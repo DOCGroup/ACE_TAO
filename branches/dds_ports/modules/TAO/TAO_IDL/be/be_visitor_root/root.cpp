@@ -363,6 +363,11 @@ int be_visitor_root::visit_root (be_root *node)
       case TAO_CodeGen::TAO_ROOT_SI:
       case TAO_CodeGen::TAO_ROOT_SS:
       case TAO_CodeGen::TAO_ROOT_TIE_SH:
+      case TAO_CodeGen::TAO_ROOT_SVH:
+      case TAO_CodeGen::TAO_ROOT_SVS:
+      case TAO_CodeGen::TAO_ROOT_EXH:
+      case TAO_CodeGen::TAO_ROOT_EXS:
+      case TAO_CodeGen::TAO_ROOT_EX_IDL:
         break;
       default:
         {
@@ -403,6 +408,11 @@ int be_visitor_root::visit_root (be_root *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SVH:
+    case TAO_CodeGen::TAO_ROOT_SVS:
+    case TAO_CodeGen::TAO_ROOT_EXH:
+    case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
@@ -451,6 +461,11 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_TIE_SH:
+    case TAO_CodeGen::TAO_ROOT_SVH:
+    case TAO_CodeGen::TAO_ROOT_SVS:
+    case TAO_CodeGen::TAO_ROOT_EXH:
+    case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
       break; // nothing to be done
     default:
       {
@@ -479,10 +494,10 @@ int be_visitor_root::visit_root (be_root *node)
       (void) tao_cg->end_client_header ();
       break;
     case TAO_CodeGen::TAO_ROOT_CI:
-      tao_cg->end_client_inline ();
+      (void) tao_cg->end_client_inline ();
       break;
     case TAO_CodeGen::TAO_ROOT_CS:
-      tao_cg->end_client_stubs ();
+      (void) tao_cg->end_client_stubs ();
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
       (void) tao_cg->end_server_header ();
@@ -495,7 +510,7 @@ int be_visitor_root::visit_root (be_root *node)
         );
       break;
     case TAO_CodeGen::TAO_ROOT_SI:
-      tao_cg->end_server_inline ();
+      (void) tao_cg->end_server_inline ();
       break;
     case TAO_CodeGen::TAO_ROOT_SS:
       if (be_global->gen_tie_classes ())
@@ -511,6 +526,21 @@ int be_visitor_root::visit_root (be_root *node)
           (void) tao_cg->end_server_template_header ();
         }
 
+      break;
+    case TAO_CodeGen::TAO_ROOT_SVH:
+      (void) tao_cg->end_ciao_svnt_header ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_SVS:
+      (void) tao_cg->end_ciao_svnt_source ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_EXH:
+      (void) tao_cg->end_ciao_exec_header ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_EXS:
+      (void) tao_cg->end_ciao_exec_source ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
+      (void) tao_cg->end_ciao_exec_idl ();
       break;
     default:
       break;
@@ -566,7 +596,7 @@ be_visitor_root::visit_constant (be_constant *node)
 int
 be_visitor_root::visit_enum (be_enum *node)
 {
-  // Instantiate a visitor context with a copy of our context. This info
+ // Instantiate a visitor context with a copy of our context. This info
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
@@ -641,7 +671,7 @@ be_visitor_root::visit_enum (be_enum *node)
 int
 be_visitor_root::visit_exception (be_exception *node)
 {
-  // Instantiate a visitor context with a copy of our context. This info
+ // Instantiate a visitor context with a copy of our context. This info
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
@@ -1244,6 +1274,26 @@ be_visitor_root::visit_component (be_component *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SVH:
+      {
+        be_visitor_component_svh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVS:
+      {
+        be_visitor_component_svs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
+      {
+        be_visitor_component_ex_idl visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_EXH:
+    case TAO_CodeGen::TAO_ROOT_EXS:
     default:
       return 0;    // nothing to do.
     }
@@ -1333,6 +1383,26 @@ be_visitor_root::visit_home (be_home *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SVH:
+      {
+        be_visitor_home_svh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVS:
+      {
+        be_visitor_home_svs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
+      {
+        be_visitor_home_ex_idl visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_EXH:
+    case TAO_CodeGen::TAO_ROOT_EXS:
     default:
       return 0; // nothing to be done
     }
@@ -1367,12 +1437,15 @@ be_visitor_root::visit_module (be_module *node)
         break;
       }
     case TAO_CodeGen::TAO_ROOT_CI:
-      {
-        be_visitor_module visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+    case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_CS:
+    case TAO_CodeGen::TAO_ROOT_SVH:
+    case TAO_CodeGen::TAO_ROOT_SVS:
+    case TAO_CodeGen::TAO_ROOT_EXH:
+    case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
       {
         be_visitor_module visitor (&ctx);
         status = node->accept (&visitor);
@@ -1381,14 +1454,6 @@ be_visitor_root::visit_module (be_module *node)
     case TAO_CodeGen::TAO_ROOT_SH:
       {
         be_visitor_module_sh visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_SI:
-    case TAO_CodeGen::TAO_ROOT_SS:
-    case TAO_CodeGen::TAO_ROOT_IS:
-      {
-        be_visitor_module visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

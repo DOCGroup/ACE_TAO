@@ -111,20 +111,28 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   Identifier *id = 0;
   UTL_ScopedName *new_name = 0;
   UTL_ScopedName *conc_name = 0;
+  bool narrow = this->width () == sizeof (char);
 
   ACE_NEW (id,
-           Identifier (this->width () == 1 ? "Char *" : "WChar *"));
+           Identifier (narrow ? "char *" : "WChar *"));
 
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
                            0));
 
-  ACE_NEW (id,
-           Identifier ("CORBA"));
+  if (narrow)
+    {
+      new_name = conc_name;
+    }
+  else
+    {
+      ACE_NEW (id,
+               Identifier ("CORBA"));
 
-  ACE_NEW (new_name,
-           UTL_ScopedName (id,
-                           conc_name));
+      ACE_NEW (new_name,
+               UTL_ScopedName (id,
+                               conc_name));
+    }
 
   this->set_name (new_name);
 

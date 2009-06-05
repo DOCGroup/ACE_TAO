@@ -72,158 +72,253 @@ public:
   // name with output dir path, is useful, when I just want just the
   // base name to use in #include's etc.
   static const char *be_get_client_hdr_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_client_stub_fname (void);
+  
   static const char *be_get_client_inline_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_server_hdr_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_implementation_hdr_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_implementation_skel_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_server_template_hdr_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_server_skeleton_fname (void);
+  
   static const char *be_get_implementation_skeleton_fname (void);
+  
   static const char *be_get_server_template_skeleton_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_server_inline_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_anyop_source_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
   static const char *be_get_anyop_header_fname (
-      bool base_name_only = 0
-    );
+      bool base_name_only = false);
+      
+  static const char *be_get_ciao_svnt_hdr_fname (
+      bool base_name_only = false);
+      
+  static const char *be_get_ciao_svnt_src_fname (
+      bool base_name_only = false);
+      
+  static const char *be_get_ciao_exec_hdr_fname (
+      bool base_name_only = false);
+      
+  static const char *be_get_ciao_exec_src_fname (
+      bool base_name_only = false);
+      
+  static const char *be_get_ciao_exec_stub_hdr_fname (
+      bool base_name_only = false);
+
+  static const char *be_get_ciao_exec_idl_fname (
+      bool base_name_only = false);
 
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
   // The parameter <base_name_only> set to 0 (no base name, but full
   // name with output dir path, is useful, when I want just the
   // base name to use in #include's etc.
-  static const char *be_get_client_hdr (UTL_String *idl_file_name,
-                                        bool base_name_only = 0);
-  static const char *be_get_client_stub (UTL_String *idl_file_name);
-  static const char *be_get_client_inline (UTL_String *idl_file_name,
-                                           bool base_name_only = 0);
-  static const char *be_get_server_hdr (UTL_String *idl_file_name,
-                                        bool base_name_only = 0);
-  static const char *be_get_implementation_hdr (UTL_String *idl_file_name,
-                                                bool base_name_only = 0);
-  static const char *be_get_implementation_skel (UTL_String *idl_file_name,
-                                                 bool base_name_only = 0);
-  static const char *be_get_server_template_hdr (UTL_String *idl_file_name,
-                                                 bool base_name_only = 0);
-  static const char *be_get_server_skeleton (UTL_String *idl_file_name);
+  static const char *be_get_client_hdr (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_client_stub (
+    UTL_String *idl_file_name);
+    
+  static const char *be_get_client_inline (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_server_hdr (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_implementation_hdr (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_implementation_skel (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_server_template_hdr (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_server_skeleton (
+    UTL_String *idl_file_name);
+    
   static const char *be_get_server_template_skeleton (
       UTL_String *idl_file_name,
-      bool base_name_only = 0
-    );
-  static const char *be_get_server_inline (UTL_String *idl_file_name,
-                                           bool base_name_only = 0);
-  static const char *be_get_anyop_header (UTL_String *idl_file_name,
-                                          bool base_name_only = 0);
-  static const char *be_get_anyop_source (UTL_String *idl_file_name,
-                                          bool base_name_only = 0);
+      bool base_name_only = false);
+      
+  static const char *be_get_server_inline (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_anyop_header (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_anyop_source (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_svnt_header (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_svnt_source (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_exec_header (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_exec_source (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+    
+  static const char *be_get_ciao_exec_stub_header (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_exec_idl (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
 
   const char* skel_export_macro (void) const;
-  // returns the macro name for exporting server side classes in Win32
-  // DLL.
+  /// Returns the macro name for exporting server side classes in Win32
+  /// DLL.
 
   void skel_export_macro (const char* s);
-  // set the macro name for export server side classes in Win32 DLL.
+  /// Set the macro name for export server side classes in Win32 DLL.
 
   const char* skel_export_include (void) const;
-  // returns the name of the include file that contains the server
-  // side export macro definition.
+  /// Returns the name of the include file that contains the server
+  /// side export macro definition.
 
   void skel_export_include (const char* s);
-  // set the name of the include file that contains the server side
-  // export macro definition.
+  /// Set the name of the include file that contains the server side
+  /// export macro definition.
 
   const char* stub_export_macro (void) const;
-  // returns the macro name for exporting client side classes in Win32
-  // DLL.
+  /// Returns the macro name for exporting client side classes in Win32
+  /// DLL.
 
   void stub_export_macro (const char* s);
-  // set the macro name for export client side classes in Win32 DLL.
+  /// Set the macro name for export client side classes in Win32 DLL.
 
   const char* stub_export_include (void) const;
-  // returns the name of the include file that contains the client
-  // side export macro definition.
+  /// Returns the name of the include file that contains the client
+  /// side export macro definition.
 
   void stub_export_include (const char* s);
-  // set the name of the include file that contains the client side
-  // export macro definition.
+  /// Set the name of the include file that contains the client side
+  /// export macro definition.
 
   const char* anyop_export_macro (void) const;
-  // returns the macro name for exporting client side classes in Win32
-  // DLL.
+  /// Returns the macro name for exporting *A.h file classes in Win32
+  /// DLL.
 
   void anyop_export_macro (const char* s);
-  // set the macro name for export client side classes in Win32 DLL.
+  /// Set the macro name for export *A.h file classes in Win32 DLL.
 
   const char* anyop_export_include (void) const;
-  // returns the name of the include file that contains the client
-  // side export macro definition.
+  /// Returns the name of the include file that contains the *A.h
+  /// file export macro definition.
 
   void anyop_export_include (const char* s);
-  // set the name of the include file that contains the client side
-  // export macro definition.
+  /// Set the name of the include file that contains the *A.h file
+  /// export macro definition.
+
+  const char* exec_export_macro (void) const;
+  /// Returns the macro name for exporting exec impl classes in Win32
+  /// DLL.
+
+  void exec_export_macro (const char* s);
+  /// Set the macro name for export exec impl classes in Win32 DLL.
+
+  const char* exec_export_include (void) const;
+  /// Returns the name of the include file that contains the exec
+  /// impl export macro definition.
+
+  void exec_export_include (const char* s);
+  /// Set the name of the include file that contains the exec impl
+  /// export macro definition.
+
+  const char* svnt_export_macro (void) const;
+  /// Returns the macro name for exporting CIAO svnt classes in Win32
+  /// DLL.
+
+  void svnt_export_macro (const char* s);
+  /// Set the macro name for export CIAO svnt classes in Win32 DLL.
+
+  const char* svnt_export_include (void) const;
+  /// Returns the name of the include file that contains the CIAO
+  /// svnt export macro definition.
+
+  void svnt_export_include (const char* s);
+  /// Set the name of the include file that contains the CIAO svnt
+  /// export macro definition.
 
   const char* pch_include (void) const;
-  // returns the name of the include file to be used for precompiled
-  // header support.
+  /// Returns the name of the include file to be used for precompiled
+  /// header support.
 
   void pch_include (const char* s);
-  // set the name of the include file to be used for precompiled
-  // header support.
+  /// Set the name of the include file to be used for precompiled
+  /// header support.
 
   const char* pre_include (void) const;
-  // returns the name of the include file to be put at the top of
-  // every header file.
+  /// Returns the name of the include file to be put at the top of
+  /// every header file.
 
   void pre_include (const char* s);
-  // set the name of the include file to be put at the top of every
-  // header file.
+  /// Set the name of the include file to be put at the top of every
+  /// header file.
 
   const char* post_include (void) const;
-  // returns the name of the include file to be put at the bottom of
-  // every header file.
+  /// Returns the name of the include file to be put at the bottom of
+  /// every header file.
 
   void post_include (const char* s);
-  // set the name of the include file to be put at the bottom of every
-  // header file.
+  /// Set the name of the include file to be put at the bottom of every
+  /// header file.
 
   const char* include_guard (void) const;
-  // returns the guard that is placed in the client header file
+  /// Returns the guard that is placed in the client header file
 
   void include_guard (const char* s);
-  // set the guard that is placed in the client header file
+  /// Set the guard that is placed in the client header file
 
   const char* safe_include (void) const;
-  // returns the name of the include file that is used instead of the own
-  // generated client header file
+  /// Returns the name of the include file that is used instead of the own
+  /// generated client header file
 
   void safe_include (const char* s);
-  // set the name of the include file that is used instead of the own
-  // generated client header file
+  /// set the name of the include file that is used instead of the own
+  /// generated client header file
 
   const char* unique_include (void) const;
-  // returns the name of the include file that should on get
-  // generated in the client header file
+  /// Returns the name of the include file that should on get
+  /// generated in the client header file
 
   void unique_include (const char* s);
-  // set the name of the include file that should on get
+  // Set the name of the include file that should on get
   // generated in the client header file
 
   /// Set text that opens a "versioned" namespace.
@@ -323,6 +418,30 @@ public:
   void anyop_header_ending (const char* s);
   // Set the anyop_header_ending.
 
+  const char* anyop_header_ending (void) const;
+  // Get the anyop_header_ending.
+
+  void anyop_source_ending (const char* s);
+  // Set the anyop_source_ending.
+
+  const char* anyop_source_ending (void) const;
+  // Get the anyop_source_ending.
+  
+  void ciao_svnt_header_ending (const char* s);
+  const char* ciao_svnt_header_ending (void) const;
+  void ciao_svnt_source_ending (const char* s);
+  const char* ciao_svnt_source_ending (void) const;
+  void ciao_exec_header_ending (const char* s);
+  const char* ciao_exec_header_ending (void) const;
+  void ciao_exec_source_ending (const char* s);
+  const char* ciao_exec_source_ending (void) const;
+  void ciao_exec_stub_header_ending (const char* s);
+  const char* ciao_exec_stub_header_ending (void) const;
+  void ciao_exec_idl_ending (const char* s);
+  const char* ciao_exec_idl_ending (void) const;
+  // Similar to above, but for CIAO servant and executor
+  // impl and executor IDL files, if generated.
+
   void use_clonable_in_args (bool clonable);
   // Set the clonable_in_args.
 
@@ -340,15 +459,6 @@ public:
 
   void gen_ostream_operators (bool val);
   // Set the gen_ostream_operators_ member.
-
-  const char* anyop_header_ending (void) const;
-  // Get the anyop_header_ending.
-
-  void anyop_source_ending (const char* s);
-  // Set the anyop_source_ending.
-
-  const char* anyop_source_ending (void) const;
-  // Get the anyop_source_ending.
 
   void output_dir (const char* s);
   // Set the directory where all the IDL-Compiler-Generated files are
@@ -577,6 +687,25 @@ public:
   bool gen_custom_ending (void) const;
   void gen_custom_ending (bool val);
   // Accessors for the member gen_custom_ending_.
+  
+  bool gen_ciao_svnt (void) const;
+  void gen_ciao_svnt (bool val);
+  bool gen_ciao_exec_impl (void) const;
+  void gen_ciao_exec_impl (bool val);
+  // Accessors for the corresponding members.
+  
+  bool gen_ciao_exec_idl (void) const;
+  void gen_ciao_exec_idl (bool val);
+  // Accessors for the corresponding members.
+  
+  bool gen_component_swapping (void) const;
+  void gen_component_swapping (bool val);
+
+  bool gen_ciao_static_config (void) const;
+  void gen_ciao_static_config (bool val);
+
+  bool gen_ciao_valuefactory_reg (void) const;
+  void gen_ciao_valuefactory_reg (bool val);
 
   ACE_CString spawn_options (void);
   // Command line passed to ACE_Process::spawn. Different
@@ -613,6 +742,11 @@ private:
   // AnyTypeCode library.
   char* anyop_export_macro_;
   char* anyop_export_include_;
+
+  char* exec_export_macro_;
+  char* exec_export_include_;
+  char* svnt_export_macro_;
+  char* svnt_export_include_;
 
   char* pch_include_;
   char* pre_include_;
@@ -677,6 +811,24 @@ private:
 
   // Anyop source file name ending. Default is "A.cpp".
   char* anyop_src_ending_;
+  
+  // CIAO servant header file name ending. Default is "_svnt.h".
+  char* ciao_svnt_hdr_ending_;
+
+  // CIAO servant source file name ending. Default is "_svnt.cpp".
+  char* ciao_svnt_src_ending_;
+
+  // CIAO executor impl header file name ending. Default is "_exec.h".
+  char* ciao_exec_hdr_ending_;
+
+  // CIAO executor impl source file name ending. Default is "_exec.cpp".
+  char* ciao_exec_src_ending_;
+
+  // CIAO executor stub header file name ending. Default is "EC.h".
+  char* ciao_exec_stub_hdr_ending_;
+  
+  // CIAO executor IDL file name ending. Default is "E.idl".
+  char* ciao_exec_idl_ending_;
 
   char* output_dir_;
   // Directory where all the IDL-Compiler-Generated files are to be
@@ -821,12 +973,31 @@ private:
 
   bool gen_ostream_operators_;
   // Generate ostream operators for each type declaration, for
-  // debuggin or logging.
+  // debugging or logging.
 
   bool gen_custom_ending_;
   // True by default, but a command line option can turn this off so
   // custom ending will not be applied to files in $TAO_ROOT/,
   // $TAO_ROOT/tao, $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao.
+
+  bool gen_ciao_svnt_;
+  bool gen_ciao_exec_impl_;
+  // Both false by default, these flags trigger code generation
+  // formerly done by the CIAO CIDL compiler.
+  
+  bool gen_ciao_exec_idl_;
+  // Shadows gen_ciao_svnt_ by default, but can be suppressed
+  // separately.
+  
+  bool gen_component_swapping_;
+  // Different container #includes, modified servant code.
+  
+  bool gen_ciao_static_config_;
+  // Suppresses generation of table guards in CIAO servants.
+  
+  bool gen_ciao_valuefactory_reg_;
+  // Generate automatic valuetype factory registration in
+  // CIAO servants.
 };
 
 #endif /* _BE_GLOBAL_H */

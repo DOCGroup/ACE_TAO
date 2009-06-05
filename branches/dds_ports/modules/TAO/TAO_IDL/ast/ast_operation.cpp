@@ -150,21 +150,14 @@ AST_Operation::~AST_Operation (void)
 
 // Public operations.
 
-int
+bool
 AST_Operation::void_return_type (void)
 {
   AST_Type* type = this->return_type ();
 
-  if (type->node_type () == AST_Decl::NT_pre_defined
-      && (AST_PredefinedType::narrow_from_decl (type)->pt ()
-            == AST_PredefinedType::PT_void))
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  return (type->node_type () == AST_Decl::NT_pre_defined
+          && (AST_PredefinedType::narrow_from_decl (type)->pt ()
+                == AST_PredefinedType::PT_void));
 }
 
 // Return the member count.

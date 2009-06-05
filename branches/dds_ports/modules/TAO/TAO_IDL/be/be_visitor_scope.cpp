@@ -65,7 +65,7 @@ be_visitor_scope::visit_scope (be_scope *node)
                              "bad node in this scope\n"),
                             -1);
         }
-
+        
       be_decl *bd = be_decl::narrow_from_decl (d);
 
       // Set the scope node as "node" in which the code is being
@@ -203,14 +203,7 @@ be_visitor_scope::last_node (be_decl *bd)
   (void) this->next_elem (bd,
                           next);
 
-  if (next != 0)
-    {
-      // Not the last.
-      return 0;
-    }
-
-  // I am the last one.
-  return 1;
+  return (next == 0);
 }
 
 bool
