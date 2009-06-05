@@ -69,18 +69,18 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (void)
   if (this->filtering_ == 1)
     {
       TAO_Notify_Admin& parent = this->proxy_supplier_->consumer_admin ();
-      CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_,
+      CORBA::Boolean const val = this->proxy_supplier_->check_filters (this->event_,
                                                                   parent.filter_admin (),
                                                                   parent.filter_operator ());
 
       if (TAO_debug_level > 1)
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Notify (%P|%t) Proxysupplier %x filter ")
-                    ACE_TEXT ("eval result = %d"),
+                    ACE_TEXT ("eval result = %d\n"),
           &this->proxy_supplier_ , val));
 
       // Filter failed - do nothing.
-      if (val == 0)
+      if (!val)
         return 0;
     }
 
@@ -243,7 +243,7 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::execute (void)
 TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Dispatch_No_Copy::copy (void)
 {
-  TAO_Notify_Method_Request_Queueable* request;
+  TAO_Notify_Method_Request_Queueable* request = 0;
 
   TAO_Notify_Event::Ptr event_var (
     this->event_->queueable_copy () );
