@@ -1,3 +1,8 @@
+Fri Jun  5 08:20:56 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Bug_3683_Regression/Echo_Client_i.cpp:
+          Fixed compilation warning.
+
 Thu Jun  4 11:52:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
