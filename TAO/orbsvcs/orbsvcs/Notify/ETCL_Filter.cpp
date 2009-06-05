@@ -27,7 +27,7 @@ TAO_Notify_Constraint_Expr::~TAO_Notify_Constraint_Expr ()
 }
 
 
-void 
+void
 TAO_Notify_Constraint_Expr::save_persistent (
   TAO_Notify::Topology_Saver& saver)
 {
@@ -46,7 +46,7 @@ TAO_Notify_Constraint_Expr::save_persistent (
 }
 
 
-void 
+void
 TAO_Notify_Constraint_Expr::load_attrs(
   const TAO_Notify::NVPList& attrs)
 {
@@ -62,7 +62,7 @@ TAO_Notify_Constraint_Expr::load_attrs(
 TAO_Notify::Topology_Object*
 TAO_Notify_Constraint_Expr::load_child (
   const ACE_CString &type,
-  CORBA::Long id, 
+  CORBA::Long id,
   const TAO_Notify::NVPList& attrs)
 {
   ACE_UNUSED_ARG (id);
@@ -75,7 +75,7 @@ TAO_Notify_Constraint_Expr::load_child (
     attrs.find ("Type", type);
 
     CORBA::ULong len = this->constr_expr.event_types.length ();
-    if (DEBUG_LEVEL) 
+    if (DEBUG_LEVEL)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) reload EventType %d \n"),
                   len + 1));
@@ -156,7 +156,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
   auto_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Added an empty constraint to filter\n")));
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
@@ -171,8 +171,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
 void
 TAO_Notify_ETCL_Filter::add_constraint_i
         (const CosNotifyFilter::ConstraintInfo& constraint,
-         CosNotifyFilter::ConstraintID cnstr_id
-        )
+         CosNotifyFilter::ConstraintID cnstr_id)
 {
   TAO_Notify_Constraint_Expr* notify_constr_expr = 0;
 
@@ -192,8 +191,8 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   if (cnstr_id == 0)
   {
     if (TAO_debug_level > 1)
-      ACE_DEBUG ((LM_DEBUG, 
-                  ACE_TEXT ("Added constraint %s to filter %d\n"), 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Added constraint %C to filter %d\n"),
                   expr.constraint_expr.in (), this->id_));
 
     cnstr_id = ++constraint_expr_ids_;
@@ -201,8 +200,8 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   else
   {
     if (TAO_debug_level > 1)
-      ACE_DEBUG ((LM_DEBUG, 
-                  ACE_TEXT ("Loaded constraint %s to filter %d\n"), 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Loaded constraint %C to filter %d\n"),
                   expr.constraint_expr.in (), this->id_));
   }
 
@@ -223,7 +222,7 @@ TAO_Notify_ETCL_Filter::add_constraints (
   CORBA::ULong constraint_length = constraint_list.length ();
 
   if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("constraint_length = %d\n"),
                   constraint_length));
 
@@ -523,7 +522,7 @@ TAO_Notify_ETCL_Filter::get_callbacks (void)
 }
 
 
-void 
+void
 TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   TAO_Notify::NVPList attrs;
@@ -543,10 +542,10 @@ TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver& saver)
       TAO_Notify::NVPList attrs;
       bool changed = true;
       attrs.push_back(TAO_Notify::NVP("ConstraintId", entry->ext_id_));
-      attrs.push_back(TAO_Notify::NVP("Expression", 
+      attrs.push_back(TAO_Notify::NVP("Expression",
         entry->int_id_->constr_expr.constraint_expr.in ()));
       saver.begin_object(0, "constraint", attrs, changed);
- 
+
       entry->int_id_->save_persistent (saver);
 
       saver.end_object(0, "constraint");
@@ -596,12 +595,12 @@ TAO_Notify_ETCL_Filter::load_child (const ACE_CString &type,
       TAO_Notify_Object::ID id = ACE_OS::atoi (value);
       constraint_expr_ids_ = id;
 
-      if (DEBUG_LEVEL) 
+      if (DEBUG_LEVEL)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reload filter %d constraint %d\n"),
                     static_cast<int> (this->id_), static_cast<int> (id)));
 
-      TAO_Notify_Constraint_Expr* expr 
+      TAO_Notify_Constraint_Expr* expr
         = this->add_constraint_i (id);
       expr->load_attrs (attrs);
 
