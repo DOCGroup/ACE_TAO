@@ -40,7 +40,7 @@
 
 #include "mcpp_out.h"
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 #include "mcpp_lib.h"   /* External interface when used as library  */
 #endif
 
@@ -199,7 +199,7 @@
 /* MB_ERROR signals wrong multi-byte character sequence.    */
 #define MB_ERROR        0x8000
 
-#if MCPP_LIB && HOST_COMPILER == GNUC   \
+#if defined(MCPP_LIB) && HOST_COMPILER == GNUC			\
         && (SYS_FAMILY == SYS_UNIX && SYSTEM != SYS_CYGWIN)
     /* For GCC 4.* on UNIXes    */
 //#pragma GCC visibility push( hidden)    /* Hide these names from outside    */
@@ -241,7 +241,7 @@ typedef struct fileinfo {
         const char *    full_fname; /* Real full path list          */
         char *          filename;   /* File/macro name (maybe changed)      */
         char *          buffer;     /* Buffer of current input line */
-#if MCPP_LIB
+#ifdef MCPP_LIB
         /* Save output functions during push/pop of #includes   */
         int (* last_fputc)  ( int c, OUTDEST od);
         int (* last_fputs)  ( const char * s, OUTDEST od);
@@ -530,12 +530,12 @@ extern void     at_end( void);
                 /* Do the final commands        */
 extern void     print_heap( void);
                 /* Print blocks of heap memory  */
-#if ! HOST_HAVE_STPCPY
+#ifndef HOST_HAVE_STPCPY
 extern char *   stpcpy( char * dest, const char * src);
                 /* Non-Standard library function*/
 #endif
 
-#if MCPP_LIB    /* Setting to use mcpp as a subroutine  */
+#ifdef MCPP_LIB    /* Setting to use mcpp as a subroutine  */
 /* directive.c  */
 extern void     clear_symtable( void);
                 /* Free all macro definitions   */
@@ -557,6 +557,6 @@ extern void     init_system( void);
 #endif
 #endif
 
-#if HOST_HAVE_STPCPY
+#ifndef HOST_HAVE_STPCPY
 extern char *   stpcpy( char * dest, const char * src);
 #endif

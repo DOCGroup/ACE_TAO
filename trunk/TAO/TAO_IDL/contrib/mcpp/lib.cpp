@@ -43,7 +43,7 @@ int     opterr = 1;
 int     optopt;
 char *  optarg;
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 void    init_lib( void)
 {
     optind = 1;
