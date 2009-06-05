@@ -1204,7 +1204,7 @@ static char *   mgtoken_save( const char * macroname)
  * Return the advanced pointer into the replacement text or 0.
  */
 {
-    char *   repl_cur;
+  char *   repl_cur;
 
     if (str_eq( macroname, identifier)) {   /* Macro name in body   */
         repl_cur = token_p;                 /* Overwrite on token   */
@@ -1304,7 +1304,7 @@ static void do_undef( void)
 static DEFBUF *     symtab[ SBSIZE];
 static long         num_of_macro = 0;
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 void    init_directive( void)
 /* Initialize static variables. */
 {
@@ -1676,7 +1676,7 @@ void    dump_def(
     wrong_line = TRUE;               /* Line number is out of sync  */
 }
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 void    clear_symtable( void)
 /*
  * Free all the macro definitions.

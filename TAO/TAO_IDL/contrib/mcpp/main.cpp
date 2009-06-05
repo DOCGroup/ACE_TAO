@@ -260,7 +260,7 @@ static int      src_col = 0;        /* Column number of source line */
 #define MBCHAR_IS_ESCAPE_FREE   (SJIS_IS_ESCAPE_FREE && \
             BIGFIVE_IS_ESCAPE_FREE && ISO2022_JP_IS_ESCAPE_FREE)
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 static void     init_main( void);
                 /* Initialize static variables      */
 #endif
@@ -296,7 +296,7 @@ static char *   esc_mbchar( char * str, char * str_end);
 #endif
 
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 static void     init_main( void)
 /* Initialize global variables on re-entering.  */
 {
@@ -346,7 +346,7 @@ int     main
         goto  fatal_error_exit;
     }
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
     /* Initialize global and static variables.  */
     init_main();
     init_directive();
@@ -375,7 +375,7 @@ int     main
       if ((fp_in = ACE_OS::fopen( in_file, "r")) == 0) {
             mcpp_fprintf( ERR, "Can't open input file \"%s\".\n", in_file);
             errors++;
-#if MCPP_LIB
+#ifdef MCPP_LIB
             goto  fatal_error_exit;
 #else
             return( IO_ERROR);
@@ -389,7 +389,7 @@ int     main
         if ((fp_out = ACE_OS::fopen( out_file, "w")) == 0) {
             mcpp_fprintf( ERR, "Can't open output file \"%s\".\n", out_file);
             errors++;
-#if MCPP_LIB
+#ifdef MCPP_LIB
             goto  fatal_error_exit;
 #else
             return( IO_ERROR);
@@ -401,7 +401,7 @@ int     main
         if ((fp_err = ACE_OS::fopen( "mcpp.err", "a")) == 0) {
             errors++;
             mcpp_fprintf( OUT, "Can't open \"mcpp.err\"\n");
-#if MCPP_LIB
+#ifdef MCPP_LIB
             goto  fatal_error_exit;
 #else
             return( IO_ERROR);
@@ -425,7 +425,7 @@ int     main
     at_end();                       /* Do the final commands        */
 
 fatal_error_exit:
-#if MCPP_LIB
+#ifdef MCPP_LIB
     /* Free malloced memory */
     if (mcpp_debug & MACRO_CALL) {
         if (in_file != stdin_name)

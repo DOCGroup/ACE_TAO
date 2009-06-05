@@ -133,7 +133,7 @@ static CAT_LINE bsl_cat_line;
 static CAT_LINE com_cat_line;
         /* Datum on the last catenated line by a line-crossing comment  */
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 static int  use_mem_buffers = FALSE;
 
 void    init_support( void)
@@ -268,7 +268,7 @@ int    mcpp_lib_fputc(
     OUTDEST od
 )
 {
-#if MCPP_LIB
+#ifdef MCPP_LIB
     if (use_mem_buffers) {
         return mem_putc( c, od);
     } else {
@@ -276,7 +276,7 @@ int    mcpp_lib_fputc(
         FILE *  stream = DEST2FP( od);
 
         return (stream != 0) ? ACE_OS::fputc( c, stream) : EOF;
-#if MCPP_LIB
+#ifdef MCPP_LIB
     }
 #endif
 }
@@ -288,7 +288,7 @@ int    mcpp_lib_fputs(
     OUTDEST od
 )
 {
-#if MCPP_LIB
+#ifdef MCPP_LIB
     if (use_mem_buffers) {
         return mem_puts( s, od);
     } else {
@@ -296,7 +296,7 @@ int    mcpp_lib_fputs(
         FILE *  stream = DEST2FP( od);
 
         return (stream != 0) ? ACE_OS::fputs( s, stream) : EOF;
-#if MCPP_LIB
+#ifdef MCPP_LIB
     }
 #endif
 }
@@ -318,7 +318,7 @@ int    mcpp_lib_fprintf(
         int rc;
 
         va_start( ap, format);
-#if MCPP_LIB
+#ifdef MCPP_LIB
         if (use_mem_buffers) {
             static char     mem_buffer[ NWORK];
 
@@ -330,7 +330,7 @@ int    mcpp_lib_fprintf(
         } else {
 #endif
 	  rc = ACE_OS::vfprintf( stream, format, ap);
-#if MCPP_LIB
+#ifdef MCPP_LIB
         }
 #endif
         va_end( ap);
@@ -344,7 +344,7 @@ int    mcpp_lib_fprintf(
 
 int (* mcpp_fprintf)( OUTDEST od, const char * format, ...) = mcpp_lib_fprintf;
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 void    mcpp_reset_def_out_func( void)
 {
     mcpp_fputc = mcpp_lib_fputc;
@@ -1608,7 +1608,7 @@ int     get_ch( void)
         infile->bptr = infile->buffer + len;
         src_line = infile->line;            /* Reset line number    */
         inc_dirp = infile->dirp;            /* Includer's directory */
-#if MCPP_LIB
+#ifdef MCPP_LIB
         mcpp_set_out_func( infile->last_fputc, infile->last_fputs,
                            infile->last_fprintf);
 #endif
@@ -2302,14 +2302,14 @@ FILEINFO *  get_file(
     } else {
         file->src_dir = 0;
     }
-#if MCPP_LIB
+#ifdef MCPP_LIB
     file->last_fputc = mcpp_lib_fputc;
     file->last_fputs = mcpp_lib_fputs;
     file->last_fprintf = mcpp_lib_fprintf;
 #endif
     if (infile != 0) {                   /* If #include file     */
         infile->line = src_line;            /* Save current line    */
-#if MCPP_LIB
+#ifdef MCPP_LIB
         infile->last_fputc = mcpp_fputc;
         infile->last_fputs = mcpp_fputs;
         infile->last_fprintf = mcpp_fprintf;

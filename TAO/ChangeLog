@@ -1,11 +1,23 @@
+Fri Jun  5 20:42:42 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/eval.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/lib.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Porting for Borland. 
+        
 Fri Jun  5 21:01:43 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
-    
-          Fixed a bug in build_tree() that ignored the user defined 
+
+          Fixed a bug in build_tree() that ignored the user defined
           constraint expression when the domain name or event type is
           defined.
-          
+
         * orbsvcs/tests/Notify/Bug_3688_Regression/Bug_3688_Regression.mpc:
         * orbsvcs/tests/Notify/Bug_3688_Regression/common.h:
         * orbsvcs/tests/Notify/Bug_3688_Regression/consumer.cpp:
@@ -29,13 +41,13 @@ Fri Jun  5 21:01:43 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * bin/tao_other_tests.lst:
 
           Added Bug_3688_Regression test.
-          
+
         * orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:
 
           Made received flag set true when consumer receives message. It did
           not show any problem is because the test defaults to not expecting
           to receive events.
-          
+
 Fri Jun  5 17:37:27 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/directive.cpp:

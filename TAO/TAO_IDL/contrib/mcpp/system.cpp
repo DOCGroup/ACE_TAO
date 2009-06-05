@@ -365,7 +365,7 @@ static int      in_import;          /* #import rather than #include */
 static int      no_dir;
 #endif
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 void    init_system( void)
 /* Initialize static variables  */
 {
@@ -1368,7 +1368,7 @@ static void version( void)
 {
     const char *    mes[] = {
 
-#if     MCPP_LIB
+#ifdef     MCPP_LIB
 /* Write messages here, for example, "MySomeTool with ".    */
 #endif
 
@@ -1598,7 +1598,7 @@ static void usage(
     if (opt != '?')
         mcpp_fprintf( ERR, illegopt, opt, mcpp_optarg ? mcpp_optarg : null);
     version();
-#if MCPP_LIB
+#ifdef MCPP_LIB
     mes[ 1] = argv0;
 #endif
     while (*mpp)
@@ -2889,7 +2889,7 @@ void    put_depend(
     size_t          fnamlen;                /* Length of filename   */
 
     if (fp == 0) {   /* Main source file.  Have to initialize.   */
-#if MCPP_LIB
+#ifdef MCPP_LIB
         if (output != 0) {
             ACE_OS::free( output);
             ACE_OS::free( pos);
@@ -4838,7 +4838,7 @@ static int  mcpp_getopt(
     return  c;
 }
 
-#if ! HOST_HAVE_STPCPY
+#ifndef HOST_HAVE_STPCPY
 char *  stpcpy(
     char *          dest,
     const char *    src
@@ -4890,7 +4890,7 @@ void    at_end( void)
 #endif
 }
 
-#if MCPP_LIB
+#ifdef MCPP_LIB
 void    clear_filelist( void)
 /*
  * Free malloced memory for filename-list and directory-list.
