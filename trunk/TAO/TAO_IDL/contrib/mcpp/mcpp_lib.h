@@ -1,18 +1,10 @@
-/* $Id$ */
-#ifndef MCPP_LIB_H
-#define MCPP_LIB_H
+/* $Id$ mcpp_lib.h: declarations of libmcpp exported (visible) functions */
+#ifndef _MCPP_LIB_H
+#define _MCPP_LIB_H
 
-#ifdef OUT
-#undef OUT
+#ifndef _MCPP_OUT_H
+#include    "mcpp_out.h"            /* declaration of OUTDEST   */
 #endif
-
-/* Choices for output destination */
-typedef enum {
-    OUT,                        /* ~= fp_out    */
-    ERR,                        /* ~= fp_err    */
-    DBG,                        /* ~= fp_debug  */
-    NUM_OUTDEST
-} OUTDEST;
 
 #include "mcpp_lib_export.h"
 
@@ -25,5 +17,4 @@ extern MCPP_LIB_Export void    mcpp_set_out_func(
                     );
 extern MCPP_LIB_Export void    mcpp_use_mem_buffers( int tf);
 extern MCPP_LIB_Export char *  mcpp_get_mem_buffer( OUTDEST od);
-//#endif  /* MCPP_LIB */
-#endif  /* MCPP_LIB_H   */
+#endif  /* _MCPP_LIB_H  */

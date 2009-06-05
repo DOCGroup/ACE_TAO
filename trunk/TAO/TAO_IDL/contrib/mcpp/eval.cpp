@@ -1,5 +1,5 @@
 /*- $Id$
- * Copyright (c) 1998, 2002-2007 Kiyoshi Matsui <kmatsui@t3.rim.or.jp>
+ * Copyright (c) 1998, 2002-2008 Kiyoshi Matsui <kmatsui@t3.rim.or.jp>
  * All rights reserved.
  *
  * Some parts of this code are derived from the public domain software
@@ -41,10 +41,6 @@
 #include    "system.H"
 #include    "internal.H"
 #endif
-
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_stdlib.h"
 
 typedef struct optab {
     char    op;                     /* Operator                     */
@@ -177,7 +173,7 @@ typedef struct sizes {
 } SIZES;
 
 /*
- * S_CHAR etc.  define the sizeof the basic TARGET machine word types.
+ * S_CHAR, etc.  define the sizeof the basic TARGET machine word types.
  *      By default, sizes are set to the values for the HOST computer.  If
  *      this is inappropriate, see those tables for details on what to change.
  *      Also, if you have a machine where sizeof (signed int) differs from
@@ -200,7 +196,10 @@ typedef struct sizes {
 #define S_PDOUBLE   (sizeof (double *))
 #define S_PFPTR     (sizeof (int (*)()))
 #if HAVE_LONG_LONG
-#if HOST_COMPILER == BORLANDC
+// FUZZ: disable check_for_msc_ver
+#if (HOST_COMPILER == BORLANDC) \
+        || (HOST_COMPILER == MSC && defined(_MSC_VER) && (_MSC_VER <= 1300))
+// FUZZ: enable check_for_msc_ver
 #define S_LLINT     (sizeof (__int64))
 #define S_PLLINT    (sizeof (__int64 *))
 #else
@@ -213,7 +212,7 @@ typedef struct sizes {
 
 typedef struct types {
     int         type;               /* This is the bits for types   */
-    const char *      token_name;         /* this is the token word       */
+    char *      token_name;         /* this is the token word       */
     int         excluded;           /* but these aren't legal here. */
 } TYPES;
 
@@ -277,7 +276,7 @@ void    init_eval( void)
 expr_t  eval_if( void)
 /*
  * Evaluate a #if expression.  Straight-forward operator precedence.
- * This is called from directive() on encountering an #if statement.
+ * This is called from directive() on encountering an #if directive.
  * It calls the following routines:
  * eval_lex()   Lexical analyser -- returns the type and value of
  *              the next input token.
@@ -361,17 +360,17 @@ expr_t  eval_if( void)
             if (mcpp_debug & EXPRESSION)
                 mcpp_fprintf( DBG
                         , "op %s, prec %d, stacked op %s, prec %d, skip %d\n"
-                              , opname[ op], prec, opname[ static_cast<size_t> (opp->op)], opp->prec, opp->skip);
+                              , opname[ op], prec, opname[ static_cast <size_t> (opp->op)], opp->prec, opp->skip);
 
             /* Stack coming sub-expression of higher precedence.    */
             if (opp->prec < prec) {
                 if (op == OP_LPA) {
                     prec = OP_RPA_PREC;
                     if (standard && (warn_level & 4)
-                            && ++parens == exp_nest_min + 1)
+                            && ++parens == std_limits.exp_nest + 1)
                         cwarn(
                     "More than %.0s%ld nesting of parens"   /* _W4_ */
-                            , 0, (long) exp_nest_min, 0);
+                            , 0, (long) std_limits.exp_nest, 0);
                 } else if (op == OP_QUE) {
                     prec = OP_QUE_PREC;
                 } else if (is_unary( op)) {
@@ -451,7 +450,7 @@ expr_t  eval_if( void)
                 if (opp->op != OP_QUE) {    /* Matches ? on stack?  */
                     cerror(
                     "Misplaced \":\", previous operator is \"%s\""  /* _E_  */
-                    , opname[static_cast<size_t> (opp->op)], 0L, 0);
+                    , opname[static_cast <size_t> (opp->op)], 0L, 0);
                     return  0L;
                 }
                 /* Evaluate op1.            Fall through            */
@@ -488,8 +487,8 @@ expr_t  eval_if( void)
 
 static int  eval_lex( void)
 /*
- * Return next operator or value to evaluate.  Called from eval_if().  It calls
- * a special-purpose routines for character constants and numeric values:
+ * Return next operator or constant to evaluate.  Called from eval_if().  It 
+ * calls a special-purpose routines for character constants and numeric values:
  *      eval_char()     called to evaluate 'x'
  *      eval_num()      called to evaluate numbers
  * C++98 treats 11 identifier-like tokens as operators.
@@ -504,6 +503,8 @@ static int  eval_lex( void)
 
     ev.sign = SIGNED;                       /* Default signedness   */
     ev.val = 0L;            /* Default value (on error or 0 value)  */
+    in_if = ! skip; /* Inform to expand_macro() that the macro is   */
+                    /*      in #if line and not skipped expression. */
     c = skip_ws();
     if (c == '\n') {
         unget_ch();
@@ -522,8 +523,13 @@ static int  eval_lex( void)
             if (c == '(')                   /* Allow defined (name) */
                 c = skip_ws();
             if (scan_token( c, (workp = work_buf, &workp), work_end) == NAM) {
-                if (warn)
-                    ev.val = (look_id( identifier) != 0);
+                DEFBUF *    defp = look_id( identifier);
+                if (warn) {
+                    ev.val = (defp != 0);
+                    if ((mcpp_debug & MACRO_CALL) && ! skip && defp)
+                        /* Annotate if the macro is in non-skipped expr.    */
+                        mcpp_fprintf( OUT, "/*%s*/", defp->name);
+                }
                 if (c1 != '(' || skip_ws() == ')')  /* Balanced ?   */
                     return  VAL;            /* Parsed ok            */
             }
@@ -540,7 +546,7 @@ static int  eval_lex( void)
             } else if (mcpp_mode != POST_STD
                     && (openum = id_operator( identifier)) != 0) {
                 /* Identifier-like operator in C++98    */
-                ACE_OS::strcpy( work_buf, identifier);
+                strcpy( work_buf, identifier);
                 return  chk_ops();
             }
         } else if (! standard && str_eq( identifier, "sizeof")) {
@@ -736,7 +742,7 @@ no_good:
 }
 
 static int  look_type(
-    int typecode
+    int     typecode
 )
 {
     const char * const  unknown_type
@@ -754,17 +760,17 @@ static int  look_type(
         if (token_type == NAM) {
 #if HAVE_LONG_LONG
             if (str_eq( identifier, "long")) {
-                ACE_OS::strcpy( work_buf, "long long");
+                strcpy( work_buf, "long long");
                 goto  basic;
             }
 #endif
             if (str_eq( identifier, "double")) {
-                ACE_OS::strcpy( work_buf, "long double");
+                strcpy( work_buf, "long double");
                 goto  basic;
             }
         }
         unget_string( work_buf, 0);      /* Not long long        */
-        ACE_OS::strcpy( work_buf, "long");          /*   nor long double    */
+        strcpy( work_buf, "long");          /*   nor long double    */
     }
 
     /*
@@ -839,7 +845,7 @@ VAL_SIGN *  eval_num(
 
     ev.sign = SIGNED;                       /* Default signedness   */
     ev.val = 0L;                            /* Default value        */
-    if ((char_type[ c = *cp++ & UCHARMAX] & DIG) == 0)   /* Dot          */
+    if ((char_type[ c = *cp++ & UCHARMAX] & DIG) == 0)   /* Dot     */
         goto  num_err;
     if (c != '0') {                         /* Decimal              */
         base = 10;
@@ -855,8 +861,8 @@ VAL_SIGN *  eval_num(
     v = v1 = 0L;
     for (;;) {
         c1 = c;
-        if (ACE_OS::ace_isupper( c1))
-            c1 = ACE_OS::ace_tolower( c1);
+        if (isupper( c1))
+            c1 = tolower( c1);
         if (c1 >= 'a')
             c1 -= ('a' - 10);
         else
@@ -908,8 +914,8 @@ VAL_SIGN *  eval_num(
         c = *cp++;
     }
 #if HAVE_LONG_LONG && (COMPILER == MSC || COMPILER == BORLANDC)
-    if (ACE_OS::ace_tolower( c) == 'i') {
-        c1 = ACE_OS::atoi( cp);
+    if (tolower( c) == 'i') {
+        c1 = atoi( cp);
         if (c1 == 64) {
             if (! stdc3 && ((! skip && (warn_level & w_level))
                     || (skip && (warn_level & 8))))
@@ -960,7 +966,7 @@ num_err:
 }
 
 static VAL_SIGN *   eval_char(
-    char * const token
+    char * const    token
 )
 /*
  * Evaluate a character constant.
@@ -1000,7 +1006,7 @@ static VAL_SIGN *   eval_char(
         cp++;                           /* Skip 'L'                 */
         bits = mbits;
     }
-    if (char_type[ *cp & UCHARMAX] & mbstart) {
+    if (char_type[ *cp & UCHARMAX] & mbchk) {
         cl = mb_eval( &cp);
         bits = mbits;
     } else if ((cl = eval_one( &cp, wide, mbits, (ucn8 = FALSE, &ucn8)))
@@ -1012,7 +1018,7 @@ static VAL_SIGN *   eval_char(
     value = cl;
 
     for (i = 0; *cp != '\'' && *cp != EOS; i++) {
-        if (char_type[ *cp & UCHARMAX] & mbstart) {
+        if (char_type[ *cp & UCHARMAX] & mbchk) {
             cl = mb_eval( &cp);
             if (cl == 0)
                 /* Shift-out sequence of multi-byte or wide character   */
@@ -1175,9 +1181,9 @@ static expr_t   eval_one(
 
     value = 0L;
     for (count = 0; ; ++count) {
-        if (ACE_OS::ace_isupper( uc))
-            uc = ACE_OS::ace_tolower( uc);
-        if ((cp = ACE_OS::strchr( digits, uc)) == 0)
+        if (isupper( uc))
+            uc = tolower( uc);
+        if ((cp = strchr( digits, uc)) == 0)
             break;
         if (count >= 3 && bits == 3)
             break;      /* Octal escape sequence at most 3 digits   */
@@ -1212,7 +1218,7 @@ static expr_t   eval_one(
     if (uc1 == 'u' || uc1 == 'U') {
         if ((count < 4 && uc1 == 'u') || (count < 8 && uc1 == 'U'))
             goto  undefined;
-        if ((/*value >= 0L &&*/  value <= 0x9FL
+        if ((value >= 0L && value <= 0x9FL
                     && value != 0x24L && value != 0x40L && value != 0x60L)
                 || (!stdc3 && value >= 0xD800L && value <= 0xDFFFL)) {
             if (!skip)
@@ -1265,8 +1271,8 @@ range_err:
 }
 
 static VAL_SIGN *   eval_eval(
-    VAL_SIGN * valp,
-    int op
+    VAL_SIGN *  valp,
+    int         op
 )
 /*
  * One or two values are popped from the value stack and do arithmetic.
@@ -1314,7 +1320,7 @@ static VAL_SIGN *   eval_eval(
             expr_t  v3;
 
             v3 = (sign1 == SIGNED ? v1 : v2);
-            ACE_OS::sprintf( negate, neg_format, v3, v3);
+            sprintf( negate, neg_format, v3, v3);
             cwarn( negate, skip ? non_eval : 0, 0L, 0);
         }
         valp->sign = sign1 = sign2 = UNSIGNED;
@@ -1371,9 +1377,9 @@ static VAL_SIGN *   eval_eval(
 
 static expr_t   eval_signed(
     VAL_SIGN ** valpp,
-    expr_t v1,
-    expr_t v2,
-    int op
+    expr_t      v1,
+    expr_t      v2,
+    int         op
 )
 /*
  * Apply the argument operator to the signed data.
@@ -1498,7 +1504,7 @@ static expr_t   eval_signed(
 }
 
 static expr_t   eval_unsigned(
-    VAL_SIGN **     valpp,
+    VAL_SIGN ** valpp,
     uexpr_t     v1u,
     uexpr_t     v2u,
     int         op
@@ -1522,7 +1528,7 @@ static expr_t   eval_unsigned(
     case OP_EOE:
     case OP_PLU:    v1 = v1u;           break;
     case OP_NEG:
-        v1 = static_cast<uexpr_t> (- (static_cast<expr_t> (v1u)));
+        v1 = -v1u;
         if (v1u)
             overflow( op_name, valpp, TRUE);
         break;
@@ -1622,8 +1628,8 @@ static void overflow(
 }
 
 static void dump_val(
-    const char * msg,
-    const VAL_SIGN * valp
+    const char *        msg,
+    const VAL_SIGN *    valp
 )
 /*
  * Dump a value by internal representation.

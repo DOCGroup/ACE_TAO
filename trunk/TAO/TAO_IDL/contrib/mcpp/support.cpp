@@ -1,5 +1,5 @@
 /*- $Id$
- * Copyright (c) 1998, 2002-2007 Kiyoshi Matsui <kmatsui@t3.rim.or.jp>
+ * Copyright (c) 1998, 2002-2008 Kiyoshi Matsui <kmatsui@t3.rim.or.jp>
  * All rights reserved.
  *
  * Some parts of this code are derived from the public domain software
@@ -57,10 +57,12 @@
  * unget_string()   Pushs sequence on the input stream.
  * save_string() Saves a string in malloc() memory.
  * get_file()   Initializes a new FILEINFO structure, called when #include
- *              opens a new file.
+ *              opens a new file, or from unget_string().
  * xmalloc()    Gets a specified number of bytes from heap memory.
  *              If malloc() returns NULL, exits with a message.
  * xrealloc()   realloc().  If it fails, exits with a message.
+ * get_src_location()   Trace back line-column datum into pre-line-splicing
+ *              phase.  A function for -K option.
  * cfatal(), cerror(), cwarn()
  *              These routines format print messages to the user.
  * mcpp_fputc(), mcpp_fputs(), mcpp_fprintf()
@@ -75,37 +77,31 @@
 #include    "internal.H"
 #endif
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_stdlib.h"
-
 static void     scan_id( int c);
                 /* Scan an identifier           */
 static char *   scan_number( int c, char * out, char * out_end);
                 /* Scan a preprocessing number  */
 static char *   scan_number_prestd( int c, char * out, char * out_end);
-                /* scan_number() for pre-Standard       */
+                /* scan_number() for pre-Standard mode  */
 #if OK_UCN
 static char *   scan_ucn( int cnt, char * out);
                 /* Scan an UCN sequence         */
 #endif
 static char *   scan_op( int c, char * out);
-                /* Scan an operator or punctuat.*/
+                /* Scan an operator or a punctuator     */
 static char *   parse_line( void);
-                /* Parse a logical line         */
-static char *   read_a_comment( char * sp);
+                /* Parse a logical line and convert comments    */
+static char *   read_a_comment( char * sp, size_t * sizp);
                 /* Read over a comment          */
 static char *   get_line( int in_comment);
-                /* Get a logical line from file */
-static void     at_eof( int in_comment);
+                /* Get a logical line from file, handle line-splicing   */
+static char *   at_eof( int in_comment);
                 /* Check erroneous end of file  */
 static void     do_msg( const char * severity, const char * format
         , const char * arg1, long arg2, const char * arg3);
                 /* Putout diagnostic message    */
 static char *   cat_line( int del_bsl);
                 /* Splice the line              */
-static int      last_is_mbchar( const char * in, int len);
-                /* The line ends with MBCHAR ?  */
 static void     put_line( char * out, FILE * fp);
                 /* Put out a logical line       */
 static void     dump_token( int token_type, const char * cp);
@@ -113,16 +109,29 @@ static void     dump_token( int token_type, const char * cp);
 
 #define EXP_MAC_IND_MAX     16
 /* Information of current expanding macros for diagnostic   */
-typedef struct  expanding_mac {
+static struct {
     const char *    name;       /* Name of the macro just expanded  */
     int             to_be_freed;    /* Name should be freed later   */
-} EXPANDING_MAC;
-static EXPANDING_MAC    expanding_macro[ EXP_MAC_IND_MAX];
+} expanding_macro[ EXP_MAC_IND_MAX];
 static int  exp_mac_ind = 0;        /* Index into expanding_macro[] */
 
 static int  in_token = FALSE;       /* For token scanning functions */
 static int  in_string = FALSE;      /* For get_ch() and parse_line()*/
 static int  squeezews = FALSE;
+
+#define MAX_CAT_LINE    256
+/* Information on line catenated by <backslash><newline>    */
+/* and by line-crossing comment.  This is for -K option.    */
+typedef struct catenated_line {
+    long    start_line;         /* Starting line of catenation      */
+    long    last_line;          /* Ending line of catanation        */
+    size_t  len[ MAX_CAT_LINE + 1];
+                        /* Length of successively catenated lines   */
+} CAT_LINE;
+static CAT_LINE bsl_cat_line;
+        /* Datum on the last catenated line by <backslash><newline> */
+static CAT_LINE com_cat_line;
+        /* Datum on the last catenated line by a line-crossing comment  */
 
 #if MCPP_LIB
 static int  use_mem_buffers = FALSE;
@@ -130,6 +139,7 @@ static int  use_mem_buffers = FALSE;
 void    init_support( void)
 {
     in_token = in_string = squeezews = FALSE;
+    bsl_cat_line.len[ 0] = com_cat_line.len[ 0] = 0;
     clear_exp_mac();
 }
 
@@ -146,14 +156,16 @@ void    mcpp_use_mem_buffers(
     int    tf
 )
 {
+    int i;
+
     use_mem_buffers = tf ? TRUE : FALSE;
 
-    if (use_mem_buffers) {
-        int i;
-
-        for (i = 0; i < NUM_OUTDEST; ++i) {
-            if (mem_buffers[ i].buffer)     /* Already allocated    */
-                ACE_OS::free( mem_buffers[ i].buffer);
+    for (i = 0; i < NUM_OUTDEST; ++i) {
+        if (mem_buffers[ i].buffer)
+            /* Free previously allocated memory buffer  */
+            free( mem_buffers[ i].buffer);
+        if (use_mem_buffers) {
+            /* Output to memory buffers instead of files    */
             mem_buffers[ i].buffer = 0;
             mem_buffers[ i].entry_pt = 0;
             mem_buffers[ i].size = 0;
@@ -168,9 +180,6 @@ int    using_mem_buffers( void)
 }
 
 #define BUF_INCR_SIZE   (NWORK * 2)
-#ifdef MAX
-#undef MAX
-#endif
 #define MAX( a, b)      (((a) > (b)) ? (a) : (b))
 
 static char *   append_to_buffer(
@@ -197,7 +206,7 @@ static char *   append_to_buffer(
     }
 
     /* Append the string to the tail of the buffer  */
-    ACE_OS::memcpy( mem_buf_p->entry_pt, string, length);
+    memcpy( mem_buf_p->entry_pt, string, length);
     mem_buf_p->entry_pt += length;
     mem_buf_p->entry_pt[ 0] = '\0';     /* Terminate the string buffer  */
     mem_buf_p->bytes_avail -= length;
@@ -225,7 +234,7 @@ static int  mem_puts(
     OUTDEST od
 )
 {
-    if (append_to_buffer( &(mem_buffers[od]), s, ACE_OS::strlen(s)) != 0)
+    if (append_to_buffer( &(mem_buffers[od]), s, strlen(s)) != 0)
         return 0;
     else
         return !0;
@@ -266,7 +275,7 @@ int    mcpp_lib_fputc(
 #endif
         FILE *  stream = DEST2FP( od);
 
-        return (stream != 0) ? ACE_OS::fputc( c, stream) : EOF;
+        return (stream != 0) ? fputc( c, stream) : EOF;
 #if MCPP_LIB
     }
 #endif
@@ -286,7 +295,7 @@ int    mcpp_lib_fputs(
 #endif
         FILE *  stream = DEST2FP( od);
 
-        return (stream != 0) ? ACE_OS::fputs( s, stream) : EOF;
+        return (stream != 0) ? fputs( s, stream) : EOF;
 #if MCPP_LIB
     }
 #endif
@@ -294,7 +303,7 @@ int    mcpp_lib_fputs(
 
 int (* mcpp_fputs)( const char * s, OUTDEST od) = mcpp_lib_fputs;
 
-#include <ace/os_include/os_stdarg.h>
+#include <stdarg.h>
 
 int    mcpp_lib_fprintf(
     OUTDEST od,
@@ -313,7 +322,7 @@ int    mcpp_lib_fprintf(
         if (use_mem_buffers) {
             static char     mem_buffer[ NWORK];
 
-            rc = ACE_OS::vsprintf( mem_buffer, format, ap);
+            rc = vsprintf( mem_buffer, format, ap);
 
             if (rc != 0) {
                 rc = mem_puts( mem_buffer, od);
@@ -356,7 +365,7 @@ void    mcpp_set_out_func(
 #endif
 
 int     get_unexpandable(
-    int     c,                              /* First of token       */
+    int     c,                              /* First char of token  */
     int     diag                            /* Flag of diagnosis    */
 )
 /*
@@ -370,24 +379,30 @@ int     get_unexpandable(
     DEFBUF *    defp = 0;
     FILEINFO *  file;
     FILE *  fp = 0;
+    LINE_COL    line_col = { 0L, 0};
     int     token_type = NO_TOKEN;
+    int     has_pragma;
 
     while (c != EOS && c != '\n'                /* In a line        */
             && (fp = infile->fp         /* Preserve current state   */
                 , (token_type
-                        = scan_token( c, (workp = work_buf, &workp), work_end))
+                    = scan_token( c, (workp = work_buf, &workp), work_end))
                     == NAM)                     /* Identifier       */
             && fp != 0                       /* In source !      */
             && (defp = is_macro( 0)) != 0) {      /* Macro    */
-        expand_macro( defp, work_buf, work_end);        /* Expand macro call*/
+        expand_macro( defp, work_buf, work_end, line_col, & has_pragma);
+                                                /* Expand macro     */
+        if (has_pragma)
+            cerror( "_Pragma operator found in directive line"      /* _E_  */
+                    , 0, 0L, 0);
         file = unget_string( work_buf, defp->name);     /* Stack to re-read */
         c = skip_ws();                          /* Skip TOK_SEP     */
         if (file != infile && macro_line != MACRO_ERROR && (warn_level & 1)) {
             /* This diagnostic is issued even if "diag" is FALSE.   */
             cwarn( "Macro \"%s\" is expanded to 0 token"    /* _W1_ */
                     , defp->name, 0L, 0);
-            if (! no_source_line)
-                dump_a_def( "    macro", defp, FALSE, FALSE, TRUE, fp_err);
+            if (! option_flags.no_source_line)
+                dump_a_def( "    macro", defp, FALSE, TRUE, fp_err);
         }
     }
 
@@ -420,7 +435,7 @@ int     get_unexpandable(
             c = get_ch();
         }
         if (file == infile) {
-            infile->bptr += ACE_OS::strlen( infile->bptr);
+            infile->bptr += strlen( infile->bptr);
             get_ch();
         }
         unget_ch();
@@ -440,28 +455,28 @@ void    skip_nl( void)
 {
     insert_sep = NO_SEP;
     while (infile && infile->fp == 0) {  /* Stacked text         */
-        infile->bptr += ACE_OS::strlen( infile->bptr);
+        infile->bptr += strlen( infile->bptr);
         get_ch();                           /* To the parent        */
     }
     if (infile)
-        infile->bptr += ACE_OS::strlen( infile->bptr);  /* Source line      */
+        infile->bptr += strlen( infile->bptr);  /* Source line      */
 }
 
 int     skip_ws( void)
 /*
- * Skip over whitespaces other than <newline>.
- * Note: POST_STD mode does not use TOK_SEP, and KR mode does not use COM_SEP.
+ * Skip over horizontal whitespaces.
  */
 {
     int     c;
 
     do {
         c = get_ch();
-    }
-    while (c == ' ' || c == TOK_SEP);
-                                /* COM_SEP is an alias of TOK_SEP   */
+    } while (char_type[ c] & HSP);
+
     return  c;
 }
+
+#define MBMASK          0xFF    /* Mask to hide multibyte char      */
 
 int     scan_token(
     int     c,                  /* The first character of the token */
@@ -488,11 +503,11 @@ int     scan_token(
 
     if (standard)
         in_token = TRUE;                /* While a token is scanned */
-    ch_type = char_type[ c & UCHARMAX] & mbmask;
     c = c & UCHARMAX;
+    ch_type = char_type[ c] & MBMASK;
 
     switch (ch_type) {
-    case LET:                           /* An identifier            */
+    case LET:                           /* Probably an identifier   */
         switch (c) {
         case 'L':
             if (! standard)
@@ -509,10 +524,10 @@ int     scan_token(
             } else {
                 unget_ch();
             }                           /* Fall through             */
-        default:
+        default:                        /* An identifier            */
 ident:
             scan_id( c);
-            out = mcpp_stpcpy( out, identifier);
+            out = stpcpy( out, identifier);
             token_type = NAM;
             break;
         }
@@ -521,7 +536,7 @@ ident:
         /* Else fall through    -- i.e. WSTR, WCHR  */
     case QUO:                   /* String or character constant     */
         out = scan_quote( c, out, out_end, FALSE);
-        if (token_type == 0) {
+        if (token_type == 0) {                  /* Without prefix L */
             if (c == '"')
                 token_type = STR;
             else
@@ -543,7 +558,7 @@ ident:
 operat: out = scan_op( c, out);         /* Operator or punctuator   */
         token_type = OPE;       /* Number is set in global "openum" */
         break;
-    default:
+    default:                /* Special tokens or special characters */
 #if OK_UCN
         if (mcpp_mode == STD && c == '\\' && stdc2) {
             ch = get_ch();
@@ -553,12 +568,13 @@ operat: out = scan_op( c, out);         /* Operator or punctuator   */
         }
 #endif
 #if OK_MBIDENT
-        if (mcpp_mode == STD && (char_type[ c] & mbstart) && stdc3) {
+        if (mcpp_mode == STD && (char_type[ c] & mbchk) && stdc3) {
             char *  bptr = infile->bptr;
             mb_read( c, &infile->bptr, &out);
             infile->bptr = bptr;
             out = *out_pp;
-            goto  ident;
+            goto  ident;        /* An identifier with multi-byte characters */
+            /* Mbchar cheking has been done in scan_quote() and others. */
         }
 #endif
         if ((standard && (c == CAT || c == ST_QUOTE)) || (char_type[ c] & SPA))
@@ -593,10 +609,8 @@ static void scan_id(
  * The caller has already read the first character of the identifier.
  */
 {
-#if DOLLAR_IN_NAME
-    static int      diagnosed = FALSE;  /* Flag of diagnosing '$'   */
-#endif
     static char * const     limit = &identifier[ IDMAX];
+    static int      dollar_diagnosed = FALSE;   /* Flag of diagnosing '$'   */
 #if OK_UCN
     int     uc2 = 0, uc4 = 0;           /* Count of UCN16, UCN32    */
 #endif
@@ -605,6 +619,15 @@ static void scan_id(
 #endif
     size_t  len;                        /* Length of identifier     */
     char *  bp = identifier;
+
+    if (c == IN_SRC) {                  /* Magic character  */
+        *bp++ = c;
+        if ((mcpp_debug & MACRO_CALL) && ! in_directive) {
+            *bp++ = get_ch();           /* Its 2-bytes      */
+            *bp++ = get_ch();           /*      argument    */
+        }
+        c = get_ch();
+    }
 
     do {
         if (bp < limit)
@@ -636,7 +659,7 @@ static void scan_id(
         }
 #endif  /* OK_UCN   */
 #if OK_MBIDENT
-        if (mcpp_mode == STD && (char_type[ c] & mbstart) && stdc3) {
+        if (mcpp_mode == STD && (char_type[ c] & mbchk) && stdc3) {
             len = mb_read( c, &infile->bptr, &bp);
             if (len & MB_ERROR) {
                 if (infile->fp)
@@ -657,7 +680,7 @@ next_c:
             || (mcpp_mode == STD && c == '\\' && stdc2)
 #endif
 #if OK_MBIDENT
-            || (mcpp_mode == STD && (char_type[ c] & mbstart) && stdc3)
+            || (mcpp_mode == STD && (char_type[ c] & mbchk) && stdc3)
 #endif
         );
 
@@ -679,18 +702,16 @@ next_c:
     if (mcpp_mode == STD)
         len -= mb;
 #endif
-    if (standard && infile->fp && len > id_len_min && (warn_level & 4))
+    if (standard && infile->fp && len > std_limits.id_len && (warn_level & 4))
         cwarn( "Identifier longer than %.0s%ld characters \"%s\""   /* _W4_ */
-                , 0, (long) id_len_min, identifier);
+                , 0, (long) std_limits.id_len, identifier);
 #endif  /* IDMAX > IDLEN90MIN   */
 
-#if DOLLAR_IN_NAME
-    if (diagnosed == FALSE && (warn_level & 2)
-            && ACE_OS::strchr( identifier, '$') != 0) {
+    if (option_flags.dollar_in_name && dollar_diagnosed == FALSE
+            && (warn_level & 2) && strchr( identifier, '$') != 0) {
         cwarn( "'$' in identifier \"%s\"", identifier, 0L, 0); /* _W2_ */
-        diagnosed = TRUE;                   /* Diagnose only once   */
+        dollar_diagnosed = TRUE;            /* Diagnose only once   */
     }
-#endif
 }
 
 char *  scan_quote(
@@ -711,10 +732,10 @@ char *  scan_quote(
                         = "Unterminated string literal%s";
     const char * const      unterm_char
                         = "Unterminated character constant %s%.0ld%s";
+    const char * const      empty_const
+                        = "Empty character constant %s%.0ld%s";
     const char *    skip;
-#if MBCHAR
     size_t      len;
-#endif
     int         c;
     char *      out_p = out;
 
@@ -729,7 +750,7 @@ scan:
     while ((c = get_ch()) != EOS) {
 
 #if MBCHAR
-        if (char_type[ c] & mbstart) {
+        if (char_type[ c] & mbchk) {
             /* First of multi-byte character (or shift-sequence)    */
             char *  bptr = infile->bptr;
             len = mb_read( c, &infile->bptr, (*out_p++ = c, &out_p));
@@ -739,12 +760,12 @@ scan:
                         char *  buf;
                         size_t  chlen;
                         buf = xmalloc( chlen = infile->bptr - bptr + 2);
-                        ACE_OS::memcpy( buf, bptr, chlen - 1);
+                        memcpy( buf, bptr, chlen - 1);
                         buf[ chlen - 1] = EOS;
                         cwarn(
     "Illegal multi-byte character sequence \"%s\" in quotation",    /* _W1_ */
                         buf, 0L, 0);
-                        ACE_OS::free( buf);
+                        free( buf);
                     }
                 }
                 continue;
@@ -780,7 +801,7 @@ scan:
             c = get_ch();
 escape:
 #if MBCHAR
-            if (char_type[ c] & mbstart) {
+            if (char_type[ c] & mbchk) {
                                 /* '\\' followed by multi-byte char */
                 unget_ch();
                 continue;
@@ -798,15 +819,13 @@ escape:
         } else if (c == '\n') {
             break;
         }
-        if (diag && ACE_OS::ace_iscntrl( c) && ((char_type[ c] & SPA) == 0)
+        if (diag && iscntrl( c) && ((char_type[ c] & SPA) == 0)
                 && (warn_level & 1))
             cwarn(
             "Illegal control character %.0s0lx%02x in quotation"    /* _W1_ */
                     , 0, (long) c, 0);
         *out_p++ = c;
-#if MBCHAR
 chk_limit:
-#endif
         if (out_end < out_p) {
             *out_end = EOS;
             cfatal( "Too long quotation", 0, 0L, 0);  /* _F_  */
@@ -825,7 +844,8 @@ chk_limit:
                     && (delim == '"' || delim == '\''))
                 goto  done;
             if (delim == '"') {
-                if (mcpp_mode != POST_STD && lang_asm) {    /* STD, KR      */
+                if (mcpp_mode != POST_STD && option_flags.lang_asm) {
+                    /* STD, KR      */
                     /* Concatenate the unterminated string to the next line */
                     if (warn_level & 1)
                         cwarn( unterm_string
@@ -838,12 +858,13 @@ chk_limit:
                     cerror( unterm_string, skip, 0L, 0); /* _E_  */
                 }
             } else if (delim == '\'') {
-                if (mcpp_mode != POST_STD && lang_asm) {    /* STD, KR      */
+                if (mcpp_mode != POST_STD && option_flags.lang_asm) {
+                    /* STD, KR      */
                     if (warn_level & 1)
                         cwarn( unterm_char, out, 0L, 0); /* _W1_ */
                     goto  done;
                 } else {
-                    cerror( unterm_char, out, 0L, skip);        /* _E_  */
+                    cerror( unterm_char, out, 0L, skip);    /* _E_  */
                 }
             } else {
                 cerror( "Unterminated header name %s%.0ld%s"        /* _E_  */
@@ -851,18 +872,24 @@ chk_limit:
             }
             out_p = 0;
         } else if (delim == '\'' && out_p - out <= 2) {
-            cerror( "Empty character constant %s%.0ld%s"    /* _E_  */
-                    , out, 0L, skip);
-            out_p = 0;
-        }
-        else if (mcpp_mode == POST_STD && delim == '>' && (warn_level & 2))
+            if (mcpp_mode != POST_STD && option_flags.lang_asm) {
+                /* STD, KR      */
+                if (warn_level & 1)
+                    cwarn( empty_const, out, 0L, skip);     /* _W1_ */
+            } else {
+                cerror( empty_const, out, 0L, skip);        /* _E_  */
+                out_p = 0;
+                goto  done;
+            }
+        } else if (mcpp_mode == POST_STD && delim == '>' && (warn_level & 2)) {
             cwarn(
         "Header-name enclosed by <, > is an obsolescent feature %s" /* _W2_ */
                     , out, 0L, skip);
+        }
 #if NWORK-2 > SLEN90MIN
-        if (standard && out_p - out > str_len_min && (warn_level & 4))
+        if (standard && out_p - out > std_limits.str_len && (warn_level & 4))
             cwarn( "Quotation longer than %.0s%ld bytes"    /* _W4_ */
-                    , 0, str_len_min, 0);
+                    , 0, std_limits.str_len, 0);
 #endif
     }
 
@@ -889,20 +916,20 @@ static char *   cat_line(
         infile->bptr -= 2;
         len = infile->bptr - infile->buffer;
     } else {        /* Overwrite the <newline> with <backslash>'n'  */
-        ACE_OS::strcpy( infile->bptr, "\\n");
-        len = ACE_OS::strlen( infile->buffer);
+        strcpy( infile->bptr, "\\n");
+        len = strlen( infile->buffer);
     }
     save1 = save_string( infile->buffer);
     save2 = get_line( FALSE);   /* infile->buffer is overwritten    */
     if (save2 == 0) {
-        ACE_OS::free( save1);
+        free( save1);
         return  0;
     }
     save2 = save_string( infile->buffer);
-    ACE_OS::memcpy( infile->buffer, save1, len);
-    ACE_OS::strcpy( infile->buffer + len, save2);               /* Catenate */
-    ACE_OS::free( save1);
-    ACE_OS::free( save2);
+    memcpy( infile->buffer, save1, len);
+    strcpy( infile->buffer + len, save2);               /* Catenate */
+    free( save1);
+    free( save2);
     if (! del_bsl)
         len -= 2;
     infile->bptr = infile->buffer + len;
@@ -915,8 +942,9 @@ static char *   scan_number(
     char *  out_end                 /* Limit of output buffer       */
 )
 /*
- * Read a preprocessing number.  We know that c is from 0 to 9 or dot, and if
- * c is dot then the next character is digit.
+ * Read a preprocessing number.
+ * By scan_token() we know already that the first c is from 0 to 9 or dot,
+ * and if c is dot then the second character is digit.
  * Returns the advanced output pointer.
  * Note: preprocessing number permits non-numeric forms such as 3E+xy,
  *   which are used in stringization or token-concatenation.
@@ -957,7 +985,7 @@ static char *   scan_number(
             c = get_ch();
 #endif  /* OK_UCN   */
 #if OK_MBIDENT
-        } else if (mcpp_mode == STD && (char_type[ c] & mbstart) && stdc3) {
+        } else if (mcpp_mode == STD && (char_type[ c] & mbchk) && stdc3) {
             len = mb_read( c, &infile->bptr, &out_p);
             if (len & MB_ERROR) {
                 if (infile->fp)
@@ -974,7 +1002,7 @@ static char *   scan_number(
             || (mcpp_mode == STD && c == '\\' && stdc3)
 #endif
 #if OK_MBIDENT
-            || (mcpp_mode == STD && (char_type[ c] & mbstart) && stdc3)
+            || (mcpp_mode == STD && (char_type[ c] & mbchk) && stdc3)
 #endif
         );
 
@@ -986,7 +1014,8 @@ static char *   scan_number(
     return  out_p;
 }
 
-/* Original version of DECUS CPP, too exact for Standard preprocessing.     */
+/* Original version of DECUS CPP with slight modifications, */
+/* too exact for Standard preprocessing.                    */
 static char *   scan_number_prestd(
     int         c,                          /* First char of number */
     char *      out,                        /* Output buffer        */
@@ -1069,17 +1098,15 @@ static char *   scan_number_prestd(
     /*
      * When we break out of the scan loop, c contains the first
      * character (maybe) not in the number.  If the number is an
-     * integer, allow a trailing 'L' for long.  for unsigned.  If not
-     * those, push the trailing character back on the input stream.
-     * Floating point numbers accept a trailing 'L' for "long double"
-     * or a trailing 'F' for explicit float.
+     * integer, allow a trailing 'L' for long.  If not those, push
+     * the trailing character back on the input stream.
+     * Floating point numbers accept a trailing 'L' for "long double".
      */
 done:
     if (! (dotflag || expseen)) {           /* Not floating point   */
         /*
          * We know that dotflag and expseen are both zero, now:
          *   dotflag signals "saw 'L'".
-         * We assume that 12F is not a floating constant.
          */
         for (;;) {
             switch (c) {
@@ -1128,7 +1155,7 @@ static char *   scan_ucn(
     value = 0L;
     for (i = 0; i < cnt; i++) {
         c = get_ch();
-        if (! ACE_OS::ace_isxdigit( c)) {
+        if (! isxdigit( c)) {
             if (infile->fp)
                 cerror( "Illegal UCN sequence"              /* _E_  */
                         , 0, 0L, 0);
@@ -1136,13 +1163,13 @@ static char *   scan_ucn(
                 unget_ch();
                 return  0;
         }
-        c = ACE_OS::ace_tolower( c);
+        c = tolower( c);
         *out++ = c;
-        c = (ACE_OS::ace_isdigit( c) ? (c - '0') : (c - 'a' + 10));
+        c = (isdigit( c) ? (c - '0') : (c - 'a' + 10));
         value = (value << 4) | c;
     }
     if (infile->fp                              /* In source        */
-        && ((/*value >= 0L &&*/ value <= 0x9FL
+            && ((value >= 0L && value <= 0x9FL
                 && value != 0x24L && value != 0x40L && value != 0x60L)
                                     /* Basic source character       */
             || (stdc3 && (value >= 0xD800L && value <= 0xDFFFL))))
@@ -1161,7 +1188,7 @@ static char *   scan_op(
  * Scan C operator or punctuator into the specified buffer.
  * Return the advanced output pointer.
  * The code-number of the operator is stored to global variable 'openum'.
- * Note: '#' is not an operator nor a punctuator in other than control line,
+ * Note: '#' is not an operator nor a punctuator in other than directive line,
  *   nevertheless is handled as a punctuator in this cpp for convenience.
  */
 {
@@ -1224,13 +1251,13 @@ static char *   scan_op(
             break;
         case '=':   openum = OP_LE;         break;      /* <=       */
         case ':':                                   /* <: i.e. [    */
-            if (mcpp_mode == STD && dig_flag)
+            if (mcpp_mode == STD && option_flags.dig)
                 openum = OP_LBRCK_D;
             else
                 openum = OP_LT;
             break;
         case '%':                                   /* <% i.e. {    */
-            if (mcpp_mode == STD && dig_flag)
+            if (mcpp_mode == STD && option_flags.dig)
                 openum = OP_LBRACE_D;
             else
                 openum = OP_LT;
@@ -1291,13 +1318,13 @@ static char *   scan_op(
         switch (c2) {
         case '=':                           break;      /* %=       */
         case '>':                                   /* %> i.e. }    */
-            if (mcpp_mode == STD && dig_flag)
+            if (mcpp_mode == STD && option_flags.dig)
                 openum = OP_RBRACE_D;
             else
                 openum = OP_MOD;
             break;
         case ':':
-            if (mcpp_mode == STD && dig_flag) {
+            if (mcpp_mode == STD && option_flags.dig) {
                 if ((c3 = get_ch()) == '%') {
                     if ((c4 = get_ch()) == ':') {   /* %:%: i.e. ## */
                         openum = OP_DSHARP_D;
@@ -1364,12 +1391,12 @@ static char *   scan_op(
     case ':':
         if (cplus_val && c2 == ':')                     /* ::       */
             /* openum = OP_2    */  ;
-        else if (mcpp_mode == STD && c2 == '>' && dig_flag)
+        else if (mcpp_mode == STD && c2 == '>' && option_flags.dig)
             openum = OP_RBRCK_D;                    /* :> i.e. ]    */
         else                                            /* :        */
             openum = OP_COL;
         break;
-    default:                                        /* Who knows ?  */
+    default:                                    /* Never reach here */
         cfatal( "Bug: Punctuator is mis-implemented %.0s0lx%x"      /* _F_  */
                 , 0, (long) c, 0);
         openum = OP_1;
@@ -1463,7 +1490,7 @@ void    clear_exp_mac( void)
 
     for (i = 1; i < EXP_MAC_IND_MAX; i++) {
         if (expanding_macro[ i].to_be_freed) {
-            ACE_OS::free( (void *) expanding_macro[ i].name);
+            free( (void *) expanding_macro[ i].name);
             expanding_macro[ i].to_be_freed = FALSE;
         }
     }
@@ -1492,7 +1519,7 @@ int     get_ch( void)
     if ((file = infile) == 0)
         return  CHAR_EOF;                   /* End of all input     */
 
-    if (mcpp_mode == POST_STD && file->fp) {     /* In a source file     */
+    if (mcpp_mode == POST_STD && file->fp) {        /* In a source file     */
         switch (insert_sep) {
         case NO_SEP:
             break;
@@ -1511,9 +1538,10 @@ int     get_ch( void)
     }
 
     if (mcpp_debug & GETC) {
-        mcpp_fprintf( DBG, "get_ch(%s), line %ld, bptr = %d, buffer"
+        mcpp_fprintf( DBG, "get_ch(%s) '%c' line %ld, bptr = %d, buffer"
             , file->fp ? cur_fullname : file->real_fname ? file->real_fname
             : file->filename ? file->filename : "0"
+            , *file->bptr & UCHARMAX
             , src_line, (int) (file->bptr - file->buffer));
         dump_string( 0, file->buffer);
         dump_unget( "get entrance");
@@ -1533,7 +1561,8 @@ int     get_ch( void)
         if (! in_string && c == '\\' && *file->bptr == '\n'
                 && in_define        /* '\\''\n' is deleted in #define line, */
                     /*   provided the '\\' is not the 2nd byte of mbchar.   */
-                && ! last_is_mbchar( file->buffer, ACE_OS::strlen( file->buffer) - 2)
+                && ! last_is_mbchar( file->buffer, strlen( file->buffer) - 2
+                && ! keep_spaces)
             ) {
             if (*(file->bptr - 2) == ' ')
                 squeezews = TRUE;
@@ -1555,25 +1584,23 @@ int     get_ch( void)
      * input from the parent file/macro, if any.
      */
     infile = file->parent;                  /* Unwind file chain    */
-    ACE_OS::free( file->buffer);                    /* Free buffer          */
-    if (infile == 0) {                   /* If at end of input,  */
-        if (file->filename)
-            ACE_OS::free( file->filename);              /* Free filename        */
-        ACE_OS::free( file);
-        return  CHAR_EOF;                   /*   return end of file.*/
+    free( file->buffer);                    /* Free buffer          */
+    if (infile == 0) {                   /* If at end of input   */
+        free( file->filename);
+        free( const_cast<char *> (file->src_dir));
+        free( file);    /* full_fname is the same with filename for main file*/
+        return  CHAR_EOF;                   /* Return end of file   */
     }
     if (file->fp) {                         /* Source file included */
-        char *  cp;
-
-        ACE_OS::free( file->filename);              /* Free filename        */
-        file->filename = 0;
-        ACE_OS::fclose( file->fp);                  /* Close finished file  */
-        cp = mcpp_stpcpy( cur_fullname, *(infile->dirp));
-        ACE_OS::strcpy( cp, infile->real_fname);
+        free( file->filename);              /* Free filename        */
+        free( const_cast <char *> (file->src_dir));               /* Free src_dir         */
+        fclose( file->fp);                  /* Close finished file  */
+        /* Do not free file->real_fname and file->full_fname        */
+        cur_fullname = const_cast <char *> (infile->full_fname);
         cur_fname = infile->real_fname;     /* Restore current fname*/
         if (infile->pos != 0L) {            /* Includer was closed  */
-            infile->fp = ACE_OS::fopen( cur_fullname, "r");
-            ACE_OS::fseek( infile->fp, infile->pos, SEEK_SET);
+            infile->fp = fopen( cur_fullname, "r");
+            fseek( infile->fp, infile->pos, SEEK_SET);
         }   /* Re-open the includer and restore the file-position   */
         len = (int) (infile->bptr - infile->buffer);
         infile->buffer = xrealloc( infile->buffer, NBUFF);
@@ -1587,16 +1614,23 @@ int     get_ch( void)
 #endif
         include_nest--;
         src_line++;                         /* Next line to #include*/
-        sharp();                            /* Need a #line now     */
+        sharp( 0, infile->include_opt ? 1 : (file->include_opt ? 0 : 2));
+            /* Need a #line now.  Marker depends on include_opt.    */
+            /* The file of include_opt should be marked as 1.       */
+            /* Else if returned from include_opt file, it is the    */
+            /* main input file, and should not be marked.           */
+            /* Else, it is normal includer file, and marked as 2.   */
         src_line--;
         newlines = 0;                       /* Clear the blank lines*/
+        if (mcpp_debug & MACRO_CALL)    /* Should be re-initialized */
+            com_cat_line.last_line = bsl_cat_line.last_line = 0L;
     } else if (file->filename) {            /* Expanding macro      */
         if (macro_name)     /* file->filename should be freed later */
             expanding( file->filename, TRUE);
         else
-            ACE_OS::free( file->filename);
+            free( file->filename);
     }
-    ACE_OS::free( file);                            /* Free file space      */
+    free( file);                            /* Free file space      */
     return  get_ch();                       /* Get from the parent  */
 }
 
@@ -1606,9 +1640,10 @@ static char *   parse_line( void)
  * Parse a logical line.
  * Check illegal control characters.
  * Check unterminated string literal, character constant or comment.
- * Convert each comment to one space.
+ * Convert each comment to one space (or spaces of the comment length on
+ * 'keep_spaces' mode)..
  * Squeeze succeding white spaces other than <newline> (including comments) to
- * one space.
+ * one space (unless keep_spaces == TRUE).
  * The lines might be spliced by comments which cross the lines.
  */
 {
@@ -1616,6 +1651,7 @@ static char *   parse_line( void)
     char *      limit;                      /* Buffer end           */
     char *      tp;     /* Current pointer into temporary buffer    */
     char *      sp;                 /* Pointer into input buffer    */
+    size_t      com_size;
     int         c;
 
     if ((sp = get_line( FALSE)) == 0)    /* Next logical line    */
@@ -1630,13 +1666,12 @@ static char *   parse_line( void)
     tp = temp = xmalloc( (size_t) NBUFF);
     limit = temp + NBUFF - 2;
 
-    if (mcpp_mode == POST_STD) {
-        while (((c = *sp++ & UCHARMAX) == ' ') || c == '\t')
-            ;                           /* Skip the line top spaces */
-    } else {
-        /* Putout the line top spaces as they are   */
-        while (((c = *sp++ & UCHARMAX) == ' ') || c == '\t')
+    while (char_type[ c = *sp++ & UCHARMAX] & HSP) {
+        if (mcpp_mode != POST_STD)
+            /* Preserve line top horizontal white spaces    */
+            /*      as they are for human-readability       */
             *tp++ = c;
+        /* Else skip the line top spaces    */
     }
     sp--;
 
@@ -1646,17 +1681,34 @@ static char *   parse_line( void)
         case '/':
             switch (*sp++) {
             case '*':                       /* Start of a comment   */
-                if ((sp = read_a_comment( sp)) == 0) {
-                    ACE_OS::free( temp);            /* End of file with un- */
+              //com_start:
+                if ((sp = read_a_comment( sp, &com_size)) == 0) {
+                    free( temp);            /* End of file with un- */
                     return  0;           /*   terminated comment */
                 }
-                if (mcpp_mode == POST_STD && (temp < tp && *(tp - 1) != ' '))
-                    *tp++ = ' ';            /* Skip line top spaces */
-                else if (mcpp_mode == OLD_PREP && (temp == tp
-                        || (*(tp - 1) != ' ' && *(tp - 1) != COM_SEP)))
-                    *tp++ = COM_SEP;        /* Convert to magic character   */
-                else if (temp == tp || *(tp - 1) != ' ')
-                    *tp++ = ' ';            /* Squeeze white spaces */
+                if (keep_spaces && mcpp_mode != OLD_PREP) {
+                    if (tp + com_size >= limit - 1)     /* Too long comment */
+                        com_size = limit - tp - 1;      /* Truncate */
+                    while (com_size--)
+                        *tp++ = ' ';        /* Spaces of the comment length */
+                    break;
+                }
+                switch (mcpp_mode) {
+                case POST_STD:
+                    if (temp < tp && *(tp - 1) != ' ')
+                        *tp++ = ' ';        /* Squeeze white spaces */
+                    break;
+                case OLD_PREP:
+                    if (temp == tp
+                            || ! (char_type[ *(tp - 1) & UCHARMAX] & HSP))
+                        *tp++ = COM_SEP;    /* Convert to magic character   */
+                    break;
+                default:
+                    if (temp == tp ||
+                            ! (char_type[ *(tp - 1) & UCHARMAX] & HSP))
+                        *tp++ = ' ';        /* Squeeze white spaces */
+                    break;
+                }
                 break;
             case '/':                                       /* //   */
                 if (! standard)
@@ -1668,9 +1720,8 @@ static char *   parse_line( void)
                             , 0, 0L, 0);
                 if (keep_comments) {
                     sp -= 2;
-                    while (*sp != '\n')
-                        mcpp_fputc( *sp++, OUT);    /* Until end of line    */
-                    wrong_line = TRUE;      /* Need to adjust #line */
+                    while (*sp != '\n')     /* Until end of line    */
+                        mcpp_fputc( *sp++, OUT);
                 }
                 goto  end_line;
             default:                        /* Not a comment        */
@@ -1689,12 +1740,15 @@ not_comment:
                     , 0, (long) c, 0);
         case '\t':                          /* Horizontal space     */
         case ' ':
-            if (mcpp_mode == OLD_PREP) {
-                if ((*(tp - 1) != ' ' && *(tp - 1) != COM_SEP))
-                    *(tp - 1) = ' ';        /* Squeeze COM_SEP with spaces  */
-            } else {
-                if (*(tp - 1) != ' ')
-                    *tp++ = ' ';            /* Squeeze white spaces */
+            if (keep_spaces) {
+                if (c == '\t')
+                    *tp++ = '\t';
+                else
+                    *tp++ = ' ';            /* Convert to ' '       */
+            } else if (! (char_type[ *(tp - 1) & UCHARMAX] & HSP)) {
+                *tp++ = ' ';                /* Squeeze white spaces */
+            } else if (mcpp_mode == OLD_PREP && *(tp - 1) == COM_SEP) {
+                *(tp - 1) = ' ';    /* Replace COM_SEP with ' '     */
             }
             break;
         case '"':                           /* String literal       */
@@ -1708,13 +1762,13 @@ not_comment:
                 in_string = FALSE;
             }
             if (tp == 0) {
-                ACE_OS::free( temp);                /* Unbalanced quotation */
+                free( temp);                /* Unbalanced quotation */
                 return  parse_line();       /* Skip the line        */
             }
             sp = infile->bptr;
             break;
         default:
-            if (ACE_OS::ace_iscntrl( c)) {
+            if (iscntrl( c)) {
                 cerror(             /* Skip the control character   */
     "Illegal control character %.0s0x%lx, skipped the character"    /* _E_  */
                         , 0, (long) c, 0);
@@ -1732,18 +1786,18 @@ not_comment:
     }
 
 end_line:
-    if (temp < tp && *(tp - 1) == ' ')
+    if (temp < tp && (char_type[ *(tp - 1) & UCHARMAX] & HSP))
         tp--;                       /* Remove trailing white space  */
     *tp++ = '\n';
     *tp = EOS;
-    infile->bptr = ACE_OS::strcpy( infile->buffer, temp);   /* Write back to buffer */
-    ACE_OS::free( temp);
+    infile->bptr = strcpy( infile->buffer, temp);   /* Write back to buffer */
+    free( temp);
     if (macro_line != 0 && macro_line != MACRO_ERROR) { /* Expanding macro  */
         temp = infile->buffer;
-        if (*temp == ' ')
+        while (char_type[ *temp & UCHARMAX] & HSP)
             temp++;
-        if (*temp == '#'
-                    || (mcpp_mode == STD && *temp == '%' && *(temp + 1) == ':'))
+        if (*temp == '#'        /* This line starts with # token    */
+                || (mcpp_mode == STD && *temp == '%' && *(temp + 1) == ':'))
             if (warn_level & 1)
                 cwarn(
     "Macro started at line %.0s%ld swallowed directive-like line"   /* _W1_ */
@@ -1753,14 +1807,21 @@ end_line:
 }
 
 static char *   read_a_comment(
-    char *      sp
+    char *      sp,                         /* Source               */
+    size_t *    sizp                        /* Size of the comment  */
 )
 /*
  * Read over a comment (which may cross the lines).
  */
 {
     int         c;
+    char *      saved_sp;
+    int         cat_line = 0;       /* Number of catenated lines    */
 
+    if (keep_spaces) {
+        saved_sp = sp - 2;          /* '-2' for beginning / and *   */
+        *sizp = 0;
+    }        
     if (keep_comments)                      /* If writing comments  */
         mcpp_fputs( "/*", OUT);             /* Write the initializer*/
     c = *sp++;
@@ -1783,14 +1844,47 @@ static char *   read_a_comment(
                 continue;                   /*   end, look at next. */
             if (keep_comments) {            /* Put out comment      */
                 mcpp_fputc( c, OUT);        /*   terminator, too.   */
-                mcpp_fputc( '\n', OUT);     /* Newline to avoid mess*/
+                mcpp_fputc( '\n', OUT);     /* Append '\n' to avoid */
+                    /*  trouble on some other tools such as rpcgen. */
+                wrong_line = TRUE;
+            }
+            if (keep_spaces)                /* Save the length      */
+                *sizp = *sizp + (sp - saved_sp);
+            if ((mcpp_debug & MACRO_CALL) && compiling) {
+                if (cat_line) {
+                    cat_line++;
+                    com_cat_line.len[ cat_line]         /* Catenated length */
+                            = com_cat_line.len[ cat_line - 1]
+                                + strlen( infile->buffer) - 1;
+                                            /* '-1' for '\n'        */
+                    com_cat_line.last_line = src_line;
+                }
             }
             return  sp;                     /* End of comment       */
-        case '\n':
-            if (! keep_comments)            /* We'll need a #line   */
-                wrong_line = TRUE;          /*   later...           */
-            if ((sp = get_line( TRUE)) == 0) /* End of file      */
-                return  0;               /*   within comment     */
+        case '\n':                          /* Line-crossing comment*/
+            if (keep_spaces)                /* Save the length      */
+                *sizp = *sizp + (sp - saved_sp) - 1;    /* '-1' for '\n'    */
+            if ((mcpp_debug & MACRO_CALL) && compiling) {
+                                    /* Save location informations   */
+                if (cat_line == 0)  /* First line of catenation     */
+                    com_cat_line.start_line = src_line;
+                if (cat_line >= MAX_CAT_LINE - 1) {
+                    *sizp = 0;      /* Discard the too long comment */
+                    cat_line = 0;
+                    if (warn_level & 4)
+                        cwarn(
+                        "Too long comment, discarded up to here"    /* _W4_ */
+                                , 0, 0L, 0);
+                }
+                cat_line++;
+                com_cat_line.len[ cat_line]
+                        = com_cat_line.len[ cat_line - 1]
+                            + strlen( infile->buffer) - 1;
+            }
+            if ((saved_sp = sp = get_line( TRUE)) == 0)
+                return  0;       /* End of file within comment   */
+                /* Never happen, because at_eof() supplement closing*/
+            wrong_line = TRUE;      /* We'll need a #line later     */
             break;
         default:                            /* Anything else is     */
             break;                          /*   just a character   */
@@ -1808,7 +1902,7 @@ static char *   mcpp_fgets(
     FILE *  stream
 )
 {
-    return ACE_OS::fgets( s, size, stream);
+    return fgets( s, size, stream);
 }
 
 static char *   get_line(
@@ -1829,25 +1923,30 @@ static char *   get_line(
     int     converted = FALSE;
     int     len;                            /* Line length - alpha  */
     char *  ptr;
+    int     cat_line = 0;           /* Number of catenated lines    */
 
     if (infile == 0)                     /* End of a source file */
         return  0;
     ptr = infile->bptr = infile->buffer;
+    if ((mcpp_debug & MACRO_CALL) && src_line == 0) /* Initialize   */
+        com_cat_line.last_line = bsl_cat_line.last_line = 0L;
 
     while (mcpp_fgets( ptr, (int) (infile->buffer + NBUFF - ptr), infile->fp)
             != 0) {
         /* Translation phase 1  */
         src_line++;                 /* Gotten next physical line    */
-        if (standard && src_line == line_limit + 1 && (warn_level & 1))
+        if (standard && src_line == std_limits.line_num + 1
+                && (warn_level & 1))
             cwarn( "Line number %.0s\"%ld\" got beyond range"       /* _W1_ */
                     , 0, src_line, 0);
         if (mcpp_debug & (TOKEN | GETC)) {  /* Dump it to DBG       */
             mcpp_fprintf( DBG, "\n#line %ld (%s)", src_line, cur_fullname);
             dump_string( 0, ptr);
         }
-        len = ACE_OS::strlen( ptr);
+        len = strlen( ptr);
         if (NBUFF - 1 <= ptr - infile->buffer + len
                 && *(ptr + len - 1) != '\n') {
+                /* The line does not yet end, though the buffer is full.    */
             if (NBUFF - 1 <= len)
                 cfatal( "Too long source line"              /* _F_  */
                         , 0, 0L, 0);
@@ -1867,12 +1966,12 @@ static char *   get_line(
             }
         }
         if (standard) {
-            if (trig_flag)
+            if (option_flags.trig)
                 converted = cnv_trigraph( ptr);
-            if (mcpp_mode == POST_STD && dig_flag)
+            if (mcpp_mode == POST_STD && option_flags.dig)
                 converted += cnv_digraph( ptr);
             if (converted)
-                len = ACE_OS::strlen( ptr);
+                len = strlen( ptr);
             /* Translation phase 2  */
             len -= 2;
             if (len >= 0) {
@@ -1880,15 +1979,32 @@ static char *   get_line(
                             /* <backslash><newline> (not MBCHAR)    */
                     ptr = infile->bptr += len;  /* Splice the lines */
                     wrong_line = TRUE;
+                    if ((mcpp_debug & MACRO_CALL) && compiling) {
+                                    /* Save location informations   */
+                        if (cat_line == 0)      /* First line of catenation */
+                            bsl_cat_line.start_line = src_line;
+                        if (cat_line < MAX_CAT_LINE)
+                                    /* Record the catenated length  */
+                            bsl_cat_line.len[ ++cat_line]
+                                    = strlen( infile->buffer) - 2;
+                        /* Else ignore  */
+                    }
                     continue;
                 }
             }
 #if NBUFF-2 > SLEN90MIN
-            if (ptr - infile->buffer + len + 2 > str_len_min + 1
+            if (ptr - infile->buffer + len + 2 > std_limits.str_len + 1
                     && (warn_level & 4))    /* +1 for '\n'          */
             cwarn( "Logical source line longer than %.0s%ld bytes"  /* _W4_ */
-                        , 0, str_len_min, 0);
+                        , 0, std_limits.str_len, 0);
 #endif
+        }
+        if ((mcpp_debug & MACRO_CALL) && compiling) {
+            if (cat_line && cat_line < MAX_CAT_LINE) {
+                bsl_cat_line.len[ ++cat_line] = strlen( infile->buffer) - 1;
+                                /* Catenated length: '-1' for '\n'  */
+                bsl_cat_line.last_line = src_line;
+            }
         }
         return  infile->bptr = infile->buffer;      /* Logical line */
     }
@@ -1896,10 +2012,11 @@ static char *   get_line(
     /* End of a (possibly included) source file */
     if (ferror( infile->fp))
         cfatal( "File read error", 0, 0L, 0);         /* _F_  */
-    at_eof( in_comment);                    /* Check at end of file */
-    if (zflag) {
+    if ((ptr = at_eof( in_comment)) != 0)        /* Check at end of file */
+        return  ptr;                        /* Partial line supplemented    */
+    if (option_flags.z) {
         no_output--;                        /* End of included file */
-        keep_comments = cflag && compiling && !no_output;
+        keep_comments = option_flags.c && compiling && !no_output;
     }
     return  0;
 }
@@ -1923,16 +2040,16 @@ int     cnv_trigraph(
     int     count = 0;
     const char *    tp;
 
-    while ((in = ACE_OS::strchr( in, '?')) != 0) {
+    while ((in = strchr( in, '?')) != 0) {
         if (*++in != '?')
             continue;
         while (*++in == '?')
             ;
-        if ((tp = ACE_OS::strchr( tritext, *in)) == 0)
+        if ((tp = strchr( tritext, *in)) == 0)
             continue;
-        in[ -2] = tp[ TRIOFFSET];
+        *(in - 2) = *(tp + TRIOFFSET);
         in--;
-        ACE_OS::memmove( in, in + 2, ACE_OS::strlen( in + 1));
+        memmove( in, in + 2, strlen( in + 1));
         count++;
     }
 
@@ -1954,7 +2071,7 @@ int     cnv_digraph(
     int     i;
     int     c1, c2;
 
-    while ((i = ACE_OS::strcspn( in, "%:<")), (c1 = in[ i]) != '\0') {
+    while ((i = strcspn( in, "%:<")), (c1 = *(in + i)) != '\0') {
         in += i + 1;
         c2 = *in;
         switch (c1) {
@@ -1979,7 +2096,7 @@ int     cnv_digraph(
             }
             break;
         }
-        ACE_OS::memmove( in, in + 1, ACE_OS::strlen( in));
+        memmove( in, in + 1, strlen( in));
         count++;
     }
 
@@ -1989,36 +2106,14 @@ int     cnv_digraph(
     return  count;
 }
 
-static int  last_is_mbchar(
-    const char *  in,               /* Input physical line          */
-    int     len                     /* Length of the line minus 2   */
-)
-/*
- * Return 2, if the last char of the line is second byte of SJIS or BIGFIVE,
- * else return 0.
- */
-{
-    const char *    cp = in + len;
-    const char * const      endp = in + len;    /* -> the char befor '\n'   */
-
-    if ((mbchar & (SJIS | BIGFIVE)) == 0)
-        return  0;
-    while (in <= --cp) {                    /* Search backwardly    */
-        if ((char_type[ *cp & UCHARMAX] & mbstart) == 0)
-            break;                  /* Not the first byte of MBCHAR */
-    }
-    if ((endp - cp) & 1)
-        return  0;
-    else
-        return  2;
-}
-
-static void at_eof(
+static char *   at_eof(
     int     in_comment
 )
 /*
  * Check the partial line, unterminated comment, unbalanced #if block,
- * uncompleted macro call at end of file or at end of input.
+ * uncompleted macro call at end of a file or at end of input.
+ * Supplement the line terminator, if possible.
+ * Return the supplemented line or 0 on unrecoverable error.
  */
 {
     const char * const  format
@@ -2037,37 +2132,42 @@ static void at_eof(
     const char * const  unterm_asm_format
 = "End of %s with unterminated #asm block started at line %ld"; /* _E_ _W1_ */
     size_t  len;
-    char *  cp = infile->buffer;
-    IFINFO *    ifp;
+    char *  cp;
 
-    len = ACE_OS::strlen( cp);
+    cp = infile->buffer;
+    len = strlen( cp);
     if (len && *(cp += (len - 1)) != '\n') {
         *++cp = '\n';                       /* Supplement <newline> */
         *++cp = EOS;
-        if (standard && (warn_level & 1))
+        if (mcpp_mode != OLD_PREP && (warn_level & 1))
             cwarn( format, input, 0L, no_newline);
-        else if (mcpp_mode == KR && (warn_level & 1))
-            cwarn( format, input, 0L, no_newline);
+        return  infile->bptr = infile->buffer;
     }
     if (standard && infile->buffer < infile->bptr) {
-        cp += len - 2;
+                            /* No line after <backslash><newline>   */
+        cp = infile->bptr;
         *cp++ = '\n';                       /* Delete the \\        */
         *cp = EOS;
         if (warn_level & 1)
             cwarn( format, input, 0L, backsl);
+        return  infile->bptr = infile->buffer;
     }
-    if (in_comment) {
-        if ((standard || mcpp_mode == KR) && (warn_level & 1))
+    if (in_comment) {               /* End of file within a comment */
+        if (mcpp_mode != OLD_PREP && (warn_level & 1))
             cwarn( format, input, 0L, unterm_com);
+        /* The partial comment line has been already read by        */
+        /* read_a_comment(), so supplement the  next line.          */
+        strcpy( infile->buffer, "*/\n");
+        return  infile->bptr = infile->buffer;
     }
 
     if (infile->initif < ifptr) {
-        ifp = infile->initif + 1;
+        IFINFO *    ifp = infile->initif + 1;
         if (standard) {
             cerror( unterm_if_format, input, ifp->ifline, 0);
             ifptr = infile->initif;         /* Clear information of */
             compiling = ifptr->stat;        /*   erroneous grouping */
-        } else if (mcpp_mode != OLD_PREP && (warn_level & 1)) {
+        } else if (mcpp_mode == KR && (warn_level & 1)) {
             cwarn( unterm_if_format, input, ifp->ifline, 0);
         }
     }
@@ -2084,6 +2184,8 @@ static void at_eof(
 
     if (in_asm && mcpp_mode == KR && (warn_level & 1))
         cwarn( unterm_asm_format, input, in_asm, 0);
+
+    return  0;
 }
 
 void    unget_ch( void)
@@ -2106,7 +2208,7 @@ void    unget_ch( void)
                 insert_sep = INSERT_SEP;
                 return;
             case INSERT_SEP:
-                cfatal( "Bug: unget_ch() just after scan_token()"    /* _F_  */
+                cfatal( "Bug: unget_ch() just after scan_token()"   /* _F_  */
                         , 0, 0L, 0);
                 break;
             default:
@@ -2124,23 +2226,23 @@ void    unget_ch( void)
 
 FILEINFO *  unget_string(
     const char *    text,               /* Text to unget            */
-    const char *    name                /* Name of the macro        */
+    const char *    name                /* Name of the macro, if any*/
 )
 /*
  * Push a string back on the input stream.  This is done by treating
- * the text as if it were a macro.
+ * the text as if it were a macro or a file.
  */
 {
     FILEINFO *      file;
     size_t          size;
 
     if (text)
-        size = ACE_OS::strlen( text) + 1;
+        size = strlen( text) + 1;
     else
         size = 1;
-    file = get_file( name, size);
+    file = get_file( name, 0, 0, size, FALSE);
     if (text)
-        ACE_OS::memcpy( file->buffer, text, size);
+        memcpy( file->buffer, text, size);
     else
         *file->buffer = EOS;
     return  file;
@@ -2156,15 +2258,18 @@ char *  save_string(
     char *      result;
     size_t      size;
 
-    size = ACE_OS::strlen( text) + 1;
+    size = strlen( text) + 1;
     result = xmalloc( size);
-    ACE_OS::memcpy( result, text, size);
+    memcpy( result, text, size);
     return  result;
 }
 
 FILEINFO *  get_file(
-    const char *    name,           /* File or macro name string    */
-    size_t      bufsize             /* Line buffer size             */
+    const char *    name,                   /* File or macro name   */
+    const char *    src_dir,                /* Source file directory*/
+    const char *    fullname,               /* Full path list       */
+    size_t      bufsize,                    /* Line buffer size     */
+    int         include_opt         /* Specified by -include opt (for GCC)  */
 )
 /*
  * Common FILEINFO buffer initialization for a new file or macro.
@@ -2181,13 +2286,21 @@ FILEINFO *  get_file(
     file->pos = 0L;                         /* No pos to remember   */
     file->parent = infile;                  /* Chain files together */
     file->initif = ifptr;                   /* Initial ifstack      */
-    file->dirp = 0;                      /* No sys-header yet    */
+    file->include_opt = include_opt;        /* Specified by -include*/
+    file->dirp = 0;                      /* No include dir yet   */
     file->real_fname = name;                /* Save file/macro name */
+    file->full_fname = fullname;            /* Full path list       */
     if (name) {
-        file->filename = xmalloc( ACE_OS::strlen( name) + 1);
-        ACE_OS::strcpy( file->filename, name);      /* Copy for #line       */
+        file->filename = xmalloc( strlen( name) + 1);
+        strcpy( file->filename, name);      /* Copy for #line       */
     } else {
         file->filename = 0;
+    }
+    if (src_dir) {
+        file->src_dir = xmalloc( strlen( src_dir) + 1);
+        strcpy( const_cast <char *> (file->src_dir), src_dir);
+    } else {
+        file->src_dir = 0;
     }
 #if MCPP_LIB
     file->last_fputc = mcpp_lib_fputc;
@@ -2203,6 +2316,7 @@ FILEINFO *  get_file(
 #endif
     }
     infile = file;                          /* New current file     */
+
     return  file;                           /* All done.            */
 }
 
@@ -2219,7 +2333,7 @@ char *
 {
     char *      result;
 
-    if ((result = (char *) ACE_OS::malloc( size)) == 0) {
+    if ((result = (char *) malloc( size)) == 0) {
         if (mcpp_debug & MEMORY)
             print_heap();
        cfatal( out_of_memory, 0, (long) size, 0);
@@ -2232,12 +2346,12 @@ char *  (xrealloc)(
     size_t      size
 )
 /*
- * Reallocate ACE_OS::malloc()ed memory.
+ * Reallocate malloc()ed memory.
  */
 {
     char *      result;
 
-    if ((result = (char *) ACE_OS::realloc( ptr, size)) == 0 && size != 0) {
+    if ((result = (char *) realloc( ptr, size)) == 0 && size != 0) {
         /* 'size != 0' is necessary to cope with some               */
         /*   implementation of realloc( ptr, 0) which returns 0. */
         if (mcpp_debug & MEMORY)
@@ -2245,6 +2359,52 @@ char *  (xrealloc)(
         cfatal( out_of_memory, 0, (long) size, 0);
     }
     return  result;
+}
+
+LINE_COL *  get_src_location(
+    LINE_COL *  p_line_col          /* Line and column on phase 4   */
+)
+/*
+ * Convert line-column datum of just after translation phase 3 into that of
+ * phase 2, tracing back line splicing by a comment and <backslash><newline>.
+ * Note: This conversion does not give correct datum on a line catenated by
+ * both of <backslash><newline> and line-crossing-comment at the same time.
+ *
+ * com_cat_line and bsl_cat_line have data only on last catenated line.
+ * com_cat_line.len[] and bsl_cat_line.len[] have the length of catenated
+ * line, and len[ 0] is always 0, followed by len[ 1], len[ 2], ..., as
+ * accumulated length of successively catenated lines.
+ */
+{
+    long        line;
+    size_t      col;
+    size_t *    cols;
+    CAT_LINE *  l_col_p;
+    int         i;
+
+    line = p_line_col->line;
+    col = p_line_col->col;
+
+    for (i = 0; i <= 1; i++) {
+        l_col_p = i ? & bsl_cat_line : & com_cat_line;
+        if (l_col_p->last_line != line)
+            continue;
+        /* Else just catenated line */
+        cols = l_col_p->len + 1;
+        while (*cols < col)
+            cols++;
+        if (col <= *cols) {
+            cols--;
+            col -= *cols;
+        }
+        line = l_col_p->start_line + (cols - l_col_p->len);
+    }
+
+    p_line_col->line = line;
+    p_line_col->col = col + 1;
+                    /* col internally start at 0, output start at 1 */
+
+    return  p_line_col;
 }
 
 static void put_line(
@@ -2273,10 +2433,9 @@ static void do_msg(
 )
 /*
  * Print filenames, macro names, line numbers and error messages.
+ * Also print macro definitions on macro expansion problems.
  */
 {
-#define MAX_MACRO_FILE  4
-
     FILEINFO *  file;
     DEFBUF *    defp;
     int         i;
@@ -2288,16 +2447,16 @@ static void do_msg(
     int         c;
     int         ind;
 
-    ACE_OS::fflush( fp_out);                /* Synchronize output and diagnostics   */
+    fflush( fp_out);                /* Synchronize output and diagnostics   */
     arg_s[ 0] = arg1;  arg_s[ 1] = arg3;
 
     for (i = 0; i < 2; i++) {   /* Convert special characters to visible    */
         sp = arg_s[ i];
         if (sp != 0)
-            slen = ACE_OS::strlen( sp) + 1;
+            slen = strlen( sp) + 1;
         else
             slen = 1;
-        tp = arg_t[ i] = (char *) ACE_OS::malloc( slen);
+        tp = arg_t[ i] = (char *) malloc( slen);
             /* Don't use xmalloc() so as not to cause infinite recursion    */
         if (sp == 0 || *sp == EOS) {
             *tp = EOS;
@@ -2311,18 +2470,43 @@ static void do_msg(
                     break;              /* Skip magic characters    */
                 /* Else fall through    */
             case RT_END:
-            case IN_SRC:
-                if (mcpp_mode != STD) {
-                    *tp++ = ' ';
-                    /* Illegal control character, convert to a space*/
-                    break;
-                }                       /* Else fall through        */
             case CAT:
             case ST_QUOTE:
             case DEF_MAGIC:
                 if (! standard)
                     *tp++ = ' ';
-                break;                  /* Skip magic characters    */
+                break;                  /* Skip the magic characters*/
+            case IN_SRC:
+                if (! standard)
+                    *tp++ = ' ';
+                if ((mcpp_debug & MACRO_CALL) && ! in_directive)
+                    sp += 2;            /* Skip two more bytes      */
+                break;
+            case MAC_INF:
+                if (mcpp_mode != STD) {
+                    *tp++ = ' ';
+                    /* Illegal control character, convert to a space*/
+                } else {
+                    switch (*sp++) {    /* Skip the magic characters*/
+                    case MAC_ARG_START  :
+                        sp++;
+                        /* Fall through */
+                    case MAC_CALL_START :
+                        sp += 2;
+                        break;
+                    case MAC_ARG_END    :
+                        if (! option_flags.v)
+                            break;
+                        else
+                            sp++;
+                            /* Fall through */
+                    case MAC_CALL_END   :
+                        if (option_flags.v)
+                            sp += 2;
+                        break;
+                    }
+                }
+                break;
             case '\n':
                 *tp++ = ' ';            /* Convert '\n' to a space  */
                 break;
@@ -2337,7 +2521,7 @@ static void do_msg(
         *tp = EOS;
     }
 
-    /* Print diagnostic */
+    /* Print source location and diagnostic */
     file = infile;
     while (file != 0 && (file->fp == 0 || file->fp == (FILE *)-1))
         file = file->parent;                        /* Skip macro   */
@@ -2347,7 +2531,7 @@ static void do_msg(
     }
     mcpp_fprintf( ERR, format, arg_t[ 0], arg2, arg_t[ 1]);
     mcpp_fputc( '\n', ERR);
-    if (no_source_line)
+    if (option_flags.no_source_line)
         goto  free_arg;
 
     /* Print source line, includers and expanding macros    */
@@ -2366,21 +2550,24 @@ static void do_msg(
         if (file->fp == 0) {             /* Macro                */
             if (file->filename) {
                 defp = look_id( file->filename);
-                if (defp->nargs >= DEF_NOARGS - 2)
-                    dump_a_def( "    macro", defp, FALSE, FALSE, TRUE, fp_err);
+                if ((defp->nargs > DEF_NOARGS_STANDARD)
+                    && ! (file->parent && file->parent->filename
+                        && str_eq( file->filename, file->parent->filename)))
+                        /* If the name is not duplicate of parent   */
+                    dump_a_def( "    macro", defp, FALSE, TRUE, fp_err);
             }
         } else {                            /* Source file          */
             if (file->buffer[ 0] == '\0')
-                ACE_OS::strcpy( file->buffer, "\n");
+                strcpy( file->buffer, "\n");
             if (mcpp_mode != OLD_PREP) {
-                mcpp_fprintf( ERR, "    from %s%s: %ld:    %s",
-                    *(file->dirp),          /* Include directory    */
-                    file->real_fname,       /* Current file name    */
+                mcpp_fprintf( ERR, "    from %s: %ld:    %s",
+                    file->line ? file->full_fname       /* Full-path-list   */
+                        : "<stdin>",        /* Included by -include */
                     file->line,             /* Current line number  */
                     file->buffer);          /* The source line      */
             } else {
-                mcpp_fprintf( ERR, "    from %s%s: %ld:    ",
-                    *(file->dirp), file->real_fname, file->line);
+                mcpp_fprintf( ERR, "    from %s: %ld:    ", file->full_fname
+                        , file->line);
                 put_line( file->buffer, fp_err);
             }
         }
@@ -2393,7 +2580,6 @@ static void do_msg(
     expanding_macro[ 0].name = macro_name;
     for (ind = 0; ind <= exp_mac_ind; ind++) {
         int         ind_done;
-        FILEINFO *  file;
 
         for (ind_done = 0; ind_done < ind; ind_done++)
             if (str_eq( expanding_macro[ ind].name
@@ -2408,16 +2594,16 @@ static void do_msg(
         if (file)
             continue;
         if ((defp = look_id( expanding_macro[ ind].name)) != 0) {
-            if (defp->nargs < DEF_NOARGS - 2)
-                continue;                   /* __FILE__, __LINE__   */
-            dump_a_def( "    macro", defp, FALSE, FALSE, TRUE, fp_err);
+            if (defp->nargs <= DEF_NOARGS_STANDARD)
+                continue;                   /* Standard predefined  */
+            dump_a_def( "    macro", defp, FALSE, TRUE, fp_err);
             /* Macro already read over  */
         }
     }
 
 free_arg:
     for (i = 0; i < 2; i++)
-        ACE_OS::free( arg_t[ i]);
+        free( arg_t[ i]);
 }
 
 void    cfatal(
@@ -2473,7 +2659,7 @@ void    dump_string(
 {
     const char *    cp;
     const char *    chr;
-    int     c;
+    int     c, c1, c2;
 
     if (why != 0)
         mcpp_fprintf( DBG, " (%s)", why);
@@ -2489,8 +2675,42 @@ void    dump_string(
 
         switch (c) {
         case MAC_PARM:
-            c = *cp++ & UCHARMAX;
+            c = *cp++ & UCHARMAX;       /* Macro parameter number   */
             mcpp_fprintf( DBG, "<%d>", c);
+            break;
+        case MAC_INF:
+            if (! (mcpp_mode == STD && (mcpp_debug & MACRO_CALL)))
+                goto  no_magic;
+            /* Macro informations inserted by -K option */
+            c2 = *cp++ & UCHARMAX;
+            if (option_flags.v || c2 == MAC_CALL_START
+                    || c2 == MAC_ARG_START) {
+                c = ((*cp++ & UCHARMAX) - 1) * UCHARMAX;
+                c += (*cp++ & UCHARMAX) - 1;
+            }
+            switch (c2) {
+            case MAC_CALL_START:
+                mcpp_fprintf( DBG, "<MAC%d>", c);
+                break;
+            case MAC_CALL_END:
+                if (option_flags.v)
+                    mcpp_fprintf( DBG, "<MAC_END%d>", c);
+                else
+                    chr = "<MAC_END>";
+                break;
+            case MAC_ARG_START:
+                c1 = *cp++ & UCHARMAX;
+                mcpp_fprintf( DBG, "<MAC%d:ARG%d>", c, c1 - 1);
+                break;
+            case MAC_ARG_END:
+                if (option_flags.v) {
+                    c1 = *cp++ & UCHARMAX;
+                    mcpp_fprintf( DBG, "<ARG_END%d-%d>", c, c1 - 1);
+                } else {
+                    chr = "<ARG_END>";
+                }
+                break;
+            }
             break;
         case DEF_MAGIC:
             if (standard) {
@@ -2514,11 +2734,18 @@ void    dump_string(
             }       /* Else fall through    */
         case IN_SRC:
             if (standard) {
-                chr = "<SRC>";
-                break;
+                if ((mcpp_debug & MACRO_CALL) && ! in_directive) {
+                    int     num;
+                    num = ((*cp++ & UCHARMAX) - 1) * UCHARMAX;
+                    num += (*cp++ & UCHARMAX) - 1;
+                    mcpp_fprintf( DBG, "<SRC%d>", num);
+                } else {
+                    chr = "<SRC>";
+                }
             } else {                        /* Control character    */
                 mcpp_fprintf( DBG, "<^%c>", c + '@');
             }
+            break;
         case TOK_SEP:
             if (mcpp_mode == STD) {
                 chr = "<TSEP>";
@@ -2528,6 +2755,7 @@ void    dump_string(
                 break;
             }       /* Else fall through    */
         default:
+no_magic:
             if (c < ' ')
                 mcpp_fprintf( DBG, "<^%c>", c + '@');
             else
