@@ -301,10 +301,10 @@ static char *   expand_std(
     if (trace_macro) {
         max_mac_num = INIT_MAC_INF;
         mac_inf = (MACRO_INF *) xmalloc( sizeof (MACRO_INF) * max_mac_num);
-        memset( mac_inf, 0, sizeof (MACRO_INF) * max_mac_num);
+        ACE_OS::memset( mac_inf, 0, sizeof (MACRO_INF) * max_mac_num);
         max_in_src_num = INIT_IN_SRC_NUM;
         in_src = (LOCATION *) xmalloc( sizeof (LOCATION) * max_in_src_num);
-        memset( in_src, 0, sizeof (LOCATION) * max_in_src_num);
+        ACE_OS::memset( in_src, 0, sizeof (LOCATION) * max_in_src_num);
         mac_num = in_src_num = 0;           /* Initialize           */
     }
     if (replace( defp, macrobuf, macrobuf + NMACWORK, 0, infile, line_col
@@ -314,16 +314,16 @@ static char *   expand_std(
         goto  exp_end;
     }
     len = (size_t) (out_end - out);
-    if (strlen( macrobuf) > len) {
+    if (ACE_OS::strlen( macrobuf) > len) {
         cerror( macbuf_overflow, macro_name, 0, macrobuf);
-        memcpy( out, macrobuf, len);
+        ACE_OS::memcpy( out, macrobuf, len);
         out_p = out + len;
         macro_line = MACRO_ERROR;
         goto  exp_end;
     }
 
 #if DEBUG_MACRO_ANN
-    chk_magic_balance( macrobuf, macrobuf + strlen( macrobuf), FALSE, TRUE);
+    chk_magic_balance( macrobuf, macrobuf + ACE_OS::strlen( macrobuf), FALSE, TRUE);
 #endif
     cp = macrobuf;
     c1 = '\0';                          /* The char previous to 'c' */
@@ -379,12 +379,12 @@ exp_end:
         int     num;
         for (num = 1; num < mac_num; num++) {   /* 'num' start at 1 */
             if (mac_inf[ num].num_args >= 0) {  /* Macro with args  */
-                free( mac_inf[ num].args);      /* Saved arguments  */
-                free( mac_inf[ num].loc_args);  /* Location of args */
+                ACE_OS::free( mac_inf[ num].args);      /* Saved arguments  */
+                ACE_OS::free( mac_inf[ num].loc_args);  /* Location of args */
             }
         }
-        free( mac_inf);
-        free( in_src);
+        ACE_OS::free( mac_inf);
+        ACE_OS::free( in_src);
     }
     *pragma_op = has_pragma;
 
@@ -417,10 +417,10 @@ static int  print_macro_inf(
     }
     switch (c) {
     case MAC_CALL_START :           /* Start of a macro expansion   */
-        *opp += sprintf( *opp, "/*<%s", m_inf->defp->name); /* Macro name   */ 
+        *opp += ACE_OS::sprintf( *opp, "/*<%s", m_inf->defp->name); /* Macro name   */ 
         if (m_inf->locs.start_line) {
             /* Location of the macro call in source file        */
-            *opp += sprintf( *opp, " %ld:%d-%ld:%d"
+            *opp += ACE_OS::sprintf( *opp, " %ld:%d-%ld:%d"
                     , m_inf->locs.start_line, (int) m_inf->locs.start_col
                     , m_inf->locs.end_line, (int) m_inf->locs.end_col);
         }
@@ -437,7 +437,7 @@ static int  print_macro_inf(
         break;
     case MAC_CALL_END   :               /* End of a macro expansion */
         if (option_flags.v) {               /* Verbose mode         */
-            *opp += sprintf( *opp, "/*%s>*/", m_inf->defp->name);
+            *opp += ACE_OS::sprintf( *opp, "/*%s>*/", m_inf->defp->name);
             break;
         }
         /* Else fall through    */
@@ -469,12 +469,12 @@ static char *   print_macro_arg(
 {
     LOCATION *  loc = m_inf->loc_args + argn;
 
-    out += sprintf( out, "/*%s%s:%d-%d", real_arg ? "!" : (start ? "<" : "")
+    out += ACE_OS::sprintf( out, "/*%s%s:%d-%d", real_arg ? "!" : (start ? "<" : "")
             , m_inf->defp->name, m_inf->recur, argn);
 
     if (real_arg && m_inf->loc_args && loc->start_line) {
         /* Location of the argument in source file  */
-        out += sprintf( out, " %ld:%d-%ld:%d", loc->start_line
+        out += ACE_OS::sprintf( out, " %ld:%d-%ld:%d", loc->start_line
                 , (int) loc->start_col, loc->end_line, (int) loc->end_col);
     }
     if (! start)            /* End of an argument in verbose mode   */
@@ -516,7 +516,7 @@ static char *   chk_magic_balance(
         case MAC_CALL_START :
             if (option_flags.v) {
                 mac_loc[ mac] = buf_p - 2;
-                memcpy( mac_id[ mac], buf_p, MAC_S_LEN - 2);
+                ACE_OS::memcpy( mac_id[ mac], buf_p, MAC_S_LEN - 2);
             }
             mac++;
             buf_p += MAC_S_LEN - 2;
@@ -524,7 +524,7 @@ static char *   chk_magic_balance(
         case MAC_ARG_START  :
             if (option_flags.v) {
                 arg_loc[ arg] = buf_p - 2;
-                memcpy( arg_id[ arg], buf_p, ARG_S_LEN - 2);
+                ACE_OS::memcpy( arg_id[ arg], buf_p, ARG_S_LEN - 2);
             }
             arg++;
             buf_p += ARG_S_LEN - 2;
@@ -535,12 +535,12 @@ static char *   chk_magic_balance(
                 if (arg < 0) {          /* Perhaps moved magic  */
                     if (diag)
                         cwarn( mesg, "Redundant", (long) -arg, "argument");
-                } else if (memcmp( arg_id[ arg], buf_p, ARG_E_LEN_V - 2) != 0)
+                } else if (ACE_OS::memcmp( arg_id[ arg], buf_p, ARG_E_LEN_V - 2) != 0)
                 {
                     char *      to_be_edge = 0;
                     char *      cur_edge;
 
-                    if (arg >= 1 && memcmp( arg_id[ 0], buf_p, ARG_E_LEN_V - 2)
+                    if (arg >= 1 && ACE_OS::memcmp( arg_id[ 0], buf_p, ARG_E_LEN_V - 2)
                             == 0) {
                         to_be_edge = arg_loc[ arg];
                                             /* To be moved to top   */
@@ -553,10 +553,10 @@ static char *   chk_magic_balance(
                         /* surrounded by starting of an arg magic   */
                         /* and its corresponding closing magic.     */
                         while (buf_p + (ARG_E_LEN_V - 2) <= cur_edge 
-                                && memcmp( cur_edge, arg_end_magic, 2) != 0)
+                                && ACE_OS::memcmp( cur_edge, arg_end_magic, 2) != 0)
                             cur_edge--;
                         if (buf_p + (ARG_E_LEN_V - 2) <= cur_edge
-                                && memcmp( arg_id[ 0], cur_edge + 2
+                                && ACE_OS::memcmp( arg_id[ 0], cur_edge + 2
                                         , ARG_E_LEN_V - 2) == 0) {
                             to_be_edge = buf_p - 2; /* To be moved to end   */
                         }
@@ -575,16 +575,16 @@ static char *   chk_magic_balance(
                             /* Move a stray magic to outside of sequences   */
                             char    magic[ ARG_E_LEN_V];
                             size_t  len = ARG_E_LEN_V;
-                            memcpy( magic, cur_edge, len);
+                            ACE_OS::memcpy( magic, cur_edge, len);
                                 /* Save current edge    */
                             if (to_be_edge == arg_loc[ arg])
                                 /* Shift followings to cur_edge */
-                                memmove( cur_edge, cur_edge + len
+			      ACE_OS::memmove( cur_edge, cur_edge + len
                                         , to_be_edge - cur_edge);
                             else        /* Shift precedents to cur_edge */
-                                memmove( to_be_edge + len, to_be_edge
+                                ACE_OS::memmove( to_be_edge + len, to_be_edge
                                         , cur_edge - to_be_edge);
-                            memcpy( to_be_edge, magic, len);
+                            ACE_OS::memcpy( to_be_edge, magic, len);
                             /* Restore old 'cur_edge' into old 'to_be_edge' */
                         }
                     } else {        /* Serious imbalance, just warn */
@@ -607,7 +607,7 @@ static char *   chk_magic_balance(
                 if (mac < 0) {
                     if (diag)
                         cwarn( mesg, "Redundant", (long) -mac, "macro");
-                } else if (memcmp( mac_id[ mac], buf_p, MAC_E_LEN_V - 2) != 0)
+                } else if (ACE_OS::memcmp( mac_id[ mac], buf_p, MAC_E_LEN_V - 2) != 0)
                 {
                     char *      mac_p = mac_id[ mac];
                     mac_s_n = ((mac_p[ 0] & UCHARMAX) - 1) * UCHARMAX;
@@ -687,7 +687,7 @@ static char *   replace(
             size_t  len = sizeof (MACRO_INF) * max_mac_num;
             /* Enlarge the array    */
             mac_inf = (MACRO_INF *) xrealloc( (char *) mac_inf, len * 2);
-            memset( mac_inf + max_mac_num, 0, len);
+            ACE_OS::memset( mac_inf + max_mac_num, 0, len);
                                         /* Clear the latter half    */
             max_mac_num *= 2;
         }
@@ -748,8 +748,8 @@ static char *   replace(
                             /* Note: arglist[ n] may be reallocated */
                             /*   and re-written by collect_args()   */
         if ((num_args = collect_args( defp, arglist, m_num)) == ARG_ERROR) {
-            free( arglist[ 0]);             /* Syntax error         */
-            free( arglist);
+            ACE_OS::free( arglist[ 0]);             /* Syntax error         */
+            ACE_OS::free( arglist);
             return  0;
         }
         if (enable_trace_macro) {
@@ -782,13 +782,13 @@ static char *   replace(
         if (nargs >= 0) {
             if (! enable_trace_macro)
                 /* arglist[0] is needed for macro infs  */
-                free( arglist[ 0]);
-            free( arglist);
+                ACE_OS::free( arglist[ 0]);
+            ACE_OS::free( arglist);
         }
-        free( catbuf);
+        ACE_OS::free( catbuf);
         return  0;
     }
-    catbuf = xrealloc( catbuf, strlen( catbuf) + 1);
+    catbuf = xrealloc( catbuf, ACE_OS::strlen( catbuf) + 1);
                                             /* Use memory sparingly */
     if (mcpp_debug & EXPAND) {
         mcpp_fprintf( DBG, "(%s)", defp->name);
@@ -804,10 +804,10 @@ static char *   replace(
         out_p = substitute( defp, (const char **) arglist, catbuf, expbuf
                 , expbuf + NMACWORK);   /* Expand each arguments    */
         if (! enable_trace_macro)
-            free( arglist[ 0]);
-        free( arglist);
-        free( catbuf);
-        expbuf = xrealloc( expbuf, strlen( expbuf) + 1);
+            ACE_OS::free( arglist[ 0]);
+        ACE_OS::free( arglist);
+        ACE_OS::free( catbuf);
+        expbuf = xrealloc( expbuf, ACE_OS::strlen( expbuf) + 1);
                                             /* Use memory sparingly */
         if (mcpp_debug & EXPAND) {
             mcpp_fprintf( DBG, "(%s)", defp->name);
@@ -816,8 +816,8 @@ static char *   replace(
     } else {                                /* Object-like macro or */
         if (nargs == 0 && ! enable_trace_macro)
                             /* Function-like macro with no argument */
-            free( arglist[ 0]);
-        free( arglist);
+            ACE_OS::free( arglist[ 0]);
+        ACE_OS::free( arglist);
         out_p = expbuf = catbuf;
     }
 
@@ -826,7 +826,7 @@ static char *   replace(
     if (out_p && defp->nargs == DEF_PRAGMA)
         has_pragma = TRUE;
                     /* Inform mcpp_main() that _Pragma() was found  */
-    free( expbuf);
+    ACE_OS::free( expbuf);
     if (enable_trace_macro && out_p)
         out_p = close_macro_inf( out_p, m_num, in_src_n);
     if (mcpp_debug & EXPAND)
@@ -936,12 +936,12 @@ static DEFBUF * def_special(
             diag_macro( CWARN
                     , "Line number %.0s\"%ld\" is out of range"     /* _W1_ */
                     , 0, src_line, 0, defp, 0);
-        sprintf( defp->repl, "%ld", src_line);      /* Re-define    */
+        ACE_OS::sprintf( defp->repl, "%ld", src_line);      /* Re-define    */
         break;
     case DEF_NOARGS_DYNAMIC - 2:            /* __FILE__             */
         for (file = infile; file != 0; file = file->parent) {
             if (file->fp != 0) {
-                sprintf( work_buf, "\"%s\"", file->filename);
+                ACE_OS::sprintf( work_buf, "\"%s\"", file->filename);
                 if (str_eq( work_buf, defp->repl))
                     break;                          /* No change    */
                 defp->nargs = DEF_NOARGS;   /* Enable to redefine   */
@@ -1022,8 +1022,8 @@ static int  prescan(
                 }
                 if (*prev_token == IN_SRC && trace_macro)
                     len = IN_SRC_LEN;
-                memmove( prev_token, prev_token + len
-                        , strlen( prev_token + len));
+                ACE_OS::memmove( prev_token, prev_token + len
+                        , ACE_OS::strlen( prev_token + len));
                 out -= len;
                 *out = EOS;             /* Remove DEF_MAGIC, IN_SRC */
             }
@@ -1111,7 +1111,7 @@ static char *   catenate(
             } else {
                 unget_string( argp, 0);
                 if (trace_macro)
-                    free( (char *) argp);
+                    ACE_OS::free( (char *) argp);
                     /* malloc()ed in remove_magics()    */
                 while ((c = get_ch()) != RT_END) {
                     prev_prev_token = prev_token;
@@ -1128,7 +1128,7 @@ static char *   catenate(
                 size_t  len = 1;
                 if (trace_macro && *prev_token == IN_SRC)
                     len = IN_SRC_LEN;
-                memmove( prev_token, prev_token + len
+                ACE_OS::memmove( prev_token, prev_token + len
                         , (size_t) ((out -= len) - prev_token));
                 /* Remove DEF_MAGIC enabling the name to replace later      */
             }
@@ -1155,7 +1155,7 @@ static char *   catenate(
         } else {
             unget_string( argp, 0);
             if (trace_macro)
-                free( (char *) argp);
+                ACE_OS::free( (char *) argp);
             if ((c = get_ch()) == DEF_MAGIC) {  /* Remove DEF_MAGIC */
                 c = get_ch();               /*  enabling to replace */
             } else if (c == IN_SRC) {       /* Remove IN_SRC        */
@@ -1202,7 +1202,7 @@ static char *   catenate(
                 diag_macro( CERROR, invalid_token, prev_token, 0L, 0, defp
                        , 0);
             }
-            infile->bptr += strlen( infile->bptr);
+            infile->bptr += ACE_OS::strlen( infile->bptr);
         }
         get_ch();                           /* To the parent "file" */
         unget_ch();
@@ -1274,9 +1274,9 @@ static const char *     remove_magics(
     max_magics = INIT_MAGICS;
 
     mac_n = arg_n = ind = 0;
-    ap = arg_p = xmalloc( strlen( argp) + 1);
-    strcpy( arg_p, argp);
-    ep = arg_p + strlen( arg_p);
+    ap = arg_p = xmalloc( ACE_OS::strlen( argp) + 1);
+    ACE_OS::strcpy( arg_p, argp);
+    ep = arg_p + ACE_OS::strlen( arg_p);
     if (*(ep - 1) == RT_END) {
         with_rtend = TRUE;
         ep--;                               /* Point to RT_END      */
@@ -1303,7 +1303,7 @@ static const char *     remove_magics(
                 *ap++ = get_ch();
                 *ap++ = get_ch();
                 mac_loc[ mac_n] = ap - MAC_S_LEN;   /* Location of the seq  */
-                memcpy( mac_id[ mac_n], ap - (MAC_S_LEN - 1), MAC_S_LEN - 1);
+                ACE_OS::memcpy( mac_id[ mac_n], ap - (MAC_S_LEN - 1), MAC_S_LEN - 1);
                         /* Copy the sequence from its second byte   */
                 mac_id[ mac_n++][ MAC_S_LEN - 1] = FALSE;
                                     /* Mark of to-be-removed or not */
@@ -1313,7 +1313,7 @@ static const char *     remove_magics(
                 *ap++ = get_ch();
                 *ap++ = get_ch();
                 arg_loc[ arg_n] = ap - ARG_S_LEN;
-                memcpy( arg_id[ arg_n], ap - (ARG_S_LEN - 1), ARG_S_LEN - 1);
+                ACE_OS::memcpy( arg_id[ arg_n], ap - (ARG_S_LEN - 1), ARG_S_LEN - 1);
                 arg_id[ arg_n++][ ARG_S_LEN - 1] = FALSE;
                 break;
             case MAC_CALL_END   :
@@ -1450,7 +1450,7 @@ static const char *     remove_magics(
     /* Copy the sequences skipping the to-be-removed magic seqs */
     file = unget_string( arg_p, 0);  /* Stack to "file" for token parsing*/
     tp = arg_p;
-    ep = arg_p + strlen( arg_p);
+    ep = arg_p + ACE_OS::strlen( arg_p);
     mac_n = arg_n = n = 0;
 
     while ((*tp++ = c = get_ch()) != RT_END && file == infile) {
@@ -1498,7 +1498,7 @@ static const char *     remove_magics(
             break;
         }
         if (rm == FALSE) {                  /* Not to be removed    */
-            memmove( tp, loc_tab[ num], len);
+            ACE_OS::memmove( tp, loc_tab[ num], len);
                     /* Copy it (from arg_p buffer for convenience)  */
             tp += len;
         }
@@ -1527,7 +1527,7 @@ static void     chk_symmetry(
 {
     int     s_id, e_id, arg_s_n, arg_e_n;
 
-    if (memcmp( start_id + 1, end_id + 1, len) == 0)
+    if (ACE_OS::memcmp( start_id + 1, end_id + 1, len) == 0)
         return;                     /* The sequences are the same   */
     s_id = ((start_id[ 1] & UCHARMAX) - 1) * UCHARMAX;
     s_id += (start_id[ 2] & UCHARMAX) - 1;
@@ -1572,7 +1572,7 @@ static char *   stringize(
             /* Argument is prefixed with macro tracing magics   */
                 || (char_type[ *argp & UCHARMAX] & HSP)) {
             if (*argp == MAC_INF) {     /* Move magics to outside of string */
-                memcpy( out_p, argp, ARG_S_LEN);
+                ACE_OS::memcpy( out_p, argp, ARG_S_LEN);
                 out_p += ARG_S_LEN;
                 argp += ARG_S_LEN;
                 num_arg_magic++;
@@ -1583,7 +1583,7 @@ static char *   stringize(
     }
 
     file = unget_string( argp, 0);
-    len = strlen( infile->buffer);  /* Sequence ends with RT_END    */
+    len = ACE_OS::strlen( infile->buffer);  /* Sequence ends with RT_END    */
     if (trace_macro) {          /* Remove suffixed argument closing magics  */
         /* There are 0 or more argument closing magic sequences and */
         /* 0 or more TOK_SEPs and no space at the end of argp.      */
@@ -1596,7 +1596,7 @@ static char *   stringize(
             if (*(infile->buffer + len - arg_e_len - 1) == MAC_INF
                     && *(infile->buffer + len - arg_e_len) == MAC_ARG_END) {
                 if (option_flags.v) {
-                    memcpy( arg_end_inf[ nmagic]
+                    ACE_OS::memcpy( arg_end_inf[ nmagic]
                             , infile->buffer + len - arg_e_len + 1
                             , arg_e_len - 2);
                     arg_end_inf[ nmagic][ arg_e_len - 2] = EOS;
@@ -1715,7 +1715,7 @@ static char *   stringize(
             /* Unterminated or too long string will be diagnosed    */
         if (*infile->bptr != EOS)           /* More than a token    */
             invalid = TRUE; /* Diagnose after clearing the "file"   */
-        infile->bptr += strlen( infile->bptr);
+        infile->bptr += ACE_OS::strlen( infile->bptr);
         get_ch();                           /* Clear the "file"     */
         unget_ch();
         if (invalid)
@@ -1927,7 +1927,7 @@ static char *   rescan(
             MAGIC_SEQ   mgc_seq;    /* Magics between macro name and '('    */
 
             if (trace_macro)
-                memset( &mgc_seq, 0, sizeof (MAGIC_SEQ));
+                ACE_OS::memset( &mgc_seq, 0, sizeof (MAGIC_SEQ));
             if (is_macro_call( inner, &out_p, &endf
                         , trace_macro ? &mgc_seq : 0)
                     && ((mcpp_mode == POST_STD && is_able_repl( inner))
@@ -1971,8 +1971,8 @@ static char *   rescan(
                             insert_to_bptr( mgc_seq.magic_start, seq_len);
                             mgc_cleared = const_cast<char *> (remove_magics(const_cast <const char *> (infile->bptr), FALSE));
                                         /* Remove pair of magics    */
-                            strcpy( infile->bptr, mgc_cleared);
-                            free( mgc_cleared);
+                            ACE_OS::strcpy( infile->bptr, mgc_cleared);
+                            ACE_OS::free( mgc_cleared);
                         }
                     }
                 }
@@ -1980,7 +1980,7 @@ static char *   rescan(
                         , in_src_line_col, in_src_n)) == 0)
                     break;                  /* Error of macro call  */
             } else {
-                if (endf && strlen( endf)) {
+                if (endf && ACE_OS::strlen( endf)) {
                     /* Has read over to parent file: another nuisance.      */
                     /* Restore the read-over sequence into current buffer.  */
                     /* Don't use unget_string() here.                       */
@@ -1992,7 +1992,7 @@ static char *   rescan(
                         || (mcpp_mode == STD && is_able == READ_OVER
                                 && c != IN_SRC && ! compat_mode)) {
                     if (mcpp_mode == POST_STD || c != IN_SRC)
-                        memmove( tp + 1, tp, (size_t) (out_p++ - tp));
+                        ACE_OS::memmove( tp + 1, tp, (size_t) (out_p++ - tp));
                     *tp = DEF_MAGIC;        /* Mark not to replace  */
                 }                           /* Else not a macro call*/
             }
@@ -2106,11 +2106,11 @@ static char *   insert_to_bptr(
 
     if (infile->fp == 0) {               /* Not source file      */
         infile->buffer = xrealloc( infile->buffer
-                , strlen( infile->buffer) + len + 1);
+                , ACE_OS::strlen( infile->buffer) + len + 1);
         infile->bptr = infile->buffer + bptr_offset;
     }
-    memmove( infile->bptr + len, infile->bptr, strlen( infile->bptr) + 1);
-    memcpy( infile->bptr, ins, len);
+    ACE_OS::memmove( infile->bptr + len, infile->bptr, ACE_OS::strlen( infile->bptr) + 1);
+    ACE_OS::memcpy( infile->bptr, ins, len);
 
     return  infile->buffer;
 }
@@ -2181,7 +2181,7 @@ static char *   expand_prestd(
         case NUM:                           /* Number token         */
         case OPE:                           /* Operator or punct.   */
         case NAM:                           /* Identifier           */
-            len = strlen( mp);
+            len = ACE_OS::strlen( mp);
             mp += len;
             break;
         case SEP:                           /* Special character    */
@@ -2311,7 +2311,7 @@ static int  replace_pre(
             arg_len = collect_args( defp, arglist_pre, 0);
                                             /* Collect arguments    */
             if (arg_len == ARG_ERROR) {     /* End of input         */
-                free( arglist_pre[ 0]);
+                ACE_OS::free( arglist_pre[ 0]);
                 longjmp( jump, 1);
             }
         }
@@ -2326,7 +2326,7 @@ static int  replace_pre(
     if (mcpp_debug & EXPAND)
         dump_unget( "replace_pre exit");
     if (defp->nargs >= 0)
-        free( arglist_pre[ 0]);
+        ACE_OS::free( arglist_pre[ 0]);
     return  TRUE;
 }
 
@@ -2355,7 +2355,7 @@ static void substitute_pre(
             /*
              * Substitute formal parameter with actual argument.
              */
-            if (out_end <= (out_p + strlen( arglist_pre[ c])))
+            if (out_end <= (out_p + ACE_OS::strlen( arglist_pre[ c])))
                 goto nospace;
             out_p = stpcpy( out_p, arglist_pre[ c]);
         } else {
@@ -2366,7 +2366,7 @@ static void substitute_pre(
     }
 
     *out_p = EOS;
-    file->buffer = xrealloc( file->buffer, strlen( file->buffer) + 1);
+    file->buffer = xrealloc( file->buffer, ACE_OS::strlen( file->buffer) + 1);
     file->bptr = file->buffer;              /* Truncate buffer      */
     if (mcpp_debug & EXPAND)
         dump_string( "substitute_pre macroline", file->buffer);
@@ -2442,13 +2442,13 @@ static int  collect_args(
             /* #pragma MCPP debug macro_call, and the macro is on source    */
             mac_inf[ m_num].loc_args = loc = locs
                     = (LOCATION *) xmalloc( (sizeof (LOCATION)) * UCHARMAX);
-            memset( loc, 0, (sizeof (LOCATION)) * UCHARMAX);
+            ACE_OS::memset( loc, 0, (sizeof (LOCATION)) * UCHARMAX);
                     /* 0-clear for default values, including empty argument */
         }
     }
 
     while (1) {
-        memset( &mgc_prefix, 0, sizeof (MAGIC_SEQ));
+        ACE_OS::memset( &mgc_prefix, 0, sizeof (MAGIC_SEQ));
         c = squeeze_ws( &seq, 0
                 , (trace_macro && m_num) ? &mgc_prefix : 0);
             /* Skip MAC_INF seqs and white spaces, still remember   */
@@ -2554,7 +2554,7 @@ static int  collect_args(
             = xrealloc( arglist[ 0], (size_t) (argp - arglist[ 0]));
                                         /* Use memory sparingly     */
     for (c = 1; c < args; c++)
-        arglist[ c] = argp += strlen( argp) + 1;
+        arglist[ c] = argp += ACE_OS::strlen( argp) + 1;
     if (trace_macro && m_num)
         mac_inf[ m_num].loc_args        /* Truncate excess memory   */
                 = (LOCATION *) xrealloc( (char *) locs
@@ -2622,7 +2622,7 @@ static int  get_an_arg(
                 e_line_col = s_line_col;
                     /* Save the location,   */
                     /*      also for end of arg in case of empty arg*/
-                memset( n_paren, 0, sizeof (n_paren));
+                ACE_OS::memset( n_paren, 0, sizeof (n_paren));
             }
             *argp++ = MAC_INF;
             *argp++ = MAC_ARG_START;
@@ -2633,11 +2633,11 @@ static int  get_an_arg(
             if (mgc_prefix->magic_start) {
                 /* Copy the preceding magics, if any    */
                 len = mgc_prefix->magic_end - mgc_prefix->magic_start;
-                memcpy( argp, mgc_prefix->magic_start, len);
+                ACE_OS::memcpy( argp, mgc_prefix->magic_start, len);
                 argp += len;
             }
         }
-        memset( &mgc_seq, 0, sizeof (MAGIC_SEQ));
+        ACE_OS::memset( &mgc_seq, 0, sizeof (MAGIC_SEQ));
     }
 
     while (1) {
@@ -2704,7 +2704,7 @@ static int  get_an_arg(
             if (mcpp_mode == STD && token_type == NAM
                     && c != IN_SRC && c != DEF_MAGIC && infile->fp) {
                 len = trace_arg ? IN_SRC_LEN : 1;
-                memmove( prevp + len, prevp, (size_t) (argp - prevp));
+                ACE_OS::memmove( prevp + len, prevp, (size_t) (argp - prevp));
                 argp += len;
                 *prevp = IN_SRC;
                     /* Mark that the name is read from source file  */
@@ -2724,7 +2724,7 @@ static int  get_an_arg(
                         in_src = (LOCATION *) xrealloc( (char *) in_src
                                 , old_len * 2);
                         /* Have to initialize the enlarged area     */
-                        memset( in_src + max_in_src_num, 0, old_len);
+                        ACE_OS::memset( in_src + max_in_src_num, 0, old_len);
                         max_in_src_num *= 2;
                     }
                     /* Insert the identifier number in 2-bytes-encoding     */
@@ -2755,7 +2755,7 @@ static int  get_an_arg(
             e_line_col.line = src_line;     /*      before spaces   */
             e_line_col.col = infile->bptr - infile->buffer;
         }
-        memset( &mgc_seq, 0, sizeof (MAGIC_SEQ));
+        ACE_OS::memset( &mgc_seq, 0, sizeof (MAGIC_SEQ));
         c = squeeze_ws( &argp, 0, &mgc_seq);
                                             /* To the next token    */
     }                                       /* Collected an argument*/
@@ -2925,7 +2925,7 @@ static void skip_macro( void)
     if (infile->fp)                         /* Source file          */
         return;
     while (infile->fp == 0) {            /* Stacked stuff        */
-        infile->bptr += strlen( infile->bptr);
+        infile->bptr += ACE_OS::strlen( infile->bptr);
         get_ch();                           /* To the parent "file" */
     }
     unget_ch();

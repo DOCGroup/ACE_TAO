@@ -546,7 +546,7 @@ static int  eval_lex( void)
             } else if (mcpp_mode != POST_STD
                     && (openum = id_operator( identifier)) != 0) {
                 /* Identifier-like operator in C++98    */
-                strcpy( work_buf, identifier);
+                ACE_OS::strcpy( work_buf, identifier);
                 return  chk_ops();
             }
         } else if (! standard && str_eq( identifier, "sizeof")) {
@@ -760,17 +760,17 @@ static int  look_type(
         if (token_type == NAM) {
 #if HAVE_LONG_LONG
             if (str_eq( identifier, "long")) {
-                strcpy( work_buf, "long long");
+                ACE_OS::strcpy( work_buf, "long long");
                 goto  basic;
             }
 #endif
             if (str_eq( identifier, "double")) {
-                strcpy( work_buf, "long double");
+                ACE_OS::strcpy( work_buf, "long double");
                 goto  basic;
             }
         }
         unget_string( work_buf, 0);      /* Not long long        */
-        strcpy( work_buf, "long");          /*   nor long double    */
+        ACE_OS::strcpy( work_buf, "long");          /*   nor long double    */
     }
 
     /*
@@ -1183,7 +1183,7 @@ static expr_t   eval_one(
     for (count = 0; ; ++count) {
         if (isupper( uc))
             uc = tolower( uc);
-        if ((cp = strchr( digits, uc)) == 0)
+        if ((cp = ACE_OS::strchr( digits, uc)) == 0)
             break;
         if (count >= 3 && bits == 3)
             break;      /* Octal escape sequence at most 3 digits   */
@@ -1320,7 +1320,7 @@ static VAL_SIGN *   eval_eval(
             expr_t  v3;
 
             v3 = (sign1 == SIGNED ? v1 : v2);
-            sprintf( negate, neg_format, v3, v3);
+	    ACE_OS::sprintf( negate, neg_format, v3, v3);
             cwarn( negate, skip ? non_eval : 0, 0L, 0);
         }
         valp->sign = sign1 = sign2 = UNSIGNED;
@@ -1528,7 +1528,7 @@ static expr_t   eval_unsigned(
     case OP_EOE:
     case OP_PLU:    v1 = v1u;           break;
     case OP_NEG:
-        v1 = -v1u;
+        v1 = v1u;
         if (v1u)
             overflow( op_name, valpp, TRUE);
         break;

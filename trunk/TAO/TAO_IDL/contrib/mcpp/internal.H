@@ -202,7 +202,7 @@
 #if MCPP_LIB && HOST_COMPILER == GNUC   \
         && (SYS_FAMILY == SYS_UNIX && SYSTEM != SYS_CYGWIN)
     /* For GCC 4.* on UNIXes    */
-#pragma GCC visibility push( hidden)    /* Hide these names from outside    */
+//#pragma GCC visibility push( hidden)    /* Hide these names from outside    */
 #endif
 
 /*
@@ -301,7 +301,7 @@ typedef struct line_col {
 #define INSERT_SEP      1   /* Next get_ch() insert a separator     */
 #define INSERTED_SEP    2   /* Last get_ch() Inserted a separator   */
 
-#define str_eq(s1, s2)  (strcmp(s1, s2) == 0)
+#define str_eq(s1, s2)  (ACE_OS::strcmp(s1, s2) == 0)
 
 #ifndef IO_SUCCESS
 #define IO_SUCCESS      0
@@ -553,7 +553,7 @@ extern void     init_support( void);
 extern void     init_system( void);
 
 #if HOST_COMPILER == GNUC && (SYS_FAMILY == SYS_UNIX && SYSTEM != SYS_CYGWIN)
-#pragma GCC visibility pop
+//#pragma GCC visibility pop
 #endif
 #endif
 
