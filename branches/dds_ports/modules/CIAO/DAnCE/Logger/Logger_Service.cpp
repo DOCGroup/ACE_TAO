@@ -47,7 +47,7 @@ namespace DAnCE
     //    const ACE_TCHAR *traces = "-t";
     const ACE_TCHAR *lfl = ACE_TEXT("--log-file");
     const ACE_TCHAR *lfs = ACE_TEXT("-f");
-
+    
     // We need to actually FIND the -l option, as the get_opt won't ignore
     // the ORB options and such.
     for (int i = 0; i < argc; ++i)
@@ -55,6 +55,7 @@ namespace DAnCE
         if (//ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
             ACE_OS::strncmp (argv[i], tracel, 7) == 0)
           {
+            argv[i] = ACE_TEXT ("");
             this->trace_ = true;
             continue;
           }
@@ -65,7 +66,7 @@ namespace DAnCE
             if ((i + 1) < argc && *argv[i + 1] != '-')
               {
                 int level = ACE_OS::atoi (argv[i + 1]);
-
+                
                 if (level != 0)
                   this->log_level_ = level;
               }
@@ -74,9 +75,12 @@ namespace DAnCE
         if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
             ACE_OS::strncmp (argv[i], lfl, 10 ) == 0)
           {
+            argv[i] = ACE_TEXT ("");
+            
             if ((i + 1) < argc && *argv[i + 1] != '-')
               {
                 this->filename_ = ACE_TEXT_ALWAYS_CHAR (argv[i+1]);
+                argv[i + 1] = ACE_TEXT ("");
               }
           }
       }

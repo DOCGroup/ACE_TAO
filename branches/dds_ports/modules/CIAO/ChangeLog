@@ -1,29 +1,35 @@
+Fri Jun  5 19:48:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/Logger_Service.cpp:
+
+          Now swallows any command line arguments it finds. 
+        
 Tue Jun  2 03:43:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Module_Main.h
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp
-          
+
           Added \n to debug statements.
-          
+
         * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
-          
+
           In a DANCE_DEBUG statement, an %C was declared without an input variable.
           This results in an exception.
-          
+
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher.h
-          
+
           Changed code outlining.
-          
+
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
-          
-          When logging the command line parameters in a logfile, every line is prefixed 
+
+          When logging the command line parameters in a logfile, every line is prefixed
           with a timestamp, hostid, ...... This results in a log line which is hard to read.
           The command line parameters are now logged using several lines.
-          
+
         * examples/Hello/descriptors/run_test.pl
-          
+
           Added logging regarding processes and commandline parameters
 
 Tue Jun  2 03:43:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -41,8 +47,8 @@ Tue Jun  2 03:43:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Outline of a driving use case for phase 1.  Note that the
           idl3p files are the IDL3+ for the components/connector, and the
-          idl3 files are my best guess at the implied IDL3 mapping.  
-        
+          idl3 files are my best guess at the implied IDL3 mapping.
+
         * connectors/dds4ccm/idl:
         * connectors/dds4ccm/idl/dds4ccm_Base.idl3:
         * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3p:
