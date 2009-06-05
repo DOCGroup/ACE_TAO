@@ -11,16 +11,20 @@ use PerlACE::Run_Test;
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DAnCE = "$ENV{'DANCE_ROOT'}";
+
 $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
+
 $daemons = 2;
 @ports = ( 60001, 60002 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 @nodenames = ( "Sender", "Receiver" );
+
 $status = 0;
 $dat_file = "NodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
+
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
 $nsior = PerlACE::LocalFile ("ns.ior");
@@ -79,6 +83,8 @@ sub run_node_daemons {
       $d_cmd = "$DAnCE/bin/dance_node_manager";
       $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --instance-nc corbaloc:rir:/NameService";
 
+      print "Run dance_node_manager with $d_param\n";
+
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
       $result = $Daemons[$i]->Spawn ();
       push(@processes, $Daemons[$i]);
@@ -96,7 +102,7 @@ sub run_node_daemons {
   return 0;
 }
 
-delete_ior_files ();
+delete_ior_files ();  
 
 # Invoke naming service
 
@@ -104,7 +110,7 @@ $NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "
 
 $NS->Spawn ();
 
-print STDERR "Starting Naming Service\n";
+print STDERR "Starting Naming Service with -m 0 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
 
 if (PerlACE::waitforfile_timed ($nsior, $PerlACE::wait_interval_for_process_creation) == -1)
 {
@@ -132,7 +138,7 @@ if ($status != 0) {
 $daemons_running = 1;
 
 # Invoke execution manager.
-print "Invoking execution manager\n";
+print "Invoking execution manager (dance_execution_manager.exe) with -eEM.ior --node-map $dat_file\n";
 $EM = new PerlACE::Process ("$DAnCE/bin/dance_execution_manager",
                             "-eEM.ior --node-map $dat_file");
 $EM->Spawn ();
@@ -149,6 +155,8 @@ $em_running = 1;
 
 # Invoke executor - start the application -.
 print "Invoking executor - start the application -\n";
+
+print "Start dance_plan_launcher.exe with -x DeploymentPlan.cdp -k file://EM.ior\n";
 $E =
   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
                         "-x DeploymentPlan.cdp -k file://EM.ior");
@@ -170,7 +178,7 @@ if (PerlACE::waitforfile_timed ("Sender.ior",
     exit 1;
 }
 
-print "Invoking the controller\n";
+print "Invoking the controller ($controller_exec -k file://Sender.ior)\n";
 $controller = new PerlACE::Process ("$controller_exec", "-k file://Sender.ior");
 $result = $controller->SpawnWaitKill (3000);
 
@@ -181,6 +189,8 @@ if ($result != 0) {
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
+print "by running dance_plan_launcher.exe with -k file://EM.ior -x DeploymentPlan.cdp -q\n";
+
 $E =
   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
                         "-k file://EM.ior -x DeploymentPlan.cdp -q");

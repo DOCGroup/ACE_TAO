@@ -26,8 +26,8 @@ DAnCE_Plan_Launcher_Module::create_object (CORBA::ORB_ptr orb,
   try
     {
       DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_Plan_Launcher_Module::create_object - "
-                    "Creating Plan Launcher object."));
-                    
+                    "Creating Plan Launcher object.\n"));
+
       Plan_Launcher_Impl pl (orb, argc, argv);
       pl.execute();
     }
