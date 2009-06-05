@@ -1,3 +1,20 @@
+Fri Jun  5 14:35:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+          Layout changes
+
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.inl:
+          Initialise pointer with 0
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+          Const changes, debug changes, and initialise pointer with 0
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+          Debug changes
+
+        * orbsvcs/orbsvcs/Notify/Proxy.inl:
+          Const/bool changes
+
 Fri Jun  5 13:48:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/Makefile.am:
