@@ -65,7 +65,7 @@ Echo_Client_i::run (const char *name,
       CORBA::Object_var object =
         client_->_set_policy_overrides(policyList, CORBA::ADD_OVERRIDE);
 
-      Echo_var srv(Echo::_narrow(object));
+      Echo_var srv(Echo::_narrow(object.in ()));
 
       char* buf = new char [this->payload_length_+ 1];
       ACE_OS::memset (buf, 'a', this->payload_length_);
