@@ -26,7 +26,6 @@ namespace CosNotifyCommImpl{
       std::cout << "event.header.fixed_header.event_type.type_name = " 
         << event.header.fixed_header.event_type.type_name
         << std::endl;
-
     };
 
     void disconnect_structured_push_consumer()
@@ -138,8 +137,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNotification::EventTypeSeq event_types(1);
     event_types.length(2);
 
-    event_types[0].domain_name = CORBA::string_dup("DomainA");
-    event_types[0].type_name = CORBA::string_dup("TypeA");
+    event_types[0].domain_name = CORBA::string_dup("Test_domain");
+    event_types[0].type_name = CORBA::string_dup("Test_type_name");
     event_types[1].domain_name = CORBA::string_dup("DomainB");
     event_types[1].type_name = CORBA::string_dup("TypeB");
 
@@ -148,18 +147,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     constraints[0].event_types = event_types;
     constraints[0].constraint_expr = CORBA::string_dup(
-      "");
+      "$data == 1 or $data == 2 or $data == 4");
 
     filter->add_constraints(constraints);                                       
 
     pps->add_filter(filter.in());
 
     std::cout << "Attached a filter to ProxyPushSupplier" << std::endl;
-    std::cout << "The filter's event_types[0].domain_name=" <<  event_types[0].domain_name << std::endl;
-    std::cout << "The filter's event_types[0].type_name=" <<  event_types[0].type_name << std::endl;
-    std::cout << "The filter's event_types[1].domain_name=" <<  event_types[1].domain_name << std::endl;
-    std::cout << "The filter's event_types[1].type_name=" <<  event_types[1].type_name << std::endl;
-
+    std::cout << "The filter's event_types[0].domain_name = " <<  event_types[0].domain_name << std::endl;
+    std::cout << "The filter's event_types[0].type_name = " <<  event_types[0].type_name << std::endl;
+    std::cout << "The filter's event_types[1].domain_name = " <<  event_types[1].domain_name << std::endl;
+    std::cout << "The filter's event_types[1].type_name = " <<  event_types[1].type_name << std::endl;
+    std::cout << "The filter's constraint_expr=" << constraints[0].constraint_expr << std::endl; 
 
     //Connecting a Supplier to a Proxy Consumer
     try
@@ -183,15 +182,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->run (tv);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Consumer done.\n")));
 
-    if (pImpl_spc->received_events ())
+    if (! pImpl_spc->received_events ())
     {
       //Consumer should not receive any events as it's filtered with event type.
-      std::cerr << "Test failed - received test events." << std::endl;
+      std::cerr << "Test failed - did not receive test events." << std::endl;
       return 1;
     }
     else
     {
-      std::cerr << "Test passed - did not receive test events as expected." << std::endl;
+      std::cout << "Test passed - received test events as expected." << std::endl;
     }
   }
   catch(...)

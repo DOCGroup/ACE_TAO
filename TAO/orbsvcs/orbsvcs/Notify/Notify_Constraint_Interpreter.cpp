@@ -93,9 +93,11 @@ TAO_Notify_Constraint_Interpreter::build_tree (
 
   if (has_et_exp && valid_constraint)
   {
-    exp_str = "(";
+    exp_str = "((";
     exp_str += et_exp;
-    exp_str += ")";
+    exp_str += ") and (";
+    exp_str += exp.constraint_expr.in ();
+    exp_str += "))";
   }
   else if (has_et_exp)
     exp_str = et_exp;

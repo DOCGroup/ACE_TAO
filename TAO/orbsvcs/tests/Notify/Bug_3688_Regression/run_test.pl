@@ -7,30 +7,70 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+use strict;
 
-$status = 0;
-$file = PerlACE::LocalFile ("test.ior");
+my $persistent_test = 0;
+my $notifyior = PerlACE::LocalFile("ecf.ior");
+my $port = PerlACE::uniqueid () + 10005;
+my $nts_ref = "NotifyService=iioploc://localhost:$port/NotifyService";
+my $svcconf = "";
+my $consumer_runtime = 10;
+  
+my $NTS = new PerlACE::Process("../../../Notify_Service/Notify_Service",
+                              "-ORBDebugLevel 1 ".
+                              "-NoNameSvc -IORoutput $notifyior $svcconf " .
+                              "-ORBEndpoint iiop://localhost:$port");
+my $SUPPLIER = new PerlACE::Process("supplier", "$nts_ref -ORBDebugLevel 1");
+my $CONSUMER = new PerlACE::Process("consumer", "$nts_ref -t $consumer_runtime");
 
-unlink $file;
+unlink($notifyior);
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "");
+
+print "\n*********** Starting the Notify_Service  ***********\n\n";
+print $NTS->CommandLine ()."\n";
+
+$NTS->Spawn();
+if (PerlACE::waitforfile_timed($notifyior, 20) == -1) {
+  print STDERR "ERROR: waiting for the notify service to start\n";
+  $NTS->Kill();
+  exit(1);
 }
-else {
-    $SV = new PerlACE::Process ("server", "");
+
+print "\n*********** Starting the notification Consumer ***********\n\n";
+print STDERR $CONSUMER->CommandLine (). "\n";
+
+my $client = $CONSUMER->Spawn();
+if ($client  != 0) {
+  $NTS->Kill();
+  exit(1);
 }
 
-print STDERR "\n\n==== Running bug 3688 regression test\n";
+sleep(5);
 
-$SV->Spawn ();
+print "\n*********** Starting the notification Supplier ***********\n\n";
+print STDERR $SUPPLIER->CommandLine (). "\n";
 
-$collocated = $SV->WaitKill (15);
-
-if ($collocated != 0) {
-    print STDERR "ERROR: Bug_3688_Regression returned $collocated\n";
-    $status = 1;
+my $server = $SUPPLIER->Spawn();
+if ($server  != 0) {
+  $NTS->Kill();
+  $CONSUMER->Kill();
+  exit(1);
 }
 
-unlink $file;
+$server = $SUPPLIER->WaitKill(10);
+if ($server  != 0) {
+  $NTS->Kill();
+  $CONSUMER->Kill();
+  exit(1);
+}
 
-exit $status;
+$client = $CONSUMER->WaitKill(10);
+if ($client  != 0) {
+  $NTS->Kill();
+  exit(1);
+}
+
+$NTS->Kill();
+
+unlink($notifyior);
+exit(0);
