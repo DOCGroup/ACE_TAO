@@ -1,7 +1,6 @@
-/*
+/* $Id$
  * cc1.c:   dummy cc1 and cc1plus to be invoked by MinGW's GCC
  *      MinGW's GCC does not invoke shell-script named cc1.
- * $Id$
  */
 
 #include "stdio.h"
@@ -12,11 +11,12 @@
 
 int exec_program( int argc, char ** argv);
 // FUZZ: disable check_for_improper_main_declaration
-int main (int argc, char ** argv) {
+int main( int argc, char ** argv) {
+// FUZZ: enable check_for_improper_main_declaration
     int     status;
 
     if (argc - 1 >= ARG_LIM) {
-        ACE_OS::fprintf( stderr, "Too many arguments.\n");
+        fprintf( stderr, "Too many arguments.\n");
         return  1;
     }
     status = exec_program( argc, argv);
@@ -34,20 +34,21 @@ int exec_program( int argc, char ** argv) {
     int     status;
     size_t  len;
 
-    if (ACE_OS::strstr( argv[ 0], "cc1plus"))
+    if (strstr( argv[ 0], "cc1plus"))
         plus = 1;                   /* C++  */
-    tp = ACE_OS::strstr( argv[ 0], "cc1");
+    tp = strstr( argv[ 0], "cc1");
     len = tp - argv[ 0];
-    ACE_OS::memcpy( temp, argv[ 0], len);
+    memcpy( temp, argv[ 0], len);
     temp[ len] = '\0';
     tp = temp + len;
     for (i = 1; i < argc; i++)
-      if (ACE_OS::strcmp( argv[ i], "-fpreprocessed") == 0)
+        if ((strcmp( argv[ i], "-fpreprocessed") == 0)
+                || (strncmp( argv[ i], "-traditional", 12) == 0))
             break;                  /* Invoke cc1 or cc1plus    */
     if (i < argc) {
-        ACE_OS::strcpy( tp, plus ? "cc1plus_gnuc.exe" : "cc1_gnuc.exe");
+        strcpy( tp, plus ? "cc1plus_gnuc.exe" : "cc1_gnuc.exe");
     } else {                        /* Invoke mcpp              */
-        ACE_OS::strcpy( tp, "mcpp.exe");
+        strcpy( tp, "mcpp.exe");
         if (plus)
             buf[ n++] = "-+";       /* Insert the option        */
     }
