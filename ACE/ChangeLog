@@ -1,3 +1,11 @@
+Fri Jun  5 18:16:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ETCL/ETCL_Interpreter.cpp:
+          Prefix increment and const changes
+
+        * ace/SString.h:
+          Doxygen changes
+
 Thu Jun  4 10:14:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_T.cpp:
