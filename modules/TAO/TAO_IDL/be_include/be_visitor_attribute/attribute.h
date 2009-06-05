@@ -46,6 +46,13 @@ public:
 
   virtual int visit_attribute (be_attribute *node);
   // visit attribute. We provide code for this method in the derived class
+
+  void for_facets (bool val);
+  void op_scope (be_interface *node);
+
+private:
+  bool for_facets_;
+  be_interface *op_scope_;
 };
 
 #endif /* _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H*/

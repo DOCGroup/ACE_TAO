@@ -59,12 +59,14 @@ public:
   AST_Interface **supports (void) const;
 
   long n_supports (void) const;
+  
+  typedef ACE_Unbounded_Queue<port_description> PORTS;
 
-  ACE_Unbounded_Queue<port_description> &provides (void);
-  ACE_Unbounded_Queue<port_description> &uses (void);
-  ACE_Unbounded_Queue<port_description> &emits (void);
-  ACE_Unbounded_Queue<port_description> &publishes (void);
-  ACE_Unbounded_Queue<port_description> &consumes (void);
+  PORTS &provides (void);
+  PORTS &uses (void);
+  PORTS &emits (void);
+  PORTS &publishes (void);
+  PORTS &consumes (void);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -82,11 +84,11 @@ public:
 
 private:
   AST_Component *pd_base_component;
-  ACE_Unbounded_Queue<port_description> pd_provides;
-  ACE_Unbounded_Queue<port_description> pd_uses;
-  ACE_Unbounded_Queue<port_description> pd_emits;
-  ACE_Unbounded_Queue<port_description> pd_publishes;
-  ACE_Unbounded_Queue<port_description> pd_consumes;
+  PORTS pd_provides;
+  PORTS pd_uses;
+  PORTS pd_emits;
+  PORTS pd_publishes;
+  PORTS pd_consumes;
 };
 
 #endif // _AST_COMPONENT_AST_COMPONENT_HH

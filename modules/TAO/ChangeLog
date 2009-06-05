@@ -1,3 +1,90 @@
+Fri Jun  5 16:38:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_identifier_helper.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be_include/be_visitor_any_extracted_type_decl.h:
+        * TAO_IDL/be_include/be_identifier_helper.h:
+        * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svs.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svh.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svs.h:
+        * TAO_IDL/be_include/be_visitor_attribute/set_from_extracted.h:
+        * TAO_IDL/be_include/be_visitor_attribute/component_init.h:
+
+          New files, visitors and utility classes to add support for
+          generation of CIAO servant code and executor IDL.
+
+        * TAO_IDL/TAO_IDL_ACE.mwc:
+
+          New file, for convenience when compiling the IDL compiler
+          after ACE has been updated.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * ast/ast_operation.cpp:
+        * ast/ast_interface.cpp:
+        * ast/ast_component.cpp:
+        * ast/ast_concrete_type.cpp:
+        * ast/ast_string.cpp:
+        * be_include/be_interface.h:
+        * be_include/be_visitor_component/component_ch.h:
+        * be_include/be_helper.h:
+        * be_include/be_visitor_attribute/attribute.h:
+        * be_include/be_visitor_root.h:
+        * be_include/be_codegen.h:
+        * be_include/be_visitor_attribute.h:
+        * be_include/be_global.h:
+        * be_include/be_visitor_home.h:
+        * be_include/be_visitor_operation.h:
+        * be_include/be_visitor_component.h:
+        * driver/drv_args.cpp:
+        * util/utl_global.cpp:
+
+          Changes to existing files in support of the new CIAO servant
+          code and executor IDL code generation.
+
 Fri May 29 12:47:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp (schedule_output):

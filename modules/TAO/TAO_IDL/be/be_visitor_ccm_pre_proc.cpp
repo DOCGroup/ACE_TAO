@@ -303,12 +303,6 @@ be_visitor_ccm_pre_proc::gen_provides (be_component *node)
         {
           return -1;
         }
-        
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -384,12 +378,6 @@ be_visitor_ccm_pre_proc::gen_uses (be_component *node)
                                 -1);
             }
         }
-        
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -424,12 +412,6 @@ be_visitor_ccm_pre_proc::gen_emits (be_component *node)
                              "gen_emits_disconnect failed\n"),
                             -1);
         }
-        
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -464,12 +446,6 @@ be_visitor_ccm_pre_proc::gen_publishes (be_component *node)
                              "gen_unsubscribe failed\n"),
                             -1);
         }
-        
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -495,12 +471,6 @@ be_visitor_ccm_pre_proc::gen_consumes (be_component *node)
                              "gen_consumes_get_connection failed\n"),
                             -1);
         }
-              
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;

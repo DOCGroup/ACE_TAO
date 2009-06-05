@@ -185,19 +185,25 @@ public:
 
   /// Iterate over the inheritance hierarchy and call the
   /// worker->emit() method for each interface on it.
+  /// CCMObject is traversed only for components regardless
+  /// of the flag, it is there to disable this traversal for
+  /// component servant and executor code generation.
   int traverse_inheritance_graph (
-      TAO_IDL_Inheritance_Hierarchy_Worker &worker,
-      TAO_OutStream *os,
-      bool abstract_paths_only = false
-    );
+    TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+    TAO_OutStream *os,
+    bool abstract_paths_only = false,
+    bool add_ccm_object = true);
 
   /// Wrap the @c gen parameter and call the generic version of
-  /// traverse_inheritance_graph()
+  /// traverse_inheritance_graph().
+  /// CCMObject is traversed only for components regardless
+  /// of the flag, it is there to disable this traversal for
+  /// component servant and executor code generation.
   int traverse_inheritance_graph (
-      tao_code_emitter gen,
-      TAO_OutStream *os,
-      bool abstract_paths_only = false
-    );
+    tao_code_emitter gen,
+    TAO_OutStream *os,
+    bool abstract_paths_only = false,
+    bool add_ccm_object = true);
 
   int in_mult_inheritance (void);
   // Am I in some form of multiple inheritance

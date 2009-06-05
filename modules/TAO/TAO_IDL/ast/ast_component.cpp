@@ -44,6 +44,10 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                    false),
     pd_base_component (base_component)
 {
+  if (!this->imported ())
+    {
+      idl_global->component_seen_ = true;
+    }
 }
 
 AST_Component::~AST_Component (void)
@@ -143,31 +147,31 @@ AST_Component::n_supports (void) const
   return this->n_inherits ();
 }
 
-ACE_Unbounded_Queue<AST_Component::port_description> &
+AST_Component::PORTS &
 AST_Component::provides (void)
 {
   return this->pd_provides;
 }
 
-ACE_Unbounded_Queue<AST_Component::port_description> &
+AST_Component::PORTS &
 AST_Component::uses (void)
 {
   return this->pd_uses;
 }
 
-ACE_Unbounded_Queue<AST_Component::port_description> &
+AST_Component::PORTS &
 AST_Component::emits (void)
 {
   return this->pd_emits;
 }
 
-ACE_Unbounded_Queue<AST_Component::port_description> &
+AST_Component::PORTS &
 AST_Component::publishes (void)
 {
   return this->pd_publishes;
 }
 
-ACE_Unbounded_Queue<AST_Component::port_description> &
+AST_Component::PORTS &
 AST_Component::consumes (void)
 {
   return this->pd_consumes;
@@ -176,6 +180,58 @@ AST_Component::consumes (void)
 void
 AST_Component::destroy (void)
 {
+  port_description *pd = 0;
+  
+  for (PORTS::ITERATOR i = this->pd_provides.begin ();
+       !i.done ();
+       i.advance ())
+    {
+      i.next (pd);
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
+    }
+    
+  for (PORTS::ITERATOR i = this->pd_uses.begin ();
+       !i.done ();
+       i.advance ())
+    {
+      i.next (pd);
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
+    }
+    
+  for (PORTS::ITERATOR i = this->pd_publishes.begin ();
+       !i.done ();
+       i.advance ())
+    {
+      i.next (pd);
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
+    }
+    
+  for (PORTS::ITERATOR i = this->pd_consumes.begin ();
+       !i.done ();
+       i.advance ())
+    {
+      i.next (pd);
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
+    }
+    
+  for (PORTS::ITERATOR i = this->pd_emits.begin ();
+       !i.done ();
+       i.advance ())
+    {
+      i.next (pd);
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
+    }
+    
   this->AST_Interface::destroy ();
 }
 

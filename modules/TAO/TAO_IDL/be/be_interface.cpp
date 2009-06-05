@@ -33,6 +33,7 @@
 #include "utl_exceptlist.h"
 #include "ast_generator.h"
 #include "ast_component.h"
+#include "ast_home.h"
 #include "global_extern.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
@@ -1425,9 +1426,11 @@ be_code_emitter_wrapper::emit (be_interface *derived_interface,
 // style. The actual work on each element in the inheritance graph is carried
 // out by the function passed as argument.
 int
-be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
-                                          TAO_OutStream *os,
-                                          bool abstract_paths_only)
+be_interface::traverse_inheritance_graph (
+  be_interface::tao_code_emitter gen,
+  TAO_OutStream *os,
+  bool abstract_paths_only,
+  bool add_ccm_object)
 {
   // Make sure the queues are empty.
   this->insert_queue.reset ();
@@ -1445,17 +1448,19 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
 
   be_code_emitter_wrapper wrapper (gen);
 
-  return this->traverse_inheritance_graph (wrapper,
-                                           os,
-                                           abstract_paths_only);
+  return
+    this->traverse_inheritance_graph (wrapper,
+                                      os,
+                                      abstract_paths_only,
+                                      add_ccm_object);
 }
 
 int
 be_interface::traverse_inheritance_graph (
-    TAO_IDL_Inheritance_Hierarchy_Worker &worker,
-    TAO_OutStream *os,
-    bool abstract_paths_only
-  )
+  TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+  TAO_OutStream *os,
+  bool abstract_paths_only,
+  bool add_ccm_object)
 {
   AST_Interface *intf = 0;  // element inside the queue
 
@@ -1470,11 +1475,26 @@ be_interface::traverse_inheritance_graph (
                             -1);
         }
 
+      // If we are doing a home, we check for a parent.
+      if (intf->node_type () == AST_Decl::NT_home)
+        {
+          AST_Home *base =
+            AST_Home::narrow_from_decl (intf)->base_home ();
+
+          if (base != 0)
+            {
+              (void) this->insert_non_dup (base);
+            }
+        }
+
       // If we are doing a component, we check for a parent.
       if (intf->node_type () == AST_Decl::NT_component)
         {
-          (void) this->insert_non_dup (be_global->ccmobject ());
-
+          if (add_ccm_object)
+            {
+              (void) this->insert_non_dup (be_global->ccmobject ());
+            }
+            
           AST_Component *base =
             AST_Component::narrow_from_decl (intf)->base_component ();
 
@@ -2690,9 +2710,6 @@ be_interface::server_enclosing_scope (void)
 {
   return this->strategy_->server_scope ();
 }
-
-
-
 
 IMPL_NARROW_FROM_DECL (be_interface)
 IMPL_NARROW_FROM_SCOPE (be_interface)

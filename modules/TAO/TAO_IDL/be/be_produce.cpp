@@ -219,6 +219,28 @@ BE_produce (void)
       be_visitor_root_is root_is_visitor (&ctx);
       BE_visit_root (root_is_visitor, "implementation skeleton");
     }
+    
+  if (be_global->gen_ciao_svnt () && idl_global->component_seen_)
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
+      be_visitor_root_svh root_svh_visitor (&ctx);
+      BE_visit_root (root_svh_visitor, "CIAO servant header");
+
+      ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
+      be_visitor_root_svs root_svs_visitor (&ctx);
+      BE_visit_root (root_svs_visitor, "CIAO servant source");
+      
+      if (be_global->gen_ciao_exec_idl ())
+        {
+          ctx.state (TAO_CodeGen::TAO_ROOT_EX_IDL);
+          be_visitor_root_ex_idl root_svs_visitor (&ctx);
+          BE_visit_root (root_svs_visitor, "CIAO executor IDL");
+        }
+    }
+
+  if (be_global->gen_ciao_exec_impl () && idl_global->component_seen_)
+    {
+    }
 
   // Done with this IDL file.
   BE_cleanup ();

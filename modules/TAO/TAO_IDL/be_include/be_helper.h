@@ -108,7 +108,12 @@ public:
       TAO_SVR_TMPL_INL,
       TAO_SVR_IMPL,
       TAO_SVR_TMPL_IMPL,
-      TAO_GPERF_INPUT
+      TAO_GPERF_INPUT,
+      CIAO_SVNT_HDR,
+      CIAO_SVNT_IMPL,
+      CIAO_EXEC_HDR,
+      CIAO_EXEC_IMPL,
+      CIAO_EXEC_IDL
     };
 
   TAO_OutStream (void);

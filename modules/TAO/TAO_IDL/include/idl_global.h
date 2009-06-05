@@ -282,6 +282,7 @@ public:
   bool bd_string_arg_seen_;
   bool boolean_seq_seen_;
   bool char_seq_seen_;
+  bool component_seen_;
   bool double_seq_seen_;
   bool enum_seen_;
   bool exception_seen_;

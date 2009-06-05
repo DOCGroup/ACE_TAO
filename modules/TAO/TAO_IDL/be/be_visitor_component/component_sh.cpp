@@ -96,12 +96,13 @@ be_visitor_component_sh::visit_component (be_component *node)
 
   if (be_global->gen_direct_collocation ())
     {
-      *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
     }
 
   if (be_global->gen_direct_collocation ())
     {
-      *os << "class " << node->strategized_proxy_broker_name ()
+      *os << "class " << node->direct_proxy_impl_name ()
+          << ";" << be_nl
+          << "class " << node->strategized_proxy_broker_name ()
           << ";" << be_nl;
     }
 
@@ -239,9 +240,8 @@ be_visitor_component_sh::visit_component (be_component *node)
   // before invoking the call.
   int status =
     node->traverse_inheritance_graph (
-              be_interface::gen_skel_helper,
-              os
-            );
+      be_interface::gen_skel_helper,
+      os);
 
   if (status == -1)
     {

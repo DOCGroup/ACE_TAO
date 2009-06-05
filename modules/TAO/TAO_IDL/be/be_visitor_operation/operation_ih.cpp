@@ -56,7 +56,7 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
+                         "(%N:%l) be_visitor_operation_ih::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);

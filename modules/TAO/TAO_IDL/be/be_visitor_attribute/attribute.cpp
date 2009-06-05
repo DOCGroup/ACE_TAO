@@ -49,7 +49,9 @@ ACE_RCSID (be_visitor_attribute,
 // *************************************************************************
 
 be_visitor_attribute::be_visitor_attribute (be_visitor_context *ctx)
-  : be_visitor_decl (ctx)
+  : be_visitor_decl (ctx),
+    for_facets_ (false),
+    op_scope_ (0)
 {
 }
 
@@ -98,7 +100,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   switch (this->ctx_->state ())
     {
-    // These two cases are the only ones that could involved a strategy.
+    // These two cases are the only ones that could involve a strategy.
     case TAO_CodeGen::TAO_ROOT_CH:
     case TAO_CodeGen::TAO_INTERFACE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
@@ -163,6 +165,20 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ROOT_TIE_SS:
       {
         be_visitor_operation_tie_ss visitor (&ctx);
+        status = get_op.accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVH:
+      {
+        be_visitor_operation_ch visitor (&ctx);
+        status = get_op.accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVS:
+      {
+        be_visitor_operation_svs visitor (&ctx);
+        visitor.for_facets (this->for_facets_);
+        visitor.scope (this->op_scope_);
         status = get_op.accept (&visitor);
         break;
       }
@@ -353,6 +369,20 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SVH:
+      {
+        be_visitor_operation_ch visitor (&ctx);
+        status = set_op.accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVS:
+      {
+        be_visitor_operation_svs visitor (&ctx);
+        visitor.for_facets (this->for_facets_);
+        visitor.scope (this->op_scope_);
+        status = set_op.accept (&visitor);
+        break;
+      }
     default:
       // Error.
       set_op.destroy ();
@@ -428,4 +458,16 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   set_op.destroy ();
   rt.destroy ();
   return 0;
+}
+
+void
+be_visitor_attribute::for_facets (bool val)
+{
+  this->for_facets_ = val;
+}
+
+void
+be_visitor_attribute::op_scope (be_interface *node)
+{
+  this->op_scope_ = node;
 }

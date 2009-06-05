@@ -1681,7 +1681,5 @@ AST_Interface::ast_accept (ast_visitor *visitor)
   return visitor->visit_interface (this);
 }
 
-
-
 IMPL_NARROW_FROM_DECL(AST_Interface)
 IMPL_NARROW_FROM_SCOPE(AST_Interface)
