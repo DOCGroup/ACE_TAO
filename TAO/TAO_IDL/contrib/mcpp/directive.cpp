@@ -128,7 +128,7 @@ void    directive( void)
         goto  skip_line;
     if (token_type != NAM) {
         if (mcpp_mode == OLD_PREP && token_type == NUM) {   /* # 123 [fname]*/
-            strcpy( identifier, "line");
+	  ACE_OS::strcpy( identifier, "line");
         } else {
             if (compiling) {
                 if (option_flags.lang_asm) {
@@ -145,7 +145,7 @@ void    directive( void)
     }
     hash = (identifier[ 1] == EOS) ? identifier[ 0]
             : (identifier[ 0] ^ (identifier[ 2] << 1));
-    if (strlen( identifier) > 7)
+    if (ACE_OS::strlen( identifier) > 7)
         hash ^= (identifier[ 7] << 1);
 
     /* hash is set to a unique value corresponding to the directive.*/
@@ -581,7 +581,7 @@ static long do_line( void)
     if (standard) {
         if (get_unexpandable( skip_ws(), FALSE) != NO_TOKEN) {
             cerror( excess, work_buf, 0L, 0);
-            free( save);
+	    ACE_OS::free( save);
             return  -1L;
         }
     } else if (mcpp_mode == OLD_PREP) {
@@ -599,7 +599,7 @@ static long do_line( void)
     }
 
     if (infile->filename)
-        free( infile->filename);
+        ACE_OS::free( infile->filename);
     infile->filename = save;                /* New file name        */
             /* Note that this does not change infile->real_fname    */
     return  (long) valp->val;               /* New line number      */
@@ -758,7 +758,7 @@ DEFBUF *    do_define(
             }
         }
     }
-    strcpy( macroname, identifier);         /* Remember the name    */
+    ACE_OS::strcpy( macroname, identifier);         /* Remember the name    */
 
     in_define = TRUE;                       /* Recognize '#', '##'  */
     if (get_parm() == FALSE) {              /* Get parameter list   */
@@ -1140,12 +1140,12 @@ static char *   is_formal(
     size_t  len;
     int     i;
 
-    len = strlen( name);
+    len = ACE_OS::strlen( name);
     for (i = 0; i < (nargs & ~AVA_ARGS); i++) {     /* For each parameter   */
         parm = parms[ i];
         if ((len == parm.len
                 /* Note: parms[].name are comma separated  */
-                    && memcmp( name, parm.name, parm.len) == 0)
+                    && ACE_OS::memcmp( name, parm.name, parm.len) == 0)
                 || (standard && (nargs & VA_ARGS)
                     && i == (nargs & ~AVA_ARGS) - 1 && conv
                     && str_eq( name, va_arg))) {    /* __VA_ARGS__  */
@@ -1352,7 +1352,7 @@ DEFBUF **   look_prev(
     *cmp = -1;                              /* Initialize           */
 
     while ((dp = *prevp) != 0) {
-        if ((*cmp = memcmp( dp->name, name, s_name)) >= 0)
+        if ((*cmp = ACE_OS::memcmp( dp->name, name, s_name)) >= 0)
             break;
         prevp = &dp->link;
     }
@@ -1411,12 +1411,12 @@ DEFBUF *    install_macro(
                                                 /* Shouldn't happen */
         cfatal( "Bug: Illegal macro installation of \"%s\"" /* _F_  */
                 , name, 0L, 0);      /* Use "" instead of 0   */
-    s_name = strlen( name);
+    s_name = ACE_OS::strlen( name);
     if (mcpp_mode == STD)
-        s_parmnames = strlen( parmnames) + 1;
+        s_parmnames = ACE_OS::strlen( parmnames) + 1;
     else
         s_parmnames = 0;
-    s_repl = strlen( repl) + 1;
+    s_repl = ACE_OS::strlen( repl) + 1;
     dp = (DEFBUF *)
         xmalloc( sizeof (DEFBUF) + s_name + s_parmnames + s_repl);
     if (cmp || (standard && (*prevp)->push)) {  /* New definition   */
@@ -1425,7 +1425,7 @@ DEFBUF *    install_macro(
     } else {                            /* Redefinition             */
         dp->link = defp->link;          /* Replace old def with new */
         *prevp = dp;
-        free( defp);
+        ACE_OS::free( defp);
     }
     dp->nargs = predefine ? predefine : numargs;
     if (standard) {
@@ -1433,12 +1433,12 @@ DEFBUF *    install_macro(
         dp->parmnames = (char *)dp + sizeof (DEFBUF) + s_name;
         dp->repl = dp->parmnames + s_parmnames;
         if (mcpp_mode == STD)
-            memcpy( dp->parmnames, parmnames, s_parmnames);
+            ACE_OS::memcpy( dp->parmnames, parmnames, s_parmnames);
     } else {
         dp->repl = (char *)dp + sizeof (DEFBUF) + s_name;
     }
-    memcpy( dp->name, name, s_name + 1);
-    memcpy( dp->repl, repl, s_repl);
+    ACE_OS::memcpy( dp->name, name, s_name + 1);
+    ACE_OS::memcpy( dp->repl, repl, s_repl);
     /* Remember where the macro is defined  */
     dp->fname = cur_fullname;   /* Full-path-list of current file   */
     dp->mline = src_line;
@@ -1476,7 +1476,7 @@ int undefine(
         mcpp_fprintf( OUT, "/*undef %ld*//*%s*/\n", src_line, dp->name);
         wrong_line = TRUE;
     }
-    free( dp);                          /* Delete the definition    */
+    ACE_OS::free( dp);                          /* Delete the definition    */
     if (standard)
         num_of_macro--;
     return  TRUE;
@@ -1602,8 +1602,8 @@ void    dump_a_def(
                 /* Make parms[] for dump_repl() */
                 for (i = 0, cp = dp->parmnames; i < numargs;
                         i++, cp = cp1 + 1) {
-                    if ((cp1 = strchr( cp, ',')) == 0)   /* The last arg */
-                        parms[ i].len = strlen( cp);
+                    if ((cp1 = ACE_OS::strchr( cp, ',')) == 0)   /* The last arg */
+                        parms[ i].len = ACE_OS::strlen( cp);
                     else
                         parms[ i].len = (size_t) (cp1 - cp);
                     parms[ i].name = cp;
@@ -1611,7 +1611,7 @@ void    dump_a_def(
             }
 #if COMPILER == GNUC
             if ((dp->nargs & VA_ARGS)
-                    && memcmp( parms[ numargs - 1].name, "...", 3) != 0) {
+                    && ACE_OS::memcmp( parms[ numargs - 1].name, "...", 3) != 0) {
                 appendix = "...";   /* Append ... so as to become 'args...' */
                 gcc2_va = TRUE;
             }
@@ -1690,7 +1690,7 @@ void    clear_symtable( void)
         for (next = *symp; next != 0; ) {
             dp = next;
             next = dp->link;
-            free( dp);                      /* Free the symbol      */
+            ACE_OS::free( dp);                      /* Free the symbol      */
         }
         *symp = 0;
     }

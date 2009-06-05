@@ -372,7 +372,7 @@ int     main
 
     /* Open input file, "-" means stdin.    */
     if (in_file != 0 && ! str_eq( in_file, "-")) {
-        if ((fp_in = fopen( in_file, "r")) == 0) {
+      if ((fp_in = ACE_OS::fopen( in_file, "r")) == 0) {
             mcpp_fprintf( ERR, "Can't open input file \"%s\".\n", in_file);
             errors++;
 #if MCPP_LIB
@@ -386,7 +386,7 @@ int     main
     }
     /* Open output file, "-" means stdout.  */
     if (out_file != 0 && ! str_eq( out_file, "-")) {
-        if ((fp_out = fopen( out_file, "w")) == 0) {
+        if ((fp_out = ACE_OS::fopen( out_file, "w")) == 0) {
             mcpp_fprintf( ERR, "Can't open output file \"%s\".\n", out_file);
             errors++;
 #if MCPP_LIB
@@ -398,7 +398,7 @@ int     main
         fp_debug = fp_out;
     }
     if (option_flags.q) {                   /* Redirect diagnostics */
-        if ((fp_err = fopen( "mcpp.err", "a")) == 0) {
+        if ((fp_err = ACE_OS::fopen( "mcpp.err", "a")) == 0) {
             errors++;
             mcpp_fprintf( OUT, "Can't open \"mcpp.err\"\n");
 #if MCPP_LIB
@@ -429,18 +429,18 @@ fatal_error_exit:
     /* Free malloced memory */
     if (mcpp_debug & MACRO_CALL) {
         if (in_file != stdin_name)
-            free( in_file);
+            ACE_OS::free( in_file);
     }
     clear_filelist();
     clear_symtable();
 #endif
 
     if (fp_in != stdin)
-        fclose( fp_in);
+        ACE_OS::fclose( fp_in);
     if (fp_out != stdout)
-        fclose( fp_out);
+        ACE_OS::fclose( fp_out);
     if (fp_err != stderr)
-        fclose( fp_err);
+        ACE_OS::fclose( fp_err);
 
     if (mcpp_debug & MEMORY)
         print_heap();
@@ -711,7 +711,7 @@ static void mcpp_main( void)
                     char *  tp = out_ptr;
                     while (char_type[ *tp & UCHARMAX] & HSP)
                         tp++;           /* Remove excessive spaces  */
-                    memmove( out_ptr, tp, strlen( tp) + 1);
+                    ACE_OS::memmove( out_ptr, tp, ACE_OS::strlen( tp) + 1);
                     wp -= (tp - out_ptr);
                 }
                 if (has_pragma) {           /* Found _Pramga()      */
@@ -794,10 +794,10 @@ static void do_pragma_op( void)
                 put_seq( output, cp1);
                 return;
             }
-            strcpy( workp, "\n");       /* Terminate with <newline> */
+            ACE_OS::strcpy( workp, "\n");       /* Terminate with <newline> */
             unget_string( work_buf, 0);
             do_pragma();                /* Do the #pragma "line"    */
-            infile->bptr += strlen( infile->bptr);      /* Clear sequence   */
+            infile->bptr += ACE_OS::strlen( infile->bptr);      /* Clear sequence   */
             cp1 = out_ptr = output;     /* From the top of buffer   */
             prev = FALSE;
         } else {                        /* Not pragma sequence      */
@@ -874,7 +874,7 @@ static void putout(
     /* Else no post-preprocess  */
 #if COMPILER != GNUC && COMPILER != MSC
     /* GCC and Visual C can accept very long line   */
-    len = strlen( out);
+    len = ACE_OS::strlen( out);
     if (len > NWORK - 1)
         devide_line( out);              /* Devide a too long line   */
     else
@@ -919,7 +919,7 @@ static void devide_line(
                 /* tokens such as '/', '*', ..., '*', '/', since it */
                 /* does not expect comment.                         */
                 save = out_ptr;
-                while ((save = strrchr( save, '/')) != 0) {
+                while ((save = ACE_OS::strrchr( save, '/')) != 0) {
                     if (*(save - 1) == '*') {   /* '*' '/' sequence */
                         out_ptr = save + 1;     /* Devide at the end*/
                         break;                  /*      of a comment*/
@@ -931,7 +931,7 @@ static void devide_line(
             *out_ptr = EOS;
             put_a_line( out);           /* Putout the former tokens */
             wp = out_ptr = stpcpy( out, save);      /* Restore the token    */
-            free( save);
+            ACE_OS::free( save);
         } else {                            /* Still in size        */
             out_ptr = wp;                   /* Advance the pointer  */
         }
@@ -957,7 +957,7 @@ static void put_a_line(
 
     if (no_output)
         return;
-    len = strlen( out);
+    len = ACE_OS::strlen( out);
     tp = out_p = out + len - 2;             /* Just before '\n'     */
     while (char_type[ *out_p & UCHARMAX] & SPA)
         out_p--;                    /* Remove trailing white spaces */
@@ -1113,7 +1113,7 @@ static char *   esc_mbchar(
                 c = *(cp - 1);
                 if (c == '\\' || c == '"' || c == '\'') {
                                     /* Insert \ before 0x5c, 0x22, 0x27 */
-                    memmove( cp, cp - 1, (size_t) (str_end - cp) + 2);
+                    ACE_OS::memmove( cp, cp - 1, (size_t) (str_end - cp) + 2);
                     *(cp++ - 1) = '\\';
                     str++;
                     str_end++;

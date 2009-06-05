@@ -163,7 +163,7 @@ void    mcpp_use_mem_buffers(
     for (i = 0; i < NUM_OUTDEST; ++i) {
         if (mem_buffers[ i].buffer)
             /* Free previously allocated memory buffer  */
-            free( mem_buffers[ i].buffer);
+            ACE_OS::free( mem_buffers[ i].buffer);
         if (use_mem_buffers) {
             /* Output to memory buffers instead of files    */
             mem_buffers[ i].buffer = 0;
@@ -206,7 +206,7 @@ static char *   append_to_buffer(
     }
 
     /* Append the string to the tail of the buffer  */
-    memcpy( mem_buf_p->entry_pt, string, length);
+    ACE_OS::memcpy( mem_buf_p->entry_pt, string, length);
     mem_buf_p->entry_pt += length;
     mem_buf_p->entry_pt[ 0] = '\0';     /* Terminate the string buffer  */
     mem_buf_p->bytes_avail -= length;
@@ -234,7 +234,7 @@ static int  mem_puts(
     OUTDEST od
 )
 {
-    if (append_to_buffer( &(mem_buffers[od]), s, strlen(s)) != 0)
+    if (append_to_buffer( &(mem_buffers[od]), s, ACE_OS::strlen(s)) != 0)
         return 0;
     else
         return !0;
@@ -275,7 +275,7 @@ int    mcpp_lib_fputc(
 #endif
         FILE *  stream = DEST2FP( od);
 
-        return (stream != 0) ? fputc( c, stream) : EOF;
+        return (stream != 0) ? ACE_OS::fputc( c, stream) : EOF;
 #if MCPP_LIB
     }
 #endif
@@ -295,7 +295,7 @@ int    mcpp_lib_fputs(
 #endif
         FILE *  stream = DEST2FP( od);
 
-        return (stream != 0) ? fputs( s, stream) : EOF;
+        return (stream != 0) ? ACE_OS::fputs( s, stream) : EOF;
 #if MCPP_LIB
     }
 #endif
@@ -322,14 +322,14 @@ int    mcpp_lib_fprintf(
         if (use_mem_buffers) {
             static char     mem_buffer[ NWORK];
 
-            rc = vsprintf( mem_buffer, format, ap);
+            rc = ACE_OS::vsprintf( mem_buffer, format, ap);
 
             if (rc != 0) {
                 rc = mem_puts( mem_buffer, od);
             }
         } else {
 #endif
-            rc = vfprintf( stream, format, ap);
+	  rc = ACE_OS::vfprintf( stream, format, ap);
 #if MCPP_LIB
         }
 #endif
@@ -435,7 +435,7 @@ int     get_unexpandable(
             c = get_ch();
         }
         if (file == infile) {
-            infile->bptr += strlen( infile->bptr);
+            infile->bptr += ACE_OS::strlen( infile->bptr);
             get_ch();
         }
         unget_ch();
@@ -455,11 +455,11 @@ void    skip_nl( void)
 {
     insert_sep = NO_SEP;
     while (infile && infile->fp == 0) {  /* Stacked text         */
-        infile->bptr += strlen( infile->bptr);
+        infile->bptr += ACE_OS::strlen( infile->bptr);
         get_ch();                           /* To the parent        */
     }
     if (infile)
-        infile->bptr += strlen( infile->bptr);  /* Source line      */
+        infile->bptr += ACE_OS::strlen( infile->bptr);  /* Source line      */
 }
 
 int     skip_ws( void)
@@ -708,7 +708,7 @@ next_c:
 #endif  /* IDMAX > IDLEN90MIN   */
 
     if (option_flags.dollar_in_name && dollar_diagnosed == FALSE
-            && (warn_level & 2) && strchr( identifier, '$') != 0) {
+            && (warn_level & 2) && ACE_OS::strchr( identifier, '$') != 0) {
         cwarn( "'$' in identifier \"%s\"", identifier, 0L, 0); /* _W2_ */
         dollar_diagnosed = TRUE;            /* Diagnose only once   */
     }
@@ -760,12 +760,12 @@ scan:
                         char *  buf;
                         size_t  chlen;
                         buf = xmalloc( chlen = infile->bptr - bptr + 2);
-                        memcpy( buf, bptr, chlen - 1);
+                        ACE_OS::memcpy( buf, bptr, chlen - 1);
                         buf[ chlen - 1] = EOS;
                         cwarn(
     "Illegal multi-byte character sequence \"%s\" in quotation",    /* _W1_ */
                         buf, 0L, 0);
-                        free( buf);
+                        ACE_OS::free( buf);
                     }
                 }
                 continue;
@@ -916,20 +916,20 @@ static char *   cat_line(
         infile->bptr -= 2;
         len = infile->bptr - infile->buffer;
     } else {        /* Overwrite the <newline> with <backslash>'n'  */
-        strcpy( infile->bptr, "\\n");
-        len = strlen( infile->buffer);
+        ACE_OS::strcpy( infile->bptr, "\\n");
+        len = ACE_OS::strlen( infile->buffer);
     }
     save1 = save_string( infile->buffer);
     save2 = get_line( FALSE);   /* infile->buffer is overwritten    */
     if (save2 == 0) {
-        free( save1);
+        ACE_OS::free( save1);
         return  0;
     }
     save2 = save_string( infile->buffer);
-    memcpy( infile->buffer, save1, len);
-    strcpy( infile->buffer + len, save2);               /* Catenate */
-    free( save1);
-    free( save2);
+    ACE_OS::memcpy( infile->buffer, save1, len);
+    ACE_OS::strcpy( infile->buffer + len, save2);               /* Catenate */
+    ACE_OS::free( save1);
+    ACE_OS::free( save2);
     if (! del_bsl)
         len -= 2;
     infile->bptr = infile->buffer + len;
@@ -1490,7 +1490,7 @@ void    clear_exp_mac( void)
 
     for (i = 1; i < EXP_MAC_IND_MAX; i++) {
         if (expanding_macro[ i].to_be_freed) {
-            free( (void *) expanding_macro[ i].name);
+            ACE_OS::free( (void *) expanding_macro[ i].name);
             expanding_macro[ i].to_be_freed = FALSE;
         }
     }
@@ -1561,7 +1561,7 @@ int     get_ch( void)
         if (! in_string && c == '\\' && *file->bptr == '\n'
                 && in_define        /* '\\''\n' is deleted in #define line, */
                     /*   provided the '\\' is not the 2nd byte of mbchar.   */
-                && ! last_is_mbchar( file->buffer, strlen( file->buffer) - 2
+                && ! last_is_mbchar( file->buffer, ACE_OS::strlen( file->buffer) - 2
                 && ! keep_spaces)
             ) {
             if (*(file->bptr - 2) == ' ')
@@ -1584,23 +1584,23 @@ int     get_ch( void)
      * input from the parent file/macro, if any.
      */
     infile = file->parent;                  /* Unwind file chain    */
-    free( file->buffer);                    /* Free buffer          */
+    ACE_OS::free( file->buffer);                    /* Free buffer          */
     if (infile == 0) {                   /* If at end of input   */
-        free( file->filename);
-        free( const_cast<char *> (file->src_dir));
-        free( file);    /* full_fname is the same with filename for main file*/
+        ACE_OS::free( file->filename);
+        ACE_OS::free( const_cast<char *> (file->src_dir));
+        ACE_OS::free( file);    /* full_fname is the same with filename for main file*/
         return  CHAR_EOF;                   /* Return end of file   */
     }
     if (file->fp) {                         /* Source file included */
-        free( file->filename);              /* Free filename        */
-        free( const_cast <char *> (file->src_dir));               /* Free src_dir         */
-        fclose( file->fp);                  /* Close finished file  */
+        ACE_OS::free( file->filename);              /* Free filename        */
+        ACE_OS::free( const_cast <char *> (file->src_dir));               /* Free src_dir         */
+        ACE_OS::fclose( file->fp);                  /* Close finished file  */
         /* Do not free file->real_fname and file->full_fname        */
         cur_fullname = const_cast <char *> (infile->full_fname);
         cur_fname = infile->real_fname;     /* Restore current fname*/
         if (infile->pos != 0L) {            /* Includer was closed  */
-            infile->fp = fopen( cur_fullname, "r");
-            fseek( infile->fp, infile->pos, SEEK_SET);
+	  infile->fp = ACE_OS::fopen( cur_fullname, "r");
+	  ACE_OS::fseek( infile->fp, infile->pos, SEEK_SET);
         }   /* Re-open the includer and restore the file-position   */
         len = (int) (infile->bptr - infile->buffer);
         infile->buffer = xrealloc( infile->buffer, NBUFF);
@@ -1628,9 +1628,9 @@ int     get_ch( void)
         if (macro_name)     /* file->filename should be freed later */
             expanding( file->filename, TRUE);
         else
-            free( file->filename);
+            ACE_OS::free( file->filename);
     }
-    free( file);                            /* Free file space      */
+    ACE_OS::free( file);                            /* Free file space      */
     return  get_ch();                       /* Get from the parent  */
 }
 
@@ -1683,7 +1683,7 @@ static char *   parse_line( void)
             case '*':                       /* Start of a comment   */
               //com_start:
                 if ((sp = read_a_comment( sp, &com_size)) == 0) {
-                    free( temp);            /* End of file with un- */
+                    ACE_OS::free( temp);            /* End of file with un- */
                     return  0;           /*   terminated comment */
                 }
                 if (keep_spaces && mcpp_mode != OLD_PREP) {
@@ -1762,7 +1762,7 @@ not_comment:
                 in_string = FALSE;
             }
             if (tp == 0) {
-                free( temp);                /* Unbalanced quotation */
+                ACE_OS::free( temp);                /* Unbalanced quotation */
                 return  parse_line();       /* Skip the line        */
             }
             sp = infile->bptr;
@@ -1790,8 +1790,8 @@ end_line:
         tp--;                       /* Remove trailing white space  */
     *tp++ = '\n';
     *tp = EOS;
-    infile->bptr = strcpy( infile->buffer, temp);   /* Write back to buffer */
-    free( temp);
+    infile->bptr = ACE_OS::strcpy( infile->buffer, temp);   /* Write back to buffer */
+    ACE_OS::free( temp);
     if (macro_line != 0 && macro_line != MACRO_ERROR) { /* Expanding macro  */
         temp = infile->buffer;
         while (char_type[ *temp & UCHARMAX] & HSP)
@@ -1855,7 +1855,7 @@ static char *   read_a_comment(
                     cat_line++;
                     com_cat_line.len[ cat_line]         /* Catenated length */
                             = com_cat_line.len[ cat_line - 1]
-                                + strlen( infile->buffer) - 1;
+                                + ACE_OS::strlen( infile->buffer) - 1;
                                             /* '-1' for '\n'        */
                     com_cat_line.last_line = src_line;
                 }
@@ -1879,7 +1879,7 @@ static char *   read_a_comment(
                 cat_line++;
                 com_cat_line.len[ cat_line]
                         = com_cat_line.len[ cat_line - 1]
-                            + strlen( infile->buffer) - 1;
+                            + ACE_OS::strlen( infile->buffer) - 1;
             }
             if ((saved_sp = sp = get_line( TRUE)) == 0)
                 return  0;       /* End of file within comment   */
@@ -1902,7 +1902,7 @@ static char *   mcpp_fgets(
     FILE *  stream
 )
 {
-    return fgets( s, size, stream);
+  return ACE_OS::fgets( s, size, stream);
 }
 
 static char *   get_line(
@@ -1943,7 +1943,7 @@ static char *   get_line(
             mcpp_fprintf( DBG, "\n#line %ld (%s)", src_line, cur_fullname);
             dump_string( 0, ptr);
         }
-        len = strlen( ptr);
+        len = ACE_OS::strlen( ptr);
         if (NBUFF - 1 <= ptr - infile->buffer + len
                 && *(ptr + len - 1) != '\n') {
                 /* The line does not yet end, though the buffer is full.    */
@@ -1971,7 +1971,7 @@ static char *   get_line(
             if (mcpp_mode == POST_STD && option_flags.dig)
                 converted += cnv_digraph( ptr);
             if (converted)
-                len = strlen( ptr);
+                len = ACE_OS::strlen( ptr);
             /* Translation phase 2  */
             len -= 2;
             if (len >= 0) {
@@ -1986,7 +1986,7 @@ static char *   get_line(
                         if (cat_line < MAX_CAT_LINE)
                                     /* Record the catenated length  */
                             bsl_cat_line.len[ ++cat_line]
-                                    = strlen( infile->buffer) - 2;
+                                    = ACE_OS::strlen( infile->buffer) - 2;
                         /* Else ignore  */
                     }
                     continue;
@@ -2001,7 +2001,7 @@ static char *   get_line(
         }
         if ((mcpp_debug & MACRO_CALL) && compiling) {
             if (cat_line && cat_line < MAX_CAT_LINE) {
-                bsl_cat_line.len[ ++cat_line] = strlen( infile->buffer) - 1;
+                bsl_cat_line.len[ ++cat_line] = ACE_OS::strlen( infile->buffer) - 1;
                                 /* Catenated length: '-1' for '\n'  */
                 bsl_cat_line.last_line = src_line;
             }
@@ -2040,16 +2040,16 @@ int     cnv_trigraph(
     int     count = 0;
     const char *    tp;
 
-    while ((in = strchr( in, '?')) != 0) {
+    while ((in = ACE_OS::strchr( in, '?')) != 0) {
         if (*++in != '?')
             continue;
         while (*++in == '?')
             ;
-        if ((tp = strchr( tritext, *in)) == 0)
+        if ((tp = ACE_OS::strchr( tritext, *in)) == 0)
             continue;
         *(in - 2) = *(tp + TRIOFFSET);
         in--;
-        memmove( in, in + 2, strlen( in + 1));
+	ACE_OS::memmove( in, in + 2, ACE_OS::strlen( in + 1));
         count++;
     }
 
@@ -2071,7 +2071,7 @@ int     cnv_digraph(
     int     i;
     int     c1, c2;
 
-    while ((i = strcspn( in, "%:<")), (c1 = *(in + i)) != '\0') {
+    while ((i = ACE_OS::strcspn( in, "%:<")), (c1 = *(in + i)) != '\0') {
         in += i + 1;
         c2 = *in;
         switch (c1) {
@@ -2096,7 +2096,7 @@ int     cnv_digraph(
             }
             break;
         }
-        memmove( in, in + 1, strlen( in));
+        ACE_OS::memmove( in, in + 1, ACE_OS::strlen( in));
         count++;
     }
 
@@ -2135,7 +2135,7 @@ static char *   at_eof(
     char *  cp;
 
     cp = infile->buffer;
-    len = strlen( cp);
+    len = ACE_OS::strlen( cp);
     if (len && *(cp += (len - 1)) != '\n') {
         *++cp = '\n';                       /* Supplement <newline> */
         *++cp = EOS;
@@ -2157,7 +2157,7 @@ static char *   at_eof(
             cwarn( format, input, 0L, unterm_com);
         /* The partial comment line has been already read by        */
         /* read_a_comment(), so supplement the  next line.          */
-        strcpy( infile->buffer, "*/\n");
+        ACE_OS::strcpy( infile->buffer, "*/\n");
         return  infile->bptr = infile->buffer;
     }
 
@@ -2237,12 +2237,12 @@ FILEINFO *  unget_string(
     size_t          size;
 
     if (text)
-        size = strlen( text) + 1;
+        size = ACE_OS::strlen( text) + 1;
     else
         size = 1;
     file = get_file( name, 0, 0, size, FALSE);
     if (text)
-        memcpy( file->buffer, text, size);
+        ACE_OS::memcpy( file->buffer, text, size);
     else
         *file->buffer = EOS;
     return  file;
@@ -2258,9 +2258,9 @@ char *  save_string(
     char *      result;
     size_t      size;
 
-    size = strlen( text) + 1;
+    size = ACE_OS::strlen( text) + 1;
     result = xmalloc( size);
-    memcpy( result, text, size);
+    ACE_OS::memcpy( result, text, size);
     return  result;
 }
 
@@ -2291,14 +2291,14 @@ FILEINFO *  get_file(
     file->real_fname = name;                /* Save file/macro name */
     file->full_fname = fullname;            /* Full path list       */
     if (name) {
-        file->filename = xmalloc( strlen( name) + 1);
-        strcpy( file->filename, name);      /* Copy for #line       */
+        file->filename = xmalloc( ACE_OS::strlen( name) + 1);
+        ACE_OS::strcpy( file->filename, name);      /* Copy for #line       */
     } else {
         file->filename = 0;
     }
     if (src_dir) {
-        file->src_dir = xmalloc( strlen( src_dir) + 1);
-        strcpy( const_cast <char *> (file->src_dir), src_dir);
+        file->src_dir = xmalloc( ACE_OS::strlen( src_dir) + 1);
+        ACE_OS::strcpy( const_cast <char *> (file->src_dir), src_dir);
     } else {
         file->src_dir = 0;
     }
@@ -2333,7 +2333,7 @@ char *
 {
     char *      result;
 
-    if ((result = (char *) malloc( size)) == 0) {
+    if ((result = (char *) ACE_OS::malloc( size)) == 0) {
         if (mcpp_debug & MEMORY)
             print_heap();
        cfatal( out_of_memory, 0, (long) size, 0);
@@ -2346,12 +2346,12 @@ char *  (xrealloc)(
     size_t      size
 )
 /*
- * Reallocate malloc()ed memory.
+ * Reallocate ACE_OS::malloc()ed memory.
  */
 {
     char *      result;
 
-    if ((result = (char *) realloc( ptr, size)) == 0 && size != 0) {
+    if ((result = (char *) ACE_OS::realloc( ptr, size)) == 0 && size != 0) {
         /* 'size != 0' is necessary to cope with some               */
         /*   implementation of realloc( ptr, 0) which returns 0. */
         if (mcpp_debug & MEMORY)
@@ -2447,16 +2447,16 @@ static void do_msg(
     int         c;
     int         ind;
 
-    fflush( fp_out);                /* Synchronize output and diagnostics   */
+    ACE_OS::fflush( fp_out);                /* Synchronize output and diagnostics   */
     arg_s[ 0] = arg1;  arg_s[ 1] = arg3;
 
     for (i = 0; i < 2; i++) {   /* Convert special characters to visible    */
         sp = arg_s[ i];
         if (sp != 0)
-            slen = strlen( sp) + 1;
+            slen = ACE_OS::strlen( sp) + 1;
         else
             slen = 1;
-        tp = arg_t[ i] = (char *) malloc( slen);
+        tp = arg_t[ i] = (char *) ACE_OS::malloc( slen);
             /* Don't use xmalloc() so as not to cause infinite recursion    */
         if (sp == 0 || *sp == EOS) {
             *tp = EOS;
@@ -2558,7 +2558,7 @@ static void do_msg(
             }
         } else {                            /* Source file          */
             if (file->buffer[ 0] == '\0')
-                strcpy( file->buffer, "\n");
+                ACE_OS::strcpy( file->buffer, "\n");
             if (mcpp_mode != OLD_PREP) {
                 mcpp_fprintf( ERR, "    from %s: %ld:    %s",
                     file->line ? file->full_fname       /* Full-path-list   */
@@ -2603,7 +2603,7 @@ static void do_msg(
 
 free_arg:
     for (i = 0; i < 2; i++)
-        free( arg_t[ i]);
+        ACE_OS::free( arg_t[ i]);
 }
 
 void    cfatal(

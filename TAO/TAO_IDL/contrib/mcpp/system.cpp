@@ -43,8 +43,10 @@
 #include    "internal.H"
 #endif
 
+#include "ace/OS_NS_unistd.h"
+
 #if     HOST_SYS_FAMILY == SYS_UNIX
-#include    "unistd.h"              /* For getcwd(), readlink() */
+#include    "ace/OS_NS_unistd.h"              /* For getcwd(), readlink() */
 #elif   HOST_COMPILER == MSC || HOST_COMPILER == LCC
 #include    "direct.h"
 #define getcwd( buf, size)  _getcwd( buf, size)
@@ -67,16 +69,16 @@
 /* Function to compare path-list    */
 #if     FNAME_FOLD
 #if     HOST_COMPILER == GNUC   /* CYGWIN, MINGW, MAC   */
-#include    <strings.h>         /* POSIX 1, 2001        */
-#define str_case_eq( str1, str2)    (strcasecmp( str1, str2) == 0)
+#include    <ace/OS_NS_strings.h>         /* POSIX 1, 2001        */
+#define str_case_eq( str1, str2)    (ACE_OS::strcasecmp( str1, str2) == 0)
 #else   /* MSC, BORLANDC, LCC   */
 #if     HOST_COMPILER == MSC
 #define stricmp( str1, str2)        _stricmp( str1, str2)
 #endif
-#define str_case_eq( str1, str2)    (stricmp( str1, str2) == 0)
+#define str_case_eq( str1, str2)    (ACE_OS::stricmp( str1, str2) == 0)
 #endif
 #else   /* ! FNAME_FOLD */
-#define str_case_eq( str1, str2)    (strcmp( str1, str2) == 0)
+#define str_case_eq( str1, str2)    (ACE_OS::strcmp( str1, str2) == 0)
 #endif
 
 /*
@@ -368,7 +370,7 @@ void    init_system( void)
 /* Initialize static variables  */
 {
     if (sharp_filename)
-        free( sharp_filename);
+        ACE_OS::free( sharp_filename);
     sharp_filename = 0;
     incend = incdir = 0;
     fnamelist = once_list = 0;
@@ -449,11 +451,11 @@ void    do_options(
     set_cplus_dir = TRUE;
 
     /* Get current directory for -I option and #pragma once */
-    getcwd( cur_work_dir, PATHMAX);
+    ACE_OS::getcwd( cur_work_dir, PATHMAX);
 #if SYS_FAMILY == SYS_WIN
     bsl2sl( cur_work_dir);
 #endif
-    sprintf( cur_work_dir + strlen( cur_work_dir), "%c%c", PATH_DELIM, EOS);
+    ACE_OS::sprintf( cur_work_dir + ACE_OS::strlen( cur_work_dir), "%c%c", PATH_DELIM, EOS);
         /* Append trailing path-delimiter   */
 
 #if COMPILER == GNUC
@@ -902,16 +904,16 @@ plus:
         case 'm':
             if (str_eq( mcpp_optarg, "64")) {               /* -m64 */
                 if (str_eq( CPU, "i386"))
-                    strcpy( arch, "x86_64");
+                    ACE_OS::strcpy( arch, "x86_64");
                 else if (str_eq( CPU, "ppc"))
-                    strcpy( arch, "ppc64");
+                    ACE_OS::strcpy( arch, "ppc64");
                 /* Else ignore  */
                 break;
             } else if (str_eq( mcpp_optarg, "32")) {        /* -m32 */
                 if (str_eq( CPU, "x86_64"))
-                    strcpy( arch, "i386");
+                    ACE_OS::strcpy( arch, "i386");
                 else if (str_eq( CPU, "ppc64"))
-                    strcpy( arch, "ppc");
+                    ACE_OS::strcpy( arch, "ppc");
                 /* Else ignore  */
                 break;
             } else if (str_eq( mcpp_optarg, "mmx")) {   /* -mmmx    */
@@ -989,7 +991,7 @@ plus:
 #elif COMPILER == LCC
         case 'O':                   /* Define __LCCOPTIMLEVEL as 1  */
             defp = look_id( optim_name);
-            strcpy( defp->repl, "1");
+            ACE_OS::strcpy( defp->repl, "1");
             break;
 #endif
 
@@ -1065,7 +1067,7 @@ plus:
 
         case 's':
             if (memcmp( mcpp_optarg, "td=", 3) == 0
-                    && strlen( mcpp_optarg) > 3) {  /* -std=STANDARD*/
+                    && ACE_OS::strlen( mcpp_optarg) > 3) {  /* -std=STANDARD*/
                 cp = mcpp_optarg + 3;
                 if (str_eq( cp, "c89")              /* std=c89      */
                         || str_eq( cp, "c90")       /* std=c90      */
@@ -1082,7 +1084,7 @@ plus:
                 } else if (str_eq( cp, "c++98")) {  /* std=c++98    */
                     cplus_val = std_val = 199711L;
                 } else if (memcmp( cp, "iso9899:", 8) == 0
-                        && strlen( cp) >= 14) { /* std=iso9899:199409, etc. */
+                        && ACE_OS::strlen( cp) >= 14) { /* std=iso9899:199409, etc. */
                     mcpp_optarg = cp + 8;
                     look_and_install( "__STRICT_ANSI__", DEF_NOARGS_PREDEF
                             , null, "1");
@@ -1091,7 +1093,7 @@ plus:
                 } else if (memcmp( cp, "iso14882", 8) == 0) {
                     cp += 8;
                     ansi = TRUE;
-                    if (cp && *cp == ':' && strlen( cp) >= 7) {
+                    if (cp && *cp == ':' && ACE_OS::strlen( cp) >= 7) {
                                     /* std=iso14882:199711, etc.    */
                         cplus_val = CPLUS;
                         mcpp_optarg = cp + 1;
@@ -1131,7 +1133,7 @@ plus:
 
 #if COMPILER == MSC
         case 'T':
-            if (strlen( mcpp_optarg) > 1)
+            if (ACE_OS::strlen( mcpp_optarg) > 1)
                 usage( opt);
             i = tolower( *mcpp_optarg);             /* Fold case    */
             if (i == 'c') {
@@ -1300,7 +1302,7 @@ Version:
     if (! arch[ 0]) {
         /* None of -arch, -m32 or -m64 options has been specified.  */
         /* The CPU-specific-macros will be defined in init_cpu_macro(). */
-        strcpy( arch, CPU);
+        ACE_OS::strcpy( arch, CPU);
     }
 #if COMPILER != GNUC
     init_cpu_macro( gval, sse);
@@ -1314,7 +1316,7 @@ Version:
         while (dp < sysdir_end)
             set_a_dir( *dp++);
     }
-    if (*in_pp && str_eq( (*in_pp) + strlen( *in_pp) - 2, ".S"))
+    if (*in_pp && str_eq( (*in_pp) + ACE_OS::strlen( *in_pp) - 2, ".S"))
         option_flags.lang_asm = TRUE;   /* Input file name is *.S   */
     if (option_flags.lang_asm) {
         look_and_install( "__ASSEMBLER__", DEF_NOARGS_PREDEF, null, "1");
@@ -1331,9 +1333,9 @@ Version:
         set_sys_dirs( set_cplus_dir);
 
     if (mkdep_mf) {                         /* -MF overrides -MD    */
-        mkdep_fp = fopen( mkdep_mf, "w");
+      mkdep_fp = ACE_OS::fopen( mkdep_mf, "w");
     } else if (mkdep_md) {
-        mkdep_fp = fopen( mkdep_md, "w");
+      mkdep_fp = ACE_OS::fopen( mkdep_md, "w");
     }
     if (mkdep_mq)                           /* -MQ overrides -MT    */
         mkdep_target = mkdep_mq;
@@ -1641,11 +1643,11 @@ static void set_opt_list(
 
     const char * const *    lp = & list[ 0];
 
-    strcpy( optlist, "23+@:e:h:jkn:o:vzCD:I:KM:NPQS:U:V:W:");
+    ACE_OS::strcpy( optlist, "23+@:e:h:jkn:o:vzCD:I:KM:NPQS:U:V:W:");
                                                 /* Default options  */
     while (*lp)
-        strcat( optlist, *lp++);
-    if (strlen( optlist) >= OPTLISTLEN)
+        ACE_OS::strcat( optlist, *lp++);
+    if (ACE_OS::strlen( optlist) >= OPTLISTLEN)
         cfatal( "Bug: Too long option list", 0, 0L, 0);       /* _F_  */
 }
 
@@ -1708,15 +1710,15 @@ static void def_a_macro(
         cnv_trigraph( def);
     if (mcpp_mode == POST_STD && option_flags.dig)
         cnv_digraph( def);  /* Convert prior to installing macro    */
-    definition = xmalloc( strlen( def) + 4);
-    strcpy( definition, def);
-    if ((cp = strchr( definition, '=')) != 0) {
+    definition = xmalloc( ACE_OS::strlen( def) + 4);
+    ACE_OS::strcpy( definition, def);
+    if ((cp = ACE_OS::strchr( definition, '=')) != 0) {
         *cp = ' ';                          /* Remove the '='       */
         cp = "\n";                          /* Append <newline>     */
     } else {
         cp = " 1\n";                        /* With definition "1"  */
     }
-    strcat( definition, cp);
+    ACE_OS::strcat( definition, cp);
     cp = definition;
     while ((char_type[ *cp & UCHARMAX] & SPA) == 0)
         cp++;
@@ -1735,7 +1737,7 @@ static void def_a_macro(
         defp->nargs = DEF_NOARGS_STANDARD;
                                 /* Restore Standard-predefinedness  */
     }
-    free( definition);
+    ACE_OS::free( definition);
     skip_nl();                      /* Clear the appended <newline> */
 }
 
@@ -1815,8 +1817,8 @@ static void     chk_opts(
 #if COMPILER != GNUC
 
 static void init_cpu_macro (
-                            int     /*gval*/,               /* Argument of -G option for MSC    */
-                            int     /*sse*/                 /* Argument of -sse: option for MSC */
+                            int     gval,               /* Argument of -G option for MSC    */
+                            int     sse                 /* Argument of -sse: option for MSC */
 )
 /*
  * Set predefined macros for CPU.
@@ -1905,7 +1907,7 @@ static void init_predefines( void)
         un_predefine( FALSE);           /* Undefine "unix" or so    */
 #endif
     }
-    sprintf( tmp, "%ldL", cplus_val ? cplus_val : stdc_ver);
+    ACE_OS::sprintf( tmp, "%ldL", cplus_val ? cplus_val : stdc_ver);
     if (cplus_val) {
         look_and_install( "__cplusplus", DEF_NOARGS_STANDARD, null, tmp);
     } else {
@@ -1948,15 +1950,15 @@ static void init_std_defines( void)
                                             /* Should be stuffed    */
 
     /* Define __DATE__, __TIME__ as present date and time.          */
-    time( &tvec);
-    tstring = ctime( &tvec);
-    sprintf( timestr, "\"%.3s %c%c %.4s\"",
+    ACE_OS::time( &tvec);
+    tstring = ACE_OS::ctime( &tvec);
+    ACE_OS::sprintf( timestr, "\"%.3s %c%c %.4s\"",
         tstring + 4,
         *(tstring + 8) == '0' ? ' ' : *(tstring + 8),
         *(tstring + 9),
         tstring + 20);
     look_and_install( "__DATE__", DEF_NOARGS_DYNAMIC, null, timestr);
-    sprintf( timestr, "\"%.8s\"", tstring + 11);
+    ACE_OS::sprintf( timestr, "\"%.8s\"", tstring + 11);
     look_and_install( "__TIME__", DEF_NOARGS_DYNAMIC, null, timestr);
 
     if (! look_id( "__STDC_HOSTED__")) {
@@ -1964,7 +1966,7 @@ static void init_std_defines( void)
          * Some compilers, e.g. GCC older than 3.3, define this macro by
          * -D option.
          */
-        sprintf( tmp, "%d", STDC_HOSTED);
+        ACE_OS::sprintf( tmp, "%d", STDC_HOSTED);
         look_and_install( "__STDC_HOSTED__", DEF_NOARGS_PREDEF, null, tmp);
     }
 #if COMPILER != GNUC        /* GCC do not undefine __STDC__ on C++  */
@@ -1973,7 +1975,7 @@ static void init_std_defines( void)
 #endif
     /* Define __STDC__ as 1 or such for Standard conforming compiler.   */
     if (! look_id( "__STDC__")) {
-        sprintf( tmp, "%d", stdc_val);
+        ACE_OS::sprintf( tmp, "%d", stdc_val);
         look_and_install( "__STDC__", DEF_NOARGS_STANDARD, null, tmp);
     }
 }
@@ -2028,7 +2030,7 @@ static void set_pragma_op( void)
     char *  name = "_Pragma";
     char    tmp[ 16];
 
-    sprintf( tmp, "%c%s ( %c%c )", DEF_MAGIC, name, MAC_PARM, 1);
+    ACE_OS::sprintf( tmp, "%c%s ( %c%c )", DEF_MAGIC, name, MAC_PARM, 1);
                                                 /* Replacement text */
     look_and_install( name, DEF_PRAGMA, "a", tmp);
 }
@@ -2068,11 +2070,11 @@ void    at_start( void)
      * LC_ALL, LC_CTYPE and LANG -- with preference in this order.
      */
     if (! mb_changed) {                     /* -m option precedes   */
-        if ((env = getenv( "LC_ALL")) != 0)
+        if ((env = ACE_OS::getenv( "LC_ALL")) != 0)
             set_encoding( env, "LC_ALL", 0);
-        else if ((env = getenv( "LC_CTYPE")) != 0)
+        else if ((env = ACE_OS::getenv( "LC_CTYPE")) != 0)
             set_encoding( env, "LC_CTYPE", 0);
-        else if ((env = getenv( "LANG")) != 0)
+        else if ((env = ACE_OS::getenv( "LANG")) != 0)
             set_encoding( env, "LANG", 0);
     }
 
@@ -2174,10 +2176,10 @@ static void set_env_dirs( void)
     const char *    env;
 
     if (cplus_val) {
-        if ((env = getenv( ENV_CPLUS_INCLUDE_DIR)) != 0)
+        if ((env = ACE_OS::getenv( ENV_CPLUS_INCLUDE_DIR)) != 0)
             parse_env( env);
     }
-    if ((env = getenv( ENV_C_INCLUDE_DIR)) != 0)
+    if ((env = ACE_OS::getenv( ENV_C_INCLUDE_DIR)) != 0)
         parse_env( env);
 }
 
@@ -2209,7 +2211,7 @@ static void parse_env(
         while (*save == ENV_SEP)
             ++save;
     }
-    free( save_start);
+    ACE_OS::free( save_start);
 }
 
 static void set_sys_dirs(
@@ -2313,7 +2315,7 @@ static void set_a_dir(
             if (option_flags.v && ! (mcpp_debug & MACRO_CALL))
                 mcpp_fprintf( ERR, "Duplicate directory \"%s\" is ignored\n"
                         , norm_name);
-            free( norm_name);               /* Already registered   */
+            ACE_OS::free( norm_name);               /* Already registered   */
             return;
         }
     }
@@ -2378,14 +2380,14 @@ static char *   norm_dir(
 #endif
         if (dirname[ 0] != PATH_DELIM)
             delim[ 0] = PATH_DELIM;
-        dir = xmalloc( strlen( sysroot) + strlen( dirname) + 2);
-        sprintf( dir, "%s%s%s", sysroot, delim, dirname);
+        dir = xmalloc( ACE_OS::strlen( sysroot) + ACE_OS::strlen( dirname) + 2);
+        ACE_OS::sprintf( dir, "%s%s%s", sysroot, delim, dirname);
         dirname = dir;
     }
 #endif
 #if SYSTEM == SYS_MAC && COMPILER == GNUC
-    if (strlen( dirname) > 5
-            && str_case_eq( dirname + strlen( dirname) - 5, ".hmap")) {
+    if (ACE_OS::strlen( dirname) > 5
+            && str_case_eq( dirname + ACE_OS::strlen( dirname) - 5, ".hmap")) {
         /* "header map" file (not an include directory) */
         norm_name = norm_path( null, dirname, FALSE, TRUE);
         if (! norm_name && option_flags.v)
@@ -2402,7 +2404,7 @@ static char *   norm_dir(
     }
 #if COMPILER == GNUC
     if (sysroot && sys_dirp)
-        free( dirname);
+        ACE_OS::free( dirname);
 #endif
 
     return  norm_name;
@@ -2461,8 +2463,8 @@ static char *   norm_path(
                 , 0, 0L, 0);
     inf = inf && (mcpp_debug & PATH);       /* Output information   */
 
-    strcpy( slbuf1, dir);                   /* Include directory    */
-    len = strlen( slbuf1);
+    ACE_OS::strcpy( slbuf1, dir);                   /* Include directory    */
+    len = ACE_OS::strlen( slbuf1);
     if (fname && len && slbuf1[ len - 1] != PATH_DELIM) {
         slbuf1[ len] = PATH_DELIM;          /* Append PATH_DELIM    */
         slbuf1[ ++len] = EOS;
@@ -2471,7 +2473,7 @@ static char *   norm_path(
         slbuf1[ --len] = EOS;
     }
     if (fname)
-        strcat( slbuf1, fname);
+        ACE_OS::strcat( slbuf1, fname);
     if (stat( slbuf1, & st_buf) != 0        /* Non-existent         */
             || (! fname && ! S_ISDIR( st_buf.st_mode))
                 /* Not a directory though 'fname' is not specified  */
@@ -2502,20 +2504,20 @@ static char *   norm_path(
         /* Symbolic link check of directories are required  */
         deref_syml( slbuf1, slbuf2, slbuf1);
     } else if (fname) {                             /* Regular file */
-        len = strlen( slbuf1);
-        strcat( slbuf1, fname);
+        len = ACE_OS::strlen( slbuf1);
+        ACE_OS::strcat( slbuf1, fname);
         deref_syml( slbuf1, slbuf2, slbuf1 + len);
                                 /* Symbolic link check of directory */
-        if ((len = readlink( slbuf1, slbuf2, PATHMAX)) > 0) {
+        if ((len = ACE_OS::readlink( slbuf1, slbuf2, PATHMAX)) > 0) {
             /* Dereference symbolic linked file (not directory) */
             *(slbuf2 + len) = EOS;
             cp1 = slbuf1;
             if (slbuf2[ 0] != PATH_DELIM) {     /* Relative path    */
-                cp2 = strrchr( slbuf1, PATH_DELIM);
+                cp2 = ACE_OS::strrchr( slbuf1, PATH_DELIM);
                 if (cp2)        /* Append to the source directory   */
                     cp1 = cp2 + 1;
             }
-            strcpy( cp1, slbuf2);
+            ACE_OS::strcpy( cp1, slbuf2);
         }
     }
     if (inf) {
@@ -2524,9 +2526,9 @@ static char *   norm_path(
                     , dir, fname ? fname : null, slbuf1);
     }
 #endif
-    len = strlen( slbuf1);
+    len = ACE_OS::strlen( slbuf1);
     start = norm_name = xmalloc( len + 1);  /* Need a new buffer    */
-    strcpy( norm_name, slbuf1);
+    ACE_OS::strcpy( norm_name, slbuf1);
 #if SYS_FAMILY == SYS_WIN
     bsl2sl( norm_name);
 #endif
@@ -2549,20 +2551,20 @@ static char *   norm_path(
         /* /dir, not /cygdrive/     */
         if (! root_dir_len) {           /* Should be initialized    */
             /* Convert "X:\DIR-list" to "/cygdrive/x/dir-list"      */
-            root_dir = xmalloc( strlen( CYGWIN_ROOT_DIRECTORY) + 1);
-            strcpy( root_dir, CYGWIN_ROOT_DIRECTORY);
+            root_dir = xmalloc( ACE_OS::strlen( CYGWIN_ROOT_DIRECTORY) + 1);
+            ACE_OS::strcpy( root_dir, CYGWIN_ROOT_DIRECTORY);
             *(root_dir + 1) = *root_dir;        /* "x:/" to " x/"   */
-            cp1 = xmalloc( strlen( cygdrive) + strlen( root_dir));
-            strcpy( cp1, cygdrive);
-            strcat( cp1, root_dir + 1);
-            free( root_dir);
+            cp1 = xmalloc( ACE_OS::strlen( cygdrive) + ACE_OS::strlen( root_dir));
+            ACE_OS::strcpy( cp1, cygdrive);
+            ACE_OS::strcat( cp1, root_dir + 1);
+            ACE_OS::free( root_dir);
             root_dir = cp1;
-            root_dir_len = strlen( root_dir);
+            root_dir_len = ACE_OS::strlen( root_dir);
         }
         cp1 = xmalloc( root_dir_len + len + 1);
-        strcpy( cp1, root_dir);
-        strcat( cp1, norm_name);        /* Convert to absolute path */
-        free( norm_name);
+        ACE_OS::strcpy( cp1, root_dir);
+        ACE_OS::strcat( cp1, norm_name);        /* Convert to absolute path */
+        ACE_OS::free( norm_name);
         norm_name = start = cp1;
         len += root_dir_len;
     }
@@ -2577,14 +2579,14 @@ static char *   norm_path(
         *(cp1 + 1) = ':';               /* Convert to c:/, d:/, etc */
     } else if (memcmp( cp1, "/mingw", 6) == 0) {
         if (! mingw_dir_len) {          /* Should be initialized    */
-            mingw_dir_len = strlen( MINGW_DIRECTORY);
+            mingw_dir_len = ACE_OS::strlen( MINGW_DIRECTORY);
             mingw_dir = xmalloc( mingw_dir_len + 1);
-            strcpy( mingw_dir, MINGW_DIRECTORY);
+            ACE_OS::strcpy( mingw_dir, MINGW_DIRECTORY);
         }
         cp1 = xmalloc( mingw_dir_len + len + 1);
-        strcpy( cp1, mingw_dir);
-        strcat( cp1, norm_name + 6);    /* Convert to absolute path */
-        free( norm_name);
+        ACE_OS::strcpy( cp1, mingw_dir);
+        ACE_OS::strcat( cp1, norm_name + 6);    /* Convert to absolute path */
+        ACE_OS::free( norm_name);
         norm_name = start = cp1;
         len += mingw_dir_len;
     } else if (memcmp( cp1, "/usr", 4) == 0) {
@@ -2593,14 +2595,14 @@ static char *   norm_path(
     }
     if (*cp1 == '/') {                  /* /dir or /                */
         if (! root_dir_len) {           /* Should be initialized    */
-            root_dir_len = strlen( MSYS_ROOT_DIRECTORY);
+            root_dir_len = ACE_OS::strlen( MSYS_ROOT_DIRECTORY);
             root_dir = xmalloc( root_dir_len + 1);
-            strcpy( root_dir, MSYS_ROOT_DIRECTORY);
+            ACE_OS::strcpy( root_dir, MSYS_ROOT_DIRECTORY);
         }
         cp1 = xmalloc( root_dir_len + len + 1);
-        strcpy( cp1, root_dir);
-        strcat( cp1, norm_name);        /* Convert to absolute path */
-        free( norm_name);
+        ACE_OS::strcpy( cp1, root_dir);
+        ACE_OS::strcat( cp1, norm_name);        /* Convert to absolute path */
+        ACE_OS::free( norm_name);
         norm_name = start = cp1;
         len += root_dir_len;
     }
@@ -2614,28 +2616,28 @@ static char *   norm_path(
     if (len == 1 && *norm_name == '/')              /* Only "/"     */
         return  norm_name;
 
-    if (strncmp( cp1, "./", 2) == 0)    /* Remove beginning "./"    */
-        memmove( cp1, cp1 + 2, strlen( cp1 + 2) + 1);       /* +1 for EOS   */
+    if (ACE_OS::strncmp( cp1, "./", 2) == 0)    /* Remove beginning "./"    */
+        ACE_OS::memmove( cp1, cp1 + 2, ACE_OS::strlen( cp1 + 2) + 1);       /* +1 for EOS   */
     if (*start != '/') {    /* Relative path to current directory   */
         /* Make absolute path   */
-        abs_path = xmalloc( len + strlen( cur_work_dir) + 1);
+        abs_path = xmalloc( len + ACE_OS::strlen( cur_work_dir) + 1);
         cp1 = stpcpy( abs_path, cur_work_dir);
-        strcpy( cp1, start);
-        free( norm_name);
+        ACE_OS::strcpy( cp1, start);
+        ACE_OS::free( norm_name);
         norm_name = abs_path;
         start = cp1 = norm_name + start_pos;
     }
 
-    while ((cp1 = strstr( cp1, "/./")) != 0)
-        memmove( cp1, cp1 + 2, strlen( cp1 + 2) + 1);
+    while ((cp1 = ACE_OS::strstr( cp1, "/./")) != 0)
+        ACE_OS::memmove( cp1, cp1 + 2, ACE_OS::strlen( cp1 + 2) + 1);
                                         /* Remove "/." of "/./"     */
     cp1 = start;
     /* Remove redundant "foo/../"   */
-    while ((cp1 = strstr( cp1, "/../")) != 0) {
+    while ((cp1 = ACE_OS::strstr( cp1, "/../")) != 0) {
         *cp1 = EOS;
-        if ((cp2 = strrchr( start, '/')) != 0) {
+        if ((cp2 = ACE_OS::strrchr( start, '/')) != 0) {
             if (*(cp1 - 1) != '.') {
-                memmove( cp2 + 1, cp1 + 4, strlen( cp1 + 4) + 1);
+                ACE_OS::memmove( cp2 + 1, cp1 + 4, ACE_OS::strlen( cp1 + 4) + 1);
                                         /* Remove "foo/../"         */
                 cp1 = cp2;
             } else {                                /* Impossible   */
@@ -2654,8 +2656,8 @@ static char *   norm_path(
 #endif
     if (inf) {
         char    debug_buf[ PATHMAX+1];
-        strcpy( debug_buf, dir);
-        strcat( debug_buf, fname ? fname : null);
+        ACE_OS::strcpy( debug_buf, dir);
+        ACE_OS::strcat( debug_buf, fname ? fname : null);
 #if SYS_FAMILY == SYS_WIN
         bsl2sl( debug_buf);
 #endif
@@ -2679,22 +2681,22 @@ static void     deref_syml(
     char *      cp2;
     int         len;                /* Should be int, not size_t    */
 
-    while ((chk_start = strchr( chk_start, PATH_DELIM)) != 0) {
+    while ((chk_start = ACE_OS::strchr( chk_start, PATH_DELIM)) != 0) {
         *chk_start = EOS;
-        if ((len = readlink( slbuf1, slbuf2, PATHMAX)) > 0) {
+        if ((len = ACE_OS::readlink( slbuf1, slbuf2, PATHMAX)) > 0) {
             /* Dereference symbolic linked directory    */
-            cp2 = strrchr( slbuf1, PATH_DELIM); /* Previous delimiter       */
+            cp2 = ACE_OS::strrchr( slbuf1, PATH_DELIM); /* Previous delimiter       */
             *chk_start = PATH_DELIM;
-            strcpy( slbuf2 + len, chk_start);
+            ACE_OS::strcpy( slbuf2 + len, chk_start);
             if (slbuf2[ 0] == PATH_DELIM) {     /* Absolute path    */
-                strcpy( slbuf1, slbuf2);
+                ACE_OS::strcpy( slbuf1, slbuf2);
                 chk_start = slbuf1 + len + 1;
             } else {
                 if (cp2)
                     chk_start = cp2 + 1;
                 else
                     chk_start = slbuf1;
-                strcpy( chk_start, slbuf2);     /* Rewrite the path */
+                ACE_OS::strcpy( chk_start, slbuf2);     /* Rewrite the path */
                 chk_start += len;
             }
         } else {
@@ -2728,19 +2730,19 @@ static void init_gcc_macro( void)
     if (nflag)                                  /* -undef option    */
         goto  undef_special;
 
-    tmp = xmalloc( strlen( INC_DIR) + strlen( "/mingw/mcpp-gcc-")
-            + strlen( arch) + 1);
+    tmp = xmalloc( ACE_OS::strlen( INC_DIR) + ACE_OS::strlen( "/mingw/mcpp-gcc-")
+            + ACE_OS::strlen( arch) + 1);
 #if SYSTEM == SYS_CYGWIN
     if (no_cygwin) {
-        sprintf( tmp, "%s/mingw/mcpp-gcc-%s", INC_DIR, arch);
+        ACE_OS::sprintf( tmp, "%s/mingw/mcpp-gcc-%s", INC_DIR, arch);
     } else {
-        sprintf( tmp, "%s/mcpp-gcc-%s", INC_DIR, arch);
+        ACE_OS::sprintf( tmp, "%s/mcpp-gcc-%s", INC_DIR, arch);
     }
 #else
-    sprintf( tmp, "%s/mcpp-gcc-%s", INC_DIR, arch);
+    ACE_OS::sprintf( tmp, "%s/mcpp-gcc-%s", INC_DIR, arch);
 #endif
     include_dir = norm_path( tmp, 0, TRUE, FALSE);
-    free( tmp);
+    ACE_OS::free( tmp);
 
     for (i = 0; i <= 1; i++) {
         int         nargs;
@@ -2750,7 +2752,7 @@ static void init_gcc_macro( void)
                         /*      predefine non-conforming macros     */
         /* The predefined macro file    */
         cp = i ? "std" : "old";
-        sprintf( fname, "%sg%s%d%d_predef_%s.h"
+        ACE_OS::sprintf( fname, "%sg%s%d%d_predef_%s.h"
                 , include_dir, cplus_val ? "xx" : "cc"
                 , gcc_maj_ver, gcc_min_ver, cp);
             /* Note that norm_path() append a PATH_DELIM.   */
@@ -2773,7 +2775,7 @@ static void init_gcc_macro( void)
             skip_nl();
         }
     }
-    free( include_dir);
+    ACE_OS::free( include_dir);
 
 undef_special:
     if (look_id( "__OPTIMIZE__"))       /* -O option is specified   */
@@ -2789,14 +2791,14 @@ static void chk_env( void)
     char *  cp;
 
     /* Output of dependency lines   */
-    if ((env = getenv( "DEPENDENCIES_OUTPUT")) == 0) {
-        if ((env = getenv( "SUNPRO_DEPENDENCIES")) == 0)
+    if ((env = ACE_OS::getenv( "DEPENDENCIES_OUTPUT")) == 0) {
+        if ((env = ACE_OS::getenv( "SUNPRO_DEPENDENCIES")) == 0)
             return;
         else
             mkdep |= MD_SYSHEADER;
     }
     mkdep |= MD_MKDEP;
-    if ((cp = strchr( env, ' ')) != 0) {
+    if ((cp = ACE_OS::strchr( env, ' ')) != 0) {
         *cp++ = EOS;
         while (*cp == ' ')
             cp++;
@@ -2889,15 +2891,15 @@ void    put_depend(
     if (fp == 0) {   /* Main source file.  Have to initialize.   */
 #if MCPP_LIB
         if (output != 0) {
-            free( output);
-            free( pos);
+            ACE_OS::free( output);
+            ACE_OS::free( pos);
         }
 #endif
         output = xmalloc( mkdep_len = MKDEP_INITLEN);
         pos = (size_t *) xmalloc( (pos_max = MKDEP_INIT) * sizeof (size_t));
         out_p = md_init( filename, output);
         fp = mkdep_fp;
-        llen = strlen( output);
+        llen = ACE_OS::strlen( output);
         pos_num = 0;            /* Initialize for MCPP_LIB build    */
     } else if (filename == 0) {              /* End of input     */
         out_p = stpcpy( out_p, "\n\n");
@@ -2906,15 +2908,15 @@ void    put_depend(
             char *  cp;
             int     c;
 
-            if (strlen( output) * 2 + (pos_num * 2) >= MKDEP_MAXLEN) {
+            if (ACE_OS::strlen( output) * 2 + (pos_num * 2) >= MKDEP_MAXLEN) {
                 cerror( "Too long dependency line"          /* _E_  */
                         , 0, 0L, 0);
                 if (fp == fp_out)
                     mcpp_fputs( output, OUT);
                 else
-                    fputs( output, fp);
+                    ACE_OS::fputs( output, fp);
                 return;
-            } else if (strlen( output) * 2 + (pos_num * 2) >= mkdep_len) {
+            } else if (ACE_OS::strlen( output) * 2 + (pos_num * 2) >= mkdep_len) {
                 /* Enlarge the buffer   */
                 size_t  len = out_p - output;
                 output = xrealloc( output, mkdep_len *= 2);
@@ -2941,17 +2943,17 @@ void    put_depend(
         if (fp == fp_out) { /* To the same path with normal preprocessing   */
             mcpp_fputs( output, OUT);
         } else {        /* To the file specified by -MF, -MD, -MMD options  */
-            fputs( output, fp);
-            fclose( fp);
+            ACE_OS::fputs( output, fp);
+            ACE_OS::fclose( fp);
         }
         fp = 0;      /* Clear for the next call in MCPP_LIB build        */
         return;
     }
 
-    fnamlen = strlen( filename);
+    fnamlen = ACE_OS::strlen( filename);
     /* Check the recorded filename  */
     for (pos_p = pos; pos_p < &pos[ pos_num]; pos_p++) {
-        if (memcmp( output + *pos_p, filename, fnamlen) == 0)
+        if (ACE_OS::memcmp( output + *pos_p, filename, fnamlen) == 0)
             return;                 /* Already recorded filename    */
     }
     /* Any new header.  Append its name to output.  */
@@ -2996,22 +2998,22 @@ static char *   md_init(
 
     if (! mkdep_target || ! mkdep_fp) {         /* Make target name */
 #ifdef  PATH_DELIM
-        if ((cp0 = strrchr( target, PATH_DELIM)) != 0)
+        if ((cp0 = ACE_OS::strrchr( target, PATH_DELIM)) != 0)
             target = cp0 + 1;
 #endif
-        if ((cp0 = strrchr( target, '.')) == 0)
-            len = strlen( target);
+        if ((cp0 = ACE_OS::strrchr( target, '.')) == 0)
+            len = ACE_OS::strlen( target);
         else
             len = (size_t) (cp0 - target);
-        memcpy( prefix, target, len);
+        ACE_OS::memcpy( prefix, target, len);
         cp = prefix + len;
         *cp++ = '.';
     }
 
     if (! mkdep_fp) {   /* Unless already opened by -MF, -MD, -MMD options  */
         if (mkdep & MD_FILE) {
-            strcpy( cp, "d");
-            mkdep_fp = fopen( prefix, "w");
+            ACE_OS::strcpy( cp, "d");
+            mkdep_fp = ACE_OS::fopen( prefix, "w");
         } else {
             mkdep_fp = fp_out;  /* Output dependency line to normal output  */
             no_output++;                /* Without normal output    */
@@ -3025,7 +3027,7 @@ static char *   md_init(
             out_p = stpcpy( output, mkdep_target);
         }
     } else {
-        strcpy( cp, OBJEXT);
+        ACE_OS::strcpy( cp, OBJEXT);
         out_p = stpcpy( output, prefix);
     }
 
@@ -3168,19 +3170,19 @@ found_name:
     if (no_dir) {                       /* Strip directory components   */
         char    src_dir[ PATHMAX] = { EOS, };
         if (has_directory( fname, src_dir))
-            filename = fname + strlen( src_dir);
+            filename = fname + ACE_OS::strlen( src_dir);
         delim = '"';    /* Even a system header is handled as a local one   */
     }
 #endif
     if (open_include( filename, (delim == '"'), next)) {
-        /* 'fname' should not be free()ed, it is used as file->         */
+        /* 'fname' should not be ACE_OS::free()ed, it is used as file->         */
         /*      real_fname and has been registered into fnamelist[]     */
         return  TRUE;
     }
 
     cerror( "Can't open include file \"%s\"", filename, 0L, 0);  /* _E_  */
 error:
-    free( fname);
+    ACE_OS::free( fname);
     return  FALSE;
 
 not_header:
@@ -3213,7 +3215,7 @@ static int  open_include(
     if (!full_path && searchlocal && (search_rule & SOURCE)) {
         has_dir_src  = has_directory( infile->src_dir, src_dir);
         has_dir_fname = has_directory( infile->real_fname
-                , src_dir + strlen( src_dir));
+                , src_dir + ACE_OS::strlen( src_dir));
         /* Get directory part of the parent file of the file to include.*/
         /* Note that infile->dirp of main input file is set to "" and   */
         /* remains the same even if -include options are processed.     */
@@ -3297,11 +3299,11 @@ static int  has_directory(
 
     if (! source)
         return  FALSE;
-    if ((sp = strrchr( source, PATH_DELIM)) == 0) {
+    if ((sp = ACE_OS::strrchr( source, PATH_DELIM)) == 0) {
         return  FALSE;
     } else {
         len = (size_t)(sp - source) + 1;    /* With path-delimiter  */
-        memcpy( directory, source, len);
+        ACE_OS::memcpy( directory, source, len);
         directory[ len] = EOS;
         return  TRUE;
     }
@@ -3350,7 +3352,7 @@ static int  search_dir(
 #endif
 
     for ( ; incptr < incend; incptr++) {
-        if (strlen( *incptr) + strlen( filename) >= PATHMAX)
+        if (ACE_OS::strlen( *incptr) + ACE_OS::strlen( filename) >= PATHMAX)
             cfatal( toolong_fname, *incptr, 0L, filename);  /* _F_  */
 #if SYSTEM == SYS_MAC
         if (incptr == to_search_framework && ! searchlocal) {
@@ -3387,7 +3389,7 @@ static int  open_file(
 {
     char        dir_fname[ PATHMAX] = { EOS, };
 #if HOST_COMPILER == BORLANDC
-    /* Borland's fopen() does not set errno.    */
+    /* Borland's ACE_OS::fopen() does not set errno.    */
     static int  max_open = FOPEN_MAX - 5;
 #else
     static int  max_open;
@@ -3400,8 +3402,8 @@ static int  open_file(
 
     errno = 0;      /* Clear errno possibly set by path searching   */
 #if SYSTEM == SYS_MAC && COMPILER == GNUC
-    if (strlen( *dirp) > 5
-            && str_case_eq( *dirp + strlen( *dirp) - 5, ".hmap")) {
+    if (ACE_OS::strlen( *dirp) > 5
+            && str_case_eq( *dirp + ACE_OS::strlen( *dirp) - 5, ".hmap")) {
         /* Search header map file for a header  */
         if (! search_header_map( *dirp, filename, dir_fname))
             return  0;
@@ -3418,8 +3420,8 @@ static int  open_file(
     /* src_dir is usually 0.  This is specified to   */
     /* search the source directory of the includer.     */
     if (src_dir && *src_dir != EOS) {
-        strcpy( dir_fname, src_dir);
-        strcat( dir_fname, filename);
+        ACE_OS::strcpy( dir_fname, src_dir);
+        ACE_OS::strcat( dir_fname, filename);
         fname = dir_fname;
     } else {
         fname = filename;
@@ -3434,7 +3436,7 @@ static int  open_file(
         
     if ((max_open != 0 && max_open <= include_nest)
                             /* Exceed the known limit of open files */
-            || ((fp = fopen( fullname, "r")) == 0 && errno == EMFILE)) {
+            || ((fp = ACE_OS::fopen( fullname, "r")) == 0 && errno == EMFILE)) {
                             /* Reached the limit for the first time */
         if (mcpp_debug & PATH) {
 #if HOST_COMPILER == BORLANDC
@@ -3451,12 +3453,12 @@ static int  open_file(
          * Remember the file position and close the includer.
          * The state will be restored by get_line() on end of the included.
          */
-        file->pos = ftell( file->fp);
-        fclose( file->fp);
+        file->pos = ACE_OS::ftell( file->fp);
+        ACE_OS::fclose( file->fp);
         /* In case of failure, re-open the includer */
-        if ((fp = fopen( fullname, "r")) == 0) {
-            file->fp = fopen( cur_fullname, "r");
-            fseek( file->fp, file->pos, SEEK_SET);
+        if ((fp = ACE_OS::fopen( fullname, "r")) == 0) {
+            file->fp = ACE_OS::fopen( cur_fullname, "r");
+	    ACE_OS::fseek( file->fp, file->pos, SEEK_SET);
             goto  false_label;
         }
         if (max_open == 0)      /* Remember the limit of the system */
@@ -3512,7 +3514,7 @@ static int  open_file(
 true_label:
     return  TRUE;
 false_label:
-    free( fullname);
+    ACE_OS::free( fullname);
     return  FALSE;
 }
 
@@ -3574,13 +3576,13 @@ static const char *     set_fname(
     }
 
     /* Register the filename in fnamelist[] */
-    fnamelen = strlen( filename);
+    fnamelen = ACE_OS::strlen( filename);
     for (fnamep = fnamelist; fnamep < fname_end; fnamep++) {
         if (fnamep->len == fnamelen && str_case_eq( fnamep->name, filename))
             return  filename;           /* Already registered       */
     }
     fname_end->name = xmalloc( fnamelen + 1);
-    filename = strcpy( fname_end->name, filename);
+    filename = ACE_OS::strcpy( fname_end->name, filename);
                                 /* Global pointer for get_file()    */
     fname_end->len = fnamelen;
     fname_end++;
@@ -3618,7 +3620,7 @@ static char *   search_header_map(
     stat( hmap_file, &stat_buf);            /* Get size of the file */
     fsize = stat_buf.st_size;
     contents = xmalloc( fsize + 1);
-    fp = fopen( hmap_file, "r");
+    fp = ACE_OS::fopen( hmap_file, "r");
     fread( contents, fsize, 1, fp);     /* Read whole of the file at once   */
     hmap = (struct hmap_header_map *) contents;
 
@@ -3630,12 +3632,12 @@ static char *   search_header_map(
         if (str_case_eq( filename, strings + key_offs)) {
             /* The names match.  Make path-list.    */
             char *  cp = stpcpy( pathlist, strings + buckets[ i].value.prefix);
-            strcpy( cp, strings + buckets[ i].value.suffix);
+            ACE_OS::strcpy( cp, strings + buckets[ i].value.suffix);
             break;
         }
         i = ++i & mask;
     }
-    free( contents);
+    ACE_OS::free( contents);
     return  key_offs ? pathlist : 0;
 }
 
@@ -3703,7 +3705,7 @@ static int      search_framework(
     int         sys_frame = FALSE;
     int         i;
 
-    cp1 = cp2 = strchr( filename, PATH_DELIM);
+    cp1 = cp2 = ACE_OS::strchr( filename, PATH_DELIM);
     /*
      * 'filename' should be <frame/header> format or sometimes
      *      <frame/dir/header>.
@@ -3732,11 +3734,11 @@ static int      search_framework(
      */
     for (i = sys_framework; i < num_framework; i++) {
         size_t  frame_len, fname_len;
-        frame_len = strlen( framework[ i]);
-        fname_len = strlen( infile->real_fname);
+        frame_len = ACE_OS::strlen( framework[ i]);
+        fname_len = ACE_OS::strlen( infile->real_fname);
         if (fname_len <= frame_len)
             continue;
-        if (memcmp( framework[ i], infile->real_fname, frame_len) == 0) {
+        if (ACE_OS::memcmp( framework[ i], infile->real_fname, frame_len) == 0) {
             sys_frame = TRUE;
             break;
         }
@@ -3750,8 +3752,8 @@ static int      search_framework(
         dot = strstr( file->real_fname, dot_frame);
         if (! dot)
             continue;
-        len = dot - file->real_fname + strlen( dot_frame) + 1;
-        memcpy( fullname, file->real_fname, len);
+        len = dot - file->real_fname + ACE_OS::strlen( dot_frame) + 1;
+        ACE_OS::memcpy( fullname, file->real_fname, len);
         cp1 = fullname + len;
         cp1 = stpcpy( cp1, "Frameworks/");
         /* 'fullname' e.g.:                                             */
@@ -3780,9 +3782,9 @@ static int      search_subdir(
     static const char *     subdir[] = { "Headers", "PrivateHeaders", 0};
     int     j, n;
 
-    cp += sprintf( cp, "%s%s%c", frame, dot_frame, PATH_DELIM);
+    cp += ACE_OS::sprintf( cp, "%s%s%c", frame, dot_frame, PATH_DELIM);
     for (j = 0; subdir[ j] != 0; j++) {
-        n = sprintf( cp, "%s%c%s", subdir[ j], PATH_DELIM, fname);
+        n = ACE_OS::sprintf( cp, "%s%c%s", subdir[ j], PATH_DELIM, fname);
         /*
          * 'fullname' is for example:
          * /System/Library/Frameworks/Foundation.framework/Headers/
@@ -3915,7 +3917,7 @@ static void cur_file(
         if (sharp_file) {                       /* Main input file  */
             name = file->filename;
         } else if (str_eq( file->filename, file->real_fname)) {
-            sprintf( work_buf, "%s%s", *(file->dirp), cur_fname);
+            ACE_OS::sprintf( work_buf, "%s%s", *(file->dirp), cur_fname);
             name = work_buf;
         } else {            /* Changed by '#line fname' directive   */
             name = file->filename;
@@ -3923,7 +3925,7 @@ static void cur_file(
     }
     if (sharp_filename == 0 || ! str_eq( name, sharp_filename)) {
         if (sharp_filename != 0)
-            free( sharp_filename);
+            ACE_OS::free( sharp_filename);
         sharp_filename = save_string( name);
     }
     mcpp_fprintf( OUT, " \"%s\"", name);
@@ -4075,7 +4077,7 @@ void    do_pragma( void)
             token_type = scan_token( c = get_ch(), (bp = tp, &tp), mp_end);
         } while (c != '\n');
         unget_string( mp, 0);                    /* To re-read   */
-        free( mp);
+        ACE_OS::free( mp);
         c = skip_ws();
         bp = infile->bptr - 1;
         token_type = scan_token( c, (tp = work_buf, &tp), work_end);
@@ -4239,7 +4241,7 @@ static void do_once(
         max_once *= 2;
     }
     once_end->name = const_cast <char *> (fullname);
-    once_end->len = strlen( fullname);
+    once_end->len = ACE_OS::strlen( fullname);
     once_end++;
 }
 
@@ -4256,7 +4258,7 @@ static int  included(
 
     if (once_list == 0)              /* No once file registered  */
         return  FALSE;
-    fnamelen = strlen( fullname);
+    fnamelen = ACE_OS::strlen( fullname);
     for (inc = once_list; inc < once_end; inc++) {
         if (inc->len == fnamelen && str_case_eq( inc->name, fullname)) {
             /* Already included */
@@ -4293,9 +4295,9 @@ static void push_or_pop(
 
         if (is_junk())
             return;
-        s_name = strlen( work_buf) - 2;
+        s_name = ACE_OS::strlen( work_buf) - 2;
         *(work_buf + s_name + 1) = '\0';
-        memcpy( identifier, work_buf + 1, s_name + 1);
+        ACE_OS::memcpy( identifier, work_buf + 1, s_name + 1);
                                             /* Remove enclosing '"' */
         prevp = look_prev( identifier, &cmp);
         if (cmp == 0) { /* Current definition or pushed definition exists   */
@@ -4309,11 +4311,11 @@ static void push_or_pop(
                 }
                 /* Else the current definition exists.  Push it     */
                 s_def = sizeof (DEFBUF) + 3 + s_name
-                        + strlen( defp->repl) + strlen( defp->fname);
+                        + ACE_OS::strlen( defp->repl) + ACE_OS::strlen( defp->fname);
                 if (mcpp_mode == STD)
-                    s_def += strlen( defp->parmnames);
+                    s_def += ACE_OS::strlen( defp->parmnames);
                 dp = (DEFBUF *) xmalloc( s_def);
-                memcpy( dp, defp, s_def);   /* Copy the definition  */
+                ACE_OS::memcpy( dp, defp, s_def);   /* Copy the definition  */
                 dp->link = *prevp;          /* Insert to linked-list*/
                 *prevp = dp;                /*      the pushed def  */
                 prevp = &dp->link;          /* Next link to search  */
@@ -4328,14 +4330,14 @@ static void push_or_pop(
                     } else {
                         *prevp = defp->link;
                                 /* Link the previous and the next   */
-                        free( defp);
+                        ACE_OS::free( defp);
                             /* Delete the definition to enable popped def   */
                     }
                 }   /* Else no current definition exists    */
             }
             while ((defp = *prevp) != 0) {
                 /* Increment or decrement "push" count of all pushed defs   */
-                if ((cmp = memcmp( defp->name, identifier, s_name)) > 0)
+                if ((cmp = ACE_OS::memcmp( defp->name, identifier, s_name)) > 0)
                     break;
                 defp->push += direction;        /* Increment or decrement   */
                 prevp = &defp->link;
@@ -4574,18 +4576,18 @@ static void do_preprocessed( void)
      * Compiler cannot accept C source style #line.
      * Convert it to the compiler-specific format.
      */
-    strcpy( conv, LINE_PREFIX);
-    arg = conv + strlen( conv);
+    ACE_OS::strcpy( conv, LINE_PREFIX);
+    arg = conv + ACE_OS::strlen( conv);
 #endif
     file = infile;
     lbuf = file->bptr = file->buffer;           /* Reset file->bptr */
 
     /* Copy the input to output until a comment line appears.       */
-    while (fgets( lbuf, NBUFF, file->fp) != 0
-            && memcmp( lbuf, "/*", 2) != 0) {
+    while (ACE_OS::fgets( lbuf, NBUFF, file->fp) != 0
+            && ACE_OS::memcmp( lbuf, "/*", 2) != 0) {
 #if STD_LINE_PREFIX == FALSE
-        if (memcmp( lbuf, "#line ", 6) == 0) {
-            strcpy( arg, lbuf + 6);
+        if (ACE_OS::memcmp( lbuf, "#line ", 6) == 0) {
+            ACE_OS::strcpy( arg, lbuf + 6);
             mcpp_fputs( conv, OUT);
         } else
 #endif
@@ -4598,48 +4600,48 @@ static void do_preprocessed( void)
                 , 0, 0L, 0);
 
     /* Define macros according to the #define lines.    */
-    while (fgets( lbuf, NWORK, file->fp) != 0) {
-        if (memcmp( lbuf, "/*", 2) == 0) {
+    while (ACE_OS::fgets( lbuf, NWORK, file->fp) != 0) {
+        if (ACE_OS::memcmp( lbuf, "/*", 2) == 0) {
                                     /* Standard predefined macro    */
             continue;
         }
-        if (memcmp( lbuf, "#define ", 8) != 0) {
-            if (memcmp( lbuf, "#line", 5) == 0)
+        if (ACE_OS::memcmp( lbuf, "#define ", 8) != 0) {
+            if (ACE_OS::memcmp( lbuf, "#line", 5) == 0)
                 continue;
             else
                 cfatal( corrupted, 0, 0L, 0);
         }
         /* Filename and line-number information in comment as:  */
         /* dir/fname:1234\t*/
-        cp = lbuf + strlen( lbuf);
-        if ((memcmp( cp - 4, "\t*/\n", 4) != 0)
+        cp = lbuf + ACE_OS::strlen( lbuf);
+        if ((ACE_OS::memcmp( cp - 4, "\t*/\n", 4) != 0)
                 || (*(cp - 4) = EOS
-                        , (comment = strrchr( lbuf, '*')) == 0)
-                || (memcmp( --comment, "/* ", 3) != 0)
-                || ((colon = strrchr( comment, ':')) == 0))
+                        , (comment = ACE_OS::strrchr( lbuf, '*')) == 0)
+                || (ACE_OS::memcmp( --comment, "/* ", 3) != 0)
+                || ((colon = ACE_OS::strrchr( comment, ':')) == 0))
             cfatal( corrupted, 0, 0L, 0);
-        src_line = atol( colon + 1);        /* Pseudo line number   */
+        src_line = ACE_OS::atol( colon + 1);        /* Pseudo line number   */
         *colon = EOS;
         dir = comment + 3;
         inc_dirp = &null;
         /* Search the include directory list    */
         for (incptr = incdir ; incptr < incend; incptr++) {
-            if (memcmp( *incptr, dir, strlen( *incptr)) == 0) {
+            if (ACE_OS::memcmp( *incptr, dir, ACE_OS::strlen( *incptr)) == 0) {
                 inc_dirp = incptr;
                 break;
             }
         }
         /* Register the filename to fnamelist[] */
         /* inc_dirp may be 0, and cur_fname may be "(predefined)"    */
-        cur_fname = set_fname( dir + strlen( *inc_dirp));
-        strcpy( comment - 2, "\n");         /* Remove the comment   */
+        cur_fname = set_fname( dir + ACE_OS::strlen( *inc_dirp));
+        ACE_OS::strcpy( comment - 2, "\n");         /* Remove the comment   */
         unget_string( lbuf + 8, 0);
         do_define( FALSE, 0);
         get_ch();                               /* '\n' */
         get_ch();                               /* Clear the "file" */
         unget_ch();                             /* infile == file   */
     }
-    file->bptr = file->buffer + strlen( file->buffer);
+    file->bptr = file->buffer + ACE_OS::strlen( file->buffer);
 }
 
 static int  do_debug(
@@ -4800,14 +4802,14 @@ static int  mcpp_getopt(
                 argv[ mcpp_optind][ 0] != '-'
                     || argv[ mcpp_optind][ 1] == '\0') {
             return  EOF;
-        } else if (strcmp( argv[ mcpp_optind], "--") == 0) {
+        } else if (ACE_OS::strcmp( argv[ mcpp_optind], "--") == 0) {
             mcpp_optind++;
             return  EOF;
         }
     }
 /*  mcpp_optopt = c = (unsigned char) argv[ mcpp_optind][ sp];  */
     mcpp_optopt = c = argv[ mcpp_optind][ sp] & UCHARMAX;
-    if (c == ':' || (cp = strchr( opts, c)) == 0) {
+    if (c == ':' || (cp = ACE_OS::strchr( opts, c)) == 0) {
         OPTERR( error2, c)
         if (argv[ mcpp_optind][ ++sp] == '\0') {
             mcpp_optind++;
@@ -4898,13 +4900,13 @@ void    clear_filelist( void)
     INC_LIST *  namep;
 
     for (incp = incdir; incp < incend; incp++)
-        free( (void *) *incp);
-    free( (void *) incdir);
+        ACE_OS::free( (void *) *incp);
+    ACE_OS::free( (void *) incdir);
     for (namep = fnamelist; namep < fname_end; namep++)
-        free( (void *) namep->name);
-    free( (void *) fnamelist);
+        ACE_OS::free( (void *) namep->name);
+    ACE_OS::free( (void *) fnamelist);
     if (standard)
-        free( (void *) once_list);
+        ACE_OS::free( (void *) once_list);
 }
 #endif
 
