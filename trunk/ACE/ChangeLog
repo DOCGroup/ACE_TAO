@@ -1,3 +1,8 @@
+Fri Jun  5 18:20:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SString.h:
+          Doxygen changes
+
 Fri Jun  5 18:16:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ETCL/ETCL_Interpreter.cpp:

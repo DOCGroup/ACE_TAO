@@ -196,7 +196,7 @@ public:
   /// slot of the first location that matches, else @c npos.
   size_type strstr (const ACE_SString &s) const;
 
-  /// Find <str> starting at pos.  Returns the slot of the first
+  /// Find @a str starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
   size_type find (const ACE_SString &str, size_type pos = 0) const;
 
@@ -204,11 +204,11 @@ public:
   /// location that matches (will be >= pos), else npos.
   size_type find (const char *s, size_type pos = 0) const;
 
-  /// Find <c> starting at pos.  Returns the slot of the first
+  /// Find @a c starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
   size_type find (char c, size_type pos = 0) const;
 
-  /// Find <c> starting at pos (counting from the end).  Returns the
+  /// Find @a c starting at pos (counting from the end).  Returns the
   /// slot of the first location that matches, else npos.
   size_type rfind (char c, size_type pos = npos) const;
 
