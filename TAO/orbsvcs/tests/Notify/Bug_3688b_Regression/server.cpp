@@ -36,7 +36,7 @@ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testNotifyService",
   "TAO_Notify_Service",
   "_make_TAO_Notify_Service_Driver",
-  "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 1 -ORBInitRef NameService=file://naming.ior -IORoutput notify.ior -ORBDebugLevel 10"
+  "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 1 -ORBInitRef NameService=file://naming.ior -IORoutput notify.ior"
 );
 
 ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
