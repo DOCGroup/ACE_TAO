@@ -579,7 +579,7 @@ TAO_Notify_ETCL_Filter::load_attrs(const TAO_Notify::NVPList& attrs)
 
 TAO_Notify::Topology_Object*
 TAO_Notify_ETCL_Filter::load_child (const ACE_CString &type,
-  CORBA::Long id, const TAO_Notify::NVPList& attrs)
+  CORBA::Long, const TAO_Notify::NVPList& attrs)
 {
   TAO_Notify::Topology_Object* result = this;
   if (type == "constraint")
