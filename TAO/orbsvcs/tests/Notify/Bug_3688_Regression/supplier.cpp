@@ -10,8 +10,6 @@ namespace CosNotifyCommImpl{
   public:
     void disconnect_structured_push_supplier()
     {
-      std::cout << "StructuredPushSupplier:  got disconnected" << std::endl;
-    
     };
     void subscription_change( const CosNotification::EventTypeSeq&, 
       const CosNotification::EventTypeSeq&)
@@ -102,7 +100,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::string_dup("Test_type_name");
     event.header.variable_header.length(0);
 
-    int data = 1;
+    int data = 5;
     event.filterable_data.length(1);
     event.filterable_data[0].name = CORBA::string_dup ("data");
     event.filterable_data[0].value <<= data;
@@ -115,7 +113,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cout << "event.header.fixed_header.event_type.type_name = " 
       << event.header.fixed_header.event_type.type_name
       << std::endl;
-    std::cout << "event.filterable_data: data=0" << std::endl; 
+    std::cout << "event.filterable_data: data=" << data << std::endl; 
 
 
     try{
