@@ -182,15 +182,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->run (tv);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Consumer done.\n")));
 
-    if (! pImpl_spc->received_events ())
+    if (pImpl_spc->received_events ())
     {
-      //Consumer should not receive any events as it's filtered with event type.
-      std::cerr << "Test failed - did not receive test events." << std::endl;
+      //Consumer should not receive any events as the user defined constraint takes
+      //effect. 
+      std::cerr << "Test failed - should not receive test events." << std::endl;
       return 1;
     }
     else
     {
-      std::cout << "Test passed - received test events as expected." << std::endl;
+      std::cout << "Test passed - did not receive test events as expected." << std::endl;
     }
   }
   catch(...)

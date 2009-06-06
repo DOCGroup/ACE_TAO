@@ -1,3 +1,15 @@
+Sat Jun  6 00:31:39 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3688_Regression/consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/supplier.cpp:
+
+          Corrected the test scenario. The filter constraint is
+          "$data == 1 or $data == 2 or $data == 4" and the supplier push 
+          event with filterable_data "data=5". Before the fix, the filter 
+          constraint was not evaluated so it will receive events. With the 
+          fix, the constraint was evaluated so the consumer should not 
+          receive the event.
+
 Fri Jun 05 22:45:57 UTC 2009  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
