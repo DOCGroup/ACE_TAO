@@ -271,6 +271,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Timer_Queue_Adapters.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
+    Tokenizer_T.cpp
     Typed_SV_Message.cpp
     Typed_SV_Message_Queue.cpp
     Unbounded_Queue.cpp
