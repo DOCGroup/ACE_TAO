@@ -7,6 +7,7 @@
 #include "Valuetype_Factories/Cookies.h"
 #include "CIAO_common.h"
 #include "Client_init.h"
+#include "ace/Tokenizer_T.h"
 
 namespace CIAO
 {
