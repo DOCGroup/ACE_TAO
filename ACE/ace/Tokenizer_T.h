@@ -224,7 +224,7 @@ protected:
   int delimiter_index_;
 };
 
-typedef ACE_Tokenizer_T <char> ACE_Tokenizer;
+typedef ACE_Tokenizer_T <ACE_TCHAR> ACE_Tokenizer;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
