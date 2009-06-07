@@ -118,7 +118,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "Getting QOS using ACE_OS::ioctl () succeeds.\n"));
 
-  const char* msg = "Hello sent on a QoS enabled session !!\n";
+  char* msg = "Hello sent on a QoS enabled session !!\n";
   iovec iov[1];
   iov[0].iov_base = msg;
   iov[0].iov_len =
