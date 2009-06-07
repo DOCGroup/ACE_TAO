@@ -118,7 +118,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "Getting QOS using ACE_OS::ioctl () succeeds.\n"));
 
-  char* msg = "Hello sent on a QoS enabled session !!\n";
+  const char* msg = "Hello sent on a QoS enabled session !!\n";
   iovec iov[1];
   iov[0].iov_base = msg;
   iov[0].iov_len = ACE_OS::strlen(msg);
@@ -167,7 +167,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
                                                          25,
                                                          1)))
     {
-    case 1 : 
+    case 1 :
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind the new flow spec\n"
                          "The Flow Spec name already exists\n"),
