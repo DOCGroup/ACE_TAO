@@ -29,6 +29,7 @@
 #include "ace/Time_Value.h"
 #include "ace/SString.h"
 #include "ace/Truncate.h"
+#include "ace/Tokenizer_T.h"
 
 ACE_RCSID(Process, process, "$Id$")
 
