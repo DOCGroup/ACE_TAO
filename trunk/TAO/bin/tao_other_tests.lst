@@ -150,11 +150,11 @@ TAO/orbsvcs/tests/Notify/Persistent_Filter/run_test.pl: !ST !NO_MESSAGING !MINIM
 TAO/orbsvcs/tests/Notify/Validate_Client/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/Notify/Bug_1884_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/Notify/Bug_1884_Regression/run_test.pl -p: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
-TAO/orbsvcs/tests/Notify/Bug_3646a_Regression/run_test.pl -p: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
-TAO/orbsvcs/tests/Notify/Bug_3646b_Regression/run_test.pl -p: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
-TAO/orbsvcs/tests/Notify/Bug_3646c_Regression/run_test.pl -p: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
-TAO/orbsvcs/tests/Notify/Bug_3646d_Regression/run_test.pl -p: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
-TAO/orbsvcs/tests/Notify/Bug_3663_Regression/run_test.pl -p: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ !FIXED_BUGS_ONLY
+TAO/orbsvcs/tests/Notify/Bug_3646a_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
+TAO/orbsvcs/tests/Notify/Bug_3646b_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
+TAO/orbsvcs/tests/Notify/Bug_3646c_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
+TAO/orbsvcs/tests/Notify/Bug_3646d_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
+TAO/orbsvcs/tests/Notify/Bug_3663_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ !FIXED_BUGS_ONLY
 TAO/orbsvcs/tests/Notify/Bug_2926_Regression/run_test.pl: !ST !NO_MESSAGING !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/Notify/Bug_3688_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
 TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !VxWorks !VxWorks_RTP !LabVIEW_RT !WinCE !FUZZ
