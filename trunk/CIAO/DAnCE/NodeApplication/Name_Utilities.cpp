@@ -4,6 +4,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+#include "ace/Tokenizer_T.h"
 #include "Logger/Log_Macros.h"
 
 namespace DAnCE
@@ -23,7 +24,7 @@ namespace DAnCE
       }
     return false;
   }
-  
+
   bool
   Name_Utilities::bind_object (const char *name,
                                CORBA::Object_ptr obj,
@@ -38,13 +39,13 @@ namespace DAnCE
                       name));
         return false;
       }
-    
+
     try
       {
         CosNaming::Name nm;
-        
+
         Name_Utilities::build_name (name, nm);
-        
+
         if (nm.length () == 0)
           {
             DANCE_ERROR ((LM_WARNING, DLINFO "Name_Utilities::bind_object - "
@@ -52,9 +53,9 @@ namespace DAnCE
                           name));
             return false;
           }
-        
+
         Name_Utilities::bind_context (nm, ctx);
-        
+
         try
           {
             ctx->bind (nm, obj);
@@ -81,16 +82,16 @@ namespace DAnCE
                       name));
         return false;
       }
-    
+
     return true;
   }
-  
+
   void
   Name_Utilities::bind_context (CosNaming::Name &nm,
                                 CosNaming::NamingContext_ptr ctx)
   {
     DANCE_TRACE ("Name_Utilities::bind_context");
-    
+
     if (CORBA::is_nil (ctx))
       {
         DANCE_ERROR ((LM_WARNING, DLINFO "Name_Utilities::bind_context - "
@@ -98,29 +99,29 @@ namespace DAnCE
       }
 
     CosNaming::Name newname (nm.length ());
-    
+
     for (CORBA::ULong i = 0;
          i < (nm.length () - 1); ++i)
       {
         newname.length (i + 1);
         newname[i] = nm[i];
-        
+
         try
           {
             ctx->bind_new_context (newname);
             DANCE_DEBUG ((LM_TRACE, DLINFO "Name_Utilities::bind_context - "
                           "Bound new context %C\n", newname[i].id.in ()));
           }
-        catch (CosNaming::NamingContext::AlreadyBound &) 
+        catch (CosNaming::NamingContext::AlreadyBound &)
           {
             DANCE_DEBUG ((LM_TRACE, DLINFO "Name_Utilities::bind_context - "
                           "Context %C already bound.\n", newname[i].id.in ()));
           }
       }
   }
-  
+
   bool
-  Name_Utilities::unbind_object (const char *name, 
+  Name_Utilities::unbind_object (const char *name,
                                  CosNaming::NamingContext_ptr ctx)
   {
     DANCE_TRACE ("Name_Utilities::unbind_object");
@@ -131,10 +132,10 @@ namespace DAnCE
                       "Provided naming context is nil, instance %s will not be unbound\n",
                       name));
       }
-    
+
     CosNaming::Name nm;
     Name_Utilities::build_name (name, nm);
-    
+
     try
       {
         ctx->unbind (nm);
@@ -148,31 +149,31 @@ namespace DAnCE
       }
     return true;
   }
-  
+
   void
   Name_Utilities::build_name (const char *name,
                               CosNaming::Name &nm)
   {
     DANCE_TRACE ("Name_Utilities::build_name");
-    
+
     /*ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>*/  ACE_TCHAR *safe_array (new char[ACE_OS::strlen (name) + 1]);
-    
+
     ACE_Tokenizer parser (ACE_OS::strcpy (safe_array/*.get ()*/, name));
     parser.delimiter ('/');
-    
+
     ACE_TCHAR *next (0);
-    
+
     while ((next = parser.next ()) != 0)
       {
         CORBA::ULong i = nm.length ();
         nm.length (i + 1);
-        
+
         DANCE_DEBUG ((LM_TRACE, DLINFO "Name_Utilities::build_name - "
                       "Found name component %C\n",
                       next));
-        
+
         nm[i].id = CORBA::string_dup (next);
       }
   }
-  
+
 }
