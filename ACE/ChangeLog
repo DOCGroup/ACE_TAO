@@ -1,3 +1,29 @@
+Sun Jun  7 17:53:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Tokenizer_T.cpp
+        * ace/Tokenizer_T.h
+        * ace/SString.cpp
+        * ace/SString.h
+          Moved ACE_Tokenizer to its own file and reworked it to
+          the C++ template ACE_Tokenizer_T. ACE_Tokenizer is then a
+          typedef of ACE_Tokenizer_T<ACE_TCHAR>. This makes it
+          possible to use a char tokenizer in a wchar build
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Added new files
+
+        * ace/Configuration.cpp:
+        * ace/Process.cpp:
+        * examples/OS/Process/process.cpp:
+          Added include of Tokenizer_T.h
+
+        * ace/OS_NS_Thread.cpp
+        * ace/OS_NS_Thread.h
+        * ace/OS_NS_Thread.inl
+          Changed important_writer_ to bool
+
 Fri Jun  5 18:20:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SString.h:

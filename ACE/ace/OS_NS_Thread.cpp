@@ -3421,7 +3421,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
           rw->ref_count_ = 0;
           rw->num_waiting_writers_ = 0;
           rw->num_waiting_readers_ = 0;
-          rw->important_writer_ = 0;
+          rw->important_writer_ = false;
           result = 0;
         }
       ACE_OS::condattr_destroy (attributes);
