@@ -14,6 +14,5 @@ module Components
     CCMObject create_component()
       raises (CreateFailure);
   };
-
 };
 #endif /* CCM_KEYLESSCCMHOME_IDL */
