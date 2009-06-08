@@ -1,3 +1,14 @@
+Mon Jun  8 22:25:23 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_3695_Regression:
+        * tests/Bug_3695_Regression/Bug_3695.cpp:
+        * tests/Bug_3695_Regression/Bug_3695_Regression.mpc:
+        * tests/Bug_3695_Regression/run_test.pl:
+
+          Added a new test, this will fail until the patch is committed
+          tomorrow (see bugzilla).
+
 Mon Jun  8 19:42:36 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:
