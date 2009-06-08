@@ -96,6 +96,9 @@ ifeq ($(shared_libs),1)
   CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
   LDFLAGS  += -mshared
   LIBS     += -ldl
+  ifeq ($(CROSS-COMPILE),1)
+    LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
+  endif
 else
   LIBS     += -lnetinet -lnsl
 endif
