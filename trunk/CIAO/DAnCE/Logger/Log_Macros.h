@@ -19,7 +19,7 @@
 #  endif
 #endif DANCE_NTRACE 
 */
-#define DLINFO "(%P|%t) [%M] - %T - "
+#define DLINFO ACE_TEXT("(%P|%t) [%M] - %T - ")
 
 #if (DANCE_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
