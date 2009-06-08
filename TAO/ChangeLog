@@ -1,3 +1,44 @@
+Mon Jun  8 19:18:58 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/taodefaults.mpb:
+
+          Fix a bad comment.
+
+        * docs/compiler.html:
+
+          s/gperf/ace_gperf/ in a few places that must have been missed when
+          the name of this executable was changed a year ago.
+
+        * docs/rtcorba/features.html:
+
+          Fix the name of the -RTORBNetworkPriorityMapping option.
+
+        * orbsvcs/Notify_Service/README:
+
+          Add information about -LoggingInterval and how to use it.
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+
+          Fix a bug in how Numeric statistics print their last value.
+
+        * tests/Bug_2593_Regression/run_test.pl:
+
+          Use a random port instead of hard-coding :4444.
+
+        * tests/IPV6/run_test.pl:
+
+          This test requires -ORBUseSharedProfile 0, even though it's the
+          default now that might change in the future and it's safer to be
+          explicit.
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+
+          Added an "after" needed for the single-threaded configuration.
+
+        * tests/ORB_Local_Config/ORB_Local_Config.mwc:
+
+          Removed this file.  This test doesn't need its own workspace.
+
 Mon Jun  8 06:41:03 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.h:
@@ -287,7 +328,7 @@ Tue  Jun  2 06:47:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
           strategy for which the default is leader follower, but that
           will not work because we don't use the lf loop in this case.
           Added a note the ClientConnectionHandler RW needs a
-          FlusingStrategy of blocking
+          FlushingStrategy of blocking
 
         * tests/Bug_3683_Regression/Echo_Client_i.cpp
         * tests/Bug_3683_Regression/Echo_Client_i.h
