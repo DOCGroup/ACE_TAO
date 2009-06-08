@@ -46,15 +46,15 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
   public:
     struct SOptions
       {
-        const char* exec_mgr_file_;
+        const ACE_TCHAR* exec_mgr_file_;
         bool process_ns_;
-        const char* process_ns_file_;
+        const ACE_TCHAR* process_ns_file_;
         bool create_plan_ns_;
-        const char* create_plan_ns_ior_;
+        const ACE_TCHAR* create_plan_ns_ior_;
         bool rebind_plan_ns_;
-        const char* rebind_plan_ns_ior_;
+        const ACE_TCHAR* rebind_plan_ns_ior_;
         bool port_indirection_;
-        ACE_Vector<ACE_CString> node_managers_;
+        ACE_Vector<ACE_TString> node_managers_;
         bool ignore_failure_;
         const char *node_map_;
         const char *domain_nc_;
