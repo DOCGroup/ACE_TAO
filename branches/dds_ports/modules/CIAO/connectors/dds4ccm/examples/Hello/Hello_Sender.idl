@@ -1,0 +1,15 @@
+//$Id$
+
+#ifndef SENDER_IDL
+#define SENDER_IDL
+
+#include "dds4ccm/idl/dds4ccm_Base.idl3"
+
+module CCM_DDS
+{
+  interface string_Writer {
+    void write (in string an_instance)
+      raises (InternalError);
+  };
+};
+#endif /*SENDER_IDL*/
