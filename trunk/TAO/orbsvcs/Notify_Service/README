@@ -69,7 +69,12 @@ Command line arguments:
                   'corba_messaging' MPC feature during building of the
                   Notify_Service, which is on by default.
 
-!! The -Notify_TPReactor option is deprecated!! use the -RunThreads
+"-LoggingInterval seconds" : Sets up a logging interval timer for the ORB's
+                             reactor.  This is required to use the ACE 
+                             Logging Service features such as file sizing
+                             and rotation.  See the example below.
+
+!! The -Notify_TPReactor option is deprecated!! use the -ORBRunThreads
 option instead.
 
 "-Notify_TPReactor [threads]": Tells the Notify Service that the ORB
@@ -127,6 +132,19 @@ manner:
 Note that the client uses:
  resolve_initial_references ("NotifyEventChannelFactory");
 to obtain the object reference.
+
+Using the ACE Logging Service:
+------------------------------
+
+Start the Notify_Service executable with the debug options desired and
+the -LoggingInterval option:
+
+./Notify_Service -ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBSvcConf ns.conf -LoggingInterval 5
+
+Configure the logging service in the ns.conf file:
+dynamic Logging_Strategy Service_Object * ACE:_make_ACE_Logging_Strategy() "-s NS -f OSTREAM -t 0 "
+
+
 
 The svc.conf options:
 ----------------------

@@ -20,7 +20,8 @@ foreach $i (@ARGV) {
 $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
-$endpoints = "-ORBEndpoint shmiop://12345 -ORBEndpoint iiop://:4444";
+$endpoints = "-ORBEndpoint shmiop://12345 -ORBEndpoint iiop://:"
+    . PerlACE::random_port();
 $debug_conf = "-ORBDebugLevel $debug_level";
 $svc_conf = "-ORBSvcConf server.conf";
 
