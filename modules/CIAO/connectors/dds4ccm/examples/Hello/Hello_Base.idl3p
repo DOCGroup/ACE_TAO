@@ -1,12 +1,12 @@
 #include "dds4ccm/idl/dds4ccm_Port_Write.idl3p"
-#include "dds4ccm/idl/dds4ccm_Port_Listen.idl3p"
+//#include "dds4ccm/idl/dds4ccm_Port_Listen.idl3p"
 
 module Hello_DDS
 {
-  connector Hello : DDS_TopicBase 
+  connector Hello : DDS_TopicBase
   {
     mirrorport DDS_Write<string> sender;
-    mirrorport DDS_RawListen<string> receiver;
+  //  mirrorport DDS_RawListen<string> receiver;
   };
 };
 
