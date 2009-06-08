@@ -1,3 +1,9 @@
+Mon Jun  8 19:42:36 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          TransportCurrent is not available with CORBA/e compact or micro.
+
 Mon Jun  8 19:18:58 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/taodefaults.mpb:
