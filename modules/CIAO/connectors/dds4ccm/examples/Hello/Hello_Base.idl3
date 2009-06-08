@@ -2,12 +2,12 @@
 
 module CCM_DDS
 {
-  interface string_Writer 
+  interface string_Writer
   {
     void write (in string an_instance)
       raises (InternalError);
   };
-  
+
   interface string_Reader
   {
     void read_all (out StringSeq instances, out ReadInfoSeq infos)
@@ -17,15 +17,15 @@ module CCM_DDS
     void read_one (inout string an_instance, out ReadInfo info)
       raises (NonExistent,
               InternalError);
-    void read_one_history (in string an_instance, 
+    void read_one_history (in string an_instance,
                            out StringSeq instances, out ReadInfoSeq infos)
       raises (NonExistent,
               InternalError);
     attribute QueryFilter filter
-    setraises (BadParameter);
+      setraises (BadParameter);
   };
-  
-  interface string_RawListener 
+
+  interface string_RawListener
   {
     void on_data (in string an_instance, in ReadInfo info);
   };
@@ -38,7 +38,7 @@ module Hello_DDS
     provides CCM_DDS::string_Writer sender_data;
     provides DDS::DataWriter sender_dds_entity;
   };
-  
+
   component Hello_receiver_Connector
   {
     provides CCM_DDS::string_Reader receiver_data;
