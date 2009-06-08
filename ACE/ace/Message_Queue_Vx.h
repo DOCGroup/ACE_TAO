@@ -62,7 +62,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * *   is ignored; only the first block of a fragment chain is
  * *   recognized.
  */
-class ACE_Message_Queue_Vx : public ACE_Message_Queue<ACE_NULL_SYNCH>
+class ACE_Export ACE_Message_Queue_Vx: public ACE_Message_Queue<ACE_NULL_SYNCH>
 {
 public:
   // = Initialization and termination methods.
