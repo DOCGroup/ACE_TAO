@@ -12,7 +12,7 @@ namespace DAnCE
   File_Logger_Backend::open (const ACE_TCHAR *)
   {
     DANCE_DEBUG ((LM_DEBUG, "[%M] Setting logger's output to file \"%s\"\n", this->filename_.c_str()));
-    this->fh_ = ACE_OS::fopen (this->filename_.c_str(), "w");
+    this->fh_ = ACE_OS::fopen (this->filename_.c_str(), "a+");
     if (0 == this->fh_)
       {
         ACE_CString s = "Failed to open log file \"";

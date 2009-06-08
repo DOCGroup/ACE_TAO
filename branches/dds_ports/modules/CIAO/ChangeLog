@@ -1,3 +1,10 @@
+Mon Jun  8 09:58:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Logger/File_Logger_Backend.cpp:
+          Fixed Bugzilla #3692 - Incorrect behaviour of DANCE_LOG_FILE 
+          variable when used globally.
+          Open DAnCE logfile with a+ in stead off w.
+
 Mon Jun  8 09:43:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/Logger/File_Logger_Backend.cpp:
