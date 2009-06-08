@@ -213,7 +213,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
   if (err!=UNZ_OK)
     {
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("unzGetGlobalInfo failed to get global")
-                           ACE_TEXT(" information about zipfile\n")), err));
+                           ACE_TEXT(" information about zipfile\n"), err));
       return false;
     }
   err =unzGoToFirstFile(uf);
