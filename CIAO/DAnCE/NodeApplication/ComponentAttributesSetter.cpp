@@ -58,7 +58,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
         }
       DANCE_DEBUG ((LM_DEBUG, DLINFO
                     ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
-                    ACE_TEXT("Populating attribute name %C\n", name.c_str())));
+                    ACE_TEXT("Populating attribute name %C\n"), name.c_str()));
       ACE_CString method = "_set_";
       method += prop[i].name.in();
 
