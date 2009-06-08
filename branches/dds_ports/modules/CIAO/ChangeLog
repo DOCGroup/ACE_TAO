@@ -1,3 +1,11 @@
+Mon Jun  8 09:43:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Logger/File_Logger_Backend.cpp:
+          Added new line after log messages.
+
+        * examples/Hello/step-by-step.html:
+          Made changes regarding the use of the naming server.
+
 Mon Jun  8 09:12:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/Receiver/Receiver.cidl:
@@ -8,7 +16,7 @@ Mon Jun  8 09:12:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
           RECEIVER.IDL).
 
         * examples/Hello/descriptors/run_NodeDaemons.pl:
-          Making use of DANCE_ROOT environment variable. Using the 
+          Making use of DANCE_ROOT environment variable. Using the
           same command line parameters as in run_test.pl.
 
         * examples/Hello/step-by-step.html:
@@ -21,7 +29,7 @@ Fri Jun  5 20:10:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/examples/Hello/Hello_Sender.idl3:
 
           Finished the by-hand translation to idl3.
-        
+
 Fri Jun  5 19:48:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Logger_Service.cpp:

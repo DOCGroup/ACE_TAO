@@ -185,18 +185,17 @@ Finally you are ready to deploy the component-based application you have develop
        component(s) will be deployed, so this is non-standard. We plan to use Naming Service to do this in the future.
   </ul><P>
 
-  <LI> Start the plan launcher, using the Naming Service. Go to <em>descriptors</em> and execute:<br/>
-  <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -x deploymentplan.cdp -k file://EM.ior </code><br/>
+  <LI> Start the plan launcher, using the Naming Service. Go to <em>descriptors_naming</em> and execute:<br/>
+  <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -x deploymentplan_naming.cdp -k file://../descriptors/EM.ior </code><br/>
 
   <ul type="square"> <li> If you don't want to register component(s) with CORBA naming service, then you don't have to start
-  your naming service, and you can use the below code to start the executor:<br/>
+  your naming service, and you can use the below code to start the executor. First navigate to <code>$CIAO_ROOT/examples/Hello/descriptor</code>:<br/>
 
-  <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -p deploymentplan.cdp -k file://EM.ior </code><P>
+  <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -x deploymentplan.cdp -k file://EM.ior </code><P>
+  </li></ul>
+  After this, components should be deployed successfully.<P>
 
-  After this, components should be deployed successfully.</li></ul><P>
-
-  <LI> You can go into the <em>
-      $CIAO_ROOT/DAnCE/examples/Hello/descriptor </em> directory and
+  <LI> You can go into the <em>$CIAO_ROOT/examples/Hello/descriptor</em> directory and
       run execute <code>$CIAO_ROOT/examples/Hello/Sender/starter -k file://Sender.ior</code> to start the application. Please make sure that the component IOR
       file for the Sender component (<code>Sender.ior</code>) is present when you run this client.<P>
   </LI>

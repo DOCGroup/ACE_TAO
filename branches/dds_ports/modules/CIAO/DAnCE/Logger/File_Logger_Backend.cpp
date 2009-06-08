@@ -11,13 +11,13 @@ namespace DAnCE
   int
   File_Logger_Backend::open (const ACE_TCHAR *)
   {
-    DANCE_DEBUG ((LM_DEBUG, "[%M] Setting logger's output to file \"%s\"", this->filename_.c_str()));
+    DANCE_DEBUG ((LM_DEBUG, "[%M] Setting logger's output to file \"%s\"\n", this->filename_.c_str()));
     this->fh_ = ACE_OS::fopen (this->filename_.c_str(), "w");
     if (0 == this->fh_)
       {
         ACE_CString s = "Failed to open log file \"";
         s += this->filename_;
-        s += "\"";
+        s += "\"\n";
         throw LoggerError (s.c_str());
       }
     return 0;
