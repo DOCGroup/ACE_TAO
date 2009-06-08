@@ -6,6 +6,7 @@
 
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 
+#include <string>
 
 class bug3688_Export TestBroadcaster
 {
