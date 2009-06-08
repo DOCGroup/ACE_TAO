@@ -47,6 +47,9 @@ namespace CIDL_Sender_Connector_Impl
     virtual void
     write (
       const char * an_instance);
+
+    InstanceHandle_t instance_handle;
+    HelloWorldDataWriter *helloWriter;
   };
 
   class HELLO_SENDER_CONNECTOR_EXEC_Export DataWriter_exec_i

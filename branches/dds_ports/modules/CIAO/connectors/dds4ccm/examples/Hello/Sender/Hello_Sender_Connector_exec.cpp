@@ -39,8 +39,10 @@ namespace CIDL_Sender_Connector_Impl
 
   void
   string_Writer_exec_i::write (
-    const char * /* an_instance */)
+    const char * an_instance)
   {
+    helloWriter->write(*instance, instance_handle);
+
     /* Your code here. */
   }
 
@@ -50,51 +52,43 @@ namespace CIDL_Sender_Connector_Impl
 
   DataWriter_exec_i::DataWriter_exec_i (void)
   {
-  
-/*     8     int domainId = 0;
-   9     int sample_count = 100;
-  10     DomainParticipant *participant = NULL;
-  11     Publisher *publisher = NULL;
-  12     Topic *topic = NULL;
-  13     DataWriter *writer = NULL;
-  14     HelloWorldDataWriter *helloWriter = NULL;
-  15     HelloWorld instance;
-  16     InstanceHandle_t instance_handle = HANDLE_NIL;
-  17     const char *type_name = NULL;
-  18     int count = 0;
-  19     participant = TheParticipantFactory->create_participant(
-  20         domainId, PARTICIPANT_QOS_DEFAULT, NULL /* listener */,
-  21         STATUS_MASK_NONE);
-  22     publisher = participant->create_publisher(
-  23         PUBLISHER_QOS_DEFAULT, NULL /* listener */,
-  24         STATUS_MASK_NONE);
-  25     type_name = HelloWorldTypeSupport::get_type_name();
-  26     HelloWorldTypeSupport::register_type(
-  27         participant, type_name);
-  28     topic = participant->create_topic(
-  29         "Example HelloWorld",
-  30         type_name, TOPIC_QOS_DEFAULT, NULL /* listener */,
-  31         STATUS_MASK_NONE);
-  32     writer = publisher->create_datawriter(
-  33         topic, DATAWRITER_QOS_DEFAULT, NULL /* listener */,
-  34         STATUS_MASK_NONE);
-  35     helloWriter = HelloWorldDataWriter::narrow(writer);
-  36     strcpy(instance.name, "MyName");
-  37     instance_handle = HelloWorld_writer->register_instance(instance);
-  38     /* Main loop */
-  39     for (count=0; (sample_count == 0) || (count < sample_count); ++count) {
-  40         sprintf(instance.msg,  "Hello World! (count %d)", count);
-  41         printf("Writing: %s", instance.msg);
-  42         helloWriter->write(*instance, instance_handle);
-  43         sleep(1);
-  44     }
-  45     participant->delete_contained_entities();
-  46     TheParticipantFactory->delete_participant(participant);
-*/
+
+          int domainId = 0;
+        int sample_count = 100;
+         DomainParticipant *participant = NULL;
+         Publisher *publisher = NULL;
+         Topic *topic = NULL;
+         DataWriter *writer = NULL;
+       HelloWorldDataWriter *helloWriter = NULL;
+       HelloWorld instance;
+       InstanceHandle_t instance_handle = HANDLE_NIL;
+       const char *type_name = NULL;
+       int count = 0;
+       participant = TheParticipantFactory->create_participant(
+           domainId, PARTICIPANT_QOS_DEFAULT, NULL /* listener */,
+           STATUS_MASK_NONE);
+       publisher = participant->create_publisher(
+           PUBLISHER_QOS_DEFAULT, NULL /* listener */,
+           STATUS_MASK_NONE);
+       type_name = HelloWorldTypeSupport::get_type_name();
+       HelloWorldTypeSupport::register_type(
+           participant, type_name);
+       topic = participant->create_topic(
+           "Example HelloWorld",
+           type_name, TOPIC_QOS_DEFAULT, NULL /* listener */,
+           STATUS_MASK_NONE);
+       writer = publisher->create_datawriter(
+           topic, DATAWRITER_QOS_DEFAULT, NULL /* listener */,
+           STATUS_MASK_NONE);
+       helloWriter = HelloWorldDataWriter::narrow(writer);
+       strcpy(instance.name, "MyName");
+       instance_handle = HelloWorld_writer->register_instance(instance);
   }
 
   DataWriter_exec_i::~DataWriter_exec_i (void)
   {
+       participant->delete_contained_entities();
+       TheParticipantFactory->delete_participant(participant);
   }
 
   // Operations from ::DDS::DataWriter
