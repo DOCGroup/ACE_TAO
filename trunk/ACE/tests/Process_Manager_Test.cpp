@@ -542,6 +542,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
     }
 
+#ifdef ACE_HAS_THREADS
   Process_Task task1 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 3);
   Process_Task task2 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 2);
   Process_Task task3 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 1);
@@ -566,6 +567,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   order.c_str ()));
       test_status = 1;
     }
+#endif /* ACE_HAS_THREADS */
 
 #if !defined (ACE_OPENVMS)
   // --------------------------------------------------

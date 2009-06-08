@@ -1,3 +1,41 @@
+Mon Jun  8 18:39:58 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Message_Queue_Vx.h:
+        * ace/OS_main.h:
+
+          Added ACE_Export to ACE_Message_Queue_Vx.
+          Added "exports" for the symbols ace_os_main_i and ace_main_i.
+          This allows them to work with GCC 4.x hidden visibility on platforms
+          that use redefinition of main (VxWorks).
+
+        * contrib/minizip/minizip.mwc:
+
+          Added a workspace so minizip will be "found" when running
+          mwc.pl -recurse.
+
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+
+          Both VxWorks and LynxOS:
+          For shared library builds (RTP), use -rpath-link to silence
+          warnings from the linker.  We assume the libraries in $ACE_ROOT/lib
+          will be present at runtime.
+
+          VxWorks only:
+          Allow in-place (no HOST_ROOT) cross-compilation on Win32 hosts.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Default "distrib" to 1, which means we will not set RPATH, similar to
+          other platforms.  This resolves bug #3678.
+
+        * tests/Network_Adapters_Test.h:
+        * tests/Process_Manager_Test.cpp:
+        * tests/Signal_Test.cpp:
+        * tests/run_test.lst:
+
+          Fix ACE tests that were failing in single-threaded builds.
+
 Mon Jun  8 09:51:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1890_Regression_Test.cpp:

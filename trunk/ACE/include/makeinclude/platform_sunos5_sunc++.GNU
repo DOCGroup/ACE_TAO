@@ -42,7 +42,7 @@
 
 compat4 ?= 0
 debug ?= 1
-distrib ?= 0
+distrib ?= 1
 stdcpplib ?= 1
 threads ?= 1
 versioned_so ?= 1
