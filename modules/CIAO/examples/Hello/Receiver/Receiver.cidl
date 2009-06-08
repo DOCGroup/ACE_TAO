@@ -1,7 +1,7 @@
 //$Id$
 
-#ifndef SENDER_CIDL
-#define SENDER_CIDL
+#ifndef RECEIVER_CIDL
+#define RECEIVER_CIDL
 
 #include "Receiver.idl"
 
@@ -14,4 +14,4 @@ composition session Receiver_Impl
   };
 };
 
-#endif /* SENDER_CIDL */
+#endif /* RECEIVER_CIDL */
