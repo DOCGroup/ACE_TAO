@@ -1,14 +1,12 @@
-<!-- This flattened deployment plan allows component instance to 
+<!-- This flattened deployment plan allows component instance to
      register to naming service, if you don't want to use naming
      service at all, you can use the flattened_deployment_without_ns.cdp
      as your deployment descriptor. -->
-
-<Deployment:deploymentPlan
+  <Deployment:DeploymentPlan
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-
   <label>Hello-DeploymentPlan</label>
   <UUID>Hello_Plan_UUID_0001</UUID>
   <!-- Could be ZERO  -->
@@ -16,85 +14,70 @@
     <label>BasicSP-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
+    <supportedType>IDL:BasicSP/EC:1.0</supportedType>
     <port>
       <name>read_message</name>
       <specificType>IDL:Hello/ReadMessage:1.0</specificType>
       <supportedType>IDL:Hello/ReadMessage:1.0</supportedType>
-      <provider>false></provider>
+      <provider>false</provider>
       <exclusiveProvider>false</exclusiveProvider>
       <exclusiveUser>true</exclusiveUser>
       <optional>false</optional>
       <kind>SimplexReceptacle</kind>
     </port>
   </realizes>
-  
-  <implementation id="Hello-Sender-mdd">
+
+  <implementation xmi:id="Hello-Sender-mdd">
     <name>Hello-Sender-mdd</name>
-    <source><!-- @@ Don't know what goes here --></source>
-    <artifact>Hello-Sender_exec</artifact>
-    <artifact>Hello-Sender_svnt</artifact>
+    <source />
+    <artifact xmi:idref="Hello-Sender_execArtifact" />
+    <artifact xmi:idref="Hello-Sender_svntArtifact" />
     <!--
     <execParameter></execParameter>
     <deployRequirement></deployRequirement>
     -->
   </implementation>
 
-  <implementation id="Hello-Receiver-mdd">
+  <implementation xmi:id="Hello-Receiver-mdd">
     <name>Hello-Receiver-mdd</name>
-    <source><!-- @@ Don't know what goes here --></source>
-    <artifact>Hello-Receiver_exec</artifact>
-    <artifact>Hello-Receiver_svnt</artifact>
+    <source />
+    <artifact xmi:idref="Hello-Receiver_execArtifact" />
+    <artifact xmi:idref="Hello-Receiver_svntArtifact" />
     <!--
     <execParameter></execParameter>
     <deployRequirement></deployRequirement>
     -->
   </implementation>
 
-  <instance id="Hello-Sender-idd">
+  <instance xmi:id="Hello-Sender-idd">
     <name>Hello-Sender-idd</name>
     <node>SenderNode</node>
-    <source><!-- @@ What goes here --></source>
-    <implementation>Hello-Sender-mdd</implementation>
-
-    <!-- Add this property if you want to write component reference to IOR -->
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Sender.ior</string>
-        </value>
-      </value>
-    </configProperty>
-
+    <source />
+    <implementation xmi:idref="Hello-Sender-mdd" />
     <!-- Add this property if you want to register with naming service -->
     <!-- The string is the naming context to bind to naming service -->
     <configProperty>
       <name>RegisterNaming</name>
       <value>
         <type>
-         <kind>tk_string</kind>
+          <kind>tk_string</kind>
         </type>
         <value>
           <string>Sender_001</string>
         </value>
-      </value> 
+      </value>
     </configProperty>
-
     <!-- Add this property if you want to initialize component attribute -->
     <configProperty>
       <name>local_message</name>
       <value>
         <type>
-         <kind>tk_string</kind>
+          <kind>tk_string</kind>
         </type>
         <value>
           <string>This is a test message passed in through XML.</string>
         </value>
-      </value> 
+      </value>
     </configProperty>
     <!-- This attribute initializes an enumerated value -->
     <configProperty>
@@ -116,13 +99,25 @@
         </value>
       </value>
     </configProperty>
+    <!-- Add this property if you want to write component reference to IOR -->
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>    
   </instance>
 
-  <instance id="Hello-Receiver-idd">
+  <instance xmi:id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
     <node>ReceiverNode</node>
-    <source><!-- @@ What goes here --></source>
-    <implementation>Hello-Receiver-mdd</implementation>
+    <source />
+    <implementation xmi:idref="Hello-Receiver-mdd" />
     <configProperty>
       <name>ComponentIOR</name>
       <value>
@@ -142,12 +137,12 @@
     <internalEndpoint>
       <portName>click_out</portName>
       <kind>EventPublisher</kind>
-      <instance>Hello-Sender-idd</instance>
+      <instance xmi:idref="Hello-Sender-idd" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>click_in</portName>
       <kind>EventConsumer</kind>
-      <instance>Hello-Receiver-idd</instance>
+      <instance xmi:idref="Hello-Receiver-idd" />
     </internalEndpoint>
   </connection>
 
@@ -156,17 +151,17 @@
     <internalEndpoint>
       <portName>push_message</portName>
       <kind>Facet</kind>
-      <instance>Hello-Sender-idd</instance>
+      <instance xmi:idref="Hello-Sender-idd" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>read_message</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>Hello-Receiver-idd</instance>
+      <instance xmi:idref="Hello-Receiver-idd" />
     </internalEndpoint>
   </connection>
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->
-  <artifact id="Hello-Sender_exec">
+  <artifact xmi:id="Hello-Sender_execArtifact">
     <name>Sender_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
@@ -183,8 +178,8 @@
       </value>
     </execParameter>
   </artifact>
-  
-  <artifact id="Hello-Sender_svnt">
+
+  <artifact xmi:id="Hello-Sender_svntArtifact">
     <name>Sender_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
@@ -201,8 +196,8 @@
       </value>
     </execParameter>
   </artifact>
-  
-  <artifact id="Hello-Receiver_exec">
+
+  <artifact xmi:id="Hello-Receiver_execArtifact">
     <name>Receiver_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
@@ -219,8 +214,8 @@
       </value>
     </execParameter>
   </artifact>
-  
-  <artifact id="Hello-Receiver_svnt">
+
+  <artifact xmi:id="Hello-Receiver_svntArtifact">
     <name>Receiver_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
@@ -237,4 +232,4 @@
       </value>
     </execParameter>
   </artifact>
-</Deployment:deploymentPlan>  
+</Deployment:DeploymentPlan>
