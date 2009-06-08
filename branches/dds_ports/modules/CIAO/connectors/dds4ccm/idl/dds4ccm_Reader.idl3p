@@ -18,22 +18,22 @@ module CCM_DDS
     void read_one (inout T an_instance, out ReadInfo info)
       raises (NonExistent,
               InternalError);
-    void read_one_history (in T an_instance, 
+    void read_one_history (in T an_instance,
                            out T$Seq instances, out ReadInfoSeq infos)
       raises (NonExistent,
               InternalError);
     attribute QueryFilter filter
-    setraises (BadParameter);
+      setraises (BadParameter);
     // behaviour
     // - read operations are performed with the following parameters
     //	- READ or NO_READ
     //	- NEW or NOT_NEW
     //	- ALIVE
     //	- through the query as specified in the filter ("" means no query)
-    // - data returned: 
+    // - data returned:
     //	- read_all returns for each living instance, its last sample
     //	  ordered by instance first and then by sample
-    // 	- read_all_history returns all the samples of all instances 
+    // 	- read_all_history returns all the samples of all instances
     //	  ordered by instance first and then by sample
     // 	- read_one returns the last sample of the given instance
     // 	- read_one_history returns all the samples for the given instance
