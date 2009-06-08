@@ -62,7 +62,7 @@ project(Hello_Base_Sender_Connector_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Hello_Base_Sender_Connector_exec) : ciao_executor, avoids_ace_for_tao {
+project(Hello_Base_Sender_Connector_exec) : ciao_executor, avoids_ace_for_tao, nddslib {
   after   += Hello_Base_Sender_Connector_idle_gen Hello_Base_Sender_Connector_stub
   sharedname = Sender_Connector_exec
   libs += Sender_Connector_stub Hello_Base_stub
