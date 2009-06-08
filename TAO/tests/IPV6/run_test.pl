@@ -19,6 +19,8 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $srv_arg = "-o $iorfile ";
 }
+
+$srv_arg .= "-ORBUseSharedProfile 0 ";
 $clt_arg = "-k file://$iorfile ";
 
 @configurations =

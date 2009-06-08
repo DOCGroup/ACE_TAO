@@ -267,7 +267,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "Last: %g Average: %g\n",
-                                  data->data_union.num().dlist[0],
+                                  data->data_union.num().dlist[0].value,
                                   data->data_union.num().average));
                     }
                   else
