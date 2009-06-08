@@ -4,21 +4,23 @@ module CCM_DDS
 {
   interface string_Writer
   {
+    typedef sequence<string> stringSeq;
     void write (in string an_instance)
       raises (InternalError);
   };
 
   interface string_Reader
   {
-    void read_all (out StringSeq instances, out ReadInfoSeq infos)
+    typedef sequence<string> stringSeq;
+    void read_all (out stringSeq instances, out ReadInfoSeq infos)
       raises (InternalError);
-    void read_all_history (out StringSeq instances, out ReadInfoSeq infos)
+    void read_all_history (out stringSeq instances, out ReadInfoSeq infos)
       raises (InternalError);
     void read_one (inout string an_instance, out ReadInfo info)
       raises (NonExistent,
               InternalError);
     void read_one_history (in string an_instance,
-                           out StringSeq instances, out ReadInfoSeq infos)
+                           out stringSeq instances, out ReadInfoSeq infos)
       raises (NonExistent,
               InternalError);
     attribute QueryFilter filter
@@ -42,9 +44,9 @@ module Hello_DDS
   component Hello_receiver_Connector
   {
     provides CCM_DDS::string_Reader receiver_data;
-    provides CCM_DDS::ListenerControl receiver_control;
+//    provides CCM_DDS::ListenerControl receiver_control;
     uses CCM_DDS::string_RawListener receiver_listener;
     provides DDS::DataReader receiver_dds_entity;
-    uses CCM_DDS::PortStatusListener receiver_status;
+  //  uses CCM_DDS::PortStatusListener receiver_status;
   };
 };

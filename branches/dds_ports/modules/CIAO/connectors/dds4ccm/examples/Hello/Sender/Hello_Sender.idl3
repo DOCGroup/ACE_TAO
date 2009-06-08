@@ -1,4 +1,4 @@
-#include "../Hello_Base.idl3p"
+#include "../Hello_Base.idl3"
 
 module Hello_DDS
 {
