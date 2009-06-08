@@ -1,3 +1,19 @@
+Mon Jun  8 09:12:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/Receiver/Receiver.cidl:
+          Changed #ifndef SENDER_CIDL to #ifndef RECEIVER_CIDL.
+
+        * examples/Hello/Sender/Sender.idl:
+          Changed CIAO_SENDER_IDL into SENDER_IDL (same format as
+          RECEIVER.IDL).
+
+        * examples/Hello/descriptors/run_NodeDaemons.pl:
+          Making use of DANCE_ROOT environment variable. Using the 
+          same command line parameters as in run_test.pl.
+
+        * examples/Hello/step-by-step.html:
+          Adapted to the current status.
+
 Fri Jun  5 20:10:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Hello_Base.idl3:

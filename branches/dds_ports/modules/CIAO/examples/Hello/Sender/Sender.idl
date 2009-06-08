@@ -1,7 +1,7 @@
 //$Id$
 
-#ifndef CIAO_SENDER_IDL
-#define CIAO_SENDER_IDL
+#ifndef SENDER_IDL
+#define SENDER_IDL
 
 
 #include "../Hello_Base/Hello_Base.idl"
@@ -40,4 +40,4 @@ module Hello
   {
   };
 };
-#endif /*CIAO_SENDER_IDL*/
+#endif /*SENDER_IDL*/
