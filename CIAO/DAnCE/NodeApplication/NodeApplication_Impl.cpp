@@ -172,7 +172,7 @@ namespace
                           ACE_TEXT("Found property '%C'\n"), name));
             if (properties[i].value >>= CORBA::Any::to_string (val, 0))
               {
-                DANCE_DEBUG ((LM_TRACE, 
+                DANCE_DEBUG ((LM_TRACE,
                               DLINFO ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<T> - ")
                               ACE_TEXT("Value is %C\n"), val));
                 return true;
@@ -206,18 +206,18 @@ namespace
         exception.reason = reason;
       }
   }
-  
-  const char * get_artifact_location (const char * name, 
+
+  const char * get_artifact_location (const char * name,
                                       const ::Deployment::ArtifactDeploymentDescriptions &art)
   {
     DANCE_TRACE ("NodeApplication::<anonymous>::get_artifact_location");
-    
+
     for (CORBA::ULong i = 0; i < art.length (); ++i)
       {
         if (ACE_OS::strcmp (name, art[0].name.in ()) == 0)
           return art[0].location[0].in ();
       }
-    
+
     return 0;
   }
 }
@@ -284,7 +284,7 @@ NodeApplication_Impl::~NodeApplication_Impl()
                 {
                   if (!CORBA::is_nil (container.ref))
                     server.ref->remove_container (container.ref.in ());
-                  
+
                   container.ref = CIAO::Deployment::Container::_nil ();
                 }
               catch (const CORBA::Exception &ex)
@@ -359,23 +359,23 @@ NodeApplication_Impl::init()
 
   DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                 ACE_TEXT("Spawning server activator\n")));
-  
+
   CIAO::Deployment::ComponentInstallation_Impl *tmp_ci;
 
-  ACE_NEW_THROW_EX (tmp_ci, 
+  ACE_NEW_THROW_EX (tmp_ci,
                     CIAO::Deployment::ComponentInstallation_Impl (),
                     CORBA::NO_MEMORY ());
-  
+
   PortableServer::ServantBase_var safe_servant = tmp_ci;
-  
+
   this->poa_->activate_object (tmp_ci);
-  
+
   for (CORBA::ULong i = 0; i < this->plan_.artifact.length (); ++i)
     {
       tmp_ci->install (this->plan_.artifact[i].name,
                        this->plan_.artifact[i].location[0]);
     }
-  
+
   CIAO::Deployment::CIAO_ServerActivator_i *tmp_act;
   ACE_NEW_THROW_EX (tmp_act,
                     CIAO::Deployment::CIAO_ServerActivator_i (spawn,
@@ -387,7 +387,7 @@ NodeApplication_Impl::init()
                                                               this->poa_.in()),
                     CORBA::NO_MEMORY ());
   this->activator_.reset (tmp_act);
-  
+
   PortableServer::ObjectId_var sa_id =
     this->poa_->activate_object (this->activator_.get ());
 
@@ -605,7 +605,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
   // need to get significant property values
   const char *entrypt = 0;
   get_property_value (DAnCE::HOME_FACTORY, mdd.execParameter, entrypt);
-  
+
   if (entrypt == 0)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
@@ -1920,7 +1920,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                       }//default
                     }//switch
                 }
-              catch (const ::Deployment::StartError &ex)
+              catch (::Deployment::StartError &ex)
                 {
                   DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
                                 ACE_TEXT("Intercepted StartError exception while configuring %C conneciton, rethrowing\n"),
@@ -1928,7 +1928,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                   ex.name = name.c_str ();
                   throw;
                 }
-              catch (const ::Deployment::InvalidConnection &ex)
+              catch (::Deployment::InvalidConnection &ex)
                 {
                   DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
                                 ACE_TEXT("Intercepted InvalidConnection exception while configuring %C conneciton, rethrowing\n"),
