@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef SENDER_CONNECTOR_CIDL
+#define SENDER_CONNECTOR_CIDL
+
+#include "Hello_Sender_Connector.idl3"
+
+composition session Sender_Connector_Impl
+{
+  home executor SenderConnector_Home_Exec
+  {
+    implements Hello_DDS::SenderConnectorHome;
+    manages SenderConnector_Exec;
+  };
+};
+
+#endif /* SENDER_CONNECTOR_CIDL */

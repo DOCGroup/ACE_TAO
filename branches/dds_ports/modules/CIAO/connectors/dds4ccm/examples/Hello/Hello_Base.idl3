@@ -35,12 +35,6 @@ module CCM_DDS
 
 module Hello_DDS
 {
-  component Hello_sender_Connector
-  {
-    provides CCM_DDS::string_Writer sender_data;
-    provides DDS::DataWriter sender_dds_entity;
-  };
-
   component Hello_receiver_Connector
   {
     provides CCM_DDS::string_Reader receiver_data;
