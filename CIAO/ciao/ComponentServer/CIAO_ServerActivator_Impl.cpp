@@ -33,7 +33,7 @@ namespace CIAO
         ci_ (CIAO::Deployment::ComponentInstallation::_duplicate (ci))
 
     {
-      CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::CIAO_ServerActivator_i");
+      CIAO_TRACE (CLINFO ACE_TEXT("CIAO_ServerActivator_i::CIAO_ServerActivator_i"));
     }
 
     CIAO_ServerActivator_i::~CIAO_ServerActivator_i(void)
@@ -46,7 +46,7 @@ namespace CIAO
       const char * server_UUID,
       ::Components::ConfigValues_out config)
     {
-      CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::component_server_callback");
+      CIAO_TRACE(CLINFO ACE_TEXT("CIAO_ServerActivator_i::component_server_callback"));
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::component_server_callback - "
@@ -123,7 +123,7 @@ namespace CIAO
     void
     CIAO_ServerActivator_i::configuration_complete (const char *server_UUID)
     {
-      CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::configuration_complete");
+      CIAO_TRACE (CLINFO ACE_TEXT("CIAO_ServerActivator_i::configuration_complete"));
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::configuration_complete - "
@@ -193,7 +193,7 @@ namespace CIAO
     ::Components::Deployment::ComponentServer_ptr
     CIAO_ServerActivator_i::create_component_server (const ::Components::ConfigValues & config)
     {
-      CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::create_component_server");
+      CIAO_TRACE(CLINFO ACE_TEXT("CIAO_ServerActivator_i::create_component_server"));
 
       Safe_Server_Info server (new Server_Info (config.length () + 1));
 
@@ -253,7 +253,7 @@ namespace CIAO
     ACE_CString
     CIAO_ServerActivator_i::construct_command_line (Server_Info &server)
     {
-      CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::construct_command_line");
+      CIAO_TRACE (CLINFO ACE_TEXT("CIAO_ServerActivator_i::construct_command_line"));
       // Build our command line to launch the compoent server
       ACE_CString cmd_options (this->cs_args_);
 
@@ -377,7 +377,7 @@ namespace CIAO
     single_threaded_wait_for_callback (const Server_Info &si,
                                        ACE_Time_Value &timeout)
     {
-      CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::single_threaded_wait_for_callback");
+      CIAO_TRACE (CLINFO ACE_TEXT("CIAO_ServerActivator_i::single_threaded_wait_for_callback"));
       // Below code is broken for thread-per-connection concurrency model,
       // since the main thread is running ORB event loop and will spawn
       // a different thread to handle the call <register_node_application>,
@@ -409,7 +409,7 @@ namespace CIAO
     multi_threaded_wait_for_callback (const Server_Info &si,
                                       ACE_Time_Value &timeout)
     {
-      CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::multi_threaded_wait_for_callback");
+      CIAO_TRACE (CLINFO ACE_TEXT("CIAO_ServerActivator_i::multi_threaded_wait_for_callback"));
 
       // Wait for a conditional variable
       ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
@@ -431,7 +431,7 @@ namespace CIAO
     void
     CIAO_ServerActivator_i::remove_component_server (::Components::Deployment::ComponentServer_ptr server)
     {
-      CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::remove_component_server");
+      CIAO_TRACE(CLINFO ACE_TEXT("CIAO_ServerActivator_i::remove_component_server"));
 
       if (this->server_infos_.is_empty ())
         {
@@ -502,7 +502,7 @@ namespace CIAO
     ::Components::Deployment::ComponentServers *
     CIAO_ServerActivator_i::get_component_servers (void)
     {
-      CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::get_component_servers");
+      CIAO_TRACE(CLINFO ACE_TEXT("CIAO_ServerActivator_i::get_component_servers"));
 
       ::Components::Deployment::ComponentServers_var retval = new
           Components::Deployment::ComponentServers (this->server_infos_.size ());

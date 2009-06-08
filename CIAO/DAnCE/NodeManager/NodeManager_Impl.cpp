@@ -29,13 +29,13 @@ namespace DAnCE
   {
     DANCE_TRACE ( "NodeManager_Impl::NodeManager_Impl");
     redirection.add_node (name);
-    DANCE_DEBUG ((LM_INFO, DLINFO "NodeManager_impl::NodeManager_impl has been created\n"));
+    DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeManager_impl::NodeManager_impl has been created\n")));
 
     PROPERTY_MAP::const_iterator i = properties.begin ();
     while (!i.done ())
       {
-        DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_Impl::NodeManager_Impl - "
-                      "Binding property %s provided by caller.\n", i->key ().c_str ()));
+        DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_Impl::NodeManager_Impl - ")
+                      ACE_TEXT("Binding property %s provided by caller.\n"), i->key ().c_str ()));
         this->properties_.bind (i->key (), i->item ());
         i.advance ();
       }
@@ -52,20 +52,20 @@ namespace DAnCE
           {
             PortableServer::ObjectId_var id = this->poa_->servant_to_id ( (*iter).int_id_);
             DANCE_DEBUG ((LM_TRACE, DLINFO
-                          "NodeManager_impl::~NodeManager_impl - Deactivating NodeApplicationManager %s\n",
+                          ACE_TEXT("NodeManager_impl::~NodeManager_impl - Deactivating NodeApplicationManager %s\n"),
                           (*iter).ext_id_.c_str ()));
             this->poa_->deactivate_object (id.in());
             DANCE_DEBUG ((LM_TRACE, DLINFO
-                          "NodeManager_impl::~NodeManager_impl - deleting NodeApplicationManager\n"));
+                          ACE_TEXT("NodeManager_impl::~NodeManager_impl - deleting NodeApplicationManager\n")));
             delete (*iter).int_id_;
             DANCE_DEBUG ((LM_DEBUG, DLINFO
-                          "NodeManager_impl::~NodeManager_impl - NodeApplicationManager deleted\n"));
+                          ACE_TEXT("NodeManager_impl::~NodeManager_impl - NodeApplicationManager deleted\n")));
           }
         catch (...)
           {
             DANCE_ERROR ((LM_WARNING, DLINFO
-                          "NodeManager_impl::~NodeManager_impl - Caught exception while removing "
-                          "NodeApplicationManager %s\n", (*iter).ext_id_.c_str ()));
+                          ACE_TEXT("NodeManager_impl::~NodeManager_impl - Caught exception while removing ")
+                          ACE_TEXT("NodeApplicationManager %s\n"), (*iter).ext_id_.c_str ()));
           }
       }
   }
@@ -77,8 +77,8 @@ namespace DAnCE
                                 ::CORBA::Long /*updateInterval*/)
   {
     DANCE_TRACE ( "NodeManager_Impl::joinDomain");
-    ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::joinDomain - "
-                "joinDomain not implemented\n"));
+    ACE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::joinDomain - ")
+                ACE_TEXT("joinDomain not implemented\n")));
     throw CORBA::NO_IMPLEMENT ();
   }
 
@@ -86,8 +86,8 @@ namespace DAnCE
   NodeManager_Impl::leaveDomain ()
   {
     DANCE_TRACE ( "NodeManager_Impl::leaveDomain");
-    ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::leaveDomain - "
-                "leave not implemented\n"));
+    ACE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::leaveDomain - ")
+                ACE_TEXT("leave not implemented\n")));
     throw CORBA::NO_IMPLEMENT ();
   }
 
@@ -97,8 +97,8 @@ namespace DAnCE
   {
     DANCE_TRACE ( "NodeManager_Impl::preparePlan");
 
-    DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeManager_impl::preparePlan - "
-                  "started for node %s and plan %s\n", this->name_.c_str(), plan.UUID.in()));
+    DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - ")
+                  ACE_TEXT("started for node %C and plan %C\n"), this->name_.c_str(), plan.UUID.in()));
 
 #ifdef GEN_OSTREAM_OPS
     {
@@ -115,13 +115,13 @@ namespace DAnCE
         // What should we do here if we already have application for this plan?
         // Probably it is mistake because we should previously call destroyApplication
         // before performe relaunching of application
-        DANCE_ERROR ((LM_ERROR, DLINFO "NodeManager_impl::preparePlan - "
-                      "ApplicationManager for  UUID %s already exists\n",
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - ")
+                      ACE_TEXT("ApplicationManager for UUID %C already exists\n"),
                       plan.UUID.in ()));
         throw ::Deployment::PlanError();
       }
-    ACE_DEBUG ((LM_DEBUG, "*** size of properties_:%u\n", properties_.current_size ()));
-    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::preparePlan - creating NodeApplicationManager...\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** size of properties_:%u\n"), properties_.current_size ()));
+    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - creating NodeApplicationManager...\n")));
     NodeApplicationManager_Impl* manager = 0;
     ACE_NEW_THROW_EX (manager,
                       NodeApplicationManager_Impl (this->orb_.in(),
@@ -131,14 +131,14 @@ namespace DAnCE
                                                    this->name_,
                                                    this->properties_),
                       CORBA::NO_MEMORY());
-    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::preparePlan - activating NodeApplicationManager...\n"));
+    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - activating NodeApplicationManager...\n")));
     PortableServer::ObjectId_var id = this->poa_->activate_object (manager);
     CORBA::Object_var nam = this->poa_->id_to_reference (id.in());
 
     //there is an idea to check if plan.UUID really exists
     this->managers_.bind (plan.UUID.in(), manager);
     // narrow should return a nil reference if it fails.
-    DANCE_DEBUG ((LM_INFO, DLINFO "NodeManager_impl::preparePlan - NodeApplicationManager for plan %s completed\n",
+    DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - NodeApplicationManager for plan %C completed\n"),
                   plan.UUID.in ()));
     return Deployment::NodeApplicationManager::_narrow (nam.in ());
   }
@@ -156,17 +156,17 @@ namespace DAnCE
           {
             PortableServer::ObjectId_var id = this->poa_->reference_to_id (appManager);
             this->poa_->deactivate_object (id.in());
-            DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::destroyManager - deleting NodeApplicationManager\n"));
+            DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::destroyManager - deleting NodeApplicationManager\n")));
             delete (*iter).int_id_;
-            DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::destroyManager - NodeApplicationManager deleted\n"));
+            DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::destroyManager - NodeApplicationManager deleted\n")));
             this->managers_.unbind ( (*iter).ext_id_);
-            DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::destroyManager - finished\n"));
+            DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::destroyManager - finished\n")));
             return;
           }
       }
 
-    DANCE_ERROR((LM_ERROR, DLINFO "NodeManager_impl::destroyManager - "
-                 "correponding NodeApplicationManager cannot be found\n"));
+    DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeManager_impl::destroyManager - ")
+                 ACE_TEXT("correponding NodeApplicationManager cannot be found\n")));
     throw ::Deployment::InvalidReference();
   }
 
@@ -174,8 +174,8 @@ namespace DAnCE
   NodeManager_Impl::getDynamicResources ()
   {
     DANCE_TRACE ( "NodeManager_Impl::getDynamicResources ()");
-    ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::getDynamicResources - "
-                "getDynamicResources not implemented\n"));
+    ACE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::getDynamicResources - ")
+                ACE_TEXT("getDynamicResources not implemented\n")));
       throw CORBA::NO_IMPLEMENT ();
     return 0;
   }

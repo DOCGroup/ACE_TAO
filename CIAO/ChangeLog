@@ -1,3 +1,44 @@
+Mon Jun  8 09:45:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * ciao/Logger/File_Logger_Backend.cpp
+        * ciao/Server_init.cpp
+        * ciao/Server_init.h
+        * DAnCE/Deployment/Module_Main.h
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h
+        * DAnCE/Logger/Log_Macros.h
+        * DAnCE/Logger/Logger_Service.cpp
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp
+        * DAnCE/NodeApplication/Name_Utilities.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.h
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp
+        * DAnCE/RedirectionService/NameServiceRedirection.cpp
+        * DAnCE/RedirectionService/RedirectionService.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        * DAnCE/RepositoryManager/URL_Parser.cpp
+        * DAnCE/RepositoryManager/URL_Parser.h
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/Starter/Starter.cpp
+        * DAnCE/TargetManager/CmpClient.cpp
+        * DAnCE/TargetManager/DomainDataManager.cpp
+          Unicode changes
+
 Sun Jun  7 17:58:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Server_init.cpp

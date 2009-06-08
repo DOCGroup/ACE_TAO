@@ -37,7 +37,7 @@ public:
   bool parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Return false on failure
-  bool parseURL (char* url);
+  bool parseURL (ACE_TCHAR* url);
 
   void Error (void);
 
