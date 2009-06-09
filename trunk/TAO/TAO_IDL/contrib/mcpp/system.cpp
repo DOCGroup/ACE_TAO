@@ -44,6 +44,7 @@
 #endif
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_stat.h"
 
 #if     HOST_SYS_FAMILY == SYS_UNIX
 #include    "ace/OS_NS_unistd.h"              /* For getcwd(), readlink() */
@@ -2455,7 +2456,7 @@ static char *   norm_path(
 #if HOST_COMPILER == MSC
   struct _stat    st_buf;
 #else
-  struct stat     st_buf;
+  ACE_stat     st_buf;
 #endif
 
   if (! dir || (*dir && is_full_path( fname)))
@@ -4838,7 +4839,7 @@ void    do_pragma( void)
     return  c;
   }
 
-#ifndef HOST_HAVE_STPCPY
+#if defined(HOST_HAVE_STPCPY) && HOST_HAVE_STPCPY == FALSE
   char *  stpcpy(
                  char *          dest,
                  const char *    src
