@@ -1,3 +1,19 @@
+Tue Jun  9 21:01:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/eval.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/mbchar.cpp:
+        * TAO_IDL/contrib/mcpp/mcpp.mpc:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.H:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Compile warning fixes.
+        
 Tue Jun  9 20:25:50 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:

@@ -351,8 +351,8 @@ static size_t   mb_read_utf8( int c1, char ** in_pp, char ** out_pp);
 
 
 const char *    set_encoding(
-    char *  name,       /* Name of encoding specified   */
-    char *  env,        /* Name of environment variable */
+                             const char *  name,       /* Name of encoding specified   */
+                             const char *  env,        /* Name of environment variable */
     int     pragma
         /* 2: #pragma setlocale, 1: #pragma __setlocale, 0: not #pragma */
 )
