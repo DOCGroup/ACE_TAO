@@ -175,16 +175,20 @@ private:
 
   /// Generate preferred interfaces from the options passed in by the
   /// user.
-  CORBA::ULong preferred_interfaces (const char* csvPreferred, bool enforce);
+  CORBA::ULong preferred_interfaces (const char *csvPreferred,
+                                     bool enforce,
+                                     TAO_IIOP_Profile &profile);
 
   /// Chain a new duplicate of ourself with the specified
   /// local preferred interface.
-  TAO_IIOP_Endpoint* add_local_endpoint(TAO_IIOP_Endpoint* ep, const char* local);
+  TAO_IIOP_Endpoint *add_local_endpoint (TAO_IIOP_Endpoint *ep,
+                                         const char *local,
+                                         TAO_IIOP_Profile &profile);
 
   /// Canonical copy constructor
   /**
    * In private section to prevent clients from invoking this
-   * accidentally. Clients should only use duplicate () to make a depp
+   * accidentally. Clients should only use duplicate () to make a deep
    * copy
    */
   TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &);
