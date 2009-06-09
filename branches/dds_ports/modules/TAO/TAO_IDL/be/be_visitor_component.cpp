@@ -61,6 +61,7 @@
 #include "be_visitor_component/component_svh.cpp"
 #include "be_visitor_component/component_svs.cpp"
 #include "be_visitor_component/component_ex_idl.cpp"
+#include "be_visitor_component/component_exh.cpp"
 #include "be_visitor_component/any_op_ch.cpp"
 #include "be_visitor_component/any_op_cs.cpp"
 #include "be_visitor_component/cdr_op_ch.cpp"

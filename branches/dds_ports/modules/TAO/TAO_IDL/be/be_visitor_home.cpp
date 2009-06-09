@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_visitor_home.cpp
@@ -49,6 +49,7 @@
 #include "be_visitor_home/home_svh.cpp"
 #include "be_visitor_home/home_svs.cpp"
 #include "be_visitor_home/home_ex_idl.cpp"
+#include "be_visitor_home/home_exh.cpp"
 
 ACE_RCSID (be, 
            be_visitor_home, 

@@ -240,6 +240,9 @@ BE_produce (void)
 
   if (be_global->gen_ciao_exec_impl () && idl_global->component_seen_)
     {
+      ctx.state (TAO_CodeGen::TAO_ROOT_EXH);
+      be_visitor_root_exh root_exh_visitor (&ctx);
+      BE_visit_root (root_exh_visitor, "CIAO exec impl header");
     }
 
   // Done with this IDL file.

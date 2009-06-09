@@ -77,6 +77,7 @@
 #include "be_visitor_root/root_svh.cpp"
 #include "be_visitor_root/root_svs.cpp"
 #include "be_visitor_root/root_ex_idl.cpp"
+#include "be_visitor_root/root_exh.cpp"
 #include "be_visitor_root/any_op.cpp"
 #include "be_visitor_root/cdr_op.cpp"
 #include "be_visitor_root/serializer_op.cpp"
