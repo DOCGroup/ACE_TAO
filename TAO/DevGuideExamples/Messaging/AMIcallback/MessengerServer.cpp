@@ -17,12 +17,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     // Messenger_i::send_message() throw an exception if e
     // has been passed as the command lin argument.
     unsigned int seconds_to_wait = 0;
-    CORBA::Boolean servant_throws_exception = 0;
+    CORBA::Boolean servant_throws_exception = false;
     if (argc == 2)
     {
       if (argv[1][0] == 'e')
       {
-        servant_throws_exception = 1;
+        servant_throws_exception = true;
         std::cout << "Messenger_i::send_message() will throw an exception." << std::endl;
       }
       else
@@ -42,10 +42,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     mgr->activate();
 
     // Create an object
-    Messenger_i servant(seconds_to_wait, servant_throws_exception);
+    PortableServer::Servant_var<Messenger_i> servant = new
+      Messenger_i(seconds_to_wait, servant_throws_exception);
 
     // Write its stringified reference to stdout
-    PortableServer::ObjectId_var oid =  poa->activate_object(&servant);
+    PortableServer::ObjectId_var oid =  poa->activate_object(servant.in());
     obj = poa->id_to_reference(oid.in());
     Messenger_var messenger = Messenger::_narrow(obj.in());
     CORBA::String_var str = orb->object_to_string(messenger.in());

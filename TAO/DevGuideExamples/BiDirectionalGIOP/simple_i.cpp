@@ -37,7 +37,7 @@ void Simple_i::callback_object (Callback_ptr cb)
 
 void Simple_i::shutdown ()
 {
-  const int wait = 0;
+  CORBA::Boolean wait = false;
   orb_->shutdown(wait);
 }
 

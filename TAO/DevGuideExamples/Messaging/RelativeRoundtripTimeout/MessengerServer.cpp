@@ -18,10 +18,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     mgr->activate();
 
     // Create an object
-    Messenger_i messenger_servant;
+    PortableServer::Servant_var<Messenger_i> messenger_servant =
+      new Messenger_i;
 
     // Write its stringified reference to a file
-    PortableServer::ObjectId_var oid = poa->activate_object(&messenger_servant);
+    PortableServer::ObjectId_var oid = poa->activate_object(messenger_servant.in());
     obj = poa->id_to_reference(oid.in());
     Messenger_var messenger = Messenger::_narrow(obj.in());
     CORBA::String_var str = orb->object_to_string(messenger.in());

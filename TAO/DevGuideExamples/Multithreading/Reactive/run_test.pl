@@ -13,7 +13,7 @@ unlink $ior;
 
 # start MessengerServer
 
-$S = new PerlACE::Process("MessengerServer", "-ORBEndpoint iiop://localhost");
+$S = new PerlACE::Process("MessengerServer", "-ORBListenEndpoints iiop://localhost");
 $S->Spawn();
 
 if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {

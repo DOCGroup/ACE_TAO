@@ -21,11 +21,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     mgr->activate();
 
     // Create a Logger_i servant.
-    Logger_i logger_servant;
+    PortableServer::Servant_var<Logger_i> logger_servant = new Logger_i;
 
     // Register the servant with the RootPOA, obtain its object reference,
     // stringify it, and write it to a file.
-    PortableServer::ObjectId_var oid = poa->activate_object(&logger_servant);
+    PortableServer::ObjectId_var oid = poa->activate_object(logger_servant.in());
     CORBA::Object_var logger_obj = poa->id_to_reference(oid.in());
     CORBA::String_var str = orb->object_to_string(logger_obj.in());
     std::ofstream iorFile("Logger.ior");

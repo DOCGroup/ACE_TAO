@@ -12,6 +12,6 @@ int MessengerShutdownTimer::handle_timeout (
   const void*)
 {
   ACE_DEBUG((LM_DEBUG, "In MessengerShutdownTimer::handle_timeout\n"));
-  orb_->shutdown (0);
+  orb_->shutdown (false);
   return 0;
 }
