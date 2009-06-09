@@ -1266,6 +1266,69 @@ TAO_CodeGen::ciao_svnt_source (void)
 int
 TAO_CodeGen::start_ciao_exec_header (const char *fname)
 {
+  // Retrieve the singleton instance to the outstream factory.
+  TAO_OutStream_Factory *factory =
+    TAO_OUTSTREAM_FACTORY::instance ();
+
+  // Clean up between multiple files.
+  delete this->ciao_exec_header_;
+  this->ciao_exec_header_ = factory->make_outstream ();
+
+  if (0 == this->ciao_exec_header_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_CodeGen::ciao_exec_header - ")
+                         ACE_TEXT ("Error creating file stream\n")),
+                        -1);
+    }
+    
+  int status =
+    this->ciao_exec_header_->open (fname,
+                                   TAO_OutStream::CIAO_EXEC_HDR);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_CodeGen::start_ciao_exec_header - ")
+                         ACE_TEXT ("Error opening file\n")),
+                        -1);
+    }
+    
+  TAO_OutStream &os = *this->ciao_exec_header_;
+
+  os << be_nl
+     << "// TAO_IDL - Generated from" << be_nl
+     << "// " << __FILE__ << ":" << __LINE__
+     << be_nl << be_nl;
+
+  // Generate the #ident string, if any.
+  this->gen_ident_string (this->ciao_exec_header_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->ciao_exec_header_,
+                           "CIAO_",
+                           "_H_");
+
+  if (be_global->pre_include () != 0)
+    {
+      os << "#include /**/ \""
+         << be_global->pre_include ()
+         << "\"\n";
+    }
+
+  this->gen_standard_include (
+    this->ciao_exec_header_,
+    be_global->be_get_ciao_exec_stub_hdr_fname (true));          
+       
+  // Some compilers don't optimize the #ifndef header include
+  // protection, but do optimize based on #pragma once.
+  os << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+     << "# pragma once\n"
+     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+     
+  this->gen_exec_hdr_includes ();
+     
   return 0;
 }
 
@@ -1743,6 +1806,15 @@ TAO_CodeGen::end_ciao_svnt_source (void)
 int
 TAO_CodeGen::end_ciao_exec_header (void)
 {
+  if (be_global->post_include () != 0)
+    {
+      *this->ciao_exec_header_ << "\n\n#include /**/ \""
+                               << be_global->post_include ()
+                               << "\"";
+    }
+
+  *this->ciao_exec_header_ << "\n\n#endif /* ifndef */\n";
+  
   return 0;
 }
 
@@ -2886,6 +2958,21 @@ TAO_CodeGen::gen_svnt_src_includes (void)
 void
 TAO_CodeGen::gen_exec_hdr_includes (void)
 {
+  // All CIAO examples so far have component skeleton and servant
+  // generated code in the same library, using the skel export macro,
+  // so the values for the servant export default to the skel values.
+  // Eventually, there should be a way to completely decouple them.
+  if (be_global->exec_export_include () != 0)
+    {
+      this->gen_standard_include (
+        this->ciao_exec_header_,
+        be_global->exec_export_include (),
+        true);
+    }
+    
+  this->gen_standard_include (
+    this->ciao_exec_header_,
+    "tao/LocalObject.h");
 }
 
 void

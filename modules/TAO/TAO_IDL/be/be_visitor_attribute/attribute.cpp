@@ -182,6 +182,12 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_EXH:
+      {
+        be_visitor_operation_ch visitor (&ctx);
+        status = get_op.accept (&visitor);
+        break;
+      }
     default:
       get_op.destroy ();
       return 0;
@@ -380,6 +386,12 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         be_visitor_operation_svs visitor (&ctx);
         visitor.for_facets (this->for_facets_);
         visitor.scope (this->op_scope_);
+        status = set_op.accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_EXH:
+      {
+        be_visitor_operation_ch visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }

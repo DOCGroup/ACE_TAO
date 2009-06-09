@@ -1,3 +1,30 @@
+Tue Jun  9 20:55:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_home/home_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+
+          New files, visitors that generate the CIAO executor
+          implementation header file.
+
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_visitor_home.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Files modified to support the generation of the CIAO
+          executor implementation header file.
+
 Fri Jun  5 16:38:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
