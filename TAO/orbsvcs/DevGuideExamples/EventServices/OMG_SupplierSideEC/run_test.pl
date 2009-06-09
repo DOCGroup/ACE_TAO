@@ -27,9 +27,6 @@ if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
 $S = new PerlACE::Process("EchoEventSupplier", $arg_ns_ref);
 $S->Spawn();
 
-# Allow time for the supplier to register with the Naming Service
-sleep(2);
-
 # start EchoEventConsumer  
 $C = new PerlACE::Process("EchoEventConsumer", $arg_ns_ref);
 $CRET = $C->SpawnWaitKill(60);

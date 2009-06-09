@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $ior = PerlACE::LocalFile ("Messenger.ior");
 unlink $ior;
 
-$server_args = "-ORBEndpoint iiop://localhost";
+$server_args = "-ORBListenEndpoints iiop://localhost";
 
 # -------------------------------------------------------------------
 # Test 1: Shutdown on client invocation

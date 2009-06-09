@@ -32,11 +32,6 @@ $MessengerServer = "MessengerServer";
 $S = new PerlACE::Process($MessengerServer, $arg_ns_ref);
 $S->Spawn();
 
-# Give the server some time
-# to bind the object reference
-# with the Naming Service
-sleep 3;
- 
 # start MessengerClient
 $MessengerClient = "MessengerClient";
 $C = new PerlACE::Process($MessengerClient, $arg_ns_ref );  

@@ -30,5 +30,5 @@ CORBA::Boolean Messenger_i::send_message (
   std::cout << "Message:      " << message << std::endl;
   CORBA::string_free(message);
   message = CORBA::string_dup("Thanks for the message.");
-  return 1;
+  return true;
 }

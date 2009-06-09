@@ -12,12 +12,23 @@ use PerlACE::Run_Test;
 $TARGETHOSTNAME = "localhost";
 $def_port = 2809;
 
+my($nsiorfile) = "ns.ior";
+unlink($nsiorfile);
+
 # start Naming Service
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
-$NS = new PerlACE::Process($NameService, "-ORBEndpoint iiop://$TARGETHOSTNAME:$def_port");
-$NS->Spawn();
+$NS = new PerlACE::Process($NameService, "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$def_port -o $nsiorfile");
 
-sleep(1);
+$NS->Spawn();
+if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$nsiorfile>\n";
+  $NS->Kill();
+  exit 1;
+}
+
+# File is only used to make sure the NS is fully running, so we can
+# remove it now.
+unlink($nsiorfile);
 
 # List of tests to test corbaloc URL syntax.
 @corbaloc_servers = ( "-ORBDefaultInitRef corbaloc::$TARGETHOSTNAME",
@@ -44,14 +55,11 @@ $MessengerClient= "MessengerClient";
 $test_number = 0;
 
 foreach $o (@corbaloc_servers) {  
-
   # Run messenger server for each test.  
   #print "Start $MessengerServer $o \n";
   $SR = new PerlACE::Process($MessengerServer, $o);
   $SR->Spawn();
 
-  sleep(1);
-  
   #print "Start $MessengerClient \n";
   $CL = new PerlACE::Process($MessengerClient, "-ORBDefaultInitRef iiop://$TARGETHOSTNAME:$def_port");
   $test_number++;
@@ -69,14 +77,21 @@ foreach $o (@corbaloc_servers) {
   print "======================================\n\n";
 
   $SR->Kill(1);
+
+  # remove ns entry...
+  $nsdel = "$ENV{ACE_ROOT}/bin/tao_nsdel";
+  $NSDEL = new PerlACE::Process($nsdel, "--quiet --name example/Messenger -ORBInitRef NameService=corbaloc::$TARGETHOSTNAME:$def_port/NameService");
+  if ($NSDEL->SpawnWaitKill(15) != 0) {
+   print STDERR "ERROR: tao_nsdel failed\n";
+   $NS->Kill();
+   exit 1;
+  }
 }
 
 
 #print "Start $MessengerServer \n";
 $SR = new PerlACE::Process($MessengerServer, "-ORBDefaultInitRef iiop://$TARGETHOSTNAME:$def_port");
 $SR->Spawn();
-
-sleep(1);
 
 $i = 0;
 foreach $o (@corbaloc_clients) {

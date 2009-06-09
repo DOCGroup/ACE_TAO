@@ -70,10 +70,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
     poa_manager->activate ();
 
-    Simple_i svt(orb.in(), callback_count);
+    PortableServer::Servant_var<Simple_i> svt = new Simple_i(orb.in(), callback_count);
 
     // Register and activate Simple servant
-    PortableServer::ObjectId_var id = poa->activate_object(&svt);
+    PortableServer::ObjectId_var id = poa->activate_object(svt.in());
     obj = poa->id_to_reference(id.in());
     Simple_var server = Simple::_narrow(obj.in());
 
@@ -88,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     while (true) {
 
       // returns 1 as soon as it has successfully called back.
-      if (svt.call_client()) {
+      if (svt->call_client()) {
         break;
       }
 
@@ -100,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     std::cout << "Event loop finished." << std::endl;
 
-    int etherealize = 1, wait = 1;
+    CORBA::Boolean etherealize = true, wait = true;
     poa->destroy(etherealize, wait);
     orb->destroy();
 
