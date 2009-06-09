@@ -58,6 +58,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                  version),
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
+    last_endpoint_ (&this->endpoint_),
     count_ (1)
 {
 }
@@ -73,6 +74,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                  object_key,
                  version),
     endpoint_ (host, port, addr),
+    last_endpoint_ (&this->endpoint_),
     count_ (1)
 {
 }
@@ -83,6 +85,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
                                            TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
+    last_endpoint_ (&this->endpoint_),
     count_ (1)
 {
 }
@@ -118,7 +121,7 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       const char* csv = this->orb_core()->orb_params()->preferred_interfaces();
       bool const enforce =
         this->orb_core()->orb_params()->enforce_pref_interfaces();
-      this->count_ += this->endpoint_.preferred_interfaces(csv, enforce);
+      this->count_ += this->endpoint_.preferred_interfaces(csv, enforce, *this);
 
       return 1;
     }
@@ -394,8 +397,8 @@ TAO_IIOP_Profile::endpoint_count (void) const
 void
 TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
 {
-  endp->next_ = this->endpoint_.next_;
-  this->endpoint_.next_ = endp;
+  this->last_endpoint_->next_ = endp;
+  this->last_endpoint_ = endp;
 
   ++this->count_;
 }
@@ -416,27 +419,35 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
           // since the assignment operator does not copy the next_
           // pointer, we must do it by hand
           this->endpoint_.next_ = n->next_;
+          if (this->last_endpoint_ == n)
+            {
+              this->last_endpoint_ = &this->endpoint_;
+            }
           delete n;
         }
       return;
     }
 
-  TAO_IIOP_Endpoint* last = &this->endpoint_;
+  TAO_IIOP_Endpoint* prev = &this->endpoint_;
   TAO_IIOP_Endpoint* cur = this->endpoint_.next_;
 
   while (cur != 0)
   {
     if (cur == endp)
       break;
-    last = cur;
+    prev = cur;
     cur = cur->next_;
   }
 
   if (cur != 0)
   {
-    last->next_ = cur->next_;
+    prev->next_ = cur->next_;
     cur->next_ = 0;
     --this->count_;
+    if (this->last_endpoint_ == cur)
+      {
+        this->last_endpoint_ = prev;
+      }
     delete cur;
   }
 }
