@@ -119,8 +119,8 @@ HostProcess::add_peer(PeerProcess *peer, bool as_client)
   if (existing != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "add_peer, found existing for %d, is_closed = %d\n",
-		  peer->handle(), existing->is_closed()));
+                  "add_peer, found existing for %d, is_closed = %d\n",
+                  peer->handle(), existing->is_closed()));
     }
   PeerProcs *list = as_client ? &clients_ : &servers_;
   long handle = peer->handle();
@@ -155,15 +155,15 @@ HostProcess::dump_summary (ostream &strm)
       strm << "  listening on ";
       size_t count = 0;
       for (ACE_DLList_Iterator <ACE_CString> t_iter (this->endpoints_);
-	   !t_iter.done();
-	   t_iter.advance())
-	{
-	  ACE_CString *ep;
-	  t_iter.next(ep);
-	  strm << ep->c_str();
-	  if (++count < num)
-	    strm << ", ";
-	}
+           !t_iter.done();
+           t_iter.advance())
+        {
+          ACE_CString *ep;
+          t_iter.next(ep);
+          strm << ep->c_str();
+          if (++count < num)
+            strm << ", ";
+        }
       strm << endl;
     }
   
@@ -222,26 +222,26 @@ HostProcess::dump_detail_list(ostream &strm, PeerProcs &list, int mode, Session 
       if (i.next(entry) == 0)
         break;
       if (entry->item() == 0)
-	break;
+        break;
       switch (mode)
-	{
-	case 0:
-	  entry->item()->dump_summary (strm);
-	  break;
-	case 1:
-	  entry->item()->dump_object_detail (strm);
-	  strm << endl;
-	  break;
-	case 2:
-	  if (!first)
-	    this->dump_ident (strm,"Invocations continued");
-	  entry->item()->dump_invocation_detail (strm);
-	  strm << endl;
-	  break;
-	case 3:
-	  entry->item()->match_hosts (session);
-	  break;
-	}
+        {
+        case 0:
+          entry->item()->dump_summary (strm);
+          break;
+        case 1:
+          entry->item()->dump_object_detail (strm);
+          strm << endl;
+          break;
+        case 2:
+          if (!first)
+            this->dump_ident (strm,"Invocations continued");
+          entry->item()->dump_invocation_detail (strm);
+          strm << endl;
+          break;
+        case 3:
+          entry->item()->match_hosts (session);
+          break;
+        }
       first = false;
     }
 }

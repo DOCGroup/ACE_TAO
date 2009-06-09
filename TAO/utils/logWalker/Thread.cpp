@@ -52,7 +52,7 @@ Thread::exit_wait (PeerProcess *pp, size_t linenum)
     {
       ACE_ERROR ((LM_ERROR, 
                   "Line %d, Ending an invocation to peer %s, but most recent started"
-		  " is to peer %s\n", linenum, pp->id(), old->id()));
+                  " is to peer %s\n", linenum, pp->id(), old->id()));
       //      this->pending_.push(old);
   if (this->pending_.pop(old) == -1)
     return;
@@ -114,7 +114,7 @@ Thread::dump_detail (ostream &strm)
        << "\t" << this->encounters_ << " encounters";
   if (nested_ > 0)
     strm <<", with " << this->nested_ << " nested upcalls, max depth " 
-	 << this->max_depth_;
+         << this->max_depth_;
   strm << endl; 
 }
 

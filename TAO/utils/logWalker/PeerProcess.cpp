@@ -88,7 +88,7 @@ PeerProcess::id (void) const
     {
       const ACE_CString &pname = this->remote_->proc_name();
       if (pname.length() > 0)
-	return pname.c_str();
+        return pname.c_str();
     }
 
   return this->ident_;
@@ -149,9 +149,9 @@ PeerProcess::find_invocation (size_t req_id)
     {
       i.next(inv);
       if (inv->request_id() == req_id)
-	{
-	  return inv;
-	}
+        {
+          return inv;
+        }
     }
   return 0;
 }
@@ -166,9 +166,9 @@ PeerProcess::find_invocation_size (size_t len)
     {
       i.next(inv);
       if (!inv->message_complete() && inv->expected_size() == len)
-	{
-	  return inv;
-	}
+        {
+          return inv;
+        }
     }
   return 0;
 }
@@ -192,7 +192,7 @@ PeerProcess::dump_summary (ostream &strm)
        << this->handle_ << "] as ";
   if (this->client_)
       strm << "client on " 
-	   << this->local_addr_;
+           << this->local_addr_;
   else
     strm << " server";
   if (this->remote_)
