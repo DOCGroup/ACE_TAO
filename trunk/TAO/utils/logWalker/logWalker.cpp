@@ -39,40 +39,40 @@ parse_manifest (Session &session, ACE_TCHAR *filename)
     {
       strm.getline(buffer,500);
       if (buffer[0] == '\0' || 
-	  buffer[0] == '#')
-	{
-	  continue;
-	}
+          buffer[0] == '#')
+        {
+          continue;
+        }
       if (buffer[0] == '-')
-	{
-	  if (buffer[1] == 'o')
-	    {
-	      outfile = new char[ACE_OS::strlen(buffer) - 3];
-	      ACE_OS::strcpy(buffer+3,outfile);
-	      continue;
-	    }
-	  if (buffer[1] == 't')
-	    {
-	      Session::set_tao_version (buffer+3);
-	      continue;
-	    }
-	  if (buffer[1] == 'a')
-	    {
-	      session.alternate_address(buffer+3);
-	      continue;
-	    }
-	  if (buffer[1] == 'p')
-	    {
-	      session.default_service (buffer+3);
-	      continue;
-	    }
-	}
+        {
+          if (buffer[1] == 'o')
+            {
+              outfile = new char[ACE_OS::strlen(buffer) - 3];
+              ACE_OS::strcpy(buffer+3,outfile);
+              continue;
+            }
+          if (buffer[1] == 't')
+            {
+              Session::set_tao_version (buffer+3);
+              continue;
+            }
+          if (buffer[1] == 'a')
+            {
+              session.alternate_address(buffer+3);
+              continue;
+            }
+          if (buffer[1] == 'p')
+            {
+              session.default_service (buffer+3);
+              continue;
+            }
+        }
       if (ACE_OS::strchr(buffer,'=') == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,"Unparsable string: %s\n",
-		      buffer));
-	  return;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,"Unparsable string: %s\n",
+                      buffer));
+          return;
+        }
       ACE_Tokenizer tokens(buffer);
       tokens.delimiter_replace('=',0);
       char *alias = tokens.next();
@@ -106,18 +106,18 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       if (ACE_OS::strcasecmp (argv[i], "-t") == 0)
         {
           Session::set_tao_version (argv[++i]);
-	  continue;
+          continue;
         }
       if (ACE_OS::strcasecmp (argv[i], "-a") == 0)
-	{
-	  session.alternate_address (argv[++i]);
-	  continue;
-	}
+        {
+          session.alternate_address (argv[++i]);
+          continue;
+        }
       if (ACE_OS::strcasecmp (argv[i], "-p") == 0)
-	{
-	  session.default_service (argv[++i]);
-	  continue;
-	}
+        {
+          session.default_service (argv[++i]);
+          continue;
+        }
 
       Log log(session);
       ACE_DEBUG ((LM_DEBUG,"Parsing file %s\n", argv[i]));
