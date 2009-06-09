@@ -1,3 +1,15 @@
+Tue Jun  9 20:25:50 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+
+          Fix for bug #3695.  Keep alternate endpoints within a profile in
+          the same order after marshalling/demarshalling so that is_equivalent
+          return true.
+
 Tue Jun  9 15:37:40 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/contrib/mcpp/directive.cpp:
@@ -6,7 +18,7 @@ Tue Jun  9 15:37:40 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * TAO_IDL/contrib/mcpp/internal.H:
         * TAO_IDL/contrib/mcpp/support.cpp:
         * TAO_IDL/contrib/mcpp/system.cpp:
-        
+
           fuzz fix.
 
 Tue Jun  9 13:25:10 UTC 2009  Paul Calabrese  <calabrese_p@ociweb.com>
