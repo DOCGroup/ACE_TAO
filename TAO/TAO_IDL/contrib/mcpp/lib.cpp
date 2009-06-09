@@ -109,7 +109,7 @@ int     getopt(
 
 #endif
 
-#if ! HOST_HAVE_STPCPY
+#if defined(HOST_HAVE_STPCPY) && HOST_HAVE_STPCPY == FALSE
 
 char *  mcpp_stpcpy(
     char *          dest,
