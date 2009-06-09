@@ -199,7 +199,7 @@
 /* MB_ERROR signals wrong multi-byte character sequence.    */
 #define MB_ERROR        0x8000
 
-#if defined(MCPP_LIB) && HOST_COMPILER == GNUC			\
+#if defined(MCPP_LIB) && HOST_COMPILER == GNUC \
         && (SYS_FAMILY == SYS_UNIX && SYSTEM != SYS_CYGWIN)
     /* For GCC 4.* on UNIXes    */
 //#pragma GCC visibility push( hidden)    /* Hide these names from outside    */
