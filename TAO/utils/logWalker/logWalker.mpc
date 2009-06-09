@@ -1,0 +1,6 @@
+// -*- mpc -*-
+
+project : aceexe {
+  exename = tao_logWalker
+  install = $(ACE_ROOT)/bin
+}
