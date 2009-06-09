@@ -110,7 +110,7 @@ void    directive( void)
   int     token_type;
   int     hash;
   int     c;
-  char *  tp;
+  const char *  tp;
 
   in_directive = TRUE;
   if (keep_comments) {
@@ -700,7 +700,7 @@ DEFBUF *    do_define(
   int     redefined;                      /* TRUE if redefined    */
   int     dnargs = 0;                     /* defp->nargs          */
   int     cmp;                    /* Result of name comparison    */
-  size_t  def_start, def_end;     /* Column of macro definition   */
+  size_t  def_start = 0, def_end = 0;     /* Column of macro definition   */
 
   repl_base = repl_list;
   repl_end = & repl_list[ NMACWORK];

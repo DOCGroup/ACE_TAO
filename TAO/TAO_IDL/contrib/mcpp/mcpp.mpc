@@ -21,8 +21,8 @@ project(tao_mcpp_exe) : aceexe, install, tao_output, crosscompile {
 
 project(TAO_IDL_MCPP) : acelib, conv_lib, tao_output, crosscompile {
   requires += mcpp
-  macros += MCPP_LIB
-  dynamicflags += MCPP_LIB_BUILD_DLL MCPP_LIB=1
+  macros += MCPP_LIB=1
+  dynamicflags += MCPP_LIB_BUILD_DLL 
 
   Header_Files {
      *.h
