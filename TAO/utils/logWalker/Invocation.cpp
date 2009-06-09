@@ -37,9 +37,9 @@ static const size_t target_offset = giop_header_len + 12;
 // 12 = req_id + flags + RESVD + addr disp.
 
 Invocation::GIOP_Buffer::GIOP_Buffer(const char *text, 
-				     size_t offset,
-				     Thread *thread,
-				     Invocation *owner)
+                                     size_t offset,
+                                     Thread *thread,
+                                     Invocation *owner)
   : preamble_(text),
     log_offset_(offset),
     thr_(thread),
@@ -68,13 +68,13 @@ Invocation::GIOP_Buffer::GIOP_Buffer(const char *text,
       timebuf[time_tok - text] = 0;
       char *hms = ACE_OS::strchr (timebuf,' ');
       if (hms != 0)
-	hms = ACE_OS::strchr (hms + 1, ' ');
+        hms = ACE_OS::strchr (hms + 1, ' ');
       if (hms != 0)
-	{
-	  int hr, min, sec, msec;
+        {
+          int hr, min, sec, msec;
           ::sscanf (hms+1,"%d:%d:%d.%d", &hr, &min, &sec, &msec);
-	  this->time_ = (hr * 3600 + min *60 + sec) * 1000 + msec;
-	}
+          this->time_ = (hr * 3600 + min *60 + sec) * 1000 + msec;
+        }
     }
 }
 
@@ -405,7 +405,7 @@ Invocation::message_complete (void)
   if (this->is_oneway())
     {
       if (this->req_octets_ == 0 || !this->req_octets_->is_full())
-	return false;
+        return false;
     }
   else
     if (this->repl_octets_ == 0 || !this->repl_octets_->is_full())
@@ -438,17 +438,17 @@ Invocation::set_octets (bool request, GIOP_Buffer *octets)
   if (request)
     {
       if (this->req_octets_ != 0)
-	{
-	  return;
-	}
+        {
+          return;
+        }
       this->req_octets_ = octets;
     }
   else
     {
       if (this->repl_octets_ != 0)
-	{
-	  return;
-	}
+        {
+          return;
+        }
       this->repl_octets_ = octets;
     }
   octets->owner(this);
@@ -513,10 +513,10 @@ Invocation::dump_detail (ostream &strm, int indent)
     {
       opname = this->req_octets_->operation();
       if (this->req_octets_->sending())
-	{
-	  dir_1 = " for ";
-	  dir_2 = " from ";
-	}
+        {
+          dir_1 = " for ";
+          dir_2 = " from ";
+        }
     }
 
   for (int ind = 0; ind < indent; ind++)
@@ -539,10 +539,10 @@ Invocation::dump_detail (ostream &strm, int indent)
     {
       req_time = this->req_octets_->time();
       if (this->repl_octets_ != 0)
-	{
-	  rep_time = this->repl_octets_->time();
-	  delta = this->repl_octets_->log_posn() - this->req_octets_->log_posn();
-	}
+        {
+          rep_time = this->repl_octets_->time();
+          delta = this->repl_octets_->log_posn() - this->req_octets_->log_posn();
+        }
     }
   if (req_time != 0 && rep_time != 0)
     strm << " took " << (rep_time - req_time) << " ms";
@@ -561,14 +561,14 @@ Invocation::dump_detail (ostream &strm, int indent)
   else
     {
       if (this->repl_octets_ != 0)
-	{
-	  strm << " Reply, line " << this->repl_octets_->log_posn();
+        {
+          strm << " Reply, line " << this->repl_octets_->log_posn();
 #if defined (SHOW_THREAD_ID)
-	  strm << " " << this->repl_octets_->thread()->alias();
+          strm << " " << this->repl_octets_->thread()->alias();
 #endif
-	}
+        }
       else
-	strm << " <no reply found>";
+        strm << " <no reply found>";
     }
   if (delta > 0)
     strm << " log offset = " << delta;
