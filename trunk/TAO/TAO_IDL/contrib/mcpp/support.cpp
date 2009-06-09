@@ -1,4 +1,4 @@
-h/*- $Id$
+/*- $Id$
   * Copyright (c) 1998, 2002-2008 Kiyoshi Matsui <kmatsui@t3.rim.or.jp>
   * All rights reserved.
   *
@@ -72,6 +72,7 @@ h/*- $Id$
 
 #if PREPROCESSED
 #include    "mcpp.H"
+#error "Unsupportred configuration"
 #else
 #include    "system.H"
 #include    "internal.H"
@@ -180,6 +181,9 @@ int    using_mem_buffers( void)
 }
 
 #define BUF_INCR_SIZE   (NWORK * 2)
+#ifdef MAX
+#undef MAX
+#endif
 #define MAX( a, b)      (((a) > (b)) ? (a) : (b))
 
 static char *   append_to_buffer(
@@ -1651,7 +1655,7 @@ static char *   parse_line( void)
   char *      limit;                      /* Buffer end           */
   char *      tp;     /* Current pointer into temporary buffer    */
   char *      sp;                 /* Pointer into input buffer    */
-  size_t      com_size;
+  size_t      com_size = 0;
   int         c;
 
   if ((sp = get_line( FALSE)) == 0)    /* Next logical line    */
@@ -1815,7 +1819,7 @@ static char *   read_a_comment(
  */
 {
   int         c;
-  char *      saved_sp;
+  char *      saved_sp = 0;
   int         cat_line = 0;       /* Number of catenated lines    */
 
   if (keep_spaces) {

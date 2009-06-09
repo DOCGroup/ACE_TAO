@@ -66,7 +66,8 @@
          * are used instead of -a.
          */
         FALSE,          /* lang_asm:    -a (assembler source)       */
-        FALSE           /* no_source_line:  -j (no source line in diag)     */
+        FALSE,           /* no_source_line:  -j (no source line in diag)     */
+        FALSE /* dollar_in_name */
     };
 
     int     mcpp_mode = STD;        /* Mode of preprocessing        */
@@ -230,6 +231,11 @@
         NBUFF,          /* Least maximum of string length           */
         IDMAX,          /* Least maximum of identifier length       */
         NMACPARS,       /* Least maximum of number of macro params  */
+        EXP_NEST_CPLUS_MIN,
+        BLK_NEST_CPLUS_MIN,
+        INCLUDE_NEST_CPLUS_MIN,
+        NMACRO_CPLUS_MIN,
+        LINE_CPLUS_LIMIT
     };
 
 /*
@@ -337,9 +343,9 @@ int     main
     char ** argv
 )
 {
-    char *  in_file = 0;
-    char *  out_file = 0;
-    char *  stdin_name = "<stdin>";
+  char *  in_file = 0;
+  char *  out_file = 0;
+  char *  stdin_name = "<stdin>";
 
     if (setjmp( error_exit) == -1) {
         errors++;

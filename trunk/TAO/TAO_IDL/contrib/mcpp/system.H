@@ -359,6 +359,9 @@ typedef long            expr_t;
 #define BLK_NEST_CPLUS_MIN  0x100
 #define INCLUDE_NEST_CPLUS_MIN  0x100
 #define NMACRO_CPLUS_MIN    0x10000
+#define LINE90LIMIT         32767
+#define LINE_CPLUS_LIMIT    32767
+
 
 /* LINE99LIMIT  means the line number limit of C99  */
 #define LINE99LIMIT         0x7FFFFFFF

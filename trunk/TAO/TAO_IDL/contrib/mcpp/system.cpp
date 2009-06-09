@@ -1826,6 +1826,9 @@ static void init_cpu_macro (
  * GCC-specific-build defines these macro by init_gcc_macro().
  */
 {
+  ACE_UNUSED_ARG (gval);
+  ACE_UNUSED_ARG (sse);
+    
   const char *    cpu_macro[][ 7] = {
 #if SYS_FAMILY == SYS_UNIX
     { "__i386__"
@@ -1980,9 +1983,6 @@ static void init_std_defines( void)
   }
 }
 
-#define LINE90LIMIT         32767
-#define LINE_CPLUS_LIMIT    32767
-
 static void set_limit( void)
 /*
  * Set the minimum translation limits specified by the Standards.
@@ -2027,7 +2027,7 @@ static void set_pragma_op( void)
  * macro.
  */
 {
-  char *  name = "_Pragma";
+  const char *  name = "_Pragma";
   char    tmp[ 16];
 
   ACE_OS::sprintf( tmp, "%c%s ( %c%c )", DEF_MAGIC, name, MAC_PARM, 1);
@@ -2474,7 +2474,7 @@ static char *   norm_path(
   }
   if (fname)
     ACE_OS::strcat( slbuf1, fname);
-  if (stat( slbuf1, & st_buf) != 0        /* Non-existent         */
+  if (ACE_OS::stat( slbuf1, & st_buf) != 0        /* Non-existent         */
       || (! fname && ! S_ISDIR( st_buf.st_mode))
       /* Not a directory though 'fname' is not specified  */
       || (fname && ! S_ISREG( st_buf.st_mode)))
@@ -2879,7 +2879,7 @@ void    put_depend(
 
   static char *   output = 0;          /* File names           */
   static size_t * pos = 0;             /* Offset to filenames  */
-  static int      pos_num;                /* Index of pos[]       */
+  static unsigned int      pos_num;                /* Index of pos[]       */
   static char *   out_p;                  /* Pointer to output[]  */
   static size_t   mkdep_len;              /* Size of output[]     */
   static size_t   pos_max;                /* Size of pos[]        */
@@ -4668,7 +4668,7 @@ void    do_pragma( void)
       { 0,     0       },
     };
     struct Debug_arg    *argp;
-    int     num;
+    int     num = 0;
     int     c;
 
     c = skip_ws();

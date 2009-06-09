@@ -6,6 +6,8 @@
  *      must edit this file here and there.
  */
 
+#include "ace/Basic_Types.h"
+
 #define TRUE                1
 #define FALSE               0
 
@@ -13,8 +15,6 @@
  *  'Target' means the O.S. and the compiler to which cpp is implemented.
  *  'Host' means the O.S. and the compiler with which cpp is compiled.
  */
-
-#include "ace/config.h"
 
 #ifdef ACE_WIN32
 #define SYSTEM SYS_WIN

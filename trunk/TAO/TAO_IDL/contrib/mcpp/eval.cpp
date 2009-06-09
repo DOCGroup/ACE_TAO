@@ -212,7 +212,7 @@ typedef struct sizes {
 
 typedef struct types {
   int         type;               /* This is the bits for types   */
-  char *      token_name;         /* this is the token word       */
+  const char *      token_name;         /* this is the token word       */
   int         excluded;           /* but these aren't legal here. */
 } TYPES;
 
@@ -1218,7 +1218,7 @@ static expr_t   eval_one(
   if (uc1 == 'u' || uc1 == 'U') {
     if ((count < 4 && uc1 == 'u') || (count < 8 && uc1 == 'U'))
       goto  undefined;
-    if ((value >= 0L && value <= 0x9FL
+    if ((value <= 0x9FL
          && value != 0x24L && value != 0x40L && value != 0x60L)
         || (!stdc3 && value >= 0xD800L && value <= 0xDFFFL)) {
       if (!skip)

@@ -401,7 +401,7 @@ static int  print_macro_inf(
  * Enabled by '#pragma MCPP debug macro_call' or -K option in STD mode.
  */
 {
-  MACRO_INF *     m_inf;
+  MACRO_INF *     m_inf = 0;
   int     num;
   int     num_args;   /* Number of actual args (maybe less than expected) */
   int     i;
@@ -502,7 +502,7 @@ static char *   chk_magic_balance(
   char    arg_id[ MAX_NEST_MAGICS][ ARG_E_LEN_V - 2];
   char *  mac_loc[ MAX_NEST_MAGICS];
   char *  arg_loc[ MAX_NEST_MAGICS];
-  char *  mesg = "%s %ld %s-closing-comment(s) in tracing macro";
+  const char *  mesg = "%s %ld %s-closing-comment(s) in tracing macro";
   int     mac, arg;
   int     mac_s_n, mac_e_n, arg_s_n, arg_e_n;
   char *  buf_p = buf;        /* Save 'buf' for debugging purpose */
@@ -665,7 +665,7 @@ static char *   replace(
   /* Number of actual arguments (maybe less than expected)    */
   int     enable_trace_macro;     /* To exclude _Pragma() pseudo macro    */
   int     m_num = 0;              /* 'mac_num' of current macro   */
-  MACRO_INF *     m_inf;          /* Pointer into mac_inf[]       */
+  MACRO_INF *     m_inf = 0;          /* Pointer into mac_inf[]       */
 
   if (mcpp_debug & EXPAND) {
     dump_a_def( "replace entry", defp, FALSE, TRUE, fp_debug);
@@ -1253,7 +1253,7 @@ static const char *     remove_magics(
   char ** arg_loc;
   char *  mgc_index;
   size_t  max_magics;
-  int     mac_n, arg_n, ind, n;
+  unsigned int     mac_n, arg_n, ind, n;
   char *  first = 0;
   char *  last = 0;
   char *  token;
@@ -1289,7 +1289,8 @@ static const char *     remove_magics(
   /* Read stacked arg_p and write it to arg_p as a dummy buffer   */
   while ((*ap++ = c = get_ch()) != RT_END && file == infile) {
     if (c == MAC_INF) {
-      if (mac_n >= max_magics || arg_n >= max_magics * 2) {
+      if (mac_n >= max_magics || 
+          arg_n >= max_magics * 2) {
         max_magics *= 2;
         mac_id = (char (*)[ MAC_S_LEN]) xrealloc( reinterpret_cast<char *> (mac_id), MAC_S_LEN * max_magics);
         arg_id = (char (*)[ ARG_S_LEN]) xrealloc( reinterpret_cast<char *> (arg_id), ARG_S_LEN * max_magics * 2);
@@ -1373,8 +1374,8 @@ static const char *     remove_magics(
   /* Remove pair of magics surrounding the last (or first) token  */
   if (mac_n) {
     /* Remove pair of macro magics surrounding the token    */
-    int     magic, mac_s, mac_e;
-    int     nest_s, nest_e;
+    unsigned int     magic, mac_s, mac_e;
+    unsigned int     nest_s, nest_e;
 
     nest_s = 0;
     for (mac_s = 0; mac_loc[ mac_s] < token; mac_s++) {
@@ -1412,8 +1413,8 @@ static const char *     remove_magics(
   }
   if (arg_n) {
     /* Remove pair of arg magics surrounding the token  */
-    int     magic, arg_s, arg_e;
-    int     nest_s, nest_e;
+    unsigned int     magic, arg_s, arg_e;
+    unsigned int     nest_s, nest_e;
 
     nest_s = 0;
     for (arg_s = 0; arg_loc[ arg_s] < token; arg_s++) {
@@ -1454,9 +1455,9 @@ static const char *     remove_magics(
   mac_n = arg_n = n = 0;
 
   while ((*tp++ = c = get_ch()) != RT_END && file == infile) {
-    char ** loc_tab;
-    int     num, mark, rm, magic;
-    size_t  len;
+    char ** loc_tab = 0;
+    int     num = 0, mark = 0, rm = 0, magic = 0;
+    size_t  len = 0;
 
     if (c != MAC_INF) {
       scan_token( c, (--tp, &tp), ep);
@@ -1834,7 +1835,7 @@ static char *   substitute(
     char *  tp = 0;              /* Temporary pointer into buffer*/
     char *  out_p = out;            /* Current output pointer       */
     FILEINFO *  file;       /* Input sequences stacked on a "file"  */
-    DEFBUF *    inner;              /* Inner macro to replace       */
+    DEFBUF *    inner = 0;              /* Inner macro to replace       */
     int     c;                      /* First character of token     */
     int     token_type;
     char *  mac_arg_start = 0;
@@ -2416,7 +2417,7 @@ static char *   substitute(
     int     nargs = 0;                  /* Number of collected args */
     int     var_arg = defp->nargs & VA_ARGS;    /* Variable args    */
     int     more_to_come = FALSE;       /* Next argument is expected*/
-    LOCATION *  locs;           /* Location of args in source file  */
+    LOCATION *  locs = 0;           /* Location of args in source file  */
     LOCATION *  loc;                            /* Current locs     */
     MAGIC_SEQ   mgc_prefix;     /* MAC_INF seqs and spaces preceding an arg */
     int     c;
