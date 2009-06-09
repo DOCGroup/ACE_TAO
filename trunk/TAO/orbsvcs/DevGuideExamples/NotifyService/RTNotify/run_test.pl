@@ -11,10 +11,12 @@ use PerlACE::Run_Test;
 $nsiorfile   = PerlACE::LocalFile("ns.ior");
 $messiorfile = PerlACE::LocalFile("Messenger.ior");
 $notify_ior  = PerlACE::LocalFile("notify.ior");
+$consumerfile = PerlACE::LocalFile("MessengerConsumer.ready");
 $arg_ns_ref = "-ORBInitRef NameService=file://$nsiorfile";
 unlink $nsiorfile;
 unlink $messiorfile;
 unlink $notify_ior;
+unlink $consumerfile;
 
 # start Naming Service
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
@@ -58,8 +60,15 @@ if (PerlACE::waitforfile_timed ($messiorfile, 15) == -1) {
 $MC = new PerlACE::Process("MessengerConsumer", 
 			   "$arg_ns_ref -ORBSvcConf nsclient.conf");
 $MC->Spawn();
+if (PerlACE::waitforfile_timed ($consumerfile, 15) == -1) {
+   print STDERR "ERROR: Timed out waiting for $consumerfile\n";
+   $MC->Kill();
+   $S->Kill();
+   $NS->Kill();
+   $NFS->Kill();
+   exit 1;
+}
 
-sleep(2);
 # start MessengerClient
 $C = new PerlACE::Process("MessengerClient", "");
 if ($C->SpawnWaitKill(10) != 0) {
@@ -78,5 +87,6 @@ $NS->Kill();
 unlink $nsiorfile;
 unlink $messiorfile;
 unlink $notify_ior;
+unlink $consumerfile;
 
 exit 0;

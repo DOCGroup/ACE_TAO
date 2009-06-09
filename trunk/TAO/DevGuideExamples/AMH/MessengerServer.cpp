@@ -51,11 +51,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     mgr->activate();
 
     // Create a servant.
-    AMH_Messenger_i servant;
+    PortableServer::Servant_var<AMH_Messenger_i> servant = new AMH_Messenger_i;
 
     // Register the servant with the RootPOA, obtain its object
     // reference, stringify it, and write it to a file.
-    PortableServer::ObjectId_var oid = poa->activate_object( &servant );
+    PortableServer::ObjectId_var oid = poa->activate_object( servant.in() );
     obj = poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( obj.in() );
     std::ofstream iorFile(ACE_TEXT_ALWAYS_CHAR(ior_output_file.c_str()));

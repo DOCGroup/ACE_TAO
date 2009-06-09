@@ -27,12 +27,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     SSLIOP::Current_var ssliop_current =
       SSLIOP::Current::_narrow (obj.in ());
 
-    Messenger_i messenger_servant(orb.in(),
-                                  ssliop_current.in()
-                                  );
+    PortableServer::Servant_var<Messenger_i> messenger_servant
+      = new Messenger_i(orb.in(), ssliop_current.in());
 
     PortableServer::ObjectId_var oid =
-      poa->activate_object( &messenger_servant );
+      poa->activate_object( messenger_servant.in() );
 
     CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
 

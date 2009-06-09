@@ -12,13 +12,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-
-      temp_initializer = new ClientInitializer;
-
       PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+        new ClientInitializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 

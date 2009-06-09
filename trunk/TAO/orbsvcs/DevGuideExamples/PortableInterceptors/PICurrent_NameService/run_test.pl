@@ -14,7 +14,7 @@ $PORT=9876;
 
 # start Naming Service
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
-$NS = new PerlACE::Process($NameService, "-o $nsiorfile -ORBEndpoint iiop://localhost:$PORT");
+$NS = new PerlACE::Process($NameService, "-o $nsiorfile -ORBListenEndpoints iiop://localhost:$PORT");
 $NS->Spawn();
 if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file $nsiorfile\n";
@@ -30,7 +30,6 @@ $S = new PerlACE::Process("MessengerServer", $IREF);
 $S->Spawn();
 
 # start MessengerClient
-sleep(1);
 $C = new PerlACE::Process("MessengerClient", $IREF);
 if ($C->SpawnWaitKill(15) != 0) {
      $S->Kill();

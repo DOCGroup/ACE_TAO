@@ -45,12 +45,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POA_var poa = createPersistentPOA(root_poa.in(), poa_name);
 
-    Messenger_i servant;
+    PortableServer::Servant_var<Messenger_i> servant = new Messenger_i;
 
     PortableServer::ObjectId_var object_id =
       PortableServer::string_to_ObjectId("object");
 
-    poa->activate_object_with_id(object_id.in(), &servant);
+    poa->activate_object_with_id(object_id.in(), servant.in());
 
     obj = poa->id_to_reference(object_id.in());
     CORBA::String_var ior = orb->object_to_string(obj.in());

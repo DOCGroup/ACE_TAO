@@ -52,8 +52,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     RTCORBA::ThreadpoolId threadpool_id =
       rt_orb->create_threadpool_with_lanes (0,  // Stack Size
                                             lanes,
-                                            0,  // Allow borrowing
-                                            0,  // Allow request buffering
+                                            false,  // Allow borrowing
+                                            false,  // Allow request buffering
                                             0,  // Max buffered requests
                                             0); // Max request buffer size
 
@@ -71,12 +71,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                      poa_policy_list);
 
     // Create an object
-    Messenger_i messenger_servant(orb.in());
+    PortableServer::Servant_var<Messenger_i> messenger_servant
+      = new Messenger_i(orb.in());
 
     // Register the servant with the RootPOA, obtain its object
     // reference, stringify it, and write it to a file.
     PortableServer::ObjectId_var oid =
-      client_propagated_poa->activate_object( &messenger_servant );
+      client_propagated_poa->activate_object( messenger_servant.in() );
     CORBA::Object_var messenger_obj =
       client_propagated_poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( messenger_obj.in() );
