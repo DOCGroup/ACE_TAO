@@ -27,7 +27,7 @@ namespace CIDL_TargetManager_i
     
     // Create Domain Data here
 
-    CIAO::DomainDataManager::create (orb_.in (), target.in ());
+    CIAO::DOMAIN_DATA_MANAGER->init (orb_.in (), target.in ());
   }
 
   TargetManager_exec_i::~TargetManager_exec_i (void)
@@ -39,31 +39,27 @@ namespace CIDL_TargetManager_i
   ::Deployment::Domain *
   TargetManager_exec_i::getAllResources ()
   {
-    return CIAO::DomainDataManager::
-      get_data_manager ()->get_initial_domain ();
+    return CIAO::DOMAIN_DATA_MANAGER->get_initial_domain ();
   }
 
   ::Deployment::Domain *
   TargetManager_exec_i::getAvailableResources ()
   {
-    return CIAO::DomainDataManager::
-      get_data_manager ()->get_current_domain ();
+    return CIAO::DOMAIN_DATA_MANAGER->get_current_domain ();
   }
 
   ::Deployment::ResourceCommitmentManager_ptr
   TargetManager_exec_i::commitResources (
   const ::Deployment::ResourceAllocations & resources)
   {
-    return CIAO::DomainDataManager::
-      get_data_manager ()->commitResources (resources);
+    return CIAO::DOMAIN_DATA_MANAGER->commitResources (resources);
   }
 
   void
   TargetManager_exec_i::releaseResources (
   ::Deployment::ResourceCommitmentManager_ptr manager)
   {
-    return CIAO::DomainDataManager::
-      get_data_manager ()->releaseResources (manager);
+    return CIAO::DOMAIN_DATA_MANAGER->releaseResources (manager);
   }
 
   void
@@ -73,11 +69,10 @@ namespace CIDL_TargetManager_i
   ::Deployment::DomainUpdateKind  updateKind)
   {
     // Your code here.
-    CIAO::DomainDataManager::
-      get_data_manager ()->update_domain (
-                    elements,
-                    domainSubset,
-                    updateKind);
+    CIAO::DOMAIN_DATA_MANAGER->update_domain (
+                                  elements,
+                                  domainSubset,
+                                  updateKind);
 
     // here tell the planner about the changes
 

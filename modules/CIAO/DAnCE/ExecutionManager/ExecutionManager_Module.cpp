@@ -162,14 +162,14 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, char *argv[])
           //case '?': // Display help for use of the server.
           //default:
           DANCE_ERROR_RETURN ((LM_ERROR,
-                               "usage:  %C\n"
-                               "\t--exec-mgr,-e [execution manager ior file name]\n"
-                               "\t--node-mgr,-n <node name>[=node manager ior file name]\n"
+                               "Excution Manager options:  %C\n"
+                               "\t-e|--exec-mgr [execution manager ior file name]\n"
+                               "\t-n|--node-mgr <node name>[=node manager ior file name]\n"
                                "\t--node-map <file name> \t\tFile containing a node manager map\n"
                                "\t--domain-nc <nc ior> \t\tIOR for the Domain Naming Context\n"
-                               //"--process-ns,-p [file name] \t\tcreate process name service and store its ior to file name\n"
-                               //"--create-plan-ns,-c [NC] \t\tcreate plan objects (components and ports) representation in name context with ior NC\n"
-                               //"--rebind-plan-ns,-r [NC] \t\tbind plan representation name context to NC\n"
+                               //"-p|--process-ns [file name] \t\tcreate process name service and store its ior to file name\n"
+                               //"-c|--create-plan-ns [NC] \t\tcreate plan objects (components and ports) representation in name context with ior NC\n"
+                               //"-r|--rebind-plan-ns [NC] \t\tbind plan representation name context to NC\n"
                                //"-i \t\t\t\tenable plan objects indirection via servant locator\n",
                                ,argv [0]),
                               false);

@@ -1,3 +1,24 @@
+Wed Jun 10 14:01:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+          Normalized "usage" texts.
+
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/ResourceCommitmentManager.cpp:
+        * DAnCE/TargetManager/TargetManager_exec.h:
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          DomainDataManager is now an ACE_Singleton class.
+          Removed function like create-, get- and destroy 
+          data manager.
+          
+        * examples/Hello/step-by-step.html:
+          Used "DANCE_ROOT" in stead of CIAO_ROOT/DAnCE" and
+          changed the domain-nc value.
+
 Mon Jun  8 15:27:56 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/descriptors_naming/deploymentplan_naming.cdp:

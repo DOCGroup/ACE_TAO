@@ -7,30 +7,25 @@
 
 const char * domain_file_name = "Domain.cdd";
 
-CIAO::DomainDataManager* CIAO::DomainDataManager::global_data_manager_ = 0;
-
-CIAO::DomainDataManager * CIAO::DomainDataManager::create (CORBA::ORB_ptr orb,
+void
+CIAO::DomainDataManager::init (CORBA::ORB_ptr orb,
                             ::Deployment::TargetManager_ptr target)
 {
-  if (global_data_manager_ == 0)
-    {
-      global_data_manager_ = new DomainDataManager (orb , target);
-    }
-  return global_data_manager_;
-}
+  this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->target_mgr_ = ::Deployment::TargetManager::_duplicate(target);
 
-// Returns the pointer to the static variable
-CIAO::DomainDataManager*
-CIAO::DomainDataManager::get_data_manager ()
-{
-  return global_data_manager_;
-}
+  CIAO::Config_Handlers::DD_Handler dd (domain_file_name);
+  ::Deployment::Domain* dmn = dd.domain_idl ();
 
-void
-CIAO::DomainDataManager::delete_data_manger ()
-{
-  if (global_data_manager_)
-    delete global_data_manager_;
+  current_domain_ = *dmn;
+  initial_domain_ = current_domain_;
+
+  // initialize the provisioning domain
+  provisioned_data_ = initial_domain_;
+
+  update_node_status ();
+
+  call_all_node_managers ();
 }
 
 int CIAO::DomainDataManager::update_domain (
@@ -84,30 +79,6 @@ int CIAO::DomainDataManager::update_domain (
       current_domain_.node[size]=domainSubset.node[0];
     }
   return 0;
-}
-
-CIAO::DomainDataManager::
-DomainDataManager (CORBA::ORB_ptr orb,
-                   ::Deployment::TargetManager_ptr target)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-//    deployment_config_ (orb_.in()),
-    target_mgr_ (::Deployment::TargetManager::_duplicate(target))
-{
-  CIAO::Config_Handlers::DD_Handler dd (domain_file_name);
-  ::Deployment::Domain* dmn = dd.domain_idl ();
-
-//  if (CIAO::debug_level () > 9)
-    //::Deployment::DnC_Dump::dump (*dmn);
-
-  current_domain_ = *dmn;
-  initial_domain_ = current_domain_;
-
-  // initialize the provisioning domain
-  provisioned_data_ = initial_domain_;
-
-  update_node_status ();
-
-  call_all_node_managers ();
 }
 
 ::Deployment::Domain* CIAO::DomainDataManager::get_current_domain ()

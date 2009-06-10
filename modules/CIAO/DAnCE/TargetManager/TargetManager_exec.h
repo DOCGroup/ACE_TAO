@@ -105,9 +105,6 @@ namespace CIDL_TargetManager_i
   private:
     TargetManagerImpl_exec_i * exec_;
 
-    /// The pointer to the Domain Manager
-    auto_ptr<CIAO::DomainDataManager> dataManager_;
-
     /// The CORBA ORB ...
     CORBA::ORB_var orb_;
   };

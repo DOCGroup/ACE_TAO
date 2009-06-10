@@ -16,7 +16,6 @@
 
 #include "TargetManagerImplC.h"
 #include "DAnCE/DomainApplicationManager/Node_Locator.h"
-//#include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerC.h"
 
 /**
  * @namespace CIAO
@@ -65,37 +64,12 @@ namespace CIAO
        */
       ::Deployment::Domain* get_current_domain ();
 
-      /**
-       * This function calls the constructor of the
-       * class Domain Data Manager
-       * @brief This function is called to create the Datamanager
-       * @param orb The orb pointer
-       * @param target The Target Manager Object Reference
-       *
-       */
-      static DomainDataManager * create (CORBA::ORB_ptr orb,
-                                  ::Deployment::TargetManager_ptr target);
-
-      /**
-       * @brief Returns the static pointer to the
-       *        data manager.
-       * @return DomainDataManager*
-       * The staic get_data_manger function returning
-       *              the data_manager pointer
-       */
-      static DomainDataManager* get_data_manager ();
-
-      /**
-       * @brief deletes the data manager
-       */
-      static void delete_data_manger ();
-
-      /**
-       * @brief returns the sequence of node managers
-       * object reference
-       */
-       ::Deployment::ResourceCommitmentManager_ptr  commitResources (
-         const ::Deployment::ResourceAllocations & resources);
+        /**
+         * @brief returns the sequence of node managers
+         * object reference
+         */
+        ::Deployment::ResourceCommitmentManager_ptr  commitResources (
+            const ::Deployment::ResourceAllocations & resources);
 
        /**
         * @brief The function releases the resources held by a plan
@@ -132,21 +106,21 @@ namespace CIAO
        void releaseResourceAllocation (
            const ::Deployment::ResourceAllocations & resources);
 
+       /**
+        * @brief Initializing DomainDataManager
+        *
+        * This function inits the DomainDataManager
+        *
+        */
+       void init (CORBA::ORB_ptr orb,
+                  ::Deployment::TargetManager_ptr target);
+      
       private:
-
+     
       /**
-       * The constructor made protected so that no one can create
-       * it.
-       * @param orb The orb pointer
-       * @param target The Target Manager Object Reference
-       */
-      DomainDataManager (CORBA::ORB_ptr orb,
-                         ::Deployment::TargetManager_ptr target);
-
-      /**
-       * @brief   It will read the initial Domain data from
-       *          XML files.
-       */
+        * @brief   It will read the initial Domain data from
+        *          XML files.
+        */
       int readin_domain_data ();
 
       /**
@@ -260,11 +234,10 @@ namespace CIAO
       /// at total capacity
       ::Deployment::Domain initial_domain_;
 
-      /// The staic data member , replacing a global variable
-      static DomainDataManager* global_data_manager_;
-      /// The Current Domain - contains resources
-      /// at current capacity
-      ::Deployment::Domain current_domain_;
+
+        /// The Current Domain - contains resources
+        /// at current capacity
+        ::Deployment::Domain current_domain_;
 
       /// The Target Manager Context
       ::Deployment::TargetManager_var target_mgr_;
@@ -281,7 +254,9 @@ namespace CIAO
       /// The current action
       Action current_action_;
     };
+    typedef ACE_Singleton <DomainDataManager, ACE_SYNCH_RECURSIVE_MUTEX> 
+        DomainDataManager_Singleton;
+    #define DOMAIN_DATA_MANAGER DomainDataManager_Singleton::instance ()
 } // CIAO
-
 
 #endif /* DOMAIN_DATA_MGRH */

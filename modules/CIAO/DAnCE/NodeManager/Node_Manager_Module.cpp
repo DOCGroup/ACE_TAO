@@ -71,20 +71,20 @@ DAnCE_NodeManager_Module::usage (void)
 {
   DANCE_TRACE ("DAnCE_NodeManager_Module::usage");
   return "Node Manager Options:\n"
-    "\t-e,--exec-mgr\t\t [execution manager ior file name]\n"
-    "\t-n,--node-mgr\t\t <node name> [=node manager ior file name]\n"
-    //    "\t-p,--process-ns\t\t\t [file name] create process name service and store its ior to file name\n"
-    "\t-c,--create-plan-ns [NC] create plan objects (components and ports) representation in name context with ior NC\n"
-    "\t-r,--rebind-plan-ns [NC] bind plan representation name context to NC\n"
-    "\t-i,--port-indirection\t enable plan objects indirection via servant locator\n"
-    //"\t-f,--ignore-failure\t\t ignore deployment failures\n"
-    "\t-s,--server-executable\t default component server executable\n"
+    "\t-e|--exec-mgr\t\t [execution manager ior file name]\n"
+    "\t-n|--node-mgr\t\t <node name> [=node manager ior file name]\n"
+    //    "\t-p|--process-ns\t\t\t [file name] create process name service and store its ior to file name\n"
+    "\t-c|--create-plan-ns [NC] create plan objects (components and ports) representation in name context with ior NC\n"
+    "\t-r|--rebind-plan-ns [NC] bind plan representation name context to NC\n"
+    "\t-i|--port-indirection\t enable plan objects indirection via servant locator\n"
+    //"\t-f|--ignore-failure\t\t ignore deployment failures\n"
+    "\t-s|--server-executable\t default component server executable\n"
     "\t--server-args\t\t additional arguments to supply to the component server\n"
     "\t--standalone-nm\t\t Indicates that this NodeManager is not managed by an ExecutionManager\n"
-    "\t-t,--timeout\t\t default timeout in seconds to wait for component server spawn\n"
-    "\t-d,--domain-nc [NC]\t Default naming context for domain objects.\n"
+    "\t-t|--timeout\t\t default timeout in seconds to wait for component server spawn\n"
+    "\t-d|--domain-nc [NC]\t Default naming context for domain objects.\n"
     "\t--instance-nc [NC]\t Default naming context for instance registration directives. No argument indicates Domain NC.\n"
-    "\t-h,help\t\t\t print this help message\n";
+    "\t-h|help\t\t\t print this help message\n";
 }
 
 bool
