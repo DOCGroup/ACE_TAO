@@ -1,3 +1,10 @@
+Wed Jun 10 18:31:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/descriptors:
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+
+          First pass at deployment plan. 
+        
 Wed Jun 10 17:53:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_DeploymentPlan.idl:
@@ -6,9 +13,9 @@ Wed Jun 10 17:53:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * docs/schema/cid.xsd:
         * docs/schema/cpd.xsd:
 
-          Updated to match new structures defined by the DDS4CCM spec.  
+          Updated to match new structures defined by the DDS4CCM spec.
           New generated XSC code/config handler implementation is forthcoming.
-        
+
 Wed Jun 10 14:01:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
