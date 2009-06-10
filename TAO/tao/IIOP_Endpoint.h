@@ -34,6 +34,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IIOP_Connection_Handler;
+class TAO_IIOP_Profile;
 
 /**
  * @class TAO_IIOP_Endpoint

@@ -1,3 +1,9 @@
+Wed Jun 10 02:20:40 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Endpoint.h:
+        
+          fix compile error.
+
 Tue Jun  9 23:17:14 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/HostProcess.cpp:
@@ -7,7 +13,7 @@ Tue Jun  9 23:17:14 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * utils/logWalker/Thread.cpp:
         * utils/logWalker/logWalker.cpp:
         * utils/logWalker/logWalker.mpc:
-        
+
           Fuzz fix.
 
 Tue Jun  9 22:26:07 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
