@@ -26,7 +26,7 @@ public:
 
   ~Log();
 
-  bool init (ACE_TCHAR *filename, const char *alias = "");
+  bool init (const ACE_TCHAR *filename, const char *alias = "");
   void parse_line (char* line, size_t offset);
 
   void summarize(void);
