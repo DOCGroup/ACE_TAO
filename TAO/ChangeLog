@@ -1,7 +1,13 @@
+Wed Jun 10 13:37:03 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * utils/logWalker/Log.cpp:
+
+          s_addr is a macro (for use with struct in_addr) on some platforms.
+
 Wed Jun 10 02:20:40 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Endpoint.h:
-        
+
           fix compile error.
 
 Tue Jun  9 23:17:14 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
