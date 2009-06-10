@@ -15,7 +15,9 @@ module Deployment {
                 MultiplexReceptacle,
                 EventEmitter,
                 EventPublisher,
-                EventConsumer
+                EventConsumer,
+                ExtendedPort,
+                MirrorPort
         };
 
         struct ComponentPortDescription {
@@ -27,6 +29,7 @@ module Deployment {
                 boolean exclusiveUser;
                 boolean optional;
                 CCMComponentPortKind kind;
+               ::CORBA::StringSeq templateParam;
         };
 
         typedef sequence < ComponentPortDescription > ComponentPortDescriptions;

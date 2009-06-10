@@ -130,6 +130,18 @@ module Deployment {
                 Properties infoProperty;
         };
 
+        struct ConnectorImplementationDescription {
+                string label;
+                string UUID;
+                ComponentInterfaceDescription implements;
+                ComponentAssemblyDescriptions assemblyImpl;
+                MonolithicImplementationDescriptions monolithicImpl;
+                Properties configProperty;
+                Capabilities capability;
+                ImplementationDependencies dependsOn;
+                Properties infoProperty;
+        };
+
         struct PackagedComponentImplementation {
                 string name;
                 ComponentImplementationDescription referencedImplementation;
@@ -146,6 +158,15 @@ module Deployment {
                 Properties infoProperty;
         };
 
+        struct ConnectorPackageDescription {
+                string label;
+                string UUID;
+                ComponentInterfaceDescription realizes;
+                Properties configProperty;
+                ConnectorImplementationDescription implementation;
+                Properties infoProperty;
+        };
+
         struct PackageConfiguration {
                 string label;
                 string UUID;
@@ -159,6 +180,7 @@ module Deployment {
         
         struct ComponentUsageDescription {
                 ComponentPackageDescriptions basePackage;
+                ConnectorPackageDescription baseConnectorPackage;
                 PackageConfigurations specializedConfig;
                 Requirements selectRequirement;
                 Properties configProperty;

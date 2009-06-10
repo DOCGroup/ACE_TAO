@@ -296,6 +296,8 @@
       <xsd:enumeration value="EventEmitter"/>
       <xsd:enumeration value="EventPublisher"/>
       <xsd:enumeration value="EventConsumer"/>
+      <xsd:enumeration value="ExtendedPort"/>
+      <xsd:enumeration value="MirrorPort"/>
     </xsd:restriction>
   </xsd:simpleType>
 
@@ -310,6 +312,7 @@
       <xsd:element name="exclusiveUser" type="xsd:boolean"/>
       <xsd:element name="optional" type="xsd:boolean"/>
       <xsd:element name="kind" type="Deployment:CCMComponentPortKind"/>
+      <xsd:element name="templateParam" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
