@@ -112,13 +112,14 @@ const char *
 DAnCE_RepositoryManager_Module::usage (void)
 {
   DANCE_TRACE ("DAnCE_RepositoryManager_Module::usage");
-  return "Node Manager Options:\n"
-    "\t-n,--name [name]\t Name to register in the naming service\n"
-    "\t-t,--threads [num]\t Number of threads to run.\n"
-    "\t-f,--file [name]\t Filename to output IOR.\n"
-    "\t-p,--package-dir [directory]\t Directory to store packages.\n"
-    "\t-s,--server-address [address]\t Address of the HTTP server associated with this RM.\n"
-    "\t-d,--domain-nc [NC]\t Default naming context for domain objects.\n"
+  return "Repository Manager Options:\n"
+    "\t-n|--name [name]\t Name to register in the naming service\n"
+    "\t-t|--threads [num]\t Number of threads to run.\n"
+    "\t-f|--file [name]\t Filename to output IOR.\n"
+    "\t-p|--package-dir [directory]\t Directory to store packages.\n"
+    "\t-s|--server-address [address]\t Address of the HTTP server associated with this RM.\n"
+    "\t-d|--domain-nc [NC]\t Default naming context for domain objects.\n"
+    "\t-h|help\t\t\t print this help message\n"
 #ifdef DANCE_RM_USES_JAWS
     "\t--spawn-http\t\t Spawn a JAWS http server, controlled by following options:\n"
     "\t--http-port [port]\t Spawn JAWS HTTP server with provided port, default is 5432\n"

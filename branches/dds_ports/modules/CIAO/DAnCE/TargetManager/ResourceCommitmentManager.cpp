@@ -16,7 +16,7 @@ CIAO::ResourceCommitmentManager_i::~ResourceCommitmentManager_i (void)
 void CIAO::ResourceCommitmentManager_i::commitResources (
     const ::Deployment::ResourceAllocations& resources)
 {
-  CIAO::DomainDataManager::get_data_manager ()->commitResourceAllocation (resources);
+  DOMAIN_DATA_MANAGER->commitResourceAllocation (resources);
 
   // commit succesful .. add to commited resource
   this->add_to_commited_resource (resources);
@@ -34,7 +34,7 @@ void CIAO::ResourceCommitmentManager_i::releaseResources (
   else
     res = resources;
 
-  CIAO::DomainDataManager::get_data_manager ()->releaseResourceAllocation (res);
+  DOMAIN_DATA_MANAGER->releaseResourceAllocation (res);
   return;
 }
 

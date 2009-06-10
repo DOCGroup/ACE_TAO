@@ -181,7 +181,7 @@ Finally you are ready to deploy the component-based application you have develop
     <ol>
       <li>Using the naming service to locate the node deamons<br/>
       Navigate to <em>$CIAO_ROOT/examples/Hello/descriptor</em> and execute
-      <code>$DANCE_ROOT/bin/dance_execution_manager -eEM.ior --domain-nc ns.ior</code><br/>
+      <code>$DANCE_ROOT/bin/dance_execution_manager -eEM.ior --domain-nc file://ns.ior</code><br/>
       --domain-nc should point to the ior file of the naming service.
       </li>
 
@@ -204,7 +204,7 @@ Finally you are ready to deploy the component-based application you have develop
       </li>
       <li>Without using the naming service<br/>
         Navigate to <em>$CIAO_ROOT/examples/Hello/descriptors</em> and execute:<br/>
-        <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -x deploymentplan.cdp -k file://EM.ior </code><P>
+        <code> $DANCE_ROOT/bin/dance_plan_launcher -x deploymentplan.cdp -k file://EM.ior </code><P>
       </li>
     After this, components should be deployed successfully.<P>
     </ol>
