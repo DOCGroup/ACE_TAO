@@ -47,13 +47,13 @@ parse_manifest (Session &session, ACE_TCHAR *filename)
         {
           if (buffer[1] == 'o')
             {
-              outfile = new char[ACE_OS::strlen(buffer) - 3];
-              ACE_OS::strcpy(buffer+3,outfile);
+              outfile = new ACE_TCHAR[ACE_OS::strlen(buffer) - 3];
+              ACE_OS::strcpy(buffer+3, ACE_TEXT_ALWAYS_CHAR(outfile));
               continue;
             }
           if (buffer[1] == 't')
             {
-              Session::set_tao_version (buffer+3);
+              Session::set_tao_version (ACE_TEXT_CHAR_TO_TCHAR (buffer + 3));
               continue;
             }
           if (buffer[1] == 'a')
@@ -73,12 +73,12 @@ parse_manifest (Session &session, ACE_TCHAR *filename)
                       buffer));
           return;
         }
-      ACE_Tokenizer tokens(buffer);
-      tokens.delimiter_replace('=',0);
+      ACE_Tokenizer_T<char> tokens(buffer);
+      tokens.delimiter_replace('=', 0);
       char *alias = tokens.next();
-      char *filename = tokens.next();
+      ACE_TString filename = ACE_TEXT_CHAR_TO_TCHAR(tokens.next());
       Log log(session);
-      log.init(filename,alias);
+      log.init(filename.c_str(), alias);
     }
 }
 
@@ -93,29 +93,29 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Session session;
   for (int i = 1; i < argc; i++)
     {
-      if (ACE_OS::strcasecmp (argv[i], "-o") == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-o")) == 0)
         {
           outfile = argv[++i];
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], "-m") == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-m")) == 0)
         {
           parse_manifest (session, argv[++i]);
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], "-t") == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-t")) == 0)
         {
           Session::set_tao_version (argv[++i]);
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], "-a") == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-a")) == 0)
         {
-          session.alternate_address (argv[++i]);
+          session.alternate_address (ACE_TEXT_ALWAYS_CHAR (argv[++i]));
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], "-p") == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-p")) == 0)
         {
-          session.default_service (argv[++i]);
+          session.default_service (ACE_TEXT_ALWAYS_CHAR (argv[++i]));
           continue;
         }
 
