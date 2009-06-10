@@ -80,10 +80,28 @@
         <xsd:element name="dependsOn" type="Deployment:ImplementationDependency" minOccurs="0" maxOccurs="unbounded" />
         <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
-      <xsd:element name="contentLocation" type="xsd:string"/>
     </xsd:choice>
     <xsd:attribute name="href" type="xsd:string" use="optional"/>
   </xsd:complexType>
 
+  <xsd:complexType name="ConnectorImplementationDescription">
+    <xsd:choice minOccurs="0" maxOccurs="1">
+      <xsd:sequence>
+        <xsd:element name="label" type="xsd:string" minOccurs="0" />
+        <xsd:element name="UUID" type="xsd:string" minOccurs="0" />
+        <!-- @@ MAJO : Hack: Implements should be required. -->
+        <xsd:element name="implements" type="Deployment:ComponentInterfaceDescription" minOccurs="0" />
+        <xsd:choice>
+          <xsd:element name="assemblyImpl" type="Deployment:ComponentAssemblyDescription"/>
+          <xsd:element name="monolithicImpl" type="Deployment:MonolithicImplementationDescription"/>
+        </xsd:choice>
+        <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
+        <xsd:element name="capability" type="Deployment:Capability" minOccurs="0" maxOccurs="unbounded" />
+        <xsd:element name="dependsOn" type="Deployment:ImplementationDependency" minOccurs="0" maxOccurs="unbounded" />
+        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+    </xsd:choice>
+    <xsd:attribute name="href" type="xsd:string" use="optional"/>
+  </xsd:complexType>
 
 </xsd:schema>

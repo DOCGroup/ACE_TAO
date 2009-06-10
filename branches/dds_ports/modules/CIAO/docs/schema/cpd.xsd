@@ -26,7 +26,21 @@
         <xsd:element name="implementation" type="Deployment:PackagedComponentImplementation" maxOccurs="unbounded" />
         <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
-      <xsd:element name="contentLocation" type="xsd:string"/>
+    </xsd:choice>
+    <xsd:attribute name="href" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="ConnectorPackageDescription">
+    <xsd:choice minOccurs="0" maxOccurs="1">
+      <xsd:sequence>
+        <xsd:element name="label" type="xsd:string" minOccurs="0" />
+        <xsd:element name="UUID" type="xsd:string" minOccurs="0" />
+        <!-- @@MAJO - This is a hack, realizes is required. -->
+        <xsd:element name="realizes" type="Deployment:ComponentInterfaceDescription" minOccurs="0" />
+        <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
+        <xsd:element name="implementation" type="Deployment:ConnectorImplementationDescription" maxOccurs="unbounded" />
+        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
     </xsd:choice>
     <xsd:attribute name="href" type="xsd:string" use="optional"/>
   </xsd:complexType>
