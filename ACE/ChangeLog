@@ -1,3 +1,9 @@
+Wed Jun 10 18:18:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-9.h:
+        * ace/OS_NS_stdio.inl:
+          Fix for Windows CE with msvc9
+
 Wed Jun 10 14:07:09 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
