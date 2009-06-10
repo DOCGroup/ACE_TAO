@@ -20,7 +20,7 @@ Log::~Log (void)
 }
 
 bool
-Log::init (ACE_TCHAR *filename, const char *alias)
+Log::init (const ACE_TCHAR *filename, const char *alias)
 {
   this->origin_ = ACE_TEXT_ALWAYS_CHAR (filename);
   this->alias_ = alias;
