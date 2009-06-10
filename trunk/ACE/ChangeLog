@@ -1,3 +1,12 @@
+Wed Jun 10 14:07:09 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+
+          Minor adjustment to the part of the change below concerning
+          "Allow in-place (no HOST_ROOT) cross-compilation on Win32 hosts."
+          If the host tool variables (like $(TAO_IDL)) are already end in .exe
+          don't add .exe again.
+
 Mon Jun  8 18:39:58 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Message_Queue_Vx.h:
