@@ -351,8 +351,8 @@ Log::parse_line (char *line, size_t offset)
         char *addr = ACE_OS::strchr(line,'<') +1; 
         char *c = ACE_OS::strchr(addr,'>');
         *c = '\0';
-        ACE_CString s_addr(addr);
-        hp->add_endpoint(s_addr);
+        ACE_CString server_addr(addr);
+        hp->add_endpoint(server_addr);
         break;
       }
     case 5: // "Muxed_TMS"
@@ -462,8 +462,8 @@ Log::parse_line (char *line, size_t offset)
             char *c = ACE_OS::strchr(addr,'>');
             *c = '\0';
             peer->set_addr(addr, true);
-            ACE_CString s_addr(addr);
-            hp->add_endpoint(s_addr);
+            ACE_CString server_addr(addr);
+            hp->add_endpoint(server_addr);
           }
         break;
       }
