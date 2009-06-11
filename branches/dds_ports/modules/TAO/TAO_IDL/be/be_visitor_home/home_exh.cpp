@@ -118,7 +118,7 @@ be_visitor_home_exh::gen_exec_class (void)
       << "// Implicit operations.";
       
   os_ << be_nl << be_nl
-      << "virtual ::Components::EnterpriseComponenet_ptr" << be_nl
+      << "virtual ::Components::EnterpriseComponent_ptr" << be_nl
       << "create (void);";
 
   os_ << be_uidt_nl
