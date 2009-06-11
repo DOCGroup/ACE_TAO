@@ -17,10 +17,10 @@ PeerProcess::nextIdent(void)
   return ident;
 }
 
-PeerProcess::PeerProcess (const char *text, 
-                          size_t offset, 
-                          bool as_client, 
-                          const char *target, 
+PeerProcess::PeerProcess (const char *text,
+                          size_t offset,
+                          bool as_client,
+                          const char *target,
                           long handle)
   : owner_ (0),
     remote_ (0),
@@ -115,7 +115,7 @@ PeerProcess::is_client (void) const
 PeerObject *
 PeerProcess::object_for (const char *oid, size_t len)
 {
-  PeerObject *po;
+  PeerObject *po = 0;
   u_long key = ACE::hash_pjw (oid,len);
   int result = objects_.find(key, po);
   if (result == -1)
@@ -142,7 +142,7 @@ PeerProcess::new_invocation (size_t req_id)
 Invocation *
 PeerProcess::find_invocation (size_t req_id)
 {
-  Invocation *inv;
+  Invocation *inv = 0;
   for (ACE_DLList_Reverse_Iterator<Invocation> i(this->invocations_);
        !i.done();
        i.advance())
@@ -159,7 +159,7 @@ PeerProcess::find_invocation (size_t req_id)
 Invocation *
 PeerProcess::find_invocation_size (size_t len)
 {
-  Invocation *inv;
+  Invocation *inv = 0;
   for (ACE_DLList_Reverse_Iterator<Invocation> i(this->invocations_);
        !i.done();
        i.advance())
@@ -191,7 +191,7 @@ PeerProcess::dump_summary (ostream &strm)
   strm << "    peer process " << this->ident_ << " handle["
        << this->handle_ << "] as ";
   if (this->client_)
-      strm << "client on " 
+      strm << "client on "
            << this->local_addr_;
   else
     strm << " server";
@@ -211,14 +211,14 @@ PeerProcess::dump_summary (ostream &strm)
 void
 PeerProcess::dump_object_detail (ostream &strm)
 {
-  strm << this->objects_.current_size() 
+  strm << this->objects_.current_size()
        << " Objects referenced in " << this->ident_ << ":" << endl;
   size_t count_inv = 0;
   for (PeerObjectTable::ITERATOR i = this->objects_.begin();
        i != this->objects_.end();
        i++)
     {
-      PeerObjectTable::ENTRY *entry;
+      PeerObjectTable::ENTRY *entry = 0;
       i.next (entry);
       PeerObject *obj = entry->item();
       obj->dump_detail (strm);
