@@ -134,7 +134,7 @@ Invocation::GIOP_Buffer::add_octets(const char *text)
       c = err+1;
     }
   size_t cs = this->cur_size();
-  return cs == this->size_ ? -1 : cs / 16;
+  return cs == this->size_ ? -1 : int(cs) / 16;
 }
 
 bool
