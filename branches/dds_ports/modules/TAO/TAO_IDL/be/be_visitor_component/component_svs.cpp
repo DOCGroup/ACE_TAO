@@ -837,7 +837,7 @@ be_visitor_component_svs::gen_uses_context_multiplex (
       << "                  ::" << node_->full_name ()
       << "::" << port_name << "Connections (" << be_nl
       << "                    this->ciao_uses_"
-      << port_name << "_.size ())" << be_nl
+      << port_name << "_.size ())," << be_nl
       << "                  ::CORBA::NO_MEMORY ());"
       << be_nl << be_nl
       << "::" << node_->full_name () << "::" << port_name
@@ -851,7 +851,7 @@ be_visitor_component_svs::gen_uses_context_multiplex (
       << be_nl
       << "     iter != this->ciao_uses_"
       << port_name << "_.end ();" << be_nl
-      << "     ++iter, ++i;" << be_idt_nl
+      << "     ++iter, ++i)" << be_idt_nl
       << "{" << be_idt_nl
       << "retv[i].objref = iter->second;" << be_nl << be_nl
       << "ACE_NEW_THROW_EX (retv[i].ck.inout ()," << be_nl
@@ -864,7 +864,7 @@ be_visitor_component_svs::gen_uses_context_multiplex (
       
   os_ << be_nl << be_nl
       << "::Components::Cookie *" << be_nl
-      << node_->full_name () << "_Context::connect_"
+      << node_->local_name () << "_Context::connect_"
       << port_name << " (" << be_idt_nl
       << "::" << fname << "_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -909,7 +909,7 @@ be_visitor_component_svs::gen_uses_context_multiplex (
       << "}" << be_uidt_nl << be_nl
       << "::Components::Cookie * ck = 0;" << be_nl
       << "ACE_NEW_THROW_EX (ck," << be_nl
-      << "                  ::CIAO::Cookie_Impl (entry.first)"
+      << "                  ::CIAO::Cookie_Impl (entry.first),"
       << be_nl
       << "                  ::CORBA::NO_MEMORY ());"
       << be_nl << be_nl
@@ -1288,10 +1288,12 @@ be_visitor_component_svs::gen_uses_servant (const char *obj_name,
     }
        
   os_ << be_nl
-      << node_->local_name () << "_Servant::get_connection_"
+      << node_->local_name () << "_Servant::get_connection"
+      << (is_multiple ? "s" : "") << "_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "return this->context_->get_connection_"
+      << "return this->context_->get_connection"
+      << (is_multiple ? "s" : "") << "_"
       << port_name << " ();" << be_uidt_nl
       << "}";
 }
@@ -2044,8 +2046,8 @@ be_visitor_component_svs::gen_consumes (AST_Type *obj,
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "return dynamic_cast< ::Hello::TimeOut *> (v.in ()) != 0;"
-      << be_uidt_nl
+      << "return dynamic_cast< ::" << fname
+      << " *> (v.in ()) != 0;" << be_uidt_nl
       << "}";
       
   os_ << be_nl << be_nl
@@ -2202,7 +2204,7 @@ be_visitor_component_svs::gen_emits_context (
       << "throw ::Components::AlreadyConnected ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "this->ciao_emits_" << port_name
-      << "_comsumer_ =" << be_idt_nl
+      << "_consumer_ =" << be_idt_nl
       << "::" << fname << "Consumer::_duplicate (c);"
       << be_uidt << be_uidt_nl
       << "}";

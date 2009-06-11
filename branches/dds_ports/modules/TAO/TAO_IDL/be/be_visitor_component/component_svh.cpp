@@ -574,7 +574,7 @@ be_visitor_component_svh::gen_uses (const char *obj_name,
   
   if (is_multiple)
     {
-      os_ << "::" << obj_name << "::"
+      os_ << "::" << node_->full_name () << "::"
           << port_name << "Connections *" << be_nl
           << "get_connections_" << port_name << " (void);";
     }
