@@ -231,7 +231,7 @@ Invocation::GIOP_Buffer::actual_req_id(void) const
   ACE_InputCDR cdr(this->octets_+giop_header_len, 
                    this->cur_size() - giop_header_len,
                    bo, vmaj, vmin);
-  size_t rid;
+  ACE_CDR::ULong rid;
   cdr >> rid;
   return rid;
 }
@@ -259,7 +259,9 @@ Invocation::GIOP_Buffer::target_oid(size_t &len) const
   ACE_InputCDR cdr(this->octets_ + target_offset,
                    this->cur_size() - target_offset,
                    bo, vmaj, vmin);
-  cdr >> len;
+  ACE_CDR::ULong len_ulong;
+  cdr >> len_ulong;
+  len = len_ulong;
   if (target_offset + len > this->cur_size())
     {
       len = 0;
