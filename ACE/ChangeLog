@@ -1,3 +1,11 @@
+Thu Jun 11 13:15:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Use $(HOST_EXE_EXT) when host_root is set
+
+        * include/makeinclude/platform_cegcc.GNU:
+          Set qos to 1 and updated header
+
 Wed Jun 10 18:18:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-9.h:

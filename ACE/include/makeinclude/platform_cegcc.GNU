@@ -1,8 +1,6 @@
 # $Id$
 #
-# This file should allow to build ACE for cygwin32 with cygwin tools.
-#
-# Edit to change TCPU and w32api defs below.
+# This file should allow to build ACE for Windows CE with GCC tools.
 #
 # Don't forget to define the ACE_ROOT environment variable!
 #
@@ -23,6 +21,8 @@ rwho = 0
 versioned_so=0
 
 ACE_CE_VER ?= 0x600
+
+qos ?= 1
 
 # Disable auto-import warnings. The Cygwin linker has a problem with imports
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
