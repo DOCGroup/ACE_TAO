@@ -1,3 +1,65 @@
+Thu Jun 11 20:02:58 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * common/RACE_common.mpc:
+        * MPC/config/race_common.mpb:
+
+          RACE libraries output to $(ACE_ROOT)/lib
+
+
+        * RACE.mwc:
+        * RACE_SAPOP.mwc:
+
+          Updated with revised filenames
+
+
+        * SA_POP/SAPOP_C2W.mwc:
+        * SA_POP/SAPOP_Standalone.mwc:
+        * SA_POP/SAPOP_for_RACE.mpc:
+        * SA_POP/SAPOP_w_ACE.mpc:
+        * SA_POP/SA_POP_XML_Typedefs.cpp:
+
+          Updated for latest version of CIAO XML Utilities
+
+
+        * SA_POP/Standalone/XML_Utils/XML:
+
+        * SA_POP/Standalone/XML_Utils/XML/CIAO_XML_Utils_Export.h:
+        * SA_POP/Standalone/XML_Utils/XML/XML.mpc:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Error_Handler.h:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Error_Handler.cpp:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Helper.h:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Helper.tpp:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.h:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.tpp:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.cpp:
+        * SA_POP/Standalone/XML_Utils/XML/XercesString.h:
+        * SA_POP/Standalone/XML_Utils/XML/XercesString.cpp:
+
+        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.tpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.hpp:
+
+        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.tpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/XML.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/XMLSchema.hpp:
+
+          Updated to latest version of CIAO XML Utilities
+
+
+        * SA_POP/Tester/Tester_Component.mpc:
+
+          Updated for changes to CIAO and DAnCE
+
+
+        * SA_POP/SA_POP_for_RACE.mpc:
+        * SA_POP/Standalone/XML_Utils/Common.h:
+        * SA_POP/Standalone/XML_Utils/SAPOP_XSC.mpc:
+        * SA_POP/Standalone/XML_Utils/XSC_XML_Handlers_Export.h:
+
+          Removed these files for CIAO XML Utilities update.
+
+
 Wed May 27 23:44:58 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Component/SA_POP_Component.mpc:

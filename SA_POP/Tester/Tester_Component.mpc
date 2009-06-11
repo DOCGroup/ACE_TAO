@@ -77,7 +77,10 @@ project(Tester_Component_exec) : ciao_executor, race_common {
                 OpString_stub \
                 SA_POP_Component_stub
 
-  libs += OpString_stub Data_Base_Component_stub DAnCE_OA_Component_stub RACE_common_stub CIAO_Deployment_stub TAO_Messaging CIAO_Events_Base CIAO_Container TAO_PortableServer   
+  libs += OpString_stub Data_Base_Component_stub DAnCE_OA_Component_stub RACE_common_stub   
+// TAO_Messaging CIAO_Container_Base TAO_PortableServer
+// CIAO_Events_Base 
+
   libpaths += $(ACE_ROOT)/lib
 
   dynamicflags   = TESTER_COMPONENT_EXEC_BUILD_DLL

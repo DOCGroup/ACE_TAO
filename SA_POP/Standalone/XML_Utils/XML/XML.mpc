@@ -1,0 +1,19 @@
+// $Id$
+
+project (SAPOP_XML_Utils) : acelib, xerces {
+  sharedname   += SAPOP_XML_Utils
+
+  libout = $(SAPOP_ROOT)/lib
+
+  includes += ..
+
+  dynamicflags  = CIAO_XML_UTILS_BUILD_DLL
+
+//  macros       += XML_USE_PTHREADS
+
+  Source_Files {
+    XML_Error_Handler.cpp
+    XercesString.cpp
+    XML_Schema_Resolver.cpp
+  }
+}

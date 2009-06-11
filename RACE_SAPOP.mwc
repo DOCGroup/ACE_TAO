@@ -11,7 +11,7 @@ workspace {
   Input_Adapters/SA_POP_Input_Adapter
   Input_Adapters/Base
   Data_Base
-  SA_POP/SA_POP_for_RACE.mpc
+  SA_POP/SAPOP_for_RACE.mpc
   SA_POP/Component/SA_POP_Component.mpc
   SA_POP/Tester/Tester_Component.mpc
 }

@@ -1,14 +1,14 @@
 workspace {
   cmdline += -include $RACE_ROOT/MPC/config
   common
-  Output_Adapters/DAnCE_Output_Adapter
-  Input_Adapters
-  Data_Base
   utils
-  Conductor
   Controller/Base
-  Tester
   TM_Daemon
   TM_Proxy
   Effectors
+  Conductor
+  Output_Adapters/DAnCE_Output_Adapter
+  Input_Adapters
+  Data_Base
+  Tester
 }

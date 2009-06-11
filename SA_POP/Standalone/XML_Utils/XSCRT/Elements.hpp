@@ -8,9 +8,11 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <memory>
 // #include <iostream> //@@ tmp
 
 #include "XSCRT/Parser.hpp"
+#include "ace/Refcounted_Auto_Ptr.h"
 
 namespace XSCRT
 {
@@ -219,6 +221,8 @@ namespace XSCRT
   class FundamentalType : public Type
   {
   public:
+    //    typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
+    
     FundamentalType ()
     {
     }
@@ -268,7 +272,7 @@ namespace XSCRT
   };
 
 #if ((defined (__GNUC__) && (__GNUC__ == 3 && (__GNUC_MINOR__ < 3))) || \
-    (defined (__BORLANDC__) && (__BORLANDC__ == 0x564)) || \
+    (defined (__BORLANDC__) && (__BORLANDC__ == 0x610)) || \
     (defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x570)))
 
   // Stuff for broken gcc < 3.3. Don't like what you see - use better
@@ -475,8 +479,6 @@ namespace XSCRT
   //
   //
 
-#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
-
   template<>
   template<>
   inline
@@ -512,58 +514,6 @@ namespace XSCRT
   {
     x_ = (a.value () == L"true") || (a.value () == L"1");
   }
-
-#else
-
-  template <>
-  class FundamentalType<bool> : public Type
-  {
-  public:
-    FundamentalType ()
-    {
-    }
-
-    template<typename C>
-    FundamentalType (XML::Element<C> const& e)
-    {
-      x_ = (e.value ()[0] == 't') || (e.value ()[0] == '1');
-    }
-
-    template<typename C>
-    FundamentalType (XML::Attribute<C> const& a)
-    {
-      x_ = (a.value ()[0] == 't') || (a.value ()[0] == '1');
-    }
-
-    FundamentalType (bool const& x)
-        : x_ (x)
-    {
-    }
-
-    FundamentalType&
-    operator= (bool const& x)
-    {
-      x_ = x;
-      return *this;
-    }
-
-  public:
-    operator bool const& () const
-    {
-      return x_;
-    }
-
-    operator bool& ()
-    {
-      return x_;
-    }
-
-  protected:
-    bool x_;
-  };
-
-#endif
-
 }
 
 #include "XSCRT/Elements.ipp"
