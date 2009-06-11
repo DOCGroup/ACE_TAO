@@ -1,3 +1,11 @@
+Thu Jun 11 13:25:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Only define the custom export macros when they are not defined yet
+
+        * ace/TP_Reactor.cpp:
+          owner_ is a bool
+
 Thu Jun 11 13:15:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
