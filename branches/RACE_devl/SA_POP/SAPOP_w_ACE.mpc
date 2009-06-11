@@ -12,15 +12,11 @@ project(SA_POP) : xerces, acelib {
    includes += $(SAPOP_ROOT) \
                $(SAPOP_ROOT)/Standalone/XML_Utils
 
-//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-// SA_POP_HAS_CIAO macro needed even for standalone due to changes
-// in CIAO XML utilities (now used in the same manner as in CIAO,
-// even when built separately for standalone version).
-   macros = SA_POP_HAS_ACE SA_POP_HAS_CIAO
-//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+   macros = SA_POP_HAS_ACE
 
-   dynamicflags   = CIAO_XML_UTILS_BUILD_DLL \
-                    SANETFILEIN_BUILD_DLL \
+
+
+   dynamicflags   = SANETFILEIN_BUILD_DLL \
                     TASKMAPFILEIN_BUILD_DLL \
                     SA_BUILDER_BUILD_DLL \
                     LOGSCREENOUT_BUILD_DLL \
@@ -62,13 +58,14 @@ project(SA_POP) : xerces, acelib {
       LogFileOut.h
       LogGraphOut.h
 
+      SA_POP_XML_Typedefs.h
       SANet/SANetFileIn.h
       TaskMapFileIn.h
    }
 
    Source_Files {
       SA_POP_Exceptions.cpp
-      SA_POP_XML_Typedefs.cpp
+
       SA_Builder.cpp
 
       Planner.cpp
@@ -90,6 +87,7 @@ project(SA_POP) : xerces, acelib {
       LogFileOut.cpp
       LogGraphOut.cpp
 
+      SA_POP_XML_Typedefs.cpp
       SANet/SANetFileIn.cpp
       SANet/XML_SANet.cpp
       TaskMapFileIn.cpp

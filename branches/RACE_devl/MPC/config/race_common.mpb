@@ -1,4 +1,5 @@
 project {
-  includes += $(RACE_ROOT)
+  libout     =  $(ACE_ROOT)/lib	
+  includes  +=  $(RACE_ROOT)
 }
 

@@ -3,7 +3,8 @@ project(SA_POP) : ciao_config_handlers, dance_deployment_stub, xerces, race_comm
    after += XSC_Config_Handlers
    sharedname   = SA_POP
 
-   includes += $(CIAO_ROOT)/tools/Config_Handlers \
+   includes += $(CIAO_ROOT)/tools \
+               $(CIAO_ROOT)/tools/Config_Handlers \
                $(SAPOP_ROOT)
 
    macros = SA_POP_HAS_ACE SA_POP_HAS_CIAO
@@ -12,6 +13,8 @@ project(SA_POP) : ciao_config_handlers, dance_deployment_stub, xerces, race_comm
                     TASKMAPFILEIN_BUILD_DLL \
                     SA_BUILDER_BUILD_DLL \
                     LOGSCREENOUT_BUILD_DLL
+
+   libs += CIAO_XML_Utils
 
 
    IDL_Files {
@@ -49,6 +52,7 @@ project(SA_POP) : ciao_config_handlers, dance_deployment_stub, xerces, race_comm
       LogScreenOut.h
       LogFileOut.h
 
+      SA_POP_XML_Typedefs.h
       SANet/SANetFileIn.h
       TaskMapFileIn.h
    }
@@ -76,6 +80,7 @@ project(SA_POP) : ciao_config_handlers, dance_deployment_stub, xerces, race_comm
       LogScreenOut.cpp
       LogFileOut.cpp
 
+      SA_POP_XML_Typedefs.cpp
       SANet/SANetFileIn.cpp
       SANet/XML_SANet.cpp
       TaskMapFileIn.cpp

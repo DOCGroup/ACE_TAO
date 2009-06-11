@@ -1,6 +1,6 @@
 // $Id$
 
-#include "XML_Typedefs.h"
+#include "SA_POP_XML_Typedefs.h"
 
 namespace SA_POP
 {

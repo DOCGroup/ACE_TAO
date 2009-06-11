@@ -1,6 +1,6 @@
 project(RACE_common_stub): anytypecode, race_idl {
 
-   libout       = $(ACE_ROOT)/lib	
+//   libout       = $(ACE_ROOT)/lib	
    sharedname = RACE_common_stub
    idlflags += -Wb,stub_export_macro=RACE_COMMON_STUB_Export \
                -Wb,stub_export_include=RACE_common_stub_export.h
@@ -26,6 +26,7 @@ project(RACE_common_stub): anytypecode, race_idl {
 
 project(OpString_stub): dance_deployment_stub, race_idl {
 
+//  libout       = $(ACE_ROOT)/lib	
   after += RACE_common_stub
   sharedname = OpString_stub
   idlflags += -Wb,stub_export_macro=OPSTRING_STUB_Export \
@@ -36,7 +37,7 @@ project(OpString_stub): dance_deployment_stub, race_idl {
 
   libs += RACE_common_stub
 
-IDL_Files {
+  IDL_Files {
     OpString.idl
     Goal.idl
     QoS.idl

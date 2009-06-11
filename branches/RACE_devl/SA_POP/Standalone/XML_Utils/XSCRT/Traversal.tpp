@@ -80,7 +80,7 @@ namespace XSCRT
 
         // Remove traversed types from the level map.
         //
-	//@@ VC6
+    //@@ VC6
         {
           for (typename TypeInfoSet::const_iterator i = dispatched.begin ();
                i != dispatched.end ();
@@ -88,7 +88,7 @@ namespace XSCRT
           {
             levels.erase (*i);
           }
-	}
+    }
       }
     }
 
@@ -145,7 +145,7 @@ namespace XSCRT
 
         // Remove traversed types from the level map.
         //
-	//@@ VC6
+    //@@ VC6
         {
           for (typename TypeInfoSet::const_iterator i = dispatched.begin ();
                i != dispatched.end ();
@@ -153,7 +153,7 @@ namespace XSCRT
           {
             levels.erase (*i);
           }
-	}
+    }
       }
     }
 
