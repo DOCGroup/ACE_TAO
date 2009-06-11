@@ -8,38 +8,38 @@
 //    TAO_IDL_BE
 //
 // = FILENAME
-//    be_visitor_any_extracted_type_decl.h
+//    be_visitor_null_return_value.h
 //
 // = DESCRIPTION
-//    Encapsulation of rules for declaring variables
-//    for Any extraction
+//    Encapsulation of rules for generating null return values
 //
 // = AUTHOR
 //    Jeff Parsons
 //
 // ============================================================================
 
-#ifndef BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
-#define BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
+#ifndef BE_VISITOR_NULL_RETURN_VALUE_H
+#define BE_VISITOR_NULL_RETURN_VALUE_H
 
 #include "be_visitor_decl.h"
 
 class TAO_OutStream;
 
-class be_visitor_any_extracted_type_decl : public be_visitor_decl
+class be_visitor_null_return_value : public be_visitor_decl
 {
   //
   // = TITLE
-  //   be_visitor_any_extracted_type_decl
+  //   be_visitor_null_return_value
   //
   // = DESCRIPTION
-  //   Contains overloaded methods that generate declarations of
-  //   CORBA typenames for Any extraction
+  //   Contains overloaded methods that generate null return
+  //   values, compliant with the CORBA IDL C++ mapping, and
+  //   portable to all platforms supported by ACE.
   //
   //
 public:
-  be_visitor_any_extracted_type_decl (be_visitor_context *ctx);
-  virtual ~be_visitor_any_extracted_type_decl (void);
+  be_visitor_null_return_value (be_visitor_context *ctx);
+  virtual ~be_visitor_null_return_value (void);
   
   virtual int visit_array (be_array *);
   virtual int visit_component (be_component *);
@@ -58,9 +58,7 @@ public:
   
 protected:
   TAO_OutStream & os_;
-  const char * var_name_;
-  const char * tmp_name_;
 };
 
-#endif /* BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H */
+#endif /* BE_VISITOR_NULL_RETURN_VALUE_H */
 
