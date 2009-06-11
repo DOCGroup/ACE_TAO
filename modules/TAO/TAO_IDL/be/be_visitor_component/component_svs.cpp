@@ -234,7 +234,7 @@ be_visitor_component_svs::gen_facet_ops_attrs (be_interface *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_component_svs::")
-                         ACE_TEXT ("gen_facets - ")
+                         ACE_TEXT ("gen_facet_ops_attrs - ")
                          ACE_TEXT ("traverse_inheritance_graph() ")
                          ACE_TEXT ("failed\n")),
                         -1);

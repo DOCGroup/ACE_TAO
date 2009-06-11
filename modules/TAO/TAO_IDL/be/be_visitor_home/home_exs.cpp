@@ -8,10 +8,10 @@
 //    TAO_IDL_BE
 //
 // = FILENAME
-//    home_exh.cpp
+//    home_exs.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for homes in the exec impl header.
+//    Visitor generating code for homes in the exec impl source.
 //
 // = AUTHOR
 //    Jeff Parsons
@@ -19,28 +19,31 @@
 // ============================================================================
 
 ACE_RCSID (be_visitor_home,
-           home_exh,
+           home_exs,
            "$Id$")
 
 // ******************************************************
-// Home visitor for exec impl header
+// Home visitor for exec impl source
 // ******************************************************
 
-be_visitor_home_exh::be_visitor_home_exh (be_visitor_context *ctx)
+be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     node_ (0),
     comp_ (0),
     os_ (*ctx->stream ()),
+    comment_border_ ("//=============================="
+                     "=============================="),
+    your_code_here_ ("/* Your code here. */"),
     export_macro_ (be_global->exec_export_macro ())
 {
 }
 
-be_visitor_home_exh::~be_visitor_home_exh (void)
+be_visitor_home_exs::~be_visitor_home_exs (void)
 {
 }
 
 int
-be_visitor_home_exh::visit_home (be_home *node)
+be_visitor_home_exs::visit_home (be_home *node)
 {
   node_ = node;
   TAO_OutStream &os_  = *this->ctx_->stream ();
@@ -51,11 +54,11 @@ be_visitor_home_exh::visit_home (be_home *node)
   os_ << be_nl << be_nl
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
-    
+
   if (this->gen_exec_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_exh::")
+                         ACE_TEXT ("be_visitor_home_exs::")
                          ACE_TEXT ("visit_home - ")
                          ACE_TEXT ("gen_servant_class() failed\n")),
                         -1);
@@ -70,21 +73,23 @@ be_visitor_home_exh::visit_home (be_home *node)
 }
 
 int
-be_visitor_home_exh::visit_operation (be_operation *node)
+be_visitor_home_exs::visit_operation (be_operation *node)
 {
-  be_visitor_operation_ch v (this->ctx_);
+  be_visitor_operation_exs v (this->ctx_);
+  v.scope (node_);
   return v.visit_operation (node);
 }
 
 int
-be_visitor_home_exh::visit_attribute (be_attribute *node)
+be_visitor_home_exs::visit_attribute (be_attribute *node)
 {
   be_visitor_attribute v (this->ctx_);
+  v.op_scope (node_);
   return v.visit_attribute (node);
 }
 
 int
-be_visitor_home_exh::gen_exec_class (void)
+be_visitor_home_exs::gen_exec_class (void)
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -94,19 +99,20 @@ be_visitor_home_exh::gen_exec_class (void)
   const char *global = (sname_str == "" ? "" : "::");
   
   os_ << be_nl
-      << "class " << export_macro_.c_str () << " " << lname
-      << "_exec_i" << be_idt_nl
-      << ": public virtual " << lname << "_Exec," << be_idt_nl
-      << "public virtual ::CORBA::LocalObject"
-      << be_uidt << be_uidt_nl
+      << comment_border_ << be_nl
+      << "// Home Executor Implementation Class: "
+      << lname << "_exec_i" << be_nl
+      << comment_border_;
+  
+  os_ << be_nl << be_nl
+      << lname << "_exec_i::" << lname << "_exec_i (void)" << be_nl
       << "{" << be_nl
-      << "public:" << be_idt;
-      
-  os_ << be_nl
-      << lname << "_exec_i (void);";
+      << "}";
       
   os_ << be_nl << be_nl
-      << "virtual ~" << lname << "_exec_i (void);";
+      << lname << "_exec_i::~" << lname << "_exec_i (void)" << be_nl
+      << "{" << be_nl
+      << "}";
       
   this->gen_ops_attrs ();
  
@@ -118,30 +124,46 @@ be_visitor_home_exh::gen_exec_class (void)
       << "// Implicit operations.";
       
   os_ << be_nl << be_nl
-      << "virtual ::Components::EnterpriseComponenet_ptr" << be_nl
-      << "create (void);";
+      << "::Components::EnterpriseComponent_ptr" << be_nl
+      << node_->local_name () << "_exec_i::create (void)" << be_nl
+      << "{" << be_idt_nl
+      << "::Components::EnterpriseComponent_ptr retval ="
+      << be_idt_nl
+      << "::Components::EnterpriseComponent::_nil ();"
+      << be_uidt_nl << be_nl
+      << "ACE_NEW_THROW_EX (" << be_idt_nl
+      << "retval," << be_nl
+      << comp_->local_name ()->get_string () << "_exec_i," << be_nl
+      << "::CORBA::NO_MEMORY ());"
+      << be_uidt_nl << be_nl
+      << "return retval;" << be_uidt_nl
+      << "}";
 
-  os_ << be_uidt_nl
-      << "};";
-     
   return 0;
 }
 
 int
-be_visitor_home_exh::gen_ops_attrs (void)
+be_visitor_home_exs::gen_ops_attrs (void)
 {
   os_ << be_nl << be_nl
       << "// All operations and attributes.";
       
+  node_->get_insert_queue ().reset ();
+  node_->get_del_queue ().reset ();
+  node_->get_insert_queue ().enqueue_tail (node_);
+  
+  Home_Exec_Op_Attr_Generator op_attr_gen (this);
+      
   int status =
-    node_->traverse_inheritance_graph (
-      be_visitor_home_exh::op_attr_decl_helper,
-      &os_);
+    node_->traverse_inheritance_graph (op_attr_gen,
+                                       &os_,
+                                       false,
+                                       false);
       
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_exh::")
+                         ACE_TEXT ("be_visitor_home_exs::")
                          ACE_TEXT ("gen_ops_attrs - ")
                          ACE_TEXT ("traverse_inheritance_graph() ")
                          ACE_TEXT ("failed\n")),
@@ -152,7 +174,7 @@ be_visitor_home_exh::gen_ops_attrs (void)
 }
 
 int
-be_visitor_home_exh::gen_factories (void)
+be_visitor_home_exs::gen_factories (void)
 {
   os_ << be_nl << be_nl
       << "// Factory operations.";
@@ -161,7 +183,7 @@ be_visitor_home_exh::gen_factories (void)
 }
 
 int
-be_visitor_home_exh::gen_factories_r (AST_Home *node)
+be_visitor_home_exs::gen_factories_r (AST_Home *node)
 {
   if (node == 0)
     {
@@ -171,7 +193,7 @@ be_visitor_home_exh::gen_factories_r (AST_Home *node)
   if (this->gen_init_ops_i (node->factories ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_exh::")
+                         ACE_TEXT ("be_visitor_home_exs::")
                          ACE_TEXT ("gen_factories_r - ")
                          ACE_TEXT ("gen_init_ops_i() failed\n")),
                         -1);
@@ -183,7 +205,7 @@ be_visitor_home_exh::gen_factories_r (AST_Home *node)
 }
 
 int
-be_visitor_home_exh::gen_finders (void)
+be_visitor_home_exs::gen_finders (void)
 {
   os_ << be_nl << be_nl
       << "// Finder operations.";
@@ -192,7 +214,7 @@ be_visitor_home_exh::gen_finders (void)
 }
 
 int
-be_visitor_home_exh::gen_finders_r (AST_Home *node)
+be_visitor_home_exs::gen_finders_r (AST_Home *node)
 {
   if (node == 0)
     {
@@ -202,7 +224,7 @@ be_visitor_home_exh::gen_finders_r (AST_Home *node)
   if (this->gen_init_ops_i (node->finders ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_home_exh::")
+                         ACE_TEXT ("be_visitor_home_exs::")
                          ACE_TEXT ("gen_finders_r - ")
                          ACE_TEXT ("gen_init_ops_i() failed\n")),
                         -1);
@@ -214,8 +236,14 @@ be_visitor_home_exh::gen_finders_r (AST_Home *node)
 }
 
 int
-be_visitor_home_exh::gen_init_ops_i (AST_Home::INIT_LIST & list)
+be_visitor_home_exs::gen_init_ops_i (AST_Home::INIT_LIST & list)
 {
+  AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
+  ACE_CString sname_str (scope->full_name ());
+  const char *sname = sname_str.c_str ();
+  const char *lname = comp_->local_name ()->get_string ();
+  const char *global = (sname_str == "" ? "" : "::");
+  
   AST_Operation **op = 0;
   
   for (AST_Home::INIT_LIST::ITERATOR i = list.begin ();
@@ -231,50 +259,65 @@ be_visitor_home_exh::gen_init_ops_i (AST_Home::INIT_LIST & list)
       /// the operation traversal with an arglist visitor.
       os_ << be_nl << be_nl
           << "::Components::EnterpriseComponent_ptr" << be_nl
+          << node_->local_name () << "_exec_i::"
           << bop->local_name ();
           
       be_visitor_operation_arglist visitor (this->ctx_);
+      visitor.unused (true);
       
       if (visitor.visit_operation (bop) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_home_exh::")
+                             ACE_TEXT ("be_visitor_home_exs::")
                              ACE_TEXT ("gen_init_ops_i - ")
                              ACE_TEXT ("visit_operation() failed\n")),
                             -1);
         }
         
-      os_ << ";";
+      os_ << be_nl
+          << "{" << be_idt_nl
+          << your_code_here_ << be_nl
+          << "return " << global << sname << "::CCM_"
+          << lname << "::_nil ();" << be_uidt_nl
+          << "}";
     }
     
   return 0;
 }
 
 void
-be_visitor_home_exh::gen_entrypoint (void)
+be_visitor_home_exs::gen_entrypoint (void)
 {
   os_ << be_nl << be_nl
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void);"; 
+      << "_Impl (void)" << be_nl
+      << "{" << be_idt_nl
+      << "::Components::HomeExecutorBase_ptr retval =" << be_idt_nl
+      << "::Components::HomeExecutorBase::_nil ();"
+      << be_uidt_nl << be_nl
+      << "ACE_NEW_RETURN (" << be_idt_nl
+      << "retval," << be_nl
+      << node_->local_name () << "_exec_i," << be_nl
+      << "::Components::HomeExecutorBase::_nil ());"
+      << be_uidt_nl << be_nl
+      << "return retval;" << be_uidt_nl
+      << "}"; 
+}
+
+Home_Exec_Op_Attr_Generator::Home_Exec_Op_Attr_Generator (
+    be_visitor_scope * visitor)
+  : visitor_ (visitor)
+{
 }
 
 int
-be_visitor_home_exh::op_attr_decl_helper (be_interface *derived,
-                                          be_interface *ancestor,
-                                          TAO_OutStream *os)
+Home_Exec_Op_Attr_Generator::emit (be_interface * /* derived_interface */,
+                                   TAO_OutStream * /* os */,
+                                   be_interface * base_interface)
 {
-  /// We're in a static method, so we have to instantiate a temporary
-  /// visitor and context.
-  be_visitor_context ctx;
-  ctx.state (TAO_CodeGen::TAO_ROOT_EXH);
-  ctx.stream (os);
-  be_visitor_home_exh visitor (&ctx);
-  
-  /// Since this visitor overriddes only visit_operation() and 
-  /// visit_attribute(), we can get away with this for the declarations.
-  return visitor.visit_scope (ancestor);
+  return visitor_->visit_scope (base_interface);
 }
 
 

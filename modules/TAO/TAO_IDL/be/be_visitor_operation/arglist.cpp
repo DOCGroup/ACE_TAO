@@ -31,7 +31,8 @@ ACE_RCSID (be_visitor_operation,
 be_visitor_operation_arglist::be_visitor_operation_arglist (
     be_visitor_context *ctx
   )
-  : be_visitor_operation (ctx)
+  : be_visitor_operation (ctx),
+    unused_ (false)
 {
 }
 
@@ -157,6 +158,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
 
   // Create a visitor.
   be_visitor_args_arglist visitor (&ctx);
+  visitor.unused (unused_);
 
   if (visitor.visit_argument (node) == -1)
     {
@@ -184,4 +186,10 @@ be_visitor_operation_arglist::post_process (be_decl *bd)
     }
 
   return 0;
+}
+
+void
+be_visitor_operation_arglist::unused (bool val)
+{
+  unused_ = val;
 }
