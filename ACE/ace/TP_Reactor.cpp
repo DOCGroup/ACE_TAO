@@ -54,7 +54,7 @@ ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
     }
 
   // We got the token and so let us mark ourselves as owner
-  this->owner_ = 1;
+  this->owner_ = true;
 
   return result;
 }
@@ -92,7 +92,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
     }
 
   // We got the token and so let us mark ourselves as owner
-  this->owner_ = 1;
+  this->owner_ = true;
 
   return result;
 }
