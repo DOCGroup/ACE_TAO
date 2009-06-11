@@ -61,7 +61,7 @@ Subject: [area]: [synopsis]
     C++)]:
 
     BUILD METHOD USED:
-[experimental ./configure or traditional makefile/project file?]
+[Experimental ./configure or traditional makefile/project file?]
 
     CONTENTS OF $ACE_ROOT/bin/MakeProjectCreator/config/default.features
     (used by MPC when you generate your own makefiles):
