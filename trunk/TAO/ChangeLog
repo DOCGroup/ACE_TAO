@@ -1,3 +1,15 @@
+Thu Jun 11 13:20:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/logWalker/PeerProcess.cpp:
+          Initialize several pointers with 0
+
+        * utils/monitor/monitor_client.cpp:
+        * utils/NamingViewer/NamingViewerDlg.cpp:
+          Removed not needed unicode conversion
+
+        * utils/nslist/nslist.cpp:
+          Layout changes
+
 Wed Jun 10 13:56:48 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * utils/logWalker/Log.h:
