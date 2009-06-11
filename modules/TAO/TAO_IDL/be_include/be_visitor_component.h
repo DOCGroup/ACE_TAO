@@ -37,6 +37,7 @@
 #include "be_visitor_component/component_svs.h"
 #include "be_visitor_component/component_ex_idl.h"
 #include "be_visitor_component/component_exh.h"
+#include "be_visitor_component/component_exs.h"
 #include "be_visitor_component/any_op_ch.h"
 #include "be_visitor_component/any_op_cs.h"
 #include "be_visitor_component/cdr_op_ch.h"

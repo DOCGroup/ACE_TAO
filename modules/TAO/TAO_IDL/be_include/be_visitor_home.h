@@ -35,5 +35,6 @@
 #include "be_visitor_home/home_svs.h"
 #include "be_visitor_home/home_ex_idl.h"
 #include "be_visitor_home/home_exh.h"
+#include "be_visitor_home/home_exs.h"
 
 #endif
