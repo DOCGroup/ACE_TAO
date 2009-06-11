@@ -115,7 +115,7 @@ be_visitor_component_exh::gen_facets (void)
           << lname << "_exec_i" << be_idt_nl
           << ": public virtual " << global << sname << "::CCM_"
           << lname << "," << be_idt_nl
-          << "public virtual ::CORBA::LocalOBject"
+          << "public virtual ::CORBA::LocalObject"
           << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "public:" << be_idt_nl

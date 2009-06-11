@@ -43,20 +43,6 @@ be_null_return_emitter::~be_null_return_emitter (void)
 int
 be_null_return_emitter::emit (be_type *node)
 {
-  AST_Decl::NodeType nt = node->node_type ();
-  
-  if (nt == AST_Decl::NT_typedef)
-    {
-      be_typedef *td = be_typedef::narrow_from_decl (node);
-      nt = td->primitive_base_type ()->node_type ();
-    }
-    
-  if (nt == AST_Decl::NT_struct || nt == AST_Decl::NT_union)
-    {
-      this->emit_struct_union (node);
-      return 0;
-    }
-  
   os_ << "return ";
   
   be_visitor_null_return_value visitor (this->ctx_);
@@ -75,32 +61,3 @@ be_null_return_emitter::emit (be_type *node)
   
   return 0;
 }
-
-void
-be_null_return_emitter::emit_struct_union (be_type *node)
-{
-  if (node->size_type () == AST_Type::FIXED)
-    {
-      os_ << "::" << node->full_name () << " retval;" << be_nl;
-    }
-    
-  os_ << "return ";
-    
-  switch (node->size_type ())
-    {
-      case AST_Type::FIXED:
-        os_ << "retval";
-        break;
-      case AST_Type::VARIABLE:
-        os_ << "0";
-        break;
-      default:
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("be_null_return_emitter::")
-                    ACE_TEXT ("emit_struct_union - ")
-                    ACE_TEXT ("bad size type\n")));
-    }
-    
-  os_ << ";";
-}
-

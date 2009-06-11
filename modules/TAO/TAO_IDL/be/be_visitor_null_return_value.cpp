@@ -64,7 +64,7 @@ be_visitor_null_return_value::visit_home (be_home *node)
 int
 be_visitor_null_return_value::visit_interface (be_interface *node)
 {
-  os_ << "::" << node->full_name () << "::nil ()";
+  os_ << "::" << node->full_name () << "::_nil ()";
 
   return 0;
 }
