@@ -29,7 +29,8 @@ ACE_RCSID (be_visitor_argument,
 // ************************************************************
 
 be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
-  : be_visitor_args (ctx)
+  : be_visitor_args (ctx),
+    unused_ (false)
 {
 }
 
@@ -67,7 +68,8 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
 
   if (this->ctx_->state () != TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH)
     {
-      *os << " " << node->local_name ();
+      *os << " " << (unused_ ? "/* " : "" )
+          << node->local_name () << (unused_ ? " */" : "");
     }
     
   return 0;
@@ -473,4 +475,10 @@ int be_visitor_args_arglist::emit_common (be_type *node)
     }
 
   return 0;
+}
+
+void
+be_visitor_args_arglist::unused (bool val)
+{
+  unused_ = val;
 }

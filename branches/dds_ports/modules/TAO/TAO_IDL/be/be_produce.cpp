@@ -243,6 +243,10 @@ BE_produce (void)
       ctx.state (TAO_CodeGen::TAO_ROOT_EXH);
       be_visitor_root_exh root_exh_visitor (&ctx);
       BE_visit_root (root_exh_visitor, "CIAO exec impl header");
+
+      ctx.state (TAO_CodeGen::TAO_ROOT_EXS);
+      be_visitor_root_exs root_exs_visitor (&ctx);
+      BE_visit_root (root_exs_visitor, "CIAO exec impl source");
     }
 
   // Done with this IDL file.

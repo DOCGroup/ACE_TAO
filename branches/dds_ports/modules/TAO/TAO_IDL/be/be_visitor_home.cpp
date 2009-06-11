@@ -50,6 +50,7 @@
 #include "be_visitor_home/home_svs.cpp"
 #include "be_visitor_home/home_ex_idl.cpp"
 #include "be_visitor_home/home_exh.cpp"
+#include "be_visitor_home/home_exs.cpp"
 
 ACE_RCSID (be, 
            be_visitor_home, 

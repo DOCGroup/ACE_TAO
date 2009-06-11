@@ -55,8 +55,8 @@ be_visitor_any_extracted_type_decl::visit_enum (be_enum *node)
 int
 be_visitor_any_extracted_type_decl::visit_eventtype (be_eventtype *node)
 {
-   os_ << node->full_name () << " * " << var_name_ << " = 0;";
- return 0;
+  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  return 0;
 }
 
 int
@@ -191,7 +191,7 @@ be_visitor_any_extracted_type_decl::visit_valuebox (be_valuebox *node)
 int
 be_visitor_any_extracted_type_decl::visit_valuetype (be_valuetype *node)
 {
-   os_ << node->full_name () << " * " << var_name_ << " = 0;";
- return 0;
+  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  return 0;
 }
 

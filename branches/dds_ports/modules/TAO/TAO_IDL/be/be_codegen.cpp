@@ -1335,6 +1335,48 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
 int
 TAO_CodeGen::start_ciao_exec_source (const char *fname)
 {
+  // Retrieve the singleton instance to the outstream factory.
+  TAO_OutStream_Factory *factory =
+    TAO_OUTSTREAM_FACTORY::instance ();
+
+  // Clean up between multiple files.
+  delete this->ciao_exec_source_;
+  this->ciao_exec_source_ = factory->make_outstream ();
+
+  if (0 == this->ciao_exec_source_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_CodeGen::")
+                         ACE_TEXT ("start_ciao_exec_source - ")
+                         ACE_TEXT ("Error creating file stream\n")),
+                        -1);
+    }
+    
+  int status =
+    this->ciao_exec_source_->open (fname,
+                                   TAO_OutStream::CIAO_EXEC_IMPL);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_CodeGen::")
+                         ACE_TEXT ("start_ciao_exec_source - ")
+                         ACE_TEXT ("Error opening file\n")),
+                        -1);
+    }
+    
+  TAO_OutStream &os = *this->ciao_exec_source_;
+
+  os << be_nl
+     << "// TAO_IDL - Generated from" << be_nl
+     << "// " << __FILE__ << ":" << __LINE__
+     << be_nl;
+
+  // Generate the #ident string, if any.
+  this->gen_ident_string (this->ciao_exec_source_);
+
+  this->gen_exec_src_includes ();
+
   return 0;
 }
 
@@ -1821,6 +1863,8 @@ TAO_CodeGen::end_ciao_exec_header (void)
 int
 TAO_CodeGen::end_ciao_exec_source (void)
 {
+  *this->ciao_exec_source_ << "\n";
+  
   return 0;
 }
 
@@ -2978,6 +3022,14 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
 void
 TAO_CodeGen::gen_exec_src_includes (void)
 {
+  // Generate the include statement for the exec header.
+  this->gen_standard_include (
+    this->ciao_exec_source_,
+    be_global->be_get_ciao_exec_hdr_fname (true));
+
+  this->gen_standard_include (
+    this->ciao_exec_source_,
+    "ciao/CIAO_common.h");          
 }
 
 void

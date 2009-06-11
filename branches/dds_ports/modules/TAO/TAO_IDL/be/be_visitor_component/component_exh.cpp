@@ -271,41 +271,6 @@ be_visitor_component_exh::gen_component_attrs_r (AST_Component *node)
 }
 
 void
-be_visitor_component_exh::gen_ports (AST_Component *node,
-                                     port_kind kind)
-{
-  AST_Component::port_description *pd = 0;
-  
-  switch (kind)
-    {
-      case PROVIDES:
-        for (AST_Component::PORTS::ITERATOR i = node->provides ().begin ();
-             !i.done ();
-             i.advance ())
-          {
-            i.next (pd);
-            this->gen_provides (pd->impl,
-                                pd->id->get_string ());
-          }
-          
-        break;
-      case CONSUMES:
-        for (AST_Component::PORTS::ITERATOR i = node->consumes ().begin ();
-             !i.done ();
-             i.advance ())
-          {
-            i.next (pd);
-            this->gen_consumes (pd->impl->full_name (),
-                                pd->id->get_string ());
-          }
-          
-        break;
-      default:
-        break;
-    }
-}
-
-void
 be_visitor_component_exh::gen_provides_r (AST_Component *node)
 {
   if (node == 0)
@@ -313,7 +278,16 @@ be_visitor_component_exh::gen_provides_r (AST_Component *node)
       return;
     }
     
-  this->gen_ports (node, PROVIDES);
+  AST_Component::port_description *pd = 0;
+    
+  for (AST_Component::PORTS::ITERATOR i = node->provides ().begin ();
+       !i.done ();
+       i.advance ())
+    {
+      i.next (pd);
+      this->gen_provides (pd->impl,
+                          pd->id->get_string ());
+    }  
   
   node = node->base_component ();
   this->gen_provides_r (node);
@@ -343,7 +317,16 @@ be_visitor_component_exh::gen_consumes_r (AST_Component *node)
       return;
     }
     
-  this->gen_ports (node, CONSUMES);
+  AST_Component::port_description *pd = 0;
+    
+  for (AST_Component::PORTS::ITERATOR i = node->consumes ().begin ();
+       !i.done ();
+       i.advance ())
+    {
+      i.next (pd);
+      this->gen_consumes (pd->impl->full_name (),
+                          pd->id->get_string ());
+    }
   
   node = node->base_component ();
   this->gen_consumes_r (node);

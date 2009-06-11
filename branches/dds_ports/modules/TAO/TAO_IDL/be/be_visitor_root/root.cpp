@@ -1299,6 +1299,11 @@ be_visitor_root::visit_component (be_component *node)
         break;
       }
     case TAO_CodeGen::TAO_ROOT_EXS:
+      {
+        be_visitor_component_exs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       return 0;    // nothing to do.
     }
@@ -1413,6 +1418,11 @@ be_visitor_root::visit_home (be_home *node)
         break;
       }
     case TAO_CodeGen::TAO_ROOT_EXS:
+      {
+        be_visitor_home_exs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       return 0; // nothing to be done
     }

@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_visitor_operation.cpp
@@ -68,6 +68,7 @@
 #include "be_visitor_operation/operation_ss.cpp"
 #include "be_visitor_operation/operation_is.cpp"
 #include "be_visitor_operation/operation_svs.cpp"
+#include "be_visitor_operation/operation_exs.cpp"
 #include "be_visitor_operation/rettype.cpp"
 #include "be_visitor_operation/rettype_return_cs.cpp"
 #include "be_visitor_operation/tie_sh.cpp"
