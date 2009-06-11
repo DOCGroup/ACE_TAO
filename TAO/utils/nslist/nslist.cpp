@@ -387,7 +387,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ns requires an argument\n"));
-                      failed= true;
+                      failed = true;
                     }
                   else
                     {
@@ -396,7 +396,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
-                          failed= true;
+                          failed = true;
                         }
                       else if (showNSonly)
                         {
@@ -452,7 +452,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --tree requires an argument\n"));
-                      failed= true;
+                      failed = true;
                     }
                   else
                     {
@@ -474,7 +474,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --node requires an argument\n"));
-                      failed= true;
+                      failed = true;
                     }
                   else
                     {
