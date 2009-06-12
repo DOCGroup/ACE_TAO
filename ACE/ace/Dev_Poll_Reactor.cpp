@@ -693,8 +693,10 @@ ACE_Dev_Poll_Reactor::open (size_t size,
   if (this->initialized_)
     return -1;
 
+#ifdef ACE_HAS_EVENT_POLL
   ACE_OS::memset (&this->event_, 0, sizeof (this->event_));
   this->event_.data.fd = ACE_INVALID_HANDLE;
+#endif /* ACE_HAS_EVENT_POLL */
 
   this->restart_ = restart;
   this->signal_handler_ = sh;
