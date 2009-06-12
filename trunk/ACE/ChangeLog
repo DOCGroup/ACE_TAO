@@ -1,8 +1,8 @@
 Fri Jun 12 00:45:09 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.{h cpp inl}: Fixed multi-thread behavior of
-          ACE_Dev_Poll_Reactor to resolve Bugzilla 2740, 3178, 3279. Note that
-          fixing 3178 involved adding the manual-resume behavior from
+          ACE_Dev_Poll_Reactor to resolve Bugzilla 2740, 3178, 3188, 3279.
+          Note that fixing 3178 involved adding the manual-resume behavior from
           ACE_TP_Reactor which was easy after the other fixes. Essentially
           what was done is:
              - Change epoll_wait() from returning all ready events to just one.
