@@ -1,3 +1,10 @@
+Fri Jun 12 20:39:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        
+          Implemented overlooked generation of home servant factory
+          function.
+
 Thu Jun 11 19:35:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:
