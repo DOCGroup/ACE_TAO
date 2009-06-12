@@ -473,8 +473,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
-                        ACE_TEXT ("%p, "),
-                        ACE_TEXT ("cannot open acceptor\n")));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("cannot open acceptor")));
           return -1;
         }
     }
@@ -559,8 +559,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
-                    ACE_TEXT ("%p"),
-                    ACE_TEXT ("cannot get local addr\n")));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("cannot get local addr")));
       return -1;
     }
 
@@ -831,8 +831,8 @@ TAO_IIOP_Acceptor::dotted_decimal_address (const ACE_INET_Addr &addr,
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - ")
                     ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address, ")
-                    ACE_TEXT ("- %p, "),
-                    ACE_TEXT ("cannot determine hostname\n")));
+                    ACE_TEXT ("- %p\n"),
+                    ACE_TEXT ("cannot determine hostname")));
       return -1;
     }
 

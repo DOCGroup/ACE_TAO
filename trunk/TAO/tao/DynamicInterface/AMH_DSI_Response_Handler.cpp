@@ -253,8 +253,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::Boolean
 TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
     TAO_InputCDR &strm,
-    TAO_AMH_DSI_Exception_Holder *&new_object
-  )
+    TAO_AMH_DSI_Exception_Holder *&new_object)
 {
   CORBA::ValueBase *base = 0;
   CORBA::ValueFactory_var factory;
@@ -265,7 +264,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
         TAO_AMH_DSI_Exception_Holder::_tao_obv_static_repository_id ()
       );
 
-  if (retval == 0)
+  if (!retval)
     {
       return false;
     }
