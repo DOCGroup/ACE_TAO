@@ -1,8 +1,14 @@
+Fri Jun 12 10:25:58 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/Invocation.cpp:
+
+          HPUX apparently uses something novel for either size_t or ACE_CDR::ULong.
+        
 Fri Jun 12 02:05:32 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/logWalker.cpp:
-        
-          Clean up WChar errors.  
+
+          Clean up WChar errors.
 
 Thu Jun 11 23:16:41 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
