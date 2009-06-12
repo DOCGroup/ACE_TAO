@@ -1,8 +1,21 @@
+Fri Jun 12 14:29:55 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Transport.cpp:
+
+          If send() returns -1 with EWOULDBLOCK and the Flushing Strategy is
+          blocking, return -1 instead of 0.  This is an error condition and
+          the transport must be closed to avoid looping indefinitely in the
+          flushing strategy's flush_transport().
+
 Fri Jun 12 11:16:39 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * utils/logWalker/Invocation.cpp:
           Fixed memset's parameter order.
-        
+
 Fri Jun 12 10:25:58 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/Invocation.cpp:

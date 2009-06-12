@@ -37,6 +37,7 @@ public:
                              ACE_Time_Value *max_wait_time);
   virtual int flush_transport (TAO_Transport *transport
                                , ACE_Time_Value *max_wait_time);
+  virtual bool is_blocking ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
