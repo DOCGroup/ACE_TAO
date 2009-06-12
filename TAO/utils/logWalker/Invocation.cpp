@@ -103,7 +103,7 @@ Invocation::GIOP_Buffer::init_buf (const char *text)
       this->size_ = ACE_OS::strtol(size_str, 0, 10);
     }
   this->octets_ = new char [this->size_];
-  ACE_OS::memset(this->octets_,this->size_,0);
+  ACE_OS::memset(this->octets_,0,this->size_);
   this->wr_pos_ = this->octets_;
 }
 
