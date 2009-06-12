@@ -28,7 +28,7 @@ void
 parse_manifest (Session &session, ACE_TCHAR *filename)
 {
   // get list of logs, aliases, and other config from file
-  ifstream strm (filename);
+  ifstream strm (ACE_TEXT_ALWAYS_CHAR (filename));
   if (!strm.is_open())
     {
       ACE_DEBUG ((LM_DEBUG,"cannot open manifest file %C\n", filename));
@@ -135,7 +135,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   if (outfile == 0)
     strm = &cout;
   else
-    strm = new ofstream(outfile);
+    strm = new ofstream(ACE_TEXT_ALWAYS_CHAR (outfile));
 
   session.dump(*strm);
 
