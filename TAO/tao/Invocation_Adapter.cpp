@@ -112,8 +112,8 @@ namespace TAO
             if (TAO_debug_level > 2)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Invocation_Adapter::invoke_i, "
-                  "handling forwarded locations\n"));
+                  ACE_TEXT("TAO (%P|%t) - Invocation_Adapter::invoke_i, ")
+                  ACE_TEXT("handling forwarded locations\n")));
               }
           }
       }
