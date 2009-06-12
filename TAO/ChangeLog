@@ -1,3 +1,9 @@
+Fri Jun 12 16:12:36 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/logWalker.mpc:
+        
+          Cannot build on ace_for_tao platforms.
+
 Fri Jun 12 14:29:55 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Block_Flushing_Strategy.h:
