@@ -1,3 +1,12 @@
+Fri Jun 12 11:24:09 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp: Added missing ifdef ACE_HAS_EVENT_POLL.
+
+        * tests/run_test.lst: Removed !FIXED_BUGS_ONLY from those fixed:
+          Reactor_Dispatch_Order_Test_Dev_Poll
+          Reactor_Remove_Resume_Test_Dev_Poll
+          Refcounted_Event_Handler_Test_DevPoll
+
 Fri Jun 12 00:45:09 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.{h cpp inl}: Fixed multi-thread behavior of

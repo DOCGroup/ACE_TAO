@@ -138,14 +138,14 @@ Process_Semaphore_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 RB_Tree_Test
 Bug_3332_Regression_Test
 Reactor_Dispatch_Order_Test
-Reactor_Dispatch_Order_Test_Dev_Poll: !FIXED_BUGS_ONLY
+Reactor_Dispatch_Order_Test_Dev_Poll:
 Reactor_Exceptions_Test
 Reactor_Notify_Test: !ST !ACE_FOR_TAO
 Reactor_Notification_Queue_Test
 Reactor_Performance_Test: !ACE_FOR_TAO
 Reactor_Registration_Test
 Reactor_Remove_Resume_Test
-Reactor_Remove_Resume_Test_Dev_Poll: !FIXED_BUGS_ONLY
+Reactor_Remove_Resume_Test_Dev_Poll:
 Reactor_Timer_Test: !ACE_FOR_TAO
 Reactors_Test
 Reader_Writer_Test
@@ -153,7 +153,7 @@ Recursive_Condition_Test: !ST
 Recursive_Mutex_Test: !ST
 Refcounted_Auto_Ptr_Test: !ACE_FOR_TAO
 Reference_Counted_Event_Handler_Test -d 0
-Refcounted_Event_Handler_Test_DevPoll: !FIXED_BUGS_ONLY
+Refcounted_Event_Handler_Test_DevPoll:
 Reverse_Lock_Test
 RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Sendfile_Test: !QNX !NO_NETWORK !VxWorks !LabVIEW_RT
