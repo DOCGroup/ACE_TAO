@@ -42,11 +42,13 @@ void TaskMapFileIn::build_task_map (std::string filename, Builder *builder)
 
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =
-#if defined (SA_POP_HAS_CIAO)
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+// No longer need different call to XML Helper with/without CIAO... I think...
+//#if defined (SA_POP_HAS_CIAO)
     XML_Helper::XML_HELPER.create_dom (filename.c_str ());
-#else
-  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
-#endif  /* SA_POP_HAS_CIAO */
+//#else
+//  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
+//#endif  /* SA_POP_HAS_CIAO */
   if (!dom)
     throw "SA_POP::TaskMapFileIn::build_task_map (): Could not create Xerces DOMDocument from file";
 

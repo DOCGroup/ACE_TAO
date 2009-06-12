@@ -46,11 +46,13 @@ Network *SANetFileIn::build_net (std::string filename)
 
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =
-#if defined (SA_POP_HAS_CIAO)
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+// No longer need different call to XML Helper with/without CIAO... I think...
+//#if defined (SA_POP_HAS_CIAO)
     XML_Helper::XML_HELPER.create_dom (filename.c_str ());
-#else
-  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
-#endif  /* SA_POP_HAS_CIAO */
+//#else
+//  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
+//#endif  /* SA_POP_HAS_CIAO */
   if (!dom)
     return 0;
 
@@ -156,11 +158,13 @@ void SANetFileIn::build_net (std::string filename, SA_POP::Builder *builder)
 
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =
-#if defined (SA_POP_HAS_CIAO)
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+// No longer need different call to XML Helper with/without CIAO... I think...
+//#if defined (SA_POP_HAS_CIAO)
     XML_Helper::XML_HELPER.create_dom (filename.c_str ());
-#else
-  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
-#endif  /* SA_POP_HAS_CIAO */
+//#else
+//  XML_Helper::XML_HELPER.create_dom (filename.c_str (), "");
+//#endif  /* SA_POP_HAS_CIAO */
   if (!dom)
     return;
 

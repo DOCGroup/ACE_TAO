@@ -1,3 +1,10 @@
+Fri Jun 12 20:58:24 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SANet/SANetFileIn.cpp:
+        * TaskMapFileIn.cpp:
+
+          Modified for new CIAO XML Utilities in SA-POP Standalone.
+
 Fri Jun 12 17:37:05 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
 
