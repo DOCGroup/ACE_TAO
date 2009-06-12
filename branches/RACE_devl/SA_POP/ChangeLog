@@ -1,3 +1,22 @@
+Fri Jun 12 17:37:05 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+
+        * Standalone/XML_Utils/Utils:
+        * Standalone/XML_Utils/Utils/CIAO_XML_Utils_Export.h:
+        * Standalone/XML_Utils/Utils/Exceptions.h:
+        * Standalone/XML_Utils/Utils/Utils.mpc:
+        * Standalone/XML_Utils/Utils/XML_Error_Handler.h:
+        * Standalone/XML_Utils/Utils/XML_Error_Handler.cpp:
+        * Standalone/XML_Utils/Utils/XML_Helper.h:
+        * Standalone/XML_Utils/Utils/XML_Helper.cpp:
+        * Standalone/XML_Utils/Utils/XML_Schema_Resolver.h:
+        * Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp:
+        * Standalone/XML_Utils/Utils/XercesString.h:
+        * Standalone/XML_Utils/Utils/XercesString.cpp:
+
+          Removed these files for CIAO XML Utilities update.
+
+
 Thu Jun 11 20:02:58 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * common/RACE_common.mpc:
@@ -119,7 +138,7 @@ Wed May 27 23:44:58 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/Space/source/common/Event_Types.mpc:
         * server/Driver.mpc:
 
-          Updates for new CIAO. 
+          Updates for new CIAO.
 
 Fri Mar 20 23:10:39 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
