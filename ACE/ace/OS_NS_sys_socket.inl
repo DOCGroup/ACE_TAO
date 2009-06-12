@@ -875,7 +875,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                 -1,
                 result);
 #if defined (WSAEOPNOTSUPP)
-  if (result == -1 && errno == WSAEOPNOTSUPP)
+  if (result == -1 && (errno == WSAEOPNOTSUPP || errno == WSAENOPROTOOPT))
 #else
   if (result == -1)
 #endif /* WSAEOPNOTSUPP */

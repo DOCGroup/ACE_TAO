@@ -1,3 +1,10 @@
+Fri Jun 12 19:05:43 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_sys_socket.inl:
+
+          Windows Mobile 6 can return WSAENOPROTOOPT instead of WSAEOPNOTSUPP
+          for setsockopt with an unsupported option.
+
 Fri Jun 12 19:16:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Rever the change below, Adam has a better fix
@@ -61,8 +68,8 @@ Thu Jun 11 19:27:33 UTC 2009  Steven Stallion  <stallions@ociweb.com>
 
         * PROBLEM-REPORT-FORM:
 
-	  Added additional PRF question about build method (commit performed
-	  on behalf of Chris Cleeland).
+          Added additional PRF question about build method (commit performed
+          on behalf of Chris Cleeland).
 
 Thu Jun 11 13:25:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
