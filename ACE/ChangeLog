@@ -1,3 +1,37 @@
+Fri Jun 12 00:45:09 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.{h cpp inl}: Fixed multi-thread behavior of
+          ACE_Dev_Poll_Reactor to resolve Bugzilla 2740, 3178, 3279. Note that
+          fixing 3178 involved adding the manual-resume behavior from
+          ACE_TP_Reactor which was easy after the other fixes. Essentially
+          what was done is:
+             - Change epoll_wait() from returning all ready events to just one.
+             - Registered events now include the EPOLLONESHOT flag, so once
+               an event is delivered for a handle, no more will be until
+               epoll_ctl() is called again to reset the events.
+          This has the effect of suspending handlers around I/O upcalls and
+          preventing registration changes from happening while another thread
+          is waiting for events.
+
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test_Dev_Poll.cpp:
+        * tests/Refcounted_Event_Handler_Test_DevPoll.cpp:
+          When registering the test handle for events, register for read and
+          write, not everything. Registering for everything leaves 'connect'
+          set when 'write' is removed, but they both map to the same event
+          on non-Windows reactors.
+          For the _Dev_Poll test, remove the BSD, VxWorks, Lynx-only case for
+          removing write-mask - this should always be done.
+
+        * tests/MT_Reactor_Upcall_Test.cpp: When setting up the
+          ACE_Dev_Poll_Reactor, set the restart flag.
+
+        * tests/Bug_2740_Regression_Test.cpp: Tweaks for more informative
+          logging and remove false-fails on peer socket closes.
+
+        * tests/run_test.lst: Removed !FIXED_BUGS_ONLY from
+          Bug_2740_Regression_Test.
+
 Thu Jun 11 19:27:33 UTC 2009  Steven Stallion  <stallions@ociweb.com>
 
         * PROBLEM-REPORT-FORM:
