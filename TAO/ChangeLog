@@ -1,7 +1,18 @@
+Fri Jun 12 18:44:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+          Improved logging layout
+
+        * tao/Invocation_Adapter.cpp:
+          Use ACE_TEXT
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+          Layout changes
+
 Fri Jun 12 16:12:36 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/logWalker.mpc:
-        
+
           Cannot build on ace_for_tao platforms.
 
 Fri Jun 12 14:29:55 UTC 2009  Adam Mitz  <mitza@ociweb.com>
