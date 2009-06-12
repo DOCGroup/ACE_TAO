@@ -80,7 +80,7 @@ Handler::Handler (ACE_Reactor &reactor)
       if (0 != this->reactor ()->register_handler
                  (this->pipe_.read_handle (),
                   this,
-                  ACE_Event_Handler::ALL_EVENTS_MASK))
+                  ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK))
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
       else
         this->ok_ = true;
@@ -126,13 +126,10 @@ Handler::handle_output (ACE_HANDLE)
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
 
-#if defined (__OpenBSD__) || defined (ACE_VXWORKS) || defined (__Lynx__)
-  // All that we need written has been written, so don't
-  // call handle_output again.
+  // Don't want to continually see writeable; only verify its relative order.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
                               ACE_Event_Handler::WRITE_MASK,
                               ACE_Reactor::CLR_MASK);
-#endif /* __OpenBSD__ || ACE_VXWORKS || __Lynx__ */
 
   return 0;
 }
