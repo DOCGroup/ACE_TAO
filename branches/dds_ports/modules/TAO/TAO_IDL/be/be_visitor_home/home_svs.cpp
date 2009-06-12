@@ -69,9 +69,9 @@ be_visitor_home_svs::visit_home (be_home *node)
                          ACE_TEXT ("gen_servant_class() failed\n")),
                         -1);
     }
-/*    
+    
   this->gen_entrypoint ();
-*/
+
   os_ << be_uidt_nl
       << "}";
      
@@ -354,6 +354,12 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
 void
 be_visitor_home_svs::gen_entrypoint (void)
 {
+  ACE_CString sname_str (
+    ScopeAsDecl (node_->defined_in ())->full_name ());
+  const char *sname = sname_str.c_str ();
+  const char *lname = node_->local_name ();
+  const char *global = (sname_str == "" ? "" : "::");
+
   os_ << be_nl << be_nl
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
@@ -361,7 +367,25 @@ be_visitor_home_svs::gen_entrypoint (void)
       << "_Servant (" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr p," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
-      << "const char * ins_name);" << be_uidt; 
+      << "const char * ins_name)" << be_uidt_nl
+      << "{" << be_idt_nl
+      << global << sname << "::CCM_" << lname
+      << "_var x =" << be_idt_nl
+      << global << sname << "::CCM_" << lname
+      << "::_narrow (p);" << be_uidt_nl << be_nl
+      << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "::PortableServer::Servant retval = 0;" << be_nl
+      << "ACE_NEW_RETURN (retval," << be_nl
+      << "                " << lname << "_Servant (" << be_idt_nl
+      << "                x.in ()," << be_nl
+      << "                ins_name," << be_nl
+      << "                c)," << be_uidt_nl
+      << "                0);" << be_nl << be_nl
+      << "return retval;" << be_uidt_nl
+      << "}";
 }
 
 Home_Op_Attr_Generator::Home_Op_Attr_Generator (
