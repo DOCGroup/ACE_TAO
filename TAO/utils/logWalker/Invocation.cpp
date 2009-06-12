@@ -233,7 +233,7 @@ Invocation::GIOP_Buffer::actual_req_id(void) const
                    bo, vmaj, vmin);
   ACE_CDR::ULong rid;
   cdr >> rid;
-  return rid;
+  return static_cast<size_t>(rid);
 }
 
 size_t
@@ -261,7 +261,7 @@ Invocation::GIOP_Buffer::target_oid(size_t &len) const
                    bo, vmaj, vmin);
   ACE_CDR::ULong len_ulong;
   cdr >> len_ulong;
-  len = len_ulong;
+  len = static_cast<size_t>(len_ulong);
   if (target_offset + len > this->cur_size())
     {
       len = 0;
