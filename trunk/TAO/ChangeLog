@@ -13,7 +13,8 @@ Fri Jun 12 14:29:55 UTC 2009  Adam Mitz  <mitza@ociweb.com>
         * tao/Transport.cpp:
 
           If send() returns -1 with EWOULDBLOCK and the Flushing Strategy is
-          blocking, return -1 instead of 0.  This is an error condition and
+          blocking, return -1 instead of 0.  This is an error condition
+          because TAO shouldn't see EWOULDBLOCK with a blocking socket, and
           the transport must be closed to avoid looping indefinitely in the
           flushing strategy's flush_transport().
 
