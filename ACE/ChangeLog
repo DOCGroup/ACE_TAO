@@ -1,3 +1,8 @@
+Fri Jun 12 14:12:04 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Removed !FIXED_BUGS_ONLY from Process_Test. Not
+          sure why it's there and I never see Process_Test fail.
+
 Fri Jun 12 11:24:09 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp: Added missing ifdef ACE_HAS_EVENT_POLL.
