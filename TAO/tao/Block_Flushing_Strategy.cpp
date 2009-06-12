@@ -49,4 +49,10 @@ TAO_Block_Flushing_Strategy::flush_transport (TAO_Transport *transport,
   return 0;
 }
 
+bool TAO_Block_Flushing_Strategy::is_blocking ()
+{
+  return true;
+}
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL
