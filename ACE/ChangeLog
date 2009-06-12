@@ -1,3 +1,9 @@
+Fri Jun 12 19:16:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Rever the change below, Adam has a better fix
+        * ace/config-WinCE.h
+          Set ACE_LACKS_SO_RCVBUF for WinCE 5, it is not supported
+
 Fri Jun 12 18:37:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-WinCE.h
