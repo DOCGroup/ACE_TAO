@@ -250,7 +250,11 @@ namespace CIAO
             {
               if (ACE_OS::strcmp (CIAO::Deployment::COMPONENTINSTALLATION_REF,
                                   this->config_values_[i]->name ()) == 0)
-                this->config_values_[i]->value () >>= this->ci_;
+                {
+                  CIAO::Deployment::ComponentInstallation_ptr tmp;
+                  this->config_values_[i]->value () >>= tmp;
+                  this->ci_ = CIAO::Deployment::ComponentInstallation::_duplicate (tmp);
+                }
             }
         }
     }
