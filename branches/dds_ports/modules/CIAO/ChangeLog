@@ -1,10 +1,16 @@
+Sat Jun 13 01:35:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+
+          Fixed a memory management error.  Thanks to Jeff for pointing it out.
+
 Wed Jun 10 18:31:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/descriptors:
         * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
 
-          First pass at deployment plan. 
-        
+          First pass at deployment plan.
+
 Wed Jun 10 17:53:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_DeploymentPlan.idl:
