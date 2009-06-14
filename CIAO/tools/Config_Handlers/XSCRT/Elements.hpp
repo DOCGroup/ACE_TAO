@@ -222,7 +222,7 @@ namespace XSCRT
   {
   public:
     //    typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
-    
+
     FundamentalType ()
     {
     }
@@ -272,7 +272,7 @@ namespace XSCRT
   };
 
 #if ((defined (__GNUC__) && (__GNUC__ == 3 && (__GNUC_MINOR__ < 3))) || \
-    (defined (__BORLANDC__) && (__BORLANDC__ == 0x610)) || \
+    (defined (__BORLANDC__) && (__BORLANDC__ < 0x620)) || \
     (defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x570)))
 
   // Stuff for broken gcc < 3.3. Don't like what you see - use better
