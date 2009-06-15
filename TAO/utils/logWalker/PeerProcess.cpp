@@ -122,7 +122,7 @@ PeerProcess::object_for (const char *oid, size_t len)
     {
       long index = static_cast<long>(objects_.current_size());
       char alias[20];
-      ACE_OS::sprintf (alias, "obj_%d", index);
+      ACE_OS::sprintf (alias, "obj_%ld", index);
       po = new PeerObject(index,alias, this);
       objects_.bind(key, po);
     }
