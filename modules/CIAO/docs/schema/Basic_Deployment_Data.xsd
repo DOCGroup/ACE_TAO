@@ -423,7 +423,7 @@
   <xsd:complexType name="PlanLocality">
     <xsd:sequence>
       <xsd:element name="constraint" type="Deployment:PlanLocalityKind"/>
-      <xsd:element name="constrainedInstance" type="Deployment:IdRef"/> <!-- InstanceDeploymentDescription -->
+      <xsd:element name="constrainedInstance" type="Deployment:IdRef" maxOccurs="unbounded" /> <!-- InstanceDeploymentDescription -->
     </xsd:sequence>
   </xsd:complexType>
 

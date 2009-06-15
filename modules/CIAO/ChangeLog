@@ -1,9 +1,15 @@
+Mon Jun 15 14:41:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/Basic_Deployment_Data.xsd:
+
+          Correction to schema. 
+
 Mon Jun 15 14:37:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test_without_ns.pl:
 
-          Removed --instance-nc command line options. 
-        
+          Removed --instance-nc command line options.
+
 Mon Jun 15 14:05:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc:
