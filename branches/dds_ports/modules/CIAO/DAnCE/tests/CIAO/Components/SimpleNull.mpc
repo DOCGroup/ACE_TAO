@@ -6,24 +6,22 @@ project(SimpleNull_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   idlflags += -Wb,stub_export_macro=SIMPLENULL_STUB_Export \
               -Wb,stub_export_include=SimpleNull_stub_export.h \
               -Wb,skel_export_macro=SIMPLENULL_SVNT_Export \
-              -Wb,skel_export_include=SimpleNull_svnt_export.h
+              -Wb,skel_export_include=SimpleNull_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLENULL_EXEC_Export \
+              -Wb,exec_export_include=SimpleNull_exec_export.h \
+              -Gsv -Gex
 
   IDL_Files {
     SimpleNull.idl
   }
 }
 
-project(SimpleNull_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(SimpleNull_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+  after += SimpleNull_idl_gen
   custom_only = 1
-  cidlflags += --svnt-export-macro SIMPLENULL_SVNT_Export \
-               --svnt-export-include SimpleNull_svnt_export.h
   idlflags += -Wb,export_macro=SIMPLENULL_EXEC_Export \
               -Wb,export_include=SimpleNull_exec_export.h \
               -SS
-
-  CIDL_Files {
-    SimpleNull.cidl
-  }
 
   IDL_Files {
     SimpleNullE.idl
@@ -55,7 +53,7 @@ project(SimpleNull_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 project(SimpleNull_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += SimpleNull_cidl_gen SimpleNull_stub
+  after   += SimpleNull_idle_gen SimpleNull_stub
   sharedname = SimpleNull_exec
   libs += SimpleNull_stub
 
