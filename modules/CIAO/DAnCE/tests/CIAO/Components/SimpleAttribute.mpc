@@ -9,7 +9,7 @@ project(SimpleAttribute_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_
               -Wb,skel_export_include=SimpleAttribute_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEATTRIBUTE_EXEC_Export \
               -Wb,exec_export_include=SimpleAttribute_exec_export.h \
-              -Gsv -Gex
+              -Gsv 
               
 
   IDL_Files {

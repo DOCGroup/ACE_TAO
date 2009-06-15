@@ -1,3 +1,17 @@
+Mon Jun 15 19:20:07 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleNull.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
+        * DAnCE/tests/CIAO/Components/SimplePublisher.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleUser.mpc:
+
+          Removed -Gex.  Thanks to Jeff both for the initial porting work
+          and for pointing out the lingering -Gex.
+        
 Mon Jun 15 14:52:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.h:
@@ -17,8 +31,8 @@ Mon Jun 15 14:52:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/Components/SimpleUser_exec.h:
         * DAnCE/tests/CIAO/Components/SimpleUser_exec.cpp:
 
-          Checked in ported exec code from a misapplied patch. 
-        
+          Checked in ported exec code from a misapplied patch.
+
 Mon Jun 15 14:41:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:

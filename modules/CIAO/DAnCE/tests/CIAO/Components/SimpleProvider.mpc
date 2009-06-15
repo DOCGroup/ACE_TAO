@@ -9,7 +9,7 @@ project(SimpleCommon_SimpleProvider_idl_gen) : ciaoidldefaults, anytypecode, avo
               -Wb,skel_export_include=SimpleProvider_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEPROVIDER_EXEC_Export \
               -Wb,exec_export_include=SimpleProvider_exec_export.h \
-              -Gex -Gsv
+               -Gsv
 
   IDL_Files {
     SimpleProvider.idl

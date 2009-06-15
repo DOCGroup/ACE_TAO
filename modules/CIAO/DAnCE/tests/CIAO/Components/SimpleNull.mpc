@@ -9,7 +9,7 @@ project(SimpleNull_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
               -Wb,skel_export_include=SimpleNull_svnt_export.h \
               -Wb,exec_export_macro=SIMPLENULL_EXEC_Export \
               -Wb,exec_export_include=SimpleNull_exec_export.h \
-              -Gsv -Gex
+              -Gsv 
 
   IDL_Files {
     SimpleNull.idl

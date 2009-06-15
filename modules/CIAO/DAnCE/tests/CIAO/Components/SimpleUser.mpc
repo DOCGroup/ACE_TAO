@@ -9,7 +9,7 @@ project(SimpleCommon_SimpleUser_idl_gen) : ciaoidldefaults, anytypecode, avoids_
               -Wb,skel_export_include=SimpleUser_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEUSER_EXEC_Export \
               -Wb,exec_export_include=SimpleUser_exec_export.h \
-              -Gsv -Gex
+              -Gsv 
 
   IDL_Files {
     SimpleUser.idl
