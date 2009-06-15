@@ -9,7 +9,7 @@ project(SimpleCommon_SimplePublisher_idl_gen) : ciaoidldefaults, anytypecode, av
               -Wb,skel_export_include=SimplePublisher_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEPUBLISHER_EXEC_Export \
               -Wb,exec_export_include=SimplePublisher_exec_export.h \
-              -Gex -Gsv
+               -Gsv
 
   IDL_Files {
     SimplePublisher.idl

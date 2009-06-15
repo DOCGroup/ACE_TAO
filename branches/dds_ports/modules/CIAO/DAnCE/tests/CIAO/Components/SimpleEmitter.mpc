@@ -9,7 +9,7 @@ project(SimpleCommon_SimpleEmitter_idl_gen) : ciaoidldefaults, anytypecode, avoi
               -Wb,skel_export_include=SimpleEmitter_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEEMITTER_EXEC_Export \
               -Wb,exec_export_include=SimpleEmitter_exec_export.h \
-              -Gsv -Gex
+              -Gsv 
 
   IDL_Files {
     SimpleEmitter.idl

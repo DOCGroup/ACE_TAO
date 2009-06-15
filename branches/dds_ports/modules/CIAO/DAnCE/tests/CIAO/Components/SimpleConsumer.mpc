@@ -9,7 +9,7 @@ project(SimpleCommon_SimpleConsumer_idl_gen) : ciaoidldefaults, anytypecode, avo
               -Wb,skel_export_include=SimpleConsumer_svnt_export.h \
               -Wb,exec_export_macro=SIMPLECONSUMER_EXEC_Export \
               -Wb,exec_export_include=SimpleConsumer_exec_export.h \
-              -Gsv -Gex
+              -Gsv 
 
   IDL_Files {
     SimpleConsumer.idl
