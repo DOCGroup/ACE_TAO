@@ -1,3 +1,8 @@
+Mon Jun 15 07:42:47 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * utils/logWalker/PeerProcess.cpp:
+          Added long specifier to sprintf.
+
 Fri Jun 12 18:44:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Acceptor.cpp:
