@@ -48,7 +48,7 @@ project(Controller_Base_stub) : ccm_stub, race_common {
   }
 }
 
-project(Controller_Base_svnt) : ciao_servant, race_common {
+project(Controller_Base_svnt) : ciao_servant, race_common, dance_deployment_stub {
   avoids += ace_for_tao
   after      +=  Controller_Base_stub
 

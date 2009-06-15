@@ -68,7 +68,7 @@ project(Tester_Component_svnt) : ciao_servant, race_idl {
   }
 }
 
-project(Tester_Component_exec) : ciao_executor, race_common {
+project(Tester_Component_exec) : ciao_executor, race_common, dance_deployment_stub {
   after   += Tester_Component_svnt
   sharedname = Tester_Component_exec
 

@@ -28,7 +28,7 @@ project(TM_Proxy_stub) : ccm_stub, dance_deployment_stub, race_idl {
   }
 }
 
-project(TM_Proxy_svnt) : ciao_servant, race_idl {
+project(TM_Proxy_svnt) : ciao_servant, race_idl, dance_deployment_svnt {
   after      += TM_Proxy_stub
   sharedname  = TM_Proxy_Component_svnt
   libs       += TM_Proxy_Component_stub

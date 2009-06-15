@@ -105,7 +105,7 @@ project(Conductor_exec) : ciao_executor, ciao_config_handlers, race_common {
 }
 
 
-project(Conductor_svnt) : ciao_servant, race_common {
+project(Conductor_svnt) : ciao_servant, race_common, dance_deployment_stub {
   avoids += ace_for_tao
   after += Conductor_exec
 

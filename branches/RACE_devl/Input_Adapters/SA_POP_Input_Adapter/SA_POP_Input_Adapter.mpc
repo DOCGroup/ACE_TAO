@@ -27,7 +27,7 @@ project(SA_POP_Input_Adapter_stub): ccm_stub, dance_deployment_stub, race_idl {
   }
 }
 
-project(SA_POP_Input_Adapter_svnt) : ciao_servant, race_idl {
+project(SA_POP_Input_Adapter_svnt) : ciao_servant, race_idl, dance_deployment_stub {
 
   sharedname  = SA_POP_IA_Component_svnt
 
