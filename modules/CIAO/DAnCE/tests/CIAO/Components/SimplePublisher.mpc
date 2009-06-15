@@ -6,24 +6,22 @@ project(SimpleCommon_SimplePublisher_idl_gen) : ciaoidldefaults, anytypecode, av
   idlflags += -Wb,stub_export_macro=SIMPLEPUBLISHER_STUB_Export \
               -Wb,stub_export_include=SimplePublisher_stub_export.h \
               -Wb,skel_export_macro=SIMPLEPUBLISHER_SVNT_Export \
-              -Wb,skel_export_include=SimplePublisher_svnt_export.h
+              -Wb,skel_export_include=SimplePublisher_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLEPUBLISHER_EXEC_Export \
+              -Wb,exec_export_include=SimplePublisher_exec_export.h \
+              -Gex -Gsv
 
   IDL_Files {
     SimplePublisher.idl
   }
 }
 
-project(SimpleCommon_SimplePublisher_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(SimpleCommon_SimplePublisher_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+  after += SimpleCommon_SimplePublisher_idl_gen
   custom_only = 1
-  cidlflags += --svnt-export-macro SIMPLEPUBLISHER_SVNT_Export \
-               --svnt-export-include SimplePublisher_svnt_export.h
   idlflags += -Wb,export_macro=SIMPLEPUBLISHER_EXEC_Export \
               -Wb,export_include=SimplePublisher_exec_export.h \
               -SS
-
-  CIDL_Files {
-    SimplePublisher.cidl
-  }
 
   IDL_Files {
     SimplePublisherE.idl
@@ -55,7 +53,7 @@ project(SimpleCommon_SimplePublisher_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 project(SimpleCommon_SimplePublisher_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += SimpleCommon_SimplePublisher_cidl_gen SimpleCommon_SimplePublisher_stub
+  after   += SimpleCommon_SimplePublisher_idle_gen SimpleCommon_SimplePublisher_stub
   sharedname = SimplePublisher_exec
   libs += SimplePublisher_stub SimpleCommon_stub
 

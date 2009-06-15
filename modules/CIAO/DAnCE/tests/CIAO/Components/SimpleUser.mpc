@@ -6,24 +6,22 @@ project(SimpleCommon_SimpleUser_idl_gen) : ciaoidldefaults, anytypecode, avoids_
   idlflags += -Wb,stub_export_macro=SIMPLEUSER_STUB_Export \
               -Wb,stub_export_include=SimpleUser_stub_export.h \
               -Wb,skel_export_macro=SIMPLEUSER_SVNT_Export \
-              -Wb,skel_export_include=SimpleUser_svnt_export.h
+              -Wb,skel_export_include=SimpleUser_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLEUSER_EXEC_Export \
+              -Wb,exec_export_include=SimpleUser_exec_export.h \
+              -Gsv -Gex
 
   IDL_Files {
     SimpleUser.idl
   }
 }
 
-project(SimpleCommon_SimpleUser_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(SimpleCommon_SimpleUser_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+  after += SimpleCommon_SimpleUser_idl_gen
   custom_only = 1
-  cidlflags += --svnt-export-macro SIMPLEUSER_SVNT_Export \
-               --svnt-export-include SimpleUser_svnt_export.h
   idlflags += -Wb,export_macro=SIMPLEUSER_EXEC_Export \
               -Wb,export_include=SimpleUser_exec_export.h \
               -SS
-
-  CIDL_Files {
-    SimpleUser.cidl
-  }
 
   IDL_Files {
     SimpleUserE.idl
@@ -55,7 +53,7 @@ project(SimpleCommon_SimpleUser_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 project(SimpleCommon_SimpleUser_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += SimpleCommon_SimpleUser_cidl_gen SimpleCommon_SimpleUser_stub
+  after   += SimpleCommon_SimpleUser_idle_gen SimpleCommon_SimpleUser_stub
   sharedname = SimpleUser_exec
   libs += SimpleUser_stub SimpleCommon_stub
 
