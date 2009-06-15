@@ -1,3 +1,47 @@
+Mon Jun 15 10:19:16 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Crash_On_Write/Crash_Task.cpp:
+
+          Used terminate_process() instead of abort(). The later works
+          differently on Solaris.
+
+        * tests/Big_AMI/client.cpp:
+        * tests/Portable_Interceptors/AMI/client.cpp:
+        * tests/Bug_1270_Regression/client.cpp:
+        * tests/Bug_1270_Regression/Echo.cpp:
+        * tests/Bug_1270_Regression/server.cpp:
+
+          Fixed tests after the change for Bug#3682. In these tests it
+          was assumed that nothing could be received from server until
+          we run orb explicitly. The later is not true with synch scope
+          policy SYNC_WITH_TRANSPORT.
+
+        * tests/Bug_1476_Test/test.ior:
+
+          An attempt to fix this test on platforms where connect to
+          localhost on non-blocking socket returns with ECONNREFUSED
+          while it's expected to return with errno=EINPROGRESS.
+          This is Solaris and other Unices. I changed the remote host
+          in IOR from localhost to something really remote (google.com).
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+
+          This fixes Bug#3682. SYNC_WITH_TRANSPORT is now really
+          default synch scope policy in TAO. This must fix Single_Read
+          and AMH_Oneway tests on Solaris.
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+
+          This fixes Bug#3697. The comment in the code explains why this
+          fix is better than the code used before. This must fix
+          Big_Request_Muxing on Solaris.
+
+        * tao/Transport.cpp:
+
+          Changed to use queue_is_empty_i() instead of head_==0.
+
 Mon Jun 15 07:42:47 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * utils/logWalker/PeerProcess.cpp:

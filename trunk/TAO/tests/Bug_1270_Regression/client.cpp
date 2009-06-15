@@ -37,29 +37,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent");
-
-      CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in ());
-
-      if (CORBA::is_nil (policy_current.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "ERROR: Nil policy current\n"));
-          return 1;
-        }
-      CORBA::Any scope_as_any;
-      scope_as_any <<= Messaging::SYNC_WITH_TRANSPORT;
-
-      CORBA::PolicyList policies(1); policies.length (1);
-      policies[0] =
-        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any);
-
-      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
-
-      policies[0]->destroy ();
-
       if (parse_args (argc, argv) != 0)
         return 1;
 
@@ -113,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception ("Exception caught in client:");
       return 1;
     }
 
