@@ -1,3 +1,8 @@
+Mon Jun 15 18:41:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+          Unicode fixes
+
 Mon Jun 15 13:54:01 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/Leader_Follower_Flushing_Strategy.cpp:
