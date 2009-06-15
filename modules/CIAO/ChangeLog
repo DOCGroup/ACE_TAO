@@ -1,8 +1,29 @@
+Mon Jun 15 14:52:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec.cpp:
+
+          Checked in ported exec code from a misapplied patch. 
+        
 Mon Jun 15 14:41:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:
 
-          Correction to schema. 
+          Correction to schema.
 
 Mon Jun 15 14:37:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
