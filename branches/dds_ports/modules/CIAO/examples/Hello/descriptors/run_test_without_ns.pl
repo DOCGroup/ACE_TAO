@@ -78,7 +78,7 @@ sub run_node_daemons {
       $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
       $d_cmd = "$DAnCE/bin/dance_node_manager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --instance-nc corbaloc:rir:/NameService";
+      $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30";
 
       print "Run dance_node_manager with $d_param\n";
 
