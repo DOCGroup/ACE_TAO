@@ -49,8 +49,12 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
 
       if (max_wait_time == 0)
         {
-          // In case max_wait_time==0 it doesn't make sense to run
-          // while loop depending on transport->queue_is_empty ()
+          // In case max_wait_time==0 we run a while loop depending on
+          // both transport->queue_is_empty() and reactor->work_pending()
+          // to make sure that we both dispatch all the messages in the
+          // transport's queue and at the same time those that we scheduled
+          // in the reactor but not more then that. However it doesn't
+          // make sense to check only for transport->queue_is_empty()
           // since in multi-threaded application it can easily happen
           // that the other thread will run the orb and drain the
           // queue in the transport we're coping with here. So, that
@@ -61,11 +65,10 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
           // since transport will return 0 (letting the reactor know
           // about more pending work) when handling output/timeout as
           // long as its queue is not empty.
-          while (orb_core->reactor ()->work_pending ())
+          while (orb_core->orb ()->work_pending () &&
+                 !transport->queue_is_empty ())
             {
-              ACE_Time_Value tv (0, 100);
-              if (orb_core->run (&tv, 1) == -1)
-                return -1;
+              orb_core->orb ()->perform_work ();
             }
         }
       else
