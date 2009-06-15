@@ -5,7 +5,7 @@ PLANNED CHANGES BEFORE NEXT RELEASE
 
 .  The TargetManager will be ported to the new DAnCE. 
 
-.  The CIDL Compiler may be deprecated in the near future to be replaced by
+.  The CIDL Compiler will be deprecated in the next version to be replaced by
    code generation being handled entirely by tao_idl.  As a result, CIDL will
    no longer be used to specify containers and local executor mappings for component
    implementations, to be instead handled by either command line options to the

@@ -4,10 +4,13 @@
     <LINK rev="made" href="mailto:schmidt@cs.wustl.edu"></head>
   <body text="#000000" vLink="#ff0f0f" link="#000fff" bgColor="#ffffff">
     <hr>
-    <h3>Building and Installing CIAO
-    </h3>
+    <h3>Building and Installing CIAO</h3>
     <p>The first thing you should do to install CIAO is to set the environment 
-      variable <code>CIAO_ROOT</code> to be <code>$TAO_ROOT/CIAO</code>. Please refer 
+      variable <code>CIAO_ROOT</code> to
+      be <code>$TAO_ROOT/CIAO</code>, or whereever you have installed
+      the CIAO sources.  The <code>DANCE_ROOT</code> environment
+      variable should also be set to <code>$CIAO_ROOT/DAnCE</code>, or
+      wherever you have installed the DAnCE sources. Please refer 
       to the <A href="../../ACE-INSTALL.html">ACE installation notes</A> and <A href="../TAO-INSTALL.html">
         TAO installation notes</A> for instructions on setting <code>$ACE_ROOT</code> 
       and <code>$TAO_ROOT</code>, respectively. They are needed since CIAO sits on 
@@ -34,13 +37,11 @@
       </li>
     </ol>
     <hr>
-    <h3>Supported Platforms for CIAO
-    </h3>
+    <h3>Supported Platforms for CIAO</h3>
     <p>CIAO should be usable on all platforms that TAO runs on. Please see <A href="../TAO-INSTALL.html">
         TAO's installation</A> pages for details
     </p>
-    <h3>Supported Platforms for CIDLC
-    </h3>
+    <h3>Supported Platforms for CIDLC</h3>
     <p>CIDLC is supported only on a small subset of platforms. Please refer to <A href="CCF/Documentation/Build.html">
         this</A> for details on how to build CIDLC.
     </p>
@@ -74,9 +75,8 @@
       version of ACE and TAO because CIAO tracks changes to ACE and TAO very closely.
     </p>
     <hr>
-    <h3>Install CIDL Compiler
-    </h3>
-    <p>We suggest you download the prebuilt binary <code>cidlc(exe)</code> from <strong>
+    <h3>Install CIDL Compiler</h3>
+    <p>We suggest you download the prebuilt binary <code>cidlc(.exe)</code> from <strong>
         <a href="http://www.dre.vanderbilt.edu/cidlc/">here</a></strong> or, if you 
       are using Windows or Linux, you can build it by yourself.
     </p>
@@ -125,9 +125,9 @@
             <code>ACE_ROOT</code>
           - [path&nbsp;ending with&nbsp;ACE_wrappers directory] (this should already be 
           set if you're using CIAO)
-          <li>
+<!--          <li>
             <code>BOOST_CFG</code> - <code>_vc7_mdsd</code>
-          <li>
+          <li> -->
             <code>BOOST_ROOT</code>
           - [path ending with Boost directory]
           <li>
@@ -144,16 +144,14 @@
       </li>
     </ul>
     <hr>
-    <h3>Obtaining and Installing Xerces-C
-    </h3>
+    <h3>Obtaining and Installing Xerces-C</h3>
     <p>The Xerces-C XML parsing library is a necessary component to build parts of 
       DAnCE that need to process XML based descriptor files, which include the <b>Plan 
         Launcher</b> and the <b>Repository Manager</b>. Currently, the only Xerces-C 
-      version supported by the DOC group is version 2.6 or later.
+      versions supported by the DOC group is version 2.6 or later or 3.0 or later.
       Earlier versions of the Xerces-C library may work.
     </p>
-    <h4>Building Xerces-C
-    </h4>
+    <h4>Building Xerces-C</h4>
     <p>You may check <a href="http://www.dre.vanderbilt.edu/~wotte/xerces/">here</a> to 
       see if there is a prebuilt binary available for your platform. Otherwise, you 
       will have to obtain the source from the <a href="http://xml.apache.org/xerces-c/download.cgi">
@@ -168,8 +166,7 @@
       build tool will expect these libraries to be named xerces-c for non debug 
       versions, and xerces-cd for debug versions.
     </ul>
-    <h4>Xerces-C Environment Settings
-    </h4>
+    <h4>Xerces-C Environment Settings</h4>
     <p>If the Xerces includes and libraries are in your system include and library 
       paths, respectively, then you need not set up any environment and may proceed 
       to the next step. If not, you will need to set an environment variable named 
@@ -179,8 +176,7 @@
       for dynamically linked libraries.
     </p>
     <hr>
-    <h3>Install CIAO core/tools/examples
-    </h3>
+    <h3>Install CIAO core/tools/examples</h3>
     <p>Most of the GNUmakefiles/project files/solution files required to build CIAO 
       are available in the release. If you don't like the configurations used, please 
       feel free to regenerate them using MPC. Please see <A href="../../MPC/README">this</A>
