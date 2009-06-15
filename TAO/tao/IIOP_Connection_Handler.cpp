@@ -515,8 +515,13 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
-      ACE_INET_Addr addr (listen_point.port,
-                          listen_point.host.in ());
+
+      // since the supplied host/port could be unresolvable, the assigning
+      // constructor of the INET addr should not be as it will emit an error
+      // if the underlying set fails. An unresolvable address in this case
+      // is OK, as it will only be used to find an already cached transport.
+      ACE_INET_Addr addr;
+      (void)addr.set(listen_point.port, listen_point.host.in ());
 
       if (TAO_debug_level > 0)
         {
