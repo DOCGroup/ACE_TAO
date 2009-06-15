@@ -26,7 +26,7 @@ project(SA_POP_Component_stub): ccm_stub, dance_deployment_stub, race_idl {
   }
 }
 
-project(SA_POP_Component_svnt) : ciao_servant, race_idl {
+project(SA_POP_Component_svnt) : ciao_servant, race_idl, dance_deployment_stub {
   after      +=  SA_POP_Component_stub
   sharedname  = SA_POP_Component_svnt
   libs       += SA_POP_Component_stub \

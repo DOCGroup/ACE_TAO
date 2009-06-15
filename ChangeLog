@@ -1,3 +1,16 @@
+Mon Jun 15 17:51:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Conductor/Conductor.mpc:
+        * Controller/Base/Controller_Base.mpc:
+        * Data_Base/Data_Base.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * SA_POP/Component/SA_POP_Component.mpc:
+        * SA_POP/Tester/Tester_Component.mpc:
+        * TM_Proxy/TM_Proxy.mpc:
+
+	  Linking fixes. 
+	
 Thu Jun 11 20:02:58 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * common/RACE_common.mpc:

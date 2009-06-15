@@ -23,7 +23,7 @@ project(Data_Base_stub): ccm_stub, dance_deployment_stub, race_idl {
   }
 }
 
-project(Data_Base_svnt) : ciao_servant, race_idl {
+project(Data_Base_svnt) : ciao_servant, race_idl, dance_deployment_stub {
   after      +=  Data_Base_stub
   sharedname  = Data_Base_Component_svnt
   libs       += Data_Base_Component_stub \
@@ -52,7 +52,7 @@ project(Data_Base_svnt) : ciao_servant, race_idl {
   }
 }
 
-project(Data_Base_exec) : ciao_executor, race_common {
+project(Data_Base_exec) : ciao_executor, race_common, dance_deployment_stub {
   after   += Data_Base_svnt
   sharedname = Data_Base_Component_exec
   libs +=	Data_Base_Component_stub \
