@@ -1,3 +1,13 @@
+Mon Jun 15 07:45:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3673_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added a new test for bugzilla 3673, this test whether exception handling
+          works correctly. This doesn't work with CB2007 which is really a compiler
+          bug. This test makes it easier to see if other compilers have the same
+          bug
+
 Fri Jun 12 19:05:43 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * ace/OS_NS_sys_socket.inl:

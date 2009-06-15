@@ -50,6 +50,7 @@ Bug_3500_Regression_Test
 Bug_3532_Regression_Test
 Bug_3541_Regression_Test
 Bug_3505_Regression_Test
+Bug_3673_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
