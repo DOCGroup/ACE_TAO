@@ -65,8 +65,8 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
           // since transport will return 0 (letting the reactor know
           // about more pending work) when handling output/timeout as
           // long as its queue is not empty.
-          while (orb_core->orb ()->work_pending () &&
-                 !transport->queue_is_empty ())
+          while (!transport->queue_is_empty () &&
+                 orb_core->orb ()->work_pending ())
             {
               orb_core->orb ()->perform_work ();
             }
