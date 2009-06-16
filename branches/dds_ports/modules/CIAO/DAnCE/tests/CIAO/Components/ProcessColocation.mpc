@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl ProcessColocation"
 
-project(ProcessColocation_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(ProcessColocation_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PROCESSCOLOCATION_STUB_Export \
               -Wb,stub_export_include=ProcessColocation_stub_export.h \
@@ -9,7 +9,6 @@ project(ProcessColocation_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_fo
               -Wb,skel_export_include=ProcessColocation_svnt_export.h \
               -Wb,exec_export_macro=PROCESSCOLOCATION_EXEC_Export \
               -Wb,exec_export_include=ProcessColocation_exec_export.h \
-              -Gsv -Gex
 
   IDL_Files {
     ProcessColocation.idl

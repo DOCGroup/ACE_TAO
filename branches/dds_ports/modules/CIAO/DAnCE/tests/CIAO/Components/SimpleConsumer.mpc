@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleConsumer"
 
-project(SimpleCommon_SimpleConsumer_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleCommon_SimpleConsumer_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECONSUMER_STUB_Export \
               -Wb,stub_export_include=SimpleConsumer_stub_export.h \
@@ -9,7 +9,6 @@ project(SimpleCommon_SimpleConsumer_idl_gen) : ciaoidldefaults, anytypecode, avo
               -Wb,skel_export_include=SimpleConsumer_svnt_export.h \
               -Wb,exec_export_macro=SIMPLECONSUMER_EXEC_Export \
               -Wb,exec_export_include=SimpleConsumer_exec_export.h \
-              -Gsv 
 
   IDL_Files {
     SimpleConsumer.idl

@@ -1,16 +1,14 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleNull"
 
-project(SimpleNull_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleNull_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLENULL_STUB_Export \
               -Wb,stub_export_include=SimpleNull_stub_export.h \
               -Wb,skel_export_macro=SIMPLENULL_SVNT_Export \
               -Wb,skel_export_include=SimpleNull_svnt_export.h \
               -Wb,exec_export_macro=SIMPLENULL_EXEC_Export \
-              -Wb,exec_export_include=SimpleNull_exec_export.h \
-              -Gsv 
-
+              -Wb,exec_export_include=SimpleNull_exec_export.h 
   IDL_Files {
     SimpleNull.idl
   }

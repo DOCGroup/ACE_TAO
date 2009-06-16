@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimplePublisher"
 
-project(SimpleCommon_SimplePublisher_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleCommon_SimplePublisher_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEPUBLISHER_STUB_Export \
               -Wb,stub_export_include=SimplePublisher_stub_export.h \
@@ -9,7 +9,6 @@ project(SimpleCommon_SimplePublisher_idl_gen) : ciaoidldefaults, anytypecode, av
               -Wb,skel_export_include=SimplePublisher_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEPUBLISHER_EXEC_Export \
               -Wb,exec_export_include=SimplePublisher_exec_export.h \
-               -Gsv
 
   IDL_Files {
     SimplePublisher.idl
