@@ -32,7 +32,7 @@
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_Receiver_Impl
+namespace CIAO_Hello_Receiver_Impl
 {
   /**
    * @class Receiver_exec_i
