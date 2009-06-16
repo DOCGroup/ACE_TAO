@@ -190,6 +190,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    payload);
         }
 
+      // We are just sending all requests, but we shouldn't get any replies
+      // until we run the orb or do a real synchronous call, so check whether
+      // we didn't get any reply until this moment
+      if (handler.reply_count () > 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "ERROR: Got a reply during sending asynchronous calls\n"),
+                            1);
+
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,

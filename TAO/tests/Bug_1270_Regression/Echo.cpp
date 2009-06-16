@@ -36,6 +36,6 @@ Echo::echo_payload(Test::Payload const &)
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
       // Kill the app
-      ACE::terminate_process (ACE_OS::getpid ());
+      ACE_OS::abort();
     }
 }
