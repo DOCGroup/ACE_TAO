@@ -48,6 +48,11 @@ be_visitor_home_ex_idl::visit_home (be_home *node)
     
   node_ = node;
   
+  /// The CCM preproc visitor moved everything in our scope to
+  /// the implied *Explicit node. Before we generate the executor
+  /// IDL, we need to move it all back.
+  this->restore_scope ();
+
   this->gen_nesting_open (node_);
   
   this->gen_implicit ();
@@ -418,7 +423,7 @@ be_visitor_home_ex_idl::gen_init_ops (AST_Home::INIT_LIST & list)
         
       os_ << ")"
           << be_uidt << be_uidt;
-
+          
       this->gen_exception_list (bop->exceptions (), "", true);
 
       os_ << ";";
@@ -444,4 +449,27 @@ be_visitor_home_ex_idl::gen_home_executor (void)
       << "{" << be_nl
       << "};" << be_uidt_nl
       << "};";
+}
+
+void
+be_visitor_home_ex_idl::restore_scope (void)
+{
+  for (UTL_ScopeActiveIterator iter (node_, UTL_Scope::IK_decls);
+       ! iter.is_done ();
+       iter.next ())
+    {
+      AST_Decl *d = iter.item ();
+      
+      d->set_defined_in (node_);
+      
+      UTL_ScopedName *nconc_name =
+        new UTL_ScopedName (d->local_name ()->copy (),
+                            0);
+                            
+      UTL_ScopedName *new_name =
+        dynamic_cast<UTL_ScopedName *> (node_->name ()->copy ());
+        
+      new_name->nconc (nconc_name);
+      d->set_name (new_name);
+    }
 }
