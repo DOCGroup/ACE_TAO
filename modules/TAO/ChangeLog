@@ -1,3 +1,22 @@
+Tue Jun 16 13:09:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+        
+          Added a method that restores the state of the home's
+          scope. The CCM pre_proc visitor makes some invasive
+          changes, and restoration was never done since at that
+          time, the home node was ignored from that point and
+          all code generation came from the added implied IDL
+          nodes. Now that we are doing addition code generation,
+          this scope state must be restored.
+          
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        
+          Added the new context states related to CIAO code
+          generation to some switch statements in this visitor,
+          to avoid getting "bad context" errors.
+
 Fri Jun 12 20:39:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/home_svs.cpp:

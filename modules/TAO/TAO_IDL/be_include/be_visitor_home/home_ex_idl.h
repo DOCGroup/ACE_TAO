@@ -69,6 +69,13 @@ private:
   void gen_init_ops (AST_Home::INIT_LIST & list);
                      
   void gen_home_executor (void);
+  
+  /// The CCM preproc visitor changed the scoped name and the
+  /// defined_in() for the home's members to the implied
+  /// *Explicit interface, which isn't a problem unless
+  /// they include exceptions raised by a contained operation.
+  /// factory or finder. So we restore the members just in case.
+  void restore_scope (void);
                            
 private:
   be_home *node_;
