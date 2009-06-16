@@ -1,3 +1,13 @@
+Tue Jun 16 20:37:23 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Reused_Facet_Interface/*.*:
+        
+          New test, with a variety of IDL3 constructs but mostly
+          focused on an interface that is used in two separate
+          facets. The test will ensure that the facet servant
+          class and the facet executor IDL interface are
+          generated only once.
+
 Tue Jun 16 20:28:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleProcessColocation.cdp:
