@@ -1,11 +1,40 @@
+Tue Jun 16 12:50:52 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/ProcessColocation.idl:
+        * DAnCE/tests/CIAO/Components/ProcessColocation.mpc:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_exec_export.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_stub_export.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_svnt_export.h:
+        
+          New component to test process colocation capabilities of CIAO/DAnCE. 
+        
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec.cpp:
+        
+          Re-added business logic accidentally removed. 
+
 Tue Jun 16 12:45:52 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciaoidldefaults.mpb:
         * examples/Hello/Receiver/Receiver.mpc:
         * examples/Hello/Sender/Sender.mpc:
-        
-          MPC base project for new tao_idl based container generation. 
-        
+
+          MPC base project for new tao_idl based container generation.
+
         * tools/Config_Handlers/Basic_Deployment_Data.cpp:
         * tools/Config_Handlers/Basic_Deployment_Data.hpp:
         * tools/Config_Handlers/Config_Handlers.mpc:
@@ -16,8 +45,8 @@ Tue Jun 16 12:45:52 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/cpd.hpp:
         * tools/Config_Handlers/cpd.cpp:
 
-          Updated XSC code for updated schema. 
-        
+          Updated XSC code for updated schema.
+
 Tue Jun 16 09:18:07 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello/Receiver/Receiver.mpc
