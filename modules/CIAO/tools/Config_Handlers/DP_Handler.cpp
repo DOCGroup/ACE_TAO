@@ -154,6 +154,8 @@ ACE_RCSID (Config_Handlers,
                        xsc_dp.end_connection (),
                        PCD_Functor (this->idl_dp_->connection));
         
+        this->idl_dp_->localityConstraint.length (xsc_dp.count_localityConstraint ());
+        
         std::for_each (xsc_dp.begin_localityConstraint (),
                        xsc_dp.end_localityConstraint (),
                        PL_Functor (this->idl_dp_->localityConstraint));
