@@ -1189,7 +1189,7 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_impl::init_components - "
                               "Allocating instance %C as a standalone component\n",
                               this->plan_.instance[i].name.in ()));
-                size_t pos = this->servers_[0].containers[0].homes.size ();
+                size_t pos = this->servers_[0].containers[0].components.size ();
                 this->servers_[0].containers[0].components.size (pos + 1);
                 this->servers_[0].containers[0].components[pos] = Instance (eComponent,
                                                                             &this->servers_[0].containers[0],
