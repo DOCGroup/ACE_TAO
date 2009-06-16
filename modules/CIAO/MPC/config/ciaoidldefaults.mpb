@@ -2,19 +2,5 @@
 // $Id$
 
 project : taoidldefaults {
-  idlflags   += -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ccm -Gsv
-  
-  Modify_Custom (IDL) {
-    optional(source_pre_extension) {
-      commandflags(-Gsv) += _svnt
-    }
-    
-    optional(header_pre_extension) {
-      commandflags(-Gsv) += _svnt
-    }
-    
-    optional(generic_outputext) {
-      commandflags(-Gsv) += E.idl
-    }
-  }
+  idlflags += -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ccm 
 }

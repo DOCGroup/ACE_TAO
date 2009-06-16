@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleMultipleUser"
 
-project(SimpleCom_SimpleMulUser_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleCom_SimpleMulUser_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEMULTIPLEUSER_STUB_Export \
               -Wb,stub_export_include=SimpleMultipleUser_stub_export.h \
@@ -9,7 +9,6 @@ project(SimpleCom_SimpleMulUser_idl_gen) : ciaoidldefaults, anytypecode, avoids_
               -Wb,skel_export_include=SimpleMultipleUser_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEMULTIPLEUSER_EXEC_Export \
               -Wb,exec_export_include=SimpleMultipleUser_exec_export.h \
-              -Gsv 
 
   IDL_Files {
     SimpleMultipleUser.idl

@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Hello_Base -u Hello -c starter Sender"
 
-project(Hello_Sender_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Hello_Sender_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \

@@ -102,18 +102,8 @@ if (defined $opt_c) {
 if (! defined $opt_n) {
     $cidl_gen =
 '
-project('."$unique_prefix"."$com_name".'_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
-  custom_only = 1
-  cidlflags += --svnt-export-macro '."$UCOM_NAME".'_SVNT_Export \
-               --svnt-export-include '."$com_name".'_svnt_export.h
-
-  CIDL_Files {'."
-    $com_name".'.cidl
-  }
-}
-
 project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
-  after += '."$unique_prefix"."$com_name".'_cidl_gen
+  after += '."$unique_prefix"."$com_name".'_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export \
               -Wb,export_include='."$com_name".'_exec_export.h \
@@ -159,7 +149,9 @@ $cli_idlflags =
   'idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export \
               -Wb,stub_export_include='."$com_name".'_stub_export.h \
               -Wb,skel_export_macro='."$UCOM_NAME"."$USVR_SUFFIX".'_Export \
-              -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h'
+              -Wb,skel_export_include='."$com_name"."$svr_suffix".'_export.h \
+              -Wb,exec_export_macro='."$UCOM_NAME".'_EXEC_Export \
+              -Wb,exec_export_include='."$com_name".'_exec_export.h'
 ;
 
 $cli_base = "ccm_stub";
@@ -215,7 +207,7 @@ else {
 $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
-project('."$unique_prefix"."$com_name".'_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   '."$cli_idlflags".'
 
