@@ -115,6 +115,12 @@ be_visitor_component_svh::gen_facets (void)
       
       be_interface *intf =
         be_interface::narrow_from_decl (pd->impl);
+        
+      if (intf->svnt_hdr_facet_gen ())
+        {
+          continue;
+        }
+        
       const char *lname = intf->local_name ();
       be_decl *scope =
         be_scope::narrow_from_scope (intf->defined_in ())->decl ();
@@ -174,6 +180,8 @@ be_visitor_component_svh::gen_facets (void)
           << lname << "_Servant;" << be_uidt_nl;
          
       os_ << "}";
+      
+      intf->svnt_hdr_facet_gen (true);
     }
 
   return 0;

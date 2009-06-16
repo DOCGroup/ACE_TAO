@@ -185,6 +185,14 @@ be_visitor_component_ex_idl::gen_facets (void)
     {
       i.next (pd);
       
+      be_decl *intf =
+        be_decl::narrow_from_decl (pd->impl);
+        
+      if (intf->ex_idl_facet_gen ())
+        {
+          continue;
+        }
+      
       this->gen_nesting_open (pd->impl);
       
       os_ << be_nl
@@ -197,6 +205,8 @@ be_visitor_component_ex_idl::gen_facets (void)
           << "};";
       
       this->gen_nesting_close (pd->impl);
+      
+      intf->ex_idl_facet_gen (true);
     }
 }
 

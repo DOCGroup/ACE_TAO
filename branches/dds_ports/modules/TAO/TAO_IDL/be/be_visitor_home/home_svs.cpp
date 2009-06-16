@@ -315,11 +315,7 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
               << be_idt_nl
               << "this->executor_->" << bop->local_name () << " (";
               
-          if (bop->argument_count () == 0)
-            {
-              os_ << ");";
-            }
-          else
+          if (bop->argument_count () != 0)
             {
               os_ << be_idt_nl;
               
