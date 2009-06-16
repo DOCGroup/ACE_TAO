@@ -34,7 +34,6 @@ namespace CIAO
     IdRef::
     IdRef (IdRef const& s)
     :
-      XSCRT::Type (),
     href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     idref_ (s.idref_.get () ? new ::XMLSchema::IDREF< ACE_TCHAR > (*s.idref_) : 0),
     regulator__ ()
@@ -3489,6 +3488,7 @@ namespace CIAO
     exclusiveUser_ (new ::XMLSchema::boolean (*s.exclusiveUser_)),
     optional_ (new ::XMLSchema::boolean (*s.optional_)),
     kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (*s.kind_)),
+    templateParam_ (s.templateParam_),
     regulator__ ()
     {
       name_->container (this);
@@ -3521,6 +3521,8 @@ namespace CIAO
       optional (*s.optional_);
 
       kind (*s.kind_);
+
+      templateParam_ = s.templateParam_;
 
       return *this;
     }
@@ -3675,6 +3677,44 @@ namespace CIAO
     kind (::CIAO::Config_Handlers::CCMComponentPortKind const& e)
     {
       *kind_ = e;
+    }
+
+    // ComponentPortDescription
+    // 
+    ComponentPortDescription::templateParam_iterator ComponentPortDescription::
+    begin_templateParam ()
+    {
+      return templateParam_.begin ();
+    }
+
+    ComponentPortDescription::templateParam_iterator ComponentPortDescription::
+    end_templateParam ()
+    {
+      return templateParam_.end ();
+    }
+
+    ComponentPortDescription::templateParam_const_iterator ComponentPortDescription::
+    begin_templateParam () const
+    {
+      return templateParam_.begin ();
+    }
+
+    ComponentPortDescription::templateParam_const_iterator ComponentPortDescription::
+    end_templateParam () const
+    {
+      return templateParam_.end ();
+    }
+
+    void ComponentPortDescription::
+    add_templateParam (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
+    {
+      templateParam_.push_back (e);
+    }
+
+    size_t ComponentPortDescription::
+    count_templateParam(void) const
+    {
+      return templateParam_.size ();
     }
 
 
@@ -5174,14 +5214,13 @@ namespace CIAO
 
     PlanLocality::
     PlanLocality (::CIAO::Config_Handlers::PlanLocalityKind const& constraint__,
-                  ::CIAO::Config_Handlers::IdRef const& constrainedInstance__)
+                  ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > > const& constrainedInstance__)
     : 
     constraint_ (new ::CIAO::Config_Handlers::PlanLocalityKind (constraint__)),
-    constrainedInstance_ (new ::CIAO::Config_Handlers::IdRef (constrainedInstance__)),
+    constrainedInstance_ (constrainedInstance__),
     regulator__ ()
     {
       constraint_->container (this);
-      constrainedInstance_->container (this);
     }
 
     PlanLocality::
@@ -5189,11 +5228,10 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     constraint_ (new ::CIAO::Config_Handlers::PlanLocalityKind (*s.constraint_)),
-    constrainedInstance_ (new ::CIAO::Config_Handlers::IdRef (*s.constrainedInstance_)),
+    constrainedInstance_ (s.constrainedInstance_),
     regulator__ ()
     {
       constraint_->container (this);
-      constrainedInstance_->container (this);
     }
 
     PlanLocality& PlanLocality::
@@ -5201,7 +5239,7 @@ namespace CIAO
     {
       constraint (*s.constraint_);
 
-      constrainedInstance (*s.constrainedInstance_);
+      constrainedInstance_ = s.constrainedInstance_;
 
       return *this;
     }
@@ -5223,16 +5261,40 @@ namespace CIAO
 
     // PlanLocality
     // 
-    ::CIAO::Config_Handlers::IdRef const& PlanLocality::
-    constrainedInstance () const
+    PlanLocality::constrainedInstance_iterator PlanLocality::
+    begin_constrainedInstance ()
     {
-      return *constrainedInstance_;
+      return constrainedInstance_.begin ();
+    }
+
+    PlanLocality::constrainedInstance_iterator PlanLocality::
+    end_constrainedInstance ()
+    {
+      return constrainedInstance_.end ();
+    }
+
+    PlanLocality::constrainedInstance_const_iterator PlanLocality::
+    begin_constrainedInstance () const
+    {
+      return constrainedInstance_.begin ();
+    }
+
+    PlanLocality::constrainedInstance_const_iterator PlanLocality::
+    end_constrainedInstance () const
+    {
+      return constrainedInstance_.end ();
     }
 
     void PlanLocality::
-    constrainedInstance (::CIAO::Config_Handlers::IdRef const& e)
+    add_constrainedInstance (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex >  const& e)
     {
-      *constrainedInstance_ = e;
+      constrainedInstance_.push_back (e);
+    }
+
+    size_t PlanLocality::
+    count_constrainedInstance(void) const
+    {
+      return constrainedInstance_.size ();
     }
   }
 }
@@ -6494,6 +6556,8 @@ namespace CIAO
       else if (v == "EventEmitter") v_ = EventEmitter_l;
       else if (v == "EventPublisher") v_ = EventPublisher_l;
       else if (v == "EventConsumer") v_ = EventConsumer_l;
+      else if (v == "ExtendedPort") v_ = ExtendedPort_l;
+      else if (v == "MirrorPort") v_ = MirrorPort_l;
       else 
       {
       }
@@ -6511,6 +6575,8 @@ namespace CIAO
       else if (v == "EventEmitter") v_ = EventEmitter_l;
       else if (v == "EventPublisher") v_ = EventPublisher_l;
       else if (v == "EventConsumer") v_ = EventConsumer_l;
+      else if (v == "ExtendedPort") v_ = ExtendedPort_l;
+      else if (v == "MirrorPort") v_ = MirrorPort_l;
       else 
       {
       }
@@ -6522,6 +6588,8 @@ namespace CIAO
     CCMComponentPortKind const CCMComponentPortKind::EventEmitter (CCMComponentPortKind::EventEmitter_l);
     CCMComponentPortKind const CCMComponentPortKind::EventPublisher (CCMComponentPortKind::EventPublisher_l);
     CCMComponentPortKind const CCMComponentPortKind::EventConsumer (CCMComponentPortKind::EventConsumer_l);
+    CCMComponentPortKind const CCMComponentPortKind::ExtendedPort (CCMComponentPortKind::ExtendedPort_l);
+    CCMComponentPortKind const CCMComponentPortKind::MirrorPort (CCMComponentPortKind::MirrorPort_l);
 
     // ComponentPortDescription
     //
@@ -6584,6 +6652,12 @@ namespace CIAO
         {
           kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > (new ::CIAO::Config_Handlers::CCMComponentPortKind (e));
           kind_->container (this);
+        }
+
+        else if (n == "templateParam")
+        {
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
+          add_templateParam (t);
         }
 
         else 
@@ -7115,8 +7189,8 @@ namespace CIAO
 
         else if (n == "constrainedInstance")
         {
-          constrainedInstance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
-          constrainedInstance_->container (this);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::IdRef (e));
+          add_constrainedInstance (t);
         }
 
         else 
@@ -12355,6 +12429,7 @@ namespace CIAO
         exclusiveUser (o);
         optional (o);
         kind (o);
+        templateParam (o);
         post (o);
       }
 
@@ -12371,6 +12446,7 @@ namespace CIAO
         exclusiveUser (o);
         optional (o);
         kind (o);
+        templateParam (o);
         post (o);
       }
 
@@ -12560,6 +12636,90 @@ namespace CIAO
       kind (Type const& o)
       {
         dispatch (o.kind ());
+      }
+
+      void ComponentPortDescription::
+      templateParam (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ComponentPortDescription::templateParam_iterator b (o.begin_templateParam()), e (o.end_templateParam());
+
+        if (b != e)
+        {
+          templateParam_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) templateParam_next (o);
+          }
+
+          templateParam_post (o);
+        }
+
+        else templateParam_none (o);
+      }
+
+      void ComponentPortDescription::
+      templateParam (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ComponentPortDescription::templateParam_const_iterator b (o.begin_templateParam()), e (o.end_templateParam());
+
+        if (b != e)
+        {
+          templateParam_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) templateParam_next (o);
+          }
+
+          templateParam_post (o);
+        }
+
+        else templateParam_none (o);
+      }
+
+      void ComponentPortDescription::
+      templateParam_pre (Type&)
+      {
+      }
+
+      void ComponentPortDescription::
+      templateParam_pre (Type const&)
+      {
+      }
+
+      void ComponentPortDescription::
+      templateParam_next (Type&)
+      {
+      }
+
+      void ComponentPortDescription::
+      templateParam_next (Type const&)
+      {
+      }
+
+      void ComponentPortDescription::
+      templateParam_post (Type&)
+      {
+      }
+
+      void ComponentPortDescription::
+      templateParam_post (Type const&)
+      {
+      }
+
+      void ComponentPortDescription::
+      templateParam_none (Type&)
+      {
+      }
+
+      void ComponentPortDescription::
+      templateParam_none (Type const&)
+      {
       }
 
       void ComponentPortDescription::
@@ -14663,13 +14823,71 @@ namespace CIAO
       void PlanLocality::
       constrainedInstance (Type& o)
       {
-        dispatch (o.constrainedInstance ());
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::PlanLocality::constrainedInstance_iterator b (o.begin_constrainedInstance()), e (o.end_constrainedInstance());
+
+        if (b != e)
+        {
+          constrainedInstance_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) constrainedInstance_next (o);
+          }
+
+          constrainedInstance_post (o);
+        }
       }
 
       void PlanLocality::
       constrainedInstance (Type const& o)
       {
-        dispatch (o.constrainedInstance ());
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::PlanLocality::constrainedInstance_const_iterator b (o.begin_constrainedInstance()), e (o.end_constrainedInstance());
+
+        if (b != e)
+        {
+          constrainedInstance_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) constrainedInstance_next (o);
+          }
+
+          constrainedInstance_post (o);
+        }
+      }
+
+      void PlanLocality::
+      constrainedInstance_pre (Type&)
+      {
+      }
+
+      void PlanLocality::
+      constrainedInstance_pre (Type const&)
+      {
+      }
+
+      void PlanLocality::
+      constrainedInstance_next (Type&)
+      {
+      }
+
+      void PlanLocality::
+      constrainedInstance_next (Type const&)
+      {
+      }
+
+      void PlanLocality::
+      constrainedInstance_post (Type&)
+      {
+      }
+
+      void PlanLocality::
+      constrainedInstance_post (Type const&)
+      {
       }
 
       void PlanLocality::
@@ -16411,6 +16629,8 @@ namespace CIAO
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventEmitter) s = "EventEmitter";
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventPublisher) s = "EventPublisher";
         else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventConsumer) s = "EventConsumer";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::ExtendedPort) s = "ExtendedPort";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::MirrorPort) s = "MirrorPort";
         else 
         {
         }
@@ -16519,6 +16739,25 @@ namespace CIAO
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("kind", top_ ()));
         Traversal::ComponentPortDescription::kind (o);
+        pop_ ();
+      }
+
+      void ComponentPortDescription::
+      templateParam_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("templateParam", top_ ()));
+      }
+
+      void ComponentPortDescription::
+      templateParam_next (Type const& o)
+      {
+        templateParam_post (o);
+        templateParam_pre (o);
+      }
+
+      void ComponentPortDescription::
+      templateParam_post (Type const&)
+      {
         pop_ ();
       }
 
@@ -17287,10 +17526,21 @@ namespace CIAO
       }
 
       void PlanLocality::
-      constrainedInstance (Type const& o)
+      constrainedInstance_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("constrainedInstance", top_ ()));
-        Traversal::PlanLocality::constrainedInstance (o);
+      }
+
+      void PlanLocality::
+      constrainedInstance_next (Type const& o)
+      {
+        constrainedInstance_post (o);
+        constrainedInstance_pre (o);
+      }
+
+      void PlanLocality::
+      constrainedInstance_post (Type const&)
+      {
         pop_ ();
       }
     }
