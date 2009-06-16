@@ -125,6 +125,11 @@ be_visitor_component_svs::gen_facets (void)
       be_interface *intf =
         be_interface::narrow_from_decl (pd->impl);
         
+      if (intf->svnt_src_facet_gen ())
+        {
+          continue;
+        }
+        
       const char *lname = intf->local_name ();
       
       be_decl *scope =
@@ -205,6 +210,8 @@ be_visitor_component_svs::gen_facets (void)
           
       os_ << be_uidt_nl
           << "}";
+      
+      intf->svnt_src_facet_gen (true);
     }
 
   return 0;

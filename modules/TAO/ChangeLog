@@ -1,3 +1,21 @@
+Tue Jun 16 20:40:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        
+          Fixed bug in code generation of home operation body,
+          where the call is delegated to the executor.
+          
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        
+          Fixed code generation bug where the facet servant
+          class and the facet executor interface were generated
+          for each use of a given interface in a facet. This
+          class and interface must be generated exactly once.
+
 Tue Jun 16 16:46:15 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_svs.cpp:
