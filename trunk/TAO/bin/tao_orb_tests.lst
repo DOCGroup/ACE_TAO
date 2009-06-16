@@ -172,15 +172,15 @@ TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_
 TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !IPV6 !ACE_FOR_TAO
-TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST!LynxOS
+TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LynxOS
 TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO !OpenVMS_IA64Crash
 TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
-TAO/tests/RTCORBA/Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO!ST
+TAO/tests/RTCORBA/Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Policy_Combinations/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO !OpenVMS_IA64Crash
 TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl: !VxWorks!MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !IPV6 !ACE_FOR_TAO
+TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !IPV6 !ACE_FOR_TAO
 TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !IPV6 !ACE_FOR_TAO
