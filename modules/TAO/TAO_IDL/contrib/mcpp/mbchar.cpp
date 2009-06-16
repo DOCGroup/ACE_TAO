@@ -1,5 +1,5 @@
 /*- $Id$
- * Copyright (c) 1998, 2002-2007 Kiyoshi Matsui <kmatsui@t3.rim.or.jp>
+ * Copyright (c) 1998, 2002-2008 Kiyoshi Matsui <kmatsui@t3.rim.or.jp>
  * All rights reserved.
  *
  * Some parts of this code are derived from the public domain software
@@ -44,17 +44,18 @@
 
 /*
  * Tables of character types and multi-byte character types.
- * These tables must be rewritten for a non-Ascii machine.
  *
  * Some of these character attributes will be overwritten by
  *      execution time option '-@post' or '-@old'.
+ * Warning on erroneous sequence will be issued from the caller routines:
+ * scan_quote(), scan_id() or scan_number().
  */
 
-#if DOLLAR_IN_NAME
-#define DOL     LET
-#else
-#define DOL     000
-#endif
+/* Non-ASCII characters are always checked by mb_read().    */
+#define NA      0x4000  /* Non-ASCII characters */
+
+/* Horizontal spaces (' ', '\t' and TOK_SEP)    */
+#define HSPA    (SPA | HSP)
 
 short *     char_type;  /* Pointer to one of the following type_*[].    */
 
@@ -68,8 +69,9 @@ short *     char_type;  /* Pointer to one of the following type_*[].    */
 #define EJ12    (EJ1 | EJ2)     /* 1st byte or 2nd byte of EUC_JP   */
 #define GB12    (GB1 | GB2)
 #define KS12    (KS1 | KS2)
-#define EU12    (EJ12 | GB12 | KS12)
-    /* 1st or 2nd byte of EUC_JP, GB2312 or KSC5601 */
+#define EJ1N    (NA | EJ1)
+#define EU12N   (NA | EJ12 | GB12 | KS12)
+    /* 1st or 2nd byte of EUC_JP, GB2312 or KSC5601, or any other non-ASCII */
 
 static short    type_euc[ UCHARMAX + 1] = {
 /*
@@ -81,11 +83,11 @@ static short    type_euc[ UCHARMAX + 1] = {
 /*   8,     9,     A,     B,     C,     D,     E,     F,       Hex          */
 
    000,   000,   000,   000,   000,   000,   000,   000,    /* 00           */
-   000,   SPA,   SPA,   SPA,   SPA,   SPA,   000,   000,    /* 08           */
+   000,   HSPA,  SPA,   SPA,   SPA,   SPA,   000,   000,    /* 08           */
    000,   000,   000,   000,   000,   000,   000,   000,    /* 10           */
-    /* 0x19, 0x1A and 0x1F will be cleared in some modes by chk_opts(). */
-   000,   LET,   LET,   000,   000,   000,   000,   SPA,    /* 18           */
-   SPA,   PUNC,  QUO,   PUNC,  DOL,   PUNC,  PUNC,  QUO,    /* 20  !"#$%&'  */
+    /* 0x17-0x1A and 0x1F will be cleared in some modes by chk_opts()       */
+   000,   LET,   LET,   000,   000,   000,   000,   HSPA,   /* 18           */
+   HSPA,  PUNC,  QUO,   PUNC,  000,   PUNC,  PUNC,  QUO,    /* 20  !"#$%&'  */
    PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  DOT,   PUNC,   /* 28 ()*+,-./  */
    DIG,   DIG,   DIG,   DIG,   DIG,   DIG,   DIG,   DIG,    /* 30 01234567  */
    DIG,   DIG,   PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  PUNC,   /* 38 89:;<=>?  */
@@ -99,22 +101,22 @@ static short    type_euc[ UCHARMAX + 1] = {
    LET,   LET,   LET,   LET,   LET,   LET,   LET,   LET,    /* 70 pqrstuvw  */
    LET,   LET,   LET,   PUNC,  PUNC,  PUNC,  PUNC,  000,    /* 78 xyz{|}~   */
 
-   000,   000,   000,   000,   000,   000,   000,   000,    /*   80 .. 87   */
-   000,   000,   000,   000,   000,   000,   EJ1,   000,    /*   88 .. 8F   */
-   000,   000,   000,   000,   000,   000,   000,   000,    /*   90 .. 97   */
-   000,   000,   000,   000,   000,   000,   000,   000,    /*   98 .. 9F   */
-   000,   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   A0 .. A7   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   A8 .. AF   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   B0 .. B7   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   B8 .. BF   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   C0 .. C7   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   C8 .. CF   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   D0 .. D7   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   D8 .. DF   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   E0 .. E7   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   E8 .. EF   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,   /*   F0 .. F7   */
-   EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  EU12,  000,    /*   F8 .. FF   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   80 .. 87   */
+   NA,    NA,    NA,    NA,    NA,    NA,    EJ1N,  NA,     /*   88 .. 8F   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   90 .. 97   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   98 .. 9F   */
+   NA,    EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   A0 .. A7   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   A8 .. AF   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   B0 .. B7   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   B8 .. BF   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   C0 .. C7   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   C8 .. CF   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   D0 .. D7   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   D8 .. DF   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   E0 .. E7   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   E8 .. EF   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N,  /*   F0 .. F7   */
+   EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, EU12N, NA,     /*   F8 .. FF   */
 };
 
 static short    type_bsl[ UCHARMAX + 1] = {
@@ -129,10 +131,12 @@ static short    type_bsl[ UCHARMAX + 1] = {
 #define BF2     0x800   /* 2nd byte of BIGFIVE  */
 
 #define SB2     (SJ2 | BF2)
-#define SJ12    (SJ1 | SJ2)
-#define BF12    (BF1 | BF2)
-#define SB12    (SJ12 | BF12)
-#define S2B12   (SJ2 | BF1 | BF2)
+#define SJ2N    (NA | SJ2)
+#define SB2N    (NA | SJ2 | BF2)
+#define SJ12N   (NA | SJ1 | SJ2)
+#define BF12N   (NA | BF1 | BF2)
+#define SB12N   (NA | SJ1 | SJ2 | BF1 | BF2)
+#define S2B12N  (NA | SJ2 | BF1 | BF2)
 
 #define LSB2    (LET | SB2)
 #define PSB2    (PUNC| SB2)
@@ -142,11 +146,11 @@ static short    type_bsl[ UCHARMAX + 1] = {
 /*   8,     9,     A,     B,     C,     D,     E,     F,       Hex          */
 
    000,   000,   000,   000,   000,   000,   000,   000,    /* 00           */
-   000,   SPA,   SPA,   SPA,   SPA,   SPA,   000,   000,    /* 08           */
+   000,   HSPA,  SPA,   SPA,   SPA,   SPA,   000,   000,    /* 08           */
    000,   000,   000,   000,   000,   000,   000,   000,    /* 10           */
-    /* 0x19, 0x1A and 0x1F will be cleared in some modes    */
-   000,   LET,   LET,   000,   000,   000,   000,   SPA,    /* 18           */
-   SPA,   PUNC,  QUO,   PUNC,  DOL,   PUNC,  PUNC,  QUO,    /* 20  !"#$%&'  */
+    /* 0x17-0x1A and 0x1F will be cleared in some modes by chk_opts()       */
+   000,   LET,   LET,   000,   000,   000,   000,   HSPA,   /* 18           */
+   HSPA,  PUNC,  QUO,   PUNC,  000,   PUNC,  PUNC,  QUO,    /* 20  !"#$%&'  */
    PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  DOT,   PUNC,   /* 28 ()*+,-./  */
    DIG,   DIG,   DIG,   DIG,   DIG,   DIG,   DIG,   DIG,    /* 30 01234567  */
    DIG,   DIG,   PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  PUNC,   /* 38 89:;<=>?  */
@@ -160,33 +164,33 @@ static short    type_bsl[ UCHARMAX + 1] = {
    LSB2,  LSB2,  LSB2,  LSB2,  LSB2,  LSB2,  LSB2,  LSB2,   /* 70 pqrstuvw  */
    LSB2,  LSB2,  LSB2,  PSB2,  PSB2,  PSB2,  PSB2,  000,    /* 78 xyz{|}~   */
 
-   SB2,   SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,   /*   80 .. 87   */
-   SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,   /*   88 .. 8F   */
-   SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,   /*   90 .. 97   */
-   SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,  SJ12,   /*   98 .. 9F   */
-   SJ2,   S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12,  /*   A0 .. A7   */
-   S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12,  /*   A8 .. AF   */
-   S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12,  /*   B0 .. B7   */
-   S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12,  /*   B8 .. BF   */
-   S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12,  /*   C0 .. C7   */
-   S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12,  /*   C8 .. CF   */
-   S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12,  /*   D0 .. D7   */
-   S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12, S2B12,  /*   D8 .. DF   */
-   SB12,  SB12,  SB12,  SB12,  SB12,  SB12,  SB12,  SB12,   /*   E0 .. E7   */
-   SB12,  SB12,  SB12,  SB12,  SB12,  SB12,  SB12,  SB12,   /*   E8 .. EF   */
-   SB12,  SB12,  SB12,  SB12,  SB12,  SB12,  SB12,  SB12,   /*   F0 .. F7   */
-   SB12,  SB12,  SB12,  SB12,  SB12,  BF12,  BF12,  000,    /*   F8 .. FF   */
+   SB2N,  SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N,  /*   80 .. 87   */
+   SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N,  /*   88 .. 8F   */
+   SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N,  /*   90 .. 97   */
+   SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N, SJ12N,  /*   98 .. 9F   */
+   SJ2N,  S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N, /*   A0 .. A7   */
+   S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N, /*   A8 .. AF   */
+   S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N, /*   B0 .. B7   */
+   S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N, /*   B8 .. BF   */
+   S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N, /*   C0 .. C7   */
+   S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N, /*   C8 .. CF   */
+   S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N, /*   D0 .. D7   */
+   S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N,S2B12N, /*   D8 .. DF   */
+   SB12N, SB12N, SB12N, SB12N, SB12N, SB12N, SB12N, SB12N,  /*   E0 .. E7   */
+   SB12N, SB12N, SB12N, SB12N, SB12N, SB12N, SB12N, SB12N,  /*   E8 .. EF   */
+   SB12N, SB12N, SB12N, SB12N, SB12N, SB12N, SB12N, SB12N,  /*   F0 .. F7   */
+   SB12N, SB12N, SB12N, SB12N, SB12N, BF12N, BF12N, NA,     /*   F8 .. FF   */
 };
 
 /*
  * For ISO2022_JP multi-byte character encoding.
  */
 
-#define IS1     0x40    /* 1st byte of shift-sequence   */
-#define IS2     0x80    /* 2nd byte of shift-sequence   */
-#define IS3     0x100   /* 3rd byte of shift-sequence   */
-#define IS4     0x200   /* 4th byte of shift-sequence   */
-#define IJP     0x400   /* 1st or 2nd byte of ISO-2022-JP (ISO-2022-JP1)    */
+#define IS1     0x100   /* 1st byte of shift-sequence   */
+#define IS2     0x200   /* 2nd byte of shift-sequence   */
+#define IS3     0x400   /* 3rd byte of shift-sequence   */
+#define IS4     0x800   /* 4th byte of shift-sequence   */
+#define IJP     0x1000  /* 1st or 2nd byte of ISO-2022-JP (ISO-2022-JP1)    */
 
 #define PIJP    (PUNC | IJP)
 #define QIJP    (QUO | IJP)
@@ -194,7 +198,7 @@ static short    type_bsl[ UCHARMAX + 1] = {
 #define DGJP    (DIG | IJP)
 #define LIJP    (LET | IJP)
 
-#define DLJPS2  (DOL | IJP | IS2)
+#define JPS2    (IJP | IS2)
 #define PJPS23  (PIJP | IS2 | IS3)
 #define LJPS3   (LIJP | IS3)
 #define LJPS4   (LIJP | IS4)
@@ -206,11 +210,11 @@ static short    type_iso2022_jp[ UCHARMAX + 1] = {
 /*   8,     9,     A,     B,     C,     D,     E,     F,       Hex          */
 
    000,   000,   000,   000,   000,   000,   000,   000,    /* 00           */
-   000,   SPA,   SPA,   SPA,   SPA,   SPA,   000,   000,    /* 08           */
+   000,   HSPA,  SPA,   SPA,   SPA,   SPA,   000,   000,    /* 08           */
    000,   000,   000,   000,   000,   000,   000,   000,    /* 10           */
-    /* 0x19, 0x1A and 0x1F will be cleared in some modes    */
-   000,   LET,   LET,   IS1,   000,   000,   000,   SPA,    /* 18           */
-   SPA,   PIJP,  QIJP,  PIJP,  DLJPS2,PIJP,  PIJP,  QIJP,   /* 20  !"#$%&'  */
+    /* 0x17-0x1A and 0x1F will be cleared in some modes by chk_opts()       */
+   000,   LET,   LET,   IS1,   000,   000,   000,   HSPA,   /* 18           */
+   HSPA,  PIJP,  QIJP,  PIJP,  JPS2,  PIJP,  PIJP,  QIJP,   /* 20  !"#$%&'  */
    PJPS23,PIJP,  PIJP,  PIJP,  PIJP,  PIJP,  DTJP,  PIJP,   /* 28 ()*+,-./  */
    DGJP,  DGJP,  DGJP,  DGJP,  DGJP,  DGJP,  DGJP,  DGJP,   /* 30 01234567  */
    DGJP,  DGJP,  PIJP,  PIJP,  PIJP,  PIJP,  PIJP,  PIJP,   /* 38 89:;<=>?  */
@@ -223,23 +227,37 @@ static short    type_iso2022_jp[ UCHARMAX + 1] = {
    LIJP,  LIJP,  LIJP,  LIJP,  LIJP,  LIJP,  LIJP,  LIJP,   /* 68 hijklmno  */
    LIJP,  LIJP,  LIJP,  LIJP,  LIJP,  LIJP,  LIJP,  LIJP,   /* 70 pqrstuvw  */
    LIJP,  LIJP,  LIJP,  PIJP,  PIJP,  PIJP,  PIJP,  000,    /* 78 xyz{|}~   */
-    /* the rests are 0 cleared  */
+
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   80 .. 87   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   88 .. 8F   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   90 .. 97   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   98 .. 9F   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   A0 .. A7   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   A8 .. AF   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   B0 .. B7   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   B8 .. BF   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   C0 .. C7   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   C8 .. CF   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   D0 .. D7   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   D8 .. DF   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   E0 .. E7   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   E8 .. EF   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   F0 .. F7   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   F8 .. FF   */
 };
 
 /*
  * For UTF8 multi-byte character encoding.
  */
 
-#define U2_1    0x100   /* 1st byte of 2-byte encoding of UTF8  */
-#define U2_2    0x200   /* 2nd byte of 2-byte encoding of UTF8  */
-#define U3_1    0x400   /* 1st byte of 3-byte encoding of UTF8  */
-#define U3_2    0x800   /* 2nd byte of 3-byte encoding of UTF8  */
-#define U3_3    0x1000  /* 3rd byte of 3-byte encoding of UTF8  */
-
-#define UT23    (U2_2 | U3_3)
-/* 2nd byte of 2-byte encoding or 3rd byte of 3-byte encoding   */
-#define UT223   (U2_2 | U3_2 | U3_3)
-/* 2nd byte of 2-byte encoding, or 2nd or 3rd byte of 3-byte encoding   */
+#define U2_1    0x100       /* 1st byte of 2-byte encoding of UTF8  */
+#define U3_1    0x200       /* 1st byte of 3-byte encoding of UTF8  */
+#define U4_1    0x400       /* 1st byte of 4-byte encoding of UTF8  */
+#define UCONT   0x800   /* Continuation of a 2, 3, or 4 byte UTF8 sequence  */
+#define U2_1N   (NA | U2_1)
+#define U3_1N   (NA | U3_1)
+#define U4_1N   (NA | U4_1)
+#define UCONTN  (NA | UCONT)
 
 static short    type_utf8[ UCHARMAX + 1] = {
 
@@ -248,11 +266,11 @@ static short    type_utf8[ UCHARMAX + 1] = {
 /*   8,     9,     A,     B,     C,     D,     E,     F,       Hex          */
 
    000,   000,   000,   000,   000,   000,   000,   000,    /* 00           */
-   000,   SPA,   SPA,   SPA,   SPA,   SPA,   000,   000,    /* 08           */
+   000,   HSPA,  SPA,   SPA,   SPA,   SPA,   000,   000,    /* 08           */
    000,   000,   000,   000,   000,   000,   000,   000,    /* 10           */
-    /* 0x19, 0x1A and 0x1F will be cleared in some modes    */
-   000,   LET,   LET,   000,   000,   000,   000,   SPA,    /* 18           */
-   SPA,   PUNC,  QUO,   PUNC,  DOL,   PUNC,  PUNC,  QUO,    /* 20  !"#$%&'  */
+    /* 0x17-0x1A and 0x1F will be cleared in some modes by chk_opts()       */
+   000,   LET,   LET,   000,   000,   000,   000,   HSPA,   /* 18           */
+   HSPA,  PUNC,  QUO,   PUNC,  000,   PUNC,  PUNC,  QUO,    /* 20  !"#$%&'  */
    PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  DOT,   PUNC,   /* 28 ()*+,-./  */
    DIG,   DIG,   DIG,   DIG,   DIG,   DIG,   DIG,   DIG,    /* 30 01234567  */
    DIG,   DIG,   PUNC,  PUNC,  PUNC,  PUNC,  PUNC,  PUNC,   /* 38 89:;<=>?  */
@@ -266,55 +284,52 @@ static short    type_utf8[ UCHARMAX + 1] = {
    LET,   LET,   LET,   LET,   LET,   LET,   LET,   LET,    /* 70 pqrstuvw  */
    LET,   LET,   LET,   PUNC,  PUNC,  PUNC,  PUNC,  000,    /* 78 xyz{|}~   */
 
-   UT23,  UT23,  UT23,  UT23,  UT23,  UT23,  UT23,  UT23,   /*   80 .. 87   */
-   UT23,  UT23,  UT23,  UT23,  UT23,  UT23,  UT23,  UT23,   /*   88 .. 8F   */
-   UT23,  UT23,  UT23,  UT23,  UT23,  UT23,  UT23,  UT23,   /*   90 .. 97   */
-   UT23,  UT23,  UT23,  UT23,  UT23,  UT23,  UT23,  UT23,   /*   98 .. 9F   */
-   UT223, UT223, UT223, UT223, UT223, UT223, UT223, UT223,  /*   A0 .. A7   */
-   UT223, UT223, UT223, UT223, UT223, UT223, UT223, UT223,  /*   A8 .. AF   */
-   UT223, UT223, UT223, UT223, UT223, UT223, UT223, UT223,  /*   B0 .. B7   */
-   UT223, UT223, UT223, UT223, UT223, UT223, UT223, UT223,  /*   B8 .. BF   */
-   000,   000,   U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,   /*   C0 .. C7   */
-   U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,   /*   C8 .. CF   */
-   U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,   /*   D0 .. D7   */
-   U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,  U2_1,   /*   D8 .. DF   */
-   U3_1,  U3_1,  U3_1,  U3_1,  U3_1,  U3_1,  U3_1,  U3_1,   /*   E0 .. E7   */
-   U3_1,  U3_1,  U3_1,  U3_1,  U3_1,  U3_1,  U3_1,  U3_1,   /*   E8 .. EF   */
-   000,   000,   000,   000,   000,   000,   000,   000,    /*   F0 .. F7   */
-   000,   000,   000,   000,   000,   000,   000,   000,    /*   F8 .. FF   */
+   UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN, /*   80 .. 87   */
+   UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN, /*   88 .. 8F   */
+   UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN, /*   90 .. 97   */
+   UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN, /*   98 .. 9F   */
+   UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN, /*   A0 .. A7   */
+   UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN, /*   A8 .. AF   */
+   UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN, /*   B0 .. B7   */
+   UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN,UCONTN, /*   B8 .. BF   */
+   NA,    NA,    U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N,  /*   C0 .. C7   */
+   U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N,  /*   C8 .. CF   */
+   U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N,  /*   D0 .. D7   */
+   U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N, U2_1N,  /*   D8 .. DF   */
+   U3_1N, U3_1N, U3_1N, U3_1N, U3_1N, U3_1N, U3_1N, U3_1N,  /*   E0 .. E7   */
+   U3_1N, U3_1N, U3_1N, U3_1N, U3_1N, U3_1N, U3_1N, U3_1N,  /*   E8 .. EF   */
+   U4_1N, U4_1N, U4_1N, U4_1N, U4_1N, NA,    NA,    NA,     /*   F0 .. F7   */
+   NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,     /*   F8 .. FF   */
 };
 
 #define SETLOCALE       2       /* #pragma setlocale (not __setlocale)  */
 
 #define NUM_ENCODING    8
-#define NUM_ALIAS       7
+#define NUM_ALIAS       6
 
-/*
- * Names of encoding recognized.  Table for search_encoding().
- * Note: GCC documents that LANG=C-EUCJP (C-SJIS, C-JIS) is effective,
- * though this feature is not fully enabled in GCC.
- */
+/* Names of encoding recognized.  Table for search_encoding().  */
 static const char * const   encoding_name[ NUM_ENCODING][ NUM_ALIAS] = {
-    /* normalized LANG, Visual C full, Visual C short
-        , miscellaneous  */
-    { "c",        "english",    "c"
+    /* Visual C full, Visual C short
+        , 4 miscellaneous  */
+    { "english",    "c"
         , "c",      "en",   "latin",    "iso8859"},
-    { "ceucjp",  "",     ""
+    { "",     ""
         , "eucjp",  "euc",  "ujis",     ""},
-    { "",         "chinesesimplified",  "chs"
+    { "chinesesimplified",  "chs"
         , "gb2312", "cngb",     "euccn",    ""},
-    { "",         "korean",   "kor"
+    { "korean",   "kor"
         , "ksc5601",    "ksx1001",  "wansung",  "euckr"},
-    { "csjis",    "japanese", "jpn"
+    { "japanese", "jpn"
         , "sjis",   "shiftjis", "mskanji",  ""},
-    { "",         "chinesetraditional", "cht"
+    { "chinesetraditional", "cht"
         , "bigfive",    "big5", "cnbig5",   "euctw"},
-    { "cjis",     "",     ""
+    { "",     ""
         , "iso2022jp",  "iso2022jp1",   "jis",  ""},
-    { "",         "",     ""
+    { "",     ""
         , "utf8",   "utf",      "",     ""},
 };
 
+static int      mbstart;
 static int      mb2;
 
 static size_t   mb_read_2byte( int c1, char ** in_pp, char ** out_pp);
@@ -323,16 +338,22 @@ static const char *     search_encoding( char * norm, int alias);
                 /* Search encoding_name[][] table   */
 static void     strip_bar( char * string);
                 /* Remove '_', '-' or '.' in the string */
+static void     conv_case( char * name, char * lim, int upper);
+                /* Convert to upper/lower case      */
 static size_t   mb_read_iso2022_jp( int c1, char ** in_pp, char ** out_pp);
                 /* For ISO2022_JP encoding          */
 static size_t   mb_read_utf8( int c1, char ** in_pp, char ** out_pp);
                 /* For UTF8 mbchar encoding         */
 
-#define NAMLEN  20
+#define NAMLEN          20
+#define UPPER           1               /* To upper */
+#define LOWER           0               /* To lower */
 
-const char *    set_encoding(const char *  name,       /* Name of encoding specified   */
+
+const char *    set_encoding(
+                             const char *  name,       /* Name of encoding specified   */
                              const char *  env,        /* Name of environment variable */
-                             int     pragma
+    int     pragma
         /* 2: #pragma setlocale, 1: #pragma __setlocale, 0: not #pragma */
 )
 /*
@@ -373,14 +394,10 @@ const char *    set_encoding(const char *  name,       /* Name of encoding speci
             || ACE_OS::memcmp( norm, "en", 2) == 0) {       /* en*      */
         mbchar = 0;                 /* No multi-byte character  */
     } else {
-        alias = 3;
-#if COMPILER == GNUC
-        if (env && str_eq( env, "LANG"))
-            alias = 0;
-#endif
+        alias = 2;
 #if COMPILER == MSC
         if (pragma == SETLOCALE)        /* #pragma setlocale    */
-            alias = 1;
+            alias = 0;
 #endif
         loc = search_encoding( norm, alias);        /* Search the name  */
     }
@@ -421,10 +438,6 @@ static const char * search_encoding(
                 }
                 return  loc;
             }
-#if COMPILER == GNUC
-            if (alias == 0 && al == 0)  /* Searched the names for LANG  */
-                al = 2;         /* Skip the name for Visual C   */
-#endif
         }
     }
     return  0;
@@ -444,6 +457,35 @@ static void strip_bar(
             ACE_OS::memmove( cp, cp + 1, ACE_OS::strlen( cp));
         else
             cp++;
+    }
+}
+
+static void     conv_case(
+    char *  name,                       /* (diretory) Name          */
+    char *  lim,                        /* End of (directory) name  */
+    int     upper                       /* TRUE if to upper         */
+)
+/* Convert a string to upper-case letters or lower-case letters in-place    */
+{
+    int     c;
+    char *  sp;
+
+    for (sp = name; sp < lim; sp++) {
+        c = *sp & UCHARMAX;
+#if MBCHAR
+        if ((char_type[ c] & mbstart)) {
+            char    tmp[ PATHMAX+1];
+            char *  tp = tmp;
+            *tp++ = *sp++;
+            mb_read( c, &sp, &tp);
+        } else
+#endif
+        {
+            if (upper)
+                *sp = toupper( c);
+            else
+                *sp = tolower( c);
+        }
     }
 }
 
@@ -490,40 +532,48 @@ void    mb_init( void)
     switch (mbchar) {
     case 0      :
         mbstart = 0;
-        mbmask = ~0;
         break;
     case EUC_JP :
         mbstart = EJ1;
-        mbmask = ~EU12;
         mb2 = EJ2;
         break;
     case GB2312 :
         mbstart = GB1;
-        mbmask = ~EU12;
         mb2 = GB2;
         break;
     case KSC5601:
         mbstart = KS1;
-        mbmask = ~EU12;
         mb2 = KS2;
         break;
     case SJIS   :
         mbstart = SJ1;
-        mbmask = ~SB12;
         mb2 = SJ2;
         break;
     case BIGFIVE:
         mbstart = BF1;
-        mbmask = ~SB12;
         mb2 = BF2;
         break;
     case ISO2022_JP :
         mbstart = IS1;
-        mbmask = ~(IS1 | IS2 | IS3 | IS4 | IJP);
         break;
     case UTF8   :
-        mbstart = (U2_1 | U3_1);
-        mbmask = ~(U2_1 | U2_2 | U3_1 | U3_2 | U3_3);
+        mbstart = (U2_1 | U3_1 | U4_1);
+        break;
+    }
+    switch (mbchar) {
+    case 0      :
+        mbchk = 0;
+        break;
+    case EUC_JP :
+    case GB2312 :
+    case KSC5601:
+    case SJIS   :
+    case BIGFIVE:
+    case UTF8   :
+        mbchk = NA;
+        break;
+    case ISO2022_JP :
+        mbchk = (IS1 | NA);
         break;
     }
 
@@ -561,12 +611,12 @@ void    mb_init( void)
         char_type[ DEF_MAGIC] = standard ? LET : 0;
         char_type[ IN_SRC] = (mcpp_mode == STD) ? LET : 0;
         char_type[ TOK_SEP] = (mcpp_mode == STD || mcpp_mode == OLD_PREP)
-                ? SPA: 0;           /* TOK_SEP equals to COM_SEP    */
+                ? HSPA: 0;          /* TOK_SEP equals to COM_SEP    */
     }
 }
 
 static size_t   mb_read_2byte(
-    int    ,         /* The 1st byte of mbchar sequence (already read)   */
+    int     c1,         /* The 1st byte of mbchar sequence (already read)   */
     char ** in_pp,              /* Pointer to input     */
     char ** out_pp              /* Pointer to output    */
 )
@@ -578,6 +628,9 @@ static size_t   mb_read_2byte(
     size_t  len = 0;    /* Number of multi-byte characters read.    */
     char *  in_p = *in_pp;
     char *  out_p = *out_pp;
+
+    if (! (char_type[ c1 & UCHARMAX] & mbstart))
+        return  MB_ERROR;           /* Not a multi-byte character   */
 
     do {
         if (! (char_type[ (*out_p++ = *in_p++) & UCHARMAX] & mb2)) {
@@ -606,6 +659,9 @@ static size_t   mb_read_iso2022_jp(
     char *  in_p = *in_pp;
     char *  out_p = *out_pp;
     int     c2, c3, c4;
+
+    if (! (char_type[ c1 & UCHARMAX] & mbstart))
+        return  MB_ERROR;
 
     do {
 
@@ -679,30 +735,49 @@ static size_t   mb_read_utf8(
     size_t  len = 0;
     char *  in_p = *in_pp;
     char *  out_p = *out_pp;
-    int     c2;
+
+    if (! (char_type[ c1 & UCHARMAX] & mbstart))
+        return  MB_ERROR;
 
     do {
-        *out_p++ = c2 = *in_p++;
-        if (char_type[ c1 & UCHARMAX] & U2_1) {         /* 2-byte character */
-            if (! (char_type[ c2 & UCHARMAX] & U2_2)) {
+        unsigned int    codepoint;
+        int             i, bytes;
+
+        if ((char_type[ c1 & UCHARMAX] & U4_1) == U4_1)
+            bytes = 4;                          /* 4-byte character */
+        else if ((char_type[ c1 & UCHARMAX] & U3_1) == U3_1)
+            bytes = 3;                          /* 3-byte character */
+        else if ((char_type[ c1 & UCHARMAX] & U2_1) == U2_1)
+            bytes = 2;                          /* 2-byte character */
+
+        /* Must ensure that the sequence is not reserved as a surrogate */
+        codepoint = ((2 << (6-bytes)) - 1) & c1;    /* mask off top bits    */
+
+        /* All bytes left in the sequence must be in 0x80 - 0xBF    */
+        for (i = bytes - 1; i && !error; i--) {
+            codepoint = (codepoint << 6) + ((*in_p) & 0x3fU);
+            if (! (char_type[ (*out_p++ = *in_p++) & UCHARMAX] & UCONT))
                 error = TRUE;
-                break;
-            }
-        } else {
-            if (char_type[ c2 & UCHARMAX] & U3_2) {     /* 3-byte character */
-                if (! (char_type[ (*out_p++ = *in_p++) & UCHARMAX] & U3_3)) {
-                    error = TRUE;
-                    break;
-                }
-            } else {
-                error = TRUE;
-                break;
-            }
         }
+
+        /* Check for overlong/underlong sequences */
+        if ((bytes == 2 && (codepoint < 0x80 || codepoint > 0x7FF))
+            || (bytes == 3 && (codepoint < 0x800 || codepoint > 0xFFFF))
+            || (bytes == 4 && (codepoint < 0x10000 || codepoint > 0x10FFFF)))
+            error = TRUE;
+        if ((codepoint >= 0xD800 && codepoint <= 0xDFFF)
+            /* Check for reserved surrogate codepoints */
+                || (codepoint >= 0xFFFE && codepoint <= 0xFFFF))
+                /* Illegal  */
+            error = TRUE;
+#if 0
+        printf( "codepoint:0x%x\n", codepoint);
+#endif
+        if (error)
+            break;
         len++;
     } while (char_type[ (*out_p++ = c1 = *in_p++) & UCHARMAX] & mbstart);
                         /* Start of the next multi-byte character   */
-
     *in_pp = --in_p;
     *(--out_p) = EOS;
     *out_pp = out_p;
@@ -723,18 +798,22 @@ uexpr_t     mb_eval(
     uexpr_t     val = 0;
     int         c, c1;
 
+    if (! (char_type[ c = *seq++ & UCHARMAX] & mbstart)) {
+        *seq_pp = seq;
+        return  c;                  /* Not a multi-byte character   */
+    }
+
     switch (mbchar) {
     case EUC_JP :
     case GB2312 :
     case KSC5601:
     case SJIS   :
     case BIGFIVE:
-        val = (*seq++ & UCHARMAX) << 8;
-        val += *seq++ & UCHARMAX;       /* Evaluate the 2-byte sequence */
+        val = (c << 8) + (*seq++ & UCHARMAX);
+        /* Evaluate the 2-byte sequence */
         break;
     case ISO2022_JP :
-        if (char_type[ c = *seq++ & UCHARMAX] & IS1) {
-                                                /* Skip shift-sequence  */
+        if (char_type[ c & UCHARMAX] & IS1) {   /* Skip shift-sequence  */
             if (char_type[ c = *seq++ & UCHARMAX] & IS2) {
                 if (char_type[ c1 = *seq++ & UCHARMAX] & IS3) {
                     if (c1 == 0x28)
@@ -747,13 +826,14 @@ uexpr_t     mb_eval(
                 }
             }
         }
-        val = (c << 8) + (*seq++ & UCHARMAX);       /* Evaluate the 2-byte  */
+        val = (c << 8) + (*seq++ & UCHARMAX);       /* Evaluate the 2-bytes */
         break;
-    case UTF8   :       /* Evaluate the sequence of 2 or 3 bytes as it is   */
-        if (char_type[ c = *seq++ & UCHARMAX] & U2_1) {
-            val = (c << 8) + (*seq++ & UCHARMAX);
-        } else {
-            val = (c << 8) + (*seq++ & UCHARMAX);
+    case UTF8   :   /* Evaluate the sequence of 2, 3 or 4 bytes as it is    */
+        val = (c << 8) + (*seq++ & UCHARMAX);
+        if (char_type[ c & UCHARMAX] & U3_1) {
+            val = (val << 8) + (*seq++ & UCHARMAX);
+        } else if (char_type[ c & UCHARMAX] & U4_1) {
+            val = (val << 8) + (*seq++ & UCHARMAX);
             val = (val << 8) + (*seq++ & UCHARMAX);
         }
         break;
@@ -761,5 +841,29 @@ uexpr_t     mb_eval(
 
     *seq_pp = seq;
     return  val;
+}
+
+int  last_is_mbchar(
+    const char *  in,               /* Input physical line          */
+    int     len                     /* Length of the line minus 2   */
+)
+/*
+ * Return 2, if the last char of the line is second byte of SJIS or BIGFIVE,
+ * else return 0.
+ */
+{
+    const char *    cp = in + len;
+    const char * const      endp = in + len;    /* -> the char befor '\n'   */
+
+    if ((mbchar & (SJIS | BIGFIVE)) == 0)
+        return  0;
+    while (in <= --cp) {                    /* Search backwardly    */
+        if ((char_type[ *cp & UCHARMAX] & mbstart) == 0)
+            break;                  /* Not the first byte of MBCHAR */
+    }
+    if ((endp - cp) & 1)
+        return  0;
+    else
+        return  2;
 }
 

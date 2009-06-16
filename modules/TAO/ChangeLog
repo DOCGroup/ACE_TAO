@@ -1,8 +1,33 @@
+Tue Jun 16 15:40:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib:
+        * TAO_IDL/contrib/mcpp/Makefile.am:
+        * TAO_IDL/contrib/mcpp/cc1.cpp:
+        * TAO_IDL/contrib/mcpp/configed.H:
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/eval.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/lib.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/main_libmcpp.c:
+        * TAO_IDL/contrib/mcpp/mbchar.cpp:
+        * TAO_IDL/contrib/mcpp/mcpp.mpc:
+        * TAO_IDL/contrib/mcpp/mcpp_lib.h:
+        * TAO_IDL/contrib/mcpp/mcpp_out.h:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.H:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+        * TAO_IDL/contrib/mcpp/testmain.c:
+
+          Merged in from trunk. 
+        
 Tue Jun 16 13:09:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
         * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
-        
+
           Added a method that restores the state of the home's
           scope. The CCM pre_proc visitor makes some invasive
           changes, and restoration was never done since at that
@@ -10,9 +35,9 @@ Tue Jun 16 13:09:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
           all code generation came from the added implied IDL
           nodes. Now that we are doing addition code generation,
           this scope state must be restored.
-          
+
         * TAO_IDL/be/be_visitor_root/root.cpp:
-        
+
           Added the new context states related to CIAO code
           generation to some switch statements in this visitor,
           to avoid getting "bad context" errors.
@@ -20,7 +45,7 @@ Tue Jun 16 13:09:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Jun 12 20:39:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/home_svs.cpp:
-        
+
           Implemented overlooked generation of home servant factory
           function.
 
@@ -28,7 +53,7 @@ Thu Jun 11 19:35:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:
         * TAO_IDL/be/be_visitor_component/component_svs.cpp:
-        
+
           Fixed errors in CIAO servant code generation.
 
 Thu Jun 11 17:53:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -38,7 +63,7 @@ Thu Jun 11 17:53:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_null_return_emitter.cpp:
         * TAO_IDL/be/be_visitor_null_return_value.cpp:
         * TAO_IDL/be_include/be_null_return_emitter.h:
-        
+
           Fixed mistakes in executor implementation code generation.
 
 Thu Jun 11 000:36:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
