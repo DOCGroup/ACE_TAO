@@ -1,3 +1,10 @@
+Tue Jun 16 15:14:52 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_main.cpp:
+
+          For Windows CE/Mobile: when constructing argv[0], quote the full
+          path to the exe if it contains spaces (\Program Files\...).
+
 Mon Jun 15 07:45:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3673_Regression_Test.cpp:
@@ -17,7 +24,7 @@ Fri Jun 12 19:05:43 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
 Fri Jun 12 19:16:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        Rever the change below, Adam has a better fix
+        Revert the change below, Adam has a better fix
         * ace/config-WinCE.h
           Set ACE_LACKS_SO_RCVBUF for WinCE 5, it is not supported
 
