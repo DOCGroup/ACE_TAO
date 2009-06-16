@@ -32,6 +32,7 @@ namespace CIAO
     class ComponentAssemblyDescription;
     class MonolithicImplementationDescription;
     class ComponentImplementationDescription;
+    class ConnectorImplementationDescription;
   }
 }
 
@@ -574,16 +575,6 @@ namespace CIAO
       protected:
       ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
-      // contentLocation
-      // 
-      public:
-      bool contentLocation_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
-      void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > contentLocation_;
-
       // href
       // 
       public:
@@ -603,6 +594,148 @@ namespace CIAO
 
       ComponentImplementationDescription&
       operator= (ComponentImplementationDescription const& s);
+
+      private:
+      char regulator__;
+    };
+
+
+    class XSC_XML_Handlers_Export ConnectorImplementationDescription : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ConnectorImplementationDescription, ACE_Null_Mutex > _ptr;
+
+      // label
+      // 
+      public:
+      bool label_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& label () const;
+      void label (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
+
+      // UUID
+      // 
+      public:
+      bool UUID_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
+      void UUID (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
+
+      // implements
+      // 
+      public:
+      bool implements_p () const;
+      ::CIAO::Config_Handlers::ComponentInterfaceDescription const& implements () const;
+      void implements (::CIAO::Config_Handlers::ComponentInterfaceDescription const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > implements_;
+
+      // assemblyImpl
+      // 
+      public:
+      bool assemblyImpl_p () const;
+      ::CIAO::Config_Handlers::ComponentAssemblyDescription const& assemblyImpl () const;
+      void assemblyImpl (::CIAO::Config_Handlers::ComponentAssemblyDescription const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentAssemblyDescription > assemblyImpl_;
+
+      // monolithicImpl
+      // 
+      public:
+      bool monolithicImpl_p () const;
+      ::CIAO::Config_Handlers::MonolithicImplementationDescription const& monolithicImpl () const;
+      void monolithicImpl (::CIAO::Config_Handlers::MonolithicImplementationDescription const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::MonolithicImplementationDescription > monolithicImpl_;
+
+      // configProperty
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
+      configProperty_iterator begin_configProperty ();
+      configProperty_iterator end_configProperty ();
+      configProperty_const_iterator begin_configProperty () const;
+      configProperty_const_iterator end_configProperty () const;
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      size_t count_configProperty (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
+
+      // capability
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > >::iterator capability_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > >::const_iterator capability_const_iterator;
+      capability_iterator begin_capability ();
+      capability_iterator end_capability ();
+      capability_const_iterator begin_capability () const;
+      capability_const_iterator end_capability () const;
+      void add_capability ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > const& );
+      size_t count_capability (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > > capability_;
+
+      // dependsOn
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > >::iterator dependsOn_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > >::const_iterator dependsOn_const_iterator;
+      dependsOn_iterator begin_dependsOn ();
+      dependsOn_iterator end_dependsOn ();
+      dependsOn_const_iterator begin_dependsOn () const;
+      dependsOn_const_iterator end_dependsOn () const;
+      void add_dependsOn ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > const& );
+      size_t count_dependsOn (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > > dependsOn_;
+
+      // infoProperty
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
+      infoProperty_iterator begin_infoProperty ();
+      infoProperty_iterator end_infoProperty ();
+      infoProperty_const_iterator begin_infoProperty () const;
+      infoProperty_const_iterator end_infoProperty () const;
+      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      size_t count_infoProperty (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
+
+      // href
+      // 
+      public:
+      bool href_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& href () const;
+      ::XMLSchema::string< ACE_TCHAR >& href ();
+      void href (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > href_;
+
+      public:
+      ConnectorImplementationDescription ();
+
+      ConnectorImplementationDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      ConnectorImplementationDescription (ConnectorImplementationDescription const& s);
+
+      ConnectorImplementationDescription&
+      operator= (ConnectorImplementationDescription const& s);
 
       private:
       char regulator__;
@@ -1366,16 +1499,217 @@ namespace CIAO
         infoProperty_none (Type const&);
 
         virtual void
-        contentLocation (Type&);
+        href (Type&);
 
         virtual void
-        contentLocation (Type const&);
+        href (Type const&);
 
         virtual void
-        contentLocation_none (Type&);
+        href_none (Type&);
 
         virtual void
-        contentLocation_none (Type const&);
+        href_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct XSC_XML_Handlers_Export ConnectorImplementationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectorImplementationDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        label (Type&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        label_none (Type&);
+
+        virtual void
+        label_none (Type const&);
+
+        virtual void
+        UUID (Type&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        UUID_none (Type&);
+
+        virtual void
+        UUID_none (Type const&);
+
+        virtual void
+        implements (Type&);
+
+        virtual void
+        implements (Type const&);
+
+        virtual void
+        implements_none (Type&);
+
+        virtual void
+        implements_none (Type const&);
+
+        virtual void
+        assemblyImpl (Type&);
+
+        virtual void
+        assemblyImpl (Type const&);
+
+        virtual void
+        assemblyImpl_none (Type&);
+
+        virtual void
+        assemblyImpl_none (Type const&);
+
+        virtual void
+        monolithicImpl (Type&);
+
+        virtual void
+        monolithicImpl (Type const&);
+
+        virtual void
+        monolithicImpl_none (Type&);
+
+        virtual void
+        monolithicImpl_none (Type const&);
+
+        virtual void
+        configProperty (Type&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        configProperty_pre (Type&);
+
+        virtual void
+        configProperty_pre (Type const&);
+
+        virtual void
+        configProperty_next (Type&);
+
+        virtual void
+        configProperty_next (Type const&);
+
+        virtual void
+        configProperty_post (Type&);
+
+        virtual void
+        configProperty_post (Type const&);
+
+        virtual void
+        configProperty_none (Type&);
+
+        virtual void
+        configProperty_none (Type const&);
+
+        virtual void
+        capability (Type&);
+
+        virtual void
+        capability (Type const&);
+
+        virtual void
+        capability_pre (Type&);
+
+        virtual void
+        capability_pre (Type const&);
+
+        virtual void
+        capability_next (Type&);
+
+        virtual void
+        capability_next (Type const&);
+
+        virtual void
+        capability_post (Type&);
+
+        virtual void
+        capability_post (Type const&);
+
+        virtual void
+        capability_none (Type&);
+
+        virtual void
+        capability_none (Type const&);
+
+        virtual void
+        dependsOn (Type&);
+
+        virtual void
+        dependsOn (Type const&);
+
+        virtual void
+        dependsOn_pre (Type&);
+
+        virtual void
+        dependsOn_pre (Type const&);
+
+        virtual void
+        dependsOn_next (Type&);
+
+        virtual void
+        dependsOn_next (Type const&);
+
+        virtual void
+        dependsOn_post (Type&);
+
+        virtual void
+        dependsOn_post (Type const&);
+
+        virtual void
+        dependsOn_none (Type&);
+
+        virtual void
+        dependsOn_none (Type const&);
+
+        virtual void
+        infoProperty (Type&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        infoProperty_pre (Type&);
+
+        virtual void
+        infoProperty_pre (Type const&);
+
+        virtual void
+        infoProperty_next (Type&);
+
+        virtual void
+        infoProperty_next (Type const&);
+
+        virtual void
+        infoProperty_post (Type&);
+
+        virtual void
+        infoProperty_post (Type const&);
+
+        virtual void
+        infoProperty_none (Type&);
+
+        virtual void
+        infoProperty_none (Type const&);
 
         virtual void
         href (Type&);
@@ -2077,13 +2411,185 @@ namespace CIAO
         infoProperty_post (Type const&);
 
         virtual void 
-        contentLocation (Type &o)
+        href (Type &o)
         {
-          this->contentLocation (const_cast <Type const &> (o));
+          this->href (const_cast <Type const &> (o));
         }
 
         virtual void
-        contentLocation (Type const&);
+        href (Type const&);
+
+        protected:
+        ComponentImplementationDescription ();
+      };
+
+      struct ConnectorImplementationDescription : Traversal::ConnectorImplementationDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::ConnectorImplementationDescription Type;
+        ConnectorImplementationDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        label (Type &o)
+        {
+          this->label (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        label (Type const&);
+
+        virtual void 
+        UUID (Type &o)
+        {
+          this->UUID (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void 
+        implements (Type &o)
+        {
+          this->implements (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        implements (Type const&);
+
+        virtual void 
+        assemblyImpl (Type &o)
+        {
+          this->assemblyImpl (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        assemblyImpl (Type const&);
+
+        virtual void 
+        monolithicImpl (Type &o)
+        {
+          this->monolithicImpl (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        monolithicImpl (Type const&);
+
+        virtual void 
+        configProperty_pre (Type &o)
+        {
+          this->configProperty_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        configProperty_pre (Type const&);
+
+        virtual void 
+        configProperty_next (Type &o)
+        {
+          this->configProperty_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        configProperty_next (Type const&);
+
+        virtual void 
+        configProperty_post (Type &o)
+        {
+          this->configProperty_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        configProperty_post (Type const&);
+
+        virtual void 
+        capability_pre (Type &o)
+        {
+          this->capability_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        capability_pre (Type const&);
+
+        virtual void 
+        capability_next (Type &o)
+        {
+          this->capability_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        capability_next (Type const&);
+
+        virtual void 
+        capability_post (Type &o)
+        {
+          this->capability_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        capability_post (Type const&);
+
+        virtual void 
+        dependsOn_pre (Type &o)
+        {
+          this->dependsOn_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        dependsOn_pre (Type const&);
+
+        virtual void 
+        dependsOn_next (Type &o)
+        {
+          this->dependsOn_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        dependsOn_next (Type const&);
+
+        virtual void 
+        dependsOn_post (Type &o)
+        {
+          this->dependsOn_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        dependsOn_post (Type const&);
+
+        virtual void 
+        infoProperty_pre (Type &o)
+        {
+          this->infoProperty_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        infoProperty_pre (Type const&);
+
+        virtual void 
+        infoProperty_next (Type &o)
+        {
+          this->infoProperty_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        infoProperty_next (Type const&);
+
+        virtual void 
+        infoProperty_post (Type &o)
+        {
+          this->infoProperty_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        infoProperty_post (Type const&);
 
         virtual void 
         href (Type &o)
@@ -2095,7 +2601,7 @@ namespace CIAO
         href (Type const&);
 
         protected:
-        ComponentImplementationDescription ();
+        ConnectorImplementationDescription ();
       };
     }
   }
