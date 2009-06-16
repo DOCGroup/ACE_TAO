@@ -1,17 +1,37 @@
+Tue Jun 16 19:20:32 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+        * DAnCE/RepositoryManager:
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/RepositoryManager/Repository_Manager_Admin_Export.h:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin.h:
+        * DAnCE/RepositoryManager/repository_manager_admin.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+
+          Merge in from my RepositoryManager sprint branch. 
+        
+        * DAnCE/RepositoryManager/Options.h:
+        * DAnCE/RepositoryManager/Options.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+
+          Removed these files.
+
 Tue Jun 16 19:11:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-        
-          Fix for a segmentation fault with unhomed components. 
-        
+
+          Fix for a segmentation fault with unhomed components.
+
         * DAnCE/tests/CIAO/Components/ProcessColocation_exec.h:
         * DAnCE/tests/CIAO/Components/ProcessColocation_exec.cpp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleProcessColocation.cdp:
 
           Simple test to determine if PlanLocality constraints work or not.  Note
           that as this support has yet to be implemented, this test is currently designed
-          to fail. 
-        
+          to fail.
+
 Tue Jun 16 18:46:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/Administrator.mpc
