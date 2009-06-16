@@ -1,3 +1,9 @@
+Tue Jun 16 14:28:55 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciaoidldefaults.mpb:
+
+          Added -Gsv.  Thanks to MArcel for pointing out the omission. 
+        
 Tue Jun 16 13:34:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Null_Component/Null_Component.mpc
