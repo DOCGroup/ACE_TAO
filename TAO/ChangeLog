@@ -1,3 +1,9 @@
+Tue Jun 16 07:19:07 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Added return value check for fscanf to silence complation
+          warning on Ubuntu 9.04.
+
 Tue Jun 16 07:06:14 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Big_AMI/client.cpp:
