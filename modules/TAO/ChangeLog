@@ -1,3 +1,11 @@
+Tue Jun 16 16:46:15 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        
+          Fixed a couple of code generation bugs related to
+          scoping adjustments. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for reporting the problems.
+
 Tue Jun 16 15:40:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib:
@@ -23,6 +31,7 @@ Tue Jun 16 15:40:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Merged in from trunk. 
         
+>>>>>>> .r85664
 Tue Jun 16 13:09:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
