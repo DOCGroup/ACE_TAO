@@ -6,24 +6,22 @@ project(Hello_Sender_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
               -Wb,skel_export_macro=SENDER_SVNT_Export \
-              -Wb,skel_export_include=Sender_svnt_export.h
+              -Wb,skel_export_include=Sender_svnt_export.h \
+              -Wb,exec_export_macro=SENDER_EXEC_Export \
+              -Wb,exec_export_include=Sender_exec_export.h \
+              -Gsv
 
   IDL_Files {
     Sender.idl
   }
 }
 
-project(Hello_Sender_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(Hello_Sender_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+  after += Hello_Sender_idl_gen
   custom_only = 1
-  cidlflags += --svnt-export-macro SENDER_SVNT_Export \
-               --svnt-export-include Sender_svnt_export.h
   idlflags += -Wb,export_macro=SENDER_EXEC_Export \
               -Wb,export_include=Sender_exec_export.h \
               -SS
-
-  CIDL_Files {
-    Sender.cidl
-  }
 
   IDL_Files {
     SenderE.idl
@@ -57,7 +55,7 @@ project(Hello_Sender_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 project(Hello_Sender_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += Hello_Sender_cidl_gen Hello_Sender_stub
+  after   += Hello_Sender_idle_gen Hello_Sender_stub
   sharedname = Hello_Sender_exec
   libs += Hello_Sender_stub Hello_Base_stub
   libout = ../lib

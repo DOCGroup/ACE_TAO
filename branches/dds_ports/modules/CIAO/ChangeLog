@@ -1,3 +1,16 @@
+Tue Jun 16 09:18:07 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello/Receiver/Receiver.mpc
+        * examples/Hello/Receiver/Receiver_exec.cpp
+        * examples/Hello/Receiver/Receiver_exec.h
+        * examples/Hello/Sender/Sender.mpc
+        * examples/Hello/Sender/Sender_exec.cpp
+        * examples/Hello/Sender/Sender_exec.h
+          Ported to IDL compiler
+
+        * examples/Hello/descriptors/run_test.pl
+          Reduced timeouts
+
 Mon Jun 15 19:20:07 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc:
@@ -11,7 +24,7 @@ Mon Jun 15 19:20:07 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Removed -Gex.  Thanks to Jeff both for the initial porting work
           and for pointing out the lingering -Gex.
-        
+
 Mon Jun 15 14:52:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.h:

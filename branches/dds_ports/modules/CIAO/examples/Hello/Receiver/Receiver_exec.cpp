@@ -21,7 +21,7 @@
 #include "Receiver_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_Receiver_Impl
+namespace CIAO_Hello_Receiver_Impl
 {
   Receiver_exec_i::Receiver_exec_i ()
   {
