@@ -1,7 +1,27 @@
+Tue Jun 16 18:46:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/Administrator.mpc
+        * examples/DevGuideExamples/Messenger/Administrator_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Administrator_exec_i.h
+        * examples/DevGuideExamples/Messenger/History_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/History_exec_i.h
+        * examples/DevGuideExamples/Messenger/Messenger.mpc
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.h
+        * examples/DevGuideExamples/Messenger/Publication_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Publication_exec_i.h
+        * examples/DevGuideExamples/Messenger/Receiver.mpc
+        * examples/DevGuideExamples/Messenger/Receiver_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Receiver_exec_i.h
+        * examples/DevGuideExamples/Messenger/Runnable_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Runnable_exec_i.h
+        * examples/Hello/Receiver/Receiver.mpc
+          Zap usage of cidlc
+
 Tue Jun 16 18:30:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Cornucopia/*.*:
-        
+
           New subdirectory (IDL_Test) for tests of the IDL
           compiler's recently added code generation of CIAO
           servants, executor IDL and executor implementation
@@ -14,8 +34,8 @@ Tue Jun 16 18:19:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/PL_Handler.cpp:
 
-          Addedmissing file. 
-        
+          Addedmissing file.
+
 Tue Jun 16 17:59:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Session/Session_Container.cpp:

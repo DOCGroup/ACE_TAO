@@ -25,7 +25,7 @@
 #include <iostream>
 #include <string>
 
-namespace CIDL_Administrator_Impl
+namespace CIAO_Administrator_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   Administrator_exec_i
