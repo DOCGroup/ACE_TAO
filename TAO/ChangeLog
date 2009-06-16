@@ -1,3 +1,21 @@
+Tue Jun 16 07:06:14 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Big_AMI/client.cpp:
+        * tests/Crash_On_Write/Crash_Task.cpp:
+        * tests/Portable_Interceptors/AMI/client.cpp:
+        * tests/Bug_1270_Regression/client.cpp:
+        * tests/Bug_1270_Regression/Echo.cpp:
+        * tests/Bug_1270_Regression/server.cpp:
+        * tests/Bug_1476_Test/test.ior:
+        * tao/ORB_Core.cpp:
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/ORB_Core.h:
+        * tao/Transport.cpp:
+
+          Reverted all my changes for Bug#3682 and Bug#3697. They need
+          more investigation.
+
 Mon Jun 15 19:45:30 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Connection_Handler.cpp:
@@ -5,9 +23,9 @@ Mon Jun 15 19:45:30 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           Change the initialization of the bidir listen point received in
           the context. This will silence an error that is reported by the
           ACE_INET_Addr ctor regardless of the debug output level.
-        
+
         * tests/BiDirectional/run_test3557.pl:
-        
+
           Change the number of iterations sent by the server to the
           callback.  This is necessary to avoid a problem on windows in
           which the TAO_IIOP_Endpoint::hash() method first calls its
@@ -17,13 +35,13 @@ Mon Jun 15 19:45:30 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
           as is the point of this test, windows apparently takes a while
           to time out before actually completing invocation and passing
           the test.
-        
+
           This actually points out a potentential failure in the transport
           cache in that recached bidir transports may end up using a hash
           key value of 0. This is not in itself a failure, but more than
           one such entry will cause that 0'th bucket to become
           disproportionally large.
-          
+
 Mon Jun 15 18:41:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
