@@ -4843,7 +4843,7 @@ void    do_pragma( void)
   char *  stpcpy(
                  char *          dest,
                  const char *    src
-                 ) throw ()
+                 ) 
   /*
    * Copy the string and return the advanced pointer.
    */
