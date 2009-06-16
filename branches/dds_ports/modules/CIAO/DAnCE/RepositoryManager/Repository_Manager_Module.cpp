@@ -233,7 +233,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               this->options_.spawn_http_ = true;
               this->options_.http_port_ = get_opts.opt_arg ();
             }
-          else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-")) == 0)
+          else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-threads")) == 0)
             {
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
                             "Using %C as the spawned HTTP number of threads\n",
@@ -241,7 +241,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               this->options_.spawn_http_ = true;
               this->options_.http_threads_ = get_opts.opt_arg ();
             }
-          else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-")) == 0)
+          else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-threading")) == 0)
             {
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
                             "Using %C as the spawned HTTP server threading model\n",
@@ -249,7 +249,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               this->options_.spawn_http_ = true;
               this->options_.http_threading_ = get_opts.opt_arg ();
             }
-          else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-")) == 0)
+          else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-io")) == 0)
             {
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
                             "Using %C as the spawned HTTP server IO strategy\n",
@@ -257,7 +257,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               this->options_.spawn_http_ = true;
               this->options_.http_io_ = get_opts.opt_arg ();
             }
-          else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-")) == 0)
+          else if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("http-caching")) == 0)
             {
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Repository_Manager_Module::parse_args - "
                             "Using %C as the spawned HTTP server caching strategy\n",
@@ -497,22 +497,34 @@ DAnCE_RepositoryManager_Module::spawn_http (void)
 {
   DANCE_TRACE ("DAnCE_RepositoryManager_Module::spawn_http");
 
-  const ACE_TCHAR *name = "HTTP_Server";
+  ACE_CString directive =
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
+    ACE_TEXT ("<dynamic id=\"HTTP_Server\" type=\"Service_Object\">")
+    ACE_TEXT ("  <initializer init=\"_make_HTTP_Server\" path=\"JAWS\" params=\"");
+#else
+  ACE_TEXT ("dynamic HTTP_Server Service_Object *")
+    ACE_TEXT ("  JAWS:_make_HTTP_Server() \"");
+#endif
 
-  ACE_CString args;
-  args += "-p ";
-  args += this->options_.http_port_;
-  args += " -n ";
-  args += this->options_.http_threads_;
-  args += " -i ";
-  args += this->options_.http_io_;
-  args += " -t ";
-  args += this->options_.http_threading_;
-  args += " -c ";
-  args += this->options_.http_caching_;
-  args += " -b 50 -f THR_NEW_LWP";
+  directive += ACE_TEXT ("-p ");
+  directive += this->options_.http_port_;
+  directive += ACE_TEXT (" -n ");
+  directive += this->options_.http_threads_;
+  directive += ACE_TEXT (" -i ");
+  directive += this->options_.http_io_;
+  directive += ACE_TEXT (" -t ");
+  directive += this->options_.http_threading_;
+  directive += ACE_TEXT (" -c ");
+  directive += this->options_.http_caching_;
+  directive += ACE_TEXT (" -b 50 -f THR_NEW_LWP");
+  directive += ACE_TEXT ("\"");
+  
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
+  directive += ACE_TEXT ("/>");
+  directive += ACE_TEXT ("</dynamic>");
+#endif
 
-  ACE_Service_Config::current ()->initialize (name, args.c_str ());
+  ACE_Service_Config::current ()->process_directive (directive.c_str ());
 }
 
 #ifndef BUILD_REPOSITORY_MANAGER_EXE

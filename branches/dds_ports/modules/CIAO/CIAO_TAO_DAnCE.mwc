@@ -4,6 +4,7 @@
 workspace {
   $(ACE_ROOT)/ace
   $(ACE_ROOT)/apps/gperf/src
+  $(ACE_ROOT)/apps/JAWS/server
   $(ACE_ROOT)/ACEXML/common
   $(ACE_ROOT)/ACEXML/parser/parser
   $(ACE_ROOT)/ACEXML/apps/svcconf
