@@ -13,21 +13,30 @@ project(Messenger_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
     Publication.idl
     Message.idl
     History.idl
+  }
+}
+
+project(Messenger_idlx_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=MESSENGER_STUB_Export \
+              -Wb,stub_export_include=Messenger_stub_export.h \
+              -Wb,skel_export_macro=MESSENGER_SVNT_Export \
+              -Wb,skel_export_include=Messenger_svnt_export.h \
+              -Wb,exec_export_macro=MESSENGER_EXEC_Export \
+              -Wb,exec_export_include=Messenger_exec_export.h \
+              -Gsv
+
+  IDL_Files {
     Messenger.idl
   }
 }
 
-project(Messenger_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(Messenger_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  cidlflags += --svnt-export-macro MESSENGER_SVNT_Export \
-               --svnt-export-include Messenger_svnt_export.h
+  after += Messenger_idl_gen Messenger_idlx_gen
   idlflags += -Wb,export_macro=MESSENGER_EXEC_Export \
               -Wb,export_include=Messenger_exec_export.h \
               -SS
-
-  CIDL_Files {
-    Messenger.cidl
-  }
 
   IDL_Files {
     MessengerE.idl
@@ -70,7 +79,7 @@ project(Messenger_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 project(Messenger_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += Messenger_cidl_gen Messenger_stub
+  after   += Messenger_idle_gen Messenger_stub
   sharedname = Messenger_exec
   libs += Messenger_stub
 
@@ -108,9 +117,6 @@ project(Messenger_svnt) : ciao_servant, avoids_ace_for_tao {
                 Messenger_stub
 
   dynamicflags = MESSENGER_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }
