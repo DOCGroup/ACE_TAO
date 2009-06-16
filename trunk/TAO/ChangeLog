@@ -1,3 +1,13 @@
+Tue Jun 16 15:33:24 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * NEWS:
+        
+          Updated. 
+        
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Removed incompatible throw specification. 
+        
 Tue Jun 16 07:19:07 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
