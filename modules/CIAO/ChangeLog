@@ -1,3 +1,17 @@
+Tue Jun 16 19:11:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        
+          Fix for a segmentation fault with unhomed components. 
+        
+        * DAnCE/tests/CIAO/Components/ProcessColocation_exec.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleProcessColocation.cdp:
+
+          Simple test to determine if PlanLocality constraints work or not.  Note
+          that as this support has yet to be implemented, this test is currently designed
+          to fail. 
+        
 Tue Jun 16 18:46:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/Administrator.mpc
