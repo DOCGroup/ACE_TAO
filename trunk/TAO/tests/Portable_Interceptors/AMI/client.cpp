@@ -195,8 +195,6 @@ test_ami (CORBA::ORB_ptr orb,
 
   unsigned long initial_request_count =
     Echo_Client_Request_Interceptor::request_count;
-  unsigned long initial_reply_count =
-    Echo_Client_Request_Interceptor::reply_count;
   unsigned long initial_other_count =
     Echo_Client_Request_Interceptor::other_count;
 
@@ -208,8 +206,7 @@ test_ami (CORBA::ORB_ptr orb,
     }
 
   unsigned long total_request_count =
-    Echo_Client_Request_Interceptor::request_count -
-    (Echo_Client_Request_Interceptor::reply_count + initial_request_count);
+    Echo_Client_Request_Interceptor::request_count - initial_request_count;
   unsigned long total_other_count =
     Echo_Client_Request_Interceptor::other_count - initial_other_count;
 
@@ -224,7 +221,8 @@ test_ami (CORBA::ORB_ptr orb,
     }
 
   initial_request_count =
-    Echo_Client_Request_Interceptor::request_count -
+    Echo_Client_Request_Interceptor::request_count;
+  unsigned long initial_reply_count =
     Echo_Client_Request_Interceptor::reply_count;
 
   while (echo_handler_impl->replies () != ITERATIONS)
