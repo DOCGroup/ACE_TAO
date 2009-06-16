@@ -1,9 +1,16 @@
+Tue Jun 16 13:34:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Null_Component/Null_Component.mpc
+        * examples/Null_Component/Null_Component_exec.cpp
+        * examples/Null_Component/Null_Component_exec.h
+          Zapp cidlc
+
 Tue Jun 16 13:26:22 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/PL_Handler.h:
 
-          Missing from a prior commit. 
-        
+          Missing from a prior commit.
+
 Tue Jun 16 12:55:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.h:
