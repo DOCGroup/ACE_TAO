@@ -623,11 +623,12 @@ be_visitor_component_svs::gen_provides (AST_Type *obj,
                                         const char *port_name)
 {
   const char *obj_name = obj->full_name ();
-  ACE_CString sname_str (
-    ScopeAsDecl (obj->defined_in ())->full_name ());
+  AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
+  ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
   const char *lname = obj->local_name ()->get_string ();
   const char *global = (sname_str == "" ? "" : "::");
+  const char *prefix_connector = (sname_str == "" ? "" : "_");
   
   os_ << be_nl << be_nl
       << "::" << obj_name << "_ptr" << be_nl
@@ -673,7 +674,9 @@ be_visitor_component_svs::gen_provides (AST_Type *obj,
       << "}" << be_uidt_nl << be_nl
       << "typedef" << be_idt_nl
       << "::CIAO::Port_Activator_T<" << be_idt_nl
-      << "::CIAO_FACET_" << obj_name << "_Servant," << be_nl
+      << "::CIAO_FACET" << prefix_connector
+      << scope->flat_name () << "::" << lname
+      << "_Servant," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
       << "::Components::CCMContext," << be_nl
       << node_->local_name () << "_Servant>" << be_uidt_nl
@@ -2552,7 +2555,7 @@ be_visitor_component_svs::gen_entrypoint (void)
       << "{" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_var x =" << be_idt_nl
-      << "::" << sname << "::CCM_" << lname
+      << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
       << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
