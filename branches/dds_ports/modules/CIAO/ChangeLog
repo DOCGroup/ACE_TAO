@@ -1,3 +1,15 @@
+Tue Jun 16 18:30:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Cornucopia/*.*:
+        
+          New subdirectory (IDL_Test) for tests of the IDL
+          compiler's recently added code generation of CIAO
+          servants, executor IDL and executor implementation
+          stencil classes. Also new test (Cornupcopia), which
+          includes IDL3 constructs, scoping relationships,
+          and build configurations not covered in other CIAO
+          tests or examples.
+
 Tue Jun 16 18:19:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/PL_Handler.cpp:
