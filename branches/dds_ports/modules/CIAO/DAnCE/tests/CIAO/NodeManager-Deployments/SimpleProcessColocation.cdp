@@ -113,5 +113,11 @@
     <node/>
     <location>ProcessColocation_svnt</location>
   </artifact>
-
+  
+  <localityConstraint>
+    <constraint>DifferentProcess</constraint>
+    <constrainedInstance xmi:idref="ProcessColocationComponentInstance_1" />
+    <constrainedInstance xmi:idref="ProcessColocationComponentInstance_2" />
+  </localityConstraint>
+    
   </Deployment:DeploymentPlan>
