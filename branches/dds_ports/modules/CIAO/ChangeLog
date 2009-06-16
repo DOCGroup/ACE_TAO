@@ -1,9 +1,15 @@
+Tue Jun 16 17:59:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+
+          Removed misc debug statements.
+        
 Tue Jun 16 17:49:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciaoidldefaults.mpb:
         * MPC/config/componentidldefaults.mpb:
-        
-        Massaged the base projects a bit more.  
+
+        Massaged the base projects a bit more.
 
         * DAnCE/tests/CIAO/Components/ProcessColocation.mpc:
         * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc:
@@ -17,7 +23,7 @@ Tue Jun 16 17:49:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/Hello/Receiver/Receiver.mpc:
         * examples/Hello/Sender/Sender.mpc:
         * bin/generate_component_mpc.pl:
-        
+
         Updated to reflect the base project changes.
 
 Tue Jun 16 14:28:55 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
