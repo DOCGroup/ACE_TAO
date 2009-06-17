@@ -87,7 +87,13 @@ namespace DAnCE
       
       try
         {
+          DANCE_DEBUG ((LM_TRACE, DLINFO "Admin::uninstall_package - "
+                        "Attempting to uninstall package %s\n",
+                        uuid));
           this->rm_->deletePackage (uuid);
+          DANCE_DEBUG ((LM_INFO, DLINFO "Admin::uninstall_package - "
+                        "Successfully uninstalled package %s\n",
+                        uuid));
         }
       catch (Deployment::NoSuchName &ex)
         {
@@ -214,9 +220,12 @@ namespace DAnCE
     {
       DANCE_TRACE ("Admin::shutdown");
       
+      DANCE_DEBUG ((LM_TRACE, DLINFO "Admin::shutdown - "
+                    "Attempting to shut down Repository Manager\n"));
       CIAO::RepositoryManagerDaemon_var rmd = 
         CIAO::RepositoryManagerDaemon::_narrow (this->rm_.in ());
-      
+      DANCE_DEBUG ((LM_INFO, DLINFO "Admin::shutdown - "
+                    "Repository Manager shut down.\n"));      
       if (CORBA::is_nil (rmd.in ()))
         {
           DANCE_ERROR ((LM_ERROR, DLINFO "Admin::shutdown - "
