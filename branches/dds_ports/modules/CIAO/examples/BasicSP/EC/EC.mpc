@@ -1,31 +1,28 @@
 // $Id$
 
-project(EC_stub_gen): ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(EC_stub_gen): componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
-  idlflags += -Wb,stub_export_macro=EC_STUB_Export
-  idlflags += -Wb,stub_export_include=EC_stub_export.h
-  idlflags += -Wb,skel_export_macro=EC_SVNT_Export
-  idlflags += -Wb,skel_export_include=EC_svnt_export.h
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+              -Wb,stub_export_macro=EC_STUB_Export \
+              -Wb,stub_export_include=EC_stub_export.h \
+              -Wb,skel_export_macro=EC_SVNT_Export \
+              -Wb,skel_export_include=EC_svnt_export.h \
+              -Wb,exec_export_macro=EC_EXEC_Export \
+              -Wb,exec_export_include=EC_exec_export.h
 
   IDL_Files {
     EC.idl
   }
 }
 
-project(EC_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
-  after += BasicSP_lem_gen
+project(EC_lem_gen) : ciaoidldefaults, avoids_ace_for_tao {
+  after += BasicSP_lem_gen EC_stub_gen
   custom_only = 1
-  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
 
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags  +=  -Wb,export_macro=EC_EXEC_Export \
                 -Wb,export_include=EC_exec_export.h \
-                -SS
-
-  CIDL_Files {
-    EC.cidl
-  }
+                -SS \
+                -I $(CIAO_ROOT)/examples/BasicSP
 
   IDL_Files {
     ECE.idl
@@ -104,9 +101,6 @@ project(EC_svnt) : ciao_servant, avoids_ace_for_tao {
   dynamicflags = EC_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

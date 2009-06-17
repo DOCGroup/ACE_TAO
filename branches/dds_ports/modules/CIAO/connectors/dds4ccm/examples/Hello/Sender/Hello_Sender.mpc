@@ -1,30 +1,22 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Hello_Base Sender"
 
-project(Hello_Base_Sender_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Hello_Base_Sender_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
               -Wb,skel_export_macro=SENDER_SVNT_Export \
-              -Wb,skel_export_include=Sender_svnt_export.h
+              -Wb,skel_export_include=Sender_svnt_export.h \
+              -Wb,exec_export_macro=SENDER_EXEC_Export \
+              -Wb,exec_export_include=Sender_exec_export.h
 
   IDL_Files {
     Sender.idl
   }
 }
 
-project(Hello_Base_Sender_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
-  custom_only = 1
-  cidlflags += --svnt-export-macro SENDER_SVNT_Export \
-               --svnt-export-include Sender_svnt_export.h
-
-  CIDL_Files {
-    Sender.cidl
-  }
-}
-
 project(Hello_Base_Sender_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
-  after += Hello_Base_Sender_cidl_gen
+  after += Hello_Base_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro=SENDER_EXEC_Export \
               -Wb,export_include=Sender_exec_export.h \
@@ -95,9 +87,6 @@ project(Hello_Base_Sender_svnt) : ciao_servant, avoids_ace_for_tao {
                 Hello_Base_stub
 
   dynamicflags = SENDER_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

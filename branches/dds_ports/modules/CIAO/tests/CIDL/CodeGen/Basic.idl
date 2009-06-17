@@ -21,6 +21,14 @@ module Extra
   exception NoReason {};
   exception NoRhyme {};
 
+    struct UserDataQosPolicy {
+        sequence<octet> value;
+    };
+
+  struct key {
+    long value[3];
+  };
+
   interface Superfluous
   {
     attribute string useless_attr;

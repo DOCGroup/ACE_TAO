@@ -1,9 +1,56 @@
+Wed Jun 17 10:07:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc
+        * DAnCE/tests/CIAO/Components/ProcessColocation.mpc
+        * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc
+        * DAnCE/tests/CIAO/Components/SimpleConsumer.mpc
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.mpc
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc
+        * DAnCE/tests/CIAO/Components/SimpleNull.mpc
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc
+        * DAnCE/tests/CIAO/Components/SimplePublisher.mpc
+        * DAnCE/tests/CIAO/Components/SimpleUser.mpc
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc
+        * examples/BasicSP/BasicSP.mpc
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc
+        * examples/BasicSP/BMDevice/BMDevice.mpc
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc
+        * examples/BasicSP/EC/EC.mpc
+        * examples/DevGuideExamples/Messenger/Administrator.mpc
+        * examples/Display/GPS/GPS.mpc
+        * examples/Display/NavDisplay/NavDisplay.mpc
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc
+        * examples/Display/RateGen/RateGen.mpc
+        * examples/Hello/Sender/Sender.mpc
+        * examples/Null_Component/Null_Component.mpc
+        * examples/Swapping/Receiver/Receiver.mpc
+        * examples/Swapping/Sender/Sender.mpc
+        * MPC/config/ciao_servant.mpb
+        * MPC/config/ciaocidldefaults.mpb
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc
+        * tests/CIDL/CodeGen/Basic.idl
+        * tests/CIDL/CodeGen/CodeGen.mpc
+        * tests/IDL_Test/Cornucopia/Cornucopia.mpc
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.mpc
+        * tests/Minimum/Receiver/Receiver.mpc
+        * tests/Minimum/Sender/Sender.mpc
+        * tools/Config_Handlers/XML_File_Intf.cpp
+          Zap ciaocidldefaults from the MPC files. Everything has to be rebuild to
+          sort out the compile/link issues, but at least now cidlc is not used anymore
+
 Wed Jun 17 08:43:19 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * CIAO_TAO.mwc:
         * CIAO_TAO_DanCE.mwc:
           Removed CIDL
-          
+
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
           Repositorymanager uses ciaodefaults instead of ciaobasedefaults
 
@@ -13,7 +60,7 @@ Wed Jun 17 08:43:19 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * DAnCE/TargetManager/TargetManager.mpc:
         * DAnCE/TargetManager/TargetManager_exec.h:
         * DAnCE/TargetManager/TargetManager_exec.cpp:
-          Changed because the CIDL compiler was removed. 
+          Changed because the CIDL compiler was removed.
           Changed TargetManagerImpl into TargetManager.
 
         * docs/tutorials/Quoter/Simple/03.html:

@@ -88,9 +88,6 @@ project(SimpleCommon_SimplePublisher_svnt) : ciao_servant, avoids_ace_for_tao {
 
   dynamicflags = SIMPLEPUBLISHER_SVNT_BUILD_DLL
 
-  CIDL_Files {
-  }
-
   IDL_Files {
   }
 

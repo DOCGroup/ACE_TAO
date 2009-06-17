@@ -84,14 +84,14 @@ project(Cornucopia_skel) : ccm_svnt, avoids_ace_for_tao {
   libs += Cornucopia_stub
 
   dynamicflags = CORNUCOPIA_SKEL_BUILD_DLL
-  
+
   IDL_Files {
   }
-  
+
   Source_Files {
     CornucopiaS.cpp
   }
-  
+
   Header_Files {
     CornucopiaS.h
     Cornucopia_skel_export.h
@@ -110,9 +110,6 @@ project(Cornucopia_svnt) : ciao_servant, avoids_ace_for_tao {
                 Cornucopia_stub
 
   dynamicflags = CORNUCOPIA_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

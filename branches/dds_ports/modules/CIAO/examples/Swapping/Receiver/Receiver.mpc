@@ -1,30 +1,25 @@
 // $Id$
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Receiver"
 
-project(Swapping_Hello_Receiver_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Swapping_Hello_Receiver_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
               -Wb,skel_export_macro=RECEIVER_SVNT_Export \
-              -Wb,skel_export_include=Receiver_svnt_export.h
+              -Wb,skel_export_include=Receiver_svnt_export.h \
+              -Wb,exec_export_macro=RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=Receiver_exec_export.h \
 
   IDL_Files {
     Receiver.idl
   }
 }
 
-project(Swapping_Hello_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(Swapping_Hello_Receiver_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
-               --svnt-export-include Receiver_svnt_export.h \
-               --custom-container upgradeable
   idlflags += -Wb,export_macro=RECEIVER_SVNT_Export \
               -Wb,export_include=Receiver_svnt_export.h \
               -SS
-  CIDL_Files {
-    Receiver.cidl
-  }
-
   IDL_Files {
     ReceiverE.idl
   }
@@ -59,7 +54,7 @@ project(Swapping_Hello_Receiver_stub): ccm_stub, avoids_ace_for_tao {
 project(Swapping_Hello_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
   after += Swapping_Hello_Base_skel \
            Swapping_Hello_Receiver_stub \
-           Swapping_Hello_Receiver_cidl_gen
+           Swapping_Hello_Receiver_idle_gen
   sharedname  = Swapping_Receiver_svnt
   libs    += Swapping_Receiver_stub \
              Swapping_Hello_Base_skel \
@@ -67,9 +62,6 @@ project(Swapping_Hello_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
   libpaths += ../Hello_Base
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
   requires += dummy_label
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

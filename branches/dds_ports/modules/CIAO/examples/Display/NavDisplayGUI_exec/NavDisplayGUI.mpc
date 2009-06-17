@@ -11,7 +11,7 @@ project(Display_NavDisplayGUI_exec_moc) : ace_qt4, qt4_qt3support {
 }
 
 project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support, avoids_ace_for_tao {
-  after   += Display_NavDisplay_cidl_gen \
+  after   += Display_NavDisplay_idle_gen \
              Display_NavDisplay_stub \
              Display_NavDisplayGUI_exec_moc
   sharedname = NavDisplayGUI_exec
@@ -65,9 +65,6 @@ project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, qt4_qt3support, avo
   dynamicflags = NAVDISPLAY_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

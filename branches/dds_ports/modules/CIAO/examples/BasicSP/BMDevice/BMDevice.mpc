@@ -1,31 +1,27 @@
 // $Id$
 
-project(BMDevice_stub_gen): ciaoidldefaults,anytypecode, avoids_ace_for_tao {
+project(BMDevice_stub_gen): componentidldefaults,anytypecode, avoids_ace_for_tao {
   custom_only = 1
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
-  idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export
-  idlflags += -Wb,stub_export_include=BMDevice_stub_export.h
-  idlflags += -Wb,skel_export_macro=BMDEVICE_SVNT_Export
-  idlflags += -Wb,skel_export_include=BMDevice_svnt_export.h
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+              -Wb,stub_export_macro=BMDEVICE_STUB_Export \
+              -Wb,stub_export_include=BMDevice_stub_export.h \
+              -Wb,skel_export_macro=BMDEVICE_SVNT_Export \
+              -Wb,skel_export_include=BMDevice_svnt_export.h \
+              -Wb,exec_export_macro=BMDEVICE_EXEC_Export \
+              -Wb,exec_export_include=BMDevice_exec_export.h
 
   IDL_Files {
     BMDevice.idl
   }
 }
 
-project(BMDevice_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(BMDevice_lem_gen) : ciaoidldefaults, avoids_ace_for_tao {
   after += BasicSP_lem_gen
   custom_only = 1
-  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
-
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags  +=  -Wb,export_macro=BMDEVICE_EXEC_Export \
                 -Wb,export_include=BMDevice_exec_export.h \
-                -SS
-
-  CIDL_Files {
-    BMDevice.cidl
-  }
+                -SS \
+                -I $(CIAO_ROOT)/examples/BasicSP
 
   IDL_Files {
     BMDeviceE.idl
@@ -104,9 +100,6 @@ project(BMDevice_svnt) : ciao_servant, avoids_ace_for_tao {
   dynamicflags = BMDEVICE_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

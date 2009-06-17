@@ -9,7 +9,7 @@ project(SimpleAttribute_idl_gen) : componentidldefaults, anytypecode, avoids_ace
               -Wb,skel_export_include=SimpleAttribute_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEATTRIBUTE_EXEC_Export \
               -Wb,exec_export_include=SimpleAttribute_exec_export.h \
-              
+
 
   IDL_Files {
     SimpleAttribute.idl
@@ -86,9 +86,6 @@ project(SimpleAttribute_svnt) : ciao_servant, avoids_ace_for_tao {
                 SimpleAttribute_stub
 
   dynamicflags = SIMPLEATTRIBUTE_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

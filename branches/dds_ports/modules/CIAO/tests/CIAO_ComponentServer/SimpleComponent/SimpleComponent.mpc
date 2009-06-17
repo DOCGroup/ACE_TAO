@@ -1,31 +1,25 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleComponent"
 
-project(SimpleComponent_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleComponent_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECOMPONENT_STUB_Export \
               -Wb,stub_export_include=SimpleComponent_stub_export.h \
               -Wb,skel_export_macro=SIMPLECOMPONENT_SVNT_Export \
-              -Wb,skel_export_include=SimpleComponent_svnt_export.h
+              -Wb,skel_export_include=SimpleComponent_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLECOMPONENT_EXEC_Export \
+              -Wb,exec_export_include=SimpleComponent_exec_export.h \
 
   IDL_Files {
     SimpleComponent.idl
   }
 }
 
-project(SimpleComponent_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
-  custom_only = 1
-
-  CIDL_Files {
-    SimpleComponent.cidl
-  }
-}
-
 project(SimpleComponent_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  after += SimpleComponent_cidl_gen
-  idlflags  += -Wb,stub_export_macro=SIMPLECOMPONENT_EXEC_Export \
-               -Wb,stub_export_include=SimpleComponent_exec_export.h \
+  after += SimpleComponent_idl_gen
+  idlflags  += -Wb,export_macro=SIMPLECOMPONENT_EXEC_Export \
+               -Wb,export_include=SimpleComponent_exec_export.h \
                -SS
 
   IDL_Files {
@@ -89,8 +83,6 @@ project(SimpleComponent_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += SimpleComponent_stub SimpleComponent_exec
   dynamicflags = SIMPLECOMPONENT_SVNT_BUILD_DLL
 
-  CIDL_Files {
-  }
   IDL_Files {
   }
   Source_Files {

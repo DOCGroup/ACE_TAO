@@ -1,23 +1,16 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n HUDisplay"
 
-project(BasicSP_stub_gen): ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(BasicSP_stub_gen): componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BASICSP_STUB_Export \
            -Wb,stub_export_include=BasicSP_stub_export.h \
            -Wb,skel_export_macro=BASICSP_SVNT_Export \
-           -Wb,skel_export_include=BasicSP_svnt_export.h
+           -Wb,skel_export_include=BasicSP_svnt_export.h \
+           -Wb,exec_export_macro=BASICSP_EXEC_Export \
+           -Wb,exec_export_include=BasicSP_exec_export.h \
 
   IDL_Files {
-    BasicSP.idl
-  }
-}
-
-project(BasicSP_lem_gen) : ciaocidldefaults, avoids_ace_for_tao {
-  custom_only = 1
-  cidlflags += --lem-force-all
-
-  CIDL_Files {
     BasicSP.idl
   }
 }
@@ -88,8 +81,6 @@ project(BasicSP_svnt) : ciao_servant, avoids_ace_for_tao {
   libpaths += lib
 
   IDL_Files {
-  }
-  CIDL_Files {
   }
   Header_Files {
     BasicSPS.h

@@ -1,29 +1,25 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Benchmark -l .. -c client RoundTripClient"
 
-project(Benchmark_RoundTripClient_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Benchmark_RoundTripClient_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ROUNDTRIPCLIENT_STUB_Export \
               -Wb,stub_export_include=RoundTripClient_stub_export.h \
               -Wb,skel_export_macro=ROUNDTRIPCLIENT_SVNT_Export \
-              -Wb,skel_export_include=RoundTripClient_svnt_export.h
+              -Wb,skel_export_include=RoundTripClient_svnt_export.h \
+              -Wb,exec_export_macro=ROUNDTRIPCLIENT_EXEC_Export \
+              -Wb,exec_export_include=RoundTripClient_exec_export.h \
 
   IDL_Files {
     RoundTripClient.idl
   }
 }
 
-project(Benchmark_RoundTripClient_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(Benchmark_RoundTripClient_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  cidlflags += --svnt-export-macro ROUNDTRIPCLIENT_SVNT_Export \
-               --svnt-export-include RoundTripClient_svnt_export.h
   idlflags += -Wb,export_macro=ROUNDTRIPCLIENT_EXEC_Export \
               -Wb,export_include=RoundTripClient_exec_export.h \
               -SS
-
-  CIDL_Files {
-    RoundTripClient.cidl
-  }
 
   IDL_Files {
     RoundTripClientE.idl
@@ -56,7 +52,7 @@ project(Benchmark_RoundTripClient_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += Benchmark_RoundTripClient_cidl_gen Benchmark_RoundTripClient_stub
+  after   += Benchmark_RoundTripClient_idle_gen Benchmark_RoundTripClient_stub
   sharedname = RoundTripClient_exec
   libs += RoundTripClient_stub Benchmark_stub
   libpaths += ..
@@ -94,9 +90,6 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
                 Benchmark_stub
   libpaths += ..
   dynamicflags = ROUNDTRIPCLIENT_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }
