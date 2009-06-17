@@ -28,7 +28,7 @@
 /**
  * TargetManager Executor namespace
  */
-namespace CIDL_TargetManager_i
+namespace CIAO_CIAO_TargetManagerImpl_Impl
 {
   class TARGETMANAGER_EXEC_Export TargetManagerImpl_exec_i
   : public virtual TargetManagerImpl_Exec,

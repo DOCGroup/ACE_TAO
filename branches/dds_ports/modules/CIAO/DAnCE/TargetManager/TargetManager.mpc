@@ -1,18 +1,23 @@
 // $Id$
 
-project(CIAO_TargetManager_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
+project(CIAO_TargetManager_idl_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  cidlflags += --svnt-export-macro TARGETMANAGER_SVNT_Export \
-               --svnt-export-include TargetManager_svnt_export.h
+  idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
+              -Wb,stub_export_include=TargetManager_stub_export.h \
+              -Wb,skel_export_macro=TARGETMANAGER_SVNT_Export \
+              -Wb,skel_export_include=TargetManager_svnt_export.h \
+              -Wb,exec_export_macro=TARGETMANAGER_EXEC_Export \
+              -Wb,exec_export_include=TargetManager_exec_export.h \
+              -Gsv
 
-  CIDL_Files {
-    TargetManager.cidl
+  IDL_Files {
+    TargetManager.idl
   }
 }
 
-project(CIAO_TargetManager_idl_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(CIAO_TargetManager_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  after += CIAO_TargetManager_cidl_gen
+  after += CIAO_TargetManager_idl_gen
   idlflags += -Wb,export_macro=TARGETMANAGER_EXEC_Export \
               -Wb,export_include=TargetManager_exec_export.h -SS
 
@@ -30,13 +35,12 @@ project(CIAO_TargetManager_stub) : ciao_output, ccm_stub, dance_deployment_stub,
               -Wb,skel_export_include=TargetManager_svnt_export.h
 
   IDL_Files {
-    TargetManagerImpl.idl
     TargetManagerExt.idl
     DomainEvents.idl
   }
 
   Source_Files {
-    TargetManagerImplC.cpp
+    TargetManagerC.cpp
     TargetManagerExtC.cpp
     DomainEventsC.cpp
   }
@@ -45,7 +49,7 @@ project(CIAO_TargetManager_stub) : ciao_output, ccm_stub, dance_deployment_stub,
 project(CIAO_TargetManager_exec) : ciao_output, ciao_executor, dance_domain_application_manager, ciao_config_handlers, avoids_ace_for_tao {
   sharedname = CIAO_TargetManager_exec
   libs += CIAO_TargetManager_stub
-  after += CIAO_TargetManager_stub CIAO_TargetManager_idl_gen
+  after += CIAO_TargetManager_stub CIAO_TargetManager_idle_gen
   dynamicflags = TARGETMANAGER_EXEC_BUILD_DLL
 
   Source_Files {
@@ -67,15 +71,12 @@ project(CIAO_TargetManager_svnt) : ciao_output, ccm_svnt, ciao_servant, messagin
 
   dynamicflags = TARGETMANAGER_SVNT_BUILD_DLL
 
-  CIDL_Files {
-  }
-
   IDL_Files {
   }
 
   Source_Files {
     TargetManager_svnt.cpp
-    TargetManagerImplS.cpp
+    TargetManagerS.cpp
     TargetManagerExtS.cpp
     DomainEventsS.cpp
   }

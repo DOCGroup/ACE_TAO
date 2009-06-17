@@ -8,7 +8,7 @@
 
 #include "ResourceCommitmentManager.h"
 
-namespace CIDL_TargetManager_i
+namespace CIAO_CIAO_TargetManagerImpl_Impl
 {
   //==================================================================
   // Facet Executor Implementation Class:   TargetManager_exec_i
