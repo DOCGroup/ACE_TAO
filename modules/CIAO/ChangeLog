@@ -1,3 +1,34 @@
+Wed Jun 17 18:07:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.cidl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.cidl:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.cidl:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.cidl:
+        * examples/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/BasicSP/BMDisplay/BMDisplay.cidl:
+        * examples/BasicSP/EC/EC.cidl:
+        * examples/DevGuideExamples/Messenger/Administrator.cidl:
+        * examples/DevGuideExamples/Messenger/Messenger.cidl:
+        * examples/DevGuideExamples/Messenger/Receiver.cidl:
+        * examples/Display/GPS/GPS.cidl:
+        * examples/Display/NavDisplay/NavDisplay.cidl:
+        * examples/Display/RateGen/RateGen.cidl:
+        * examples/Null_Component/Null_Component.cidl:
+        * examples/Swapping/Receiver/Receiver.cidl:
+        * examples/Swapping/Sender/Sender.cidl:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.cidl:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.cidl:
+        * performance-tests/Protocols/Receiver/Receiver.cidl:
+        * performance-tests/Protocols/Sender/Sender.cidl:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.cidl:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.cidl:
+        * tests/CIDL/CodeGen/CodeGen.cidl:
+        * tests/Minimum/Receiver/Receiver.cidl:
+        * tests/Minimum/Sender/Sender.cidl:
+
+          Removed these files.
+
 Wed Jun 17 18:04:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp:
@@ -8,8 +39,8 @@ Wed Jun 17 18:04:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/Minimum/Sender/Sender_exec.h:
         * tests/Minimum/Sender/Sender_exec.cpp:
 
-          Compile fixes. 
-        
+          Compile fixes.
+
 Wed Jun 17 10:07:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
