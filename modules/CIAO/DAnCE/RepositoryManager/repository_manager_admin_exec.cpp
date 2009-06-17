@@ -5,10 +5,13 @@
  * Simple administration program for the Repository Manager.
  */
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/String_Base.h"
 #include "DAnCE/Logger/Log_Macros.h"
+#include "DAnCE/Logger/Logger_Service.h"
+#include "Deployment/Deployment_RepositoryManagerC.h"
 
 #include "repository_manager_admin.h"
 
@@ -248,12 +251,14 @@ struct Options
             
             if (create.replace_)
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
-                            "Replacing installed package from path %C with name %C and base location %C.\n", create.path_.c_str (),
+                            "Replacing installed package from path %C with name %C and base location %C.\n", 
+                            create.path_.c_str (),
                             create.name_.c_str (),
                             create.base_location_.c_str ()));
             else
               DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
-                            "Installing new package from path %C with name %C and base location %C.\n", create.path_.c_str (),
+                            "Installing new package from path %C with name %C and base location %C.\n", 
+                            create.path_.c_str (),
                             create.name_.c_str (),
                             create.base_location_.c_str ()));
             
@@ -262,7 +267,7 @@ struct Options
             
           case 'u':
             DANCE_DEBUG ((LM_DEBUG, DLINFO "Options::parse_args - "
-                         "Removing package with UUID %C\n", get_opt.opt_arg ()));
+                          "Removing package with UUID %C\n", get_opt.opt_arg ()));
             this->uninstall_.insert (get_opt.opt_arg ());
             break;
 
@@ -304,9 +309,141 @@ struct Options
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
-  Options options;
+  DANCE_DISABLE_TRACE ();
   
-  options.parse_args (argc, argv);
+  auto_ptr<DAnCE::Logger_Service> logger;
+  
+  int retval (0);
+
+  try
+    {
+      DAnCE::Logger_Service
+        * dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger_Backend_Factory");  
+      
+      if (!dlf)
+        {
+          dlf = new DAnCE::Logger_Service;
+          logger.reset (dlf);
+        }
+      
+      dlf->init (argc, argv);
+
+      DANCE_DEBUG ((LM_TRACE, DLINFO
+                    "Module_main.h - initializing ORB\n"));
+      
+      CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+      
+      ACE_Log_Msg_Backend * backend = dlf->get_logger_backend(orb);
+      
+      if (backend != 0)
+        {
+          backend->open(0);
+          ACE_Log_Msg::msg_backend (backend);
+          ACE_Log_Msg * ace = ACE_Log_Msg::instance();
+          ace->clr_flags(ace->flags());
+          ace->set_flags(ACE_Log_Msg::CUSTOM);
+        }
+
+      Options options;  
+      options.parse_args (argc, argv);
+      
+      if (options.rm_ior_ == 0)
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+                        "No RepositoryManager IOR provided\n"));
+          return -1;
+        }
+      
+      // Resolve the RepositoryManager reference
+      CORBA::Object_var obj = orb->string_to_object (options.rm_ior_);
+      
+      Deployment::RepositoryManager_var rm = 
+        Deployment::RepositoryManager::_narrow (obj);
+
+      if (CORBA::is_nil (obj))
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+                        "Provided IOR was invalid or could not be narrowed: %s\n",
+                        options.rm_ior_));
+          return -1;
+        }
+      
+      DAnCE::RepositoryManager::Admin admin (rm.in ());
+      
+      ACE_Unbounded_Set_Iterator<Options::Installation> inst_it (options.install_);
+      Options::Installation *inst (0);
+      
+      while (inst_it.next (inst) == 1)
+        {
+          if (!admin.install_package (inst->path_.c_str (),
+                                      inst->name_.c_str (),
+                                      inst->replace_))
+            retval = -1;
+        }
+
+      ACE_Unbounded_Set_Iterator<Options::Creation> creat_it (options.create_);
+      Options::Creation *creat (0);
+      
+      while (creat_it.next (creat) == 1)
+        {
+          if (!admin.create_package (creat->path_.c_str (),
+                                     creat->name_.c_str (),
+                                     creat->base_location_.c_str (),
+                                     creat->replace_))
+            retval = -1;
+        }
+
+      ACE_Unbounded_Set_Iterator<ACE_CString> uninst_it (options.uninstall_);
+      ACE_CString *uninst = 0;
+      
+      while (uninst_it.next (uninst) == 1)
+        {
+          if (!admin.uninstall_package (uninst->c_str ()))
+            retval = -1;
+        }
+      
+      if (options.list_)
+        {
+          ::CORBA::StringSeq * packages = admin.list_packages ();
+          if (packages == 0)
+            {
+              DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+                            "No packages returned from list_packages\n"));
+              retval = -1;
+            }
+          
+          DANCE_DEBUG ((LM_EMERGENCY, "Listing %u packages installed on server:\n"));
+          
+          for (CORBA::ULong i = 0; i < packages->length (); ++i)
+            {
+              DANCE_DEBUG ((LM_EMERGENCY, "\t%s\n",
+                            (*packages)[i].in ()));
+            }
+          
+          delete packages;
+        }
+      
+      if (options.shutdown_)
+        {
+          DANCE_DEBUG ((LM_EMERGENCY, "Shutting down the Repository Manager\n"));
+          if (!admin.shutdown ())
+            retval = -1;
+        }
+    }
+  catch (CORBA::Exception &ex)
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+                    "Caught unexpected CORBA Exception: %s\n",
+                    ex._info ().c_str ()));
+      return -1;
+    }
+  catch (...)
+    {
+      DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+                    "Caught unexpected C++ exception.\n"));
+      return -1;
+    }
   
   return 0;
 }
+
