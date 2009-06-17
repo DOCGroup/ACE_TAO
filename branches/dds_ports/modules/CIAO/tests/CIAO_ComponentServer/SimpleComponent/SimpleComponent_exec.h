@@ -32,10 +32,10 @@
 #include "SimpleComponent_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_SimpleComponent_Impl
+namespace CIAO_Foo_SimpleComponent_Impl
 {
   class SIMPLECOMPONENT_EXEC_Export SimpleComponent_exec_i
-    : public virtual Simple_Exec,
+    : public virtual SimpleComponent_Exec,
       public virtual ::CORBA::LocalObject
   {
     public:
@@ -77,7 +77,7 @@ namespace CIDL_SimpleComponent_Impl
   };
 
   class SIMPLECOMPONENT_EXEC_Export SimpleHome_exec_i
-    : public virtual SimpleComponent_Exec,
+    : public virtual SimpleHome_Exec,
       public virtual ::CORBA::LocalObject
   {
     public:
