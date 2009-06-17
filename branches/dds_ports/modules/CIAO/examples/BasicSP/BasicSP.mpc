@@ -4,22 +4,22 @@
 project(BasicSP_stub_gen): componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BASICSP_STUB_Export \
-           -Wb,stub_export_include=BasicSP_stub_export.h \
-           -Wb,skel_export_macro=BASICSP_SVNT_Export \
-           -Wb,skel_export_include=BasicSP_svnt_export.h \
-           -Wb,exec_export_macro=BASICSP_EXEC_Export \
-           -Wb,exec_export_include=BasicSP_exec_export.h \
+              -Wb,stub_export_include=BasicSP_stub_export.h \
+              -Wb,skel_export_macro=BASICSP_SVNT_Export \
+              -Wb,skel_export_include=BasicSP_svnt_export.h \
+              -Wb,exec_export_macro=BASICSP_EXEC_Export \
+              -Wb,exec_export_include=BasicSP_exec_export.h \
 
   IDL_Files {
     BasicSP.idl
   }
 }
 
-project(BasicSP_lem_gen_idl) : ciaoidldefaults, avoids_ace_for_tao {
+project(BasicSP_lem_gen_idle) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  after += BasicSP_lem_gen
-  idlflags  += -Wb,stub_export_macro=BASICSP_EXEC_Export \
-               -Wb,stub_export_include=BasicSP_exec_export.h \
+  after += BasicSP_stub_gen
+  idlflags  += -Wb,export_macro=BASICSP_EXEC_Export \
+               -Wb,export_include=BasicSP_exec_export.h \
                -SS
 
   IDL_Files {
@@ -48,7 +48,7 @@ project(BasicSP_stub): ccm_stub, avoids_ace_for_tao {
 }
 
 project(BasicSP_exec) : ciao_executor, avoids_ace_for_tao {
-  after += BasicSP_stub BasicSP_lem_gen_idl
+  after += BasicSP_stub BasicSP_lem_gen_idle
   sharedname = BasicSP_exec
   libs += BasicSP_stub
   dynamicflags = BASICSP_EXEC_BUILD_DLL
