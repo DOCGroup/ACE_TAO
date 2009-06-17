@@ -1,3 +1,29 @@
+Wed Jun 17 08:43:19 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DanCE.mwc:
+          Removed CIDL
+          
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          Repositorymanager uses ciaodefaults instead of ciaobasedefaults
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * DAnCE/TargetManager/TargetManager.idl:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManager_exec.h:
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Changed because the CIDL compiler was removed. 
+          Changed TargetManagerImpl into TargetManager.
+
+        * docs/tutorials/Quoter/Simple/03.html:
+          Minor changes.
+
+        * DAnCE/TargetManager/TargetManager.cidl:
+        * DAnCE/TargetManager/TargetManagerImpl.idl:
+          Removed these files because the cidl compiler is not in use
+          anymore.
+
 Wed Jun 17 02:15:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
@@ -5,7 +31,7 @@ Wed Jun 17 02:15:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
 
           Fleshed out the implementation of dance_rm_admin.
-        
+
 Tue Jun 16 20:37:23 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Reused_Facet_Interface/*.*:

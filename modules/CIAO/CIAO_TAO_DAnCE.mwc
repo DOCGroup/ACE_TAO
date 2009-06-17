@@ -20,7 +20,6 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
   ccm
-  CIDLC/CIDLC.mwc
   ciao
   DAnCE
   tools/Config_Handlers

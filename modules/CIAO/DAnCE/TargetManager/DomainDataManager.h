@@ -14,7 +14,7 @@
 #ifndef DOMAIN_DATA_MGRH
 #define DOMAIN_DATA_MGRH
 
-#include "TargetManagerImplC.h"
+#include "TargetManagerC.h"
 #include "DAnCE/DomainApplicationManager/Node_Locator.h"
 
 /**
