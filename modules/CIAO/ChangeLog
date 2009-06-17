@@ -1,3 +1,15 @@
+Wed Jun 17 18:04:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.cpp:
+        * tests/Minimum/Receiver/Receiver_exec.h:
+        * tests/Minimum/Receiver/Receiver_exec.cpp:
+        * tests/Minimum/Sender/Sender_exec.h:
+        * tests/Minimum/Sender/Sender_exec.cpp:
+
+          Compile fixes. 
+        
 Wed Jun 17 10:07:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
