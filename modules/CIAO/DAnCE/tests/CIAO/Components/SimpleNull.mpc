@@ -8,7 +8,7 @@ project(SimpleNull_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_
               -Wb,skel_export_macro=SIMPLENULL_SVNT_Export \
               -Wb,skel_export_include=SimpleNull_svnt_export.h \
               -Wb,exec_export_macro=SIMPLENULL_EXEC_Export \
-              -Wb,exec_export_include=SimpleNull_exec_export.h 
+              -Wb,exec_export_include=SimpleNull_exec_export.h
   IDL_Files {
     SimpleNull.idl
   }
@@ -84,9 +84,6 @@ project(SimpleNull_svnt) : ciao_servant, avoids_ace_for_tao {
                 SimpleNull_stub
 
   dynamicflags = SIMPLENULL_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

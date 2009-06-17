@@ -1,32 +1,25 @@
 // $Id$
 // This file is generated with "generate_component_mpc_extra.pl -p Hello_Base Sender"
 
-project(Swapping_Hello_Sender_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
-  requires += dummy_label
+project(Swapping_Hello_Sender_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
               -Wb,skel_export_macro=SENDER_SVNT_Export \
-              -Wb,skel_export_include=Sender_svnt_export.h
+              -Wb,skel_export_include=Sender_svnt_export.h \
+              -Wb,exec_export_macro=SENDER_EXEC_Export \
+              -Wb,exec_export_include=Sender_exec_export.h
 
   IDL_Files {
     Sender.idl
   }
 }
 
-project(Swapping_Hello_Sender_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
-  requires += dummy_label
+project(Swapping_Hello_Sender_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  cidlflags += --svnt-export-macro SENDER_SVNT_Export \
-               --svnt-export-include Sender_svnt_export.h \
-               --custom-container upgradeable
   idlflags += -Wb,export_macro=SENDER_SVNT_Export \
               -Wb,export_include=Sender_svnt_export.h \
               -SS
-
-  CIDL_Files {
-    Sender.cidl
-  }
 
   IDL_Files {
     SenderE.idl
@@ -64,16 +57,13 @@ project(Swapping_Hello_Sender_svnt) : ciao_servant, avoids_ace_for_tao {
   libpaths += ../Hello_Base
   after += Swapping_Hello_Base_skel \
            Swapping_Hello_Sender_stub \
-           Swapping_Hello_Sender_cidl_gen
+           Swapping_Hello_Sender_idle_gen
   sharedname  = Swapping_Sender_svnt
   libs    += Swapping_Sender_stub \
              Swapping_Hello_Base_skel \
              Swapping_Hello_Base_stub
 
   dynamicflags = SENDER_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

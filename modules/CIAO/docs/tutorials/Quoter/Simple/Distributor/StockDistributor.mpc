@@ -1,29 +1,25 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockDistributorDriver StockDistributor"
 
-project(Stock_Base_StockDistributor_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKDISTRIBUTOR_STUB_Export \
               -Wb,stub_export_include=StockDistributor_stub_export.h \
               -Wb,skel_export_macro=STOCKDISTRIBUTOR_SVNT_Export \
-              -Wb,skel_export_include=StockDistributor_svnt_export.h
+              -Wb,skel_export_include=StockDistributor_svnt_export.h \
+              -Wb,exec_export_macro=STOCKDISTRIBUTOR_EXEC_Export \
+              -Wb,exec_export_include=StockDistributor_exec_export.h
 
   IDL_Files {
     StockDistributor.idl
   }
 }
 
-project(Stock_Base_StockDistributor_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(Stock_Base_StockDistributor_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  cidlflags += --svnt-export-macro STOCKDISTRIBUTOR_SVNT_Export \
-               --svnt-export-include StockDistributor_svnt_export.h
   idlflags += -Wb,export_macro=STOCKDISTRIBUTOR_EXEC_Export \
               -Wb,export_include=StockDistributor_exec_export.h \
               -SS
-
-  CIDL_Files {
-    StockDistributor.cidl
-  }
 
   IDL_Files {
     StockDistributorE.idl
@@ -56,7 +52,7 @@ project(Stock_Base_StockDistributor_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += Stock_Base_StockDistributor_cidl_gen Stock_Base_StockDistributor_stub
+  after   += Stock_Base_StockDistributor_idle_gen Stock_Base_StockDistributor_stub
   sharedname = StockDistributor_exec
   libs += StockDistributor_stub Stock_Base_stub
   libpaths += ../Stock_Base
@@ -93,9 +89,6 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ace_for_tao {
   libpaths += ../Stock_Base
 
   dynamicflags = STOCKDISTRIBUTOR_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

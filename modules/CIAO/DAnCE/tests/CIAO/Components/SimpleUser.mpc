@@ -9,7 +9,7 @@ project(SimpleCommon_SimpleUser_idl_gen) : componentidldefaults, anytypecode, av
               -Wb,skel_export_include=SimpleUser_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEUSER_EXEC_Export \
               -Wb,exec_export_include=SimpleUser_exec_export.h \
-              -Gsv 
+              -Gsv
 
   IDL_Files {
     SimpleUser.idl
@@ -88,9 +88,6 @@ project(SimpleCommon_SimpleUser_svnt) : ciao_servant, avoids_ace_for_tao {
                 SimpleCommon_stub
 
   dynamicflags = SIMPLEUSER_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

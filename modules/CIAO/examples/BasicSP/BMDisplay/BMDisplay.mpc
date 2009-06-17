@@ -1,31 +1,28 @@
 // $Id$
 
-project(BMDisplay_stub_gen): ciaoidldefaults,anytypecode, avoids_ace_for_tao {
+project(BMDisplay_stub_gen): componentidldefaults,anytypecode, avoids_ace_for_tao {
   custom_only = 1
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
-  idlflags += -Wb,stub_export_macro=BMDISPLAY_STUB_Export
-  idlflags += -Wb,stub_export_include=BMDisplay_stub_export.h
-  idlflags += -Wb,skel_export_macro=BMDISPLAY_SVNT_Export
-  idlflags += -Wb,skel_export_include=BMDisplay_svnt_export.h
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+              -Wb,stub_export_macro=BMDISPLAY_STUB_Export \
+              -Wb,stub_export_include=BMDisplay_stub_export.h \
+              -Wb,skel_export_macro=BMDISPLAY_SVNT_Export \
+              -Wb,skel_export_include=BMDisplay_svnt_export.h \
+              -Wb,exec_export_macro=BMDISPLAY_EXEC_Export \
+              -Wb,exec_export_include=BMDisplay_exec_export.h \
 
   IDL_Files {
     BMDisplay.idl
   }
 }
 
-project(BMDisplay_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(BMDisplay_lem_gen) : ciaoidldefaults, avoids_ace_for_tao {
   after += BasicSP_lem_gen
   custom_only = 1
-  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
 
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
-  idlflags  +=  -Wb,export_macro=BMDISPLAY_EXEC_Export \
-                -Wb,export_include=BMDisplay_exec_export.h \
-                -SS
-
-  CIDL_Files {
-    BMDisplay.cidl
-  }
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+              -Wb,export_macro=BMDISPLAY_EXEC_Export \
+              -Wb,export_include=BMDisplay_exec_export.h \
+              -SS
 
   IDL_Files {
     BMDisplayE.idl
@@ -108,9 +105,6 @@ project(BMDisplay_svnt) : ciao_servant, avoids_ace_for_tao {
   dynamicflags = BMDISPLAY_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }
