@@ -79,7 +79,7 @@ namespace MyImpl
    * EC executor implementation class.
    */
   class EC_EXEC_Export EC_exec_i :
-    public virtual CIDL_EC_Impl::EC_Exec,
+    public virtual CIAO_BasicSP_EC_Impl::EC_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

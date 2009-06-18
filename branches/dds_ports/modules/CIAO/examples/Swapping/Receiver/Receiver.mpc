@@ -17,6 +17,7 @@ project(Swapping_Hello_Receiver_idl_gen) : componentidldefaults, anytypecode, av
 
 project(Swapping_Hello_Receiver_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
+  after += Swapping_Hello_Receiver_idl_gen
   idlflags += -Wb,export_macro=RECEIVER_SVNT_Export \
               -Wb,export_include=Receiver_svnt_export.h \
               -SS
