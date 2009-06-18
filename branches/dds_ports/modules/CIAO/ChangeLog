@@ -1,3 +1,10 @@
+Thu Jun 18 02:52:44 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/06-04-02.xsd
+        
+          Schema from the standard. Note that this is non-normative, and the
+          fact that we deviate from it is fine.
+
 Wed Jun 17 19:37:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Logger_Service.cpp:
