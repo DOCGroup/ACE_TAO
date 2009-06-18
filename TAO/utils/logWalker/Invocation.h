@@ -6,7 +6,6 @@
 #ifndef LOG_WALKER_INVOCATION_H
 #define LOG_WALKER_INVOCATION_H
 
-#include <stdlib.h>
 #include "ace/SString.h"
 
 class PeerProcess;

@@ -1,3 +1,15 @@
+Thu Jun 18 22:47:05 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/Invocation.h:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestListener.h:
+
+          There is a curious order-of-inclusion problem on macosx-leopoard
+          builds whereby including a non-ACE header before something that
+          includes ace/config.h causes a compiler error in
+          OS_NS_stdlib.inl. It seems that on that platform, the signature
+          of ::unsetenv() varies. I think this should be looked into in
+          greater depth after releasing x.7.0.
+
 Thu Jun 18 15:44:35 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Block_Flushing_Strategy.h:
