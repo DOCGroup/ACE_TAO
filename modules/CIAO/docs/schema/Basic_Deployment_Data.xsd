@@ -13,7 +13,7 @@
   </xsd:complexType>
 
   <xsd:simpleType name="TCKind">
-    <xsd:restriction base="xsd:NCName">
+    <xsd:restriction base="xsd:NCName"> <!-- std says xsd:string -->
       <xsd:enumeration value="tk_null"/>
       <xsd:enumeration value="tk_void"/>
       <xsd:enumeration value="tk_short"/>
@@ -42,7 +42,7 @@
       <xsd:enumeration value="tk_longdouble"/>
       <xsd:enumeration value="tk_wchar"/>
       <xsd:enumeration value="tk_wstring"/>
-      <xsd:enumeration value="tk_wfixed"/>
+      <xsd:enumeration value="tk_fixed"/>
       <xsd:enumeration value="tk_value"/>
       <xsd:enumeration value="tk_value_box"/>
       <xsd:enumeration value="tk_native"/>
@@ -58,6 +58,7 @@
     <xsd:sequence>
       <xsd:element name="kind" type="Deployment:TCKind"/>
       <xsd:choice minOccurs="0">
+        <xsd:element name="kind" type="Deployment:TCKind" />
         <xsd:element name="enum" type="Deployment:EnumType" />
         <xsd:element name="struct" type="Deployment:StructType"/>
         <xsd:element name="value" type="Deployment:ValueType"/>
@@ -216,8 +217,8 @@
 
   <xsd:complexType name="Requirement">
     <xsd:sequence>
-      <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="property" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>

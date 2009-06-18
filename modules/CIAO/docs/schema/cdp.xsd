@@ -5,6 +5,17 @@
             targetNamespace="http://www.omg.org/Deployment">
 
 <xsd:include schemaLocation="ccd.xsd" />
+
+  <xsd:complexType name="PlanPropertyMapping">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="source" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:element name="externalName" type="xsd:string"/>
+      <xsd:element name="delegatesTo" type="Deployment:PlanSubcomponentPropertyReference" maxOccurs="unbounded" />
+    </xsd:sequence>
+    <xsd:attribute ref="xmi:id" use="optional"/>
+  </xsd:complexType>
+
 	<!-- Note:  name deploymentPlan should be DeploymentPlan, this is a hack to make XSC happy -->
   <xsd:complexType name="deploymentPlan">
    <xsd:sequence>
@@ -14,9 +25,8 @@
     <xsd:element name="implementation" type="Deployment:MonolithicDeploymentDescription" minOccurs="0" maxOccurs="unbounded" />
     <xsd:element name="instance" type="Deployment:InstanceDeploymentDescription" minOccurs="0" maxOccurs="unbounded"/>
     <xsd:element name="connection" type="Deployment:PlanConnectionDescription" minOccurs="0" maxOccurs="unbounded"/>
-    <!-- potentially recursive, not used
-      <xsd:element name="externalProperty" type="Deployment:PlanPropertyMapping"/>
-    -->
+    <!-- @@todo: needs to be added. -->
+    <xsd:element name="externalProperty" type="Deployment:PlanPropertyMapping" minOccurs="0" maxOccurs="unbounded" />
     <xsd:element name="dependsOn" type="Deployment:ImplementationDependency" minOccurs="0" maxOccurs="unbounded"/>
     <xsd:element name="artifact" type="Deployment:ArtifactDeploymentDescription" minOccurs="0" maxOccurs="unbounded"/>
     <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
