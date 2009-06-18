@@ -22,7 +22,7 @@
 #include "ciao/CIAO_common.h"
 
 
-namespace CIDL_StockBroker_Impl
+namespace CIAO_Stock_StockBroker_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   StockBroker_exec_i

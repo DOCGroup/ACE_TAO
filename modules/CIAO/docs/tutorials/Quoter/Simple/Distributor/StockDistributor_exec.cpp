@@ -23,7 +23,7 @@
 #include "ace/Reactor.h"
 
 
-namespace CIDL_StockDistributor_Impl
+namespace CIAO_Stock_StockDistributor_Impl
 {
 
   // initialze the stock values

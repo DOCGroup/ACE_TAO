@@ -17,6 +17,7 @@ project(Stock_Base_StockBroker_idl_gen) : componentidldefaults, anytypecode, avo
 
 project(Stock_Base_StockBroker_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
+  after += Stock_Base_StockBroker_idl_gen
   idlflags += -Wb,export_macro=STOCKBROKER_EXEC_Export \
               -Wb,export_include=StockBroker_exec_export.h \
               -SS

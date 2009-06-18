@@ -229,7 +229,7 @@ COLOR:black'>MonolithicImplementation</span></code><span style='COLOR:black'>.
     <li style='COLOR:black;'> Create an &lt;&lt;PublishConnector&gt;&gt; by dragging it from the "Part browser" onto the "StockQuoter" window.
     </li>
     <li style='COLOR:black;'> Now assemble the components together according to <a href="images/fig1.jpg">Figure
-      1</a> (make sure you change to connect mode <img border="0" width="32" height="32" id="_x0000_i1035" src="Icons/AddConnMode.gif" />)
+      1</a> (make sure you change to connect mode <img border="0" width="16" height="16" id="_x0000_i1035" src="Icons/AddConnMode.gif" />)
       and the resulting assembly model should look like Figure 7. Note that to create connections between StockDistributor.notify_out and StockBroker.notify_in,
       you will need the intermediate connector &lt;&lt;PublishConnector&gt;&gt;.
     </li>
@@ -375,38 +375,34 @@ COLOR:black'>MonolithicImplementation</span></code><span style='COLOR:black'>.
       </ul>
     <p>The model should look like this:</p>
   </ol>
-  <p align="center" style='MARGIN-BOTTOM:12pt;MARGIN-LEFT:0.5in;TEXT-ALIGN:center;'><span style='COLOR:black'><img border="0" width="1076" height="530" id="_x0000_i1044" src="images/fig10.jpg"><br>
+  <p align="center" style='MARGIN-BOTTOM:12pt;MARGIN-LEFT:0.5in;TEXT-ALIGN:center;'><span style='COLOR:black'><img border="0" id="_x0000_i1044" src="images/fig10.jpg"><br>
     <br>
     Figure 10.</span></p>
   <ol start="4" type="1">
     <li style='MARGIN-BOTTOM:12pt;COLOR:black;'> Now we need to associate &lt;&lt;ComponentRef&gt;&gt; StockBroker to the
-      &lt;&lt;CollocationGroup&gt;&gt; running on the &lt;&lt;NodeReference&gt;&gt;
-      Broker, and &lt;&lt;ComponentRef&gt;&gt; StockDistributor to the
-      &lt;&lt;CollocationGroup&gt;&gt; running on the &lt;&lt;NodeReference&gt;&gt;
-      Distributor. To do that, switch the Edit Mode Bar to Set Mode (<img border="0" width="32" height="32" id="_x0000_i1045" src="Icons/SetMode.gif">),
-      and move the cursor to the &lt;&lt;CollocationGroup&gt;&gt; running on
-      &lt;&lt;NodeReference&gt;&gt; Distributor, right-click on it. You will find the
-      cursor is changed to set mode cursor, and only the
-      &lt;&lt;CollocationGroup&gt;&gt; you clicked in is highlighted, as shown in
-      Figure 11.</li>
+      &lt;&lt;CollocationGroup&gt;&gt; running on the &lt;&lt;NodeReference&gt;&gt; Node_Broker, and &lt;&lt;ComponentRef&gt;&gt; StockDistributor to the
+      &lt;&lt;CollocationGroup&gt;&gt; running on the &lt;&lt;NodeReference&gt;&gt; Node_Distributor. To do that, switch the Edit Mode Bar to Set Mode
+      (<img border="0" width="16" height="16" id="_x0000_i1045" src="Icons/SetMode.gif">), and move the cursor to the &lt;&lt;CollocationGroup&gt;&gt; running on
+      &lt;&lt;NodeReference&gt;&gt; Node_Distributor, right-click on it. You will find the cursor is changed to set mode cursor, and only the &lt;&lt;CollocationGroup&gt;&gt;
+      you clicked in is highlighted, as shown in Figure 11.
+    </li>
   </ol>
-  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" width="1076" height="530" id="_x0000_i1046" src="images/fig11.jpg">
+  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1046" src="images/fig11.jpg">
     <!-- 01.html,v 1.3 2006/02/10 14:34:35 mxiong Exp -->
-    &gt;<br>
+    <br><br>
+    Figure 11</span>
+  </p>
+  <p><span style='COLOR:black'>Now move your cursor to &lt;&lt;ComponentRef&gt;&gt;&nbsp; StockDistributor, and left-click it, so that
+    it looks like Figure 12.</span>
+  </p>
+  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1047" src="images/fig12.jpg"> &nbsp;<br>
     <br>
-    Figure 11</span></p>
-  <p><span style='COLOR:black'>Now move your cursor to
-    &lt;&lt;ComponentRef&gt;&gt;&nbsp; StockDistributor, and left-click it, so that
-    it looks like Figure 12.</span></p>
-  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" width="1076" height="530" id="_x0000_i1047" src="images/fig12.jpg"> &nbsp;<br>
-    <br>
-    Figure 12</span></p>
-  <p style='MARGIN-BOTTOM:12pt'><span style='COLOR:black'>This operation
-    associates <em>StockDistributor</em> component to the
-    &lt;&lt;CollocationGroup&gt;&gt; running on <em>Distributor</em> node. To do
-    the same with Broker, just right-click on another
-    &lt;&lt;CollocationGroup&gt;&gt;, and left-click on StockBroker
-    &lt;&lt;CollocationGroup&gt;&gt; which is highlighted.</span></p>
+    Figure 12</span>
+  </p>
+  <p style='MARGIN-BOTTOM:12pt'><span style='COLOR:black'>This operation associates <em>StockDistributor</em> component to the
+    &lt;&lt;CollocationGroup&gt;&gt; running on <em>Distributor</em> node. To do the same with Broker, just right-click on the associate
+    &lt;&lt;CollocationGroup&gt;&gt;, and left-click on StockBroker &lt;&lt;CollocationGroup&gt;&gt; which is then highlighted.</span>
+  </p>
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div>
