@@ -9,7 +9,7 @@ class Custom_Network_Priority_Mapping;
 namespace CIDL_SenderImpl
 {
   class SENDER_EXEC_Export SenderExec_i :
-    public virtual CIAO_Protocols_Sender_Impl::Sender_Exec,
+    public virtual ::CIAO_Protocols_Sender_Impl::Sender_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -42,8 +42,7 @@ namespace CIDL_SenderImpl
     void configuration_complete (void);
 
   protected:
-
-    SenderExec_Context_var context_;
+    Sender_Exec_Context_var context_;
 
     CORBA::ORB_var orb_;
 

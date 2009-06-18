@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n HUDisplay"
 
-project(BasicSP_stub_gen): componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(BasicSP_idl_gen): componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BASICSP_STUB_Export \
               -Wb,stub_export_include=BasicSP_stub_export.h \
@@ -15,9 +15,9 @@ project(BasicSP_stub_gen): componentidldefaults, anytypecode, avoids_ace_for_tao
   }
 }
 
-project(BasicSP_lem_gen_idle) : ciaoidldefaults, avoids_ace_for_tao {
+project(BasicSP_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  after += BasicSP_stub_gen
+  after += BasicSP_idl_gen
   idlflags  += -Wb,export_macro=BASICSP_EXEC_Export \
                -Wb,export_include=BasicSP_exec_export.h \
                -SS
@@ -28,7 +28,7 @@ project(BasicSP_lem_gen_idle) : ciaoidldefaults, avoids_ace_for_tao {
 }
 
 project(BasicSP_stub): ccm_stub, avoids_ace_for_tao {
-  after += BasicSP_lem_gen_idle
+  after += BasicSP_idle_gen
   sharedname = BasicSP_stub
   dynamicflags = BASICSP_STUB_BUILD_DLL
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -48,7 +48,7 @@ project(BasicSP_stub): ccm_stub, avoids_ace_for_tao {
 }
 
 project(BasicSP_exec) : ciao_executor, avoids_ace_for_tao {
-  after += BasicSP_stub BasicSP_lem_gen_idle
+  after += BasicSP_stub BasicSP_idle_gen
   sharedname = BasicSP_exec
   libs += BasicSP_stub
   dynamicflags = BASICSP_EXEC_BUILD_DLL
