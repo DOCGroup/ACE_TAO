@@ -15,8 +15,8 @@ project(Reused_Facet_Interface_idl_gen) : ciaoidldefaults, anytypecode, avoids_a
 }
 
 project(Reused_Facet_Interface_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
-  after += Reused_Facet_Interface_idl_gen
   custom_only = 1
+  after += Reused_Facet_Interface_idl_gen
   idlflags += -Wb,export_macro=CODEGEN_EXEC_Export \
               -Wb,export_include=CodeGen_exec_export.h \
               -SS
