@@ -54,12 +54,12 @@ private:
   void gen_provides_r (AST_Component *node);
    
   void gen_provides (AST_Type *obj,
-                     const char *port_name);
+                     Identifier *port_id);
                                      
   void gen_consumes_r (AST_Component *node);
   
-  void gen_consumes (const char *obj_name,
-                     const char *port_name);
+  void gen_consumes (AST_Type *obj,
+                     Identifier *port_id);
                                      
   /// Base class overrides and CIAO-specific code.                
   void gen_non_type_specific (void);

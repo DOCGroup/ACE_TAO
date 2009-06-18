@@ -99,6 +99,12 @@ public:
 
   int visit_valuebox (be_valuebox *node);
   // visit a valuebox node
+  
+private:
+  const char *type_name (be_type *node);
+  
+private:
+  TAO_OutStream *os;
 };
 
 #endif /* _BE_VISITOR_OPERATION_RETTYPE_H_ */

@@ -112,7 +112,7 @@ be_visitor_component_ex_idl::visit_string (be_string *node)
 
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
 
-  if (bound > 0)
+  if (bound > 0UL)
     {
       os_ << "<" << bound << ">";
     }
@@ -127,7 +127,18 @@ be_visitor_component_ex_idl::gen_nesting_open (AST_Decl *node)
   
   for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
     {
-      ACE_CString module_name (i.item ()->get_string ());
+      UTL_ScopedName tmp (i.item (), 0);
+      AST_Decl *scope =
+        node->defined_in ()->lookup_by_name (&tmp, true);
+        
+      if (scope == 0)
+        {
+          i.next ();
+          continue;
+        }
+        
+      ACE_CString module_name =
+        IdentifierHelper::try_escape (scope->original_local_name ());
       
       if (module_name == "")
         {
@@ -197,8 +208,10 @@ be_visitor_component_ex_idl::gen_facets (void)
       
       os_ << be_nl
           << "local interface CCM_"
-          << pd->impl->local_name ()->get_string ()
-          << " : ::" << pd->impl->full_name () << be_nl
+          << pd->impl->original_local_name ()->get_string ()
+          << " : ::"
+          << IdentifierHelper::orig_sn (intf->name ()).c_str ()
+          << be_nl
           << "{" << be_idt;
           
       os_ << be_uidt_nl
@@ -228,7 +241,8 @@ be_visitor_component_ex_idl::gen_executor_base (void)
   AST_Component *base = node_->base_component ();
   
   os_ << be_nl
-      << "local interface CCM_" << node_->local_name ()
+      << "local interface CCM_"
+      << node_->original_local_name ()->get_string ()
       << be_idt_nl
       << ": ";
       
@@ -240,14 +254,15 @@ be_visitor_component_ex_idl::gen_executor_base (void)
     }
   else
     {
-      ACE_CString sname_str (
-        ScopeAsDecl (base->defined_in ())->full_name ());
+      ACE_CString sname_str =
+        IdentifierHelper::orig_sn (
+          ScopeAsDecl (base->defined_in ())->name ());
         
       const char *sname = sname_str.c_str ();
       const char *global = (sname_str == "" ? "" : "::");
         
       os_ << global << sname << "::CCM_"
-          << base->local_name ()->get_string ();
+          << base->original_local_name ()->get_string ();
     }
       
   os_ << be_uidt_nl
@@ -269,7 +284,8 @@ be_visitor_component_ex_idl::gen_supported (void)
   for (long i = 0; i < node_->n_supports (); ++i)
     {
       os_ << "," << be_nl
-          << "::" << supported[i]->full_name ();
+          << "::"
+          << IdentifierHelper::orig_sn (supported[i]->name ()).c_str ();
     }
     
   os_ << be_uidt;
@@ -304,9 +320,14 @@ be_visitor_component_ex_idl::gen_facet_ops (void)
       i.next (pd);
       
       AST_Decl *scope = ScopeAsDecl (pd->impl->defined_in ());
-      ACE_CString sname_str (scope->full_name ());
+      
+      ACE_CString sname_str =
+        IdentifierHelper::orig_sn (scope->name ());
       const char *sname = sname_str.c_str ();
-      const char *lname = pd->impl->local_name ()->get_string ();
+      
+      const char *lname =
+        pd->impl->original_local_name ()->get_string ();
+      
       const char *global = (sname_str == "" ? "" : "::");
       
       os_ << be_nl
@@ -329,7 +350,8 @@ be_visitor_component_ex_idl::gen_consumer_ops (void)
       
       os_ << be_nl
           << "void push_" << pd->id->get_string () << " (in ::"
-          << pd->impl->full_name () << " e);";
+          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << " e);";
     }
 }
 
@@ -369,7 +391,8 @@ void
 be_visitor_component_ex_idl::gen_context (void)
 {
   os_ << be_nl << be_nl
-      << "local interface CCM_" << node_->local_name ()
+      << "local interface CCM_"
+      << node_->original_local_name ()->get_string ()
       << "_Context" << be_idt_nl
       << ": ";
       
@@ -381,10 +404,15 @@ be_visitor_component_ex_idl::gen_context (void)
     }
   else
     {
-      ACE_CString sname_str (
-        ScopeAsDecl (base->defined_in ())->full_name ());
+      AST_Decl *scope = ScopeAsDecl (base->defined_in ());
+      
+      ACE_CString sname_str =
+        IdentifierHelper::orig_sn (scope->name ());
       const char *sname = sname_str.c_str ();
-      const char *lname = base->local_name ()->get_string ();
+      
+      const char *lname =
+        base->original_local_name ()->get_string ();
+    
       const char *global = (sname_str == "" ? "" : "::");
       
       os_ << global << sname << "::CCM_" << lname << "_Context";
@@ -415,7 +443,8 @@ be_visitor_component_ex_idl::gen_publisher_ops (void)
       
       os_ << be_nl
           << "void push_" << pd->id->get_string () << " (in ::"
-          << pd->impl->full_name () << " e);";
+          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << " e);";
     }
 }
 
@@ -433,7 +462,8 @@ be_visitor_component_ex_idl::gen_emitter_ops (void)
       
       os_ << be_nl
           << "void push_" << pd->id->get_string () << " (in ::"
-          << pd->impl->full_name () << " e);";
+          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << " e);";
     }
 }
 
@@ -452,18 +482,23 @@ be_visitor_component_ex_idl::gen_receptacle_ops (void)
       os_ << be_nl
           << "::";
       
+      // Note that we don't strip off the possible '_cxx_' when
+      // adding the 'Connections' suffix. The front end will
+      // create this implied IDL node with the '_cxx_' so lookup
+      // will fail (when processing the *E.idl file) if we
+      // strip it off here.
       if (pd->is_multiple)
         {
-          os_ << node_->full_name () << "::"
-              << pd->id->get_string ()
+          os_ << IdentifierHelper::orig_sn (node_->name ()).c_str ()
+              << "::" << pd->id->get_string ()
               << "Connections get_connections_"
               << pd->id->get_string () << " ();";
         }
       else
         {
-          os_ << pd->impl->full_name ()
-              << " get_connection_" << pd->id->get_string ()
-              << " ();";
+          os_ << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+              << " get_connection_"
+              << pd->id->get_string () << " ();";
         }
     }
 }
@@ -471,10 +506,15 @@ be_visitor_component_ex_idl::gen_receptacle_ops (void)
 void
 be_visitor_component_ex_idl::gen_executor_derived (void)
 {
-  ACE_CString sname_str (
-    ScopeAsDecl (node_->defined_in ())->full_name ());
+  AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
+  
+  ACE_CString sname_str =
+    IdentifierHelper::orig_sn (scope->name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
+  
+  const char *lname =
+    node_->original_local_name ()->get_string ();
+  
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl << be_nl

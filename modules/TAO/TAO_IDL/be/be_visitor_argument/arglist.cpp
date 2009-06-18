@@ -69,7 +69,8 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
   if (this->ctx_->state () != TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH)
     {
       *os << " " << (unused_ ? "/* " : "" )
-          << node->local_name () << (unused_ ? " */" : "");
+          << node->local_name ()->get_string ()
+          << (unused_ ? " */" : "");
     }
 
   return 0;

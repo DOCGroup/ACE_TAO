@@ -76,9 +76,10 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Generate the operation name
+  // Generate the operation name, avoiding possible _cxx_ prefix.
   os << be_nl
-     << scope_->local_name () << "_Servant";
+     << scope_->original_local_name ()->get_string ()
+     << "_Servant";
   
   if (this->for_facets_)
     {

@@ -188,7 +188,7 @@ be_visitor_home_ex_idl::visit_string (be_string *node)
 
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
 
-  if (bound > 0)
+  if (bound > 0UL)
     {
       os_ << "<" << bound << ">";
     }
@@ -203,7 +203,18 @@ be_visitor_home_ex_idl::gen_nesting_open (AST_Decl *node)
   
   for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
     {
-      ACE_CString module_name (i.item ()->get_string ());
+      UTL_ScopedName tmp (i.item (), 0);
+      AST_Decl *scope =
+        node->defined_in ()->lookup_by_name (&tmp, true);
+        
+      if (scope == 0)
+        {
+          i.next ();
+          continue;
+        }
+        
+      ACE_CString module_name =
+        IdentifierHelper::try_escape (scope->original_local_name ());
       
       if (module_name == "")
         {
@@ -253,7 +264,8 @@ void
 be_visitor_home_ex_idl::gen_implicit (void)
 {
   os_ << be_nl
-      << "local interface CCM_" << node_->local_name ()
+      << "local interface CCM_"
+      << IdentifierHelper::try_escape (node_->original_local_name ()).c_str ()
       << "Implicit" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent create ()" << be_idt_nl
@@ -266,7 +278,8 @@ void
 be_visitor_home_ex_idl::gen_explicit (void)
 {
   os_ << be_nl << be_nl
-      << "local interface CCM_" << node_->local_name ()
+      << "local interface CCM_"
+      << IdentifierHelper::try_escape (node_->original_local_name ()).c_str ()
       << "Explicit" << be_idt_nl
       << ": ";
       
@@ -280,14 +293,16 @@ be_visitor_home_ex_idl::gen_explicit (void)
     }
   else
     {
-      ACE_CString sname_str (
-        ScopeAsDecl (base->defined_in ())->full_name ());
+      ACE_CString sname_str =
+        IdentifierHelper::orig_sn (
+          ScopeAsDecl (base->defined_in ())->name ());
         
       const char *sname = sname_str.c_str ();
       const char *global = (sname_str == "" ? "" : "::");
         
       os_ << global << sname << "::CCM_"
-          << base->local_name ()->get_string () << "Explicit";
+          << IdentifierHelper::try_escape (base->local_name ()).c_str ()
+          << "Explicit";
     }
     
   os_ << be_uidt_nl
@@ -311,10 +326,14 @@ be_visitor_home_ex_idl::gen_explicit (void)
 void
 be_visitor_home_ex_idl::gen_derived (void)
 {
+  ACE_CString lname_str =
+    IdentifierHelper::try_escape (node_->original_local_name ());
+  const char *lname = lname_str.c_str ();
+
   os_ << be_nl << be_nl
-      << "local interface CCM_" << node_->local_name () << be_nl
-      << "  : CCM_" << node_->local_name () << "Explicit," << be_nl
-      << "    CCM_" << node_->local_name () << "Implicit" << be_nl
+      << "local interface CCM_" << lname << be_nl
+      << "  : CCM_" << lname << "Explicit," << be_nl
+      << "    CCM_" << lname << "Implicit" << be_nl
       << "{" << be_nl
       << "};";
 }
@@ -329,7 +348,8 @@ be_visitor_home_ex_idl::gen_supported (void)
   for (long i = 0; i < node_->n_supports (); ++i)
     {
       os_ << "," << be_nl
-          << "::" << supported[i]->full_name ();
+          << "::"
+          << IdentifierHelper::orig_sn (supported[i]->name ()).c_str ();
     }
     
   os_ << be_uidt;
@@ -353,7 +373,8 @@ be_visitor_home_ex_idl::gen_exception_list (
            ;)
         {
           AST_Exception *ex = ei.item ();
-          ACE_CString ex_name (ex->full_name ());
+          ACE_CString ex_name =
+            IdentifierHelper::orig_sn (ex->name ());
           
           if (init_op)
             {
@@ -369,8 +390,7 @@ be_visitor_home_ex_idl::gen_exception_list (
                 }
             }
         
-          os_ << "::"
-              << IdentifierHelper::orig_sn (ex->name ()).c_str ();
+          os_ << "::" << ex_name.c_str ();
 
           ei.next ();
 
@@ -434,11 +454,16 @@ void
 be_visitor_home_ex_idl::gen_home_executor (void)
 {
   AST_Component *comp = node_->managed_component ();
+  AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   
-  ACE_CString sname_str (
-    ScopeAsDecl (node_->defined_in ())->full_name ());
+  ACE_CString sname_str =
+    IdentifierHelper::orig_sn (scope->name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
+  
+  ACE_CString lname_str =
+    IdentifierHelper::try_escape (node_->original_local_name ());
+  const char *lname = lname_str.c_str ();
+  
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl << be_nl

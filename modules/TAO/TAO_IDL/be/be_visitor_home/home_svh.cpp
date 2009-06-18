@@ -97,7 +97,11 @@ be_visitor_home_svh::gen_servant_class (void)
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
+  
+  // No '_cxx_' prefix.
+  const char *lname =
+    node_->original_local_name ()->get_string ();
+    
   const char *clname = comp_->local_name ()->get_string ();
   const char *global = (sname_str == "" ? "" : "::");
   bool swapping = be_global->gen_component_swapping ();
@@ -261,7 +265,7 @@ be_visitor_home_svh::gen_entrypoint (void)
 }
 
 int
-be_visitor_home_svh::op_attr_decl_helper (be_interface *derived,
+be_visitor_home_svh::op_attr_decl_helper (be_interface * /* derived */,
                                           be_interface *ancestor,
                                           TAO_OutStream *os)
 {

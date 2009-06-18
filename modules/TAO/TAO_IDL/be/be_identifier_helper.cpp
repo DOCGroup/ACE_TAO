@@ -111,7 +111,7 @@ IdentifierHelper::original_local_name (Identifier * local_name)
 }
 
 ACE_CString
-IdentifierHelper::orig_sn (UTL_IdList * sn, bool appended_to)
+IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
 {
   ACE_CString retval;
   bool first = true;
@@ -129,14 +129,18 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool appended_to)
           first = second = false;
         }
 
-      id = IdentifierHelper::original_local_name (i.item ());
+      id =
+        for_idl
+          ? IdentifierHelper::original_local_name (i.item ())
+          : i.item ()->copy ();
+          
       i.next ();
       
       // Append the identifier.
       retval +=
-        appended_to && i.is_done ()
-          ? id->get_string ()
-          : IdentifierHelper::try_escape (id).c_str ();
+        for_idl
+          ? IdentifierHelper::try_escape (id).c_str ()
+          : id->get_string ();
 
        if (first)
         {

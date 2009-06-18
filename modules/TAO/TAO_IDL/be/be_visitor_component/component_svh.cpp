@@ -120,8 +120,11 @@ be_visitor_component_svh::gen_facets (void)
         {
           continue;
         }
-        
-      const char *lname = intf->local_name ();
+       
+      // No '_cxx_' prefix>  
+      const char *lname =
+        intf->original_local_name ()->get_string ();
+      
       be_decl *scope =
         be_scope::narrow_from_scope (intf->defined_in ())->decl ();
       ACE_CString suffix (scope->flat_name ());
@@ -213,7 +216,11 @@ be_visitor_component_svh::gen_context_class (void)
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
+  
+  // No '_cxx_' prefix.
+  const char *lname =
+    node_->original_local_name ()->get_string ();
+    
   const char *global = (sname_str == "" ? "" : "::");
   bool swapping = be_global->gen_component_swapping ();
      
@@ -291,7 +298,11 @@ be_visitor_component_svh::gen_context_r (AST_Component *node)
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node->local_name ()->get_string ();
+  
+  // No '_cxx_' prefix.
+  const char *lname =
+    node->original_local_name ()->get_string ();
+    
   const char *global = (sname_str == "" ? "" : "::");
      
   os_ << be_nl << be_nl
@@ -317,7 +328,11 @@ be_visitor_component_svh::gen_servant_class (void)
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
+  
+  // No '_cxx_' prefix.
+  const char *lname =
+    node_->original_local_name ()->get_string ();
+  
   const char *global = (sname_str == "" ? "" : "::");
      
   os_ << be_nl << be_nl
@@ -480,8 +495,7 @@ be_visitor_component_svh::gen_ports (AST_Component *node,
              i.advance ())
           {
             i.next (pd);
-            this->gen_provides (pd->impl->full_name (),
-                                pd->id->get_string ());
+            this->gen_provides (pd);
           }
           
         break;
@@ -494,10 +508,7 @@ be_visitor_component_svh::gen_ports (AST_Component *node,
              i.advance ())
           {
             i.next (pd);
-            this->gen_uses (pd->impl->full_name (),
-                            pd->id->get_string (),
-                            pd->is_multiple,
-                            in_servant);
+            this->gen_uses (pd, in_servant);
           }
           
         break;
@@ -551,9 +562,12 @@ be_visitor_component_svh::gen_ports (AST_Component *node,
 }
 
 void
-be_visitor_component_svh::gen_provides (const char *obj_name,
-                                        const char *port_name)
+be_visitor_component_svh::gen_provides (
+  AST_Component::port_description *pd)
 {
+  const char *obj_name = pd->impl->full_name ();
+  const char *port_name = pd->id->get_string ();
+
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
       << "virtual ::" << obj_name << "_ptr" << be_nl
@@ -571,16 +585,18 @@ be_visitor_component_svh::gen_provides (const char *obj_name,
 }
 
 void
-be_visitor_component_svh::gen_uses (const char *obj_name,
-                                    const char *port_name,
-                                    bool is_multiple,
-                                    bool in_servant)
+be_visitor_component_svh::gen_uses (
+  AST_Component::port_description *pd,
+  bool in_servant)
 {
+  const char *obj_name = pd->impl->full_name ();
+  const char *port_name = pd->id->get_string ();
+  
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
       << "virtual ";
   
-  if (is_multiple)
+  if (pd->is_multiple)
     {
       os_ << "::" << node_->full_name () << "::"
           << port_name << "Connections *" << be_nl
@@ -602,7 +618,7 @@ be_visitor_component_svh::gen_uses (const char *obj_name,
     
   os_ << be_nl
       << "virtual "
-      << (is_multiple ? "::Components::Cookie *" : "void")
+      << (pd->is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
       << "connect_" << port_name << " (" << be_idt_nl
       << "::" << obj_name << "_ptr);"
@@ -611,7 +627,7 @@ be_visitor_component_svh::gen_uses (const char *obj_name,
   os_ << "virtual ::" << obj_name << "_ptr" << be_nl
       << "disconnect_" << port_name << " (";
      
-     if (is_multiple)
+     if (pd->is_multiple)
       {
         os_ << be_idt_nl
             << "::Components::Cookie * ck);" << be_uidt;
@@ -626,7 +642,7 @@ be_visitor_component_svh::gen_uses (const char *obj_name,
       os_ << be_uidt_nl << be_nl
           << "protected:" << be_idt_nl;
 
-      if (is_multiple)
+      if (pd->is_multiple)
         {
           os_ << "// Multiplex " << port_name << " connection." << be_nl
               << "typedef ACE_Array_Map<ptrdiff_t," << be_nl
@@ -925,7 +941,7 @@ be_visitor_component_svh::gen_entrypoint (void)
 }
 
 int
-be_visitor_component_svh::op_attr_decl_helper (be_interface *derived,
+be_visitor_component_svh::op_attr_decl_helper (be_interface * /*derived */,
                                                be_interface *ancestor,
                                                TAO_OutStream *os)
 {

@@ -60,6 +60,7 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
   be_visitor_operation_rettype rt_visitor (&ctx);
+//  rt_visitor.for_exec (true);
 
   if (rt->accept (&rt_visitor) == -1)
     {
@@ -73,12 +74,14 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
 
   // Generate the operation name
   os_ << be_nl
-      << scope_->local_name () << "_exec_i::" << node->local_name ();
+      << scope_->original_local_name ()->get_string ()
+      << "_exec_i::"
+      << node->local_name ();
   
   // Generate the argument list, which will use our overrridden 
   // visit_argument().
   be_visitor_operation_arglist al_visitor (this->ctx_);
-  al_visitor.unused (true);
+//  al_visitor.unused (true);
 
   if (node->accept (&al_visitor) == -1)
     {

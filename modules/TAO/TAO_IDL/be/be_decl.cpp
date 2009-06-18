@@ -247,8 +247,10 @@ be_decl::compute_flat_name  (const char *prefix,
       // Prefix.
       result_str = prefix_str;
 
-      // Local name.
-      result_str += ACE_CString (this->local_name ()->get_string ());
+      // Local name. Leave out _cxx_ prefix, if any.
+      result_str +=
+        ACE_CString (
+          this->original_local_name ()->get_string ());
 
       // Suffix.
       result_str += suffix_str;
@@ -278,8 +280,10 @@ be_decl::compute_flat_name  (const char *prefix,
       // Prefix.
       result_str += prefix_str;
 
-      // Local name.
-      result_str += ACE_CString (this->local_name ()->get_string ());
+      // Local name. Leave out _cxx_ prefix, if any.
+      result_str +=
+        ACE_CString (
+          this->original_local_name ()->get_string ());
 
       // Suffix.
       result_str += suffix_str;

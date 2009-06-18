@@ -1,3 +1,61 @@
+Thu Jun 18 18:44:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_identifier_helper.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/rettype.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_identifier_helper.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Fixed warnings in compilation of new visitors.
+
+          - Modified flat name computation, and initialization of
+            port name in component port descriptors, to leave off
+            the '_cxx_' prefix (indicating a clash with a C++
+            keyword) if it exists. Flat name and port name are
+            always used in concatenation with other strings, and
+            so the prefix isn't necessary, and is confusing to
+            read.
+
+          - Fixed CIAO servant, executor IDL and executor impl
+            code generation to be consistent when the IDL file
+            contains C++ keywords and escaped IDL keywords. There
+            is also a new test in CIAO_ROOT/tests/IDL_Test to
+            cover these use cases.
+            
+          - Fixed bug in code generation for home servant finder
+            operations. These aren't implemented yet in CIAO, so
+            the arguments, if any, must be generated as commented
+            out, to avoid 'unused arg' warnings. Thanks to
+            Johnny Willemsen <jwillemsen@remedy.nl> for reporting
+            the bug.
+
 Tue Jun 16 20:40:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/home_svs.cpp:
