@@ -60,16 +60,15 @@ COLOR:black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/descriptors</span></code><
 </DIV>
 <P style="COLOR: black;    ">&nbsp;<FONT face="Courier New" size="2">&nbsp;&nbsp;&nbsp;&nbsp;
   %DANCE_ROOT%/bin/dance_node_manager -ORBListenendpoints iiop://localhost:30000 -s
-  %CIAO_ROOT%/bin/ciao_componentserver -d 1000</FONT></P>
+  %CIAO_ROOT%/bin/ciao_componentserver -n Distributor=node_dist.ior</FONT></P>
 <P style="COLOR: black;    "><FONT face="Courier New" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%DANCE_ROOT%/bin/dance_node_manager
-  -ORBListenendpoints iiop://localhost:40000 -s %CIAO_ROOT%/bin/ciao_componentserver
-  -d 1000</FONT></P>
+  -ORBListenendpoints iiop://localhost:40000 -s %CIAO_ROOT%/bin/ciao_componentserver -n Broker=node_broker.ior</FONT></P>
 <UL type="disc">
   <li style='COLOR:black;'> Start the execution manager:</li>
 </UL>
 <P style="COLOR: black;    ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp; <code> <span style='FONT-SIZE:10pt'>
-  %DANCE_ROOT%/bin/dance_execution_manager -o ior -i NodeMap.dat</span></code>&nbsp; </P>
+  %DANCE_ROOT%/bin/dance_execution_manager -eEM.ior --node-map NodeMap.dat</span></code>&nbsp; </P>
 <p><span style='COLOR:black'>The </span><code><span style='FONT-SIZE:10pt;
 COLOR:black'>NodeMap.dat</span></code><span style='COLOR:black'> file describes
   the deployment daemons CIAO's Execution_Manager will contact to instantiate
@@ -83,8 +82,8 @@ COLOR:black'>NodeMap.dat</span></code><span style='COLOR:black'> file describes
     non-standard. We plan to use Naming Service to do this in the future.</li>
 </ul>
 <ul type="disc">
-  <li style='COLOR:black;'> Start the DaNCE Repository Manager by running <code> <span style='FONT-SIZE:10pt'>%CIAO_ROOT%/bin/dance_repository_manager
-    -p Plan.cdp -k file://ior</span></code>
+  <li style='COLOR:black;'> Start the DaNCE Repository Manager by running <code> <span style='FONT-SIZE:10pt'>
+  %DANCE_ROOT%/bin/dance_plan_launcher -x Plan.cdp -k file://EM.ior</span></code>
   <li style='COLOR:black;'> By now the components should be successfully deployed. You may run the driver
     program to start the application. e.g. you can try the following
     :
