@@ -1,3 +1,20 @@
+Thu Jun 18 13:04:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/04.html:
+          Updated to meet the latest versions
+          of GME/COSMIC/CIAO/DANCE
+
+        * docs/tutorials/Quoter/Simple/descriptors/NodeMap.dat:
+          NodeManager should be specific: i.e. Broker.NodeManager.
+
+Thu Jun 18 13:02:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+        * docs/tutorials/Quoter/Simple/04.html:
+
+        * docs/tutorials/Quoter/Simple/descriptors/NodeMap.dat:
+
 Thu Jun 18 13:00:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
