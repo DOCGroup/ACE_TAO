@@ -13,10 +13,4 @@ TAO_Flushing_Strategy::~TAO_Flushing_Strategy (void)
 {
 }
 
-bool TAO_Flushing_Strategy::is_blocking ()
-{
-  return false;
-}
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL

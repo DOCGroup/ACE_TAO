@@ -987,16 +987,6 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
 
       if (errno == EWOULDBLOCK || errno == EAGAIN)
         {
-          if (this->orb_core ()->flushing_strategy ()->is_blocking ())
-            {
-              // If the flushing strategy has "blocking" behavior, we can't
-              // return 0 here because it would loop indefinitely calling
-              // back into handle_output() and returning EWOULDBLOCK.
-              // This is an error condition because TAO can't handle an
-              // EWOULDBLOCK with a blocking flushing strategy.
-              return -1;
-            }
-
           return 0;
         }
 

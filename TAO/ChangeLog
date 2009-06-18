@@ -1,3 +1,18 @@
+Thu Jun 18 15:44:35 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Transport.cpp:
+
+          Reverted the change from...
+          Fri Jun 12 14:29:55 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+          ...which made it an error to have a send() return -1/EWOULDBLOCK
+          with the blocking flushing strategy.  This is actually expected
+          behavior for a server, but it needs to be changed for the blocking
+          flusing strategy, see bug #3704, to be resolved after the release.
+
 Tue Jun 16 20:23:44 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:
@@ -7,13 +22,13 @@ Tue Jun 16 20:23:44 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 Tue Jun 16 15:33:24 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:
-        
-          Updated. 
-        
+
+          Updated.
+
         * TAO_IDL/contrib/mcpp/system.cpp:
 
-          Removed incompatible throw specification. 
-        
+          Removed incompatible throw specification.
+
 Tue Jun 16 07:19:07 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
