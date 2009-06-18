@@ -1,16 +1,25 @@
+Thu Jun 18 14:35:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/cidlc.mpb:
+          Deleted
+
+        * MPC/config/dance_plan_generator.mpb
+        * MPC/config/dance_plan_generator.mpc
+          Renamed mpc to mpb
+
 Thu Jun 18 14:25:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:
         * docs/schema/cdp.xsd:
         * docs/schema/cid.xsd:
         * docs/schema/toplevel.xsd:
-        
-          Changes from 06-04-02.  Shouldn't break existing plans. 
-        
+
+          Changes from 06-04-02.  Shouldn't break existing plans.
+
         * docs/schema/unused_06-04-02.xsd:
 
           Unused elements from 06-04-02.
-        
+
 Thu Jun 18 14:24:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CCF:
