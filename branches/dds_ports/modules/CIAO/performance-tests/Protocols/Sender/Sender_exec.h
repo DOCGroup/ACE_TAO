@@ -9,7 +9,7 @@ class Custom_Network_Priority_Mapping;
 namespace CIDL_SenderImpl
 {
   class SENDER_EXEC_Export SenderExec_i :
-    public virtual SenderExec,
+    public virtual CIAO_Protocols_Sender_Impl::Sender_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -50,7 +50,7 @@ namespace CIDL_SenderImpl
   };
 
   class SENDER_EXEC_Export SenderHomeExec_i :
-    public virtual SenderHomeExec,
+    public virtual CIAO_Protocols_Sender_Impl::SenderHome_Exec
     public virtual ::CORBA::LocalObject
   {
   public:

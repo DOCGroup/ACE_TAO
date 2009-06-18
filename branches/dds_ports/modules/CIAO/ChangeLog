@@ -1,4 +1,14 @@
-Thu Jun 18 13:17:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Thu Jun 18 13:34:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h
+        * examples/BasicSP/EC/EC_exec.h
+        * examples/Display/GPS/GPS_exec.h
+        * examples/Display/NavDisplay/NavDisplay_exec.h
+        * examples/Display/RateGen/RateGen_exec.h
+        * performance-tests/Protocols/Sender/Sender_exec.h
+          Compile fixes
+
+Thu Jun 18 13:17:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h
         * examples/BasicSP/BMClosedED/BMClosedED.mpc
