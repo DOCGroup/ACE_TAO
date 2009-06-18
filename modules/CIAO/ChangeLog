@@ -1,3 +1,18 @@
+Thu Jun 18 09:32:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.idl
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.mpc
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base_skel_export.h
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base_stub_export.h
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.idl
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec_export.h
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_stub_export.h
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_svnt_export.h
+          Put these under version control. Copy of regular hello world
+
 Thu Jun 18 06:48:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/03.html:
