@@ -24,7 +24,7 @@ namespace MyImpl
    * GPS executor implementation class.
    */
   class GPS_EXEC_Export GPS_exec_i :
-    public virtual CIAO_HUDisplay_GPS_Impl::GPS_exec,
+    public virtual ::CIAO_HUDisplay_GPS_Impl::GPS_exec, 
     public virtual ::CORBA::LocalObject
   {
 

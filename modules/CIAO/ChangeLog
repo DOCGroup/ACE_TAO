@@ -1,3 +1,14 @@
+Thu Jun 18 13:17:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.h
+        * examples/Display/GPS/GPS_exec.h
+        * examples/Display/NavDisplay/NavDisplay_exec.h
+        * examples/Display/RateGen/RateGen_exec.h
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+          Compile fixes
+
 Thu Jun 18 13:04:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/04.html:
