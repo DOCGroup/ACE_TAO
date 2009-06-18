@@ -1,3 +1,8 @@
+Thu Jun 18 13:54:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/Model/Quoter.xme:
+          Used to latest version of COSMIC to create this Quoter.xme
+
 Thu Jun 18 13:37:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
