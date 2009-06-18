@@ -1,3 +1,8 @@
+Thu Jun 18 16:51:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO.mwc:
+          Added connectors and performance-tests directory, removed CCF
+
 Thu Jun 18 14:35:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/cidlc.mpb:
