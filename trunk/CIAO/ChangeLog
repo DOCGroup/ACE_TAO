@@ -1,10 +1,22 @@
+Thu Jun 18 23:03:06 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tools/Config_Handlers/IRDD_Handler.h:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        
+          There is a curious order-of-inclusion problem on macosx-leopoard
+          builds whereby including a non-ACE header before something that
+          includes ace/config.h causes a compiler error in
+          OS_NS_stdlib.inl. It seems that on that platform, the signature
+          of ::unsetenv() varies. I think this should be looked into in
+          greater depth after releasing x.7.0.
+
 Tue Jun 16 00:55:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_plan_generator.mpc:
         * MPC/config/dance_plan_launcher_base.mpc:
 
           Linking fixes for RACE.
-        
+
 Mon Jun 15 02:22:01 UTC 2009  William R. Otte  <wotte@william-r-ottes-macbook-pro-2.local>
 
         * CIAO-INSTALL.html:
