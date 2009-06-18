@@ -40,7 +40,7 @@ namespace CIDL_Receiver_Impl
    * Receiver executor implementation class.
    */
   class RECEIVER_EXEC_Export Receiver_exec_i
-    : public virtual Receiver_Exec,
+    : public virtual ::CIAO_Hello_Receiver_Impl::Receiver_Exec,
       public virtual ::CORBA::LocalObject
   {
 
