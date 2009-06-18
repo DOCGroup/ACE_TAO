@@ -2,10 +2,10 @@
 #ifndef testListener_h
 #define testListener_h
 
+#include "bug3688_export.h"
+
 #include <string>
 #include <vector>
-
-#include "bug3688_export.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
