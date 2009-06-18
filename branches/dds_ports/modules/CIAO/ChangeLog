@@ -1,3 +1,28 @@
+Thu Jun 18 10:24:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/03.html:
+        * docs/tutorials/Quoter/Simple/descriptors/Plan.cdp:
+        * docs/tutorials/Quoter/Simple/images/fig10.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig11.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig12.jpg:
+          Updated to meet the latest versions 
+          of GME/COSMIC/CIAO/DANCE
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+          Stock_Base_StockBroker_idle_gen project should be build 
+          after Stock_Base_StockBroker_idl_gen project.
+
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+          Stock_Base_StockDistributor_idle_gen project should be build 
+          after Stock_Base_StockDistributor_idl_gen project.
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.cpp:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.cpp:
+          Naming convention of namespace is different now since CIDL 
+          compiler is removed.
+
 Thu Jun 18 09:32:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.idl

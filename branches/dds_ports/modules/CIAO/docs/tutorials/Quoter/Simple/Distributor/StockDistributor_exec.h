@@ -34,7 +34,8 @@
 #include "StockDistributor_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_StockDistributor_Impl
+namespace CIAO_Stock_StockDistributor_Impl
+//namespace CIDL_StockDistributor_Impl
 {
   class StockDistributor_exec_i;
 

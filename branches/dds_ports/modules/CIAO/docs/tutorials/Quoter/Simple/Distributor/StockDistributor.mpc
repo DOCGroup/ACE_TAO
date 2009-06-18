@@ -17,6 +17,7 @@ project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults, anytypecode
 
 project(Stock_Base_StockDistributor_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
+  after += Stock_Base_StockDistributor_idl_gen
   idlflags += -Wb,export_macro=STOCKDISTRIBUTOR_EXEC_Export \
               -Wb,export_include=StockDistributor_exec_export.h \
               -SS
