@@ -1,7 +1,23 @@
+Thu Jun 18 06:48:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/03.html:
+
+          Updated to meet the current status of CIAO/DAnCE.
+
+        * docs/tutorials/Quoter/Simple/images/fig2.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig3.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig5.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig6.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig7.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig8.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig9.jpg:
+
+          Updated to meet the current status of GME/COSMIC
+
 Thu Jun 18 02:52:44 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/06-04-02.xsd
-        
+
           Schema from the standard. Note that this is non-normative, and the
           fact that we deviate from it is fine.
 
