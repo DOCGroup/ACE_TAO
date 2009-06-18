@@ -78,7 +78,7 @@ namespace CIDL_Receiver_Impl
    * Receiver home executor implementation class.
    */
   class RECEIVER_EXEC_Export ReceiverHome_exec_i
-    : public virtual ReceiverHome_Exec,
+    : public virtual ::CIAO_Hello_Receiver_Impl::ReceiverHome_Exec, 
       public virtual ::CORBA::LocalObject
   {
     public:
