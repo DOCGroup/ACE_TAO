@@ -229,13 +229,13 @@ BE_produce (void)
       ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
       be_visitor_root_svs root_svs_visitor (&ctx);
       BE_visit_root (root_svs_visitor, "CIAO servant source");
+    }
       
-      if (be_global->gen_ciao_exec_idl ())
-        {
-          ctx.state (TAO_CodeGen::TAO_ROOT_EX_IDL);
-          be_visitor_root_ex_idl root_svs_visitor (&ctx);
-          BE_visit_root (root_svs_visitor, "CIAO executor IDL");
-        }
+  if (be_global->gen_ciao_exec_idl () && idl_global->component_seen_)
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_EX_IDL);
+      be_visitor_root_ex_idl root_svs_visitor (&ctx);
+      BE_visit_root (root_svs_visitor, "CIAO executor IDL");
     }
 
   if (be_global->gen_ciao_exec_impl () && idl_global->component_seen_)

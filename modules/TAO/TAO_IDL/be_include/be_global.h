@@ -690,12 +690,10 @@ public:
   
   bool gen_ciao_svnt (void) const;
   void gen_ciao_svnt (bool val);
-  bool gen_ciao_exec_impl (void) const;
-  void gen_ciao_exec_impl (bool val);
-  // Accessors for the corresponding members.
-  
   bool gen_ciao_exec_idl (void) const;
   void gen_ciao_exec_idl (bool val);
+  bool gen_ciao_exec_impl (void) const;
+  void gen_ciao_exec_impl (bool val);
   // Accessors for the corresponding members.
   
   bool gen_component_swapping (void) const;
@@ -981,13 +979,10 @@ private:
   // $TAO_ROOT/tao, $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao.
 
   bool gen_ciao_svnt_;
-  bool gen_ciao_exec_impl_;
-  // Both false by default, these flags trigger code generation
-  // formerly done by the CIAO CIDL compiler.
-  
   bool gen_ciao_exec_idl_;
-  // Shadows gen_ciao_svnt_ by default, but can be suppressed
-  // separately.
+  bool gen_ciao_exec_impl_;
+  // False by default, these flags trigger code generation
+  // formerly done by the CIAO CIDL compiler.
   
   bool gen_component_swapping_;
   // Different container #includes, modified servant code.
