@@ -23,6 +23,7 @@ project(Basic_CodeGen_idl_gen) : componentidldefaults, anytypecode, avoids_ace_f
 
 project(Basic_CodeGen_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   custom_only = 1
+  after += Basic_CodeGen_idl_gen
   idlflags += -Wb,export_macro=CODEGEN_EXEC_Export \
               -Wb,export_include=CodeGen_exec_export.h \
               -SS

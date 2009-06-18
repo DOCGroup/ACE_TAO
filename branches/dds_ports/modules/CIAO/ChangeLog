@@ -1,3 +1,10 @@
+Thu Jun 18 18:48:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Protocols/Sender/Sender_exec.h
+        * tests/CIDL/CodeGen/CodeGen.mpc
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.mpc
+          Compile fixes
+
 Thu Jun 18 16:51:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO.mwc:
