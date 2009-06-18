@@ -41,12 +41,12 @@ namespace DAnCE
   void
   Logger_Service::parse_args (int argc, ACE_TCHAR **argv)
   {
-    const ACE_TCHAR *shortl = ACE_TEXT("-l");
+    //    const ACE_TCHAR *shortl = ACE_TEXT("-l");
     const ACE_TCHAR *longl = ACE_TEXT("--log-level");
     const ACE_TCHAR *tracel = ACE_TEXT("--trace");
     //    const ACE_TCHAR *traces = "-t";
     const ACE_TCHAR *lfl = ACE_TEXT("--log-file");
-    const ACE_TCHAR *lfs = ACE_TEXT("-f");
+    //    const ACE_TCHAR *lfs = ACE_TEXT("-f");
     
     // We need to actually FIND the -l option, as the get_opt won't ignore
     // the ORB options and such.
@@ -60,7 +60,7 @@ namespace DAnCE
             continue;
           }
 
-        if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
+        if (//ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
             ACE_OS::strncmp (argv[i], longl, 11 ) == 0)
           {
             if ((i + 1) < argc && *argv[i + 1] != '-')
@@ -72,7 +72,7 @@ namespace DAnCE
               }
           }
 
-        if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
+        if (//ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
             ACE_OS::strncmp (argv[i], lfl, 10 ) == 0)
           {
             argv[i] = ACE_TEXT ("");
