@@ -7,6 +7,8 @@ project(Reused_Facet_Interface_idl_gen) : ciaoidldefaults, anytypecode, avoids_a
               -Wb,stub_export_include=CodeGen_stub_export.h \
               -Wb,skel_export_macro=CODEGEN_SVNT_Export \
               -Wb,skel_export_include=CodeGen_svnt_export.h \
+              -Wb,exec_export_macro=CODEGEN_EXEC_Export \
+              -Wb,exec_export_include=CodeGen_exec_export.h \
               -Gsv -Gex
 
   IDL_Files {
@@ -27,7 +29,7 @@ project(Reused_Facet_Interface_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
 }
 
 project(Reused_Facet_Interface_stub) : ccm_stub, avoids_ace_for_tao {
-  after += Reused_Facet_Interface_idl_gen Basic_stub
+  after += Reused_Facet_Interface_idl_gen Reused_Facet_Interface_Basic_stub
   libs  += Basic_stub
 
   sharedname = CodeGen_stub
@@ -78,7 +80,7 @@ project(Reused_Facet_Interface_exec) : ciao_executor, avoids_ace_for_tao {
 
 
 project(Reused_Facet_Interface_svnt) : ciao_servant, avoids_ace_for_tao {
-  after      += Basic_skel Reused_Facet_Interface_exec
+  after      += Reused_Facet_Interface_Basic_skel Reused_Facet_Interface_exec
   sharedname  = CodeGen_svnt
   libs       += CodeGen_exec \
                 CodeGen_stub \

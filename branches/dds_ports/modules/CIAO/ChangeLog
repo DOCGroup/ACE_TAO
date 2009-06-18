@@ -1,3 +1,15 @@
+Thu Jun 18 18:52:10 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.mpc:
+        
+          Fixed dependency mistakes.
+          
+        * tests/IDL_Test/Keywords/*.*:
+        
+          New test, covering all CIAO-related code generation when
+          the IDL file contains C++ keywords and escaped IDL
+          keywords.
+
 Thu Jun 18 18:48:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Protocols/Sender/Sender_exec.h
