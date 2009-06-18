@@ -86,12 +86,9 @@ be_visitor_home_exh::visit_attribute (be_attribute *node)
 int
 be_visitor_home_exh::gen_exec_class (void)
 {
-  AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
-  const char *clname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  // We don't want a '_cxx_' prefix here.
+  const char *lname =
+    node_->original_local_name ()->get_string ();
   
   os_ << be_nl
       << "class " << export_macro_.c_str () << " " << lname
@@ -261,7 +258,7 @@ be_visitor_home_exh::gen_entrypoint (void)
 }
 
 int
-be_visitor_home_exh::op_attr_decl_helper (be_interface *derived,
+be_visitor_home_exh::op_attr_decl_helper (be_interface * /* derived */,
                                           be_interface *ancestor,
                                           TAO_OutStream *os)
 {

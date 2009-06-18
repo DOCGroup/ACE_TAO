@@ -55,7 +55,7 @@ struct TAO_IDL_BE_Export IdentifierHelper
   // Removes '_cxx_ from segments of a scoped name, and optionally
   // de-escape the last segment, if it's to be appended to.
   static ACE_CString
-  orig_sn (UTL_ScopedName * scoped_name, bool appended_to = false);
+  orig_sn (UTL_ScopedName * scoped_name, bool for_idl = true);
 
   // Detects case-insensitive match with IDL keyword.
   static bool

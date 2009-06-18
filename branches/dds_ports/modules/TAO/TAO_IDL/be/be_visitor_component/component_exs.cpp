@@ -110,11 +110,10 @@ be_visitor_component_exs::gen_facets (void)
       
       be_interface *intf =
         be_interface::narrow_from_decl (pd->impl);
-      const char *lname = intf->local_name ();
-      AST_Decl *s = ScopeAsDecl (intf->defined_in ());
-      ACE_CString sname_str (s->full_name ());
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
+        
+      // We don't want any '_cxx_' prefix here.  
+      const char *lname =
+        intf->original_local_name ()->get_string ();
       
       os_ << be_nl
           << comment_border_ << be_nl
@@ -184,11 +183,7 @@ be_visitor_component_exs::gen_facet_ops_attrs (be_interface *node)
 int
 be_visitor_component_exs::gen_exec_class (void)
 {
-  AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
   const char *lname = node_->local_name ();
-  const char *global = (sname_str == "" ? "" : "::");
   
   // In the interest of pretty formatting....
   if (node_->provides ().size () > 0)
@@ -315,8 +310,7 @@ be_visitor_component_exs::gen_provides_r (AST_Component *node)
        i.advance ())
     {
       i.next (pd);
-      this->gen_provides (pd->impl,
-                          pd->id->get_string ());
+      this->gen_provides (pd->impl, pd->id);
     }  
   
   node = node->base_component ();
@@ -325,13 +319,18 @@ be_visitor_component_exs::gen_provides_r (AST_Component *node)
 
 void
 be_visitor_component_exs::gen_provides (AST_Type *obj,
-                                        const char *port_name)
+                                        Identifier *port_id)
 {
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = obj->local_name ()->get_string ();
+  
+  // No '_cxx_' prefix.
+  const char *lname = obj->original_local_name ()->get_string ();
+  
   const char *global = (sname_str == "" ? "" : "::");
+  
+  const char *port_name = port_id->get_string ();
   
   os_ << be_nl << be_nl
       << global << sname << "::CCM_" << lname
@@ -360,8 +359,7 @@ be_visitor_component_exs::gen_consumes_r (AST_Component *node)
        i.advance ())
     {
       i.next (pd);
-      this->gen_consumes (pd->impl->full_name (),
-                          pd->id->get_string ());
+      this->gen_consumes (pd->impl, pd->id);
     }
   
   node = node->base_component ();
@@ -369,14 +367,17 @@ be_visitor_component_exs::gen_consumes_r (AST_Component *node)
 }
 
 void
-be_visitor_component_exs::gen_consumes (const char *obj_name,
-                                        const char *port_name)
+be_visitor_component_exs::gen_consumes (AST_Type *obj,
+                                        Identifier *port_id)
 {
+  const char *port_name = port_id->get_string ();
+  
   os_ << be_nl << be_nl
       << "void" << be_nl
-      << node_->local_name () << "_exec_i::push_"
+      << node_->original_local_name () << "_exec_i::push_"
       << port_name << " (" << be_idt_nl
-      << "::" << obj_name << " * /* ev */)" << be_uidt_nl
+      << "::" << IdentifierHelper::orig_sn (obj->name (), false).c_str ()
+      << " * /* ev */)" << be_uidt_nl
       << "{" << be_idt_nl
       << your_code_here_ << be_uidt_nl
       << "}";

@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_string.h"
 #include "fe_extern.h"
+#include "fe_private.h"
 #include "nr_extern.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -2071,4 +2072,31 @@ IDL_GlobalData::validate_orb_include (UTL_String * idl_file_name)
     }
 
   return false;
+}
+
+void
+IDL_GlobalData::original_local_name (Identifier *local_name)
+{
+  const char *lname = local_name->get_string ();
+   
+  // Remove _cxx_ if:
+  // 1. it occurs and
+  // 2. it occurs at the beginning of the string and
+  // 3. the rest of the string is a C++ keyword
+  if (ACE_OS::strstr (lname, "_cxx_") == lname)
+    {
+      TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
+      
+      unsigned int len =
+        static_cast<unsigned int> (ACE_OS::strlen (lname + 5));
+        
+      const TAO_IDL_CPP_Keyword_Entry *entry =
+        cpp_key_tbl.lookup (lname + 5, len);
+
+      if (entry != 0)
+        {
+          ACE_CString tmp (lname + 5);
+          local_name->replace_string (tmp.c_str ());
+        }
+    }
 }

@@ -98,6 +98,9 @@ be_visitor_null_return_value::visit_predefined_type (be_predefined_type *node)
       case AST_PredefinedType::PT_double:
         os_ << "0.0";
         break;
+      case AST_PredefinedType::PT_longdouble:
+        os_ << "ACE_CDR_LONG_DOUBLE_INITIALIZER";
+        break;
       case AST_PredefinedType::PT_object:
         os_ << "::CORBA::Object::_nil ()";
         break;
@@ -106,6 +109,8 @@ be_visitor_null_return_value::visit_predefined_type (be_predefined_type *node)
         break;
       case AST_PredefinedType::PT_pseudo:
         os_ << "::CORBA::TypeCode::_nil ()";
+        break;
+      default: // PT_void not handled.
         break;
     }
     

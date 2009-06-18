@@ -91,12 +91,9 @@ be_visitor_home_exs::visit_attribute (be_attribute *node)
 int
 be_visitor_home_exs::gen_exec_class (void)
 {
-  AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
-  const char *clname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  // No '_cxx_' prefix.
+  const char *lname =
+    node_->original_local_name ()->get_string ();
   
   os_ << be_nl
       << comment_border_ << be_nl
@@ -125,7 +122,7 @@ be_visitor_home_exs::gen_exec_class (void)
       
   os_ << be_nl << be_nl
       << "::Components::EnterpriseComponent_ptr" << be_nl
-      << node_->local_name () << "_exec_i::create (void)" << be_nl
+      << lname << "_exec_i::create (void)" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl
@@ -133,7 +130,8 @@ be_visitor_home_exs::gen_exec_class (void)
       << be_uidt_nl << be_nl
       << "ACE_NEW_THROW_EX (" << be_idt_nl
       << "retval," << be_nl
-      << comp_->local_name ()->get_string () << "_exec_i," << be_nl
+      << comp_->original_local_name ()->get_string ()
+      << "_exec_i," << be_nl
       << "::CORBA::NO_MEMORY ());"
       << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl
@@ -259,7 +257,8 @@ be_visitor_home_exs::gen_init_ops_i (AST_Home::INIT_LIST & list)
       /// the operation traversal with an arglist visitor.
       os_ << be_nl << be_nl
           << "::Components::EnterpriseComponent_ptr" << be_nl
-          << node_->local_name () << "_exec_i::"
+          << node_->original_local_name ()->get_string ()
+          << "_exec_i::"
           << bop->local_name ();
           
       be_visitor_operation_arglist visitor (this->ctx_);
@@ -299,7 +298,8 @@ be_visitor_home_exs::gen_entrypoint (void)
       << be_uidt_nl << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "retval," << be_nl
-      << node_->local_name () << "_exec_i," << be_nl
+      << node_->original_local_name ()->get_string ()
+      << "_exec_i," << be_nl
       << "::Components::HomeExecutorBase::_nil ());"
       << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl

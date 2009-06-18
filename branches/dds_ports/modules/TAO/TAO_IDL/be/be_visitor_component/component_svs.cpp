@@ -129,8 +129,10 @@ be_visitor_component_svs::gen_facets (void)
         {
           continue;
         }
-        
-      const char *lname = intf->local_name ();
+      
+      // No '_cxx_' prefix.
+      const char *lname =
+        intf->original_local_name ()->get_string ();
       
       be_decl *scope =
         be_scope::narrow_from_scope (intf->defined_in ())->decl ();
@@ -633,7 +635,11 @@ be_visitor_component_svs::gen_provides (AST_Type *obj,
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = obj->local_name ()->get_string ();
+  
+  // Avoid '_cxx_' prefix.
+  const char *lname =
+    obj->original_local_name ()->get_string ();
+    
   const char *global = (sname_str == "" ? "" : "::");
   const char *prefix_connector = (sname_str == "" ? "" : "_");
   
@@ -769,7 +775,6 @@ be_visitor_component_svs::gen_uses_context_simplex (
   const char *port_name)
 {
   const char *fname = obj->full_name ();
-  const char *lname = obj->local_name ()->get_string ();
   
   os_ << be_nl << be_nl
       << "::" << fname << "_ptr" << be_nl
@@ -822,7 +827,6 @@ be_visitor_component_svs::gen_uses_context_multiplex (
   const char *port_name)
 {
   const char *fname = obj->full_name ();
-  const char *lname = obj->local_name ()->get_string ();
   bool static_config = be_global->gen_ciao_static_config ();
   
   os_ << be_nl << be_nl
@@ -1944,7 +1948,6 @@ be_visitor_component_svs::gen_consumes (AST_Type *obj,
                                         const char *port_name)
 {
   const char *comp_lname = node_->local_name ();
-  const char *comp_fname = node_->full_name ();
   ACE_CString comp_sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());   
   const char *comp_sname = comp_sname_str.c_str ();
@@ -2308,8 +2311,7 @@ be_visitor_component_svs::gen_emits_servant_top (void)
         {
           i.next (pd);
           
-          this->gen_disconnect_consumer_block (pd->impl->full_name (),
-                                               pd->id->get_string ());
+          this->gen_disconnect_consumer_block (pd->id->get_string ());
         }
         
       node = node->base_component ();
@@ -2388,7 +2390,6 @@ be_visitor_component_svs::gen_connect_consumer_block (
 
 void
 be_visitor_component_svs::gen_disconnect_consumer_block (
-  const char *obj_name,
   const char *port_name)
 {
   os_ << be_nl << be_nl

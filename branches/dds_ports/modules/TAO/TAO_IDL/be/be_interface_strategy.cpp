@@ -593,7 +593,8 @@ be_interface_default_strategy::flat_client_scope (void)
     }
 
   const char *full_name = this->flat_name ();
-  const char *name = this->local_name ();
+  const char *name =
+    this->node_->original_local_name ()->get_string ();
 
   size_t offset = ACE_OS::strlen (name);
   size_t length = ACE_OS::strlen (full_name) - offset;

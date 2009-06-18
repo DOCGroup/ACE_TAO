@@ -104,9 +104,14 @@ be_visitor_component_exh::gen_facets (void)
       
       be_interface *intf =
         be_interface::narrow_from_decl (pd->impl);
-      const char *lname = intf->local_name ();
+        
+      // We don't want a '_cxx_' prefix here.
+      const char *lname =
+        intf->original_local_name ()->get_string ();
+      
       AST_Decl *s = ScopeAsDecl (intf->defined_in ());
-      ACE_CString sname_str (s->full_name ());
+      ACE_CString sname_str =
+        IdentifierHelper::orig_sn (s->name (), false);
       const char *sname = sname_str.c_str ();
       const char *global = (sname_str == "" ? "" : "::");
       
@@ -167,7 +172,11 @@ be_visitor_component_exh::gen_exec_class (void)
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
+  
+  // No _cxx_ prefix.
+  const char *lname =
+    node_->original_local_name ()->get_string ();
+    
   const char *global = (sname_str == "" ? "" : "::");
      
   os_ << be_nl
@@ -285,8 +294,7 @@ be_visitor_component_exh::gen_provides_r (AST_Component *node)
        i.advance ())
     {
       i.next (pd);
-      this->gen_provides (pd->impl,
-                          pd->id->get_string ());
+      this->gen_provides (pd->impl, pd->id->get_string ());
     }  
   
   node = node->base_component ();
@@ -300,7 +308,11 @@ be_visitor_component_exh::gen_provides (AST_Type *obj,
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = obj->local_name ()->get_string ();
+  
+  // No '_cxx_' prefix.
+  const char *lname =
+    obj->original_local_name ()->get_string ();
+    
   const char *global = (sname_str == "" ? "" : "::");
      
   os_ << be_nl << be_nl
@@ -373,7 +385,7 @@ be_visitor_component_exh::gen_entrypoint (void)
 }
 
 int
-be_visitor_component_exh::op_attr_decl_helper (be_interface *derived,
+be_visitor_component_exh::op_attr_decl_helper (be_interface * /*derived */,
                                                be_interface *ancestor,
                                                TAO_OutStream *os)
 {

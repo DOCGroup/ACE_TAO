@@ -41,66 +41,58 @@ be_visitor_attribute_component_init::visit_attribute (
 }
 
 int
-be_visitor_attribute_component_init::visit_array (
-  be_array *node)
+be_visitor_attribute_component_init::visit_array (be_array *)
 {
-  emit_error ("array");
+  this->emit_error ("array");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_component (
-  be_component *node)
+be_visitor_attribute_component_init::visit_component (be_component *)
 {
-  emit_error ("component");
+  this->emit_error ("component");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_enum (
-  be_enum *node)
+be_visitor_attribute_component_init::visit_enum (be_enum *)
 {
-  emit_init_block ();
+  this->emit_init_block ();
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_eventtype (
-  be_eventtype *node)
+be_visitor_attribute_component_init::visit_eventtype (be_eventtype *)
 {
-  emit_error ("eventtype");
+  this->emit_error ("eventtype");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_home (
-  be_home *node)
+be_visitor_attribute_component_init::visit_home (be_home *)
 {
-  emit_error ("home");
+  this->emit_error ("home");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_interface (
-  be_interface *node)
+be_visitor_attribute_component_init::visit_interface (be_interface *)
 {
-  emit_error ("interface");
+  this->emit_error ("interface");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_predefined_type (
-  be_predefined_type *node)
+be_visitor_attribute_component_init::visit_predefined_type (be_predefined_type *)
 {
-  emit_init_block ();
+  this->emit_init_block ();
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_sequence (
-  be_sequence *node)
+be_visitor_attribute_component_init::visit_sequence (be_sequence *)
 {
-  emit_error ("sequence");
+  this->emit_error ("sequence");
   return 0;
 }
 
@@ -110,21 +102,20 @@ be_visitor_attribute_component_init::visit_string (
 {
   if (node->max_size ()->ev ()->u.ulval == 0)
     {
-      emit_init_block ();
+      this->emit_init_block ();
     }
   else
     {
-      emit_error ("bounded string");
+      this->emit_error ("bounded string");
     }
     
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_structure (
-  be_structure *node)
+be_visitor_attribute_component_init::visit_structure (be_structure *)
 {
-  emit_error ("structure");
+  this->emit_error ("structure");
   return 0;
 }
 
@@ -132,31 +123,27 @@ int
 be_visitor_attribute_component_init::visit_typedef (
   be_typedef *node)
 {
-  // TODO
+  return node->primitive_base_type ()->accept (this);
+}
+
+int
+be_visitor_attribute_component_init::visit_union (be_union *)
+{
+  this->emit_error ("union");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_union (
-  be_union *node)
+be_visitor_attribute_component_init::visit_valuebox (be_valuebox *)
 {
-  emit_error ("union");
+  this->emit_error ("valuebox");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_valuebox (
-  be_valuebox *node)
+be_visitor_attribute_component_init::visit_valuetype (be_valuetype *)
 {
-  emit_error ("valuebox");
-  return 0;
-}
-
-int
-be_visitor_attribute_component_init::visit_valuetype (
-  be_valuetype *node)
-{
-  emit_error ("valuetype");
+  this->emit_error ("valuetype");
   return 0;
 }
 

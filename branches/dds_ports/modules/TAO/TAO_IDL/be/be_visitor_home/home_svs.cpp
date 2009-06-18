@@ -113,7 +113,11 @@ be_visitor_home_svs::gen_servant_class (void)
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
+  
+  // Avoid '_cxx_' prefix.
+  const char *lname =
+    node_->original_local_name ()->get_string ();
+    
   const char *clname = comp_->local_name ()->get_string ();
   const char *global = (sname_str == "" ? "" : "::");
   
@@ -288,10 +292,14 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
         }
         
       os_ << be_nl
-          << node_->local_name () << "_Servant::"
-          << bop->local_name ();
+          << node_->original_local_name ()->get_string ()
+          << "_Servant::" << bop->local_name ();
 
       be_visitor_operation_arglist al_visitor (this->ctx_);
+      
+      // Finder operations are as yet unimplemented in CIAO, so
+      // any args will be unused and should be commented out.
+      al_visitor.unused (finder_list);
 
       if (bop->accept (&al_visitor) == -1)
         {
@@ -353,7 +361,11 @@ be_visitor_home_svs::gen_entrypoint (void)
   ACE_CString sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
   const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
+  
+  // Avoid _cxx_ prefix.
+  const char *lname =
+    node_->original_local_name ()->get_string ();
+    
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl << be_nl

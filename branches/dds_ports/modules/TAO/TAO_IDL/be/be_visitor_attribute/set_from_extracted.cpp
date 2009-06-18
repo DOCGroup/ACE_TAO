@@ -91,6 +91,7 @@ be_visitor_attribute_set_from_extracted::visit_predefined_type (be_predefined_ty
       case AST_PredefinedType::PT_ulonglong:
       case AST_PredefinedType::PT_float:
       case AST_PredefinedType::PT_double:
+      case AST_PredefinedType::PT_longdouble:
       case AST_PredefinedType::PT_object:
       case AST_PredefinedType::PT_value:
       case AST_PredefinedType::PT_abstract:
@@ -99,6 +100,8 @@ be_visitor_attribute_set_from_extracted::visit_predefined_type (be_predefined_ty
         break;
       case AST_PredefinedType::PT_any:
         os_ << "*" << var_name_;
+        break;
+      default: // PT_void left out of case list.
         break;
     }
     

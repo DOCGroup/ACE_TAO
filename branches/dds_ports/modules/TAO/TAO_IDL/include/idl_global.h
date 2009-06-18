@@ -624,6 +624,9 @@ public:
 
   bool validate_orb_include (UTL_String *);
   // Check if included file is in TAO specific include dirs.
+  
+  void original_local_name (Identifier *local_name);
+  // Strips _cxx_ prefix for use in port names.
 
 private:
   // Data

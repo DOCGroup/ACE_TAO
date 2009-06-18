@@ -30,7 +30,8 @@ ACE_RCSID (be_visitor_operation,
 
 be_visitor_operation_rettype::be_visitor_operation_rettype (be_visitor_context
                                                             *ctx)
-  : be_visitor_decl (ctx)
+  : be_visitor_decl (ctx),
+    os (ctx->stream ())
 {
 }
 
@@ -41,20 +42,7 @@ be_visitor_operation_rettype::~be_visitor_operation_rettype (void)
 int
 be_visitor_operation_rettype::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name () << "_slice *";
+  *os << "::" << this->type_name (node) << "_slice *";
 
   return 0;
 }
@@ -62,20 +50,7 @@ be_visitor_operation_rettype::visit_array (be_array *node)
 int
 be_visitor_operation_rettype::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name ();
+  *os << "::" << this->type_name (node);
 
   return 0;
 }
@@ -83,20 +58,7 @@ be_visitor_operation_rettype::visit_enum (be_enum *node)
 int
 be_visitor_operation_rettype::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name () << "_ptr";
+  *os << "::" << this->type_name (node) << "_ptr";
 
   return 0;
 }
@@ -104,20 +66,7 @@ be_visitor_operation_rettype::visit_interface (be_interface *node)
 int
 be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name () << "_ptr";
+  *os << "::" << this->type_name (node) << "_ptr";
 
   return 0;
 }
@@ -125,20 +74,7 @@ be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
 int
 be_visitor_operation_rettype::visit_native (be_native *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name ();
+  *os << "::" << this->type_name (node);
 
   return 0;
 }
@@ -146,7 +82,6 @@ be_visitor_operation_rettype::visit_native (be_native *node)
 int
 be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
 
   if (this->ctx_->alias ())
@@ -203,20 +138,7 @@ be_visitor_operation_rettype::visit_sequence (be_sequence *node)
 {
   // We should never directly be here because anonymous sequence return types
   // are not allowed.
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name () << " *";
+  *os << "::" << this->type_name (node) << " *";
 
   return 0;
 }
@@ -224,8 +146,6 @@ be_visitor_operation_rettype::visit_sequence (be_sequence *node)
 int
 be_visitor_operation_rettype::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
   if (node->width () == (long) sizeof (char))
     {
       *os << "char *";
@@ -241,20 +161,7 @@ be_visitor_operation_rettype::visit_string (be_string *node)
 int
 be_visitor_operation_rettype::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name ();
+  *os << "::" << this->type_name (node);
 
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
@@ -288,20 +195,7 @@ be_visitor_operation_rettype::visit_typedef (be_typedef *node)
 int
 be_visitor_operation_rettype::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name ();
+  *os << "::" << this->type_name (node);
 
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
@@ -316,20 +210,7 @@ be_visitor_operation_rettype::visit_union (be_union *node)
 int
 be_visitor_operation_rettype::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name () << " *";
+  *os << "::" << this->type_name (node) << " *";
 
   return 0;
 }
@@ -337,20 +218,7 @@ be_visitor_operation_rettype::visit_valuetype (be_valuetype *node)
 int
 be_visitor_operation_rettype::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  if (this->ctx_->alias ())
-    {
-      // A typedefed return type.
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  *os << "::" << bt->name () << " *";
+  *os << "::" << this->type_name (node) << " *";
 
   return 0;
 }
@@ -388,7 +256,14 @@ be_visitor_operation_rettype::visit_home (be_home *node)
 int
 be_visitor_operation_rettype::visit_valuebox (be_valuebox *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  *os << "::" << this->type_name (node) << " *";
+
+  return 0;
+}
+
+const char *
+be_visitor_operation_rettype::type_name (be_type *node)
+{
   be_type *bt;
 
   if (this->ctx_->alias ())
@@ -400,8 +275,6 @@ be_visitor_operation_rettype::visit_valuebox (be_valuebox *node)
     {
       bt = node;
     }
-
-  *os << "::" << bt->name () << " *";
-
-  return 0;
+    
+  return bt->full_name ();
 }

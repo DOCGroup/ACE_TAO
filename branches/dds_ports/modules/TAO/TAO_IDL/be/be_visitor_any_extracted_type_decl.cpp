@@ -16,6 +16,8 @@
 #include "be_valuebox.h"
 #include "be_valuetype.h"
 
+#include "utl_identifier.h"
+
 be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx),
@@ -126,6 +128,9 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (be_predefined_type *n
       case AST_PredefinedType::PT_double:
         os_ << var_name_ << " = 0;";
         break;
+      case AST_PredefinedType::PT_longdouble:
+        os_ << var_name_ << " = ACE_CDR_LONG_DOUBLE_INITIALIZER;";
+        break;
       case AST_PredefinedType::PT_object:
         os_ << "_ptr " << var_name_ << " = ::CORBA::Object::_nil ();";
         break;
@@ -139,7 +144,18 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (be_predefined_type *n
         os_ << " * " << var_name_ << " = 0;";
         break;
       case AST_PredefinedType::PT_pseudo:
-        os_ << "_ptr " << var_name_ << " = ::CORBA::TypeCode::_nil ();";
+        if (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0)
+          {
+            os_ << var_name_ << " = ::CORBA::tk_null;";
+          }
+        else
+          {
+            os_ << "_ptr " << var_name_
+                << " = ::CORBA::TypeCode::_nil ();";
+          }
+        
+        break;
+      default: // PT_void is left out of the case list.
         break;
     }
     
@@ -170,8 +186,7 @@ be_visitor_any_extracted_type_decl::visit_structure (be_structure *node)
 int
 be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
 {
-  // TODO
-  return 0;
+  return node->primitive_base_type ()->accept (this);
 }
 
 int

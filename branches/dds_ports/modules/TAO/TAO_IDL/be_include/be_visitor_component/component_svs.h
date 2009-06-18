@@ -132,8 +132,7 @@ private:
   void gen_connect_consumer_block (const char *obj_name,
                                    const char *port_name);
   
-  void gen_disconnect_consumer_block (const char *obj_name,
-                                      const char *port_name);
+  void gen_disconnect_consumer_block (const char *port_name);
                                       
   void gen_emitter_description (AST_Type *obj,
                                 const char *port_name,

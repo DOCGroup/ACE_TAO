@@ -70,12 +70,9 @@ private:
                   port_kind kind,
                   bool in_servant);
    
-  void gen_provides (const char *obj_name,
-                     const char *port_name);
+  void gen_provides (AST_Component::port_description *pd);
                                      
-  void gen_uses (const char *obj_name,
-                 const char *port_name,
-                 bool is_multiple,
+  void gen_uses (AST_Component::port_description *pd,
                  bool in_servant);
                 
   void gen_publishes (const char *obj_name,
