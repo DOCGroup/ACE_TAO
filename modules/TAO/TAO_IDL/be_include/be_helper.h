@@ -196,12 +196,11 @@ public:
   TAO_OutStream &operator<< (AST_Expression *expr);
   // output an AST_Expression node
 
-  // provided by specialized classes
-  virtual TAO_OutStream &print (Identifier *id) = 0;
+  TAO_OutStream &print (Identifier *id);
 
-  virtual TAO_OutStream &print (UTL_IdList *idl) = 0;
+  TAO_OutStream &print (UTL_IdList *idl);
 
-  virtual TAO_OutStream &print (AST_Expression *idl) = 0;
+  TAO_OutStream &print (AST_Expression *idl);
 
 protected:
   FILE *fp_;

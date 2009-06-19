@@ -412,6 +412,9 @@ public:
 
   void gen_ident_string (TAO_OutStream *stream) const;
   // Pass along the #ident string, if any, from the IDL file.
+  
+  void gen_export_files (void);
+  // Generates the export files selected on the command line.
 
   void destroy (void);
   // Cleanup.
@@ -446,6 +449,10 @@ private:
   void gen_exec_hdr_includes (void);
   void gen_exec_src_includes (void);
   void gen_exec_idl_includes (void);
+  
+  void gen_export_file (const char *filename,
+                        const char *macro,
+                        const char *msg);
 
 private:
   TAO_OutStream *client_header_;

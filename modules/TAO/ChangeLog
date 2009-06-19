@@ -1,3 +1,29 @@
+Fri Jun 19 19:33:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/be_include/be_sunsoft.h:
+        * TAO_IDL/be_include/be_stream_factory.h:
+        * TAO_IDL/be/be_stream_factory.cpp:
+
+          Removed files, no longer needed.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_tmplinst.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_global.h:
+
+          - Made abstract class TAO_OutStream concrete
+            by moving 3 method implementations from
+            derived class TAO_SunSoft_OutStream and
+            eliminating the derived class.
+
+          - Added code generation of export header files.
+
 Fri Jun 19 12:41:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component.cpp:
