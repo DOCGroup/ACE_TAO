@@ -62,7 +62,6 @@
     <xsd:sequence>
       <xsd:element name="constraint" type="Deployment:LocalityKind"/>
       <xsd:element name="constrainedInstance" type="Deployment:IdRef"/>
-      <xsd:element ref="xmi:Extension"/>
     </xsd:sequence>
   </xsd:complexType>
 

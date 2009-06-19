@@ -58,7 +58,6 @@
     <xsd:sequence>
       <xsd:element name="kind" type="Deployment:TCKind"/>
       <xsd:choice minOccurs="0">
-        <xsd:element name="kind" type="Deployment:TCKind" />
         <xsd:element name="enum" type="Deployment:EnumType" />
         <xsd:element name="struct" type="Deployment:StructType"/>
         <xsd:element name="value" type="Deployment:ValueType"/>

@@ -627,6 +627,100 @@ namespace CIAO
     }
 
 
+    // LocalityKind
+    // 
+
+    LocalityKind::Value LocalityKind::
+    integral () const
+    {
+      return v_;
+    }
+
+    bool
+    operator== (::CIAO::Config_Handlers::LocalityKind const& a, ::CIAO::Config_Handlers::LocalityKind const& b)
+    {
+      return a.v_ == b.v_;
+    }
+
+    bool
+    operator!= (::CIAO::Config_Handlers::LocalityKind const& a, ::CIAO::Config_Handlers::LocalityKind const& b)
+    {
+      return a.v_ != b.v_;
+    }
+
+    LocalityKind::
+    LocalityKind (LocalityKind::Value v)
+    : v_ (v)
+    {
+    }
+
+    // Locality
+    // 
+
+    Locality::
+    Locality (::CIAO::Config_Handlers::LocalityKind const& constraint__,
+              ::CIAO::Config_Handlers::IdRef const& constrainedInstance__)
+    : 
+    constraint_ (new ::CIAO::Config_Handlers::LocalityKind (constraint__)),
+    constrainedInstance_ (new ::CIAO::Config_Handlers::IdRef (constrainedInstance__)),
+    regulator__ ()
+    {
+      constraint_->container (this);
+      constrainedInstance_->container (this);
+    }
+
+    Locality::
+    Locality (Locality const& s)
+    :
+    ::XSCRT::Type (),
+    constraint_ (new ::CIAO::Config_Handlers::LocalityKind (*s.constraint_)),
+    constrainedInstance_ (new ::CIAO::Config_Handlers::IdRef (*s.constrainedInstance_)),
+    regulator__ ()
+    {
+      constraint_->container (this);
+      constrainedInstance_->container (this);
+    }
+
+    Locality& Locality::
+    operator= (Locality const& s)
+    {
+      constraint (*s.constraint_);
+
+      constrainedInstance (*s.constrainedInstance_);
+
+      return *this;
+    }
+
+
+    // Locality
+    // 
+    ::CIAO::Config_Handlers::LocalityKind const& Locality::
+    constraint () const
+    {
+      return *constraint_;
+    }
+
+    void Locality::
+    constraint (::CIAO::Config_Handlers::LocalityKind const& e)
+    {
+      *constraint_ = e;
+    }
+
+    // Locality
+    // 
+    ::CIAO::Config_Handlers::IdRef const& Locality::
+    constrainedInstance () const
+    {
+      return *constrainedInstance_;
+    }
+
+    void Locality::
+    constrainedInstance (::CIAO::Config_Handlers::IdRef const& e)
+    {
+      *constrainedInstance_ = e;
+    }
+
+
     // ComponentAssemblyDescription
     // 
 
@@ -644,6 +738,7 @@ namespace CIAO
     instance_ (s.instance_),
     connection_ (s.connection_),
     externalProperty_ (s.externalProperty_),
+    locality_ (s.locality_),
     regulator__ ()
     {
     }
@@ -656,6 +751,8 @@ namespace CIAO
       connection_ = s.connection_;
 
       externalProperty_ = s.externalProperty_;
+
+      locality_ = s.locality_;
 
       return *this;
     }
@@ -773,6 +870,44 @@ namespace CIAO
     count_externalProperty(void) const
     {
       return externalProperty_.size ();
+    }
+
+    // ComponentAssemblyDescription
+    // 
+    ComponentAssemblyDescription::locality_iterator ComponentAssemblyDescription::
+    begin_locality ()
+    {
+      return locality_.begin ();
+    }
+
+    ComponentAssemblyDescription::locality_iterator ComponentAssemblyDescription::
+    end_locality ()
+    {
+      return locality_.end ();
+    }
+
+    ComponentAssemblyDescription::locality_const_iterator ComponentAssemblyDescription::
+    begin_locality () const
+    {
+      return locality_.begin ();
+    }
+
+    ComponentAssemblyDescription::locality_const_iterator ComponentAssemblyDescription::
+    end_locality () const
+    {
+      return locality_.end ();
+    }
+
+    void ComponentAssemblyDescription::
+    add_locality (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex >  const& e)
+    {
+      locality_.push_back (e);
+    }
+
+    size_t ComponentAssemblyDescription::
+    count_locality(void) const
+    {
+      return locality_.size ();
     }
 
 
@@ -1806,19 +1941,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "requiredUUID")
+        if (n == ACE_TEXT ("requiredUUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           requiredUUID (t);
         }
 
-        else if (n == "requiredName")
+        else if (n == ACE_TEXT ("requiredName"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           requiredName (t);
         }
 
-        else if (n == "requiredType")
+        else if (n == ACE_TEXT ("requiredType"))
         {
           requiredType_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
           requiredType_->container (this);
@@ -1845,43 +1980,43 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "basePackage")
+        else if (n == ACE_TEXT ("basePackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
           basePackage (t);
         }
 
-        else if (n == "specializedConfig")
+        else if (n == ACE_TEXT ("specializedConfig"))
         {
           ::CIAO::Config_Handlers::PackageConfiguration t (e);
           specializedConfig (t);
         }
 
-        else if (n == "selectRequirement")
+        else if (n == ACE_TEXT ("selectRequirement"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_selectRequirement (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT ("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "referencedPackage")
+        else if (n == ACE_TEXT ("referencedPackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageReference t (e);
           referencedPackage (t);
         }
 
-        else if (n == "importedPackage")
+        else if (n == ACE_TEXT ("importedPackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageImport t (e);
           importedPackage (t);
@@ -1896,7 +2031,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
@@ -1923,13 +2058,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "propertyName")
+        if (n == ACE_TEXT ("propertyName"))
         {
           propertyName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           propertyName_->container (this);
         }
 
-        else if (n == "instance")
+        else if (n == ACE_TEXT ("instance"))
         {
           instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
           instance_->container (this);
@@ -1956,22 +2091,99 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "externalName")
+        else if (n == ACE_TEXT ("externalName"))
         {
           externalName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           externalName_->container (this);
         }
 
-        else if (n == "delegatesTo")
+        else if (n == ACE_TEXT ("delegatesTo"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (e));
           add_delegatesTo (t);
+        }
+
+        else 
+        {
+        }
+      }
+    }
+
+    // LocalityKind
+    //
+
+    LocalityKind::
+    LocalityKind (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    : ::XSCRT::Type (e)
+    {
+      ::std::basic_string< ACE_TCHAR > v (e.value ());
+
+      if (v == ACE_TEXT ("SameNodeAnyProcess")) v_ = SameNodeAnyProcess_l;
+      else if (v == ACE_TEXT ("SameNodeSameProcess")) v_ = SameNodeSameProcess_l;
+      else if (v == ACE_TEXT ("SameNodeDifferentProcess")) v_ = SameNodeDifferentProcess_l;
+      else if (v == ACE_TEXT ("DifferentNode")) v_ = DifferentNode_l;
+      else if (v == ACE_TEXT ("DifferentProcess")) v_ = DifferentProcess_l;
+      else if (v == ACE_TEXT ("NoConstraint")) v_ = NoConstraint_l;
+      else 
+      {
+      }
+    }
+
+    LocalityKind::
+    LocalityKind (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
+    : ::XSCRT::Type (a)
+    {
+      ::std::basic_string< ACE_TCHAR > v (a.value ());
+
+      if (v == ACE_TEXT ("SameNodeAnyProcess")) v_ = SameNodeAnyProcess_l;
+      else if (v == ACE_TEXT ("SameNodeSameProcess")) v_ = SameNodeSameProcess_l;
+      else if (v == ACE_TEXT ("SameNodeDifferentProcess")) v_ = SameNodeDifferentProcess_l;
+      else if (v == ACE_TEXT ("DifferentNode")) v_ = DifferentNode_l;
+      else if (v == ACE_TEXT ("DifferentProcess")) v_ = DifferentProcess_l;
+      else if (v == ACE_TEXT ("NoConstraint")) v_ = NoConstraint_l;
+      else 
+      {
+      }
+    }
+
+    LocalityKind const LocalityKind::SameNodeAnyProcess (LocalityKind::SameNodeAnyProcess_l);
+    LocalityKind const LocalityKind::SameNodeSameProcess (LocalityKind::SameNodeSameProcess_l);
+    LocalityKind const LocalityKind::SameNodeDifferentProcess (LocalityKind::SameNodeDifferentProcess_l);
+    LocalityKind const LocalityKind::DifferentNode (LocalityKind::DifferentNode_l);
+    LocalityKind const LocalityKind::DifferentProcess (LocalityKind::DifferentProcess_l);
+    LocalityKind const LocalityKind::NoConstraint (LocalityKind::NoConstraint_l);
+
+    // Locality
+    //
+
+    Locality::
+    Locality (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == ACE_TEXT ("constraint"))
+        {
+          constraint_ = ::std::auto_ptr< ::CIAO::Config_Handlers::LocalityKind > (new ::CIAO::Config_Handlers::LocalityKind (e));
+          constraint_->container (this);
+        }
+
+        else if (n == ACE_TEXT ("constrainedInstance"))
+        {
+          constrainedInstance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
+          constrainedInstance_->container (this);
         }
 
         else 
@@ -1995,22 +2207,28 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "instance")
+        if (n == ACE_TEXT ("instance"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (e));
           add_instance (t);
         }
 
-        else if (n == "connection")
+        else if (n == ACE_TEXT ("connection"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::AssemblyConnectionDescription (e));
           add_connection (t);
         }
 
-        else if (n == "externalProperty")
+        else if (n == ACE_TEXT ("externalProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::AssemblyPropertyMapping (e));
           add_externalProperty (t);
+        }
+
+        else if (n == ACE_TEXT ("locality"))
+        {
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Locality (e));
+          add_locality (t);
         }
 
         else 
@@ -2034,25 +2252,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "nodeExecParameter")
+        if (n == ACE_TEXT ("nodeExecParameter"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_nodeExecParameter (t);
         }
 
-        else if (n == "componentExecParameter")
+        else if (n == ACE_TEXT ("componentExecParameter"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_componentExecParameter (t);
         }
 
-        else if (n == "deployRequirement")
+        else if (n == ACE_TEXT ("deployRequirement"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationRequirement (e));
           add_deployRequirement (t);
         }
 
-        else if (n == "primaryArtifact")
+        else if (n == ACE_TEXT ("primaryArtifact"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::NamedImplementationArtifact (e));
           add_primaryArtifact (t);
@@ -2079,55 +2297,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT ("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "implements")
+        else if (n == ACE_TEXT ("implements"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           implements (t);
         }
 
-        else if (n == "assemblyImpl")
+        else if (n == ACE_TEXT ("assemblyImpl"))
         {
           ::CIAO::Config_Handlers::ComponentAssemblyDescription t (e);
           assemblyImpl (t);
         }
 
-        else if (n == "monolithicImpl")
+        else if (n == ACE_TEXT ("monolithicImpl"))
         {
           ::CIAO::Config_Handlers::MonolithicImplementationDescription t (e);
           monolithicImpl (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT ("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "capability")
+        else if (n == ACE_TEXT ("capability"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Capability (e));
           add_capability (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT ("dependsOn"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT ("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
@@ -2142,7 +2360,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "href")
+        if (n == ACE_TEXT ("href"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);
@@ -2169,55 +2387,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT ("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "implements")
+        else if (n == ACE_TEXT ("implements"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           implements (t);
         }
 
-        else if (n == "assemblyImpl")
+        else if (n == ACE_TEXT ("assemblyImpl"))
         {
           ::CIAO::Config_Handlers::ComponentAssemblyDescription t (e);
           assemblyImpl (t);
         }
 
-        else if (n == "monolithicImpl")
+        else if (n == ACE_TEXT ("monolithicImpl"))
         {
           ::CIAO::Config_Handlers::MonolithicImplementationDescription t (e);
           monolithicImpl (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT ("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "capability")
+        else if (n == ACE_TEXT ("capability"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Capability (e));
           add_capability (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT ("dependsOn"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT ("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
@@ -2232,7 +2450,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "href")
+        if (n == ACE_TEXT ("href"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);
@@ -2318,6 +2536,35 @@ namespace CIAO
       };
 
       AssemblyPropertyMappingTypeInfoInitializer AssemblyPropertyMappingTypeInfoInitializer_;
+
+      struct LocalityKindTypeInfoInitializer
+      {
+        LocalityKindTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (LocalityKind));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      LocalityKindTypeInfoInitializer LocalityKindTypeInfoInitializer_;
+
+      struct LocalityTypeInfoInitializer
+      {
+        LocalityTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Locality));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      LocalityTypeInfoInitializer LocalityTypeInfoInitializer_;
 
       struct ComponentAssemblyDescriptionTypeInfoInitializer
       {
@@ -3060,6 +3307,72 @@ namespace CIAO
       {
       }
 
+      // Locality
+      //
+      //
+
+      void Locality::
+      traverse (Type& o)
+      {
+        pre (o);
+        constraint (o);
+        constrainedInstance (o);
+        post (o);
+      }
+
+      void Locality::
+      traverse (Type const& o)
+      {
+        pre (o);
+        constraint (o);
+        constrainedInstance (o);
+        post (o);
+      }
+
+      void Locality::
+      pre (Type&)
+      {
+      }
+
+      void Locality::
+      pre (Type const&)
+      {
+      }
+
+      void Locality::
+      constraint (Type& o)
+      {
+        dispatch (o.constraint ());
+      }
+
+      void Locality::
+      constraint (Type const& o)
+      {
+        dispatch (o.constraint ());
+      }
+
+      void Locality::
+      constrainedInstance (Type& o)
+      {
+        dispatch (o.constrainedInstance ());
+      }
+
+      void Locality::
+      constrainedInstance (Type const& o)
+      {
+        dispatch (o.constrainedInstance ());
+      }
+
+      void Locality::
+      post (Type&)
+      {
+      }
+
+      void Locality::
+      post (Type const&)
+      {
+      }
+
       // ComponentAssemblyDescription
       //
       //
@@ -3071,6 +3384,7 @@ namespace CIAO
         instance (o);
         connection (o);
         externalProperty (o);
+        locality (o);
         post (o);
       }
 
@@ -3081,6 +3395,7 @@ namespace CIAO
         instance (o);
         connection (o);
         externalProperty (o);
+        locality (o);
         post (o);
       }
 
@@ -3343,6 +3658,90 @@ namespace CIAO
 
       void ComponentAssemblyDescription::
       externalProperty_none (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      locality (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ComponentAssemblyDescription::locality_iterator b (o.begin_locality()), e (o.end_locality());
+
+        if (b != e)
+        {
+          locality_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) locality_next (o);
+          }
+
+          locality_post (o);
+        }
+
+        else locality_none (o);
+      }
+
+      void ComponentAssemblyDescription::
+      locality (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ComponentAssemblyDescription::locality_const_iterator b (o.begin_locality()), e (o.end_locality());
+
+        if (b != e)
+        {
+          locality_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) locality_next (o);
+          }
+
+          locality_post (o);
+        }
+
+        else locality_none (o);
+      }
+
+      void ComponentAssemblyDescription::
+      locality_pre (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      locality_pre (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      locality_next (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      locality_next (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      locality_post (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      locality_post (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      locality_none (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      locality_none (Type const&)
       {
       }
 
@@ -5069,6 +5468,84 @@ namespace CIAO
         pop_ ();
       }
 
+      // LocalityKind
+      //
+      //
+
+      LocalityKind::
+      LocalityKind (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      LocalityKind::
+      LocalityKind ()
+      {
+      }
+
+      void LocalityKind::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< ACE_TCHAR > s;
+
+        if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeAnyProcess) s = "SameNodeAnyProcess";
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeSameProcess) s = "SameNodeSameProcess";
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeDifferentProcess) s = "SameNodeDifferentProcess";
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::DifferentNode) s = "DifferentNode";
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::DifferentProcess) s = "DifferentProcess";
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::NoConstraint) s = "NoConstraint";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< ACE_TCHAR >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // Locality
+      //
+      //
+
+      Locality::
+      Locality (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      Locality::
+      Locality ()
+      {
+      }
+
+      void Locality::
+      traverse (Type const& o)
+      {
+        Traversal::Locality::traverse (o);
+      }
+
+      void Locality::
+      constraint (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("constraint", top_ ()));
+        Traversal::Locality::constraint (o);
+        pop_ ();
+      }
+
+      void Locality::
+      constrainedInstance (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("constrainedInstance", top_ ()));
+        Traversal::Locality::constrainedInstance (o);
+        pop_ ();
+      }
+
       // ComponentAssemblyDescription
       //
       //
@@ -5143,6 +5620,25 @@ namespace CIAO
 
       void ComponentAssemblyDescription::
       externalProperty_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentAssemblyDescription::
+      locality_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("locality", top_ ()));
+      }
+
+      void ComponentAssemblyDescription::
+      locality_next (Type const& o)
+      {
+        locality_post (o);
+        locality_pre (o);
+      }
+
+      void ComponentAssemblyDescription::
+      locality_post (Type const&)
       {
         pop_ ();
       }
