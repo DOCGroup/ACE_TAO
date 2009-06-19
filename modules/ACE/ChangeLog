@@ -1,3 +1,9 @@
+Fri Jun 19 15:03:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * contrib/utility:
+
+          Removed these files.
+
 Mon Jun  1 08:09:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Lib_Find.cpp:
