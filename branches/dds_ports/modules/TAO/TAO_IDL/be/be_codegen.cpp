@@ -19,7 +19,6 @@
 #include "be_codegen.h"
 #include "be_helper.h"
 #include "be_visitor_factory.h"
-#include "be_stream_factory.h"
 #include "be_extern.h"
 #include "global_extern.h"
 #include "utl_string.h"
@@ -119,17 +118,12 @@ TAO_CodeGen::start_client_header (const char *fname)
   // idl_global. We need to make sure the validity of those files.
   idl_global->validate_included_idl_files ();
 
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->client_header_;
-  this->client_header_ = factory->make_outstream ();
-
-  if (!this->client_header_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->client_header_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->client_header_->open (fname, TAO_OutStream::TAO_CLI_HDR) == -1)
     {
@@ -365,17 +359,12 @@ TAO_CodeGen::client_header (void)
 int
 TAO_CodeGen::start_client_stubs (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->client_stubs_;
-  this->client_stubs_ = factory->make_outstream ();
-
-  if (!this->client_stubs_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->client_stubs_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->client_stubs_->open (fname, TAO_OutStream::TAO_CLI_IMPL) == -1)
     {
@@ -421,17 +410,12 @@ TAO_CodeGen::client_stubs (void)
 int
 TAO_CodeGen::start_client_inline (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->client_inline_;
-  this->client_inline_ = factory->make_outstream ();
-
-  if (!this->client_inline_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->client_inline_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->client_inline_->open (fname, TAO_OutStream::TAO_CLI_INL) == -1)
     {
@@ -459,17 +443,12 @@ TAO_CodeGen::client_inline (void)
 int
 TAO_CodeGen::start_server_header (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->server_header_;
-  this->server_header_ = factory->make_outstream ();
-
-  if (!this->server_header_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->server_header_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->server_header_->open (fname, TAO_OutStream::TAO_SVR_HDR) == -1)
     {
@@ -626,17 +605,12 @@ TAO_CodeGen::server_header (void)
 int
 TAO_CodeGen::start_server_template_header (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->server_template_header_;
-  this->server_template_header_ = factory->make_outstream ();
-
-  if (!this->server_template_header_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->server_template_header_,
+                  TAO_OutStream,
+                  -1);
 
   int status =
     this->server_template_header_->open (
@@ -690,17 +664,12 @@ TAO_CodeGen::server_template_header (void)
 int
 TAO_CodeGen::start_server_skeletons (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->server_skeletons_;
-  this->server_skeletons_ = factory->make_outstream ();
-
-  if (!this->server_skeletons_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->server_skeletons_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->server_skeletons_->open (fname,
                                      TAO_OutStream::TAO_SVR_IMPL)
@@ -769,17 +738,12 @@ TAO_CodeGen::server_skeletons (void)
 int
 TAO_CodeGen::start_server_template_skeletons (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->server_template_skeletons_;
-  this->server_template_skeletons_ = factory->make_outstream ();
-
-  if (!this->server_template_skeletons_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->server_template_skeletons_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->server_template_skeletons_->open (fname,
                                               TAO_OutStream::TAO_SVR_TMPL_IMPL)
@@ -827,17 +791,12 @@ TAO_CodeGen::server_template_skeletons (void)
 int
 TAO_CodeGen::start_server_inline (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->server_inline_;
-  this->server_inline_ = factory->make_outstream ();
-
-  if (!this->server_inline_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->server_inline_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->server_inline_->open (fname, TAO_OutStream::TAO_SVR_INL) == -1)
     {
@@ -872,20 +831,12 @@ TAO_CodeGen::start_anyop_header (const char *fname)
       return 0;
     }
 
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->anyop_header_;
-  this->anyop_header_ = factory->make_outstream ();
-
-  if (0 == this->anyop_header_)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO_CodeGen::start_anyop_header - "
-                         "Error creating file stream\n"),
-                        -1);
-    }
+  
+  ACE_NEW_RETURN (this->anyop_header_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->anyop_header_->open (fname,
                                  TAO_OutStream::TAO_CLI_HDR)
@@ -1056,20 +1007,12 @@ TAO_CodeGen::start_anyop_source (const char *fname)
       return 0;
     }
 
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->anyop_source_;
-  this->anyop_source_ = factory->make_outstream ();
-
-  if (0 == this->anyop_source_)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO_CodeGen::start_anyop_source - "
-                         "Error creating file stream\n"),
-                        -1);
-    }
+  
+  ACE_NEW_RETURN (this->anyop_source_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->anyop_source_->open (fname, TAO_OutStream::TAO_CLI_IMPL) == -1)
     {
@@ -1120,22 +1063,13 @@ TAO_CodeGen::anyop_source (void)
 int
 TAO_CodeGen::start_ciao_svnt_header (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory =
-    TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->ciao_svnt_header_;
-  this->ciao_svnt_header_ = factory->make_outstream ();
+  
+  ACE_NEW_RETURN (this->ciao_svnt_header_,
+                  TAO_OutStream,
+                  -1);
 
-  if (0 == this->ciao_svnt_header_)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::ciao_svnt_header - ")
-                         ACE_TEXT ("Error creating file stream\n")),
-                        -1);
-    }
-    
   int status =
     this->ciao_svnt_header_->open (fname,
                                    TAO_OutStream::CIAO_SVNT_HDR);
@@ -1202,22 +1136,13 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
 int
 TAO_CodeGen::start_ciao_svnt_source (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory =
-    TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->ciao_svnt_source_;
-  this->ciao_svnt_source_ = factory->make_outstream ();
+  
+  ACE_NEW_RETURN (this->ciao_svnt_source_,
+                  TAO_OutStream,
+                  -1);
 
-  if (0 == this->ciao_svnt_source_)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::ciao_svnt_source_ - ")
-                         ACE_TEXT ("Error creating file stream\n")),
-                        -1);
-    }
-    
   int status =
     this->ciao_svnt_source_->open (fname,
                                    TAO_OutStream::CIAO_SVNT_IMPL);
@@ -1266,22 +1191,13 @@ TAO_CodeGen::ciao_svnt_source (void)
 int
 TAO_CodeGen::start_ciao_exec_header (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory =
-    TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->ciao_exec_header_;
-  this->ciao_exec_header_ = factory->make_outstream ();
+  
+  ACE_NEW_RETURN (this->ciao_exec_header_,
+                  TAO_OutStream,
+                  -1);
 
-  if (0 == this->ciao_exec_header_)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::ciao_exec_header - ")
-                         ACE_TEXT ("Error creating file stream\n")),
-                        -1);
-    }
-    
   int status =
     this->ciao_exec_header_->open (fname,
                                    TAO_OutStream::CIAO_EXEC_HDR);
@@ -1335,23 +1251,13 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
 int
 TAO_CodeGen::start_ciao_exec_source (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory =
-    TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->ciao_exec_source_;
-  this->ciao_exec_source_ = factory->make_outstream ();
+  
+  ACE_NEW_RETURN (this->ciao_exec_source_,
+                  TAO_OutStream,
+                  -1);
 
-  if (0 == this->ciao_exec_source_)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::")
-                         ACE_TEXT ("start_ciao_exec_source - ")
-                         ACE_TEXT ("Error creating file stream\n")),
-                        -1);
-    }
-    
   int status =
     this->ciao_exec_source_->open (fname,
                                    TAO_OutStream::CIAO_EXEC_IMPL);
@@ -1395,22 +1301,13 @@ TAO_CodeGen::ciao_exec_source (void)
 int
 TAO_CodeGen::start_ciao_exec_idl (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory =
-    TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->ciao_exec_idl_;
-  this->ciao_exec_idl_ = factory->make_outstream ();
+  
+  ACE_NEW_RETURN (this->ciao_exec_idl_,
+                  TAO_OutStream,
+                  -1);
 
-  if (0 == this->ciao_exec_idl_)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::ciao_exec_idl - ")
-                         ACE_TEXT ("Error creating file stream\n")),
-                        -1);
-    }
-    
   int status =
     this->ciao_exec_idl_->open (fname,
                                 TAO_OutStream::CIAO_EXEC_IDL);
@@ -1448,17 +1345,12 @@ TAO_CodeGen::ciao_exec_idl (void)
 int
 TAO_CodeGen::start_implementation_header (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->implementation_header_;
-  this->implementation_header_ = factory->make_outstream ();
-
-  if (!this->implementation_header_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->implementation_header_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->implementation_header_->open (fname,
                                           TAO_OutStream::TAO_IMPL_HDR)
@@ -1511,17 +1403,12 @@ TAO_CodeGen::implementation_header (void)
 int
 TAO_CodeGen::start_implementation_skeleton (const char *fname)
 {
-  // Retrieve the singleton instance to the outstream factory.
-  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
-
   // Clean up between multiple files.
   delete this->implementation_skeleton_;
-  this->implementation_skeleton_ = factory->make_outstream ();
-
-  if (!this->implementation_skeleton_)
-    {
-      return -1;
-    }
+  
+  ACE_NEW_RETURN (this->implementation_skeleton_,
+                  TAO_OutStream,
+                  -1);
 
   if (this->implementation_skeleton_->open (fname,
                                             TAO_OutStream::TAO_IMPL_SKEL)
@@ -1949,6 +1836,143 @@ TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
     {
       *stream << "#" << str << be_nl << be_nl;
     }
+}
+
+void
+TAO_CodeGen::gen_export_files (void)
+{
+  if (be_global->gen_stub_export_hdr_file ())
+    {
+      this->gen_export_file (
+        be_global->stub_export_include (),
+        be_global->stub_export_macro (),
+        "stub");
+    }
+    
+  if (be_global->gen_skel_export_hdr_file ())
+    {
+  ACE_DEBUG ((LM_DEBUG, "skel\n"));
+  
+      this->gen_export_file (
+        be_global->skel_export_include (),
+        be_global->skel_export_macro (),
+        "skel");
+    }
+    
+  if (be_global->gen_svnt_export_hdr_file ())
+    {
+  ACE_DEBUG ((LM_DEBUG, "svnt\n"));
+  
+      this->gen_export_file (
+        be_global->svnt_export_include (),
+        be_global->svnt_export_macro (),
+        "svnt");
+    }
+    
+  if (be_global->gen_exec_export_hdr_file ())
+    {
+      this->gen_export_file (
+        be_global->exec_export_include (),
+        be_global->exec_export_macro (),
+        "exec");
+    }    
+}
+
+void
+TAO_CodeGen::gen_export_file (const char *filename,
+                              const char *macro,
+                              const char *msg)
+{
+  ACE_CString work (macro);
+  
+  // Svnt export macro may correctly default to skel
+  // export macro, so we just return silently. The
+  // null filename check below will catch a real error.
+  if (work == "")
+    {
+      return;
+    }
+    
+  if (filename == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
+                  ACE_TEXT ("%s export include not initialized\n"),
+                  msg));
+      return;
+    }
+    
+  TAO_OutStream os;
+  
+  if (os.open (filename) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
+                  ACE_TEXT ("file open failed on %s\n"),
+                  filename));
+      return;
+    }
+    
+  ACE_CString suffix ("_Export");
+  size_t stem_len =
+    work.length () - suffix.length ();
+    
+  if (work.substr (stem_len) != suffix)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
+                  ACE_TEXT ("export macro %s does not end with ")
+                  ACE_TEXT ("\"_Export\""),
+                  macro));
+      return;
+    }
+  
+  ACE_CString stem_str (work.substr (0, stem_len));;
+  const char *stem = stem_str.c_str ();
+
+  os << "\n#ifndef " << stem << "_EXPORT_H\n"
+     << "#define " << stem << "_EXPORT_H\n\n"
+     << "#include \"ace/config-all.h\"\n\n"
+     << "#if defined (ACE_AS_STATIC_LIBS) && !defined (" << stem << "_HAS_DLL)\n"
+     << "#  define " << stem << "_HAS_DLL 0\n"
+     << "#endif /* ACE_AS_STATIC_LIBS && " << stem << "_HAS_DLL */\n\n"
+     << "#if !defined (" << stem << "_HAS_DLL)\n"
+     << "#  define " << stem << "_HAS_DLL 1\n"
+     << "#endif /* ! " << stem << "_HAS_DLL */\n\n"
+     << "#if defined (" << stem << "_HAS_DLL) && (" << stem << "_HAS_DLL == 1)\n"
+     << "#  if defined (" << stem << "_BUILD_DLL)\n"
+     << "#    define " << stem << "_Export ACE_Proper_Export_Flag\n"
+     << "#    define " << stem << "_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)\n"
+     << "#    define " << stem << "_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)\n"
+     << "#  else /* " << stem << "_BUILD_DLL */\n"
+     << "#    define " << stem << "_Export ACE_Proper_Import_Flag\n"
+     << "#    define " << stem << "_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)\n"
+     << "#    define " << stem << "_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)\n"
+     << "#  endif /* " << stem << "_BUILD_DLL */\n"
+     << "#else /* " << stem << "_HAS_DLL == 1 */\n"
+     << "#  define " << stem << "_Export\n"
+     << "#  define " << stem << "_SINGLETON_DECLARATION(T)\n"
+     << "#  define " << stem << "_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)\n"
+     << "#endif /* " << stem << "_HAS_DLL == 1 */\n\n"
+     << "// Set " << stem << "_NTRACE = 0 to turn on library-specific\n"
+     << "// tracing even if tracing is turned off for ACE.\n"
+     << "#if !defined (" << stem << "_NTRACE)\n"
+     << "#  if (ACE_NTRACE == 1)\n"
+     << "#    define " << stem << "_NTRACE 1\n"
+     << "#  else /* (ACE_NTRACE == 1) */\n"
+     << "#    define " << stem << "_NTRACE 0\n"
+     << "#  endif /* (ACE_NTRACE == 1) */\n"
+     << "#endif /* !" << stem << "_NTRACE */\n\n"
+     << "#if (" << stem << "_NTRACE == 1)\n"
+     << "#  define " << stem << "_TRACE(X)\n"
+     << "#else /* (" << stem << "_NTRACE == 1) */\n"
+     << "#  if !defined (ACE_HAS_TRACE)\n"
+     << "#    define ACE_HAS_TRACE\n"
+     << "#  endif /* ACE_HAS_TRACE */\n"
+     << "#  define " << stem << "_TRACE(X) ACE_TRACE_IMPL(X)\n"
+     << "#  include \"ace/Trace.h\"\n"
+     << "#endif /* (" << stem << "_NTRACE == 1 */\n\n"
+     << "#endif /* " << stem << "_EXPORT_H */\n\n";
 }
 
 void

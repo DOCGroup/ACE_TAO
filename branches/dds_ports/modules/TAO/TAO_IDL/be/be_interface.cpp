@@ -27,7 +27,6 @@
 #include "be_exception.h"
 #include "be_visitor.h"
 #include "be_helper.h"
-#include "be_stream_factory.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
@@ -944,13 +943,8 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Make a new outstream to hold the gperf_temp_file for this
         // interface.
-
-        // Retrieve the singleton instance to the outstream factory.
-        TAO_OutStream_Factory *factory =
-          TAO_OUTSTREAM_FACTORY::instance ();
-
-        // Get a new instance for the temp file.
-        TAO_OutStream *os = factory->make_outstream ();
+        TAO_OutStream *os = 0;
+        ACE_NEW_RETURN (os, TAO_OutStream, -1);
 
         if (os == 0)
           {

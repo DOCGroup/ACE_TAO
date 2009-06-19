@@ -248,6 +248,8 @@ BE_produce (void)
       be_visitor_root_exs root_exs_visitor (&ctx);
       BE_visit_root (root_exs_visitor, "CIAO exec impl source");
     }
+    
+  tao_cg->gen_export_files ();
 
   // Done with this IDL file.
   BE_cleanup ();

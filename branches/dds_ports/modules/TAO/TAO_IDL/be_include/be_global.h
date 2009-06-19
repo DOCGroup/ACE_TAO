@@ -705,6 +705,18 @@ public:
   bool gen_ciao_valuefactory_reg (void) const;
   void gen_ciao_valuefactory_reg (bool val);
 
+  bool gen_stub_export_hdr_file (void) const;
+  void gen_stub_export_hdr_file (bool val);
+
+  bool gen_skel_export_hdr_file (void) const;
+  void gen_skel_export_hdr_file (bool val);
+
+  bool gen_svnt_export_hdr_file (void) const;
+  void gen_svnt_export_hdr_file (bool val);
+
+  bool gen_exec_export_hdr_file (void) const;
+  void gen_exec_export_hdr_file (bool val);
+
   ACE_CString spawn_options (void);
   // Command line passed to ACE_Process::spawn. Different
   // implementations in IDL and IFR backends.
@@ -993,6 +1005,11 @@ private:
   bool gen_ciao_valuefactory_reg_;
   // Generate automatic valuetype factory registration in
   // CIAO servants.
+  
+  bool gen_stub_export_hdr_file_;
+  bool gen_skel_export_hdr_file_;
+  bool gen_svnt_export_hdr_file_;
+  bool gen_exec_export_hdr_file_;
 };
 
 #endif /* _BE_GLOBAL_H */
