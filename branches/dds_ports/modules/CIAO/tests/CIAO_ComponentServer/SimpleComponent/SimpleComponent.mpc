@@ -8,7 +8,7 @@ project(SimpleComponent_idl_gen) : componentidldefaults, anytypecode, avoids_ace
               -Wb,skel_export_macro=SIMPLECOMPONENT_SVNT_Export \
               -Wb,skel_export_include=SimpleComponent_svnt_export.h \
               -Wb,exec_export_macro=SIMPLECOMPONENT_EXEC_Export \
-              -Wb,exec_export_include=SimpleComponent_exec_export.h \
+              -Wb,exec_export_include=SimpleComponent_exec_export.h
 
   IDL_Files {
     SimpleComponent.idl
