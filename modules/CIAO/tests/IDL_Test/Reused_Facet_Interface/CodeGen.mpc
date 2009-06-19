@@ -1,7 +1,7 @@
 // $Id$
 //
 
-project(Reused_Facet_Interface_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Reused_Facet_Interface_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CODEGEN_STUB_Export \
               -Wb,stub_export_include=CodeGen_stub_export.h \
@@ -9,7 +9,7 @@ project(Reused_Facet_Interface_idl_gen) : ciaoidldefaults, anytypecode, avoids_a
               -Wb,skel_export_include=CodeGen_svnt_export.h \
               -Wb,exec_export_macro=CODEGEN_EXEC_Export \
               -Wb,exec_export_include=CodeGen_exec_export.h \
-              -Gsv -Gex
+              -Gex
 
   IDL_Files {
     CodeGen.idl
