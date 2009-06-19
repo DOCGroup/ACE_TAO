@@ -1,3 +1,28 @@
+Fri Jun 19 19:40:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Cornucopia/Cornucopia.mpc:
+        * tests/IDL_Test/Keywords/Keywords.mpc:
+        * tests/IDL_Test/Reused_Facet_Interface/Basic.mpc:
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.mpc:
+
+          Added IDL compiler options to generate all export
+          header files.
+
+        * tests/IDL_Test/Reused_Facet_Interface/Basic_stub_export.h:
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen_svnt_export.h:
+        * tests/IDL_Test/Reused_Facet_Interface/Basic_skel_export.h:
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen_stub_export.h:
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen_exec_export.h:
+        * tests/IDL_Test/Cornucopia/Cornucopia_svnt_export.h:
+        * tests/IDL_Test/Cornucopia/Cornucopia_stub_export.h:
+        * tests/IDL_Test/Cornucopia/Cornucopia_skel_export.h:
+        * tests/IDL_Test/Cornucopia/Cornucopia_exec_export.h:
+        * tests/IDL_Test/Keywords/Keyword_Clash_stub_export.h:
+        * tests/IDL_Test/Keywords/Keyword_Clash_exec_export.h:
+        * tests/IDL_Test/Keywords/Keyword_Clash_svnt_export.h:
+
+          Removed export header files, they're now generated.
+
 Fri Jun 19 18:15:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p:
