@@ -8,7 +8,7 @@ project(ProcessColocation_idl_gen) : componentidldefaults, anytypecode, avoids_a
               -Wb,skel_export_macro=PROCESSCOLOCATION_SVNT_Export \
               -Wb,skel_export_include=ProcessColocation_svnt_export.h \
               -Wb,exec_export_macro=PROCESSCOLOCATION_EXEC_Export \
-              -Wb,exec_export_include=ProcessColocation_exec_export.h \
+              -Wb,exec_export_include=ProcessColocation_exec_export.h
 
   IDL_Files {
     ProcessColocation.idl
@@ -16,8 +16,8 @@ project(ProcessColocation_idl_gen) : componentidldefaults, anytypecode, avoids_a
 }
 
 project(ProcessColocation_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
-  after += ProcessColocation_idl_gen
   custom_only = 1
+  after += ProcessColocation_idl_gen
   idlflags += -Wb,export_macro=PROCESSCOLOCATION_EXEC_Export \
               -Wb,export_include=ProcessColocation_exec_export.h \
               -SS
