@@ -1,3 +1,10 @@
+Fri Jun 19 12:41:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        
+          Added the new visitor context states to switch
+          statements in visit_typedef() and visit_operation().
+
 Thu Jun 18 18:44:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
