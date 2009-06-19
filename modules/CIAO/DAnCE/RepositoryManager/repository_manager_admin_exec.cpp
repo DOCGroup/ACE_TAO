@@ -345,7 +345,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
         }
 
       Options options;  
-      options.parse_args (argc, argv);
+      if (!options.parse_args (argc, argv))
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
+                        "Failed to parse command line arguments.\n"));
+        }
       
       if (options.rm_ior_ == 0)
         {
@@ -370,7 +374,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
       
       DAnCE::RepositoryManager::Admin admin (rm.in ());
       
-      ACE_Unbounded_Set_Iterator<Options::Installation> inst_it (options.install_);
+      ACE_Unbounded_Set_Iterator<Options::Installation> inst_it =
+        options.install_.begin ();
       Options::Installation *inst (0);
       
       while (inst_it.next (inst) == 1)
@@ -379,6 +384,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
                                       inst->name_.c_str (),
                                       inst->replace_))
             retval = -1;
+          inst_it.advance ();
         }
 
       ACE_Unbounded_Set_Iterator<Options::Creation> creat_it (options.create_);
@@ -391,6 +397,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
                                      creat->base_location_.c_str (),
                                      creat->replace_))
             retval = -1;
+          creat_it.advance ();
         }
 
       ACE_Unbounded_Set_Iterator<ACE_CString> uninst_it (options.uninstall_);
@@ -400,6 +407,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
         {
           if (!admin.uninstall_package (uninst->c_str ()))
             retval = -1;
+          uninst_it.advance ();
         }
       
       if (options.list_)

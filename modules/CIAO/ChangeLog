@@ -1,3 +1,14 @@
+Fri Jun 19 17:58:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+
+          Basic RM functionality appears to be restored.  HTTP not yet tested.  
+        
+        * tools/XML/XML_Helper.tpp:
+        
+          Removed Xerces init logging. 
+        
 Fri Jun 19 12:19:38 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:
@@ -23,7 +34,7 @@ Fri Jun 19 12:19:38 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/toplevel.cpp:
 
           Fixed the wchar issue in bugzilla 3691.
-        
+
 Fri Jun 19 07:47:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/componentidldefaults.mpb:
