@@ -55,9 +55,7 @@ namespace MyImpl
     ~ReadData_Impl();
 
   private:
-
     CORBA::String_var str_;
-
   };
 }
 
