@@ -29,6 +29,8 @@ namespace CIAO
     class SubcomponentInstantiationDescription;
     class SubcomponentPropertyReference;
     class AssemblyPropertyMapping;
+    class LocalityKind;
+    class Locality;
     class ComponentAssemblyDescription;
     class MonolithicImplementationDescription;
     class ComponentImplementationDescription;
@@ -311,6 +313,85 @@ namespace CIAO
     };
 
 
+    class XSC_XML_Handlers_Export LocalityKind : public ::XSCRT::Type
+    {
+      public:
+      LocalityKind (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      LocalityKind (::XSCRT::XML::Attribute< ACE_TCHAR > const&);
+
+      static LocalityKind const SameNodeAnyProcess;
+      static LocalityKind const SameNodeSameProcess;
+      static LocalityKind const SameNodeDifferentProcess;
+      static LocalityKind const DifferentNode;
+      static LocalityKind const DifferentProcess;
+      static LocalityKind const NoConstraint;
+
+      enum Value
+      {
+        SameNodeAnyProcess_l, SameNodeSameProcess_l, SameNodeDifferentProcess_l, DifferentNode_l, DifferentProcess_l, NoConstraint_l
+      };
+
+
+      Value
+      integral () const;
+
+      friend bool XSC_XML_Handlers_Export 
+      operator== (LocalityKind const& a, LocalityKind const& b);
+
+      friend bool XSC_XML_Handlers_Export 
+      operator!= (LocalityKind const& a, LocalityKind const& b);
+
+      private:
+      LocalityKind (Value v);
+
+      Value v_;
+    };
+
+    bool XSC_XML_Handlers_Export operator== (LocalityKind const &a, LocalityKind const &b);
+
+    bool XSC_XML_Handlers_Export operator!= (LocalityKind const &a, LocalityKind const &b);
+
+
+    class XSC_XML_Handlers_Export Locality : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Locality, ACE_Null_Mutex > _ptr;
+
+      // constraint
+      // 
+      public:
+      ::CIAO::Config_Handlers::LocalityKind const& constraint () const;
+      void constraint (::CIAO::Config_Handlers::LocalityKind const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::LocalityKind > constraint_;
+
+      // constrainedInstance
+      // 
+      public:
+      ::CIAO::Config_Handlers::IdRef const& constrainedInstance () const;
+      void constrainedInstance (::CIAO::Config_Handlers::IdRef const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > constrainedInstance_;
+
+      public:
+      Locality (::CIAO::Config_Handlers::LocalityKind const& constraint__,
+                ::CIAO::Config_Handlers::IdRef const& constrainedInstance__);
+
+      Locality (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      Locality (Locality const& s);
+
+      Locality&
+      operator= (Locality const& s);
+
+      private:
+      char regulator__;
+    };
+
+
     class XSC_XML_Handlers_Export ComponentAssemblyDescription : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
@@ -362,6 +443,21 @@ namespace CIAO
 
       protected:
       ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex > > externalProperty_;
+
+      // locality
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex > >::iterator locality_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex > >::const_iterator locality_const_iterator;
+      locality_iterator begin_locality ();
+      locality_iterator end_locality ();
+      locality_const_iterator begin_locality () const;
+      locality_const_iterator end_locality () const;
+      void add_locality ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex > const& );
+      size_t count_locality (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex > > locality_;
 
       public:
       ComponentAssemblyDescription ();
@@ -1052,6 +1148,43 @@ namespace CIAO
         post (Type const&);
       };
 
+      typedef
+      ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::LocalityKind >
+      LocalityKind;
+
+      struct XSC_XML_Handlers_Export Locality : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Locality >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        constraint (Type&);
+
+        virtual void
+        constraint (Type const&);
+
+        virtual void
+        constrainedInstance (Type&);
+
+        virtual void
+        constrainedInstance (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
       struct XSC_XML_Handlers_Export ComponentAssemblyDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentAssemblyDescription >
       {
         virtual void
@@ -1155,6 +1288,36 @@ namespace CIAO
 
         virtual void
         externalProperty_none (Type const&);
+
+        virtual void
+        locality (Type&);
+
+        virtual void
+        locality (Type const&);
+
+        virtual void
+        locality_pre (Type&);
+
+        virtual void
+        locality_pre (Type const&);
+
+        virtual void
+        locality_next (Type&);
+
+        virtual void
+        locality_next (Type const&);
+
+        virtual void
+        locality_post (Type&);
+
+        virtual void
+        locality_post (Type const&);
+
+        virtual void
+        locality_none (Type&);
+
+        virtual void
+        locality_none (Type const&);
 
         virtual void
         post (Type&);
@@ -2015,6 +2178,61 @@ namespace CIAO
         AssemblyPropertyMapping ();
       };
 
+      struct LocalityKind : Traversal::LocalityKind, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        LocalityKind (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        protected:
+        LocalityKind ();
+      };
+
+      struct Locality : Traversal::Locality, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::Locality Type;
+        Locality (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        constraint (Type &o)
+        {
+          this->constraint (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        constraint (Type const&);
+
+        virtual void 
+        constrainedInstance (Type &o)
+        {
+          this->constrainedInstance (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        constrainedInstance (Type const&);
+
+        protected:
+        Locality ();
+      };
+
       struct ComponentAssemblyDescription : Traversal::ComponentAssemblyDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
@@ -2110,6 +2328,33 @@ namespace CIAO
 
         virtual void
         externalProperty_post (Type const&);
+
+        virtual void 
+        locality_pre (Type &o)
+        {
+          this->locality_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        locality_pre (Type const&);
+
+        virtual void 
+        locality_next (Type &o)
+        {
+          this->locality_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        locality_next (Type const&);
+
+        virtual void 
+        locality_post (Type &o)
+        {
+          this->locality_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        locality_post (Type const&);
 
         protected:
         ComponentAssemblyDescription ();

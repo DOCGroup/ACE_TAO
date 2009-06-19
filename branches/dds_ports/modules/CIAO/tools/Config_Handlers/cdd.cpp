@@ -1033,43 +1033,43 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "UUID")
+        if (n == ACE_TEXT ("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "label")
+        else if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "node")
+        else if (n == ACE_TEXT ("node"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Node (e));
           add_node (t);
         }
 
-        else if (n == "interconnect")
+        else if (n == ACE_TEXT ("interconnect"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Interconnect (e));
           add_interconnect (t);
         }
 
-        else if (n == "bridge")
+        else if (n == ACE_TEXT ("bridge"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Bridge (e));
           add_bridge (t);
         }
 
-        else if (n == "sharedResource")
+        else if (n == ACE_TEXT ("sharedResource"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SharedResource (e));
           add_sharedResource (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT ("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
@@ -1096,25 +1096,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "label")
+        else if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "connect")
+        else if (n == ACE_TEXT ("connect"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Interconnect (e));
           add_connect (t);
         }
 
-        else if (n == "resource")
+        else if (n == ACE_TEXT ("resource"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Resource (e));
           add_resource (t);
@@ -1141,31 +1141,31 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "label")
+        else if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "connection")
+        else if (n == ACE_TEXT ("connection"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Bridge (e));
           add_connection (t);
         }
 
-        else if (n == "connect")
+        else if (n == ACE_TEXT ("connect"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Node (e));
           add_connect (t);
         }
 
-        else if (n == "resource")
+        else if (n == ACE_TEXT ("resource"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Resource (e));
           add_resource (t);
@@ -1192,31 +1192,31 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "label")
+        else if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "connection")
+        else if (n == ACE_TEXT ("connection"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Interconnect (e));
           add_connection (t);
         }
 
-        else if (n == "sharedResource")
+        else if (n == ACE_TEXT ("sharedResource"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SharedResource (e));
           add_sharedResource (t);
         }
 
-        else if (n == "resource")
+        else if (n == ACE_TEXT ("resource"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Resource (e));
           add_resource (t);
@@ -1243,25 +1243,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "resourceType")
+        else if (n == ACE_TEXT ("resourceType"))
         {
           resourceType_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           resourceType_->container (this);
         }
 
-        else if (n == "node")
+        else if (n == ACE_TEXT ("node"))
         {
           node_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Node > (new ::CIAO::Config_Handlers::Node (e));
           node_->container (this);
         }
 
-        else if (n == "property")
+        else if (n == ACE_TEXT ("property"))
         {
           property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
           property_->container (this);

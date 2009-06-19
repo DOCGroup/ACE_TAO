@@ -145,7 +145,7 @@ namespace CIAO
 
         case TCKind::tk_longdouble_l:
         case TCKind::tk_wstring_l:
-        case TCKind::tk_wfixed_l:
+        case TCKind::tk_fixed_l:
         case TCKind::tk_any_l:
         case TCKind::tk_TypeCode_l:
         case TCKind::tk_Principal_l:
@@ -331,7 +331,7 @@ namespace CIAO
         case TCKind::tk_alias_l:
           return DynAlias_Handler::create_typecode (type);
 
-        case TCKind::tk_wfixed_l:
+        case TCKind::tk_fixed_l:
         case TCKind::tk_any_l:
         case TCKind::tk_TypeCode_l:
         case TCKind::tk_Principal_l:

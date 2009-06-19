@@ -157,7 +157,7 @@ namespace CIAO
       static TCKind const tk_longdouble;
       static TCKind const tk_wchar;
       static TCKind const tk_wstring;
-      static TCKind const tk_wfixed;
+      static TCKind const tk_fixed;
       static TCKind const tk_value;
       static TCKind const tk_value_box;
       static TCKind const tk_native;
@@ -169,7 +169,7 @@ namespace CIAO
 
       enum Value
       {
-        tk_null_l, tk_void_l, tk_short_l, tk_long_l, tk_ushort_l, tk_ulong_l, tk_float_l, tk_double_l, tk_boolean_l, tk_char_l, tk_octet_l, tk_any_l, tk_TypeCode_l, tk_Principal_l, tk_objref_l, tk_struct_l, tk_union_l, tk_enum_l, tk_string_l, tk_sequence_l, tk_array_l, tk_alias_l, tk_except_l, tk_longlong_l, tk_ulonglong_l, tk_longdouble_l, tk_wchar_l, tk_wstring_l, tk_wfixed_l, tk_value_l, tk_value_box_l, tk_native_l, tk_abstract_interface_l, tk_local_interface_l, tk_component_l, tk_home_l, tk_event_l
+        tk_null_l, tk_void_l, tk_short_l, tk_long_l, tk_ushort_l, tk_ulong_l, tk_float_l, tk_double_l, tk_boolean_l, tk_char_l, tk_octet_l, tk_any_l, tk_TypeCode_l, tk_Principal_l, tk_objref_l, tk_struct_l, tk_union_l, tk_enum_l, tk_string_l, tk_sequence_l, tk_array_l, tk_alias_l, tk_except_l, tk_longlong_l, tk_ulonglong_l, tk_longdouble_l, tk_wchar_l, tk_wstring_l, tk_fixed_l, tk_value_l, tk_value_box_l, tk_native_l, tk_abstract_interface_l, tk_local_interface_l, tk_component_l, tk_home_l, tk_event_l
       };
 
 
@@ -1183,15 +1183,6 @@ namespace CIAO
       public:
       typedef ACE_Refcounted_Auto_Ptr < Requirement, ACE_Null_Mutex > _ptr;
 
-      // resourceType
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
-      void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
-
       // name
       // 
       public:
@@ -1200,6 +1191,15 @@ namespace CIAO
 
       protected:
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
+
+      // resourceType
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
+      void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // property
       // 
@@ -1217,8 +1217,8 @@ namespace CIAO
       ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
-      Requirement (::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-                   ::XMLSchema::string< ACE_TCHAR > const& name__);
+      Requirement (::XMLSchema::string< ACE_TCHAR > const& name__,
+                   ::XMLSchema::string< ACE_TCHAR > const& resourceType__);
 
       Requirement (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Requirement (Requirement const& s);
@@ -3874,16 +3874,16 @@ namespace CIAO
         pre (Type const&);
 
         virtual void
-        resourceType (Type&);
-
-        virtual void
-        resourceType (Type const&);
-
-        virtual void
         name (Type&);
 
         virtual void
         name (Type const&);
+
+        virtual void
+        resourceType (Type&);
+
+        virtual void
+        resourceType (Type const&);
 
         virtual void
         property (Type&);
@@ -6796,15 +6796,6 @@ namespace CIAO
         traverse (Type const&);
 
         virtual void 
-        resourceType (Type &o)
-        {
-          this->resourceType (const_cast <Type const &> (o));
-        }
-
-        virtual void
-        resourceType (Type const&);
-
-        virtual void 
         name (Type &o)
         {
           this->name (const_cast <Type const &> (o));
@@ -6812,6 +6803,15 @@ namespace CIAO
 
         virtual void
         name (Type const&);
+
+        virtual void 
+        resourceType (Type &o)
+        {
+          this->resourceType (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        resourceType (Type const&);
 
         virtual void 
         property_pre (Type &o)

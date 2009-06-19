@@ -1,3 +1,29 @@
+Fri Jun 19 12:19:38 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/Basic_Deployment_Data.xsd:
+        * docs/schema/cdp.xsd:
+        * docs/schema/cid.xsd:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Deployment.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/XMI.cpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cdp.hpp:
+        * tools/Config_Handlers/cid.hpp:
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/iad.cpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/toplevel.hpp:
+        * tools/Config_Handlers/toplevel.cpp:
+
+          Fixed the wchar issue in bugzilla 3691.
+        
 Fri Jun 19 07:47:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/componentidldefaults.mpb:

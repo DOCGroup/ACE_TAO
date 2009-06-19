@@ -36,7 +36,7 @@ namespace CIAO
     TopLevelPackageDescription (TopLevelPackageDescription const& s)
     :
     ::XSCRT::Type (),
-    basePackage_ (s.basePackage_),
+    package_ (s.package_),
     regulator__ ()
     {
     }
@@ -44,7 +44,7 @@ namespace CIAO
     TopLevelPackageDescription& TopLevelPackageDescription::
     operator= (TopLevelPackageDescription const& s)
     {
-      basePackage_ = s.basePackage_;
+      package_ = s.package_;
 
       return *this;
     }
@@ -52,40 +52,40 @@ namespace CIAO
 
     // TopLevelPackageDescription
     // 
-    TopLevelPackageDescription::basePackage_iterator TopLevelPackageDescription::
-    begin_basePackage ()
+    TopLevelPackageDescription::package_iterator TopLevelPackageDescription::
+    begin_package ()
     {
-      return basePackage_.begin ();
+      return package_.begin ();
     }
 
-    TopLevelPackageDescription::basePackage_iterator TopLevelPackageDescription::
-    end_basePackage ()
+    TopLevelPackageDescription::package_iterator TopLevelPackageDescription::
+    end_package ()
     {
-      return basePackage_.end ();
+      return package_.end ();
     }
 
-    TopLevelPackageDescription::basePackage_const_iterator TopLevelPackageDescription::
-    begin_basePackage () const
+    TopLevelPackageDescription::package_const_iterator TopLevelPackageDescription::
+    begin_package () const
     {
-      return basePackage_.begin ();
+      return package_.begin ();
     }
 
-    TopLevelPackageDescription::basePackage_const_iterator TopLevelPackageDescription::
-    end_basePackage () const
+    TopLevelPackageDescription::package_const_iterator TopLevelPackageDescription::
+    end_package () const
     {
-      return basePackage_.end ();
+      return package_.end ();
     }
 
     void TopLevelPackageDescription::
-    add_basePackage (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  const& e)
+    add_package (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  const& e)
     {
-      basePackage_.push_back (e);
+      package_.push_back (e);
     }
 
     size_t TopLevelPackageDescription::
-    count_basePackage(void) const
+    count_package(void) const
     {
-      return basePackage_.size ();
+      return package_.size ();
     }
   }
 }
@@ -109,10 +109,10 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "basePackage")
+        if (n == ACE_TEXT ("package"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PackageConfiguration (e));
-          add_basePackage (t);
+          add_package (t);
         }
 
         else 
@@ -171,7 +171,7 @@ namespace CIAO
       traverse (Type& o)
       {
         pre (o);
-        basePackage (o);
+        package (o);
         post (o);
       }
 
@@ -179,7 +179,7 @@ namespace CIAO
       traverse (Type const& o)
       {
         pre (o);
-        basePackage (o);
+        package (o);
         post (o);
       }
 
@@ -194,86 +194,86 @@ namespace CIAO
       }
 
       void TopLevelPackageDescription::
-      basePackage (Type& o)
+      package (Type& o)
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::TopLevelPackageDescription::basePackage_iterator b (o.begin_basePackage()), e (o.end_basePackage());
+        ::CIAO::Config_Handlers::TopLevelPackageDescription::package_iterator b (o.begin_package()), e (o.end_package());
 
         if (b != e)
         {
-          basePackage_pre (o);
+          package_pre (o);
           for (; b != e;)
           {
             dispatch (*(*b));
-            if (++b != e) basePackage_next (o);
+            if (++b != e) package_next (o);
           }
 
-          basePackage_post (o);
+          package_post (o);
         }
 
-        else basePackage_none (o);
+        else package_none (o);
       }
 
       void TopLevelPackageDescription::
-      basePackage (Type const& o)
+      package (Type const& o)
       {
         // VC6 anathema strikes again
         //
-        ::CIAO::Config_Handlers::TopLevelPackageDescription::basePackage_const_iterator b (o.begin_basePackage()), e (o.end_basePackage());
+        ::CIAO::Config_Handlers::TopLevelPackageDescription::package_const_iterator b (o.begin_package()), e (o.end_package());
 
         if (b != e)
         {
-          basePackage_pre (o);
+          package_pre (o);
           for (; b != e;)
           {
             dispatch (*(*b));
-            if (++b != e) basePackage_next (o);
+            if (++b != e) package_next (o);
           }
 
-          basePackage_post (o);
+          package_post (o);
         }
 
-        else basePackage_none (o);
+        else package_none (o);
       }
 
       void TopLevelPackageDescription::
-      basePackage_pre (Type&)
+      package_pre (Type&)
       {
       }
 
       void TopLevelPackageDescription::
-      basePackage_pre (Type const&)
+      package_pre (Type const&)
       {
       }
 
       void TopLevelPackageDescription::
-      basePackage_next (Type&)
+      package_next (Type&)
       {
       }
 
       void TopLevelPackageDescription::
-      basePackage_next (Type const&)
+      package_next (Type const&)
       {
       }
 
       void TopLevelPackageDescription::
-      basePackage_post (Type&)
+      package_post (Type&)
       {
       }
 
       void TopLevelPackageDescription::
-      basePackage_post (Type const&)
+      package_post (Type const&)
       {
       }
 
       void TopLevelPackageDescription::
-      basePackage_none (Type&)
+      package_none (Type&)
       {
       }
 
       void TopLevelPackageDescription::
-      basePackage_none (Type const&)
+      package_none (Type const&)
       {
       }
 
@@ -318,20 +318,20 @@ namespace CIAO
       }
 
       void TopLevelPackageDescription::
-      basePackage_pre (Type const&)
+      package_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("basePackage", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("package", top_ ()));
       }
 
       void TopLevelPackageDescription::
-      basePackage_next (Type const& o)
+      package_next (Type const& o)
       {
-        basePackage_post (o);
-        basePackage_pre (o);
+        package_post (o);
+        package_pre (o);
       }
 
       void TopLevelPackageDescription::
-      basePackage_post (Type const&)
+      package_post (Type const&)
       {
         pop_ ();
       }
