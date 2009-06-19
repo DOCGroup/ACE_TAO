@@ -67,11 +67,10 @@ int ZCALLBACK ferror_file_func OF((
    voidpf stream));
 
 
-voidpf ZCALLBACK fopen_file_func ( voidpf opaque,const char* filename,int mode)
+voidpf ZCALLBACK fopen_file_func ( voidpf,const char* filename,int mode)
   {
     FILE* file = 0;
     const char* mode_fopen = 0;
-    MINIZIP_UNUSED_ARG (opaque);
     if ((mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER)==ZLIB_FILEFUNC_MODE_READ)
         mode_fopen = "rb";
     else
@@ -87,22 +86,19 @@ voidpf ZCALLBACK fopen_file_func ( voidpf opaque,const char* filename,int mode)
 }
 
 
-uLong ZCALLBACK fread_file_func (voidpf opaque,voidpf stream,void* buf,uLong size)
+uLong ZCALLBACK fread_file_func (voidpf,voidpf stream,void* buf,uLong size)
 {
     uLong ret;
-
-    MINIZIP_UNUSED_ARG (opaque);
 
     ret = (uLong)fread(buf, 1, (size_t)size, (FILE *)stream);
     return ret;
 }
 
 
-uLong ZCALLBACK fwrite_file_func (voidpf opaque,voidpf stream,const void* buf,uLong size)
+uLong ZCALLBACK fwrite_file_func (voidpf,voidpf stream,const void* buf,uLong size)
 
 {
     uLong ret;
-    MINIZIP_UNUSED_ARG (opaque);
     ret = (uLong)fwrite(buf, 1, (size_t)size, (FILE *)stream);
     return ret;
 }
