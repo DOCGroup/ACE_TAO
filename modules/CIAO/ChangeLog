@@ -1,14 +1,22 @@
+Fri Jun 19 18:03:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Protocols/Receiver/Receiver_exec.cpp
+        * performance-tests/Protocols/Receiver/Receiver_exec.h
+        * performance-tests/Protocols/Sender/Sender_exec.cpp
+        * performance-tests/Protocols/Sender/Sender_exec.h
+          Fixed compile errors
+
 Fri Jun 19 17:58:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
         * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
 
-          Basic RM functionality appears to be restored.  HTTP not yet tested.  
-        
+          Basic RM functionality appears to be restored.  HTTP not yet tested.
+
         * tools/XML/XML_Helper.tpp:
-        
-          Removed Xerces init logging. 
-        
+
+          Removed Xerces init logging.
+
 Fri Jun 19 12:19:38 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:

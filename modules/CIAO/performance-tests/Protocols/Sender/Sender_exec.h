@@ -49,7 +49,7 @@ namespace CIDL_SenderImpl
   };
 
   class SENDER_EXEC_Export SenderHomeExec_i :
-    public virtual CIAO_Protocols_Sender_Impl::SenderHome_Exec
+    public virtual ::CIAO_Protocols_Sender_Impl::SenderHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
