@@ -1,4 +1,5 @@
 #include "../Hello_Base.idl3"
+#include "ccm/Components.idl"
 
 module Hello_DDS
 {
