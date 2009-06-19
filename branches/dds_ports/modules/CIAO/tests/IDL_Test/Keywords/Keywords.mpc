@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Keyword_Clash_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Keyword_Clash_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=KEYWORD_CLASH_STUB_Export \
               -Wb,stub_export_include=Keyword_Clash_stub_export.h \
@@ -9,8 +9,8 @@ project(Keyword_Clash_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_ta
               -Wb,skel_export_include=Keyword_Clash_svnt_export.h \
               -Wb,exec_export_macro=KEYWORD_CLASH_EXEC_Export \
               -Wb,exec_export_include=Keyword_Clash_exec_export.h \
-              -Gsv -Gex
-              
+              -Gex
+
   IDL_Files {
     Keyword_Clash.idl
   }
@@ -22,7 +22,7 @@ project(Keyword_Clash_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   idlflags += -Wb,export_macro=KEYWORD_CLASH_EXEC_Export \
               -Wb,export_include=Keyword_Clash_exec_export.h \
               -SS
-              
+
   IDL_Files {
     Keyword_ClashE.idl
   }
@@ -32,7 +32,7 @@ project(Keyword_Clash_stub) : ccm_stub, avoids_ace_for_tao {
   after += Keyword_Clash_idl_gen
   sharedname = Keyword_Clash_stub
   dynamicflags = KEYWORD_CLASH_STUB_BUILD_DLL
-  
+
   IDL_Files {
   }
 
