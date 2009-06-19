@@ -8,8 +8,7 @@ project(SimpleAttribute_idl_gen) : componentidldefaults, anytypecode, avoids_ace
               -Wb,skel_export_macro=SIMPLEATTRIBUTE_SVNT_Export \
               -Wb,skel_export_include=SimpleAttribute_svnt_export.h \
               -Wb,exec_export_macro=SIMPLEATTRIBUTE_EXEC_Export \
-              -Wb,exec_export_include=SimpleAttribute_exec_export.h \
-
+              -Wb,exec_export_include=SimpleAttribute_exec_export.h
 
   IDL_Files {
     SimpleAttribute.idl
