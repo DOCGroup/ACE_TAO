@@ -10,7 +10,7 @@ project(Cornucopia_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_
               -Wb,svnt_export_include=Cornucopia_svnt_export.h \
               -Wb,exec_export_macro=CORNUCOPIA_EXEC_Export \
               -Wb,exec_export_include=Cornucopia_exec_export.h \
-              -Gex
+              -Gex -Gxhst -Gxhsk -Gxhsv -Gxhex
 
   IDL_Files {
     Cornucopia.idl

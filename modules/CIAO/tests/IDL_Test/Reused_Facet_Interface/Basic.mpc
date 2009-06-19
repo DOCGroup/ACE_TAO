@@ -6,7 +6,8 @@ project(Reused_Facet_Interface_Basic_idl_gen) : ciaoidldefaults, anytypecode, av
   idlflags += -Wb,stub_export_macro=BASIC_STUB_Export \
               -Wb,stub_export_include=Basic_stub_export.h \
               -Wb,skel_export_macro=BASIC_SKEL_Export \
-              -Wb,skel_export_include=Basic_skel_export.h
+              -Wb,skel_export_include=Basic_skel_export.h \
+              -Gxhst -Gxhsk
 
   IDL_Files {
     Basic.idl
