@@ -306,10 +306,11 @@ local void ziplocal_putValue_inmemory (void* dest,uLong x,int nbByte)
 /****************************************************************************/
 
 
-local uLong ziplocal_TmzDateToDosDate(const tm_zip* ptm,uLong)
+local uLong ziplocal_TmzDateToDosDate(const tm_zip* ptm,uLong dosDate)
 
 {
   uLong year = (uLong)ptm->tm_year;
+  MINIZIP_UNUSED_ARG(dosDate);
   if (year>1980)
     year-=1980;
   else if (year>80)
