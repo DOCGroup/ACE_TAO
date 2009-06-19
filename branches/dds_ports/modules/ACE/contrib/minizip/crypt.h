@@ -34,13 +34,11 @@ Encryption is not supported.
 /***********************************************************************
  * Return the next byte in the pseudo-random sequence
  */
-static int decrypt_byte(unsigned long* pkeys, const unsigned long* pcrc_32_tab)
+static int decrypt_byte(unsigned long* pkeys, const unsigned long*)
 {
   unsigned temp;  /* POTENTIAL BUG:  temp*(temp^1) may overflow in an
                    * unpredictable manner on 16-bit systems; not a problem
                    * with any known compiler so far, though */
-
-  MINIZIP_UNUSED_ARG(pcrc_32_tab);
 
   temp = ((unsigned)(*(pkeys+2)) & 0xffff) | 2;
   return (int)(((temp * (temp ^ 1)) >> 8) & 0xff);
