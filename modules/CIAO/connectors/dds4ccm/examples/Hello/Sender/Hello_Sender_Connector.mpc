@@ -7,7 +7,7 @@ project(Hello_Base_Sender_Connector_idl_gen) : componentidldefaults, anytypecode
               -Wb,stub_export_include=Sender_Connector_stub_export.h \
               -Wb,skel_export_macro=SENDER_CONNECTOR_SVNT_Export \
               -Wb,skel_export_include=Sender_Connector_svnt_export.h \
-               -I%CIAO_ROOT%/connectors \
+              -I$(CIAO_ROOT)/connectors \
               -Wb,exec_export_macro=SENDER_CONNECTOR_EXEC_Export \
               -Wb,exec_export_include=Sender_Connector_exec_export.h
 
@@ -22,7 +22,7 @@ project(Hello_Base_Sender_Connector_idle_gen) : ciaoidldefaults, avoids_ace_for_
   idlflags += -Wb,export_macro=SENDER_CONNECTOR_EXEC_Export \
               -Wb,export_include=Sender_Connector_exec_export.h \
               -SS \
-               -I%CIAO_ROOT%/connectors
+               -I$(CIAO_ROOT)/connectors
 
   IDL_Files {
     Hello_Sender_ConnectorE.idl
