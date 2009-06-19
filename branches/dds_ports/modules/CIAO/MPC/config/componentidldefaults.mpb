@@ -2,19 +2,19 @@
 // $Id$
 
 project : ciaoidldefaults {
-  idlflags += -Gsv
+  idlflags += -Gsv -Glem
 
   Modify_Custom (IDL) {
     optional(source_pre_extension) {
       commandflags(-Gsv) += _svnt
     }
-    
+
     optional(header_pre_extension) {
       commandflags(-Gsv) += _svnt
     }
-    
+
     optional(generic_outputext) {
-      commandflags(-Gsv) += E.idl
+      commandflags(-Glem) += E.idl
     }
   }
 }
