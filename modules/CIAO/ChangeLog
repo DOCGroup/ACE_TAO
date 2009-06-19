@@ -1,3 +1,8 @@
+Fri Jun 19 18:15:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p:
+          Corrected this connector based on OMG issue 13953
+
 Fri Jun 19 18:03:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Protocols/Receiver/Receiver_exec.cpp
