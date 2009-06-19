@@ -30,5 +30,4 @@ workspace {
   tests
   examples
   performance-tests
-  connectors
 }
