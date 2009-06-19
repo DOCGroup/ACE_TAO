@@ -651,7 +651,7 @@ CIDL_SenderImpl::SenderExec_i::set_session_context (
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::set_session_context\n"));
 
   this->context_ =
-    CIDL_SenderImpl::Sender_Exec_Context::_narrow (ctx);
+    ::CIAO_Protocols_Sender_Impl::Sender_Exec_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
     throw CORBA::INTERNAL ();
