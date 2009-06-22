@@ -1,3 +1,10 @@
+Tue Jun 23 14:53:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/modules/IDLHelper.pm:
+          new IDL helper to let MPC generate the export file names so that
+          they get removed using a clean. Thanks to Adam Mitz for assisting
+          with this
+
 Mon Jun 22 09:22:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
