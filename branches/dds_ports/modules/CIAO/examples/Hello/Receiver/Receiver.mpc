@@ -14,7 +14,7 @@ project(Hello_Receiver_idl_gen) : componentidldefaults {
               -Gxhst -Gxhsk -Gxhsv -Gxhex
 
   IDL_Files {
-    Receiver.idl
+    Receiver.idl >> Receiver_svnt_export.h Receiver_stub_export.h Receiver_exec_export.h Receiver_skel_export.h
   }
 }
 
