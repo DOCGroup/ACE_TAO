@@ -1,3 +1,8 @@
+Mon Jun 22 09:2217 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Generate closign )
+
 Fri Jun 19 19:33:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sunsoft.cpp:
@@ -27,7 +32,7 @@ Fri Jun 19 19:33:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Jun 19 12:41:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component.cpp:
-        
+
           Added the new visitor context states to switch
           statements in visit_typedef() and visit_operation().
 
@@ -81,7 +86,7 @@ Thu Jun 18 18:44:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
             contains C++ keywords and escaped IDL keywords. There
             is also a new test in CIAO_ROOT/tests/IDL_Test to
             cover these use cases.
-            
+
           - Fixed bug in code generation for home servant finder
             operations. These aren't implemented yet in CIAO, so
             the arguments, if any, must be generated as commented
@@ -92,16 +97,16 @@ Thu Jun 18 18:44:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Jun 16 20:40:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/home_svs.cpp:
-        
+
           Fixed bug in code generation of home operation body,
           where the call is delegated to the executor.
-          
+
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:
         * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
         * TAO_IDL/be/be_visitor_component/component_svs.cpp:
         * TAO_IDL/be/be_decl.cpp:
         * TAO_IDL/be_include/be_decl.h:
-        
+
           Fixed code generation bug where the facet servant
           class and the facet executor interface were generated
           for each use of a given interface in a facet. This
@@ -110,7 +115,7 @@ Tue Jun 16 20:40:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Jun 16 16:46:15 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_svs.cpp:
-        
+
           Fixed a couple of code generation bugs related to
           scoping adjustments. Thanks to Johnny Willemsen
           <jwillemsen@remedy.nl> for reporting the problems.
@@ -138,8 +143,8 @@ Tue Jun 16 15:40:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/system.cpp:
         * TAO_IDL/contrib/mcpp/testmain.c:
 
-          Merged in from trunk. 
-        
+          Merged in from trunk.
+
 >>>>>>> .r85664
 Tue Jun 16 13:09:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 

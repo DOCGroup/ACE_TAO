@@ -120,7 +120,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   // Clean up between multiple files.
   delete this->client_header_;
-  
+
   ACE_NEW_RETURN (this->client_header_,
                   TAO_OutStream,
                   -1);
@@ -361,7 +361,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
 {
   // Clean up between multiple files.
   delete this->client_stubs_;
-  
+
   ACE_NEW_RETURN (this->client_stubs_,
                   TAO_OutStream,
                   -1);
@@ -412,7 +412,7 @@ TAO_CodeGen::start_client_inline (const char *fname)
 {
   // Clean up between multiple files.
   delete this->client_inline_;
-  
+
   ACE_NEW_RETURN (this->client_inline_,
                   TAO_OutStream,
                   -1);
@@ -445,7 +445,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 {
   // Clean up between multiple files.
   delete this->server_header_;
-  
+
   ACE_NEW_RETURN (this->server_header_,
                   TAO_OutStream,
                   -1);
@@ -607,7 +607,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
 {
   // Clean up between multiple files.
   delete this->server_template_header_;
-  
+
   ACE_NEW_RETURN (this->server_template_header_,
                   TAO_OutStream,
                   -1);
@@ -616,7 +616,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
     this->server_template_header_->open (
       fname,
       TAO_OutStream::TAO_SVR_TMPL_HDR);
-      
+
   if (status == -1)
     {
       return -1;
@@ -666,7 +666,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
 {
   // Clean up between multiple files.
   delete this->server_skeletons_;
-  
+
   ACE_NEW_RETURN (this->server_skeletons_,
                   TAO_OutStream,
                   -1);
@@ -740,7 +740,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
 {
   // Clean up between multiple files.
   delete this->server_template_skeletons_;
-  
+
   ACE_NEW_RETURN (this->server_template_skeletons_,
                   TAO_OutStream,
                   -1);
@@ -793,7 +793,7 @@ TAO_CodeGen::start_server_inline (const char *fname)
 {
   // Clean up between multiple files.
   delete this->server_inline_;
-  
+
   ACE_NEW_RETURN (this->server_inline_,
                   TAO_OutStream,
                   -1);
@@ -833,7 +833,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   // Clean up between multiple files.
   delete this->anyop_header_;
-  
+
   ACE_NEW_RETURN (this->anyop_header_,
                   TAO_OutStream,
                   -1);
@@ -1009,7 +1009,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
 
   // Clean up between multiple files.
   delete this->anyop_source_;
-  
+
   ACE_NEW_RETURN (this->anyop_source_,
                   TAO_OutStream,
                   -1);
@@ -1065,7 +1065,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
 {
   // Clean up between multiple files.
   delete this->ciao_svnt_header_;
-  
+
   ACE_NEW_RETURN (this->ciao_svnt_header_,
                   TAO_OutStream,
                   -1);
@@ -1081,7 +1081,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
                          ACE_TEXT ("Error opening file\n")),
                         -1);
     }
-    
+
   TAO_OutStream &os = *this->ciao_svnt_header_;
 
   os << be_nl
@@ -1127,9 +1127,9 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
   os << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
-     
+
   this->gen_svnt_hdr_includes ();
-     
+
   return 0;
 }
 
@@ -1138,7 +1138,7 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
 {
   // Clean up between multiple files.
   delete this->ciao_svnt_source_;
-  
+
   ACE_NEW_RETURN (this->ciao_svnt_source_,
                   TAO_OutStream,
                   -1);
@@ -1155,7 +1155,7 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
                          ACE_TEXT ("Error opening file\n")),
                         -1);
     }
-    
+
   TAO_OutStream &os = *this->ciao_svnt_source_;
 
   os << be_nl
@@ -1193,7 +1193,7 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
 {
   // Clean up between multiple files.
   delete this->ciao_exec_header_;
-  
+
   ACE_NEW_RETURN (this->ciao_exec_header_,
                   TAO_OutStream,
                   -1);
@@ -1209,7 +1209,7 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
                          ACE_TEXT ("Error opening file\n")),
                         -1);
     }
-    
+
   TAO_OutStream &os = *this->ciao_exec_header_;
 
   os << be_nl
@@ -1235,16 +1235,16 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
 
   this->gen_standard_include (
     this->ciao_exec_header_,
-    be_global->be_get_ciao_exec_stub_hdr_fname (true));          
-       
+    be_global->be_get_ciao_exec_stub_hdr_fname (true));
+
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
   os << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
-     
+
   this->gen_exec_hdr_includes ();
-     
+
   return 0;
 }
 
@@ -1253,7 +1253,7 @@ TAO_CodeGen::start_ciao_exec_source (const char *fname)
 {
   // Clean up between multiple files.
   delete this->ciao_exec_source_;
-  
+
   ACE_NEW_RETURN (this->ciao_exec_source_,
                   TAO_OutStream,
                   -1);
@@ -1270,7 +1270,7 @@ TAO_CodeGen::start_ciao_exec_source (const char *fname)
                          ACE_TEXT ("Error opening file\n")),
                         -1);
     }
-    
+
   TAO_OutStream &os = *this->ciao_exec_source_;
 
   os << be_nl
@@ -1303,7 +1303,7 @@ TAO_CodeGen::start_ciao_exec_idl (const char *fname)
 {
   // Clean up between multiple files.
   delete this->ciao_exec_idl_;
-  
+
   ACE_NEW_RETURN (this->ciao_exec_idl_,
                   TAO_OutStream,
                   -1);
@@ -1319,9 +1319,9 @@ TAO_CodeGen::start_ciao_exec_idl (const char *fname)
                          ACE_TEXT ("Error opening file\n")),
                         -1);
     }
-    
+
   TAO_OutStream &os = *this->ciao_exec_idl_;
-  
+
   os << be_nl;
 
   // Generate the #ifndef clause.
@@ -1329,7 +1329,7 @@ TAO_CodeGen::start_ciao_exec_idl (const char *fname)
                            this->ciao_exec_idl_,
                            "_CIAO_",
                            "_IDL_");
-                           
+
   this->gen_exec_idl_includes ();
 
   return 0;
@@ -1347,7 +1347,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
 {
   // Clean up between multiple files.
   delete this->implementation_header_;
-  
+
   ACE_NEW_RETURN (this->implementation_header_,
                   TAO_OutStream,
                   -1);
@@ -1405,7 +1405,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
 {
   // Clean up between multiple files.
   delete this->implementation_skeleton_;
-  
+
   ACE_NEW_RETURN (this->implementation_skeleton_,
                   TAO_OutStream,
                   -1);
@@ -1720,7 +1720,7 @@ TAO_CodeGen::end_ciao_svnt_header (void)
     }
 
   *this->ciao_svnt_header_ << "\n\n#endif /* ifndef */\n";
-  
+
   return 0;
 }
 
@@ -1728,7 +1728,7 @@ int
 TAO_CodeGen::end_ciao_svnt_source (void)
 {
   *this->ciao_svnt_source_ << "\n";
-  
+
   return 0;
 }
 
@@ -1743,7 +1743,7 @@ TAO_CodeGen::end_ciao_exec_header (void)
     }
 
   *this->ciao_exec_header_ << "\n\n#endif /* ifndef */\n";
-  
+
   return 0;
 }
 
@@ -1751,7 +1751,7 @@ int
 TAO_CodeGen::end_ciao_exec_source (void)
 {
   *this->ciao_exec_source_ << "\n";
-  
+
   return 0;
 }
 
@@ -1759,7 +1759,7 @@ int
 TAO_CodeGen::end_ciao_exec_idl (void)
 {
   *this->ciao_exec_idl_ << "\n\n#endif /* ifndef */\n";
-  
+
   return 0;
 }
 
@@ -1848,34 +1848,34 @@ TAO_CodeGen::gen_export_files (void)
         be_global->stub_export_macro (),
         "stub");
     }
-    
+
   if (be_global->gen_skel_export_hdr_file ())
     {
   ACE_DEBUG ((LM_DEBUG, "skel\n"));
-  
+
       this->gen_export_file (
         be_global->skel_export_include (),
         be_global->skel_export_macro (),
         "skel");
     }
-    
+
   if (be_global->gen_svnt_export_hdr_file ())
     {
   ACE_DEBUG ((LM_DEBUG, "svnt\n"));
-  
+
       this->gen_export_file (
         be_global->svnt_export_include (),
         be_global->svnt_export_macro (),
         "svnt");
     }
-    
+
   if (be_global->gen_exec_export_hdr_file ())
     {
       this->gen_export_file (
         be_global->exec_export_include (),
         be_global->exec_export_macro (),
         "exec");
-    }    
+    }
 }
 
 void
@@ -1884,7 +1884,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
                               const char *msg)
 {
   ACE_CString work (macro);
-  
+
   // Svnt export macro may correctly default to skel
   // export macro, so we just return silently. The
   // null filename check below will catch a real error.
@@ -1892,7 +1892,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       return;
     }
-    
+
   if (filename == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1901,9 +1901,9 @@ TAO_CodeGen::gen_export_file (const char *filename,
                   msg));
       return;
     }
-    
+
   TAO_OutStream os;
-  
+
   if (os.open (filename) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1912,11 +1912,11 @@ TAO_CodeGen::gen_export_file (const char *filename,
                   filename));
       return;
     }
-    
+
   ACE_CString suffix ("_Export");
   size_t stem_len =
     work.length () - suffix.length ();
-    
+
   if (work.substr (stem_len) != suffix)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1926,7 +1926,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
                   macro));
       return;
     }
-  
+
   ACE_CString stem_str (work.substr (0, stem_len));;
   const char *stem = stem_str.c_str ();
 
@@ -1971,7 +1971,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
      << "#  endif /* ACE_HAS_TRACE */\n"
      << "#  define " << stem << "_TRACE(X) ACE_TRACE_IMPL(X)\n"
      << "#  include \"ace/Trace.h\"\n"
-     << "#endif /* (" << stem << "_NTRACE == 1 */\n\n"
+     << "#endif /* (" << stem << "_NTRACE == 1) */\n\n"
      << "#endif /* " << stem << "_EXPORT_H */\n\n";
 }
 
