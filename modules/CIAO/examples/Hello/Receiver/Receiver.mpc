@@ -9,6 +9,8 @@ project(Hello_Receiver_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=Receiver_svnt_export.h \
               -Wb,exec_export_macro=RECEIVER_EXEC_Export \
               -Wb,exec_export_include=Receiver_exec_export.h \
+              -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
+              -Wb,svnt_export_include=Receiver_svnt_export.h \
               -Gxhst -Gxhsk -Gxhsv -Gxhex
 
   IDL_Files {
