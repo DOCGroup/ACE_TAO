@@ -1,3 +1,8 @@
+Tue Jun 22 15:49:30 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+          Move TAO_ROOT/MPC to dynamic_includes, we now have an IDLHelper
+
 Fri Jun 19 15:03:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * contrib/utility:
