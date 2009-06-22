@@ -1,0 +1,20 @@
+// -*- MPC -*-
+// $Id$
+
+project(StaticDAnCEApp): ciao_static_dnc_app, iortable {
+  exename   = StaticDAnCEApp
+
+  libs     += Hello_Base_DnC_stub
+  libs     += Hello_Base_DnC_svnt
+  libs     += Receiver_DnC_stub
+  libs     += Receiver_DnC_svnt
+  libs     += Receiver_DnC_exec
+  libs     += Sender_DnC_stub
+  libs     += Sender_DnC_svnt
+  libs     += Sender_DnC_exec
+
+  Source_Files {
+    StaticDAnCEApp.cpp
+  }
+}
+

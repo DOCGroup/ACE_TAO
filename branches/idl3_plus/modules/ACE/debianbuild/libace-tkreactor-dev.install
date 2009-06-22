@@ -1,0 +1,3 @@
+usr/lib/libACE_TkReactor.so
+usr/include/ace/TkReactor
+usr/lib/pkgconfig/ACE_TkReactor.pc
