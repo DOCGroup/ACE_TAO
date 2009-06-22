@@ -1,0 +1,16 @@
+// $Id$
+#ifndef NODEAPPLICATIONMANAGER_IDL
+#define NODEAPPLICATIONMANAGER_IDL
+
+#include "DAnCE/Deployment/Deployment_Core.idl"
+#include "DAnCE/Deployment/Deployment_ApplicationManager.idl"
+#include "DAnCE/Deployment/Deployment.idl"
+
+module Deployment {
+        interface NodeApplicationManager :
+                ApplicationManager
+        {
+        };
+};
+
+#endif /* NODEAPPLICATIONMANAGER_IDL */

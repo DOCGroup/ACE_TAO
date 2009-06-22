@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance_deployment_svnt {
+  includes += $(CIAO_ROOT)/DAnCE/Interfaces
+  includes += $(CIAO_ROOT)/DAnCE/NodeManager
+  libs     += DAnCE_NodeManager_svnt
+  after    += DAnCE_NodeManager_svnt
+}

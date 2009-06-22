@@ -1,0 +1,17 @@
+// $Id$
+
+project(CIAO_Servant_Activator_stub) : ciao_lib, portableserver, ciaoidldefaults, ciao_port_activator_stub, avoids_minimum_corba {
+  dynamicflags = CIAO_SERVANT_ACTIVATOR_BUILD_DLL
+  idlflags  += -Wb,stub_export_include=CIAO_Servant_Activator_export.h
+  idlflags  += -Wb,stub_export_macro=CIAO_Servant_Activator_Export
+  idlflags  += -SS
+
+  IDL_Files {
+    CIAO_Servant_Activator.idl
+  }
+  Source_Files {
+    Servant_Activator.cpp
+    CIAO_Servant_ActivatorC.cpp
+  }
+}
+
