@@ -5,8 +5,8 @@ project(Hello_Sender_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
-              -Wb,skel_export_macro=SENDER_SKEL_Export \
-              -Wb,skel_export_include=Sender_skel_export.h \
+              -Wb,skel_export_macro=SENDER_SVNT_Export \
+              -Wb,skel_export_include=Sender_svnt_export.h \
               -Wb,svnt_export_macro=SENDER_svnt_Export \
               -Wb,svnt_export_include=Sender_svnt_export.h \
               -Wb,exec_export_macro=SENDER_EXEC_Export \
