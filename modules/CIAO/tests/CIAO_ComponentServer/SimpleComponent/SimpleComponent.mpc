@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleComponent"
 
-project(SimpleComponent_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleComponent_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECOMPONENT_STUB_Export \
               -Wb,stub_export_include=SimpleComponent_stub_export.h \
@@ -15,7 +15,7 @@ project(SimpleComponent_idl_gen) : componentidldefaults, anytypecode, avoids_ace
   }
 }
 
-project(SimpleComponent_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(SimpleComponent_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += SimpleComponent_idl_gen
   idlflags  += -Wb,export_macro=SIMPLECOMPONENT_EXEC_Export \
@@ -27,7 +27,7 @@ project(SimpleComponent_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(SimpleComponent_stub) : ccm_stub, avoids_ace_for_tao {
+project(SimpleComponent_stub) : ccm_stub {
   after += SimpleComponent_idl_gen
 
   sharedname = SimpleComponent_stub
@@ -50,7 +50,7 @@ project(SimpleComponent_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(SimpleComponent_exec) : ciao_executor, avoids_ace_for_tao {
+project(SimpleComponent_exec) : ciao_executor {
   after   += SimpleComponent_idle_gen SimpleComponent_stub
   sharedname = SimpleComponent_exec
   libs += SimpleComponent_stub
@@ -77,7 +77,7 @@ project(SimpleComponent_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(SimpleComponent_svnt) : ciao_servant, avoids_ace_for_tao {
+project(SimpleComponent_svnt) : ciao_servant {
   sharedname  = SimpleComponent_svnt
   libs       += SimpleComponent_stub SimpleComponent_exec
   after      += SimpleComponent_stub SimpleComponent_exec

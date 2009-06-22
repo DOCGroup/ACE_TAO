@@ -1,6 +1,6 @@
 // $Id$
 
-project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults, avoids_ace_for_tao {
+project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults {
   // ensures that only idl3-to-idl2 processing is performed
   custom_only = 1
 
@@ -17,7 +17,7 @@ project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults, avoids_ace_fo
   }
 }
 
-project(Administrator_Client_IDL2): ccm_stub, valuetype, avoids_ace_for_tao {
+project(Administrator_Client_IDL2): ccm_stub, valuetype {
   after += Administrator_Client_IDL2_Compile
 
   exename = Administrator_Client_IDL2

@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleConsumer"
 
-project(SimpleCommon_SimpleConsumer_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleCommon_SimpleConsumer_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECONSUMER_STUB_Export \
               -Wb,stub_export_include=SimpleConsumer_stub_export.h \
@@ -15,7 +15,7 @@ project(SimpleCommon_SimpleConsumer_idl_gen) : componentidldefaults, anytypecode
   }
 }
 
-project(SimpleCommon_SimpleConsumer_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(SimpleCommon_SimpleConsumer_idle_gen) : ciaoidldefaults {
   after += SimpleCommon_SimpleConsumer_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro=SIMPLECONSUMER_EXEC_Export \
@@ -27,7 +27,7 @@ project(SimpleCommon_SimpleConsumer_idle_gen) : ciaoidldefaults, avoids_ace_for_
   }
 }
 
-project(SimpleCommon_SimpleConsumer_stub) : ccm_stub, avoids_ace_for_tao {
+project(SimpleCommon_SimpleConsumer_stub) : ccm_stub {
   after += SimpleCommon_SimpleConsumer_idl_gen SimpleCommon_stub
   libs  += SimpleCommon_stub
 
@@ -51,7 +51,7 @@ project(SimpleCommon_SimpleConsumer_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(SimpleCommon_SimpleConsumer_exec) : ciao_executor, avoids_ace_for_tao {
+project(SimpleCommon_SimpleConsumer_exec) : ciao_executor {
   after   += SimpleCommon_SimpleConsumer_idle_gen SimpleCommon_SimpleConsumer_stub
   sharedname = SimpleConsumer_exec
   libs += SimpleConsumer_stub SimpleCommon_stub
@@ -78,7 +78,7 @@ project(SimpleCommon_SimpleConsumer_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(SimpleCommon_SimpleConsumer_svnt) : ciao_servant, avoids_ace_for_tao {
+project(SimpleCommon_SimpleConsumer_svnt) : ciao_servant {
   after      += SimpleCommon_skel SimpleCommon_SimpleConsumer_exec
   sharedname  = SimpleConsumer_svnt
   libs       += SimpleConsumer_exec \

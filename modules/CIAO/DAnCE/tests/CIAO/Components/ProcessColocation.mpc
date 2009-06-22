@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl ProcessColocation"
 
-project(ProcessColocation_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(ProcessColocation_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PROCESSCOLOCATION_STUB_Export \
               -Wb,stub_export_include=ProcessColocation_stub_export.h \
@@ -15,7 +15,7 @@ project(ProcessColocation_idl_gen) : componentidldefaults, anytypecode, avoids_a
   }
 }
 
-project(ProcessColocation_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(ProcessColocation_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += ProcessColocation_idl_gen
   idlflags += -Wb,export_macro=PROCESSCOLOCATION_EXEC_Export \
@@ -27,7 +27,7 @@ project(ProcessColocation_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(ProcessColocation_stub) : ccm_stub, avoids_ace_for_tao {
+project(ProcessColocation_stub) : ccm_stub {
   after += ProcessColocation_idl_gen
   libs  +=
 
@@ -51,7 +51,7 @@ project(ProcessColocation_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(ProcessColocation_exec) : ciao_executor, avoids_ace_for_tao {
+project(ProcessColocation_exec) : ciao_executor {
   after   += ProcessColocation_idle_gen ProcessColocation_stub
   sharedname = ProcessColocation_exec
   libs += ProcessColocation_stub
@@ -78,7 +78,7 @@ project(ProcessColocation_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(ProcessColocation_svnt) : ciao_servant, avoids_ace_for_tao {
+project(ProcessColocation_svnt) : ciao_servant {
   after      +=  ProcessColocation_exec
   sharedname  = ProcessColocation_svnt
   libs       += ProcessColocation_exec \

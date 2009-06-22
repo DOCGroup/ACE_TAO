@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Null_Interface Null_Component"
 
-project(Null_Component_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Null_Component_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NULL_COMPONENT_STUB_Export \
               -Wb,stub_export_include=Null_Component_stub_export.h \
@@ -15,7 +15,7 @@ project(Null_Component_idl_gen) : componentidldefaults, anytypecode, avoids_ace_
   }
 }
 
-project(Null_Component_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Null_Component_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += Null_Component_idl_gen
   idlflags += -Wb,export_macro=NULL_COMPONENT_EXEC_Export \
@@ -27,7 +27,7 @@ project(Null_Component_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(Null_Component_stub) : ccm_stub, avoids_ace_for_tao {
+project(Null_Component_stub) : ccm_stub {
   after += Null_Component_idl_gen Null_Interface_stub
   libs  += Null_Interface_stub
 
@@ -51,7 +51,7 @@ project(Null_Component_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Null_Component_exec) : ciao_executor, avoids_ace_for_tao {
+project(Null_Component_exec) : ciao_executor {
   after   += Null_Component_idle_gen Null_Component_stub
   sharedname = Null_Component_exec
   libs += Null_Component_stub Null_Interface_stub
@@ -78,7 +78,7 @@ project(Null_Component_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Null_Component_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Null_Component_svnt) : ciao_servant {
   after      += Null_Interface_skel Null_Component_exec
   sharedname  = Null_Component_svnt
   libs       += Null_Component_exec \

@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Benchmark -l .. -c client RoundTripClient"
 
-project(Benchmark_RoundTripClient_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Benchmark_RoundTripClient_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ROUNDTRIPCLIENT_STUB_Export \
               -Wb,stub_export_include=RoundTripClient_stub_export.h \
@@ -15,7 +15,7 @@ project(Benchmark_RoundTripClient_idl_gen) : componentidldefaults, anytypecode, 
   }
 }
 
-project(Benchmark_RoundTripClient_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Benchmark_RoundTripClient_idle_gen) : ciaoidldefaults {
   custom_only = 1
   idlflags += -Wb,export_macro=ROUNDTRIPCLIENT_EXEC_Export \
               -Wb,export_include=RoundTripClient_exec_export.h \
@@ -27,7 +27,7 @@ project(Benchmark_RoundTripClient_idle_gen) : ciaoidldefaults, avoids_ace_for_ta
   }
 }
 
-project(Benchmark_RoundTripClient_stub) : ccm_stub, avoids_ace_for_tao {
+project(Benchmark_RoundTripClient_stub) : ccm_stub {
   after += Benchmark_RoundTripClient_idl_gen Benchmark_stub
   libs  += Benchmark_stub
   libpaths += ..
@@ -51,7 +51,7 @@ project(Benchmark_RoundTripClient_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
+project(Benchmark_RoundTripClient_exec) : ciao_executor {
   after   += Benchmark_RoundTripClient_idle_gen Benchmark_RoundTripClient_stub
   sharedname = RoundTripClient_exec
   libs += RoundTripClient_stub Benchmark_stub
@@ -81,7 +81,7 @@ project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Benchmark_RoundTripClient_svnt) : ciao_servant {
   after      += Benchmark_skel Benchmark_RoundTripClient_exec
   sharedname  = RoundTripClient_svnt
   libs       += RoundTripClient_exec \
@@ -110,7 +110,7 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
   }
 }
 
-project (RoundTripClient_client) : ccm_stub, valuetype, avoids_ace_for_tao {
+project (RoundTripClient_client) : ccm_stub, valuetype {
   exename = client
   after += Benchmark_RoundTripClient_stub
   libs  += RoundTripClient_stub Benchmark_stub
