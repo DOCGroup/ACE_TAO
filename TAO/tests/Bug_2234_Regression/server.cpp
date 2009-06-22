@@ -18,6 +18,7 @@
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PortableServer/Root_POA.h"
+#include "tao/LocalObject.h"
 
 CORBA::ORB_ptr orb;
 
@@ -726,7 +727,9 @@ public:
   }
 };
 
-class Initialiser : public  PortableInterceptor::ORBInitializer
+class Initialiser
+  : public virtual PortableInterceptor::ORBInitializer
+  , public virtual CORBA::LocalObject
 {
 public:
   Initialiser( AnInterceptor* interceptor )

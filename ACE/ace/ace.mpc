@@ -360,6 +360,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Timer_Queue_Adapters.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
+    Tokenizer_T.cpp
     Typed_SV_Message.cpp
     Typed_SV_Message_Queue.cpp
     Unbounded_Queue.cpp

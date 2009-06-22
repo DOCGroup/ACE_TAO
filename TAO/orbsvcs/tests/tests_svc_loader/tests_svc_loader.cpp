@@ -55,7 +55,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       // Use the first argument to create the object reference.
       CORBA::Object_var object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (argv[1]));
+        orb->string_to_object (argv[1]);
 
       // Check if this object reference is a valid one..
       CORBA::Boolean not_exists =

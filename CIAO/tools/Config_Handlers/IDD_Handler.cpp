@@ -31,7 +31,7 @@ namespace CIAO
            idd_b != idd_e;
            ++idd_b)
         {
-          IDD_Handler::instance_deployment_descr ((*idd_b),
+          IDD_Handler::instance_deployment_descr (*(*idd_b),
                                                   dest[pos], pos);
           pos++;
         }
@@ -49,9 +49,9 @@ namespace CIAO
           dest.name = src.name ().c_str ();
           dest.node = src.node ().c_str ();
 
-          if (src.xmi_id_p ())
+          if (src.id_p ())
             {
-              ACE_CString cstr (src.xmi_id ().c_str ());
+              ACE_CString cstr (src.id ().c_str ());
               IDD_Handler::IDREF.bind_ref (cstr, pos);
             }
           else
@@ -132,16 +132,14 @@ namespace CIAO
       size_t total = src.configProperty.length();
       for(size_t j = 0; j < total; j++)
         {
-          idd.add_configProperty(
-                                 Property_Handler::get_property (
-                                                                 src.configProperty[j]));
+          //idd.add_configProperty(Property_Handler::get_property (src.configProperty[j]));
         }
 
       // Get and store the deployedResource(s)
       size_t dp_total = src.deployedResource.length ();
       for (size_t k = 0; k < dp_total; k++)
         {
-          idd.add_deployedResource (IRDD_Handler::instance_resource_deployment_descr (src.deployedResource[k]));
+          //idd.add_deployedResource (IRDD_Handler::instance_resource_deployment_descr (src.deployedResource[k]));
         }
 
       //Check if there is a deployedSharedResource, if so store it
@@ -159,7 +157,7 @@ namespace CIAO
       // Bind the ref and set it in the IDD
       IDD_Handler::IDREF.bind_next_available (idd_id);
 
-      idd.xmi_id (xml_id);
+      idd.id (xml_id);
 
       return idd;
     }

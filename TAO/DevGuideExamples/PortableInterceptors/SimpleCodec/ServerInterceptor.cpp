@@ -67,19 +67,23 @@ ServerInterceptor::receive_request (
                                             sc->context_data.length(),
                                             sc->context_data.length(),
                                             sc->context_data.get_buffer(),
-                                            0);
+                                            false);
 
     CORBA::Any gid_as_any;
     gid_as_any = *codec->decode(ocSeq);
 
     CORBA::Long gid;
-    gid_as_any >>= gid;
-    for (int i=0; i<3; ++i) {
-      if ( gid == allowed_gid[i] )
-        {
-          permission_granted = true;
-  }
-    }
+    if (gid_as_any >>= gid) {
+      for (int i=0; i<3; ++i) {
+        if ( gid == allowed_gid[i] )
+          {
+            permission_granted = true;
+          }
+       }
+     } else {
+       permission_granted = false;
+       std::cerr << "Could not extract GID from any." << std::endl;
+     }
   }
 
   if (permission_granted == true) {

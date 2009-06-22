@@ -4,6 +4,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Profile_Timer.h"
 #include "StructuredEventSupplier_i.h"
+#include "ace/OS_NS_unistd.h"
 #include <iostream>
 
 int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
@@ -44,7 +45,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
      // Become a structured push supplier.
      CosNotifyChannelAdmin::AdminID adminid;
      CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-       CosNotifyChannelAdmin::OR_OP;
+       CosNotifyChannelAdmin::AND_OP;
      CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
        ec->new_for_suppliers (ifgop, adminid);
 

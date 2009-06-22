@@ -47,7 +47,7 @@ ClientInitializer::set_slot_data (void)
 {
   // Set the recursion flag
   CORBA::Any flag;
-  CORBA::Boolean x = 0;
+  CORBA::Boolean x = false;
   flag <<= CORBA::Any::from_boolean(x);
   current_->set_slot(slot_, flag);
 

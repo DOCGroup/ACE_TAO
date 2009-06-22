@@ -913,6 +913,7 @@ libTAO_la_SOURCES = \
   Remote_Object_Proxy_Broker.cpp \
   Reply_Dispatcher.cpp \
   Request_Dispatcher.cpp \
+  RequestInterceptor_Adapter.cpp \
   Resource_Factory.cpp \
   Resume_Handle.cpp \
   ServerRequestInterceptor_Adapter.cpp \
@@ -1228,6 +1229,7 @@ nobase_include_HEADERS = \
   LongSeqS.h \
   MCAST_Parser.h \
   MCAST_Parser.inl \
+  Message_Semantics.h \
   MMAP_Allocator.h \
   MM_Sequence_Iterator_T.h \
   MProfile.h \
@@ -1352,6 +1354,7 @@ nobase_include_HEADERS = \
   Reply_Dispatcher.h \
   Reply_Dispatcher.inl \
   Request_Dispatcher.h \
+  RequestInterceptor_Adapter.h \
   Resource_Factory.h \
   Resume_Handle.h \
   Resume_Handle.inl \
@@ -1452,6 +1455,8 @@ nobase_include_HEADERS = \
   UB_String_Argument_T.h \
   UB_String_Argument_T.inl \
   UB_String_Arguments.h \
+  Unbounded_BD_String_Sequence_T.h \
+  Bounded_BD_String_Sequence_T.h \
   ULongLongSeq.pidl \
   ULongLongSeq.pidl \
   ULongLongSeqC.h \
@@ -2383,7 +2388,8 @@ libTAO_PI_la_SOURCES = \
   PI/ProcessingModePolicyC.cpp \
   PI/RequestInfoA.cpp \
   PI/RequestInfoC.cpp \
-  PI/RequestInfo_Util.cpp
+  PI/RequestInfo_Util.cpp \
+  PI/RequestInterceptor_Adapter_Impl.cpp
 
 libTAO_PI_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2478,6 +2484,7 @@ nobase_include_HEADERS += \
   PI/RequestInfoC.h \
   PI/RequestInfoS.h \
   PI/RequestInfo_Util.h \
+  PI/RequestInterceptor_Adapter_Impl.h \
   PI/pi_export.h
 
 pkgconfig_DATA += \

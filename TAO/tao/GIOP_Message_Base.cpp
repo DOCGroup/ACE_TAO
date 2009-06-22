@@ -264,7 +264,7 @@ int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
 {
   this->set_giop_flags (stream);
-  
+
   bool log_msg = TAO_debug_level > 9;
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
@@ -1437,25 +1437,6 @@ TAO_GIOP_Message_Base::
                       TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
-#if 0
-  // @@CJC I don't think we need this check b/c the transport's send()
-  // will simply return -1.  However, I guess we could create something
-  // like TAO_Tranport::is_closed() that returns whether the connection
-  // is already closed.  The problem with that, however, is that it's
-  // entirely possible that is_closed() could return TRUE, and then the
-  // transport could get closed down btw. the time it gets called and the
-  // time that the send actually occurs.
-  ACE_HANDLE which = transport->handle ();
-  if (which == ACE_INVALID_HANDLE)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-           ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Base::send_close_connection -")
-           ACE_TEXT (" connection already closed\n")));
-      return;
-    }
-#endif
-
   ACE_Data_Block data_block (TAO_GIOP_MESSAGE_HEADER_LEN,
                              ACE_Message_Block::MB_DATA,
                              close_message,
@@ -1473,7 +1454,7 @@ TAO_GIOP_Message_Base::
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
            ACE_TEXT ("(%P|%t) error closing connection %u, errno = %d\n"),
-           transport->id (), errno));
+           transport->id (), ACE_ERRNO_GET));
     }
 
   transport->close_connection ();

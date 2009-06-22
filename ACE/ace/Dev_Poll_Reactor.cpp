@@ -15,9 +15,7 @@ ACE_RCSID (ace,
 # include "ace/OS_NS_fcntl.h"
 # include "ace/OS_NS_stropts.h"
 
-# if defined (ACE_HAS_EVENT_POLL) && defined (linux)
-#  include /**/ <sys/epoll.h>
-# elif defined (ACE_HAS_DEV_POLL)
+# if defined (ACE_HAS_DEV_POLL)
 #    if defined (linux)
 #      include /**/ <linux/devpoll.h>
 #    elif defined (HPUX_VERS) && HPUX_VERS < 1123
@@ -136,18 +134,15 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   ACE_UNUSED_ARG (timeout);
   ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
-  int notification_required =
-    notification_queue_.push_new_notification (buffer);
-
-  if (notification_required == -1)
+  // When using the queue, always try to write to the notify pipe. If it
+  // fills up, ignore it safely because the already-written bytes will
+  // eventually cause the notify handler to be dispatched.
+  if (-1 == this->notification_queue_.push_new_notification (buffer))
     return -1;             // Also decrement eh's reference count
 
   // The notification has been queued, so it will be delivered at some
   // point (and may have been already); release the refcnt guard.
   eh_guard.release ();
-
-  if (notification_required == 0)
-    return 0;
 
   // Now pop the pipe to force the callback for dispatching when ready. If
   // the send fails due to a full pipe, don't fail - assume the already-sent
@@ -440,55 +435,52 @@ ACE_Dev_Poll_Reactor_Notify::dump (void) const
 
 // -----------------------------------------------------------------
 
-ACE_Dev_Poll_Reactor_Handler_Repository::
-ACE_Dev_Poll_Reactor_Handler_Repository (void)
+ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository (void)
   : max_size_ (0),
     handlers_ (0)
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::ACE_Dev_Poll_Reactor_Handler_Repository");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository");
 }
 
-int
-ACE_Dev_Poll_Reactor_Handler_Repository::invalid_handle (
+bool
+ACE_Dev_Poll_Reactor::Handler_Repository::invalid_handle (
   ACE_HANDLE handle) const
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::invalid_handle");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::invalid_handle");
 
   if (handle < 0 || handle >= this->max_size_)
     {
       errno = EINVAL;
-      return 1;
+      return true;
     }
   else
-    return 0;
+    return false;
 }
 
-int
-ACE_Dev_Poll_Reactor_Handler_Repository::handle_in_range (
+bool
+ACE_Dev_Poll_Reactor::Handler_Repository::handle_in_range (
   ACE_HANDLE handle) const
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::handle_in_range");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::handle_in_range");
 
   if (handle >= 0 && handle < this->max_size_)
-    return 1;
+    return true;
   else
     {
       errno = EINVAL;
-      return 0;
+      return false;
     }
 }
 
 int
-ACE_Dev_Poll_Reactor_Handler_Repository::open (size_t size)
+ACE_Dev_Poll_Reactor::Handler_Repository::open (size_t size)
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::open");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::open");
 
   this->max_size_ = size;
 
   // Try to allocate the memory.
-  ACE_NEW_RETURN (this->handlers_,
-                  ACE_Dev_Poll_Event_Tuple[size],
-                  -1);
+  ACE_NEW_RETURN (this->handlers_, Event_Tuple[size], -1);
 
   // Try to increase the number of handles if <size> is greater than
   // the current limit.
@@ -496,9 +488,9 @@ ACE_Dev_Poll_Reactor_Handler_Repository::open (size_t size)
 }
 
 int
-ACE_Dev_Poll_Reactor_Handler_Repository::unbind_all (void)
+ACE_Dev_Poll_Reactor::Handler_Repository::unbind_all (void)
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::unbind_all");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::unbind_all");
 
   // Unbind all of the event handlers.
   for (int handle = 0;
@@ -510,9 +502,9 @@ ACE_Dev_Poll_Reactor_Handler_Repository::unbind_all (void)
 }
 
 int
-ACE_Dev_Poll_Reactor_Handler_Repository::close (void)
+ACE_Dev_Poll_Reactor::Handler_Repository::close (void)
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::close");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::close");
 
   if (this->handlers_ != 0)
     {
@@ -525,37 +517,37 @@ ACE_Dev_Poll_Reactor_Handler_Repository::close (void)
   return 0;
 }
 
-ACE_Event_Handler *
-ACE_Dev_Poll_Reactor_Handler_Repository::find (ACE_HANDLE handle,
-                                               size_t *index_p)
+ACE_Dev_Poll_Reactor::Event_Tuple *
+ACE_Dev_Poll_Reactor::Handler_Repository::find (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::find");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::find");
 
-  ACE_Event_Handler *eh = 0;
+  Event_Tuple *tuple = 0;
 
   // Only bother to search for the <handle> if it's in range.
-  if (this->handle_in_range (handle))
+  if (!this->handle_in_range (handle))
     {
-      eh = this->handlers_[handle].event_handler;
-      if (eh != 0)
-        {
-          if (index_p != 0)
-            *index_p = handle;
-        }
-      else
-        errno = ENOENT;
+      errno = ERANGE;
+      return 0;
     }
 
-  return eh;
+  tuple = &(this->handlers_[handle]);
+  if (tuple->event_handler == 0)
+    {
+      errno = ENOENT;
+      tuple = 0;
+    }
+
+  return tuple;
 }
 
 int
-ACE_Dev_Poll_Reactor_Handler_Repository::bind (
+ACE_Dev_Poll_Reactor::Handler_Repository::bind (
   ACE_HANDLE handle,
   ACE_Event_Handler *event_handler,
   ACE_Reactor_Mask mask)
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::bind");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::bind");
 
   if (event_handler == 0)
     return -1;
@@ -574,20 +566,22 @@ ACE_Dev_Poll_Reactor_Handler_Repository::bind (
 }
 
 int
-ACE_Dev_Poll_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
-                                                 bool decr_refcnt)
+ACE_Dev_Poll_Reactor::Handler_Repository::unbind (ACE_HANDLE handle,
+                                                  bool decr_refcnt)
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::unbind");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::unbind");
 
-  if (this->find (handle) == 0)
+  Event_Tuple *entry = this->find (handle);
+  if (entry == 0)
     return -1;
 
   if (decr_refcnt)
-    this->handlers_[handle].event_handler->remove_reference ();
-  this->handlers_[handle].event_handler = 0;
-  this->handlers_[handle].mask = ACE_Event_Handler::NULL_MASK;
-  this->handlers_[handle].suspended = 0;
+    entry->event_handler->remove_reference ();
 
+  entry->event_handler = 0;
+  entry->mask = ACE_Event_Handler::NULL_MASK;
+  entry->suspended = false;
+  entry->controlled = false;
   return 0;
 }
 
@@ -603,15 +597,11 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
   , poll_fd_ (ACE_INVALID_HANDLE)
   , size_ (0)
   // , ready_set_ ()
-#if defined (ACE_HAS_EVENT_POLL)
-  , events_ (0)
-  , start_pevents_ (0)
-  , end_pevents_ (0)
-#else
+#if defined (ACE_HAS_DEV_POLL)
   , dp_fds_ (0)
   , start_pfds_ (0)
   , end_pfds_ (0)
-#endif  /* ACE_HAS_EVENT_POLL */
+#endif  /* ACE_HAS_DEV_POLL */
   , deactivated_ (0)
   , token_ (*this, s_queue)
   , lock_adapter_ (token_)
@@ -651,15 +641,11 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
   , poll_fd_ (ACE_INVALID_HANDLE)
   , size_ (0)
   // , ready_set_ ()
-#if defined (ACE_HAS_EVENT_POLL)
-  , events_ (0)
-  , start_pevents_ (0)
-  , end_pevents_ (0)
-#else
+#if defined (ACE_HAS_DEV_POLL)
   , dp_fds_ (0)
   , start_pfds_ (0)
   , end_pfds_ (0)
-#endif  /* ACE_HAS_EVENT_POLL */
+#endif  /* ACE_HAS_DEV_POLL */
   , deactivated_ (0)
   , token_ (*this, s_queue)
   , lock_adapter_ (token_)
@@ -706,6 +692,11 @@ ACE_Dev_Poll_Reactor::open (size_t size,
   // Can't initialize ourselves more than once.
   if (this->initialized_)
     return -1;
+
+#ifdef ACE_HAS_EVENT_POLL
+  ACE_OS::memset (&this->event_, 0, sizeof (this->event_));
+  this->event_.data.fd = ACE_INVALID_HANDLE;
+#endif /* ACE_HAS_EVENT_POLL */
 
   this->restart_ = restart;
   this->signal_handler_ = sh;
@@ -755,10 +746,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-  // Allocating event table:
-  ACE_NEW_RETURN (this->events_, epoll_event[size], -1);
-
-  // Initializing epoll:
+  // Initialize epoll:
   this->poll_fd_ = ::epoll_create (size);
   if (this->poll_fd_ == -1)
     result = -1;
@@ -800,7 +788,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
     this->initialized_ = true;
   else
     // This will close down all the allocated resources properly.
- (void) this->close ();
+    (void) this->close ();
 
   return result;
 }
@@ -859,8 +847,8 @@ ACE_Dev_Poll_Reactor::close (void)
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-  delete [] this->events_;
-  this->events_ = 0;
+  ACE_OS::memset (&this->event_, 0, sizeof (this->event_));
+  this->event_.data.fd = ACE_INVALID_HANDLE;
 
 #else
 
@@ -897,13 +885,10 @@ ACE_Dev_Poll_Reactor::close (void)
 
   this->poll_fd_ = ACE_INVALID_HANDLE;
 
-#if defined (ACE_HAS_EVENT_POLL)
-  this->start_pevents_ = 0;
-  this->end_pevents_   = 0;
-#else
+#if defined (ACE_HAS_DEV_POLL)
   this->start_pfds_ = 0;
   this->end_pfds_ = 0;
-#endif /* ACE_HAS_EVENT_POLL */
+#endif /* ACE_HAS_DEV_POLL */
 
   this->initialized_ = false;
 
@@ -944,7 +929,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
     return 0;
 
 #if defined (ACE_HAS_EVENT_POLL)
-  if (this->start_pevents_ != this->end_pevents_)
+  if (this->event_.data.fd != ACE_INVALID_HANDLE)
 #else
   if (this->start_pfds_ != this->end_pfds_)
 #endif /* ACE_HAS_EVENT_POLL */
@@ -968,17 +953,11 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-   // Wait for events.
+   // Wait for an event.
    int const nfds = ::epoll_wait (this->poll_fd_,
-                                  this->events_,
-                                  this->size_,
+                                  &this->event_,
+                                  1,
                                   static_cast<int> (timeout));
-
-  if (nfds > 0)
-    {
-      this->start_pevents_ = this->events_;
-      this->end_pevents_ = this->start_pevents_ + nfds;
-    }
 
 #else
 
@@ -1040,17 +1019,16 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time,
   ACE_TRACE ("ACE_Dev_Poll_Reactor::handle_events_i");
 
   int result = 0;
-  // int active_handle_count = 0;
 
   // Poll for events
   //
-  // If the underlying ioctl () call was interrupted via the interrupt
+  // If the underlying event wait call was interrupted via the interrupt
   // signal (i.e. returned -1 with errno == EINTR) then the loop will
   // be restarted if so desired.
   do
     {
       result = this->work_pending_i (max_wait_time);
-      if (result == -1)
+      if (result == -1 && (this->restart_ == 0 || errno != EINTR))
         ACE_ERROR ((LM_ERROR, ACE_TEXT("%t: %p\n"), ACE_TEXT("work_pending_i")));
     }
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
@@ -1097,10 +1075,7 @@ ACE_Dev_Poll_Reactor::dispatch (Token_Guard &guard)
   if ((result = this->dispatch_timer_handler (guard)) != 0)
     return result;
 
-  // Check to see if there are no more I/O handles left to
-  // dispatch AFTER we've handled the timers.
-
-  // Finally, dispatch the I/O handlers.
+  // If no timer dispatched, check for an I/O event.
   result = this->dispatch_io_event (guard);
 
   return result;
@@ -1173,6 +1148,8 @@ int
 ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
 {
 
+  // Dispatch a ready event.
+
   // Define bits to check for while dispatching.
 #if defined (ACE_HAS_EVENT_POLL)
   const __uint32_t out_event = EPOLLOUT;
@@ -1186,6 +1163,17 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
   const short err_event = 0;              // No known bits for this
 #endif /* ACE_HAS_EVENT_POLL */
 
+#if defined (ACE_HAS_EVENT_POLL)
+  // epoll_wait() pulls one event which is stored in event_. If the handle
+  // is invalid, there's no event there. Else process it. In any event, we
+  // have the event, so clear event_ for the next thread.
+  const ACE_HANDLE handle = this->event_.data.fd;
+  __uint32_t revents      = this->event_.events;
+  this->event_.data.fd = ACE_INVALID_HANDLE;
+  this->event_.events = 0;
+  if (handle != ACE_INVALID_HANDLE)
+
+#else
   // Since the underlying event demultiplexing mechansim (`/dev/poll'
   // or '/dev/epoll') is stateful, and since only one result buffer is
   // used, all pending events (i.e. those retrieved from a previous
@@ -1193,8 +1181,6 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
   // polled.  As such, the Dev_Poll_Reactor keeps track of the
   // progress of events that have been dispatched.
 
-  // Dispatch the events.
-  //
   // Select the first available handle with event (s) pending. Check for
   // event type in defined order of dispatch: output, exception, input.
   // When an event is located, clear its bit in the dispatch set. If there
@@ -1203,63 +1189,16 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
   //
   // Notice that pfds only contains file descriptors that have
   // received events.
-#if defined (ACE_HAS_EVENT_POLL)
-  struct epoll_event *& pfds = this->start_pevents_;
-  if (pfds < this->end_pevents_)
-#else
   struct pollfd *& pfds = this->start_pfds_;
   if (pfds < this->end_pfds_)
 #endif /* ACE_HAS_EVENT_POLL */
+
     {
-#if defined (ACE_HAS_EVENT_POLL)
-      const ACE_HANDLE handle   = pfds->data.fd;
-      __uint32_t &revents       = pfds->events;
-#else
+
+#ifdef ACE_HAS_DEV_POLL
       const ACE_HANDLE handle = pfds->fd;
       short &revents          = pfds->revents;
-#endif /* ACE_HAS_EVENT_POLL */
-
-      // Figure out what to do first in order to make it easier to manage
-      // the bit twiddling and possible pfds increment before releasing
-      // the token for dispatch.
-      // Note that if there's an error (such as the handle was closed
-      // without being removed from the event set) the EPOLLHUP and/or
-      // EPOLLERR bits will be set in revents.
-      bool disp_out = false;
-      bool disp_exc = false;
-      bool disp_in  = false;
-      if (ACE_BIT_ENABLED (revents, out_event))
-        {
-          disp_out = true;
-          ACE_CLR_BITS (revents, out_event);
-        }
-      else if (ACE_BIT_ENABLED (revents, exc_event))
-        {
-          disp_exc = true;
-          ACE_CLR_BITS (revents, exc_event);
-        }
-      else if (ACE_BIT_ENABLED (revents, in_event))
-        {
-          disp_in = true;
-          ACE_CLR_BITS (revents, in_event);
-        }
-      else if (ACE_BIT_ENABLED (revents, err_event))
-        {
-          this->remove_handler_i (handle, ACE_Event_Handler::ALL_EVENTS_MASK);
-          ++pfds;
-          return 1;
-        }
-      else
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT (" (%t) dispatch_io h %d unknown events 0x%x\n"), handle, revents));
-          // ACE_ASSERT (0);
-        }
-
-      // Increment the pointer to the next element before we
-      // release the token.  Otherwise event handlers end up being
-      // dispatched multiple times for the same poll.
-      if (revents == 0)
-        ++pfds;
+#endif /* ACE_HAS_DEV_POLL */
 
       /* When using sys_epoll, we can attach arbitrary user
          data to the descriptor, so it can be delivered when
@@ -1267,54 +1206,119 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
          handler together with descriptor, instead of looking
          it up in a repository ? Could it boost performance ?
       */
-      ACE_Event_Handler *eh = this->handler_rep_.find (handle);
-
-      if (eh)
+      Event_Tuple *info = this->handler_rep_.find (handle);
+      if (info == 0)   // No registered handler any longer
         {
-          // Modify the reference count in an exception-safe way.
-          // Note that eh could be the notify handler. It's not strictly
-          // necessary to manage its refcount, but since we don't enable
-          // the counting policy, it won't do much. Management of the
-          // notified handlers themselves is done in the notify handler.
-          ACE_Dev_Poll_Handler_Guard eh_guard (eh);
+#ifdef ACE_HAS_EVENT_POLL
+          this->event_.data.fd = ACE_INVALID_HANDLE;  // Dump the event
+#endif /* ACE_HAS_EVENT_POLL */
+          return 0;
+        }
 
-          // Release the reactor token before upcall.
-          guard.release_token ();
+      // Figure out what to do first in order to make it easier to manage
+      // the bit twiddling and possible pfds increment before releasing
+      // the token for dispatch.
+      // Note that if there's an error (such as the handle was closed
+      // without being removed from the event set) the EPOLLHUP and/or
+      // EPOLLERR bits will be set in revents.
+      ACE_Reactor_Mask disp_mask = 0;
+      ACE_Event_Handler *eh = info->event_handler;
+      int (ACE_Event_Handler::*callback)(ACE_HANDLE) = 0;
+      if (ACE_BIT_ENABLED (revents, out_event))
+        {
+          disp_mask = ACE_Event_Handler::WRITE_MASK;
+          callback = &ACE_Event_Handler::handle_output;
+          ACE_CLR_BITS (revents, out_event);
+        }
+      else if (ACE_BIT_ENABLED (revents, exc_event))
+        {
+          disp_mask = ACE_Event_Handler::EXCEPT_MASK;
+          callback = &ACE_Event_Handler::handle_exception;
+          ACE_CLR_BITS (revents, exc_event);
+        }
+      else if (ACE_BIT_ENABLED (revents, in_event))
+        {
+          disp_mask = ACE_Event_Handler::READ_MASK;
+          callback = &ACE_Event_Handler::handle_input;
+          ACE_CLR_BITS (revents, in_event);
+        }
+      else if (ACE_BIT_ENABLED (revents, err_event))
+        {
+          this->remove_handler_i (handle,
+                                  ACE_Event_Handler::ALL_EVENTS_MASK,
+                                  info->event_handler);
+#ifdef ACE_HAS_DEV_POLL
+          ++pfds;
+#endif /* ACE_HAS_DEV_POLL */
+          return 1;
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) dispatch_io h %d unknown events 0x%x\n"),
+                      handle, revents));
+        }
 
-          // Dispatch the detected event
-          if (disp_out)
-            {
-              const int status =
-                this->upcall (eh, &ACE_Event_Handler::handle_output, handle);
+#ifdef ACE_HAS_DEV_POLL
+      // Increment the pointer to the next element before we
+      // release the token.  Otherwise event handlers end up being
+      // dispatched multiple times for the same poll.
+      if (revents == 0)
+        ++pfds;
+#else
+      // With epoll, events are registered with oneshot, so the handle is
+      // effectively suspended; future calls to epoll_wait() will select
+      // the next event, so they're not managed here.
+      // The hitch to this is that the notify handler must always be resumed
+      // immediately, before letting go of the guard. Else it's possible to
+      // get into a state where all handles, including the notify pipe, are
+      // suspended and that means the wait thread can't be interrupted.
+      info->suspended = true;
+      if (eh == this->notify_handler_)
+        this->resume_handler_i (handle);
+#endif /* ACE_HAS_DEV_POLL */
 
-              if (status < 0)
-                // Note that the token is reacquired in remove_handler ().
-                this->remove_handler (handle, ACE_Event_Handler::WRITE_MASK);
-              return 1;
-            }
+      int status = 0;   // gets callback status, below.
+      {
+        // Modify the reference count in an exception-safe way.
+        // Note that eh could be the notify handler. It's not strictly
+        // necessary to manage its refcount, but since we don't enable
+        // the counting policy, it won't do much. Management of the
+        // notified handlers themselves is done in the notify handler.
+        ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
-          if (disp_exc)
-            {
-              const int status =
-                this->upcall (eh, &ACE_Event_Handler::handle_exception, handle);
+        // Release the reactor token before upcall.
+        guard.release_token ();
 
-              if (status < 0)
-                // Note that the token is reacquired in remove_handler ().
-                this->remove_handler (handle, ACE_Event_Handler::EXCEPT_MASK);
-              return 1;
-            }
+        // Dispatch the detected event; will do the repeated upcalls
+        // if callback returns > 0. We come back with either 0 or < 0.
+        status = this->upcall (eh, callback, handle);
 
-          if (disp_in)
-            {
-              const int status =
-                this->upcall (eh, &ACE_Event_Handler::handle_input, handle);
+        // All state in the handler repository may have changed during the
+        // upcall while other threads had the token. Thus, reacquire the
+        // token and evaluate what's needed. If the upcalled handler is still
+        // the handler of record for handle, continue with checking whether
+        // or not to remove or resume the handler.
+        guard.acquire ();
+        info = this->handler_rep_.find (handle);
+        if (info != 0 && info->event_handler == eh)
+          {
+            if (status < 0)
+              this->remove_handler_i (handle, disp_mask);
 
-              if (status < 0)
-                // Note that the token is reacquired in remove_handler ().
-                this->remove_handler (handle, ACE_Event_Handler::READ_MASK);
-              return 1;
-            }
-        } // The reactor token is reacquired upon leaving this scope.
+#ifdef ACE_HAS_EVENT_POLL
+            // epoll-based effectively suspends handlers around the upcall.
+            // If the handler must be resumed here, do it now.
+            if (info->suspended &&
+                (eh->resume_handler () ==
+                 ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER))
+              this->resume_handler_i (handle);
+#endif /* ACE_HAS_EVENT_POLL */
+          }
+      }
+      // Scope close handles eh ref count decrement, if needed.
+
+      return 1;
     }
 
   return 0;
@@ -1406,19 +1410,22 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
 
 #if defined (ACE_HAS_EVENT_POLL)
 
+     Event_Tuple *info = this->handler_rep_.find (handle);
+
      struct epoll_event epev;
      ACE_OS::memset (&epev, 0, sizeof (epev));
      static const int op = EPOLL_CTL_ADD;
 
-     epev.events  = this->reactor_mask_to_poll_event (mask);
+     epev.events  = this->reactor_mask_to_poll_event (mask) | EPOLLONESHOT;
      epev.data.fd = handle;
 
      if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
        {
          ACE_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("epoll_ctl")));
- (void) this->handler_rep_.unbind (handle);
+         (void) this->handler_rep_.unbind (handle);
          return -1;
        }
+     info->controlled = true;
 
 #endif /* ACE_HAS_EVENT_POLL */
    }
@@ -1428,10 +1435,11 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      // again, possibly for different event.  Add new mask to the
      // current one.
      if (this->mask_ops_i (handle, mask, ACE_Reactor::ADD_MASK) == -1)
-       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("mask_ops_i")), -1);
+       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("mask_ops_i")),
+                         -1);
    }
 
-#ifndef  ACE_HAS_EVENT_POLL
+#ifdef  ACE_HAS_DEV_POLL
 
   struct pollfd pfd;
 
@@ -1445,7 +1453,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
  (void) this->handler_rep_.unbind (handle);
       return -1;
     }
-#endif /*ACE_HAS_EVENT_POLL*/
+#endif /*ACE_HAS_DEV_POLL*/
 
   // Note the fact that we've changed the state of the wait_set_,
   // which is used by the dispatching loop to determine whether it can
@@ -1559,15 +1567,24 @@ ACE_Dev_Poll_Reactor::remove_handler (ACE_HANDLE handle,
 
 int
 ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
-                                        ACE_Reactor_Mask mask)
+                                        ACE_Reactor_Mask mask,
+                                        ACE_Event_Handler *eh)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler_i");
 
-  ACE_Event_Handler *eh = this->handler_rep_.find (handle);
-
-  if (eh == 0 ||
-      this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) == -1)
+  // If registered event handler not the same as eh, don't mess with
+  // the mask, but do the proper callback and refcount when needed.
+  bool handle_reg_changed = true;
+  Event_Tuple *info =  this->handler_rep_.find (handle);
+  if (info == 0 && eh == 0)  // Nothing to work with
     return -1;
+  if (info != 0 && (eh == 0 || info->event_handler == eh))
+    {
+      if (this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) == -1)
+        return -1;
+      handle_reg_changed = false;
+      eh = info->event_handler;
+    }
 
   // Check for ref counting now - handle_close () may delete eh.
   bool const requires_reference_counting =
@@ -1575,11 +1592,11 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
   if (ACE_BIT_DISABLED (mask, ACE_Event_Handler::DONT_CALL))
- (void) eh->handle_close (handle, mask);
+    (void) eh->handle_close (handle, mask);
 
   // If there are no longer any outstanding events on the given handle
   // then remove it from the handler repository.
-  if (this->handler_rep_.mask (handle) == ACE_Event_Handler::NULL_MASK)
+  if (!handle_reg_changed && info->mask == ACE_Event_Handler::NULL_MASK)
     this->handler_rep_.unbind (handle, requires_reference_counting);
 
   // Note the fact that we've changed the state of the wait_set,
@@ -1707,10 +1724,11 @@ ACE_Dev_Poll_Reactor::suspend_handlers (void)
   size_t const len = this->handler_rep_.size ();
 
   for (size_t i = 0; i < len; ++i)
-    if (this->handler_rep_.suspended (i) == 0
-        && this->suspend_handler_i (i) != 0)
-      return -1;
-
+    {
+      Event_Tuple *info = this->handler_rep_.find (i);
+      if (info != 0 && !info->suspended && this->suspend_handler_i (i) != 0)
+        return -1;
+    }
   return 0;
 }
 
@@ -1719,10 +1737,11 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::suspend_handler_i");
 
-  if (this->handler_rep_.find (handle) == 0)
+  Event_Tuple *info = this->handler_rep_.find (handle);
+  if (info == 0)
     return -1;
 
-  if (this->handler_rep_.suspended (handle))
+  if (info->suspended)
     return 0;  // Already suspended.  @@ Should this be an error?
 
   // Remove the handle from the "interest set."
@@ -1742,7 +1761,7 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
 
   if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
     return -1;
-
+  info->controlled = false;
 #else
 
   struct pollfd pfd[1];
@@ -1756,7 +1775,7 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
 
 #endif  /* ACE_HAS_EVENT_POLL */
 
-  this->handler_rep_.suspend (handle);
+  info->suspended = true;
 
   return 0;
 }
@@ -1816,9 +1835,11 @@ ACE_Dev_Poll_Reactor::resume_handlers (void)
   size_t const len = this->handler_rep_.size ();
 
   for (size_t i = 0; i < len; ++i)
-    if (this->handler_rep_.suspended (i)
-        && this->resume_handler_i (i) != 0)
-      return -1;
+    {
+      Event_Tuple *info = this->handler_rep_.find (i);
+      if (info != 0 && info->suspended && this->resume_handler_i (i) != 0)
+        return -1;
+    }
 
   return 0;
 }
@@ -1828,11 +1849,11 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::resume_handler_i");
 
-  if (this->handler_rep_.find (handle) == 0
-      && this->handler_rep_.suspended (handle) == 0)
+  Event_Tuple *info = this->handler_rep_.find (handle);
+  if (info == 0 || !info->suspended)
     return -1;
 
-  ACE_Reactor_Mask mask = this->handler_rep_.mask (handle);
+  ACE_Reactor_Mask mask = info->mask;
 
   if (mask == ACE_Event_Handler::NULL_MASK)
     return -1;
@@ -1845,13 +1866,15 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
 
   struct epoll_event epev;
   ACE_OS::memset (&epev, 0, sizeof (epev));
-  static const int op = EPOLL_CTL_ADD;
-
-  epev.events  = this->reactor_mask_to_poll_event (mask);
+  int op = EPOLL_CTL_ADD;
+  if (info->controlled)
+    op = EPOLL_CTL_MOD;
+  epev.events  = this->reactor_mask_to_poll_event (mask) | EPOLLONESHOT;
   epev.data.fd = handle;
 
   if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
     return -1;
+  info->controlled = true;
 
 #else
 
@@ -1866,7 +1889,7 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
 
 #endif  /* ACE_HAS_EVENT_POLL */
 
-  this->handler_rep_.resume (handle);
+  info->suspended = false;
 
   return 0;
 }
@@ -2042,10 +2065,10 @@ ACE_Dev_Poll_Reactor::find_handler (ACE_HANDLE handle)
 {
   ACE_MT (ACE_READ_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, 0));
 
-  ACE_Event_Handler *event_handler = this->handler_rep_.find (handle);
-  if (event_handler)
-    event_handler->add_reference ();
-  return event_handler;
+  Event_Tuple *info = this->handler_rep_.find (handle);
+  if (info)
+    info->event_handler->add_reference ();
+  return info->event_handler;
 }
 
 int
@@ -2057,15 +2080,15 @@ ACE_Dev_Poll_Reactor::handler (ACE_HANDLE handle,
 
   ACE_MT (ACE_READ_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
-  ACE_Event_Handler *h = this->handler_rep_.find (handle);
+  Event_Tuple *info = this->handler_rep_.find (handle);
 
-  if (h != 0
-      && ACE_BIT_CMP_MASK (this->handler_rep_.mask (handle),
+  if (info != 0
+      && ACE_BIT_CMP_MASK (info->mask,
                            mask,  // Compare all bits in the mask
                            mask))
     {
       if (event_handler != 0)
-        *event_handler = h;
+        *event_handler = info->event_handler;
 
       return 0;
     }
@@ -2215,13 +2238,15 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::mask_ops_i");
 
-  if (this->handler_rep_.handle_in_range (handle) == 0)
+  if (!this->handler_rep_.handle_in_range (handle))
     return -1;
 
   // Block out all signals until method returns.
   ACE_Sig_Guard sb;
 
-  ACE_Reactor_Mask const old_mask = this->handler_rep_.mask (handle);
+  Event_Tuple *info = this->handler_rep_.find (handle);
+
+  ACE_Reactor_Mask const old_mask = info->mask;
   ACE_Reactor_Mask new_mask = old_mask;
 
   // Perform GET, CLR, SET, and ADD operations on the interest/wait
@@ -2260,12 +2285,15 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
     }
 
   /// Reset the mask for the given handle.
-  this->handler_rep_.mask (handle, new_mask);
+  info->mask = new_mask;
 
-  if (this->handler_rep_.suspended (handle) == 0)
+  // Only attempt to alter events for the handle from the
+  // "interest set" if it hasn't been suspended. If it has been
+  // suspended, the revised mask will take affect when the
+  // handle is resumed. The exception is if all the mask bits are
+  // cleared, we can un-control the fd now.
+  if (!info->suspended || (info->controlled && new_mask == 0))
     {
-      // Only attempt to alter events for the handle from the
-      // "interest set" if it hasn't been suspended.
 
       short const events = this->reactor_mask_to_poll_event (new_mask);
 
@@ -2301,7 +2329,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
       else
         {
           op          = EPOLL_CTL_MOD;
-          epev.events = events;
+          epev.events = events | EPOLLONESHOT;
         }
 
       epev.data.fd = handle;
@@ -2316,7 +2344,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
               ::epoll_ctl (this->poll_fd_, EPOLL_CTL_ADD, handle, &epev) == -1)
             return -1;
         }
-
+      info->controlled = (op != EPOLL_CTL_DEL);
 #else
       pollfd pfd[1];
 

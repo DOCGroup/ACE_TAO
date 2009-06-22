@@ -68,22 +68,22 @@ namespace CIAO
               
         case TCKind::tk_short_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_short);
-          retval->insert_short (CORBA::Short (static_cast < ::XMLSchema::short_ const & > (*value.begin_short ())));
+          retval->insert_short (CORBA::Short (static_cast < ::XMLSchema::short_ const & > (*(*value.begin_short ()))));
           break;
               
         case TCKind::tk_long_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_long);
-          retval->insert_long (CORBA::Long (static_cast < ::XMLSchema::int_ const& > (*value.begin_long ())));
+          retval->insert_long (CORBA::Long (static_cast < ::XMLSchema::int_ const& > (*(*value.begin_long ()))));
           break;
 
         case TCKind::tk_ushort_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ushort);
-          retval->insert_ushort (CORBA::UShort (static_cast< ::XMLSchema::unsignedShort const & > (*value.begin_ushort ())));
+          retval->insert_ushort (CORBA::UShort (static_cast< ::XMLSchema::unsignedShort const & > (*(*value.begin_ushort ()))));
           break;
 
         case TCKind::tk_ulong_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulong);
-          retval->insert_ulong (CORBA::ULong (static_cast < ::XMLSchema::unsignedInt const& > (*value.begin_ulong ())));
+          retval->insert_ulong (CORBA::ULong (static_cast < ::XMLSchema::unsignedInt const& > (*(*value.begin_ulong ()))));
           break;
 
         case TCKind::tk_float_l:
@@ -98,37 +98,37 @@ namespace CIAO
 
         case TCKind::tk_boolean_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_boolean);
-          retval->insert_boolean (static_cast < ::XMLSchema::boolean const& > (*value.begin_boolean ()));
+          retval->insert_boolean (static_cast < ::XMLSchema::boolean const& > (*(*value.begin_boolean ())));
           break;
 
         case TCKind::tk_char_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_char);
-          retval->insert_char (CORBA::Char (*value.begin_string ()->c_str ()));
+          retval->insert_char (CORBA::Char (*(*value.begin_string ())->c_str ()));
           break;
 
         case TCKind::tk_octet_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_octet);
-          retval->insert_octet (static_cast <const unsigned char &> (*value.begin_octet ()));
+          retval->insert_octet (static_cast <const unsigned char &> (*(*(value.begin_octet ()))));
           break;
 
         case TCKind::tk_string_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_string);
-          retval->insert_string (value.begin_string ()->c_str ());
+          retval->insert_string ((*value.begin_string ())->c_str ());
           break;
 
         case TCKind::tk_longlong_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_longlong);
-          retval->insert_longlong (CORBA::LongLong (static_cast < ::XMLSchema::long_ const& > (*value.begin_longlong ())));
+          retval->insert_longlong (CORBA::LongLong (static_cast < ::XMLSchema::long_ const& > (*(*value.begin_longlong ()))));
           break;
 
         case TCKind::tk_ulonglong_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulonglong);
-          retval->insert_ulonglong (CORBA::ULongLong (static_cast < ::XMLSchema::unsignedLong const& > (*value.begin_ulonglong ())));
+          retval->insert_ulonglong (CORBA::ULongLong (static_cast < ::XMLSchema::unsignedLong const& > (*(*value.begin_ulonglong ()))));
           break;
 
         case TCKind::tk_wchar_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_wchar);
-          retval->insert_wchar (CORBA::WChar (*value.begin_string ()->c_str ()));
+          retval->insert_wchar (CORBA::WChar (*(*value.begin_string ())->c_str ()));
           break;
 
         case TCKind::tk_enum_l:
@@ -174,7 +174,7 @@ namespace CIAO
       DynamicAny::DynAny_var dyn = this->daf_->create_dyn_any (any);
 
       DataValue val;
-
+#if 0
       switch (dyn->type ()->kind ())
         {
         case CORBA::tk_short:
@@ -243,6 +243,9 @@ namespace CIAO
           ACE_ERROR ((LM_ERROR, "DynAny_Handler: I have no idea how to perform a referse mapping.\n"));
           throw Config_Error ("", "reverse mapping for this type not supported");
         }
+#endif
+      Any retval (TCKind::tk_char, val);
+      return retval;
     }
     
     CORBA::TypeCode_ptr 

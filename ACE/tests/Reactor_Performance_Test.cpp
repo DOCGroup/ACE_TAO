@@ -108,7 +108,7 @@ Read_Handler::handle_input (ACE_HANDLE handle)
           else
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("handle_input: %p (errno: %d)\n"),
-                          ACE_TEXT ("recv"), errno));
+                          ACE_TEXT ("recv"), ACE_ERRNO_GET));
 
               // This will cause handle_close to get called.
               return -1;

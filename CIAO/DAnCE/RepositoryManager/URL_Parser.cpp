@@ -38,20 +38,20 @@ URL_Parser::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 URL_Parser::URL_Parser (void)
-  : hostname_ (ACE::strnew ("127.0.0.1")),
+  : hostname_ (ACE::strnew (ACE_TEXT("127.0.0.1"))),
     port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
     filename_ (0),
     debug_ (false)
 {
 }
 
-bool URL_Parser::parseURL (char* url)
+bool URL_Parser::parseURL (ACE_TCHAR* url)
 {
-  char* ptr = 0;
+  ACE_TCHAR* ptr = 0;
   bool success = true;
-  ptr = ACE_OS::strstr (url, "http://");
+  ptr = ACE_OS::strstr (url, ACE_TEXT("http://"));
   if (ptr)
-    url += ACE_OS::strlen ("http://");
+    url += ACE_OS::strlen (ACE_TEXT("http://"));
 
   if (url[0] == '/')
     {

@@ -46,7 +46,7 @@ namespace CIAO
            s != end;
            ++s)
         {
-          toconfig.supportedType[pos++] = s->c_str ();
+          toconfig.supportedType[pos++] = (*s)->c_str ();
         }
 
       ComponentInterfaceDescription::idlFile_const_iterator
@@ -58,7 +58,7 @@ namespace CIAO
            sidl != eidl;
            ++sidl)
         {
-          toconfig.idlFile [pos++] = sidl->c_str ();
+          toconfig.idlFile [pos++] = (*sidl)->c_str ();
         }
 
       ComponentInterfaceDescription::configProperty_const_iterator pend =
@@ -70,8 +70,8 @@ namespace CIAO
            pstart != pend;
            ++pstart)
         {
-          Property_Handler::handle_property (*pstart,
-                         toconfig.configProperty [pos++]);
+          Property_Handler::handle_property (*(*pstart),
+                                             toconfig.configProperty [pos++]);
         }
 
       pos = 0;
@@ -81,8 +81,8 @@ namespace CIAO
            port != desc.end_port ();
            ++port)
         {
-          CPD_Handler::handle_component_port_description (*port,
-                                                   toconfig.port[pos++]);
+          CPD_Handler::handle_component_port_description (*(*port),
+                                                          toconfig.port[pos++]);
         }
 
       pos = 0;
@@ -93,7 +93,7 @@ namespace CIAO
           prop != desc.end_property();
           prop++)
         {
-          ComponentPropertyDescription_Handler::component_property_description (*prop,
+          ComponentPropertyDescription_Handler::component_property_description (*(*prop),
                                                                                 toconfig.property[pos++]);
         }
 
@@ -104,8 +104,8 @@ namespace CIAO
             infoProp != desc.end_infoProperty();
             infoProp++)
         {
-          Property_Handler::handle_property (*infoProp,
-                         toconfig.infoProperty[pos]);
+          Property_Handler::handle_property (*(*infoProp),
+                                             toconfig.infoProperty[pos]);
         }
     }
 
@@ -131,7 +131,7 @@ namespace CIAO
       for (size_t i = 0; i < total; ++i)
         {
           XMLSchema::string< char > curr ((src.supportedType[i]));
-          cid.add_supportedType (curr);
+          //cid.add_supportedType (new XMLSchema::string< ACE_TCHAR > (curr));
         }
 
       //Get the idlFile(s) and store them into the cid
@@ -139,23 +139,21 @@ namespace CIAO
       for (size_t j = 0; j < total; ++j)
         {
           XMLSchema::string< char > curr ((src.idlFile[j]));
-          cid.add_idlFile (curr);
+          //cid.add_idlFile (curr);
         }
 
       //Get the configProperty(ies) and store them into the cid
       total = src.configProperty.length ();
       for (size_t k = 0; k < total; ++k)
         {
-          cid.add_configProperty (
-                                  Property_Handler::get_property (src.configProperty[k]));
+          //cid.add_configProperty (Property_Handler::get_property (src.configProperty[k]));
         }
 
       //Same drill for the component port description(s)
       total = src.port.length ();
       for (size_t l = 0; l < total; ++l)
         {
-          cid.add_port (
-                        CPD_Handler::component_port_description (src.port[l]));
+          //cid.add_port (CPD_Handler::component_port_description (src.port[l]));
         }
 
 
@@ -165,9 +163,7 @@ namespace CIAO
           m < total;
           m++)
         {
-          cid.add_property(
-                           ComponentPropertyDescription_Handler::component_property_description (
-                                                                                                 src.property[m]));
+          //cid.add_property(ComponentPropertyDescription_Handler::component_property_description (src.property[m]));
         }
 
       //Load up the infoProperty(s)
@@ -176,8 +172,7 @@ namespace CIAO
           n < total;
           n++)
         {
-          cid.add_infoProperty(
-                               Property_Handler::get_property (src.infoProperty[n]));
+          //cid.add_infoProperty(Property_Handler::get_property (src.infoProperty[n]));
         }
 
       return cid;

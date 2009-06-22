@@ -633,16 +633,21 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       return -1;
     }
 
-  if (this->server_template_header_->open (fname,
-                                           TAO_OutStream::TAO_SVR_TMPL_HDR)
-        == -1)
+  int status =
+    this->server_template_header_->open (
+      fname,
+      TAO_OutStream::TAO_SVR_TMPL_HDR);
+      
+  if (status == -1)
     {
       return -1;
     }
 
-  *this->server_template_header_ << be_nl << "// TAO_IDL - Generated from"
+  *this->server_template_header_ << be_nl
+                                 << "// TAO_IDL - Generated from"
                                  << be_nl
-                                 << "// " << __FILE__ << ":" << __LINE__
+                                 << "// " << __FILE__
+                                 << ":" << __LINE__
                                  << be_nl << be_nl;
 
   // Generate the ident string, if any.

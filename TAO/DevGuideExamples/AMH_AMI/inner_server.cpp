@@ -42,11 +42,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     mgr->activate();
 
     // Create a servant.
-    Inner_i servant(dont_crash);
+    PortableServer::Servant_var<Inner_i> servant = new Inner_i(dont_crash);
 
     // Register the servant with the RootPOA, obtain its object
     // reference, stringify it, and write it to a file.
-    PortableServer::ObjectId_var oid = poa->activate_object( &servant );
+    PortableServer::ObjectId_var oid = poa->activate_object( servant.in() );
     obj = poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( obj.in() );
     ACE_CString iorname ("inner.ior");

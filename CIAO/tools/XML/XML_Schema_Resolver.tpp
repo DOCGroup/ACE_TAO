@@ -40,7 +40,7 @@ namespace CIAO
         return 0;
       
       // Ownership of these objects is given to other people.
-      return /*new Wrapper4InputSource*/ (new LocalFileInputSource (path));
+      return /*new Wrapper4InputSource*/ (new LocalFileInputSource (path.begin ()));
     }    
   }
 }

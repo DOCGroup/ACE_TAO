@@ -318,8 +318,11 @@
 
 // Platform supplies scandir()
 #define ACE_HAS_SCANDIR
+#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10)
 // Although the scandir man page says otherwise, this setting is correct.
+// The setting was fixed in 2.10, so do not use the hack after that.
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
+#endif
 
 // A conflict appears when including both <ucontext.h> and
 // <sys/procfs.h> with recent glibc headers.

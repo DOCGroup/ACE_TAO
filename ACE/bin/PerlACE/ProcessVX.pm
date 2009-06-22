@@ -363,6 +363,7 @@ sub reboot {
 # Helper for spawning with list of kernel modules in a .vxtest file
 sub handle_vxtest_file
 {
+  my $self = shift;
   my $vxtestfile = shift;
   my $vx_ref = shift;
   my $unld_ref = shift;
@@ -425,7 +426,11 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 
 if (defined $ENV{'ACE_TEST_WINCE'}) {
+if ($OSNAME eq "MSWin32") {
     require PerlACE::ProcessWinCE;
+} else {
+    require PerlACE::ProcessWinCE_Unix;
+}
 } else {
 if ($OSNAME eq "MSWin32") {
     require PerlACE::ProcessVX_Win32;

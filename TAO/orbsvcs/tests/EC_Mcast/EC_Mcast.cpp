@@ -416,7 +416,13 @@ ECM_Driver::parse_config_file (void)
       int port;
       if (this->skip_blanks (cfg, "reading federation port number"))
         return -1;
-      fscanf (cfg, "%d", &port);
+      s = fscanf (cfg, "%d", &port);
+      if (s == 0 || s == EOF)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "problem reading federation port number\n"), -1);
+        }
+
       CORBA::UShort mcast_port = static_cast<CORBA::UShort> (port);
 
       int ns, nc;

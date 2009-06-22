@@ -185,7 +185,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Parse the PCD to make sure that there are no package errors.
         try
         {
-          CIAO::Config_Handlers::Packaging::PCD_Handler::package_config ("default.pcd", *pc);
+          CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (ACE_TEXT("default.pcd"), *pc);
         }
         catch (...)
         {

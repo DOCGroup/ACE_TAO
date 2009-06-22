@@ -52,13 +52,13 @@ namespace CIAO
       CIAO_TRACE ("Capability_Handler::get_capability - reverse");
 
       Capability retval (src.name.in ());
-
+#if 0
       for (CORBA::ULong i = 0; i < src.resourceType.length (); ++i)
-      retval.add_resourceType (src.resourceType[i].in ());
+        retval.add_resourceType (src.resourceType[i].in ());
 
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
         retval.add_property (SatisfierProperty_Handler::get_sat_property (src.property[i]));
-
+#endif
       return retval;
     }
       };
@@ -160,10 +160,10 @@ namespace CIAO
       retval.resourcePort (src.resourcePort.in ());
 
       retval.componentPort (src.componentPort.in ());
-
+#if 0
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
         retval.add_property (Property_Handler::get_property (src.property[i]));
-
+#endif
       return retval;
     }
       };
@@ -193,8 +193,8 @@ namespace CIAO
       toconfig.deployRequirement.length (desc.count_deployRequirement ());
       while (0)
         {
-          IR_Handler::handle_ir (*desc.begin_deployRequirement (),
-                     toconfig.deployRequirement[0]);
+          IR_Handler::handle_ir (*(*desc.begin_deployRequirement ()),
+                                 toconfig.deployRequirement[0]);
         }
       std::for_each (desc.begin_deployRequirement (),
              desc.end_deployRequirement (),
@@ -202,20 +202,20 @@ namespace CIAO
 
       toconfig.primaryArtifact.length (desc.count_primaryArtifact ());
       SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                       desc.begin_primaryArtifact (),
-                       toconfig.primaryArtifact);
+                                   (*desc.begin_primaryArtifact ()),
+                                   toconfig.primaryArtifact);
       std::for_each (desc.begin_primaryArtifact (),
              desc.end_primaryArtifact (),
              NIA_Functor (toconfig.primaryArtifact));
     }
 
     static MonolithicImplementationDescription
-    get_mid (const ::Deployment::MonolithicImplementationDescription &src)
+    get_mid (const ::Deployment::MonolithicImplementationDescription &/*src*/)
     {
       CIAO_TRACE ("MID_Handler::get_mid - reverse");
 
       MonolithicImplementationDescription retval;
-
+#if 0
       for (CORBA::ULong i = 0; i < src.nodeExecParameter.length (); ++i)
         retval.add_nodeExecParameter
           (Property_Handler::get_property (src.nodeExecParameter[i]));
@@ -231,7 +231,7 @@ namespace CIAO
       for (CORBA::ULong i = 0; i < src.primaryArtifact.length (); ++i)
         retval.add_primaryArtifact
           (NIA_Handler::get_nia (src.primaryArtifact[i]));
-
+#endif
       return retval;
     }
 
@@ -297,9 +297,9 @@ namespace CIAO
 
         // capability
         toconfig.capability.length (cid->count_capability ());
-    SEQ_HAND_GCC_BUG_WORKAROUND (Capability_Handler::handle_capability,
-                     cid->begin_capability (),
-                     toconfig.capability);
+        SEQ_HAND_GCC_BUG_WORKAROUND (Capability_Handler::handle_capability,
+                                     (*cid->begin_capability ()),
+                                     toconfig.capability);
         std::for_each (cid->begin_capability (),
                        cid->end_capability (),
                        Capability_Functor (toconfig.capability));
@@ -310,7 +310,7 @@ namespace CIAO
         for (ComponentImplementationDescription::dependsOn_const_iterator i = cid->begin_dependsOn ();
              i != cid->end_dependsOn ();
              ++i)
-          toconfig.dependsOn[pos++].requiredType = i->requiredType ().c_str ();
+          toconfig.dependsOn[pos++].requiredType = (*i)->requiredType ().c_str ();
 
         // infoProperty
         toconfig.infoProperty.length (cid->count_infoProperty ());
@@ -345,7 +345,7 @@ namespace CIAO
         else
           ACE_DEBUG ((LM_WARNING, "Warning: ComponentImplementationDescription lacks "
                       "either a required assemblyImpl or monolithicImpl, or has too many"));
-
+#if 0
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           {
             retval.add_configProperty (
@@ -362,7 +362,7 @@ namespace CIAO
             retval.add_infoProperty (
                                      Property_Handler::get_property (src.infoProperty[i]));
           }
-
+#endif
         return retval;
       }
 
@@ -378,7 +378,7 @@ namespace CIAO
 
         try {
           return new ComponentImplementationDescription
-            (componentImplementationDescription (dom));
+            (reader::componentImplementationDescription (dom));
         }
         catch (...) {
           throw Parse_Error ("Unable to create XSC structure for CID");

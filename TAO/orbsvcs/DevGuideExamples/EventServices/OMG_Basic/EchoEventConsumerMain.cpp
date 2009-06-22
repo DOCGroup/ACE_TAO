@@ -46,12 +46,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       consumerAdmin->obtain_push_supplier();
 
     // Instantiate an EchoEventConsumer_i servant.
-    EchoEventConsumer_i servant(orb.in(), supplier.in(), EVENTS_TILL_SHUTDOWN);
+    PortableServer::Servant_var<EchoEventConsumer_i> servant =
+      new EchoEventConsumer_i(orb.in(), supplier.in(), EVENTS_TILL_SHUTDOWN);
 
     // Register it with the RootPOA.
     obj = orb->resolve_initial_references("RootPOA");
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
+    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
     CORBA::Object_var consumer_obj = poa->id_to_reference(oid.in());
     CosEventComm::PushConsumer_var consumer =
       CosEventComm::PushConsumer::_narrow(consumer_obj.in());

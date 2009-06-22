@@ -206,7 +206,9 @@ TAO_Connection_Handler::handle_output_eh (
       return return_value;
     }
 
-  return_value = this->transport ()->handle_output (0);
+  // The default constraints are to never block.
+  TAO::Transport::Drain_Constraints dc;
+  return_value = this->transport ()->handle_output (dc);
 
   this->pos_io_hook (return_value);
 

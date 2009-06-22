@@ -35,7 +35,7 @@ namespace CIAO
     }
 
     ComponentPackageReference::
-    ComponentPackageReference (::CIAO::Config_Handlers::ComponentPackageReference const& s)
+    ComponentPackageReference (ComponentPackageReference const& s)
     :
     ::XSCRT::Type (),
     requiredUUID_ (s.requiredUUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.requiredUUID_) : 0),
@@ -48,16 +48,20 @@ namespace CIAO
       requiredType_->container (this);
     }
 
-    ::CIAO::Config_Handlers::ComponentPackageReference& ComponentPackageReference::
-    operator= (::CIAO::Config_Handlers::ComponentPackageReference const& s)
+    ComponentPackageReference& ComponentPackageReference::
+    operator= (ComponentPackageReference const& s)
     {
-      if (s.requiredUUID_.get ()) requiredUUID (*(s.requiredUUID_));
-      else requiredUUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.requiredUUID_.get ())
+        requiredUUID (*(s.requiredUUID_));
+      else
+        requiredUUID_.reset (0);
 
-      if (s.requiredName_.get ()) requiredName (*(s.requiredName_));
-      else requiredName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.requiredName_.get ())
+        requiredName (*(s.requiredName_));
+      else
+        requiredName_.reset (0);
 
-      requiredType (s.requiredType ());
+      requiredType (*s.requiredType_);
 
       return *this;
     }
@@ -142,7 +146,6 @@ namespace CIAO
     SubcomponentInstantiationDescription::
     SubcomponentInstantiationDescription (::XMLSchema::string< ACE_TCHAR > const& name__)
     : 
-    ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     regulator__ ()
     {
@@ -150,12 +153,14 @@ namespace CIAO
     }
 
     SubcomponentInstantiationDescription::
-    SubcomponentInstantiationDescription (::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& s)
+    SubcomponentInstantiationDescription (SubcomponentInstantiationDescription const& s)
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     basePackage_ (s.basePackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageDescription (*s.basePackage_) : 0),
     specializedConfig_ (s.specializedConfig_.get () ? new ::CIAO::Config_Handlers::PackageConfiguration (*s.specializedConfig_) : 0),
+    selectRequirement_ (s.selectRequirement_),
+    configProperty_ (s.configProperty_),
     referencedPackage_ (s.referencedPackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageReference (*s.referencedPackage_) : 0),
     importedPackage_ (s.importedPackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageImport (*s.importedPackage_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
@@ -164,45 +169,39 @@ namespace CIAO
       name_->container (this);
       if (basePackage_.get ()) basePackage_->container (this);
       if (specializedConfig_.get ()) specializedConfig_->container (this);
-      {
-        for (selectRequirement_const_iterator i (s.selectRequirement_.begin ());i != s.selectRequirement_.end ();++i) add_selectRequirement (*i);
-      }
-
-      {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
-      }
-
       if (referencedPackage_.get ()) referencedPackage_->container (this);
       if (importedPackage_.get ()) importedPackage_->container (this);
       if (id_.get ()) id_->container (this);
     }
 
-    ::CIAO::Config_Handlers::SubcomponentInstantiationDescription& SubcomponentInstantiationDescription::
-    operator= (::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& s)
+    SubcomponentInstantiationDescription& SubcomponentInstantiationDescription::
+    operator= (SubcomponentInstantiationDescription const& s)
     {
-      name (s.name ());
+      name (*s.name_);
 
-      if (s.basePackage_.get ()) basePackage (*(s.basePackage_));
-      else basePackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > (0);
+      if (s.basePackage_.get ())
+        basePackage (*(s.basePackage_));
+      else
+        basePackage_.reset (0);
 
-      if (s.specializedConfig_.get ()) specializedConfig (*(s.specializedConfig_));
-      else specializedConfig_ = ::std::auto_ptr< ::CIAO::Config_Handlers::PackageConfiguration > (0);
+      if (s.specializedConfig_.get ())
+        specializedConfig (*(s.specializedConfig_));
+      else
+        specializedConfig_.reset (0);
 
-      selectRequirement_.clear ();
-      {
-        for (selectRequirement_const_iterator i (s.selectRequirement_.begin ());i != s.selectRequirement_.end ();++i) add_selectRequirement (*i);
-      }
+      selectRequirement_ = s.selectRequirement_;
 
-      configProperty_.clear ();
-      {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
-      }
+      configProperty_ = s.configProperty_;
 
-      if (s.referencedPackage_.get ()) referencedPackage (*(s.referencedPackage_));
-      else referencedPackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageReference > (0);
+      if (s.referencedPackage_.get ())
+        referencedPackage (*(s.referencedPackage_));
+      else
+        referencedPackage_.reset (0);
 
-      if (s.importedPackage_.get ()) importedPackage (*(s.importedPackage_));
-      else importedPackage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageImport > (0);
+      if (s.importedPackage_.get ())
+        importedPackage (*(s.importedPackage_));
+      else
+        importedPackage_.reset (0);
 
       if (s.id_.get ()) id (*(s.id_));
       else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
@@ -310,7 +309,7 @@ namespace CIAO
     }
 
     void SubcomponentInstantiationDescription::
-    add_selectRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_selectRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  const& e)
     {
       selectRequirement_.push_back (e);
     }
@@ -348,7 +347,7 @@ namespace CIAO
     }
 
     void SubcomponentInstantiationDescription::
-    add_configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       configProperty_.push_back (e);
     }
@@ -460,7 +459,6 @@ namespace CIAO
     SubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
                                    ::CIAO::Config_Handlers::IdRef const& instance__)
     : 
-    ::XSCRT::Type (), 
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (propertyName__)),
     instance_ (new ::CIAO::Config_Handlers::IdRef (instance__)),
     regulator__ ()
@@ -470,7 +468,7 @@ namespace CIAO
     }
 
     SubcomponentPropertyReference::
-    SubcomponentPropertyReference (::CIAO::Config_Handlers::SubcomponentPropertyReference const& s)
+    SubcomponentPropertyReference (SubcomponentPropertyReference const& s)
     :
     ::XSCRT::Type (),
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.propertyName_)),
@@ -481,12 +479,12 @@ namespace CIAO
       instance_->container (this);
     }
 
-    ::CIAO::Config_Handlers::SubcomponentPropertyReference& SubcomponentPropertyReference::
-    operator= (::CIAO::Config_Handlers::SubcomponentPropertyReference const& s)
+    SubcomponentPropertyReference& SubcomponentPropertyReference::
+    operator= (SubcomponentPropertyReference const& s)
     {
-      propertyName (s.propertyName ());
+      propertyName (*s.propertyName_);
 
-      instance (s.instance ());
+      instance (*s.instance_);
 
       return *this;
     }
@@ -528,7 +526,6 @@ namespace CIAO
     AssemblyPropertyMapping (::XMLSchema::string< ACE_TCHAR > const& name__,
                              ::XMLSchema::string< ACE_TCHAR > const& externalName__)
     : 
-    ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     externalName_ (new ::XMLSchema::string< ACE_TCHAR > (externalName__)),
     regulator__ ()
@@ -538,31 +535,26 @@ namespace CIAO
     }
 
     AssemblyPropertyMapping::
-    AssemblyPropertyMapping (::CIAO::Config_Handlers::AssemblyPropertyMapping const& s)
+    AssemblyPropertyMapping (AssemblyPropertyMapping const& s)
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     externalName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.externalName_)),
+    delegatesTo_ (s.delegatesTo_),
     regulator__ ()
     {
       name_->container (this);
       externalName_->container (this);
-      {
-        for (delegatesTo_const_iterator i (s.delegatesTo_.begin ());i != s.delegatesTo_.end ();++i) add_delegatesTo (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::AssemblyPropertyMapping& AssemblyPropertyMapping::
-    operator= (::CIAO::Config_Handlers::AssemblyPropertyMapping const& s)
+    AssemblyPropertyMapping& AssemblyPropertyMapping::
+    operator= (AssemblyPropertyMapping const& s)
     {
-      name (s.name ());
+      name (*s.name_);
 
-      externalName (s.externalName ());
+      externalName (*s.externalName_);
 
-      delegatesTo_.clear ();
-      {
-        for (delegatesTo_const_iterator i (s.delegatesTo_.begin ());i != s.delegatesTo_.end ();++i) add_delegatesTo (*i);
-      }
+      delegatesTo_ = s.delegatesTo_;
 
       return *this;
     }
@@ -623,7 +615,7 @@ namespace CIAO
     }
 
     void AssemblyPropertyMapping::
-    add_delegatesTo (::CIAO::Config_Handlers::SubcomponentPropertyReference const& e)
+    add_delegatesTo (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex >  const& e)
     {
       delegatesTo_.push_back (e);
     }
@@ -641,47 +633,29 @@ namespace CIAO
     ComponentAssemblyDescription::
     ComponentAssemblyDescription ()
     : 
-    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
 
     ComponentAssemblyDescription::
-    ComponentAssemblyDescription (::CIAO::Config_Handlers::ComponentAssemblyDescription const& s)
+    ComponentAssemblyDescription (ComponentAssemblyDescription const& s)
     :
     ::XSCRT::Type (),
+    instance_ (s.instance_),
+    connection_ (s.connection_),
+    externalProperty_ (s.externalProperty_),
     regulator__ ()
     {
-      {
-        for (instance_const_iterator i (s.instance_.begin ());i != s.instance_.end ();++i) add_instance (*i);
-      }
-
-      {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
-      }
-
-      {
-        for (externalProperty_const_iterator i (s.externalProperty_.begin ());i != s.externalProperty_.end ();++i) add_externalProperty (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::ComponentAssemblyDescription& ComponentAssemblyDescription::
-    operator= (::CIAO::Config_Handlers::ComponentAssemblyDescription const& s)
+    ComponentAssemblyDescription& ComponentAssemblyDescription::
+    operator= (ComponentAssemblyDescription const& s)
     {
-      instance_.clear ();
-      {
-        for (instance_const_iterator i (s.instance_.begin ());i != s.instance_.end ();++i) add_instance (*i);
-      }
+      instance_ = s.instance_;
 
-      connection_.clear ();
-      {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
-      }
+      connection_ = s.connection_;
 
-      externalProperty_.clear ();
-      {
-        for (externalProperty_const_iterator i (s.externalProperty_.begin ());i != s.externalProperty_.end ();++i) add_externalProperty (*i);
-      }
+      externalProperty_ = s.externalProperty_;
 
       return *this;
     }
@@ -714,7 +688,7 @@ namespace CIAO
     }
 
     void ComponentAssemblyDescription::
-    add_instance (::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& e)
+    add_instance (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex >  const& e)
     {
       instance_.push_back (e);
     }
@@ -752,7 +726,7 @@ namespace CIAO
     }
 
     void ComponentAssemblyDescription::
-    add_connection (::CIAO::Config_Handlers::AssemblyConnectionDescription const& e)
+    add_connection (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex >  const& e)
     {
       connection_.push_back (e);
     }
@@ -790,7 +764,7 @@ namespace CIAO
     }
 
     void ComponentAssemblyDescription::
-    add_externalProperty (::CIAO::Config_Handlers::AssemblyPropertyMapping const& e)
+    add_externalProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex >  const& e)
     {
       externalProperty_.push_back (e);
     }
@@ -808,56 +782,32 @@ namespace CIAO
     MonolithicImplementationDescription::
     MonolithicImplementationDescription ()
     : 
-    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
 
     MonolithicImplementationDescription::
-    MonolithicImplementationDescription (::CIAO::Config_Handlers::MonolithicImplementationDescription const& s)
+    MonolithicImplementationDescription (MonolithicImplementationDescription const& s)
     :
     ::XSCRT::Type (),
+    nodeExecParameter_ (s.nodeExecParameter_),
+    componentExecParameter_ (s.componentExecParameter_),
+    deployRequirement_ (s.deployRequirement_),
+    primaryArtifact_ (s.primaryArtifact_),
     regulator__ ()
     {
-      {
-        for (nodeExecParameter_const_iterator i (s.nodeExecParameter_.begin ());i != s.nodeExecParameter_.end ();++i) add_nodeExecParameter (*i);
-      }
-
-      {
-        for (componentExecParameter_const_iterator i (s.componentExecParameter_.begin ());i != s.componentExecParameter_.end ();++i) add_componentExecParameter (*i);
-      }
-
-      {
-        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());i != s.deployRequirement_.end ();++i) add_deployRequirement (*i);
-      }
-
-      {
-        for (primaryArtifact_const_iterator i (s.primaryArtifact_.begin ());i != s.primaryArtifact_.end ();++i) add_primaryArtifact (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::MonolithicImplementationDescription& MonolithicImplementationDescription::
-    operator= (::CIAO::Config_Handlers::MonolithicImplementationDescription const& s)
+    MonolithicImplementationDescription& MonolithicImplementationDescription::
+    operator= (MonolithicImplementationDescription const& s)
     {
-      nodeExecParameter_.clear ();
-      {
-        for (nodeExecParameter_const_iterator i (s.nodeExecParameter_.begin ());i != s.nodeExecParameter_.end ();++i) add_nodeExecParameter (*i);
-      }
+      nodeExecParameter_ = s.nodeExecParameter_;
 
-      componentExecParameter_.clear ();
-      {
-        for (componentExecParameter_const_iterator i (s.componentExecParameter_.begin ());i != s.componentExecParameter_.end ();++i) add_componentExecParameter (*i);
-      }
+      componentExecParameter_ = s.componentExecParameter_;
 
-      deployRequirement_.clear ();
-      {
-        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());i != s.deployRequirement_.end ();++i) add_deployRequirement (*i);
-      }
+      deployRequirement_ = s.deployRequirement_;
 
-      primaryArtifact_.clear ();
-      {
-        for (primaryArtifact_const_iterator i (s.primaryArtifact_.begin ());i != s.primaryArtifact_.end ();++i) add_primaryArtifact (*i);
-      }
+      primaryArtifact_ = s.primaryArtifact_;
 
       return *this;
     }
@@ -890,7 +840,7 @@ namespace CIAO
     }
 
     void MonolithicImplementationDescription::
-    add_nodeExecParameter (::CIAO::Config_Handlers::Property const& e)
+    add_nodeExecParameter (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       nodeExecParameter_.push_back (e);
     }
@@ -928,7 +878,7 @@ namespace CIAO
     }
 
     void MonolithicImplementationDescription::
-    add_componentExecParameter (::CIAO::Config_Handlers::Property const& e)
+    add_componentExecParameter (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       componentExecParameter_.push_back (e);
     }
@@ -966,7 +916,7 @@ namespace CIAO
     }
 
     void MonolithicImplementationDescription::
-    add_deployRequirement (::CIAO::Config_Handlers::ImplementationRequirement const& e)
+    add_deployRequirement (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex >  const& e)
     {
       deployRequirement_.push_back (e);
     }
@@ -1004,7 +954,7 @@ namespace CIAO
     }
 
     void MonolithicImplementationDescription::
-    add_primaryArtifact (::CIAO::Config_Handlers::NamedImplementationArtifact const& e)
+    add_primaryArtifact (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex >  const& e)
     {
       primaryArtifact_.push_back (e);
     }
@@ -1022,13 +972,12 @@ namespace CIAO
     ComponentImplementationDescription::
     ComponentImplementationDescription ()
     : 
-    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
 
     ComponentImplementationDescription::
-    ComponentImplementationDescription (::CIAO::Config_Handlers::ComponentImplementationDescription const& s)
+    ComponentImplementationDescription (ComponentImplementationDescription const& s)
     :
     ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
@@ -1036,6 +985,10 @@ namespace CIAO
     implements_ (s.implements_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.implements_) : 0),
     assemblyImpl_ (s.assemblyImpl_.get () ? new ::CIAO::Config_Handlers::ComponentAssemblyDescription (*s.assemblyImpl_) : 0),
     monolithicImpl_ (s.monolithicImpl_.get () ? new ::CIAO::Config_Handlers::MonolithicImplementationDescription (*s.monolithicImpl_) : 0),
+    configProperty_ (s.configProperty_),
+    capability_ (s.capability_),
+    dependsOn_ (s.dependsOn_),
+    infoProperty_ (s.infoProperty_),
     contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
     href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     regulator__ ()
@@ -1045,66 +998,50 @@ namespace CIAO
       if (implements_.get ()) implements_->container (this);
       if (assemblyImpl_.get ()) assemblyImpl_->container (this);
       if (monolithicImpl_.get ()) monolithicImpl_->container (this);
-      {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
-      }
-
-      {
-        for (capability_const_iterator i (s.capability_.begin ());i != s.capability_.end ();++i) add_capability (*i);
-      }
-
-      {
-        for (dependsOn_const_iterator i (s.dependsOn_.begin ());i != s.dependsOn_.end ();++i) add_dependsOn (*i);
-      }
-
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
-
       if (contentLocation_.get ()) contentLocation_->container (this);
       if (href_.get ()) href_->container (this);
     }
 
-    ::CIAO::Config_Handlers::ComponentImplementationDescription& ComponentImplementationDescription::
-    operator= (::CIAO::Config_Handlers::ComponentImplementationDescription const& s)
+    ComponentImplementationDescription& ComponentImplementationDescription::
+    operator= (ComponentImplementationDescription const& s)
     {
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
 
-      if (s.UUID_.get ()) UUID (*(s.UUID_));
-      else UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.UUID_.get ())
+        UUID (*(s.UUID_));
+      else
+        UUID_.reset (0);
 
-      if (s.implements_.get ()) implements (*(s.implements_));
-      else implements_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (0);
+      if (s.implements_.get ())
+        implements (*(s.implements_));
+      else
+        implements_.reset (0);
 
-      if (s.assemblyImpl_.get ()) assemblyImpl (*(s.assemblyImpl_));
-      else assemblyImpl_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentAssemblyDescription > (0);
+      if (s.assemblyImpl_.get ())
+        assemblyImpl (*(s.assemblyImpl_));
+      else
+        assemblyImpl_.reset (0);
 
-      if (s.monolithicImpl_.get ()) monolithicImpl (*(s.monolithicImpl_));
-      else monolithicImpl_ = ::std::auto_ptr< ::CIAO::Config_Handlers::MonolithicImplementationDescription > (0);
+      if (s.monolithicImpl_.get ())
+        monolithicImpl (*(s.monolithicImpl_));
+      else
+        monolithicImpl_.reset (0);
 
-      configProperty_.clear ();
-      {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
-      }
+      configProperty_ = s.configProperty_;
 
-      capability_.clear ();
-      {
-        for (capability_const_iterator i (s.capability_.begin ());i != s.capability_.end ();++i) add_capability (*i);
-      }
+      capability_ = s.capability_;
 
-      dependsOn_.clear ();
-      {
-        for (dependsOn_const_iterator i (s.dependsOn_.begin ());i != s.dependsOn_.end ();++i) add_dependsOn (*i);
-      }
+      dependsOn_ = s.dependsOn_;
 
-      infoProperty_.clear ();
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
+      infoProperty_ = s.infoProperty_;
 
-      if (s.contentLocation_.get ()) contentLocation (*(s.contentLocation_));
-      else contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.contentLocation_.get ())
+        contentLocation (*(s.contentLocation_));
+      else
+        contentLocation_.reset (0);
 
       if (s.href_.get ()) href (*(s.href_));
       else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
@@ -1285,7 +1222,7 @@ namespace CIAO
     }
 
     void ComponentImplementationDescription::
-    add_configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       configProperty_.push_back (e);
     }
@@ -1323,7 +1260,7 @@ namespace CIAO
     }
 
     void ComponentImplementationDescription::
-    add_capability (::CIAO::Config_Handlers::Capability const& e)
+    add_capability (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex >  const& e)
     {
       capability_.push_back (e);
     }
@@ -1361,7 +1298,7 @@ namespace CIAO
     }
 
     void ComponentImplementationDescription::
-    add_dependsOn (::CIAO::Config_Handlers::ImplementationDependency const& e)
+    add_dependsOn (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  const& e)
     {
       dependsOn_.push_back (e);
     }
@@ -1399,7 +1336,7 @@ namespace CIAO
     }
 
     void ComponentImplementationDescription::
-    add_infoProperty (::CIAO::Config_Handlers::Property const& e)
+    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       infoProperty_.push_back (e);
     }
@@ -1554,13 +1491,13 @@ namespace CIAO
 
         else if (n == "selectRequirement")
         {
-          ::CIAO::Config_Handlers::Requirement t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_selectRequirement (t);
         }
 
         else if (n == "configProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
@@ -1659,7 +1596,7 @@ namespace CIAO
 
         else if (n == "delegatesTo")
         {
-          ::CIAO::Config_Handlers::SubcomponentPropertyReference t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (e));
           add_delegatesTo (t);
         }
 
@@ -1686,19 +1623,19 @@ namespace CIAO
 
         if (n == "instance")
         {
-          ::CIAO::Config_Handlers::SubcomponentInstantiationDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (e));
           add_instance (t);
         }
 
         else if (n == "connection")
         {
-          ::CIAO::Config_Handlers::AssemblyConnectionDescription t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::AssemblyConnectionDescription (e));
           add_connection (t);
         }
 
         else if (n == "externalProperty")
         {
-          ::CIAO::Config_Handlers::AssemblyPropertyMapping t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::AssemblyPropertyMapping (e));
           add_externalProperty (t);
         }
 
@@ -1725,25 +1662,25 @@ namespace CIAO
 
         if (n == "nodeExecParameter")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_nodeExecParameter (t);
         }
 
         else if (n == "componentExecParameter")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_componentExecParameter (t);
         }
 
         else if (n == "deployRequirement")
         {
-          ::CIAO::Config_Handlers::ImplementationRequirement t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationRequirement (e));
           add_deployRequirement (t);
         }
 
         else if (n == "primaryArtifact")
         {
-          ::CIAO::Config_Handlers::NamedImplementationArtifact t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::NamedImplementationArtifact (e));
           add_primaryArtifact (t);
         }
 
@@ -1800,25 +1737,25 @@ namespace CIAO
 
         else if (n == "configProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
         else if (n == "capability")
         {
-          ::CIAO::Config_Handlers::Capability t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Capability (e));
           add_capability (t);
         }
 
         else if (n == "dependsOn")
         {
-          ::CIAO::Config_Handlers::ImplementationDependency t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
         else if (n == "infoProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
@@ -1872,7 +1809,7 @@ namespace CIAO
       {
         ComponentPackageReferenceTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (ComponentPackageReference));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentPackageReference));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1886,7 +1823,7 @@ namespace CIAO
       {
         SubcomponentInstantiationDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (SubcomponentInstantiationDescription));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::SubcomponentInstantiationDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1900,7 +1837,7 @@ namespace CIAO
       {
         SubcomponentPropertyReferenceTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (SubcomponentPropertyReference));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::SubcomponentPropertyReference));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1914,7 +1851,7 @@ namespace CIAO
       {
         AssemblyPropertyMappingTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (AssemblyPropertyMapping));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::AssemblyPropertyMapping));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1928,7 +1865,7 @@ namespace CIAO
       {
         ComponentAssemblyDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (ComponentAssemblyDescription));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentAssemblyDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1942,7 +1879,7 @@ namespace CIAO
       {
         MonolithicImplementationDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (MonolithicImplementationDescription));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::MonolithicImplementationDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1956,7 +1893,7 @@ namespace CIAO
       {
         ComponentImplementationDescriptionTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (ComponentImplementationDescription));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ComponentImplementationDescription));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -2194,14 +2131,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        SubcomponentInstantiationDescription::Type::selectRequirement_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
+        ::CIAO::Config_Handlers::SubcomponentInstantiationDescription::selectRequirement_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
 
         if (b != e)
         {
           selectRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) selectRequirement_next (o);
           }
 
@@ -2216,14 +2153,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        SubcomponentInstantiationDescription::Type::selectRequirement_const_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
+        ::CIAO::Config_Handlers::SubcomponentInstantiationDescription::selectRequirement_const_iterator b (o.begin_selectRequirement()), e (o.end_selectRequirement());
 
         if (b != e)
         {
           selectRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) selectRequirement_next (o);
           }
 
@@ -2278,14 +2215,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        SubcomponentInstantiationDescription::Type::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::CIAO::Config_Handlers::SubcomponentInstantiationDescription::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -2300,14 +2237,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        SubcomponentInstantiationDescription::Type::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::CIAO::Config_Handlers::SubcomponentInstantiationDescription::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -2562,19 +2499,21 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        AssemblyPropertyMapping::Type::delegatesTo_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
+        ::CIAO::Config_Handlers::AssemblyPropertyMapping::delegatesTo_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
 
         if (b != e)
         {
           delegatesTo_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) delegatesTo_next (o);
           }
 
           delegatesTo_post (o);
         }
+
+        else delegatesTo_none (o);
       }
 
       void AssemblyPropertyMapping::
@@ -2582,19 +2521,21 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        AssemblyPropertyMapping::Type::delegatesTo_const_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
+        ::CIAO::Config_Handlers::AssemblyPropertyMapping::delegatesTo_const_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
 
         if (b != e)
         {
           delegatesTo_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) delegatesTo_next (o);
           }
 
           delegatesTo_post (o);
         }
+
+        else delegatesTo_none (o);
       }
 
       void AssemblyPropertyMapping::
@@ -2624,6 +2565,16 @@ namespace CIAO
 
       void AssemblyPropertyMapping::
       delegatesTo_post (Type const&)
+      {
+      }
+
+      void AssemblyPropertyMapping::
+      delegatesTo_none (Type&)
+      {
+      }
+
+      void AssemblyPropertyMapping::
+      delegatesTo_none (Type const&)
       {
       }
 
@@ -2676,19 +2627,21 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentAssemblyDescription::Type::instance_iterator b (o.begin_instance()), e (o.end_instance());
+        ::CIAO::Config_Handlers::ComponentAssemblyDescription::instance_iterator b (o.begin_instance()), e (o.end_instance());
 
         if (b != e)
         {
           instance_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) instance_next (o);
           }
 
           instance_post (o);
         }
+
+        else instance_none (o);
       }
 
       void ComponentAssemblyDescription::
@@ -2696,19 +2649,21 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentAssemblyDescription::Type::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
+        ::CIAO::Config_Handlers::ComponentAssemblyDescription::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
 
         if (b != e)
         {
           instance_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) instance_next (o);
           }
 
           instance_post (o);
         }
+
+        else instance_none (o);
       }
 
       void ComponentAssemblyDescription::
@@ -2742,18 +2697,28 @@ namespace CIAO
       }
 
       void ComponentAssemblyDescription::
+      instance_none (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      instance_none (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
       connection (Type& o)
       {
         // VC6 anathema strikes again
         //
-        ComponentAssemblyDescription::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
+        ::CIAO::Config_Handlers::ComponentAssemblyDescription::connection_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
           connection_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connection_next (o);
           }
 
@@ -2768,14 +2733,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentAssemblyDescription::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+        ::CIAO::Config_Handlers::ComponentAssemblyDescription::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
           connection_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connection_next (o);
           }
 
@@ -2830,14 +2795,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentAssemblyDescription::Type::externalProperty_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
+        ::CIAO::Config_Handlers::ComponentAssemblyDescription::externalProperty_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
 
         if (b != e)
         {
           externalProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalProperty_next (o);
           }
 
@@ -2852,14 +2817,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentAssemblyDescription::Type::externalProperty_const_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
+        ::CIAO::Config_Handlers::ComponentAssemblyDescription::externalProperty_const_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
 
         if (b != e)
         {
           externalProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) externalProperty_next (o);
           }
 
@@ -2960,14 +2925,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        MonolithicImplementationDescription::Type::nodeExecParameter_iterator b (o.begin_nodeExecParameter()), e (o.end_nodeExecParameter());
+        ::CIAO::Config_Handlers::MonolithicImplementationDescription::nodeExecParameter_iterator b (o.begin_nodeExecParameter()), e (o.end_nodeExecParameter());
 
         if (b != e)
         {
           nodeExecParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) nodeExecParameter_next (o);
           }
 
@@ -2982,14 +2947,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        MonolithicImplementationDescription::Type::nodeExecParameter_const_iterator b (o.begin_nodeExecParameter()), e (o.end_nodeExecParameter());
+        ::CIAO::Config_Handlers::MonolithicImplementationDescription::nodeExecParameter_const_iterator b (o.begin_nodeExecParameter()), e (o.end_nodeExecParameter());
 
         if (b != e)
         {
           nodeExecParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) nodeExecParameter_next (o);
           }
 
@@ -3044,14 +3009,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        MonolithicImplementationDescription::Type::componentExecParameter_iterator b (o.begin_componentExecParameter()), e (o.end_componentExecParameter());
+        ::CIAO::Config_Handlers::MonolithicImplementationDescription::componentExecParameter_iterator b (o.begin_componentExecParameter()), e (o.end_componentExecParameter());
 
         if (b != e)
         {
           componentExecParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) componentExecParameter_next (o);
           }
 
@@ -3066,14 +3031,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        MonolithicImplementationDescription::Type::componentExecParameter_const_iterator b (o.begin_componentExecParameter()), e (o.end_componentExecParameter());
+        ::CIAO::Config_Handlers::MonolithicImplementationDescription::componentExecParameter_const_iterator b (o.begin_componentExecParameter()), e (o.end_componentExecParameter());
 
         if (b != e)
         {
           componentExecParameter_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) componentExecParameter_next (o);
           }
 
@@ -3128,14 +3093,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        MonolithicImplementationDescription::Type::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::CIAO::Config_Handlers::MonolithicImplementationDescription::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -3150,14 +3115,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        MonolithicImplementationDescription::Type::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+        ::CIAO::Config_Handlers::MonolithicImplementationDescription::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
 
         if (b != e)
         {
           deployRequirement_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) deployRequirement_next (o);
           }
 
@@ -3212,19 +3177,21 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        MonolithicImplementationDescription::Type::primaryArtifact_iterator b (o.begin_primaryArtifact()), e (o.end_primaryArtifact());
+        ::CIAO::Config_Handlers::MonolithicImplementationDescription::primaryArtifact_iterator b (o.begin_primaryArtifact()), e (o.end_primaryArtifact());
 
         if (b != e)
         {
           primaryArtifact_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) primaryArtifact_next (o);
           }
 
           primaryArtifact_post (o);
         }
+
+        else primaryArtifact_none (o);
       }
 
       void MonolithicImplementationDescription::
@@ -3232,19 +3199,21 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        MonolithicImplementationDescription::Type::primaryArtifact_const_iterator b (o.begin_primaryArtifact()), e (o.end_primaryArtifact());
+        ::CIAO::Config_Handlers::MonolithicImplementationDescription::primaryArtifact_const_iterator b (o.begin_primaryArtifact()), e (o.end_primaryArtifact());
 
         if (b != e)
         {
           primaryArtifact_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) primaryArtifact_next (o);
           }
 
           primaryArtifact_post (o);
         }
+
+        else primaryArtifact_none (o);
       }
 
       void MonolithicImplementationDescription::
@@ -3274,6 +3243,16 @@ namespace CIAO
 
       void MonolithicImplementationDescription::
       primaryArtifact_post (Type const&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_none (Type&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_none (Type const&)
       {
       }
 
@@ -3466,14 +3445,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentImplementationDescription::Type::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::CIAO::Config_Handlers::ComponentImplementationDescription::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -3488,14 +3467,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentImplementationDescription::Type::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+        ::CIAO::Config_Handlers::ComponentImplementationDescription::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
         {
           configProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) configProperty_next (o);
           }
 
@@ -3550,14 +3529,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentImplementationDescription::Type::capability_iterator b (o.begin_capability()), e (o.end_capability());
+        ::CIAO::Config_Handlers::ComponentImplementationDescription::capability_iterator b (o.begin_capability()), e (o.end_capability());
 
         if (b != e)
         {
           capability_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) capability_next (o);
           }
 
@@ -3572,14 +3551,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentImplementationDescription::Type::capability_const_iterator b (o.begin_capability()), e (o.end_capability());
+        ::CIAO::Config_Handlers::ComponentImplementationDescription::capability_const_iterator b (o.begin_capability()), e (o.end_capability());
 
         if (b != e)
         {
           capability_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) capability_next (o);
           }
 
@@ -3634,14 +3613,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentImplementationDescription::Type::dependsOn_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
+        ::CIAO::Config_Handlers::ComponentImplementationDescription::dependsOn_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
 
         if (b != e)
         {
           dependsOn_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) dependsOn_next (o);
           }
 
@@ -3656,14 +3635,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentImplementationDescription::Type::dependsOn_const_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
+        ::CIAO::Config_Handlers::ComponentImplementationDescription::dependsOn_const_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
 
         if (b != e)
         {
           dependsOn_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) dependsOn_next (o);
           }
 
@@ -3718,14 +3697,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentImplementationDescription::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::ComponentImplementationDescription::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -3740,14 +3719,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        ComponentImplementationDescription::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::ComponentImplementationDescription::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 

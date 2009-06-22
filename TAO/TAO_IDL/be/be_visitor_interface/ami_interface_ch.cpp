@@ -51,7 +51,6 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
 
   // Grab the stream.
   TAO_OutStream *os = this->ctx_->stream ();
-  os->gen_ifdef_macro (node->replacement ()->flat_name (), "_ptr");
 
   // Forward declaration.
   *os << be_nl << be_nl 
@@ -62,6 +61,5 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
       << " *" << node->replacement ()->local_name ()
       << "_ptr;";
 
-  os->gen_endif ();
   return 0;
 }

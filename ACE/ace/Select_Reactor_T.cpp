@@ -211,8 +211,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify (ACE_Event_Handler *eh,
   // Pass over both the Event_Handler *and* the mask to allow the
   // caller to dictate which Event_Handler method the receiver
   // invokes.  Note that this call can timeout.
-
-  ssize_t const n = this->notify_handler_->notify (eh, mask, timeout);
+  ssize_t n = -1;
+  if (this->notify_handler_)
+    {
+      n = this->notify_handler_->notify (eh, mask, timeout);
+    }
   return n == -1 ? -1 : 0;
 }
 

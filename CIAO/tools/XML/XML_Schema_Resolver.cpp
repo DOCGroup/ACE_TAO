@@ -1,8 +1,9 @@
 // $Id$
+#include "XML/XML_Schema_Resolver.h"
+
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XercesDefs.hpp>
 
-#include "XML/XML_Schema_Resolver.h"
 #include "XML/XercesString.h"
 
 #include "ace/Env_Value_T.h"

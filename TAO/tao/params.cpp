@@ -61,6 +61,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
                                      "TAO_PortableServer",
                                      "_make_TAO_Object_Adapter_Factory",
                                      ""))
+  , forward_invocation_on_object_not_exist_ (false)
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)

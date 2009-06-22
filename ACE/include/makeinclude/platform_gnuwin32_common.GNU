@@ -29,18 +29,27 @@ endif
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
-
-CC      = gcc
-CXX     = g++
-RC      = windres
-DLLTOOL = dlltool
+CC      = ${COMPARCH}gcc
+CXX     = ${COMPARCH}g++
+RC      = ${COMPARCH}windres
+DLLTOOL = ${COMPARCH}dlltool
 
 RC_OUTPUT_FLAG = -o
 
 ifeq (2.9,$(findstring 2.9,$(GNUWIN32_CXX_VERSION)))
-  MODEL_FLAGS += -mcpu=$(TCPU)
+  cpumodelflag ?= 1
+  tunemodelflag ?= 0
 else
+  cpumodelflag ?= 0
+  tunemodelflag ?= 1
+endif
+
+ifeq ($(tunemodelflag),1)
   MODEL_FLAGS += -mtune=$(TCPU)
+endif
+
+ifeq ($(cpumodelflag),1)
+  MODEL_FLAGS += -mcpu=$(TCPU)
 endif
 
 CFLAGS += -Wpointer-arith
@@ -65,9 +74,9 @@ endif
 
 OCFLAGS += -O3
 PIC        =
-AR         = ar
+AR         = ${COMPARCH}ar
 ARFLAGS    = rsuv
-RANLIB     = ranlib
+RANLIB     = ${COMPARCH}ranlib
 SOEXT      = dll
 SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<

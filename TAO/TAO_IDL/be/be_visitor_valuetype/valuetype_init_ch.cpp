@@ -65,9 +65,6 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream& os = *(this->ctx_->stream ());
 
-  // Generate the ifdef macro for the _init class.
-  os.gen_ifdef_macro (node->flat_name (), "_init");
-
   os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -138,9 +135,6 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   os << "virtual ~" << node->local_name () << "_init (void);";
 
   os << be_uidt_nl << "};";
-
-  // Generate the endif macro.
-  os.gen_endif ();
 
   return 0;
 }

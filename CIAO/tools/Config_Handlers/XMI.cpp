@@ -30,10 +30,10 @@ namespace XMI
   }
 
   Extension::
-  Extension (::XMI::Extension const& s)
-    :
+  Extension (Extension const& s)
+  :
     XSCRT::Type (),
-  xmi_id_ (s.xmi_id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.xmi_id_) : 0),
+  id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
   label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
   uuid_ (s.uuid_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.uuid_) : 0),
   href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
@@ -43,7 +43,7 @@ namespace XMI
   extenderID_ (s.extenderID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.extenderID_) : 0),
   regulator__ ()
   {
-    if (xmi_id_.get ()) xmi_id_->container (this);
+    if (id_.get ()) id_->container (this);
     if (label_.get ()) label_->container (this);
     if (uuid_.get ()) uuid_->container (this);
     if (href_.get ()) href_->container (this);
@@ -53,11 +53,11 @@ namespace XMI
     if (extenderID_.get ()) extenderID_->container (this);
   }
 
-  ::XMI::Extension& Extension::
-  operator= (::XMI::Extension const& s)
+  Extension& Extension::
+  operator= (Extension const& s)
   {
-    if (s.xmi_id_.get ()) xmi_id (*(s.xmi_id_));
-    else xmi_id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+    if (s.id_.get ()) id (*(s.id_));
+    else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
 
     if (s.label_.get ()) label (*(s.label_));
     else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
@@ -87,35 +87,35 @@ namespace XMI
   // Extension
   // 
   bool Extension::
-  xmi_id_p () const
+  id_p () const
   {
-    return xmi_id_.get () != 0;
+    return id_.get () != 0;
   }
 
   ::XMLSchema::ID< ACE_TCHAR > const& Extension::
-  xmi_id () const
+  id () const
   {
-    return *xmi_id_;
+    return *id_;
   }
 
   ::XMLSchema::ID< ACE_TCHAR >& Extension::
-  xmi_id ()
+  id ()
   {
-    return *xmi_id_;
+    return *id_;
   }
 
   void Extension::
-  xmi_id (::XMLSchema::ID< ACE_TCHAR > const& e)
+  id (::XMLSchema::ID< ACE_TCHAR > const& e)
   {
-    if (xmi_id_.get ())
+    if (id_.get ())
     {
-      *xmi_id_ = e;
+      *id_ = e;
     }
 
     else
     {
-      xmi_id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (new ::XMLSchema::ID< ACE_TCHAR > (e));
-      xmi_id_->container (this);
+      id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (new ::XMLSchema::ID< ACE_TCHAR > (e));
+      id_->container (this);
     }
   }
 
@@ -381,10 +381,10 @@ namespace XMI
     {
       ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
       ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-      if (n == "xmi_id")
+      if (n == "id")
       {
         ::XMLSchema::ID< ACE_TCHAR > t (a);
-        xmi_id (t);
+        id (t);
       }
 
       else if (n == "label")
@@ -438,19 +438,22 @@ namespace XMI
 
 namespace XMI
 {
-  ::XMI::Extension
-  extension (xercesc::DOMDocument const* d)
+  namespace reader
   {
-    ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-    if (e.name () == "extension")
+    ::XMI::Extension
+    extension (xercesc::DOMDocument const* d)
     {
-      ::XMI::Extension r (e);
-      return r;
-    }
+      ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
+      if (e.name () == "extension")
+      {
+        ::XMI::Extension r (e);
+        return r;
+      }
 
-    else
-    {
-      throw 1;
+      else
+      {
+        throw 1;
+      }
     }
   }
 }
@@ -467,7 +470,7 @@ namespace XMI
     {
       ExtensionTypeInfoInitializer ()
       {
-        ::XSCRT::TypeId id (typeid (Extension));
+        ::XSCRT::TypeId id (typeid (::XMI::Extension));
         ::XSCRT::ExtendedTypeInfo nf (id);
 
         nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -491,8 +494,8 @@ namespace XMI
     traverse (Type& o)
     {
       pre (o);
-      if (o.xmi_id_p ()) xmi_id (o);
-      else xmi_id_none (o);
+      if (o.id_p ()) id (o);
+      else id_none (o);
       if (o.label_p ()) label (o);
       else label_none (o);
       if (o.uuid_p ()) uuid (o);
@@ -514,8 +517,8 @@ namespace XMI
     traverse (Type const& o)
     {
       pre (o);
-      if (o.xmi_id_p ()) xmi_id (o);
-      else xmi_id_none (o);
+      if (o.id_p ()) id (o);
+      else id_none (o);
       if (o.label_p ()) label (o);
       else label_none (o);
       if (o.uuid_p ()) uuid (o);
@@ -544,24 +547,24 @@ namespace XMI
     }
 
     void Extension::
-    xmi_id (Type& o)
+    id (Type& o)
     {
-      dispatch (o.xmi_id ());
+      dispatch (o.id ());
     }
 
     void Extension::
-    xmi_id (Type const& o)
+    id (Type const& o)
     {
-      dispatch (o.xmi_id ());
+      dispatch (o.id ());
     }
 
     void Extension::
-    xmi_id_none (Type&)
+    id_none (Type&)
     {
     }
 
     void Extension::
-    xmi_id_none (Type const&)
+    id_none (Type const&)
     {
     }
 
@@ -757,11 +760,11 @@ namespace XMI
     }
 
     void Extension::
-    xmi_id (Type const& o)
+    id (Type const& o)
     {
-      ::XSCRT::XML::Attribute< ACE_TCHAR > a ("xmi_id", "http://www.omg.org/XMI", "", top_ ());
+      ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "http://www.omg.org/XMI", "", top_ ());
       attr_ (&a);
-      Traversal::Extension::xmi_id (o);
+      Traversal::Extension::id (o);
       attr_ (0);
     }
 
@@ -832,29 +835,32 @@ namespace XMI
 
 namespace XMI
 {
-  void
-  extension (::XMI::Extension const& s, xercesc::DOMDocument* d)
+  namespace writer
   {
-    ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-    if (e.name () != "extension")
+    void
+    extension (::XMI::Extension const& s, xercesc::DOMDocument* d)
     {
-      throw 1;
-    }
-
-    struct W : virtual ::XMI::Writer::Extension,
-    virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
-    virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-    virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
-    virtual ::XSCRT::Writer< ACE_TCHAR >
-    {
-      W (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
+      if (e.name () != "extension")
       {
+        throw 1;
       }
-    };
 
-    W w (e);
-    w.dispatch (s);
+      struct W : virtual ::XMI::Writer::Extension,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
+      virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        W (::XSCRT::XML::Element< ACE_TCHAR >& e)
+        : ::XSCRT::Writer< ACE_TCHAR > (e)
+        {
+        }
+      };
+
+      W w (e);
+      w.dispatch (s);
+    }
   }
 }
 

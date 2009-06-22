@@ -51,17 +51,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-
-    // Keep a copy of the ORB options args
-    ACE_ARGV orb_args;
-    for (int i = 1; i < argc; ++i)
-    {
-        if (orb_args.add (argv[i]) == -1)
+      // Keep a copy of the ORB options args
+      ACE_ARGV orb_args;
+      for (int i = 1; i < argc; ++i)
+        {
+          if (orb_args.add (argv[i]) == -1)
             return -1;
-    }
+        }
 
       ACE_Argv_Type_Converter satc (argc, argv);
-
+      // This eats all orb-specific options!
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv (),
@@ -83,7 +82,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Wait for the server thread to do some processing
       me.wait ();
 
-      // This eats all orb-specific options!
+      // Restore the orb-specific options.
+      argc = orb_args.argc ();
+      for (int i = 1; i < argc; ++i)
+        {
+          argv[i] = const_cast<ACE_TCHAR*> (orb_args[i]);
+        }
       ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
         CORBA::ORB_init (catc.get_argc(),

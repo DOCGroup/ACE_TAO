@@ -51,7 +51,7 @@ public:
   static void write_cdr_plan_file(const char * filename,
       const Deployment::DeploymentPlan & plan);
 
-protected:
+ protected:
 
   /**
    * @brief Launch a plan, given an IDL deployment plan
@@ -85,7 +85,7 @@ protected:
       Deployment::Connections& conn);
 
   virtual void check_mode_consistentness();
-  static ACE_CString expand_env_vars(const char * src);
+  static ACE_CString expand_env_vars(const ACE_TCHAR * src);
 
   /// Cached ORB pointer
   CORBA::ORB_var orb_;

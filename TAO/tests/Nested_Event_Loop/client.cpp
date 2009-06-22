@@ -95,7 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Get an object reference from the argument string.
-      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
+      object = orb->string_to_object (IOR);
 
       // Try to narrow the object reference to a <server> reference.
       server_var server_object = server::_narrow (object.in ());

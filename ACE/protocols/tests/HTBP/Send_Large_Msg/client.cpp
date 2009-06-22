@@ -112,7 +112,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("(%P|%t) Client: ")
                            ACE_TEXT("%p\n %d"),
-                           ACE_TEXT("stream send"), errno),
+                           ACE_TEXT("stream send"), ACE_ERRNO_GET),
                           -1);
       }
     ACE_DEBUG ((LM_DEBUG,

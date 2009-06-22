@@ -71,7 +71,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
   ACE_NEW_RETURN (mybuf, char[line_length + 1], -1);
   const char *c = ACE_ALPHABET;
   const char *d = c;
-#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640))
+#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   // For NTO has to applied to open the file, as Mem_Map can map only shared memory
   ACE_Mem_Map mmap_4_open;
   mmap_4_open.open (filename, O_RDWR | O_CREAT | O_TRUNC, ACE_DEFAULT_FILE_PERMS);
@@ -108,7 +108,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p (%d) <%s>\n"),
                              ACE_TEXT ("Write to file failed:"),
-                             errno,
+                             ACE_ERRNO_GET,
                              filename),
                             -1);
         }
@@ -122,7 +122,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
                             -1);
         }
     }
-#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640))
+#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   mmap_4_open.close();
 #else
   ACE_OS::close (file_handle);
@@ -141,7 +141,7 @@ run_main (int, ACE_TCHAR *[])
 
 #if !defined (ACE_LACKS_MMAP)
 
-#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640))
+#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   ACE_ERROR ((LM_INFO,
                  ACE_TEXT ("mmap on QNX Neutrino/VxWorks can map only shared memory files\n")));
 #endif
@@ -187,7 +187,7 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   // Now create a temporary file for intermediate processing
-#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640))
+#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   ACE_Mem_Map mmap_4_open;
   mmap_4_open.open(temp_file1,
                    O_RDWR | O_TRUNC | O_CREAT,
@@ -209,7 +209,7 @@ run_main (int, ACE_TCHAR *[])
   reverse_file (temp_file_handle,
                 (char *) mmap.addr (),
                 mmap.size ());
-#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640))
+#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   mmap_4_open.close();
 #else
   ACE_OS::close (temp_file_handle);
@@ -224,7 +224,7 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("mmap"),
                        temp_file1),
                       -1);
-#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640))
+#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   mmap_4_open.open(temp_file2,
                    O_RDWR | O_TRUNC | O_CREAT,
                    ACE_DEFAULT_FILE_PERMS);
@@ -243,7 +243,7 @@ run_main (int, ACE_TCHAR *[])
   reverse_file (temp_file_handle,
                 (char *) temp_mmap.addr (),
                 temp_mmap.size ());
-#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640))
+#if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   mmap_4_open.close();
 #else
   ACE_OS::close (temp_file_handle);

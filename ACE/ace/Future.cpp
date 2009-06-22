@@ -328,8 +328,7 @@ template <class T> int
 ACE_Future<T>::cancel (const T &r)
 {
   this->cancel ();
-  return this->future_rep_->set (r,
-                                 *this);
+  return this->future_rep_->set (r, *this);
 }
 
 template <class T> int
@@ -346,8 +345,7 @@ template <class T> int
 ACE_Future<T>::set (const T &r)
 {
   // Give the pointer to the result to the ACE_Future_Rep.
-  return this->future_rep_->set (r,
-                                 *this);
+  return this->future_rep_->set (r, *this);
 }
 
 template <class T> int

@@ -1,18 +1,422 @@
-Tue Apr 14 09:48:27 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+Mon Jun 22 09:33:40 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* CIAO version 0.7 released.
+
+Thu Jun 18 23:03:06 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tools/Config_Handlers/IRDD_Handler.h:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        
+          There is a curious order-of-inclusion problem on macosx-leopoard
+          builds whereby including a non-ACE header before something that
+          includes ace/config.h causes a compiler error in
+          OS_NS_stdlib.inl. It seems that on that platform, the signature
+          of ::unsetenv() varies. I think this should be looked into in
+          greater depth after releasing x.7.0.
+
+Tue Jun 16 00:55:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_plan_generator.mpc:
+        * MPC/config/dance_plan_launcher_base.mpc:
+
+          Linking fixes for RACE.
+
+Mon Jun 15 02:22:01 UTC 2009  William R. Otte  <wotte@william-r-ottes-macbook-pro-2.local>
+
+        * CIAO-INSTALL.html:
+        * NEWS:
+          Minor updates.
+
+Sun Jun 14 06:58:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+          Updated for CB2009 Update 3
+
+Thu Jun 11 19:32:56 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * PROBLEM-REPORT-FORM:
+
+          Added additional PRF question about build method (commit performed
+          on behalf of Chris Cleeland).
+
+Mon Jun  8 09:45:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * ciao/Logger/File_Logger_Backend.cpp
+        * ciao/Server_init.cpp
+        * ciao/Server_init.h
+        * DAnCE/Deployment/Module_Main.h
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h
+        * DAnCE/Logger/Log_Macros.h
+        * DAnCE/Logger/Logger_Service.cpp
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp
+        * DAnCE/NodeApplication/Name_Utilities.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.h
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp
+        * DAnCE/RedirectionService/NameServiceRedirection.cpp
+        * DAnCE/RedirectionService/RedirectionService.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        * DAnCE/RepositoryManager/URL_Parser.cpp
+        * DAnCE/RepositoryManager/URL_Parser.h
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/Starter/Starter.cpp
+        * DAnCE/TargetManager/CmpClient.cpp
+        * DAnCE/TargetManager/DomainDataManager.cpp
+          Unicode changes
+
+Sun Jun  7 17:58:05  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Server_init.cpp
+        * DAnCE/NodeApplication/Name_Utilities.cpp
+          Added include of Tokenizer_T.h
+
+Fri Jun  5 18:17:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer.h
+        * ciao/Logger/File_Logger_Backend.cpp
+        * ciao/Server_init.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * tools/XML/XML_Schema_Resolver.h
+          Unicode fixes
+
+Thu Jun  4 19:12:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp
+          Unicode fixes
+
+Thu Jun  4 14:06:06 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * NEWS:
+
+          News updates for next release.
+
+Mon Jun  1 20:29:12 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIDLC/cidlc.cpp:
+        * MPC/config/ciaocidldefaults.mpb:
+
+          Added two options:  --suppress-lem and --suppress-svnt, which will
+          suppress generation of the local executor mapping and servant code,
+          respectively.
+
+Fri May 29 00:48:01 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+
+          Some tweaks to the generated _svnt files to properly compile with
+          the changes introduced in the previous commit .
+
+Thu May 28 19:07:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+
+          More tweaks to the application of the command line option
+          added in
+
+          Thu May 28 14:01:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+Thu May 28 18:52:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+
+          Applied check for the command line option added in
+
+          Thu May 28 14:01:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          in several places needed for correct generation of
+          the executor IDL file.
+
+Thu May 28 14:01:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+
+          Fixed cut/paste error in comment.
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+
+          Added command line option to generate an IDL module that
+          encloses the entire executor IDL file, and
+          corresponding 'using namespace' declarations in the
+          servant and executor impl header files. This change is
+          a temporary fix for build errors occurring when facet
+          executor IDL generation is duplicated across IDL files
+          for components which have an inheritance relationship
+          but are located in separate translation units. Thanks
+          to Will Otte <wotte@dre.vanderbilt.edu> for reporting
+          the problem and suggesting the fix.
+
+Wed May 27 23:58:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Generator/Plan_Generator.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h:
+        * MPC/config/ciao_plan_generator.mpb:
+
+          Updates for RACE.
+
+Fri May 22 12:58:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/XMI.cpp:
+
+          Warning fixes.
+
+Thu May 21 01:13:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tools/Config_Handlers/ERE_Handler.h:
+
+          fix fuzz.
+
+Wed May 20 01:41:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManagerExt.idl:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/ERE_Handler.h:
+        * tools/Config_Handlers/Utils/Functors.h:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XercesString.h:
+
+          Updates for borland.
+
+Thu May 14 19:12:56 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * MPC/config/cidlc.mpb:
+
+          Replaced: specific(nmake, vc71, vc8, vc9, vc10)
+          With: specific(prop:microsoft)
+
+Tue May 12 19:04:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+
+          Compile fix.
+
+Fri May  8 16:30:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/CCD_Handler.cpp:
+        * tools/Config_Handlers/CEPE_Handler.cpp:
+        * tools/Config_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/CRDD_Handler.cpp:
+        * tools/Config_Handlers/DD_Handler.cpp:
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/Deployment.hpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+        * tools/Config_Handlers/ERE_Handler.cpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/IRDD_Handler.cpp:
+        * tools/Config_Handlers/MDD_Handler.cpp:
+        * tools/Config_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/PSPE_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp:
+        * tools/Config_Handlers/RDD_Handler.cpp:
+        * tools/Config_Handlers/Req_Handler.cpp:
+        * tools/Config_Handlers/Utils/Functors.h:
+        * tools/Config_Handlers/XMI.hpp:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/ccd.hpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/cdd.hpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cdp.hpp:
+        * tools/Config_Handlers/cid.hpp:
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/cpd.hpp:
+        * tools/Config_Handlers/iad.cpp:
+        * tools/Config_Handlers/iad.hpp:
+        * tools/Config_Handlers/pcd.hpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/toplevel.hpp:
+        * tools/Config_Handlers/toplevel.cpp:
+
+          New version of XSC generated code, and necessary porting in the handlers
+          as a potential fix for BCB2009 compilation issues.
+
+Mon May  4 15:52:14 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+
+          Fuzz fix.
+
+Wed Apr 29 02:27:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/xscdefaults.mpb:
+        * docs/schema/Basic_Deployment_Data.xsd:
+        * docs/schema/cid.xsd:
+        * docs/schema/pcd.xsd:
+        * docs/schema/toplevel.xsd:
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/DD_Handler.cpp:
+        * tools/Config_Handlers/Deployment.cpp:
+        * tools/Config_Handlers/Deployment.hpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/MDD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/XMI.cpp:
+        * tools/Config_Handlers/XMI.hpp:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/ccd.hpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/cdd.hpp:
+        * tools/Config_Handlers/cdp.hpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cid.hpp:
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/cpd.hpp:
+        * tools/Config_Handlers/iad.cpp:
+        * tools/Config_Handlers/iad.hpp:
+        * tools/Config_Handlers/pcd.hpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/toplevel.hpp:
+        * tools/Config_Handlers/toplevel.cpp:
+
+          Updates to work with SVN Head version of XSC.
+
+Fri Apr 24 09:18:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+
+          Extended a bit error reporting so that errors are not
+          missed in the final log.
+
+Thu Apr 23 11:07:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/CmpClient.cpp
+        * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp
+          Removed not needed unicode to ascii conversions
+
+Thu Apr 23 08:06:25 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * bin/ciao_tests.lst:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.cpp:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/IDL2XMI_Test.mpc:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.h:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/xmlvalidator.cpp:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+
+          Added and enabled a test for bug#3616. It's marked as
+          unfixed since currently there is a problem with XML
+          generation for anonymous types.
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+          Fixed a compilation error for bug#3607.
+
+Wed Apr 22 14:56:08 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/IDL3_to_XMI/XMI_For_Array/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Array/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/XMI.dtd:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/test.idl:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/XMI.dtd:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+
+          Extended and updated the tests. Now they share XMI.dtd which
+          is the same for all of them.
+
+Wed Apr 22 14:34:02 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/be_global.cpp:
+        * tools/IDL3_to_XMI/Literals.cpp:
+        * tools/IDL3_to_XMI/Literals.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+          Fixed bug#3607. This also fixes a number of other things. In
+          particular XML generation for module reopening and forward
+          declared types. Proper xmi.id generation in a number of places.
+          XML generation for native types. Proper generation of associations
+          for arrays and sequences. Fixed several typos and beautified the
+          code.
+
+Tue Apr 21 06:50:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/fm/*:
+          Added FrameMaker 8 files for the CIAO pdf file. When making changes
+          make sure track changes is enabled.
+
+          This documentation is based on original work contributed by
+          Object Computing, Inc. (OCI), St. Louis, MO, USA,
+          http://www.ociweb.com.
+
+Thu Apr 16 16:13:22 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Added new section anticipating version 0.7.
+
+Tue Apr 14 10:06:19 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * CIAO version 0.6.9 released.
 
 Tue Apr 14 13:57:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
-        
+
           Reworded entries to be consistent with release note.
 
 Mon Apr 13 15:03:24 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * DAnCE/tests/ObjectLocatorTest/ObjectLocatorTest.mpc:
 
-          Scoreboard clean-up to avoid minimum corba builds for this test.  
+          Scoreboard clean-up to avoid minimum corba builds for this test.
 
 Sun Apr 12 18:55:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 

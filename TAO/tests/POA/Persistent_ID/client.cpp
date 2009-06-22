@@ -73,7 +73,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return parse_args_result;
 
       CORBA::Object_var object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
+        orb->string_to_object (IOR);
 
       test_var test1 =
         test::_narrow (object.in ());

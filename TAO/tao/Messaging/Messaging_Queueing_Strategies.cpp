@@ -113,7 +113,7 @@ namespace TAO
       }
 
     // Compute the next deadline...
-    ACE_Time_Value now = ACE_OS::gettimeofday ();
+    ACE_Time_Value const now = ACE_OS::gettimeofday ();
     ACE_Time_Value timeout =
       this->time_conversion (buffering_constraint.timeout);
     new_deadline = now + timeout;

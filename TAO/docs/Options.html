@@ -879,6 +879,12 @@ run as a background process. Note, that this changes the working directory to
 be the root directory "/". This especially affects relative paths specified at the command line.
 This option is only meaningful on OS platforms that support daemonization.</td>
       </tr>
+      <tr>
+        <td><code>-ORBForwardInvocationOnObjectNotExist</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request to next available profile when 
+        receiving OBJECT_NOT_EXIST exception reply. The default is <CODE>0</CODE>(disabled).  
+        </td>
+      </tr>
     </tbody>
   </table>
   </p>
@@ -1536,7 +1542,9 @@ require nested upcalls are not "pure" synchronous clients. Also note that this
 strategy will only affect two way calls, since there is no waiting for
 one way calls. This strategy can also be used in an application that
 is both a client and a server if the server side is handled by a
-separate thread and the client threads are "pure" clients. </p> <p>
+separate thread and the client threads are "pure" clients. When this strategy
+is set to RW, then also the -ORBFlushingStrategy (which is part of the
+Resource_Factory) has to be set to <code>blocking</code>.</p> <p>
         <CODE>MT_NOUPCALL</CODE> <b>(EXPERIMENTAL!)</b> means use a client connection handler that
         participates in the leader-follower model like MT, but, like
         RW, does not allow handling of nested upcalls within the

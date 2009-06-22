@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       /// Get the MC object reference that the client has exposed.
       CORBA::Object_var obj =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (monitor_ior));
+        orb->string_to_object (monitor_ior);
 
       if (CORBA::is_nil (obj.in ()))
         {

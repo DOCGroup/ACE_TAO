@@ -18,13 +18,16 @@
 #define ACE_DEFAULT_CONSTANTS_H
 #include /**/ "ace/pre.h"
 
-// Included just keep compilers that see #pragma dierctive first
+// Included just keep compilers that see #pragma directive first
 // happy.
 #include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// For _POSIX_TIMER_MAX
+#include "ace/os_include/os_limits.h"
 
 // Define the default constants for ACE.  Many of these are used for
 // the ACE tests and applications.  You can change these values by
@@ -310,6 +313,10 @@
 #   define ACE_DEFAULT_MAP_SIZE 1024
 # endif /* ACE_DEFAULT_MAP_SIZE */
 
+# if defined (ACE_DEFAULT_MAP_SIZE) && (ACE_DEFAULT_MAP_SIZE == 0)
+#  error ACE_DEFAULT_MAP_SIZE should not be zero
+# endif /* ACE_DEFAULT_MAP_SIZE */
+
 // Defaults for ACE Timer Wheel
 # if !defined (ACE_DEFAULT_TIMER_WHEEL_SIZE)
 #   define ACE_DEFAULT_TIMER_WHEEL_SIZE 1024
@@ -461,9 +468,13 @@
 
 // Default number of ACE_Event_Handlers supported by
 // ACE_Timer_Heap.
-# if !defined (ACE_DEFAULT_TIMERS)
-#   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
-# endif /* ACE_DEFAULT_TIMERS */
+#if !defined (ACE_DEFAULT_TIMERS) && defined (_POSIX_TIMER_MAX)
+#  define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
+#endif /* ACE_DEFAULT_TIMERS */
+
+#if !defined (ACE_DEFAULT_TIMERS) || (defined (ACE_DEFAULT_TIMERS) && (ACE_DEFAULT_TIMERS == 0))
+#error ACE_DEFAULT_TIMERS should be defined and not be zero
+#endif /* ACE_DEFAULT_TIMERS */
 
 #if defined (ACE_WIN32)
 #  define ACE_PLATFORM_A "Win32"
@@ -493,11 +504,9 @@
 #  define ACE_LD_SEARCH_PATH ACE_TEXT ("PATH")
 #  define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (";")
 #  define ACE_DLL_SUFFIX ACE_TEXT (".dll")
-#  if defined (__MINGW32__)
-#    define ACE_DLL_PREFIX ACE_TEXT ("lib")
-#  else /* __MINGW32__ */
+#  if !defined (ACE_DLL_PREFIX)
 #    define ACE_DLL_PREFIX ACE_TEXT ("")
-#  endif /* __MINGW32__ */
+#  endif /* !ACE_DLL_PREFIX */
 #else /* !ACE_WIN32 */
 #  if !defined (ACE_LD_SEARCH_PATH)
 #    define ACE_LD_SEARCH_PATH ACE_TEXT ("LD_LIBRARY_PATH")

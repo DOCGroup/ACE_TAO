@@ -34,6 +34,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "cid.hpp"
 
 namespace CIAO
@@ -43,6 +46,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export PackagedComponentImplementation : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PackagedComponentImplementation, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -81,6 +87,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentPackageDescription, ACE_Null_Mutex > _ptr;
+
       // label
       // 
       public:
@@ -114,47 +123,47 @@ namespace CIAO
       // configProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
-      void add_configProperty (::CIAO::Config_Handlers::Property const& );
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // implementation
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::PackagedComponentImplementation >::iterator implementation_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::PackagedComponentImplementation >::const_iterator implementation_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackagedComponentImplementation, ACE_Null_Mutex > >::iterator implementation_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackagedComponentImplementation, ACE_Null_Mutex > >::const_iterator implementation_const_iterator;
       implementation_iterator begin_implementation ();
       implementation_iterator end_implementation ();
       implementation_const_iterator begin_implementation () const;
       implementation_const_iterator end_implementation () const;
-      void add_implementation (::CIAO::Config_Handlers::PackagedComponentImplementation const& );
+      void add_implementation ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackagedComponentImplementation, ACE_Null_Mutex > const& );
       size_t count_implementation (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::PackagedComponentImplementation > implementation_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackagedComponentImplementation, ACE_Null_Mutex > > implementation_;
 
       // infoProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
       infoProperty_iterator begin_infoProperty ();
       infoProperty_iterator end_infoProperty ();
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
-      void add_infoProperty (::CIAO::Config_Handlers::Property const& );
+      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_infoProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
       // contentLocation
       // 
@@ -431,10 +440,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -442,10 +449,8 @@ namespace CIAO
         virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
@@ -453,10 +458,8 @@ namespace CIAO
         virtual void 
         referencedImplementation (Type &o)
         {
-
           this->referencedImplementation (const_cast <Type const &> (o));
         }
-
 
         virtual void
         referencedImplementation (Type const&);
@@ -474,10 +477,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -485,10 +486,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -496,10 +495,8 @@ namespace CIAO
         virtual void 
         UUID (Type &o)
         {
-
           this->UUID (const_cast <Type const &> (o));
         }
-
 
         virtual void
         UUID (Type const&);
@@ -507,10 +504,8 @@ namespace CIAO
         virtual void 
         realizes (Type &o)
         {
-
           this->realizes (const_cast <Type const &> (o));
         }
-
 
         virtual void
         realizes (Type const&);
@@ -518,10 +513,8 @@ namespace CIAO
         virtual void 
         configProperty_pre (Type &o)
         {
-
           this->configProperty_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_pre (Type const&);
@@ -529,10 +522,8 @@ namespace CIAO
         virtual void 
         configProperty_next (Type &o)
         {
-
           this->configProperty_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_next (Type const&);
@@ -540,10 +531,8 @@ namespace CIAO
         virtual void 
         configProperty_post (Type &o)
         {
-
           this->configProperty_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_post (Type const&);
@@ -551,10 +540,8 @@ namespace CIAO
         virtual void 
         implementation_pre (Type &o)
         {
-
           this->implementation_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         implementation_pre (Type const&);
@@ -562,10 +549,8 @@ namespace CIAO
         virtual void 
         implementation_next (Type &o)
         {
-
           this->implementation_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         implementation_next (Type const&);
@@ -573,10 +558,8 @@ namespace CIAO
         virtual void 
         implementation_post (Type &o)
         {
-
           this->implementation_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         implementation_post (Type const&);
@@ -584,10 +567,8 @@ namespace CIAO
         virtual void 
         infoProperty_pre (Type &o)
         {
-
           this->infoProperty_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_pre (Type const&);
@@ -595,10 +576,8 @@ namespace CIAO
         virtual void 
         infoProperty_next (Type &o)
         {
-
           this->infoProperty_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_next (Type const&);
@@ -606,10 +585,8 @@ namespace CIAO
         virtual void 
         infoProperty_post (Type &o)
         {
-
           this->infoProperty_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_post (Type const&);
@@ -617,10 +594,8 @@ namespace CIAO
         virtual void 
         contentLocation (Type &o)
         {
-
           this->contentLocation (const_cast <Type const &> (o));
         }
-
 
         virtual void
         contentLocation (Type const&);
@@ -628,10 +603,8 @@ namespace CIAO
         virtual void 
         href (Type &o)
         {
-
           this->href (const_cast <Type const &> (o));
         }
-
 
         virtual void
         href (Type const&);

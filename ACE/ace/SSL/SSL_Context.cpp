@@ -236,7 +236,11 @@ ACE_SSL_Context::set_mode (int mode)
   if (this->context_ != 0)
     return -1;
 
+#if OPENSSL_VERSION_NUMBER >= 0x10000002
+  const SSL_METHOD *method = 0;
+#else
   SSL_METHOD *method = 0;
+#endif
 
   switch (mode)
     {

@@ -20,7 +20,7 @@ namespace CIAO
     template <typename Source,
               typename Dest,
               typename Dest_Type,
-#if defined (__BORLANDC__) && (__BORLANDC__ == 0x564)
+#if defined (__BORLANDC__) // && (__BORLANDC__ == 0x564)
               void (Func)(const Source &, Dest_Type &)>
 #else
               void (&Func)(const Source &, Dest_Type &)>
@@ -33,9 +33,9 @@ namespace CIAO
       {
       }
 
-      void operator() (const Source &src)
+      void operator() (const ACE_Refcounted_Auto_Ptr <Source, ACE_Null_Mutex> &src)
       {
-        Func (src, dest_[pos_++]);
+        Func (*src, dest_[pos_++]);
       }
 
     private:
@@ -68,9 +68,9 @@ namespace CIAO
       {
       }
 
-      void operator() (const ::XMLSchema::string<ACE_TCHAR>  &src)
+      void operator() (const ACE_Refcounted_Auto_Ptr < ::XMLSchema::string<ACE_TCHAR>, ACE_Null_Mutex>  &src)
       {
-        dest_[pos_++] = src.c_str ();
+        dest_[pos_++] = src->c_str ();
       }
 
     private:

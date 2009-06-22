@@ -135,7 +135,7 @@ CORBA::Policy_ptr
 create_min_ratio_policy (CORBA::ORB_ptr orb)
 {
   CORBA::Any min_compression_ratio_any;
-  CORBA::Long min_compression_ratio = 75;
+  Compression::CompressionRatio min_compression_ratio = 0.75;
   min_compression_ratio_any <<= min_compression_ratio;
 
   return orb->create_policy (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID, min_compression_ratio_any);

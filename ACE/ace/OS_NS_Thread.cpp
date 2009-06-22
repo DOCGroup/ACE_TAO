@@ -33,7 +33,7 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
-#elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
+#elif defined (ACE_HAS_WINCE)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & (CREATE_SUSPENDED | STACK_SIZE_PARAM_IS_A_RESERVATION), (unsigned long *) THR_ID)
 #elif defined(ACE_HAS_WTHREADS)
@@ -117,17 +117,15 @@ ACE_OS_thread_key_t ACE_TSS_Emulation::native_tss_key_;
 #    if defined (ACE_HAS_THR_C_FUNC)
 extern "C"
 void
-ACE_TSS_Emulation_cleanup (void *ptr)
+ACE_TSS_Emulation_cleanup (void *)
 {
-   ACE_UNUSED_ARG (ptr);
    // Really this must be used for ACE_TSS_Emulation code to make the TSS
    // cleanup
 }
 #    else
 void
-ACE_TSS_Emulation_cleanup (void *ptr)
+ACE_TSS_Emulation_cleanup (void *)
 {
-   ACE_UNUSED_ARG (ptr);
    // Really this must be used for ACE_TSS_Emulation code to make the TSS
    // cleanup
 }
@@ -1152,7 +1150,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
   // This is needed to ensure that <waiters_> and <was_broadcast_> are
   // consistent relative to each other.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  int have_waiters = 0;
+  bool have_waiters = false;
 
   if (cv->waiters_ > 0)
     {
@@ -1161,7 +1159,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
       // cond_wait() method know how to optimize itself.  Be sure to
       // set this with the <waiters_lock_> held.
       cv->was_broadcast_ = 1;
-      have_waiters = 1;
+      have_waiters = true;
     }
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
   int result = 0;
@@ -1299,7 +1297,7 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
   // value is not in an inconsistent internal state while being
   // updated by another thread.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  bool have_waiters = cv->waiters_ > 0;
+  bool const have_waiters = cv->waiters_ > 0;
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   if (have_waiters)
@@ -3423,7 +3421,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
           rw->ref_count_ = 0;
           rw->num_waiting_writers_ = 0;
           rw->num_waiting_readers_ = 0;
-          rw->important_writer_ = 0;
+          rw->important_writer_ = false;
           result = 0;
         }
       ACE_OS::condattr_destroy (attributes);
@@ -4630,6 +4628,14 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
       return -1;
     }
   return 0;
+#elif defined (ACE_HAS_TASKCPUAFFINITYSET)
+  ACE_UNUSED_ARG (cpu_set_size);
+  int result = 0;
+  if (ACE_ADAPT_RETVAL (::taskCpuAffinitySet (thr_id, *cpu_mask), result) == -1)
+    {
+      return -1;
+    }
+  return 0;
 #else
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (cpu_set_size);
@@ -4668,6 +4674,13 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
   //
   if (::sched_setaffinity (thr_id, cpu_set_size, cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_TASKCPUAFFINITYSET)
+  int result = 0;
+  if (ACE_ADAPT_RETVAL (::taskCpuAffinitySet (thr_id, *cpu_mask), result) == -1)
     {
       return -1;
     }
@@ -5127,59 +5140,62 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
   size_t previous = 0;
   size_t length   = ACE_OS::strlen (string);
 
-  // We use <= to make sure that we get the last argument
-  for (size_t i = 0; i <= length; i++)
+  if (length > 0)
     {
-      // Is it a double quote that hasn't been escaped?
-      if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
+      // We use <= to make sure that we get the last argument
+      for (size_t i = 0; i <= length; i++)
         {
-          indouble ^= 1;
-          if (indouble)
+          // Is it a double quote that hasn't been escaped?
+          if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
             {
-              // We have just entered a double quoted string, so
-              // save the starting position of the contents.
-              previous = i + 1;
+              indouble ^= 1;
+              if (indouble)
+                {
+                  // We have just entered a double quoted string, so
+                  // save the starting position of the contents.
+                  previous = i + 1;
+                }
+              else
+                {
+                  // We have just left a double quoted string, so
+                  // zero out the ending double quote.
+                  string[i] = '\0';
+                }
             }
-          else
+          else if (string[i] == '\\')  // Escape the next character
             {
-              // We have just left a double quoted string, so
-              // zero out the ending double quote.
+              // The next character is automatically
+              // skipped because of the strcpy
+              ACE_OS::strcpy (string + i, string + i + 1);
+              --length;
+            }
+          else if (!indouble &&
+                   (ACE_OS::ace_isspace (string[i]) || string[i] == '\0'))
+            {
               string[i] = '\0';
-            }
-        }
-      else if (string[i] == '\\')  // Escape the next character
-        {
-          // The next character is automatically
-          // skipped because of the strcpy
-          ACE_OS::strcpy (string + i, string + i + 1);
-          length--;
-        }
-      else if (!indouble &&
-               (ACE_OS::ace_isspace (string[i]) || string[i] == '\0'))
-        {
-          string[i] = '\0';
-          if (argc < max_args)
-            {
-              argv[argc] = string + previous;
-              argc++;
-            }
-          else
-            {
-              ACE_OS::fprintf (stderr, "spae(): number of arguments "
-                                       "limited to %d\n", max_args);
-            }
+              if (argc < max_args)
+                {
+                  argv[argc] = string + previous;
+                  ++argc;
+                }
+              else
+                {
+                  ACE_OS::fprintf (stderr, "spae(): number of arguments "
+                                           "limited to %d\n", max_args);
+                }
 
-          // Skip over whitespace in between arguments
-          for(++i; i < length && ACE_OS::ace_isspace (string[i]); ++i)
-            {
+              // Skip over whitespace in between arguments
+              for(++i; i < length && ACE_OS::ace_isspace (string[i]); ++i)
+                {
+                }
+
+              // Save the starting point for the next time around
+              previous = i;
+
+              // Make sure we don't skip over a character due
+              // to the above loop to skip over whitespace
+              --i;
             }
-
-          // Save the starting point for the next time around
-          previous = i;
-
-          // Make sure we don't skip over a character due
-          // to the above loop to skip over whitespace
-          i--;
         }
     }
 }
@@ -5305,9 +5321,10 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   int argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
-
   if (arg)
-    add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
+    {
+      add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
+    }
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations

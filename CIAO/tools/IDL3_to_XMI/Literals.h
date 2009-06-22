@@ -77,7 +77,7 @@ namespace CIAO
         CLASS,
         DATATYPE,
         PACKAGE,
-        _NULL,
+        __NULL,
         ATTR,
         PUBLIC,
         _PRIVATE,
@@ -102,6 +102,7 @@ namespace CIAO
         CLASSIFIER,
         FROZEN,
         INIT_VAL,
+
         // Stereotypes
         ST_CONSUMES,
         ST_ANON_SEQ,
@@ -157,6 +158,7 @@ namespace CIAO
         ST_INTF,
         ST_PRI_KEY,
         ST_ANY,
+        ST_NATIVE,
 
         MAX_LITERAL
       };

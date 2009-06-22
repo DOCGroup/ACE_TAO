@@ -1,8 +1,9 @@
 # Set the version number here.
-%define ACEVER  5.6.9
-%define TAOVER  1.6.9
-%define CIAOVER 0.6.9
+%define ACEVER  5.7
+%define TAOVER  1.7
+%define CIAOVER 0.7
 # Set is_major_ver if the version is X.Y instead X.Y.Z
+%define is_major_ver 1
 
 # TODO
 # Test whether a TAO app with MPC can be build against MPC installed version
@@ -67,10 +68,6 @@ URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
 Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.bz2
 Source1:      ace-tao-rpmlintrc
-## Source1: ace-tao-etc.tar.gz
-## Source2: ace-tao-macros.patch
-## Patch0: ace-tao-config.patch
-## Patch5: ace-tao-orbsvcs-daemon.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if 0%{?centos_version}
@@ -507,7 +504,7 @@ Summary:      Make Project Creator
 Version:      %{ACEVER}
 Group:        Development/Tools/Building
 %if !0%{?suse_version}
-Provides:     perl (Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter)
+Provides:     perl(Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter)
 %endif
 
 %description -n mpc
@@ -825,9 +822,6 @@ export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
 
 # patch0 and patch1 are applied a bit later
-
-#patch5 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
 
 # don't use patch8 until we verify wether needed
 
@@ -1287,12 +1281,6 @@ rm -f tao-headers.tmp
 # install the TAO_IDL compiler
 install -d %{buildroot}%{_libdir}
 
-# NOTE - it appears that when TAO's build copies the files to the
-# ACE_ROOT/ace directory they get versioned with ACE's version number
-# rather then TAO's.  Use the ACEVERSO macro for now ...
-install \
-        %{buildroot}%{_libdir}
-
 install -d %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/ace_gperf %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_idl %{buildroot}%{_bindir}
@@ -1308,17 +1296,13 @@ install ${ACE_ROOT}/bin/tao_nslist %{buildroot}%{_bindir}/tao_nslist
 # ================================================================
 
 install -d %{buildroot}%{_sysconfdir}
-tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.bz2 \
-        -C %{buildroot}%{_sysconfdir}
+cp -R ${ACE_ROOT}/rpmbuild/logrotate.d %{buildroot}%{_sysconfdir}/logrotate.d
+cp -R ${ACE_ROOT}/tao %{buildroot}%{_sysconfdir}/tao
 
 %if %{defined suse_version}
-tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-init-suse.tar.bz2 \
-        -C %{buildroot}%{_sysconfdir}
-mkdir -p %{buildroot}%{_localstatedir}/adm
-mv %{buildroot}%{_sysconfdir}/fillup-templates %{buildroot}%{_localstatedir}/adm/
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse %{buildroot}%{_sysconfdir}
 %else
-tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora.tar.bz2 \
-        -C %{buildroot}%{_sysconfdir}
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora %{buildroot}%{_sysconfdir}
 %endif
 
 %if %{defined suse_version}
@@ -2385,7 +2369,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-cosnaming
 %{_sbindir}/rctao-cosnaming
-%{_localstatedir}/adm/fillup-templates/tao-cosnaming
+%{_sysconfdir}/tao/tao-cosnaming
 %else
 %{_sysconfdir}/rc.d/init.d/tao-cosnaming
 %config(noreplace) %{_sysconfdir}/tao/tao-cosnaming.opt
@@ -2414,7 +2398,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-cosevent
 %{_sbindir}/rctao-cosevent
-%{_localstatedir}/adm/fillup-templates/tao-cosevent
+%{_sysconfdir}/tao/tao-cosevent
 %else
 %{_sysconfdir}/rc.d/init.d/tao-cosevent
 %config(noreplace) %{_sysconfdir}/tao/tao-cosevent.opt
@@ -2441,7 +2425,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-cosnotification
 %{_sbindir}/rctao-cosnotification
-%{_localstatedir}/adm/fillup-templates/tao-cosnotification
+%{_sysconfdir}/tao/tao-cosnotification
 %else
 %{_sysconfdir}/rc.d/init.d/tao-cosnotification
 %config(noreplace) %{_sysconfdir}/tao/tao-cosnotification.opt
@@ -2469,7 +2453,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-costrading
 %{_sbindir}/rctao-costrading
-%{_localstatedir}/adm/fillup-templates/tao-costrading
+%{_sysconfdir}/tao/tao-costrading
 %else
 %{_sysconfdir}/rc.d/init.d/tao-costrading
 %config(noreplace) %{_sysconfdir}/tao/tao-costrading.opt
@@ -2496,7 +2480,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-rtevent
 %{_sbindir}/rctao-rtevent
-%{_localstatedir}/adm/fillup-templates/tao-rtevent
+%{_sysconfdir}/tao/tao-rtevent
 %else
 %{_sysconfdir}/rc.d/init.d/tao-rtevent
 %config(noreplace) %{_sysconfdir}/tao/tao-rtevent.opt
@@ -2523,7 +2507,7 @@ fi
 %if %{defined suse_version}
 %{_sysconfdir}/init.d/tao-cosconcurrency
 %{_sbindir}/rctao-cosconcurrency
-%{_localstatedir}/adm/fillup-templates/tao-cosconcurrency
+%{_sysconfdir}/tao/tao-cosconcurrency
 %else
 %{_sysconfdir}/rc.d/init.d/tao-cosconcurrency
 %config(noreplace) %{_sysconfdir}/tao/tao-cosconcurrency.opt

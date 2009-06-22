@@ -16,8 +16,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       PortableServer::POAManager_var mgr = poa->the_POAManager();
       mgr->activate();
 
-      Messenger_i messenger_servant (orb.in ());
-      PortableServer::ObjectId_var oid = poa->activate_object (&messenger_servant);
+      PortableServer::Servant_var<Messenger_i> messenger_servant =
+        new Messenger_i(orb.in ());
+      PortableServer::ObjectId_var oid = poa->activate_object (messenger_servant.in());
       CORBA::Object_var messenger_obj = poa->id_to_reference (oid.in ());
       CORBA::String_var str = orb->object_to_string (messenger_obj.in());
 

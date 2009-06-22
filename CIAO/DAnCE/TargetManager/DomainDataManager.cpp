@@ -5,7 +5,7 @@
 #include "tools/Config_Handlers/DnC_Dump.h"
 #include "ciao/CIAO_common.h"
 
-const char * domain_file_name = "Domain.cdd";
+const ACE_TCHAR * domain_file_name = ACE_TEXT("Domain.cdd");
 
 CIAO::DomainDataManager* CIAO::DomainDataManager::global_data_manager_ = 0;
 

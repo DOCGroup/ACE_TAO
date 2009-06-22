@@ -438,6 +438,7 @@ endif
 OBJEXT ?= o
 SOEXT ?= so
 LIBEXT ?= a
+LIB_PREFIX ?= lib
 
 CC_OUTPUT_FLAG ?= -o
 SO_OUTPUT_FLAG ?= -o
@@ -810,12 +811,12 @@ ifdef quantify
   #### You might want to adjust the Quantify options below.
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
-  PRELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
-             -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
+  PURELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
+              -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
   CPPFLAGS += -DACE_HAS_QUANTIFY -I$(ACE_QUANTIFY_DIR)
 
   ifeq ($(shell uname -p),sparc)
-    PRELINK += -record-register-window-traps
+    PURELINK += -record-register-window-traps
   endif # sparc
 endif # quantify
 
@@ -913,4 +914,8 @@ else
   LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
-SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+ifeq ($(SOLINK.cc),override)
+  SOLINK.cc = $(SOLINK.cc.override)
+else
+  SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+endif # SOLINK.cc.override

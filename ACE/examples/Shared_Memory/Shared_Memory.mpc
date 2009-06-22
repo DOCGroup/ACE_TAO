@@ -1,15 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(*MM) : aceexe {
-  avoids += ace_for_tao
+project(*MM) : aceexe, avoids_ace_for_tao {
   exename = testmm
   Source_Files {
     test_MM.cpp
   }
 }
-project(*SV) : aceexe {
-  avoids += ace_for_tao
+project(*SV) : aceexe, avoids_ace_for_tao {
   exename = testsv
   Source_Files {
     test_SV.cpp

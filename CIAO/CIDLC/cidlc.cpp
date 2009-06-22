@@ -138,8 +138,15 @@ main (int argc, char* argv[])
                       "Run preprocessor only and output result to stdout.",
                       CL::OptionType::flag));
 
-    cld.add_argument ("cidl file");
+    cld.add_option (CL::OptionDescription ("suppress-lem",
+                                           "Suppress generation of local executor mapping",
+                                           CL::OptionType::flag));
 
+    cld.add_option (CL::OptionDescription ("suppress-svnt",
+                                           "Suppress generation of servant code",
+                                           CL::OptionType::flag));
+    
+    cld.add_argument ("cidl file");
 
     CommandLine cl;
 
@@ -330,6 +337,7 @@ main (int argc, char* argv[])
 
 
     // Generate executor mapping.
+    if (!cl.get_value ("suppress-lem", false))
     {
       ExecutorMappingGenerator lem_gen;
       lem_gen.generate (cl, tu, file_path);
@@ -349,6 +357,7 @@ main (int argc, char* argv[])
     }
 
     // Generate servant code.
+    if (!cl.get_value ("suppress-svnt", false))
     {
       ServantGenerator svnt_gen (cl);
       svnt_gen.generate (tu, file_path);

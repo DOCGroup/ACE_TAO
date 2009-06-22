@@ -25,77 +25,53 @@ namespace CIAO
     // 
 
     Domain::
-    Domain ()
+    Domain (::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > const& node__)
     : 
     ::XSCRT::Type (), 
+    node_ (node__),
     regulator__ ()
     {
     }
 
     Domain::
-    Domain (::CIAO::Config_Handlers::Domain const& s)
+    Domain (Domain const& s)
     :
     ::XSCRT::Type (),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    node_ (s.node_),
+    interconnect_ (s.interconnect_),
+    bridge_ (s.bridge_),
+    sharedResource_ (s.sharedResource_),
+    infoProperty_ (s.infoProperty_),
     regulator__ ()
     {
       if (UUID_.get ()) UUID_->container (this);
       if (label_.get ()) label_->container (this);
-      {
-        for (node_const_iterator i (s.node_.begin ());i != s.node_.end ();++i) add_node (*i);
-      }
-
-      {
-        for (interconnect_const_iterator i (s.interconnect_.begin ());i != s.interconnect_.end ();++i) add_interconnect (*i);
-      }
-
-      {
-        for (bridge_const_iterator i (s.bridge_.begin ());i != s.bridge_.end ();++i) add_bridge (*i);
-      }
-
-      {
-        for (sharedResource_const_iterator i (s.sharedResource_.begin ());i != s.sharedResource_.end ();++i) add_sharedResource (*i);
-      }
-
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::Domain& Domain::
-    operator= (::CIAO::Config_Handlers::Domain const& s)
+    Domain& Domain::
+    operator= (Domain const& s)
     {
-      if (s.UUID_.get ()) UUID (*(s.UUID_));
-      else UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.UUID_.get ())
+        UUID (*(s.UUID_));
+      else
+        UUID_.reset (0);
 
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
 
-      node_.clear ();
-      {
-        for (node_const_iterator i (s.node_.begin ());i != s.node_.end ();++i) add_node (*i);
-      }
+      node_ = s.node_;
 
-      interconnect_.clear ();
-      {
-        for (interconnect_const_iterator i (s.interconnect_.begin ());i != s.interconnect_.end ();++i) add_interconnect (*i);
-      }
+      interconnect_ = s.interconnect_;
 
-      bridge_.clear ();
-      {
-        for (bridge_const_iterator i (s.bridge_.begin ());i != s.bridge_.end ();++i) add_bridge (*i);
-      }
+      bridge_ = s.bridge_;
 
-      sharedResource_.clear ();
-      {
-        for (sharedResource_const_iterator i (s.sharedResource_.begin ());i != s.sharedResource_.end ();++i) add_sharedResource (*i);
-      }
+      sharedResource_ = s.sharedResource_;
 
-      infoProperty_.clear ();
-      {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
-      }
+      infoProperty_ = s.infoProperty_;
 
       return *this;
     }
@@ -186,7 +162,7 @@ namespace CIAO
     }
 
     void Domain::
-    add_node (::CIAO::Config_Handlers::Node const& e)
+    add_node (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex >  const& e)
     {
       node_.push_back (e);
     }
@@ -224,7 +200,7 @@ namespace CIAO
     }
 
     void Domain::
-    add_interconnect (::CIAO::Config_Handlers::Interconnect const& e)
+    add_interconnect (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  const& e)
     {
       interconnect_.push_back (e);
     }
@@ -262,7 +238,7 @@ namespace CIAO
     }
 
     void Domain::
-    add_bridge (::CIAO::Config_Handlers::Bridge const& e)
+    add_bridge (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex >  const& e)
     {
       bridge_.push_back (e);
     }
@@ -300,7 +276,7 @@ namespace CIAO
     }
 
     void Domain::
-    add_sharedResource (::CIAO::Config_Handlers::SharedResource const& e)
+    add_sharedResource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex >  const& e)
     {
       sharedResource_.push_back (e);
     }
@@ -338,7 +314,7 @@ namespace CIAO
     }
 
     void Domain::
-    add_infoProperty (::CIAO::Config_Handlers::Property const& e)
+    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
     {
       infoProperty_.push_back (e);
     }
@@ -354,51 +330,43 @@ namespace CIAO
     // 
 
     Bridge::
-    Bridge (::XMLSchema::string< ACE_TCHAR > const& name__)
+    Bridge (::XMLSchema::string< ACE_TCHAR > const& name__,
+            ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > > const& connect__)
     : 
-    ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
+    connect_ (connect__),
     regulator__ ()
     {
       name_->container (this);
     }
 
     Bridge::
-    Bridge (::CIAO::Config_Handlers::Bridge const& s)
+    Bridge (Bridge const& s)
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    connect_ (s.connect_),
+    resource_ (s.resource_),
     regulator__ ()
     {
       name_->container (this);
       if (label_.get ()) label_->container (this);
-      {
-        for (connect_const_iterator i (s.connect_.begin ());i != s.connect_.end ();++i) add_connect (*i);
-      }
-
-      {
-        for (resource_const_iterator i (s.resource_.begin ());i != s.resource_.end ();++i) add_resource (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::Bridge& Bridge::
-    operator= (::CIAO::Config_Handlers::Bridge const& s)
+    Bridge& Bridge::
+    operator= (Bridge const& s)
     {
-      name (s.name ());
+      name (*s.name_);
 
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
 
-      connect_.clear ();
-      {
-        for (connect_const_iterator i (s.connect_.begin ());i != s.connect_.end ();++i) add_connect (*i);
-      }
+      connect_ = s.connect_;
 
-      resource_.clear ();
-      {
-        for (resource_const_iterator i (s.resource_.begin ());i != s.resource_.end ();++i) add_resource (*i);
-      }
+      resource_ = s.resource_;
 
       return *this;
     }
@@ -474,7 +442,7 @@ namespace CIAO
     }
 
     void Bridge::
-    add_connect (::CIAO::Config_Handlers::Interconnect const& e)
+    add_connect (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  const& e)
     {
       connect_.push_back (e);
     }
@@ -512,7 +480,7 @@ namespace CIAO
     }
 
     void Bridge::
-    add_resource (::CIAO::Config_Handlers::Resource const& e)
+    add_resource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  const& e)
     {
       resource_.push_back (e);
     }
@@ -528,60 +496,46 @@ namespace CIAO
     // 
 
     Interconnect::
-    Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__)
+    Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__,
+                  ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > > const& connect__)
     : 
-    ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
+    connect_ (connect__),
     regulator__ ()
     {
       name_->container (this);
     }
 
     Interconnect::
-    Interconnect (::CIAO::Config_Handlers::Interconnect const& s)
+    Interconnect (Interconnect const& s)
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    connection_ (s.connection_),
+    connect_ (s.connect_),
+    resource_ (s.resource_),
     regulator__ ()
     {
       name_->container (this);
       if (label_.get ()) label_->container (this);
-      {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
-      }
-
-      {
-        for (connect_const_iterator i (s.connect_.begin ());i != s.connect_.end ();++i) add_connect (*i);
-      }
-
-      {
-        for (resource_const_iterator i (s.resource_.begin ());i != s.resource_.end ();++i) add_resource (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::Interconnect& Interconnect::
-    operator= (::CIAO::Config_Handlers::Interconnect const& s)
+    Interconnect& Interconnect::
+    operator= (Interconnect const& s)
     {
-      name (s.name ());
+      name (*s.name_);
 
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
 
-      connection_.clear ();
-      {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
-      }
+      connection_ = s.connection_;
 
-      connect_.clear ();
-      {
-        for (connect_const_iterator i (s.connect_.begin ());i != s.connect_.end ();++i) add_connect (*i);
-      }
+      connect_ = s.connect_;
 
-      resource_.clear ();
-      {
-        for (resource_const_iterator i (s.resource_.begin ());i != s.resource_.end ();++i) add_resource (*i);
-      }
+      resource_ = s.resource_;
 
       return *this;
     }
@@ -657,7 +611,7 @@ namespace CIAO
     }
 
     void Interconnect::
-    add_connection (::CIAO::Config_Handlers::Bridge const& e)
+    add_connection (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex >  const& e)
     {
       connection_.push_back (e);
     }
@@ -695,7 +649,7 @@ namespace CIAO
     }
 
     void Interconnect::
-    add_connect (::CIAO::Config_Handlers::Node const& e)
+    add_connect (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex >  const& e)
     {
       connect_.push_back (e);
     }
@@ -733,7 +687,7 @@ namespace CIAO
     }
 
     void Interconnect::
-    add_resource (::CIAO::Config_Handlers::Resource const& e)
+    add_resource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  const& e)
     {
       resource_.push_back (e);
     }
@@ -751,7 +705,6 @@ namespace CIAO
     Node::
     Node (::XMLSchema::string< ACE_TCHAR > const& name__)
     : 
-    ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     regulator__ ()
     {
@@ -759,50 +712,35 @@ namespace CIAO
     }
 
     Node::
-    Node (::CIAO::Config_Handlers::Node const& s)
+    Node (Node const& s)
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    connection_ (s.connection_),
+    sharedResource_ (s.sharedResource_),
+    resource_ (s.resource_),
     regulator__ ()
     {
       name_->container (this);
       if (label_.get ()) label_->container (this);
-      {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
-      }
-
-      {
-        for (sharedResource_const_iterator i (s.sharedResource_.begin ());i != s.sharedResource_.end ();++i) add_sharedResource (*i);
-      }
-
-      {
-        for (resource_const_iterator i (s.resource_.begin ());i != s.resource_.end ();++i) add_resource (*i);
-      }
     }
 
-    ::CIAO::Config_Handlers::Node& Node::
-    operator= (::CIAO::Config_Handlers::Node const& s)
+    Node& Node::
+    operator= (Node const& s)
     {
-      name (s.name ());
+      name (*s.name_);
 
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
 
-      connection_.clear ();
-      {
-        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
-      }
+      connection_ = s.connection_;
 
-      sharedResource_.clear ();
-      {
-        for (sharedResource_const_iterator i (s.sharedResource_.begin ());i != s.sharedResource_.end ();++i) add_sharedResource (*i);
-      }
+      sharedResource_ = s.sharedResource_;
 
-      resource_.clear ();
-      {
-        for (resource_const_iterator i (s.resource_.begin ());i != s.resource_.end ();++i) add_resource (*i);
-      }
+      resource_ = s.resource_;
 
       return *this;
     }
@@ -878,7 +816,7 @@ namespace CIAO
     }
 
     void Node::
-    add_connection (::CIAO::Config_Handlers::Interconnect const& e)
+    add_connection (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  const& e)
     {
       connection_.push_back (e);
     }
@@ -916,7 +854,7 @@ namespace CIAO
     }
 
     void Node::
-    add_sharedResource (::CIAO::Config_Handlers::SharedResource const& e)
+    add_sharedResource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex >  const& e)
     {
       sharedResource_.push_back (e);
     }
@@ -954,7 +892,7 @@ namespace CIAO
     }
 
     void Node::
-    add_resource (::CIAO::Config_Handlers::Resource const& e)
+    add_resource (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  const& e)
     {
       resource_.push_back (e);
     }
@@ -975,7 +913,6 @@ namespace CIAO
                     ::CIAO::Config_Handlers::Node const& node__,
                     ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     : 
-    ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (resourceType__)),
     node_ (new ::CIAO::Config_Handlers::Node (node__)),
@@ -989,7 +926,7 @@ namespace CIAO
     }
 
     SharedResource::
-    SharedResource (::CIAO::Config_Handlers::SharedResource const& s)
+    SharedResource (SharedResource const& s)
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
@@ -1004,16 +941,16 @@ namespace CIAO
       property_->container (this);
     }
 
-    ::CIAO::Config_Handlers::SharedResource& SharedResource::
-    operator= (::CIAO::Config_Handlers::SharedResource const& s)
+    SharedResource& SharedResource::
+    operator= (SharedResource const& s)
     {
-      name (s.name ());
+      name (*s.name_);
 
-      resourceType (s.resourceType ());
+      resourceType (*s.resourceType_);
 
-      node (s.node ());
+      node (*s.node_);
 
-      property (s.property ());
+      property (*s.property_);
 
       return *this;
     }
@@ -1110,31 +1047,31 @@ namespace CIAO
 
         else if (n == "node")
         {
-          ::CIAO::Config_Handlers::Node t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Node (e));
           add_node (t);
         }
 
         else if (n == "interconnect")
         {
-          ::CIAO::Config_Handlers::Interconnect t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Interconnect (e));
           add_interconnect (t);
         }
 
         else if (n == "bridge")
         {
-          ::CIAO::Config_Handlers::Bridge t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Bridge (e));
           add_bridge (t);
         }
 
         else if (n == "sharedResource")
         {
-          ::CIAO::Config_Handlers::SharedResource t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SharedResource (e));
           add_sharedResource (t);
         }
 
         else if (n == "infoProperty")
         {
-          ::CIAO::Config_Handlers::Property t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
@@ -1173,13 +1110,13 @@ namespace CIAO
 
         else if (n == "connect")
         {
-          ::CIAO::Config_Handlers::Interconnect t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Interconnect (e));
           add_connect (t);
         }
 
         else if (n == "resource")
         {
-          ::CIAO::Config_Handlers::Resource t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Resource (e));
           add_resource (t);
         }
 
@@ -1218,19 +1155,19 @@ namespace CIAO
 
         else if (n == "connection")
         {
-          ::CIAO::Config_Handlers::Bridge t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Bridge (e));
           add_connection (t);
         }
 
         else if (n == "connect")
         {
-          ::CIAO::Config_Handlers::Node t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Node (e));
           add_connect (t);
         }
 
         else if (n == "resource")
         {
-          ::CIAO::Config_Handlers::Resource t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Resource (e));
           add_resource (t);
         }
 
@@ -1269,19 +1206,19 @@ namespace CIAO
 
         else if (n == "connection")
         {
-          ::CIAO::Config_Handlers::Interconnect t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Interconnect (e));
           add_connection (t);
         }
 
         else if (n == "sharedResource")
         {
-          ::CIAO::Config_Handlers::SharedResource t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SharedResource (e));
           add_sharedResource (t);
         }
 
         else if (n == "resource")
         {
-          ::CIAO::Config_Handlers::Resource t (e);
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Resource (e));
           add_resource (t);
         }
 
@@ -1359,7 +1296,7 @@ namespace CIAO
       {
         DomainTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (Domain));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Domain));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1373,7 +1310,7 @@ namespace CIAO
       {
         BridgeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (Bridge));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Bridge));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1387,7 +1324,7 @@ namespace CIAO
       {
         InterconnectTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (Interconnect));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Interconnect));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1401,7 +1338,7 @@ namespace CIAO
       {
         NodeTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (Node));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::Node));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1415,7 +1352,7 @@ namespace CIAO
       {
         SharedResourceTypeInfoInitializer ()
         {
-          ::XSCRT::TypeId id (typeid (SharedResource));
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::SharedResource));
           ::XSCRT::ExtendedTypeInfo nf (id);
 
           nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
@@ -1529,14 +1466,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::node_iterator b (o.begin_node()), e (o.end_node());
+        ::CIAO::Config_Handlers::Domain::node_iterator b (o.begin_node()), e (o.end_node());
 
         if (b != e)
         {
           node_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) node_next (o);
           }
 
@@ -1549,14 +1486,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::node_const_iterator b (o.begin_node()), e (o.end_node());
+        ::CIAO::Config_Handlers::Domain::node_const_iterator b (o.begin_node()), e (o.end_node());
 
         if (b != e)
         {
           node_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) node_next (o);
           }
 
@@ -1599,14 +1536,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::interconnect_iterator b (o.begin_interconnect()), e (o.end_interconnect());
+        ::CIAO::Config_Handlers::Domain::interconnect_iterator b (o.begin_interconnect()), e (o.end_interconnect());
 
         if (b != e)
         {
           interconnect_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) interconnect_next (o);
           }
 
@@ -1621,14 +1558,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::interconnect_const_iterator b (o.begin_interconnect()), e (o.end_interconnect());
+        ::CIAO::Config_Handlers::Domain::interconnect_const_iterator b (o.begin_interconnect()), e (o.end_interconnect());
 
         if (b != e)
         {
           interconnect_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) interconnect_next (o);
           }
 
@@ -1683,14 +1620,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::bridge_iterator b (o.begin_bridge()), e (o.end_bridge());
+        ::CIAO::Config_Handlers::Domain::bridge_iterator b (o.begin_bridge()), e (o.end_bridge());
 
         if (b != e)
         {
           bridge_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) bridge_next (o);
           }
 
@@ -1705,14 +1642,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::bridge_const_iterator b (o.begin_bridge()), e (o.end_bridge());
+        ::CIAO::Config_Handlers::Domain::bridge_const_iterator b (o.begin_bridge()), e (o.end_bridge());
 
         if (b != e)
         {
           bridge_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) bridge_next (o);
           }
 
@@ -1767,14 +1704,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::sharedResource_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
+        ::CIAO::Config_Handlers::Domain::sharedResource_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
 
         if (b != e)
         {
           sharedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) sharedResource_next (o);
           }
 
@@ -1789,14 +1726,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::sharedResource_const_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
+        ::CIAO::Config_Handlers::Domain::sharedResource_const_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
 
         if (b != e)
         {
           sharedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) sharedResource_next (o);
           }
 
@@ -1851,14 +1788,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::Domain::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -1873,14 +1810,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Domain::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+        ::CIAO::Config_Handlers::Domain::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
         {
           infoProperty_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) infoProperty_next (o);
           }
 
@@ -2017,14 +1954,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Bridge::Type::connect_iterator b (o.begin_connect()), e (o.end_connect());
+        ::CIAO::Config_Handlers::Bridge::connect_iterator b (o.begin_connect()), e (o.end_connect());
 
         if (b != e)
         {
           connect_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connect_next (o);
           }
 
@@ -2037,14 +1974,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Bridge::Type::connect_const_iterator b (o.begin_connect()), e (o.end_connect());
+        ::CIAO::Config_Handlers::Bridge::connect_const_iterator b (o.begin_connect()), e (o.end_connect());
 
         if (b != e)
         {
           connect_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connect_next (o);
           }
 
@@ -2087,14 +2024,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Bridge::Type::resource_iterator b (o.begin_resource()), e (o.end_resource());
+        ::CIAO::Config_Handlers::Bridge::resource_iterator b (o.begin_resource()), e (o.end_resource());
 
         if (b != e)
         {
           resource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resource_next (o);
           }
 
@@ -2109,14 +2046,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Bridge::Type::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
+        ::CIAO::Config_Handlers::Bridge::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
 
         if (b != e)
         {
           resource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resource_next (o);
           }
 
@@ -2255,14 +2192,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Interconnect::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
+        ::CIAO::Config_Handlers::Interconnect::connection_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
           connection_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connection_next (o);
           }
 
@@ -2277,14 +2214,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Interconnect::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+        ::CIAO::Config_Handlers::Interconnect::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
           connection_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connection_next (o);
           }
 
@@ -2339,14 +2276,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Interconnect::Type::connect_iterator b (o.begin_connect()), e (o.end_connect());
+        ::CIAO::Config_Handlers::Interconnect::connect_iterator b (o.begin_connect()), e (o.end_connect());
 
         if (b != e)
         {
           connect_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connect_next (o);
           }
 
@@ -2359,14 +2296,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Interconnect::Type::connect_const_iterator b (o.begin_connect()), e (o.end_connect());
+        ::CIAO::Config_Handlers::Interconnect::connect_const_iterator b (o.begin_connect()), e (o.end_connect());
 
         if (b != e)
         {
           connect_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connect_next (o);
           }
 
@@ -2409,14 +2346,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Interconnect::Type::resource_iterator b (o.begin_resource()), e (o.end_resource());
+        ::CIAO::Config_Handlers::Interconnect::resource_iterator b (o.begin_resource()), e (o.end_resource());
 
         if (b != e)
         {
           resource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resource_next (o);
           }
 
@@ -2431,14 +2368,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Interconnect::Type::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
+        ::CIAO::Config_Handlers::Interconnect::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
 
         if (b != e)
         {
           resource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resource_next (o);
           }
 
@@ -2577,14 +2514,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Node::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
+        ::CIAO::Config_Handlers::Node::connection_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
           connection_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connection_next (o);
           }
 
@@ -2599,14 +2536,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Node::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+        ::CIAO::Config_Handlers::Node::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
         {
           connection_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) connection_next (o);
           }
 
@@ -2661,14 +2598,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Node::Type::sharedResource_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
+        ::CIAO::Config_Handlers::Node::sharedResource_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
 
         if (b != e)
         {
           sharedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) sharedResource_next (o);
           }
 
@@ -2683,14 +2620,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Node::Type::sharedResource_const_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
+        ::CIAO::Config_Handlers::Node::sharedResource_const_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
 
         if (b != e)
         {
           sharedResource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) sharedResource_next (o);
           }
 
@@ -2745,14 +2682,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Node::Type::resource_iterator b (o.begin_resource()), e (o.end_resource());
+        ::CIAO::Config_Handlers::Node::resource_iterator b (o.begin_resource()), e (o.end_resource());
 
         if (b != e)
         {
           resource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resource_next (o);
           }
 
@@ -2767,14 +2704,14 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        Node::Type::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
+        ::CIAO::Config_Handlers::Node::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
 
         if (b != e)
         {
           resource_pre (o);
           for (; b != e;)
           {
-            dispatch (*b);
+            dispatch (*(*b));
             if (++b != e) resource_next (o);
           }
 

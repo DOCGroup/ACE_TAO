@@ -40,7 +40,7 @@ Echo::echo_payload_out (
   int j = ACE_OS::rand() % 40000;
   data = new Test::Payload(j);
   data->length(j);
-  ACE_OS::memset(data->get_buffer(), data->length(), 0);
+  ACE_OS::memset(data->get_buffer(), 0, data->length());
 
   --this->abort_counter_;
 

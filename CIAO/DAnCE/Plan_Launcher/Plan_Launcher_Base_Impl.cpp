@@ -23,13 +23,13 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
   DANCE_TRACE ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl");
   if (CORBA::is_nil (this->orb_))
     {
-      DANCE_DEBUG ((LM_INFO, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
-                    "Creating internal ORB.\n"));
+      DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - ")
+                    ACE_TEXT("Creating internal ORB.\n")));
       this->orb_ = CORBA::ORB_init (argc, argv);
     }
   this->parse_args(argc, argv);
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO "Plan_Launcher_i::init - em_ior = \"%s\"\n"
+  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_i::init - em_ior = \"%C\"\n")
                 , is_empty (this->em_ior_) ? "NULL" : this->em_ior_.c_str()));
 
   if (this->mode_ & (MODE_START_PLAN | MODE_STOP_PLAN))
@@ -40,8 +40,8 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
           obj = this->orb_->string_to_object(this->em_ior_.c_str());
           if (CORBA::is_nil(obj))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
-                            "Failed to retrieve EM object from \"%s\"\n", this->em_ior_.c_str()));
+              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - ")
+                            ACE_TEXT("Failed to retrieve EM object from \"%C\"\n"), this->em_ior_.c_str()));
               throw Deployment_Failure ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
                                         "failed to retrieve EM object");
             }
@@ -52,22 +52,22 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
        }
       catch(CORBA::Exception&)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
-                        "Failed to retrieve EM object from \"%s\"\n", this->em_ior_.c_str()));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - ")
+                        ACE_TEXT("Failed to retrieve EM object from \"%C\"\n"), this->em_ior_.c_str()));
           throw Deployment_Failure ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
                                     "failed to retrieve EM object");
         }
 
       if (CORBA::is_nil (this->em_.in()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
-                        "failed to get an execution manager.\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - ")
+                        ACE_TEXT("failed to get an execution manager.\n")));
           throw Deployment_Failure ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
                                     "failed to get an execution manager");
         }
     }
-  DANCE_DEBUG ((LM_TRACE, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
-                "Obtained Execution Manager ref\n"));
+  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - ")
+                ACE_TEXT("Obtained Execution Manager ref\n")));
 }
 
 Plan_Launcher_Base_Impl::~Plan_Launcher_Base_Impl()
@@ -83,8 +83,8 @@ void Plan_Launcher_Base_Impl::execute()
       size_t sz = this->cdr_plan_urls_.size();
       for (size_t i= 0; i < sz; ++i)
         {
-          DANCE_DEBUG ((LM_TRACE, DLINFO "Plan_Launcher_Base_Impl::execute - "
-                        "launching plan \"%s\"...\n", this->cdr_plan_urls_[i].c_str()));
+          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::execute - ")
+                        ACE_TEXT("launching plan \"%s\"...\n"), this->cdr_plan_urls_[i].c_str()));
           ::Deployment::DeploymentPlan_var plan = this->read_cdr_plan_file(this->cdr_plan_urls_[i].c_str());
           try
           {
@@ -94,8 +94,8 @@ void Plan_Launcher_Base_Impl::execute()
                 throw Deployment_Failure ("Plan_Launcher_Base_Impl::execute - "
                                           "Error launching plan\n");
               }
-            DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::execute - "
-                          "returned plan UUID is \"%s\"\n", uuid.in ()));
+            DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::execute - ")
+                          ACE_TEXT("returned plan UUID is \"%C\"\n"), uuid.in ()));
           }
           catch (...)
           {
@@ -117,7 +117,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
 
   try
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - Starting...\n"));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - Starting...\n")));
       if (CORBA::is_nil (this->em_.in ()))
         {
           DANCE_ERROR ( (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher_Base_Impl::launch_plan - ")
@@ -136,8 +136,8 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
         }
       catch(...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                        "An exception was thrown during EM->preparePlan.\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                        ACE_TEXT("An exception was thrown during EM->preparePlan.\n")));
           throw;
         }
 
@@ -147,29 +147,29 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
 
       if (CORBA::is_nil (dam.in ()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                        "CIAO_PlanLauncher:preparePlan call failed: "
-                        "nil DomainApplicationManager reference\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                        ACE_TEXT("CIAO_PlanLauncher:preparePlan call failed: ")
+                        ACE_TEXT("nil DomainApplicationManager reference\n")));
           return 0;
         }
       else
         {
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                        "DAM was received from preparePlan.\n"));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                        ACE_TEXT("DAM was received from preparePlan.\n")));
         }
 
       this->write_dam_ior (dam.in());
 
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                    "Obtained DAM ref\n"));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                    ACE_TEXT("Obtained DAM ref\n")));
 
       ::Deployment::Properties_var properties;
       ACE_NEW_RETURN (properties,
           Deployment::Properties,
           0);
 
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                    "before startLaunch...\n"));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                    ACE_TEXT("before startLaunch...\n")));
 
       ::Deployment::Connections_var conns;
       Deployment::Application_var da;
@@ -179,22 +179,22 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
         }
       catch(...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                        "An exception was thrown during DAM->startLaunch.\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                        ACE_TEXT("An exception was thrown during DAM->startLaunch.\n")));
           throw;
         }
       //Deployment::DomainApplication_var da = Deployment::DomainApplication::_narrow(obj)
       if (CORBA::is_nil (da.in()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                        "CIAO_PlanLauncher:startLaunch call failed: "
-                  "nil DomainApplication reference\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                        ACE_TEXT("CIAO_PlanLauncher:startLaunch call failed: ")
+                  ACE_TEXT("nil DomainApplication reference\n")));
           return 0;
         }
       else
         {
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                        "DomainApplication was received from startLaunch\n"));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                        ACE_TEXT("DomainApplication was received from startLaunch\n")));
         }
       //this is temporal workaround while cdmw checks object type in connect call
       /*
@@ -204,25 +204,25 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
       this->create_external_connections (plan, conns.inout());
 
       // Call finish Launch to complete the connections
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                    "before finishLaunch\n"));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                    ACE_TEXT("before finishLaunch\n")));
       try
         {
           da->finishLaunch (conns.in(), false); // is_ReDAC by default is <false>
         }
       catch(...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                        "An exception was thrown during DA->finishLaunch.\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                        ACE_TEXT("An exception was thrown during DA->finishLaunch.\n")));
           throw;
         }
 
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                    "after finishLaunch\n"));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                    ACE_TEXT("after finishLaunch\n")));
 
       // Call start to activate components
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                    "before start activating components...\n"));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                    ACE_TEXT("before start activating components...\n")));
 
       try
         {
@@ -230,12 +230,12 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
         }
       catch(...)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::launch_plan - "
-                        "An exception was thrown during DA->start.\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
+                        ACE_TEXT("An exception was thrown during DA->start.\n")));
           throw;
         }
 
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::launch_plan - [success]\n"));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - [success]\n")));
       DANCE_DEBUG ( (LM_DEBUG, DLINFO
               ACE_TEXT ("[%M] Plan_Launcher_Base_Impl::launch_plan - ")
               ACE_TEXT ("Application Deployed successfully\n")));
@@ -254,7 +254,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
           ex.propertyName.in (),
           ex.elementName.in (),
           ex.resourceName.in ());
-      DANCE_ERROR ((LM_ERROR, DLINFO "%s", buf));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
       throw Deployment_Failure (buf);
     }
   catch (const Deployment::StartError& ex)
@@ -263,7 +263,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
       ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: StartError exception caught: %s, %s\n",
           ex.name.in (),
           ex.reason.in ());
-      DANCE_ERROR ((LM_ERROR, DLINFO "%s", buf));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
       throw Deployment_Failure (buf);
     }
   catch (const Deployment::InvalidProperty& ex)
@@ -272,7 +272,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
       ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: InvalidProperty exception caught: %s, %s\n",
           ex.name.in (),
           ex.reason.in ());
-      DANCE_ERROR ((LM_ERROR, DLINFO "%s", buf));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
       throw Deployment_Failure (buf);
     }
   catch (const Deployment::InvalidConnection& ex)
@@ -281,7 +281,7 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
       ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: InvalidConnection exception caught: %s, %s\n",
           ex.name.in (),
           ex.reason.in ());
-      DANCE_ERROR ((LM_ERROR, DLINFO "%s", buf));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
       throw Deployment_Failure (buf);
     }
   catch (const CORBA::Exception& ex)
@@ -289,14 +289,14 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
       char buf[1024];
       ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - CORBA EXCEPTION: %s\n",
           ex._info().fast_rep());
-      DANCE_ERROR ((LM_ERROR, DLINFO "%s", buf));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
       throw Deployment_Failure (buf);
     }
   catch (...)
     {
       char buf[1024];
       ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::launch_plan - EXCEPTION: non-CORBA exception\n");
-      DANCE_ERROR ((LM_ERROR, DLINFO "%s", buf));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
       throw Deployment_Failure (buf);
     }
 
@@ -309,14 +309,14 @@ bool Plan_Launcher_Base_Impl::teardown_plan(const char *uuid)
 
   try
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::teardown_plan - looking for uuid=\"%s\"\n", uuid));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - looking for uuid=\"%C\"\n"), uuid));
       ::Deployment::DomainApplicationManagers_var mgrs = this->em_->getManagers();
       ::Deployment::DomainApplicationManager_var dapp_mgr;
       for (size_t i = 0; i < mgrs->length(); ++i)
         {
           ACE_CString s = (*mgrs) [i]->getPlan()->UUID.in();
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::teardown_plan - "
-                        "comparing with existing uuid=\"%s\"\n", s.c_str()));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - ")
+                        ACE_TEXT("comparing with existing uuid=\"%C\"\n"), s.c_str()));
           if (s == uuid)
             {
               dapp_mgr = ::Deployment::DomainApplicationManager::_duplicate ( (*mgrs) [i].in());
@@ -337,9 +337,9 @@ bool Plan_Launcher_Base_Impl::teardown_plan(const char *uuid)
     {
       // @todo the destroy_dam_by_plan could give a stoperror exception
       // we should handle
-      DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::teardown_plan - "
-                    "Unable to find DomainApplicationManager "
-                    "for plan with uuid: %s\n", uuid));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - ")
+                    ACE_TEXT("Unable to find DomainApplicationManager ")
+                    ACE_TEXT("for plan with uuid: %C\n"), uuid));
       return false;
     }
 
@@ -350,12 +350,12 @@ void
 Plan_Launcher_Base_Impl::teardown_plan(::Deployment::DomainApplicationManager_ptr dam)
 {
   DANCE_DEBUG ((LM_DEBUG, DLINFO
-              "Plan_Launcher_Base_Impl::teardown_plan - destroy the application.....\n"));
+              ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - destroy the application.....\n")));
   ::Deployment::Applications_var apps = dam->getApplications();
   if (0 == apps->length())
     {
-      DANCE_DEBUG((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::teardown_plan - "
-                   "DAM has no application.\n"));
+      DANCE_DEBUG((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - ")
+                   ACE_TEXT("DAM has no application.\n")));
     }
   for (size_t i = 0; i < apps->length(); ++i)
     {
@@ -363,17 +363,17 @@ Plan_Launcher_Base_Impl::teardown_plan(::Deployment::DomainApplicationManager_pt
     }
   this->destroy_dam(dam);
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::teardown_plan - [success]\n"));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::teardown_plan - [success]\n")));
 }
 
 void Plan_Launcher_Base_Impl::destroy_dam(
     ::Deployment::DomainApplicationManager_ptr dam)
 {
   DANCE_DEBUG ((LM_DEBUG, DLINFO
-              "Plan_Launcher_Base_Impl::destroy_dam - destroy the manager.....\n"));
+              ACE_TEXT("Plan_Launcher_Base_Impl::destroy_dam - destroy the manager.....\n")));
   this->em_->destroyManager(dam);
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO "Plan_Launcher_Base_Impl::destroy_dam - [success]\n"));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::destroy_dam - [success]\n")));
 }
 
 void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
@@ -398,7 +398,7 @@ void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
 
 void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
 {
-  DANCE_DEBUG ((LM_TRACE, DLINFO "PL options : \""));
+  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("PL options : \"")));
   for (int i = 0; i < argc; ++i)
     {
       DANCE_DEBUG ( (LM_TRACE, " %s", argv[i]));
@@ -441,7 +441,7 @@ void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
           case 'w':
             if (0 < this->cdr_dest_url_.length())
               {
-                DANCE_ERROR ((LM_ERROR, DLINFO "Ambiguity: more then one --write-cdr-plan option.\n"));
+                DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Ambiguity: more then one --write-cdr-plan option.\n")));
                 throw Deployment_Failure("Ambiguity: more then one --write-cdr-plan option.");
               }
             this->cdr_dest_url_ = expand_env_vars (get_opt.opt_arg());
@@ -500,7 +500,7 @@ void Plan_Launcher_Base_Impl::write_dam_ior(
     }
   else
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO "PlanLauncher.cpp::write_dap_ior - Error in opening file %s to write DAM IOR: %m",
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("PlanLauncher.cpp::write_dap_ior - Error in opening file %s to write DAM IOR: %m"),
               this->dam_ior_.c_str()));
       throw Deployment_Failure (ACE_CString ("write_dap_ior - Error in opening file %s to write DAM IOR: %m") +
           this->dam_ior_);
@@ -514,28 +514,28 @@ Plan_Launcher_Base_Impl::stop_plan()
   if (!is_empty (this->plan_uuid_))
     {
       stopped = true;
-      DANCE_DEBUG((LM_TRACE, DLINFO "Plan_Launcher_Base_Impl::stop_plan - "
-                   "Stopping plan \"%s\"\n", this->plan_uuid_.c_str()));
+      DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
+                   ACE_TEXT("Stopping plan \"%C\"\n"), this->plan_uuid_.c_str()));
 
       if (!this->teardown_plan(this->plan_uuid_.c_str()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::stop_plan - "
-                        "tear down assembly failed: unknown plan uuid.\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
+                        ACE_TEXT("tear down assembly failed: unknown plan uuid.\n")));
         }
     }
 
   if (!is_empty (this->dam_ior_))
     {
       stopped = true;
-      DANCE_DEBUG((LM_TRACE, DLINFO "Plan_Launcher_Base_Impl::stop_plan - "
-                   "Stopping plan by DAM IOR.\n"));
+      DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
+                   ACE_TEXT("Stopping plan by DAM IOR.\n")));
       CORBA::Object_var
         obj = this->orb_->string_to_object(this->dam_ior_.c_str());
       if (CORBA::is_nil (obj.in ()))
         {
           DANCE_ERROR ((LM_ERROR, DLINFO
-                        "Plan_Launcher_Base_Impl::stop_plan - "
-                        "tear down assembly failed: DAM IOR is invalid.\n"));
+                        ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
+                        ACE_TEXT("tear down assembly failed: DAM IOR is invalid.\n")));
         }
       else
         {
@@ -551,21 +551,21 @@ Plan_Launcher_Base_Impl::stop_plan()
       size_t sz = this->cdr_plan_urls_.size();
       for (size_t i = 0; i < sz; ++i)
         {
-          DANCE_DEBUG((LM_TRACE, DLINFO "Plan_Launcher_Base_Impl::stop_plan - "
-                       "Stopping plan by plan file : %s\n", this->cdr_plan_urls_[i].c_str()));
+          DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
+                       ACE_TEXT("Stopping plan by plan file : %s\n"), this->cdr_plan_urls_[i].c_str()));
           ::Deployment::DeploymentPlan_var plan = this->read_cdr_plan_file(this->cdr_plan_urls_[i].c_str());
           if (!this->teardown_plan(plan->UUID.in()))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::stop_plan - "
-                            "tear down assembly failed: unknown plan uuid.\n"));
+              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
+                            ACE_TEXT("tear down assembly failed: unknown plan uuid.\n")));
             }
         }
     }
 
   if (!stopped && 0 == this->xml_plan_urls_.size())
     {
-      DANCE_DEBUG((LM_TRACE, DLINFO "Plan_Launcher_Base_Impl::stop_plan - "
-                   "Stopping plan all running plans.\n"));
+      DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
+                   ACE_TEXT("Stopping plan all running plans.\n")));
       ::Deployment::DomainApplicationManagers_var
           mgrs = this->em_->getManagers();
       ::Deployment::DomainApplicationManager_var dapp_mgr;
@@ -579,7 +579,7 @@ Plan_Launcher_Base_Impl::stop_plan()
 void Plan_Launcher_Base_Impl::create_external_connections(
     const ::Deployment::DeploymentPlan &plan, Deployment::Connections& conn)
 {
-  DANCE_DEBUG ((LM_DEBUG, DLINFO "create_external_connections - start\n"));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("create_external_connections - start\n")));
   /*    CORBA::Object_var obj = this->orb_->resolve_initial_references("NameService");
    CosNaming::NamingContext_var naming = CosNaming::NamingContext::_narrow(obj.in());
    CosNaming::BindingList_var bl;
@@ -640,7 +640,7 @@ void Plan_Launcher_Base_Impl::create_external_connections(
           else
             {
               DANCE_DEBUG ( (LM_DEBUG,
-                      "Plan_Launcher_i::create_external_connections - can't create object for IOR %C\n",
+                      ACE_TEXT("Plan_Launcher_i::create_external_connections - can't create object for IOR %C\n"),
                       plan.connection[i].externalReference[0].location.in()));
               throw 0;
             }
@@ -681,7 +681,7 @@ Deployment::DeploymentPlan*Plan_Launcher_Base_Impl::read_cdr_plan_file(
     }
   catch(...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO "Failed to read CDR plan file.\n"));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Failed to read CDR plan file.\n")));
       throw Deployment_Failure("Failed to read CDR plan file.");
     }
   return res;
@@ -712,8 +712,8 @@ Plan_Launcher_Base_Impl::write_cdr_plan_file(const char * filename,
     }
   catch(...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::write_cdr_plan_file - "
-                    "Failed to write CDR plan file.\n"));
+      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::write_cdr_plan_file - ")
+                    ACE_TEXT("Failed to write CDR plan file.\n")));
       throw Deployment_Failure("Failed to write CDR plan file.");
     }
 }
@@ -756,7 +756,7 @@ Plan_Launcher_Base_Impl::check_mode_consistentness()
   }
 
 ACE_CString
-Plan_Launcher_Base_Impl::expand_env_vars (const char * s)
+Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
   {
     ACE_CString src = s;
     ACE_CString res;
@@ -802,8 +802,8 @@ Plan_Launcher_Base_Impl::expand_env_vars (const char * s)
               }
             else
               {
-                DANCE_DEBUG ((LM_WARNING, DLINFO "Plan_Launcher_Base_Impl::expand_env_vars - "
-                              "Envvar can not be parsed out at %i in \"%s\"",
+                DANCE_DEBUG ((LM_WARNING, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::expand_env_vars - ")
+                              ACE_TEXT("Envvar can not be parsed out at %i in \"%s\""),
                               pos_start,
                               src.c_str()));
               }

@@ -49,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
       bug_689_regression_var servant = bug_689_regression::_narrow(tmp.in ());
 

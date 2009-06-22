@@ -18,6 +18,7 @@ use PerlACE::TestTarget;
 use PerlACE::ProcessVX;
 use File::Copy;
 use Cwd;
+use English;
 
 our @ISA = qw(PerlACE::TestTarget);
 
@@ -107,8 +108,11 @@ sub LocalFile {
 
 sub CreateProcess {
   my $self = shift;
-  my $process = new PerlACE::ProcessVX ($self, @_);
-  return $process;
+if ($OSNAME eq "MSWin32") {
+  my $process = new PerlACE::ProcessVX ($self, @_);  return $process;
+} else {
+  my $process = new PerlACE::ProcessVX (@_, $self);  return $process;
+}
 }
 
 # Need a reboot when this target is destroyed.

@@ -22,6 +22,7 @@
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
 #include "ace/Vector_T.h"
+#include "ace/Tokenizer_T.h"
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS > 0x600) && defined (__RTP__)
 # include <rtpLib.h>
@@ -138,7 +139,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // like other OS environment.  Therefore, it is user's whole responsibility to call
   // 'ACE_Process_Options::process_name(const ACE_TCHAR *name)' to set the proper
   // process name (the execution file name with path if needed).
-
   BOOL fork_result =
     ACE_TEXT_CreateProcess (options.process_name(),
                             options.command_line_buf(),
@@ -838,6 +838,12 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
   command_line_buf_[0] = '\0';
   process_name_[0] = '\0';
 
+#if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG(inherit_environment);
+  ACE_UNUSED_ARG(env_buf_len);
+  ACE_UNUSED_ARG(max_env_args);
+#endif
+
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
   ACE_NEW (environment_buf_,
@@ -1174,18 +1180,34 @@ ACE_Process_Options::~ACE_Process_Options (void)
 int
 ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
 {
-  // @@ Factor out the code between this
   int i = 0;
 
   if (argv[i])
     {
       ACE_OS::strcat (command_line_buf_, argv[i]);
+      
       while (argv[++i])
         {
-          ACE_OS::strcat (command_line_buf_,
-                          ACE_TEXT (" "));
-          ACE_OS::strcat (command_line_buf_,
-                          argv[i]);
+          // Check to see if the next argument will overflow the  
+          // command_line buffer.
+          int cur_len =
+            static_cast<int> (
+              ACE_OS::strlen (command_line_buf_)
+              + ACE_OS:: strlen (argv[i])
+              + 2);
+              
+          if (cur_len > command_line_buf_len_)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ACE_Process:command_line: ")
+                                 ACE_TEXT ("command line is ")
+                                 ACE_TEXT ("longer than %d\n"),
+                                 command_line_buf_len_),
+                                1);
+            }
+            
+          ACE_OS::strcat (command_line_buf_, ACE_TEXT (" "));
+          ACE_OS::strcat (command_line_buf_, argv[i]);
         }
     }
 

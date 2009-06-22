@@ -71,6 +71,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "XMI.hpp"
 
 namespace CIAO
@@ -81,8 +84,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < IdRef, ACE_Null_Mutex > _ptr;
+
       // href
-      //
+      // 
       public:
       bool href_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& href () const;
@@ -93,7 +99,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > href_;
 
       // idref
-      //
+      // 
       public:
       bool idref_p () const;
       ::XMLSchema::IDREF< ACE_TCHAR > const& idref () const;
@@ -170,10 +176,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator== (TCKind const& a, TCKind const& b);
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator!= (TCKind const& a, TCKind const& b);
 
       private:
@@ -191,8 +197,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < DataType, ACE_Null_Mutex > _ptr;
+
       // kind
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::TCKind const& kind () const;
       void kind (::CIAO::Config_Handlers::TCKind const& );
@@ -201,7 +210,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::TCKind > kind_;
 
       // enum
-      //
+      // 
       public:
       bool enum_p () const;
       ::CIAO::Config_Handlers::EnumType const& enum_ () const;
@@ -211,7 +220,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::EnumType > enum__;
 
       // struct
-      //
+      // 
       public:
       bool struct_p () const;
       ::CIAO::Config_Handlers::StructType const& struct_ () const;
@@ -221,7 +230,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::StructType > struct__;
 
       // value
-      //
+      // 
       public:
       bool value_p () const;
       ::CIAO::Config_Handlers::ValueType const& value () const;
@@ -231,7 +240,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ValueType > value_;
 
       // sequence
-      //
+      // 
       public:
       bool sequence_p () const;
       ::CIAO::Config_Handlers::SequenceType const& sequence () const;
@@ -241,7 +250,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SequenceType > sequence_;
 
       // alias
-      //
+      // 
       public:
       bool alias_p () const;
       ::CIAO::Config_Handlers::AliasType const& alias () const;
@@ -250,16 +259,16 @@ namespace CIAO
       protected:
       ::std::auto_ptr< ::CIAO::Config_Handlers::AliasType > alias_;
 
-      // xmi_id
-      //
+      // id
+      // 
       public:
-      bool xmi_id_p () const;
-      ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
-      ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
-      void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
+      bool id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& id ();
+      void id (::XMLSchema::ID< ACE_TCHAR > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
 
       public:
       DataType (::CIAO::Config_Handlers::TCKind const& kind__);
@@ -279,230 +288,233 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
-      // short
-      //
       public:
-      typedef ::std::list< ::XMLSchema::short_ >::iterator short_iterator;
-      typedef ::std::list< ::XMLSchema::short_ >::const_iterator short_const_iterator;
+      typedef ACE_Refcounted_Auto_Ptr < DataValue, ACE_Null_Mutex > _ptr;
+
+      // short
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > >::iterator short_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > >::const_iterator short_const_iterator;
       short_iterator begin_short ();
       short_iterator end_short ();
       short_const_iterator begin_short () const;
       short_const_iterator end_short () const;
-      void add_short (::XMLSchema::short_ const& );
+      void add_short ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > const& );
       size_t count_short (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::short_ > short_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > > short__;
 
       // long
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::int_ >::iterator long_iterator;
-      typedef ::std::list< ::XMLSchema::int_ >::const_iterator long_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > >::iterator long_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > >::const_iterator long_const_iterator;
       long_iterator begin_long ();
       long_iterator end_long ();
       long_const_iterator begin_long () const;
       long_const_iterator end_long () const;
-      void add_long (::XMLSchema::int_ const& );
+      void add_long ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > const& );
       size_t count_long (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::int_ > long_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > > long__;
 
       // ushort
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::unsignedShort >::iterator ushort_iterator;
-      typedef ::std::list< ::XMLSchema::unsignedShort >::const_iterator ushort_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > >::iterator ushort_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > >::const_iterator ushort_const_iterator;
       ushort_iterator begin_ushort ();
       ushort_iterator end_ushort ();
       ushort_const_iterator begin_ushort () const;
       ushort_const_iterator end_ushort () const;
-      void add_ushort (::XMLSchema::unsignedShort const& );
+      void add_ushort ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > const& );
       size_t count_ushort (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::unsignedShort > ushort_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > > ushort_;
 
       // ulong
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::unsignedInt >::iterator ulong_iterator;
-      typedef ::std::list< ::XMLSchema::unsignedInt >::const_iterator ulong_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > >::iterator ulong_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > >::const_iterator ulong_const_iterator;
       ulong_iterator begin_ulong ();
       ulong_iterator end_ulong ();
       ulong_const_iterator begin_ulong () const;
       ulong_const_iterator end_ulong () const;
-      void add_ulong (::XMLSchema::unsignedInt const& );
+      void add_ulong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > const& );
       size_t count_ulong (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::unsignedInt > ulong_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > > ulong_;
 
       // float
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::float_ >::iterator float_iterator;
-      typedef ::std::list< ::XMLSchema::float_ >::const_iterator float_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > >::iterator float_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > >::const_iterator float_const_iterator;
       float_iterator begin_float ();
       float_iterator end_float ();
       float_const_iterator begin_float () const;
       float_const_iterator end_float () const;
-      void add_float (::XMLSchema::float_ const& );
+      void add_float ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > const& );
       size_t count_float (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::float_ > float_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > > float__;
 
       // double
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::double_ >::iterator double_iterator;
-      typedef ::std::list< ::XMLSchema::double_ >::const_iterator double_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > >::iterator double_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > >::const_iterator double_const_iterator;
       double_iterator begin_double ();
       double_iterator end_double ();
       double_const_iterator begin_double () const;
       double_const_iterator end_double () const;
-      void add_double (::XMLSchema::double_ const& );
+      void add_double ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > const& );
       size_t count_double (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::double_ > double_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > > double__;
 
       // boolean
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::boolean >::iterator boolean_iterator;
-      typedef ::std::list< ::XMLSchema::boolean >::const_iterator boolean_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > >::iterator boolean_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > >::const_iterator boolean_const_iterator;
       boolean_iterator begin_boolean ();
       boolean_iterator end_boolean ();
       boolean_const_iterator begin_boolean () const;
       boolean_const_iterator end_boolean () const;
-      void add_boolean (::XMLSchema::boolean const& );
+      void add_boolean ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > const& );
       size_t count_boolean (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::boolean > boolean_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > > boolean_;
 
       // octet
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::unsignedByte >::iterator octet_iterator;
-      typedef ::std::list< ::XMLSchema::unsignedByte >::const_iterator octet_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > >::iterator octet_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > >::const_iterator octet_const_iterator;
       octet_iterator begin_octet ();
       octet_iterator end_octet ();
       octet_const_iterator begin_octet () const;
       octet_const_iterator end_octet () const;
-      void add_octet (::XMLSchema::unsignedByte const& );
+      void add_octet ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > const& );
       size_t count_octet (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::unsignedByte > octet_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > > octet_;
 
       // enum
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator enum_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator enum_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator enum_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator enum_const_iterator;
       enum_iterator begin_enum ();
       enum_iterator end_enum ();
       enum_const_iterator begin_enum () const;
       enum_const_iterator end_enum () const;
-      void add_enum (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_enum ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_enum (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > enum_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > enum__;
 
       // string
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator string_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator string_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator string_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator string_const_iterator;
       string_iterator begin_string ();
       string_iterator end_string ();
       string_const_iterator begin_string () const;
       string_const_iterator end_string () const;
-      void add_string (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_string ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_string (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > string_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > string_;
 
       // longlong
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::long_ >::iterator longlong_iterator;
-      typedef ::std::list< ::XMLSchema::long_ >::const_iterator longlong_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > >::iterator longlong_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > >::const_iterator longlong_const_iterator;
       longlong_iterator begin_longlong ();
       longlong_iterator end_longlong ();
       longlong_const_iterator begin_longlong () const;
       longlong_const_iterator end_longlong () const;
-      void add_longlong (::XMLSchema::long_ const& );
+      void add_longlong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > const& );
       size_t count_longlong (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::long_ > longlong_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > > longlong_;
 
       // ulonglong
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::unsignedLong >::iterator ulonglong_iterator;
-      typedef ::std::list< ::XMLSchema::unsignedLong >::const_iterator ulonglong_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > >::iterator ulonglong_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > >::const_iterator ulonglong_const_iterator;
       ulonglong_iterator begin_ulonglong ();
       ulonglong_iterator end_ulonglong ();
       ulonglong_const_iterator begin_ulonglong () const;
       ulonglong_const_iterator end_ulonglong () const;
-      void add_ulonglong (::XMLSchema::unsignedLong const& );
+      void add_ulonglong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > const& );
       size_t count_ulonglong (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::unsignedLong > ulonglong_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > > ulonglong_;
 
       // longdouble
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::double_ >::iterator longdouble_iterator;
-      typedef ::std::list< ::XMLSchema::double_ >::const_iterator longdouble_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > >::iterator longdouble_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > >::const_iterator longdouble_const_iterator;
       longdouble_iterator begin_longdouble ();
       longdouble_iterator end_longdouble ();
       longdouble_const_iterator begin_longdouble () const;
       longdouble_const_iterator end_longdouble () const;
-      void add_longdouble (::XMLSchema::double_ const& );
+      void add_longdouble ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > const& );
       size_t count_longdouble (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::double_ > longdouble_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > > longdouble_;
 
       // element
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::DataValue >::iterator element_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::DataValue >::const_iterator element_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > >::iterator element_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > >::const_iterator element_const_iterator;
       element_iterator begin_element ();
       element_iterator end_element ();
       element_const_iterator begin_element () const;
       element_const_iterator end_element () const;
-      void add_element (::CIAO::Config_Handlers::DataValue const& );
+      void add_element ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > const& );
       size_t count_element (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::DataValue > element_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > > element_;
 
       // member
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::NamedValue >::iterator member_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::NamedValue >::const_iterator member_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > >::iterator member_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
-      void add_member (::CIAO::Config_Handlers::NamedValue const& );
+      void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > const& );
       size_t count_member (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::NamedValue > member_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > > member_;
 
       public:
       DataValue ();
@@ -522,8 +534,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < AliasType, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -532,7 +547,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -541,7 +556,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // elementType
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataType const& elementType () const;
       void elementType (::CIAO::Config_Handlers::DataType const& );
@@ -569,8 +584,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < EnumType, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -579,7 +597,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -588,23 +606,24 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // member
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator member_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator member_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator member_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
-      void add_member (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_member ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_member (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > member_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > member_;
 
       public:
       EnumType (::XMLSchema::string< ACE_TCHAR > const& name__,
-                ::XMLSchema::string< ACE_TCHAR > const& typeId__);
+                ::XMLSchema::string< ACE_TCHAR > const& typeId__,
+                ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > const& member__);
 
       EnumType (::XSCRT::XML::Element< ACE_TCHAR > const&);
       EnumType (EnumType const& s);
@@ -621,8 +640,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < StructType, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -631,7 +653,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -640,19 +662,19 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // member
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::StructMemberType >::iterator member_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::StructMemberType >::const_iterator member_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > >::iterator member_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
-      void add_member (::CIAO::Config_Handlers::StructMemberType const& );
+      void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > const& );
       size_t count_member (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::StructMemberType > member_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > > member_;
 
       public:
       StructType (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -673,8 +695,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < StructMemberType, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -683,7 +708,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // type
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -710,8 +735,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ValueType, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -720,7 +748,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // typeId
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
       void typeId (::XMLSchema::string< ACE_TCHAR > const& );
@@ -729,7 +757,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
 
       // modifier
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& modifier () const;
       void modifier (::XMLSchema::string< ACE_TCHAR > const& );
@@ -738,7 +766,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > modifier_;
 
       // baseType
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataType const& baseType () const;
       void baseType (::CIAO::Config_Handlers::DataType const& );
@@ -747,19 +775,19 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > baseType_;
 
       // member
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ValueMemberType >::iterator member_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ValueMemberType >::const_iterator member_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > >::iterator member_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
-      void add_member (::CIAO::Config_Handlers::ValueMemberType const& );
+      void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > const& );
       size_t count_member (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ValueMemberType > member_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > > member_;
 
       public:
       ValueType (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -782,8 +810,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ValueMemberType, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -792,7 +823,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // visibility
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& visibility () const;
       void visibility (::XMLSchema::string< ACE_TCHAR > const& );
@@ -801,7 +832,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > visibility_;
 
       // type
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -829,8 +860,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < NamedValue, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -839,7 +873,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // value
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataValue const& value () const;
       void value (::CIAO::Config_Handlers::DataValue const& );
@@ -866,8 +900,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SequenceType, ACE_Null_Mutex > _ptr;
+
       // bound
-      //
+      // 
       public:
       bool bound_p () const;
       ::XMLSchema::unsignedInt const& bound () const;
@@ -877,7 +914,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedInt > bound_;
 
       // elementType
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataType const& elementType () const;
       void elementType (::CIAO::Config_Handlers::DataType const& );
@@ -903,8 +940,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Any, ACE_Null_Mutex > _ptr;
+
       // type
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -913,7 +953,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > type_;
 
       // value
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataValue const& value () const;
       void value (::CIAO::Config_Handlers::DataValue const& );
@@ -940,8 +980,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Property, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -950,7 +993,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // value
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
       void value (::CIAO::Config_Handlers::Any const& );
@@ -995,10 +1038,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator== (SatisfierPropertyKind const& a, SatisfierPropertyKind const& b);
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator!= (SatisfierPropertyKind const& a, SatisfierPropertyKind const& b);
 
       private:
@@ -1016,8 +1059,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SatisfierProperty, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1026,7 +1072,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // kind
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind () const;
       void kind (::CIAO::Config_Handlers::SatisfierPropertyKind const& );
@@ -1035,7 +1081,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierPropertyKind > kind_;
 
       // dynamic
-      //
+      // 
       public:
       ::XMLSchema::boolean const& dynamic () const;
       void dynamic (::XMLSchema::boolean const& );
@@ -1044,7 +1090,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > dynamic_;
 
       // value
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
       void value (::CIAO::Config_Handlers::Any const& );
@@ -1073,8 +1119,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Resource, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1083,37 +1132,38 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // resourceType
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator resourceType_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator resourceType_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator resourceType_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator resourceType_const_iterator;
       resourceType_iterator begin_resourceType ();
       resourceType_iterator end_resourceType ();
       resourceType_const_iterator begin_resourceType () const;
       resourceType_const_iterator end_resourceType () const;
-      void add_resourceType (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_resourceType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_resourceType (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > resourceType_;
 
       // property
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::SatisfierProperty const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SatisfierProperty > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > > property_;
 
       public:
-      Resource (::XMLSchema::string< ACE_TCHAR > const& name__);
+      Resource (::XMLSchema::string< ACE_TCHAR > const& name__,
+                ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > const& resourceType__);
 
       Resource (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Resource (Resource const& s);
@@ -1130,8 +1180,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Requirement, ACE_Null_Mutex > _ptr;
+
       // resourceType
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1140,7 +1193,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1149,19 +1202,19 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // property
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       Requirement (::XMLSchema::string< ACE_TCHAR > const& resourceType__,
@@ -1182,8 +1235,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ResourceDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // requirementName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1192,7 +1248,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1201,19 +1257,19 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // property
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       ResourceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& requirementName__,
@@ -1234,8 +1290,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ArtifactDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1244,22 +1303,22 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // source
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator source_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator source_const_iterator;
       source_iterator begin_source ();
       source_iterator end_source ();
       source_const_iterator begin_source () const;
       source_const_iterator end_source () const;
-      void add_source (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_source ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_source (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > source_;
 
       // node
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& node () const;
       void node (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1268,75 +1327,75 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > node_;
 
       // location
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator location_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator location_const_iterator;
       location_iterator begin_location ();
       location_iterator end_location ();
       location_const_iterator begin_location () const;
       location_const_iterator end_location () const;
-      void add_location (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_location ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_location (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > location_;
 
       // execParameter
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator execParameter_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator execParameter_const_iterator;
       execParameter_iterator begin_execParameter ();
       execParameter_iterator end_execParameter ();
       execParameter_const_iterator begin_execParameter () const;
       execParameter_const_iterator end_execParameter () const;
-      void add_execParameter (::CIAO::Config_Handlers::Property const& );
+      void add_execParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_execParameter (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > execParameter_;
 
       // deployRequirement
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
       // deployedResource
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::iterator deployedResource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > >::iterator deployedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > >::const_iterator deployedResource_const_iterator;
       deployedResource_iterator begin_deployedResource ();
       deployedResource_iterator end_deployedResource ();
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
-      void add_deployedResource (::CIAO::Config_Handlers::ResourceDeploymentDescription const& );
+      void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_deployedResource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > > deployedResource_;
 
-      // xmi_id
-      //
+      // id
+      // 
       public:
-      bool xmi_id_p () const;
-      ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
-      ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
-      void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
+      bool id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& id ();
+      void id (::XMLSchema::ID< ACE_TCHAR > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
 
       public:
       ArtifactDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -1357,8 +1416,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < MonolithicDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1367,75 +1429,75 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // source
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator source_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator source_const_iterator;
       source_iterator begin_source ();
       source_iterator end_source ();
       source_const_iterator begin_source () const;
       source_const_iterator end_source () const;
-      void add_source (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_source ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_source (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > source_;
 
       // artifact
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::IdRef >::iterator artifact_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::IdRef >::const_iterator artifact_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > >::iterator artifact_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > >::const_iterator artifact_const_iterator;
       artifact_iterator begin_artifact ();
       artifact_iterator end_artifact ();
       artifact_const_iterator begin_artifact () const;
       artifact_const_iterator end_artifact () const;
-      void add_artifact (::CIAO::Config_Handlers::IdRef const& );
+      void add_artifact ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > const& );
       size_t count_artifact (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::IdRef > artifact_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > > artifact_;
 
       // execParameter
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator execParameter_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator execParameter_const_iterator;
       execParameter_iterator begin_execParameter ();
       execParameter_iterator end_execParameter ();
       execParameter_const_iterator begin_execParameter () const;
       execParameter_const_iterator end_execParameter () const;
-      void add_execParameter (::CIAO::Config_Handlers::Property const& );
+      void add_execParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_execParameter (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > execParameter_;
 
       // deployRequirement
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
-      // xmi_id
-      //
+      // id
+      // 
       public:
-      bool xmi_id_p () const;
-      ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
-      ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
-      void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
+      bool id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& id ();
+      void id (::XMLSchema::ID< ACE_TCHAR > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
 
       public:
       MonolithicDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -1472,10 +1534,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator== (ResourceUsageKind const& a, ResourceUsageKind const& b);
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator!= (ResourceUsageKind const& a, ResourceUsageKind const& b);
 
       private:
@@ -1493,8 +1555,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < InstanceResourceDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // resourceUsage
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
       void resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& );
@@ -1503,7 +1568,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > resourceUsage_;
 
       // requirementName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1512,7 +1577,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1521,19 +1586,19 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // property
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
@@ -1555,8 +1620,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < InstanceDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1565,7 +1633,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // node
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& node () const;
       void node (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1574,7 +1642,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > node_;
 
       // source
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& source () const;
       void source (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1583,7 +1651,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // implementation
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::IdRef const& implementation () const;
       void implementation (::CIAO::Config_Handlers::IdRef const& );
@@ -1592,37 +1660,37 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > implementation_;
 
       // configProperty
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
-      void add_configProperty (::CIAO::Config_Handlers::Property const& );
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // deployedResource
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::iterator deployedResource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > >::iterator deployedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > >::const_iterator deployedResource_const_iterator;
       deployedResource_iterator begin_deployedResource ();
       deployedResource_iterator end_deployedResource ();
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
-      void add_deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& );
+      void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_deployedResource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > > deployedResource_;
 
       // deployedSharedResource
-      //
+      // 
       public:
       bool deployedSharedResource_p () const;
       ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedSharedResource () const;
@@ -1631,16 +1699,16 @@ namespace CIAO
       protected:
       ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedSharedResource_;
 
-      // xmi_id
-      //
+      // id
+      // 
       public:
-      bool xmi_id_p () const;
-      ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
-      ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
-      void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
+      bool id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& id ();
+      void id (::XMLSchema::ID< ACE_TCHAR > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
 
       public:
       InstanceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -1681,10 +1749,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator== (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator!= (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
       private:
@@ -1702,8 +1770,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentPortDescription, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1712,7 +1783,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // specificType
-      //
+      // 
       public:
       bool specificType_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& specificType () const;
@@ -1722,22 +1793,22 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > specificType_;
 
       // supportedType
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator supportedType_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator supportedType_const_iterator;
       supportedType_iterator begin_supportedType ();
       supportedType_iterator end_supportedType ();
       supportedType_const_iterator begin_supportedType () const;
       supportedType_const_iterator end_supportedType () const;
-      void add_supportedType (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_supportedType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_supportedType (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > supportedType_;
 
       // provider
-      //
+      // 
       public:
       ::XMLSchema::boolean const& provider () const;
       void provider (::XMLSchema::boolean const& );
@@ -1746,7 +1817,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > provider_;
 
       // exclusiveProvider
-      //
+      // 
       public:
       ::XMLSchema::boolean const& exclusiveProvider () const;
       void exclusiveProvider (::XMLSchema::boolean const& );
@@ -1755,7 +1826,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > exclusiveProvider_;
 
       // exclusiveUser
-      //
+      // 
       public:
       ::XMLSchema::boolean const& exclusiveUser () const;
       void exclusiveUser (::XMLSchema::boolean const& );
@@ -1764,7 +1835,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > exclusiveUser_;
 
       // optional
-      //
+      // 
       public:
       ::XMLSchema::boolean const& optional () const;
       void optional (::XMLSchema::boolean const& );
@@ -1773,7 +1844,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > optional_;
 
       // kind
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
       void kind (::CIAO::Config_Handlers::CCMComponentPortKind const& );
@@ -1804,8 +1875,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentPropertyDescription, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1814,7 +1888,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // type
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       void type (::CIAO::Config_Handlers::DataType const& );
@@ -1841,8 +1915,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentExternalPortEndpoint, ACE_Null_Mutex > _ptr;
+
       // portName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1868,8 +1945,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PlanSubcomponentPortEndpoint, ACE_Null_Mutex > _ptr;
+
       // portName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1878,7 +1958,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > portName_;
 
       // provider
-      //
+      // 
       public:
       bool provider_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& provider () const;
@@ -1888,7 +1968,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > provider_;
 
       // kind
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
       void kind (::CIAO::Config_Handlers::CCMComponentPortKind const& );
@@ -1897,7 +1977,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > kind_;
 
       // instance
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::IdRef const& instance () const;
       void instance (::CIAO::Config_Handlers::IdRef const& );
@@ -1925,8 +2005,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ExternalReferenceEndpoint, ACE_Null_Mutex > _ptr;
+
       // location
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& location () const;
       void location (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1935,7 +2018,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > location_;
 
       // provider
-      //
+      // 
       public:
       ::XMLSchema::boolean const& provider () const;
       void provider (::XMLSchema::boolean const& );
@@ -1944,7 +2027,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > provider_;
 
       // portName
-      //
+      // 
       public:
       bool portName_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
@@ -1954,19 +2037,19 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > portName_;
 
       // supportedType
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator supportedType_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator supportedType_const_iterator;
       supportedType_iterator begin_supportedType ();
       supportedType_iterator end_supportedType ();
       supportedType_const_iterator begin_supportedType () const;
       supportedType_const_iterator end_supportedType () const;
-      void add_supportedType (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_supportedType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_supportedType (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > supportedType_;
 
       public:
       ExternalReferenceEndpoint (::XMLSchema::string< ACE_TCHAR > const& location__,
@@ -1987,8 +2070,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ConnectionResourceDeploymentDescription, ACE_Null_Mutex > _ptr;
+
       // targetName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& targetName () const;
       void targetName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -1997,7 +2083,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > targetName_;
 
       // requirementName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2006,7 +2092,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > requirementName_;
 
       // resourceName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2015,19 +2101,19 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceName_;
 
       // property
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       ConnectionResourceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& targetName__,
@@ -2049,8 +2135,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PlanConnectionDescription, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2059,7 +2148,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // source
-      //
+      // 
       public:
       bool source_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& source () const;
@@ -2069,79 +2158,79 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // deployRequirement
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
       // externalEndpoint
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > >::iterator externalEndpoint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > >::const_iterator externalEndpoint_const_iterator;
       externalEndpoint_iterator begin_externalEndpoint ();
       externalEndpoint_iterator end_externalEndpoint ();
       externalEndpoint_const_iterator begin_externalEndpoint () const;
       externalEndpoint_const_iterator end_externalEndpoint () const;
-      void add_externalEndpoint (::CIAO::Config_Handlers::ComponentExternalPortEndpoint const& );
+      void add_externalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > const& );
       size_t count_externalEndpoint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > > externalEndpoint_;
 
       // internalEndpoint
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > >::iterator internalEndpoint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > >::const_iterator internalEndpoint_const_iterator;
       internalEndpoint_iterator begin_internalEndpoint ();
       internalEndpoint_iterator end_internalEndpoint ();
       internalEndpoint_const_iterator begin_internalEndpoint () const;
       internalEndpoint_const_iterator end_internalEndpoint () const;
-      void add_internalEndpoint (::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint const& );
+      void add_internalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > const& );
       size_t count_internalEndpoint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint > internalEndpoint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > > internalEndpoint_;
 
       // externalReference
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > >::iterator externalReference_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > >::const_iterator externalReference_const_iterator;
       externalReference_iterator begin_externalReference ();
       externalReference_iterator end_externalReference ();
       externalReference_const_iterator begin_externalReference () const;
       externalReference_const_iterator end_externalReference () const;
-      void add_externalReference (::CIAO::Config_Handlers::ExternalReferenceEndpoint const& );
+      void add_externalReference ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > const& );
       size_t count_externalReference (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > > externalReference_;
 
       // deployedResource
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::iterator deployedResource_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > >::iterator deployedResource_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > >::const_iterator deployedResource_const_iterator;
       deployedResource_iterator begin_deployedResource ();
       deployedResource_iterator end_deployedResource ();
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
-      void add_deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& );
+      void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_deployedResource (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > deployedResource_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > > deployedResource_;
 
       public:
       PlanConnectionDescription (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -2161,8 +2250,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ImplementationDependency, ACE_Null_Mutex > _ptr;
+
       // requiredType
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requiredType () const;
       void requiredType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2188,8 +2280,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < Capability, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2198,34 +2293,34 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // resourceType
-      //
+      // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator resourceType_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator resourceType_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator resourceType_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator resourceType_const_iterator;
       resourceType_iterator begin_resourceType ();
       resourceType_iterator end_resourceType ();
       resourceType_const_iterator begin_resourceType () const;
       resourceType_const_iterator end_resourceType () const;
-      void add_resourceType (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_resourceType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_resourceType (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > resourceType_;
 
       // property
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SatisfierProperty >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::SatisfierProperty const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SatisfierProperty > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > > property_;
 
       public:
       Capability (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -2245,8 +2340,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ImplementationRequirement, ACE_Null_Mutex > _ptr;
+
       // resourceUsage
-      //
+      // 
       public:
       bool resourceUsage_p () const;
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
@@ -2256,7 +2354,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > resourceUsage_;
 
       // resourcePort
-      //
+      // 
       public:
       bool resourcePort_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& resourcePort () const;
@@ -2266,7 +2364,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourcePort_;
 
       // componentPort
-      //
+      // 
       public:
       bool componentPort_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& componentPort () const;
@@ -2276,7 +2374,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > componentPort_;
 
       // resourceType
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2285,7 +2383,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2294,19 +2392,19 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // property
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator property_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator property_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator property_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
-      void add_property (::CIAO::Config_Handlers::Property const& );
+      void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_property (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > property_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
       ImplementationRequirement (::XMLSchema::string< ACE_TCHAR > const& resourceType__,
@@ -2327,8 +2425,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < SubcomponentPortEndpoint, ACE_Null_Mutex > _ptr;
+
       // portName
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2337,7 +2438,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > portName_;
 
       // instance
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::IdRef const& instance () const;
       void instance (::CIAO::Config_Handlers::IdRef const& );
@@ -2364,8 +2465,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < AssemblyConnectionDescription, ACE_Null_Mutex > _ptr;
+
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
       void name (::XMLSchema::string< ACE_TCHAR > const& );
@@ -2374,64 +2478,64 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
 
       // deployRequirement
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
       // internalEndpoint
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > >::iterator internalEndpoint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > >::const_iterator internalEndpoint_const_iterator;
       internalEndpoint_iterator begin_internalEndpoint ();
       internalEndpoint_iterator end_internalEndpoint ();
       internalEndpoint_const_iterator begin_internalEndpoint () const;
       internalEndpoint_const_iterator end_internalEndpoint () const;
-      void add_internalEndpoint (::CIAO::Config_Handlers::SubcomponentPortEndpoint const& );
+      void add_internalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > const& );
       size_t count_internalEndpoint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint > internalEndpoint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > > internalEndpoint_;
 
       // externalEndpoint
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > >::iterator externalEndpoint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > >::const_iterator externalEndpoint_const_iterator;
       externalEndpoint_iterator begin_externalEndpoint ();
       externalEndpoint_iterator end_externalEndpoint ();
       externalEndpoint_const_iterator begin_externalEndpoint () const;
       externalEndpoint_const_iterator end_externalEndpoint () const;
-      void add_externalEndpoint (::CIAO::Config_Handlers::ComponentExternalPortEndpoint const& );
+      void add_externalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > const& );
       size_t count_externalEndpoint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > > externalEndpoint_;
 
       // externalReference
-      //
+      // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > >::iterator externalReference_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > >::const_iterator externalReference_const_iterator;
       externalReference_iterator begin_externalReference ();
       externalReference_iterator end_externalReference ();
       externalReference_const_iterator begin_externalReference () const;
       externalReference_const_iterator end_externalReference () const;
-      void add_externalReference (::CIAO::Config_Handlers::ExternalReferenceEndpoint const& );
+      void add_externalReference ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > const& );
       size_t count_externalReference (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > > externalReference_;
 
       public:
       AssemblyConnectionDescription (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -2466,10 +2570,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator== (PlanLocalityKind const& a, PlanLocalityKind const& b);
 
-      friend bool XSC_XML_Handlers_Export
+      friend bool XSC_XML_Handlers_Export 
       operator!= (PlanLocalityKind const& a, PlanLocalityKind const& b);
 
       private:
@@ -2487,8 +2591,11 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PlanLocality, ACE_Null_Mutex > _ptr;
+
       // constraint
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::PlanLocalityKind const& constraint () const;
       void constraint (::CIAO::Config_Handlers::PlanLocalityKind const& );
@@ -2497,7 +2604,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::PlanLocalityKind > constraint_;
 
       // constrainedInstance
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::IdRef const& constrainedInstance () const;
       void constrainedInstance (::CIAO::Config_Handlers::IdRef const& );
@@ -2666,16 +2773,16 @@ namespace CIAO
         alias_none (Type const&);
 
         virtual void
-        xmi_id (Type&);
+        id (Type&);
 
         virtual void
-        xmi_id (Type const&);
+        id (Type const&);
 
         virtual void
-        xmi_id_none (Type&);
+        id_none (Type&);
 
         virtual void
-        xmi_id_none (Type const&);
+        id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -3900,6 +4007,12 @@ namespace CIAO
         source_post (Type const&);
 
         virtual void
+        source_none (Type&);
+
+        virtual void
+        source_none (Type const&);
+
+        virtual void
         node (Type&);
 
         virtual void
@@ -3928,6 +4041,12 @@ namespace CIAO
 
         virtual void
         location_post (Type const&);
+
+        virtual void
+        location_none (Type&);
+
+        virtual void
+        location_none (Type const&);
 
         virtual void
         execParameter (Type&);
@@ -4020,16 +4139,16 @@ namespace CIAO
         deployedResource_none (Type const&);
 
         virtual void
-        xmi_id (Type&);
+        id (Type&);
 
         virtual void
-        xmi_id (Type const&);
+        id (Type const&);
 
         virtual void
-        xmi_id_none (Type&);
+        id_none (Type&);
 
         virtual void
-        xmi_id_none (Type const&);
+        id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -4083,6 +4202,12 @@ namespace CIAO
         source_post (Type const&);
 
         virtual void
+        source_none (Type&);
+
+        virtual void
+        source_none (Type const&);
+
+        virtual void
         artifact (Type&);
 
         virtual void
@@ -4105,6 +4230,12 @@ namespace CIAO
 
         virtual void
         artifact_post (Type const&);
+
+        virtual void
+        artifact_none (Type&);
+
+        virtual void
+        artifact_none (Type const&);
 
         virtual void
         execParameter (Type&);
@@ -4167,16 +4298,16 @@ namespace CIAO
         deployRequirement_none (Type const&);
 
         virtual void
-        xmi_id (Type&);
+        id (Type&);
 
         virtual void
-        xmi_id (Type const&);
+        id (Type const&);
 
         virtual void
-        xmi_id_none (Type&);
+        id_none (Type&);
 
         virtual void
-        xmi_id_none (Type const&);
+        id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -4369,16 +4500,16 @@ namespace CIAO
         deployedSharedResource_none (Type const&);
 
         virtual void
-        xmi_id (Type&);
+        id (Type&);
 
         virtual void
-        xmi_id (Type const&);
+        id (Type const&);
 
         virtual void
-        xmi_id_none (Type&);
+        id_none (Type&);
 
         virtual void
-        xmi_id_none (Type const&);
+        id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -4662,6 +4793,12 @@ namespace CIAO
 
         virtual void
         supportedType_post (Type const&);
+
+        virtual void
+        supportedType_none (Type&);
+
+        virtual void
+        supportedType_none (Type const&);
 
         virtual void
         post (Type&);
@@ -4998,6 +5135,12 @@ namespace CIAO
 
         virtual void
         resourceType_post (Type const&);
+
+        virtual void
+        resourceType_none (Type&);
+
+        virtual void
+        resourceType_none (Type const&);
 
         virtual void
         property (Type&);
@@ -5363,41 +5506,35 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct IdRef : Traversal::IdRef,
+      struct IdRef : Traversal::IdRef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::IdRef Type;
         IdRef (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         href (Type &o)
         {
-
           this->href (const_cast <Type const &> (o));
         }
-
 
         virtual void
         href (Type const&);
 
-        virtual void
+        virtual void 
         idref (Type &o)
         {
-
           this->idref (const_cast <Type const &> (o));
         }
-
 
         virtual void
         idref (Type const&);
@@ -5406,12 +5543,12 @@ namespace CIAO
         IdRef ();
       };
 
-      struct TCKind : Traversal::TCKind,
+      struct TCKind : Traversal::TCKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         TCKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -5424,612 +5561,504 @@ namespace CIAO
         TCKind ();
       };
 
-      struct DataType : Traversal::DataType,
+      struct DataType : Traversal::DataType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::DataType Type;
         DataType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         kind (Type &o)
         {
-
           this->kind (const_cast <Type const &> (o));
         }
-
 
         virtual void
         kind (Type const&);
 
-        virtual void
+        virtual void 
         enum_ (Type &o)
         {
-
           this->enum_ (const_cast <Type const &> (o));
         }
-
 
         virtual void
         enum_ (Type const&);
 
-        virtual void
+        virtual void 
         struct_ (Type &o)
         {
-
           this->struct_ (const_cast <Type const &> (o));
         }
-
 
         virtual void
         struct_ (Type const&);
 
-        virtual void
+        virtual void 
         value (Type &o)
         {
-
           this->value (const_cast <Type const &> (o));
         }
-
 
         virtual void
         value (Type const&);
 
-        virtual void
+        virtual void 
         sequence (Type &o)
         {
-
           this->sequence (const_cast <Type const &> (o));
         }
-
 
         virtual void
         sequence (Type const&);
 
-        virtual void
+        virtual void 
         alias (Type &o)
         {
-
           this->alias (const_cast <Type const &> (o));
         }
-
 
         virtual void
         alias (Type const&);
 
-        virtual void
-        xmi_id (Type &o)
+        virtual void 
+        id (Type &o)
         {
-
-          this->xmi_id (const_cast <Type const &> (o));
+          this->id (const_cast <Type const &> (o));
         }
 
-
         virtual void
-        xmi_id (Type const&);
+        id (Type const&);
 
         protected:
         DataType ();
       };
 
-      struct DataValue : Traversal::DataValue,
+      struct DataValue : Traversal::DataValue, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::DataValue Type;
         DataValue (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         short_pre (Type &o)
         {
-
           this->short_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         short_pre (Type const&);
 
-        virtual void
+        virtual void 
         short_next (Type &o)
         {
-
           this->short_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         short_next (Type const&);
 
-        virtual void
+        virtual void 
         short_post (Type &o)
         {
-
           this->short_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         short_post (Type const&);
 
-        virtual void
+        virtual void 
         long_pre (Type &o)
         {
-
           this->long_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         long_pre (Type const&);
 
-        virtual void
+        virtual void 
         long_next (Type &o)
         {
-
           this->long_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         long_next (Type const&);
 
-        virtual void
+        virtual void 
         long_post (Type &o)
         {
-
           this->long_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         long_post (Type const&);
 
-        virtual void
+        virtual void 
         ushort_pre (Type &o)
         {
-
           this->ushort_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ushort_pre (Type const&);
 
-        virtual void
+        virtual void 
         ushort_next (Type &o)
         {
-
           this->ushort_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ushort_next (Type const&);
 
-        virtual void
+        virtual void 
         ushort_post (Type &o)
         {
-
           this->ushort_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ushort_post (Type const&);
 
-        virtual void
+        virtual void 
         ulong_pre (Type &o)
         {
-
           this->ulong_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ulong_pre (Type const&);
 
-        virtual void
+        virtual void 
         ulong_next (Type &o)
         {
-
           this->ulong_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ulong_next (Type const&);
 
-        virtual void
+        virtual void 
         ulong_post (Type &o)
         {
-
           this->ulong_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ulong_post (Type const&);
 
-        virtual void
+        virtual void 
         float_pre (Type &o)
         {
-
           this->float_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         float_pre (Type const&);
 
-        virtual void
+        virtual void 
         float_next (Type &o)
         {
-
           this->float_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         float_next (Type const&);
 
-        virtual void
+        virtual void 
         float_post (Type &o)
         {
-
           this->float_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         float_post (Type const&);
 
-        virtual void
+        virtual void 
         double_pre (Type &o)
         {
-
           this->double_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         double_pre (Type const&);
 
-        virtual void
+        virtual void 
         double_next (Type &o)
         {
-
           this->double_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         double_next (Type const&);
 
-        virtual void
+        virtual void 
         double_post (Type &o)
         {
-
           this->double_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         double_post (Type const&);
 
-        virtual void
+        virtual void 
         boolean_pre (Type &o)
         {
-
           this->boolean_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         boolean_pre (Type const&);
 
-        virtual void
+        virtual void 
         boolean_next (Type &o)
         {
-
           this->boolean_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         boolean_next (Type const&);
 
-        virtual void
+        virtual void 
         boolean_post (Type &o)
         {
-
           this->boolean_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         boolean_post (Type const&);
 
-        virtual void
+        virtual void 
         octet_pre (Type &o)
         {
-
           this->octet_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         octet_pre (Type const&);
 
-        virtual void
+        virtual void 
         octet_next (Type &o)
         {
-
           this->octet_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         octet_next (Type const&);
 
-        virtual void
+        virtual void 
         octet_post (Type &o)
         {
-
           this->octet_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         octet_post (Type const&);
 
-        virtual void
+        virtual void 
         enum_pre (Type &o)
         {
-
           this->enum_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         enum_pre (Type const&);
 
-        virtual void
+        virtual void 
         enum_next (Type &o)
         {
-
           this->enum_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         enum_next (Type const&);
 
-        virtual void
+        virtual void 
         enum_post (Type &o)
         {
-
           this->enum_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         enum_post (Type const&);
 
-        virtual void
+        virtual void 
         string_pre (Type &o)
         {
-
           this->string_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         string_pre (Type const&);
 
-        virtual void
+        virtual void 
         string_next (Type &o)
         {
-
           this->string_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         string_next (Type const&);
 
-        virtual void
+        virtual void 
         string_post (Type &o)
         {
-
           this->string_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         string_post (Type const&);
 
-        virtual void
+        virtual void 
         longlong_pre (Type &o)
         {
-
           this->longlong_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         longlong_pre (Type const&);
 
-        virtual void
+        virtual void 
         longlong_next (Type &o)
         {
-
           this->longlong_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         longlong_next (Type const&);
 
-        virtual void
+        virtual void 
         longlong_post (Type &o)
         {
-
           this->longlong_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         longlong_post (Type const&);
 
-        virtual void
+        virtual void 
         ulonglong_pre (Type &o)
         {
-
           this->ulonglong_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ulonglong_pre (Type const&);
 
-        virtual void
+        virtual void 
         ulonglong_next (Type &o)
         {
-
           this->ulonglong_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ulonglong_next (Type const&);
 
-        virtual void
+        virtual void 
         ulonglong_post (Type &o)
         {
-
           this->ulonglong_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         ulonglong_post (Type const&);
 
-        virtual void
+        virtual void 
         longdouble_pre (Type &o)
         {
-
           this->longdouble_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         longdouble_pre (Type const&);
 
-        virtual void
+        virtual void 
         longdouble_next (Type &o)
         {
-
           this->longdouble_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         longdouble_next (Type const&);
 
-        virtual void
+        virtual void 
         longdouble_post (Type &o)
         {
-
           this->longdouble_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         longdouble_post (Type const&);
 
-        virtual void
+        virtual void 
         element_pre (Type &o)
         {
-
           this->element_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         element_pre (Type const&);
 
-        virtual void
+        virtual void 
         element_next (Type &o)
         {
-
           this->element_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         element_next (Type const&);
 
-        virtual void
+        virtual void 
         element_post (Type &o)
         {
-
           this->element_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         element_post (Type const&);
 
-        virtual void
+        virtual void 
         member_pre (Type &o)
         {
-
           this->member_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_pre (Type const&);
 
-        virtual void
+        virtual void 
         member_next (Type &o)
         {
-
           this->member_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_next (Type const&);
 
-        virtual void
+        virtual void 
         member_post (Type &o)
         {
-
           this->member_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_post (Type const&);
@@ -6038,52 +6067,44 @@ namespace CIAO
         DataValue ();
       };
 
-      struct AliasType : Traversal::AliasType,
+      struct AliasType : Traversal::AliasType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::AliasType Type;
         AliasType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         typeId (Type &o)
         {
-
           this->typeId (const_cast <Type const &> (o));
         }
-
 
         virtual void
         typeId (Type const&);
 
-        virtual void
+        virtual void 
         elementType (Type &o)
         {
-
           this->elementType (const_cast <Type const &> (o));
         }
-
 
         virtual void
         elementType (Type const&);
@@ -6092,74 +6113,62 @@ namespace CIAO
         AliasType ();
       };
 
-      struct EnumType : Traversal::EnumType,
+      struct EnumType : Traversal::EnumType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::EnumType Type;
         EnumType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         typeId (Type &o)
         {
-
           this->typeId (const_cast <Type const &> (o));
         }
-
 
         virtual void
         typeId (Type const&);
 
-        virtual void
+        virtual void 
         member_pre (Type &o)
         {
-
           this->member_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_pre (Type const&);
 
-        virtual void
+        virtual void 
         member_next (Type &o)
         {
-
           this->member_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_next (Type const&);
 
-        virtual void
+        virtual void 
         member_post (Type &o)
         {
-
           this->member_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_post (Type const&);
@@ -6168,74 +6177,62 @@ namespace CIAO
         EnumType ();
       };
 
-      struct StructType : Traversal::StructType,
+      struct StructType : Traversal::StructType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::StructType Type;
         StructType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         typeId (Type &o)
         {
-
           this->typeId (const_cast <Type const &> (o));
         }
-
 
         virtual void
         typeId (Type const&);
 
-        virtual void
+        virtual void 
         member_pre (Type &o)
         {
-
           this->member_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_pre (Type const&);
 
-        virtual void
+        virtual void 
         member_next (Type &o)
         {
-
           this->member_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_next (Type const&);
 
-        virtual void
+        virtual void 
         member_post (Type &o)
         {
-
           this->member_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_post (Type const&);
@@ -6244,41 +6241,35 @@ namespace CIAO
         StructType ();
       };
 
-      struct StructMemberType : Traversal::StructMemberType,
+      struct StructMemberType : Traversal::StructMemberType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::StructMemberType Type;
         StructMemberType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         type (Type &o)
         {
-
           this->type (const_cast <Type const &> (o));
         }
-
 
         virtual void
         type (Type const&);
@@ -6287,96 +6278,80 @@ namespace CIAO
         StructMemberType ();
       };
 
-      struct ValueType : Traversal::ValueType,
+      struct ValueType : Traversal::ValueType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ValueType Type;
         ValueType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         typeId (Type &o)
         {
-
           this->typeId (const_cast <Type const &> (o));
         }
-
 
         virtual void
         typeId (Type const&);
 
-        virtual void
+        virtual void 
         modifier (Type &o)
         {
-
           this->modifier (const_cast <Type const &> (o));
         }
-
 
         virtual void
         modifier (Type const&);
 
-        virtual void
+        virtual void 
         baseType (Type &o)
         {
-
           this->baseType (const_cast <Type const &> (o));
         }
-
 
         virtual void
         baseType (Type const&);
 
-        virtual void
+        virtual void 
         member_pre (Type &o)
         {
-
           this->member_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_pre (Type const&);
 
-        virtual void
+        virtual void 
         member_next (Type &o)
         {
-
           this->member_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_next (Type const&);
 
-        virtual void
+        virtual void 
         member_post (Type &o)
         {
-
           this->member_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         member_post (Type const&);
@@ -6385,52 +6360,44 @@ namespace CIAO
         ValueType ();
       };
 
-      struct ValueMemberType : Traversal::ValueMemberType,
+      struct ValueMemberType : Traversal::ValueMemberType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ValueMemberType Type;
         ValueMemberType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         visibility (Type &o)
         {
-
           this->visibility (const_cast <Type const &> (o));
         }
-
 
         virtual void
         visibility (Type const&);
 
-        virtual void
+        virtual void 
         type (Type &o)
         {
-
           this->type (const_cast <Type const &> (o));
         }
-
 
         virtual void
         type (Type const&);
@@ -6439,41 +6406,35 @@ namespace CIAO
         ValueMemberType ();
       };
 
-      struct NamedValue : Traversal::NamedValue,
+      struct NamedValue : Traversal::NamedValue, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::NamedValue Type;
         NamedValue (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         value (Type &o)
         {
-
           this->value (const_cast <Type const &> (o));
         }
-
 
         virtual void
         value (Type const&);
@@ -6482,41 +6443,35 @@ namespace CIAO
         NamedValue ();
       };
 
-      struct SequenceType : Traversal::SequenceType,
+      struct SequenceType : Traversal::SequenceType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SequenceType Type;
         SequenceType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         bound (Type &o)
         {
-
           this->bound (const_cast <Type const &> (o));
         }
-
 
         virtual void
         bound (Type const&);
 
-        virtual void
+        virtual void 
         elementType (Type &o)
         {
-
           this->elementType (const_cast <Type const &> (o));
         }
-
 
         virtual void
         elementType (Type const&);
@@ -6525,41 +6480,35 @@ namespace CIAO
         SequenceType ();
       };
 
-      struct Any : Traversal::Any,
+      struct Any : Traversal::Any, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Any Type;
         Any (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         type (Type &o)
         {
-
           this->type (const_cast <Type const &> (o));
         }
-
 
         virtual void
         type (Type const&);
 
-        virtual void
+        virtual void 
         value (Type &o)
         {
-
           this->value (const_cast <Type const &> (o));
         }
-
 
         virtual void
         value (Type const&);
@@ -6568,41 +6517,35 @@ namespace CIAO
         Any ();
       };
 
-      struct Property : Traversal::Property,
+      struct Property : Traversal::Property, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Property Type;
         Property (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         value (Type &o)
         {
-
           this->value (const_cast <Type const &> (o));
         }
-
 
         virtual void
         value (Type const&);
@@ -6611,12 +6554,12 @@ namespace CIAO
         Property ();
       };
 
-      struct SatisfierPropertyKind : Traversal::SatisfierPropertyKind,
+      struct SatisfierPropertyKind : Traversal::SatisfierPropertyKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         SatisfierPropertyKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -6629,63 +6572,53 @@ namespace CIAO
         SatisfierPropertyKind ();
       };
 
-      struct SatisfierProperty : Traversal::SatisfierProperty,
+      struct SatisfierProperty : Traversal::SatisfierProperty, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SatisfierProperty Type;
         SatisfierProperty (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         kind (Type &o)
         {
-
           this->kind (const_cast <Type const &> (o));
         }
-
 
         virtual void
         kind (Type const&);
 
-        virtual void
+        virtual void 
         dynamic (Type &o)
         {
-
           this->dynamic (const_cast <Type const &> (o));
         }
-
 
         virtual void
         dynamic (Type const&);
 
-        virtual void
+        virtual void 
         value (Type &o)
         {
-
           this->value (const_cast <Type const &> (o));
         }
-
 
         virtual void
         value (Type const&);
@@ -6694,96 +6627,80 @@ namespace CIAO
         SatisfierProperty ();
       };
 
-      struct Resource : Traversal::Resource,
+      struct Resource : Traversal::Resource, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Resource Type;
         Resource (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         resourceType_pre (Type &o)
         {
-
           this->resourceType_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType_pre (Type const&);
 
-        virtual void
+        virtual void 
         resourceType_next (Type &o)
         {
-
           this->resourceType_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType_next (Type const&);
 
-        virtual void
+        virtual void 
         resourceType_post (Type &o)
         {
-
           this->resourceType_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType_post (Type const&);
 
-        virtual void
+        virtual void 
         property_pre (Type &o)
         {
-
           this->property_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_pre (Type const&);
 
-        virtual void
+        virtual void 
         property_next (Type &o)
         {
-
           this->property_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_next (Type const&);
 
-        virtual void
+        virtual void 
         property_post (Type &o)
         {
-
           this->property_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_post (Type const&);
@@ -6792,74 +6709,62 @@ namespace CIAO
         Resource ();
       };
 
-      struct Requirement : Traversal::Requirement,
+      struct Requirement : Traversal::Requirement, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Requirement Type;
         Requirement (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         resourceType (Type &o)
         {
-
           this->resourceType (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         property_pre (Type &o)
         {
-
           this->property_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_pre (Type const&);
 
-        virtual void
+        virtual void 
         property_next (Type &o)
         {
-
           this->property_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_next (Type const&);
 
-        virtual void
+        virtual void 
         property_post (Type &o)
         {
-
           this->property_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_post (Type const&);
@@ -6868,74 +6773,62 @@ namespace CIAO
         Requirement ();
       };
 
-      struct ResourceDeploymentDescription : Traversal::ResourceDeploymentDescription,
+      struct ResourceDeploymentDescription : Traversal::ResourceDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ResourceDeploymentDescription Type;
         ResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         requirementName (Type &o)
         {
-
           this->requirementName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         requirementName (Type const&);
 
-        virtual void
+        virtual void 
         resourceName (Type &o)
         {
-
           this->resourceName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceName (Type const&);
 
-        virtual void
+        virtual void 
         property_pre (Type &o)
         {
-
           this->property_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_pre (Type const&);
 
-        virtual void
+        virtual void 
         property_next (Type &o)
         {
-
           this->property_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_next (Type const&);
 
-        virtual void
+        virtual void 
         property_post (Type &o)
         {
-
           this->property_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_post (Type const&);
@@ -6944,406 +6837,338 @@ namespace CIAO
         ResourceDeploymentDescription ();
       };
 
-      struct ArtifactDeploymentDescription : Traversal::ArtifactDeploymentDescription,
+      struct ArtifactDeploymentDescription : Traversal::ArtifactDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ArtifactDeploymentDescription Type;
         ArtifactDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         source_pre (Type &o)
         {
-
           this->source_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         source_pre (Type const&);
 
-        virtual void
+        virtual void 
         source_next (Type &o)
         {
-
           this->source_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         source_next (Type const&);
 
-        virtual void
+        virtual void 
         source_post (Type &o)
         {
-
           this->source_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         source_post (Type const&);
 
-        virtual void
+        virtual void 
         node (Type &o)
         {
-
           this->node (const_cast <Type const &> (o));
         }
-
 
         virtual void
         node (Type const&);
 
-        virtual void
+        virtual void 
         location_pre (Type &o)
         {
-
           this->location_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_pre (Type const&);
 
-        virtual void
+        virtual void 
         location_next (Type &o)
         {
-
           this->location_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_next (Type const&);
 
-        virtual void
+        virtual void 
         location_post (Type &o)
         {
-
           this->location_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_post (Type const&);
 
-        virtual void
+        virtual void 
         execParameter_pre (Type &o)
         {
-
           this->execParameter_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_pre (Type const&);
 
-        virtual void
+        virtual void 
         execParameter_next (Type &o)
         {
-
           this->execParameter_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_next (Type const&);
 
-        virtual void
+        virtual void 
         execParameter_post (Type &o)
         {
-
           this->execParameter_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_post (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_pre (Type &o)
         {
-
           this->deployRequirement_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_pre (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_next (Type &o)
         {
-
           this->deployRequirement_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_next (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_post (Type &o)
         {
-
           this->deployRequirement_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_post (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_pre (Type &o)
         {
-
           this->deployedResource_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_pre (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_next (Type &o)
         {
-
           this->deployedResource_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_next (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_post (Type &o)
         {
-
           this->deployedResource_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_post (Type const&);
 
-        virtual void
-        xmi_id (Type &o)
+        virtual void 
+        id (Type &o)
         {
-
-          this->xmi_id (const_cast <Type const &> (o));
+          this->id (const_cast <Type const &> (o));
         }
 
-
         virtual void
-        xmi_id (Type const&);
+        id (Type const&);
 
         protected:
         ArtifactDeploymentDescription ();
       };
 
-      struct MonolithicDeploymentDescription : Traversal::MonolithicDeploymentDescription,
+      struct MonolithicDeploymentDescription : Traversal::MonolithicDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::MonolithicDeploymentDescription Type;
         MonolithicDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         source_pre (Type &o)
         {
-
           this->source_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         source_pre (Type const&);
 
-        virtual void
+        virtual void 
         source_next (Type &o)
         {
-
           this->source_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         source_next (Type const&);
 
-        virtual void
+        virtual void 
         source_post (Type &o)
         {
-
           this->source_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         source_post (Type const&);
 
-        virtual void
+        virtual void 
         artifact_pre (Type &o)
         {
-
           this->artifact_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         artifact_pre (Type const&);
 
-        virtual void
+        virtual void 
         artifact_next (Type &o)
         {
-
           this->artifact_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         artifact_next (Type const&);
 
-        virtual void
+        virtual void 
         artifact_post (Type &o)
         {
-
           this->artifact_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         artifact_post (Type const&);
 
-        virtual void
+        virtual void 
         execParameter_pre (Type &o)
         {
-
           this->execParameter_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_pre (Type const&);
 
-        virtual void
+        virtual void 
         execParameter_next (Type &o)
         {
-
           this->execParameter_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_next (Type const&);
 
-        virtual void
+        virtual void 
         execParameter_post (Type &o)
         {
-
           this->execParameter_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_post (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_pre (Type &o)
         {
-
           this->deployRequirement_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_pre (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_next (Type &o)
         {
-
           this->deployRequirement_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_next (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_post (Type &o)
         {
-
           this->deployRequirement_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_post (Type const&);
 
-        virtual void
-        xmi_id (Type &o)
+        virtual void 
+        id (Type &o)
         {
-
-          this->xmi_id (const_cast <Type const &> (o));
+          this->id (const_cast <Type const &> (o));
         }
 
-
         virtual void
-        xmi_id (Type const&);
+        id (Type const&);
 
         protected:
         MonolithicDeploymentDescription ();
       };
 
-      struct ResourceUsageKind : Traversal::ResourceUsageKind,
+      struct ResourceUsageKind : Traversal::ResourceUsageKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         ResourceUsageKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -7356,85 +7181,71 @@ namespace CIAO
         ResourceUsageKind ();
       };
 
-      struct InstanceResourceDeploymentDescription : Traversal::InstanceResourceDeploymentDescription,
+      struct InstanceResourceDeploymentDescription : Traversal::InstanceResourceDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription Type;
         InstanceResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         resourceUsage (Type &o)
         {
-
           this->resourceUsage (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceUsage (Type const&);
 
-        virtual void
+        virtual void 
         requirementName (Type &o)
         {
-
           this->requirementName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         requirementName (Type const&);
 
-        virtual void
+        virtual void 
         resourceName (Type &o)
         {
-
           this->resourceName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceName (Type const&);
 
-        virtual void
+        virtual void 
         property_pre (Type &o)
         {
-
           this->property_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_pre (Type const&);
 
-        virtual void
+        virtual void 
         property_next (Type &o)
         {
-
           this->property_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_next (Type const&);
 
-        virtual void
+        virtual void 
         property_post (Type &o)
         {
-
           this->property_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_post (Type const&);
@@ -7443,165 +7254,139 @@ namespace CIAO
         InstanceResourceDeploymentDescription ();
       };
 
-      struct InstanceDeploymentDescription : Traversal::InstanceDeploymentDescription,
+      struct InstanceDeploymentDescription : Traversal::InstanceDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::InstanceDeploymentDescription Type;
         InstanceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         node (Type &o)
         {
-
           this->node (const_cast <Type const &> (o));
         }
-
 
         virtual void
         node (Type const&);
 
-        virtual void
+        virtual void 
         source (Type &o)
         {
-
           this->source (const_cast <Type const &> (o));
         }
-
 
         virtual void
         source (Type const&);
 
-        virtual void
+        virtual void 
         implementation (Type &o)
         {
-
           this->implementation (const_cast <Type const &> (o));
         }
-
 
         virtual void
         implementation (Type const&);
 
-        virtual void
+        virtual void 
         configProperty_pre (Type &o)
         {
-
           this->configProperty_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_pre (Type const&);
 
-        virtual void
+        virtual void 
         configProperty_next (Type &o)
         {
-
           this->configProperty_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_next (Type const&);
 
-        virtual void
+        virtual void 
         configProperty_post (Type &o)
         {
-
           this->configProperty_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_post (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_pre (Type &o)
         {
-
           this->deployedResource_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_pre (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_next (Type &o)
         {
-
           this->deployedResource_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_next (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_post (Type &o)
         {
-
           this->deployedResource_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_post (Type const&);
 
-        virtual void
+        virtual void 
         deployedSharedResource (Type &o)
         {
-
           this->deployedSharedResource (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedSharedResource (Type const&);
 
-        virtual void
-        xmi_id (Type &o)
+        virtual void 
+        id (Type &o)
         {
-
-          this->xmi_id (const_cast <Type const &> (o));
+          this->id (const_cast <Type const &> (o));
         }
 
-
         virtual void
-        xmi_id (Type const&);
+        id (Type const&);
 
         protected:
         InstanceDeploymentDescription ();
       };
 
-      struct CCMComponentPortKind : Traversal::CCMComponentPortKind,
+      struct CCMComponentPortKind : Traversal::CCMComponentPortKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         CCMComponentPortKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -7614,129 +7399,107 @@ namespace CIAO
         CCMComponentPortKind ();
       };
 
-      struct ComponentPortDescription : Traversal::ComponentPortDescription,
+      struct ComponentPortDescription : Traversal::ComponentPortDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPortDescription Type;
         ComponentPortDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         specificType (Type &o)
         {
-
           this->specificType (const_cast <Type const &> (o));
         }
-
 
         virtual void
         specificType (Type const&);
 
-        virtual void
+        virtual void 
         supportedType_pre (Type &o)
         {
-
           this->supportedType_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         supportedType_pre (Type const&);
 
-        virtual void
+        virtual void 
         supportedType_next (Type &o)
         {
-
           this->supportedType_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         supportedType_next (Type const&);
 
-        virtual void
+        virtual void 
         supportedType_post (Type &o)
         {
-
           this->supportedType_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         supportedType_post (Type const&);
 
-        virtual void
+        virtual void 
         provider (Type &o)
         {
-
           this->provider (const_cast <Type const &> (o));
         }
-
 
         virtual void
         provider (Type const&);
 
-        virtual void
+        virtual void 
         exclusiveProvider (Type &o)
         {
-
           this->exclusiveProvider (const_cast <Type const &> (o));
         }
-
 
         virtual void
         exclusiveProvider (Type const&);
 
-        virtual void
+        virtual void 
         exclusiveUser (Type &o)
         {
-
           this->exclusiveUser (const_cast <Type const &> (o));
         }
-
 
         virtual void
         exclusiveUser (Type const&);
 
-        virtual void
+        virtual void 
         optional (Type &o)
         {
-
           this->optional (const_cast <Type const &> (o));
         }
-
 
         virtual void
         optional (Type const&);
 
-        virtual void
+        virtual void 
         kind (Type &o)
         {
-
           this->kind (const_cast <Type const &> (o));
         }
-
 
         virtual void
         kind (Type const&);
@@ -7745,41 +7508,35 @@ namespace CIAO
         ComponentPortDescription ();
       };
 
-      struct ComponentPropertyDescription : Traversal::ComponentPropertyDescription,
+      struct ComponentPropertyDescription : Traversal::ComponentPropertyDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPropertyDescription Type;
         ComponentPropertyDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         type (Type &o)
         {
-
           this->type (const_cast <Type const &> (o));
         }
-
 
         virtual void
         type (Type const&);
@@ -7788,30 +7545,26 @@ namespace CIAO
         ComponentPropertyDescription ();
       };
 
-      struct ComponentExternalPortEndpoint : Traversal::ComponentExternalPortEndpoint,
+      struct ComponentExternalPortEndpoint : Traversal::ComponentExternalPortEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentExternalPortEndpoint Type;
         ComponentExternalPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         portName (Type &o)
         {
-
           this->portName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         portName (Type const&);
@@ -7820,63 +7573,53 @@ namespace CIAO
         ComponentExternalPortEndpoint ();
       };
 
-      struct PlanSubcomponentPortEndpoint : Traversal::PlanSubcomponentPortEndpoint,
+      struct PlanSubcomponentPortEndpoint : Traversal::PlanSubcomponentPortEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint Type;
         PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         portName (Type &o)
         {
-
           this->portName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         portName (Type const&);
 
-        virtual void
+        virtual void 
         provider (Type &o)
         {
-
           this->provider (const_cast <Type const &> (o));
         }
-
 
         virtual void
         provider (Type const&);
 
-        virtual void
+        virtual void 
         kind (Type &o)
         {
-
           this->kind (const_cast <Type const &> (o));
         }
-
 
         virtual void
         kind (Type const&);
 
-        virtual void
+        virtual void 
         instance (Type &o)
         {
-
           this->instance (const_cast <Type const &> (o));
         }
-
 
         virtual void
         instance (Type const&);
@@ -7885,85 +7628,71 @@ namespace CIAO
         PlanSubcomponentPortEndpoint ();
       };
 
-      struct ExternalReferenceEndpoint : Traversal::ExternalReferenceEndpoint,
+      struct ExternalReferenceEndpoint : Traversal::ExternalReferenceEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ExternalReferenceEndpoint Type;
         ExternalReferenceEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         location (Type &o)
         {
-
           this->location (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location (Type const&);
 
-        virtual void
+        virtual void 
         provider (Type &o)
         {
-
           this->provider (const_cast <Type const &> (o));
         }
-
 
         virtual void
         provider (Type const&);
 
-        virtual void
+        virtual void 
         portName (Type &o)
         {
-
           this->portName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         portName (Type const&);
 
-        virtual void
+        virtual void 
         supportedType_pre (Type &o)
         {
-
           this->supportedType_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         supportedType_pre (Type const&);
 
-        virtual void
+        virtual void 
         supportedType_next (Type &o)
         {
-
           this->supportedType_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         supportedType_next (Type const&);
 
-        virtual void
+        virtual void 
         supportedType_post (Type &o)
         {
-
           this->supportedType_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         supportedType_post (Type const&);
@@ -7972,85 +7701,71 @@ namespace CIAO
         ExternalReferenceEndpoint ();
       };
 
-      struct ConnectionResourceDeploymentDescription : Traversal::ConnectionResourceDeploymentDescription,
+      struct ConnectionResourceDeploymentDescription : Traversal::ConnectionResourceDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription Type;
         ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         targetName (Type &o)
         {
-
           this->targetName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         targetName (Type const&);
 
-        virtual void
+        virtual void 
         requirementName (Type &o)
         {
-
           this->requirementName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         requirementName (Type const&);
 
-        virtual void
+        virtual void 
         resourceName (Type &o)
         {
-
           this->resourceName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceName (Type const&);
 
-        virtual void
+        virtual void 
         property_pre (Type &o)
         {
-
           this->property_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_pre (Type const&);
 
-        virtual void
+        virtual void 
         property_next (Type &o)
         {
-
           this->property_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_next (Type const&);
 
-        virtual void
+        virtual void 
         property_post (Type &o)
         {
-
           this->property_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_post (Type const&);
@@ -8059,206 +7774,170 @@ namespace CIAO
         ConnectionResourceDeploymentDescription ();
       };
 
-      struct PlanConnectionDescription : Traversal::PlanConnectionDescription,
+      struct PlanConnectionDescription : Traversal::PlanConnectionDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PlanConnectionDescription Type;
         PlanConnectionDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         source (Type &o)
         {
-
           this->source (const_cast <Type const &> (o));
         }
-
 
         virtual void
         source (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_pre (Type &o)
         {
-
           this->deployRequirement_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_pre (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_next (Type &o)
         {
-
           this->deployRequirement_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_next (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_post (Type &o)
         {
-
           this->deployRequirement_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_post (Type const&);
 
-        virtual void
+        virtual void 
         externalEndpoint_pre (Type &o)
         {
-
           this->externalEndpoint_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalEndpoint_pre (Type const&);
 
-        virtual void
+        virtual void 
         externalEndpoint_next (Type &o)
         {
-
           this->externalEndpoint_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalEndpoint_next (Type const&);
 
-        virtual void
+        virtual void 
         externalEndpoint_post (Type &o)
         {
-
           this->externalEndpoint_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalEndpoint_post (Type const&);
 
-        virtual void
+        virtual void 
         internalEndpoint_pre (Type &o)
         {
-
           this->internalEndpoint_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         internalEndpoint_pre (Type const&);
 
-        virtual void
+        virtual void 
         internalEndpoint_next (Type &o)
         {
-
           this->internalEndpoint_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         internalEndpoint_next (Type const&);
 
-        virtual void
+        virtual void 
         internalEndpoint_post (Type &o)
         {
-
           this->internalEndpoint_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         internalEndpoint_post (Type const&);
 
-        virtual void
+        virtual void 
         externalReference_pre (Type &o)
         {
-
           this->externalReference_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalReference_pre (Type const&);
 
-        virtual void
+        virtual void 
         externalReference_next (Type &o)
         {
-
           this->externalReference_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalReference_next (Type const&);
 
-        virtual void
+        virtual void 
         externalReference_post (Type &o)
         {
-
           this->externalReference_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalReference_post (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_pre (Type &o)
         {
-
           this->deployedResource_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_pre (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_next (Type &o)
         {
-
           this->deployedResource_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_next (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_post (Type &o)
         {
-
           this->deployedResource_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployedResource_post (Type const&);
@@ -8267,30 +7946,26 @@ namespace CIAO
         PlanConnectionDescription ();
       };
 
-      struct ImplementationDependency : Traversal::ImplementationDependency,
+      struct ImplementationDependency : Traversal::ImplementationDependency, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ImplementationDependency Type;
         ImplementationDependency (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         requiredType (Type &o)
         {
-
           this->requiredType (const_cast <Type const &> (o));
         }
-
 
         virtual void
         requiredType (Type const&);
@@ -8299,96 +7974,80 @@ namespace CIAO
         ImplementationDependency ();
       };
 
-      struct Capability : Traversal::Capability,
+      struct Capability : Traversal::Capability, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Capability Type;
         Capability (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         resourceType_pre (Type &o)
         {
-
           this->resourceType_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType_pre (Type const&);
 
-        virtual void
+        virtual void 
         resourceType_next (Type &o)
         {
-
           this->resourceType_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType_next (Type const&);
 
-        virtual void
+        virtual void 
         resourceType_post (Type &o)
         {
-
           this->resourceType_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType_post (Type const&);
 
-        virtual void
+        virtual void 
         property_pre (Type &o)
         {
-
           this->property_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_pre (Type const&);
 
-        virtual void
+        virtual void 
         property_next (Type &o)
         {
-
           this->property_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_next (Type const&);
 
-        virtual void
+        virtual void 
         property_post (Type &o)
         {
-
           this->property_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_post (Type const&);
@@ -8397,107 +8056,89 @@ namespace CIAO
         Capability ();
       };
 
-      struct ImplementationRequirement : Traversal::ImplementationRequirement,
+      struct ImplementationRequirement : Traversal::ImplementationRequirement, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ImplementationRequirement Type;
         ImplementationRequirement (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         resourceUsage (Type &o)
         {
-
           this->resourceUsage (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceUsage (Type const&);
 
-        virtual void
+        virtual void 
         resourcePort (Type &o)
         {
-
           this->resourcePort (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourcePort (Type const&);
 
-        virtual void
+        virtual void 
         componentPort (Type &o)
         {
-
           this->componentPort (const_cast <Type const &> (o));
         }
-
 
         virtual void
         componentPort (Type const&);
 
-        virtual void
+        virtual void 
         resourceType (Type &o)
         {
-
           this->resourceType (const_cast <Type const &> (o));
         }
-
 
         virtual void
         resourceType (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         property_pre (Type &o)
         {
-
           this->property_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_pre (Type const&);
 
-        virtual void
+        virtual void 
         property_next (Type &o)
         {
-
           this->property_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_next (Type const&);
 
-        virtual void
+        virtual void 
         property_post (Type &o)
         {
-
           this->property_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         property_post (Type const&);
@@ -8506,41 +8147,35 @@ namespace CIAO
         ImplementationRequirement ();
       };
 
-      struct SubcomponentPortEndpoint : Traversal::SubcomponentPortEndpoint,
+      struct SubcomponentPortEndpoint : Traversal::SubcomponentPortEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SubcomponentPortEndpoint Type;
         SubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         portName (Type &o)
         {
-
           this->portName (const_cast <Type const &> (o));
         }
-
 
         virtual void
         portName (Type const&);
 
-        virtual void
+        virtual void 
         instance (Type &o)
         {
-
           this->instance (const_cast <Type const &> (o));
         }
-
 
         virtual void
         instance (Type const&);
@@ -8549,162 +8184,134 @@ namespace CIAO
         SubcomponentPortEndpoint ();
       };
 
-      struct AssemblyConnectionDescription : Traversal::AssemblyConnectionDescription,
+      struct AssemblyConnectionDescription : Traversal::AssemblyConnectionDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::AssemblyConnectionDescription Type;
         AssemblyConnectionDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_pre (Type &o)
         {
-
           this->deployRequirement_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_pre (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_next (Type &o)
         {
-
           this->deployRequirement_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_next (Type const&);
 
-        virtual void
+        virtual void 
         deployRequirement_post (Type &o)
         {
-
           this->deployRequirement_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_post (Type const&);
 
-        virtual void
+        virtual void 
         internalEndpoint_pre (Type &o)
         {
-
           this->internalEndpoint_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         internalEndpoint_pre (Type const&);
 
-        virtual void
+        virtual void 
         internalEndpoint_next (Type &o)
         {
-
           this->internalEndpoint_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         internalEndpoint_next (Type const&);
 
-        virtual void
+        virtual void 
         internalEndpoint_post (Type &o)
         {
-
           this->internalEndpoint_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         internalEndpoint_post (Type const&);
 
-        virtual void
+        virtual void 
         externalEndpoint_pre (Type &o)
         {
-
           this->externalEndpoint_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalEndpoint_pre (Type const&);
 
-        virtual void
+        virtual void 
         externalEndpoint_next (Type &o)
         {
-
           this->externalEndpoint_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalEndpoint_next (Type const&);
 
-        virtual void
+        virtual void 
         externalEndpoint_post (Type &o)
         {
-
           this->externalEndpoint_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalEndpoint_post (Type const&);
 
-        virtual void
+        virtual void 
         externalReference_pre (Type &o)
         {
-
           this->externalReference_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalReference_pre (Type const&);
 
-        virtual void
+        virtual void 
         externalReference_next (Type &o)
         {
-
           this->externalReference_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalReference_next (Type const&);
 
-        virtual void
+        virtual void 
         externalReference_post (Type &o)
         {
-
           this->externalReference_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         externalReference_post (Type const&);
@@ -8713,12 +8320,12 @@ namespace CIAO
         AssemblyConnectionDescription ();
       };
 
-      struct PlanLocalityKind : Traversal::PlanLocalityKind,
+      struct PlanLocalityKind : Traversal::PlanLocalityKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         PlanLocalityKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
@@ -8731,41 +8338,35 @@ namespace CIAO
         PlanLocalityKind ();
       };
 
-      struct PlanLocality : Traversal::PlanLocality,
+      struct PlanLocality : Traversal::PlanLocality, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PlanLocality Type;
         PlanLocality (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void
+        virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
 
-        virtual void
+        virtual void 
         constraint (Type &o)
         {
-
           this->constraint (const_cast <Type const &> (o));
         }
-
 
         virtual void
         constraint (Type const&);
 
-        virtual void
+        virtual void 
         constrainedInstance (Type &o)
         {
-
           this->constrainedInstance (const_cast <Type const &> (o));
         }
-
 
         virtual void
         constrainedInstance (Type const&);

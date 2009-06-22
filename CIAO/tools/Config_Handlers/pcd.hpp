@@ -34,6 +34,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "Basic_Deployment_Data.hpp"
 
 #include "cpd.hpp"
@@ -46,20 +49,23 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ComponentPackageImport, ACE_Null_Mutex > _ptr;
+
       // location
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator location_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator location_const_iterator;
       location_iterator begin_location ();
       location_iterator end_location ();
       location_const_iterator begin_location () const;
       location_const_iterator end_location () const;
-      void add_location (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_location ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_location (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > location_;
 
       public:
       ComponentPackageImport ();
@@ -78,6 +84,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export PackageConfiguration : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PackageConfiguration, ACE_Null_Mutex > _ptr;
 
       // label
       // 
@@ -142,32 +151,32 @@ namespace CIAO
       // selectRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator selectRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator selectRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator selectRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator selectRequirement_const_iterator;
       selectRequirement_iterator begin_selectRequirement ();
       selectRequirement_iterator end_selectRequirement ();
       selectRequirement_const_iterator begin_selectRequirement () const;
       selectRequirement_const_iterator end_selectRequirement () const;
-      void add_selectRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_selectRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_selectRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > selectRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > selectRequirement_;
 
       // configProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
-      void add_configProperty (::CIAO::Config_Handlers::Property const& );
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
 
       // contentLocation
       // 
@@ -246,6 +255,12 @@ namespace CIAO
 
         virtual void
         location_post (Type const&);
+
+        virtual void
+        location_none (Type&);
+
+        virtual void
+        location_none (Type const&);
 
         virtual void
         post (Type&);
@@ -439,10 +454,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -450,10 +463,8 @@ namespace CIAO
         virtual void 
         location_pre (Type &o)
         {
-
           this->location_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_pre (Type const&);
@@ -461,10 +472,8 @@ namespace CIAO
         virtual void 
         location_next (Type &o)
         {
-
           this->location_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_next (Type const&);
@@ -472,10 +481,8 @@ namespace CIAO
         virtual void 
         location_post (Type &o)
         {
-
           this->location_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_post (Type const&);
@@ -493,10 +500,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -504,10 +509,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -515,10 +518,8 @@ namespace CIAO
         virtual void 
         UUID (Type &o)
         {
-
           this->UUID (const_cast <Type const &> (o));
         }
-
 
         virtual void
         UUID (Type const&);
@@ -526,10 +527,8 @@ namespace CIAO
         virtual void 
         basePackage (Type &o)
         {
-
           this->basePackage (const_cast <Type const &> (o));
         }
-
 
         virtual void
         basePackage (Type const&);
@@ -537,10 +536,8 @@ namespace CIAO
         virtual void 
         specializedConfig (Type &o)
         {
-
           this->specializedConfig (const_cast <Type const &> (o));
         }
-
 
         virtual void
         specializedConfig (Type const&);
@@ -548,10 +545,8 @@ namespace CIAO
         virtual void 
         importedPackage (Type &o)
         {
-
           this->importedPackage (const_cast <Type const &> (o));
         }
-
 
         virtual void
         importedPackage (Type const&);
@@ -559,10 +554,8 @@ namespace CIAO
         virtual void 
         referencedPackage (Type &o)
         {
-
           this->referencedPackage (const_cast <Type const &> (o));
         }
-
 
         virtual void
         referencedPackage (Type const&);
@@ -570,10 +563,8 @@ namespace CIAO
         virtual void 
         selectRequirement_pre (Type &o)
         {
-
           this->selectRequirement_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         selectRequirement_pre (Type const&);
@@ -581,10 +572,8 @@ namespace CIAO
         virtual void 
         selectRequirement_next (Type &o)
         {
-
           this->selectRequirement_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         selectRequirement_next (Type const&);
@@ -592,10 +581,8 @@ namespace CIAO
         virtual void 
         selectRequirement_post (Type &o)
         {
-
           this->selectRequirement_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         selectRequirement_post (Type const&);
@@ -603,10 +590,8 @@ namespace CIAO
         virtual void 
         configProperty_pre (Type &o)
         {
-
           this->configProperty_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_pre (Type const&);
@@ -614,10 +599,8 @@ namespace CIAO
         virtual void 
         configProperty_next (Type &o)
         {
-
           this->configProperty_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_next (Type const&);
@@ -625,10 +608,8 @@ namespace CIAO
         virtual void 
         configProperty_post (Type &o)
         {
-
           this->configProperty_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         configProperty_post (Type const&);
@@ -636,10 +617,8 @@ namespace CIAO
         virtual void 
         contentLocation (Type &o)
         {
-
           this->contentLocation (const_cast <Type const &> (o));
         }
-
 
         virtual void
         contentLocation (Type const&);

@@ -22,7 +22,12 @@
 
 #if !defined (__RTP__)
 # undef ACE_HAS_IOCTL_INT_3_PARAM
+# define ACE_HAS_TASKCPUAFFINITYSET
 #endif
+
+#define ACE_HAS_VXATOMICLIB
+#define ACE_HAS_CPUSET_T
+#define ACE_HAS_VXCPULIB
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_6_H */

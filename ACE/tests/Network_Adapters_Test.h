@@ -171,7 +171,11 @@ private:
 class Stop_Handler : public ACE_Event_Handler
 {
 public:
+#ifdef ACE_HAS_THREADS
   typedef ACE_Atomic_Op<ACE_Mutex, long> counter_sig;
+#else
+  typedef long counter_sig;
+#endif
 
   // Constructor.
   Stop_Handler (ACE_Reactor * const reactor = ACE_Reactor::instance ());

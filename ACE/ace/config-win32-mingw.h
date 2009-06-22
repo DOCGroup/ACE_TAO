@@ -102,5 +102,7 @@
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 
+#define ACE_DLL_PREFIX ACE_TEXT ("lib")
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MINGW_H */

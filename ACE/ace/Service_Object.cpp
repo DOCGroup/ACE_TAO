@@ -21,12 +21,12 @@ ACE_RCSID (ace,
            Service_Object,
            "$Id$")
 
-  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
-  ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
+ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 
-  void
+void
 ACE_Service_Type::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)

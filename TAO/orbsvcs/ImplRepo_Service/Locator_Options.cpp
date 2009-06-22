@@ -38,6 +38,7 @@ Options::Options ()
 , startup_timeout_(DEFAULT_START_TIMEOUT)
 , readonly_ (false)
 , service_command_(SC_NONE)
+, unregister_if_address_reused_ (false)
 {
 }
 
@@ -142,6 +143,11 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           this->persist_file_name_ = shifter.get_current ();
           this->repo_mode_ = REPO_HEAP_FILE;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-UnregisterIfAddressReused")) == 0)
+        {
+          this->unregister_if_address_reused_ = true;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-r")) == 0)
@@ -503,3 +509,8 @@ Options::readonly (void) const
   return this->readonly_;
 }
 
+bool
+Options::unregister_if_address_reused (void) const
+{
+  return this->unregister_if_address_reused_;
+}

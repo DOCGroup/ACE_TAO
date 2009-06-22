@@ -433,7 +433,7 @@ public:
   int ref_count_;
 
   /// Indicate that a reader is trying to upgrade
-  int important_writer_;
+  bool important_writer_;
 
   /// Condition for the upgrading reader
   ACE_cond_t waiting_important_writer_;

@@ -63,7 +63,7 @@ extern "C"
 // The following are #defines and #includes that are specific to
 // WIN32.
 #  if defined (ACE_HAS_WINCE)
-#    define ACE_STDIN  _fileno (stdin)
+#    define ACE_STDIN _fileno (stdin)
 #    define ACE_STDOUT _fileno (stdout)
 #    define ACE_STDERR _fileno (stderr)
 #  else

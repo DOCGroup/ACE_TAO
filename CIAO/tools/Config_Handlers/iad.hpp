@@ -34,6 +34,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "Basic_Deployment_Data.hpp"
 
 namespace CIAO
@@ -43,6 +46,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export NamedImplementationArtifact : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < NamedImplementationArtifact, ACE_Null_Mutex > _ptr;
 
       // name
       // 
@@ -81,6 +87,9 @@ namespace CIAO
     {
       typedef ::XSCRT::Type Base;
 
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ImplementationArtifactDescription, ACE_Null_Mutex > _ptr;
+
       // label
       // 
       public:
@@ -104,77 +113,77 @@ namespace CIAO
       // location
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
-      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator location_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator location_const_iterator;
       location_iterator begin_location ();
       location_iterator end_location ();
       location_const_iterator begin_location () const;
       location_const_iterator end_location () const;
-      void add_location (::XMLSchema::string< ACE_TCHAR > const& );
+      void add_location ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
       size_t count_location (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > location_;
 
       // dependsOn
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator dependsOn_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator dependsOn_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > >::iterator dependsOn_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > >::const_iterator dependsOn_const_iterator;
       dependsOn_iterator begin_dependsOn ();
       dependsOn_iterator end_dependsOn ();
       dependsOn_const_iterator begin_dependsOn () const;
       dependsOn_const_iterator end_dependsOn () const;
-      void add_dependsOn (::CIAO::Config_Handlers::NamedImplementationArtifact const& );
+      void add_dependsOn ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > const& );
       size_t count_dependsOn (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact > dependsOn_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > > dependsOn_;
 
       // execParameter
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator execParameter_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator execParameter_const_iterator;
       execParameter_iterator begin_execParameter ();
       execParameter_iterator end_execParameter ();
       execParameter_const_iterator begin_execParameter () const;
       execParameter_const_iterator end_execParameter () const;
-      void add_execParameter (::CIAO::Config_Handlers::Property const& );
+      void add_execParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_execParameter (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > execParameter_;
 
       // infoProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
       infoProperty_iterator begin_infoProperty ();
       infoProperty_iterator end_infoProperty ();
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
-      void add_infoProperty (::CIAO::Config_Handlers::Property const& );
+      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_infoProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
       // deployRequirement
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::iterator deployRequirement_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
-      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > > deployRequirement_;
 
       // contentLocation
       // 
@@ -499,10 +508,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -510,10 +517,8 @@ namespace CIAO
         virtual void 
         name (Type &o)
         {
-
           this->name (const_cast <Type const &> (o));
         }
-
 
         virtual void
         name (Type const&);
@@ -521,10 +526,8 @@ namespace CIAO
         virtual void 
         referencedArtifact (Type &o)
         {
-
           this->referencedArtifact (const_cast <Type const &> (o));
         }
-
 
         virtual void
         referencedArtifact (Type const&);
@@ -542,10 +545,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -553,10 +554,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -564,10 +563,8 @@ namespace CIAO
         virtual void 
         UUID (Type &o)
         {
-
           this->UUID (const_cast <Type const &> (o));
         }
-
 
         virtual void
         UUID (Type const&);
@@ -575,10 +572,8 @@ namespace CIAO
         virtual void 
         location_pre (Type &o)
         {
-
           this->location_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_pre (Type const&);
@@ -586,10 +581,8 @@ namespace CIAO
         virtual void 
         location_next (Type &o)
         {
-
           this->location_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_next (Type const&);
@@ -597,10 +590,8 @@ namespace CIAO
         virtual void 
         location_post (Type &o)
         {
-
           this->location_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         location_post (Type const&);
@@ -608,10 +599,8 @@ namespace CIAO
         virtual void 
         dependsOn_pre (Type &o)
         {
-
           this->dependsOn_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         dependsOn_pre (Type const&);
@@ -619,10 +608,8 @@ namespace CIAO
         virtual void 
         dependsOn_next (Type &o)
         {
-
           this->dependsOn_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         dependsOn_next (Type const&);
@@ -630,10 +617,8 @@ namespace CIAO
         virtual void 
         dependsOn_post (Type &o)
         {
-
           this->dependsOn_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         dependsOn_post (Type const&);
@@ -641,10 +626,8 @@ namespace CIAO
         virtual void 
         execParameter_pre (Type &o)
         {
-
           this->execParameter_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_pre (Type const&);
@@ -652,10 +635,8 @@ namespace CIAO
         virtual void 
         execParameter_next (Type &o)
         {
-
           this->execParameter_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_next (Type const&);
@@ -663,10 +644,8 @@ namespace CIAO
         virtual void 
         execParameter_post (Type &o)
         {
-
           this->execParameter_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         execParameter_post (Type const&);
@@ -674,10 +653,8 @@ namespace CIAO
         virtual void 
         infoProperty_pre (Type &o)
         {
-
           this->infoProperty_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_pre (Type const&);
@@ -685,10 +662,8 @@ namespace CIAO
         virtual void 
         infoProperty_next (Type &o)
         {
-
           this->infoProperty_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_next (Type const&);
@@ -696,10 +671,8 @@ namespace CIAO
         virtual void 
         infoProperty_post (Type &o)
         {
-
           this->infoProperty_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_post (Type const&);
@@ -707,10 +680,8 @@ namespace CIAO
         virtual void 
         deployRequirement_pre (Type &o)
         {
-
           this->deployRequirement_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_pre (Type const&);
@@ -718,10 +689,8 @@ namespace CIAO
         virtual void 
         deployRequirement_next (Type &o)
         {
-
           this->deployRequirement_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_next (Type const&);
@@ -729,10 +698,8 @@ namespace CIAO
         virtual void 
         deployRequirement_post (Type &o)
         {
-
           this->deployRequirement_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         deployRequirement_post (Type const&);
@@ -740,10 +707,8 @@ namespace CIAO
         virtual void 
         contentLocation (Type &o)
         {
-
           this->contentLocation (const_cast <Type const &> (o));
         }
-
 
         virtual void
         contentLocation (Type const&);
@@ -751,10 +716,8 @@ namespace CIAO
         virtual void 
         href (Type &o)
         {
-
           this->href (const_cast <Type const &> (o));
         }
-
 
         virtual void
         href (Type const&);

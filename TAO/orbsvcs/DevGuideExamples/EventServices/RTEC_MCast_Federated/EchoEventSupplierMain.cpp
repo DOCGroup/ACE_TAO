@@ -94,9 +94,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Create a local event channel and register it
     TAO_EC_Event_Channel_Attributes attributes (poa.in (), poa.in ());
-    TAO_EC_Event_Channel ec_impl (attributes);
-    ec_impl.activate ();
-    PortableServer::ObjectId_var oid = poa->activate_object(&ec_impl);
+    PortableServer::Servant_var<TAO_EC_Event_Channel> ec_impl =
+      new TAO_EC_Event_Channel(attributes);
+    ec_impl->activate ();
+    PortableServer::ObjectId_var oid = poa->activate_object(ec_impl.in());
     CORBA::Object_var ec_obj = poa->id_to_reference(oid.in());
     RtecEventChannelAdmin::EventChannel_var ec =
       RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in());
@@ -115,10 +116,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       admin->obtain_push_consumer();
 
     // Instantiate an EchoEventSupplier_i servant.
-    EchoEventSupplier_i servant(orb.in());
+    PortableServer::Servant_var<EchoEventSupplier_i> servant =
+      new EchoEventSupplier_i(orb.in());
 
     // Register it with the RootPOA.
-    oid = poa->activate_object(&servant);
+    oid = poa->activate_object(servant.in());
     CORBA::Object_var supplier_obj = poa->id_to_reference(oid.in());
     RtecEventComm::PushSupplier_var supplier =
       RtecEventComm::PushSupplier::_narrow(supplier_obj.in());
@@ -132,10 +134,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // This will be used by the sender object and the multicast
     // receiver.
     ACE_INET_Addr send_addr (port, address);
-    SimpleAddressServer addr_srv_impl (send_addr);
+    PortableServer::Servant_var<SimpleAddressServer> addr_srv_impl =
+      new SimpleAddressServer(send_addr);
 
     PortableServer::ObjectId_var addr_srv_oid =
-      poa->activate_object(&addr_srv_impl);
+      poa->activate_object(addr_srv_impl.in());
     CORBA::Object_var addr_srv_obj = poa->id_to_reference(addr_srv_oid.in());
     RtecUDPAdmin::AddrServer_var addr_srv =
       RtecUDPAdmin::AddrServer::_narrow(addr_srv_obj.in());

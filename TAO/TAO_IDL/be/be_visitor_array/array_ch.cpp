@@ -61,9 +61,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
                << "// " __FILE__ << ":" << __LINE__;
 
-  // Generate the ifdefined macro.
-  os->gen_ifdef_macro (node->flat_name ());
-
   // If we contain an anonymous sequence,
   // generate code for the sequence here.
   if (nt == AST_Decl::NT_sequence)
@@ -341,9 +338,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << " *_tao_from" << be_uidt_nl
           << ");" << be_uidt;
     }
-
-  // Generate the endif macro.
-  os->gen_endif ();
 
   node->cli_hdr_gen (1);
   return 0;

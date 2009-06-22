@@ -27,9 +27,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
      mgr->activate();
 
      // Create an object
-     Messenger_i messenger_servant(orb.in());
+     PortableServer::Servant_var<Messenger_i> messenger_servant =
+       new Messenger_i(orb.in());
 
-     Messenger_var messenger = messenger_servant._this();
+     Messenger_var messenger = messenger_servant->_this();
 
      CosNaming::Name name;
      name.length (1);

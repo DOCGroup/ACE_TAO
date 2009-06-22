@@ -544,14 +544,6 @@ ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fflush");
-#if defined (ACE_VXWORKS)
-  if (fp == 0)
-    {
-      // Do not allow fflush(0) on VxWorks
-      return 0;
-    }
-#endif /* ACE_VXWORKS */
-
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fflush (fp), int, -1);
 }
 
@@ -588,6 +580,12 @@ ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetws (buf, size, fp), wchar_t *, 0);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
+
+ACE_INLINE ACE_HANDLE
+ACE_OS::fileno (FILE *stream)
+{
+  return ace_fileno_helper (stream);
+}
 
 #if !(defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
@@ -1011,7 +1009,8 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
       defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
-      defined (ACE_HAS_VSWPRINTF) || defined (ACE_WIN32_VC9) || \
+      defined (ACE_HAS_VSWPRINTF) || \
+      (defined (ACE_WIN32_VC9) && !defined (ACE_HAS_WINCE)) || \
       (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
       _MSC_FULL_VER > 140050000)
 

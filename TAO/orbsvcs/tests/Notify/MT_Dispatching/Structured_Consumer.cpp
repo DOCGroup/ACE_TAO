@@ -133,7 +133,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         client.create_event_channel ("MyEventChannel", 1);
 
       CORBA::Object_var object =
-        client.orb ()->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+        client.orb ()->string_to_object (ior);
 
       sig_var sig = sig::_narrow (object.in ());
 

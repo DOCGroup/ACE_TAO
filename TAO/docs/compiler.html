@@ -142,14 +142,14 @@ the following:
       that ACE runs on. <P>
 
   <li>Build the <CODE>gperf</CODE> in $ACE_ROOT/apps/gperf.  This build
-      also leaves a copy/link of the gperf program at the $ACE_ROOT/bin
+      also leaves a copy/link of the ace_gperf program at the $ACE_ROOT/bin
       directory.<P>
 
   <li>Set the environment variable $ACE_ROOT appropriately or add
       $ACE_ROOT/bin to your search path. <P>
 
   <li>Use the <CODE>-g</CODE> option for the TAO IDL compiler or set
-      your search path accordingly to install <CODE>gperf</CODE> in a
+      your search path accordingly to install <CODE>ace_gperf</CODE> in a
       directory other than $ACE_ROOT/bin.
 </ul>
 
@@ -496,10 +496,10 @@ also receives other options that are specific to it.<p>
   </TR>
 
   <tr><a name="g">
-    <td><tt>-g</tt></td>
+    <td><tt>-g </tt><i>path</i></td>
 
     <td>To specify the path for the perfect hasing program (GPERF). Default
-        is $ACE_ROOT/bin/gperf.&nbsp;</td>
+        is $ACE_ROOT/bin/ace_gperf.&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
 

@@ -41,15 +41,15 @@ namespace CIAO
           {
             TopLevelPackageDescription tpd;
         
-        tpd = topLevelPackageDescription (dom);
+            tpd = reader::topLevelPackageDescription (dom);
 
-            PCD_Handler::package_config (*tpd.begin_basePackage (),
+            PCD_Handler::package_config (*(*tpd.begin_basePackage ()),
                                          toconfig);
           }
         else if (root == XStr ("Deployment:packageConfiguration"))
           {
             PackageConfiguration pcd;
-            pcd = packageConfiguration (dom);
+            pcd = reader::packageConfiguration (dom);
             PCD_Handler::package_config (pcd, toconfig);
           }
         else
@@ -130,14 +130,14 @@ namespace CIAO
             ACE_DEBUG ((LM_DEBUG, "5\n"));
             pcd.basePackage (CPD_Handler::component_package_descr (src.basePackage[0]));
           }
-
+#if 0
         // @@ MAJO: Support other elements present here.
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           pcd.add_configProperty (Property_Handler::get_property (src.configProperty[i]));
 
         for (CORBA::ULong i = 0; i < src.selectRequirement.length (); ++i)
           pcd.add_selectRequirement (Req_Handler::get_requirement (src.selectRequirement[i]));
-
+#endif
         return pcd;
 
       }
@@ -151,7 +151,7 @@ namespace CIAO
           throw Parse_Error ("Unable to create DOM for PackageConfiguration");
 
         try {
-          return new PackageConfiguration (packageConfiguration (dom));
+          return new PackageConfiguration (reader::packageConfiguration (dom));
         }
         catch (...) {
           throw Parse_Error ("Unable to create XSC structure for PackageConfiguration");

@@ -9,6 +9,7 @@
 #include "StructuredEventConsumer_i.h"
 #include "Priorities.h"
 #include <iostream>
+#include <fstream>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -33,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CosNotifyChannelAdmin::AdminID adminid;
       CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-        CosNotifyChannelAdmin::OR_OP;
+        CosNotifyChannelAdmin::AND_OP;
 
       CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
         ec->new_for_consumers(ifgop,
@@ -95,10 +96,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               poa_manager.in (),
               poa_policy_list);
 
-      StructuredEventConsumer_i  servant (orb.in());
+      PortableServer::Servant_var<StructuredEventConsumer_i> servant =
+        new StructuredEventConsumer_i(orb.in());
 
       PortableServer::ObjectId_var objectId =
-        rt_poa->activate_object (&servant);
+        rt_poa->activate_object (servant.in());
 
       CORBA::Object_var consumer_obj =
         rt_poa->id_to_reference (objectId.in ());
@@ -163,6 +165,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate();
 
+      // Write a file to let the run_test.pl script know we are ready.
+      std::ofstream iorFile( "MessengerConsumer.ready" );
+      iorFile << "Ready" << std::endl;
+      iorFile.close();
+    
       orb->run();
     }
   catch(const CORBA::Exception& ex)

@@ -74,7 +74,8 @@ ForwardTest_Request_Interceptor::receive_request_service_contexts (
                   "Sending LOCATION_FORWARD, current thread %i\n",
                   ACE_Thread::self ()));
 
-      throw PortableInterceptor::ForwardRequest (this->forward_location_);
+      throw PortableInterceptor::ForwardRequest (
+        CORBA::Object::_duplicate (this->forward_location_.in ()));
     }
 
 }

@@ -55,7 +55,7 @@ namespace CIAO
            i != src.property.length ();
            ++i)
         {
-          crdd.add_property (Property_Handler::get_property (src.property[i]));
+          //crdd.add_property (Property_Handler::get_property (src.property[i]));
         }
 
 

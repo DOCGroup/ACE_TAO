@@ -534,7 +534,7 @@ int FTClientMain::run (void)
     {
       ACE_OS::fprintf (stdout, "FT Client: Initial counter %ld\n", counter);
     }
-    if (ACE_OS::isatty(fileno(stdin)))
+    if (ACE_OS::isatty(ACE_OS::fileno(stdin)))
     {
       ACE_OS::fprintf (stdout, "FT Client: Commands(? for help):\n");
     }

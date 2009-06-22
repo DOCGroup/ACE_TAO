@@ -28,9 +28,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
 
   PortableServer::POAManager_var poaman = poa->the_POAManager();
 
-  Messenger_i svt;
+  PortableServer::Servant_var<Messenger_i> svt = new Messenger_i;
 
-  PortableServer::ObjectId_var id = poa->activate_object(&svt);
+  PortableServer::ObjectId_var id = poa->activate_object(svt.in());
   obj = poa->id_to_reference(id.in());
   CORBA::String_var ior = orb->object_to_string(obj.in());
   write_ior(ior.in());
@@ -41,7 +41,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
 
   orb->run();
 
-  poa->destroy(1, 1);
+  poa->destroy(true, true);
   orb->destroy();
 
   return 0;

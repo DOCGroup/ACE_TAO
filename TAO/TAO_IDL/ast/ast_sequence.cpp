@@ -246,6 +246,12 @@ AST_Sequence::legal_for_primary_key (void) const
   return this->base_type ()->legal_for_primary_key ();
 }
 
+bool
+AST_Sequence::is_defined (void)
+{
+  return this->pd_base_type->is_defined ();
+}
+
 void
 AST_Sequence::destroy (void)
 {

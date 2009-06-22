@@ -51,6 +51,11 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> QUEUE;
 typedef ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> ITERATOR;
 typedef ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH> REVERSE_ITERATOR;
 
+#if defined (ACE_HAS_WINCE)
+static const int MESSAGE_FACTOR = 10000;
+#else
+static const int MESSAGE_FACTOR = 100000;
+#endif
 static const int MAX_MESSAGES = 10000;
 static const int MAX_MESSAGE_SIZE = 32;
 static const char test_message[] = "ACE_Message_Queue Test Message";
@@ -124,7 +129,7 @@ Counting_Test_Producer::svc (void)
   // The delay usually causes the test to time out in the automated
   // regression testing. I just left it here in case it's needed someday.
   delay_ms = 0;
-  long count = 100000 * (multiple ? multiple : 1);
+  long count = MESSAGE_FACTOR * (multiple ? multiple : 1);
   long produced = 0;
   // Some of the threads enqueue single blocks, others sequences.
   long lsequence = ++(this->sequence_);
@@ -136,7 +141,7 @@ Counting_Test_Producer::svc (void)
               seq,
               delay_ms));
 
-  ACE_Message_Block *first, *prev, *b;
+  ACE_Message_Block *first = 0, *prev = 0, *b = 0;
   ACE_Time_Value delay (0, delay_ms);
   ACE_Time_Value timeout (10);
   while (produced < count)
@@ -214,7 +219,7 @@ Counting_Test_Consumer::svc (void)
   // The delay usually causes the test to time out in the automated
   // regression testing. I just left it here in case it's needed someday.
   delay_ms = 0;
-  long count = 100000 * (multiple ? multiple : 1);
+  long count = MESSAGE_FACTOR * (multiple ? multiple : 1);
   long consumed = 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Consumer will dequeue %B blocks, ")
@@ -313,7 +318,6 @@ counting_test (void)
 
 #endif /* ACE_HAS_THREADS */
 
-#if !defined (VXWORKS)
 static int
 iterator_test (void)
 {
@@ -338,7 +342,7 @@ iterator_test (void)
                        ACE_TEXT ("%d"),
                        i + 1);
 
-      ACE_Message_Block *entry;
+      ACE_Message_Block *entry = 0;
       ACE_NEW_RETURN (entry,
                       ACE_Message_Block ((char *) buffer[i],
                                          sizeof buffer[i]),
@@ -410,7 +414,6 @@ iterator_test (void)
 
   return 0;
 }
-#endif /* ! VXWORKS */
 
 #if defined (ACE_HAS_THREADS)
 
@@ -522,7 +525,7 @@ single_thread_performance_test (int queue_type = 0)
     ACE_NEW_RETURN (msgq,
                     QUEUE,
                     -1);
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   else
     {
       ACE_NEW_RETURN (msgq,
@@ -539,7 +542,7 @@ single_thread_performance_test (int queue_type = 0)
                       -1);
       message = ACE_TEXT ("ACE_Message_Queue_NT, single thread test");
     }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   // Create the messages.  Allocate off the heap in case messages
   // is large relative to the amount of stack space available.
@@ -559,11 +562,11 @@ single_thread_performance_test (int queue_type = 0)
                   ACE_Message_Block *[max_messages],
                   -1);
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   // Set up blocks to receive the messages.  Allocate these off the
   // heap in case messages is large relative to the amount of
   // stack space available.
-  ACE_Message_Block *receive_block;
+  ACE_Message_Block *receive_block = 0;
   ACE_NEW_RETURN (receive_block,
                   ACE_Message_Block[max_messages],
                   -1);
@@ -576,7 +579,7 @@ single_thread_performance_test (int queue_type = 0)
       // assigned.  It will be used by dequeue_head ().
       receive_block_p[i] = &receive_block[i];
     }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   timer->start ();
 
@@ -609,9 +612,9 @@ single_thread_performance_test (int queue_type = 0)
   timer->reset ();
 
   delete [] receive_block_p;
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   delete [] receive_block;
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   for (i = 0; i < max_messages; ++i)
     delete send_block[i];
@@ -633,7 +636,7 @@ receiver (void *arg)
                   ACE_Message_Block *[max_messages],
                   (void *) -1);
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   // Set up blocks to receive the messages.  Allocate these off the
   // heap in case messages is large relative to the amount of stack
   // space available.
@@ -650,7 +653,7 @@ receiver (void *arg)
       // assigned.  It will be used by <dequeue_head>.
       receive_block_p[i] = &receive_block[i];
     }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   for (i = 0; i < max_messages; ++i)
     if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
@@ -661,9 +664,9 @@ receiver (void *arg)
   timer->stop ();
 
   delete [] receive_block_p;
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   delete [] receive_block;
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   return 0;
 }
@@ -718,7 +721,7 @@ performance_test (int queue_type = 0)
     ACE_NEW_RETURN (queue_wrapper.q_,
                     SYNCH_QUEUE,
                     -1);
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   else
     {
       ACE_NEW_RETURN (queue_wrapper.q_,
@@ -735,7 +738,7 @@ performance_test (int queue_type = 0)
                       -1);
       message = ACE_TEXT ("ACE_Message_Queue_NT");
     }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) sender,
                                               &queue_wrapper,
@@ -865,7 +868,7 @@ close_test (void)
   QUEUE mq1;
   flushed_messages = mq1.close ();
 
-  if (flushed_messages != 0) 
+  if (flushed_messages != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Closing queue should flush 0 messages, close() reports - %d\n"),
@@ -886,7 +889,7 @@ close_test (void)
   mq2.enqueue_head (pMB2);
   flushed_messages = mq2.close ();
 
-  if (flushed_messages != 2) 
+  if (flushed_messages != 2)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Closing queue should flush 2 messages, close() reports - %d\n"),
@@ -918,12 +921,10 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   int status = prio_test ();
 
-#if !defined (VXWORKS)
   // The iterator test occasionally causes a page fault or a hang on
   // VxWorks.
   if (status == 0)
     status = iterator_test ();
-#endif /* ! VXWORKS */
 
   ACE_NEW_RETURN (timer,
                   ACE_High_Res_Timer,
@@ -942,20 +943,20 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (status == 0)
     status = single_thread_performance_test ();
 
-# if defined (VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+# if defined (ACE_VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Test ACE_Message_Queue_Vx. or ACE_Message_Queue_NT
   if (status == 0)
     status = single_thread_performance_test (1);
-# endif /* VXWORKS */
+# endif /* ACE_VXWORKS */
 
   if (status == 0)
     status = performance_test ();
 
-# if defined (VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+# if defined (ACE_VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Test ACE_Message_Queue_Vx or ACE_Message_Queue_NT
   if (status == 0)
     status = performance_test (1);
-# endif /* VXWORKS */
+# endif /* ACE_VXWORKS */
 
   if (counting_test () != 0)
     status = -1;
@@ -968,7 +969,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   delete timer;
   timer = 0;
 
-  
+
 
   ACE_END_TEST;
   return status;

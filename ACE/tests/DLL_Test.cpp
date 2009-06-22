@@ -71,7 +71,8 @@ int basic_test (ACE_DLL &dll)
     {
       ACE_TCHAR *dll_error = dll.error ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error in DLL Open: %s\n"),
+                         ACE_TEXT ("Error in DLL Open of <%s>: %s\n"),
+                         OBJ_PREFIX ACE_TEXT ("DLL_Test_Lib") OBJ_SUFFIX,
                          dll_error ? dll_error : ACE_TEXT ("unknown error")),
                         -1);
     }
@@ -79,9 +80,7 @@ int basic_test (ACE_DLL &dll)
   // Just because the ANSI C++ spec says you can no longer cast a
   // void* to a function pointer. Doesn't allow:
   // TC f = (Hello_Factory) dll.symbol ("get_hello");
-  void *foo;
-
-  foo = dll.symbol (ACE_TEXT ("get_hello"));
+  void *foo = dll.symbol (ACE_TEXT ("get_hello"));
 
   // Cast the void* to long first.
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);

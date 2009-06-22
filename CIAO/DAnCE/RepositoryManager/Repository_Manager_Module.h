@@ -75,11 +75,11 @@ class DAnCE_RepositoryManager_Module_Export DAnCE_RepositoryManager_Module
           package_dir_ (ACE_TEXT("RepositoryManager_Packages")),
           server_address_ (0),
           spawn_http_ (false),
-          http_port_ ("5432"),
-          http_threads_ ("1"),
-          http_threading_ ("POOL"),
-          http_io_ ("SYNCH"),
-          http_caching_ ("NO_CACHE")
+          http_port_ (ACE_TEXT("5432")),
+          http_threads_ (ACE_TEXT("1")),
+          http_threading_ (ACE_TEXT("POOL")),
+          http_io_ (ACE_TEXT("SYNCH")),
+          http_caching_ (ACE_TEXT("NO_CACHE"))
         {
         }
       };
@@ -96,7 +96,7 @@ class DAnCE_RepositoryManager_Module_Export DAnCE_RepositoryManager_Module
                                            int argc,
                                            ACE_TCHAR *argv []);
 
-  virtual const ACE_TCHAR * usage (void);
+  virtual const char * usage (void);
 
   virtual bool parse_args (int argc, ACE_TCHAR *argv []);
 

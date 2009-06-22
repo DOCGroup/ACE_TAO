@@ -34,6 +34,10 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* CYGWIN32 || ACE_OPENVMS */
 
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+# include "io.h"
+#endif
+
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
 #endif
@@ -108,6 +112,19 @@ inline int ace_ungetc_helper (int ch, FILE *fp)
 #endif /* defined (ungetc) */
 }
 
+inline ACE_HANDLE ace_fileno_helper (FILE *fp)
+{
+#if defined (fileno) && !defined (ACE_WIN32)
+  return fileno (fp);
+#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  return (ACE_HANDLE)_get_osfhandle (ACE_STD_NAMESPACE::fileno (fp));
+#else
+  return ACE_STD_NAMESPACE::fileno (fp);
+#endif /* defined (fileno) */
+#if defined (fileno)
+# undef fileno
+#endif /* defined (fileno) */
+}
 
 #if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
     && !defined(ACE_WIN32) && !defined (ACE_VXWORKS)
@@ -297,6 +314,10 @@ namespace ACE_OS {
                     ACE_OFF_T len = 0);
 
   //@}
+
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_HANDLE fileno (FILE *stream);
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   extern ACE_Export

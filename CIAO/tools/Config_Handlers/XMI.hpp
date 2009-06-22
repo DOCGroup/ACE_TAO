@@ -30,22 +30,28 @@ namespace XMI
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 namespace XMI
 {
   class XSC_XML_Handlers_Export Extension : public ::XSCRT::Type
   {
     typedef ::XSCRT::Type Base;
 
-    // xmi_id
+    public:
+    typedef ACE_Refcounted_Auto_Ptr < Extension, ACE_Null_Mutex > _ptr;
+
+    // id
     // 
     public:
-    bool xmi_id_p () const;
-    ::XMLSchema::ID< ACE_TCHAR > const& xmi_id () const;
-    ::XMLSchema::ID< ACE_TCHAR >& xmi_id ();
-    void xmi_id (::XMLSchema::ID< ACE_TCHAR > const& );
+    bool id_p () const;
+    ::XMLSchema::ID< ACE_TCHAR > const& id () const;
+    ::XMLSchema::ID< ACE_TCHAR >& id ();
+    void id (::XMLSchema::ID< ACE_TCHAR > const& );
 
     protected:
-    ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > xmi_id_;
+    ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
 
     // label
     // 
@@ -140,9 +146,12 @@ namespace XMI
 
 namespace XMI
 {
-  XSC_XML_Handlers_Export
-  ::XMI::Extension
-  extension (xercesc::DOMDocument const*);
+  namespace reader
+  {
+    XSC_XML_Handlers_Export
+    ::XMI::Extension
+    extension (xercesc::DOMDocument const*);
+  }
 }
 
 #include "XMLSchema/Traversal.hpp"
@@ -166,16 +175,16 @@ namespace XMI
       pre (Type const&);
 
       virtual void
-      xmi_id (Type&);
+      id (Type&);
 
       virtual void
-      xmi_id (Type const&);
+      id (Type const&);
 
       virtual void
-      xmi_id_none (Type&);
+      id_none (Type&);
 
       virtual void
-      xmi_id_none (Type const&);
+      id_none (Type const&);
 
       virtual void
       label (Type&);
@@ -285,32 +294,26 @@ namespace XMI
       virtual void 
       traverse (Type &o)
       {
-
         this->traverse (const_cast <Type const &> (o));
       }
-
 
       virtual void
       traverse (Type const&);
 
       virtual void 
-      xmi_id (Type &o)
+      id (Type &o)
       {
-
-        this->xmi_id (const_cast <Type const &> (o));
+        this->id (const_cast <Type const &> (o));
       }
 
-
       virtual void
-      xmi_id (Type const&);
+      id (Type const&);
 
       virtual void 
       label (Type &o)
       {
-
         this->label (const_cast <Type const &> (o));
       }
-
 
       virtual void
       label (Type const&);
@@ -318,10 +321,8 @@ namespace XMI
       virtual void 
       uuid (Type &o)
       {
-
         this->uuid (const_cast <Type const &> (o));
       }
-
 
       virtual void
       uuid (Type const&);
@@ -329,10 +330,8 @@ namespace XMI
       virtual void 
       href (Type &o)
       {
-
         this->href (const_cast <Type const &> (o));
       }
-
 
       virtual void
       href (Type const&);
@@ -340,10 +339,8 @@ namespace XMI
       virtual void 
       idref (Type &o)
       {
-
         this->idref (const_cast <Type const &> (o));
       }
-
 
       virtual void
       idref (Type const&);
@@ -351,10 +348,8 @@ namespace XMI
       virtual void 
       version (Type &o)
       {
-
         this->version (const_cast <Type const &> (o));
       }
-
 
       virtual void
       version (Type const&);
@@ -362,10 +357,8 @@ namespace XMI
       virtual void 
       extender (Type &o)
       {
-
         this->extender (const_cast <Type const &> (o));
       }
-
 
       virtual void
       extender (Type const&);
@@ -373,10 +366,8 @@ namespace XMI
       virtual void 
       extenderID (Type &o)
       {
-
         this->extenderID (const_cast <Type const &> (o));
       }
-
 
       virtual void
       extenderID (Type const&);
@@ -389,9 +380,12 @@ namespace XMI
 
 namespace XMI
 {
-  XSC_XML_Handlers_Export
-  void
-  extension (::XMI::Extension const&, xercesc::DOMDocument*);
+  namespace writer
+  {
+    XSC_XML_Handlers_Export
+    void
+    extension (::XMI::Extension const&, xercesc::DOMDocument*);
+  }
 }
 
 #endif // XMI_HPP

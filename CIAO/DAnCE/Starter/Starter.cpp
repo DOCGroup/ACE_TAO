@@ -78,14 +78,14 @@ Starter::Starter(int argc, ACE_TCHAR * argv[]) :
   this->logger_->init (argc, argv);
 
   DANCE_DEBUG ((LM_TRACE, DLINFO
-                "Starter::Starter - Creating starter...\n"));
+                ACE_TEXT("Starter::Starter - Creating starter...\n")));
 
   this->parseArgs(argc, argv);
 
   this->configure_logging_backend ();
 
   DANCE_DEBUG ((LM_TRACE, DLINFO
-                "Starter::Starter - Starter was created successfully.\n"));
+                ACE_TEXT("Starter::Starter - Starter was created successfully.\n")));
 }
 
 Starter::~Starter()
@@ -137,7 +137,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
 
   int j;
   char c;
-  ACE_CString s;
+  ACE_TString s;
   while ( (c = opts ()) != -1)
     {
       DANCE_DEBUG((LM_TRACE, "[%M] Option : \"%s\" with argument \"%s\"\n", opts.last_option(), opts.opt_arg()));
@@ -159,7 +159,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
               {
                 ACE_CString nodename;
                 Node node;
-                size_t pos = s.find("=");
+                size_t const pos = s.find(ACE_TEXT("="));
                 if (ACE_CString::npos != pos)
                   {
                     nodename = s.substring(0, pos);
@@ -573,7 +573,7 @@ Starter::initNodeManager (const char * node)
         throw ACE_CString ("Failed to load NodeManager.");
       }
     int c = 0;
-    char ** v = 0;
+    ACE_TCHAR ** v = 0;
     this->argCopyForNode (node, c, v);
     CORBA::Object_var res = loader->create_object (this->orb_, c, v);
     this->releaseArgs (c, v);
@@ -602,7 +602,7 @@ Starter::initExecutionManager()
         throw ACE_CString ("Failed to load ExecutionManager.");
       }
     int c = 0;
-    char ** v = 0;
+    ACE_TCHAR ** v = 0;
     this->argCopyForEM (c, v);
     CORBA::Object_var em = loader->create_object (this->orb_, c, v);
     this->releaseArgs (c, v);
@@ -643,7 +643,7 @@ Starter::runPlanLauncher()
         throw ACE_CString ("Failed to load PlanLauncher.");
       }
     int c = 0;
-    char ** v = 0;
+    ACE_TCHAR ** v = 0;
     this->argCopyForPL (c, v);
     loader->create_object (this->orb_, c, v);
     this->releaseArgs (c, v);
@@ -719,7 +719,7 @@ Starter::argCopyForNode (const char * node, int & c, char **& v)
                 if (this->argv_[i] == ACE_OS::strstr (this->argv_[i], validOptions[j]))
                   {
                     if (i + 1 < this->argc_
-                        && (0 == ACE_OS::strcmp (this->argv_[i], "--node-mgr") || 0 == ACE_OS::strcmp (this->argv_[i], "-n")))
+                        && (0 == ACE_OS::strcmp (this->argv_[i], ACE_TEXT("--node-mgr")) || 0 == ACE_OS::strcmp (this->argv_[i], ACE_TEXT("-n"))))
                       {
                         ACE_CString s = this->argv_[i+1];
                         if (ACE_CString::npos != s.find ('='))

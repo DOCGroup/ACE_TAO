@@ -71,9 +71,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
     }
   else
     {
-      // STEP 1: Generate the class name and the class name we inherit.
-      os->gen_ifdef_macro (node->flat_name (), "_OBV");
-
       *os << be_nl << be_nl << "// OBV_ class" << be_nl;
       *os << "class " << be_global->stub_export_macro() << " ";;
 
@@ -86,7 +83,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           << ": public virtual "
           << node->full_name ();
 
-      // STEP 1a (about which previous implementer forgot ):
+      // STEP 1 (about which previous implementer forgot ):
       // Generate inheritance from corresponding OBV_ classes.
 
 //------>>>
@@ -245,8 +242,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       *os << be_nl
           << "CORBA::Boolean require_truncation_;" << be_uidt_nl
           << "};";
-
-      os->gen_endif ();
     }
 
   return 0;

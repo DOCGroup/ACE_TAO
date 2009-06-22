@@ -57,9 +57,6 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // Generate _var and _out class typedefs.
   node->gen_common_varout (os);
 
-  // Generate the ifdefined macro for the union type.
-  os->gen_ifdef_macro (node->flat_name ());
-
   *os << be_nl << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
@@ -160,7 +157,6 @@ int be_visitor_union_ch::visit_union (be_union *node)
   *os << "private:" << be_idt_nl;
   *os << bt->nested_type_name (node) << " disc_;" << be_nl;
   *os << bt->nested_type_name (node) << " holder_;" << be_nl << be_nl;
-  // Emit the ACE_NESTED_CLASS macro.
 
   // The members are inside of a union.
   *os << "union" << be_nl;
@@ -201,8 +197,6 @@ int be_visitor_union_ch::visit_union (be_union *node)
                             -1);
         }
     }
-
-  os->gen_endif ();
 
   node->cli_hdr_gen (true);
   return 0;

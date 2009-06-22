@@ -6388,16 +6388,59 @@ tao_yyreduce:
             {
               d->last_referenced_as (tao_yyvsp[0].idlist);
               AST_Decl::NodeType nt = d->node_type ();
+              AST_Type *t = AST_Type::narrow_from_decl (d);                  
+              AST_Typedef *td = 0;
+              bool can_be_undefined = false;
 
               if (nt == AST_Decl::NT_struct_fwd
                   || nt == AST_Decl::NT_union_fwd
                   || nt == AST_Decl::NT_struct
-                  || nt == AST_Decl::NT_union)
+                  || nt == AST_Decl::NT_union
+                  || nt == AST_Decl::NT_typedef)
                 {
-                  if (! AST_Type::narrow_from_decl (d)->is_defined ())
+                  // This code block ensures that a sequence of
+                  // as-yet-undefined struct or union isn't used
+                  // as a return type or argument.
+                  if (nt == AST_Decl::NT_typedef)
                     {
-                      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_ADD,
-                                                  d);
+                      td = AST_Typedef::narrow_from_decl (d);
+                      AST_Type *pbt = td->primitive_base_type ();
+                      
+                      if (pbt->node_type () == AST_Decl::NT_sequence)
+                        {
+                          t = pbt;
+                          AST_Sequence *seq_type =
+                            AST_Sequence::narrow_from_decl (pbt);
+                          AST_Type *elem_type =
+                            seq_type->base_type ();
+                          AST_Decl::NodeType elem_nt =
+                            elem_type->node_type ();
+                            
+                          if (elem_nt == AST_Decl::NT_typedef)
+                            {
+                              AST_Typedef *elem_td =
+                                AST_Typedef::narrow_from_decl (elem_type);
+                              elem_type = elem_td->primitive_base_type ();
+                              elem_nt = elem_type->node_type ();
+                            }
+                            
+                          if (elem_nt == AST_Decl::NT_interface
+                              || elem_nt == AST_Decl::NT_interface_fwd
+                              || elem_nt == AST_Decl::NT_valuetype
+                              || elem_nt == AST_Decl::NT_valuetype_fwd
+                              || elem_nt == AST_Decl::NT_component
+                              || elem_nt == AST_Decl::NT_component_fwd)
+                            {
+                              can_be_undefined = true;
+                            }
+                        }
+                    }
+                    
+                  if (! t->is_defined () && ! can_be_undefined)
+                    {
+                      idl_global->err ()->error1 (
+                        UTL_Error::EIDL_ILLEGAL_ADD,
+                        (nt == AST_Decl::NT_typedef ? td : t));
 
                       /* If we don't return here, we'll crash later.*/
                       return 1;

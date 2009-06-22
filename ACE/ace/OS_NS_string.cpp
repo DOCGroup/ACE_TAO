@@ -147,7 +147,7 @@ ACE_OS::strerror (int errnum)
  * Just returns "Unknown Error" all the time.
  */
 char *
-ACE_OS::strerror_emulation (int errnum)
+ACE_OS::strerror_emulation (int)
 {
   return "Unknown Error";
 }

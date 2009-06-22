@@ -18,6 +18,7 @@ namespace CosNotifyCommImpl{
     void push_structured_event(
       const CosNotification::StructuredEvent &event)
     {
+      received_ = true;
       std::cout << "Received an event...," << std::endl;
       std::cout << "event.header.fixed_header.event_type.domain_name = " 
         << event.header.fixed_header.event_type.domain_name 

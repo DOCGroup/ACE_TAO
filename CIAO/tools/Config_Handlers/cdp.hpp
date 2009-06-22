@@ -33,6 +33,9 @@ namespace CIAO
 #include <list>
 #include "XMLSchema/Types.hpp"
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Null_Mutex.h"
+
 #include "ccd.hpp"
 
 namespace CIAO
@@ -42,6 +45,9 @@ namespace CIAO
     class XSC_XML_Handlers_Export deploymentPlan : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < deploymentPlan, ACE_Null_Mutex > _ptr;
 
       // label
       // 
@@ -76,107 +82,107 @@ namespace CIAO
       // implementation
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription >::iterator implementation_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription >::const_iterator implementation_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex > >::iterator implementation_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex > >::const_iterator implementation_const_iterator;
       implementation_iterator begin_implementation ();
       implementation_iterator end_implementation ();
       implementation_const_iterator begin_implementation () const;
       implementation_const_iterator end_implementation () const;
-      void add_implementation (::CIAO::Config_Handlers::MonolithicDeploymentDescription const& );
+      void add_implementation ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_implementation (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > implementation_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex > > implementation_;
 
       // instance
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::iterator instance_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::const_iterator instance_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex > >::iterator instance_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex > >::const_iterator instance_const_iterator;
       instance_iterator begin_instance ();
       instance_iterator end_instance ();
       instance_const_iterator begin_instance () const;
       instance_const_iterator end_instance () const;
-      void add_instance (::CIAO::Config_Handlers::InstanceDeploymentDescription const& );
+      void add_instance ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_instance (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription > instance_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex > > instance_;
 
       // connection
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription >::iterator connection_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription >::const_iterator connection_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex > >::iterator connection_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex > >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
-      void add_connection (::CIAO::Config_Handlers::PlanConnectionDescription const& );
+      void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex > const& );
       size_t count_connection (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription > connection_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex > > connection_;
 
       // dependsOn
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ImplementationDependency >::iterator dependsOn_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ImplementationDependency >::const_iterator dependsOn_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > >::iterator dependsOn_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > >::const_iterator dependsOn_const_iterator;
       dependsOn_iterator begin_dependsOn ();
       dependsOn_iterator end_dependsOn ();
       dependsOn_const_iterator begin_dependsOn () const;
       dependsOn_const_iterator end_dependsOn () const;
-      void add_dependsOn (::CIAO::Config_Handlers::ImplementationDependency const& );
+      void add_dependsOn ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > const& );
       size_t count_dependsOn (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ImplementationDependency > dependsOn_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > > dependsOn_;
 
       // artifact
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::iterator artifact_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::const_iterator artifact_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex > >::iterator artifact_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex > >::const_iterator artifact_const_iterator;
       artifact_iterator begin_artifact ();
       artifact_iterator end_artifact ();
       artifact_const_iterator begin_artifact () const;
       artifact_const_iterator end_artifact () const;
-      void add_artifact (::CIAO::Config_Handlers::ArtifactDeploymentDescription const& );
+      void add_artifact ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex > const& );
       size_t count_artifact (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription > artifact_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex > > artifact_;
 
       // infoProperty
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
       infoProperty_iterator begin_infoProperty ();
       infoProperty_iterator end_infoProperty ();
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
-      void add_infoProperty (::CIAO::Config_Handlers::Property const& );
+      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
       size_t count_infoProperty (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
       // localityConstraint
       // 
       public:
-      typedef ::std::list< ::CIAO::Config_Handlers::PlanLocality >::iterator localityConstraint_iterator;
-      typedef ::std::list< ::CIAO::Config_Handlers::PlanLocality >::const_iterator localityConstraint_const_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex > >::iterator localityConstraint_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex > >::const_iterator localityConstraint_const_iterator;
       localityConstraint_iterator begin_localityConstraint ();
       localityConstraint_iterator end_localityConstraint ();
       localityConstraint_const_iterator begin_localityConstraint () const;
       localityConstraint_const_iterator end_localityConstraint () const;
-      void add_localityConstraint (::CIAO::Config_Handlers::PlanLocality const& );
+      void add_localityConstraint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex > const& );
       size_t count_localityConstraint (void) const;
 
       protected:
-      ::std::list< ::CIAO::Config_Handlers::PlanLocality > localityConstraint_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex > > localityConstraint_;
 
       public:
       deploymentPlan ();
@@ -495,10 +501,8 @@ namespace CIAO
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         virtual void
         traverse (Type const&);
@@ -506,10 +510,8 @@ namespace CIAO
         virtual void 
         label (Type &o)
         {
-
           this->label (const_cast <Type const &> (o));
         }
-
 
         virtual void
         label (Type const&);
@@ -517,10 +519,8 @@ namespace CIAO
         virtual void 
         UUID (Type &o)
         {
-
           this->UUID (const_cast <Type const &> (o));
         }
-
 
         virtual void
         UUID (Type const&);
@@ -528,10 +528,8 @@ namespace CIAO
         virtual void 
         realizes (Type &o)
         {
-
           this->realizes (const_cast <Type const &> (o));
         }
-
 
         virtual void
         realizes (Type const&);
@@ -539,10 +537,8 @@ namespace CIAO
         virtual void 
         implementation_pre (Type &o)
         {
-
           this->implementation_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         implementation_pre (Type const&);
@@ -550,10 +546,8 @@ namespace CIAO
         virtual void 
         implementation_next (Type &o)
         {
-
           this->implementation_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         implementation_next (Type const&);
@@ -561,10 +555,8 @@ namespace CIAO
         virtual void 
         implementation_post (Type &o)
         {
-
           this->implementation_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         implementation_post (Type const&);
@@ -572,10 +564,8 @@ namespace CIAO
         virtual void 
         instance_pre (Type &o)
         {
-
           this->instance_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         instance_pre (Type const&);
@@ -583,10 +573,8 @@ namespace CIAO
         virtual void 
         instance_next (Type &o)
         {
-
           this->instance_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         instance_next (Type const&);
@@ -594,10 +582,8 @@ namespace CIAO
         virtual void 
         instance_post (Type &o)
         {
-
           this->instance_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         instance_post (Type const&);
@@ -605,10 +591,8 @@ namespace CIAO
         virtual void 
         connection_pre (Type &o)
         {
-
           this->connection_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_pre (Type const&);
@@ -616,10 +600,8 @@ namespace CIAO
         virtual void 
         connection_next (Type &o)
         {
-
           this->connection_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_next (Type const&);
@@ -627,10 +609,8 @@ namespace CIAO
         virtual void 
         connection_post (Type &o)
         {
-
           this->connection_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         connection_post (Type const&);
@@ -638,10 +618,8 @@ namespace CIAO
         virtual void 
         dependsOn_pre (Type &o)
         {
-
           this->dependsOn_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         dependsOn_pre (Type const&);
@@ -649,10 +627,8 @@ namespace CIAO
         virtual void 
         dependsOn_next (Type &o)
         {
-
           this->dependsOn_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         dependsOn_next (Type const&);
@@ -660,10 +636,8 @@ namespace CIAO
         virtual void 
         dependsOn_post (Type &o)
         {
-
           this->dependsOn_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         dependsOn_post (Type const&);
@@ -671,10 +645,8 @@ namespace CIAO
         virtual void 
         artifact_pre (Type &o)
         {
-
           this->artifact_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         artifact_pre (Type const&);
@@ -682,10 +654,8 @@ namespace CIAO
         virtual void 
         artifact_next (Type &o)
         {
-
           this->artifact_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         artifact_next (Type const&);
@@ -693,10 +663,8 @@ namespace CIAO
         virtual void 
         artifact_post (Type &o)
         {
-
           this->artifact_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         artifact_post (Type const&);
@@ -704,10 +672,8 @@ namespace CIAO
         virtual void 
         infoProperty_pre (Type &o)
         {
-
           this->infoProperty_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_pre (Type const&);
@@ -715,10 +681,8 @@ namespace CIAO
         virtual void 
         infoProperty_next (Type &o)
         {
-
           this->infoProperty_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_next (Type const&);
@@ -726,10 +690,8 @@ namespace CIAO
         virtual void 
         infoProperty_post (Type &o)
         {
-
           this->infoProperty_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         infoProperty_post (Type const&);
@@ -737,10 +699,8 @@ namespace CIAO
         virtual void 
         localityConstraint_pre (Type &o)
         {
-
           this->localityConstraint_pre (const_cast <Type const &> (o));
         }
-
 
         virtual void
         localityConstraint_pre (Type const&);
@@ -748,10 +708,8 @@ namespace CIAO
         virtual void 
         localityConstraint_next (Type &o)
         {
-
           this->localityConstraint_next (const_cast <Type const &> (o));
         }
-
 
         virtual void
         localityConstraint_next (Type const&);
@@ -759,10 +717,8 @@ namespace CIAO
         virtual void 
         localityConstraint_post (Type &o)
         {
-
           this->localityConstraint_post (const_cast <Type const &> (o));
         }
-
 
         virtual void
         localityConstraint_post (Type const&);

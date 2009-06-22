@@ -59,7 +59,7 @@ project(CIAO_TargetManager_exec) : ciao_output, ciao_executor, dance_domain_appl
   }
 }
 
-project(CIAO_TargetManager_svnt) : ciao_output, ccm_svnt, ciao_servant, messaging, dance_deployment_svnt, ciao_config_handlers, avoids_ace_for_tao {
+project(CIAO_TargetManager_svnt) : ciao_output, ccm_svnt, ciao_servant, messaging, dance_deployment_svnt, ciao_config_handlers, avoids_ace_for_tao, dance_node_manager {
   sharedname  = CIAO_TargetManager_svnt
 
   libs += CIAO_TargetManager_stub CIAO_TargetManager_exec

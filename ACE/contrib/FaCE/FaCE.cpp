@@ -4,7 +4,7 @@
 
 #ifdef NO_ACE
 
-#include "CE_ARGV.H"
+#include "CE_ARGV.h"
 
 #else
 
@@ -21,7 +21,7 @@
 // This utility does not use ACE, and shouldn't.
 //FUZZ: disable check_for_lack_ACE_OS
 
-ACE_TCHAR* g_ParameterFileName = ACE_TEXT("Parameters.txt");
+const ACE_TCHAR* g_ParameterFileName = ACE_TEXT("Parameters.txt");
 
 /**
  * This simple and small class manages user-input command line
@@ -455,15 +455,15 @@ HWND CreateRpCommandBar(HWND hwnd)
 }
 
 // Mesage handler for the About box.
-LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     SHINITDLGINFO shidi;
 
-    ACE_TCHAR* copyrightNote = ACE_TEXT(
-"ACE® and TAO® are copyrighted by Dr. Douglas C. Schmidt and Center for Distributed Object \
-Computing at Washington University,© 1993-2002, all rights reserved.  \
-FaCE is copyrighted by Object Computing, Inc.,© 2002,\n all rights reserved.\n\
-See License.txt for more information.");
+    const ACE_TCHAR* copyrightNote =
+ACE_TEXT("ACE and TAO are copyrighted by Dr. Douglas C. Schmidt and Center for Distributed Object") \
+ACE_TEXT("Computing at Washington University, 1993-2002, all rights reserved.")  \
+ACE_TEXT("FaCE is copyrighted by Object Computing, Inc., 2002,\n all rights reserved.\n") \
+ACE_TEXT("See License.txt for more information.");
 
     switch (message)
     {
@@ -488,7 +488,7 @@ See License.txt for more information.");
 }
 
 
-LRESULT CALLBACK CommandLine(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CommandLine(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     int wmId;
     int wmEvent;
@@ -529,7 +529,7 @@ LRESULT CALLBACK CommandLine(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 }
 
 
-LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     int wmId;
     int wmEvent;
@@ -617,7 +617,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
 }
 
 
-LRESULT CALLBACK FileError(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK FileError(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     switch (message)
     {
@@ -637,7 +637,7 @@ LRESULT CALLBACK FileError(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
 }
 
 
-LRESULT CALLBACK FileExist(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK FileExist(HWND hDlg, UINT message, WPARAM wParam, LPARAM)
 {
     switch (message)
     {

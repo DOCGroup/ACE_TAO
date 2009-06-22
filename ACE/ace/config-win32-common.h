@@ -519,7 +519,7 @@
 #    define EDQUOT                  WSAEDQUOT
 #    define ESTALE                  WSAESTALE
 #    define EREMOTE                 WSAEREMOTE
-#  endif /* UNDER_CE */
+#  endif /* (_WIN32_WCE) && (_WIN32_WCE < 0x600) */
 # endif /* _WINSOCK2API */
 
 # if defined (ACE_HAS_FORE_ATM_WS2)
@@ -552,7 +552,7 @@
 
 // PharLap ETS has its own winsock lib, so don't grab the one
 // supplied with the OS.
-# if defined (_MSC_VER) && !defined (UNDER_CE) && !defined (ACE_HAS_PHARLAP)
+# if defined (_MSC_VER) && !defined (_WIN32_WCE) && !defined (ACE_HAS_PHARLAP)
 #  pragma comment(lib, "wsock32.lib")
 # endif /* _MSC_VER */
 

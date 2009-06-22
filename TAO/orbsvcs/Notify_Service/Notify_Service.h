@@ -21,9 +21,11 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "../orbsvcs/Notify/CosNotify_Initializer.h"
+#include "orbsvcs/Notify/CosNotify_Initializer.h"
 #include "ace/SString.h"
 #include "ace/Reactor.h"
+#include "ace/Service_Object.h"
+#include "Notify_Service_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
@@ -35,15 +37,15 @@ class TAO_Notify_Service_Driver;
 class LoggingWorker : public ACE_Task_Base
 {
   public:
-   LoggingWorker (TAO_Notify_Service_Driver* ns);
-   virtual int svc (void);
-   void start ();
-   void end ();
-   private:
-     
-     ACE_Reactor logging_reactor_;
-     TAO_Notify_Service_Driver* ns_;
-     bool started_;
+    LoggingWorker (TAO_Notify_Service_Driver* ns);
+    virtual int svc (void);
+    void start ();
+    void end ();
+  private:
+    ACE_Reactor logging_reactor_;
+    TAO_Notify_Service_Driver* ns_;
+    bool started_;
+    long timer_id_;
 };
 
 /**
@@ -76,9 +78,8 @@ private:
  *
  * Implementation of the Notification Service front end.
  */
-class TAO_Notify_Service_Driver
+class TAO_Notify_Service_Export TAO_Notify_Service_Driver : public ACE_Service_Object
 {
-
  friend class LoggingWorker;
 
  public:
@@ -91,7 +92,7 @@ class TAO_Notify_Service_Driver
 
   /// Initializes the Service.
   /// Returns 0 on success, -1 on error.
-  int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// run the Service.
   /// Returns 0 on success, -1 on error.
@@ -99,7 +100,7 @@ class TAO_Notify_Service_Driver
 
   /// Shutdown the Service.
   /// Returns 0 on success, -1 on error.
-  void shutdown (void);
+  virtual int fini (void);
 
 protected:
   /// initialize the ORB.
@@ -117,7 +118,7 @@ protected:
   int resolve_naming_service (void);
 
   /// Parses the command line arguments.
-  int parse_args (int& argc, ACE_TCHAR *argv []);
+  int parse_args (int argc, ACE_TCHAR *argv []);
 
   // = Data members
 
@@ -127,14 +128,14 @@ protected:
   /// true: register itself with the name service
   bool use_name_svc_;
 
-  /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
+  /// File name where the IOR of the server object is stored.
+  const ACE_TCHAR *ior_output_file_name_;
 
   /// The Factory name.
   ACE_CString notify_factory_name_;
 
-  /// The Factory name.
-  ACE_CString notify_channel_name_;
+  /// The event channel names.
+  ACE_Unbounded_Set <ACE_CString> notify_channel_name_;
 
   /// true: create an event channel and registers it with the Naming Service
   /// with the name <notify_channel_name_>
@@ -146,7 +147,7 @@ protected:
   /// The ORB that we use.
   CORBA::ORB_var orb_;
 
-  /// separate dispatching orb if needed.
+  /// Separate dispatching orb if needed.
   CORBA::ORB_var dispatching_orb_;
 
   /// Reference to the root poa.
@@ -167,11 +168,23 @@ protected:
   /// The relative round-trip timeout
   suseconds_t timeout_;
 
+  /// Logging interval
   ACE_Time_Value logging_interval_;
+
+  /// Logging worker
   LoggingWorker logging_worker_;
+
+  /// Shutdown the ORB?
+  bool shutdown_orb_;
+
+  /// Shutdown the dispatching ORB?
+  bool shutdown_dispatching_orb_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_Notify_Service_Driver)
+ACE_FACTORY_DECLARE (TAO_Notify_Service, TAO_Notify_Service_Driver)
 
 #include /**/ "ace/post.h"
 #endif /* NOTIFY_SERVICE_H */

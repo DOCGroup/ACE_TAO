@@ -48,9 +48,9 @@ namespace CIAO
                        String_Seq_Functor (toconfig.location));
 
         toconfig.dependsOn.length (iad->count_dependsOn ());
-    SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-                     desc.begin_dependsOn (),
-                     toconfig.dependsOn);
+        SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
+                                     (*desc.begin_dependsOn ()),
+                                     toconfig.dependsOn);
         std::for_each (iad->begin_dependsOn (),
                        iad->end_dependsOn (),
                        NIA_Functor (toconfig.dependsOn));
@@ -79,7 +79,7 @@ namespace CIAO
 
         retval.label (src.label.in ());
         retval.UUID (src.UUID.in ());
-
+#if 0
         for (CORBA::ULong i = 0; i < src.location.length (); ++i)
           retval.add_location (src.location[i].in ());
 
@@ -97,7 +97,7 @@ namespace CIAO
         for (CORBA::ULong i = 0; i < src.deployRequirement.length (); ++i)
           retval.add_deployRequirement
             (Req_Handler::get_requirement (src.deployRequirement[i]));
-
+#endif
         return retval;
       }
 
@@ -112,7 +112,7 @@ namespace CIAO
 
         try {
           return new ImplementationArtifactDescription
-            (implementationArtifactDescription (dom));
+            (reader::implementationArtifactDescription (dom));
         }
         catch (...) {
           throw Parse_Error ("Unable to create XSC structure for IAD");

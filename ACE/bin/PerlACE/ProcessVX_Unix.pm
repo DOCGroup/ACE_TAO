@@ -198,7 +198,7 @@ sub Spawn ()
         my(@unload_commands);
         if (!$PerlACE::Static && !$PerlACE::VxWorks_RTP_Test) {
           my $vxtest_file = $program . '.vxtest';
-          if (handle_vxtest_file($vxtest_file, \@load_commands, \@unload_commands)) {
+          if (handle_vxtest_file($self, $vxtest_file, \@load_commands, \@unload_commands)) {
               @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
               push @cmds, @load_commands;
               $cmdnr += scalar @load_commands;
@@ -275,15 +275,14 @@ sub Spawn ()
                 if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                   print "Couldn't open telnet connection; sleeping then retrying\n";
                 }
+                if ($retries == 0) {
+                  die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
+                }
                 sleep(5);
+              } else {
+                last;
               }
             }
-
-            if (!$t->open()) {
-              die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
-            }
-
-            $t->print("");
 
             my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
             my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
@@ -298,21 +297,19 @@ sub Spawn ()
               $t->print("$target_password");
             }
 
-            $t->print("");
-
-            my $blk;
-            my $buf;
+            my $buf = '';
             # wait for the prompt
-            my $prompt1 = '-> $';
-            while ($blk = $t->get) {
-              printf $blk;
+            my $prompt1 = '->[\ ]$';
+            while (1) {
+              my $blk = $t->get;
+              print $blk;
               $buf .= $blk;
               if ($buf =~ /$prompt1/) {
                 last;
               }
             }
             if ($buf !~ /$prompt1/) {
-              die "ERROR: Didn't got prompt but got <$buf> <$blk>";
+              die "ERROR: Didn't got prompt but got <$buf>";
             }
             my $i = 0;
             my @lines;
@@ -322,10 +319,10 @@ sub Spawn ()
               }
               if ($t->print (@cmds[$i++])) {
                 # After each command wait for the prompt
-                my $blk;
-                my $buf;
-                while ($blk = $t->get) {
-                  printf $blk;
+                my $buf = '';
+                while (1) {
+                  my $blk = $t->get;
+                  print $blk;
                   $buf .= $blk;
                   if ($buf =~ /$prompt/) {
                     last;

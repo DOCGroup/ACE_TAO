@@ -292,8 +292,12 @@ DRV_cpp_init (void)
               // TAO_IDL_INCLUDE_DIR may be in quotes,
               // e.g. "/usr/local/include/tao"
               // We deal with a case like this below ...
-              DRV_add_include_path (include_path1, TAO_IDL_INCLUDE_DIR, 0);
-              DRV_add_include_path (include_path2, ".", 0);
+              DRV_add_include_path (include_path1,
+                                    TAO_IDL_INCLUDE_DIR,
+                                    0);
+              DRV_add_include_path (include_path2,
+                                    TAO_IDL_INCLUDE_DIR,
+                                    "/tao");
 #else
               DRV_add_include_path (include_path1, ".", 0);
 #endif  /* TAO_IDL_INCLUDE_DIR */
@@ -507,9 +511,15 @@ DRV_cpp_post_init (void)
         }
       else
         {
+#if defined (TAO_IDL_INCLUDE_DIR)
+          DRV_add_include_path (include_path3,
+                                TAO_IDL_INCLUDE_DIR,
+                                "/orbsvcs");
+#else
           // If ACE_ROOT isn't defined either, there will already
           // be a warning from DRV_preproc().
           DRV_add_include_path (include_path3, ".", 0);
+#endif  /* TAO_IDL_INCLUDE_DIR */
         }
     }
 
@@ -544,10 +554,22 @@ DRV_cpp_post_init (void)
         }
       else
         {
+#if defined (TAO_IDL_INCLUDE_DIR)
+          DRV_add_include_path (include_path4,
+                                TAO_IDL_INCLUDE_DIR,
+                                0);
+          DRV_add_include_path (include_path5,
+                                TAO_IDL_INCLUDE_DIR,
+                                "/ciao");
+          DRV_add_include_path (include_path5,
+                                TAO_IDL_INCLUDE_DIR,
+                                "/ccm");
+#else
           // If ACE_ROOT isn't defined either, there will already
           // be a warning from DRV_preproc().
           DRV_add_include_path (include_path4, ACE_ROOT, ".");
           DRV_add_include_path (include_path5, ACE_ROOT, ".");
+#endif  /* TAO_IDL_INCLUDE_DIR */
         }
     }
 
@@ -1091,7 +1113,7 @@ DRV_pre_proc (const char *myfile)
   ACE_Process process;
 
   // For complex builds, the default command line buffer size of 1024
-  // is sometimes not enough. We use 4096 here.
+  // is sometimes not enough. We use 8192 here.
   ACE_Process_Options cpp_options (1,       // Inherit environment.
                                    TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
 
@@ -1099,7 +1121,14 @@ DRV_pre_proc (const char *myfile)
   DRV_cpp_putarg (t_ifile);
   DRV_cpp_putarg (0); // Null terminate the DRV_arglist.
 
-  cpp_options.command_line (DRV_arglist);
+  if (cpp_options.command_line (DRV_arglist) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%s: command line processing \"%s\" failed\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  DRV_arglist[0]));
+      throw Bailout ();
+    }
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.  Renaming is (supposed to be) an atomic

@@ -16,7 +16,7 @@
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
-#include /**/ <Iphlpapi.h>
+#include /**/ <iphlpapi.h>
 #endif
 
 ACE_RCSID (ace,

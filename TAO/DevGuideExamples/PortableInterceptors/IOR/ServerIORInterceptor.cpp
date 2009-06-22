@@ -17,7 +17,6 @@ void
 ServerIORInterceptor::establish_components (
                                             PortableInterceptor::IORInfo_ptr info)
 {
-
   const char * permission = "ServerRequiresAuth";
 
   // arbitrary tag.
@@ -36,4 +35,24 @@ ServerIORInterceptor::establish_components (
   info->add_ior_component (myTag);
 
   std::cout << "Created Tagged IOR." << std::endl;
+}
+
+void
+ServerIORInterceptor::components_established (
+          PortableInterceptor::IORInfo_ptr /*info*/)
+{
+}
+
+void
+ServerIORInterceptor::adapter_manager_state_changed (
+                             const char* /*id*/, 
+                             PortableInterceptor::AdapterState /*state*/)
+{
+}
+
+void
+ServerIORInterceptor::adapter_state_changed (
+    const PortableInterceptor::ObjectReferenceTemplateSeq& /*templates*/,
+    PortableInterceptor::AdapterState /*state*/)
+{
 }

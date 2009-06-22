@@ -359,22 +359,17 @@ namespace
 
 //============================================================================
 int
-ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Contact the orb
-      ACE_Argv_Type_Converter argcon (argcw, argvw);
-      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv ());
+      orb = CORBA::ORB_init (argc, argv);
 
       // Scan through the command line options
       bool
         failed = false,
         showNSonly = false;
-      int
-        argc = argcon.get_argc ();
-      ACE_TCHAR
-        **argv = argcon.get_TCHAR_argv ();
       ACE_TCHAR kindsep = ACE_TEXT('.');
       ACE_TCHAR ctxsep[] = ACE_TEXT("/");
       ACE_TCHAR *name = 0;
@@ -392,7 +387,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ns requires an argument\n"));
-                      failed= true;
+                      failed = true;
                     }
                   else
                     {
@@ -401,7 +396,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
-                          failed= true;
+                          failed = true;
                         }
                       else if (showNSonly)
                         {
@@ -457,7 +452,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --tree requires an argument\n"));
-                      failed= true;
+                      failed = true;
                     }
                   else
                     {
@@ -479,7 +474,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --node requires an argument\n"));
-                      failed= true;
+                      failed = true;
                     }
                   else
                     {

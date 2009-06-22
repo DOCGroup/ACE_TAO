@@ -43,7 +43,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
+      CORBA::Object_var object = orb->string_to_object (ior);
 
       if (CORBA::is_nil (object.in ()))
         {

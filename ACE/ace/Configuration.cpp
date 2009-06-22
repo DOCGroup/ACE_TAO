@@ -4,6 +4,7 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Tokenizer_T.h"
 
 // Can remove this when import_config and export_config are removed from
 // ACE_Configuration. They're deprecated at ACE 5.2.
@@ -518,11 +519,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                              KEY_ALL_ACCESS,
                                              0,
                                              &result_key,
-#if defined (__MINGW32__)
                                              (PDWORD) 0
-#else
-                                             0
-#endif /* __MINGW32__ */
                                              )) != ERROR_SUCCESS)
         {
           errno = errnum;
@@ -540,7 +537,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
 int
 ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section_Key& key,
                                                  const ACE_TCHAR* sub_section,
-                                                 int recursive)
+                                                 bool recursive)
 {
   if (validate_name (sub_section))
     return -1;
@@ -574,13 +571,12 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                                     0,
                                     0) == ERROR_SUCCESS)
         {
-          remove_section (section, name_buffer, 1);
+          remove_section (section, name_buffer, true);
           buffer_size = ACE_DEFAULT_BUFSIZE;
         }
     }
 
-  int errnum;
-  errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
+  int const errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
   if (errnum != ERROR_SUCCESS)
     {
       errno = errnum;
@@ -1049,11 +1045,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
                                                             KEY_ALL_ACCESS,
                                                             0,
                                                             &subkey,
-#if defined (__MINGW32__)
                                                             (PDWORD) 0
-#else
-                                                            0
-#endif /* __MINGW32__ */
                                                             )) !=ERROR_SUCCESS)
             {
               errno = errnum;
@@ -1595,7 +1587,7 @@ ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key
 int
 ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key,
                                         const ACE_TCHAR* sub_section,
-                                        int recursive)
+                                        bool recursive)
 {
   ACE_ASSERT (this->allocator_);
   if (validate_name (sub_section))
@@ -1632,7 +1624,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
       ACE_TString name;
       while (!enumerate_sections (section, index, name))
         {
-          if (remove_section (section, name.fast_rep (), 1))
+          if (remove_section (section, name.fast_rep (), true))
             return -1;
 
           ++index;

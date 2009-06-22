@@ -70,10 +70,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = orb->string_to_object(ior.c_str());
     Simple_var server = Simple::_narrow (obj.in());
 
-    Callback_i callback_svt(orb.in());
+    PortableServer::Servant_var<Callback_i> callback_svt = new Callback_i(orb.in());
 
     // Register and activate callback servant
-    PortableServer::ObjectId_var id = poa->activate_object(&callback_svt);
+    PortableServer::ObjectId_var id = poa->activate_object(callback_svt.in());
     obj = poa->id_to_reference(id.in());
     Callback_var callback = Callback::_narrow(obj.in());
 
@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->run();
 
-    int etherealize = 1, wait = 1;
+    CORBA::Boolean etherealize = true, wait = true;
     poa->destroy(etherealize, wait);
     orb->destroy();
 

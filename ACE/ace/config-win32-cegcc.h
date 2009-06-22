@@ -35,11 +35,13 @@
 
 #include "ace/config-g++-common.h"
 
-#undef _WIN32_WCE
-#define _WIN32_WCE 0x600
-
 #include /**/ <cegcc.h>
 #include /**/ <w32api.h>
+#include /**/ <_mingw.h>
+
+#if (__MINGW32_MAJOR_VERSION > 3)  || ((__MINGW32_MAJOR_VERSION == 3) && (__MINGW32_MINOR_VERSION >= 15))
+# undef ACE_LACKS_USECONDS_T
+#endif
 
 #define ACE_HAS_USER_MODE_MASKS
 
@@ -51,8 +53,6 @@
 #undef ACE_LACKS_TELLDIR
 #undef ACE_LACKS_SEEKDIR
 #undef ACE_LACKS_REWINDDIR
-
-#undef ACE_LACKS_USECONDS_T
 
 #undef ACE_HAS_WTOF
 
@@ -93,22 +93,18 @@
 #define ACE_LACKS_ERRNO_H
 #undef ACE_LACKS_SIGSET
 #undef ACE_LACKS_DEV_T
-#define ACE_LACKS_USECONDS_T
 #define ACE_LACKS_ISCTYPE
 #define ACE_HAS_NONCONST_WFDOPEN
 #undef ACE_HAS_WTOI
 #undef ACE_HAS_WTOL
-#define ACE_LACKS_GETSYSTEMTIMEASFILETIME
-#define ACE_LACKS_FILELOCKS
 
 #define ACE_INT64_FORMAT_SPECIFIER_ASCII "%I64d"
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
+#define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
 
-#if defined (_WIN32_WCE)
-#  define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
-#else
-#  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
-#endif /* _WIN32_WCE */
+#undef ACE_HAS_CUSTOM_EXPORT_MACROS
+
+#define ACE_DLL_PREFIX ACE_TEXT ("lib")
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_CEGCC_H */

@@ -140,8 +140,9 @@ namespace CIAO
                       name.c_str ()));
         }
 
-      for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
-        cpd.add_supportedType (XMLSchema::string< char > ((src.supportedType[i])));
+      for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i);
+      
+        //cpd.add_supportedType (XMLSchema::string< char > ((src.supportedType[i])));
 
       return cpd;
     }

@@ -4108,7 +4108,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
       break;
     }
   AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-  AVStreams::protocolSpec *temp_protocols;
+  AVStreams::protocolSpec *temp_protocols = 0;
   CORBA::Any_var AvailableProtocols_ptr =
     peer_fep->get_property_value ("AvailableProtocols");
   AvailableProtocols_ptr.in () >>= temp_protocols;

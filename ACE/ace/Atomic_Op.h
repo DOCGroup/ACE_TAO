@@ -43,6 +43,8 @@
 #  endif /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
 # elif defined (ACE_HAS_INTEL_ASSEMBLY)
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
+# elif defined (ACE_HAS_VXATOMICLIB)
+#  define ACE_HAS_BUILTIN_ATOMIC_OP
 # endif /* WIN32 */
 #endif /* ACE_HAS_THREADS */
 
