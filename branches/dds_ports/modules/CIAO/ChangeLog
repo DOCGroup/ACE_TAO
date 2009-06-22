@@ -1,3 +1,94 @@
+Mon Jun 22 09:22:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Update for the fact that avoids_ace_for_tao and anytypecode moved to the
+          base projects
+
+        * bin/msvc_cidlc.pl:
+        * bin/replace_dummy_with_dummylabel.sh
+        * docs/cidlc.html
+          Deleted, not needed
+
+        * CIAO-INSTALL.html:
+        * docs/index.html
+        * docs/TODO.html
+          Partly updated for CIDLC removal
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc
+        * DAnCE/TargetManager/TargetManager.mpc
+        * DAnCE/TargetManager/TM_Client.mpc
+        * DAnCE/tests/CIAO/Components/ProcessColocation.mpc
+        * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc
+        * DAnCE/tests/CIAO/Components/SimpleConsumer.mpc
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.mpc
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser.mpc
+        * DAnCE/tests/CIAO/Components/SimpleNull.mpc
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc
+        * DAnCE/tests/CIAO/Components/SimplePublisher.mpc
+        * DAnCE/tests/CIAO/Components/SimpleUser.mpc
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc
+        * examples/BasicSP/BasicSP.mpc
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc
+        * examples/BasicSP/BMDevice/BMDevice.mpc
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc
+        * examples/BasicSP/EC/EC.mpc
+        * examples/DevGuideExamples/Messenger/Administrator.mpc
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc
+        * examples/DevGuideExamples/Messenger/Messenger.mpc
+        * examples/DevGuideExamples/Messenger/Receiver.mpc
+        * examples/Display/Display_Base/Display_Base.mpc
+        * examples/Display/GPS/GPS.mpc
+        * examples/Display/NavDisplay/NavDisplay.mpc
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc
+        * examples/Display/RateGen/RateGen.mpc
+        * examples/Hello/Hello_Base/Hello_Base.mpc
+        * examples/Hello/Receiver/Receiver.mpc
+        * examples/Hello/Sender/Sender.mpc
+        * examples/Null_Component/Null_Component.mpc
+        * examples/Null_Component/Null_Interface.mpc
+        * examples/Swapping/Hello_Base/Hello_Base.mpc
+        * examples/Swapping/Receiver/Receiver.mpc
+        * examples/Swapping/Sender/Sender.mpc
+        * MPC/config/componentidldefaults.mpb
+        * performance-tests/Benchmark/Benchmark.mpc
+        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
+        * performance-tests/Protocols/common/Protocols.mpc
+        * performance-tests/Protocols/Controller/Controller.mpc
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc
+        * tests/CIDL/CodeGen/Basic.mpc
+        * tests/CIDL/CodeGen/CodeGen.mpc
+        * tests/IDL_Test/Cornucopia/Cornucopia.mpc
+        * tests/IDL_Test/Keywords/Keywords.mpc
+        * tests/IDL_Test/Reused_Facet_Interface/Basic.mpc
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.mpc
+        * tests/Minimum/Minimum_Base/Minimum_Base.mpc
+        * tests/Minimum/Receiver/Receiver.mpc
+        * tests/Minimum/Sender/Sender.mpc
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+          Updated base projects
+
+        * examples/Hello/Receiver/Receiver_exec_export.h
+        * examples/Hello/Receiver/Receiver_stub_export.h
+        * examples/Hello/Receiver/Receiver_svnt_export.h
+        * examples/Hello/Sender/Sender_exec_export.h
+        * examples/Hello/Sender/Sender_stub_export.h
+        * examples/Hello/Sender/Sender_svnt_export.h
+          Removed
+
 Fri Jun 19 19:40:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Cornucopia/Cornucopia.mpc:
