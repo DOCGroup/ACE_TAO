@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display -c controller RateGen"
 
-project(Display_RateGen_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Display_RateGen_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RATEGEN_STUB_Export \
               -Wb,stub_export_include=RateGen_stub_export.h \
@@ -15,7 +15,7 @@ project(Display_RateGen_idl_gen) : componentidldefaults, anytypecode, avoids_ace
   }
 }
 
-project(Display_RateGen_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Display_RateGen_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += Display_RateGen_idl_gen
   idlflags += -Wb,export_macro=RATEGEN_EXEC_Export \
@@ -27,7 +27,7 @@ project(Display_RateGen_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(Display_RateGen_stub) : ccm_stub, avoids_ace_for_tao {
+project(Display_RateGen_stub) : ccm_stub {
   libout = ../lib
   libpaths += ../lib
   after += Display_RateGen_idl_gen Display_Base_stub
@@ -53,7 +53,7 @@ project(Display_RateGen_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Display_RateGen_exec) : ciao_executor, avoids_ace_for_tao {
+project(Display_RateGen_exec) : ciao_executor {
   libout = ../lib
   libpaths += ../lib
   after   += Display_RateGen_idle_gen Display_RateGen_stub
@@ -82,7 +82,7 @@ project(Display_RateGen_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Display_RateGen_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Display_RateGen_svnt) : ciao_servant {
   libout = ../lib
   libpaths += ../lib
   after      += Display_Base_skel Display_RateGen_exec
@@ -113,7 +113,7 @@ project(Display_RateGen_svnt) : ciao_servant, avoids_ace_for_tao {
   }
 }
 
-project (Display_controller) : ccm_stub, valuetype, avoids_ace_for_tao {
+project (Display_controller) : ccm_stub, valuetype {
   libout = ../lib
   libpaths += ../lib
   exename = controller

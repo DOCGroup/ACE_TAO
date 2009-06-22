@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleCommon"
 
-project(SimpleCommon_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleCommon_idl_gen) : ciaoidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECOMMON_STUB_Export \
               -Wb,stub_export_include=SimpleCommon_stub_export.h \
@@ -13,7 +13,7 @@ project(SimpleCommon_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao
   }
 }
 
-project(SimpleCommon_stub) : ccm_stub, avoids_ace_for_tao {
+project(SimpleCommon_stub) : ccm_stub {
   after += SimpleCommon_idl_gen
   libs  +=
 
@@ -37,7 +37,7 @@ project(SimpleCommon_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(SimpleCommon_skel) : ccm_svnt, avoids_ace_for_tao {
+project(SimpleCommon_skel) : ccm_svnt {
   after      +=  SimpleCommon_stub
   sharedname  = SimpleCommon_skel
   libs       += SimpleCommon_stub

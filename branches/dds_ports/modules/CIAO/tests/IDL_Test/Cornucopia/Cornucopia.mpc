@@ -1,6 +1,6 @@
 // $Id$
 
-project(Cornucopia_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Cornucopia_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CORNUCOPIA_STUB_Export \
               -Wb,stub_export_include=Cornucopia_stub_export.h \
@@ -13,11 +13,11 @@ project(Cornucopia_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_
               -Gex -Gxhst -Gxhsk -Gxhsv -Gxhex
 
   IDL_Files {
-    Cornucopia.idl
+    Cornucopia.idl >> Cornucopia_stub_export.h Cornucopia_skel_export.h Cornucopia_svnt_export.h Cornucopia_exec_export.h
   }
 }
 
-project(Cornucopia_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Cornucopia_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += Cornucopia_idl_gen
   idlflags += -Wb,export_macro=CORNUCOPIA_EXEC_Export \
@@ -29,7 +29,7 @@ project(Cornucopia_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(Cornucopia_stub) : ccm_stub, avoids_ace_for_tao {
+project(Cornucopia_stub) : ccm_stub {
   after += Cornucopia_idl_gen
 
   sharedname = Cornucopia_stub
@@ -52,7 +52,7 @@ project(Cornucopia_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Cornucopia_exec) : ciao_executor, avoids_ace_for_tao {
+project(Cornucopia_exec) : ciao_executor {
   after   += Cornucopia_idle_gen Cornucopia_stub
   sharedname = Cornucopia_exec
   libs += Cornucopia_stub
@@ -78,7 +78,7 @@ project(Cornucopia_exec) : ciao_executor, avoids_ace_for_tao {
   }
 }
 
-project(Cornucopia_skel) : ccm_svnt, avoids_ace_for_tao {
+project(Cornucopia_skel) : ccm_svnt {
   after += Cornucopia_stub
   sharedname = Cornucopia_skel
   libs += Cornucopia_stub
@@ -102,7 +102,7 @@ project(Cornucopia_skel) : ccm_svnt, avoids_ace_for_tao {
   }
 }
 
-project(Cornucopia_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Cornucopia_svnt) : ciao_servant {
   after      += Cornucopia_exec Cornucopia_skel
   sharedname  = Cornucopia_svnt
   libs       += Cornucopia_exec \

@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Minimum_Base"
 
-project(Minimum_Base_idl_gen) : ciaoidldefaults, anytypecode, ccm, avoids_ace_for_tao {
+project(Minimum_Base_idl_gen) : ciaoidldefaults, anytypecode, ccm {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=MINIMUM_BASE_STUB_Export \
               -Wb,stub_export_include=Minimum_Base_stub_export.h \
@@ -13,7 +13,7 @@ project(Minimum_Base_idl_gen) : ciaoidldefaults, anytypecode, ccm, avoids_ace_fo
   }
 }
 
-project(Minimum_Base_stub) : ccm_stub, avoids_ace_for_tao {
+project(Minimum_Base_stub) : ccm_stub {
   after += Minimum_Base_idl_gen
   libs  +=
 
@@ -38,7 +38,7 @@ project(Minimum_Base_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 
-project(Minimum_Base_skel) : ccm_stub, portableserver, avoids_ace_for_tao {
+project(Minimum_Base_skel) : ccm_stub, portableserver {
   after      +=  Minimum_Base_stub
   sharedname  = Minimum_Base_skel
   libs       += Minimum_Base_stub

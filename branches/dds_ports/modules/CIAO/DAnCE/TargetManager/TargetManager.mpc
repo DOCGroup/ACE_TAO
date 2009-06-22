@@ -1,6 +1,6 @@
 // $Id$
 
-project(CIAO_TargetManager_idl_gen) : componentidldefaults, avoids_ace_for_tao {
+project(CIAO_TargetManager_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
               -Wb,stub_export_include=TargetManager_stub_export.h \
@@ -14,7 +14,7 @@ project(CIAO_TargetManager_idl_gen) : componentidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(CIAO_TargetManager_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(CIAO_TargetManager_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += CIAO_TargetManager_idl_gen
   idlflags += -Wb,export_macro=TARGETMANAGER_EXEC_Export \
@@ -25,7 +25,7 @@ project(CIAO_TargetManager_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(CIAO_TargetManager_stub) : ciao_output, ccm_stub, dance_deployment_stub, dance_nodemanager_stub, avoids_ace_for_tao {
+project(CIAO_TargetManager_stub) : ciao_output, ccm_stub, dance_deployment_stub, dance_nodemanager_stub {
   sharedname = CIAO_TargetManager_stub
   dynamicflags   = TARGETMANAGER_STUB_BUILD_DLL
   idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
@@ -45,7 +45,7 @@ project(CIAO_TargetManager_stub) : ciao_output, ccm_stub, dance_deployment_stub,
   }
 }
 
-project(CIAO_TargetManager_exec) : ciao_output, ciao_executor, dance_domain_application_manager, ciao_config_handlers, avoids_ace_for_tao {
+project(CIAO_TargetManager_exec) : ciao_output, ciao_executor, dance_domain_application_manager, ciao_config_handlers {
   sharedname = CIAO_TargetManager_exec
   libs += CIAO_TargetManager_stub
   after += CIAO_TargetManager_stub CIAO_TargetManager_idle_gen
@@ -62,7 +62,7 @@ project(CIAO_TargetManager_exec) : ciao_output, ciao_executor, dance_domain_appl
   }
 }
 
-project(CIAO_TargetManager_svnt) : ciao_output, ccm_svnt, ciao_servant, messaging, dance_deployment_svnt, ciao_config_handlers, avoids_ace_for_tao, dance_node_manager {
+project(CIAO_TargetManager_svnt) : ciao_output, ccm_svnt, ciao_servant, messaging, dance_deployment_svnt, ciao_config_handlers, dance_node_manager {
   sharedname  = CIAO_TargetManager_svnt
 
   libs += CIAO_TargetManager_stub CIAO_TargetManager_exec

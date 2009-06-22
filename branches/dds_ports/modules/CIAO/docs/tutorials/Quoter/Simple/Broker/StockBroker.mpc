@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockBrokerDriver StockBroker"
 
-project(Stock_Base_StockBroker_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Stock_Base_StockBroker_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKBROKER_STUB_Export \
               -Wb,stub_export_include=StockBroker_stub_export.h \
@@ -15,7 +15,7 @@ project(Stock_Base_StockBroker_idl_gen) : componentidldefaults, anytypecode, avo
   }
 }
 
-project(Stock_Base_StockBroker_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Stock_Base_StockBroker_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += Stock_Base_StockBroker_idl_gen
   idlflags += -Wb,export_macro=STOCKBROKER_EXEC_Export \
@@ -27,7 +27,7 @@ project(Stock_Base_StockBroker_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(Stock_Base_StockBroker_stub) : ccm_stub, avoids_ace_for_tao {
+project(Stock_Base_StockBroker_stub) : ccm_stub {
   after += Stock_Base_StockBroker_idl_gen Stock_Base_stub
   libs  += Stock_Base_stub
   libpaths += ../Stock_Base
@@ -52,7 +52,7 @@ project(Stock_Base_StockBroker_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Stock_Base_StockBroker_exec) : ciao_executor, avoids_ace_for_tao {
+project(Stock_Base_StockBroker_exec) : ciao_executor {
   after   += Stock_Base_StockBroker_idle_gen Stock_Base_StockBroker_stub
   sharedname = StockBroker_exec
   libs += StockBroker_stub Stock_Base_stub
@@ -80,7 +80,7 @@ project(Stock_Base_StockBroker_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Stock_Base_StockBroker_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Stock_Base_StockBroker_svnt) : ciao_servant {
   after      += Stock_Base_skel Stock_Base_StockBroker_exec
   sharedname  = StockBroker_svnt
   libs       += StockBroker_exec \
@@ -110,7 +110,7 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant, avoids_ace_for_tao {
   }
 }
 
-project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype, avoids_ace_for_tao {
+project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype {
   exename = StockBrokerDriver
   after += Stock_Base_StockBroker_stub
   libs  += StockBroker_stub Stock_Base_stub

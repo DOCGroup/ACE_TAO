@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockDistributorDriver StockDistributor"
 
-project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKDISTRIBUTOR_STUB_Export \
               -Wb,stub_export_include=StockDistributor_stub_export.h \
@@ -15,7 +15,7 @@ project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults, anytypecode
   }
 }
 
-project(Stock_Base_StockDistributor_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Stock_Base_StockDistributor_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += Stock_Base_StockDistributor_idl_gen
   idlflags += -Wb,export_macro=STOCKDISTRIBUTOR_EXEC_Export \
@@ -27,7 +27,7 @@ project(Stock_Base_StockDistributor_idle_gen) : ciaoidldefaults, avoids_ace_for_
   }
 }
 
-project(Stock_Base_StockDistributor_stub) : ccm_stub, avoids_ace_for_tao {
+project(Stock_Base_StockDistributor_stub) : ccm_stub {
   after += Stock_Base_StockDistributor_idl_gen Stock_Base_stub
   libs  += Stock_Base_stub
   libpaths += ../Stock_Base
@@ -52,7 +52,7 @@ project(Stock_Base_StockDistributor_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ace_for_tao {
+project(Stock_Base_StockDistributor_exec) : ciao_executor {
   after   += Stock_Base_StockDistributor_idle_gen Stock_Base_StockDistributor_stub
   sharedname = StockDistributor_exec
   libs += StockDistributor_stub Stock_Base_stub
@@ -80,7 +80,7 @@ project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Stock_Base_StockDistributor_svnt) : ciao_servant {
   after      += Stock_Base_skel Stock_Base_StockDistributor_exec
   sharedname  = StockDistributor_svnt
   libs       += StockDistributor_exec \
@@ -110,7 +110,7 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ace_for_tao {
   }
 }
 
-project (Stock_Base_StockDistributorDriver) : ccm_stub, valuetype, avoids_ace_for_tao {
+project (Stock_Base_StockDistributorDriver) : ccm_stub, valuetype {
   exename = StockDistributorDriver
   after += Stock_Base_StockDistributor_stub
   libs  += StockDistributor_stub Stock_Base_stub

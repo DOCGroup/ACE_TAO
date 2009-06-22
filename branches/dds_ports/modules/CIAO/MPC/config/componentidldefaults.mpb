@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciaoidldefaults {
-  idlflags += -Gsv -Glem
+project : ciaoidldefaults, anytypecode {
+  idlflags += -Gsv -Glem -Gxhst -Gxhsk -Gxhsv -Gxhex
 
   Modify_Custom (IDL) {
     optional(source_pre_extension) {

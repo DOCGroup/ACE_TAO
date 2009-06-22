@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display GPS"
 
-project(Display_GPS_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Display_GPS_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=GPS_STUB_Export \
               -Wb,stub_export_include=GPS_stub_export.h \
@@ -15,7 +15,7 @@ project(Display_GPS_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for
   }
 }
 
-project(Display_GPS_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Display_GPS_idle_gen) : ciaoidldefaults {
   custom_only = 1
   idlflags += -Wb,export_macro=GPS_EXEC_Export \
               -Wb,export_include=GPS_exec_export.h \
@@ -26,7 +26,7 @@ project(Display_GPS_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(Display_GPS_stub) : ccm_stub, avoids_ace_for_tao {
+project(Display_GPS_stub) : ccm_stub {
   after += Display_GPS_idl_gen Display_Base_stub
   libs  += Display_Base_stub
   libout = ../lib
@@ -52,7 +52,7 @@ project(Display_GPS_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Display_GPS_exec) : ciao_executor, avoids_ace_for_tao {
+project(Display_GPS_exec) : ciao_executor {
   after   += Display_GPS_idle_gen Display_GPS_stub
   sharedname = GPS_exec
   libs += GPS_stub Display_Base_stub
@@ -81,7 +81,7 @@ project(Display_GPS_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Display_GPS_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Display_GPS_svnt) : ciao_servant {
   after      += Display_Base_skel Display_GPS_exec
   sharedname  = GPS_svnt
   libs       += GPS_exec \

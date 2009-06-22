@@ -102,7 +102,7 @@ if (defined $opt_c) {
 if (! defined $opt_n) {
     $cidl_gen =
 '
-project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults {
   after += '."$unique_prefix"."$com_name".'_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export \
@@ -117,7 +117,7 @@ project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults, avoids_ace
 
     $component_def =
 '
-project('."$unique_prefix"."$com_name".'_exec) : ciao_executor, avoids_ace_for_tao {
+project('."$unique_prefix"."$com_name".'_exec) : ciao_executor {
   after   += '."$unique_prefix"."$com_name".'_idle_gen '."$unique_prefix"."$com_name".'_stub
   sharedname = '."$com_name".'_exec
   libs += '."$com_name".'_stub '."$stub_depend
@@ -207,7 +207,7 @@ else {
 $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
-project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults {
   custom_only = 1
   '."$cli_idlflags".'
 
@@ -216,7 +216,7 @@ project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults, anytyp
   }
 }
 '."$cidl_gen".'
-project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base".', avoids_ace_for_tao {
+project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base".' {
   after += '."$unique_prefix"."$com_name".'_idl_gen '."$stub_depend".'
   libs  += '."$stub_depend"."
   $lib_paths".'
@@ -241,7 +241,7 @@ project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base".', avoids_ace_for
 }
 '."$component_def".'
 
-project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".', avoids_ace_for_tao {
+project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".' {
   after      += '."$svr_p_after "."$svr_after".'
   sharedname  = '."$com_name"."$svr_suffix".'
   libs       += '."$svr_libs $svr_plibs
@@ -273,21 +273,3 @@ project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".', avoid
 # MPC files
 open (MPCFILE, ">", "$com_name".".mpc");
 print MPCFILE $mpc_template;
-
-$ACE_ROOT= "$ENV{'ACE_ROOT'}";
-
-print "The following commands have been executed:\n\n";
-
-$command = "generate_export_file.pl $UCOM_NAME".'_STUB > '."$com_name".'_stub_export.h';
-print "\t$command"."\n";
-system ("perl $ACE_ROOT".'/bin/'."$command");
-
-$command = "generate_export_file.pl $UCOM_NAME"."$USVR_SUFFIX".' > '."$com_name"."$svr_suffix".'_export.h';
-print "\t$command"."\n";
-system ("perl $ACE_ROOT".'/bin/'."$command");
-
-if (! defined $opt_n) {
-    $command = "generate_export_file.pl $UCOM_NAME".'_EXEC > '."$com_name".'_exec_export.h';
-    print "\t$command"."\n";
-    system ("perl $ACE_ROOT".'/bin/'."$command");
-}

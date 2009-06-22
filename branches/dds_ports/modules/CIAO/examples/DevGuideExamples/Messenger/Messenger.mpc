@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Messenger"
 
-project(Messenger_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Messenger_idl_gen) : ciaoidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=MESSENGER_STUB_Export \
               -Wb,stub_export_include=Messenger_stub_export.h \
@@ -16,7 +16,7 @@ project(Messenger_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   }
 }
 
-project(Messenger_idlx_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Messenger_idlx_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=MESSENGER_STUB_Export \
               -Wb,stub_export_include=Messenger_stub_export.h \
@@ -30,7 +30,7 @@ project(Messenger_idlx_gen) : componentidldefaults, anytypecode, avoids_ace_for_
   }
 }
 
-project(Messenger_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Messenger_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += Messenger_idl_gen Messenger_idlx_gen
   idlflags += -Wb,export_macro=MESSENGER_EXEC_Export \
@@ -42,7 +42,7 @@ project(Messenger_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(Messenger_stub) : ccm_stub, avoids_ace_for_tao {
+project(Messenger_stub) : ccm_stub {
   after += Messenger_idl_gen Messenger_idlx_gen
 
   sharedname = Messenger_stub
@@ -77,7 +77,7 @@ project(Messenger_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Messenger_exec) : ciao_executor, avoids_ace_for_tao {
+project(Messenger_exec) : ciao_executor {
   after   += Messenger_idle_gen Messenger_stub
   sharedname = Messenger_exec
   libs += Messenger_stub
@@ -109,7 +109,7 @@ project(Messenger_exec) : ciao_executor, avoids_ace_for_tao {
   }
 }
 
-project(Messenger_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Messenger_svnt) : ciao_servant {
   after      += Messenger_exec
   sharedname  = Messenger_svnt
   libs       += Messenger_exec \

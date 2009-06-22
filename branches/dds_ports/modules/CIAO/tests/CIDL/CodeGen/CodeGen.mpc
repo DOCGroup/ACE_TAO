@@ -6,7 +6,7 @@
 //       caution when regenerating this file (that is, remember to
 //       insert the logic for autogeneration of executor files).
 
-project(Basic_CodeGen_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Basic_CodeGen_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CODEGEN_STUB_Export \
               -Wb,stub_export_include=CodeGen_stub_export.h \
@@ -21,7 +21,7 @@ project(Basic_CodeGen_idl_gen) : componentidldefaults, anytypecode, avoids_ace_f
   }
 }
 
-project(Basic_CodeGen_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Basic_CodeGen_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += Basic_CodeGen_idl_gen
   idlflags += -Wb,export_macro=CODEGEN_EXEC_Export \
@@ -32,7 +32,7 @@ project(Basic_CodeGen_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(Basic_CodeGen_stub) : ccm_stub, avoids_ace_for_tao {
+project(Basic_CodeGen_stub) : ccm_stub {
   after += Basic_CodeGen_idl_gen Basic_stub
   libs  += Basic_stub
 
@@ -56,7 +56,7 @@ project(Basic_CodeGen_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Basic_CodeGen_exec) : ciao_executor, avoids_ace_for_tao {
+project(Basic_CodeGen_exec) : ciao_executor {
   after   += Basic_CodeGen_idle_gen Basic_CodeGen_stub
   sharedname = CodeGen_exec
   libs += CodeGen_stub Basic_stub
@@ -83,7 +83,7 @@ project(Basic_CodeGen_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Basic_CodeGen_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Basic_CodeGen_svnt) : ciao_servant {
   after      += Basic_skel Basic_CodeGen_exec
   sharedname  = CodeGen_svnt
   libs       += CodeGen_exec \

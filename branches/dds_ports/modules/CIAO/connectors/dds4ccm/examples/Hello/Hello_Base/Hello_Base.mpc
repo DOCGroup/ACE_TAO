@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Hello_DDS_Base"
 
-project(Hello_DDS_Base_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Hello_DDS_Base_idl_gen) : ciaoidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Base_stub_export.h \
@@ -13,7 +13,7 @@ project(Hello_DDS_Base_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_t
   }
 }
 
-project(Hello_DDS_Base_stub) : ccm_stub, avoids_ace_for_tao {
+project(Hello_DDS_Base_stub) : ccm_stub {
   after += Hello_DDS_Base_idl_gen
   libout = ../lib
   sharedname = Hello_Base_stub
@@ -37,7 +37,7 @@ project(Hello_DDS_Base_stub) : ccm_stub, avoids_ace_for_tao {
 }
 
 
-project(Hello_DDS_Base_skel) : ccm_svnt, avoids_ace_for_tao {
+project(Hello_DDS_Base_skel) : ccm_svnt {
   after      +=  Hello_DDS_Base_stub
   sharedname  = Hello_Base_skel
   libs       += Hello_Base_stub

@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display NavDisplay"
 
-project(Display_NavDisplay_idl_gen) : componentidldefaults, anytypecode, avoids_ace_for_tao {
+project(Display_NavDisplay_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NAVDISPLAY_STUB_Export \
               -Wb,stub_export_include=NavDisplay_stub_export.h \
@@ -15,7 +15,7 @@ project(Display_NavDisplay_idl_gen) : componentidldefaults, anytypecode, avoids_
   }
 }
 
-project(Display_NavDisplay_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+project(Display_NavDisplay_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += Display_NavDisplay_idl_gen
   idlflags += -Wb,export_macro=NAVDISPLAY_EXEC_Export \
@@ -27,7 +27,7 @@ project(Display_NavDisplay_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(Display_NavDisplay_stub) : ccm_stub, avoids_ace_for_tao {
+project(Display_NavDisplay_stub) : ccm_stub {
   after += Display_NavDisplay_idl_gen Display_Base_stub
   libs  += Display_Base_stub
   libout = ../lib
@@ -53,7 +53,7 @@ project(Display_NavDisplay_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Display_NavDisplay_exec) : ciao_executor, avoids_ace_for_tao {
+project(Display_NavDisplay_exec) : ciao_executor {
   after   += Display_NavDisplay_idle_gen Display_NavDisplay_stub
   sharedname = NavDisplay_exec
   libs += NavDisplay_stub Display_Base_stub
@@ -82,7 +82,7 @@ project(Display_NavDisplay_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Display_NavDisplay_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Display_NavDisplay_svnt) : ciao_servant {
   after      += Display_Base_skel Display_NavDisplay_exec
   sharedname  = NavDisplay_svnt
   libs       += NavDisplay_exec \
