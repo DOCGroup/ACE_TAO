@@ -1,0 +1,4 @@
+project : dance_deployment_svnt, ciao_config_handlers {
+  after += DAnCE_TargetManager_Impl 
+  libs += DAnCE_TargetManager_Impl DAnCE_TargetManager_svnt DAnCE_TargetManager_stub
+}
