@@ -237,6 +237,14 @@ AST_Decl *tao_enum_constant_decl = 0;
 %token          IDL_USES
 %token          IDL_MANAGES
 
+%token          IDL_TYPENAME
+%token          IDL_PRIMITIVE
+%token          IDL_PORT
+%token          IDL_MIRRORPORT
+%token          IDL_PORTTYPE
+%token          IDL_CONNECTOR
+%token          IDL_CONCAT
+
 %token <ival>   IDL_INTEGER_LITERAL
 %token <uival>  IDL_UINTEGER_LITERAL
 %token <sval>   IDL_STRING_LITERAL

@@ -148,6 +148,7 @@ void            return IDL_VOID;
 native          return IDL_NATIVE;
 local           return IDL_LOCAL;
 abstract        return IDL_ABSTRACT;
+
 custom          return IDL_CUSTOM;
 factory         return IDL_FACTORY;
 private         return IDL_PRIVATE;
@@ -155,6 +156,7 @@ public          return IDL_PUBLIC;
 supports        return IDL_SUPPORTS;
 truncatable     return IDL_TRUNCATABLE;
 valuetype       return IDL_VALUETYPE;
+
 component       return IDL_COMPONENT;
 consumes        return IDL_CONSUMES;
 emits           return IDL_EMITS;
@@ -172,6 +174,14 @@ typeid          return IDL_TYPEID;
 typeprefix      return IDL_TYPEPREFIX;
 uses            return IDL_USES;
 manages         return IDL_MANAGES;
+
+typename        return IDL_TYPENAME;
+primtive        return IDL_PRIMITIVE;
+port            return IDL_PORT;
+mirrorport      return IDL_MIRRORPORT;
+porttype        return IDL_PORTTYPE;
+connector       return IDL_CONNECTOR;
+\$              return IDL_CONCAT;
 
 TRUE            return IDL_TRUETOK;
 FALSE           return IDL_FALSETOK;
