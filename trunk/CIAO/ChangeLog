@@ -1,12 +1,17 @@
+Tue Jun 23 15:08:50 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+          Added space for 0.7 -> 0.7.1 changes.
+
 Mon Jun 22 09:33:40 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* CIAO version 0.7 released.
+        * CIAO version 0.7 released.
 
 Thu Jun 18 23:03:06 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tools/Config_Handlers/IRDD_Handler.h:
         * tools/XML/XML_Schema_Resolver.cpp:
-        
+
           There is a curious order-of-inclusion problem on macosx-leopoard
           builds whereby including a non-ACE header before something that
           includes ace/config.h causes a compiler error in
