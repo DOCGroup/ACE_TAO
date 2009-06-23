@@ -1,3 +1,53 @@
+Tue Jun 23 20:06:54 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_init.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Use %C when inserting char* into ACE_DEBUG/ACE_ERROR strings.
+
+        * tao/TAO_Internal.cpp:
+
+          Enable ACE_ARGV's quote_args functionality for user strings
+          like -ORBSvcConf and argv[0].  This resolves bug #3630.
+
+        * tests/Bug_3630_Regression/server.cpp:
+        * bin/tao_orb_tests.lst:
+
+          3630 is now expected to pass; fixed bugs in the test case.
+
+        * tests/Bug_2683_Regression/client.cpp:
+
+          Convert hostname from ACE_TCHAR* to char* before passing to sprintf.
+
+        * orbsvcs/tests/Bug_3486_Regression/run_test.pl:
+
+          Changed the log messages to have the correct bug #.
+
+        * orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:
+        * tests/Crashed_Callback/run_test.pl:
+
+          Extend the timeout.
+
+        * tests/ForwardUponObjectNotExist/client.cpp:
+
+          Use strlen() to find length of an ACE_TCHAR string.
+
+        * tests/Reliable_Oneways/run_test.pl:
+
+          Extend the timeout and use a localhost endpoint to avoid excessive
+          delays on multihomed machines as each endpoint is tried.
+
 Tue Jun 23 14:53:01 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:

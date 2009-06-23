@@ -12,12 +12,14 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 $status = 0;
 
+my $ep = '-ORBListenEndpoints iiop://localhost';
+
 foreach $i ("-n", "-t", "-s", "-r") {
   if (PerlACE::is_vxworks_test()) {
-      $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+      $SV = new PerlACE::ProcessVX ("server", "-o server.ior $ep");
   }
   else {
-      $SV = new PerlACE::Process ("server", "-o $iorfile");
+      $SV = new PerlACE::Process ("server", "-o $iorfile $ep");
   }
   $CL = new PerlACE::Process ("client", " -k file://$iorfile $i");
 
@@ -29,7 +31,7 @@ foreach $i ("-n", "-t", "-s", "-r") {
     exit 1;
   }
 
-  $client = $CL->SpawnWaitKill (200);
+  $client = $CL->SpawnWaitKill (600);
 
   if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

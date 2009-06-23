@@ -8,9 +8,8 @@ TAO_IDL_BE_Export void
 BE_version (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s %s\n",
-              ACE_TEXT ("TAO_IDL_BE, version"),
-              ACE_TEXT (TAO_VERSION)));
+              ACE_TEXT ("TAO_IDL_BE, version ") ACE_TEXT (TAO_VERSION)
+              ACE_TEXT ("\n")));
 }
 
 TAO_IDL_BE_Export int

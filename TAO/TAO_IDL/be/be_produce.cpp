@@ -105,7 +105,7 @@ BE_visit_root (be_visitor_decl &root_visitor, const char *which_pass)
   if (-1 == root->accept (&root_visitor))
     {
       ACE_ERROR ((LM_ERROR,
-                  "BE_visit_root - %s for Root failed\n",
+                  "BE_visit_root - %C for Root failed\n",
                   which_pass));
       BE_abort ();
     }

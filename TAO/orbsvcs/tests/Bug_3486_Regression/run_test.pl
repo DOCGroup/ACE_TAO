@@ -20,14 +20,14 @@ else {
     $SV = new PerlACE::Process ("server", "");
 }
 
-print STDERR "\n\n==== Running bug 2926 regression test\n";
+print STDERR "\n\n==== Running bug 3486 regression test\n";
 
 $SV->Spawn ();
 
 $collocated = $SV->WaitKill (15);
 
 if ($collocated != 0) {
-    print STDERR "ERROR: Bug_2926_Regression returned $collocated\n";
+    print STDERR "ERROR: Bug_3486_Regression returned $collocated\n";
     $status = 1;
 }
 
