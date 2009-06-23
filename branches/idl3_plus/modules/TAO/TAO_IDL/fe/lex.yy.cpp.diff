@@ -1,5 +1,5 @@
---- lex.yy.cpp.orig	2008-06-10 11:30:01.000000000 -0500
-+++ lex.yy.cpp	2008-06-10 11:30:37.000000000 -0500
+--- lex.yy.cpp.orig	2009-06-23 13:18:22.000000000 -0500
++++ lex.yy.cpp	2009-06-23 13:49:49.000000000 -0500
 @@ -27,7 +27,7 @@
  
  /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
@@ -17,101 +17,106 @@
  
  typedef int8_t flex_int8_t;
  typedef uint8_t flex_uint8_t;
-@@ -1723,7 +1724,7 @@
+@@ -1773,7 +1774,7 @@ TAO_YY_RULE_SETUP
                    idl_global->set_lineno(idl_global->lineno() + 1);
                    idl_store_pragma(ace_tao_yytext);
                  }
 -        TAO_YY_BREAK
-+        break;
- case 87:
- /* rule 87 can match eol */
- case 88:
-@@ -1732,7 +1733,7 @@
++         break;
+ case 94:
+ /* rule 94 can match eol */
+ case 95:
+@@ -1782,7 +1783,7 @@ TAO_YY_RULE_SETUP
  {/* ignore file */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
 -        TAO_YY_BREAK
-+        break;
- case 89:
- /* rule 89 can match eol */
- case 90:
-@@ -1741,7 +1742,7 @@
- {
-                   idl_parse_line_and_file(ace_tao_yytext);
-                 }
--        TAO_YY_BREAK
-+        break;
- case 91:
- /* rule 91 can match eol */
- case 92:
-@@ -1750,7 +1751,7 @@
- {
-                   idl_parse_line_and_file(ace_tao_yytext);
-                 }
--        TAO_YY_BREAK
-+        break;
- case 93:
- /* rule 93 can match eol */
- case 94:
-@@ -1759,7 +1760,7 @@
- {
-                   idl_parse_line_and_file(ace_tao_yytext);
-                 }
--        TAO_YY_BREAK
-+        break;
- case 95:
- /* rule 95 can match eol */
++         break;
  case 96:
-@@ -1768,7 +1769,7 @@
+ /* rule 96 can match eol */
+ case 97:
+@@ -1791,7 +1792,7 @@ TAO_YY_RULE_SETUP
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
 -        TAO_YY_BREAK
 +         break;
- case 97:
- /* rule 97 can match eol */
  case 98:
-@@ -1778,7 +1779,7 @@
+ /* rule 98 can match eol */
+ case 99:
+@@ -1800,7 +1801,7 @@ TAO_YY_RULE_SETUP
+ {
+                   idl_parse_line_and_file(ace_tao_yytext);
+                 }
+-        TAO_YY_BREAK
++         break;
+ case 100:
+ /* rule 100 can match eol */
+ case 101:
+@@ -1809,7 +1810,7 @@ TAO_YY_RULE_SETUP
+ {
+                   idl_parse_line_and_file(ace_tao_yytext);
+                 }
+-        TAO_YY_BREAK
++         break;
+ case 102:
+ /* rule 102 can match eol */
+ case 103:
+@@ -1818,7 +1819,7 @@ TAO_YY_RULE_SETUP
+ {
+                   idl_parse_line_and_file(ace_tao_yytext);
+                 }
+-        TAO_YY_BREAK
++         break;
+ case 104:
+ /* rule 104 can match eol */
+ case 105:
+@@ -1828,7 +1829,7 @@ TAO_YY_RULE_SETUP
                    /* ignore cpp ident */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
 -        TAO_YY_BREAK
-+ break;
- case 99:
- /* rule 99 can match eol */
++         break;
+ case 106:
+ /* rule 106 can match eol */
  TAO_YY_RULE_SETUP
-@@ -1786,7 +1787,7 @@
+@@ -1836,7 +1837,7 @@ TAO_YY_RULE_SETUP
                    /* ignore comments */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
 -        TAO_YY_BREAK
-+ break;
- case 100:
++         break;
+ case 107:
  TAO_YY_RULE_SETUP
  {
-@@ -1808,14 +1809,14 @@
- case 101:
+@@ -1854,18 +1855,18 @@ TAO_YY_RULE_SETUP
+                     }
+                   }
+                 }
+-        TAO_YY_BREAK
++        break;
+ case 108:
  TAO_YY_RULE_SETUP
  ;
 -        TAO_YY_BREAK
-+ break;
- case 102:
- /* rule 102 can match eol */
++         break;
+ case 109:
+ /* rule 109 can match eol */
  TAO_YY_RULE_SETUP
  {
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
 -        TAO_YY_BREAK
-+ break;
- case 103:
++         break;
+ case 110:
  TAO_YY_RULE_SETUP
  return ace_tao_yytext [0];
-@@ -1823,7 +1824,7 @@
- case 104:
+@@ -1873,7 +1874,7 @@ return ace_tao_yytext [0];
+ case 111:
  TAO_YY_RULE_SETUP
  TAO_YY_ECHO;
 -        TAO_YY_BREAK
-+        break;
++         break;
  case TAO_YY_STATE_EOF(INITIAL):
          tao_yyterminate();
  

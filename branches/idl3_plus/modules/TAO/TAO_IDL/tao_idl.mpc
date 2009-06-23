@@ -76,7 +76,7 @@ project(TAO_IDL_GEN) {
     "	$(RM) /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h"
     "	(cd fe; patch < y.tab.cpp.diff)"
     "else"
-    "	@echo 'ERROR: You must use bison 1.875b or higher to process this file'"
+    "	@echo 'ERROR: You must use bison 2.3 or higher to process this file'"
     "	@/bin/false"
     "endif"
   }

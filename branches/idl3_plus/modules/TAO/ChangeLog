@@ -1,3 +1,21 @@
+Tue Jun 23 19:03:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added new IDL3+ keywords: typename, primitive, port, mirrorport,
+          porttype, and connector. The $ concatenation symbol is also
+          now recognized as a token.
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Updated error messages stating the earliest required versions of
+          Bison and Flex.
+
 Tue Jun 23 17:20:15 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
