@@ -1,8 +1,17 @@
+Tue Jun 23 20:12:06 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Removed switch statements with only a default case, and used
+          TAO_YYUSE, the parser-specific unused arg macro, on an unused
+          parameter in tao_yy_symbol_value_print().
+
 Tue Jun 23 19:47:58 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/IIOP_Endpoints.pidl:
         * tao/IIOP.pidl:
-        
+
           Added escapes to 'port' identifiers, since it is now a
           keyword.
 
