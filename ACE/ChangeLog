@@ -1,6 +1,14 @@
+Tue Jun 23 15:09:50 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * etc/index.html:
+          Post release updates.
+        
 Mon Jun 22 09:33:40 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ACE version 5.7 released.
+        * ACE version 5.7 released.
 
 Tue Jun 16 15:14:52 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
