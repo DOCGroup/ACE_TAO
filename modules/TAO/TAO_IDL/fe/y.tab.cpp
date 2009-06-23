@@ -1759,13 +1759,9 @@ tao_yy_symbol_value_print (tao_yyoutput, tao_yytype, tao_yyvaluep)
   if (tao_yytype < TAO_YYNTOKENS)
     TAO_YYPRINT (tao_yyoutput, tao_yytoknum[tao_yytype], *tao_yyvaluep);
 # else
+  TAO_YYUSE (tao_yytype);
   TAO_YYUSE (tao_yyoutput);
 # endif
-  switch (tao_yytype)
-    {
-      default:
-        break;
-    }
 }
 
 
@@ -2122,13 +2118,6 @@ tao_yydestruct (tao_yymsg, tao_yytype, tao_yyvaluep)
   if (!tao_yymsg)
     tao_yymsg = "Deleting";
   TAO_YY_SYMBOL_PRINT (tao_yymsg, tao_yytype, tao_yyvaluep, tao_yylocationp);
-
-  switch (tao_yytype)
-    {
-
-      default:
-        break;
-    }
 }
 
 
