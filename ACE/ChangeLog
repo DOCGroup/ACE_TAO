@@ -1,3 +1,18 @@
+Tue Jun 23 20:12:51 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Argv_Type_Converter.cpp:
+
+          Allow a 0-length argv list (argc == 0), argv[0] may not be valid.
+
+        * ace/OS_NS_ctype.inl:
+
+          This WinCE/Mobile work-around applies to Win32 w/ wchar as well.
+
+        * ace/OS_NS_stdio.cpp:
+
+          Removed the check for Unicode BOM in ACE_OS::fopen().  This was only
+          checked in Win32 builds with ACE_USES_WCHAR.  This resolves bug#3705.
+
 Tue Jun 23 15:09:50 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
@@ -5,7 +20,7 @@ Tue Jun 23 15:09:50 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * docs/Download.html:
         * etc/index.html:
           Post release updates.
-        
+
 Mon Jun 22 09:33:40 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ACE version 5.7 released.
