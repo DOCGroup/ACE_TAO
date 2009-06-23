@@ -1,3 +1,35 @@
+Tue Jun 23 18:11:56 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_TargetManager.idl:
+        
+          bring in line with spec. 
+        
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/ResourceCommitmentManager.h:
+        * DAnCE/TargetManager/ResourceCommitmentManager.cpp:
+        * DAnCE/TargetManager/TM_Client.mpc:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManagerDaemon.idl:
+        * DAnCE/TargetManager/TargetManager_Impl.h:
+        * DAnCE/TargetManager/TargetManager_Impl.cpp:
+        * DAnCE/TargetManager/Target_Manager_Exec.cpp:
+        * DAnCE/TargetManager/Target_Manager_Module.h:
+        * DAnCE/TargetManager/Target_Manager_Module.cpp:
+        * DAnCE/TargetManager/Target_Manager_Module_export.h:
+        * MPC/config/dance_target_manager.mpb:
+
+          Initial pass at porting the TargetManager.  Work is by no means
+          complete or workable.  TargetManager will no longer be deployed as a component.
+        
+        * DAnCE/TargetManager/descriptors/Domain.cdd:
+        * DAnCE/TargetManager/descriptors/NodeDetails.dat:
+        * DAnCE/TargetManager/descriptors/NodeManagerMap.dat:
+        * DAnCE/TargetManager/descriptors/flattened_deploymentplan.cdp:
+        * DAnCE/TargetManager/descriptors/run_test_TargetManager.pl:
+
+          Removed these files.
+
 Mon Jun 22 09:22:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_component_mpc.pl:

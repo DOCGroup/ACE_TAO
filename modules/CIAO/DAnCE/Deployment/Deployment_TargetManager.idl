@@ -24,8 +24,7 @@ module Deployment {
 
     Domain getAvailableResources ();
 
-    //@! in DOCGroup renamed to createResourceCommitment
-    ResourceCommitmentManager commitResources (in ResourceAllocations resources)
+    ResourceCommitmentManager createResourceCommitment (in ResourceAllocations resources)
       raises (ResourceCommitmentFailure);
 
     void destroyResourceCommitment (in ResourceCommitmentManager manager);

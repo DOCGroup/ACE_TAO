@@ -1,72 +1,50 @@
 // $Id$
 
-project(CIAO_TargetManager_idl_gen) : componentidldefaults {
+project (DAnCE_RepositoryManager_IDL) : ciaoidldefaults {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
-              -Wb,stub_export_include=TargetManager_stub_export.h \
-              -Wb,skel_export_macro=TARGETMANAGER_SVNT_Export \
-              -Wb,skel_export_include=TargetManager_svnt_export.h \
-              -Wb,exec_export_macro=TARGETMANAGER_EXEC_Export \
-              -Wb,exec_export_include=TargetManager_exec_export.h
 
-  IDL_Files {
-    TargetManager.idl
-  }
-}
-
-project(CIAO_TargetManager_idle_gen) : ciaoidldefaults {
-  custom_only = 1
-  after += CIAO_TargetManager_idl_gen
-  idlflags += -Wb,export_macro=TARGETMANAGER_EXEC_Export \
-              -Wb,export_include=TargetManager_exec_export.h -SS
-
-  IDL_Files {
-    TargetManagerE.idl
-  }
-}
-
-project(CIAO_TargetManager_stub) : ciao_output, ccm_stub, dance_deployment_stub, dance_nodemanager_stub {
-  sharedname = CIAO_TargetManager_stub
-  dynamicflags   = TARGETMANAGER_STUB_BUILD_DLL
   idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
               -Wb,stub_export_include=TargetManager_stub_export.h \
               -Wb,skel_export_macro=TARGETMANAGER_SVNT_Export \
               -Wb,skel_export_include=TargetManager_svnt_export.h
 
   IDL_Files {
-    TargetManagerExt.idl
-    DomainEvents.idl
-  }
-
-  Source_Files {
-    TargetManagerC.cpp
-    TargetManagerExtC.cpp
-    DomainEventsC.cpp
+    TargetManagerDaemon.idl
   }
 }
 
-project(CIAO_TargetManager_exec) : ciao_output, ciao_executor, dance_domain_application_manager, ciao_config_handlers {
-  sharedname = CIAO_TargetManager_exec
-  libs += CIAO_TargetManager_stub
-  after += CIAO_TargetManager_stub CIAO_TargetManager_idle_gen
+project(DAnCE_TargetManager_stub) : dance_lib, dance_deployment_stub {
+  sharedname = DAnCE_TargetManager_stub
+  dynamicflags   = TARGETMANAGER_STUB_BUILD_DLL
+
+  Source_Files {
+    TargetManagerDaemonC.cpp
+  }
+}
+
+project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers {
+  sharedname = DAnCE_TargetManager_Impl
+  libs += DAnCE_TargetManager_stub DAnCE_TargetManager_svnt
+  after += DAnCE_TargetManager_svnt 
   dynamicflags = TARGETMANAGER_EXEC_BUILD_DLL
 
   Source_Files {
-    TargetManagerEC.cpp
     DomainDataManager.cpp
-    TargetManager_exec.cpp
+//    TargetManager_exec.cpp
     ResourceCommitmentManager.cpp
+    TargetManager_Impl.cpp
+    Target_Manager_Module.cpp
   }
 
   IDL_Files {
   }
 }
 
-project(CIAO_TargetManager_svnt) : ciao_output, ccm_svnt, ciao_servant, messaging, dance_deployment_svnt, ciao_config_handlers, dance_node_manager {
-  sharedname  = CIAO_TargetManager_svnt
+project(DAnCE_TargetManager_svnt) : dance_lib, dance_deployment_svnt, ciao_config_handlers {
+  sharedname  = DAnCE_TargetManager_svnt
 
-  libs += CIAO_TargetManager_stub CIAO_TargetManager_exec
-  after += CIAO_TargetManager_stub CIAO_TargetManager_exec
+  libs += DAnCE_TargetManager_stub 
+  after += DAnCE_TargetManager_stub 
 
   dynamicflags = TARGETMANAGER_SVNT_BUILD_DLL
 
@@ -74,11 +52,18 @@ project(CIAO_TargetManager_svnt) : ciao_output, ccm_svnt, ciao_servant, messagin
   }
 
   Source_Files {
-    TargetManager_svnt.cpp
-    TargetManagerS.cpp
-    TargetManagerExtS.cpp
-    DomainEventsS.cpp
+    TargetManagerDaemonS.cpp
   }
 }
 
 
+project (DAnCE_TargetManager_Exec) : dance_target_manager, naming, dance_exe, iortable, utils {
+  exename = dance_target_manager
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+     Target_Manager_Exec.cpp
+  }
+}
