@@ -773,7 +773,7 @@ idl_store_pragma (char *buf)
 
       if (!idl_global->add_dcps_data_key (sample_type, key))
         {
-          ACE_ERROR((LM_ERROR, "DCPS_DATA_TYPE \"%s\" not found for key \"%s\"\n",
+          ACE_ERROR((LM_ERROR, "DCPS_DATA_TYPE \"%C\" not found for key \"%C\"\n",
             sample_type, key));
         }
     }

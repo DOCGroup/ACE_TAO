@@ -1835,7 +1835,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                   if (0 != d)
                     {
                       ACE_ERROR (( LM_ERROR,
-                        ACE_TEXT ("%s: \"%s\", line %d: Did you mean \"::%s\"\n")
+                        ACE_TEXT ("%C: \"%C\", line %d: Did you mean \"::%C\"\n")
                         ACE_TEXT ("   declared at "),
                         idl_global->prog_name (),
                         idl_global->filename ()->get_string (),
@@ -1848,7 +1848,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                       if (!same_file)
                         {
                           ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("%s "),
+                            ACE_TEXT ("%C "),
                             d->file_name ().c_str () ));
                         }
                       ACE_ERROR ((LM_ERROR,
@@ -1856,11 +1856,11 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                         d->line () ));
                       if (ScopeAsDecl (this)->full_name ()[0])
                         {
-                          ACE_ERROR ((LM_ERROR, ACE_TEXT ("::%s"),
+                          ACE_ERROR ((LM_ERROR, ACE_TEXT ("::%C"),
                             ScopeAsDecl (this)->full_name () ));
                         }
                       ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("::%s\""),
+                        ACE_TEXT ("::%C\""),
                         e->head ()->get_string () ));
                       const bool same_file_again=
                         (same_file &&
@@ -1871,7 +1871,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                         {
                           ACE_ERROR ((LM_ERROR,
                             ACE_TEXT ("\n")
-                            ACE_TEXT ("   declared at %s "),
+                            ACE_TEXT ("   declared at %C "),
                             first_one_found->file_name ().c_str () ));
                         }
                       else
