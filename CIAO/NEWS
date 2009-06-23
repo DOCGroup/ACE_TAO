@@ -75,8 +75,13 @@ replacement in the near term:
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.7.0 and CIAO-0.7.1
+=======================================================
+
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.9 and CIAO-0.7.0
 =======================================================
+
 .  CIDLC compiler has new command line options:  --suppress-lem which will suppress
    generation of the local executor mapping, --suppress-svnt which will suppress
    generation of the servant code, --lem-enclosing-module which will generate the 
