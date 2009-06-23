@@ -1,3 +1,15 @@
+Tue Jun 23 20:27:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpoints.pidl:
+        * orbsvcs/orbsvcs/SSLIOP.idl:
+        * orbsvcs/orbsvcs/HTIOP.idl:
+        * orbsvcs/orbsvcs/CSIIOP.idl:
+        * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
+        * tao/EndpointPolicy/IIOPEndpointValue.pidl:
+        * tao/Strategies/sciop_endpoints.pidl:
+        
+          More escapes added to 'port' identifiers.
+
 Tue Jun 23 20:12:06 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp.diff:
