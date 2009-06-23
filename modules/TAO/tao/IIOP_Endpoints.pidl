@@ -31,7 +31,7 @@ module TAO
   struct IIOP_Endpoint_Info
   {
     string host;
-    short port;
+    short _port;
     short priority;
   };
 

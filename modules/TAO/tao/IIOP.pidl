@@ -36,7 +36,7 @@ module IIOP
   struct ListenPoint
   {
     string host;
-    unsigned short port;
+    unsigned short _port;
   };
 
   typedef sequence<ListenPoint> ListenPointList;
