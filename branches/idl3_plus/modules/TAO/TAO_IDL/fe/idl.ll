@@ -64,7 +64,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 /*
- * idl.ll - Lexical scanner for IDL 1.1
+ * idl.ll - Lexical scanner for IDL 3.1
  */
 
 #include "utl_strlist.h"
