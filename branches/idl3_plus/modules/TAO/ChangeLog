@@ -1,11 +1,18 @@
-Tue Jun 23 17:20:15 UTC 2009  parsons  <parsons@localdomain>
+Tue Jun 23 17:20:15 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
+
+          Updated comment.
+
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/lex.yy.cpp.diff:
         * TAO_IDL/fe/y.tab.h:
         * TAO_IDL/fe/y.tab.cpp.diff:
         * TAO_IDL/fe/y.tab.cpp:
+
+          Regenerated y.tab.cpp and lex.yy.cpp without changing the IDL grammar,
+          but using updated versions of Bison (2.3) and Flex (2.5.35), and updated
+          the corresponding diff files.
 
 Mon Jun 22 09:22:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
