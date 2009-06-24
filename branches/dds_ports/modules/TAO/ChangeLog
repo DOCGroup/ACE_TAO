@@ -1,3 +1,17 @@
+Wed Jun 24 14:56:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/lib.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Renamed stpcpy to mcpp_stpcpy to avoid clashes if a system defined 
+          stpcpy is present. 
+        
 Tue Jun 23 15:19:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/modules/IDLHelper.pm:
