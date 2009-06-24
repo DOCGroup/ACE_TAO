@@ -424,7 +424,7 @@ static int  print_macro_inf(
                                , m_inf->locs.start_line, (int) m_inf->locs.start_col
                                , m_inf->locs.end_line, (int) m_inf->locs.end_col);
     }
-    *opp = stpcpy( *opp, "*/");
+    *opp = mcpp_stpcpy( *opp, "*/");
     if ((num_args = m_inf->num_args) >= 1) {
       /* The macro has arguments.  Show the locations.    */
       for (i = 0; i < num_args; i++)  /* Arg num begins at 0  */
@@ -447,7 +447,7 @@ static int  print_macro_inf(
       /* Output verbose infs symmetrical to start of the arg infs  */
       *opp = print_macro_arg( *opp, m_inf, i, FALSE, FALSE);
     } else {
-      *opp = stpcpy( *opp, "/*>*/");
+      *opp = mcpp_stpcpy( *opp, "/*>*/");
     }
     break;
   }
@@ -478,8 +478,8 @@ static char *   print_macro_arg(
                             , (int) loc->start_col, loc->end_line, (int) loc->end_col);
   }
   if (! start)            /* End of an argument in verbose mode   */
-    out = stpcpy( out, ">");
-  out = stpcpy( out, "*/");
+    out = mcpp_stpcpy( out, ">");
+  out = mcpp_stpcpy( out, "*/");
 
   return out;
 }
@@ -725,11 +725,11 @@ static char *   replace(
     if (mcpp_mode == STD) {
       /* Wrap repl-text with token separators to prevent token merging    */
       *cur_out++ = TOK_SEP;     
-      cur_out = stpcpy( cur_out, defp->repl);
+      cur_out = mcpp_stpcpy( cur_out, defp->repl);
       *cur_out++ = TOK_SEP;     
       *cur_out = EOS;
     } else {
-      cur_out = stpcpy( cur_out, defp->repl);
+      cur_out = mcpp_stpcpy( cur_out, defp->repl);
     }
     if (enable_trace_macro) {
       m_inf->defp = defp;             /* Redefined dynamically*/
@@ -994,7 +994,7 @@ static int  prescan(
   } else {
     *out++ = TOK_SEP;                   /* Wrap replacement     */
     workp = work_buf;                   /*  text with token     */
-    workp = stpcpy( workp, defp->repl); /*   separators to      */
+    workp = mcpp_stpcpy( workp, defp->repl); /*   separators to      */
     *workp++ = TOK_SEP;                 /*    prevent unintended*/
     *workp = EOS;                       /*     token merging.   */
     file = unget_string( work_buf, defp->name);
@@ -1689,7 +1689,7 @@ static char *   stringize(
       *out_p = EOS;
       break;
     default:
-      out_p = stpcpy( out_p, work_buf);
+      out_p = mcpp_stpcpy( out_p, work_buf);
       break;
     }
   }
@@ -1702,7 +1702,7 @@ static char *   stringize(
       *out_p++ = MAC_INF;             /* Restore removed magic*/
       *out_p++ = MAC_ARG_END;
       if (option_flags.v)
-        out_p = stpcpy( out_p, arg_end_inf[ num_arg_magic]);
+        out_p = mcpp_stpcpy( out_p, arg_end_inf[ num_arg_magic]);
     }
   }
   *out_p = EOS;
@@ -2224,7 +2224,7 @@ static char *   substitute(
       macro_line = MACRO_ERROR;
     }
   err_end:
-    out_p = stpcpy( out, macrobuf);
+    out_p = mcpp_stpcpy( out, macrobuf);
     if (mcpp_debug & EXPAND) {
       dump_string( "expand_prestd exit", out);
     }
@@ -2358,7 +2358,7 @@ static char *   substitute(
          */
         if (out_end <= (out_p + ACE_OS::strlen( arglist_pre[ c])))
           goto nospace;
-        out_p = stpcpy( out_p, arglist_pre[ c]);
+        out_p = mcpp_stpcpy( out_p, arglist_pre[ c]);
       } else {
         *out_p++ = c;
       }
@@ -2431,7 +2431,7 @@ static char *   substitute(
     arg_end = argp + NMACWORK/2;
     seq = sequence = arg_end + IDMAX;   /* Use latter half of argp  */
     seq_end = seq + NMACWORK/2;
-    seq = stpcpy( seq, name);
+    seq = mcpp_stpcpy( seq, name);
     *seq++ = '(';
     if (mcpp_mode == STD) {
       /*
@@ -2762,7 +2762,7 @@ static char *   substitute(
     }                                       /* Collected an argument*/
 
     *argp = EOS;
-    *seqp = stpcpy( *seqp, *argpp);         /* Save the sequence    */
+    *seqp = mcpp_stpcpy( *seqp, *argpp);         /* Save the sequence    */
     if (c == '\n' || c == RT_END)
       return  -1;                         /* Unterminated macro   */
     argp--;                                 /* Remove the punctuator*/
