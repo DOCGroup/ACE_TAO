@@ -1,9 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.7
-%define TAOVER  1.7
-%define CIAOVER 0.7
-# Set is_major_ver if the version is X.Y instead X.Y.Z
-%define is_major_ver 1
+%define ACEVER  5.7.0
+%define TAOVER  1.7.0
+%define CIAOVER 0.7.0
 
 # TODO
 # Test whether a TAO app with MPC can be build against MPC installed version
@@ -51,7 +49,6 @@
 
 %{!?skip_make:%define skip_make 0}
 %{!?make_nosrc:%define make_nosrc 0}
-%{!?is_major_ver:%define is_major_ver 0}
 
 %define have_fox 0
 
@@ -1071,17 +1068,9 @@ $MAKECMD -C $TAO_ROOT/utils
 # install
 # ================================================================
 
-# For major releases the package version will be the shortened version
-# tuple and the shared-object version needs a placeholder '.0'
-%if %is_major_ver
-%define ACEVERSO %{ACEVER}.0
-%define TAOVERSO %{TAOVER}.0
-%define CIAOVERSO %{CIAOVER}.0
-%else
 %define ACEVERSO %{ACEVER}
 %define TAOVERSO %{TAOVER}
 %define CIAOVERSO %{CIAOVER}
-%endif
 
 %install
 
@@ -1297,7 +1286,7 @@ install ${ACE_ROOT}/bin/tao_nslist %{buildroot}%{_bindir}/tao_nslist
 
 install -d %{buildroot}%{_sysconfdir}
 cp -R ${ACE_ROOT}/rpmbuild/logrotate.d %{buildroot}%{_sysconfdir}/logrotate.d
-cp -R ${ACE_ROOT}/tao %{buildroot}%{_sysconfdir}/tao
+cp -R ${ACE_ROOT}/rpmbuild/tao %{buildroot}%{_sysconfdir}/tao
 
 %if %{defined suse_version}
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse %{buildroot}%{_sysconfdir}
@@ -2664,6 +2653,9 @@ fi
 # ================================================================
 
 %changelog
+* Wed Jun 24 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.7.0-0
+- New minor release
+
 * Fri Mar 13 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.6.8-2
 - Removed specific OS checks
 
