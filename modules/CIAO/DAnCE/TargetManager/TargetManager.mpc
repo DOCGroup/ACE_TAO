@@ -1,6 +1,6 @@
 // $Id$
 
-project (DAnCE_RepositoryManager_IDL) : ciaoidldefaults {
+project (DAnCE_TargetManager_IDL) : ciaoidldefaults {
   custom_only = 1
 
   idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \

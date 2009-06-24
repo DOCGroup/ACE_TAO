@@ -30,7 +30,8 @@ project(Stock_Base_StockDistributor_idle_gen) : ciaoidldefaults {
 project(Stock_Base_StockDistributor_stub) : ccm_stub {
   after += Stock_Base_StockDistributor_idl_gen Stock_Base_stub
   libs  += Stock_Base_stub
-  libpaths += ../Stock_Base
+  libout    = ../lib
+  libpaths += ../lib
 
   sharedname = StockDistributor_stub
   dynamicflags   = STOCKDISTRIBUTOR_STUB_BUILD_DLL
@@ -56,7 +57,8 @@ project(Stock_Base_StockDistributor_exec) : ciao_executor {
   after   += Stock_Base_StockDistributor_idle_gen Stock_Base_StockDistributor_stub
   sharedname = StockDistributor_exec
   libs += StockDistributor_stub Stock_Base_stub
-  libpaths += ../Stock_Base
+  libout    = ../lib
+  libpaths += ../lib
 
   dynamicflags   = STOCKDISTRIBUTOR_EXEC_BUILD_DLL
 
@@ -87,7 +89,8 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant {
                 StockDistributor_stub \
                 Stock_Base_skel \
                 Stock_Base_stub
-  libpaths += ../Stock_Base
+  libout    = ../lib
+  libpaths += ../lib
 
   dynamicflags = STOCKDISTRIBUTOR_SVNT_BUILD_DLL
 
@@ -114,7 +117,8 @@ project (Stock_Base_StockDistributorDriver) : ccm_stub, valuetype {
   exename = StockDistributorDriver
   after += Stock_Base_StockDistributor_stub
   libs  += StockDistributor_stub Stock_Base_stub
-  libpaths += ../Stock_Base
+  libout    = ../lib
+  libpaths += ../lib
 
   IDL_Files {
   }

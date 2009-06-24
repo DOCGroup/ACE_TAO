@@ -1,9 +1,22 @@
+Wed Jun 24 07:31:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+          Resolved typo (RepositoryManager_IDL=>TargetManager_IDL).
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+          Added lib path (like Hello example).
+
+        * docs/tutorials/Quoter/Simple/descriptors/Plan.cdp:
+          Should match the current DAnCE spec.
+
 Tue Jun 23 18:11:56 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_TargetManager.idl:
-        
-          bring in line with spec. 
-        
+
+          bring in line with spec.
+
         * DAnCE/TargetManager/DomainDataManager.h:
         * DAnCE/TargetManager/DomainDataManager.cpp:
         * DAnCE/TargetManager/ResourceCommitmentManager.h:
@@ -21,7 +34,7 @@ Tue Jun 23 18:11:56 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Initial pass at porting the TargetManager.  Work is by no means
           complete or workable.  TargetManager will no longer be deployed as a component.
-        
+
         * DAnCE/TargetManager/descriptors/Domain.cdd:
         * DAnCE/TargetManager/descriptors/NodeDetails.dat:
         * DAnCE/TargetManager/descriptors/NodeManagerMap.dat:

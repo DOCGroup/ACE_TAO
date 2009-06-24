@@ -14,7 +14,9 @@ project(Stock_Base_idl_gen) : ciaoidldefaults, anytypecode {
 }
 
 project(Stock_Base_stub) : ccm_stub {
-  after += Stock_Base_idl_gen
+  after    += Stock_Base_idl_gen
+  libout    = ../lib
+  libpaths += ../lib
 
   sharedname = Stock_Base_stub
   dynamicflags   = STOCK_BASE_STUB_BUILD_DLL
@@ -41,6 +43,8 @@ project(Stock_Base_skel) : ciao_executor {
   after      +=  Stock_Base_stub
   sharedname  = Stock_Base_skel
   libs       += Stock_Base_stub
+  libout      = ../lib
+  libpaths   += ../lib
 
   dynamicflags = STOCK_BASE_SKEL_BUILD_DLL
 
