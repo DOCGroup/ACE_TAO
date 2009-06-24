@@ -1,3 +1,8 @@
+Wed Jun 24 08:51:51 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          First set of fixed to get x.7.0 compiling on OpenSuSE Build
+
 Sun Jun 21 14:34:13 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Log_Msg.cpp (log): Changed the use of
