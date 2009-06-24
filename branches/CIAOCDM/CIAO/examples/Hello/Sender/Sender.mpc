@@ -1,0 +1,142 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p Hello_Base -u Hello -c starter Sender"
+
+project(Hello_Sender_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
+              -Wb,stub_export_include=Sender_stub_export.h \
+              -Wb,skel_export_macro=SENDER_SVNT_Export \
+              -Wb,skel_export_include=Sender_svnt_export.h
+
+  IDL_Files {
+    Sender.idl
+  }
+}
+
+project(Hello_Sender_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+  custom_only = 1
+  cidlflags += --svnt-export-macro SENDER_SVNT_Export \
+               --svnt-export-include Sender_svnt_export.h
+  idlflags += -Wb,export_macro=SENDER_EXEC_Export \
+              -Wb,export_include=Sender_exec_export.h \
+              -SS
+
+  CIDL_Files {
+    Sender.cidl
+  }
+
+  IDL_Files {
+    SenderE.idl
+  }
+}
+
+project(Hello_Sender_stub) : ccm_stub, avoids_ace_for_tao {
+  after += Hello_Sender_idl_gen Hello_Base_stub
+  libs  += Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = Hello_Sender_stub
+  dynamicflags   = SENDER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderC.cpp
+  }
+
+  Header_Files {
+    SenderC.h
+    Sender_stub_export.h
+  }
+
+  Inline_Files {
+    SenderC.inl
+  }
+}
+
+project(Hello_Sender_exec) : ciao_executor, avoids_ace_for_tao {
+  after   += Hello_Sender_cidl_gen Hello_Sender_stub
+  sharedname = Hello_Sender_exec
+  libs += Hello_Sender_stub Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags   = SENDER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderEC.cpp
+    Sender_exec.cpp
+  }
+
+  Header_Files {
+    SenderEC.h
+    Sender_exec.h
+    Sender_exec_export.h
+  }
+
+  Inline_Files {
+    SenderEC.inl
+  }
+}
+
+
+project(Hello_Sender_svnt) : ciao_servant, avoids_ace_for_tao {
+  after      += Hello_Base_skel Hello_Sender_exec
+  sharedname  = Hello_Sender_svnt
+  libs       += Hello_Sender_exec \
+                Hello_Sender_stub \
+                Hello_Base_skel \
+                Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags = SENDER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderS.cpp
+    Sender_svnt.cpp
+  }
+
+  Header_Files {
+    SenderS.h
+    Sender_svnt.h
+    Sender_svnt_export.h
+  }
+
+  Inline_Files {
+    SenderS.inl
+  }
+}
+
+project (Hello_starter) : ccm_stub, valuetype, avoids_ace_for_tao {
+  exename = starter
+  after += Hello_Sender_stub
+  libs  += Hello_Sender_stub Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    starter.cpp
+  }
+
+  Header_Files {
+  }
+
+  Inline_Files {
+  }
+}
+
