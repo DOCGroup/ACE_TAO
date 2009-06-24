@@ -45,15 +45,15 @@ be_visitor_component_ex_idl::visit_component (be_component *node)
     {
       return 0;
     }
-    
+
   node_ = node;
-  
+
   this->gen_facets ();
-  
+
   this->gen_component ();
-  
+
   this->gen_executor_derived ();
-  
+
   return 0;
 }
 
@@ -67,9 +67,9 @@ be_visitor_component_ex_idl::visit_attribute (be_attribute *node)
    // accepted by parser for attributes.
    os_ << be_nl
        << (rd_only ? "readonly " : "") << "attribute ";
-       
+
    be_type *ft = be_type::narrow_from_decl (node->field_type ());
-   
+
    os_ << IdentifierHelper::type_name (ft, this);
    os_ << " "
        << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
@@ -90,9 +90,9 @@ be_visitor_component_ex_idl::visit_sequence (be_sequence *node)
 {
   // Keep output statements separate because of side effects.
   os_ << "sequence<";
-  
+
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  
+
   os_ << IdentifierHelper::type_name (bt, this);
 
   if (!node->unbounded ())
@@ -108,7 +108,7 @@ be_visitor_component_ex_idl::visit_sequence (be_sequence *node)
 int
 be_visitor_component_ex_idl::visit_string (be_string *node)
 {
-  os_ << (node->width () > sizeof (char) ? "w" : "") << "string";
+  os_ << (node->width () > (long) sizeof (char) ? "w" : "") << "string";
 
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
 
@@ -124,35 +124,35 @@ void
 be_visitor_component_ex_idl::gen_nesting_open (AST_Decl *node)
 {
   os_ << be_nl;
-  
+
   for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
     {
       UTL_ScopedName tmp (i.item (), 0);
       AST_Decl *scope =
         node->defined_in ()->lookup_by_name (&tmp, true);
-        
+
       if (scope == 0)
         {
           i.next ();
           continue;
         }
-        
+
       ACE_CString module_name =
         IdentifierHelper::try_escape (scope->original_local_name ());
-      
+
       if (module_name == "")
         {
           i.next ();
           continue;
         }
-        
+
       i.next ();
-      
+
       if (i.is_done ())
         {
           break;
         }
-      
+
       os_ << be_nl
           << "module " << module_name.c_str () << be_nl
           << "{" << be_idt;
@@ -165,20 +165,20 @@ be_visitor_component_ex_idl::gen_nesting_close (AST_Decl *node)
   for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
     {
       ACE_CString module_name (i.item ()->get_string ());
-      
+
       if (module_name == "")
         {
           i.next ();
           continue;
         }
-        
+
       i.next ();
-      
+
       if (i.is_done ())
         {
           break;
         }
-      
+
       os_ << be_uidt_nl
           << "};";
     }
@@ -195,7 +195,7 @@ be_visitor_component_ex_idl::gen_facets (void)
        i.advance ())
     {
       i.next (pd);
-      
+
       be_decl *intf =
         be_decl::narrow_from_decl (pd->impl);
         
