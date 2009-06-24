@@ -176,8 +176,10 @@ div.Section1 {
   <h3><span style='COLOR:black'>ImplementationArtifacts</span></h3>
   <p><span style='COLOR:black'>This folder contains implementation artifacts
     associated with components. <em>idl_to_picml</em> has created these artifacts
-    for us, with their dependency relationships correctly captured. Figure 4 shows
-    the Implementation Artifacts for <em>StockBroker</em>.</span></p>
+    for us, with their dependency relationships correctly captured. In order to match the current DAnCE specification, both execPoints
+    should be removed. Figure 4 shows the Implementation Artifacts for <em>StockBroker</em>.</span>
+  </p>
+
   <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1031" src="images/fig4.jpg"><br>
     Figure 4.</span></p>
   <div align="center" style='TEXT-ALIGN:center'><a name="1"></a><span style='COLOR:black'>
@@ -188,10 +190,54 @@ div.Section1 {
     of component interfaces. In the Quoter example, we will have two monolithic
     component implementations - named <em>StockDistributorImplementation</em> and <em>StockBrokerImplementation</em> - and an assembly component implementation named <em>StockQuoter</em>, which is
     an assembly of <em>StockDistributorImplementation</em> and <em>StockBrokerImplementaion</em>. <em>idl_to_picml</em> has created the monolithic component implementations for
-    us, as shown in figure 5 for example, but we have to specify the connections between them in order to construct a Quoter system. Therefore we need to create the mentioned
-    StockQuoter component assemby</span></p>
+    us, as shown in figure 5 for example, but we have to change this model in order to meet the DAnCE specification.</span></p>
   <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1033" src="images/fig5.jpg"><br>
-    Figure 5</span></p>
+    Figure 5</span>
+  </p>
+
+  <p><span style='COLOR:black'>First thing we need to do is delete the following attributes.
+    <ul>
+      <li>StockBroker_stubRef</li>
+      <li>StockBroker_svntRef</li>
+      <li>StockBroker_execRef</li>
+      <li>ComponentIOR</li>
+    </ul>
+    After that we need to create a reference to the artifacts.
+    <ol>
+      <li>Drag a &lt;&lt;ComponentImplementationArtifact&gt;&gt; and a
+        &lt;&lt;ComponentServantArtifact&gt;&gt; from the Part browser to the modeling window.
+      </li>
+      <li>These two parts need to be linked to the StockBroker_exec and StockBroker_svnt artifacts in
+        <code><span style='FONT-SIZE:10pt'>Quoter/ImplementationArtifacts/StockBrokerArtifacts</span></code>.
+        This can be established by expanding the tree view and drag StockBroker_exec to the
+        &lt;&lt;ComponentImplementationArtifact&gt;&gt; and StockBroker_svnt to
+        &lt;&lt;ComponentServantArtifact&gt;&gt; on the window. On succes,
+        the &lt;&lt;ComponentImplementationArtifact&gt;&gt; icon should change into a
+        &lt;&lt;ImplementationArtifactReference&gt;&gt; icon.
+      </li>
+      <li>Now we should define which entry point is used. This should be done
+        by selecting the <em>ComponentImplemtationArtifact</em> and specify it's entry point in the attribute window.
+        This should be "exec_entry_point". The <em>ComponentServantArtifact</em> should have an entry point
+        called "servant_entry_point".
+      </li>
+      <li>Connect <em>ComponentServantArtifact</em> and <em>ComponentImplementationArtifact</em> to
+        <em>StockBrokerMonolithicImpl</em>. To connect two items, one should switch to connect mode by clicking
+        <img border="0" width="16" height="16" id="_x0000_i1035" src="Icons/AddConnMode.gif" />. First click
+        <em>StockBrokerMonolithicImpl</em> and then <em>ComponentServantArtifact</em>.
+      </li>
+    </ol>
+    The result of these actions is shown in figure 5a.</span>
+  </p>
+  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1033" src="images/fig5a.jpg"><br>
+    <br/>
+    Figure 5a</span>
+  </p>
+
+
+    We also need to specify the connections between a <em>StockDistributorImplementation</em> and a <em>StockBrokerImplementaion</em> in
+    order to construct a Quoter system. Therefore we need to create the mentioned
+    StockQuoter component assemby</span></p>
+
   <p><span style='COLOR:black'>Assembly components provide a boundary for the composition
     of monolithic components and even other assemblies. Assembly components do not
     provide actual implementations for their interface, it is a virtual component
@@ -199,7 +245,7 @@ div.Section1 {
     contains. There are slight differences between modeling an assembly and
     modeling a monolithic component. Since the assembly is a virtual component, it
     is not necessary to model a </span><code><span style='FONT-SIZE:10pt;
-COLOR:black'>MonolithicImplementation</span></code><span style='COLOR:black'>.
+    COLOR:black'>MonolithicImplementation</span></code><span style='COLOR:black'>.
     Instead, <em>instances</em> of other components are placed within the assembly
     and connected. Let's try to assemble the <em>StockQuoter</em>.</span></p>
   <ol start="1" type="1">
