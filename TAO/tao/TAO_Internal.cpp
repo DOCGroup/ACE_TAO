@@ -246,7 +246,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
   ACE_ARGV global_svc_config_argv (true); // only this ctor allows
   // subsequent use of add()!
   global_svc_config_argv.add ((argc <= 0 || argv == 0) ?
-            ACE_TEXT ("") : argv[0], true);
+            ACE_TEXT ("") : argv[0]);
 
   // Will expand the environment variables, if any were used.
   // Is this a good thing? I guess it provides greater flexibility
@@ -382,8 +382,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   // has something to skip!
   ACE_ARGV svc_config_argv (true);  // only this ctor allows subsequent
                                     // use of add()!
-  svc_config_argv.add ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0],
-                       true);
+  svc_config_argv.add ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
 
   // Should we skip the ACE_Service_Config::open() method?,
   // e.g., because of -ORBSkipServiceConfigOpen
@@ -768,7 +767,7 @@ namespace
               }
 
             svc_config_argv.add (ACE_TEXT ("-f"));
-            svc_config_argv.add (current_arg, true);
+            svc_config_argv.add (current_arg);
           }
         else
           {

@@ -227,7 +227,7 @@ idl_error_header (UTL_Error::ErrorCode c,
                   ACE_CString s)
 {
   ACE_ERROR ((LM_ERROR,
-              "%C: \"%C\", line %d: %C",
+              "%s: \"%s\", line %d: %s",
               idl_global->prog_name (),
               s.c_str (),
               lineno == -1 ? idl_global->lineno () : lineno,
@@ -629,7 +629,7 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "%C\n",
+              "%s\n",
               parse_state_to_error_message (ps)));
 
   // Better to bail here than to increment the error count and
@@ -780,7 +780,7 @@ UTL_Error::coercion_error (AST_Expression *v,
                     v->file_name ()->get_string ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
-              " to %C\n",
+              " to %s\n",
               exprtype_to_string (t)));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -806,7 +806,7 @@ UTL_Error::version_number_error (char *n)
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "%C\n",
+              "%s\n",
               n));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -818,7 +818,7 @@ UTL_Error::version_syntax_error (const char *msg)
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "%C\n",
+              "%s\n",
               msg));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -1152,7 +1152,7 @@ UTL_Error::enum_val_expected (AST_Union *u,
                     u->line (),
                     u->file_name ());
   ACE_ERROR ((LM_ERROR,
-              " union %C, ",
+              " union %s, ",
               u->local_name ()->get_string ()));
   l->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
@@ -1174,7 +1174,7 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
                     u->line (),
                     u->file_name ());
   ACE_ERROR ((LM_ERROR,
-              " union %C,  enum %C,  enumerator ",
+              " union %s,  enum %s,  enumerator ",
               u->local_name ()->get_string (),
               e->local_name ()->get_string ()));
   n->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1206,7 +1206,7 @@ UTL_Error::name_case_error (char *b,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "\"%C\" and \"%C\"\n",
+              "\"%s\" and \"%s\"\n",
               b,
               n));
   idl_global->set_err_count (idl_global->err_count () + 1);
@@ -1222,7 +1222,7 @@ UTL_Error::name_case_warning (char *b,
                         idl_global->lineno (),
                         idl_global->filename ()->get_string ());
       ACE_ERROR ((LM_ERROR,
-                  "\"%C\" and \"%C\"\n",
+                  "\"%s\" and \"%s\"\n",
                   b,
                   n));
     }
@@ -1235,7 +1235,7 @@ UTL_Error::idl_keyword_error (char *n)
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "\"%C\"\n",
+              "\"%s\"\n",
               n));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -1249,7 +1249,7 @@ UTL_Error::idl_keyword_warning (char *n)
                         idl_global->lineno (),
                         idl_global->filename ()->get_string ());
       ACE_ERROR ((LM_ERROR,
-                  "\"%C\"\n",
+                  "\"%s\"\n",
                   n));
     }
 }
@@ -1264,12 +1264,12 @@ UTL_Error::ambiguous (UTL_Scope *s,
                     d->line (),
                     d->file_name ());
   ACE_ERROR ((LM_ERROR,
-              " scope: %C,  collision: ",
+              " scope: %s,  collision: ",
               (ScopeAsDecl (s))->local_name ()->get_string ()));
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               " vs. "));
-  l->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  l->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
