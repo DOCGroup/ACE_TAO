@@ -1,3 +1,11 @@
+Sun Jun 21 14:34:13 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Msg.cpp (log): Changed the use of
+          ACE_Log_Record::MAXLOGMSGLEN to ACE_MAXLOGMSGLEN to avoid
+          problems with "off-by-one" buffer overflow errors.  Thanks to
+          Brendan Murphy <brendan dot murphy at euro dot apple dot com>
+          for contributing this.
+
 Tue Jun 23 20:12:51 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Argv_Type_Converter.cpp:
