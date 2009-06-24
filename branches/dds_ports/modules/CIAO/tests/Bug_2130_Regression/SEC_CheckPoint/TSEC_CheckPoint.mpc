@@ -7,7 +7,7 @@ project(TSEC_CheckPoint_idl_gen) : componentidldefaults {
               -Wb,skel_export_macro=TSEC_CHECKPOINT_SVNT_Export \
               -Wb,skel_export_include=TSEC_CheckPoint_svnt_export.h \
               -Wb,exec_export_macro=TSEC_CHECKPOINT_EXEC_Export \
-              -Wb,exec_export_include=TSEC_CheckPoint_exec_export.h \
+              -Wb,exec_export_include=TSEC_CheckPoint_exec_export.h
 
   IDL_Files {
     TSEC_CheckPoint.idl
@@ -56,7 +56,6 @@ project(TSEC_CheckPoint_svnt) : ciao_servant, event {
   }
 
   Source_Files {
-    TSEC_CheckPointEC.cpp
     TSEC_CheckPointS.cpp
     TSEC_CheckPoint_svnt.cpp
   }
@@ -85,6 +84,7 @@ project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt, ciao_session_con
   }
 
   Source_Files {
+    TSEC_CheckPointEC.cpp
     TSEC_CheckPointEIC.cpp
     TSEC_CheckPoint_exec.cpp
   }
