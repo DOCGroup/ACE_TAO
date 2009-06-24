@@ -61,10 +61,10 @@ project(TSEC_CheckPoint_svnt) : ciao_servant, event {
 
 
 project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt, ciao_session_container, naming {
-  after   += TSEC_CheckPoint_svnt
+  after   += TSEC_CheckPoint_svnt TSEC_CheckPoint_idl_gen
   after   += ENW_skel ENW_stub
 
-  includes   += ../interfaces
+  includes  += ../interfaces
 
   sharedname = TSEC_CheckPoint_exec
   libpaths  += ../interfaces
@@ -72,10 +72,10 @@ project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt, ciao_session_con
   libs      += ENW_stub ENW_skel
 
   idlflags  -= -GT
-  idlflags  +=  -SS -St \
-                -Wb,export_macro=TSEC_CHECKPOINT_EXEC_Export \
-                -Wb,export_include=TSEC_CheckPoint_exec_export.h
-  dynamicflags   = TSEC_CHECKPOINT_EXEC_BUILD_DLL
+  idlflags  += -SS -St \
+               -Wb,export_macro=TSEC_CHECKPOINT_EXEC_Export \
+               -Wb,export_include=TSEC_CheckPoint_exec_export.h
+  dynamicflags = TSEC_CHECKPOINT_EXEC_BUILD_DLL
 
   IDL_Files {
     TSEC_CheckPointEI.idl
