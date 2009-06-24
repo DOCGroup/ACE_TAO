@@ -1,3 +1,11 @@
+Wed Jun 24 18:19:24 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_ctype.inl:
+        * ace/config-win32-msvc.h:
+
+          Revised the change from yesterday to only apply to Visual C++ and not
+          the other Win32 compilers.
+
 Wed Jun 24 08:51:51 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
