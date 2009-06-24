@@ -12,9 +12,11 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "TargetManager_Impl_export.h"
+
 namespace DAnCE
 {
-class TARGETMANAGER_STUB_Export TargetManagerDaemon_i
+class DAnCE_TargetManager_Impl_Export TargetManagerDaemon_i
   : public virtual POA_DAnCE::TargetManagerDaemon
 {
 public:

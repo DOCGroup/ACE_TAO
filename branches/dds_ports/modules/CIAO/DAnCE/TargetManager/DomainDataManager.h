@@ -14,7 +14,8 @@
 #ifndef DOMAIN_DATA_MGRH
 #define DOMAIN_DATA_MGRH
 
-#include "TargetManagerC.h"
+//#include "TargetManagerC.h"
+#include "Deployment/Deployment_TargetDataC.h"
 #include "DAnCE/DomainApplicationManager/Node_Locator.h"
 
 namespace DAnCE
