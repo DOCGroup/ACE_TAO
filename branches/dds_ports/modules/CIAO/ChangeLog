@@ -1,3 +1,9 @@
+Wed Jun 24 15:51:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/descriptors:
+
+          Removed this file.
+
 Wed Jun 24 15:50:36 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/DomainDataManager.h:
@@ -5,8 +11,8 @@ Wed Jun 24 15:50:36 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/TargetManager/TargetManager_Impl.h:
         * DAnCE/TargetManager/TargetManager_Impl_export.h:
 
-          Stab at fixing linking problems. 
-        
+          Stab at fixing linking problems.
+
 Wed Jun 24 13:56:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/03.html:
