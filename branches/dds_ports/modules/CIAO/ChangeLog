@@ -1,3 +1,10 @@
+Wed Jun 24 13:56:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/03.html:
+        * docs/tutorials/Quoter/Simple/images/fig4.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig5a.jpg:
+          Updated to meet the latest version of the DAnCE spec.        
+
 Wed Jun 24 07:31:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/TargetManager/TargetManager.mpc:
