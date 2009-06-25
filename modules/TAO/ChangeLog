@@ -1,3 +1,12 @@
+Thu Jun 25 14:52:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        
+          Restored a line of code that causes the argument list of 
+          empty executor implementation operations in the source file
+          to be commented out, since the operation body is empty until
+          the user fills it in.
+
 Wed Jun 24 14:56:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/directive.cpp:
