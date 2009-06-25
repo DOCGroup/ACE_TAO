@@ -1,3 +1,15 @@
+Thu Jun 25 15:11:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.mpc:
+        * tests/IDL_Test/Reused_Facet_Interface/Reused_Facet_Interface.mpc:
+        
+          Renamed first file as second file, to avoid problems on some
+          platforms when .mpc files have the same name.
+          
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        
+          Fixed IDL flags in Reused_Facet_Interface_idl_gen project.
+
 Wed Jun 24 15:51:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/descriptors:
