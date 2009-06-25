@@ -1,4 +1,25 @@
-<<<<<<< .mine
+Thu Jun 25 19:45:13 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+
+          Fixed signed/unsigned mismatch warnings.
+
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          Fixed cut/paste errors.
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added production rules for template interface inheritance,
+          and fixed typo in new token declarations.
+
 Thu Jun 25 16:33:34 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_template_interface_header.cpp:
@@ -18,7 +39,6 @@ Thu Jun 25 16:33:34 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
           Added new values to the NodeType enum.
 
-=======
 Tue Jun 23 20:27:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/HTIOP/htiop_endpoints.pidl:
@@ -28,10 +48,9 @@ Tue Jun 23 20:27:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
         * tao/EndpointPolicy/IIOPEndpointValue.pidl:
         * tao/Strategies/sciop_endpoints.pidl:
-        
+
           More escapes added to 'port' identifiers.
 
->>>>>>> .r85797
 Tue Jun 23 20:12:06 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp.diff:

@@ -6,7 +6,7 @@
 // FE_template_interfade_header
 // Internal class for FE to describe template interface headers.
 
-class UTL_ScopedName;
+#include "utl_scoped_name.h"
 
 class TAO_IDL_FE_Export FE_Template_InterfaceHeader
 {

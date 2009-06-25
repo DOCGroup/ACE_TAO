@@ -17,7 +17,7 @@ FE_Template_InterfaceHeader::~FE_Template_InterfaceHeader (void)
 }
 
 void
-FE_InterfaceHeader::destroy (void)
+FE_Template_InterfaceHeader::destroy (void)
 {
   if (0 != this->pd_interface_name)
     {
@@ -30,7 +30,7 @@ FE_InterfaceHeader::destroy (void)
 // Data accessors.
 
 UTL_ScopedName *
-FE_InterfaceHeader::name (void) const
+FE_Template_InterfaceHeader::name (void) const
 {
   return this->pd_interface_name;
 }
@@ -42,7 +42,7 @@ FE_InterfaceHeader::inherits (void) const
 }
 */
 long
-FE_InterfaceHeader::n_inherits (void) const
+FE_Template_InterfaceHeader::n_inherits (void) const
 {
   return this->pd_n_inherits;
 }
@@ -54,7 +54,7 @@ FE_InterfaceHeader::inherits_flat (void) const
 }
 */
 long
-FE_InterfaceHeader::n_inherits_flat (void) const
+FE_Template_InterfaceHeader::n_inherits_flat (void) const
 {
   return this->pd_n_inherits_flat;
 }
