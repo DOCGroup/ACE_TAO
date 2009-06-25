@@ -1,3 +1,14 @@
+Thu Jun 25 14:20:08 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/ace_tests.lst:
+        * tests/non_mpc_makefile:
+        * tests/non_mpc_makefile/CustomMakefile:
+        * tests/non_mpc_makefile/foo.cpp:
+        * tests/non_mpc_makefile/run_test.pl:
+
+          Added a test for non-MPC-generated Makefile compatibility with
+          the files in include/makeinclude.
+
 Thu Jun 25 13:26:13 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/wrapper_macros.GNU: Restore pre-5.7 build
