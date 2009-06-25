@@ -1,3 +1,24 @@
+<<<<<<< .mine
+Thu Jun 25 16:33:34 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          New files, to be filled in later and used in the parser to
+          gather information about template interface declarations.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          New production rules for template interfaces.
+
+        * TAO_IDL/include/ast_decl.h:
+
+          Added new values to the NodeType enum.
+
+=======
 Tue Jun 23 20:27:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/HTIOP/htiop_endpoints.pidl:
@@ -10,6 +31,7 @@ Tue Jun 23 20:27:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         
           More escapes added to 'port' identifiers.
 
+>>>>>>> .r85797
 Tue Jun 23 20:12:06 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp.diff:

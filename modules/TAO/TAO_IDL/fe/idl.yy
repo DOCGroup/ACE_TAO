@@ -65,7 +65,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 /*
- * idl.yy - YACC grammar for IDL 1.1
+ * idl.yy - YACC grammar for IDL 3.x
  */
 
 /* Declarations */
@@ -163,6 +163,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   char                          *strval;        /* char * value         */
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
+  AST_Decl::NodeType            ntval;          /* Node type value      */
 }
 
 /*
@@ -236,7 +237,7 @@ AST_Decl *tao_enum_constant_decl = 0;
 %token          IDL_TYPEPREFIX
 %token          IDL_USES
 %token          IDL_MANAGES
-
+                /* Extended ports tokens  */
 %token          IDL_TYPENAME
 %token          IDL_PRIMITIVE
 %token          IDL_PORT
@@ -320,6 +321,8 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <idval>   event_abs_header
 
 %type <ival>    type_dcl
+
+%type <ntval>   type_classifier
 %%
 
 /*
@@ -387,6 +390,18 @@ definition
         {
 //      | interface_def
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
+ACE_DEBUG ((LM_DEBUG, "interface_def\n"));
+        }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | template_interface_def
+        {
+//      | template_interface_def
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
+ACE_DEBUG ((LM_DEBUG, "template_interface_def\n"));
         }
           ';'
         {
@@ -696,17 +711,20 @@ inheritance_spec
         {
 // inheritance_spec : ':' opt_truncatable
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
+ACE_DEBUG ((LM_DEBUG, ": opt_truncatable\n"));
         }
           at_least_one_scoped_name
         {
 //      at_least_one_scoped_name
           $4->truncatable ($2);
           $$ = $4;
+ACE_DEBUG ((LM_DEBUG, "at_least_one_scoped_name\n"));
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
           $$ = 0;
+ACE_DEBUG ((LM_DEBUG, "EMPTY\n"));
         }
         ;
 
@@ -1083,20 +1101,18 @@ value_element
         ;
 
 state_member
-        : IDL_PUBLIC
+        : IDL_PUBLIC member_i
         {
 // state_member : IDL_PUBLIC
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_PUBLIC;
         }
-        member_i
-        | IDL_PRIVATE
+        | IDL_PRIVATE member_i
         {
 //      IDL_PRIVATE
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_PRIVATE;
         }
-        member_i
         ;
 
 exports
@@ -4812,10 +4828,10 @@ provides_decl :
                 AST_Type::narrow_from_decl (d);
 
               AST_Component::port_description pd;
-              
+
               // Strip off _cxx_, if any, for port name.
               idl_global->original_local_name ($3);
-              
+
               pd.id = $3;
               pd.impl = interface_type;
               pd.line_number = idl_global->lineno ();
@@ -4911,10 +4927,10 @@ uses_decl :
           if (c != 0)
             {
               AST_Component::port_description ud;
-              
+
               // Strip off _cxx_, if any, for port name.
               idl_global->original_local_name ($4);
-              
+
               ud.id = $4;
               ud.impl = interface_type;
               ud.is_multiple = $2;
@@ -4997,10 +5013,10 @@ emits_decl :
               if (c != 0)
                 {
                   AST_Component::port_description pd;
-              
+
                   // Strip off _cxx_, if any, for port name.
                   idl_global->original_local_name ($3);
-              
+
                   pd.id = $3;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();
@@ -5060,10 +5076,10 @@ publishes_decl :
               if (c != 0)
                 {
                   AST_Component::port_description pd;
-              
+
                   // Strip off _cxx_, if any, for port name.
                   idl_global->original_local_name ($3);
-              
+
                   pd.id = $3;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();
@@ -5123,10 +5139,10 @@ consumes_decl :
               if (c != 0)
                 {
                   AST_Component::port_description pd;
-              
+
                   // Strip off _cxx_, if any, for port name.
                   idl_global->original_local_name ($3);
-              
+
                   pd.id = $3;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();
@@ -5788,6 +5804,142 @@ event_header
           $$ = $1;
         }
         ;
+
+type_classifier
+        : IDL_TYPENAME
+        {
+// type_classifier : IDL_TYPENAME
+          $<ntval>$ = AST_Decl::NT_type;
+ACE_DEBUG ((LM_DEBUG, "typename token\n"));
+        }
+        | IDL_STRUCT
+        {
+//        IDL_STRUCT
+          $<ntval>$ = AST_Decl::NT_struct;
+        }
+        | IDL_EVENTTYPE
+        {
+//        IDL_EVENTTYPE
+          $<ntval>$ = AST_Decl::NT_eventtype;
+        }
+        | IDL_PRIMITIVE
+        {
+//        IDL_PRIMITIVE
+          $<ntval>$ = AST_Decl::NT_pre_defined;
+        }
+        | IDL_FIXED
+        {
+//        IDL_FIXED
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("error in %C line %d:\n")
+                      ACE_TEXT ("Fixed types not supported ")
+                      ACE_TEXT ("in TAO.\n"),
+                      idl_global->filename ()->get_string (),
+                      idl_global->lineno ()));
+
+          // Caught and handled later.
+          $<ntval>$ = AST_Decl::NT_fixed;
+        }
+        | IDL_SEQUENCE
+        {
+//        IDL_SEQUENCE
+          $<ntval>$ = AST_Decl::NT_sequence;
+        }
+        | IDL_INTERFACE
+        {
+//        IDL_INTERFACE
+          $<ntval>$ = AST_Decl::NT_interface;
+        }
+        | IDL_VALUETYPE
+        {
+//        IDL_VALUETYPE
+          $<ntval>$ = AST_Decl::NT_valuetype;
+        }
+        ;
+
+template_interface_def
+        : template_interface_header
+        {
+// template_interface_def : template_interface_header
+ACE_DEBUG ((LM_DEBUG, "template_interface_header\n"));
+        }
+        '{'
+        {
+//      '{'
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSqSeen);
+        }
+        exports
+        {
+//      exports
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
+        }
+        '}'
+        {
+//      '}'
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceQsSeen);
+
+          /*
+           * Done with this interface - pop it off the scopes stack
+           */
+ //         idl_global->scopes ().pop ();
+        }
+        ;
+
+template_interface_header
+        : template_interface_decl
+        {
+// template_interface_header : template_interface_decl
+ACE_DEBUG ((LM_DEBUG, "template_interface_decl\n"));
+        }
+        inheritance_spec
+        {
+//        template_inheritance_spec
+          // TODO
+ACE_DEBUG ((LM_DEBUG, "inheritance_spec\n"));
+        }
+        ;
+
+template_interface_decl
+        : interface_decl
+        {
+// template_interface_decl : interface_decl
+ACE_DEBUG ((LM_DEBUG, "interface_decl\n"));
+        }
+        at_least_one_template_param
+        {
+//        at_least_one_template_param
+ACE_DEBUG ((LM_DEBUG, "template_interface_decl\n"));
+        }
+        ;
+
+at_least_one_template_param
+        : '<' template_param template_params '>'
+        {
+// at_least_one_template_param : '<' template_param template_params '>'
+ACE_DEBUG ((LM_DEBUG, "at_least_one_template_param\n"));
+        }
+        ;
+
+template_params
+        : template_params ',' template_param
+        {
+// template_params : template_params ',' template_param
+ACE_DEBUG ((LM_DEBUG, "template_params\n"));
+        }
+        | /* EMPTY */
+        {
+//        /* EMPTY */
+        }
+        ;
+
+template_param
+        : type_classifier IDENTIFIER
+        {
+// template_param : type_classifier IDENTIFIER
+ACE_DEBUG ((LM_DEBUG, "template_param\n"));
+        }
+        ;
+
 
 %%
 /* programs */
