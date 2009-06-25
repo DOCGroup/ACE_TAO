@@ -1289,10 +1289,12 @@ cp -R ${ACE_ROOT}/rpmbuild/logrotate.d %{buildroot}%{_sysconfdir}/logrotate.d
 cp -R ${ACE_ROOT}/rpmbuild/tao %{buildroot}%{_sysconfdir}/tao
 
 %if %{defined suse_version}
+mkdir -p %{buildroot}%{_sysconfdir}/init.d
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/init.d/* %{buildroot}%{_sysconfdir}/init.d
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/tao/* %{buildroot}%{_sysconfdir}/tao
 %else
-cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/rc.d/* %{buildroot}%{_sysconfdir}/rc.d
+mkdir -p %{buildroot}%{_sysconfdir}/rc.d/init.d
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/rc.d/init.d/* %{buildroot}%{_sysconfdir}/rc.d/init.d
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/tao/* %{buildroot}%{_sysconfdir}/tao
 %endif
 
