@@ -1,3 +1,9 @@
+Thu Jun 25 14:17:46 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Untabify.
+
 Tue Jun 23 20:06:54 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/ast/ast_interface.cpp:
