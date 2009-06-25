@@ -248,6 +248,7 @@ typedef union TAO_YYSTYPE
   char                          *strval;        /* char * value         */
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
+  AST_Decl::NodeType            ntval;          /* Node type value      */
 }
 /* Line 1489 of yacc.c.  */
 
