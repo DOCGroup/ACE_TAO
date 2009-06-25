@@ -176,7 +176,7 @@ uses            return IDL_USES;
 manages         return IDL_MANAGES;
 
 typename        return IDL_TYPENAME;
-primtive        return IDL_PRIMITIVE;
+primitive       return IDL_PRIMITIVE;
 port            return IDL_PORT;
 mirrorport      return IDL_MIRRORPORT;
 porttype        return IDL_PORTTYPE;

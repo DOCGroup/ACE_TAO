@@ -184,7 +184,9 @@ be_visitor_home_ex_idl::visit_sequence (be_sequence *node)
 int
 be_visitor_home_ex_idl::visit_string (be_string *node)
 {
-  os_ << (node->width () > sizeof (char) ? "w" : "") << "string";
+  bool wide = static_cast<size_t> (node->width ()) > sizeof (char);
+
+  os_ << (wide ? "w" : "") << "string";
 
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
 

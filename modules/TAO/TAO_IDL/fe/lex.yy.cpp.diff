@@ -17,7 +17,7 @@
  
  typedef int8_t flex_int8_t;
  typedef uint8_t flex_uint8_t;
-@@ -1773,7 +1774,7 @@ TAO_YY_RULE_SETUP
+@@ -1775,7 +1775,7 @@ TAO_YY_RULE_SETUP
                    idl_global->set_lineno(idl_global->lineno() + 1);
                    idl_store_pragma(ace_tao_yytext);
                  }
@@ -26,7 +26,7 @@
  case 94:
  /* rule 94 can match eol */
  case 95:
-@@ -1782,7 +1783,7 @@ TAO_YY_RULE_SETUP
+@@ -1784,7 +1784,7 @@ TAO_YY_RULE_SETUP
  {/* ignore file */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
@@ -35,7 +35,7 @@
  case 96:
  /* rule 96 can match eol */
  case 97:
-@@ -1791,7 +1792,7 @@ TAO_YY_RULE_SETUP
+@@ -1793,7 +1793,7 @@ TAO_YY_RULE_SETUP
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
@@ -44,7 +44,7 @@
  case 98:
  /* rule 98 can match eol */
  case 99:
-@@ -1800,7 +1801,7 @@ TAO_YY_RULE_SETUP
+@@ -1802,7 +1802,7 @@ TAO_YY_RULE_SETUP
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
@@ -53,7 +53,7 @@
  case 100:
  /* rule 100 can match eol */
  case 101:
-@@ -1809,7 +1810,7 @@ TAO_YY_RULE_SETUP
+@@ -1811,7 +1811,7 @@ TAO_YY_RULE_SETUP
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
@@ -62,7 +62,7 @@
  case 102:
  /* rule 102 can match eol */
  case 103:
-@@ -1818,7 +1819,7 @@ TAO_YY_RULE_SETUP
+@@ -1820,7 +1820,7 @@ TAO_YY_RULE_SETUP
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
@@ -71,7 +71,7 @@
  case 104:
  /* rule 104 can match eol */
  case 105:
-@@ -1828,7 +1829,7 @@ TAO_YY_RULE_SETUP
+@@ -1830,7 +1830,7 @@ TAO_YY_RULE_SETUP
                    /* ignore cpp ident */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
@@ -80,7 +80,7 @@
  case 106:
  /* rule 106 can match eol */
  TAO_YY_RULE_SETUP
-@@ -1836,7 +1837,7 @@ TAO_YY_RULE_SETUP
+@@ -1838,7 +1838,7 @@ TAO_YY_RULE_SETUP
                    /* ignore comments */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
@@ -89,7 +89,7 @@
  case 107:
  TAO_YY_RULE_SETUP
  {
-@@ -1854,18 +1855,18 @@ TAO_YY_RULE_SETUP
+@@ -1856,18 +1856,18 @@ TAO_YY_RULE_SETUP
                      }
                    }
                  }
@@ -111,7 +111,7 @@
  case 110:
  TAO_YY_RULE_SETUP
  return ace_tao_yytext [0];
-@@ -1873,7 +1874,7 @@ return ace_tao_yytext [0];
+@@ -1875,7 +1875,7 @@ return ace_tao_yytext [0];
  case 111:
  TAO_YY_RULE_SETUP
  TAO_YY_ECHO;

@@ -5891,11 +5891,10 @@ template_interface_header
 // template_interface_header : template_interface_decl
 ACE_DEBUG ((LM_DEBUG, "template_interface_decl\n"));
         }
-        inheritance_spec
+        template_inheritance_spec
         {
 //        template_inheritance_spec
-          // TODO
-ACE_DEBUG ((LM_DEBUG, "inheritance_spec\n"));
+ACE_DEBUG ((LM_DEBUG, "template_inheritance_spec\n"));
         }
         ;
 
@@ -5908,7 +5907,7 @@ ACE_DEBUG ((LM_DEBUG, "interface_decl\n"));
         at_least_one_template_param
         {
 //        at_least_one_template_param
-ACE_DEBUG ((LM_DEBUG, "template_interface_decl\n"));
+ACE_DEBUG ((LM_DEBUG, "at_least_one_template_param\n"));
         }
         ;
 
@@ -5916,7 +5915,7 @@ at_least_one_template_param
         : '<' template_param template_params '>'
         {
 // at_least_one_template_param : '<' template_param template_params '>'
-ACE_DEBUG ((LM_DEBUG, "at_least_one_template_param\n"));
+ACE_DEBUG ((LM_DEBUG, "'<' template_param template_params '>'\n"));
         }
         ;
 
@@ -5937,6 +5936,67 @@ template_param
         {
 // template_param : type_classifier IDENTIFIER
 ACE_DEBUG ((LM_DEBUG, "template_param\n"));
+        }
+        ;
+
+template_inheritance_spec
+        : ':' at_least_one_template_ref
+        {
+// template_inneritance_spec : ':' at_least_one_template_ref
+        }
+        | /* EMPTY */
+        {
+//        /* EMPTY */
+        }
+        ;
+
+at_least_one_template_ref
+        : template_ref template_refs
+        {
+// at_least_one_template_ref : template_ref template_refs
+        }
+        ;
+
+template_refs
+        : template_refs ',' template_ref
+        {
+// template_refs : template_refs ',' template_ref
+        }
+        | /* EMPTY */
+        {
+//        /* EMPTY */
+        }
+        ;
+
+template_ref
+        : scoped_name '<' at_least_one_template_param_ref '>'
+        {
+// template_ref : scoped_name '<' at_least_one_template_param_ref '>'
+        }
+        ;
+
+at_least_one_template_param_ref
+        : template_param_ref template_param_refs
+        {
+// at_least_one_template_param_ref : template_param_ref template_param_refs
+        }
+        ;
+
+template_param_refs
+        : template_param_refs ',' template_param_ref
+        {
+// template_param_refs : template_param_refs ',' template_param_ref
+        }
+        | /* EMPTY */
+        {
+//        /* EMPTY */
+        }
+        ;
+
+template_param_ref
+        : IDENTIFIER
+        {
+// template_param_ref : IDENTIFIER
         }
         ;
 
