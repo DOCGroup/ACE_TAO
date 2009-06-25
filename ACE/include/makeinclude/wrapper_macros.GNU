@@ -192,6 +192,16 @@
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
+# User-written makefiles that are not MPC-generated often use LIB to specify
+# what to build. This is in contrast to MPC-generated files that use
+# LIB_CHECKED for this purpose. LIB causes conflicts on Windows with gmake
+# and Visual Studio which uses the LIB environment variable as a search path
+# for libraries to link. So, to allow non-MPC makefiles to keep working, set
+# LIB_CHECKED based on LIB if the former is not set and the latter is.
+ifndef COMSPEC
+  LIB_CHECKED ?= $(LIB)
+endif # ! COMPSPEC (and, therefore, assumed !Windows
+
 # default to not using an architecture specific output directory
 ARCH        ?=
 ARCH_BIN     = $(BIN)

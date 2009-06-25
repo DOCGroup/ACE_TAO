@@ -1,3 +1,9 @@
+Thu Jun 25 13:26:13 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU: Restore pre-5.7 build
+          functionality for non-MPC-generated Makefiles that use LIB to
+          specify what library to build. Fixes Bugzilla 3708.
+
 Thu Jun 25 02:09:51 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
