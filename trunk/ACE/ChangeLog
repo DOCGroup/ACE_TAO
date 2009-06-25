@@ -1,3 +1,22 @@
+Thu Jun 25 02:09:51 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          More fixes
+
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosconcurrency
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosevent
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosnaming
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosnotification
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-costrading
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-rtevent
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosconcurrency
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosevent
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnaming
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnotification
+        * rpmbuild/ace-tao-init-suse/init.d/tao-costrading
+        * rpmbuild/ace-tao-init-suse/init.d/tao-rtevent
+          Set svn:executable
+
 Wed Jun 24 19:33:51 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
