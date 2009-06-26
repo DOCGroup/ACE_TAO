@@ -1,3 +1,22 @@
+Fri Jun 26 14:15:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+          Added Dance_logger library to Dance_TargetManager_exec project.
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec_export.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_svnt_export.h:
+          Removed these files since they are create by the IDL compiler          
+
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_svnt_export.h:
+          Removed these files since they are create by the IDL compiler          
+
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_skel_export.h:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_stub_export.h:
+          Removed these files since they are create by the IDL compiler          
+
 Fri Jun 26 08:26:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/images/fig7.jpg:
