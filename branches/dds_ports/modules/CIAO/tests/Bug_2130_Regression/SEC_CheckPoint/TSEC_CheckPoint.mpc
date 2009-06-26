@@ -52,11 +52,11 @@ project(TSEC_CheckPoint_stub): ccm_stub, event {
 }
 
 project(TSEC_CheckPoint_svnt) : ciao_servant, event {
-  after +=  TSEC_CheckPoint_stub
+  after +=  TSEC_CheckPoint_skel TSEC_CheckPoint_exec
   after +=  ENW_skel ENW_stub
   sharedname  = TSEC_CheckPoint_svnt
   libpaths += ../interfaces
-  libs     += TSEC_CheckPoint_stub
+  libs     += TSEC_CheckPoint_stub TSEC_CheckPoint_exec
   libs     += ENW_stub ENW_skel
 
   dynamicflags = TSEC_CHECKPOINT_SVNT_BUILD_DLL
@@ -72,14 +72,14 @@ project(TSEC_CheckPoint_svnt) : ciao_servant, event {
 
 
 project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt, ciao_session_container, naming {
-  after   += TSEC_CheckPoint_svnt TSEC_CheckPoint_idl_gen
+  after   += TSEC_CheckPoint_stub TSEC_CheckPoint_idle_gen
   after   += ENW_skel ENW_stub
 
   includes  += ../interfaces
 
   sharedname = TSEC_CheckPoint_exec
   libpaths  += ../interfaces
-  libs      += TSEC_CheckPoint_stub TSEC_CheckPoint_svnt
+  libs      += TSEC_CheckPoint_stub
   libs      += ENW_stub ENW_skel
 
   idlflags  -= -GT
