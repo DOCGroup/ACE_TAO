@@ -1,0 +1,77 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Ground_Component"
+
+project(Ground_Component_stub): ccm_stub, race_idl {
+
+  after += Event_Types_stub
+  includes += ../common
+  libs    += Event_Types_stub
+  sharedname = Ground_Component_stub
+  idlflags += -Wb,stub_export_macro=GROUND_COMPONENT_STUB_Export \
+              -Wb,stub_export_include=Ground_Component_stub_export.h \
+              -Wb,skel_export_macro=GROUND_COMPONENT_SVNT_Export \
+              -Wb,skel_export_include=Ground_Component_svnt_export.h \
+              -I ../common
+  dynamicflags   = GROUND_COMPONENT_STUB_BUILD_DLL
+
+  IDL_Files {
+    Ground_Component.idl
+  }
+
+  Source_Files {
+    Ground_ComponentC.cpp
+  }
+}
+
+project(Ground_Component_svnt) : ciao_servant, race_idl {
+  after +=  Ground_Component_stub Event_Types_svnt
+  sharedname  = Ground_Component_svnt
+  libs    += Ground_Component_stub Event_Types_stub Event_Types_svnt
+  includes += ../common
+
+  idlflags  +=  -Wb,export_macro=GROUND_COMPONENT_SVNT_Export \
+                -Wb,export_include=Ground_Component_svnt_export.h \
+                -I ../common
+  dynamicflags = GROUND_COMPONENT_SVNT_BUILD_DLL
+
+  cidlflags -= --
+  cidlflags += -I ../common --
+
+  CIDL_Files {
+    Ground_Component.cidl
+  }
+
+  IDL_Files {
+    Ground_ComponentE.idl
+  }
+
+  Source_Files {
+    Ground_ComponentEC.cpp
+    Ground_ComponentS.cpp
+    Ground_Component_svnt.cpp
+  }
+}
+
+
+project(Ground_Component_exec) : ciao_executor, race_common {
+  includes += ../common
+  after   += Ground_Component_svnt
+  sharedname = Ground_Component_exec
+  libs      += Ground_Component_stub \
+               Ground_Component_svnt \
+               Event_Types_stub \
+               Event_Types_svnt
+
+  idlflags  +=  -Wb,export_macro=GROUND_COMPONENT_EXEC_Export \
+                -Wb,export_include=Ground_Component_exec_export.h
+  dynamicflags   = GROUND_COMPONENT_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Ground_Component_exec.cpp
+  }
+}

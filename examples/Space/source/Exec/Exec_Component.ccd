@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE corbacomponent SYSTEM "corbacomponent.dtd">
+
+<corbacomponent>
+  <corbaversion>3.0</corbaversion>
+  <componentrepid repid="IDL:SPACE/Exec_Component:1.0"/>
+  <homerepid repid="IDL:SPACE/Exec_Component_Factory:1.0"/>
+  <componentkind>
+    <session>
+      <servant lifetime="container"/>
+    </session>
+  </componentkind>
+  <threading policy="multithread"/>
+  <configurationcomplete set="true"/>
+  
+  <homefeatures
+      name="Exec_Component_Factory"
+      repid="IDL:SPACE/Exec_Component_Factory:1.0">
+  </homefeatures>
+  
+  <componentfeatures
+      name="Exec_Component"
+      repid="IDL:SPACE/Exec_Component:1.0">
+    <ports>
+      <publishes
+          publishesname="send_command"
+          eventtype="IDL:SPACE/Gizmo_Data:1.0">
+        <eventpolicy policy="normal"/>
+      </publishes>
+    </ports>
+  </componentfeatures>
+  
+</corbacomponent>

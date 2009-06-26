@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SANet:network xmlns:SANet="http://www.vanderbilt.edu/SANet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.vanderbilt.edu/SANet SANet_Network.xsd" xmlns="http://www.vanderbilt.edu/SANet">
+  <defaultAttenFactor />
+  <defaultTaskCost />
+  <defaultCondUtil />
+  <defaultCondProbTrue />
+  <linkThresh />
+  <taskNode>
+    <nodeID>201</nodeID>
+    <name>Sat1_Initialize_Sensor_X</name>
+    <priorProb>1</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>202</nodeID>
+    <name>Sat1_Initialize_Sensor_Y</name>
+    <priorProb>1</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>203</nodeID>
+    <name>Sat2_Initialize_Sensor_X</name>
+    <priorProb>1</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>204</nodeID>
+    <name>Sat2_Initialize_Sensor_Y</name>
+    <priorProb>1</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>211</nodeID>
+    <name>Sat1_Sensor_X_Collect_Data</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>212</nodeID>
+    <name>Sat1_Sensor_Y_Collect_Data</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>213</nodeID>
+    <name>Sat2_Sensor_X_Collect_Data</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>214</nodeID>
+    <name>Sat2_Sensor_Y_Collect_Data</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>221</nodeID>
+    <name>Sat2_Transmit_X_Data_To_Sat1</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>222</nodeID>
+    <name>Sat2_Transmit_Y_Data_To_Sat1</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>231</nodeID>
+    <name>MultiSat_Sync_X_Data</name>
+    <priorProb>0.81</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>232</nodeID>
+    <name>MultiSat_Sync_Y_Data</name>
+    <priorProb>0.81</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>241</nodeID>
+    <name>Fuse_X_Y_Data</name>
+    <priorProb>0.81</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>251</nodeID>
+    <name>Compress_X_Data</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>252</nodeID>
+    <name>Compress_X_Y_Data</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>261</nodeID>
+    <name>Transmit_X_Data_To_Ground</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>262</nodeID>
+    <name>Transmit_X_Y_Data_To_Ground</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>271</nodeID>
+    <name>Analyse_X_Data</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <condNode>
+    <nodeID>101</nodeID>
+    <name>Sat1_Sensor_X_Active</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>ENVIRON</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>102</nodeID>
+    <name>Sat1_Sensor_Y_Active</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>ENVIRON</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>103</nodeID>
+    <name>Sat2_Sensor_X_Active</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>ENVIRON</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>104</nodeID>
+    <name>Sat2_Sensor_Y_Active</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>ENVIRON</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>111</nodeID>
+    <name>Sat1_X_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>112</nodeID>
+    <name>Sat1_Y_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>113</nodeID>
+    <name>Sat2_X_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>114</nodeID>
+    <name>Sat2_Y_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>121</nodeID>
+    <name>Sat1_Sat2_X_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>122</nodeID>
+    <name>Sat1_Sat2_Y_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>131</nodeID>
+    <name>Reliable_X_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>132</nodeID>
+    <name>Reliable_Y_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>141</nodeID>
+    <name>X_Y_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>151</nodeID>
+    <name>Compressed_X_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>152</nodeID>
+    <name>Compressed_X_Y_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>161</nodeID>
+    <name>X_Data_On_Ground</name>
+    <probTrue>0</probTrue>
+    <utility>10</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>162</nodeID>
+    <name>X_Y_Data_On_Ground</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>171</nodeID>
+    <name>X_Data_Analysed</name>
+    <probTrue>0</probTrue>
+    <utility>10</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <precondLink>
+    <condID>101</condID>
+    <taskID>211</taskID>
+    <portID>Port1In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>102</condID>
+    <taskID>212</taskID>
+    <portID>Port2In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>103</condID>
+    <taskID>213</taskID>
+    <portID>Port3In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>104</condID>
+    <taskID>214</taskID>
+    <portID>Port4In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>113</condID>
+    <taskID>221</taskID>
+    <portID>Port5In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>114</condID>
+    <taskID>222</taskID>
+    <portID>Port6In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>111</condID>
+    <taskID>231</taskID>
+    <portID>Port7In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>112</condID>
+    <taskID>232</taskID>
+    <portID>Port8In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>111</condID>
+    <taskID>233</taskID>
+    <portID>Port9In</portID>
+    <trueProb>0.9</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>112</condID>
+    <taskID>234</taskID>
+    <portID>Port10In</portID>
+    <trueProb>0.9</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>121</condID>
+    <taskID>233</taskID>
+    <portID>Port11In</portID>
+    <trueProb>0.9</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>122</condID>
+    <taskID>234</taskID>
+    <portID>Port12In</portID>
+    <trueProb>0.9</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>132</condID>
+    <taskID>241</taskID>
+    <portID>Port13In</portID>
+    <trueProb>0.9</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>131</condID>
+    <taskID>271</taskID>
+    <portID>Port14In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>131</condID>
+    <taskID>251</taskID>
+    <portID>Port15In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>141</condID>
+    <taskID>252</taskID>
+    <portID>Port16In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>151</condID>
+    <taskID>261</taskID>
+    <portID>Port17In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>152</condID>
+    <taskID>262</taskID>
+    <portID>Port18In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>131</condID>
+    <taskID>241</taskID>
+    <portID>Port19In</portID>
+    <trueProb>0.9</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <effectLink>
+    <taskID>201</taskID>
+    <condID>101</condID>
+    <portID>Port1Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>202</taskID>
+    <condID>102</condID>
+    <portID>Port2Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>203</taskID>
+    <condID>103</condID>
+    <portID>Port3Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>204</taskID>
+    <condID>104</condID>
+    <portID>Port4Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>211</taskID>
+    <condID>111</condID>
+    <portID>Port5Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>212</taskID>
+    <condID>112</condID>
+    <portID>Port6Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>213</taskID>
+    <condID>113</condID>
+    <portID>Port7Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>214</taskID>
+    <condID>114</condID>
+    <portID>Port8Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>221</taskID>
+    <condID>121</condID>
+    <portID>Port9Out</portID>
+    <weight>0.99</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>222</taskID>
+    <condID>122</condID>
+    <portID>Port10Out</portID>
+    <weight>0.99</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>231</taskID>
+    <condID>131</condID>
+    <portID>Port11Out</portID>
+    <weight>0.85</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>232</taskID>
+    <condID>132</condID>
+    <portID>Port12Out</portID>
+    <weight>0.85</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>233</taskID>
+    <condID>131</condID>
+    <portID>Port13Out</portID>
+    <weight>0.95</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>234</taskID>
+    <condID>132</condID>
+    <portID>Port14Out</portID>
+    <weight>0.95</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>241</taskID>
+    <condID>141</condID>
+    <portID>Port15Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>251</taskID>
+    <condID>151</condID>
+    <portID>Port16Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>252</taskID>
+    <condID>152</condID>
+    <portID>Port17Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>261</taskID>
+    <condID>161</condID>
+    <portID>Port18Out</portID>
+    <weight>0.98</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>262</taskID>
+    <condID>162</condID>
+    <portID>Port19Out</portID>
+    <weight>0.98</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>271</taskID>
+    <condID>171</condID>
+    <portID>Port20Out</portID>
+    <weight>1</weight>
+  </effectLink>
+</SANet:network>

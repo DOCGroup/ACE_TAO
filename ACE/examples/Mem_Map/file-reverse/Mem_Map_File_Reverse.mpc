@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : aceexe, avoids_ace_for_tao {
-  exename = file-reverse
-}

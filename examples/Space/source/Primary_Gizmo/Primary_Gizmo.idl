@@ -1,0 +1,22 @@
+
+#ifndef PRIMARY_GIZMO_IDL
+#define PRIMARY_GIZMO_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Primary_Gizmo
+  {
+    publishes Gizmo_Data observation_data;
+  };
+  
+  home Primary_Gizmo_Factory
+    manages Primary_Gizmo
+  {
+  };
+};
+
+#endif // PRIMARY_GIZMO_IDL
+

@@ -1,0 +1,22 @@
+
+#ifndef GROUND_COMPONENT_IDL
+#define GROUND_COMPONENT_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Ground_Station
+  {
+    consumes Gizmo_Data recv_transmission;
+  };
+  
+  home Ground_Station_Factory
+    manages Ground_Station
+  {
+  };
+};
+
+#endif // GROUND_COMPONENT_IDL
+

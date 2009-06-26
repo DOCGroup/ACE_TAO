@@ -1,0 +1,22 @@
+
+#ifndef GIZMO1_MEDIUM_IDL
+#define GIZMO1_MEDIUM_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Gizmo1_Medium
+  {
+    publishes Gizmo_Data observation_data;
+  };
+  
+  home Gizmo1_Medium_Factory
+    manages Gizmo1_Medium
+  {
+  };
+};
+
+#endif // GIZMO1_MEDIUM_IDL
+

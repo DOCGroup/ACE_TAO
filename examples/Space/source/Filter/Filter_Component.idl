@@ -1,0 +1,24 @@
+
+#ifndef FILTER_COMPONENT_IDL
+#define FILTER_COMPONENT_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Filter_Component
+  {
+    consumes Gizmo_Data recv_data;
+    
+    publishes Gizmo_Data send_data;
+  };
+  
+  home Filter_Component_Factory
+    manages Filter_Component
+  {
+  };
+};
+
+#endif // FILTER_COMPONENT_IDL
+

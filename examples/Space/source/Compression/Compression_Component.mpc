@@ -1,0 +1,77 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Compression_Component"
+
+project(Compression_Component_stub): ccm_stub, race_idl {
+
+  after += Event_Types_stub
+  includes += ../common
+  sharedname = Compression_Component_stub
+  libs    += Event_Types_stub
+  idlflags += -Wb,stub_export_macro=COMPRESSION_COMPONENT_STUB_Export \
+              -Wb,stub_export_include=Compression_Component_stub_export.h \
+              -Wb,skel_export_macro=COMPRESSION_COMPONENT_SVNT_Export \
+              -Wb,skel_export_include=Compression_Component_svnt_export.h \
+              -I ../common
+  dynamicflags   = COMPRESSION_COMPONENT_STUB_BUILD_DLL
+
+  IDL_Files {
+    Compression_Component.idl
+  }
+
+  Source_Files {
+    Compression_ComponentC.cpp
+  }
+}
+
+project(Compression_Component_svnt) : ciao_servant, race_idl {
+  after +=  Compression_Component_stub Event_Types_svnt
+  includes += ../common
+  sharedname  = Compression_Component_svnt
+  libs    += Compression_Component_stub Event_Types_stub Event_Types_svnt
+
+  idlflags  +=  -Wb,export_macro=COMPRESSION_COMPONENT_SVNT_Export \
+                -Wb,export_include=Compression_Component_svnt_export.h \
+                -I ../common
+  dynamicflags = COMPRESSION_COMPONENT_SVNT_BUILD_DLL
+
+  cidlflags -= --
+  cidlflags += -I ../common --
+
+  CIDL_Files {
+    Compression_Component.cidl
+  }
+
+  IDL_Files {
+    Compression_ComponentE.idl
+  }
+
+  Source_Files {
+    Compression_ComponentEC.cpp
+    Compression_ComponentS.cpp
+    Compression_Component_svnt.cpp
+  }
+}
+
+
+project(Compression_Component_exec) : ciao_executor, race_common {
+  after   += Compression_Component_svnt
+  sharedname = Compression_Component_exec
+  includes += ../common
+  libs      += Compression_Component_stub \
+               Compression_Component_svnt \
+               Event_Types_stub \
+               Event_Types_svnt
+
+  idlflags  +=  -Wb,export_macro=COMPRESSION_COMPONENT_EXEC_Export \
+                -Wb,export_include=Compression_Component_exec_export.h
+  dynamicflags   = COMPRESSION_COMPONENT_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Compression_Component_exec.cpp
+  }
+}

@@ -1,0 +1,77 @@
+project(Gizmo2_High_stub): ccm_stub, race_idl {
+
+  sharedname = Gizmo2_High_stub
+  libs    += Event_Types_stub
+  after += Event_Types_stub
+  includes += ../common
+  idlflags += -Wb,stub_export_macro=GIZMO2_HIGH_STUB_Export \
+              -Wb,stub_export_include=Gizmo2_High_stub_export.h \
+              -Wb,skel_export_macro=GIZMO2_HIGH_SVNT_Export \
+              -Wb,skel_export_include=Gizmo2_High_svnt_export.h \
+              -I ../common
+
+
+  dynamicflags   = GIZMO2_HIGH_STUB_BUILD_DLL
+
+  IDL_Files {
+    Gizmo2_High.idl
+  }
+
+  Source_Files {
+    Gizmo2_HighC.cpp
+  }
+}
+
+project(Gizmo2_High_svnt) : ciao_servant, race_idl {
+  after +=  Gizmo2_High_stub
+  sharedname  = Gizmo2_High_svnt
+  libs    += Gizmo2_High_stub Event_Types_stub
+  includes += ../common
+
+
+  idlflags  +=  -Wb,export_macro=GIZMO2_HIGH_SVNT_Export \
+                -Wb,export_include=Gizmo2_High_svnt_export.h \
+                -I ../common
+
+  dynamicflags = GIZMO2_HIGH_SVNT_BUILD_DLL
+
+  cidlflags -= --
+  cidlflags += -I ../common --
+
+
+  CIDL_Files {
+    Gizmo2_High.cidl
+  }
+
+  IDL_Files {
+    Gizmo2_HighE.idl
+  }
+
+  Source_Files {
+    Gizmo2_HighEC.cpp
+    Gizmo2_HighS.cpp
+    Gizmo2_High_svnt.cpp
+  }
+}
+
+
+project(Gizmo2_High_exec) : ciao_executor, race_common {
+  after   += Gizmo2_High_svnt
+  sharedname = Gizmo2_High_exec
+  libs      += Gizmo2_High_stub Gizmo2_High_svnt Event_Types_stub
+  includes += ../common
+
+  idlflags  +=  -Wb,export_macro=GIZMO2_HIGH_EXEC_Export \
+                -Wb,export_include=Gizmo2_High_exec_export.h
+
+  dynamicflags   = GIZMO2_HIGH_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Gizmo2_High_exec.cpp
+  }
+}

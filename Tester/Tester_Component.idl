@@ -1,0 +1,48 @@
+#ifndef TESTER_COMPONENT_IDL
+#define TESTER_COMPONENT_IDL
+
+#include <Components.idl>
+#include "common/OpString.idl"
+#include "common/Goal.idl"
+#include "Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl"
+#include "SA_POP/Component/SA_POP_Component.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    module SA_POP
+    {
+      interface Testing
+      {
+        /// Initialize SA-POP with a task network and task map.
+        boolean init (in string task_net_file, in string task_map_file);
+
+        /// Plan for a goal and deploy opstring.
+        boolean deploy_from_goal (in GoalStructure goal, out UUID ID);
+
+        /// Modify a previously scheduled/deployed string. Raises UnknownID.
+        boolean modify_string_from_goal (in GoalStructure goal, in UUID ID)
+          raises (UnknownID);
+
+        /// Teardown a string. Raises UnknownID.
+        boolean tear_down_string (in UUID ID)
+          raises (UnknownID);
+
+      };
+
+      component Tester_Component supports Testing
+      {
+        uses CIAO::RACE::Input_Adapter::Admin RACE_IA;
+
+        uses CIAO::RACE::SA_POP::Planning SAPOP;
+      };
+
+      home Tester_Component_Home manages Tester_Component
+      {
+      };
+    };
+  };
+};
+
+#endif /* TESTER_COMPONENT_IDL */

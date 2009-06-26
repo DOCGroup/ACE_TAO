@@ -1,0 +1,75 @@
+project(Backup_Gizmo_High_stub): ccm_stub, race_idl {
+
+  sharedname = Backup_Gizmo_High_stub
+  libs    += Event_Types_stub
+  after += Event_Types_stub
+  includes += ../common
+  idlflags += -Wb,stub_export_macro=BACKUP_GIZMO_HIGH_STUB_Export \
+              -Wb,stub_export_include=Backup_Gizmo_High_stub_export.h \
+              -Wb,skel_export_macro=BACKUP_GIZMO_HIGH_SVNT_Export \
+              -Wb,skel_export_include=Backup_Gizmo_High_svnt_export.h \
+              -I ../common
+  dynamicflags   = BACKUP_GIZMO_HIGH_STUB_BUILD_DLL
+
+  IDL_Files {
+    Backup_Gizmo_High.idl
+  }
+
+  Source_Files {
+    Backup_Gizmo_HighC.cpp
+  }
+}
+
+project(Backup_Gizmo_High_svnt) : ciao_servant, race_idl {
+  after +=  Backup_Gizmo_High_stub
+  includes += ../common
+  sharedname  = Backup_Gizmo_High_svnt
+  libs    += Backup_Gizmo_High_stub Event_Types_stub Event_Types_svnt
+
+  idlflags  +=  -Wb,export_macro=BACKUP_GIZMO_HIGH_SVNT_Export \
+                -Wb,export_include=Backup_Gizmo_High_svnt_export.h \
+                -I ../common
+
+  dynamicflags = BACKUP_GIZMO_HIGH_SVNT_BUILD_DLL
+
+  cidlflags -= --
+  cidlflags += -I ../common --
+
+  CIDL_Files {
+    Backup_Gizmo_High.cidl
+  }
+
+  IDL_Files {
+    Backup_Gizmo_HighE.idl
+  }
+
+  Source_Files {
+    Backup_Gizmo_HighEC.cpp
+    Backup_Gizmo_HighS.cpp
+    Backup_Gizmo_High_svnt.cpp
+  }
+}
+
+
+project(Backup_Gizmo_High_exec) : ciao_executor, race_common {
+  after   += Backup_Gizmo_High_svnt
+  includes += ../common
+  sharedname = Backup_Gizmo_High_exec
+  libs      += Backup_Gizmo_High_stub \
+               Backup_Gizmo_High_svnt \
+               Event_Types_stub \
+               Event_Types_svnt
+
+  idlflags  +=  -Wb,export_macro=BACKUP_GIZMO_HIGH_EXEC_Export \
+                -Wb,export_include=Backup_Gizmo_High_exec_export.h
+  dynamicflags   = BACKUP_GIZMO_HIGH_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Backup_Gizmo_High_exec.cpp
+  }
+}

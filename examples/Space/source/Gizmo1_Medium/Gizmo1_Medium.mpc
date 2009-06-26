@@ -1,0 +1,76 @@
+project(Gizmo1_Medium_stub): ccm_stub, race_idl {
+
+  sharedname = Gizmo1_Medium_stub
+  libs    += Event_Types_stub
+  after += Event_Types_stub
+  includes += ../common
+  idlflags += -Wb,stub_export_macro=GIZMO1_MEDIUM_STUB_Export \
+              -Wb,stub_export_include=Gizmo1_Medium_stub_export.h \
+              -Wb,skel_export_macro=GIZMO1_MEDIUM_SVNT_Export \
+              -Wb,skel_export_include=Gizmo1_Medium_svnt_export.h \
+              -I ../common
+
+
+  dynamicflags   = GIZMO1_MEDIUM_STUB_BUILD_DLL
+
+  IDL_Files {
+    Gizmo1_Medium.idl
+  }
+
+  Source_Files {
+    Gizmo1_MediumC.cpp
+  }
+}
+
+project(Gizmo1_Medium_svnt) : ciao_servant, race_idl {
+  after +=  Gizmo1_Medium_stub
+  sharedname  = Gizmo1_Medium_svnt
+  libs    += Gizmo1_Medium_stub Event_Types_stub
+  includes += ../common
+
+  idlflags  +=  -Wb,export_macro=GIZMO1_MEDIUM_SVNT_Export \
+                -Wb,export_include=Gizmo1_Medium_svnt_export.h \
+                -I ../common
+
+  dynamicflags = GIZMO1_MEDIUM_SVNT_BUILD_DLL
+
+
+  cidlflags -= --
+  cidlflags += -I ../common --
+
+  CIDL_Files {
+    Gizmo1_Medium.cidl
+  }
+
+  IDL_Files {
+    Gizmo1_MediumE.idl
+  }
+
+  Source_Files {
+    Gizmo1_MediumEC.cpp
+    Gizmo1_MediumS.cpp
+    Gizmo1_Medium_svnt.cpp
+  }
+}
+
+
+project(Gizmo1_Medium_exec) : ciao_executor, race_common {
+  after   += Gizmo1_Medium_svnt
+  sharedname = Gizmo1_Medium_exec
+  libs      += Gizmo1_Medium_stub Gizmo1_Medium_svnt Event_Types_stub
+  includes += ../common
+
+  idlflags  +=  -Wb,export_macro=GIZMO1_MEDIUM_EXEC_Export \
+                -Wb,export_include=Gizmo1_Medium_exec_export.h
+
+  dynamicflags   = GIZMO1_MEDIUM_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Gizmo1_Medium_exec.cpp
+  }
+}

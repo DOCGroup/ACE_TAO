@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SA-POP:taskMap
+  xmlns:SA-POP="http://www.vanderbilt.edu/SA-POP"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.vanderbilt.edu/SA-POP Task_Map.xsd"
+  xmlns="http://www.vanderbilt.edu/SA-POP">
+
+
+
+  <taskImpl>
+    <implID>IDL:SPACE/Ground_Station:1.0</implID>
+    <param>
+      <paramID></paramID>
+      <kind></kind>
+      <value></value>
+    </param>
+  </taskImpl> 
+  <taskImpl>
+    <implID>IDL:SPACE/Filter_Component:1.0</implID>
+    <param>
+      <paramID></paramID>
+      <kind></kind>
+      <value></value>
+    </param>
+  </taskImpl> 
+  <taskImpl>
+    <implID>IDL:SPACE/Exec_Component:1.0</implID>
+    <param>
+      <paramID></paramID>
+      <kind></kind>
+      <value></value>
+    </param>
+  </taskImpl> 
+  <taskImpl>
+    <implID>IDL:SPACE/Compression_Component:1.0</implID>
+    <param>
+      <paramID></paramID>
+      <kind></kind>
+      <value></value>
+    </param>
+  </taskImpl> 
+  <taskImpl>
+    <implID>IDL:SPACE/Comm_Component:1.0</implID>
+    <param>
+      <paramID></paramID>
+      <kind></kind>
+      <value></value>
+    </param>
+  </taskImpl> 
+  <taskImpl>
+    <implID>IDL:SPACE/Backup_Gizmo_High:1.0</implID>
+    <param>
+      <paramID></paramID>
+      <kind></kind>
+      <value></value>
+    </param>
+  </taskImpl> 
+  <taskImpl>
+    <implID>IDL:SPACE/Backup_Gizmo_Low:1.0</implID>
+    <param>
+      <paramID></paramID>
+      <kind></kind>
+      <value></value>
+    </param>
+  </taskImpl> 
+  <taskImpl>
+    <implID>IDL:SPACE/Primary_Gizmo:1.0</implID>
+    <param>
+      <paramID></paramID>
+      <kind></kind>
+      <value></value>
+    </param>
+  </taskImpl> 
+
+
+
+  <resource>
+    <resourceID>Memory</resourceID>
+    <kind>DISCRETE</kind>
+    <capacity>512</capacity>
+  </resource>
+  <resource>
+    <resourceID>CPU</resourceID>
+    <kind>DISCRETE</kind>
+    <capacity />
+  </resource>
+
+
+  <taskToImpl>
+    <taskID>2241</taskID>
+    <implID>IDL:SPACE/Ground_Station:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2242</taskID>
+    <implID>IDL:SPACE/Ground_Station:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2237</taskID>
+    <implID>IDL:SPACE/Exec_Component:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2231</taskID>
+    <implID>IDL:SPACE/Filter_Component:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2232</taskID>
+    <implID>IDL:SPACE/Filter_Component:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2233</taskID>
+    <implID>IDL:SPACE/Compression_Component:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2234</taskID>
+    <implID>IDL:SPACE/Compression_Component:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2235</taskID>
+    <implID>IDL:SPACE/Comm_Component:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2236</taskID>
+    <implID>IDL:SPACE/Comm_Component:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2223</taskID>
+    <implID>IDL:SPACE/Backup_Gizmo_High:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2222</taskID>
+    <implID>IDL:SPACE/Backup_Gizmo_Low:1.0</implID> 
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2221</taskID>
+    <implID>IDL:SPACE/Primary_Gizmo:1.0</implID> 
+    <duration />
+  </taskToImpl>
+
+
+
+
+  <implToResource>
+    <implID>IDL:SPACE/Ground_Station:1.0</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>5</utilization>
+  </implToResource> 
+  <implToResource>
+    <implID>IDL:SPACE/Filter_Component:1.0</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>5</utilization>
+  </implToResource> 
+  <implToResource>
+    <implID>IDL:SPACE/Exec_Component:1.0</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>5</utilization>
+  </implToResource> 
+  <implToResource>
+    <implID>IDL:SPACE/Compression_Component:1.0</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>5</utilization>
+  </implToResource> 
+  <implToResource>
+    <implID>IDL:SPACE/Comm_Component:1.0</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>5</utilization>
+  </implToResource> 
+  <implToResource>
+    <implID>IDL:SPACE/Backup_Gizmo_High:1.0</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>5</utilization>
+  </implToResource> 
+  <implToResource>
+    <implID>IDL:SPACE/Backup_Gizmo_Low:1.0</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>5</utilization>
+  </implToResource> 
+  <implToResource>
+    <implID>IDL:SPACE/Primary_Gizmo:1.0</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>5</utilization>
+  </implToResource> 
+
+</SA-POP:taskMap>

@@ -1,0 +1,40 @@
+project(SANet_Demo) : xerces, aceexe {
+  exename = SANet_Demo
+
+  includes += $(SAPOP_ROOT)/Standalone/XML_Utils
+
+  dynamicflags = CIAO_XML_UTILS_BUILD_DLL
+
+  macros = SANET_STANDALONE
+
+
+  Source_Files {
+    SANet_UI.cpp
+
+    SAnet_Exceptions.cpp
+
+    SANode.cpp
+    SANet.cpp
+
+    SANetFileIn.cpp
+    XML_SANet.cpp
+    $(SAPOP_ROOT)/Standalone/XML_Utils/Utils/XML_Helper.cpp
+    $(SAPOP_ROOT)/Standalone/XML_Utils/Utils/XML_Error_Handler.cpp
+    $(SAPOP_ROOT)/Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp
+    $(SAPOP_ROOT)/Standalone/XML_Utils/Utils/XercesString.cpp
+  }
+
+  Header_Files {
+    SANet_Types.h
+    SANet_Exceptions.h
+
+    SANode.h
+    SANet.h
+
+    SANetFileIn.h
+  }
+
+  Documentation_Files {
+    readme.txt
+  }
+}

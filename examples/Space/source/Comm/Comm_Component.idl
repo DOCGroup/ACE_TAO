@@ -1,0 +1,26 @@
+
+#ifndef COMM_COMPONENT_IDL
+#define COMM_COMPONENT_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Comm_Component
+  {
+    consumes Gizmo_Data recv_command;
+    
+    consumes Gizmo_Data science_data;
+    
+    publishes Gizmo_Data transmit_data;
+  };
+  
+  home Comm_Component_Factory
+    manages Comm_Component
+  {
+  };
+};
+
+#endif // COMM_COMPONENT_IDL
+
