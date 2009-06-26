@@ -27,7 +27,7 @@ project(TSEC_CheckPoint_idle_gen) : ciaoidldefaults {
 }
 
 
-project(SimpleComponent_idln_gen): ccm_stub, event {
+project(SimpleComponent_stub): ccm_stub, event {
   after  += ENW_stub
   libpaths += ../interfaces
   libs     += ENW_stub
@@ -39,6 +39,15 @@ project(SimpleComponent_idln_gen): ccm_stub, event {
 
   Source_Files {
     TSEC_CheckPointC.cpp
+  }
+
+  Header_Files {
+    TSEC_CheckPointC.h
+    TSEC_CheckPoint_stub_export.h
+  }
+
+  Inline_Files {
+    TSEC_CheckPointC.inl
   }
 }
 
