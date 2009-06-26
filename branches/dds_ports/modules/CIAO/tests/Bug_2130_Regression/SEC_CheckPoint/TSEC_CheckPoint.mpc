@@ -28,7 +28,7 @@ project(TSEC_CheckPoint_idle_gen) : ciaoidldefaults {
 
 
 project(SimpleComponent_stub): ccm_stub, event {
-  after  += ENW_stub
+  after  += ENW_stub TSEC_CheckPoint_idl_gen
   libpaths += ../interfaces
   libs     += ENW_stub
   sharedname = TSEC_CheckPoint_stub
