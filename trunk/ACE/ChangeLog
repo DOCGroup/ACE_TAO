@@ -1,3 +1,16 @@
+Fri Jun 26 16:10:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-suse/fillup-templates/*:
+          Missing files for x.7.0
+
+        * rpmbuild/ace-tao-init-suse/tao:
+          Removed, this are Fedora files
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Copy the correct files for SuSE and print the g++ version in the
+          build log which makes it easier to see which g++ version is
+          used
+
 Fri Jun 26 02:16:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:

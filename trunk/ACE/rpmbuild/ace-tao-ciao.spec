@@ -973,6 +973,11 @@ export ACE_ROOT=`pwd`
 export TAO_ROOT=$ACE_ROOT/TAO
 export LD_LIBRARY_PATH=$ACE_ROOT/lib
 
+# Dump the g++ versions, in case the g++ version is broken we can
+# easily see this in the build log
+g++ --version
+g++ -dumpversion
+
 %if %skip_make
 cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
 %else
@@ -1290,12 +1295,13 @@ cp -R ${ACE_ROOT}/rpmbuild/tao %{buildroot}%{_sysconfdir}/tao
 
 %if %{defined suse_version}
 mkdir -p %{buildroot}%{_sysconfdir}/init.d
-cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/init.d/* %{buildroot}%{_sysconfdir}/init.d
-cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/tao/* %{buildroot}%{_sysconfdir}/tao
+mkdir -p %{buildroot}%{_localstatedir}/adm
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/init.d/* %{buildroot}%{_sysconfdir}/init.d/
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/fillup-templates/* %{buildroot}%{_localstatedir}/adm/
 %else
 mkdir -p %{buildroot}%{_sysconfdir}/rc.d/init.d
-cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/rc.d/init.d/* %{buildroot}%{_sysconfdir}/rc.d/init.d
-cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/tao/* %{buildroot}%{_sysconfdir}/tao
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/rc.d/init.d/* %{buildroot}%{_sysconfdir}/rc.d/init.d/
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/tao/* %{buildroot}%{_sysconfdir}/tao/
 %endif
 
 %if %{defined suse_version}
