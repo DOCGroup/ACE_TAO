@@ -1,9 +1,14 @@
+Fri Jun 26 00:46:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-guidelines.html:
+          Fixed typo
+
 Thu Jun 25 21:46:10 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/non_mpc_makefile/foo.cpp:
-          
+
           Fuzz fix.
-        
+
 Thu Jun 25 14:20:08 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * bin/ace_tests.lst:
