@@ -521,7 +521,7 @@ TAO_Transport::update_transport (void)
  *  Methods called and used in the output path of the ORB.
  *
  */
-int
+TAO_Transport::Drain_Result
 TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
 {
   if (TAO_debug_level > 3)
@@ -538,7 +538,7 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
   // The flushing strategy (potentially via the Reactor) wants to send
   // more data, first check if there is a current message that needs
   // more sending...
-  int const retval = this->drain_queue (dc);
+  Drain_Result const retval = this->drain_queue (dc);
 
   if (TAO_debug_level > 3)
     {
@@ -546,7 +546,7 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output, ")
                   ACE_TEXT ("drain_queue returns %d/%d\n"),
                   this->id (),
-                  retval, ACE_ERRNO_GET));
+                  static_cast<int> (retval.dre_), ACE_ERRNO_GET));
     }
 
   // Any errors are returned directly to the Reactor
@@ -592,14 +592,14 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 
   synch_message.push_back (this->head_, this->tail_);
 
-  int const n = this->drain_queue_i (dc);
+  Drain_Result const n = this->drain_queue_i (dc);
 
-  if (n == -1)
+  if (n == DR_ERROR)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
       return -1; // Error while sending...
     }
-  else if (n == 1)
+  else if (n == DR_QUEUE_EMPTY)
     {
       bytes_transferred = total_length;
       return 1;  // Empty queue, message was sent..
@@ -780,14 +780,14 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
   TAO::Transport::Drain_Constraints dc(
       max_wait_time, this->using_blocking_io_for_synch_messages());
 
-  int const n = this->drain_queue_i (dc);
+  Drain_Result const n = this->drain_queue_i (dc);
 
-  if (n == -1)
+  if (n == DR_ERROR)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
       return -1; // Error while sending...
     }
-  else if (n == 1)
+  else if (n == DR_QUEUE_EMPTY)
     {
       return 1;  // Empty queue, message was sent..
     }
@@ -911,13 +911,13 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
   return 0;
 }
 
-int
+TAO_Transport::Drain_Result
 TAO_Transport::drain_queue (TAO::Transport::Drain_Constraints const & dc)
 {
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-  int const retval = this->drain_queue_i (dc);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, DR_ERROR);
+  Drain_Result const retval = this->drain_queue_i (dc);
 
-  if (retval == 1)
+  if (retval == DR_QUEUE_EMPTY)
     {
       // ... there is no current message or it was completely
       // sent, cancel output...
@@ -926,13 +926,13 @@ TAO_Transport::drain_queue (TAO::Transport::Drain_Constraints const & dc)
 
       flushing_strategy->cancel_output (this);
 
-      return 0;
+      return DR_OK;
     }
 
   return retval;
 }
 
-int
+TAO_Transport::Drain_Result
 TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
     TAO::Transport::Drain_Constraints const & dc)
 {
@@ -973,7 +973,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
              ACE_TEXT ("send() returns 0\n"),
              this->id ()));
         }
-      return -1;
+      return DR_ERROR;
     }
   else if (retval == -1)
     {
@@ -987,10 +987,10 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
 
       if (errno == EWOULDBLOCK || errno == EAGAIN)
         {
-          return 0;
+          return DR_WOULDBLOCK;
         }
 
-      return -1;
+      return DR_ERROR;
     }
 
   // ... now we need to update the queue, removing elements
@@ -1013,10 +1013,11 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
          this->id(), byte_count, (this->head_ == 0)));
     }
 
-  return 1;
+  return DR_QUEUE_EMPTY;
+  // drain_queue_i will check if the queue is actually empty
 }
 
-int
+TAO_Transport::Drain_Result
 TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
 {
   // This is the vector used to send data, it must be declared outside
@@ -1068,22 +1069,23 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
       // IOV_MAX elements ...
       if (iovcnt == ACE_IOV_MAX)
         {
-          int const retval = this->drain_queue_helper (iovcnt, iov, dc);
-
-          now = ACE_High_Res_Timer::gettimeofday_hr ();
+          Drain_Result const retval =
+            this->drain_queue_helper (iovcnt, iov, dc);
 
           if (TAO_debug_level > 4)
             {
               ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
                  ACE_TEXT ("helper retval = %d\n"),
-                 this->id (), retval));
+                 this->id (), static_cast<int> (retval.dre_)));
             }
 
-          if (retval != 1)
+          if (retval != DR_QUEUE_EMPTY)
             {
               return retval;
             }
+
+          now = ACE_High_Res_Timer::gettimeofday_hr ();
 
           i = this->head_;
           continue;
@@ -1095,17 +1097,17 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
 
   if (iovcnt != 0)
     {
-      int const retval = this->drain_queue_helper (iovcnt, iov, dc);
+      Drain_Result const retval = this->drain_queue_helper (iovcnt, iov, dc);
 
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
               ACE_TEXT ("helper retval = %d\n"),
-              this->id (), retval));
+              this->id (), static_cast<int> (retval.dre_)));
         }
 
-      if (retval != 1)
+      if (retval != DR_QUEUE_EMPTY)
         {
           return retval;
         }
@@ -1121,10 +1123,10 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
           this->reset_flush_timer ();
         }
 
-      return 1;
+      return DR_QUEUE_EMPTY;
     }
 
-  return 0;
+  return DR_OK;
 }
 
 void

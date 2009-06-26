@@ -1,3 +1,42 @@
+Fri Jun 26 20:41:53 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+
+          This resolves bug #3704.
+          TAO_Transport::handle_output() now uses an enum return value to
+          distinguish the EWOULDBLOCK case from other normal or error
+          conditions.  The Block_Flushing_Strategy checks for EWOULDBLOCK
+          and calls a new method, handle_write_ready(), on the Connection
+          Handler.  The Connection Handler calls ACE::handle_write_ready()
+          passing the specific handle.
+
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.h:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+
+          Added handle_write_ready() to the non-IIOP protocols.
+
 Thu Jun 25 14:17:46 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/fe/lex.yy.cpp:

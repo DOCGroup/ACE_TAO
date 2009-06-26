@@ -668,6 +668,13 @@ TAO_IIOP_Connection_Handler::abort (void)
     }
 }
 
+int
+TAO_IIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *timeout)
+{
+  return ACE::handle_write_ready (this->peer ().get_handle (), timeout);
+}
+
+
 //@@ CONNECTION_HANDLER_SPL_COPY_HOOK_END
 /*
  * End copy hook

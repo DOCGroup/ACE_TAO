@@ -364,8 +364,35 @@ public:
    */
   TAO_Wait_Strategy *wait_strategy (void) const;
 
+  enum Drain_Result_Enum
+    {
+      DR_ERROR = -1,
+      DR_OK = 0,
+      DR_QUEUE_EMPTY = 1, // used internally, not returned from drain_queue()
+      DR_WOULDBLOCK = 2
+    };
+
+  /// The handle_output and drain_queue* functions return objects of this
+  /// struct instead of the enum value directly so the compiler will catch
+  /// any uses that assign the return value to an int.
+  struct Drain_Result
+  {
+    Drain_Result (Drain_Result_Enum dre) : dre_(dre) {}
+    Drain_Result_Enum dre_;
+
+    bool operator== (Drain_Result rhs) const
+    {
+      return this->dre_ == rhs.dre_;
+    }
+
+    bool operator!= (Drain_Result rhs) const
+    {
+      return this->dre_ != rhs.dre_;
+    }
+  };
+
   /// Callback method to reactively drain the outgoing data queue
-  int handle_output (TAO::Transport::Drain_Constraints const & c);
+  Drain_Result handle_output (TAO::Transport::Drain_Constraints const & c);
 
   /// Get the bidirectional flag
   int bidirectional_flag (void) const;
@@ -895,14 +922,11 @@ private:
   /**
    * As the outgoing data is drained this method is invoked to send as
    * much of the current message as possible.
-   *
-   * Returns 0 if there is more data to send, -1 if there was an error
-   * and 1 if the message was completely sent.
    */
-  int drain_queue (TAO::Transport::Drain_Constraints const & dc);
+  Drain_Result drain_queue (TAO::Transport::Drain_Constraints const & dc);
 
   /// Implement drain_queue() assuming the lock is held
-  int drain_queue_i (TAO::Transport::Drain_Constraints const & dc);
+  Drain_Result drain_queue_i (TAO::Transport::Drain_Constraints const & dc);
 
   /// Check if there are messages pending in the queue
   /**
@@ -914,7 +938,7 @@ private:
   bool queue_is_empty_i (void) const;
 
   /// A helper routine used in drain_queue_i()
-  int drain_queue_helper (int &iovcnt, iovec iov[],
+  Drain_Result drain_queue_helper (int &iovcnt, iovec iov[],
       TAO::Transport::Drain_Constraints const & dc);
 
   /// These classes need privileged access to:
