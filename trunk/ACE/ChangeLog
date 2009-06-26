@@ -1,3 +1,8 @@
+Fri Jun 26 02:16:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Mandriva 2007 fix
+
 Fri Jun 26 00:46:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-guidelines.html:
