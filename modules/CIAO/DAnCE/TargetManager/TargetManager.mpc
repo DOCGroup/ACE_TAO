@@ -35,7 +35,6 @@ project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming {
 
   Source_Files {
     DomainDataManager.cpp
-//    TargetManager_exec.cpp
     ResourceCommitmentManager.cpp
     TargetManager_Impl.cpp
     Target_Manager_Module.cpp
@@ -64,6 +63,7 @@ project(DAnCE_TargetManager_svnt) : dance_lib, dance_deployment_svnt, ciao_confi
 
 project (DAnCE_TargetManager_Exec) : dance_target_manager, naming, dance_exe, iortable, utils {
   exename = dance_target_manager
+  libs += DAnCE_Logger
   
   IDL_Files {
   }
