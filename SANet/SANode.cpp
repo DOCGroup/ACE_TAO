@@ -729,6 +729,15 @@ void TaskNode::update_effect (CondID ID, CondNode *node, LinkWeight weight)
   node->update_pre_link (ID_, this, weight);
 };
 
+Probability TaskNode::get_prior (void)
+{
+  return prior_prob_;
+}
+
+void TaskNode::update_prior (Probability prior)
+{
+   prior_prob_ = prior;
+}
 
 CondNode::CondNode (CondID ID, std::string name, MultFactor atten_factor,
                       Probability true_prob, Probability false_prob, Utility goal_util, CondKind condkind)

@@ -18,6 +18,8 @@
 #include "PlanCommands.h"
 #include "SA_PlanCommands.h"
 
+#include <stack>
+#include <fstream>
 
 using namespace SA_POP;
 
@@ -541,13 +543,165 @@ TaskImplID SA_WorkingPlan::get_task_impl_from_inst(TaskInstID inst_id)
 	return this->task_impls_.find(inst_id)->second;
 }
 
+void SA_WorkingPlan::generate_all_threats(void)
+{
+  threat_set.clear();
+
+  std::ostringstream debug_text;
+
+  
+
+
+
+  debug_text << "SA_WorkingPlan::generate_all_threats:  All Causal Links: " << std::endl;
+  
+  
+  
+  for(CondToCLinksMap::iterator nit = causal_links_.begin(); nit != causal_links_.end(); nit++){
+
+            CausalLink causal_threatened = (*nit).second;
+            TaskID threatened_task = this->task_insts_.find(causal_threatened.first)->second;
+            if(causal_threatened.second != -1)
+              debug_text << "  Task ("<<threatened_task<<") " << "Inst ("<<causal_threatened.first<<") -(" << causal_threatened.cond.id << ")-> Task ("<<this->task_insts_.find(causal_threatened.second)->second<< ") Inst ("<< causal_threatened.second << ")" << std::endl;           
+
+  }
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+
+/*
+
+    for(InstToImplMap::iterator iterator = this->task_impls_.begin(); iterator != this->task_impls_.end(); iterator++){
+    TaskInstID threat_possibility = (*iterator).first;
+    TaskID threat_possibility_taskid = this->task_insts_.find(threat_possibility)->second;
+    
+    file_op<<"  Task :"<<iterator->first<<"("<<threat_possibility_taskid<<")"<<std::endl;
+  }
+
+
+  for(InstToImplMap::iterator iterator = this->task_impls_.begin(); iterator != this->task_impls_.end(); iterator++){
+
+    TaskInstID threat_possibility = iterator->first;
+    TaskID threat_possibility_taskid = this->task_insts_.find(threat_possibility)->second;
+    CondSet set = this->planner_->get_effects(threat_possibility_taskid);
+
+    for(CondSet::iterator arr = set.begin(); arr != set.end(); arr++){ 
+
+        Condition condition = (*arr);
+
+        std::pair<
+          CondToCLinksMap::iterator,
+          CondToCLinksMap::iterator
+            > ret = this->causal_links_.equal_range(condition);
+      
+
+        for(CondToCLinksMap::iterator nit = ret.first; nit != ret.second; nit++){
+
+            CausalLink causal_threatened = (*nit).second;
+            TaskID threatened_task = this->task_insts_.find(causal_threatened.first)->second;
+
+            SANet::LinkWeight threat_effect = this->planner_->get_link(threat_possibility_taskid, condition.id);
+            SANet::LinkWeight causal_effect = this->planner_->get_link(threatened_task, causal_threatened.cond.id);
+
+           
+            if((threat_effect > 0 && causal_effect < 0 )|| (threat_effect < 0 && causal_effect > 0)){
+
+              if(causal_threatened.first != threat_possibility && causal_threatened.second != threat_possibility)
+              {
+                TaskID threatened_task1 = this->task_insts_.find(causal_threatened.first)->second;
+                TaskID threatened_task2 = this->task_insts_.find(causal_threatened.second)->second;
+
+                CLThreat new_threat;
+                new_threat.clink = causal_threatened;
+                new_threat.threat = threat_possibility;
+                threat_set.insert(new_threat);
+
+                file_op<<"        New threat: causal link from "<<causal_threatened.first<<" ("<<threatened_task1<<") to "<<causal_threatened.second<<" ("<<threatened_task2<<") using condition "<<causal_threatened.cond.id<<" threatened by "<<threat_possibility<<" ("<<threat_possibility_taskid<<")\n";
+
+              }
+             }
+        }
+      }
+   }
+
+  file_op.close();
+
+
+*/
+
+  debug_text.clear();
+
+  debug_text << "SA_WorkingPlan::generate_all_threats:  All Tasks Instances: " << std::endl;
+    
+  for(InstToTaskMap::iterator iterator = this->task_insts_.begin(); iterator != this->task_insts_.end(); iterator++){
+    TaskInstID threat_possibility = iterator->first;
+    TaskID threat_possibility_taskid = iterator->second;
+    
+    debug_text <<"  Task (" <<threat_possibility_taskid << ")"<< ": Inst (" <<iterator->first << ")" << std::endl;
+  }
+  
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+  debug_text.clear();
+
+  debug_text << "SA_WorkingPlan::generate_all_threats:  All Causal Threats: " << std::endl;
+
+
+  for(InstToTaskMap::iterator iterator = this->task_insts_.begin(); iterator != this->task_insts_.end(); iterator++){
+    TaskInstID threat_possibility = iterator->first;
+    TaskID threat_possibility_taskid = iterator->second;
+    CondSet set = this->planner_->get_effects(threat_possibility_taskid);
+
+    for(CondSet::iterator arr = set.begin(); arr != set.end(); arr++){ 
+
+        Condition condition = (*arr);
+
+        std::pair<
+          CondToCLinksMap::iterator,
+          CondToCLinksMap::iterator
+            > ret = this->causal_links_.equal_range(condition);
+      
+
+        for(CondToCLinksMap::iterator nit = ret.first; nit != ret.second; nit++){
+
+            CausalLink causal_threatened = (*nit).second;
+            TaskID threatened_task = this->task_insts_.find(causal_threatened.first)->second;
+
+            SANet::LinkWeight threat_effect = this->planner_->get_link(threat_possibility_taskid, condition.id);
+            SANet::LinkWeight causal_effect = this->planner_->get_link(threatened_task, causal_threatened.cond.id);
+
+           
+            if((threat_effect > 0 && causal_effect < 0 )|| (threat_effect < 0 && causal_effect > 0)){
+
+              if(causal_threatened.first != threat_possibility && causal_threatened.second != threat_possibility)
+              {
+                TaskID threatened_task1 = this->task_insts_.find(causal_threatened.first)->second;
+                TaskID threatened_task2 = this->task_insts_.find(causal_threatened.second)->second;
+
+                CLThreat new_threat;
+                new_threat.clink = causal_threatened;
+                new_threat.threat = threat_possibility;
+                threat_set.insert(new_threat);
+
+                debug_text <<"  Causal link from Task ("<< threatened_task1 <<") Inst ("<< causal_threatened.first <<") to Task ("<< threatened_task2 <<") Inst ("<< causal_threatened.second <<") using condition "<<causal_threatened.cond.id<<" threatened by Task ("<< threat_possibility_taskid <<") Inst ("<<threat_possibility<<")" << std::endl;
+             
+              
+              }
+             }
+        }
+      }
+   }
+
+  
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+  debug_text.clear();
+
+  
+  
+}
+
+
 // Get all current causal link threats.
 CLThreatSet SA_WorkingPlan::get_all_threats (void)
-{
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-  CLThreatSet temp;
-  temp.clear ();
-  return temp;
+{ 
+  return threat_set;
 };
 
 //Get all the causal and data links TO the task instance
@@ -637,29 +791,54 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 {
 	// Get task ID, condition, and instance ID.
   TaskID task = cmd->tasks_.front ();
+
+  
+
   Condition cond = cmd->cond_;
   TaskInstID task_inst;
+  
+  // If trying a new task (i.e., not still trying task instances for same task), get existing task instances for that task from working plan. 
   if(cmd->last_task_ != task)
   {
-	  // The task instance is reused.
+	  // Get existing task instances for current task.
     for(InstToTaskMap::iterator iter = this->task_insts_.begin(); iter!=this->task_insts_.end();iter++)
       if(iter->second==cmd->tasks_.front()) 
         cmd->used_task_insts_.insert(iter->first);
   }
+
+  // If there are no/no-more existing task instances to try, create new task instance.
   if(cmd->used_task_insts_.empty()) 
   {
+    if(task == 20 && this->planner_->init_added)
+    {
+      throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
+    }
+
+    this->planner_->init_added =  true;
+  
     task_inst = this->get_next_inst_id ();
     // Add task instance.
     this->task_insts_.insert (std::make_pair (task_inst, task));
-	  //   Remove task from command and update last task and instance.
-	  cmd->tasks_.pop_front ();
+    //   Remove this task from tasks still to try.
+    cmd->tasks_.pop_front ();
+    
+    
+    
   }
-  else 
+  else
   {
 	  // Reuse the task instance
     task_inst = *cmd->used_task_insts_.begin();
 		this->reused_insts_.insert(task_inst);
+
+    // NOTE: task instance removed from existing task instances to try in undo.
 	}
+
+  std::ostringstream debug_text;
+  debug_text << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding task (" << task << ") instance (" << task_inst << ") for condition (" << cond.id << ").";
+
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+
   // Create causal links for each task instance depending on the condition.
   for (TaskInstSet::iterator inst_iter = cmd->task_insts_.begin ();
     inst_iter != cmd->task_insts_.end (); inst_iter++)
@@ -669,21 +848,38 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
     clink.first = task_inst;
     clink.second = *inst_iter;
     CondToCLinksMap::iterator links_iter;
+
+    // Check whether this causal link already exists in working plan.
     for (links_iter = this->causal_links_.lower_bound (cond);links_iter != this->causal_links_.upper_bound (cond);links_iter++)
       if(links_iter->second == clink)
         break;
+    // If causal link not found in working plan, add it to causal links and ordering links.
     if(links_iter==this->causal_links_.upper_bound(cond))
     {
+      std::ostringstream debug_text2;
+      debug_text2 << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding causal link (" << clink.first << " -" << clink.cond.id << "-> " << clink.second << ")";
+      SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text2.str ());
+
       this->causal_links_.insert (std::make_pair (cond, clink));
-      cmd->added_links_.insert(clink);
+
+      if(clink.second != GOAL_TASK_INST_ID){
+        this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.first, clink.second));
+        this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.second, clink.first));
+      }
+       cmd->added_links_.insert(clink);
     }
   }
+
+  // Set this task and task instance as last used by command.
 	cmd->last_task_ = task;
 	cmd->last_task_inst_ = task_inst;
 };
 
 void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 {
+
+
+
   if(cmd->used_task_insts_.empty())
   {
     // Remove task instance.
@@ -694,6 +890,12 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 	  cmd->used_task_insts_.erase(cmd->used_task_insts_.begin());
     this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
   }
+
+
+
+
+
+
   // Remove causal links.
   for (SA_WorkingPlan::CondToCLinksMap::iterator cl_iter =
     this->causal_links_.lower_bound (cmd->cond_);
@@ -707,8 +909,31 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
       {
         if(prev_iter->second == *iter)  
         {
+          
+          CausalLink clink = prev_iter->second;
+          
           this->causal_links_.erase (prev_iter);
           cmd->added_links_.erase(iter);
+
+          
+          std::pair<SchedulingLinks::iterator, SchedulingLinks::iterator> ret =
+          ordering_links.equal_range(clink.first);
+          SchedulingLinks::iterator it;
+          for(it = ret.first; it != ret.second; it++){
+            if(it->second == clink.second){
+              break;
+            }
+          }              
+          this->ordering_links.erase(it);
+
+          ret = reverse_ordering_links.equal_range(clink.second);
+          for(it = ret.first; it != ret.second; it++){
+            if(it->second == clink.first){
+              break;
+            }
+          }
+          this->reverse_ordering_links.erase(it);
+       
           break;
         }
       }
@@ -730,19 +955,109 @@ bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
   cmd->last_impl_ = cmd->impls_.front ();
   cmd->impls_.pop_front ();
 	// Update the precedence graph
+
+  //Ben changed this.  undo by returning that stuff
+
+  cmd->got_to_scheduling = true;
+
+  if(is_cycle_in_ordering()){
+    cmd->got_to_scheduling = false;
+    return false;
+  }
+
+/*
+
+  std::map<TaskInstID, bool> un_visited_map;
+  std::map<TaskInstID, bool> visited_map;
+  std::stack<TaskInstID> s;
+
+  for(InstToTaskMap::iterator it = this->task_insts_.begin(); it != this->task_insts_.end(); it++){
+    un_visited_map.insert(std::pair<TaskInstID, bool>(it->first, true));
+
+  }
+
+  int total_num = un_visited_map.size();
+  while(!(s.size()== total_num)){
+
+    std::map<TaskInstID, bool>::iterator some_it = un_visited_map.begin();
+    TaskInstID next = some_it->first;
+    dfs_aux(next, s, visited_map, un_visited_map);
+  }
+
+  visited_map.clear();
+
+  cmd->got_to_scheduling = true;
+
+  while(!s.empty()){
+    TaskInstID next = s.top();
+    s.pop();
+
+    if(!dfs_aux2(next, visited_map)){
+      cmd->got_to_scheduling = false;     
+      return false;
+    }
+  }
+*/
+
   return this->init_prec_insert(cmd->task_inst_,cmd);
 };
+
+
+bool SA_WorkingPlan::is_cycle_in_ordering(){
+
+  std::ostringstream debug_text;
+  
+
+
+  std::map<TaskInstID, bool> un_visited_map;
+  std::map<TaskInstID, bool> visited_map;
+  std::stack<TaskInstID> s;
+
+  for(InstToTaskMap::iterator it = this->task_insts_.begin(); it != this->task_insts_.end(); it++){
+    un_visited_map.insert(std::pair<TaskInstID, bool>(it->first, true));
+
+  }
+
+  int total_num = un_visited_map.size();
+  while(!(s.size()== total_num)){
+
+    std::map<TaskInstID, bool>::iterator some_it = un_visited_map.begin();
+    TaskInstID next = some_it->first;
+    dfs_aux(next, s, visited_map, un_visited_map);
+  }
+
+  visited_map.clear();
+
+
+  while(!s.empty()){
+    TaskInstID next = s.top();
+    s.pop();
+
+    if(!dfs_aux2(next, visited_map)){  
+
+      
+      debug_text << "SA_WorkingPlan::is_cycle_in_ordering:  FOUND A LOOP IN THREAT SCHEDULE" << std::endl;
+      SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+      return true;
+    }
+  }
+
+  return false;
+}
 
 // Undo a command to associate an implementation with a
 // task instance in the plan.
 void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
 {
 	// Undo the time window adjustments and the precedence graph updations.
-  this->undo(&cmd->max_adj_cmd);
-  this->undo(&cmd->min_adj_cmd);
-	this->prec_erase(cmd->task_inst_,cmd);
-  cmd->causal_insertions.clear();
-  cmd->simul_insertions.clear();
+  if(cmd->got_to_scheduling){
+    this->undo(&cmd->max_adj_cmd);
+    this->undo(&cmd->min_adj_cmd);
+	  this->prec_erase(cmd->task_inst_,cmd);
+    cmd->causal_insertions.clear();
+    cmd->simul_insertions.clear();
+  }
+
   if(this->reused_insts_.find(cmd->task_inst_)==this->reused_insts_.end())
   {
     this->durations.erase(this->durations.find(cmd->task_inst_));
@@ -752,17 +1067,518 @@ void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
 
 // Execute a command to resolve a causal link threat in the
 // plan (with promotion or demotion).
-void SA_WorkingPlan::execute (SA_ResolveCLThreatCmd *)
+bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+
+  std::ostringstream debug_text;
+ 
+
+
+
+
+	TaskInstID first_task_inst = cmd->first;
+	TaskInstID second_task_inst = cmd->second;
+  Condition condition = cmd->condition;
+
+ // CausalLink cl;
+ // cl.cond = condition;
+ // cl.first = first_task_inst;
+ // cl.second = second_task_inst;
+
+ // this->causal_links_.insert(std::pair<Condition, CausalLink>(condition, cl));
+  this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(first_task_inst, second_task_inst));
+  this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(second_task_inst, first_task_inst));
+
+/*
+
+
+  std::map<TaskInstID, bool> un_visited_map;
+  std::map<TaskInstID, bool> visited_map;
+  std::stack<TaskInstID> s;
+
+  for(InstToTaskMap::iterator it = this->task_insts_.begin(); it != this->task_insts_.end(); it++){
+    un_visited_map.insert(std::pair<TaskInstID, bool>(it->first, true));
+  }
+
+  int total_num = un_visited_map.size();
+
+  while(!(s.size()== total_num)){
+
+    std::map<TaskInstID, bool>::iterator some_it = un_visited_map.begin();
+    TaskInstID next = some_it->first;
+    dfs_aux(next, s, visited_map, un_visited_map);
+
+  }
+
+  visited_map.clear();
+
+  while(!s.empty()){
+    TaskInstID next = s.top();
+    s.pop();
+
+    if(!dfs_aux2(next, visited_map))
+      return false;
+  }
+
+  */
+
+  cmd->got_to_change_precedences = true;
+  if(is_cycle_in_ordering()){
+
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule task inst"<<cmd->first<<" before task inst"<<cmd->second<<std::endl;
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.clear();
+
+
+    cmd->got_to_change_precedences = false;
+    return false;
+  }
+
+ // this->init_prec_insert(this->associate_cmd->task_inst_,this->associate_cmd);
+
+ // this->after_orderings
+
+  PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
+  PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
+  PrecedenceSet* simuls = &this->precedence_graph_.find(SIMUL)->second;
+  PrecedenceSet* unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+
+  TaskInstSet *before_A = &befores->find(cmd->first)->second;
+  TaskInstSet *after_A = &afters->find(cmd->first)->second;
+  TaskInstSet *simul_A = &simuls->find(cmd->first)->second;
+  TaskInstSet *unranked_A = &unrankeds->find(cmd->first)->second;
+	
+  TaskInstSet *before_B = &befores->find(cmd->second)->second;
+  TaskInstSet *after_B = &afters->find(cmd->second)->second;
+  TaskInstSet *simul_B = &simuls->find(cmd->second)->second;
+  TaskInstSet *unranked_B = &unrankeds->find(cmd->second)->second;
+
+  /*
+  cmd->before_A_old = *before_A;
+  cmd->after_A_old = *after_A;
+  cmd->simul_A_old = *simul_A;
+  cmd->unsched_A_old = *unranked_A;
+
+  cmd->before_B_old = *before_B;
+  cmd->after_B_old = *after_B;
+  cmd->simul_B_old = *simul_B;
+  cmd->unsched_B_old = *unranked_B;
+*/
+  cmd->befores = *befores;
+  cmd->afters = *afters;
+  cmd->simuls = *simuls;
+  cmd->unrankeds = *unrankeds;
+
+  TaskInstSet tmp;
+
+  /*
+  for(TaskInstSet::iterator it = unranked_A->begin(); it != unranked_A->end(); it++){
+    if(unranked_B->find(*it)!=unranked_B->end()){
+      tmp.insert(*it);
+    }
+  }
+
+
+  unranked_A->clear();
+  unranked_B->clear();
+  for(TaskInstSet::iterator it = tmp.begin(); it != tmp.end(); it++){
+    unranked_A->insert(*it);
+    unranked_B->insert(*it);
+  }
+  */
+
+  before_B->insert(cmd->first);
+  unranked_B->erase(cmd->first);
+
+  for(TaskInstSet::iterator it = before_A->begin(); it != before_A->end(); it++){
+    before_B->insert(*it);
+    unranked_B->erase(*it);
+
+    afters->find(*it)->second.insert(cmd->second);
+    unrankeds->find(*it)->second.erase(cmd->second);
+  }
+
+  after_A->insert(cmd->second);
+  unranked_A->erase(cmd->second);
+
+  for(TaskInstSet::iterator it = after_B->begin(); it != after_B->end(); it++){
+    after_A->insert(*it);
+    unranked_A->erase(*it);
+
+    befores->find(*it)->second.insert(cmd->first);
+    unrankeds->find(*it)->second.erase(cmd->first);
+  }
+
+  debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Now scheduling task "<<cmd->first<<" before "<<cmd->second<<std::endl;
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+  debug_text.clear();
+  
+
+
+
+
+
+
+
+
+
+    PrecedenceSet* new_befores = &this->precedence_graph_.find(BEFORE)->second;
+    PrecedenceSet* new_afters = &this->precedence_graph_.find(AFTER)->second;
+    PrecedenceSet* new_simuls = &this->precedence_graph_.find(SIMUL)->second;
+    PrecedenceSet* new_unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Precendence Sets: BEFORE: " << std::endl;
+    for(PrecedenceSet::iterator it = new_befores->begin(); it != new_befores->end(); it++){
+      debug_text<<"  TaskInst ID "<<it->first<<" : ";
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        debug_text<<" "<<*jt;
+      }
+      debug_text<<std::endl;
+    }
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.clear();
+
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Precendence Sets: AFTER: " << std::endl;
+    for(PrecedenceSet::iterator it = new_afters->begin(); it != new_afters->end(); it++){
+      debug_text<<"  TaskInst ID "<<it->first<<" : ";
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        debug_text<<" "<<*jt;
+      }
+            debug_text<<std::endl;
+    }
+    
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.clear();
+
+
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Precendence Sets: SIMUL: " << std::endl;
+    for(PrecedenceSet::iterator it = new_simuls->begin(); it != new_simuls->end(); it++){
+      debug_text<<"  TaskInst ID "<<it->first<<" : ";
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        debug_text<<" "<<*jt;
+      }
+            debug_text<<std::endl;
+    }
+
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.clear();
+
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Precendence Sets: UNRANKED: " << std::endl;
+    for(PrecedenceSet::iterator it = new_unrankeds->begin(); it != new_unrankeds->end(); it++){
+      debug_text<<"  TaskInst ID "<<it->first<<" : ";
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        debug_text<<" "<<*jt;
+      }
+            debug_text<<std::endl;
+    }
+    
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.clear();
+
+  return true;
+
+/*
+
+	TimeWindow first_start,second_start;
+	TimeWindow first_end,second_end;
+	first_start = this->get_start_window(first_task_inst);
+	first_end = this->get_end_window(first_task_inst);
+	second_start = this->get_start_window(second_task_inst);
+	second_end = this->get_end_window(second_task_inst);
+	
+	if(second_start.second!= NULL_TIME && (first_end.second==NULL_TIME || second_start.second<first_end.second))
+	{
+  fstream file_op("outfile.txt",ios::app);
+  file_op<<"place 1"<<std::endl;
+  file_op.close();
+
+
+		// There is a need to adjust the max times
+		cmd->adj_max_times_cmd_ = static_cast<SA_AdjustMaxTimesCmd *> (this->get_AdjustMaxTimesCmd());
+		cmd->adj_max_times_cmd_->set_times(first_task_inst,second_start.second-this->get_duration(first_task_inst),second_start.second);
+		if(!this->execute(cmd->adj_max_times_cmd_))
+			return false;
+	}
+	else cmd->adj_max_times_cmd_=NULL;
+	if(first_end.first!= NULL_TIME && second_start.first<first_end.first)
+	{
+  fstream file_op("outfile.txt",ios::app);
+  file_op<<"place 2"<<std::endl;
+  file_op.close();
+
+
+		// There is a need to adjust the min times
+		cmd->adj_min_times_cmd_ = static_cast<SA_AdjustMinTimesCmd *> (this->get_AdjustMinTimesCmd());
+		cmd->adj_min_times_cmd_->set_times(second_task_inst,first_end.first,first_end.first+this->get_duration(second_task_inst));
+		if(!this->execute(cmd->adj_min_times_cmd_))
+			return false;
+	}
+	else cmd->adj_min_times_cmd_=NULL;
+	
+	PrecedenceSet *before = &this->precedence_graph_.find(BEFORE)->second;
+	PrecedenceSet *after = &this->precedence_graph_.find(AFTER)->second;
+	PrecedenceSet *simul = &this->precedence_graph_.find(SIMUL)->second;
+	PrecedenceSet *unranked = &this->precedence_graph_.find(UNRANKED)->second;
+	
+	before->find(second_task_inst)->second.insert(first_task_inst);
+	after->find(first_task_inst)->second.insert(second_task_inst);
+	unranked->find(first_task_inst)->second.erase(unranked->find(first_task_inst)->second.find(second_task_inst));
+	unranked->find(second_task_inst)->second.erase(unranked->find(second_task_inst)->second.find(first_task_inst));
+	
+	TaskInstSet after_second = this->after_orderings(second_task_inst);
+	for(TaskInstSet::iterator iter=simul->find(second_task_inst)->second.begin();iter!=simul->find(second_task_inst)->second.end();iter++)
+		after_second.insert(*iter);
+	TaskInstSet before_first = this->before_orderings(first_task_inst);
+	for(TaskInstSet::iterator iter=simul->find(first_task_inst)->second.begin();iter!=simul->find(first_task_inst)->second.end();iter++)
+		before_first.insert(*iter);
+	// All the task instances after and simultaneous to the second task instance should
+	// be after all the task instances before and simultaneous to the first task instance
+	for(TaskInstSet::iterator iter=after_second.begin();iter!=after_second.end();iter++)
+	{
+		if(before->find(*iter)->second.find(first_task_inst)==before->find(*iter)->second.end())
+		{
+			SA_ResolveCLThreatCmd *temp = static_cast<SA_ResolveCLThreatCmd *> (this->get_ResolveCLThreatCmd());
+			temp->set_task_insts(first_task_inst,*iter);
+			cmd->cmds_.push_back(temp);
+			if(!this->execute(temp)) return false;
+		}
+	}
+	// All the task instances before and simultaneous to the first task instance should
+	// be before all the task instances after and simultaneous to the second task instance
+	for(TaskInstSet::iterator iter=before_first.begin();iter!=before_first.end();iter++)
+	{
+		if(after->find(*iter)->second.find(second_task_inst)==after->find(*iter)->second.end())
+		{
+			SA_ResolveCLThreatCmd *temp = static_cast<SA_ResolveCLThreatCmd *> (this->get_ResolveCLThreatCmd());
+			temp->set_task_insts(*iter,second_task_inst);
+			cmd->cmds_.push_back(temp);
+			if(!this->execute(temp)) return false;
+		}
+	}
+	return true;
+
+  */
 };
+
+void SA_WorkingPlan::dfs_aux(TaskInstID current, std::stack<TaskInstID>& s, std::map<TaskInstID, bool>& visited, std::map<TaskInstID, bool>& unvisited){
+
+
+
+  unvisited.erase(current);
+  visited.insert(std::pair<TaskInstID, bool>(current, true));
+
+    std::pair<
+        SchedulingLinks::iterator,
+        SchedulingLinks::iterator
+            > ret = this->ordering_links.equal_range(current);
+
+    for(SchedulingLinks::iterator it = ret.first; it != ret.second; it++){
+      TaskInstID hah = it->second;
+      if(visited.find(hah)==visited.end()){
+        dfs_aux(it->second, s, visited, unvisited);
+      }
+    }
+
+   s.push(current);
+
+}
+
+bool SA_WorkingPlan::dfs_aux2(TaskInstID current, std::map<TaskInstID, bool>& visited){
+
+  visited.insert(std::pair<TaskInstID, bool>(current, true));
+
+    std::pair<
+        SchedulingLinks::iterator,
+        SchedulingLinks::iterator
+            > ret = this->reverse_ordering_links.equal_range(current);
+
+    for(SchedulingLinks::iterator it = ret.first; it != ret.second; it++){
+      TaskInstID hah = it->second;
+      if(visited.find(hah)==visited.end()){
+        return false;
+      }
+    }
+
+    return true;
+}
 
 // Undo a command to resolve a causal link threat in the
 // plan (with promotion or demotion).
-void SA_WorkingPlan::undo (SA_ResolveCLThreatCmd *)
+void SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-};
+
+  std::ostringstream debug_text;
+
+  debug_text << "SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd): Undoing scheduling task "<<cmd->first<<" before "<<cmd->second<<std::endl;
+  
+
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+  debug_text.clear();
+
+  if(cmd->got_to_change_precedences){
+
+
+    PrecedenceSet* new_befores = &this->precedence_graph_.find(BEFORE)->second;
+    PrecedenceSet* new_afters = &this->precedence_graph_.find(AFTER)->second;
+    PrecedenceSet* new_simuls = &this->precedence_graph_.find(SIMUL)->second;
+    PrecedenceSet* new_unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+
+    for(PrecedenceSet::iterator it = cmd->befores.begin(); it != cmd->befores.end(); it++){
+      new_befores->find(it->first)->second.clear();
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        new_befores->find(it->first)->second.insert(*jt);
+      }
+    }
+
+    for(PrecedenceSet::iterator it = cmd->afters.begin(); it != cmd->afters.end(); it++){
+      new_afters->find(it->first)->second.clear();
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        new_afters->find(it->first)->second.insert(*jt);
+      }
+    }
+
+    for(PrecedenceSet::iterator it = cmd->simuls.begin(); it != cmd->simuls.end(); it++){
+      new_simuls->find(it->first)->second.clear();
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        new_simuls->find(it->first)->second.insert(*jt);
+      }
+    }
+
+    for(PrecedenceSet::iterator it = cmd->unrankeds.begin(); it != cmd->unrankeds.end(); it++){
+      new_unrankeds->find(it->first)->second.clear();
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        new_unrankeds->find(it->first)->second.insert(*jt);
+      }
+    }
+
+/*
+
+  TaskInstSet *before_A = &this->precedence_graph_.find(BEFORE)->second.find(cmd->first)->second;
+  TaskInstSet *after_A = &this->precedence_graph_.find(AFTER)->second.find(cmd->first)->second;
+  TaskInstSet *simul_A = &this->precedence_graph_.find(SIMUL)->second.find(cmd->first)->second;
+  TaskInstSet *unranked_A = &this->precedence_graph_.find(UNRANKED)->second.find(cmd->first)->second;
+	
+  TaskInstSet *before_B = &this->precedence_graph_.find(BEFORE)->second.find(cmd->second)->second;
+  TaskInstSet *after_B = &this->precedence_graph_.find(AFTER)->second.find(cmd->second)->second;
+  TaskInstSet *simul_B = &this->precedence_graph_.find(SIMUL)->second.find(cmd->second)->second;
+  TaskInstSet *unranked_B = &this->precedence_graph_.find(UNRANKED)->second.find(cmd->second)->second;
+
+  before_A->clear();
+  for(TaskInstSet::iterator it = cmd->before_A_old.begin(); it != cmd->before_A_old.end(); it++){
+    before_A->insert(*it);
+  }
+
+  after_A->clear();
+  for(TaskInstSet::iterator it = cmd->after_A_old.begin(); it != cmd->after_A_old.end(); it++){
+    after_A->insert(*it);
+  }
+
+  simul_A->clear();
+  for(TaskInstSet::iterator it = cmd->simul_A_old.begin(); it != cmd->simul_A_old.end(); it++){
+    simul_A->insert(*it);
+  }
+
+  unranked_A->clear();
+  for(TaskInstSet::iterator it = cmd->unsched_A_old.begin(); it != cmd->unsched_A_old.end(); it++){
+    unranked_A->insert(*it);
+  }
+
+  before_B->clear();
+  for(TaskInstSet::iterator it = cmd->before_B_old.begin(); it != cmd->before_B_old.end(); it++){
+    before_B->insert(*it);
+  }
+
+  after_B->clear();
+  for(TaskInstSet::iterator it = cmd->after_B_old.begin(); it != cmd->after_B_old.end(); it++){
+    after_B->insert(*it);
+  }
+
+  simul_B->clear();
+  for(TaskInstSet::iterator it = cmd->simul_B_old.begin(); it != cmd->simul_B_old.end(); it++){
+    simul_B->insert(*it);
+  }
+
+  unranked_B->clear();
+  for(TaskInstSet::iterator it = cmd->unsched_B_old.begin(); it != cmd->unsched_B_old.end(); it++){
+    unranked_B->insert(*it);
+  }
+
+  */
+  }
+
+  //before_A = cmd->before_A_old;
+ // after_A = cmd->after_A_old
+  //simul_A = cmd->simul_A_old;
+  //unranked_A = cmd->unsched_A_old;
+
+  //before_B = cmd->before_B_old;
+ // after_B = cmd->after_B_old;
+  //simul_B = cmd->simul_B_old;
+ // unranked_B = cmd->unsched_B_old;
+
+  //return;
+
+//  std::pair<CondToCLinksMap::iterator, CondToCLinksMap::iterator> firstmap
+//    = this->causal_links_.equal_range(cmd->condition);
+
+//  CondToCLinksMap::iterator firstit;
+
+//  for(firstit = firstmap.first; firstit != firstmap.second; firstit++){
+ //   if(firstit->second.first == cmd->first && firstit->second.second == cmd->second)
+ //     break;
+ // }
+
+//  this->causal_links_.erase(firstit);
+
+  std::pair<
+      std::multimap<TaskInstID, TaskInstID>::iterator,
+      std::multimap<TaskInstID, TaskInstID>::iterator
+      > ret = this->ordering_links.equal_range(cmd->first);
+
+  std::multimap<TaskInstID, TaskInstID>::iterator it;
+
+  for(it = ret.first; it != ret.second; it++){
+    if(it->second == cmd->second)
+      break;
+  //    this->ordering_links.erase(it);
+  }
+
+  this->ordering_links.erase(it);
+
+  ret = this->reverse_ordering_links.equal_range(cmd->second);
+
+  for(it = ret.first; it != ret.second; it++){
+    if(it->second == cmd->first)
+        break;
+  }
+
+  this->reverse_ordering_links.erase(it);
+
+
+  /*
+  
+  for(std::list<SA_ResolveCLThreatCmd*>::reverse_iterator iter=cmd->cmds_.rbegin();iter!=cmd->cmds_.rend();iter++)
+		this->undo(*iter);
+	
+	TaskInstID first_task_inst = cmd->first;
+	TaskInstID second_task_inst = cmd->second;
+
+	PrecedenceSet *before = &this->precedence_graph_.find(BEFORE)->second;
+	PrecedenceSet *after = &this->precedence_graph_.find(AFTER)->second;
+	PrecedenceSet *unranked = &this->precedence_graph_.find(UNRANKED)->second;
+	
+	before->find(second_task_inst)->second.erase(before->find(second_task_inst)->second.find(first_task_inst));
+	after->find(first_task_inst)->second.erase(after->find(first_task_inst)->second.find(second_task_inst));
+	unranked->find(first_task_inst)->second.insert(second_task_inst);
+	unranked->find(second_task_inst)->second.insert(first_task_inst);
+	if(cmd->adj_max_times_cmd_ != NULL) {
+		this->undo(cmd->adj_max_times_cmd_);
+	}
+	if(cmd->adj_min_times_cmd_ != NULL)this->undo(cmd->adj_min_times_cmd_);
+
+  
+  */
+  };
 
 // Execute a command to resolve a scheduling conflict (i.e.
 // non-causal-link ordering constraint with promotion or demotion)
@@ -907,7 +1723,10 @@ bool SA_WorkingPlan::execute (SA_AdjustMinTimesCmd *cmd)
 		cmd->min_adjust_cmds.push_back(temp);
     }
   }
+
   if(sched.empty()) std::cout<<"sched is empty"<<std::endl;
+
+
   for(TaskInstSet::iterator iter=sched.begin();iter!=sched.end();iter++)
   {
     TimeWindow temp_start = this->get_start_window(*iter);
@@ -915,10 +1734,13 @@ bool SA_WorkingPlan::execute (SA_AdjustMinTimesCmd *cmd)
     if(end_win->first>temp_start.first)
     {
       SA_AdjustMinTimesCmd* temp = static_cast<SA_AdjustMinTimesCmd *> (this->get_AdjustMinTimesCmd());
-		TimeValue dur = this->durations.find(*iter)->second;
-		if(dur!=0) temp->set_times(*iter,end_win->first,end_win->first+this->durations.find(*iter)->second);
-		else temp->set_times(*iter,end_win->first,temp_end.first);
+		  TimeValue dur = this->durations.find(*iter)->second;
+		  if(dur!=0) 
+        temp->set_times(*iter,end_win->first,end_win->first+this->durations.find(*iter)->second);
+      else 
+        temp->set_times(*iter,end_win->first,temp_end.first);
       cmd->min_adjust_cmds.push_back(temp);
+  
     }
   }
 	// Do the same change for the task instances simultaneous to this one
@@ -934,8 +1756,10 @@ bool SA_WorkingPlan::execute (SA_AdjustMinTimesCmd *cmd)
     }
   }
 
+
   for(SA_AdjustMinTimesCmd::MinTimesAdjustList::iterator iter=cmd->min_adjust_cmds.begin();iter!=cmd->min_adjust_cmds.end();iter++)
   {
+
     if(!this->execute(*iter)) return false;
   }
   std::cout<<"the task inst is "<<cmd->task_inst_<<std::endl;
@@ -1026,6 +1850,10 @@ bool SA_WorkingPlan::execute (SA_AdjustMaxTimesCmd *cmd)
       cmd->max_adjust_cmds.push_back(temp);
     }
   }
+
+  if(sched.empty()) std::cout<<"msched is empty ("<<cmd->task_inst_<<")"<<std::endl;
+  else
+  std::cout<<"mnot sched is empty ("<<cmd->task_inst_<<")"<<std::endl;
   
   for(TaskInstSet::iterator iter=sched.begin();iter!=sched.end();iter++)
   {
@@ -1165,6 +1993,7 @@ TimeValue SA_WorkingPlan::get_duration(TaskInstID task_inst)
 /// Adds the sched order to the sched_links_ map by putting the first task instance before the second
 void SA_WorkingPlan::add_sched_link(TaskInstID first_task_inst, TaskInstID second_task_inst)
 {
+  std::cout<<"Adding sched link insert"<<std::endl;
 	this->sched_links_.insert(std::make_pair(first_task_inst,second_task_inst));
 }
 /// Removes the sched order from the sched_links_ map

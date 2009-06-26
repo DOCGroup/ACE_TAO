@@ -23,6 +23,7 @@
 #include "SANet/SANetFileIn.h"
 #include "LogScreenOut.h"
 #include "LogGraphOut.h"
+//#include "SA_POP_Utils.h"
 
 #include <vector>
 #include <map>
@@ -44,7 +45,7 @@ void displayConds(SA_POP::Planner *plans, std::vector<SANet::CondID> checks, std
   //Produce Graph
   std::cout << "Create Digraph" << std::endl;
   cfile << "strict digraph conds {\n";
-  for(int node = 0; node< checks.size(); node++)
+  for(size_t node = 0; node< checks.size(); node++)
   {
 	  std::cout << "Next Cond" << std::endl;
 	 
@@ -93,6 +94,66 @@ int main (int argc, char* argv[])
   std::vector<SANet::CondID> toCheck;
   std::map<SANet::CondID, double> condMap;
 
+/*
+  SA_POP::ListMultiMap<int, int> intList;
+  
+  intList.insert(std::make_pair(1,2));
+  intList.insert(std::make_pair(5,6));
+  intList.insert(std::make_pair(5,7));
+  
+  for (SA_POP::ListMultiMap<int, int>::iterator list_iter = intList.lower_bound (5);list_iter != intList.upper_bound (5);list_iter++)
+  {
+    std::cout << list_iter->second << std::endl;
+  }
+
+  for (SA_POP::ListMultiMap<int, int>::iterator list_iter = intList.begin();list_iter != intList.end();list_iter++)
+  {
+    std::cout << list_iter->first << " FOR JOHN " <<list_iter->second << std::endl;
+  }
+
+  intList.erase(intList.lower_bound (5), intList.upper_bound (5));
+
+  for (SA_POP::ListMultiMap<int, int>::iterator list_iter = intList.begin();list_iter != intList.end();list_iter++)
+  {
+    std::cout << list_iter->first << " FOR JOHN " <<list_iter->second << std::endl;
+  }
+
+  intList.push_front(std::make_pair(9,9));
+  intList.push_front(std::make_pair(8,8));
+  intList.push_back(std::make_pair(7,7));
+
+  std::cout << "Front: " <<intList.front().first << " and " <<  intList.front().second << std::endl;
+  std::cout << "Back: " <<intList.back().first << " and " <<  intList.back().second << std::endl;
+  intList.pop_front();
+  std::cout << "Front: " <<intList.front().first << " and " <<  intList.front().second << std::endl;
+  std::cout << "Back: " <<intList.back().first << " and " <<  intList.back().second << std::endl;
+  intList.push_front(std::make_pair(12,12));
+  intList.push_front(std::make_pair(7,7));
+  for (SA_POP::ListMultiMap<int, int>::iterator list_iter = intList.begin();list_iter != intList.end();list_iter++)
+  {
+    std::cout << list_iter->first << " FOR JOHN " <<list_iter->second << std::endl;
+  }
+  std::cout << "Front: " <<intList.front().first << " and " <<  intList.front().second << std::endl;
+  std::cout << "Back: " <<intList.back().first << " and " <<  intList.back().second << std::endl;
+  intList.pop_back();
+  std::cout << "Front: " <<intList.front().first << " and " <<  intList.front().second << std::endl;
+  std::cout << "Back: " <<intList.back().first << " and " <<  intList.back().second << std::endl;
+  for (SA_POP::ListMultiMap<int, int>::iterator list_iter = intList.begin();list_iter != intList.end();list_iter++)
+  {
+    std::cout << list_iter->first << " FOR JOHN " <<list_iter->second << std::endl;
+  }
+  intList.push_back(std::make_pair(7,7));
+  std::cout << "Front: " <<intList.front().first << " and " <<  intList.front().second << std::endl;
+  std::cout << "Back: " <<intList.back().first << " and " <<  intList.back().second << std::endl;
+  intList.erase(intList.lower_bound (7));
+  std::cout << "Front: " <<intList.front().first << " and " <<  intList.front().second << std::endl;
+  std::cout << "Back: " <<intList.back().first << " and " <<  intList.back().second << std::endl;
+  for (SA_POP::ListMultiMap<int, int>::iterator list_iter = intList.begin();list_iter != intList.end();list_iter++)
+  {
+    std::cout << list_iter->first << " FOR JOHN " <<list_iter->second << std::endl;
+  }
+*/
+
   // Get filenames from user.
   std::cout << "Task Network file: ";
 //  sanet_filename = "../examples/output1.xml";
@@ -137,7 +198,7 @@ int main (int argc, char* argv[])
     std::cerr << std::endl;
     std::cerr << e;
   } catch (...) {
-    std::cerr << "UNKNOWN ERROR while planning." << std::endl;
+    std::cerr << "UNKNOWN ERROR while building task network and task map from files." << std::endl;
   }
 
 
@@ -187,9 +248,9 @@ int main (int argc, char* argv[])
     SA_POP::LogScreenOut screen_out (std::cout);
 	  graph_out.addTracking(toCheck);
     planner->add_out_adapter (&graph_out);
-	//SA_POP::SchemaOut s_out	(std::cout, *kconds);
+	  //SA_POP::SchemaOut s_out	(std::cout, *kconds);
     //planner->add_out_adapter (&s_out);
-	//planner->add_out_adapter (&screen_out);
+	  planner->add_out_adapter (&screen_out);
 
     planner->plan (100, goal);
   } catch (std::string e) {

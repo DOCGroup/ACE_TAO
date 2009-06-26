@@ -1,3 +1,40 @@
+Fri Jun 26 21:53:02 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+	
+        * C2W/C2W_Demo.cpp:
+	Cleaned up and contains code for testing MultiMapList
+
+        * LogGraphOut.cpp:
+	Changes to various display colors	
+        
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+	Getters and Setters for accessing components of the SANets
+	
+
+	* PlanCommands.h:
+        * Planner.h:
+        * Planner.cpp:
+        * SAPOP_w_ACE.mpc:
+        * SA_POP_Types.h:
+        * SA_PlanCommands.h:
+        * SA_PlanCommands.cpp:
+        * SA_PlanHeuristics.cpp:
+        * SA_PlanStrategy.h:
+        * SA_PlanStrategy.cpp:
+        * SA_SchedStrategy.cpp:
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+        * WorkingPlan.h:
+
+	This is in development changes for implementation of causal threat resolution. 
+
+        * SA_POP_Utils.h:
+        * SA_POP_Utils.cpp:
+	An implementation of a MultiMap with List like capabilities(i.e. ordering purposes)
+
 Fri Jun 12 20:58:24 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SANet/SANetFileIn.cpp:

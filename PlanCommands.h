@@ -84,6 +84,8 @@ namespace SA_POP {
      * @return  Log text for most recent execution of command.
      */
     virtual std::string get_log_text (void) = 0;
+    int choices;
+
 
   protected:
     /// ID of this command.
@@ -331,6 +333,10 @@ namespace SA_POP {
      * @param threat  The causal link threat to resolve.
      */
     virtual void set_threat (CLThreat &threat) = 0;
+    
+
+   virtual TaskInstID get_first_task(void) = 0;
+   virtual TaskInstID get_second_task(void)=0;
   };
 
   /**

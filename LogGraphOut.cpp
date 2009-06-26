@@ -25,6 +25,7 @@
 #include "Planner.h"
 #include <fstream>
 #include <vector>
+//#include "Thread.h"
 //#include "gvc.h"
 //#include "mfg_draw_graph.h"
 //#include "mfg_graph_drawer.h"
@@ -72,12 +73,14 @@ void LogGraphOut::notify_eu (SA_POP::Planner *planner)
   }
 }
 
+
 unsigned long WINAPI SecondThread(PVOID pvParam)
 {
 	system("dot -Tgif GViz.dot -o step.gif");
 	system("step.gif");
 	return 0;
 }
+
 
 
 // Notify about plan changes.
@@ -339,6 +342,8 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   HANDLE hThread = CreateThread(NULL, 0, SecondThread, (PVOID) imageName,
 								0, &dwThreadId);
   CloseHandle(hThread);
+  //int spawn (ACE_THR_FUNC SecondThread);
+
   //system("dot -Tgif GViz.dot -o step.gif");
   //system("step.gif");
 

@@ -46,7 +46,7 @@ Condition SA_CondStrategy::choose_cond (const OpenCondMap &open_conds)
   }
 
   // If no data conditions, just return first condition.
-  return open_conds.begin ()->first;
+  return open_conds.front().first;
 };
 
 
@@ -69,6 +69,10 @@ TaskList SA_TaskStrategy::choose_task (Condition open_cond)
 {
   TaskSet tasks = this->planner_->get_satisfying_tasks (open_cond);
 
+  if(this->planner_->init_added){
+    tasks.erase(20);
+  }
+    
   // Add tasks to map with EU (to sort).
   std::map<EUCalc, TaskID> task_map;
   task_map.clear ();

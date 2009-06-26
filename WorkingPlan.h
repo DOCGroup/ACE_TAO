@@ -194,6 +194,8 @@ namespace SA_POP {
      */
     virtual AdjustMaxTimesCmd *get_AdjustMaxTimesCmd (void) = 0;
 
+    virtual void generate_all_threats(void) = 0;
+
   protected:
     /// Pointer to Planner object.
     SA_POP::Planner *planner_;

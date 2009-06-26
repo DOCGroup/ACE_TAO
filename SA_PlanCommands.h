@@ -355,6 +355,8 @@ namespace SA_POP {
     SA_AdjustMinTimesCmd min_adj_cmd;
 	SA_AdjustMaxTimesCmd max_adj_cmd;
 	
+    bool got_to_scheduling;
+
 	// The changes made in the precedence set due to the selection of this task instance
 	// are recorded in these sets.
 	std::set< std::pair<TaskInstID,TaskInstID> > causal_insertions;
@@ -541,6 +543,12 @@ namespace SA_POP {
     /// PlanStrategy object that this command works on.
     SA_PlanStrategy *plan_strat_;
 
+    /// Set of Threats to add to open threats.
+    CLThreatSet threats_;
+
+    /// Flag for whether this has been executed.
+    bool has_executed_;
+
   };
 
   /**
@@ -596,6 +604,14 @@ namespace SA_POP {
     /// PlanStrategy object that this command works on.
     SA_PlanStrategy *plan_strat_;
 
+    /// Set of threats to remove from open threats.
+    CLThreatSet threats_;
+
+    /// Flag for whether this has been executed.
+    bool executed_;
+
+
+
   };
 
   /**
@@ -646,10 +662,47 @@ namespace SA_POP {
      */
     virtual void set_threat (CLThreat &threat);
 
+
+    /// Set the task instances to order.
+    /**
+     * @param task_inst_a  One task instance.
+     *
+     * @param task_inst_b  The other task instance.
+     */
+    virtual void set_task_insts (TaskInstID task_inst_a,
+      TaskInstID task_inst_b);
+
+  //  int choices;
+    // A Type of a list of ResolveSchedOrderCmd pointers
+	typedef std::list<SA_ResolveCLThreatCmd* > ResolveCLThreatCmdList;
+
+  virtual TaskInstID get_first_task(void){return first;}
+  virtual TaskInstID get_second_task(void){return second;}
+
   protected:
     /// WorkingPlan object that this command works on.
     SA_WorkingPlan *working_plan_;
 
+    CLThreat threat;
+    // The first task instance is scheduled before the second one
+	  TaskInstID first,second;
+    Condition condition;
+
+    std::map <TaskInstID, TaskInstSet> befores;
+    std::map <TaskInstID, TaskInstSet> afters;
+    std::map <TaskInstID, TaskInstSet> simuls;
+    std::map <TaskInstID, TaskInstSet> unrankeds;
+    
+    bool got_to_change_precedences;
+
+
+    	// The min and the max times changed due to this command
+	  SA_AdjustMinTimesCmd *adj_min_times_cmd_;
+	  SA_AdjustMaxTimesCmd *adj_max_times_cmd_;
+
+    // A list of all the scheduling orderings introduced by this command
+    // This may need to change for a list of ResolveThreatCmd List
+	  ResolveCLThreatCmdList cmds_;
   };
 
   /**
@@ -717,6 +770,7 @@ namespace SA_POP {
 
 	// The first task instance is scheduled before the second one
 	TaskInstID first,second;
+
 
 	// The min and the max times changed due to this command
 	SA_AdjustMinTimesCmd *adj_min_times_cmd_;
