@@ -230,6 +230,8 @@ namespace CIAO_Stock_StockDistributor_Impl
     create ();
   };
 
+  extern "C" STOCKDISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Stock_StockDistributorComp_Impl (void);
   extern "C" STOCKDISTRIBUTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Stock_StockDistributorHome_Impl (void);
 }

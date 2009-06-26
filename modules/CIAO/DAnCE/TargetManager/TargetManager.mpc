@@ -28,9 +28,10 @@ project(DAnCE_TargetManager_stub) : dance_lib, dance_deployment_stub {
 
 project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming {
   sharedname = DAnCE_TargetManager_Impl
-  libs += DAnCE_TargetManager_stub DAnCE_TargetManager_svnt
+  libs += DAnCE_TargetManager_stub DAnCE_TargetManager_svnt DAnCE_Deployment_svnt \
+          DAnCE_Deployment_svnt TAO_IORTable TAO_Utils
   after += DAnCE_TargetManager_svnt 
-  dynamicflags = DANCE_TARGETMANAGER_IMPL_BUILD_DLL
+  dynamicflags = DANCE_TARGETMANAGER_IMPL_BUILD_DLL TARGETMANAGER_MODULE_BUILD_DLL
 
   Source_Files {
     DomainDataManager.cpp
