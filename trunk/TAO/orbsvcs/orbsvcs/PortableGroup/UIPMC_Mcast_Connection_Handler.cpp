@@ -228,4 +228,11 @@ TAO_UIPMC_Mcast_Connection_Handler::add_transport_to_cache (void)
                                                this->transport ());
 }
 
+int
+TAO_UIPMC_Mcast_Connection_Handler::handle_write_ready
+  (const ACE_Time_Value *t)
+{
+  return ACE::handle_write_ready (this->peer ().get_handle (), t);
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

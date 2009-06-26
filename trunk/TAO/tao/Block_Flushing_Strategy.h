@@ -22,6 +22,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace TAO
+{
+  namespace Transport
+  {
+    class Drain_Constraints;
+  }
+}
+
 /**
  * @class TAO_Block_Flushing_Strategy
  *
@@ -37,6 +45,10 @@ public:
                              ACE_Time_Value *max_wait_time);
   virtual int flush_transport (TAO_Transport *transport
                                , ACE_Time_Value *max_wait_time);
+
+private:
+  int call_handle_output (TAO_Transport *transport,
+                          const TAO::Transport::Drain_Constraints &dc);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

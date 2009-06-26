@@ -266,6 +266,12 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
   return cache.cache_transport (&prop, this->transport ());
 }
 
+int
+TAO_SHMIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+{
+  return ACE::handle_write_ready (this->peer ().get_handle (), t);
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /*(TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0) */
