@@ -12,7 +12,7 @@ namespace DAnCE
     {
       DANCE_TRACE ("Admin::Admin");
     }
-    
+
 
     /// Install a package at a provided filesystem path.
     bool
@@ -21,7 +21,7 @@ namespace DAnCE
                             bool replace)
     {
       DANCE_TRACE ("Admin::install_package");
-      
+
       try
         {
           DANCE_DEBUG ((LM_TRACE, DLINFO "Admin::install_package - "
@@ -62,29 +62,29 @@ namespace DAnCE
                         name));
           return false;
         }
-      
+
       return true;
     }
-      
+
     /// Create new package.
-    bool 
-    Admin::create_package (const ACE_TCHAR *pc_path,
-                           const ACE_TCHAR *name,
-                           const ACE_TCHAR *baselocation,
-                           bool replace)
+    bool
+    Admin::create_package (const ACE_TCHAR * /* pc_path */,
+                           const ACE_TCHAR * /** name*/,
+                           const ACE_TCHAR * /*baselocation*/,
+                           bool  /*replace*/)
     {
       DANCE_TRACE ("Admin::create_package");
-      
+
       return false;
     }
-      
+
     /// Uninstall a package with a provided UUID.
     /// Fails if the NoSuchName exception was raised.
-    bool 
+    bool
     Admin::uninstall_package (const ACE_TCHAR *uuid)
     {
       DANCE_TRACE ("Admin::uninstall_package");
-      
+
       try
         {
           DANCE_DEBUG ((LM_TRACE, DLINFO "Admin::uninstall_package - "
@@ -117,16 +117,16 @@ namespace DAnCE
                         uuid));
           return false;
         }
-      
+
       return true;
     }
-      
+
     /// List all installed packages
-    ::CORBA::StringSeq * 
+    ::CORBA::StringSeq *
     Admin::list_packages (void)
     {
       DANCE_TRACE ("Admin::list_packages");
-      
+
       try
         {
           CORBA::StringSeq_var packages = this->rm_->getAllNames ();
@@ -148,13 +148,13 @@ namespace DAnCE
 
       return 0;
     }
-      
+
     /// List all installed package types
-    ::CORBA::StringSeq * 
+    ::CORBA::StringSeq *
     Admin::list_types (void)
     {
       DANCE_TRACE ("Admin::list_types");
-      
+
       try
         {
           CORBA::StringSeq_var packages = this->rm_->getAllTypes ();
@@ -176,20 +176,20 @@ namespace DAnCE
 
       return 0;
     }
-      
+
     /// Find package names by type
     ::CORBA::StringSeq *
     Admin::find_by_type (const ACE_TCHAR *type)
     {
       DANCE_TRACE ("Admin::find_by_type");
-      
+
       if (type == 0)
         {
           DANCE_ERROR ((LM_ERROR, DLINFO "Admin::find_by_type - "
                         "Nill type passed to find_by_type\n"));
           return 0;
         }
-      
+
       try
         {
           ::CORBA::StringSeq_var types = this->rm_->findNamesByType (type);
