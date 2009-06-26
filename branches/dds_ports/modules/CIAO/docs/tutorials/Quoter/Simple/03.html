@@ -279,6 +279,29 @@ div.Section1 {
       and the resulting assembly model should look like Figure 7. Note that to create connections between StockDistributor.notify_out and StockBroker.notify_in,
       you will need the intermediate connector &lt;&lt;PublishConnector&gt;&gt;.
     </li>
+    <li style='COLOR:black;'>In one of the previous steps we've removed ComponentIOR. With ComponentIOR one could
+      configure the name of the IOR file. This is still needed. In this step we need to create them again. This can
+      be done by dragging two &lt;&lt;Property&gt;&gt; items from the part browser onto the window;
+      one for StockBroker and one for StockDistributor. The following steps should be taken in order
+      to configure both properties correct:
+      <ol>
+        <li>Double click on one of them. An empty window appears and the part browser only has one part, called "DataType". Drag this part onto the empty window.
+        </li>
+        <li>In the tree window, browse to <code> <span style='FONT-SIZE:10pt'>Quoter/PredefinedTypes</span></code>
+        </li>
+        <li>Drag tree item "String" onto the "DataType" item.
+        </li>
+        <li>Go back to the previous window and repeat these steps for the other &lt;&lt;Property&gt;&gt;.
+        </li>
+      </ol>
+      Now it's time to configure the name and value of both &lt;&lt;Property&gt;&gt; items.
+      <ul>
+        <li>The name of each &lt;&lt;Property&gt;&gt; should be "edu.vanderbilt.dre.DAnCE.InstanceIOR"
+        </li>
+        <li>One of the values should be "StockBroker.ior"; the other one should be "StockDistributor.ior"
+        </li>
+      </ul>
+    </li>
   </ol>
   <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <img border="0" id="_x0000_i1036" src="images/fig7.jpg" />
