@@ -1,13 +1,45 @@
+Fri Jun 26 07:13:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Resolved a minor copy paste error.
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/Target_Manager_Module.cpp:
+          Resolved some linker errors on windows.
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+          In trace message one shouldn't use the CLINFO or DLINFO define.
+
+        * docs/tutorials/Quoter/Simple/03.html:
+          Described how to connect a component factory to a component.
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.cpp:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.cpp:
+          In the current tutorial we're deploying unhomed components. To do that,
+          the appropriate functions should be added.
+          
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec_export.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_svnt_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_svnt_export.h:
+          Used the latest version of the IDL compiler
+
+
 Thu Jun 25 15:11:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Reused_Facet_Interface/CodeGen.mpc:
         * tests/IDL_Test/Reused_Facet_Interface/Reused_Facet_Interface.mpc:
-        
+
           Renamed first file as second file, to avoid problems on some
           platforms when .mpc files have the same name.
-          
+
         * tests/CIDL/CodeGen/CodeGen.mpc:
-        
+
           Fixed IDL flags in Reused_Facet_Interface_idl_gen project.
 
 Wed Jun 24 15:51:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>

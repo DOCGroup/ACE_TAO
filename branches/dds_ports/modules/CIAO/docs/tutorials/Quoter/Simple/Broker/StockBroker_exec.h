@@ -119,6 +119,9 @@ namespace CIAO_Stock_StockBroker_Impl
     create ();
   };
 
+
+  extern "C" STOCKBROKER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Stock_StockBrokerComp_Impl (void);
   extern "C" STOCKBROKER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Stock_StockBrokerHome_Impl (void);
 }

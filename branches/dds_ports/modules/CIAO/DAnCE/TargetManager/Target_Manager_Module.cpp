@@ -44,7 +44,7 @@ namespace DAnCE
 
 DAnCE_TargetManager_Module::DAnCE_TargetManager_Module (void)
 {
-  DANCE_TRACE("DAnCE_TargetManager_Module::DAnCE_TargetManager_Module");
+  //DANCE_TRACE("DAnCE_TargetManager_Module::DAnCE_TargetManager_Module");
 }
 
 DAnCE_TargetManager_Module::~DAnCE_TargetManager_Module (void)
@@ -337,11 +337,11 @@ DAnCE_TargetManager_Module::create_poas (void)
   catch (const PortableServer::POA::AdapterAlreadyExists &)
     {
       DANCE_DEBUG ((LM_INFO, DLINFO "DAnCE_TargetManager_Module::create_poas - "
-                    "Using exiswting \"Repository\" POA\n"));
+                    "Using existing \"Repository\" POA\n"));
       this->rm_poa_ = this->root_poa_->find_POA ("Repository", 0);
     }
 }
 
-#ifndef BUILD_REPOSITORY_MANAGER_EXE
+#ifndef DANCE_TARGETMANAGER_IMPL_BUILD_DLL
 ACE_FACTORY_DEFINE (DAnCE_TargetManager_Module, DAnCE_TargetManager_Module)
-#endif /*BUILD_REPOSITORY_MANAGER_EXE */
+#endif /* DANCE_TARGETMANAGER_IMPL_BUILD_DLL */

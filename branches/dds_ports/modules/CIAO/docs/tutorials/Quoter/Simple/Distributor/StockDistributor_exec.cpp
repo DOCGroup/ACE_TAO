@@ -314,7 +314,21 @@ namespace CIAO_Stock_StockDistributor_Impl
       retval,
       StockDistributor_exec_i,
       CORBA::NO_MEMORY ());
-      
+
+    return retval;
+  }
+
+  extern "C" STOCKDISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Stock_StockDistributorComp_Impl (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+
+    ACE_NEW_RETURN (
+      retval,
+      StockDistributor_exec_i,
+      ::Components::EnterpriseComponent::_nil ());
+
     return retval;
   }
 

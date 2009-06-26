@@ -25,7 +25,7 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
       node_name_ (node_name),
       properties_ ()
 {
-  DANCE_TRACE (DLINFO "NodeApplicationManager_Impl::NodeApplicationManager_Impl");
+  DANCE_TRACE ("NodeApplicationManager_Impl::NodeApplicationManager_Impl");
 
   DANCE_DEBUG((LM_DEBUG, DLINFO " NodeApplicationManager_Impl::NodeApplicationManager_Impl - "
                "Initializing for node '%s' and plan '%s' starting...\n",
@@ -45,7 +45,7 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
 
 NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
 {
-  DANCE_TRACE (DLINFO "NodeApplicationManager_Impl::~NodeApplicationManager_Impl");
+  DANCE_TRACE ("NodeApplicationManager_Impl::~NodeApplicationManager_Impl");
 
   try
     {
@@ -70,7 +70,7 @@ Deployment::Application_ptr
 NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
                                           Deployment::Connections_out providedReference)
 {
-  DANCE_TRACE (DLINFO "NodeApplicationManager_Impl::startLaunch");
+  DANCE_TRACE ("NodeApplicationManager_Impl::startLaunch");
 
   // Creating NodeApplication object
   DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_impl::startLaunch - "
@@ -107,7 +107,7 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
 void
 NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr application)
 {
-  DANCE_TRACE (DLINFO "NodeApplicationManager_Impl::destroyApplication");
+  DANCE_TRACE ("NodeApplicationManager_Impl::destroyApplication");
 
   try
   {

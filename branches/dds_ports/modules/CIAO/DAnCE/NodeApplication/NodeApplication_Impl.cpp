@@ -709,8 +709,8 @@ NodeApplication_Impl::install_component (Container &cont, Instance &inst)
   const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
   const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_home - "
-                "Starting installation of home %C on node %C\n",
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplication_Impl::install_component - "
+                "Starting installation of component %C on node %C\n",
                 idd.name.in (), idd.node.in ()));
 
   this->instances_[inst.idd_idx] = &inst;
