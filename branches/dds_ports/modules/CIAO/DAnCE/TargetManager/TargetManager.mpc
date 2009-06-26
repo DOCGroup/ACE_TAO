@@ -29,7 +29,7 @@ project(DAnCE_TargetManager_stub) : dance_lib, dance_deployment_stub {
 project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming, iortable, utils, dance_deployment_svnt {
   sharedname = DAnCE_TargetManager_Impl
   libs += DAnCE_TargetManager_stub DAnCE_TargetManager_svnt
-  after += DAnCE_TargetManager_svnt
+  after += DAnCE_TargetManager_stub DAnCE_TargetManager_svnt
   dynamicflags = DANCE_TARGETMANAGER_IMPL_BUILD_DLL TARGETMANAGER_MODULE_BUILD_DLL
 
   Source_Files {
