@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SANet:network
+  xmlns:SANet="http://www.vanderbilt.edu/SANet"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.vanderbilt.edu/SANet SANet_Network.xsd"
+  xmlns="http://www.vanderbilt.edu/SANet">
+
+  <defaultAttenFactor />
+  <defaultTaskCost />
+  <defaultCondUtil />
+  <defaultCondProbTrue />
+  <linkThresh />
+  
+  <taskNode>
+    <nodeID>1001</nodeID>
+    <name>Truck_Left</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1002</nodeID>
+    <name>GetCoordinates</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1003</nodeID>
+    <name>LocateTarget</name>
+    <priorProb>0.8</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1004</nodeID>
+    <name>LockTarget</name>
+    <priorProb>0.7</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1005</nodeID>
+    <name>FindNeighborhood</name>
+    <priorProb>0.8</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1006</nodeID>
+    <name>ExamineArea</name>
+    <priorProb>0.8</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1013</nodeID>
+    <name>CAOCApproval</name>
+    <priorProb>0.8</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1007</nodeID>
+    <name>CheckArmed</name>
+    <priorProb>0.75</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1008</nodeID>
+    <name>FireMissile</name>
+    <priorProb>0.192</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1009</nodeID>
+    <name>AssessDamage</name>
+    <priorProb>0.9</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1010</nodeID>
+    <name>PrepareGround</name>
+    <priorProb>0.8</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1011</nodeID>
+    <name>SetRedezvous</name>
+    <priorProb>0.42</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>1012</nodeID>
+    <name>AttemptSeize</name>
+    <priorProb>0.8</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  
+  
+  
+  <condNode>
+    <nodeID>2000</nodeID>
+    <name>SimStarted</name>
+    <probTrue>1</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2001</nodeID>
+    <name>TruckMoving</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+   <condNode>
+    <nodeID>2002</nodeID>
+    <name>HaveCoordinates</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+   <condNode>
+    <nodeID>2003</nodeID>
+    <name>FoundTarget</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+   <condNode>
+    <nodeID>2004</nodeID>
+    <name>LockedTarget</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+   <condNode>
+    <nodeID>2005</nodeID>
+    <name>FoundNeighborhood</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+   <condNode>
+    <nodeID>2006</nodeID>
+    <name>Armed</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2007</nodeID>
+    <name>COACATTACKOK</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2008</nodeID>
+    <name>AreaExamined</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2009</nodeID>
+    <name>FiredMissle</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2013</nodeID>
+    <name>GroundOnline</name>
+    <probTrue>1</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2010</nodeID>
+    <name>GroundReady</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2011</nodeID>
+    <name>HaveRendezvous</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2012</nodeID>
+    <name>TruckStopped</name>
+    <probTrue>0</probTrue>
+    <utility>10</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>2014</nodeID>
+    <name>KnowTruckStopped</name>
+    <probTrue>0</probTrue>
+    <utility>10</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  
+  <condNode>
+    <nodeID>3001</nodeID>
+    <name>ClearRoads</name>
+    <probTrue>1</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+
+  <condNode>
+    <nodeID>3002</nodeID>
+    <name>ClearSkies</name>
+    <probTrue>1</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+
+	
+  <precondLink>
+    <condID>3001</condID>
+    <taskID>1012</taskID>
+    <portID>Port</portID>
+    <trueProb>0.8</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>  
+
+  <precondLink>
+    <condID>3002</condID>
+    <taskID>1008</taskID>
+    <portID>Port</portID>
+    <trueProb>0.192</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>  
+
+
+  <precondLink>
+    <condID>2000</condID>
+    <taskID>1001</taskID>
+    <portID>Port</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2001</condID>
+    <taskID>1002</taskID>
+    <portID>Port</portID>
+    <trueProb>.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2002</condID>
+    <taskID>1003</taskID>
+    <portID>Port</portID>
+    <trueProb>.8</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2003</condID>
+    <taskID>1004</taskID>
+    <portID>Port</portID>
+    <trueProb>.7</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2003</condID>
+    <taskID>1005</taskID>
+    <portID>Port</portID>
+    <trueProb>.8</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink> 
+  <precondLink>
+    <condID>2005</condID>
+    <taskID>1006</taskID>
+    <portID>Port</portID>
+    <trueProb>.8</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2008</condID>
+    <taskID>1013</taskID>
+    <portID>Port</portID>
+    <trueProb>.8</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2004</condID>
+    <taskID>1008</taskID>
+    <portID>Port</portID>
+    <trueProb>.32</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2006</condID>
+    <taskID>1008</taskID>
+    <portID>Port</portID>
+    <trueProb>.24</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink> 
+  <precondLink>
+    <condID>2007</condID>
+    <taskID>1008</taskID>
+    <portID>Port</portID>
+    <trueProb>.48</trueProb>
+    <falseProb>0.0</falseProb>
+  </precondLink> 
+  <precondLink>
+    <condID>2009</condID>
+    <taskID>1009</taskID>
+    <portID>Port</portID>
+    <trueProb>.9</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2010</condID>
+    <taskID>1011</taskID>
+    <portID>Port</portID>
+    <trueProb>.6</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2004</condID>
+    <taskID>1011</taskID>
+    <portID>Port</portID>
+    <trueProb>.7</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>2011</condID>
+    <taskID>1012</taskID>
+    <portID>Port</portID>
+    <trueProb>0.8</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+   <precondLink>
+    <condID>2013</condID>
+    <taskID>1010</taskID>
+    <portID>Port</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+ 
+   
+  <effectLink>
+    <taskID>1001</taskID>
+    <condID>2001</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1002</taskID>
+    <condID>2002</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1003</taskID>
+    <condID>2003</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1004</taskID>
+    <condID>2004</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1005</taskID>
+    <condID>2005</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1006</taskID>
+    <condID>2008</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1013</taskID>
+    <condID>2007</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1007</taskID>
+    <condID>2006</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1008</taskID>
+    <condID>2012</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1008</taskID>
+    <condID>2009</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1009</taskID>
+    <condID>2014</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1010</taskID>
+    <condID>2010</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1011</taskID>
+    <condID>2011</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1012</taskID>
+    <condID>2012</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>1012</taskID>
+    <condID>2014</condID>
+    <portID>Port</portID>
+    <weight>1</weight>
+  </effectLink>
+
+
+
+</SANet:network>

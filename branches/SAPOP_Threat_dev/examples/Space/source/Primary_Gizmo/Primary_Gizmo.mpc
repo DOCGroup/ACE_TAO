@@ -1,0 +1,77 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Primary_Gizmo"
+
+project(Primary_Gizmo_stub): ccm_stub, race_idl {
+
+  after += Event_Types_stub
+  includes += ../common
+  libs    += Event_Types_stub
+  sharedname = Primary_Gizmo_stub
+  idlflags += -Wb,stub_export_macro=PRIMARY_GIZMO_STUB_Export \
+              -Wb,stub_export_include=Primary_Gizmo_stub_export.h \
+              -Wb,skel_export_macro=PRIMARY_GIZMO_SVNT_Export \
+              -Wb,skel_export_include=Primary_Gizmo_svnt_export.h\
+              -I ../common
+  dynamicflags   = PRIMARY_GIZMO_STUB_BUILD_DLL
+
+  IDL_Files {
+    Primary_Gizmo.idl
+  }
+
+  Source_Files {
+    Primary_GizmoC.cpp
+  }
+}
+
+project(Primary_Gizmo_svnt) : ciao_servant, race_idl {
+  after +=  Primary_Gizmo_stub  Event_Types_svnt
+  includes += ../common
+  sharedname  = Primary_Gizmo_svnt
+  libs    += Primary_Gizmo_stub  Event_Types_svnt  Event_Types_stub
+
+  idlflags  +=  -Wb,export_macro=PRIMARY_GIZMO_SVNT_Export \
+                -Wb,export_include=Primary_Gizmo_svnt_export.h \
+                -I ../common
+  dynamicflags = PRIMARY_GIZMO_SVNT_BUILD_DLL
+
+  cidlflags -= --
+  cidlflags += -I ../common --
+
+  CIDL_Files {
+    Primary_Gizmo.cidl
+  }
+
+  IDL_Files {
+    Primary_GizmoE.idl
+  }
+
+  Source_Files {
+    Primary_GizmoEC.cpp
+    Primary_GizmoS.cpp
+    Primary_Gizmo_svnt.cpp
+  }
+}
+
+
+project(Primary_Gizmo_exec) : ciao_executor, race_idl {
+  after   += Primary_Gizmo_svnt
+  includes += ../common
+  sharedname = Primary_Gizmo_exec
+  libs      += Primary_Gizmo_stub \
+               Primary_Gizmo_svnt \
+               Event_Types_stub \
+               Event_Types_svnt
+
+  idlflags  +=  -Wb,export_macro=PRIMARY_GIZMO_EXEC_Export \
+                -Wb,export_include=Primary_Gizmo_exec_export.h
+  dynamicflags   = PRIMARY_GIZMO_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Primary_Gizmo_exec.cpp
+  }
+}

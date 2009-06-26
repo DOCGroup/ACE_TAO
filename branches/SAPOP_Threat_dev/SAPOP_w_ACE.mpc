@@ -1,0 +1,96 @@
+project(SA_POP) : xerces, acelib {
+
+   sharedname   = SA_POP
+
+   libout = $(SAPOP_ROOT)/lib
+
+   libpaths += $(SAPOP_ROOT)/lib
+
+   after += SAPOP_XML_Utils
+
+
+   includes += $(SAPOP_ROOT) \
+               $(SAPOP_ROOT)/Standalone/XML_Utils
+
+   macros = SA_POP_HAS_ACE
+
+
+
+   dynamicflags   = SANETFILEIN_BUILD_DLL \
+                    TASKMAPFILEIN_BUILD_DLL \
+                    SA_BUILDER_BUILD_DLL \
+                    LOGSCREENOUT_BUILD_DLL \
+		    LOGGRAPHOUT_BUILD_DLL
+
+   libs += SAPOP_XML_Utils
+
+
+   Header_Files {
+      SA_POP_Types.h
+      SA_POP_Exceptions.h
+
+      Builder.h
+      SA_Builder.h
+
+      Planner.h
+
+      TaskMap.h
+      TaskImpl.h
+
+      WorkingPlan.h
+      SA_WorkingPlan.h
+      SchedStrategy.h
+      SA_SchedStrategy.h
+      PlanStrategy.h
+      SA_PlanStrategy.h
+      PlanHeuristics.h
+      SA_PlanHeuristics.h
+      PlanCommands.h
+      SA_PlanCommands.h
+
+      SANet/SANet_Types.h
+      SANet/SANet.h
+      SANet/SANode.h
+      SANet/SANet_Exceptions.h
+
+      OutAdapter.h
+      LogScreenOut.h
+      LogFileOut.h
+      LogGraphOut.h
+
+      SA_POP_XML_Typedefs.h
+      SANet/SANetFileIn.h
+      TaskMapFileIn.h
+   }
+
+   Source_Files {
+      SA_POP_Exceptions.cpp
+
+      SA_Builder.cpp
+
+      Planner.cpp
+
+      TaskMap.cpp
+      TaskImpl.cpp
+
+      SA_WorkingPlan.cpp
+      SA_SchedStrategy.cpp
+      SA_PlanStrategy.cpp
+      SA_PlanHeuristics.cpp
+      SA_PlanCommands.cpp
+
+      SANet/SANet.cpp
+      SANet/SANode.cpp
+      SANet/SANet_Exceptions.cpp
+
+      LogScreenOut.cpp
+      LogFileOut.cpp
+      LogGraphOut.cpp
+
+      SA_POP_XML_Typedefs.cpp
+      SANet/SANetFileIn.cpp
+      SANet/XML_SANet.cpp
+      TaskMapFileIn.cpp
+      XML_TaskMap.cpp
+   }
+}

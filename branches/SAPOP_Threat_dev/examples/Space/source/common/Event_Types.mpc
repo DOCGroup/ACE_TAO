@@ -1,0 +1,33 @@
+project(Event_Types_stub): ccm_stub, race_idl {
+
+  sharedname = Event_Types_stub
+  idlflags += -Wb,stub_export_macro=EVENT_TYPES_STUB_Export \
+              -Wb,stub_export_include=Event_Types_stub_export.h \
+              -Wb,skel_export_macro=EVENT_TYPES_SVNT_Export \
+              -Wb,skel_export_include=Event_Types_svnt_export.h
+  dynamicflags   = EVENT_TYPES_STUB_BUILD_DLL
+
+  IDL_Files {
+    Event_Types.idl
+  }
+
+  Source_Files {
+    Event_TypesC.cpp
+  }
+}
+
+project(Event_Types_svnt) : ciao_servant, race_common {
+  after +=  Event_Types_stub
+  sharedname  = Event_Types_svnt
+  libs    += Event_Types_stub
+
+  dynamicflags = EVENT_TYPES_SVNT_BUILD_DLL
+
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Event_TypesS.cpp
+  }
+}

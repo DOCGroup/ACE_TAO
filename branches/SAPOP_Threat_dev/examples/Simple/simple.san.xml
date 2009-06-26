@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SANet:network
+  xmlns:SANet="http://www.vanderbilt.edu/SANet"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.vanderbilt.edu/SANet SANet_Network.xsd"
+  xmlns="http://www.vanderbilt.edu/SANet">
+
+  <defaultAttenFactor />
+  <defaultTaskCost />
+  <defaultCondUtil />
+  <defaultCondProbTrue />
+  <linkThresh />
+  
+  <taskNode>
+    <nodeID>2220</nodeID>
+    <name>A0</name>
+    <priorProb>0.375</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2221</nodeID>
+    <name>A1</name>
+    <priorProb>0.375</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2222</nodeID>
+    <name>A2</name>
+    <priorProb>0.375</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  
+  
+  <condNode>
+    <nodeID>1110</nodeID>
+    <name>C0</name>
+    <probTrue>1</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1111</nodeID>
+    <name>C1</name>
+    <probTrue>1</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1112</nodeID>
+    <name>C2</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1113</nodeID>
+    <name>C3</name>
+    <probTrue>0</probTrue>
+    <utility>10</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  
+  <precondLink>
+    <condID>1110</condID>
+    <taskID>2220</taskID>
+    <portID>Port0In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1111</condID>
+    <taskID>2221</taskID>
+    <portID>Port1In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1112</condID>
+    <taskID>2222</taskID>
+    <portID>Port2In</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  
+  <effectLink>
+    <taskID>2220</taskID>
+    <condID>1111</condID>
+    <portID>Port0Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2221</taskID>
+    <condID>1112</condID>
+    <portID>Port1Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2222</taskID>
+    <condID>1113</condID>
+    <portID>Port2Out</portID>
+    <weight>1</weight>
+  </effectLink>
+
+</SANet:network>

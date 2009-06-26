@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SANet:network
+  xmlns:SANet="http://www.vanderbilt.edu/SANet"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.vanderbilt.edu/SANet SANet_Network.xsd"
+  xmlns="http://www.vanderbilt.edu/SANet">
+
+  <defaultAttenFactor />
+  <defaultTaskCost />
+  <defaultCondUtil />
+  <defaultCondProbTrue />
+  <linkThresh />
+
+  <!-- Sensor tasks. -->
+  <taskNode>
+    <nodeID>2101</nodeID>
+    <name>Sensor__G1Low</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2201</nodeID>
+    <name>Sensor__G1Med</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2202</nodeID>
+    <name>Sensor__G2Med</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2301</nodeID>
+    <name>Sensor__G1Hi</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2302</nodeID>
+    <name>Sensor__G2Hi</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+
+  <!-- Filter tasks. -->
+  <taskNode>
+    <nodeID>2111</nodeID>
+    <name>Filter__G1Low</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2211</nodeID>
+    <name>Filter__G1Med_G2Med</name>
+    <priorProb>0.25</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2311</nodeID>
+    <name>Filter__G1Hi_G2Hi</name>
+    <priorProb>0.25</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+
+  <!-- Compression tasks. -->
+  <taskNode>
+    <nodeID>2121</nodeID>
+    <name>Comp__G1Low</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2221</nodeID>
+    <name>Comp__G1Med_G2Med</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2321</nodeID>
+    <name>Comp__G1Hi_G2Hi</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+
+  <!-- Communication tasks. -->
+  <taskNode>
+    <nodeID>2131</nodeID>
+    <name>Comm__G1Low</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2231</nodeID>
+    <name>Comm__G1Med_G2Med</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2331</nodeID>
+    <name>Comm__G1Hi_G2Hi</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+
+  <!-- Analysis tasks. -->
+  <taskNode>
+    <nodeID>2141</nodeID>
+    <name>Analysis__G1Low</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2241</nodeID>
+    <name>Analysis__G1Med_G2Med</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2341</nodeID>
+    <name>Analysis__G1Hi_G2Hi</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+
+
+
+
+  <!-- Sensor data conditions. -->
+  <condNode>
+    <nodeID>1101</nodeID>
+    <name>Data__Sensor__G1Low</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1201</nodeID>
+    <name>Data__Sensor__G1Med</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1202</nodeID>
+    <name>Data__Sensor__G2Med</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1301</nodeID>
+    <name>Data__Sensor__G1Hi</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1302</nodeID>
+    <name>Data__Sensor__G2Hi</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+
+  <!-- Filtered data conditions. -->
+  <condNode>
+    <nodeID>1111</nodeID>
+    <name>Data__Filter__G1Low</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1211</nodeID>
+    <name>Data__Filter__G1Med_G2Med</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1311</nodeID>
+    <name>Data__Filter__G1Hi_G2Hi</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+
+  <!-- Compressed (filtered) data conditions. -->
+  <condNode>
+    <nodeID>1121</nodeID>
+    <name>Data__Comp_Filter__G1Low</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1221</nodeID>
+    <name>Data__Comp_Filter__G1Med_G2Med</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1321</nodeID>
+    <name>Data__Comp_Filter__G1Hi_G2Hi</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+
+  <!-- Communicated (compressed, filtered) system conditions. -->
+  <condNode>
+    <nodeID>1131</nodeID>
+    <name>Sys__Comm_Comp_Filter__G1Low</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1231</nodeID>
+    <name>Sys__Comm_Comp_Filter__G1Med_G2Med</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1331</nodeID>
+    <name>Sys__Comm_Comp_Filter__G1Hi_G2Hi</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+
+  <!-- Analyzed (filtered) data conditions. -->
+  <condNode>
+    <nodeID>1141</nodeID>
+    <name>Sys__Analysis_Filter__G1Low</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1241</nodeID>
+    <name>Sys__Analysis_Filter__G1Med_G2Med</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1341</nodeID>
+    <name>Sys__Analysis_Filter__G1Hi_G2Hi</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+
+
+  <!-- Filter precondition links. -->
+
+  <!-- Data__Sensor__G1Low - Filter__G1Low -->
+  <precondLink>
+    <condID>1101</condID>
+    <taskID>2111</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Sensor__G1Med - Filter__G1Med_G2Med -->
+  <precondLink>
+    <condID>1201</condID>
+    <taskID>2211</taskID>
+    <portID>recv_data</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Sensor__G2Med - Filter__G1Med_G2Med -->
+  <precondLink>
+    <condID>1202</condID>
+    <taskID>2211</taskID>
+    <portID>recv_data</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Sensor__G1Hi - Filter__G1Hi_G2Hi -->
+  <precondLink>
+    <condID>1301</condID>
+    <taskID>2311</taskID>
+    <portID>recv_data</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Sensor__G2Hi - Filter__G1Hi_G2Hi -->
+  <precondLink>
+    <condID>1302</condID>
+    <taskID>2311</taskID>
+    <portID>recv_data</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+
+  <!-- Compression precondition links. -->
+
+  <!-- Data__Filter__G1Low - Comp__G1Low -->
+  <precondLink>
+    <condID>1111</condID>
+    <taskID>2121</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Filter__G1Med_G2Med - Comp__G1Med_G2Med -->
+  <precondLink>
+    <condID>1211</condID>
+    <taskID>2221</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Filter__G1Hi_G2Hi - Comp__G1Hi_G2Hi -->
+  <precondLink>
+    <condID>1311</condID>
+    <taskID>2321</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+
+  <!-- Communication precondition links. -->
+
+  <!-- Data__Comp_Filter__G1Low - Comm__G1Low -->
+  <precondLink>
+    <condID>1121</condID>
+    <taskID>2131</taskID>
+    <portID>science_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Comp_Filter__G1Med_G2Med - Comm__G1Med_G2Med -->
+  <precondLink>
+    <condID>1221</condID>
+    <taskID>2231</taskID>
+    <portID>science_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Comp_Filter__G1Hi_G2Hi - Comm__G1Hi_G2Hi -->
+  <precondLink>
+    <condID>1321</condID>
+    <taskID>2331</taskID>
+    <portID>science_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+
+  <!-- Analysis precondition links. -->
+
+  <!-- Data__Filter__G1Low - Analysis__G1Low -->
+  <precondLink>
+    <condID>1111</condID>
+    <taskID>2141</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Filter__G1Med_G2Med - Analysis__G1Med_G2Med -->
+  <precondLink>
+    <condID>1211</condID>
+    <taskID>2241</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <!-- Data__Filter__G1Hi_G2Hi - Analysis__G1Hi_G2Hi -->
+  <precondLink>
+    <condID>1311</condID>
+    <taskID>2341</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+
+
+
+
+
+  <!-- Sensor effect links. -->
+
+  <!-- Sensor__G1Low - Data__Sensor__G1Low -->
+  <effectLink>
+    <taskID>2101</taskID>
+    <condID>1101</condID>
+    <portID>observation_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Sensor__G1Med - Data__Sensor__G1Med -->
+  <effectLink>
+    <taskID>2201</taskID>
+    <condID>1201</condID>
+    <portID>observation_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Sensor__G2Med - Data__Sensor__G2Med -->
+  <effectLink>
+    <taskID>2202</taskID>
+    <condID>1202</condID>
+    <portID>observation_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Sensor__G1Hi - Data__Sensor__G1Hi -->
+  <effectLink>
+    <taskID>2301</taskID>
+    <condID>1301</condID>
+    <portID>observation_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Sensor__G2Hi - Data__Sensor__G2Hi -->
+  <effectLink>
+    <taskID>2302</taskID>
+    <condID>1302</condID>
+    <portID>observation_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+
+  <!-- Filter effect links. -->
+
+  <!-- Filter__G1Low - Data__Filter__G1Low -->
+  <effectLink>
+    <taskID>2111</taskID>
+    <condID>1111</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Filter__G1Med_G2Med - Data__Filter__G1Med_G2Med -->
+  <effectLink>
+    <taskID>2211</taskID>
+    <condID>1211</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Filter__G1Hi_G2Hi - Data__Filter__G1Hi_G2Hi -->
+  <effectLink>
+    <taskID>2311</taskID>
+    <condID>1311</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+
+  <!-- Compression effect links. -->
+
+  <!-- Comp__G1Low - Data__Comp_Filter__G1Low -->
+  <effectLink>
+    <taskID>2121</taskID>
+    <condID>1121</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Comp__G1Med_G2Med - Data__Comp_Filter__G1Med_G2Med -->
+  <effectLink>
+    <taskID>2221</taskID>
+    <condID>1221</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Comp__G1Hi_G2Hi - Data__Comp_Filter__G1Hi_G2Hi -->
+  <effectLink>
+    <taskID>2321</taskID>
+    <condID>1321</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+
+  <!-- Communication effect links. -->
+
+  <!-- Comm__G1Low - Sys__Comm_Comp_Filter__G1Low -->
+  <effectLink>
+    <taskID>2131</taskID>
+    <condID>1131</condID>
+    <portID>NONE</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Comm__G1Med_G2Med - Sys__Comm_Comp_Filter__G1Med_G2Med -->
+  <effectLink>
+    <taskID>2231</taskID>
+    <condID>1231</condID>
+    <portID>NONE</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Comm__G1Hi_G2Hi - Sys__Comm_Comp_Filter__G1Hi_G2Hi -->
+  <effectLink>
+    <taskID>2331</taskID>
+    <condID>1331</condID>
+    <portID>NONE</portID>
+    <weight>1.0</weight>
+  </effectLink>
+
+  <!-- Analysis effect links. -->
+
+  <!-- Analysis__G1Low - Sys__Analysis_Filter__G1Low -->
+  <effectLink>
+    <taskID>2141</taskID>
+    <condID>1141</condID>
+    <portID>NONE</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Analysis__G1Med_G2Med - Sys__Analysis_Filter__G1Med_G2Med -->
+  <effectLink>
+    <taskID>2241</taskID>
+    <condID>1241</condID>
+    <portID>NONE</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <!-- Analysis__G1Hi_G2Hi - Sys__Analysis_Filter__G1Hi_G2Hi -->
+  <effectLink>
+    <taskID>2341</taskID>
+    <condID>1341</condID>
+    <portID>NONE</portID>
+    <weight>1.0</weight>
+  </effectLink>
+
+</SANet:network>

@@ -1,0 +1,5 @@
+workspace {
+  Standalone/XML_Utils/XML/XML.mpc
+  SAPOP_w_ACE.mpc
+  Standalone/SAPOP_Demo.mpc
+}

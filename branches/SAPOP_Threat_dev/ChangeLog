@@ -1,0 +1,998 @@
+Fri Jun 12 20:58:24 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SANet/SANetFileIn.cpp:
+        * TaskMapFileIn.cpp:
+
+          Modified for new CIAO XML Utilities in SA-POP Standalone.
+
+Fri Jun 12 17:37:05 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+
+        * Standalone/XML_Utils/Utils:
+        * Standalone/XML_Utils/Utils/CIAO_XML_Utils_Export.h:
+        * Standalone/XML_Utils/Utils/Exceptions.h:
+        * Standalone/XML_Utils/Utils/Utils.mpc:
+        * Standalone/XML_Utils/Utils/XML_Error_Handler.h:
+        * Standalone/XML_Utils/Utils/XML_Error_Handler.cpp:
+        * Standalone/XML_Utils/Utils/XML_Helper.h:
+        * Standalone/XML_Utils/Utils/XML_Helper.cpp:
+        * Standalone/XML_Utils/Utils/XML_Schema_Resolver.h:
+        * Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp:
+        * Standalone/XML_Utils/Utils/XercesString.h:
+        * Standalone/XML_Utils/Utils/XercesString.cpp:
+
+          Removed these files for CIAO XML Utilities update.
+
+
+Thu Jun 11 20:02:58 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * common/RACE_common.mpc:
+        * MPC/config/race_common.mpb:
+
+          RACE libraries output to $(ACE_ROOT)/lib
+
+
+        * RACE.mwc:
+        * RACE_SAPOP.mwc:
+
+          Updated with revised filenames
+
+
+        * SA_POP/SAPOP_C2W.mwc:
+        * SA_POP/SAPOP_Standalone.mwc:
+        * SA_POP/SAPOP_for_RACE.mpc:
+        * SA_POP/SAPOP_w_ACE.mpc:
+        * SA_POP/SA_POP_XML_Typedefs.cpp:
+
+          Updated for latest version of CIAO XML Utilities
+
+
+        * SA_POP/Standalone/XML_Utils/XML:
+
+        * SA_POP/Standalone/XML_Utils/XML/CIAO_XML_Utils_Export.h:
+        * SA_POP/Standalone/XML_Utils/XML/XML.mpc:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Error_Handler.h:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Error_Handler.cpp:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Helper.h:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Helper.tpp:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.h:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.tpp:
+        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.cpp:
+        * SA_POP/Standalone/XML_Utils/XML/XercesString.h:
+        * SA_POP/Standalone/XML_Utils/XML/XercesString.cpp:
+
+        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.tpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.hpp:
+
+        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.tpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/XML.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/XMLSchema.hpp:
+
+          Updated to latest version of CIAO XML Utilities
+
+
+        * SA_POP/Tester/Tester_Component.mpc:
+
+          Updated for changes to CIAO and DAnCE
+
+
+        * SA_POP/SA_POP_for_RACE.mpc:
+        * SA_POP/Standalone/XML_Utils/Common.h:
+        * SA_POP/Standalone/XML_Utils/SAPOP_XSC.mpc:
+        * SA_POP/Standalone/XML_Utils/XSC_XML_Handlers_Export.h:
+
+          Removed these files for CIAO XML Utilities update.
+
+
+Wed May 27 23:44:58 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Component/SA_POP_Component.mpc:
+        * Component/SA_POP_Component_exec.h:
+        * Component/SA_POP_Component_exec.cpp:
+        * SANet/SANetFileIn.cpp:
+        * SAPOP_w_ACE.mpc:
+        * SA_POP_XML_Typedefs.h:
+        * SA_POP_XML_Typedefs.cpp:
+        * SA_POP_for_RACE.mpc:
+        * TaskMapFileIn.cpp:
+        * Tester/Tester_Component.mpc:
+        * Tester/Tester_Component_exec.h:
+        * Tester/Tester_Component_exec.cpp:
+        * examples/Space/source/Analysis/Analysis_Component.mpc:
+        * examples/Space/source/Analysis/Analysis_Component_exec.h:
+        * examples/Space/source/Analysis/Analysis_Component_exec.cpp:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.cpp:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.h:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.cpp:
+        * examples/Space/source/Comm/Comm_Component.mpc:
+        * examples/Space/source/Comm/Comm_Component_exec.h:
+        * examples/Space/source/Comm/Comm_Component_exec.cpp:
+        * examples/Space/source/Compression/Compression_Component.mpc:
+        * examples/Space/source/Compression/Compression_Component_exec.h:
+        * examples/Space/source/Compression/Compression_Component_exec.cpp:
+        * examples/Space/source/Exec/Exec_Component.mpc:
+        * examples/Space/source/Exec/Exec_Component_exec.h:
+        * examples/Space/source/Exec/Exec_Component_exec.cpp:
+        * examples/Space/source/Filter/Filter_Component.mpc:
+        * examples/Space/source/Filter/Filter_Component_exec.h:
+        * examples/Space/source/Filter/Filter_Component_exec.cpp:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_exec.h:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_exec.cpp:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.h:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.cpp:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.h:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.cpp:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_exec.h:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_exec.cpp:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.h:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.cpp:
+        * examples/Space/source/Ground/Ground_Component.mpc:
+        * examples/Space/source/Ground/Ground_Component_exec.h:
+        * examples/Space/source/Ground/Ground_Component_exec.cpp:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.h:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.cpp:
+        * examples/Space/source/common/Event_Types.mpc:
+        * server/Driver.mpc:
+
+          Updates for new CIAO.
+
+Fri Mar 20 23:10:39 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/Instructions for building SA-POP Federate.txt:
+          Updated for how to run the SA-POP Federate.
+
+        * C2W/LogGraphOut.h:
+        * C2W/LogGraphOut.cpp:
+          Removed these files.
+
+Fri Mar 20 19:45:41 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.mpc:
+          Removed the LogGraphOut class as part of the project.
+
+        * C2W/C2W_Demo.cpp:
+          Added the Replan functions into the demo. Also made some changes on keeping track of external conditoon.
+
+        * LogGraphOut.h:
+          Added to SA-POP Root and Exported out for the Library
+
+        * LogGraphOut.cpp:
+          Added to SA-POP Root
+
+        * LogGraphOut_Export.h:
+          Generated to provide accessibility as an outside hook into the Library.
+
+        * Planner.h:
+          Added function prototype for updating effect link(update_effect) and printing the entire SANet for Visualization(print_graph)
+
+        * Planner.cpp:
+          Implements the functions update_effect and print_graph for the Planner.
+
+        * SANet/SANet.h:
+          Added function prototype for update_effect_link, which propogates the effect link change to the SANet itself.
+          Added function prototype for print_graphviz, which prints the SANet out into the graphviz dot framework.
+
+        * SANet/SANet.cpp:
+          Implements the two new prototypes: update_effect_link and print_graphviz
+
+        * SAPOP_w_ACE.mpc:
+          Added the LogGraphOut as part of the SAPOP project, and allows it to export out the functionality to programs that link to the SAPOP library
+
+
+Thu Mar 19 21:45:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Instructions for building middleware RACE SA-POP and CoSMIC.txt
+          Updated instructions.
+
+
+Thu Mar 19 18:12:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Instructions for building middleware, RACE, SA-POP, & CoSMIC.txt:
+          Deleted (replaced with new name) because generated VC8 project file could not be opened due to invalid characters in the file name.
+
+        * Instructions for building middleware RACE SA-POP and CoSMIC.txt
+          Added (renamed from above to resolve invalid character problem in generated VC8 project file).
+
+
+Wed Mar 18 21:25:00 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Instructions for building middleware, RACE, SA-POP, & CoSMIC.txt:
+        * Instructions for building SA-POP Federate.txt:
+          Added instructions for building SA-POP, etc.
+
+
+Thu Jan 15 18:55:00 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.cpp:
+          Uses the replan function in the planner for effects and condition updating
+
+        * SANet/SANode.cpp:
+          Updates CondNode::update and TaskNode::Update to handle effect link weighting changes.
+
+        * SA_PlanStrategy.h:
+        * SA_PlanStrategy.cpp:
+          Implements a reset function for the PlanStrategy.
+
+        * SA_SchedStrategy.h:
+        * SA_SchedStrategy.cpp:
+          Implements a reset function for the SchedStrategy
+
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+          Calls the reset functions for both SchedStrategy and PlanStrategy in the replanning function.
+          Updated sched_links_ and reused_insts_ to reflect naming conventions.
+
+        * SchedStrategy.h:
+          Added virtual function for reset function
+
+
+Fri Jan  9 21:39:55 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.cpp:
+          Utilize update_effect function
+
+        * C2W/LogGraphOut.cpp:
+          Utilizes Complete Graphviz Visualization
+
+        * Planner.h:
+        * Planner.cpp:
+          Uses SANET::update_effect
+
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+          Implements SANET::update_effect, which updates an effect link in a SANet, calls TaskNode::update_effect_link
+
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+          Implements TaskNode::update_effect_link and CondNode::update_pre_link
+
+        * SA_WorkingPlan.cpp:
+          Clears causal links in reset_plan.
+
+Wed Dec 17 23:21:30 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.cpp:
+          Minor update to setting effect
+
+        * Planner.cpp:
+          Fixed typo
+
+        * SANet/SANode.cpp:
+          Check for changed condition value in CondNode::update()
+
+Wed Dec 17 22:55:40 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * SAPOP_C2W.mwc:
+          Added mwc for C2W.
+
+Wed Dec 17 22:53:31 UTC 2008  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W:
+        * C2W/C2W_Demo.cpp:
+        * C2W/C2W_Demo.mpc:
+        * C2W/LogGraphOut.h:
+        * C2W/LogGraphOut.cpp:
+        * C2W/UserInput.h:
+        * C2W/UserInput.cpp:
+        * C2W/c2w.san.xml:
+        * C2W/c2w.tm.xml:
+        * C2W/readme.txt:
+        * SchemaOut.h:
+        * SchemaOut.cpp:
+          Added the C2w Files.
+
+Sun Sep 28 21:14:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * SANet/SANetFileIn.cpp:
+        * SANet/XML_SANet.cpp:
+        * SANet/XML_SANet.hpp:
+        * TaskMapFileIn.cpp:
+        * XML_TaskMap.hpp:
+        * XML_TaskMap.cpp:
+          Updated to latest XSC genrated code to solve borland compilation errors.
+
+        * ../utils/Logger.h:
+          Borland compilation errors.
+
+Sat Sep 27 18:55:14 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Component/Planning_exec.cpp:
+          Updated UUID generation code with changed function name in ace/UUID.h
+
+Thu Sep 18 18:12:57 UTC 2008  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * ../RACE_SAPOP.mwc:
+
+        * Component/Planning_exec.h:
+        * Component/Planning_exec.cpp:
+        * Component/SA_POP_Component.idl:
+        * Component/SA_POP_Component.mpc:
+
+        * SA_POP_for_RACE.mpc:
+
+        * Tester/Tester_Component.idl:
+        * Tester/Tester_Component.mpc:
+
+        * examples/Space/source/Analysis/Analysis_Component.mpc:
+
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
+
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
+
+        * examples/Space/source/Comm/Comm_Component.mpc:
+
+        * examples/Space/source/Compression/Compression_Component.mpc:
+
+        * examples/Space/source/Exec/Exec_Component.mpc:
+
+        * examples/Space/source/Filter/Filter_Component.mpc:
+
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
+
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
+
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
+
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
+
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
+
+        * examples/Space/source/Ground/Ground_Component.mpc:
+
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
+
+        * examples/Space/source/common/Event_Types.mpc:
+
+        * server/Driver.h:
+        * server/Driver.idl:
+        * server/Driver.mpc:
+
+          Updated RACE build system to use $(RACE_ROOT) environment variable.
+
+Fri Sep 28 21:15:48 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * examples/Space/packages:
+        * examples/Space/packages/win32-vc8:
+        * examples/Space/packages/win32-vc8/Analysis.cpk:
+        * examples/Space/packages/win32-vc8/Comm.cpk:
+        * examples/Space/packages/win32-vc8/Compression.cpk:
+        * examples/Space/packages/win32-vc8/Exec.cpk:
+        * examples/Space/packages/win32-vc8/Filter.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo1_High.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo1_Low.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo1_Medium.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo2_High.cpk:
+        * examples/Space/packages/win32-vc8/Gizmo2_Medium.cpk:
+        * examples/Space/packages/win32-vc8/Ground.cpk:
+
+          Added SPACE Demo packages for Win32-VC8.
+
+
+        * examples/Space/source:
+        * examples/Space/source/Analysis:
+        * examples/Space/source/Analysis/Analysis_Component.ccd:
+        * examples/Space/source/Analysis/Analysis_Component.cidl:
+        * examples/Space/source/Analysis/Analysis_Component.idl:
+        * examples/Space/source/Analysis/Analysis_Component.mpc:
+        * examples/Space/source/Analysis/Analysis_Component_exec.h:
+        * examples/Space/source/Analysis/Analysis_Component_exec.cpp:
+        * examples/Space/source/Analysis/Analysis_Component_exec_export.h:
+        * examples/Space/source/Analysis/Analysis_Component_stub_export.h:
+        * examples/Space/source/Analysis/Analysis_Component_svnt_export.h:
+        * examples/Space/source/Backup_Gizmo_High:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.cidl:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.idl:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.cpp:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec_export.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_stub_export.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_svnt_export.h:
+        * examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_Low.ccd:
+        * examples/Space/source/Backup_Gizmo_Low:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.ccd:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.cidl:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.idl:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.h:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.cpp:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec_export.h:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_stub_export.h:
+        * examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_svnt_export.h:
+        * examples/Space/source/Comm:
+        * examples/Space/source/Comm/Comm_Component.ccd:
+        * examples/Space/source/Comm/Comm_Component.cidl:
+        * examples/Space/source/Comm/Comm_Component.idl:
+        * examples/Space/source/Comm/Comm_Component.mpc:
+        * examples/Space/source/Comm/Comm_Component_exec.h:
+        * examples/Space/source/Comm/Comm_Component_exec.cpp:
+        * examples/Space/source/Comm/Comm_Component_exec_export.h:
+        * examples/Space/source/Comm/Comm_Component_stub_export.h:
+        * examples/Space/source/Comm/Comm_Component_svnt_export.h:
+        * examples/Space/source/Compression:
+        * examples/Space/source/Compression/Compression_Component.ccd:
+        * examples/Space/source/Compression/Compression_Component.cidl:
+        * examples/Space/source/Compression/Compression_Component.idl:
+        * examples/Space/source/Compression/Compression_Component.mpc:
+        * examples/Space/source/Compression/Compression_Component_exec.h:
+        * examples/Space/source/Compression/Compression_Component_exec.cpp:
+        * examples/Space/source/Compression/Compression_Component_exec_export.h:
+        * examples/Space/source/Compression/Compression_Component_stub_export.h:
+        * examples/Space/source/Compression/Compression_Component_svnt_export.h:
+        * examples/Space/source/Exec:
+        * examples/Space/source/Exec/Exec_Component.ccd:
+        * examples/Space/source/Exec/Exec_Component.cidl:
+        * examples/Space/source/Exec/Exec_Component.idl:
+        * examples/Space/source/Exec/Exec_Component.mpc:
+        * examples/Space/source/Exec/Exec_Component_exec.h:
+        * examples/Space/source/Exec/Exec_Component_exec.cpp:
+        * examples/Space/source/Exec/Exec_Component_exec_export.h:
+        * examples/Space/source/Exec/Exec_Component_stub_export.h:
+        * examples/Space/source/Exec/Exec_Component_svnt_export.h:
+        * examples/Space/source/Filter:
+        * examples/Space/source/Filter/Filter_Component.ccd:
+        * examples/Space/source/Filter/Filter_Component.cidl:
+        * examples/Space/source/Filter/Filter_Component.idl:
+        * examples/Space/source/Filter/Filter_Component.mpc:
+        * examples/Space/source/Filter/Filter_Component_exec.h:
+        * examples/Space/source/Filter/Filter_Component_exec.cpp:
+        * examples/Space/source/Filter/Filter_Component_exec_export.h:
+        * examples/Space/source/Filter/Filter_Component_stub_export.h:
+        * examples/Space/source/Filter/Filter_Component_svnt_export.h:
+        * examples/Space/source/Gizmo1_High:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.ccd:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.cidl:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.idl:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_exec.h:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_exec.cpp:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_exec_export.h:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_stub_export.h:
+        * examples/Space/source/Gizmo1_High/Gizmo1_High_svnt_export.h:
+        * examples/Space/source/Gizmo1_Low:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.ccd:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.cidl:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.idl:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.h:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.cpp:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec_export.h:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_stub_export.h:
+        * examples/Space/source/Gizmo1_Low/Gizmo1_Low_svnt_export.h:
+        * examples/Space/source/Gizmo1_Medium:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.ccd:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.cidl:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.idl:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.h:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.cpp:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec_export.h:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_stub_export.h:
+        * examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_svnt_export.h:
+        * examples/Space/source/Gizmo2_High:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.ccd:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.cidl:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.idl:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_exec.h:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_exec.cpp:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_exec_export.h:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_stub_export.h:
+        * examples/Space/source/Gizmo2_High/Gizmo2_High_svnt_export.h:
+        * examples/Space/source/Gizmo2_Medium:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.ccd:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.cidl:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.idl:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.h:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.cpp:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec_export.h:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_stub_export.h:
+        * examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_svnt_export.h:
+        * examples/Space/source/Ground:
+        * examples/Space/source/Ground/Ground_Component.ccd:
+        * examples/Space/source/Ground/Ground_Component.cidl:
+        * examples/Space/source/Ground/Ground_Component.idl:
+        * examples/Space/source/Ground/Ground_Component.mpc:
+        * examples/Space/source/Ground/Ground_Component_exec.h:
+        * examples/Space/source/Ground/Ground_Component_exec.cpp:
+        * examples/Space/source/Ground/Ground_Component_exec_export.h:
+        * examples/Space/source/Ground/Ground_Component_stub_export.h:
+        * examples/Space/source/Ground/Ground_Component_svnt_export.h:
+        * examples/Space/source/Primary_Gizmo:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.ccd:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.cidl:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.idl:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.h:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.cpp:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec_export.h:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_stub_export.h:
+        * examples/Space/source/Primary_Gizmo/Primary_Gizmo_svnt_export.h:
+        * examples/Space/source/common:
+        * examples/Space/source/common/Event_Types.idl:
+        * examples/Space/source/common/Event_Types.mpc:
+        * examples/Space/source/common/Event_Types_exec_export.h:
+        * examples/Space/source/common/Event_Types_stub_export.h:
+        * examples/Space/source/common/Event_Types_svnt_export.h:
+
+          Added SPACE Demo source files.
+
+
+Thu Sep 27 21:29:33 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Component/SA_POP_Component.mpc
+        * Tester/Tester_Component.mpc
+
+          Added missing libs+= to enable building on OS X.
+
+Fri Sep 14 22:44:32 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Component/Planning_exec.cpp:
+
+          Revised IDL return values.
+
+Fri Sep 14 19:31:50 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * ../RACE_SAPOP.mwc:
+
+        * Component/Planning_exec.cpp:
+        * Component/SA_POP_Component.mpc:
+        * Component/SA_POP_Component_exec.cpp:
+
+          Fixed pointer error in SA-POP Component.
+
+        * Tester:
+        * Tester/Tester_Client.cpp:
+        * Tester/Tester_Component.cidl:
+        * Tester/Tester_Component.idl:
+        * Tester/Tester_Component.mpc:
+        * Tester/Tester_Component_exec.h:
+        * Tester/Tester_Component_exec.cpp:
+        * Tester/Tester_Component_exec_export.h:
+        * Tester/Tester_Component_stub_export.h:
+        * Tester/Tester_Component_svnt_export.h:
+
+          Added SA-POP (with RACE) Tester component.
+
+        * models:
+        * models/RACE_SAPOP_tester.xme:
+
+          Added SA-POP/RACE Tester model.
+
+        * ../descriptors/NodeDetails_Tester.dat:
+        * ../descriptors/TesterDeploymentPlan.cdp:
+        * ../descriptors/run_RACE_SAPOP_Tester.pl:
+        * ../descriptors/test.san:
+        * ../descriptors/test.tm:
+
+          Added SA-POP/RACE Tester descriptor files.
+
+
+2007-07-06    <wotte@localhost.localdomain>
+
+        * SA_POP.mpc:
+        * SANet/XML_SANet.hpp:
+        * SANet/XML_SANet.cpp:
+
+          Added an additional schema from previous commit.
+
+2007-07-05    <wotte@localhost.localdomain>
+
+        * XML_TaskMap.cpp:
+        * XML_TaskMap.hpp:
+        * SA_POP.mpc:
+
+          Updated generated code to latest version of XSC and added an
+          XSC generation project to the MPC file.
+
+Thu May 17 17:49:57 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP_Standalone.mwc:
+        * Standalone/SA_POP_Demo.cpp:
+
+        Updated standalone (command line) version of SA-POP.
+
+Wed Apr 18 06:35:44 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Component/Planning_exec.h:
+        * Component/Planning_exec.cpp:
+        * Component/SA_POP_Component.idl:
+        * Component/SA_POP_Component.mpc:
+        * Component/SA_POP_Component_exec.h:
+        * Component/SA_POP_Component_exec.cpp:
+
+        Updated SA-POP component with internal SA-POP planner.
+
+
+        * ../descriptors/SPACE.san:
+        * ../descriptors/SPACE.tm:
+
+        Added SPACE example task network and task map to descriptors directory.
+
+Mon Apr 16 23:41:13 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * ../RACE_SAPOP.mwc:
+
+        Added workspace for building RACE and SA-POP.
+
+
+Mon Apr 16 23:33:09 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Component:
+        * Component/Planning_exec.h:
+        * Component/Planning_exec.cpp:
+        * Component/SA_POP_Component.cidl:
+        * Component/SA_POP_Component.idl:
+        * Component/SA_POP_Component.mpc:
+        * Component/SA_POP_ComponentE.idl:
+        * Component/SA_POP_Component_exec.h:
+        * Component/SA_POP_Component_exec.cpp:
+        * Component/SA_POP_Component_exec_export.h:
+        * Component/SA_POP_Component_stub_export.h:
+        * Component/SA_POP_Component_svnt_export.h:
+
+          Added files for SA-POP component.
+
+
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+        * SANet/SANetFileIn.h:
+        * SANet/SANetFileIn.cpp:
+        * SANet/SANet_Standalone.mpc:
+        * SANet/SANet_Types.h:
+        * SANet/SANet_UI.cpp:
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+        * SANet/readme.txt:
+
+          Revised SANet to also allow standalone operation.
+
+
+        * SA_POP.mpc:
+        * SA_POP_for_RACE.mpc:
+        * SA_POP_Types.h:
+        * SANet_Network.xsd:
+        * Task_Map.xsd:
+        * Standalone:
+        * Standalone/SA_POP_Demo.cpp:
+        * Standalone/SA_POP_Demo.mpc:
+        * Standalone/UserInput.h:
+        * Standalone/UserInput.cpp:
+        * Standalone/readme.txt:
+
+          Revised SA-POP to allow operation with RACE or standalone.
+
+
+        * Standalone/XML_Utils:
+        * Standalone/XML_Utils/Utils:
+        * Standalone/XML_Utils/Utils/CIAO_XML_Utils_Export.h:
+        * Standalone/XML_Utils/Utils/Exceptions.h:
+        * Standalone/XML_Utils/Utils/Functors.h:
+        * Standalone/XML_Utils/Utils/Utils.mpc.old:
+        * Standalone/XML_Utils/Utils/XML_Error_Handler.h:
+        * Standalone/XML_Utils/Utils/XML_Error_Handler.cpp:
+        * Standalone/XML_Utils/Utils/XML_Helper.h:
+        * Standalone/XML_Utils/Utils/XML_Helper.cpp:
+        * Standalone/XML_Utils/Utils/XML_Schema_Resolver.h:
+        * Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp:
+        * Standalone/XML_Utils/Utils/XercesString.h:
+        * Standalone/XML_Utils/Utils/XercesString.cpp:
+        * Standalone/XML_Utils/XMLSchema:
+        * Standalone/XML_Utils/XMLSchema/Traversal.hpp:
+        * Standalone/XML_Utils/XMLSchema/Traversal.ipp:
+        * Standalone/XML_Utils/XMLSchema/Traversal.tpp:
+        * Standalone/XML_Utils/XMLSchema/TypeInfo.hpp:
+        * Standalone/XML_Utils/XMLSchema/TypeInfo.ipp:
+        * Standalone/XML_Utils/XMLSchema/TypeInfo.tpp:
+        * Standalone/XML_Utils/XMLSchema/Types.hpp:
+        * Standalone/XML_Utils/XMLSchema/Types.ipp:
+        * Standalone/XML_Utils/XMLSchema/Types.tpp:
+        * Standalone/XML_Utils/XMLSchema/Writer.hpp:
+        * Standalone/XML_Utils/XMLSchema/Writer.ipp:
+        * Standalone/XML_Utils/XMLSchema/Writer.tpp:
+        * Standalone/XML_Utils/XSCRT:
+        * Standalone/XML_Utils/XSCRT/Elements.hpp:
+        * Standalone/XML_Utils/XSCRT/Elements.ipp:
+        * Standalone/XML_Utils/XSCRT/Elements.tpp:
+        * Standalone/XML_Utils/XSCRT/ExtendedTypeInfo.hpp:
+        * Standalone/XML_Utils/XSCRT/ExtendedTypeInfo.ipp:
+        * Standalone/XML_Utils/XSCRT/Parser.hpp:
+        * Standalone/XML_Utils/XSCRT/Parser.ipp:
+        * Standalone/XML_Utils/XSCRT/Parser.tpp:
+        * Standalone/XML_Utils/XSCRT/Traversal.hpp:
+        * Standalone/XML_Utils/XSCRT/Traversal.ipp:
+        * Standalone/XML_Utils/XSCRT/Traversal.tpp:
+        * Standalone/XML_Utils/XSCRT/Writer.hpp:
+        * Standalone/XML_Utils/XSCRT/Writer.ipp:
+        * Standalone/XML_Utils/XSCRT/Writer.tpp:
+        * Standalone/XML_Utils/XSCRT/XML.hpp:
+        * Standalone/XML_Utils/XSCRT/XML.ipp:
+        * Standalone/XML_Utils/XSCRT/XML.tpp:
+        * Standalone/XML_Utils/XSCRT/XMLSchema.hpp:
+
+          Added a slightly modified copy of CIAO Config Handlers XML utilities for SA-POP standalone.
+
+
+        * examples:
+        * examples/Scheduling:
+        * examples/Scheduling/sched_main_test.san.xml:
+        * examples/Scheduling/sched_main_test.tm.xml:
+        * examples/Scheduling/sched_main_test1.san.xml:
+        * examples/Scheduling/sched_test1.san.xml:
+        * examples/Scheduling/sched_test1.tm.xml:
+        * examples/Scheduling/sched_test2.san.xml:
+        * examples/Scheduling/sched_test2.tm.xml:
+        * examples/Scheduling/sched_test4.san.xml:
+        * examples/Scheduling/sched_test4.tm.xml:
+        * examples/Scheduling/sched_test5.san.xml:
+        * examples/Scheduling/sched_test5.tm.xml:
+        * examples/Simple:
+        * examples/Simple/simple.san.xml:
+        * examples/Simple/simple.tm.xml:
+        * examples/Space:
+        * examples/Space/SPACE.san.xml:
+        * examples/Space/SPACE.tm.xml:
+        * examples/Space/SPACE_Goal1.san.xml:
+        * examples/Space/SPACE_Goal2.san.xml:
+
+          Added some SA-POP domain examples (task networks and task maps).
+
+
+        * experiments:
+        * experiments/EU_Test:
+        * experiments/EU_Test/EU_Test.mpc:
+        * experiments/EU_Test/EU_Test.cpp:
+        * experiments/EU_Test/Histogram.h:
+        * experiments/EU_Test/RandomGenerator.h:
+        * experiments/EU_Test/RandomGenerator.cpp:
+
+          Added skeleton of Expected Utility experiment.
+
+
+        * server/Driver.mpc:
+
+          Revised Driver for current RACE configuration (but will not compile until Interactive_Input_Adapters is updated).
+
+
+        * ../descriptors/RACE.cdp:
+
+          Revised RACE deployment plan to include SA-POP.
+
+
+        * ../descriptors/run_RACE.pl:
+
+          Revised run_RACE script with correct locations of DAnCE executables.
+
+
+Tue Nov 14 18:52:38 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SPACE.san.xml: Removed
+        * SPACE.tm.xml: Removed
+        * SPACE_Goal1.san.xml: Removed
+        * SPACE_Goal2.san.xml: Removed
+
+        * server/SPACE.san: Added revised space example task network
+        * server/SPACE.tm: Added revised space example task network
+        * server/client.cpp: Revised for multiple condition goals
+
+          Updated SA-POP SPACE example and client.
+
+Wed Nov  8 00:38:28 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * server/Driver.cpp:
+        * server/client.h:
+        * server/client.cpp:
+        * server/server.cpp:
+
+          Client and server updates/debugging for ATC Demo
+
+Tue Nov  7 19:50:13 UTC 2006  Nishanth Shankaran  <nshankar@nosmam.com>
+
+        * SA_POP.mpc:
+        * SA_WorkingPlan.h:
+
+        * server/Driver.cpp:
+        * server/Driver.mpc:
+
+          Fixed linking error on mac.
+
+Tue Nov  7 19:23:15 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Builder.h:
+        * LogScreenOut.h:
+        * LogScreenOut_Export.h:
+
+        * SANet/SANetFileIn.h:
+        * SANet/SANetFileIn_Export.h:
+
+        * SA_Builder.h:
+        * SA_Builder.cpp:
+        * SA_Builder_Export.h:
+        * SA_POP.mpc:
+        * TaskMapFileIn.h:
+        * TaskMapFileIn_Export.h:
+
+        * server/Driver.h:
+        * server/Driver.cpp:
+        * server/Driver.idl:
+        * server/Driver.mpc:
+        * server/Driver_stub_export.h:
+        * server/Driver_svnt_export.h:
+
+          Fixed problems related to "export macros" on windows.
+
+Mon Nov  6 22:37:28 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * server/Driver.mpc:
+        * server/client.h: Added file.
+        * server/client.cpp:
+
+          Updated SA-POP demo client for text UI options.
+
+Mon Nov  6 04:42:43 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * ../common/OpString.idl:
+
+        * SA_POP.mpc:
+        * SA_POP_Types.h:
+        * SA_WorkingPlan.cpp:
+        * Converter.h: Removed
+        * Converter.cpp: Removed
+        * Driever.cpp: Removed
+
+        * server/Driver.h:
+        * server/Driver.cpp:
+        * server/Driver.mpc:
+        * server/server.cpp:
+
+          Updated SA-POP driver/server to handle IDL goal structure.
+
+Sat Nov  4 19:07:07 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Driver.cpp:
+        * Planner.h:
+        * Planner.cpp:
+        * SA_POP_Types.h:
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+        * SPACE.san.xml:
+        * WorkingPlan.h:
+        * SANet/SANet.cpp:
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+
+          Updated SA-POP goal handling.
+
+
+Thu Nov  2 23:41:56 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * server:
+        * server/Driver.h:
+        * server/Driver.idl:
+        * server/Driver.cpp:
+        * server/Driver.mpc:
+        * server/client.cpp:
+        * server/server.cpp:
+
+          Added the "driver server".
+
+Thu Nov  2 19:25:01 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Driver.cpp:
+        * SA_POP_Types.h:
+        * SA_PlanCommands.cpp:
+        * SA_WorkingPlan.cpp:
+
+          Revised code to correct errors in Linux compilation.
+
+Wed Nov  1 18:58:45 UTC 2006  Nishanth Shankaran  <nshankar@nospan.com>
+
+        * Converter.h:
+        * SANet/SANetFileIn.h:
+        * SA_POP.mpc:
+        * ../common/OpString.idl:
+
+          Fixed compilation errors and warnings on linux.
+
+Wed Nov  1 17:07:41 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Converter.cpp:
+        * Driver.cpp:
+
+        * ../descriptors/Domain.cdd:
+        * ../descriptors/NodeDetails.dat:
+        * ../descriptors/RACE.cdp:
+        * ../descriptors/run_RACE.pl:
+
+          Checking in the codebase used for the ATC demo.
+
+Wed Oct 25 22:27:20 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * ../common/OpString.idl:
+
+          Added Goal IDL structure.
+
+Fri Oct 13 15:52:30 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Builder.h
+        * Converter.cpp
+        * Converter.h
+        * Driver.cpp
+        * LogFileOut.cpp
+        * LogFileOut.h
+        * LogScreenOut.cpp
+        * LogScreenOut.h
+        * OutAdapter.h
+        * PlanCommands.h
+        * PlanHeuristics.h
+        * Planner.cpp
+        * Planner.h
+        * PlanStrategy.h
+        * SA_Builder.cpp
+        * SA_Builder.h
+        * SA_PlanCommands.cpp
+        * SA_PlanCommands.h
+        * SA_PlanHeuristics.cpp
+        * SA_PlanHeuristics.h
+        * SA_PlanStrategy.cpp
+        * SA_PlanStrategy.h
+        * SA_POP.mpc
+        * SA_POP_Exceptions.cpp
+        * SA_POP_Exceptions.h
+        * SA_POP_Types.h
+        * SA_SchedStrategy.cpp
+        * SA_SchedStrategy.h
+        * SA_WorkingPlan.cpp
+        * SA_WorkingPlan.h
+        * SchedStrategy.h
+        * SPACE.san.xml
+        * SPACE.tm.xml
+        * SPACE_Goal1.san.xml
+        * SPACE_Goal2.san.xml
+        * TaskImpl.cpp
+        * TaskImpl.h
+        * TaskMap.cpp
+        * TaskMap.h
+        * TaskMapFileIn.cpp
+        * TaskMapFileIn.h
+        * WorkingPlan.h
+        * XML_TaskMap.cpp
+        * XML_TaskMap.hpp
+        * SANet/SANet.cpp
+        * SANet/SANet.h
+        * SANet/SANetFileIn.cpp
+        * SANet/SANetFileIn.h
+        * SANet/SANet_Exceptions.cpp
+        * SANet/SANet_Exceptions.h
+        * SANet/SANet_Types.h
+        * SANet/SANode.cpp
+        * SANet/SANode.h
+        * SANet/XML_SANet.cpp
+        * SANet/XML_SANet.hpp
+
+          Checking in initial version of SA-POP.
+
+        * ..common/OpString.idl:
+
+          Revised to fix namespace problem with TimeValue.
+
+        * ../Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+
+          Removed Converter project.
+
+        * ../Input_Adapters/Interactive_Input_Adapter/Converter.cpp:
+        * ../Input_Adapters/Interactive_Input_Adapter/Converter.h:
+
+          Removed (moved to SA_POP directory).

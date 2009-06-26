@@ -1,0 +1,85 @@
+project(Driver_stub): ccm_stub, race_idl {
+  sharedname = Driver_stub
+  idlflags += -Wb,stub_export_macro=DRIVER_STUB_Export \
+              -Wb,stub_export_include=Driver_stub_export.h \
+              -Wb,skel_export_macro=DRIVER_SVNT_Export \
+              -Wb,skel_export_include=Driver_svnt_export.h
+
+  after += OpString_stub
+  libs += OpString_stub
+  dynamicflags   = DRIVER_STUB_BUILD_DLL
+
+  IDL_Files {
+    Driver.idl
+  }
+
+  Source_Files {
+    DriverC.cpp
+  }
+}
+
+project(Driver_svnt) : ciao_servant, race_common {
+  after +=  Driver_stub
+  sharedname  = Driver_svnt
+  libs    += Driver_stub \
+             OpString_stub
+  dynamicflags = DRIVER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DriverS.cpp
+  }
+}
+
+project(Server): ciao_executor, ciao_config_handlers, ciao_plan_generator, race_common {
+
+  exename = server
+
+  after += Driver_svnt SA_POP
+
+  includes += $(RACE_ROOT)/Input_Adapters/Interactive_Input_Adapter \
+              $(CIAO_ROOT)/tools/Config_Handlers \
+              $(SAPOP_ROOT)
+
+  libs += OpString_stub \
+          Driver_stub \
+          Driver_svnt \
+          Interactive_Input_Adapter_stub \
+          Input_Adapter_stub \
+          Plan_Analyzer_Interface_stub \
+          SA_POP
+
+  IDL_Files {
+  }
+
+  Header_Files {
+    Driver.h
+  }
+
+  Source_Files {
+    Driver.cpp
+    server.cpp
+  }
+}
+
+project(client): taoclient, ciao_executor, ciao_plan_generator, race_common {
+
+  exename = client
+  after += Driver_stub SA_POP
+  libs += Driver_stub \
+          OpString_stub
+  includes += $(SAPOP_ROOT)
+
+  IDL_Files {
+  }
+
+  Header_Files {
+    client.h
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}

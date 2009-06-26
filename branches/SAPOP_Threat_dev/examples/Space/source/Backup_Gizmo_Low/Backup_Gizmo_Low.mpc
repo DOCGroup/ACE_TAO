@@ -1,0 +1,76 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Backup_Gizmo_Low"
+
+project(Backup_Gizmo_Low_stub): ccm_stub, race_idl {
+  after += Event_Types_stub
+  sharedname = Backup_Gizmo_Low_stub
+  libs    += Event_Types_stub
+  includes += ../common
+  idlflags += -Wb,stub_export_macro=BACKUP_GIZMO_LOW_STUB_Export \
+              -Wb,stub_export_include=Backup_Gizmo_Low_stub_export.h \
+              -Wb,skel_export_macro=BACKUP_GIZMO_LOW_SVNT_Export \
+              -Wb,skel_export_include=Backup_Gizmo_Low_svnt_export.h \
+              -I ../common
+  dynamicflags   = BACKUP_GIZMO_LOW_STUB_BUILD_DLL
+
+  IDL_Files {
+    Backup_Gizmo_Low.idl
+  }
+
+  Source_Files {
+    Backup_Gizmo_LowC.cpp
+  }
+}
+
+project(Backup_Gizmo_Low_svnt) : ciao_servant, race_idl {
+  after +=  Backup_Gizmo_Low_stub
+  includes += ../common
+  sharedname  = Backup_Gizmo_Low_svnt
+  libs    += Backup_Gizmo_Low_stub Event_Types_stub Event_Types_svnt
+
+  idlflags  +=  -Wb,export_macro=BACKUP_GIZMO_LOW_SVNT_Export \
+                -Wb,export_include=Backup_Gizmo_Low_svnt_export.h \
+                -I ../common
+  dynamicflags = BACKUP_GIZMO_LOW_SVNT_BUILD_DLL
+
+  cidlflags -= --
+  cidlflags += -I ../common --
+
+  CIDL_Files {
+    Backup_Gizmo_Low.cidl
+  }
+
+  IDL_Files {
+    Backup_Gizmo_LowE.idl
+  }
+
+  Source_Files {
+    Backup_Gizmo_LowEC.cpp
+    Backup_Gizmo_LowS.cpp
+    Backup_Gizmo_Low_svnt.cpp
+  }
+}
+
+
+project(Backup_Gizmo_Low_exec) : ciao_executor, race_common {
+  after   += Backup_Gizmo_Low_svnt
+  includes += ../common
+  sharedname = Backup_Gizmo_Low_exec
+  libs      += Backup_Gizmo_Low_stub \
+               Backup_Gizmo_Low_svnt \
+               Event_Types_stub \
+               Event_Types_svnt
+
+  idlflags  +=  -Wb,export_macro=BACKUP_GIZMO_LOW_EXEC_Export \
+                -Wb,export_include=Backup_Gizmo_Low_exec_export.h
+  dynamicflags   = BACKUP_GIZMO_LOW_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Backup_Gizmo_Low_exec.cpp
+  }
+}
