@@ -59,9 +59,8 @@ project(DAnCE_TargetManager_svnt) : dance_lib, dance_deployment_svnt, ciao_confi
   }
 }
 
-project (DAnCE_TargetManager_Exec) : dance_target_manager, naming, dance_exe, iortable, utils {
+project (DAnCE_TargetManager_Exec) : dance_target_manager, naming, dance_exe, iortable, utils, dance_logger {
   exename = dance_target_manager
-  libs += DAnCE_Logger
 
   IDL_Files {
   }
