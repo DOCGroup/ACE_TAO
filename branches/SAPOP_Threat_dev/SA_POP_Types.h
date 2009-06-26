@@ -20,6 +20,8 @@
 #include <map>
 #include <sstream>
 
+#include "SA_POP_Utils.h"
+
 #if defined (SA_POP_HAS_ACE)
 #include "ace/Log_Msg.h"
 #include "ace/Log_Priority.h"
@@ -293,9 +295,7 @@ namespace SA_POP {
 	/// Type of a set of conditions (condition & value).
   typedef std::set<Condition> CondSet;
 
-  /// Type of a set of open conditions, each associated with task instances
-  /// for which it is a precondition.
-  typedef std::multimap<Condition, TaskInstID> OpenCondMap;
+  
 
   /// Type of a set of causal link threats.
   typedef std::set<CLThreat> CLThreatSet;
@@ -453,6 +453,18 @@ namespace SA_POP {
     bool operator!= (const Goal &s) const { return !(*this == s); };
     bool operator< (const Goal &s) const { return this->goal_id < s.goal_id; };
   };
+
+  
+
+  
+
+  /// Type of a set of open conditions, each associated with task instances
+  /// for which it is a precondition.
+//  typedef std::multimap<Condition, TaskInstID> OpenCondMap;
+
+  /// Type of a set of open conditions, each associated with task instances
+  /// for which it is a precondition. With new list functionality
+  typedef SA_POP::ListMultiMap<Condition, TaskInstID> OpenCondMap;
 
   inline std::string to_string(int x)
   {

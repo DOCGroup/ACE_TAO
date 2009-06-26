@@ -281,6 +281,23 @@ namespace SANet {
      */
     virtual Utility get_utility (int step);
 
+    /// Get Prior of the TaskNode.
+    /**
+     * 
+     *
+     * @return  Expected utility.
+     */
+    virtual Probability get_prior (void);
+
+    /// Update Prior of the TaskNode.
+    /**
+     * 
+     * @param prior the new prior for the task
+     *
+     * 
+     */
+    virtual void update_prior (Probability prior);
+
     /// Add precondition link.
     /**
      * @param ID  Node ID.

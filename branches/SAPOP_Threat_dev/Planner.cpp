@@ -49,6 +49,9 @@ cur_cmd_ (0)
   this->plan_.sched_links.clear ();
   this->plan_.task_insts.clear ();
   this->plan_.threat_links.clear ();
+
+  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
+  this->init_added = false;
 };
 
 
@@ -405,6 +408,11 @@ CondSet Planner::get_effects (TaskID task_id)
   return this->sanet_->get_effects (task_id);
 };
 
+SANet::LinkWeight Planner::get_link(SANet::TaskID id, SANet::CondID cond_ID)
+{
+  return this->sanet_->get_link(id, cond_ID);
+}
+
 // Get all tasks that satisfy a condition.
 TaskSet Planner::get_satisfying_tasks (Condition cond)
 {
@@ -423,6 +431,11 @@ TaskID Planner::get_task_from_inst (TaskInstID inst_id)
 {
   return this->working_plan_->get_task_from_inst (inst_id);
 };
+
+void Planner::generate_all_threats(void)
+{
+   this->working_plan_->generate_all_threats();
+}
 
 // Get all current causal link threats.
 CLThreatSet Planner::get_all_threats (void)

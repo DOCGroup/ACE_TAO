@@ -183,6 +183,12 @@ namespace SA_POP {
      */
     virtual void undo (SA_RemoveOpenThreatsCmd *cmd);
 
+    //TODO ben's crap
+
+    virtual bool satisfy_everything();
+    virtual bool satisfy_schedule(void);
+    virtual bool get_next_threat_resolution();
+
   protected:
     // ************************************************************************
     // State information.
@@ -197,6 +203,9 @@ namespace SA_POP {
 
     /// Set of open causal link threats.
     CLThreatSet open_threats_;
+
+    /// Set of open causal link threats.
+    CLThreatSet closed_threats_;
 
     /// ID of current task being tried (to satisfy an open condition).
     TaskID cur_task_;
@@ -281,8 +290,6 @@ namespace SA_POP {
     /// plan (with promotion or demotion).
     ResolveCLThreatCmd *resolve_threat_cmd_;
 
-
-
     // ************************************************************************
     // Internal helper methods.
     // ************************************************************************
@@ -291,7 +298,7 @@ namespace SA_POP {
     /**
      * @return  True if planning succeeded, false otherwise.
      */
-    virtual bool satisfy_open_threats (void);
+//    virtual bool satisfy_open_threats (void);
 
     /// Satisfy an open condition with an appropriate task.
     /**

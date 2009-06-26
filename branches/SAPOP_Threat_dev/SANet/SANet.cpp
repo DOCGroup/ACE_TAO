@@ -71,6 +71,48 @@ void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_fac
   }
 };
 
+Probability SANet::Network::get_prior(TaskID ID)
+{
+  TaskNodeMap::iterator task_iter = task_nodes_.find (ID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  TaskNode *task_node = task_iter->second;
+
+  return task_node->get_prior();
+
+}
+
+LinkWeight SANet::Network::get_link(TaskID ID, CondID cond_ID)
+{
+  TaskNodeMap::iterator task_iter = task_nodes_.find (ID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  TaskNode *task_node = task_iter->second;
+  SANet::LinkMap lmap = task_node->get_post();
+
+  LinkMap::iterator lIter =lmap.find(cond_ID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  LinkWeight curWeight = lIter->second;
+
+  return curWeight;
+
+}
+
+void SANet::Network::update_prior(TaskID tID, Probability prior)
+{
+  TaskNodeMap::iterator task_iter = task_nodes_.find (tID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  TaskNode *task_node = task_iter->second;
+
+  task_node->update_prior(prior);
+  
+}
 
 void SANet::Network::add_cond (CondID ID, std::string name, MultFactor atten_factor,
                         Probability true_prob, Probability false_prob,

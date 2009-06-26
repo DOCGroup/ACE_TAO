@@ -17,6 +17,7 @@
 #include "Planner.h"
 #include <list>
 #include <set>
+#include <fstream>
 using namespace SA_POP;
 
 // Constructor.
@@ -91,11 +92,16 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	this->cur_seq_num_=1;
 	// Do the energy propogation for this task instance
 	// This function automatically does this for the task instances before and after it.
+  
+
   if(!this->energy_prop(task_inst))
   {
+
+
 	  this->planner_->undo_through(cur_cmd_id);
 	  return false;
   }
+
   // Do the balance propogation related to time windows for this task instance 
   // and those unranked with respect to it
   if(!this->time_balance_prop(task_inst))
@@ -420,7 +426,7 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 			TimeWindow temp_end = this->planner_->get_end_window(*iter);
 			if(temp_start.second!=NULL_TIME && temp_start.second<start_win.first)
 			{
-				std::cout<<"THe consumer of "<<*iter<<" has to executed before"<<std::endl;
+				std::cout<<"THe consumer of "<<*iter<<" has to execute before"<<std::endl;
 				//The consumer has to be executed before this task instance
 				ResourceMap temp_rm = this->planner_->get_all_resources(this->planner_->get_task_impl_from_inst(*iter));
 				ResourceMap::iterator temp_rm_iter = temp_rm.find(rm_iter->first);

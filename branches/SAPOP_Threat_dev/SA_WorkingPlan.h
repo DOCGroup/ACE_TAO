@@ -20,7 +20,8 @@
 #include "WorkingPlan.h"
 #include "PlanCommands.h"
 #include "SA_PlanCommands.h"
-
+#include <stack>
+#include <map>
 
 namespace SA_POP {
 
@@ -262,7 +263,7 @@ namespace SA_POP {
     /**
      * @param cmd  Command object.
      */
-    virtual void execute (SA_ResolveCLThreatCmd *cmd);
+    virtual bool execute (SA_ResolveCLThreatCmd *cmd);
 
     /// Undo a command to resolve a causal link threat in the
     /// plan (with promotion or demotion).
@@ -327,10 +328,16 @@ namespace SA_POP {
      */
 	virtual void reset_plan ();
 
+
+    virtual void generate_all_threats(void);
+
   protected:
     // ************************************************************************
     // State information.
     // ************************************************************************
+
+    //Ben's.  Kill if it breaks this
+    CLThreatSet threat_set;
 
     /// Flag for whether command prototypes have been set.
     bool has_cmds_;
@@ -395,6 +402,18 @@ namespace SA_POP {
 
 	// The set of reused task instances
 	std::multiset<TaskInstID> reused_insts_;
+
+  //I can't use sched_links_ because something craps itself when it gets a link
+  //and the tasks don't have windows.  I hate it too.
+  SchedulingLinks ordering_links;
+  //useful for doing the loop detection algorithm
+  SchedulingLinks reverse_ordering_links;
+ // SA_AssocTaskImplCmd* associate_cmd;
+  
+  bool is_cycle_in_ordering(void);
+  void dfs_aux(TaskInstID current, std::stack<TaskInstID>& s, std::map<TaskInstID, bool>& visited, std::map<TaskInstID, bool>& unvisited);
+  bool dfs_aux2(TaskInstID current, std::map<TaskInstID, bool>& visited);
+
   /// Insert initially task by task in the precedence graph
   /**
    * @param task_inst The task instance to insert into the precedence graph

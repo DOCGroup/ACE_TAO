@@ -19,6 +19,7 @@
 #include "Planner.h"
 #include "PlanHeuristics.h"
 #include "PlanCommands.h"
+#include <fstream>
 
 using namespace SA_POP;
 
@@ -42,7 +43,8 @@ add_threats_cmd_ (0),
 rmv_threats_cmd_ (0),
 add_task_cmd_ (0),
 assoc_impl_cmd_ (0),
-resolve_threat_cmd_ (0)
+resolve_threat_cmd_ (0),
+open_conds_(SA_POP::FrontBack::BACK, SA_POP::FrontBack::FRONT)
 {
   this->add_conds_cmd_ = new SA_AddOpenCondsCmd (this);
   this->rmv_conds_cmd_ = new SA_RemoveOpenCondsCmd (this);
@@ -167,26 +169,35 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
 
     // Add preconditions of this task of we didn't reuse the task instance.
 	    CommandID add_preconds_cmd_id;
-	if(!add_task_cmd->inst_exists())
-	{
-	preconds = this->planner_->get_unsat_preconds (this->cur_task_);
-    add_preconds_cmd_id = 
+	  if(!add_task_cmd->inst_exists())
+  	{
+     	preconds = this->planner_->get_unsat_preconds (this->cur_task_);
+      add_preconds_cmd_id = 
       this->add_open_conds (preconds, this->cur_task_inst_);
-	}
+  	}
+    //Move this code to the threat resolution sequence
     // Set decision point and reset sequence number for commands.
     this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
     this->cur_seq_num_ = 1;
 
+
+
+    //Deal with threats
+
+    //Actually build the list of threats
+    this->planner_->generate_all_threats();
+
     // Add causal link threats to open threats.
-    bool are_threats = !this->planner_->get_all_threats ().empty ();
+    bool are_threats = !(this->planner_->get_all_threats().empty ());
     CommandID add_threats_cmd_id;
     if (are_threats)
       add_threats_cmd_id = 
         this->add_open_threats (this->planner_->get_all_threats ());
 
     // Try to satisfy threats and continue recursive planning.
-    if (this->satisfy_open_threats ())
+    if (this->satisfy_everything())
       return true;
+
 
     SA_POP_DEBUG(SA_POP_DEBUG_NORMAL, "Backtracking from task addition...");
     // Undo addition of causal link threats from this task.
@@ -212,6 +223,138 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   // No task could satisfy open condition, so return failure.
   return false;
 };
+
+bool SA_PlanStrategy::satisfy_everything(){
+
+  //for each implementation
+    this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
+    this->cur_seq_num_ = 1;
+
+    AssocTaskImplCmd *assoc_impl_cmd;
+    TaskImplList impl_list;
+
+    // Choose a task implementation.
+    assoc_impl_cmd =
+      static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
+    if(!this->planner_->inst_exists(this->cur_task_inst_)) impl_list = this->impl_choice_->choose_impl (this->cur_task_inst_);
+    else impl_list.push_back(this->planner_->get_impl_id(this->cur_task_inst_));
+    assoc_impl_cmd->set_id (this->get_next_cmd_id ());
+    assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
+    this->planner_->add_command (assoc_impl_cmd);
+		 this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
+
+    while (this->planner_->try_next (assoc_impl_cmd->get_id ())) 
+    {
+      if(this->get_next_threat_resolution()){
+        return true;
+      }
+      else{
+        //this->planner_->undo_command(assoc_impl_cmd->get_id());
+      
+          this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
+      }
+  //    assoc_impl_cmd =
+  //      static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
+//      if(!this->planner_->inst_exists(this->cur_task_inst_)) impl_list = this->impl_choice_->choose_impl (this->cur_task_inst_);
+//      else impl_list.push_back(this->planner_->get_impl_id(this->cur_task_inst_));
+//      assoc_impl_cmd->set_id (this->get_next_cmd_id ());
+ //     impl_list.pop_front();
+//      assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
+ //     this->planner_->add_command (assoc_impl_cmd);
+//		  this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
+
+    }
+
+    //Undo the AssocImplCmd
+
+    return false;
+}
+bool SA_PlanStrategy::satisfy_schedule(void){
+
+
+          // Set decision point and reset sequence number for commands.
+          this->cur_decision_pt_ = SA_PlanStrategy::SCHEDULE_DECISION;
+          this->cur_seq_num_ = 1;
+
+          // Try to schedule and recursively continue planning.
+          if (this->planner_->recurse_sched (this->cur_task_inst_))
+            return true;
+
+
+     return false;
+}
+
+bool SA_PlanStrategy::get_next_threat_resolution(){
+ 
+  //TODO this just takes the first threat resolution and gives up otherwise.  fix soon
+
+        // Choose an open threat to satisfy and remove from open threats.
+
+    if(open_threats_.empty()){
+       this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
+       return satisfy_schedule();
+    }
+        this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
+        CLThreat threat = *this->open_threats_.begin ();
+        CommandID rmv_threat_cmd_id = this->rmv_open_threat (threat);
+
+        //Should have been done in the command
+        //this->open_threats_.erase(threat);
+
+
+        this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
+   //       this->cur_seq_num_ = 1;
+
+        // Create threat resolution command and add to planner.
+        ResolveCLThreatCmd *resolve_threat_cmd =
+          static_cast<ResolveCLThreatCmd *> (this->resolve_threat_cmd_->clone ());
+        resolve_threat_cmd->set_id (this->get_next_cmd_id ());
+        resolve_threat_cmd->set_threat (threat);
+        this->planner_->add_command (resolve_threat_cmd);
+        
+   //     if(this->planner_->try_next (resolve_threat_cmd->get_id ()))
+
+
+
+        while(this->planner_->try_next(resolve_threat_cmd->get_id())){
+         
+          
+          if (this->get_next_threat_resolution ())
+            return true;
+
+        }
+
+         this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
+         this->planner_->undo_command (resolve_threat_cmd->get_id ());
+
+  //      resolve_threat_cmd =
+ //         static_cast<ResolveCLThreatCmd *> (this->resolve_threat_cmd_->clone ());
+  //      resolve_threat_cmd->set_id (this->get_next_cmd_id ());
+  //      resolve_threat_cmd->set_threat (threat);
+ //       this->planner_->add_command (resolve_threat_cmd);
+
+  //      resolve_threat_cmd->choices = 1;
+
+        //Second time will try reverse direection
+ //       if(this->planner_->try_next (resolve_threat_cmd->get_id ()))
+ //         if (this->get_next_threat_resolution ())
+ //           return true;
+
+
+        // Undo threat resolution.
+ //       this->planner_->undo_command (resolve_threat_cmd->get_id ());
+
+
+
+        this->open_threats_.insert(threat);
+
+   //     // Undo removal of open threat.
+        this->planner_->undo_command (rmv_threat_cmd_id);
+
+        return false;
+  
+}
+
 
 // Get a PlanCommand prototype for adding open conditions,
 // which works on this strategy.
@@ -309,92 +452,60 @@ void SA_PlanStrategy::undo (SA_RemoveOpenCondsCmd *cmd)
 };
 
 // Execute a command to add causal link threats to planning.
-void SA_PlanStrategy::execute (SA_AddOpenThreatsCmd *)
+void SA_PlanStrategy::execute (SA_AddOpenThreatsCmd *cmd)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+    for (CLThreatSet::iterator iter = cmd->threats_.begin ();
+    iter != cmd->threats_.end (); iter++)
+  {
+    CLThreat threat = *iter;
+    if(this->closed_threats_.find(threat) == this->closed_threats_.end())
+    {
+      this->open_threats_.insert (threat);
+    }
+  }
 };
 
 // Undo a command to add causal link threats to planning.
-void SA_PlanStrategy::undo (SA_AddOpenThreatsCmd *)
+void SA_PlanStrategy::undo (SA_AddOpenThreatsCmd * cmd)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  // Remove open conditions mapped to the specified task instance.
+	std::cout<<"undoing open threats" <<std::endl;
+	for (CLThreatSet::iterator cond_iter = cmd->threats_.begin ();
+    cond_iter != cmd->threats_.end (); cond_iter++)
+  {
+      CLThreat threat = *cond_iter;
+		  this->open_threats_.erase (threat);
+  }
 };
 
 // Execute a command to remove causal link threats from planning.
-void SA_PlanStrategy::execute (SA_RemoveOpenThreatsCmd *)
+void SA_PlanStrategy::execute (SA_RemoveOpenThreatsCmd * cmd)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+    // Remove open conditions mapped to the specified task instance.
+	std::cout<<"removing open threats" <<std::endl;
+	for (CLThreatSet::iterator cond_iter = cmd->threats_.begin ();
+    cond_iter != cmd->threats_.end (); cond_iter++)
+  {
+      CLThreat threat = *cond_iter;
+		  this->open_threats_.erase (threat);
+      this->closed_threats_.insert (threat);
+  }
 };
 
 // Undo a command to remove causal link threats from planning.
-void SA_PlanStrategy::undo (SA_RemoveOpenThreatsCmd *)
+void SA_PlanStrategy::undo (SA_RemoveOpenThreatsCmd * cmd)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+   for (CLThreatSet::iterator iter = cmd->threats_.begin ();
+    iter != cmd->threats_.end (); iter++)
+  {
+    CLThreat threat = *iter;
+    this->closed_threats_.erase (threat);
+    this->open_threats_.insert (threat);
+  }
 };
 
-// Recursively satisfy all open causal link threats and continue planning.
-bool SA_PlanStrategy::satisfy_open_threats (void)
-{
-  if (this->open_threats_.empty ()) {
-    // Set decision point and reset sequence number for commands.
-    this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
-    this->cur_seq_num_ = 1;
 
-    // Choose a task implementation.
-    AssocTaskImplCmd *assoc_impl_cmd =
-      static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
-    TaskImplList impl_list;
-    if(!this->planner_->inst_exists(this->cur_task_inst_)) impl_list = this->impl_choice_->choose_impl (this->cur_task_inst_);
-    else impl_list.push_back(this->planner_->get_impl_id(this->cur_task_inst_));
-    assoc_impl_cmd->set_id (this->get_next_cmd_id ());
-    assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
-    this->planner_->add_command (assoc_impl_cmd);
 
-    // Try task implementations until one yields a complete plan or all have
-    // been tried.
-    while (this->planner_->try_next (assoc_impl_cmd->get_id ())) {
-		// Get the task instance.
-		this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
-      // Set decision point and reset sequence number for commands.
-      this->cur_decision_pt_ = SA_PlanStrategy::SCHEDULE_DECISION;
-      this->cur_seq_num_ = 1;
-
-      // Try to schedule and recursively continue planning.
-      if (this->planner_->recurse_sched (this->cur_task_inst_))
-        return true;
-    }
-
-    // No task implementation worked so return failure.
-    return false;
-  }
-
-  // Choose an open threat to satisfy and remove from open threats.
-  CLThreat threat = *this->open_threats_.begin ();
-  CommandID rmv_threat_cmd_id = this->rmv_open_threat (threat);
-
-  // Create threat resolution command and add to planner.
-  ResolveCLThreatCmd *resolve_threat_cmd =
-    static_cast<ResolveCLThreatCmd *> (this->resolve_threat_cmd_->clone ());
-  resolve_threat_cmd->set_id (this->get_next_cmd_id ());
-  resolve_threat_cmd->set_threat (threat);
-  this->planner_->add_command (resolve_threat_cmd);
-
-  // Try threat resolutions until one yields a complete plan or all have been
-  // tried.
-  while (this->planner_->try_next (resolve_threat_cmd->get_id ())) {
-    if (this->satisfy_open_threats ())
-      return true;
-  }
-
-  // Undo threat resolution.
-  this->planner_->undo_command (resolve_threat_cmd->get_id ());
-
-  // Undo removal of open threat.
-  this->planner_->undo_command (rmv_threat_cmd_id);
-
-  // No threat resolution was successful so return failure.
-  return false;
-};
 
 // Satisfy an open condition with an appropriate task.
 AddTaskCmd *SA_PlanStrategy::satisfy_cond (Condition open_cond)
