@@ -817,6 +817,7 @@ using the XtResource_Factory.
 export ACE_ROOT=`pwd`
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
+export DANCE_ROOT=$CIAO_ROOT/DAnCE
 
 # patch0 and patch1 are applied a bit later
 
