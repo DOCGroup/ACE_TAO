@@ -136,6 +136,8 @@ public:
   /// Release the OS resources related to this handler.
   virtual int release_os_resources (void);
 
+  virtual int handle_write_ready (const ACE_Time_Value *timeout);
+
   /*
    * Hook to add public methods from concrete connection handler
    * implementation onto the base connection handler.
