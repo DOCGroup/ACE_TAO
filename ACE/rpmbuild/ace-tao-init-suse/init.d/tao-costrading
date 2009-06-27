@@ -7,7 +7,7 @@
 # system startup script for service/daemon TAO-cosnotification
 #
 # LSB compatible service control script; see http://www.linuxbase.org/spec/
-#
+# 
 ### BEGIN INIT INFO
 # Provides:          tao-costrading
 # Required-Start:    $syslog $remote_fs tao-cosnaming
@@ -24,22 +24,22 @@
 # Note: Special treatment of stop for LSB conformance
 TAO_COSTRADING_BIN=/usr/sbin/tao-costrading
 
-test -x $TAO_COSTRADING_BIN || { echo "$TAO_COSTRADING_BIN not installed";
+test -x $TAO_COSTRADING_BIN || { echo "$TAO_COSTRADING_BIN not installed"; 
 	if [ "$1" = "stop" ]; then exit 0;
 	else exit 5; fi; }
 
 # Check for existence of needed config file and read it
-TAO_COSTRADING_CONFIG=/etc/sysconfig/tao/tao-costrading.opt
+TAO_COSTRADING_CONFIG=/etc/sysconfig/tao-costrading
 
 test -r $TAO_COSTRADING_CONFIG || { echo "$TAO_COSTRADING_CONFIG not existing";
 	if [ "$1" = "stop" ]; then exit 0;
 	else exit 6; fi; }
 
-# Read config
+# Read config	
 . $TAO_COSTRADING_CONFIG
 
 # Source LSB init functions
-# providing start_daemon, killproc, pidofproc,
+# providing start_daemon, killproc, pidofproc, 
 # log_success_msg, log_failure_msg and log_warning_msg.
 # This is currently not used by UnitedLinux based distributions and
 # not needed for init scripts for UnitedLinux only. If it is used,
@@ -73,7 +73,7 @@ rc_reset
 # 6       - program is not configured
 # 7       - program is not running
 # 8--199  - reserved (8--99 LSB, 100--149 distrib, 150--199 appl)
-#
+# 
 # Note that starting an already running service, stopping
 # or restarting a not-running service as well as the restart
 # with force-reload (in case signaling is not supported) are
@@ -153,7 +153,7 @@ case "$1" in
 	/sbin/killproc -HUP $TAO_COSTRADING_BIN
 	#touch /var/run/FOO.pid
 	rc_status -v
-
+	
 	## Otherwise if it does not support reload:
 	#rc_failed 3
 	#rc_status -v
@@ -170,7 +170,7 @@ case "$1" in
 	# 3 - service not running (unused)
 	# 4 - service status unknown :-(
 	# 5--199 reserved (5--99 LSB, 100--149 distro, 150--199 appl.)
-
+	
 	# NOTE: checkproc returns LSB compliant status values.
 	/sbin/checkproc $TAO_COSTRADING_BIN
 	# NOTE: rc_status knows that we called this init script with
