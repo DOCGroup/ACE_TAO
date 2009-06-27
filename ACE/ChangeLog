@@ -1,3 +1,11 @@
+Sat Jun 27 00:55:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Updated suse
+
+        * rpmbuild/ace-tao-init-suse/fillup-templates/*:
+          Moved to tao
+
 Sat Jun 27 00:44:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/tao:

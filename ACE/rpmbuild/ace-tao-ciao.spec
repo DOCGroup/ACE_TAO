@@ -1300,7 +1300,7 @@ cp -R ${ACE_ROOT}/rpmbuild/etc/tao/* %{buildroot}%{_sysconfdir}/tao/
 mkdir -p %{buildroot}%{_sysconfdir}/init.d
 mkdir -p %{buildroot}%{_localstatedir}/adm
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/init.d/* %{buildroot}%{_sysconfdir}/init.d/
-cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/fillup-templates/* %{buildroot}%{_localstatedir}/adm/
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/tao/* %{buildroot}%{_sysconfdir}/tao/
 %else
 mkdir -p %{buildroot}%{_sysconfdir}/rc.d/init.d
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/rc.d/init.d/* %{buildroot}%{_sysconfdir}/rc.d/init.d/
