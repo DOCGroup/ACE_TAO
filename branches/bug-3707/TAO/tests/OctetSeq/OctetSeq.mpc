@@ -1,0 +1,44 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  avoids += ace_for_tao
+  after += *idl
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, anytypecode {
+  avoids += ace_for_tao
+  after += *idl
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*OctetSeq): taoclient, anytypecode {
+  exename = OctetSeq
+  after += *idl
+  Source_Files {
+    testC.cpp
+    OctetSeq.cpp
+  }
+  IDL_Files {
+  }
+}

@@ -1,0 +1,122 @@
+/**
+@page wchar Wide Character/Unicode support in ACE
+
+Here's a first stab at some sort of documentation for the magic
+wide-character (wchar) stuff in ACE.  It should be possible to compile
+ACE with wchar support on most platforms that ACE runs on.  In some
+cases, we don't enable wchar support by default since it increases the
+footprint a bit.  If you run into any problems, please use the
+$ACE_ROOT/PROBLEM-REPORT-FORM to let us know.
+
+@subsection wchar_overview Overview
+
+There are three different wchar configurations that ACE can use.  These are
+no support mode, regular support mode, and full support mode (well, those are
+the best names I can come up with for now).
+
+@subsection wchar_nosupport No Support
+
+By default, ACE will not use wchar_t at all.  This is for platforms where
+wchar_t does not exist or support for it is pretty flakey.
+
+@subsection wchar_regular Regular Support
+
+If ACE_HAS_WCHAR is defined, then ACE classes will be expanded to have extra
+methods which take in wchar_t strings.  Note that all the methods available
+with No Support are also available here.  This is the default in Windows
+right now, and has been tested to work on Linux and VxWorks (well, only been
+tested to compile/link of VxWorks).
+
+@subsection wchar_full Full Support
+
+Full support is turned on if ACE_HAS_WCHAR and ACE_USES_WCHAR are defined.
+Like Regular Support, both char and wchar_t versions of some methods are
+available, but unlike Regular Support, other methods that have char arguments
+or return values may have wchar_t arguments or return values.
+
+This has been tested on Windows and Linux, and is the default for Windows CE.
+
+@subsection wchar_othermacros Other Important Macros
+
+In addition to the ACE_HAS_WCHAR and ACE_USES_WCHAR mentioned above, there
+are several other macros that are important when using wide character support
+in ACE.
+
+These other macros are used in code to conditionally switch between char and
+wchar_t.  ACE_TCHAR is a char normally and wchar_t when ACE_USES_WCHAR is
+defined.  ACE_TEXT ("foo") expands to "foo" normally and L"foo" when
+ACE_USES_WCHAR is defined.
+
+ACE_TEXT_CHAR_TO_TCHAR and ACE_TEXT_WCHAR_TO_TCHAR are used when a string
+that is always a char or wchar_t string needs to be converted to a ACE_TCHAR
+string.  On the same note, ACE_TEXT_ALWAYS_CHAR is used when a string is
+ACE_TCHAR * and needs to be a char * string.
+
+ACE_TEXT_WIDE ("foo") is unique in that it always maps to L"foo".  It is not
+a conditional macro.
+
+For string constants in code, ACE_TEXT is used to put the Unicode prefix
+(Usually 'L') before the string when needed.  This is controlled by
+ACE_USES_WCHAR.
+
+Finally, on Windows there are a bunch of ACE_TEXT_Apicall type macros which
+are used to choose the correct version of a Win32 API function depending on
+ACE_USES_WCHAR.  I'm hoping to remove these by adding a new ACE_OS_Win32
+class to perform the same task, but until then these ugly macros get the job
+done.
+
+@subsection wchar_logmsg ACE_Log_Msg support
+
+One of the more troublesome aspect of supporting wide and Ansi strings is
+the fact that the format strings for ACE_DEBUG and family always had to have
+ACE_TEXT around them.
+
+Now this should not be the case, since ACE_Log_Msg was extended to support
+both types of format strings concurrently.  This is okay, but when strings
+are printed out via the format_string, care has to be taken.
+
+It is interesting how Unix and Windows treats the format specifiers
+differently, based on their history.  Win32 uses %s, %c, %S and %C, whereas
+Linux seems to use %s, %c, %ls, and %lc.  And they even treat %s and %c
+differently.  The route ACE takes is a bit of a mixture of both:
+
+- %c: prints out an Ansi character
+- %C: prints out an Ansi string
+- %s: prints out an ACE_TCHAR string
+- %w: prints out a Wide character
+- %W: prints out a Wide string
+
+An example, which will also function correctly even when ACE_USES_WCHAR is
+defined:
+
+@verbatim
+void print (char *a_str, wchar_t *w_str, ACE_TCHAR *t_str)
+{
+    ACE_DEBUG ((LM_DEBUG,
+                "%C %s %W\n",
+                a_str,
+                t_str,
+                w_str));
+}
+@endverbatim
+
+@subsection wchar_win32macros Relation to Win32's UNICODE and _UNICODE macros
+
+It used to be that in previous versions of ACE that the Win32 macros affected
+ACE in some way.  This has been all removed in favor of the ACE_USES_WCHAR
+and ACE_HAS_WCHAR macros.  Along with this, the definition of some of the
+Win32 string types (LPTSTR, LPCSTR, etc.) have been also removed.  Since this
+isn't a direct concern of ACE, they will have to be defined separately if
+they are needed on non-Win32 platforms.
+
+The way I'd recommend doing this is to add the typdefs to config.h.
+
+@subsection wchar_legacy Legacy Support
+
+Most of the old macros (ACE_HAS_UNICODE, ACE_HAS_MOSTLY_UNICODE_APIS) are
+ignored by default by ACE, since the new macros replaced them.  If
+ACE_LEGACY_MODE is defined, there is an attempt to map them to the new scheme
+by just ACE_HAS_UNICODE == ACE_HAS_WCHAR and ACE_HAS_MOSTLY_UNICODE_APIS ==
+ACE_USES_WCHAR.
+
+*/
