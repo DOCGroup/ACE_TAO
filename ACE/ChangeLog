@@ -1,3 +1,12 @@
+Sat Jun 27 00:44:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/tao:
+        * rpmbuild/logrotate.d:
+          Moved to the new etc directory
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Updated for move above
+
 Fri Jun 26 22:55:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/non_mpc_makefile/run_test.pl:
