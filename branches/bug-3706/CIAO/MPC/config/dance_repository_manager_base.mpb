@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+feature(jaws) {
+  includes += $(ACE_ROOT)/apps
+  libs += JAWS
+  macros += DANCE_RM_USES_JAWS
+}

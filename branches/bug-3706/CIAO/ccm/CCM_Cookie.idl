@@ -1,0 +1,17 @@
+// $Id$
+
+#if !defined (CCM_COOKIE_IDL)
+#define CCM_COOKIE_IDL
+
+#include "tao/OctetSeq.pidl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  valuetype Cookie
+  {
+    private CORBA::OctetSeq cookieValue;
+  };
+};
+#endif /* CCM_COOKIE_IDL */
