@@ -63,7 +63,7 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.bz2
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.gz
 Source1:      ace-tao-rpmlintrc
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -1291,8 +1291,10 @@ install ${ACE_ROOT}/bin/tao_nslist %{buildroot}%{_bindir}/tao_nslist
 # ================================================================
 
 install -d %{buildroot}%{_sysconfdir}
-cp -R ${ACE_ROOT}/rpmbuild/logrotate.d %{buildroot}%{_sysconfdir}/logrotate.d
-cp -R ${ACE_ROOT}/rpmbuild/tao %{buildroot}%{_sysconfdir}/tao
+mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
+mkdir -p %{buildroot}%{_sysconfdir}/tao
+cp -R ${ACE_ROOT}/rpmbuild/etc/logrotate.d/* %{buildroot}%{_sysconfdir}/logrotate.d/
+cp -R ${ACE_ROOT}/rpmbuild/etc/tao/* %{buildroot}%{_sysconfdir}/tao/
 
 %if %{defined suse_version}
 mkdir -p %{buildroot}%{_sysconfdir}/init.d
