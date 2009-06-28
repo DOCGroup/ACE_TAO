@@ -1,3 +1,8 @@
+Sun Jun 28 16:15:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/union.idl
+          Fixed compile problem with SunStudio 12 Update 1
+
 Fri Jun 26 20:41:53 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Block_Flushing_Strategy.h:
