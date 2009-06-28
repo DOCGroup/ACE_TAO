@@ -1,3 +1,64 @@
+Sun Jun 28 22:15:47 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * ace/ace.mpc:
+        * ace/Abstract_Timer_Queue.h:
+        * ace/Abstract_Timer_Queue.cpp:
+        * ace/Timer_Queue_Iterator.h:
+        * ace/Timer_Queue_Iterator.inl:
+        * ace/Timer_Queue_Iterator.cpp:
+        * ace/Timer_Queuefwd.h:
+        * ace/Timer_Queue.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.inl:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_List_T.h:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Wheel_T.h:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Heap_T.cpp:
+          Heavy refactoring in ACE_Timer_Queue_T class and friends.
+          First, created a template base class (ACE_Abstract_Timer_Queue) that:
+          1) Only depends on the type held by the timer queue, not to lock
+             or upcall strategy. 
+          2) It is a pure abstract class, i.e., none of its member
+             functions have any implementation.
+          3) Provides new pure virtual functions to encapsulates some
+             logic that was spread between tests, TP_Reactor and
+            Dev_Poll_Reactor.
+          Then I re-wrote all the standard timer queue objects in terms of
+          this class.  In particular, the reactors use only the abstract
+          interface.
+          I also re-factored the Timer_Queue_Iterator to only depend on
+          the type of objects held by the timer queue.  The rest of the
+          parameters where not used either.
+          Implement functionality that was spread in Dev_Poll_Reactor,
+          TP_Reactor and a test into expire_single.
+
+        * ace/Proactor.h:
+        * ace/TP_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+          Both classes implemented the logic to dispatch a single timer
+          but release a mutex before the upcall.  This was confusing as
+          well as required exposing too much detail about the Timer_Queue
+          classes.
+          The new mechanism is a single function in (expire_single)
+          ACE_Abstract_Timer_Queue<> (implemented in ACE_Timer_Queue_T<>)
+          which receives a command object to encapsulate the mutex release.
+
+        * ace/Functor.h:
+        * ace/Functor.cpp:
+        * ace/Functor_T.h:
+        * ace/Functor_T.inl:
+          Add helper ACE_Command_* objects.  One is a no-op, for the test
+          below.  The other is a callback that ignores the silly void*
+          argument in the ACE_Command_Base::execute() member function.
+
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+          Re-factored test in terms of expire_single()
+
 Sat Jun 27 00:55:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:

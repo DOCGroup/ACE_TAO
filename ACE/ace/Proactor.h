@@ -135,10 +135,8 @@ class ACE_Export ACE_Proactor
 {
   // = Here are the private typedefs that the ACE_Proactor uses.
 
-  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *,
-    ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
-  TIMER_QUEUE_ITERATOR;
+  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *>
+    TIMER_QUEUE_ITERATOR;
   typedef ACE_Timer_List_T<ACE_Handler *,
     ACE_Proactor_Handle_Timeout_Upcall,
     ACE_SYNCH_RECURSIVE_MUTEX>
