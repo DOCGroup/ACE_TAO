@@ -159,9 +159,14 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
               CFLAGS += -m64
               LDFLAGS += -m64
             else
-              CFLAGS += -xarch=v9
-              LDFLAGS += -xarch=v9
-            endif
+              ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
+                CFLAGS += -m64
+                LDFLAGS += -m64
+              else
+                CFLAGS += -xarch=v9
+                LDFLAGS += -xarch=v9
+              endif # C++ 5.10
+            endif # C++ 5.9
           endif # C++ 5.8
         endif # C++ 5.7
       endif # buildbits
