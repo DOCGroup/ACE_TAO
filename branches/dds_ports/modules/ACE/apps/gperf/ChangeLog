@@ -1,3 +1,14 @@
+Sun Jun 28 03:20:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * src/*.{h,cpp}:
+          Use doxygen comment tags, small code improvements
+
+        * src/gperf.mpc:
+          Build a shared library that can later be used by gperf
+
+        * src/gperf_export.h:
+          New file
+
 Wed Jul 02 11:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * src/Key_List.cpp:
@@ -44,7 +55,7 @@ Tue Mar 14 21:08:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
           conditional expression", "conversion from some type to another type, possible
           loss of data", "local variable may be used without having been initialized" and
           so on.
-          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for 
+          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for
           motivating the fix to these "VC level 4 warnings".
 
 Wed Jan  4 22:55:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>

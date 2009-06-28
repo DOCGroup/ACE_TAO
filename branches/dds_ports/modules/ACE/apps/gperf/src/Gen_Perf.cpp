@@ -1,25 +1,27 @@
 // -*- C++ -*-
 
-// $Id$
-
-// Copyright (C) 1989 Free Software Foundation, Inc.
-// written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
-
-// This file is part of GNU GPERF.
-
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+/**
+ * $Id$
+ *
+ * Copyright (C) 1989 Free Software Foundation, Inc.
+ * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ *
+ * This file is part of GNU GPERF.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 
 #include "Gen_Perf.h"
 
@@ -33,26 +35,24 @@ ACE_RCSID(src, Gen_Perf, "$Id$")
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
-// Current release version.
+/// Current release version.
 extern const char *version_string;
 
-// Reads input keys, possibly applies the reordering heuristic, sets
-// the maximum associated value size (rounded up to the nearest power
-// of 2), may initialize the associated values array, and determines
-// the maximum hash table size.  Note: using the random numbers is
-// often helpful, though not as deterministic, of course!
-
+/// Reads input keys, possibly applies the reordering heuristic, sets
+/// the maximum associated value size (rounded up to the nearest power
+/// of 2), may initialize the associated values array, and determines
+/// the maximum hash table size.  Note: using the random numbers is
+/// often helpful, though not as deterministic, of course!
 Gen_Perf::Gen_Perf (void)
   : fewest_collisions (0),
     num_done (1)
 {
 }
 
-// Merge two disjoint hash key multisets to form the ordered disjoint
-// union of the sets.  (In a multiset, an element can occur multiple
-// times).  Precondition: both set1 and set2 must be
-// ordered. Returns the length of the combined set.
-
+/// Merge two disjoint hash key multisets to form the ordered disjoint
+/// union of the sets.  (In a multiset, an element can occur multiple
+/// times).  Precondition: both set1 and set2 must be
+/// ordered. Returns the length of the combined set.
 int
 Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 {
@@ -85,11 +85,10 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
   return set3 - base;
 }
 
-// Sort the UNION_SET in increasing frequency of occurrence.  This
-// speeds up later processing since we may assume the resulting set
-// (Set_3, in this case), is ordered. Uses insertion sort, since the
-// UNION_SET is typically short.
-
+/// Sort the UNION_SET in increasing frequency of occurrence.  This
+/// speeds up later processing since we may assume the resulting set
+/// (Set_3, in this case), is ordered. Uses insertion sort, since the
+/// UNION_SET is typically short.
 void
 Gen_Perf::sort_set (char *union_set, int len)
 {
@@ -107,8 +106,7 @@ Gen_Perf::sort_set (char *union_set, int len)
     }
 }
 
-// Generate a keysig's hash value.
-
+/// Generate a keysig's hash value.
 int
 Gen_Perf::hash (List_Node *key_node)
 {
@@ -121,13 +119,12 @@ Gen_Perf::hash (List_Node *key_node)
   return sum;
 }
 
-// Find out how character value change affects successfully hash
-// items.  Returns FALSE if no other hash values are affected, else
-// returns TRUE.  Note that because Option.Get_Asso_Max is a power of
-// two we can guarantee that all legal Vectors::Asso_Values are
-// visited without repetition since Option.Get_Jump was forced to be
-// an odd value!
-
+/// Find out how character value change affects successfully hash
+/// items.  Returns FALSE if no other hash values are affected, else
+/// returns TRUE.  Note that because Option.Get_Asso_Max is a power of
+/// two we can guarantee that all legal Vectors::Asso_Values are
+/// visited without repetition since Option.Get_Jump was forced to be
+/// an odd value!
 inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
@@ -169,14 +166,14 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
           if (ptr == curr)
             {
               fewest_collisions = collisions;
-              
+
               if (option[DEBUGGING])
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "- resolved after %d iterations",
                               total_iterations - i));
                 }
-                
+
               return 0;
             }
         }
@@ -188,14 +185,13 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
   return 1;
 }
 
-// Change a character value, try least-used characters first.
-
+/// Change a character value, try least-used characters first.
 int
 Gen_Perf::change (List_Node *prior, List_Node *curr)
 {
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
-                "collision on keyword #%d, prior = \"%s\", curr = \"%s\" hash = %d\n",
+                "collision on keyword #%d, prior = \"%C\", curr = \"%C\" hash = %d\n",
                 num_done,
                 prior->key,
                 curr->key,
@@ -207,7 +203,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
 
   // Try changing some values, if change doesn't alter other values
   // continue normal action.
-  fewest_collisions++;
+  ++fewest_collisions;
 
   for (char *temp = union_set; *temp != '\0'; temp++)
     if (affects_prev (*temp, curr) == 0)
@@ -269,7 +265,7 @@ Gen_Perf::open (void)
     }
   else
     {
-      int asso_value = option.initial_value ();
+      int const asso_value = option.initial_value ();
 
       // Initialize array if user requests non-zero default.
       if (asso_value)
@@ -316,9 +312,9 @@ Gen_Perf::open (void)
   return 0;
 }
 
-// For binary search, do normal string sort on the keys, and then
-// assign hash values from 0 to N-1. Then go ahead with the normal
-// logic that is there for perfect hashing.
+/// For binary search, do normal string sort on the keys, and then
+/// assign hash values from 0 to N-1. Then go ahead with the normal
+/// logic that is there for perfect hashing.
 int
 Gen_Perf::compute_binary_search (void)
 {
@@ -326,7 +322,7 @@ Gen_Perf::compute_binary_search (void)
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr;
+  List_Node *curr = 0;
   int hash_value;
   for (hash_value = 0, curr = this->key_list.head;
        curr != 0;
@@ -346,8 +342,8 @@ Gen_Perf::compute_linear_search (void)
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr;
-  int hash_value;
+  List_Node *curr = 0;
+  int hash_value = 0;
   for (hash_value = 0, curr = this->key_list.head;
        curr != 0;
        curr = curr->next, hash_value++)
@@ -360,7 +356,7 @@ Gen_Perf::compute_linear_search (void)
 int
 Gen_Perf::compute_perfect_hash (void)
 {
-  List_Node *curr;
+  List_Node *curr = 0;
 
   for (curr = this->key_list.head;
        curr != 0;
@@ -453,8 +449,7 @@ Gen_Perf::run (void)
   return 0;
 }
 
-// Prints out some diagnostics upon completion.
-
+/// Prints out some diagnostics upon completion.
 Gen_Perf::~Gen_Perf (void)
 {
   if (option[DEBUGGING])
