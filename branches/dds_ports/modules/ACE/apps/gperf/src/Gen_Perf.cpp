@@ -128,11 +128,13 @@ Gen_Perf::hash (List_Node *key_node)
 inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
-  int original_char = Vectors::asso_values[(int) c];
-  int total_iterations;
+  int const original_char = Vectors::asso_values[(int) c];
+  int total_iterations = 0;
 
   if (!option[FAST])
-    total_iterations = option.asso_max ();
+    {
+      total_iterations = option.asso_max ();
+    }
   else
     {
       total_iterations = option.iterations ();
@@ -145,8 +147,6 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
   for (int i = total_iterations - 1; i >= 0; --i)
     {
-      int collisions = 0;
-
       Vectors::asso_values[(int) c] =
         (Vectors::asso_values[(int) c]
          + (option.jump () ? option.jump () : ACE_OS::rand ()))
@@ -155,9 +155,10 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
       // Iteration Number array is a win, O(1) intialization time!
       this->char_search.reset ();
 
+      int collisions = 0;
+
       // See how this asso_value change affects previous keywords.  If
       // it does better than before we'll take it!
-
       for (List_Node *ptr = this->key_list.head;
            this->char_search.find (this->hash (ptr)) == 0
            || ++collisions < fewest_collisions;
@@ -181,6 +182,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
   // Restore original values, no more tries.
   Vectors::asso_values[(int) c] = original_char;
+
   // If we're this far it's time to try the next character....
   return 1;
 }
@@ -243,7 +245,7 @@ Gen_Perf::open (void)
     this->key_list.reorder ();
 
   int asso_value_max = option.asso_max ();
-  int non_linked_length = this->key_list.keyword_list_length ();
+  int const non_linked_length = this->key_list.keyword_list_length ();
 
   if (asso_value_max == 0)
     asso_value_max = non_linked_length;
@@ -408,16 +410,15 @@ Gen_Perf::compute_perfect_hash (void)
   return 0;
 }
 
-// Does the hard stuff....  Initializes the Bool Array, and attempts
-// to find a perfect function that will hash all the key words without
-// getting any duplications.  This is made much easier since we aren't
-// attempting to generate *minimum* functions, only perfect ones.  If
-// we can't generate a perfect function in one pass *and* the user
-// hasn't enabled the DUP option, we'll inform the user to try the
-// randomization option, use -D, or choose alternative key positions.
-// The alternatives (e.g., back-tracking) are too time-consuming, i.e,
-// exponential in the number of keys.
-
+/// Does the hard stuff....  Initializes the Bool Array, and attempts
+/// to find a perfect function that will hash all the key words without
+/// getting any duplications.  This is made much easier since we aren't
+/// attempting to generate *minimum* functions, only perfect ones.  If
+/// we can't generate a perfect function in one pass *and* the user
+/// hasn't enabled the DUP option, we'll inform the user to try the
+/// randomization option, use -D, or choose alternative key positions.
+/// The alternatives (e.g., back-tracking) are too time-consuming, i.e,
+/// exponential in the number of keys.
 int
 Gen_Perf::run (void)
 {
