@@ -783,7 +783,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::get_first_i (void) const
 * @return The iterator
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>&
+ACE_Timer_Queue_Iterator_T<TYPE> &
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::iter (void)
 {
   this->iterator_->first ();

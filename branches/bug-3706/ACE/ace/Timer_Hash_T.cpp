@@ -258,7 +258,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::item (void)
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &
+ACE_Timer_Queue_Iterator_T<TYPE> &
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::iter (void)
 {
   this->iterator_->first ();
@@ -638,9 +638,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
        i < this->table_size_;
        ++i)
     {
-      ACE_Timer_Queue_Iterator_T<TYPE,
-                                 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
-                                 ACE_Null_Mutex> &iter =
+      ACE_Timer_Queue_Iterator_T<TYPE> & iter =
         this->table_[i]->iter ();
 
       for (iter.first ();

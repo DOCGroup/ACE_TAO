@@ -20,6 +20,7 @@
 #include "ace/Reactor_Timer_Interface.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Functor.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.inl"
@@ -33,44 +34,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if !defined (ACE_TIMER_SKEW)
 #  define ACE_TIMER_SKEW 0
 #endif /* ACE_TIMER_SKEW */
-
-template <class TYPE> void
-ACE_Timer_Node_T<TYPE>::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Timer_Node_T::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nact_ = %x"), this->act_));
-  this->timer_value_.dump ();
-  this->interval_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nprev_ = %x"), this->prev_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_ = %x"), this->next_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntimer_id_ = %d\n"), this->timer_id_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
-}
-
-template <class TYPE>
-ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T (void)
-{
-  ACE_TRACE ("ACE_Timer_Node_T::ACE_Timer_Node_T");
-}
-
-template <class TYPE>
-ACE_Timer_Node_T<TYPE>::~ACE_Timer_Node_T (void)
-{
-  ACE_TRACE ("ACE_Timer_Node_T::~ACE_Timer_Node_T");
-}
-
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_Iterator_T (void)
-{
-}
-
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Queue_Iterator_T (void)
-{
-}
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Time_Value *
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time)
@@ -150,6 +113,14 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
         }
     }
   return the_timeout;
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Time_Value
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::current_time()
+{
+  ACE_Time_Value tv = this->gettimeofday();
+  tv += this->timer_skew();
+  return tv;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
@@ -281,6 +252,46 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
 
   ACE_UNUSED_ARG (result);
   return number_of_timers_expired;
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE int
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire_single (
+    ACE_Command_Base & pre_dispatch_command)
+{
+  ACE_TRACE ("ACE_Timer_Queue_T::expire_single");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  if (this->is_empty ())
+    return 0;
+
+  // Get the current time
+  ACE_Time_Value cur_time (this->gettimeofday () +
+                           this->timer_skew ());
+
+  // Look for a node in the timer queue whose timer <= the present
+  // time.
+  ACE_Timer_Node_Dispatch_Info_T<TYPE> info;
+  if (this->dispatch_info_i (cur_time, info))
+    {
+      const void *upcall_act = 0;
+
+      // Preinvoke (handles refcount if needed, etc.)
+      this->preinvoke (info, cur_time, upcall_act);
+
+      // Release the token before expiration upcall.
+      pre_dispatch_command.execute();
+
+      // call the functor
+      this->upcall (info, cur_time);
+
+      // Postinvoke (undo refcount if needed, etc.)
+      this->postinvoke (info, cur_time, upcall_act);
+
+      // We have dispatched a timer
+      return 1;
+    }
+
+  return 0;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
