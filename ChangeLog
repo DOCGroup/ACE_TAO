@@ -1,3 +1,10 @@
+Mon Jun 29 21:52:33 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SA_PlanCommands.cpp:
+        * SA_WorkingPlan.cpp:
+
+	Added ability to use 20 again if it is undone once.
+
 Mon Jun 29 21:02:05 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * PlanCommands.h:
@@ -8,7 +15,7 @@ Mon Jun 29 21:02:05 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SA_SchedStrategy.cpp:
         * SA_WorkingPlan.cpp:
 
-	Decision points numbered wrong
+        Decision points numbered wrong
 
 Mon Jun 29 16:59:21 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
