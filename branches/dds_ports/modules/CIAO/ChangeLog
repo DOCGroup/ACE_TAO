@@ -1,3 +1,23 @@
+Mon Jun 29 23:11:25 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.idl:
+        * examples/BasicSP/EC/EC.idl:
+        * examples/BasicSP/BMDevice/BMDevice.idl:
+        * examples/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+
+          Modified example to use the newly added TAO IDL
+          compiler feature of generating facet servant code
+          for each interface, rather than navigating to each
+          interface from a component's list of provides ports.
+          This option is necessary in this example, since
+          two components use the same interface as a facet,
+          and now the generated facet servant code can be
+          shared.
+
 Mon Jun 29 19:43:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/OMG-CCM-Tutorial.ppt:
