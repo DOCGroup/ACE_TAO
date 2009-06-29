@@ -1,27 +1,39 @@
+Mon Jun 29 21:02:05 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * PlanCommands.h:
+        * Planner.cpp:
+        * SA_PlanStrategy.h:
+        * SA_PlanStrategy.cpp:
+        * SA_SchedStrategy.h:
+        * SA_SchedStrategy.cpp:
+        * SA_WorkingPlan.cpp:
+
+	Decision points numbered wrong
+
 Mon Jun 29 16:59:21 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SA_PlanCommands.cpp:
-	In execute next of AddTaskCmd, was a bug in checking for tasks_.front()==20 if
-		tasks is null.  Swapped with returning false if tasks is empty to return first.
+        In execute next of AddTaskCmd, was a bug in checking for tasks_.front()==20 if
+                tasks is null.  Swapped with returning false if tasks is empty to return first.
 
         * SA_PlanHeuristics.cpp:
-	Bug here where tasks were being stored in a map with the EU as the key.  Tasks with the
-		same EU were erasing previous tasks.  Changed to multimap.
+        Bug here where tasks were being stored in a map with the EU as the key.  Tasks with the
+                same EU were erasing previous tasks.  Changed to multimap.
 
         * SA_PlanStrategy.cpp:
 
-	Undo the assoc_impl_cmd if it fails.
+        Undo the assoc_impl_cmd if it fails.
 
         * SA_SchedStrategy.cpp:
-	Bug in satisfy sched.  If energy prop or time balance prop failed, it called undo_through
-		the adjust min times cmds it created, but if recurse plan failed, it left those not undone
-		causing problems in the level down.  Changed to if recurse_plan fails undoing all 
-		commands created here.
+        Bug in satisfy sched.  If energy prop or time balance prop failed, it called undo_through
+                the adjust min times cmds it created, but if recurse plan failed, it left those not undone
+                causing problems in the level down.  Changed to if recurse_plan fails undoing all
+                commands created here.
 
         * SA_WorkingPlan.cpp:
 
-	Bug in undo of AddTaskCmd regarding ordering links fixed.
-	Made sure that causal links don't have goal targets in generate threats.
+        Bug in undo of AddTaskCmd regarding ordering links fixed.
+        Made sure that causal links don't have goal targets in generate threats.
 
 Fri Jun 26 21:53:02 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 

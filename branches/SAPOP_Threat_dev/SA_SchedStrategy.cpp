@@ -90,6 +90,7 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	// Get the current command id to backtrack to.
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
 	this->cur_seq_num_=1;
+
 	// Do the energy propogation for this task instance
 	// This function automatically does this for the task instances before and after it.
   
@@ -147,6 +148,7 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	  return false;
   }
 	
+
   if(!this->planner_->recurse_plan ()){
 	this->planner_->undo_through(cur_cmd_id);
 	return false;

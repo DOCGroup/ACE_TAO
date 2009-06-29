@@ -58,7 +58,7 @@ namespace SA_POP {
     /**
      * @param prev  Pointer to the previous command.
      */
-    virtual void set_prev (PlanCommand *prev) { this->prev_ = prev; };
+    virtual void set_prev (PlanCommand *prev) { this->prev_ = prev;};
 
     /// Get pointer to previous command.
     /**
