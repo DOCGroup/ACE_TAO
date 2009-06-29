@@ -53,15 +53,17 @@ int
 be_visitor_component_svs::visit_component (be_component *node)
 {
   node_ = node;
-  TAO_OutStream &os_  = *this->ctx_->stream ();
   
-  if (this->gen_facets () == -1)
+  if (! be_global->gen_lem_force_all ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svs::")
-                         ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("gen_facets() failed\n")),
-                        -1);
+      if (this->gen_facets () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_component_svs::")
+                             ACE_TEXT ("visit_component - ")
+                             ACE_TEXT ("gen_facets() failed\n")),
+                            -1);
+        }
     }
     
   /// CIDL-generated namespace used 'CIDL_' + composition name.
@@ -115,7 +117,8 @@ int
 be_visitor_component_svs::gen_facets (void)
 {
   AST_Component::port_description *pd = 0;
-  
+  be_visitor_component_svs::in_facets_ = true;
+
   for (AST_Component::PORTS::ITERATOR i = node_->provides ().begin ();
        !i.done ();
        i.advance ())
@@ -130,124 +133,24 @@ be_visitor_component_svs::gen_facets (void)
           continue;
         }
       
-      // No '_cxx_' prefix.
-      const char *lname =
-        intf->original_local_name ()->get_string ();
-      
-      be_decl *scope =
-        be_scope::narrow_from_scope (intf->defined_in ())->decl ();
-        
-      ACE_CString sname_str (scope->full_name ());
-        
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
-      
-      ACE_CString suffix (scope->flat_name ());
-      
-      if (suffix != "")
-        {
-          suffix = ACE_CString ("_") + suffix;
-        }
-      
-      os_ << be_nl << be_nl
-          << "namespace CIAO_FACET" << suffix.c_str () << be_nl
-          << "{" << be_idt_nl;
-         
-      os_ << "template<typename T>" << be_nl
-          << lname << "_Servant_T<T>::"
-          << lname << "_Servant_T (" << be_idt << be_idt_nl
-          << global << sname << "::CCM_"
-          << lname << "_ptr executor," << be_nl
-          << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
-          << ": executor_ ( " << global << sname
-          << "::CCM_" << lname
-          << "::_duplicate (executor))," << be_idt_nl
-          << "ctx_ ( ::Components::CCMContext::_duplicate (ctx))"
-          << be_uidt << be_uidt_nl
-          << "{" << be_nl
-          << "}";
-          
-      os_ << be_nl << be_nl
-          << "template<typename T>" << be_nl
-          << lname << "_Servant_T<T>::~"
-          << lname << "_Servant_T (void)" << be_nl
-          << "{" << be_nl
-          << "}";
-          
-      be_visitor_component_svs::in_facets_ = true;
       this->op_scope_ = intf;
-          
-      if (this->gen_facet_ops_attrs (intf) == -1)
+      
+      int status =
+        intf->gen_facet_svnt_src (this, os_);
+        
+      if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_component_svs::gen_facet - "
-                             "gen_facet_ops_attrs() failed\n"),
+                             ACE_TEXT ("be_visitor_component_svs")
+                             ACE_TEXT ("::gen_facets - call to node")
+                             ACE_TEXT ("svnt_src_facet_gen() failed\n")),
                             -1);
         }
-        
-      be_visitor_component_svs::in_facets_ = false;
-      
-      os_ << be_nl << be_nl
-          << "template<typename T>" << be_nl
-          << "::CORBA::Object_ptr" << be_nl
-          << lname << "_Servant_T<T>::_get_component (void)"
-          << be_nl
-          << "{" << be_idt_nl
-          << "::Components::SessionContext_var sc =" << be_idt_nl
-          << "::Components::SessionContext::_narrow (this->ctx_.in ());"
-          << be_uidt_nl << be_nl
-          << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return sc->get_CCM_object ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "::Components::EntityContext_var ec =" << be_idt_nl
-          << "::Components::EntityContext::_narrow (this->ctx_.in ());"
-          << be_uidt_nl << be_nl
-          << "if (! ::CORBA::is_nil (ec.in ()))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return ec->get_CCM_object ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-          << "}";
-          
-      os_ << be_uidt_nl
-          << "}";
       
       intf->svnt_src_facet_gen (true);
     }
 
-  return 0;
-}
-
-int
-be_visitor_component_svs::gen_facet_ops_attrs (be_interface *node)
-{
-  os_ << be_nl << be_nl
-      << "// All facet operations and attributes.";
-      
-  /// The overload of traverse_inheritance_graph() used here
-  /// doesn't automatically prime the queues. 
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
-  node->get_insert_queue ().enqueue_tail (node);
-      
-  Component_Op_Attr_Generator op_attr_gen (this);
-  
-  int status =
-    node->traverse_inheritance_graph (op_attr_gen,
-                                      &os_,
-                                      false,
-                                      false);
-      
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svs::")
-                         ACE_TEXT ("gen_facet_ops_attrs - ")
-                         ACE_TEXT ("traverse_inheritance_graph() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
-    }
+  be_visitor_component_svs::in_facets_ = false;
 
   return 0;
 }

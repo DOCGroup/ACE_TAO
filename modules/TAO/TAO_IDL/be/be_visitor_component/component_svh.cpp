@@ -51,15 +51,17 @@ int
 be_visitor_component_svh::visit_component (be_component *node)
 {
   node_ = node;
-  TAO_OutStream &os_  = *this->ctx_->stream ();
   
-  if (this->gen_facets () == -1)
+  if (! be_global->gen_lem_force_all ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svh::")
-                         ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("gen_facets() failed\n")),
-                        -1);
+      if (this->gen_facets () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_component_svh::")
+                             ACE_TEXT ("visit_component - ")
+                             ACE_TEXT ("gen_facets() failed\n")),
+                            -1);
+        }
     }
     
   /// CIDL-generated namespace used 'CIDL_' + composition name.
@@ -121,92 +123,21 @@ be_visitor_component_svh::gen_facets (void)
           continue;
         }
        
-      // No '_cxx_' prefix>  
-      const char *lname =
-        intf->original_local_name ()->get_string ();
-      
-      be_decl *scope =
-        be_scope::narrow_from_scope (intf->defined_in ())->decl ();
-      ACE_CString suffix (scope->flat_name ());
-      
-      if (suffix != "")
-        {
-          suffix = ACE_CString ("_") + suffix;
-        }
-      
-      os_ << be_nl << be_nl
-          << "namespace CIAO_FACET" << suffix.c_str () << be_nl
-          << "{" << be_idt_nl;
-         
-      os_ << "template<typename T>" << be_nl
-          << "class " << lname << "_Servant_T" << be_idt_nl
-          << ": public virtual " << intf->full_skel_name () << be_uidt_nl
-          << "{" << be_nl
-          << "public:" << be_idt_nl;
-         
-      AST_Decl *s = ScopeAsDecl (intf->defined_in ());
-      ACE_CString sname_str (s->full_name ());
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
-         
-      os_ << lname << "_Servant_T (" << be_idt_nl
-          << global << sname << "::CCM_"
-          << lname << "_ptr executor," << be_nl
-          << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
-         
-      os_ << "virtual ~" << lname << "_Servant_T (void);";
-         
-      if (this->gen_facet_ops_attrs (intf) == -1)
+      int status =
+        intf->gen_facet_svnt_hdr (this, os_);
+        
+      if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_component_svh::gen_facet - "
-                             "gen_facet_ops_attrs() failed\n"),
+                             ACE_TEXT ("be_visitor_component_svh")
+                             ACE_TEXT ("::gen_facets() - call ")
+                             ACE_TEXT ("into node failed\n")),
                             -1);
         }
-         
-      os_ << be_nl << be_nl << "// Get component implementation." << be_nl
-          << "virtual CORBA::Object_ptr _get_component (void);"
-          << be_uidt_nl << be_nl;
-         
-      os_ << "protected:" << be_idt_nl;
-      
-      os_ << "// Facet executor." << be_nl
-          << global << sname << "::CCM_"
-          << lname << "_var executor_;" << be_nl << be_nl;
-         
-      os_ << "// Context object." << be_nl
-          << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
-         
-      os_ << "};" << be_nl << be_nl;
-      
-      os_ << "typedef " << lname << "_Servant_T<int> "
-          << lname << "_Servant;" << be_uidt_nl;
-         
-      os_ << "}";
       
       intf->svnt_hdr_facet_gen (true);
     }
 
-  return 0;
-}
-
-int
-be_visitor_component_svh::gen_facet_ops_attrs (be_interface *node)
-{
-  int status =
-    node->traverse_inheritance_graph (
-      be_visitor_component_svh::op_attr_decl_helper,
-      &os_);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svh::")
-                         ACE_TEXT ("gen_facet_ops_attrs - ")
-                         ACE_TEXT ("traverse_inheritance_graph() failed\n")),
-                        -1);
-    }
-    
   return 0;
 }
 

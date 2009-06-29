@@ -716,6 +716,9 @@ public:
 
   bool gen_exec_export_hdr_file (void) const;
   void gen_exec_export_hdr_file (bool val);
+  
+  bool gen_lem_force_all (void) const;
+  void gen_lem_force_all (bool val);
 
   ACE_CString spawn_options (void);
   // Command line passed to ACE_Process::spawn. Different
@@ -1010,6 +1013,11 @@ private:
   bool gen_skel_export_hdr_file_;
   bool gen_svnt_export_hdr_file_;
   bool gen_exec_export_hdr_file_;
+  // Flags to generate the various export header files.
+  
+  bool gen_lem_force_all_;
+  // Generate facet code for all visited interfaces, instead
+  // of navigating to them from provides ports.
 };
 
 #endif /* _BE_GLOBAL_H */
