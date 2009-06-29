@@ -1,10 +1,15 @@
+Mon Jun 29 18:49:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/Model/Quoter.xme:
+          Updated to meet the work listed in the HTML files.
+
 Mon Jun 29 00:31:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/Simple/01.html:
         * docs/tutorials/Quoter/Simple/02.html:
 
           Updates to remove lateral references to export files and CIDLC.
-        
+
 Fri Jun 26 22:47:14 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/01.html:
