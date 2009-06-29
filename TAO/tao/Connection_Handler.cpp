@@ -208,8 +208,10 @@ TAO_Connection_Handler::handle_output_eh (
 
   // The default constraints are to never block.
   TAO::Transport::Drain_Constraints dc;
-  return_value =
-    (this->transport ()->handle_output (dc) == TAO_Transport::DR_OK) ? 0 : -1;
+  if (this->transport ()->handle_output (dc) == TAO_Transport::DR_ERROR)
+    {
+      return_value = -1;
+    }
 
   this->pos_io_hook (return_value);
 
