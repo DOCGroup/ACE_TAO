@@ -107,7 +107,7 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
   ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
       inline = 0
   else
-    ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
+    ifeq (C++ 5.1 ,$(findstring C++ 5.1 ,$(CC_VERSION)))
       inline = 0
     else # ! 5.1
       inline ?= 1
