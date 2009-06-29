@@ -302,6 +302,9 @@ void Planner::undo_through (CommandID id)
   PlanCommand *temp = this->cur_cmd_;
   temp->undo ();
   this->cur_cmd_ = temp->get_prev ();
+
+
+
   this->undo_through (id);
 };
 /// Get the current command id.

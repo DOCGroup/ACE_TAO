@@ -174,6 +174,7 @@ add_threats_cmd_ (0)
 //this->durations.insert(std::make_pair(16,0));
 //this->durations.insert(std::make_pair(17,0));
 
+/*
 this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 this->init_start.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
@@ -240,6 +241,14 @@ this->init_start.insert(std::make_pair(31,(TimeWindow)std::make_pair(NULL_TIME,N
 this->init_end.insert(std::make_pair(31,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 this->init_start.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 this->init_end.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+
+*/
+
+for(int i = 0; i < 100; i++){
+	this->init_start.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+	this->init_end.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+}
+
 };
 
 // Destructor.
@@ -1043,6 +1052,7 @@ bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
     }
   }
 */
+
 
   return this->init_prec_insert(cmd->task_inst_,cmd);
 };

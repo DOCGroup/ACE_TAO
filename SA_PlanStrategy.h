@@ -232,13 +232,13 @@ namespace SA_POP {
     static const int  TASK_DECISION = 1;
 
     /// Causal link threat handling is second decision point.
-    static const int THREAT_DECISION = 2;
+    static const int THREAT_DECISION = 3;
 
     /// Task implementation choice is third decision point.
-    static const int IMPL_DECISION = 3;
+    static const int IMPL_DECISION = 2;
 
     /// Scheduling is fourth decision point.
-    static const int SCHEDULE_DECISION = 3;
+    static const int SCHEDULE_DECISION = 4;
 
 
 

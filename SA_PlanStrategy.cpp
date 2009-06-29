@@ -235,7 +235,7 @@ bool SA_PlanStrategy::satisfy_everything(){
     TaskImplList impl_list;
 
     // Choose a task implementation.
-    assoc_impl_cmd =
+	assoc_impl_cmd =
       static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
     if(!this->planner_->inst_exists(this->cur_task_inst_)) impl_list = this->impl_choice_->choose_impl (this->cur_task_inst_);
     else impl_list.push_back(this->planner_->get_impl_id(this->cur_task_inst_));
@@ -243,12 +243,11 @@ bool SA_PlanStrategy::satisfy_everything(){
     assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
     this->planner_->add_command (assoc_impl_cmd);
 
-	TaskInstID prev_task_inst = this->cur_task_inst_;
-
 	this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
 
     while (this->planner_->try_next (assoc_impl_cmd->get_id ())) 
     {
+
       if(this->get_next_threat_resolution()){
         return true;
       }
@@ -256,7 +255,6 @@ bool SA_PlanStrategy::satisfy_everything(){
         //this->planner_->undo_command(assoc_impl_cmd->get_id());
       
           this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
-	//	  this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
       }
   //    assoc_impl_cmd =
   //      static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
@@ -273,7 +271,6 @@ bool SA_PlanStrategy::satisfy_everything(){
     //Undo the AssocImplCmd
 
 	planner_->undo_command(assoc_impl_cmd->get_id());
-//	this->cur_task_inst_ = prev_task_inst;
 
     return false;
 }
@@ -288,7 +285,7 @@ bool SA_PlanStrategy::satisfy_schedule(void){
           if (this->planner_->recurse_sched (this->cur_task_inst_))
             return true;
 
-       this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
+//       this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
      return false;
 }
 
