@@ -218,6 +218,8 @@ void SA_AddTaskCmd::undo (void)
   if (this->last_task_ == SA_POP::NULL_TASK_ID)
     return;
 
+
+
   this->working_plan_->undo (this);
   
   if (this->tasks_.empty ()) {

@@ -928,8 +928,10 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 
 void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 {
-
-
+  if(cmd->last_task_ == 20)
+  {
+	 planner_->init_added = false;
+  }
 
   if(cmd->used_task_insts_.empty())
   {
