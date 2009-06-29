@@ -186,12 +186,14 @@ bool SA_AddTaskCmd::execute_next (void)
 
   bool isInitial = false;
 
+  if (this->tasks_.empty ())
+    return false;
+
   if(this->tasks_.front() == 20){
     isInitial = true;
   }
 
-  if (this->tasks_.empty ())
-    return false;
+
   this->working_plan_->execute (this);
   this->num_tries_++;
 
@@ -752,7 +754,7 @@ bool SA_ResolveCLThreatCmd::execute_next (void)
   }
   else
   {
-    this->undo();
+ //   this->undo();
     return false;
   }
 	

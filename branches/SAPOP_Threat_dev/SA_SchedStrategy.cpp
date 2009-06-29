@@ -146,7 +146,13 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	  this->planner_->undo_through(cur_cmd_id);
 	  return false;
   }
-	return this->planner_->recurse_plan ();
+	
+  if(!this->planner_->recurse_plan ()){
+	this->planner_->undo_through(cur_cmd_id);
+	return false;
+  }else{
+	return true;
+  }
 };
 
 // Satisfy fully instantiated plan.
