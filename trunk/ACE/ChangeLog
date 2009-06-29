@@ -1,3 +1,8 @@
+Mon Jun 29 23:42:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * contrib/FaCE/newres.h:
+          Fixed compile problem with CEGCC
+
 Mon Jun 29 23:08:06 UTC 2009  Trevor Fields  <fields_t@ociweb.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
