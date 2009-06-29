@@ -199,6 +199,7 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
       return true;
 
 
+
     SA_POP_DEBUG(SA_POP_DEBUG_NORMAL, "Backtracking from task addition...");
     // Undo addition of causal link threats from this task.
     if (are_threats)
@@ -241,7 +242,10 @@ bool SA_PlanStrategy::satisfy_everything(){
     assoc_impl_cmd->set_id (this->get_next_cmd_id ());
     assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
     this->planner_->add_command (assoc_impl_cmd);
-		 this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
+
+	TaskInstID prev_task_inst = this->cur_task_inst_;
+
+	this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
 
     while (this->planner_->try_next (assoc_impl_cmd->get_id ())) 
     {
@@ -252,6 +256,7 @@ bool SA_PlanStrategy::satisfy_everything(){
         //this->planner_->undo_command(assoc_impl_cmd->get_id());
       
           this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
+	//	  this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
       }
   //    assoc_impl_cmd =
   //      static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
@@ -267,6 +272,9 @@ bool SA_PlanStrategy::satisfy_everything(){
 
     //Undo the AssocImplCmd
 
+	planner_->undo_command(assoc_impl_cmd->get_id());
+//	this->cur_task_inst_ = prev_task_inst;
+
     return false;
 }
 bool SA_PlanStrategy::satisfy_schedule(void){
@@ -280,7 +288,7 @@ bool SA_PlanStrategy::satisfy_schedule(void){
           if (this->planner_->recurse_sched (this->cur_task_inst_))
             return true;
 
-
+       this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
      return false;
 }
 
@@ -291,7 +299,7 @@ bool SA_PlanStrategy::get_next_threat_resolution(){
         // Choose an open threat to satisfy and remove from open threats.
 
     if(open_threats_.empty()){
-       this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
+
        return satisfy_schedule();
     }
         this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;

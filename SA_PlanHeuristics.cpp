@@ -74,7 +74,7 @@ TaskList SA_TaskStrategy::choose_task (Condition open_cond)
   }
     
   // Add tasks to map with EU (to sort).
-  std::map<EUCalc, TaskID> task_map;
+  std::multimap<EUCalc, TaskID> task_map;
   task_map.clear ();
   for (TaskSet::iterator iter = tasks.begin (); iter != tasks.end (); iter++)
   {
@@ -85,12 +85,14 @@ TaskList SA_TaskStrategy::choose_task (Condition open_cond)
   // Add tasks to list in reverse order of map (highest EU first).
   TaskList task_list;
   task_list.clear ();
-  for (std::map<EUCalc, TaskID>::reverse_iterator iter = task_map.rbegin ();
+  for (std::multimap<EUCalc, TaskID>::reverse_iterator iter = task_map.rbegin ();
     iter != task_map.rend (); iter++)
   {
     task_list.push_back (iter->second);
   }
   return task_list;
+
+
 };
 
 

@@ -670,7 +670,8 @@ void SA_WorkingPlan::generate_all_threats(void)
            
             if((threat_effect > 0 && causal_effect < 0 )|| (threat_effect < 0 && causal_effect > 0)){
 
-              if(causal_threatened.first != threat_possibility && causal_threatened.second != threat_possibility)
+              if(causal_threatened.first != threat_possibility && causal_threatened.second != threat_possibility
+				  && causal_threatened.second != -1)
               {
                 TaskID threatened_task1 = this->task_insts_.find(causal_threatened.first)->second;
                 TaskID threatened_task2 = this->task_insts_.find(causal_threatened.second)->second;
@@ -814,7 +815,8 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
       throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
     }
 
-    this->planner_->init_added =  true;
+	if(task == 20)
+		this->planner_->init_added =  true;
   
     task_inst = this->get_next_inst_id ();
     // Add task instance.
@@ -863,6 +865,7 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
       this->causal_links_.insert (std::make_pair (cond, clink));
 
       if(clink.second != GOAL_TASK_INST_ID){
+		
         this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.first, clink.second));
         this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.second, clink.first));
       }
@@ -874,6 +877,45 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 	cmd->last_task_ = task;
 	cmd->last_task_inst_ = task_inst;
 };
+
+//void note_ordering_link(TaskInstID first, TaskInstID second){
+
+//	std::pair<CountedSchedulingLinks::iterator, CountedSchedulingLinks::iterator>
+//		find_pair = ordering_links.equal_range(first);
+	
+//	CountedSchedulingLinks::iterator find_it;
+
+//	for(find_it = find_pair.first; find_it != find_pair.second; find_it++){
+//		if(find_it->second.first == second){
+///			break;
+//		}
+//	}
+
+//	if(find_it == find_pair.second){
+//		ordering_links.insert(std::pair<TaskInstID, std::pair<TaskInstID, int> >(first, std::pair<TaskInstID, int>(second, 1)));
+//		reverse_ordering_links.insert(std::pair<TaskInstID, std::pair<TaskInstID, int> >(second, std::pair<TaskInstID, int>(first, 1)));
+//	}else{
+		
+	//	int prev_count = find_it->second.second;
+
+	//	ordering_links.insert(std::pair<TaskInstID, std::pair<TaskInstID, int> >(first, std::pair<TaskInstID, int>(second, prev_count+1)));
+	//	reverse_ordering_links.insert(std::pair<TaskInstID, std::pair<TaskInstID, int> >(second, std::pair<TaskInstID, int>(first, prev_count+1)));
+
+//	}
+
+//}
+
+//void decrement_ordering_link(TaskInstID first, TaskInstID second){
+
+//	std::pair<CountedSchedulingLinks::iterator, CountedSchedulingLinks::iterator>
+//		find_pair = ordering_links.equal_range(first);
+
+//	CountedSchedulingLinks::iterator find_it;
+
+//	for(find_it = find_pair.
+
+//}
+
 
 void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 {
@@ -915,25 +957,28 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
           this->causal_links_.erase (prev_iter);
           cmd->added_links_.erase(iter);
 
-          
-          std::pair<SchedulingLinks::iterator, SchedulingLinks::iterator> ret =
-          ordering_links.equal_range(clink.first);
-          SchedulingLinks::iterator it;
-          for(it = ret.first; it != ret.second; it++){
-            if(it->second == clink.second){
-              break;
-            }
-          }              
-          this->ordering_links.erase(it);
+ 
+		  if(clink.second != GOAL_TASK_INST_ID){
+			  std::pair<SchedulingLinks::iterator, SchedulingLinks::iterator> ret =
+			  ordering_links.equal_range(clink.first);
+			  SchedulingLinks::iterator it;
+			  for(it = ret.first; it != ret.second; it++){
+				if(it->second == clink.second){
+				  break;
+				}
+			  }              
 
-          ret = reverse_ordering_links.equal_range(clink.second);
-          for(it = ret.first; it != ret.second; it++){
-            if(it->second == clink.first){
-              break;
-            }
-          }
-          this->reverse_ordering_links.erase(it);
+			  this->ordering_links.erase(it);
+
+			  ret = reverse_ordering_links.equal_range(clink.second);
+			  for(it = ret.first; it != ret.second; it++){
+				if(it->second == clink.first){
+				  break;
+				}
+			  }
+			  this->reverse_ordering_links.erase(it);
        
+		  }
           break;
         }
       }
@@ -1531,19 +1576,23 @@ void SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd)
 //  this->causal_links_.erase(firstit);
 
   std::pair<
-      std::multimap<TaskInstID, TaskInstID>::iterator,
-      std::multimap<TaskInstID, TaskInstID>::iterator
+      std::multimap<TaskInstID, TaskInstID >::iterator,
+      std::multimap<TaskInstID, TaskInstID >::iterator
       > ret = this->ordering_links.equal_range(cmd->first);
 
-  std::multimap<TaskInstID, TaskInstID>::iterator it;
+  std::multimap<TaskInstID, TaskInstID >::iterator it;
 
   for(it = ret.first; it != ret.second; it++){
     if(it->second == cmd->second)
       break;
-  //    this->ordering_links.erase(it);
   }
 
+//  int num_refs = it->second.second;s
   this->ordering_links.erase(it);
+ // if(it->second.second > 0)
+//	  this->ordering_links.insert(std::pair<TaskInstID, TaskInstID >
+//	  (it->first, it->second);
+  
 
   ret = this->reverse_ordering_links.equal_range(cmd->second);
 
