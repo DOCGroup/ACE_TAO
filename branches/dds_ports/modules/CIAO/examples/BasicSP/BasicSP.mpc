@@ -8,7 +8,8 @@ project(BasicSP_idl_gen): componentidldefaults {
               -Wb,skel_export_macro=BASICSP_SVNT_Export \
               -Wb,skel_export_include=BasicSP_svnt_export.h \
               -Wb,exec_export_macro=BASICSP_EXEC_Export \
-              -Wb,exec_export_include=BasicSP_exec_export.h
+              -Wb,exec_export_include=BasicSP_exec_export.h \
+              -Glfa
 
   IDL_Files {
     BasicSP.idl
@@ -58,15 +59,18 @@ project(BasicSP_exec) : ciao_executor {
 
   IDL_Files {
   }
+  
   Header_Files {
     BasicSP_exec.h
     BasicSP_exec_export.h
     BasicSPEC.h
   }
+  
   Source_Files {
     BasicSP_exec.cpp
     BasicSPEC.cpp
   }
+  
   Inline_Files {
   }
 }
@@ -82,14 +86,17 @@ project(BasicSP_svnt) : ciao_servant {
 
   IDL_Files {
   }
+  
   Header_Files {
     BasicSPS.h
     BasicSP_svnt.h
   }
+  
   Source_Files {
     BasicSPS.cpp
     BasicSP_svnt.cpp
   }
+  
   Inline_Files {
   }
 }

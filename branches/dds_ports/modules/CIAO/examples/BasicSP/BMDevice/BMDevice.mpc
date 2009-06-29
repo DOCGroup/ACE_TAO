@@ -8,7 +8,8 @@ project(BMDevice_stub_gen): componentidldefaults,anytypecode {
               -Wb,skel_export_macro=BMDEVICE_SVNT_Export \
               -Wb,skel_export_include=BMDevice_svnt_export.h \
               -Wb,exec_export_macro=BMDEVICE_EXEC_Export \
-              -Wb,exec_export_include=BMDevice_exec_export.h
+              -Wb,exec_export_include=BMDevice_exec_export.h \
+              -Glfa
 
   IDL_Files {
     BMDevice.idl
@@ -26,7 +27,6 @@ project(BMDevice_lem_gen) : ciaoidldefaults {
   IDL_Files {
     BMDeviceE.idl
   }
-
 }
 
 project(BMDevice_stub): ccm_stub {
@@ -41,7 +41,6 @@ project(BMDevice_stub): ccm_stub {
   dynamicflags   = BMDEVICE_STUB_BUILD_DLL
 
   IDL_Files {
-
   }
 
   Header_Files {
@@ -54,9 +53,7 @@ project(BMDevice_stub): ccm_stub {
   }
 
   Inline_Files {
-
   }
-
 }
 
 project(BMDevice_exec) : ciao_executor {
@@ -116,7 +113,5 @@ project(BMDevice_svnt) : ciao_servant {
   }
 
   Inline_Files {
-
   }
-
 }
