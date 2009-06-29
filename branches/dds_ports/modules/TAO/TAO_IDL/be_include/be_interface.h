@@ -346,6 +346,19 @@ public:
 
   bool is_event_consumer (void);
   // Is EventConsumerBase our parent?
+  
+  void gen_facet_idl (TAO_OutStream &os);
+  int gen_facet_svnt_hdr (be_visitor *visitor,
+                          TAO_OutStream &os);
+  int gen_facet_svnt_src (be_visitor *visitor,
+                          TAO_OutStream &os);
+  // Common code for facet generation, whether we are
+  // navigating from the component port or forcing
+  // facet generation for all interfaces.
+  
+  void gen_nesting_open (TAO_OutStream &os);
+  void gen_nesting_close (TAO_OutStream &os);
+  // Helper function called from visitors and used internally.
 
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);

@@ -48,7 +48,11 @@ be_visitor_component_ex_idl::visit_component (be_component *node)
 
   node_ = node;
 
-  this->gen_facets ();
+  // Only if not already generated at interface level.
+  if (! be_global->gen_lem_force_all ())
+    {
+      this->gen_facets ();
+    }
 
   this->gen_component ();
 
@@ -121,70 +125,6 @@ be_visitor_component_ex_idl::visit_string (be_string *node)
 }
 
 void
-be_visitor_component_ex_idl::gen_nesting_open (AST_Decl *node)
-{
-  os_ << be_nl;
-
-  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
-    {
-      UTL_ScopedName tmp (i.item (), 0);
-      AST_Decl *scope =
-        node->defined_in ()->lookup_by_name (&tmp, true);
-
-      if (scope == 0)
-        {
-          i.next ();
-          continue;
-        }
-
-      ACE_CString module_name =
-        IdentifierHelper::try_escape (scope->original_local_name ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
-      os_ << be_nl
-          << "module " << module_name.c_str () << be_nl
-          << "{" << be_idt;
-    }
-}
-
-void
-be_visitor_component_ex_idl::gen_nesting_close (AST_Decl *node)
-{
-  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
-    {
-      ACE_CString module_name (i.item ()->get_string ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
-      os_ << be_uidt_nl
-          << "};";
-    }
-}
-
-void
 be_visitor_component_ex_idl::gen_facets (void)
 {
   AST_Component::port_description *pd = 0;
@@ -196,43 +136,23 @@ be_visitor_component_ex_idl::gen_facets (void)
     {
       i.next (pd);
 
-      be_decl *intf =
-        be_decl::narrow_from_decl (pd->impl);
+      be_interface *intf =
+        be_interface::narrow_from_decl (pd->impl);
         
-      if (intf->ex_idl_facet_gen ())
-        {
-          continue;
-        }
-      
-      this->gen_nesting_open (pd->impl);
-      
-      os_ << be_nl
-          << "local interface CCM_"
-          << pd->impl->original_local_name ()->get_string ()
-          << " : ::"
-          << IdentifierHelper::orig_sn (intf->name ()).c_str ()
-          << be_nl
-          << "{" << be_idt;
-          
-      os_ << be_uidt_nl
-          << "};";
-      
-      this->gen_nesting_close (pd->impl);
-      
-      intf->ex_idl_facet_gen (true);
+      intf->gen_facet_idl (os_);
     }
 }
 
 void
 be_visitor_component_ex_idl::gen_component (void)
 {
-  this->gen_nesting_open (node_);
+  node_->gen_nesting_open (os_);
   
   this->gen_executor_base ();
       
   this->gen_context ();
 
-  this->gen_nesting_close (node_);
+  node_->gen_nesting_close (os_);
 }
 
 void

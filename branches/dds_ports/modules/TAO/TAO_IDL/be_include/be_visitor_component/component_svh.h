@@ -54,8 +54,6 @@ private:
   
   int gen_facets (void);
   
-  int gen_facet_ops_attrs (be_interface *node);
-                           
   void gen_context_class (void);
                            
   void gen_context_r (AST_Component *node);

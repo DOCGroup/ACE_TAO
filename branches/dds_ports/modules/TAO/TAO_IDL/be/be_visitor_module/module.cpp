@@ -359,13 +359,28 @@ be_visitor_module::visit_interface (be_interface *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
+      {
+        be_visitor_interface_ex_idl visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVH:
+      {
+        be_visitor_interface_svh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVS:
+      {
+        be_visitor_interface_svs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
-    case TAO_CodeGen::TAO_ROOT_SVH:
-    case TAO_CodeGen::TAO_ROOT_SVS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
-    case TAO_CodeGen::TAO_ROOT_EX_IDL:
       {
         // Nothing to be done for these cases.
         return 0;

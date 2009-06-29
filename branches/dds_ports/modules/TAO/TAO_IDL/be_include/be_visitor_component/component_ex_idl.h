@@ -49,9 +49,6 @@ public:
   virtual int visit_sequence (be_sequence *node);
   
 private:
-  void gen_nesting_open (AST_Decl *node);
-  void gen_nesting_close (AST_Decl *node);
-  
   void gen_facets (void);
   
   void gen_component (void);

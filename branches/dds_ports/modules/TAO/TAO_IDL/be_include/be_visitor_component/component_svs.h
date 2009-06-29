@@ -45,8 +45,6 @@ public:
 private:
   int gen_facets (void);
   
-  int gen_facet_ops_attrs (be_interface *node);
-                           
   void gen_context_class (void);
                            
   int gen_servant_class (void);
