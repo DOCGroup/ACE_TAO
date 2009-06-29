@@ -1,3 +1,10 @@
+Mon Jun 29 23:08:06 UTC 2009  Trevor Fields  <fields_t@ociweb.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Fixed settings of inline and exceptions for Sun compilers
+          greater than 5.9 (Sun Studio 12).  Scan for version 5.1 was
+          catching 5.10 as well.
+
 Sun Jun 28 16:15:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lite.h
