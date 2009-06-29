@@ -28,7 +28,7 @@ namespace MyImpl
    * An example RateGen executor implementation class.
    */
   class BMCLOSEDED_EXEC_Export BMClosedED_exec_i :
-    public virtual CIDL_BMClosedED_Impl::BMClosedED_Exec,
+    public virtual CIAO_BasicSP_BMClosedED_Impl::BMClosedED_Exec,
     // CIAO container implementation depends on correct reference
     // counting of local interfaces, so we take a short cut to
     public virtual ::CORBA::LocalObject
@@ -82,7 +82,7 @@ namespace MyImpl
    * BMClosedED home executor implementation class.
    */
   class BMCLOSEDED_EXEC_Export BMClosedEDHome_exec_i :
-    public virtual CIDL_BMClosedED_Impl::BMClosedEDHome_Exec,
+    public virtual CIAO_BasicSP_BMClosedED_Impl::BMClosedEDHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

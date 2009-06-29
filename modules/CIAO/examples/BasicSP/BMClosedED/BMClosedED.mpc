@@ -8,7 +8,8 @@ project(BMClosedED_idl_gen) : componentidldefaults {
               -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export \
               -Wb,skel_export_include=BMClosedED_svnt_export.h \
               -Wb,exec_export_macro=BMCLOSEDED_EXEC_Export \
-              -Wb,exec_export_include=BMClosedED_exec_export.h
+              -Wb,exec_export_include=BMClosedED_exec_export.h \
+              -Glfa
 
   IDL_Files {
     BMClosedED.idl
@@ -49,9 +50,7 @@ project(BMClosedED_stub): ccm_stub {
   }
 
   Inline_Files {
-
   }
-
 }
 
 
@@ -81,9 +80,7 @@ project(BMClosedED_exec) : ciao_executor {
   }
 
   Inline_Files {
-
   }
-
 }
 
 project(BMClosedED_svnt) : ciao_servant {
@@ -114,7 +111,5 @@ project(BMClosedED_svnt) : ciao_servant {
   }
 
   Inline_Files {
-
   }
-
 }
