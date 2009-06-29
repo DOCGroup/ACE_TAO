@@ -32,6 +32,7 @@
 #define _INC_WINDOWS
     #include "winuser.h"           // extract from windows header
     #include "winver.h"   
+    #include "windows.h"
 #endif
 #endif
 
