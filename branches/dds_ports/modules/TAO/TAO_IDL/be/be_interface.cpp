@@ -2663,7 +2663,7 @@ Facet_Op_Attr_Helper::Facet_Op_Attr_Helper (
 }
 
 int
-Facet_Op_Attr_Helper::emit (be_interface *derived_interface,
+Facet_Op_Attr_Helper::emit (be_interface * /*derived_interface */,
                             TAO_OutStream *,
                             be_interface *base_interface)
 {
