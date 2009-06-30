@@ -1,9 +1,16 @@
+Tue Jun 30 20:10:07 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * SA_PlanStrategy.cpp:
+        * SA_SchedStrategy.cpp:
+	Modified undo for removing open conds to match the breadth first search.
+	Indented some of ankits code for readability.
+
 Mon Jun 29 21:52:33 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SA_PlanCommands.cpp:
         * SA_WorkingPlan.cpp:
 
-	Added ability to use 20 again if it is undone once.
+        Added ability to use 20 again if it is undone once.
 
 Mon Jun 29 21:02:05 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 

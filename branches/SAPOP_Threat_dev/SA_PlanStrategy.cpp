@@ -451,7 +451,7 @@ void SA_PlanStrategy::undo (SA_RemoveOpenCondsCmd *cmd)
       open_iter != cmd->removed_.end (); open_iter++)
   {
 	  std::cout<<"in planstrat undo adding "<<open_iter->first.id<<" to "<<open_iter->second<<std::endl;
-	  this->open_conds_.insert (std::make_pair
+	  this->open_conds_.push_front (std::make_pair
       (open_iter->first, open_iter->second));
   }
 };
