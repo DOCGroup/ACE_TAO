@@ -1,3 +1,14 @@
+Tue Jun 30 15:22:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        
+          Changes to project names for consistency and to
+          dependencies for completeness.
+
 Mon Jun 29 23:11:25 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/BasicSP/BMClosedED/BMClosedED.mpc:
