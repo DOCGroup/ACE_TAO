@@ -22,7 +22,7 @@ module CCM_DDS
     void on_offered_incompatible_qos(in DDS::DataWriter the_writer, 
                                      in DDS::OfferedIncompatibleQosStatus status);
     void on_unexpected_status (in DDS::Entity the_entity,
-                               in DDS::StatusKind);
+                               in DDS::StatusKind status);
   };
 
 };

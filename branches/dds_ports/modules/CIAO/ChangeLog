@@ -1,3 +1,14 @@
+Tue Jun 30 19:11:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
+
+          Added last remanining non-idl3p dds4ccm item into the mpc file.
+        
+        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3p:
+
+          Removed this file.
+
 Tue Jun 30 17:49:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/impl:
@@ -13,8 +24,8 @@ Tue Jun 30 17:49:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/impl/ndds/Writer.h:
         * connectors/dds4ccm/impl/ndds/Writer.cpp:
 
-          implementation stubs. 
-        
+          implementation stubs.
+
 Tue Jun 30 17:39:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/idl/dds4ccm.mpc:
