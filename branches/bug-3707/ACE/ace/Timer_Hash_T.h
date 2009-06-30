@@ -25,7 +25,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration.
-template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY>
 class ACE_Timer_Hash_T;
 template <typename TYPE>
 class Hash_Token;
@@ -40,6 +40,7 @@ class Hash_Token;
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Hash_Upcall
+  : private ACE_Copy_Disabled
 {
 public:
   typedef ACE_Timer_Queue_T<ACE_Event_Handler *,
@@ -103,10 +104,6 @@ public:
 private:
   /// Timer Queue to do the calling up to
   ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash_;
-
-  // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_Upcall (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
 /**
@@ -118,12 +115,13 @@ private:
  * node of a timer queue.  Be aware that it doesn't transverse
  * in the order of timeout values.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
 {
 public:
   /// Constructor.
-  ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &);
+  typedef ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY> Hash;
+  ACE_Timer_Hash_Iterator_T (Hash &);
 
   /// Positions the iterator at the earliest node in the Timer Queue
   virtual void first (void);
@@ -139,7 +137,7 @@ public:
 
 protected:
   /// Pointer to the ACE_Timer_Hash that we are iterating over.
-  ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &timer_hash_;
+  Hash & timer_hash_;
 
   /// Current position in <timer_hash_>'s table
   size_t position_;
@@ -156,21 +154,23 @@ protected:
  *
  * This implementation uses a hash table of BUCKETs.  The hash
  * is based on the time_value of the event.  Unlike other Timer
- * Queues, ACE_Timer_Hash does not expire events in order.
+ * Queues, ACE_Timer_Hash does not expire events in strict order,
+ * i.e., all events are expired after their deadline.  But two events
+ * may expired out of order as defined by their deadlines.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
-class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY = ACE_Default_Time_Policy>
+class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>
 {
 public:
   /// Type of iterator
-  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>
+  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>
           HASH_ITERATOR;
 
   /// Iterator is a friend
-  friend class ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>;
+  friend class ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>;
 
   /// Type inherited from
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> INHERITED;
 
   // = Initialization and termination methods.
   /**

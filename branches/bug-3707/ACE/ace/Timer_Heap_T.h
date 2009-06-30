@@ -26,7 +26,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 class ACE_Timer_Heap_T;
 
 /**
@@ -38,12 +38,13 @@ class ACE_Timer_Heap_T;
  * node of a timer queue.  Be aware that it doesn't transverse
  * in the order of timeout values.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>
 {
 public:
+  typedef ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Heap;
   /// Constructor.
-  ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &);
+  ACE_Timer_Heap_Iterator_T (Heap &);
 
   /// Destructor.
   ~ACE_Timer_Heap_Iterator_T (void);
@@ -62,7 +63,7 @@ public:
 
 protected:
   /// Pointer to the ACE_Timer_Heap that we are iterating over.
-  ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &timer_heap_;
+  Heap & timer_heap_;
 
   /// Position in the array where the iterator is at
   size_t position_;
@@ -82,14 +83,14 @@ protected:
  * dynamic memory allocation, which is important for real-time
  * systems.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
-class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
+class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>
 {
 public:
-  typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> HEAP_ITERATOR;
-  friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>;
+  typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> HEAP_ITERATOR;
+  friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> INHERITED;
 
   // = Initialization and termination methods.
   /**
@@ -109,7 +110,8 @@ public:
   ACE_Timer_Heap_T (size_t size,
                     bool preallocated = false,
                     FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+		    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /**
    * Default constructor. @c upcall_functor is the instance of the
@@ -119,7 +121,8 @@ public:
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
   ACE_Timer_Heap_T (FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+		    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor.
   virtual ~ACE_Timer_Heap_T (void);
@@ -318,10 +321,6 @@ private:
   /// Set of pointers to the arrays of preallocated timer nodes.
   /// Used to delete the allocated memory when required.
   ACE_Unbounded_Set<ACE_Timer_Node_T<TYPE> *> preallocated_node_set_;
-
-  // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Heap_T (const ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

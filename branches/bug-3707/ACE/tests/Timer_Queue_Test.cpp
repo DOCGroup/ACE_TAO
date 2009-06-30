@@ -32,6 +32,7 @@
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_Queue.h"
+#include "ace/Time_Policy.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
@@ -626,8 +627,14 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Timer_Heap without preallocated memory, using high-res time.
   (void) ACE_High_Res_Timer::global_scale_factor ();
-  ACE_Timer_Heap *tq_heap = new ACE_Timer_Heap;
-  tq_heap->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
+  typedef ACE_Timer_Heap_T<
+    ACE_Event_Handler*,
+      ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>,
+      ACE_SYNCH_RECURSIVE_MUTEX,
+      ACE_FPointer_Time_Policy > Timer_Heap;
+
+  Timer_Heap *tq_heap = new Timer_Heap;
+  tq_heap->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (tq_heap,
                                      ACE_TEXT ("ACE_Timer_Heap (high-res timer)"),

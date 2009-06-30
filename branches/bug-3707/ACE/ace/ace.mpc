@@ -260,6 +260,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Thread_Mutex.cpp
     Thread_Semaphore.cpp
     Throughput_Stats.cpp
+    Time_Policy.cpp
     Time_Value.cpp
     Timeprobe.cpp
     TLI.cpp

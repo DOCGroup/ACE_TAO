@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration.
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 class ACE_Timer_List_T;
 
 /**
@@ -32,12 +32,12 @@ class ACE_Timer_List_T;
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 class ACE_Timer_List_Iterator_T
-: public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
+  : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
 {
 public:
-  typedef ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> List;
+  typedef ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> List;
   /// Constructor.
   ACE_Timer_List_Iterator_T (List& lst);
 
@@ -81,19 +81,19 @@ protected:
  * ACE_Timer_Heap will perform substantially faster than the
  * ACE_Timer_List.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
-class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
+class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>
 {
 public:
   /// Type of iterator
-  typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> Iterator;
+  typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Iterator;
 
   /// Iterator is a friend
-  friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>;
+  friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
   typedef ACE_Timer_Node_T<TYPE> Node;
   /// Type inherited from
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> Base;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base;
   typedef ACE_Free_List<Node> FreeList;
 
   // = Initialization and termination methods.
