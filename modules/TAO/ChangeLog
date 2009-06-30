@@ -1,3 +1,44 @@
+Tue Jun 30 15:26:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        
+          Commented out an unused parameter.
+
+Mon Jun 29 23:07:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/interface_svh.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_svs.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ex_idl.h:
+
+          New visitors, to support the generation of facet servant
+          code for every interface in the translation unit, replacing
+          the default mechanism of generating this code by navigation
+          from components' lists of provides ports. 
+
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ex_idl.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+
+          Changes to existing IDL files to support standalone 
+          interface facet servant generation.
+
 Thu Jun 25 14:52:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
