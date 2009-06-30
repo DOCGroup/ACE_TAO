@@ -150,10 +150,10 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	
 
   if(!this->planner_->recurse_plan ()){
-	this->planner_->undo_through(cur_cmd_id);
-	return false;
+	  this->planner_->undo_through(cur_cmd_id);
+	  return false;
   }else{
-	return true;
+	  return true;
   }
 };
 
