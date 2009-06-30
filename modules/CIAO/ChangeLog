@@ -1,3 +1,10 @@
+Tue Jun 30 15:56:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/update_package.py:
+
+          Old script that updates implementations in a package, can be
+          used as a basis for a better packaging script. 
+        
 Tue Jun 30 15:22:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/BasicSP/BMClosedED/BMClosedED.mpc:
@@ -5,7 +12,7 @@ Tue Jun 30 15:22:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/BasicSP/BMDisplay/BMDisplay.mpc:
         * examples/BasicSP/EC/EC.mpc:
         * examples/BasicSP/BMDevice/BMDevice.mpc:
-        
+
           Changes to project names for consistency and to
           dependencies for completeness.
 
@@ -33,8 +40,8 @@ Mon Jun 29 19:43:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/OMG-CCM-Tutorial.ppt:
 
-          OMG tutorial slides. 
-        
+          OMG tutorial slides.
+
 Mon Jun 29 18:49:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/Model/Quoter.xme:
