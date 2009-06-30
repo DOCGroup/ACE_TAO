@@ -24,6 +24,8 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Time_Value.h"
+#include "ace/Time_Policy.h"
+#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -203,8 +205,9 @@ public:
  * implementing specialized policies such as ACE_Timer_List
  * and ACE_Timer_Heap.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Timer_Queue_T
+  : private ACE_Copy_Disabled
 {
 public:
   /// Type of Iterator.
@@ -218,7 +221,8 @@ public:
    * timer nodes.  If 0, then a default freelist will be created.
    */
   ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0,
-                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+		     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor - make virtual for proper destruction of inherited
   /// classes.
@@ -344,11 +348,11 @@ public:
    * implementations of the timer queue to use special high resolution
    * timers.
    */
-  /* virtual */ ACE_Time_Value gettimeofday (void);
+  ACE_Time_Value gettimeofday (void);
 
   /// Allows applications to control how the timer queue gets the time
   /// of day.
-  void gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+  void set_time_policy(TIME_POLICY const & time_policy);
 
   /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
@@ -438,8 +442,8 @@ protected:
   /// Class that implements a free list
   ACE_Free_List<ACE_Timer_Node_T<TYPE> > *free_list_;
 
-  /// Pointer to function that returns the current time of day.
-  ACE_Time_Value (*gettimeofday_)(void);
+  /// The policy to return the current time of day
+  TIME_POLICY time_policy_;
 
   /// Upcall functor
   FUNCTOR *upcall_functor_;
@@ -457,10 +461,6 @@ private:
 
   /// Adjusts for timer skew in various clocks.
   ACE_Time_Value timer_skew_;
-
-  // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Queue_T (const ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
 /**

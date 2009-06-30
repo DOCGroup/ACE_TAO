@@ -132,20 +132,20 @@ ACE_Timer_Node_T<TYPE>::get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T<TYPE> 
     this->interval_ > ACE_Time_Value::zero;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::timer_skew (const ACE_Time_Value &skew)
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::timer_skew (const ACE_Time_Value &skew)
 {
   timer_skew_ = skew;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE const ACE_Time_Value &
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::timer_skew (void) const
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE const ACE_Time_Value &
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::timer_skew (void) const
 {
   return timer_skew_;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE int
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (void)
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE int
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (void)
 {
   if (!this->is_empty ())
     return this->expire (this->gettimeofday () + timer_skew_);
@@ -153,8 +153,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (void)
     return 0;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info (const ACE_Time_Value &cur_time,
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dispatch_info (const ACE_Time_Value &cur_time,
                                                            ACE_Timer_Node_Dispatch_Info_T<TYPE> &info)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::dispatch_info");
@@ -163,8 +163,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info (const ACE_Time_Value 
   return this->dispatch_info_i (cur_time, info);
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::upcall (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
                                                     const ACE_Time_Value &cur_time)
 {
   this->upcall_functor ().timeout (*this,
@@ -174,8 +174,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall (ACE_Timer_Node_Dispatch_Info
                                    cur_time);
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::preinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::preinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
                                                        const ACE_Time_Value &cur_time,
                                                        const void *&upcall_act)
 {
@@ -187,8 +187,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::preinvoke (ACE_Timer_Node_Dispatch_I
                                      upcall_act);
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::postinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::postinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
                                                         const ACE_Time_Value &cur_time,
                                                         const void *upcall_act)
 {
@@ -200,21 +200,21 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::postinvoke (ACE_Timer_Node_Dispatch_
                                       upcall_act);
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE ACE_Time_Value
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::gettimeofday (void)
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE ACE_Time_Value
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday (void)
 {
   // Invoke gettimeofday via pointer to function.
-  return this->gettimeofday_ ();
+  return this->time_policy_ ();
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::gettimeofday (ACE_Time_Value (*gettimeofday)(void))
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::set_time_policy (TIME_POLICY const & rhs)
 {
-  this->gettimeofday_ = gettimeofday;
+  this->time_policy_ = rhs;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE FUNCTOR &
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall_functor (void)
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE FUNCTOR &
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::upcall_functor (void)
 {
   return *this->upcall_functor_;
 }

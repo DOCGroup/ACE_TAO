@@ -1,3 +1,41 @@
+Tue Jun 30 01:10:04 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * This is a temporary commit into the 3707 branch.  I realized too
+          late that the changes from 3706 will be needed to make this work.
+
+        * ace/ace.mpc:
+        * ace/Time_Policy.h:
+        * ace/Time_Policy.inl:
+        * ace/Time_Policy.cpp:
+          New classes to encapsulate how "now" is computed in the Timer
+          Queues.   This will be an additional template parameter, so the
+          default configuration has zero overhead.
+
+        * ace/Timer_Queuefwd.h:
+        * ace/Timer_List.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.inl:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_Wheel.h:
+        * ace/Timer_Wheel_T.h:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Timer_Hash.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Heap_T.cpp:
+          Re-factor timer queue classes to use new TIMER_POLICY
+          parameter.
+
+        * tests/Timer_Queue_Test.cpp:
+          Modify test to use TIMER_POLICY.  But here is the rub, the test
+          does not compile because all timer queue types are "different"
+          to each other.  I need to introduce the base class from the
+          bug-3706 branch to make things work.
+
 Sat Jun 27 00:55:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:

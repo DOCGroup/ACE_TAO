@@ -54,7 +54,8 @@ typedef ACE_Timer_Hash_T<ACE_Event_Handler *,
 typedef ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *,
                                   ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>,
                                   ACE_SYNCH_RECURSIVE_MUTEX,
-                                  ACE_Hash_Timer_List>
+                                  ACE_Hash_Timer_List,
+				  ACE_Default_Time_Policy>
         ACE_Timer_Hash_Iterator;
 
 typedef ACE_Timer_Hash_T<ACE_Event_Handler *,
