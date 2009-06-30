@@ -1,10 +1,15 @@
+Tue Jun 30 21:32:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/04.html:
+          Fixed typo
+
 Tue Jun 30 19:11:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/idl/dds4ccm.mpc:
         * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
 
           Added last remanining non-idl3p dds4ccm item into the mpc file.
-        
+
         * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3p:
 
           Removed this file.
