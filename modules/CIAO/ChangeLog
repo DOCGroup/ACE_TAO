@@ -1,3 +1,11 @@
+Tue Jun 30 17:19:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/DevGuideExamples/Messenger/Receiver.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator.mpc:
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+        
+          Changed project names for consistency.
+
 Tue Jun 30 15:56:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/update_package.py:
