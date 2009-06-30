@@ -367,6 +367,9 @@ nobase_include_HEADERS += \
   ATM_QoS.inl \
   ATM_Stream.h \
   ATM_Stream.inl \
+  Abstract_Timer_Queue.h \
+  Abstract_Timer_Queue.inl \
+  Abstract_Timer_Queue.cpp \
   Acceptor.cpp \
   Acceptor.h \
   Activation_Queue.h \
@@ -1069,6 +1072,9 @@ nobase_include_HEADERS += \
   Timer_Queue_Adapters.cpp \
   Timer_Queue_Adapters.h \
   Timer_Queue_Adapters.inl \
+  Timer_Queue_Iterator.cpp \
+  Timer_Queue_Iterator.h \
+  Timer_Queue_Iterator.inl \
   Timer_Queue_T.cpp \
   Timer_Queue_T.h \
   Timer_Queue_T.inl \

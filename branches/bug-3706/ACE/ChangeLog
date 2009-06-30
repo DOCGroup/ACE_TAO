@@ -1,3 +1,9 @@
+Tue Jun 30 11:53:04 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * ace/Makefile.am:
+          Add new files to the automake Makefile.  Thanks to Johnny for
+          pointing this out.
+
 Sun Jun 28 22:15:47 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * ace/ace.mpc:
