@@ -15,7 +15,7 @@ project(Messenger_Administrator_idl_gen) : componentidldefaults {
   }
 }
 
-project(Messenger_Administrator_idle_gen) : ciaoidldefaults {
+project(Messenger_Administrator_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Messenger_Administrator_idl_gen
   idlflags += -Wb,export_macro=ADMINISTRATOR_EXEC_Export \
@@ -52,7 +52,7 @@ project(Messenger_Administrator_stub) : ccm_stub {
 }
 
 project(Messenger_Administrator_exec) : ciao_executor {
-  after   += Messenger_Administrator_idle_gen Messenger_Administrator_stub
+  after   += Messenger_Administrator_lem_gen Messenger_Administrator_stub
   sharedname = Administrator_exec
   libs += Administrator_stub Messenger_stub
 
