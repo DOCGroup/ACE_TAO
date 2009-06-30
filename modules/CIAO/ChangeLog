@@ -1,3 +1,16 @@
+Tue Jun 30 17:39:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_ListnerControl.idl3:
+        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3:
+
+          Generate/compile idl necessary for hello example. 
+        
+        * connectors/dds4ccm/idl/dds4ccm_ListnerControl.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3p:
+
+          Removed these files.
+
 Tue Jun 30 17:19:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/DevGuideExamples/Messenger/Receiver.mpc:
