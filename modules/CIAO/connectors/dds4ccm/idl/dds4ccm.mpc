@@ -4,13 +4,17 @@ project (DDS4CCM_idl_gen) : ciaoidldefaults {
               -Wb,stub_export_include=dds4ccm_stub_export.h \
               -Wb,skel_export_macro=DDS4CCM_SKEL_Export \
               -Wb,skel_export_include=dds4ccm_skel_export.h \
-              -Gxhst -Gxhsk \
               -I$(CIAO_ROOT)/connectors
 
   IDL_Files {
+    idlflags += -Gxhst -Gxhsk
     dds4ccm_Base.idl3
+  }
+
+  IDL_Files {
     dds4ccm_PortStatusListener.idl3
     dds4ccm_ListnerControl.idl3
+    dds4ccm_ConnectorStatusListener.idl3
     dds_rtf2_dcps.idl
   }
 }
@@ -28,6 +32,7 @@ project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib {
     dds4ccm_BaseC.h
     dds4ccm_PortStatusListenerC.h
     dds4ccm_ListnerControlC.h
+    dds4ccm_ConnectorStatusListenerC.h
     dds_rtf2_dcpsC.h
   }
 
@@ -35,6 +40,7 @@ project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib {
     dds4ccm_BaseC.cpp
     dds4ccm_PortStatusListenerC.cpp
     dds4ccm_ListnerControlC.cpp
+    dds4ccm_ConnectorStatusListenerC.cpp
     dds_rtf2_dcpsC.cpp
   }
 }
@@ -52,6 +58,7 @@ project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib {
     dds4ccm_BaseS.h
     dds4ccm_PortStatusListenerS.h
     dds4ccm_ListnerControlS.h
+    dds4ccm_ConnectorStatusListenerS.h
     dds_rtf2_dcpsS.h
   }
 
@@ -59,6 +66,7 @@ project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib {
     dds4ccm_BaseS.cpp
     dds4ccm_PortStatusListenerS.cpp
     dds4ccm_ListnerControlS.cpp
+    dds4ccm_ConnectorStatusListenerS.cpp
     dds_rtf2_dcpsS.cpp
   }
 }
