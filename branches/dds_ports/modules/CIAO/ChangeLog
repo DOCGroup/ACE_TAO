@@ -1,3 +1,13 @@
+Wed Jul  1 21:36:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Display/GPS/GPS.mpc
+        * examples/Swapping/Sender/Sender.mpc
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+        * tests/Minimum/Receiver/Receiver.mpc
+          Fixed missing afters
+
 Wed Jul  1 17:08:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
