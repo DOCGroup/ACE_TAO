@@ -15,7 +15,7 @@ project(Protocols_Receiver_idl_gen) : componentidldefaults {
   }
 }
 
-project(Protocols_Receiver_idle_gen) : ciaoidldefaults {
+project(Protocols_Receiver_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Protocols_Receiver_idl_gen
   idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
@@ -28,7 +28,7 @@ project(Protocols_Receiver_idle_gen) : ciaoidldefaults {
 }
 
 project(Protocols_Receiver_stub) : ccm_stub {
-  after += Protocols_Receiver_idle_gen Protocols_stub
+  after += Protocols_Receiver_idl_gen Protocols_stub
   libs  += Protocols_stub
   libpaths += ../common
 
@@ -53,7 +53,7 @@ project(Protocols_Receiver_stub) : ccm_stub {
 }
 
 project(Protocols_Receiver_exec) : ciao_executor {
-  after   += Protocols_Receiver_idle_gen Protocols_Receiver_stub
+  after   += Protocols_Receiver_lem_gen Protocols_Receiver_stub
   sharedname = Protocols_Receiver_exec
   libs += Protocols_Receiver_stub \
           Protocols_stub

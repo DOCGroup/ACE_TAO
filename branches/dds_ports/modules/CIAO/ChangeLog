@@ -1,11 +1,22 @@
+Wed Jul  1 22:18:53 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Protocols/Receiver/Receiver.mpc:
+        * tests/Minimum/Minimum_Base/Minimum_Base.mpc:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/Display/RateGen/RateGen.mpc:
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+        
+          Changed project names *_idle_gen to *_lem_gen.
+
 Wed Jul  1 21:36:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * examples/Display/GPS/GPS.mpc
-        * examples/Swapping/Sender/Sender.mpc
-        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
-        * performance-tests/Protocols/Sender/Sender.mpc
-        * tests/Minimum/Receiver/Receiver.mpc
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Swapping/Sender/Sender.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Protocols/Sender/Sender.mpc:
+        * tests/Minimum/Receiver/Receiver.mpc:
+        
           Fixed missing afters
 
 Wed Jul  1 17:08:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
@@ -15,6 +26,16 @@ Wed Jul  1 17:08:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/generate_component_mpc.html:
           Removed CIDL stuff.
+
+Wed Jul  1 16:27:07 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        
+          Conditionalized generation of value factory registration
+          with a check to see if the eventtype in question has a 
+          concrete factory. Registration macro should be generated
+          only if this check returns true.
 
 Wed Jul  1 16:10:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
