@@ -1,3 +1,8 @@
+Wed Jul  1 13:09:34 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Added ACE_HAS_VOID_UNSETENV.
+
 Mon Jun 29 23:42:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * contrib/FaCE/newres.h:
