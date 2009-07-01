@@ -652,12 +652,13 @@ void SA_WorkingPlan::generate_all_threats(void)
 
   debug_text << "SA_WorkingPlan::generate_all_threats:  All Causal Threats: " << std::endl;
 
-
+  //Iterate through task instances
   for(InstToTaskMap::iterator iterator = this->task_insts_.begin(); iterator != this->task_insts_.end(); iterator++){
     TaskInstID threat_possibility = iterator->first;
     TaskID threat_possibility_taskid = iterator->second;
     CondSet set = this->planner_->get_effects(threat_possibility_taskid);
-
+  
+    //Iterate through the effects of each task instance
     for(CondSet::iterator arr = set.begin(); arr != set.end(); arr++){ 
 
         Condition condition = (*arr);
@@ -667,7 +668,7 @@ void SA_WorkingPlan::generate_all_threats(void)
           CondToCLinksMap::iterator
             > ret = this->causal_links_.equal_range(condition);
       
-
+        //Iterates through causal links
         for(CondToCLinksMap::iterator nit = ret.first; nit != ret.second; nit++){
 
             CausalLink causal_threatened = (*nit).second;
@@ -679,18 +680,28 @@ void SA_WorkingPlan::generate_all_threats(void)
            
             if((threat_effect > 0 && causal_effect < 0 )|| (threat_effect < 0 && causal_effect > 0)){
 
-              if(causal_threatened.first != threat_possibility && causal_threatened.second != threat_possibility
-				  && causal_threatened.second != -1)
+              if(causal_threatened.first != threat_possibility && causal_threatened.second != threat_possibility)
               {
-                TaskID threatened_task1 = this->task_insts_.find(causal_threatened.first)->second;
-                TaskID threatened_task2 = this->task_insts_.find(causal_threatened.second)->second;
+                
 
                 CLThreat new_threat;
                 new_threat.clink = causal_threatened;
                 new_threat.threat = threat_possibility;
                 threat_set.insert(new_threat);
 
-                debug_text <<"  Causal link from Task ("<< threatened_task1 <<") Inst ("<< causal_threatened.first <<") to Task ("<< threatened_task2 <<") Inst ("<< causal_threatened.second <<") using condition "<<causal_threatened.cond.id<<" threatened by Task ("<< threat_possibility_taskid <<") Inst ("<<threat_possibility<<")" << std::endl;
+                TaskID threatened_task1 = this->task_insts_.find(causal_threatened.first)->second;
+                if(causal_threatened.second != SA_POP::GOAL_TASK_INST_ID)
+                {
+                 TaskID threatened_task2 = this->task_insts_.find(causal_threatened.second)->second;
+                 debug_text <<"  Causal link from Task ("<< threatened_task1 <<") Inst ("<< causal_threatened.first <<") to Task ("<< threatened_task2 <<") Inst ("<< causal_threatened.second <<") using condition "<<causal_threatened.cond.id<<" threatened by Task ("<< threat_possibility_taskid <<") Inst ("<<threat_possibility<<")" << std::endl;
+
+                }
+                else
+                {
+                  debug_text <<"  Causal link from Task ("<< threatened_task1 <<") Inst ("<< causal_threatened.first <<") to Task ( GOAL_TASK )Inst (GOAL_TASK_INST) using condition "<<causal_threatened.cond.id<<" threatened by Task ("<< threat_possibility_taskid <<") Inst ("<<threat_possibility<<")" << std::endl;
+                }
+
+                
              
               
               }

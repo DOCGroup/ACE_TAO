@@ -1,9 +1,16 @@
+Wed Jul  1 22:13:25 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * SA_PlanStrategy.cpp:
+        * SA_WorkingPlan.cpp:
+	Updated to allow for goal_task_inst to be part of threats. 
+	Small aesthetic changes
+
 Tue Jun 30 20:10:07 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * SA_PlanStrategy.cpp:
         * SA_SchedStrategy.cpp:
-	Modified undo for removing open conds to match the breadth first search.
-	Indented some of ankits code for readability.
+        Modified undo for removing open conds to match the breadth first search.
+        Indented some of ankits code for readability.
 
 Mon Jun 29 21:52:33 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
