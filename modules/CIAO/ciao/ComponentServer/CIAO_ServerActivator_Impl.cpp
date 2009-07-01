@@ -46,7 +46,7 @@ namespace CIAO
       const char * server_UUID,
       ::Components::ConfigValues_out config)
     {
-      CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::component_server_callback");
+      CIAO_TRACE("CIAO_ServerActivator_i::component_server_callback");
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                    "CIAO_ServerActivator_i::component_server_callback - "
@@ -193,7 +193,7 @@ namespace CIAO
     ::Components::Deployment::ComponentServer_ptr
     CIAO_ServerActivator_i::create_component_server (const ::Components::ConfigValues & config)
     {
-      CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::create_component_server");
+      CIAO_TRACE("CIAO_ServerActivator_i::create_component_server");
 
       Safe_Server_Info server (new Server_Info (config.length () + 1));
 
@@ -431,7 +431,7 @@ namespace CIAO
     void
     CIAO_ServerActivator_i::remove_component_server (::Components::Deployment::ComponentServer_ptr server)
     {
-      CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::remove_component_server");
+      CIAO_TRACE("CIAO_ServerActivator_i::remove_component_server");
 
       if (this->server_infos_.is_empty ())
         {
@@ -502,7 +502,7 @@ namespace CIAO
     ::Components::Deployment::ComponentServers *
     CIAO_ServerActivator_i::get_component_servers (void)
     {
-      CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::get_component_servers");
+      CIAO_TRACE("CIAO_ServerActivator_i::get_component_servers");
 
       ::Components::Deployment::ComponentServers_var retval = new
           Components::Deployment::ComponentServers (this->server_infos_.size ());
