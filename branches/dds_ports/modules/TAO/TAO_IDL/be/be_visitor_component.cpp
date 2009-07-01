@@ -36,6 +36,7 @@
 #include "be_string.h"
 #include "be_structure.h"
 #include "be_typedef.h"
+#include "be_valuetype.h"
 
 #include "be_visitor_component.h"
 #include "be_visitor_attribute.h"
