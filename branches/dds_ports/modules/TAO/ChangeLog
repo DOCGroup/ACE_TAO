@@ -1,3 +1,11 @@
+Wed Jul  1 15:53:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+        * docs/compiler.html:
+        
+          Updated documentation with new IDL compiler functionality,
+          CIAO-related generation and export header file generation.
+
 Wed Jul  1 14:13:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
