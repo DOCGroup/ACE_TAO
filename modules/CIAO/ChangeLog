@@ -1,12 +1,20 @@
+Wed Jul  1 17:08:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          Resolved compiler issues on Windows
+
+        * docs/generate_component_mpc.html:
+          Removed CIDL stuff.
+
 Wed Jul  1 16:10:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
         * docs/value_factory_registration.html:
-          
+
           Updated to reflect removal of CIDL compiler.
-          
+
         * MPC/config/ciao_server.mpb:
-        
+
           Removed repeated occurrence ciao_client base project.
 
 Wed Jul  1 13:34:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
@@ -21,10 +29,10 @@ Wed Jul  1 13:34:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * docs/tutorials/Quoter/Simple/01.html:
         * docs/tutorials/Quoter/Simple/04.html:
           Mentioned the tutorials library path in MPC-file's.
-          
+
         * docs/tutorials/Quoter/Simple/02.html:
           Changed $CIAO_ROOT into %CIAO_ROOT%. This was intended in this
-          tutorial. 
+          tutorial.
 
 Tue Jun 30 21:32:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 

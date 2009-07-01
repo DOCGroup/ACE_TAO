@@ -11,7 +11,7 @@ project (DAnCE_RepositoryManager_IDL) : ciaoidldefaults {
 project (DAnCE_RepositoryManager) : dance_deployment_svnt, ciao_config_handlers, ccm_stub, dance_repository_manager_base, naming, iortable, utils, minizip, zlib, dance_lib {
   requires += zlib
   libs += Package_Config_Handlers JAWS
-  after += DAnCE_RepositoryManager_IDL
+  after += DAnCE_RepositoryManager_IDL JAWS
   dynamicflags = DANCE_REPOSITORYMANAGER_MODULE_BUILD_DLL
   IDL_Files {
   }
@@ -42,12 +42,14 @@ project (DAnCE_RepositoryManager_Exec) : dance_repository_manager, dance_exe {
 
 project (DAnCE_RepositoryManager_Admin) : dance_repository_manager, dance_deployment_stub, ciao_config_handlers, naming, dance_lib {
   dynamicflags = DANCE_REPOSITORYMANAGER_ADMIN_BUILD_DLL
+  after += DAnCE_RepositoryManager_IDL
 
   IDL_Files {
   }
   
   Source_Files {
     repository_manager_admin.cpp
+    RepositoryManagerDaemonC.cpp
   }
 }
 
