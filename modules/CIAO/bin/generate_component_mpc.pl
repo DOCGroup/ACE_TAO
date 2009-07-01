@@ -179,14 +179,8 @@ if (defined $opt_n) {
 ';
 
     $svr_base = "ciao_executor";
-    $cidl_block = "";
 }
 else {
-    $cidl_block =
-'
-  CIDL_Files {
-  }
-';
 
     $svr_idl = "$com_name".'E.idl';
 
@@ -247,7 +241,7 @@ project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".' {
   libs       += '."$svr_libs $svr_plibs
   $lib_paths".'
   dynamicflags = '."$UCOM_NAME"."$USVR_SUFFIX".'_BUILD_DLL
-  '."$cidl_block".'
+  '.'
   IDL_Files {
   }
 

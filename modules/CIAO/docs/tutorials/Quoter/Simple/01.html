@@ -211,7 +211,12 @@
   a <i>Stock_Base.mpc</i> file that contains two projects
   <i>Stock_Base_stub</i> and <i>Stock_Base_skel</i> for the Stub
   and Servant code respectively. The MPC file should look like
-  <a href="Stock_Base/Stock_Base.mpc">this</a>.</span></p>
+  <a href="Stock_Base/Stock_Base.mpc">this</a>.<br/>
+  Mind that "libout" and "libpaths" are added. This is done to make
+  the compilation of this example easier and at runtime, all deliveralbes
+  are in one directory. Beware that you need to add this
+  directory to your system path when running the executables (see page 4).
+  </span></p>
 
   <p class='c14'><span class='c1'>Component Design:</span></p>
 
@@ -252,7 +257,7 @@
   <p class="c33"><span class="c32">The command above will generate
   a <i>StockDistributor.mpc</i> file that contains&nbsp;several
   projects that will build the Stub, Servant, and Executor code
-  respectively. 
+  respectively.
   <p class="c39">&middot;&nbsp;&nbsp;&nbsp;&nbsp;
   <span class="c32">Next we write a simple driver program
   (<code><i><span class=
@@ -269,7 +274,9 @@
   "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
   <span class='c20'>The generated</span> <span class='c20'>MPC file
   should look like <a href=
-  "Distributor/StockDistributor.mpc">this</a>.</span></p>
+  "Distributor/StockDistributor.mpc">this</a>. Both "libout" and "libpaths"
+  are added again.
+  </span></p>
 
   <p class='c40'><span class='c1'>Broker:</span></p>
 
@@ -307,7 +314,7 @@
   <p class="c33"><span class="c32"><span class="c32">The command
   above will generate a <i>StockBroker.mpc</i> file that
   contains&nbsp;several projects that will build the Stub, Servant,
-  and Executor code respectively. 
+  and Executor code respectively.
 
   <p class="c39"><span class="c36">&middot;<span class=
   "c35">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
@@ -324,7 +331,8 @@
   "c5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
   <span class='c20'><span class="c32">The generated</span>
   <span class="c32">MPC file should look like</span> <a href=
-  "Broker/StockBroker.mpc">this</a>.</span></p>
+  "Broker/StockBroker.mpc">this</a>. Both "libout" and "libpaths"
+  are added again.</span></p>
 
   <p class='c45'><span class='c1'><br />
   <b>Note:</b></span></p>
