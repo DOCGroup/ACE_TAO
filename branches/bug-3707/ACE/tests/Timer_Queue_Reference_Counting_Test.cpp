@@ -40,7 +40,7 @@ namespace
   inline void WAIT_FOR_NEXT_EVENT (ACE_Timer_Queue &timer_queue)
   {
     ACE_Time_Value const earliest_time = timer_queue.earliest_time ();
-    ACE_Time_Value const time_of_day =   timer_queue.gettimeofday ();
+    ACE_Time_Value const time_of_day =   timer_queue.gettimeofday_abstract ();
     if (earliest_time > time_of_day)
       {
         ACE_OS::sleep (earliest_time - time_of_day);
@@ -155,7 +155,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
       first_timer_id =
         timer_queue.schedule (handler,
                               one_second_timeout,
-                              ACE_Time_Value (1) + timer_queue.gettimeofday (),
+                              ACE_Time_Value (1) + timer_queue.gettimeofday_abstract (),
                               ACE_Time_Value (1));
       ACE_ASSERT (first_timer_id != -1);
     }
@@ -164,7 +164,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
       first_timer_id =
         timer_queue.schedule (handler,
                               one_second_timeout,
-                              ACE_Time_Value (1) + timer_queue.gettimeofday ());
+                              ACE_Time_Value (1) + timer_queue.gettimeofday_abstract ());
       ACE_ASSERT (first_timer_id != -1);
     }
 
@@ -173,7 +173,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
       second_timer_id =
         timer_queue.schedule (handler,
                               two_second_timeout,
-                              ACE_Time_Value (2) + timer_queue.gettimeofday (),
+                              ACE_Time_Value (2) + timer_queue.gettimeofday_abstract (),
                               ACE_Time_Value (2));
       ACE_ASSERT (second_timer_id != -1);
     }
@@ -266,38 +266,8 @@ invoke_expire (ACE_Timer_Queue &timer_queue)
 int
 invoke_one_upcall (ACE_Timer_Queue &timer_queue)
 {
-  // Get the current time
-  ACE_Time_Value current_time (timer_queue.gettimeofday () +
-                               timer_queue.timer_skew ());
-
-  // Look for a node in the timer queue whose timer <= the present
-  // time.
-  ACE_Timer_Node_Dispatch_Info dispatch_info;
-
-  if (timer_queue.dispatch_info (current_time,
-                                 dispatch_info))
-    {
-      const void *upcall_act = 0;
-
-      // Preinvoke.
-      timer_queue.preinvoke (dispatch_info,
-                             current_time,
-                             upcall_act);
-
-      // Call the functor
-      timer_queue.upcall (dispatch_info,
-                          current_time);
-
-      // Postinvoke
-      timer_queue.postinvoke (dispatch_info,
-                              current_time,
-                              upcall_act);
-
-      // We have dispatched a timer
-      return 1;
-    }
-
-  return 0;
+  ACE_Noop_Command command;
+  return timer_queue.expire_single(command);
 }
 
 void
@@ -315,14 +285,14 @@ expire (ACE_Timer_Queue &timer_queue,
   long timer_id =
     timer_queue.schedule (handler,
                           one_second_timeout,
-                          ACE_Time_Value (1) + timer_queue.gettimeofday (),
+                          ACE_Time_Value (1) + timer_queue.gettimeofday_abstract (),
                           ACE_Time_Value (1));
   ACE_ASSERT (timer_id != -1);
 
   result =
     timer_queue.schedule (handler,
                           two_second_timeout,
-                          ACE_Time_Value (2) + timer_queue.gettimeofday ());
+                          ACE_Time_Value (2) + timer_queue.gettimeofday_abstract ());
   ACE_ASSERT (result != -1);
 
   events += 4;
@@ -451,7 +421,7 @@ simple (ACE_Timer_Queue &timer_queue)
     timer_id =
       timer_queue.schedule (handler,
                             one_second_timeout,
-                            ACE_Time_Value (1) + timer_queue.gettimeofday (),
+                            ACE_Time_Value (1) + timer_queue.gettimeofday_abstract (),
                             ACE_Time_Value (1));
     ACE_ASSERT (timer_id != -1);
 
@@ -469,7 +439,7 @@ simple (ACE_Timer_Queue &timer_queue)
     timer_id =
       timer_queue.schedule (handler,
                             one_second_timeout,
-                            ACE_Time_Value (1) + timer_queue.gettimeofday (),
+                            ACE_Time_Value (1) + timer_queue.gettimeofday_abstract (),
                             ACE_Time_Value (1));
     ACE_ASSERT (timer_id != -1);
 

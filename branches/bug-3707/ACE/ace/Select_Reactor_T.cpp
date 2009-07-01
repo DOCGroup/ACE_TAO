@@ -728,7 +728,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
     return this->timer_queue_->schedule
       (handler,
        arg,
-       timer_queue_->gettimeofday () + delay_time,
+       timer_queue_->gettimeofday_abstract () + delay_time,
        interval);
 
   errno = ESHUTDOWN;

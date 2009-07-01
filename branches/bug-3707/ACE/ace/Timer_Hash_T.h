@@ -116,7 +116,7 @@ private:
  * in the order of timeout values.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY = ACE_Default_Time_Policy>
-class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
+class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE>
 {
 public:
   /// Constructor.
@@ -143,7 +143,7 @@ protected:
   size_t position_;
 
   /// Current iterator used on <position>'s bucket
-  ACE_Timer_Queue_Iterator_T<TYPE, ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>, ACE_Null_Mutex> *iter_;
+  ACE_Timer_Queue_Iterator_T<TYPE> *iter_;
 };
 
 /**
@@ -170,7 +170,7 @@ public:
   friend class ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>;
 
   /// Type inherited from
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Timer_Queue;
 
   // = Initialization and termination methods.
   /**
@@ -181,7 +181,8 @@ public:
    */
   ACE_Timer_Hash_T (size_t table_size,
                     FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+		    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /**
    * Default constructor. @a upcall_functor is the instance of the
@@ -190,7 +191,9 @@ public:
    * timer nodes.  If 0, then a default freelist will be created.  The default
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
-  ACE_Timer_Hash_T (FUNCTOR *upcall_functor = 0, ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+  ACE_Timer_Hash_T (FUNCTOR *upcall_functor = 0,
+		    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+		    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
   virtual ~ACE_Timer_Hash_T (void);
@@ -252,7 +255,7 @@ public:
   virtual int expire (const ACE_Time_Value &current_time);
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE> &iter (void);
 
   /// Removes the earliest node from the queue and returns it
   virtual ACE_Timer_Node_T<TYPE> *remove_first (void);

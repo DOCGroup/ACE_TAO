@@ -258,7 +258,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::item (v
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY>
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &
+ACE_Timer_Queue_Iterator_T<TYPE> &
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::iter (void)
 {
   this->iterator_->first ();
@@ -271,8 +271,9 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T (
   size_t table_size,
   FUNCTOR *upcall_functor,
-  ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
-  : ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> (upcall_functor, freelist),
+  ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
+  TIME_POLICY const & time_policy)
+  : Base_Timer_Queue (upcall_functor, freelist, time_policy),
     size_ (0),
     table_size_ (table_size),
     table_functor_ (this),
@@ -295,8 +296,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
     {
       ACE_NEW (this->table_[i],
                BUCKET (&this->table_functor_,
-                       this->free_list_));
-      this->table_[i]->gettimeofday (ACE_OS::gettimeofday);
+                       this->free_list_,
+		       time_policy));
     }
 
   ACE_NEW (iterator_,
@@ -307,8 +308,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY>
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T (
   FUNCTOR *upcall_functor,
-  ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
-  : ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> (upcall_functor, freelist),
+  ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
+  TIME_POLICY const & time_policy)
+  : Base_Timer_Queue (upcall_functor, freelist, time_policy),
     size_ (0),
     table_size_ (ACE_DEFAULT_TIMER_HASH_TABLE_SIZE),
     table_functor_ (this),
@@ -329,7 +331,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
     {
       ACE_NEW (this->table_[i],
                BUCKET (&this->table_functor_,
-                       this->free_list_));
+                       this->free_list_,
+		       time_policy));
     }
 
   ACE_NEW (iterator_,
@@ -431,7 +434,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::reschedule (
   // then here schedule <expired> for deletion. Don't call
   // this->free_node() because that will invalidate <h>
   // and that's what user have as timer_id.
-  ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::free_node (expired);
+  Base_Timer_Queue::free_node (expired);
 
   if (this->table_[this->earliest_position_]->is_empty ()
       || this->table_[h->pos_]->earliest_time ()
@@ -634,9 +637,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (const TY
        i < this->table_size_;
        ++i)
     {
-      ACE_Timer_Queue_Iterator_T<TYPE,
-                                 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
-                                 ACE_Null_Mutex> &iter =
+      ACE_Timer_Queue_Iterator_T<TYPE> & iter =
         this->table_[i]->iter ();
 
       for (iter.first ();
@@ -741,7 +742,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::get_first (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> void
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::free_node (ACE_Timer_Node_T<TYPE> *node)
 {
-  ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::free_node (node);
+  Base_Timer_Queue::free_node (node);
 
   Hash_Token<TYPE> *h =
     reinterpret_cast<Hash_Token<TYPE> *> (const_cast<void *> (node->get_act ()));
@@ -753,8 +754,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::dispatch_info_i 
                                                                     ACE_Timer_Node_Dispatch_Info_T<TYPE> &info)
 {
   int const result =
-    ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::dispatch_info_i (cur_time,
-                                                               info);
+    Base_Timer_Queue::dispatch_info_i (cur_time, info);
 
   if (result == 1)
     {
@@ -772,7 +772,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::dispatch_info_i 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::expire ()
 {
-  return ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::expire();
+  return Base_Timer_Queue::expire();
 }
 
 // Specialized expire for Timer Hash

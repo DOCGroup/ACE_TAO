@@ -47,7 +47,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Wheel_T
  , FreeList* freelist
  , TIME_POLICY const & time_policy
  )
-  : Base (upcall_functor, freelist, time_policy)
+  : Base_Timer_Queue (upcall_functor, freelist, time_policy)
 , spokes_(0)
 , spoke_count_(0) // calculated in open_i
 , spoke_bits_(0)
@@ -80,7 +80,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Wheel_T
    FUNCTOR* upcall_functor,
    FreeList* freelist,
    TIME_POLICY const & time_policy)
-: Base (upcall_functor, freelist, time_policy)
+: Base_Timer_Queue (upcall_functor, freelist, time_policy)
 , spokes_ (0)
 , spoke_count_ (0) // calculated in open_i
 , spoke_bits_ (0)
@@ -783,7 +783,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i (void) cons
 * @return The iterator
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>&
+ACE_Timer_Queue_Iterator_T<TYPE> &
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
 {
   this->iterator_->first ();

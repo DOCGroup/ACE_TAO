@@ -39,7 +39,7 @@ class ACE_Timer_Heap_T;
  * in the order of timeout values.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
-class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>
+class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE>
 {
 public:
   typedef ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Heap;
@@ -90,7 +90,7 @@ public:
   typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> HEAP_ITERATOR;
   friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Time_Policy;
 
   // = Initialization and termination methods.
   /**
@@ -166,7 +166,7 @@ public:
                       int dont_call_handle_close = 1);
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE> &iter (void);
 
   /**
    * Removes the earliest node from the queue and returns it. Note that

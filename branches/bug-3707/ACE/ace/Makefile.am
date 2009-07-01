@@ -98,6 +98,7 @@ libACE_la_SOURCES = \
   Encoding_Converter_Factory.cpp \
   Event.cpp \
   Event_Handler.cpp \
+  Event_Handler_Handle_Timeout_Upcall.cpp \
   FIFO.cpp \
   FIFO_Recv.cpp \
   FIFO_Recv_Msg.cpp \
@@ -367,6 +368,8 @@ nobase_include_HEADERS += \
   ATM_QoS.inl \
   ATM_Stream.h \
   ATM_Stream.inl \
+  Abstract_Timer_Queue.h \
+  Abstract_Timer_Queue.cpp \
   Acceptor.cpp \
   Acceptor.h \
   Activation_Queue.h \
@@ -516,6 +519,8 @@ nobase_include_HEADERS += \
   Event.inl \
   Event_Handler.h \
   Event_Handler.inl \
+  Event_Handler_Handle_Timeout_Upcall.h \
+  Event_Handler_Handle_Timeout_Upcall.inl \
   Event_Handler_T.cpp \
   Event_Handler_T.h \
   Event_Handler_T.inl \
@@ -1069,6 +1074,9 @@ nobase_include_HEADERS += \
   Timer_Queue_Adapters.cpp \
   Timer_Queue_Adapters.h \
   Timer_Queue_Adapters.inl \
+  Timer_Queue_Iterator.h \
+  Timer_Queue_Iterator.inl \
+  Timer_Queue_Iterator.cpp \
   Timer_Queue_T.cpp \
   Timer_Queue_T.h \
   Timer_Queue_T.inl \
