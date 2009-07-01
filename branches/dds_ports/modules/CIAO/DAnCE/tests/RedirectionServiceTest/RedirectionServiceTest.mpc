@@ -1,10 +1,10 @@
 // $Id$
 project (RedirectionServiceTestServer): dance, taoserver, iortable, naming, dance_redirection_service, dance_logger, naming_serv  {
-	exename = RedirectionServiceTestServer
+  exename = RedirectionServiceTestServer
 
-	IDL_Files {
-   		Dummy.idl
-  	}
+  IDL_Files {
+    Dummy.idl
+  }
 
 	Source_Files {
 		srv_main.cpp
@@ -15,10 +15,10 @@ project (RedirectionServiceTestServer): dance, taoserver, iortable, naming, danc
 }
 
 project (RedirectionServiceTestClient): dance, taoclient, naming, dance_logger, naming, portableserver, anytypecode {
-	after = *RedirectionServiceTestServer
-	exename = RedirectionServiceTestClient
+  after = *RedirectionServiceTestServer
+  exename = RedirectionServiceTestClient
 
-	Source_Files {
+  Source_Files {
 		clt_main.cpp
 		DummyC.cpp
    	}

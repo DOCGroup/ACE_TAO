@@ -17,6 +17,7 @@ project(Minimum_Base_Sender_idl_gen) : componentidldefaults {
 
 project(Minimum_Base_Sender_idle_gen) : ciaoidldefaults {
   custom_only = 1
+  after += Minimum_Base_Sender_idl_gen
   idlflags += -Wb,export_macro=SENDER_EXEC_Export \
               -Wb,export_include=Sender_exec_export.h \
               -SS
