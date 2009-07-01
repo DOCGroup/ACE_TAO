@@ -2518,10 +2518,16 @@ be_visitor_component_svs::gen_all_factory_registration (void)
 void
 be_visitor_component_svs::gen_one_factory_registration (AST_Type *t)
 {
-  os_ << be_nl << be_nl
-      << "TAO_OBV_REGISTER_FACTORY (" << be_idt_nl
-      << "::" << t->full_name () << "_init," << be_nl
-      << "::" << t->full_name () << ");" << be_uidt;
+  be_valuetype *v = be_valuetype::narrow_from_decl (t);
+  be_valuetype::FactoryStyle fs = v->determine_factory_style ();
+  
+  if (fs == be_valuetype::FS_CONCRETE_FACTORY)
+    {
+      os_ << be_nl << be_nl
+          << "TAO_OBV_REGISTER_FACTORY (" << be_idt_nl
+          << "::" << t->full_name () << "_init," << be_nl
+          << "::" << t->full_name () << ");" << be_uidt;
+    }
 }
 
 void
