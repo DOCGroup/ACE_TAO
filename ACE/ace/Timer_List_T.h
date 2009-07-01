@@ -32,9 +32,9 @@ class ACE_Timer_List_T;
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Timer_List_Iterator_T
-  : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
+: public ACE_Timer_Queue_Iterator_T <TYPE>
 {
 public:
   typedef ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> List;
@@ -93,7 +93,7 @@ public:
 
   typedef ACE_Timer_Node_T<TYPE> Node;
   /// Type inherited from
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Timer_Queue;
   typedef ACE_Free_List<Node> FreeList;
 
   // = Initialization and termination methods.
@@ -103,7 +103,8 @@ public:
    * default FUNCTOR will be created.  @a freelist is the freelist of
    * timer nodes.  If 0, then a default freelist will be created.
    */
-  ACE_Timer_List_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = 0);
+  ACE_Timer_List_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = 0,
+		    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
   virtual ~ACE_Timer_List_T (void);
@@ -147,7 +148,7 @@ public:
                       int dont_call_handle_close = 1);
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>& iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE>& iter (void);
 
   /// Removes the earliest node from the queue and returns it
   virtual ACE_Timer_Node_T<TYPE>* remove_first (void);

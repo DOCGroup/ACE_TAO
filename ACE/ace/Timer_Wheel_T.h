@@ -36,9 +36,9 @@ class ACE_Timer_Wheel_T;
  * node of a timer queue.  Be aware that it doesn't traverse
  * in the order of timeout values.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Timer_Wheel_Iterator_T
-  : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
+  : public ACE_Timer_Queue_Iterator_T <TYPE>
 {
 public:
   typedef ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Wheel;
@@ -100,7 +100,7 @@ public:
   friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   typedef ACE_Timer_Node_T<TYPE> Node;
   /// Type inherited from
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Timer_Queue;
   typedef ACE_Free_List<Node> FreeList;
 
   /// Default constructor
@@ -154,7 +154,7 @@ public:
   int expire (const ACE_Time_Value& current_time);
 
   /// Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>& iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE> & iter (void);
 
   /// Removes the earliest node from the queue and returns it
   virtual ACE_Timer_Node_T<TYPE>* remove_first (void);

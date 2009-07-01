@@ -70,7 +70,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item (void)
 
 // Return our instance of the iterator
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Queue_Iterator_T<TYPE> &
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
 {
   this->iterator_->first ();
@@ -80,8 +80,10 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
 // Create an empty list.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_List_T (FUNCTOR* uf, FreeList* fl)
-  : Base(uf, fl)
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_List_T (FUNCTOR* uf,
+									  FreeList* fl,
+									  TIME_POLICY const & time_policy)
+  : Base_Timer_Queue (uf, fl, time_policy)
   , head_ (new ACE_Timer_Node_T<TYPE>)
   , id_counter_ (0)
 {

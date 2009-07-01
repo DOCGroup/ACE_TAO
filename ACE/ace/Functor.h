@@ -77,6 +77,23 @@ public:
   virtual int execute (void *arg = 0) = 0;
 };
 
+/**
+ * @class ACE_Noop_Command
+ *
+ * Implements a ACE_Command_Base with an empty execute() body.
+ */
+
+class ACE_Export ACE_Noop_Command
+  : public ACE_Command_Base
+{
+public:
+  /// Constructor
+  ACE_Noop_Command();
+
+  /// Implement the empty execute() member function
+  virtual int execute(void*);
+};
+
 ////////////////////////////////////////////////////////////
 // STL-style Functor Classes and Template Specializations //
 ////////////////////////////////////////////////////////////

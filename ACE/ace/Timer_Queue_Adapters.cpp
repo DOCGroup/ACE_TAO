@@ -263,7 +263,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
         {
           // Compute the remaining time, being careful not to sleep
           // for "negative" amounts of time.
-          ACE_Time_Value const tv_curr = this->timer_queue_->gettimeofday ();
+          ACE_Time_Value const tv_curr = this->timer_queue_->gettimeofday_abstract ();
           ACE_Time_Value const tv_earl = this->timer_queue_->earliest_time ();
 
           if (tv_earl > tv_curr)

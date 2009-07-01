@@ -9,7 +9,7 @@
 
 int Logging_Event_Handler_Ex::handle_input (ACE_HANDLE h) {
   time_of_last_log_record_ =
-    reactor ()->timer_queue ()->gettimeofday ();
+    reactor ()->timer_queue ()->gettimeofday_abstract ();
   return PARENT::handle_input (h);
 }
 

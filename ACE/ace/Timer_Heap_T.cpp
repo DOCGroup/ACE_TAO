@@ -102,9 +102,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
   FUNCTOR *upcall_functor,
   ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
   TIME_POLICY const & time_policy)
-  : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor,
-					      freelist,
-					      time_policy),
+  : Base_Time_Policy (upcall_functor,
+		      freelist,
+		      time_policy),
     max_size_ (size),
     cur_size_ (0),
     cur_limbo_ (0),
@@ -170,9 +170,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
   FUNCTOR *upcall_functor,
   ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
   TIME_POLICY const & time_policy)
-  : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor,
-					      freelist,
-					      time_policy),
+  : Base_Time_Policy (upcall_functor,
+		      freelist,
+		      time_policy),
     max_size_ (ACE_DEFAULT_TIMERS),
     cur_size_ (0),
     cur_limbo_ (0),
@@ -323,7 +323,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty (void) const
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &
+ACE_Timer_Queue_Iterator_T<TYPE> &
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
 {
   this->iterator_->first ();
