@@ -1,3 +1,13 @@
+Wed Jul  1 16:27:07 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        
+          Conditionalized generation of value factory registration
+          with a check to see if the eventtype in question has a 
+          concrete factory. Registration macro should be generated
+          only if this check returns true.
+
 Wed Jul  1 15:57:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
