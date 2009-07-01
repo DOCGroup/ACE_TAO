@@ -171,7 +171,7 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
 void
 NodeApplicationManager_Impl::register_plan(void)
 {
-  DANCE_TRACE(DLINFO "NodeApplicationManager_Impl::register_plan()");
+  DANCE_TRACE ("NodeApplicationManager_Impl::register_plan()");
 
   this->redirection_.registration_start (this->node_name_, this->plan_.UUID.in());
   DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_Impl::register_plan - registering objects...\n"));
