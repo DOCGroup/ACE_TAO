@@ -15,7 +15,7 @@ project(Display_RateGen_idl_gen) : componentidldefaults {
   }
 }
 
-project(Display_RateGen_idle_gen) : ciaoidldefaults {
+project(Display_RateGen_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Display_RateGen_idl_gen
   idlflags += -Wb,export_macro=RATEGEN_EXEC_Export \
@@ -56,7 +56,7 @@ project(Display_RateGen_stub) : ccm_stub {
 project(Display_RateGen_exec) : ciao_executor {
   libout = ../lib
   libpaths += ../lib
-  after   += Display_RateGen_idle_gen Display_RateGen_stub
+  after   += Display_RateGen_lem_gen Display_RateGen_stub
   sharedname = RateGen_exec
   libs += RateGen_stub Display_Base_stub
 

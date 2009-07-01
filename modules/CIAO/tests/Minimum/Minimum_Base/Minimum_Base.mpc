@@ -37,7 +37,6 @@ project(Minimum_Base_stub) : ccm_stub {
   }
 }
 
-
 project(Minimum_Base_skel) : ccm_stub, portableserver {
   after      +=  Minimum_Base_stub
   sharedname  = Minimum_Base_skel
