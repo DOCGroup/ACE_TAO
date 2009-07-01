@@ -1,3 +1,14 @@
+Wed Jul  1 16:10:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+        * docs/value_factory_registration.html:
+          
+          Updated to reflect removal of CIDL compiler.
+          
+        * MPC/config/ciao_server.mpb:
+        
+          Removed repeated occurrence ciao_client base project.
+
 Wed Jul  1 13:34:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
