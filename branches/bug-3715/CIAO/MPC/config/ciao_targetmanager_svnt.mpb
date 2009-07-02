@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_targetmanager_stub {
+  libs     += CIAO_TargetManager_svnt
+  after    += CIAO_TargetManager_svnt
+}

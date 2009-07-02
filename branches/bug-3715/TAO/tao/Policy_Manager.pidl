@@ -1,0 +1,32 @@
+/**
+ * @file Policy_Manager.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the CORBA::PolicyManager related
+ * classes.
+ *
+ */
+
+#ifndef TAO_CORBA_POLICYMANAGER_PIDL
+#define TAO_CORBA_POLICYMANAGER_PIDL
+
+#include "tao/Policy.pidl"
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  local interface PolicyManager
+  {
+    PolicyList get_policy_overrides (in PolicyTypeSeq ts);
+    void set_policy_overrides (
+             in PolicyList policies,
+             in SetOverrideType set_add)
+        raises (InvalidPolicies);
+  };
+};
+
+#pragma prefix ""
+
+#endif /* TAO_CORBA_POLICYMANAGER_PIDL */
