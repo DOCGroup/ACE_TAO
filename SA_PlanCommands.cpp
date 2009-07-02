@@ -193,7 +193,6 @@ bool SA_AddTaskCmd::execute_next (void)
     isInitial = true;
   }
 
-
   this->working_plan_->execute (this);
   this->num_tries_++;
 
@@ -281,6 +280,10 @@ TaskInstID SA_AddTaskCmd::get_task_inst (void)
 {
   return this->last_task_inst_;
 };
+
+TaskInstSet SA_AddTaskCmd::get_satisfied_tasks(void){
+  return this->task_insts_;
+}
 
 /// Check if the instance id used by the task of this command already exists.
 bool SA_AddTaskCmd::inst_exists (void)
@@ -539,7 +542,7 @@ std::string SA_RemoveOpenCondsCmd::get_log_text (void)
 };
 
 // Set the open conditions to remove.
-void SA_RemoveOpenCondsCmd::set_conds (const CondSet &conds)
+void SA_RemoveOpenCondsCmd::set_conds (const CondSet &conds, const TaskInstSet &tasks)
 {
   if (!this->conds_.empty ())
     throw "SA_POP::SA_RemoveOpenCondsCmd::set_conds (): called while current condition set is not empty.";
@@ -548,6 +551,7 @@ void SA_RemoveOpenCondsCmd::set_conds (const CondSet &conds)
     throw "SA_POP::SA_RemoveOpenCondsCmd::set_conds (): called before last execution undone.";
 
   this->conds_ = conds;
+  this->tasks_ = tasks;
 };
 
 

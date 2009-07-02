@@ -194,6 +194,8 @@ namespace SA_POP {
      * @return  True if this command is using an already existing instance id.
      */
     virtual bool inst_exists (void) = 0;
+
+	virtual TaskInstSet get_satisfied_tasks(void) = 0;
   };
 
   /**
@@ -269,7 +271,7 @@ namespace SA_POP {
     /**
      * @param conds  Set of open conditions to remove.
      */
-    virtual void set_conds (const CondSet &conds) = 0;
+    virtual void set_conds (const CondSet &conds, const TaskInstSet &tasks) = 0;
   };
 
   /**

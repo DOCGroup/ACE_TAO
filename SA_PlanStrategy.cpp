@@ -142,6 +142,7 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   if (this->open_conds_.empty ())
 	  return this->planner_->full_sched();
 
+
   // Increment step counter.
   this->cur_step_++;
 
@@ -165,7 +166,7 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
     this->cur_task_ = add_task_cmd->get_task ();
     this->cur_task_inst_ = add_task_cmd->get_task_inst ();
     // Remove open condition.
-    CommandID rmv_cond_cmd_id = this->rmv_open_cond (open_cond);
+	CommandID rmv_cond_cmd_id = this->rmv_open_cond (open_cond, add_task_cmd->get_satisfied_tasks());
 
     // Add preconditions of this task of we didn't reuse the task instance.
 	    CommandID add_preconds_cmd_id;
@@ -179,7 +180,6 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
     // Set decision point and reset sequence number for commands.
     this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
     this->cur_seq_num_ = 1;
-
 
 
     //Deal with threats
@@ -322,8 +322,7 @@ bool SA_PlanStrategy::get_next_threat_resolution(){
         resolve_threat_cmd->set_id (this->get_next_cmd_id ());
         resolve_threat_cmd->set_threat (threat);
         this->planner_->add_command (resolve_threat_cmd);
-        
-   //     if(this->planner_->try_next (resolve_threat_cmd->get_id ()))
+       
 
 
 
@@ -337,23 +336,6 @@ bool SA_PlanStrategy::get_next_threat_resolution(){
 
          this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
          this->planner_->undo_command (resolve_threat_cmd->get_id ());
-
-  //      resolve_threat_cmd =
- //         static_cast<ResolveCLThreatCmd *> (this->resolve_threat_cmd_->clone ());
-  //      resolve_threat_cmd->set_id (this->get_next_cmd_id ());
-  //      resolve_threat_cmd->set_threat (threat);
- //       this->planner_->add_command (resolve_threat_cmd);
-
-  //      resolve_threat_cmd->choices = 1;
-
-        //Second time will try reverse direection
- //       if(this->planner_->try_next (resolve_threat_cmd->get_id ()))
- //         if (this->get_next_threat_resolution ())
- //           return true;
-
-
-        // Undo threat resolution.
- //       this->planner_->undo_command (resolve_threat_cmd->get_id ());
 
 
 
@@ -433,7 +415,9 @@ void SA_PlanStrategy::undo (SA_AddOpenCondsCmd *cmd)
 void SA_PlanStrategy::execute (SA_RemoveOpenCondsCmd *cmd)
 {
   // Remove open conditions, keeping track of removed cond->inst mapping.
-  for (CondSet::iterator cond_iter = cmd->conds_.begin ();
+
+	/*
+	for (CondSet::iterator cond_iter = cmd->conds_.begin ();
     cond_iter != cmd->conds_.end (); cond_iter++)
   {
     for (OpenCondMap::iterator open_iter =
@@ -447,6 +431,33 @@ void SA_PlanStrategy::execute (SA_RemoveOpenCondsCmd *cmd)
       this->open_conds_.erase (prev_iter);
     }
   }
+  */
+
+	for(CondSet::iterator cond_it = cmd->conds_.begin(); cond_it != cmd->conds_.end();
+		cond_it++){
+			for(TaskInstSet::iterator task_it = cmd->tasks_.begin(); 
+			task_it != cmd->tasks_.end(); task_it++){
+
+			  for(OpenCondMap::iterator o_it = open_conds_.lower_bound(*cond_it);
+				  o_it != open_conds_.upper_bound(*cond_it); ){
+			
+				  if(o_it->second == *task_it){
+
+					OpenCondMap::iterator prev_iter = o_it;
+					o_it++;
+					cmd->removed_.insert (std::make_pair
+						(*cond_it, *task_it));
+					
+					open_conds_.erase(prev_iter);
+				  }else{
+					  o_it++;
+				  }
+				  
+			  }
+		}
+	}
+
+
 };
 
 // Undo a command to remove open conditions from planning.
@@ -535,6 +546,7 @@ AddTaskCmd *SA_PlanStrategy::satisfy_cond (Condition open_cond)
     iter != this->open_conds_.upper_bound (open_cond); iter++)
   {
     inst_set.insert (iter->second);
+	break;
   }
   add_task_cmd->set_causal_info (open_cond, inst_set);
 
@@ -563,14 +575,14 @@ CommandID SA_PlanStrategy::add_open_conds (const CondSet &open_conds,
 };
 
 // Remove open condition.
-CommandID SA_PlanStrategy::rmv_open_cond (Condition open_cond)
+CommandID SA_PlanStrategy::rmv_open_cond (Condition open_cond, TaskInstSet tasks)
 {
   // Get commmand to remove open conditions.
   RemoveOpenCondsCmd *rmv_conds_cmd =
     static_cast<RemoveOpenCondsCmd *> (this->rmv_conds_cmd_->clone ());
   CondSet conds;
   conds.insert (open_cond);
-  rmv_conds_cmd->set_conds (conds);
+  rmv_conds_cmd->set_conds (conds, tasks);
   CommandID cmd_id = this->get_next_cmd_id ();
   rmv_conds_cmd->set_id (cmd_id);
 

@@ -248,6 +248,8 @@ namespace SA_POP {
      */
     virtual bool inst_exists (void);
 
+	virtual TaskInstSet get_satisfied_tasks(void);
+
   protected:
     /// WorkingPlan object that this command works on.
     SA_WorkingPlan *working_plan_;
@@ -478,7 +480,9 @@ namespace SA_POP {
     /**
      * @param conds  Set of open conditions to remove.
      */
-    virtual void set_conds (const CondSet &conds);
+    virtual void set_conds (const CondSet &conds, const TaskInstSet &tasks);
+
+
 
   protected:
     /// PlanStrategy object that this command works on.
@@ -486,6 +490,8 @@ namespace SA_POP {
 
     /// Set of conditions to remove from open conditions.
     CondSet conds_;
+
+	TaskInstSet tasks_;
 
     /// Map from removed conditions to (removed) task instances.
     OpenCondMap removed_;
