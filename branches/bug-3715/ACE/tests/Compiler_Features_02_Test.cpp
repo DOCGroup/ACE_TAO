@@ -4,7 +4,7 @@
  * @file
  *
  * This program checks if the compiler / platform supports the
- * std::list container.  The motivation for this test was a discussion
+ * std::map container.  The motivation for this test was a discussion
  * on the development mailing list, and the documentation was captured
  * in:
  *
@@ -16,29 +16,47 @@
 
 // The first part of the test is to compile this line.  If the program
 // does not compile the platform is just too broken.
-#include <list>
+#include <map>
 
-ACE_RCSID(tests, Compiler_Features_01_Test, "$Id$")
+ACE_RCSID(tests, Compiler_Features_02_Test, "$Id$")
 
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT("Compiler_Features_01_Test"));
+  ACE_START_TEST (ACE_TEXT("Compiler_Features_02_Test"));
 
   // As usual, the exit status from the test is 0 on success, 1 on
   // failure
   int status = 0;
 
   // Create a simple list ...
-  typedef std::list<int> collection;
+  typedef std::map<int,int> collection;
   collection c;
 
   // ... insert some elements ...
-  c.push_back(5);
-  c.push_back(4);
-  c.push_back(3);
-  c.push_back(2);
-  c.push_back(1);
+  c[1] = 5;
+  c[2] = 4;
+  c[3] = 3;
+  c[4] = 2;
+  c.insert(collection::value_type(5, 1));
+
+  // ... inserting twice returns a pair ...
+  std::pair<collection::iterator,bool> r =
+    c.insert(collection::value_type(5, 0));
+
+  // ... the iterator points to the element ...
+  if (r.first->first != 5 || r.first->second != 1)
+    {
+      status = 1;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to find (5,1) already in map")));
+    }
+
+  // ... and the booleans says that it is already in the map ...
+  if (r.second == true)
+    {
+      status = 1;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected duplicate insert to fail")));
+    }
 
   // ... add all the numbers to validate that they are there ...
   int sum = 0;
@@ -46,7 +64,7 @@ run_main (int, ACE_TCHAR *[])
       i != end;
       ++i)
     {
-      sum += *i;
+      sum += i->second;
     }
 
   // ... remember Euler ...
