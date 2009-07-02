@@ -663,7 +663,7 @@ Compiler_Features_01_Test_LDADD = \
 
 endif !BUILD_ACE_FOR_TAO
 
-## Makefile.Compiler_Features_01_Test.am
+## Makefile.Compiler_Features_02_Test.am
 
 if !BUILD_ACE_FOR_TAO
 
@@ -678,6 +678,26 @@ Compiler_Features_02_Test_SOURCES = \
   Compiler_Features_02_Test.cpp \
 
 Compiler_Features_02_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_03_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_03_Test
+
+Compiler_Features_03_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_03_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_03_Test.cpp \
+
+Compiler_Features_03_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

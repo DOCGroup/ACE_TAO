@@ -61,6 +61,9 @@ Cached_Conn_Test: !ACE_FOR_TAO !LabVIEW_RT
 Capabilities_Test: !ACE_FOR_TAO
 Codecs_Test: !NO_CODECS !ACE_FOR_TAO
 Collection_Test
+Compiler_Features_01_Test
+Compiler_Features_02_Test
+Compiler_Features_03_Test
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
 DLL_Test: !Unicos !STATIC !KCC_Linux

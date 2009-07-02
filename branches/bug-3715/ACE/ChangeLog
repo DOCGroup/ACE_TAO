@@ -1,3 +1,14 @@
+Thu Jul  2 03:13:27 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_03_Test.cpp:
+          This time it is std::vector<>
+
+        * tests/run_test.lst:
+          I need to remember to add the tests to the list of automatically
+          executed ones.
+
 Thu Jul  2 03:07:40 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * tests/tests.mpc:
