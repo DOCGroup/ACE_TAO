@@ -15,7 +15,7 @@ project(Minimum_Base_Receiver_idl_gen) : componentidldefaults {
   }
 }
 
-project(Minimum_Base_Receiver_idle_gen) : ciaoidldefaults {
+project(Minimum_Base_Receiver_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Minimum_Base_Receiver_idl_gen
   idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
@@ -52,7 +52,7 @@ project(Minimum_Base_Receiver_stub) : ccm_stub {
 }
 
 project(Minimum_Base_Receiver_exec) : ciao_executor {
-  after   += Minimum_Base_Receiver_idle_gen Minimum_Base_Receiver_stub
+  after   += Minimum_Base_Receiver_lem_gen Minimum_Base_Receiver_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Minimum_Base_stub
   libpaths += ../Minimum_Base

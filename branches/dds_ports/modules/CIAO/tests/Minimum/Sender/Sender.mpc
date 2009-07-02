@@ -15,7 +15,7 @@ project(Minimum_Base_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(Minimum_Base_Sender_idle_gen) : ciaoidldefaults {
+project(Minimum_Base_Sender_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Minimum_Base_Sender_idl_gen
   idlflags += -Wb,export_macro=SENDER_EXEC_Export \
@@ -53,7 +53,7 @@ project(Minimum_Base_Sender_stub) : ccm_stub {
 }
 
 project(Minimum_Base_Sender_exec) : ciao_executor {
-  after   += Minimum_Base_Sender_idle_gen Minimum_Base_Sender_stub
+  after   += Minimum_Base_Sender_lem_gen Minimum_Base_Sender_stub
   sharedname = Sender_exec
   libs += Sender_stub Minimum_Base_stub
   libpaths += ../Minimum_Base

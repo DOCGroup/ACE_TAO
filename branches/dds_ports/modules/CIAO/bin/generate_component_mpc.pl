@@ -102,7 +102,7 @@ if (defined $opt_c) {
 if (! defined $opt_n) {
     $cidl_gen =
 '
-project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults {
+project('."$unique_prefix"."$com_name".'_lem_gen) : ciaoidldefaults {
   after += '."$unique_prefix"."$com_name".'_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export \
@@ -118,7 +118,7 @@ project('."$unique_prefix"."$com_name".'_idle_gen) : ciaoidldefaults {
     $component_def =
 '
 project('."$unique_prefix"."$com_name".'_exec) : ciao_executor {
-  after   += '."$unique_prefix"."$com_name".'_idle_gen '."$unique_prefix"."$com_name".'_stub
+  after   += '."$unique_prefix"."$com_name".'_lem_gen '."$unique_prefix"."$com_name".'_stub
   sharedname = '."$com_name".'_exec
   libs += '."$com_name".'_stub '."$stub_depend
   $lib_paths".'

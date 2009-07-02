@@ -14,7 +14,7 @@ project(TSEC_CheckPoint_idl_gen) : componentidldefaults {
   }
 }
 
-project(TSEC_CheckPoint_idle_gen) : ciaoidldefaults {
+project(TSEC_CheckPoint_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += TSEC_CheckPoint_idl_gen
   idlflags  +=  -SS -St \
@@ -72,7 +72,7 @@ project(TSEC_CheckPoint_svnt) : ciao_servant, event {
 
 
 project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt, ciao_session_container, naming {
-  after   += TSEC_CheckPoint_stub TSEC_CheckPoint_idle_gen
+  after   += TSEC_CheckPoint_stub TSEC_CheckPoint_lem_gen
   after   += ENW_skel ENW_stub
 
   includes  += ../interfaces

@@ -15,7 +15,7 @@ project(SimpleComponent_idl_gen) : componentidldefaults {
   }
 }
 
-project(SimpleComponent_idle_gen) : ciaoidldefaults {
+project(SimpleComponent_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += SimpleComponent_idl_gen
   idlflags  += -Wb,export_macro=SIMPLECOMPONENT_EXEC_Export \
@@ -51,7 +51,7 @@ project(SimpleComponent_stub) : ccm_stub {
 }
 
 project(SimpleComponent_exec) : ciao_executor {
-  after   += SimpleComponent_idle_gen SimpleComponent_stub
+  after   += SimpleComponent_lem_gen SimpleComponent_stub
   sharedname = SimpleComponent_exec
   libs += SimpleComponent_stub
 
