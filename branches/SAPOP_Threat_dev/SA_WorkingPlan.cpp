@@ -1153,7 +1153,6 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
  // cl.first = first_task_inst;
  // cl.second = second_task_inst;
 
- // this->causal_links_.insert(std::pair<Condition, CausalLink>(condition, cl));
   this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(first_task_inst, second_task_inst));
   this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(second_task_inst, first_task_inst));
 

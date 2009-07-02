@@ -325,7 +325,7 @@ namespace SA_POP {
      *
      * @return  ID of command passed to planner to remove open condition.
      */
-    virtual CommandID rmv_open_cond (Condition open_cond);
+    virtual CommandID rmv_open_cond (Condition open_cond, TaskInstSet tasks);
 
     /// Add open causal link threats.
     /**
