@@ -1,3 +1,11 @@
+Thu Jul  2 02:45:13 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/tests.mpc:
+        * tests/Makefile.am:
+        * tests/Compiler_Features_01_Test.cpp:
+          Add first test for "modern" C++ compiler features.  In this
+          case, I test if the std::list<> class works.
+
 Wed Jul  1 13:09:34 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-openbsd.h:
