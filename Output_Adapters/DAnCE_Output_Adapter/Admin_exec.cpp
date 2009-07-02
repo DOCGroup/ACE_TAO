@@ -19,10 +19,10 @@ namespace CIAO
           DAnCE_OA_Component_Context *context,
           const char * repoman_id,
           Logger &logger)
-          : Plan_Launcher_Base_Impl (dynamic_cast<CIAO::Container_i *>
-                                     (this->context_->_ciao_the_Container ())->the_ORB (),
-                                     0,
-                                     0),
+          : DAnCE::Plan_Launcher::Plan_Launcher_Base_Impl (dynamic_cast<CIAO::Container_i *>
+							   (this->context_->_ciao_the_Container ())->the_ORB (),
+							   0,
+							   0),
             context_ (context),
             repoman_id_ (CORBA::string_dup (repoman_id)),
             repoman_ (false),
@@ -97,7 +97,7 @@ namespace CIAO
                 }
 
             }
-          catch (Plan_Launcher_Base_Impl::Deployment_Failure &)
+          catch (DAnCE::Plan_Launcher::Plan_Launcher_Base_Impl::Deployment_Failure &)
             {
               std::string msg = "Exception caught::Unable to "
                                 "launch plan with UUID ";

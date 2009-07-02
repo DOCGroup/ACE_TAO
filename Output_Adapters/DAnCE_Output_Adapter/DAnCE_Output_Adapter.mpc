@@ -73,7 +73,7 @@ project(DAnCE_Output_Adapter_exec) : ciao_executor, dance_plan_generator, ciao_c
   after   += DAnCE_Output_Adapter_svnt RACE_utils
   sharedname = DAnCE_OA_Component_exec
   includes += $(RACE_ROOT)/utils
-  libs += Data_Base_Component_stub DAnCE_Utils TAO_RTCORBA DAnCE_ExecutionManager_stub
+  libs += Data_Base_Component_stub DAnCE_Utils TAO_RTCORBA DAnCE_ExecutionManager_stub CIAO_Context_Impl
   libs      +=  OpString_stub \
 				RACE_common_stub \
 				DAnCE_OA_Component_stub \

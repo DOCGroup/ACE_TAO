@@ -40,7 +40,7 @@ project(Effector_Base_stub) : ccm_stub, race_common {
   }
 }
 
-project(Effector_Base_svnt) : ciao_servant, race_common {
+project(Effector_Base_svnt) : ciao_servant, race_common, dance_deployment_stub {
   avoids += ace_for_tao
   after      +=  Effector_Base_stub
   sharedname  = Effector_Base_svnt
