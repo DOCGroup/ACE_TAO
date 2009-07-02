@@ -1,3 +1,12 @@
+Thu Jul  2 20:14:08 UTC 2009  William R. Otte <wotte@dre.vanderbilt.edu>
+
+        * Effectors/Base/Effector_Base.mpc:
+
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+
+	Compile fixes. 
+
 Mon Jun 15 17:51:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Conductor/Conductor.mpc:
@@ -9,8 +18,8 @@ Mon Jun 15 17:51:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * SA_POP/Tester/Tester_Component.mpc:
         * TM_Proxy/TM_Proxy.mpc:
 
-	  Linking fixes. 
-	
+          Linking fixes.
+
 Thu Jun 11 20:02:58 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * common/RACE_common.mpc:
