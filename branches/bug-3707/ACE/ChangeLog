@@ -1,3 +1,34 @@
+Thu Jul  2 02:55:09 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * ace/Abstract_Timer_Queue.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.inl:
+        * ace/Timer_Queue_T.cpp:
+          I wanted to use gettimeofday() for the pure virtual function and
+          some other name for the inline function used in the timer queue
+          internals.
+          This is the second and final pass to get that change in.  This
+          time, I renamed the internal function to gettimeofday_static(),
+          used the compiler (and grep) to find all uses.  Once that
+          compiled I renamed the virtual function from
+          gettimeofday_abstract() to the gettimeofday() function.
+          I know it is convoluted, but it gets the job done without me
+          having to think too much.
+
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Proactor.cpp:
+        * ace/Timer_Queue_Adapters.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * examples/APG/Timers/Timers.cpp:
+        * examples/APG/Timers/TimerDispatcher.cpp:
+        * examples/C++NPv2/Logging_Event_Handler_Ex.cpp:
+          Fixed users and tests to use the real name for gettimeofday() in
+          ACE_Abstract_Timer_Queue<>
+
 Wed Jul  1 02:09:44 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * ace/ace.mpc:

@@ -8,7 +8,7 @@ void Timer_Dispatcher::wait_for_event (void)
 
   while (1)
     {
-      ACE_Time_Value max_tv = timer_queue_->gettimeofday_abstract ();
+      ACE_Time_Value max_tv = timer_queue_->gettimeofday ();
 
       ACE_Time_Value *this_timeout =
         this->timer_queue_->calculate_timeout (&max_tv);
@@ -19,7 +19,7 @@ void Timer_Dispatcher::wait_for_event (void)
         {
           // Convert to absolute time.
           ACE_Time_Value next_timeout =
-            timer_queue_->gettimeofday_abstract ();
+            timer_queue_->gettimeofday ();
           next_timeout += *this_timeout;
           if (this->timer_.wait (&next_timeout) == -1 )
             this->timer_queue_->expire ();

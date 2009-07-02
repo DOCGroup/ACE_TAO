@@ -288,8 +288,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
   ACE_NEW (table_,
            BUCKET *[table_size]);
 
-  this->gettimeofday (ACE_OS::gettimeofday);
-
   for (size_t i = 0;
        i < table_size;
        ++i)
