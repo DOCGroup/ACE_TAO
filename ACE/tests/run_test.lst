@@ -67,6 +67,9 @@ Compiler_Features_03_Test
 Compiler_Features_04_Test
 Compiler_Features_05_Test
 Compiler_Features_06_Test
+Compiler_Features_07_Test
+Compiler_Features_08_Test
+Compiler_Features_09_Test
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
 DLL_Test: !Unicos !STATIC !KCC_Linux
