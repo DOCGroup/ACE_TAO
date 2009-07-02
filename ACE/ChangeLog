@@ -1,3 +1,22 @@
+Thu Jul  2 11:38:15 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/Compiler_Features_04_Test.cpp:
+          Test for std::set<>
+
+        * tests/Compiler_Features_05_Test.cpp:
+          Test for std::queue<>, this is a different sort of test because
+          std::queue<> is an adaptor, not a collection.  The default
+          collection is a std::deque<>, so we are testing default template
+          parameters at the same time.
+
+        * tests/Compiler_Features_06_Test.cpp:
+          Test for std::set<> with a different order function.
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+          Add the compilation / run parafernalia.
+
 Thu Jul  2 03:13:27 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * tests/Makefile.am:

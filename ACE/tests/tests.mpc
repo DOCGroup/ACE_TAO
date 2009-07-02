@@ -457,6 +457,27 @@ project(Compiler_Features_03_Test) : acetest {
   }
 }
 
+project(Compiler_Features_04_Test) : acetest {
+  exename = Compiler_Features_04_Test
+  Source_Files {
+    Compiler_Features_04_Test.cpp
+  }
+}
+
+project(Compiler_Features_05_Test) : acetest {
+  exename = Compiler_Features_05_Test
+  Source_Files {
+    Compiler_Features_05_Test.cpp
+  }
+}
+
+project(Compiler_Features_06_Test) : acetest {
+  exename = Compiler_Features_06_Test
+  Source_Files {
+    Compiler_Features_06_Test.cpp
+  }
+}
+
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test
