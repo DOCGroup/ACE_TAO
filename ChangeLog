@@ -1,3 +1,9 @@
+Thu Jul  2 16:36:11 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SA_WorkingPlan.cpp:
+
+	Resolve CL threat fails if it is asked to schedule something before 20.
+
 Thu Jul  2 05:38:02 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * PlanCommands.h:
@@ -7,7 +13,7 @@ Thu Jul  2 05:38:02 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SA_PlanStrategy.cpp:
         * SA_WorkingPlan.cpp:
 
-	Changed open condition resolution to resolve conditions for one task at a time.
+        Changed open condition resolution to resolve conditions for one task at a time.
 
 Wed Jul  1 22:13:25 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
