@@ -159,7 +159,7 @@ public:
    * implementations of the timer queue to use special high resolution
    * timers.
    */
-  virtual ACE_Time_Value gettimeofday_abstract (void) = 0;
+  virtual ACE_Time_Value gettimeofday (void) = 0;
 
   /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.

@@ -40,7 +40,7 @@ namespace
   inline void WAIT_FOR_NEXT_EVENT (ACE_Timer_Queue &timer_queue)
   {
     ACE_Time_Value const earliest_time = timer_queue.earliest_time ();
-    ACE_Time_Value const time_of_day =   timer_queue.gettimeofday_abstract ();
+    ACE_Time_Value const time_of_day =   timer_queue.gettimeofday ();
     if (earliest_time > time_of_day)
       {
         ACE_OS::sleep (earliest_time - time_of_day);
@@ -155,7 +155,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
       first_timer_id =
         timer_queue.schedule (handler,
                               one_second_timeout,
-                              ACE_Time_Value (1) + timer_queue.gettimeofday_abstract (),
+                              ACE_Time_Value (1) + timer_queue.gettimeofday (),
                               ACE_Time_Value (1));
       ACE_ASSERT (first_timer_id != -1);
     }
@@ -164,7 +164,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
       first_timer_id =
         timer_queue.schedule (handler,
                               one_second_timeout,
-                              ACE_Time_Value (1) + timer_queue.gettimeofday_abstract ());
+                              ACE_Time_Value (1) + timer_queue.gettimeofday ());
       ACE_ASSERT (first_timer_id != -1);
     }
 
@@ -173,7 +173,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
       second_timer_id =
         timer_queue.schedule (handler,
                               two_second_timeout,
-                              ACE_Time_Value (2) + timer_queue.gettimeofday_abstract (),
+                              ACE_Time_Value (2) + timer_queue.gettimeofday (),
                               ACE_Time_Value (2));
       ACE_ASSERT (second_timer_id != -1);
     }
@@ -285,14 +285,14 @@ expire (ACE_Timer_Queue &timer_queue,
   long timer_id =
     timer_queue.schedule (handler,
                           one_second_timeout,
-                          ACE_Time_Value (1) + timer_queue.gettimeofday_abstract (),
+                          ACE_Time_Value (1) + timer_queue.gettimeofday (),
                           ACE_Time_Value (1));
   ACE_ASSERT (timer_id != -1);
 
   result =
     timer_queue.schedule (handler,
                           two_second_timeout,
-                          ACE_Time_Value (2) + timer_queue.gettimeofday_abstract ());
+                          ACE_Time_Value (2) + timer_queue.gettimeofday ());
   ACE_ASSERT (result != -1);
 
   events += 4;
@@ -421,7 +421,7 @@ simple (ACE_Timer_Queue &timer_queue)
     timer_id =
       timer_queue.schedule (handler,
                             one_second_timeout,
-                            ACE_Time_Value (1) + timer_queue.gettimeofday_abstract (),
+                            ACE_Time_Value (1) + timer_queue.gettimeofday (),
                             ACE_Time_Value (1));
     ACE_ASSERT (timer_id != -1);
 
@@ -439,7 +439,7 @@ simple (ACE_Timer_Queue &timer_queue)
     timer_id =
       timer_queue.schedule (handler,
                             one_second_timeout,
-                            ACE_Time_Value (1) + timer_queue.gettimeofday_abstract (),
+                            ACE_Time_Value (1) + timer_queue.gettimeofday (),
                             ACE_Time_Value (1));
     ACE_ASSERT (timer_id != -1);
 

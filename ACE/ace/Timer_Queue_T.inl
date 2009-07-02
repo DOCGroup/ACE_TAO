@@ -26,7 +26,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_I
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (void)
 {
   if (!this->is_empty ())
-    return this->expire (this->gettimeofday () + timer_skew_);
+    return this->expire (this->gettimeofday_static () + timer_skew_);
   else
     return 0;
 }
@@ -79,9 +79,9 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::postinvoke (ACE_Timer_N
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE ACE_Time_Value
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday (void)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday_static (void)
 {
-  // Invoke gettimeofday via pointer to function.
+  // Get the current time according to the time policy.
   return this->time_policy_ ();
 }
 

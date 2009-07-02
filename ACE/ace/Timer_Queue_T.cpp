@@ -62,9 +62,9 @@ ACE_Timer_Queue_Upcall_Base<TYPE, FUNCTOR>::~ACE_Timer_Queue_Upcall_Base ()
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Time_Value
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday_abstract()
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday()
 {
-  return this->gettimeofday();
+  return this->gettimeofday_static();
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Time_Value *
@@ -78,7 +78,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
     return max_wait_time;
   else
     {
-      ACE_Time_Value const cur_time = this->gettimeofday ();
+      ACE_Time_Value const cur_time = this->gettimeofday_static ();
 
       if (this->earliest_time () > cur_time)
         {
@@ -123,7 +123,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
     }
   else
     {
-      ACE_Time_Value cur_time = this->gettimeofday ();
+      ACE_Time_Value cur_time = this->gettimeofday_static ();
 
       if (this->earliest_time () > cur_time)
         {
@@ -150,7 +150,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Time_Value
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::current_time()
 {
-  ACE_Time_Value tv = this->gettimeofday();
+  ACE_Time_Value tv = this->gettimeofday_static ();
   tv += this->timer_skew();
   return tv;
 }
@@ -289,7 +289,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire_single (
     return 0;
 
   // Get the current time
-  ACE_Time_Value cur_time (this->gettimeofday () +
+  ACE_Time_Value cur_time (this->gettimeofday_static () +
                            this->timer_skew ());
 
   // Look for a node in the timer queue whose timer <= the present

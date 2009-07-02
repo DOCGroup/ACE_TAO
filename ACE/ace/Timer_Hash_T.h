@@ -242,7 +242,7 @@ public:
 
   /**
    * Run the <functor> for all timers whose values are <=
-   * <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
+   * gettimeofday.  Also accounts for <timer_skew>.  Returns
    * the number of timers canceled.
    */
   virtual int expire (void);

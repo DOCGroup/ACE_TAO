@@ -100,7 +100,7 @@ test_functionality (ACE_Timer_Queue *tq)
   long timer_id2;
 
   // Do a test on earliest_time.
-  ACE_Time_Value earliest_time = tq->gettimeofday_abstract ();
+  ACE_Time_Value earliest_time = tq->gettimeofday ();
 
   const void *timer_act = 0;
   ACE_NEW (timer_act, int (1));
@@ -109,7 +109,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_OS::sleep (ACE_Time_Value (0, 10));
 
   ACE_NEW (timer_act, int (1));
-  timer_id2 = tq->schedule (&eh, timer_act, tq->gettimeofday_abstract ());
+  timer_id2 = tq->schedule (&eh, timer_act, tq->gettimeofday ());
 
   long result = tq->earliest_time () == earliest_time;
   ACE_ASSERT (result != 0);
@@ -125,21 +125,21 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_NEW (timer_act, int (1));
   timer_id = tq->schedule (&eh,
                            timer_act,
-                           tq->gettimeofday_abstract ());
+                           tq->gettimeofday ());
   ACE_ASSERT (timer_id != -1);
   ACE_ASSERT (tq->is_empty () == 0); //==
 
   ACE_NEW (timer_act, int (42));
   result = tq->schedule (&eh,
                          timer_act,
-                         tq->gettimeofday_abstract ());
+                         tq->gettimeofday ());
   ACE_ASSERT (result != -1);
   ACE_ASSERT (tq->is_empty () == 0); //==
 
   ACE_NEW (timer_act, int (42));
   result = tq->schedule (&eh,
                          timer_act,
-                         tq->gettimeofday_abstract ());
+                         tq->gettimeofday ());
   ACE_ASSERT (result != -1);
   ACE_ASSERT (tq->is_empty () == 0); //==
 
@@ -158,21 +158,21 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_NEW (timer_act, int (007));
   result = tq->schedule (&eh,
                          timer_act,
-                         tq->gettimeofday_abstract ());
+                         tq->gettimeofday ());
   ACE_ASSERT (result != -1);
 
   const void *timer_act1 = 0;
   ACE_NEW (timer_act1, int (42));
   result = tq->schedule (&eh,
                          timer_act1,
-                         tq->gettimeofday_abstract () + ACE_Time_Value (100));
+                         tq->gettimeofday () + ACE_Time_Value (100));
   ACE_ASSERT (result != -1);
 
   const void *timer_act2 = 0;
   ACE_NEW (timer_act2, int (42));
   result = tq->schedule (&eh,
                          timer_act2,
-                         tq->gettimeofday_abstract () + ACE_Time_Value (100));
+                         tq->gettimeofday () + ACE_Time_Value (100));
   ACE_ASSERT (result != -1);
 
   // The following will trigger a call to <handle_close> when it
@@ -194,13 +194,13 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_NEW (timer_act, int (4));
   timer_id = tq->schedule (&eh,
                            timer_act,
-                           tq->gettimeofday_abstract ());
+                           tq->gettimeofday ());
   ACE_ASSERT (timer_id != -1);
 
   ACE_NEW (timer_act, int (4));
   timer_id2 = tq->schedule (&eh,
                             timer_act,
-                            tq->gettimeofday_abstract ());
+                            tq->gettimeofday ());
   ACE_ASSERT (timer_id2 != -1);
 
   // The following method will trigger a call to <handle_close>.
@@ -226,7 +226,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_NEW (timer_act, int (007));
   result = tq->schedule (&eh,
                          timer_act,
-                         tq->gettimeofday_abstract ());
+                         tq->gettimeofday ());
   ACE_ASSERT (result != -1);
 
   result = tq->expire ();
@@ -236,13 +236,13 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_NEW (timer_act, int (6));
   timer_id = tq->schedule (&eh,
                            timer_act,
-                           tq->gettimeofday_abstract ());
+                           tq->gettimeofday ());
   ACE_ASSERT (timer_id != -1);
 
   ACE_NEW (timer_act, int (7));
   timer_id2 = tq->schedule (&eh,
                             timer_act,
-                            tq->gettimeofday_abstract ());
+                            tq->gettimeofday ());
   ACE_ASSERT (timer_id2 != -1);
 
   ACE_ASSERT (eh.close_count_ == 3);
@@ -282,7 +282,7 @@ test_performance (ACE_Timer_Queue *tq,
   // Set up a bunch of times TIMER_DISTANCE ms apart.
   for (i = 0; i < max_iterations; ++i)
     {
-      times[i] = (tq->gettimeofday_abstract()
+      times[i] = (tq->gettimeofday()
 		  + ACE_Time_Value(0, i * TIMER_DISTANCE * 1000));
     }
 

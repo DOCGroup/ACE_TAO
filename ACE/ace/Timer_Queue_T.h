@@ -123,13 +123,13 @@ public:
   /**
    * Implement the gettimeofday() virtual function
    */
-  virtual ACE_Time_Value gettimeofday_abstract (void);
+  virtual ACE_Time_Value gettimeofday (void);
   //@}
 
-  /// Implement a non-abstract version of gettimeofday(), through this
-  /// member function the internals of the class can make calls to
-  /// ACE_OS::gettimeofday() with zero overhead.
-  ACE_Time_Value gettimeofday();
+  /// Implement an inlined, non-abstract version of gettimeofday(),
+  /// through this  member function the internals of the class can
+  /// make calls to  ACE_OS::gettimeofday() with zero overhead.
+  ACE_Time_Value gettimeofday_static();
 
   /// Allows applications to control how the timer queue gets the time
   /// of day.

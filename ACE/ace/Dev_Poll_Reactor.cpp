@@ -1898,7 +1898,7 @@ ACE_Dev_Poll_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
     return this->timer_queue_->schedule
       (event_handler,
        arg,
-       this->timer_queue_->gettimeofday_abstract () + delay,
+       this->timer_queue_->gettimeofday () + delay,
        interval);
 
   errno = ESHUTDOWN;
