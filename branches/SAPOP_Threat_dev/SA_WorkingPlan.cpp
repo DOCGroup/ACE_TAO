@@ -1138,7 +1138,7 @@ void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
 bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 {
 
-  std::ostringstream debug_text;
+	std::ostringstream debug_text;
  
 
 
@@ -1146,51 +1146,14 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 
 	TaskInstID first_task_inst = cmd->first;
 	TaskInstID second_task_inst = cmd->second;
-  Condition condition = cmd->condition;
+	Condition condition = cmd->condition;
 
- // CausalLink cl;
- // cl.cond = condition;
- // cl.first = first_task_inst;
- // cl.second = second_task_inst;
 
   this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(first_task_inst, second_task_inst));
   this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(second_task_inst, first_task_inst));
 
-/*
-
-
-  std::map<TaskInstID, bool> un_visited_map;
-  std::map<TaskInstID, bool> visited_map;
-  std::stack<TaskInstID> s;
-
-  for(InstToTaskMap::iterator it = this->task_insts_.begin(); it != this->task_insts_.end(); it++){
-    un_visited_map.insert(std::pair<TaskInstID, bool>(it->first, true));
-  }
-
-  int total_num = un_visited_map.size();
-
-  while(!(s.size()== total_num)){
-
-    std::map<TaskInstID, bool>::iterator some_it = un_visited_map.begin();
-    TaskInstID next = some_it->first;
-    dfs_aux(next, s, visited_map, un_visited_map);
-
-  }
-
-  visited_map.clear();
-
-  while(!s.empty()){
-    TaskInstID next = s.top();
-    s.pop();
-
-    if(!dfs_aux2(next, visited_map))
-      return false;
-  }
-
-  */
-
   cmd->got_to_change_precedences = true;
-  if(is_cycle_in_ordering()){
+  if(is_cycle_in_ordering() ){
 
     debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule task inst"<<cmd->first<<" before task inst"<<cmd->second<<std::endl;
     SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
@@ -1201,9 +1164,16 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
     return false;
   }
 
- // this->init_prec_insert(this->associate_cmd->task_inst_,this->associate_cmd);
+  if(task_insts_.find(cmd->second)->second == 20){
 
- // this->after_orderings
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule before initial task"<<std::endl;
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.clear();
+
+    cmd->got_to_change_precedences = false;
+	return false;
+  }
+
 
   PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
   PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
@@ -1220,39 +1190,13 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   TaskInstSet *simul_B = &simuls->find(cmd->second)->second;
   TaskInstSet *unranked_B = &unrankeds->find(cmd->second)->second;
 
-  /*
-  cmd->before_A_old = *before_A;
-  cmd->after_A_old = *after_A;
-  cmd->simul_A_old = *simul_A;
-  cmd->unsched_A_old = *unranked_A;
 
-  cmd->before_B_old = *before_B;
-  cmd->after_B_old = *after_B;
-  cmd->simul_B_old = *simul_B;
-  cmd->unsched_B_old = *unranked_B;
-*/
   cmd->befores = *befores;
   cmd->afters = *afters;
   cmd->simuls = *simuls;
   cmd->unrankeds = *unrankeds;
 
   TaskInstSet tmp;
-
-  /*
-  for(TaskInstSet::iterator it = unranked_A->begin(); it != unranked_A->end(); it++){
-    if(unranked_B->find(*it)!=unranked_B->end()){
-      tmp.insert(*it);
-    }
-  }
-
-
-  unranked_A->clear();
-  unranked_B->clear();
-  for(TaskInstSet::iterator it = tmp.begin(); it != tmp.end(); it++){
-    unranked_A->insert(*it);
-    unranked_B->insert(*it);
-  }
-  */
 
   before_B->insert(cmd->first);
   unranked_B->erase(cmd->first);
@@ -1280,12 +1224,6 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
   debug_text.clear();
   
-
-
-
-
-
-
 
 
 
@@ -1343,88 +1281,6 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
     debug_text.clear();
 
   return true;
-
-/*
-
-	TimeWindow first_start,second_start;
-	TimeWindow first_end,second_end;
-	first_start = this->get_start_window(first_task_inst);
-	first_end = this->get_end_window(first_task_inst);
-	second_start = this->get_start_window(second_task_inst);
-	second_end = this->get_end_window(second_task_inst);
-	
-	if(second_start.second!= NULL_TIME && (first_end.second==NULL_TIME || second_start.second<first_end.second))
-	{
-  fstream file_op("outfile.txt",ios::app);
-  file_op<<"place 1"<<std::endl;
-  file_op.close();
-
-
-		// There is a need to adjust the max times
-		cmd->adj_max_times_cmd_ = static_cast<SA_AdjustMaxTimesCmd *> (this->get_AdjustMaxTimesCmd());
-		cmd->adj_max_times_cmd_->set_times(first_task_inst,second_start.second-this->get_duration(first_task_inst),second_start.second);
-		if(!this->execute(cmd->adj_max_times_cmd_))
-			return false;
-	}
-	else cmd->adj_max_times_cmd_=NULL;
-	if(first_end.first!= NULL_TIME && second_start.first<first_end.first)
-	{
-  fstream file_op("outfile.txt",ios::app);
-  file_op<<"place 2"<<std::endl;
-  file_op.close();
-
-
-		// There is a need to adjust the min times
-		cmd->adj_min_times_cmd_ = static_cast<SA_AdjustMinTimesCmd *> (this->get_AdjustMinTimesCmd());
-		cmd->adj_min_times_cmd_->set_times(second_task_inst,first_end.first,first_end.first+this->get_duration(second_task_inst));
-		if(!this->execute(cmd->adj_min_times_cmd_))
-			return false;
-	}
-	else cmd->adj_min_times_cmd_=NULL;
-	
-	PrecedenceSet *before = &this->precedence_graph_.find(BEFORE)->second;
-	PrecedenceSet *after = &this->precedence_graph_.find(AFTER)->second;
-	PrecedenceSet *simul = &this->precedence_graph_.find(SIMUL)->second;
-	PrecedenceSet *unranked = &this->precedence_graph_.find(UNRANKED)->second;
-	
-	before->find(second_task_inst)->second.insert(first_task_inst);
-	after->find(first_task_inst)->second.insert(second_task_inst);
-	unranked->find(first_task_inst)->second.erase(unranked->find(first_task_inst)->second.find(second_task_inst));
-	unranked->find(second_task_inst)->second.erase(unranked->find(second_task_inst)->second.find(first_task_inst));
-	
-	TaskInstSet after_second = this->after_orderings(second_task_inst);
-	for(TaskInstSet::iterator iter=simul->find(second_task_inst)->second.begin();iter!=simul->find(second_task_inst)->second.end();iter++)
-		after_second.insert(*iter);
-	TaskInstSet before_first = this->before_orderings(first_task_inst);
-	for(TaskInstSet::iterator iter=simul->find(first_task_inst)->second.begin();iter!=simul->find(first_task_inst)->second.end();iter++)
-		before_first.insert(*iter);
-	// All the task instances after and simultaneous to the second task instance should
-	// be after all the task instances before and simultaneous to the first task instance
-	for(TaskInstSet::iterator iter=after_second.begin();iter!=after_second.end();iter++)
-	{
-		if(before->find(*iter)->second.find(first_task_inst)==before->find(*iter)->second.end())
-		{
-			SA_ResolveCLThreatCmd *temp = static_cast<SA_ResolveCLThreatCmd *> (this->get_ResolveCLThreatCmd());
-			temp->set_task_insts(first_task_inst,*iter);
-			cmd->cmds_.push_back(temp);
-			if(!this->execute(temp)) return false;
-		}
-	}
-	// All the task instances before and simultaneous to the first task instance should
-	// be before all the task instances after and simultaneous to the second task instance
-	for(TaskInstSet::iterator iter=before_first.begin();iter!=before_first.end();iter++)
-	{
-		if(after->find(*iter)->second.find(second_task_inst)==after->find(*iter)->second.end())
-		{
-			SA_ResolveCLThreatCmd *temp = static_cast<SA_ResolveCLThreatCmd *> (this->get_ResolveCLThreatCmd());
-			temp->set_task_insts(*iter,second_task_inst);
-			cmd->cmds_.push_back(temp);
-			if(!this->execute(temp)) return false;
-		}
-	}
-	return true;
-
-  */
 };
 
 void SA_WorkingPlan::dfs_aux(TaskInstID current, std::stack<TaskInstID>& s, std::map<TaskInstID, bool>& visited, std::map<TaskInstID, bool>& unvisited){
