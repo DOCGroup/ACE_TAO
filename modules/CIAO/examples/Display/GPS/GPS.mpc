@@ -15,7 +15,7 @@ project(Display_GPS_idl_gen) : componentidldefaults {
   }
 }
 
-project(Display_GPS_idle_gen) : ciaoidldefaults {
+project(Display_GPS_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Display_GPS_idl_gen
   idlflags += -Wb,export_macro=GPS_EXEC_Export \
@@ -54,7 +54,7 @@ project(Display_GPS_stub) : ccm_stub {
 }
 
 project(Display_GPS_exec) : ciao_executor {
-  after   += Display_GPS_idle_gen Display_GPS_stub
+  after   += Display_GPS_lem_gen Display_GPS_stub
   sharedname = GPS_exec
   libs += GPS_stub Display_Base_stub
   libout = ../lib

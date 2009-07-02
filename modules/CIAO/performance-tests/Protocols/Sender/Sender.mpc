@@ -15,7 +15,7 @@ project(Protocols_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(Protocols_Sender_idle_gen) : ciaoidldefaults {
+project(Protocols_Sender_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Protocols_Sender_idl_gen
   idlflags += -Wb,export_macro=SENDER_EXEC_Export \
@@ -53,7 +53,7 @@ project(Protocols_Sender_stub) : ccm_stub {
 }
 
 project(Protocols_Sender_exec) : ciao_executor, rtcorba {
-  after   += Protocols_Sender_idle_gen Protocols_Sender_stub
+  after   += Protocols_Sender_lem_gen Protocols_Sender_stub
   sharedname = Protocols_Sender_exec
   libs += Protocols_Sender_stub \
           Protocols_stub

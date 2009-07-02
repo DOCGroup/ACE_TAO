@@ -15,7 +15,7 @@ project(Swapping_Hello_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(Swapping_Hello_Sender_idle_gen) : ciaoidldefaults {
+project(Swapping_Hello_Sender_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Swapping_Hello_Sender_idl_gen
   idlflags += -Wb,export_macro=SENDER_SVNT_Export \
@@ -58,7 +58,7 @@ project(Swapping_Hello_Sender_svnt) : ciao_servant {
   libpaths += ../Hello_Base
   after += Swapping_Hello_Base_skel \
            Swapping_Hello_Sender_stub \
-           Swapping_Hello_Sender_idle_gen
+           Swapping_Hello_Sender_lem_gen
   sharedname  = Swapping_Sender_svnt
   libs    += Swapping_Sender_stub \
              Swapping_Hello_Base_skel \

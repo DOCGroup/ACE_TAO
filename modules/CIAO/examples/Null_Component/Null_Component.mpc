@@ -15,7 +15,7 @@ project(Null_Component_idl_gen) : componentidldefaults {
   }
 }
 
-project(Null_Component_idle_gen) : ciaoidldefaults {
+project(Null_Component_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Null_Component_idl_gen
   idlflags += -Wb,export_macro=NULL_COMPONENT_EXEC_Export \
@@ -52,7 +52,7 @@ project(Null_Component_stub) : ccm_stub {
 }
 
 project(Null_Component_exec) : ciao_executor {
-  after   += Null_Component_idle_gen Null_Component_stub
+  after   += Null_Component_lem_gen Null_Component_stub
   sharedname = Null_Component_exec
   libs += Null_Component_stub Null_Interface_stub
 
