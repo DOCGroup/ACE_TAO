@@ -12,7 +12,7 @@ be_template_interface::be_template_interface (
       long nih,
       AST_Interface **ih_flat,
       long nih_flat,
-      const IDL_GlobalData::IFACE_TEMPLATE_PARAMS &template_params)
+      const PARAMLIST_INFO &template_params)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_interface,

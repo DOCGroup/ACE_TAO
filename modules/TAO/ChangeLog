@@ -1,3 +1,21 @@
+Fri Jul  3 23:26:45 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/idl_global.h:
+
+          - Moved template parameter info type/name pair data
+            structures to class AST_Interface.
+
+          - Added semantic action to capture a single template
+            parameter from an IDL3+ template interface.
+
 Fri Jul  3 21:00:23 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/fe_home_header.h:

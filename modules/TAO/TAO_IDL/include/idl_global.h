@@ -614,7 +614,7 @@ public:
   const char *recursion_start (void) const;
   void recursion_start (const char *val);
   // Accessors for the member.
-  
+
   UTL_String *utl_string_factory (const char *str);
   // Utility function to create UTL_String classes on the FE heap.
 
@@ -624,19 +624,9 @@ public:
 
   bool validate_orb_include (UTL_String *);
   // Check if included file is in TAO specific include dirs.
-  
+
   void original_local_name (Identifier *local_name);
   // Strips _cxx_ prefix for use in port names.
-  
-  struct iface_template_param
-  {
-    AST_Decl::NodeType type;
-    ACE_CString name;
-  };
-  
-  typedef
-  ACE_Unbounded_Queue<iface_template_param>
-    IFACE_TEMPLATE_PARAMS;
 
 private:
   // Data
