@@ -1,3 +1,13 @@
+Fri Jul  3 03:03:56 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_10_Test.cpp:
+          Add new test for exceptions.  Verify that <stdexcept> is there,
+          that we can raise exceptions, and that object destruction during
+          exceptions is sound.
+
 Thu Jul  2 12:05:03 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * tests/Compiler_Features_07_Test.cpp:
