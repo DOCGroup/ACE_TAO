@@ -1,3 +1,19 @@
+Fri Jul  3 12:47:41 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/Compiler_Features_11_Test.cpp:
+          Test for standard string streams
+
+        * tests/Compiler_Features_12_Test.cpp:
+          Test for template template parameters
+
+        * tests/Compiler_Features_13_Test.cpp:
+          Test for cast operators
+
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+          The usual accruements that go with the tests.
+
 Fri Jul  3 03:03:56 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * tests/run_test.lst:
