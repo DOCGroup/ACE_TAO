@@ -332,7 +332,7 @@ start : definitions ;
 
 definitions
         : definitions definition
-        | /* empty */
+        | /* EMPTY */
         ;
 
 definition
@@ -390,7 +390,6 @@ definition
         {
 //      | interface_def
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
-ACE_DEBUG ((LM_DEBUG, "interface_def\n"));
         }
           ';'
         {
@@ -401,7 +400,6 @@ ACE_DEBUG ((LM_DEBUG, "interface_def\n"));
         {
 //      | template_interface_def
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
-ACE_DEBUG ((LM_DEBUG, "template_interface_def\n"));
         }
           ';'
         {
@@ -711,20 +709,17 @@ inheritance_spec
         {
 // inheritance_spec : ':' opt_truncatable
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
-ACE_DEBUG ((LM_DEBUG, ": opt_truncatable\n"));
         }
           at_least_one_scoped_name
         {
 //      at_least_one_scoped_name
           $4->truncatable ($2);
           $$ = $4;
-ACE_DEBUG ((LM_DEBUG, "at_least_one_scoped_name\n"));
         }
         | /* EMPTY */
         {
 /*      |  EMPTY */
           $$ = 0;
-ACE_DEBUG ((LM_DEBUG, "EMPTY\n"));
         }
         ;
 
@@ -5810,7 +5805,6 @@ type_classifier
         {
 // type_classifier : IDL_TYPENAME
           $<ntval>$ = AST_Decl::NT_type;
-ACE_DEBUG ((LM_DEBUG, "typename token\n"));
         }
         | IDL_STRUCT
         {
@@ -5861,7 +5855,6 @@ template_interface_def
         : template_interface_header
         {
 // template_interface_def : template_interface_header
-ACE_DEBUG ((LM_DEBUG, "template_interface_header\n"));
         }
         '{'
         {
@@ -5870,7 +5863,7 @@ ACE_DEBUG ((LM_DEBUG, "template_interface_header\n"));
         }
         exports
         {
-//      exports
+//      template_exports
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
         }
         '}'
@@ -5889,12 +5882,10 @@ template_interface_header
         : template_interface_decl
         {
 // template_interface_header : template_interface_decl
-ACE_DEBUG ((LM_DEBUG, "template_interface_decl\n"));
         }
         template_inheritance_spec
         {
 //        template_inheritance_spec
-ACE_DEBUG ((LM_DEBUG, "template_inheritance_spec\n"));
         }
         ;
 
@@ -5902,12 +5893,10 @@ template_interface_decl
         : interface_decl
         {
 // template_interface_decl : interface_decl
-ACE_DEBUG ((LM_DEBUG, "interface_decl\n"));
         }
         at_least_one_template_param
         {
 //        at_least_one_template_param
-ACE_DEBUG ((LM_DEBUG, "at_least_one_template_param\n"));
         }
         ;
 
@@ -5915,7 +5904,6 @@ at_least_one_template_param
         : '<' template_param template_params '>'
         {
 // at_least_one_template_param : '<' template_param template_params '>'
-ACE_DEBUG ((LM_DEBUG, "'<' template_param template_params '>'\n"));
         }
         ;
 
@@ -5923,7 +5911,6 @@ template_params
         : template_params ',' template_param
         {
 // template_params : template_params ',' template_param
-ACE_DEBUG ((LM_DEBUG, "template_params\n"));
         }
         | /* EMPTY */
         {
@@ -5935,7 +5922,6 @@ template_param
         : type_classifier IDENTIFIER
         {
 // template_param : type_classifier IDENTIFIER
-ACE_DEBUG ((LM_DEBUG, "template_param\n"));
         }
         ;
 
@@ -5999,7 +5985,6 @@ template_param_ref
 // template_param_ref : IDENTIFIER
         }
         ;
-
 
 %%
 /* programs */
