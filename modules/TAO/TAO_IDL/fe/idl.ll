@@ -84,6 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_event_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
+#include "fe_template_interface_header.h"
 #include "global_extern.h"
 #include "fe_private.h"
 #include "fe_extern.h"

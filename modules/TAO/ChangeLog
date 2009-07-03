@@ -1,3 +1,10 @@
+Fri Jul  3 23:40:25 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        
+          Added missing include.
+
 Fri Jul  3 23:26:45 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_template_interface.cpp:
