@@ -26,7 +26,7 @@ namespace CIAO
 
     IdRef::
     IdRef ()
-    : 
+      : XSCRT::Type (),
     regulator__ ()
     {
     }
