@@ -1,3 +1,49 @@
+Fri Jul  3 21:00:23 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_home_header.h:
+        * TAO_IDL/include/fe_event_header.h:
+        * TAO_IDL/include/fe_obv_header.h:
+        * TAO_IDL/include/fe_component_header.h:
+        * TAO_IDL/fe/fe_event_header.cpp:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+        * TAO_IDL/fe/fe_home_header.cpp:
+        * TAO_IDL/fe/fe_component_header.cpp:
+
+          New files, containing individual classes split
+          off from fe_interface_header.{h,cpp}. Also
+          added cleanup of pointer arrays allocated
+          while processing inherited and supported types.
+
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/include/ast_template_interface.h:
+
+          New files, defining front- and back-end nodes
+          for the template interface IDL3+ construct.
+
+        * TAO_IDL/include/idl_global.h:
+
+          Defined container types for single and multiple
+          type/name pairs used to desccribe the template
+          parameters of an IDL3+ template interface.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/include/fe_interface_header.h:
+
+          Minor/cosmetic changes.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Added #includes of the new fe_*_header.h files.
+
 Fri Jul  3 15:18:29 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

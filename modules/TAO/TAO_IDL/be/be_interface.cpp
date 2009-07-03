@@ -158,7 +158,6 @@ be_interface::set_strategy (be_interface_strategy *new_strategy)
   return old;
 }
 
-
 const char *
 be_interface::local_name (void) const
 {
