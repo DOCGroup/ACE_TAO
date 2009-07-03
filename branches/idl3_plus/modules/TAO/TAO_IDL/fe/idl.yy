@@ -87,6 +87,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
+#include "ast_template_interface.h"
 #include "ast_constant.h"
 #include "ast_union.h"
 #include "ast_union_fwd.h"
@@ -100,6 +101,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_exception.h"
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
+#include "fe_template_interface_header.h"
 #include "fe_obv_header.h"
 #include "fe_event_header.h"
 #include "fe_component_header.h"
@@ -143,6 +145,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
+  FE_Template_InterfaceHeader   *thval;         /* Template interface header */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
@@ -168,6 +171,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
   AST_Decl::NodeType            ntval;          /* Node type value      */
+  AST_Interface::ParamInfo      *pival;         /* Template interface param */
 }
 
 /*
@@ -327,6 +331,8 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <ival>    type_dcl
 
 %type <ntval>   type_classifier
+
+%type <pival>   template_param
 %%
 
 /*
@@ -5926,13 +5932,20 @@ template_param
         : type_classifier IDENTIFIER
         {
 // template_param : type_classifier IDENTIFIER
+
+          ACE_NEW_RETURN ($$,
+                          AST_Interface::ParamInfo,
+                          0);
+
+          $$->type = $1;
+          $$->name = $2;
         }
         ;
 
 template_inheritance_spec
         : ':' at_least_one_template_ref
         {
-// template_inneritance_spec : ':' at_least_one_template_ref
+// template_inheritance_spec : ':' at_least_one_template_ref
         }
         | /* EMPTY */
         {

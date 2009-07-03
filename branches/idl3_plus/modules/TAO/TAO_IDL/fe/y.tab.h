@@ -224,6 +224,7 @@ typedef union TAO_YYSTYPE
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
+  FE_Template_InterfaceHeader   *thval;         /* Template interface header */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
@@ -249,6 +250,7 @@ typedef union TAO_YYSTYPE
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
   AST_Decl::NodeType            ntval;          /* Node type value      */
+  AST_Interface::ParamInfo      *pival;         /* Template interface param */
 }
 /* Line 1489 of yacc.c.  */
 

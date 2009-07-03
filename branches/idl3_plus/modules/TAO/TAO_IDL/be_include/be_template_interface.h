@@ -45,7 +45,7 @@ public:
     long nih,
     AST_Interface **ih_flat,
     long nih_flat,
-    const IDL_GlobalData::IFACE_TEMPLATE_PARAMS &template_params);
+    const PARAMLIST_INFO &template_params);
     
   virtual ~be_template_interface (void);
   

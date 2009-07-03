@@ -154,6 +154,14 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  struct ParamInfo
+  {
+    AST_Decl::NodeType type;
+    ACE_CString name;
+  };
+
+  typedef ACE_Unbounded_Queue<ParamInfo> PARAMLIST_INFO;
+
 protected:
   // Data.
 
