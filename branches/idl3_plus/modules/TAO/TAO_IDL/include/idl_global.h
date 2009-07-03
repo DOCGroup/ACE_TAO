@@ -627,6 +627,16 @@ public:
   
   void original_local_name (Identifier *local_name);
   // Strips _cxx_ prefix for use in port names.
+  
+  struct iface_template_param
+  {
+    AST_Decl::NodeType type;
+    ACE_CString name;
+  };
+  
+  typedef
+  ACE_Unbounded_Queue<iface_template_param>
+    IFACE_TEMPLATE_PARAMS;
 
 private:
   // Data
