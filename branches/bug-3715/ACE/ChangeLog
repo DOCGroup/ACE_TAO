@@ -1,3 +1,11 @@
+Fri Jul  3 13:10:03 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_14_Test.cpp:
+          This test verifies that partial template specialization works.
+
 Fri Jul  3 12:47:41 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * tests/Compiler_Features_11_Test.cpp:
