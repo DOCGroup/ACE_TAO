@@ -24,7 +24,7 @@ namespace XMI
 
   Extension::
   Extension ()
-  : 
+    :  XSCRT::Type (),
   regulator__ ()
   {
   }
