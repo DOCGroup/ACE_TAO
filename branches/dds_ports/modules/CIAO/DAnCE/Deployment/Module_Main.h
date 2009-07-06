@@ -73,9 +73,6 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 #ifndef DANCE_MODULE_MAIN_SKIP_ORB_RUN      
       if (!CORBA::is_nil (obj.in ()))
         orb->run ();
-      else
-        DANCE_ERROR ((LM_ERROR, DLINFO "Module_Main.h - "
-                      "Got nil object reference from Module\n"));
       
       DANCE_DEBUG ((LM_TRACE, DLINFO
                     "Module_Main.h - ORB event loop finished, exiting.\n"));

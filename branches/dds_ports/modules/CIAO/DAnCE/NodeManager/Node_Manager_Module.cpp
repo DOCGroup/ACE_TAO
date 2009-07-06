@@ -273,8 +273,6 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (!this->parse_args (argc, argv))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                        "Failed to parse command line arguments, exiting\n"));
           return CORBA::Object::_nil ();
         }
 

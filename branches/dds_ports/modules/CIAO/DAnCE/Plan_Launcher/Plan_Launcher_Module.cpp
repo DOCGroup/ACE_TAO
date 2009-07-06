@@ -31,6 +31,9 @@ DAnCE_Plan_Launcher_Module::create_object (CORBA::ORB_ptr orb,
       Plan_Launcher_Impl pl (orb, argc, argv);
       pl.execute();
     }
+  catch (const Plan_Launcher_Base_Impl::Help_Issued& )
+    {
+    }
   catch (const Plan_Launcher_Base_Impl::Deployment_Failure& e)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_Plan_Launcher_Module::create_object - "

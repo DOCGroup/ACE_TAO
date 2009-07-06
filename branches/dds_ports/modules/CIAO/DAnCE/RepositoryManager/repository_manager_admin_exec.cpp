@@ -175,8 +175,10 @@ struct Options
     ACE_ERROR ((LM_EMERGENCY, "usage:\n"
                 "\t-h,--help\t\t\tThis message.\n"
                 "\t-r,--rm-ior <ior>\t\tIOR where the RM instance may be found\n"
-                "\t-i,--install <path>,<name>,<1|0>\t\tInstall package found at <path> into the RM, with <name>, <1> replacing or <0> not replacing an existing package. *\n"
-                "\t-c,--create <path>,<name>,<base location>,<1|0>\t\tInstall package found at <path> into the RM, with <name>, <base location>, <1> replacing or <0> not replacing an existing package. *\n"
+                "\t-i,--install <path>,<name>,<1|0>\tInstall package found at <path> into the RM, with <name>,\n"
+                    "\t\t\t<1> replacing or <0> not replacing an existing package. *\n"
+                "\t-c,--create <path>,<name>,<base location>,<1|0>\tInstall package found at <path> into the RM, with <name>,\n"
+                    "\t\t\t<base location>, <1> replacing or <0> not replacing an existing package. *\n"
                 "\t-u,--uninstall <uuid>\t\tUninstall package identified by UUID. *\n"
                 "\t-l,--list\t\t\tList all packages installed in the RM\n"
                 "\t-s,--shutdown\t\t\tShutdown the RM.\n"
@@ -186,7 +188,7 @@ struct Options
   }
                 
                 
-  bool parse_args (int argc, ACE_TCHAR *argv[])
+  int parse_args (int argc, ACE_TCHAR *argv[])
   {
     ACE_Get_Opt get_opt (argc, argv,
                          ACE_TEXT ("hr:i:c:u:lsd:"),
@@ -213,7 +215,7 @@ struct Options
           {
           case 'h':
             this->usage ();
-            return false;
+            return 1;
             break;
             
           case 'r':
@@ -227,7 +229,7 @@ struct Options
             if (!inst.init (get_opt.opt_arg ()))
               {
                 this->usage ();
-                return false;
+                return -1;
               }
             
             if (inst.replace_)
@@ -246,7 +248,7 @@ struct Options
             if (!create.init (get_opt.opt_arg ()))
               {
                 this->usage ();
-                return false;
+                return -1;
               }
             
             if (create.replace_)
@@ -299,11 +301,11 @@ struct Options
                               "Unknown long option: %C\n",
                               get_opt.long_option ()));
                 this->usage ();
-                return false;
+                return -1;
               }
           }
       }
-    return true;
+    return 0;
   }
 };
 
@@ -344,11 +346,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
           ace->set_flags(ACE_Log_Msg::CUSTOM);
         }
 
-      Options options;  
-      if (!options.parse_args (argc, argv))
+      Options options; 
+      int error = options.parse_args (argc, argv);
+      if (error == -1)
         {
           DANCE_ERROR ((LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
                         "Failed to parse command line arguments.\n"));
+        }
+      else if (error == 1)
+        { //help was issued -> quit
+          return 0;
         }
       
       if (options.rm_ior_ == 0)

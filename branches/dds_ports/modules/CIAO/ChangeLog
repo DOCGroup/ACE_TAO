@@ -1,10 +1,30 @@
+Mon Jul  6 13:47:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Deployment/Module_Main.h:
+          No error message when ORB couldn't start. This should
+          be clear when reading the previous (error) messages.
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+          Displaying help message without any other
+          (error) messages.
+  
+        * DAnCE/TargetManager/Target_Manager_Module.cpp:
+          Displaying help message without any other
+          (error) messages. Also checked parsed command line
+          options.
+
 Fri Jul  3 01:13:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:
         * tools/Config_Handlers/Basic_Deployment_Data.cpp:
         * tools/Config_Handlers/XMI.cpp:
 
-          Error/warning fixes. 
+          Error/warning fixes.
 
 Thu Jul  2 01:47:53 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
