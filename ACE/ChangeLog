@@ -1,3 +1,10 @@
+Mon Jul  6 20:33:00 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_unistd.cpp:
+
+          Fixed a bug where the number of bytes passed to ACE_OS::malloc is
+          incorrect for ACE_USES_WCHAR (each character can be > 1 byte).
+
 Mon Jul  6 18:25:23 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * ace/config-macosx-leopard.h:
