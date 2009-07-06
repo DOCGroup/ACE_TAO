@@ -196,13 +196,8 @@ bool SA_AddTaskCmd::execute_next (void)
   this->working_plan_->execute (this);
   this->num_tries_++;
 
-  if(!this->tasks_.empty ()) 
-  {
-    if(this->tasks_.front() == 20 && isInitial) {
-      this->tasks_.pop_front();
-    }
-  }
 
+  
   
 
 

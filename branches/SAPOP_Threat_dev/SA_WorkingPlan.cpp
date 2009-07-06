@@ -835,14 +835,14 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
       throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
     }
 
-	if(task == 20)
-		this->planner_->init_added =  true;
-  
-    task_inst = this->get_next_inst_id ();
-    // Add task instance.
-    this->task_insts_.insert (std::make_pair (task_inst, task));
-    //   Remove this task from tasks still to try.
-    cmd->tasks_.pop_front ();
+	  if(task == 20)
+		  this->planner_->init_added =  true;
+    
+      task_inst = this->get_next_inst_id ();
+      // Add task instance.
+      this->task_insts_.insert (std::make_pair (task_inst, task));
+      //   Remove this task from tasks still to try.
+      cmd->tasks_.pop_front ();
     
     
     
