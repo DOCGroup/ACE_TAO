@@ -1,8 +1,14 @@
+Mon Jul  6 18:42:01 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SA_WorkingPlan.cpp:
+
+	Started gettign rid of ordering links and using precedence graph.
+
 Thu Jul  2 16:36:11 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SA_WorkingPlan.cpp:
 
-	Resolve CL threat fails if it is asked to schedule something before 20.
+        Resolve CL threat fails if it is asked to schedule something before 20.
 
 Thu Jul  2 05:38:02 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
