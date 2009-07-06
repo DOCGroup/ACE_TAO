@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance {
-  libs     += DAnCE_Cdmw_IDL
-  after    += Cdmw_IDL
-}
