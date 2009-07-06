@@ -244,7 +244,7 @@ this->init_end.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NUL
 
 */
 
-for(int i = 0; i < 100; i++){
+for(int i = 0; i < 2; i++){
 	this->init_start.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 	this->init_end.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 }
@@ -295,7 +295,7 @@ void SA_WorkingPlan::reset_plan ()
   this->precedence_graph_.insert(std::make_pair(SIMUL,temp));
   this->precedence_graph_.insert(std::make_pair(UNRANKED,temp));
 
-  
+  /*
 
 this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
@@ -364,7 +364,7 @@ this->init_end.insert(std::make_pair(31,(TimeWindow)std::make_pair(NULL_TIME,NUL
 this->init_start.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 this->init_end.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 
-
+*/
 }
 
 // Set goal.
@@ -1139,9 +1139,6 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 {
 
 	std::ostringstream debug_text;
- 
-
-
 
 
 	TaskInstID first_task_inst = cmd->first;
@@ -1153,16 +1150,7 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(second_task_inst, first_task_inst));
 
   cmd->got_to_change_precedences = true;
-  if(is_cycle_in_ordering() ){
 
-    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule task inst"<<cmd->first<<" before task inst"<<cmd->second<<std::endl;
-    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-    debug_text.clear();
-
-
-    cmd->got_to_change_precedences = false;
-    return false;
-  }
 
   if(task_insts_.find(cmd->second)->second == 20){
 
@@ -1174,6 +1162,15 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 	return false;
   }
 
+  if(cmd->first == -1){
+
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot push threat to after goal"<<std::endl;
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.clear();
+
+	cmd->got_to_change_precedences = false;
+	return false;
+  }
 
   PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
   PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
@@ -1201,8 +1198,15 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   before_B->insert(cmd->first);
   unranked_B->erase(cmd->first);
 
+  bool loop_detected = false;
+
   for(TaskInstSet::iterator it = before_A->begin(); it != before_A->end(); it++){
-    before_B->insert(*it);
+  
+	if(after_B->find(*it) != after_B->end()){
+		loop_detected = true;
+	}
+	
+	before_B->insert(*it);
     unranked_B->erase(*it);
 
     afters->find(*it)->second.insert(cmd->second);
@@ -1213,17 +1217,40 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   unranked_A->erase(cmd->second);
 
   for(TaskInstSet::iterator it = after_B->begin(); it != after_B->end(); it++){
-    after_A->insert(*it);
+
+	if(before_A->find(*it) != before_A->end()){
+		loop_detected = true;
+	}
+    
+	after_A->insert(*it);
     unranked_A->erase(*it);
 
     befores->find(*it)->second.insert(cmd->first);
     unrankeds->find(*it)->second.erase(cmd->first);
   }
 
+  if(loop_detected){
+
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule task inst"<<cmd->first<<" before task inst"<<cmd->second<<std::endl;
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.clear();
+
+
+	if(!this->is_cycle_in_ordering()){
+		bool this_means_ben_failed = true;
+	}
+
+    return false;
+  }
+
+  if(is_cycle_in_ordering()){
+	bool this_means_ben_failed = true;
+  }
+
+
   debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Now scheduling task "<<cmd->first<<" before "<<cmd->second<<std::endl;
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
   debug_text.clear();
-  
 
 
 
@@ -1943,6 +1970,14 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
   this->precedence_graph_.find(AFTER)->second.insert(std::make_pair(task_inst,temp));
   this->precedence_graph_.find(UNRANKED)->second.insert(std::make_pair(task_inst,temp));
   this->precedence_graph_.find(SIMUL)->second.insert(std::make_pair(task_inst,temp));
+
+
+  if(init_start.size() == task_inst){
+	  for(int i = init_start.size(); i < 100+task_inst; i++){
+		this->init_start.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+		this->init_end.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
+	}
+  }
 
   TimeWindow win_start = this->init_start.find(task_inst)->second;
   TimeWindow win_end = this->init_end.find(task_inst)->second;
