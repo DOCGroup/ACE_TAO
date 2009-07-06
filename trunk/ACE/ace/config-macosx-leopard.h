@@ -115,6 +115,7 @@
 
 #define ACE_LACKS_STRRECVFD
 
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)

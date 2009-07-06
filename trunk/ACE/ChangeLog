@@ -1,3 +1,9 @@
+Mon Jul  6 18:25:23 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/config-macosx-leopard.h:
+
+          This platform needs ACE_HAS_SOCKADDR_IN_SIN_LEN.
+
 Sat Jul  4 20:50:16 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Happy Birthday USA!
