@@ -1,0 +1,30 @@
+// $Id$
+
+#ifndef FDP_FOO_IDL
+#define  FDP_FOO_IDL
+
+#include <Components.idl>
+
+#include "FDP_Bar.idl"
+
+module One
+{
+  interface Foo_Port
+  {
+    void foo ();
+  };
+  
+  interface Bar_Port;
+};
+
+module Two
+{
+  component Foo
+  {
+    provides One::Foo_Port foo;
+    uses One::Bar_Port bar;
+  };
+};
+
+#endif
+
