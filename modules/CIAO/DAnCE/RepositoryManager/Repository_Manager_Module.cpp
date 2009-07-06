@@ -209,15 +209,6 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           this->options_.server_address_ = get_opts.opt_arg ();
           break;
 
-        case 'h':
-          //case '?': // Display help for use of the server.
-          //default:
-          DANCE_ERROR_RETURN ( (LM_ERROR,
-                                this->usage (),
-                                argv [0], c),
-                               false);
-          break;
-
         case 0:
           if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("spawn-http")) == 0)
             {
@@ -274,15 +265,14 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 
           break;
 
-        case '\?':
-        case ':':
-          DANCE_ERROR ((LM_ERROR, DLINFO  "Repository_Manager_Module::parse_args - "
-                        "Options %c:%C requires an argument\n", c, get_opts.opt_opt ()));
-          break;
-
+        case 'h':
+        case '?': // Display help for use of the server.
         default:
-          DANCE_DEBUG ((LM_TRACE, DLINFO "Repository_Manager_Module::parse_args - ignoring unknown option %c:%C\n",
-                        c, get_opts.opt_arg ()));
+          DANCE_ERROR_RETURN ( (LM_ERROR,
+                                this->usage (),
+                                argv [0], c),
+                               false);
+          break;
         }
 
     }
@@ -327,8 +317,6 @@ DAnCE_RepositoryManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (!this->parse_args (argc, argv))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_RepositoryManager_Module::create_object - "
-                        "Failed to parse command line arguments, exiting\n"));
           return CORBA::Object::_nil ();
         }
 

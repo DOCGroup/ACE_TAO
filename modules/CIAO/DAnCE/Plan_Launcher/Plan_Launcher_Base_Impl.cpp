@@ -469,6 +469,9 @@ void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
             this->xml_plan_urls_.push_back(expand_env_vars (get_opt.opt_arg()));
             break;
           case 'h':
+            usage (argv[0]);
+            throw Help_Issued ();
+            break;
           default:
             usage (argv[0]);
             throw Deployment_Failure ("parse_args : invalid arguments");

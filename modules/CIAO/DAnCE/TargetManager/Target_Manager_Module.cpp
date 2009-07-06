@@ -64,7 +64,7 @@ DAnCE_TargetManager_Module::usage (void)
 {
   DANCE_TRACE ("DAnCE_TargetManager_Module::usage");
   return "Repository Manager Options:\n"
-    "\t-n|--name [name]\t Name to register in the naming service\n"
+    //"\t-n|--name [name]\t Name to register in the naming service\n"
     "\t-f|--file [name]\t Filename to output IOR.\n"
     "\t-i|--init [name]\t Filename read initial domain descriptor.\n"
     "\t-d|--domain-nc [NC]\t Default naming context for domain objects.\n"
@@ -118,8 +118,7 @@ DAnCE_TargetManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           break;
 
         case 'h':
-          //case '?': // Display help for use of the server.
-          //default:
+        case '?': // Display help for use of the server.
           DANCE_ERROR_RETURN ( (LM_ERROR,
                                 this->usage (),
                                 argv [0], c),
@@ -133,12 +132,6 @@ DAnCE_TargetManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                             get_opts.long_option ()));
             }
 
-          break;
-
-        case '\?':
-        case ':':
-          DANCE_ERROR ((LM_ERROR, DLINFO  "Repository_Manager_Module::parse_args - "
-                        "Options %c:%C requires an argument\n", c, get_opts.opt_opt ()));
           break;
 
         default:
@@ -181,8 +174,6 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (!this->parse_args (argc, argv))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_TargetManager_Module::create_object - "
-                        "Failed to parse command line arguments, exiting\n"));
           return CORBA::Object::_nil ();
         }
 

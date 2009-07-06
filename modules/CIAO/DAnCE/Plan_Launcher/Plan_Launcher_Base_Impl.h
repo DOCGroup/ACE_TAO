@@ -29,15 +29,17 @@ namespace Plan_Launcher
 class Plan_Launcher_Base_Impl_Export Plan_Launcher_Base_Impl
 {
 public:
-  class Deployment_Failure
+  struct Deployment_Failure
   {
-public:
     Deployment_Failure(const ACE_CString &error) :
       error_(error)
-    {
-    }
-    ;
+    {}
     ACE_CString error_;
+  };
+
+  struct Help_Issued
+  {
+    Help_Issued() {}
   };
 
   Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[]);
