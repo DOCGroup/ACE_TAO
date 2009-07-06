@@ -245,7 +245,7 @@ bool SA_PlanStrategy::satisfy_everything(){
 
 	this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
 
-  //TEMP***
+  ////TEMP***
   //if(this->cur_task_inst_ == 10)
   //{
   //  throw "At the 10th task instance";

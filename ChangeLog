@@ -1,8 +1,22 @@
+Mon Jul  6 20:27:43 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * ChangeLog:
+        * SA_PlanCommands.cpp:
+        * SA_PlanStrategy.cpp:
+        * SA_WorkingPlan.cpp:
+
+	Cleaned up Changelog for consistency.
+
+	Commented out halt for task_inst
+
+	Erased fix for Initial Action in favor of throwing an exception.
+
+
 Mon Jul  6 18:42:01 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SA_WorkingPlan.cpp:
 
-	Started gettign rid of ordering links and using precedence graph.
+        Started gettign rid of ordering links and using precedence graph.
 
 Thu Jul  2 16:36:11 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
@@ -25,6 +39,7 @@ Wed Jul  1 22:13:25 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * SA_PlanStrategy.cpp:
         * SA_WorkingPlan.cpp:
+
         Updated to allow for goal_task_inst to be part of threats.
         Small aesthetic changes
 
@@ -32,6 +47,7 @@ Tue Jun 30 20:10:07 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * SA_PlanStrategy.cpp:
         * SA_SchedStrategy.cpp:
+
         Modified undo for removing open conds to match the breadth first search.
         Indented some of ankits code for readability.
 
