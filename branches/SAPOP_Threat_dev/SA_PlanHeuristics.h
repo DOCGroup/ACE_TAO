@@ -15,6 +15,7 @@
 #ifndef SA_POP_SA_PLAN_HEURISTICS_H_
 #define SA_POP_SA_PLAN_HEURISTICS_H_
 
+
 #include "SA_POP_Types.h"
 #include "PlanHeuristics.h"
 
@@ -70,7 +71,15 @@ namespace SA_POP {
      *
      * @return  Sorted list of tasks that satisfy given condition.
      */
-    virtual TaskList choose_task (Condition open_cond);
+    virtual TaskChoiceList choose_task (Condition open_cond);
+  
+	/// Choose the (ordering of) task(s) to satisfy an open condition.  The cool way
+	 /**
+     * @param open_cond  Open condition to satisfy.
+     *
+     * @return  Sorted list of tasks that satisfy given condition.
+     */
+	virtual TaskChoiceList choose_task_fair (Condition open_cond);
   };
 
   /**
@@ -99,6 +108,8 @@ namespace SA_POP {
      */
     virtual TaskImplList choose_impl (TaskInstID task_inst);
   };
+
+
 
 
 };  /* SA_POP namespace */

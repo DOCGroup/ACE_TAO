@@ -219,7 +219,7 @@ namespace SA_POP {
     /**
      * @param tasks  Ordered list of tasks.
      */
-    virtual void set_tasks (const TaskList &tasks);
+    virtual void set_tasks (const TaskChoiceList &tasks);
 
     /// Set causal link info to add to the plan with task.
     /**
@@ -255,7 +255,7 @@ namespace SA_POP {
     SA_WorkingPlan *working_plan_;
 
     /// Ordered list of tasks to try adding to the plan.
-    TaskList tasks_;
+    TaskChoiceList tasks_;
 
     /// Open condition satisfied by these tasks.
     Condition cond_;
@@ -271,6 +271,8 @@ namespace SA_POP {
 
     /// Instance of last task tried.
     TaskInstID last_task_inst_;
+
+	TaskChoice last_task_choice_;
 
     /// Number of tasks tried.
     size_t num_tries_;

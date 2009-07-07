@@ -331,6 +331,9 @@ namespace SA_POP {
 
     virtual void generate_all_threats(void);
 
+
+	virtual InstToTaskMap get_task_insts(void){return task_insts_;};
+
   protected:
     // ************************************************************************
     // State information.
@@ -345,7 +348,7 @@ namespace SA_POP {
     /// Task instance ID to use for next instance created.
     TaskInstID next_inst_id_;
 
-    typedef std::map <TaskInstID, TaskID> InstToTaskMap;
+
     /// Task instances in plan (mapping to task id).
     InstToTaskMap task_insts_;
 
