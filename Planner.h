@@ -520,6 +520,7 @@ namespace SA_POP {
    */
   virtual void print_graph (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap);
 
+  virtual WorkingPlan*  get_working_plan(void){return this->working_plan_;};
 
 
   protected:

@@ -186,22 +186,17 @@ bool SA_AddTaskCmd::execute_next (void)
 
   bool isInitial = false;
 
-  if (this->tasks_.empty ())
+  if (this->tasks_.empty())
     return false;
 
-  if(this->tasks_.front() == 20){
+  /*
+  if(this->tasks_.front().task_id == 20 && this->tasks_.front){
     isInitial = true;
   }
+  */
 
   this->working_plan_->execute (this);
   this->num_tries_++;
-
-
-  
-  
-
-
-  
 
   return true;
 };
@@ -230,17 +225,17 @@ std::string SA_AddTaskCmd::get_log_text (void)
   log_str += "Adding Task (CommandID ";
   log_str += to_string (this->get_id ());
   log_str += "): ";
-  TaskList::iterator task_iter = this->tasks_.begin ();
+  TaskChoiceList::iterator task_iter = this->tasks_.begin ();
   if (task_iter == this->tasks_.end ())
     log_str += "[NO TASKS TO ADD]";
   else
-    log_str += to_string (*task_iter);
+    log_str += to_string (task_iter->task_id);
 
   return log_str;
 };
 
 // Set (ordered) list of tasks to add (one per execution) to the plan.
-void SA_AddTaskCmd::set_tasks (const TaskList &tasks)
+void SA_AddTaskCmd::set_tasks (const TaskChoiceList &tasks)
 {
   if (!this->tasks_.empty ())
     throw "SA_POP::SA_AddTaskCmd::set_tasks (): called while current task list is not empty.";
@@ -281,10 +276,14 @@ TaskInstSet SA_AddTaskCmd::get_satisfied_tasks(void){
 }
 
 /// Check if the instance id used by the task of this command already exists.
+
+
 bool SA_AddTaskCmd::inst_exists (void)
 {
-	 return !this->used_task_insts_.empty();
+	return (this->last_task_choice_.choice == REUSE_INST);
+
 }
+
 // Constructor.
 SA_AssocTaskImplCmd::SA_AssocTaskImplCmd (SA_WorkingPlan *working_plan)
 : working_plan_ (working_plan),

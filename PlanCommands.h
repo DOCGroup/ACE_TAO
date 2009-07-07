@@ -166,7 +166,7 @@ namespace SA_POP {
     /**
      * @param tasks  Ordered list of tasks.
      */
-    virtual void set_tasks (const TaskList &tasks) = 0;
+    virtual void set_tasks (const TaskChoiceList &tasks) = 0;
 
     /// Set causal link info to add to the plan with task.
     /**

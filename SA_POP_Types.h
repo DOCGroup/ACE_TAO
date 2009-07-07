@@ -160,6 +160,42 @@ namespace SA_POP {
 
   /// Type of a task implementation parameter value.
   typedef std::string ImplParamValue;
+  enum TaskChoiceType{REUSE_INST, NEW_INST};
+  struct TaskChoice {
+	
+		TaskChoiceType choice;
+		TaskInstID task_inst_id;
+		TaskID task_id;
+	};
+
+  ///List of TaskChoices
+  typedef std::list<TaskChoice> TaskChoiceList;
+
+  typedef std::map <TaskInstID, TaskID> InstToTaskMap;
+
+  struct SortTaskByTime{
+	
+	  TaskID task_id;
+	  TaskInstID last_instance;
+	
+	  void note_instance(TaskInstID instance){
+		  if (last_instance > instance){
+			this->last_instance = instance;
+		  }
+	  }
+
+	 bool operator<(const SortTaskByTime & s) {
+		return this->last_instance < s.last_instance;
+	}
+	 bool operator!=(const SortTaskByTime & s) {
+		return this->last_instance != s.last_instance;
+	}
+	 bool operator==(const SortTaskByTime & s) {
+		return this->last_instance == s.last_instance;
+	}
+
+  };
+
 
   /// Type of an implementation parameter.
   struct ImplParam {

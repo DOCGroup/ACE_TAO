@@ -419,7 +419,7 @@ const Plan& SA_WorkingPlan::get_plan (void)
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
   // Add task instances to plan.
-  for (SA_WorkingPlan::InstToTaskMap::iterator iter =
+  for (InstToTaskMap::iterator iter =
     this->task_insts_.begin ();
     iter != this->task_insts_.end (); iter++)
   {
@@ -500,7 +500,7 @@ const Plan& SA_WorkingPlan::get_plan (void)
       plan_conn.second_task_inst = cl_iter->second.second;
 
       // Get task ids from instances.
-      SA_WorkingPlan::InstToTaskMap::iterator inst_task_iter;
+      InstToTaskMap::iterator inst_task_iter;
 
       inst_task_iter = this->task_insts_.find (cl_iter->second.first);
       if (inst_task_iter == this->task_insts_.end ())
@@ -538,7 +538,7 @@ const TaskInstSet *SA_WorkingPlan::get_prec_set (TaskInstID task_inst, Precedenc
 // Get task id of a task instance.
 TaskID SA_WorkingPlan::get_task_from_inst (TaskInstID inst_id)
 {
-  SA_WorkingPlan::InstToTaskMap::iterator iter =
+  InstToTaskMap::iterator iter =
     this->task_insts_.find (inst_id);
   if (iter == this->task_insts_.end ())
     throw "SA_POP::SA_WorkingPlan::get_task_from_inst (): requested instance id does not exist.";
@@ -703,7 +703,7 @@ void SA_WorkingPlan::generate_all_threats(void)
 
                 
              
-              
+              bool a = true;
               }
              }
         }
@@ -810,6 +810,40 @@ AdjustMaxTimesCmd *SA_WorkingPlan::get_AdjustMaxTimesCmd (void)
 
 void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 {
+
+  TaskChoice task_choice = cmd->tasks_.front();
+  TaskID task = task_choice.task_id;
+  TaskInstID task_inst;
+  Condition cond = cmd->cond_;
+
+  cmd->last_task_choice_ = task_choice;
+
+  if(task_choice.choice == REUSE_INST){
+
+		task_inst = task_choice.task_inst_id;
+			this->reused_insts_.insert(task_inst);
+	cmd->tasks_.pop_front();
+  }
+  else if(task_choice.choice == NEW_INST){
+
+    if(task == 20 && this->planner_->init_added)
+    {
+      throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
+    }
+
+	if(task == 20)
+		this->planner_->init_added =  true;
+  
+    task_inst = this->get_next_inst_id ();
+    // Add task instance.
+    this->task_insts_.insert (std::make_pair (task_inst, task));
+    //   Remove this task from tasks still to try.
+    cmd->tasks_.pop_front ();
+  }
+
+
+/*
+
 	// Get task ID, condition, and instance ID.
   TaskID task = cmd->tasks_.front ();
 
@@ -827,6 +861,7 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
         cmd->used_task_insts_.insert(iter->first);
   }
 
+
   // If there are no/no-more existing task instances to try, create new task instance.
   if(cmd->used_task_insts_.empty()) 
   {
@@ -838,60 +873,55 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 	  if(task == 20)
 		  this->planner_->init_added =  true;
     
-      task_inst = this->get_next_inst_id ();
-      // Add task instance.
-      this->task_insts_.insert (std::make_pair (task_inst, task));
-      //   Remove this task from tasks still to try.
-      cmd->tasks_.pop_front ();
-    
-    
     
   }
   else
   {
-	  // Reuse the task instance
-    task_inst = *cmd->used_task_insts_.begin();
-		this->reused_insts_.insert(task_inst);
+		  // Reuse the task instance
+		task_inst = *cmd->used_task_insts_.begin();
+			this->reused_insts_.insert(task_inst);
 
-    // NOTE: task instance removed from existing task instances to try in undo.
+		// NOTE: task instance removed from existing task instances to try in undo.
 	}
 
-  std::ostringstream debug_text;
-  debug_text << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding task (" << task << ") instance (" << task_inst << ") for condition (" << cond.id << ").";
+*/
 
-  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	  std::ostringstream debug_text;
+	  debug_text << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding task (" << task << ") instance (" << task_inst << ") for condition (" << cond.id << ").";
 
-  // Create causal links for each task instance depending on the condition.
-  for (TaskInstSet::iterator inst_iter = cmd->task_insts_.begin ();
-    inst_iter != cmd->task_insts_.end (); inst_iter++)
-  {
-    CausalLink clink;
-    clink.cond = cond;
-    clink.first = task_inst;
-    clink.second = *inst_iter;
-    CondToCLinksMap::iterator links_iter;
+	  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
 
-    // Check whether this causal link already exists in working plan.
-    for (links_iter = this->causal_links_.lower_bound (cond);links_iter != this->causal_links_.upper_bound (cond);links_iter++)
-      if(links_iter->second == clink)
-        break;
-    // If causal link not found in working plan, add it to causal links and ordering links.
-    if(links_iter==this->causal_links_.upper_bound(cond))
-    {
-      std::ostringstream debug_text2;
-      debug_text2 << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding causal link (" << clink.first << " -" << clink.cond.id << "-> " << clink.second << ")";
-      SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text2.str ());
+	  // Create causal links for each task instance depending on the condition.
+	  for (TaskInstSet::iterator inst_iter = cmd->task_insts_.begin ();
+		inst_iter != cmd->task_insts_.end (); inst_iter++)
+	  {
+			CausalLink clink;
+			clink.cond = cond;
+			clink.first = task_inst;
+			clink.second = *inst_iter;
+			CondToCLinksMap::iterator links_iter;
 
-      this->causal_links_.insert (std::make_pair (cond, clink));
+			// Check whether this causal link already exists in working plan.
+			for (links_iter = this->causal_links_.lower_bound (cond);links_iter != this->causal_links_.upper_bound (cond);links_iter++)
+			if(links_iter->second == clink)
+				break;
+				// If causal link not found in working plan, add it to causal links and ordering links.
+			if(links_iter==this->causal_links_.upper_bound(cond))
+			{
+				  std::ostringstream debug_text2;
+				  debug_text2 << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding causal link (" << clink.first << " -" << clink.cond.id << "-> " << clink.second << ")";
+				  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text2.str ());
 
-      if(clink.second != GOAL_TASK_INST_ID){
-		
-        this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.first, clink.second));
-        this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.second, clink.first));
-      }
-       cmd->added_links_.insert(clink);
-    }
-  }
+				  this->causal_links_.insert (std::make_pair (cond, clink));
+
+				  if(clink.second != GOAL_TASK_INST_ID){
+						
+					this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.first, clink.second));
+					this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.second, clink.first));
+					}
+			cmd->added_links_.insert(clink);
+			}
+		}
 
   // Set this task and task instance as last used by command.
 	cmd->last_task_ = task;
@@ -939,6 +969,18 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 
 void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 {
+
+	  if(cmd->last_task_ == 20)
+  {
+	 planner_->init_added = false;
+  }
+	  if(cmd->last_task_choice_.choice == NEW_INST){
+		this->task_insts_.erase (this->task_insts_.find(cmd->last_task_inst_));  
+	  }else{
+		  this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
+	  }
+
+/*
   if(cmd->last_task_ == 20)
   {
 	 planner_->init_added = false;
@@ -954,7 +996,7 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 	  cmd->used_task_insts_.erase(cmd->used_task_insts_.begin());
     this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
   }
-
+*/
 
 
 

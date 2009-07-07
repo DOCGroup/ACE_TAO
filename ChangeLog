@@ -1,3 +1,23 @@
+Tue Jul  7 23:10:22 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SA_PlanCommands.h:
+		* SA_PlanHeuristics.cpp:
+		
+		Changed the order in which tasks are chosen to satisfy open conditions.
+		Working on getting it to choose the correct tasks.
+		
+		* PlanCommands.h:
+        * PlanHeuristics.h:
+        * Planner.h:
+        * SA_POP_Types.h:
+        * SA_PlanCommands.cpp:
+        * SA_PlanHeuristics.h:
+        * SA_PlanStrategy.cpp:
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+		
+		
+
 Mon Jul  6 20:27:43 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * ChangeLog:
@@ -5,11 +25,11 @@ Mon Jul  6 20:27:43 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
         * SA_PlanStrategy.cpp:
         * SA_WorkingPlan.cpp:
 
-	Cleaned up Changelog for consistency.
+        Cleaned up Changelog for consistency.
 
-	Commented out halt for task_inst
+        Commented out halt for task_inst
 
-	Erased fix for Initial Action in favor of throwing an exception.
+        Erased fix for Initial Action in favor of throwing an exception.
 
 
 Mon Jul  6 18:42:01 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
