@@ -5881,6 +5881,24 @@ template_interface_def
         : template_interface_header
         {
 // template_interface_def : template_interface_header
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          AST_Template_Interface *i =
+            idl_global->gen ()->create_template_interface (
+              $1->name (),
+              $1->inherits (),
+              $1->n_inherits (),
+              $1->inherits_flat (),
+              $1->n_inherits_flat (),
+              $1->param_info ());
+
+          (void) s->fe_add_interface (i);
+
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
+
+          idl_global->scopes ().push (i);
         }
         '{'
         {
@@ -5900,10 +5918,7 @@ template_interface_def
           /*
            * Done with this interface - pop it off the scopes stack
            */
- //         idl_global->scopes ().pop ();
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
+          idl_global->scopes ().pop ();
         }
         ;
 
