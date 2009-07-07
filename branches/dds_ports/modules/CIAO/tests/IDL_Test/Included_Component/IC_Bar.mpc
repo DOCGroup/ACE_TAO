@@ -51,10 +51,34 @@ project(IC_Bar_stub) : ccm_stub {
   }
 }
 
+project(IC_Bar_exec) : ciao_executor {
+  sharedname = IC_Bar_exec
+  after     += IC_Bar_lem_gen IC_Bar_stub
+  libs      += IC_Bar_stub
+  
+  dynamicflags   = IC_BAR_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+  
+  Source_Files {
+    IC_BarEC.cpp
+  }
+  
+  Header_Files {
+    IC_BarEC.h
+    IC_Bar_exec_export.h
+  }
+  
+  Inline_Files {
+    IC_BarEC.inl
+  }
+}
 
 project(IC_Bar_svnt) : ciao_servant {
   sharedname  = IC_Bar_svnt
-  libs       += IC_Bar_stub 
+  after      += IC_Bar_exec
+  libs       += IC_Bar_stub IC_Bar_exec
   
   dynamicflags = IC_BAR_SVNT_BUILD_DLL
   

@@ -51,10 +51,34 @@ project(IC_Foo_stub) : ccm_stub {
   }
 }
 
+project(IC_Foo_exec) : ciao_executor {
+  sharedname = IC_Foo_exec
+  after     += IC_Foo_lem_gen IC_Foo_stub
+  libs      += IC_Foo_stub
+  
+  dynamicflags   = IC_FOO_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+  
+  Source_Files {
+    IC_FooEC.cpp
+  }
+  
+  Header_Files {
+    IC_FooEC.h
+    IC_Foo_exec_export.h
+  }
+  
+  Inline_Files {
+    IC_FooEC.inl
+  }
+}
 
 project(IC_Foo_svnt) : ciao_servant {
   sharedname  = IC_Foo_svnt
-  libs       += IC_Foo_stub 
+  after      += IC_Foo_exec
+  libs       += IC_Foo_stub IC_Foo_exec
   
   dynamicflags = IC_FOO_SVNT_BUILD_DLL
   
