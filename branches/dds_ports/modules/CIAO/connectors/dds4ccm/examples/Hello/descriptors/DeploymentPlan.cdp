@@ -22,7 +22,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverHome_Impl</string>
+          <string>create_Hello_DDS_ReceiverHome_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -33,7 +33,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverHome_Servant</string>
+          <string>create_Hello_DDS_ReceiverHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -74,7 +74,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverConnectorHome_Impl</string>
+          <string>create_Hello_DDS_ReceiverConnectorHome_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -85,7 +85,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverConnectorHome_Servant</string>
+          <string>create_Hello_DDS_ReceiverConnectorHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -141,7 +141,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderHome_Impl</string>
+          <string>create_Hello_DDS_SenderHome_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -152,7 +152,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderHome_Servant</string>
+          <string>create_Hello_DDS_SenderHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -194,7 +194,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderConnectorHome_Impl</string>
+          <string>create_Hello_DDS_SenderConnectorHome_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -205,7 +205,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderConnectorHome_Servant</string>
+          <string>create_Hello_DDS_SenderConnectorHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -279,9 +279,9 @@
   </instance>
 
 
-  <instance xmi:id="Hello_ReceiverHomeInstance">
+  <instance xmi:id="Hello_ReceiverConnectorHomeInstance">
     <name>Hello_ReceiverConnectorHome</name>
-    <node>ReceiverConnectorNode</node>
+    <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_ReceiverConnectorHomeImplementation" />
@@ -353,7 +353,7 @@
 
   <instance xmi:id="Hello_ReceiverConnectorComponentInstance">
     <name>Hello_ReceiverConnectorComponent</name>
-    <node>ReceiverConnectorNode</node>
+    <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_ReceiverConnectorComponentImplementation" />
@@ -425,7 +425,7 @@
 
   <instance xmi:id="Hello_SenderConnectorHomeInstance">
     <name>Hello_SenderConnectorHome</name>
-    <node>SenderConnectorNode</node>
+    <node>SenderNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
@@ -471,36 +471,6 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>local_message</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>hello, world!</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>color</name>
-      <value>
-        <type>
-          <kind>tk_enum</kind>
-          <enum>
-            <name>COLOR_SELECTION</name>
-            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
-            <member>empty</member>
-            <member>white</member>
-            <member>red</member>
-            <member>yellow</member>
-          </enum>
-        </type>
-        <value>
-          <enum>yellow</enum>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
         <type>
@@ -524,11 +494,10 @@
     </configProperty>
   </instance>
 
-
+<!--
   <instance xmi:id="Hello_SenderComponentInstance">
     <name>Hello_SenderComponent</name>
     <node>SenderNode</node>
-    <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
     <configProperty>
@@ -543,36 +512,6 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>local_message</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>hello, world!</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>color</name>
-      <value>
-        <type>
-          <kind>tk_enum</kind>
-          <enum>
-            <name>COLOR_SELECTION</name>
-            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
-            <member>empty</member>
-            <member>white</member>
-            <member>red</member>
-            <member>yellow</member>
-          </enum>
-        </type>
-        <value>
-          <enum>yellow</enum>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
         <type>
@@ -595,10 +534,10 @@
       </value>
     </configProperty>
   </instance>
-
+-->
   <instance xmi:id="Hello_SenderConnectorComponentInstance">
     <name>Hello_SenderConnectorComponent</name>
-    <node>SenderConnectorNode</node>
+    <node>SenderNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderConnectorComponentImplementation" />
@@ -642,7 +581,7 @@
     <internalEndpoint>
       <portName>push_data_data</portName>
       <provider>false</provider>
-      <kind>SimpleReceptacle</kind>
+      <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
@@ -681,23 +620,23 @@
       <portName>receiver_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ReceiveronnectorComponentInstance" />
+      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>ccm_dds_listnercontrol</name>
+    <name>ccm_dds_listenercontrol</name>
     <internalEndpoint>
-      <portName>receiver_control</portName>
+      <portName>read_message_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>read_message_control</portName>
+      <portName>receiver_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ReceiveronnectorComponentInstance" />
+      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
@@ -713,7 +652,7 @@
       <portName>receiver_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiveronnectorComponentInstance" />
+      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
@@ -729,7 +668,7 @@
       <portName>receiver_dds_entity</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ReceiveronnectorComponentInstance" />
+      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
@@ -745,7 +684,7 @@
       <portName>receiver_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiveronnectorComponentInstance" />
+      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
@@ -780,26 +719,26 @@
     <name>Hello_ReceiverConnector_exec</name>
     <source/>
     <node/>
-    <location>Hello_ReceiverConnector_exec</location>
+    <location>Hello_Receiver_Connector_exec</location>
   </artifact>
   <artifact xmi:id="Hello_ReceiverConnector_SvntArtifact">
     <name>Hello_ReceiverConnector_svnt</name>
     <source/>
     <node/>
-    <location>Hello_ReceiverConnector_svnt</location>
+    <location>Hello_Receiver_Connector_svnt</location>
   </artifact>
 
   <artifact xmi:id="Hello_SenderConnector_ExecArtifact">
     <name>Hello_SenderConnector_exec</name>
     <source/>
     <node/>
-    <location>Hello_SenderConnector_exec</location>
+    <location>Hello_Sender_Connector_exec</location>
   </artifact>
   <artifact xmi:id="Hello_SenderConnector_SvntArtifact">
     <name>Hello_SenderConnector_svnt</name>
     <source/>
     <node/>
-    <location>Hello_SenderConnector_svnt</location>
+    <location>Hello_Sender_Connector_svnt</location>
   </artifact>
 
 </Deployment:DeploymentPlan>
