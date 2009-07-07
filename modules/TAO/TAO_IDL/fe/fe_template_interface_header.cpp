@@ -6,15 +6,15 @@ FE_Template_InterfaceHeader::FE_Template_InterfaceHeader (
       UTL_ScopedName *n,
       FE_Utils::T_PARAMLIST_INFO *params,
       FE_Utils::T_REFLIST_INFO *inherited)
-  : interface_name_ (n),
+  : FE_InterfaceHeader (n,
+                        0,
+                        false,
+                        false,
+                        false),
     param_info_ (params),
-    parent_info_ (inherited),
-    inherits_ (0),
-    n_inherits_ (0),
-    inherits_flat_ (0),
-    n_inherits_flat_ (0)
+    parent_info_ (inherited)
 {
-//  this->compile_inheritance (inherits, false);
+  this->compile_template_inheritance ();
 }
 
 FE_Template_InterfaceHeader::~FE_Template_InterfaceHeader (void)
@@ -24,57 +24,50 @@ FE_Template_InterfaceHeader::~FE_Template_InterfaceHeader (void)
 void
 FE_Template_InterfaceHeader::destroy (void)
 {
-  if (0 != this->interface_name_)
-    {
-      this->interface_name_->destroy ();
-      delete this->interface_name_;
-      this->interface_name_ = 0;
-    }
-
   // Queue element members have self-managed memory.
   delete this->param_info_;
   this->param_info_ = 0;
+  
+  // Must destroy the queue element members (but not the elements
+  // themselves) before we destroy the queue.
+  if (this->parent_info_ != 0)
+    {
+      for (FE_Utils::T_REFLIST_INFO::ITERATOR i (*this->parent_info_);
+           !i.done ();
+           i.advance ())
+        {
+          FE_Utils::T_Ref_Info *info = 0;
+          i.next (info);
+          info->destroy ();
+        }
+    }
 
-  // Queue element destructor cleans up element members.
   delete this->parent_info_;
   this->parent_info_ = 0;
+  
+  this->FE_InterfaceHeader::destroy ();
 }
 
 // Data accessors.
-
-UTL_ScopedName *
-FE_Template_InterfaceHeader::name (void) const
-{
-  return this->interface_name_;
-}
-
-AST_Template_Interface **
-FE_Template_InterfaceHeader::inherits (void) const
-{
-  return this->inherits_;
-}
-
-long
-FE_Template_InterfaceHeader::n_inherits (void) const
-{
-  return this->n_inherits_;
-}
-
-AST_Template_Interface **
-FE_Template_InterfaceHeader::inherits_flat (void) const
-{
-  return this->inherits_flat_;
-}
-
-long
-FE_Template_InterfaceHeader::n_inherits_flat (void) const
-{
-  return this->n_inherits_flat_;
-}
 
 FE_Utils::T_PARAMLIST_INFO *
 FE_Template_InterfaceHeader::param_info (void) const
 {
   return this->param_info_;
+}
+
+void
+FE_Template_InterfaceHeader::compile_template_inheritance (void)
+{
+  if (this->parent_info_ == 0)
+    {
+      return;
+    }
+    
+  for (FE_Utils::T_REFLIST_INFO::ITERATOR i (*this->parent_info_);
+       !i.done ();
+       i.advance ())
+    {
+    }
 }
 

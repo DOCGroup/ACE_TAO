@@ -199,7 +199,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Interface *i)
     }
 
   // If we've seen it already then don't expand again.
-  if (already_seen (i))
+  if (this->already_seen (i))
     {
       return;
     }

@@ -45,7 +45,7 @@ public:
     long nih,
     AST_Interface **ih_flat,
     long nih_flat,
-    const FE_Utils::T_PARAMLIST_INFO &template_params);
+    const FE_Utils::T_PARAMLIST_INFO *template_params);
 
   virtual ~be_template_interface (void);
 

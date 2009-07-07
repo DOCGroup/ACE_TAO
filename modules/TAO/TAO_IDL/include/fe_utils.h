@@ -28,7 +28,8 @@ struct TAO_IDL_FE_Export FE_Utils
 
     T_Ref_Info (void);
     T_Ref_Info (UTL_ScopedName *n, UTL_StrList *strs);
-    ~T_Ref_Info (void);
+    
+    void destroy (void);
   };
 
   typedef ACE_Unbounded_Queue<T_Ref_Info> T_REFLIST_INFO;

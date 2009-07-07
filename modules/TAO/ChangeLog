@@ -1,3 +1,26 @@
+Tue Jul  7 21:12:52 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        
+          - Changed FE_Template_InterfaceHeader to inherit from
+            FE_InterfaceHeader and reuse much of its code.
+            
+          - Added factory methods for creating template interfaces
+            in the AST.
+
 Tue Jul  7 18:56:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_utils.cpp:
