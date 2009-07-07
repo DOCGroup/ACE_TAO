@@ -1,4 +1,5 @@
 #ifndef DDS_RFT2_DCPS_IDL
+#define DDS_RFT2_DCPS_IDL
 
 #define DOMAINID_TYPE_NATIVE    long
 #define HANDLE_TYPE_NATIVE      long

@@ -1,0 +1,113 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p Hello_Base Sender"
+
+project(Hello_Base_Receiver_Connector_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=RECEIVER_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=Receiver_Connector_stub_export.h \
+              -Wb,skel_export_macro=RECEIVER_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=Receiver_Connector_svnt_export.h \
+              -I$(CIAO_ROOT)/connectors \
+              -Wb,exec_export_macro=RECEIVER_CONNECTOR_EXEC_Export \
+              -Wb,exec_export_include=Receiver_Connector_exec_export.h \
+              -DRECEIVER_CONN_WORKAROUND
+
+  IDL_Files {
+    Hello_Receiver_Connector.idl3
+  }
+}
+
+project(Hello_Base_Receiver_Connector_lem_gen) : ciaoidldefaults {
+  after += Hello_Base_Receiver_Connector_idl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=RECEIVER_CONNECTOR_EXEC_Export \
+              -Wb,export_include=Receiver_Connector_exec_export.h \
+              -SS \
+               -I$(CIAO_ROOT)/connectors \
+              -DRECEIVER_CONN_WORKAROUND
+
+  IDL_Files {
+    Hello_Receiver_ConnectorE.idl
+  }
+}
+
+project(Hello_Base_Receiver_Connector_stub) : ccm_stub {
+  after += Hello_Base_Receiver_Connector_idl_gen Hello_Base_Receiver_idl_gen Hello_Receiver_Base_idl_gen
+  
+  sharedname = Receiver_Connector_stub
+  dynamicflags   = RECEIVER_CONNECTOR_STUB_BUILD_DLL
+  includes += $(CIAO_ROOT)/connectors
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Hello_Receiver_ConnectorC.cpp
+  }
+
+  Header_Files {
+    Hello_Receiver_ConnectorC.h
+    Receiver_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    Hello_Receiver_ConnectorC.inl
+  }
+}
+
+project(Hello_Base_Receiver_Connector_exec) : ciao_executor, nddslib {
+  after   += Hello_Base_Receiver_Connector_lem_gen Hello_Base_Receiver_Connector_stub
+  sharedname = Receiver_Connector_exec
+  libs += Receiver_Connector_stub 
+  includes += $(CIAO_ROOT)/connectors
+
+  dynamicflags   = RECEIVER_CONNECTOR_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Hello_Receiver_ConnectorEC.cpp
+    Hello_Receiver_Connector_exec.cpp
+  }
+
+  Header_Files {
+    Hello_Receiver_ConnectorEC.h
+    Hello_Receiver_Connector_exec.h
+    Hello_Receiver_Connector_exec_export.h
+  }
+
+  Inline_Files {
+    Hello_Receiver_ConnectorEC.inl
+  }
+}
+
+
+project(Hello_Base_Receiver_Connector_svnt) : ciao_servant {
+  after      += Hello_Base_Receiver_Connector_exec
+  sharedname  = Receiver_Connector_svnt
+  libs       += Receiver_Connector_exec \
+                Receiver_Connector_stub 
+  includes += $(CIAO_ROOT)/connectors                
+  dynamicflags = RECEIVER_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Hello_ReceiverS.cpp
+    Hello_Receiver_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    Hello_ReceiverS.h
+    Hello_Receiver_Connector_svnt.h
+    Receiver_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    Hello_ReceiverS.inl
+  }
+}
+
+
