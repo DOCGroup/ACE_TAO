@@ -91,10 +91,6 @@ enum schedparam_policy {
 // Use of <malloc.h> is deprecated.
 #define ACE_LACKS_MALLOC_H
 
-
-// This won't be necessary after it is fixed in the system include headers.
-extern "C" { char * cuserid (char *s); }
-
 // Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_UALARM
