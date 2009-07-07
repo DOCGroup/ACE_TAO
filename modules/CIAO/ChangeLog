@@ -1,3 +1,12 @@
+Tue Jul  7 15:43:57 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL_Test/Lem_Specific_Export:
+        * tests/IDL_Test/Lem_Specific_Export/Lem_Export.idl:
+        * tests/IDL_Test/Lem_Specific_Export/Lem_Export.mpc:
+
+          Test which apparently shows the export file not being
+          generated for a LEM project. 
+        
 Tue Jul  7 00:49:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
 
@@ -8,13 +17,13 @@ Tue Jul  7 00:49:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.idl:
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
-        
-          Added missing files. 
-        
+
+          Added missing files.
+
         * connectors/dds4ccm/idl/dds4ccm.mpc:
 
           corrected spelling error.
-        
+
         * connectors/dds4ccm/examples/Hello/Sender/Sender_exec_export.h:
         * connectors/dds4ccm/examples/Hello/Sender/Sender_stub_export.h:
         * connectors/dds4ccm/examples/Hello/Sender/Sender_svnt_export.h:
