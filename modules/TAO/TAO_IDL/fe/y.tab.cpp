@@ -895,9 +895,9 @@ static const tao_yytype_uint16 tao_yyrline[] =
     5390,  5426,  5388,  5460,  5496,  5458,  5528,  5529,  5530,  5534,
     5535,  5539,  5567,  5598,  5643,  5648,  5596,  5665,  5675,  5694,
     5706,  5705,  5745,  5795,  5800,  5743,  5817,  5822,  5830,  5835,
-    5840,  5845,  5850,  5863,  5868,  5873,  5882,  5886,  5891,  5881,
-    5911,  5928,  5948,  5947,  5969,  5976,  5990,  5996,  6003,  6022,
-    6039,  6046,  6056,  6067,  6091,  6098
+    5840,  5845,  5850,  5863,  5868,  5873,  5882,  5904,  5909,  5881,
+    5926,  5943,  5963,  5962,  5984,  5991,  6005,  6011,  6018,  6037,
+    6054,  6061,  6071,  6082,  6106,  6113
 };
 #endif
 
@@ -8600,24 +8600,24 @@ tao_yyreduce:
 
     {
 // template_interface_def : template_interface_header
-      UTL_Scope *s = idl_global->scopes ().top_non_null ();
-      
-      AST_Template_Interface *i =
-        idl_global->gen ()->create_template_interface (
-          (tao_yyvsp[(1) - (2)].thval)->name (),
-          (tao_yyvsp[(1) - (2)].thval)->inherits (),
-          (tao_yyvsp[(1) - (2)].thval)->n_inherits (),
-          (tao_yyvsp[(1) - (2)].thval)->inherits_flat (),
-          (tao_yyvsp[(1) - (2)].thval)->n_inherits_flat (),
-          (tao_yyvsp[(1) - (2)].thval)->param_info ());
-          
-      (void) s->fe_add_interface (i);
-      
-      (tao_yyvsp[(1) - (2)].thval)->destroy ();
-      delete (tao_yyvsp[(1) - (2)].thval);
-      (tao_yyvsp[(1) - (2)].thval) = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
-      idl_global->scopes ().push (i);
+          AST_Template_Interface *i =
+            idl_global->gen ()->create_template_interface (
+              (tao_yyvsp[(1) - (1)].thval)->name (),
+              (tao_yyvsp[(1) - (1)].thval)->inherits (),
+              (tao_yyvsp[(1) - (1)].thval)->n_inherits (),
+              (tao_yyvsp[(1) - (1)].thval)->inherits_flat (),
+              (tao_yyvsp[(1) - (1)].thval)->n_inherits_flat (),
+              (tao_yyvsp[(1) - (1)].thval)->param_info ());
+
+          (void) s->fe_add_interface (i);
+
+          (tao_yyvsp[(1) - (1)].thval)->destroy ();
+          delete (tao_yyvsp[(1) - (1)].thval);
+          (tao_yyvsp[(1) - (1)].thval) = 0;
+
+          idl_global->scopes ().push (i);
         }
     break;
 
