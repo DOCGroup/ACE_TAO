@@ -18,7 +18,8 @@ FE_Utils::T_Ref_Info::T_Ref_Info (UTL_ScopedName *n,
 {
 }
 
-FE_Utils::T_Ref_Info::~T_Ref_Info (void)
+void
+FE_Utils::T_Ref_Info::destroy (void)
 {
   if (this->name != 0)
     {

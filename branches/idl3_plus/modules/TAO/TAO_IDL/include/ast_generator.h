@@ -72,11 +72,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
 
+#include "fe_utils.h"
+
 class UTL_LabelList;
 class UTL_ExprList;
 class AST_Root;
 class AST_EventType;
 class AST_EventTypeFwd;
+class AST_Template_Interface;
 
 // Defines base class for node generators.
 
@@ -323,10 +326,10 @@ public:
   virtual AST_String *create_wstring (AST_Expression *v);
 
   // Create a node representing a type renaming (typedef).
-  virtual AST_Typedef*create_typedef (AST_Type *bt,
-                                      UTL_ScopedName *n,
-                                      bool is_local,
-                                      bool is_abstract);
+  virtual AST_Typedef *create_typedef (AST_Type *bt,
+                                       UTL_ScopedName *n,
+                                       bool is_local,
+                                       bool is_abstract);
 
   // Create a node representing a native.
   virtual AST_Native *create_native (UTL_ScopedName *n);
@@ -337,6 +340,15 @@ public:
   // Create a node representing a valuebox.
   virtual AST_ValueBox *create_valuebox (UTL_ScopedName *n,
                                          AST_Type *boxed_type);
+                                         
+  virtual
+  AST_Template_Interface *create_template_interface (
+    UTL_ScopedName *n,
+    AST_Interface **ih,
+    long nih,
+    AST_Interface **ih_flat,
+    long nih_flat,
+    const FE_Utils::T_PARAMLIST_INFO *template_params);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

@@ -263,6 +263,15 @@ public:
 
   // Create a node representing a OBV factory construct
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
+                                         
+  virtual
+  AST_Template_Interface *create_template_interface (
+    UTL_ScopedName *n,
+    AST_Interface **ih,
+    long nih,
+    AST_Interface **ih_flat,
+    long nih_flat,
+    const FE_Utils::T_PARAMLIST_INFO *template_params);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

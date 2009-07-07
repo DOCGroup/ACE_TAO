@@ -8600,6 +8600,24 @@ tao_yyreduce:
 
     {
 // template_interface_def : template_interface_header
+      UTL_Scope *s = idl_global->scopes ().top_non_null ();
+      
+      AST_Template_Interface *i =
+        idl_global->gen ()->create_template_interface (
+          (tao_yyvsp[(1) - (2)].thval)->name (),
+          (tao_yyvsp[(1) - (2)].thval)->inherits (),
+          (tao_yyvsp[(1) - (2)].thval)->n_inherits (),
+          (tao_yyvsp[(1) - (2)].thval)->inherits_flat (),
+          (tao_yyvsp[(1) - (2)].thval)->n_inherits_flat (),
+          (tao_yyvsp[(1) - (2)].thval)->param_info ());
+          
+      (void) s->fe_add_interface (i);
+      
+      (tao_yyvsp[(1) - (2)].thval)->destroy ();
+      delete (tao_yyvsp[(1) - (2)].thval);
+      (tao_yyvsp[(1) - (2)].thval) = 0;
+
+      idl_global->scopes ().push (i);
         }
     break;
 
@@ -8628,10 +8646,7 @@ tao_yyreduce:
           /*
            * Done with this interface - pop it off the scopes stack
            */
- //         idl_global->scopes ().pop ();
-          (tao_yyvsp[(1) - (7)].thval)->destroy ();
-          delete (tao_yyvsp[(1) - (7)].thval);
-          (tao_yyvsp[(1) - (7)].thval) = 0;
+          idl_global->scopes ().pop ();
         }
     break;
 

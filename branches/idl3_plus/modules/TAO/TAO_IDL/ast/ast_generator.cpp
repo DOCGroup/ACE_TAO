@@ -79,6 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
+#include "ast_template_interface.h"
 #include "ast_exception.h"
 #include "ast_enum.h"
 #include "ast_attribute.h"
@@ -918,5 +919,27 @@ AST_Generator::create_valuebox (UTL_ScopedName *n,
                   AST_ValueBox (n, boxed_type),
                   0);
 
+  return retval;
+}
+
+AST_Template_Interface *
+AST_Generator::create_template_interface (
+  UTL_ScopedName *n,
+  AST_Interface **ih,
+  long nih,
+  AST_Interface **ih_flat,
+  long nih_flat,
+  const FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  AST_Template_Interface *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Template_Interface (n,
+                                          ih,
+                                          nih,
+                                          ih_flat,
+                                          nih_flat,
+                                          template_params),
+                  0);
+                  
   return retval;
 }
