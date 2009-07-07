@@ -1,3 +1,22 @@
+Tue Jul  7 16:27:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        
+          Added check to skip code generation for declarations
+          from included IDL files. Thanks to Will Otte
+          <wotte@dre.vanderbilt.edu> for reporting the problem.
+          
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Cosmetic changes.
+
 Wed Jul  1 16:27:07 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component.cpp:

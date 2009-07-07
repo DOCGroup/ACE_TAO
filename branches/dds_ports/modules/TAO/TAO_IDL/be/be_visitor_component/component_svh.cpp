@@ -50,6 +50,11 @@ be_visitor_component_svh::~be_visitor_component_svh (void)
 int
 be_visitor_component_svh::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+    
   node_ = node;
   
   if (! be_global->gen_lem_force_all ())

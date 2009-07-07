@@ -759,6 +759,7 @@ IDL_GlobalData::validate_included_idl_files (void)
             {
               post_tmp = post_preproc_includes[i]->get_string ();
               full_path = ACE_OS::realpath (post_tmp, post_abspath);
+              
               if (full_path != 0
                   && this->path_cmp (pre_abspath, post_abspath) == 0
                   && ACE_OS::access (post_abspath, R_OK) == 0)
