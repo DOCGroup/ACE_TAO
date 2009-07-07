@@ -1,3 +1,11 @@
+Tue Jul  7 00:10:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_connector_base.mpb:
+        * MPC/config/connectoridldefaults.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+
+          Adding new base projects. 
+        
 Tue Jul  7 00:07:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3:
@@ -20,10 +28,10 @@ Tue Jul  7 00:07:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/examples/Hello/Sender/Sender_exec_export.h:
         * connectors/dds4ccm/examples/Hello/Sender/Sender_stub_export.h:
         * connectors/dds4ccm/examples/Hello/Sender/Sender_svnt_export.h:
-        
-          Example now compiles, but there is no business logic yet.  
-          There are still missing symbols that I need to ferret out.  
-          
+
+          Example now compiles, but there is no business logic yet.
+          There are still missing symbols that I need to ferret out.
+
         * connectors/dds4ccm/idl/dds4ccm.mpc:
         * connectors/dds4ccm/idl/dds4ccm_Base.idl3:
         * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
@@ -31,8 +39,8 @@ Tue Jul  7 00:07:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3:
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
 
-          Malformed include guards, and small updates to go with standard. 
-        
+          Malformed include guards, and small updates to go with standard.
+
         * connectors/dds4ccm/examples/Hello/Hello_Base:
         * connectors/dds4ccm/examples/Hello/Hello_Base.idl3:
         * connectors/dds4ccm/examples/Hello/Hello_Base.idl3p:
