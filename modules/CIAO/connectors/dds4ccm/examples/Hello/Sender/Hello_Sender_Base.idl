@@ -1,0 +1,14 @@
+// $Id$
+
+#include "dds4ccm/idl/dds4ccm_Base.idl3"
+
+module CCM_DDS
+{
+  interface string_Writer
+  {
+    typedef sequence<string> stringSeq;
+    
+    void write (in string an_instance)
+      raises (InternalError);
+  };
+};
