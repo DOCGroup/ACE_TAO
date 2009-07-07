@@ -73,7 +73,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_type.h"
 #include "utl_scope.h"
-#include "ace/Unbounded_Queue.h"
 
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
@@ -153,14 +152,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  struct ParamInfo
-  {
-    AST_Decl::NodeType type;
-    ACE_CString name;
-  };
-
-  typedef ACE_Unbounded_Queue<ParamInfo> PARAMLIST_INFO;
 
 protected:
   // Data.
