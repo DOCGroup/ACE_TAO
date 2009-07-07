@@ -1,9 +1,16 @@
+Tue Jul  7 19:14:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+
+          Components now deploy. 
+        
 Tue Jul  7 18:32:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
-        
-          Properly init the UUID generator. 
-        
+
+          Properly init the UUID generator.
+
 Tue Jul  7 18:17:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
