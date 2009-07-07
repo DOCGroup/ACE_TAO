@@ -135,18 +135,15 @@ project('."$unique_prefix"."$com_name".'_exec) : ciao_executor ' . "$base_projs"
   }
 
   Source_Files {'."
-    $com_name".'EC.cpp'."
     $com_name".'_exec.cpp
   }
 
   Header_Files {'."
-    $com_name".'EC.h'."
     $com_name".'_exec.h'."
     $com_name".'_exec_export.h
   }
 
-  Inline_Files {'."
-    $com_name".'EC.inl
+  Inline_Files {
   }
 }
 ';

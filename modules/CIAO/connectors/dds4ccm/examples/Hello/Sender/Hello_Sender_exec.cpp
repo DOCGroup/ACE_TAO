@@ -90,7 +90,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     /* Your code here. */
   }
   
-  extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
@@ -141,7 +141,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     return retval;
   }
   
-  extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  extern "C" HELLO_SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_DDS_SenderHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =

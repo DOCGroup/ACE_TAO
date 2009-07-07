@@ -276,7 +276,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
     /* Your code here. */
   }
   
-  extern "C" SENDER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_SENDER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Hello_sender_Connector_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
@@ -327,7 +327,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
     return retval;
   }
   
-  extern "C" SENDER_CONNECTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
+  extern "C" HELLO_SENDER_CONNECTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_DDS_SenderConnectorHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =

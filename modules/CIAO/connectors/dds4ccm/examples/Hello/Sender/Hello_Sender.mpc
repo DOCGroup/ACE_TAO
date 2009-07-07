@@ -1,40 +1,38 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p Hello_Base Sender"
+// This file is generated with "generate_component_mpc.pl -b example_output, dds4ccm_base Hello_Sender"
 
-project(Hello_Base_Sender_idl_gen) : componentidldefaults {
+project(Hello_Sender_idl_gen) : connectoridldefaults , example_output, dds4ccm_base  {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
-              -Wb,stub_export_include=Sender_stub_export.h \
-              -Wb,skel_export_macro=SENDER_SVNT_Export \
-              -Wb,skel_export_include=Sender_svnt_export.h \
-              -Wb,exec_export_macro=SENDER_EXEC_Export \
-              -Wb,exec_export_include=Sender_exec_export.h \
-              -I $(CIAO_ROOT)/connectors
-  after += Hello_Sender_Base_idl_gen
+  idlflags += -Wb,stub_export_macro=HELLO_SENDER_STUB_Export \
+              -Wb,stub_export_include=Hello_Sender_stub_export.h \
+              -Wb,skel_export_macro=HELLO_SENDER_SVNT_Export \
+              -Wb,skel_export_include=Hello_Sender_svnt_export.h \
+              -Wb,exec_export_macro=HELLO_SENDER_EXEC_Export \
+              -Wb,exec_export_include=Hello_Sender_exec_export.h
+
   IDL_Files {
     Hello_Sender.idl
   }
 }
 
-project(Hello_Base_Sender_lem_gen) : ciaoidldefaults {
+project(Hello_Sender_lem_gen) : ciaoidldefaults , example_output, dds4ccm_base  {
+  after += Hello_Sender_idl_gen
   custom_only = 1
-  after += Hello_Base_Sender_idl_gen
-  idlflags += -Wb,export_macro=SENDER_EXEC_Export \
-              -Wb,export_include=Sender_exec_export.h \
-              -SS \
-              -I $(CIAO_ROOT)/connectors
+  idlflags += -Wb,stub_export_macro=HELLO_SENDER_LEM_STUB_Export \
+              -Wb,stub_export_include=Hello_Sender_lem_stub_export.h \
+              -SS -Gxhst -I$(CIAO_ROOT)/connectors
 
   IDL_Files {
     Hello_SenderE.idl
   }
 }
 
-project(Hello_Base_Sender_stub) : ccm_stub, dds4ccm_base {
-  after += Hello_Base_Sender_idl_gen Hello_Sender_Base_stub 
-  libs += Hello_Sender_Base_stub 
-  includes += $(CIAO_ROOT)/connectors
-  sharedname = Sender_stub
-  dynamicflags   = SENDER_STUB_BUILD_DLL
+project(Hello_Sender_stub) : ccm_stub , example_output, dds4ccm_base  {
+  after += Hello_Sender_idl_gen Hello_Sender_Base_stub
+  libs  += Hello_Sender_Base_stub
+  
+  sharedname = Hello_Sender_stub
+  dynamicflags   = HELLO_SENDER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -45,33 +43,31 @@ project(Hello_Base_Sender_stub) : ccm_stub, dds4ccm_base {
 
   Header_Files {
     Hello_SenderC.h
-    Sender_stub_export.h
+    Hello_Sender_stub_export.h
   }
 
   Inline_Files {
-    SenderC.inl
+    Hello_SenderC.inl
   }
 }
 
-project(Hello_Base_Sender_exec) : ciao_executor, ciao_connector_base, dds4ccm_base {
-  after   += Hello_Base_Sender_lem_gen Hello_Base_Sender_stub
-  sharedname = Sender_exec
-  libs += Sender_stub 
-
-  dynamicflags   = SENDER_EXEC_BUILD_DLL
+project(Hello_Sender_lem_stub) : ccm_svnt , example_output, dds4ccm_base  {
+  after += Hello_Sender_lem_gen 
+  libs  += 
+  
+  sharedname = Hello_Sender_lem_stub
+  dynamicflags   = HELLO_SENDER_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
     Hello_SenderEC.cpp
-    Hello_Sender_exec.cpp
   }
 
   Header_Files {
     Hello_SenderEC.h
-    Hello_Sender_exec.h
-    Sender_exec_export.h
+    Hello_Sender_lem_stub_export.h
   }
 
   Inline_Files {
@@ -79,17 +75,37 @@ project(Hello_Base_Sender_exec) : ciao_executor, ciao_connector_base, dds4ccm_ba
   }
 }
 
+project(Hello_Sender_exec) : ciao_executor , example_output, dds4ccm_base  {
+  after   += Hello_Sender_lem_stub Hello_Sender_stub
+  sharedname = Hello_Sender_exec
+  libs += Hello_Sender_stub Hello_Sender_lem_stub 
+  
+  dynamicflags   = HELLO_SENDER_EXEC_BUILD_DLL
 
-project(Hello_Base_Sender_svnt) : ciao_servant, dds4ccm_base {
-  after      += Hello_Base_Sender_exec Hello_Sender_Base_svnt 
-  sharedname  = Sender_svnt
-  libs       += Sender_exec \
-                Sender_stub Hello_Sender_Base_stub \
-                Hello_Sender_Base_svnt 
-                
-  includes += $(CIAO_ROOT)/connectors
-  dynamicflags = SENDER_SVNT_BUILD_DLL
+  IDL_Files {
+  }
 
+  Source_Files {
+    Hello_Sender_exec.cpp
+  }
+
+  Header_Files {
+    Hello_Sender_exec.h
+    Hello_Sender_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Hello_Sender_svnt) : ciao_servant , example_output, dds4ccm_base  {
+  after      +=  Hello_Sender_Base_stub
+  sharedname  = Hello_Sender_svnt
+  libs       += Hello_Sender_stub Hello_Sender_lem_stub  Hello_Sender_Base_stub
+  
+  dynamicflags = HELLO_SENDER_SVNT_BUILD_DLL
+  
   IDL_Files {
   }
 

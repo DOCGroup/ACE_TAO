@@ -1,12 +1,12 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl Hello_Sender_Base"
+// This file is generated with "generate_component_mpc.pl -n -b example_output, dds4ccm_base Hello_Sender_Base"
 
-project(Hello_Sender_Base_idl_gen) : connectoridldefaults {
+project(Hello_Sender_Base_idl_gen) : connectoridldefaults , example_output, dds4ccm_base  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Sender_Base_stub_export.h \
-              -Wb,skel_export_macro=HELLO_SENDER_BASE_SVNT_Export \
-              -Wb,skel_export_include=Hello_Sender_Base_svnt_export.h \
+              -Wb,skel_export_macro=HELLO_SENDER_BASE_SKEL_Export \
+              -Wb,skel_export_include=Hello_Sender_Base_skel_export.h \
               -Wb,exec_export_macro=HELLO_SENDER_BASE_EXEC_Export \
               -Wb,exec_export_include=Hello_Sender_Base_exec_export.h
 
@@ -15,7 +15,7 @@ project(Hello_Sender_Base_idl_gen) : connectoridldefaults {
   }
 }
 
-project(Hello_Sender_Base_stub) : ccm_stub, dds4ccm_base {
+project(Hello_Sender_Base_stub) : ccm_stub , example_output, dds4ccm_base  {
   after += Hello_Sender_Base_idl_gen 
   libs  += 
   
@@ -39,11 +39,13 @@ project(Hello_Sender_Base_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(Hello_Sender_Base_svnt) : ciao_servant, dds4ccm_base {
-  sharedname  = Hello_Sender_Base_svnt
-  libs       += Hello_Sender_Base_stub 
+project(Hello_Sender_Base_skel) : ciao_executor , example_output, dds4ccm_base  {
+  after      +=  Hello_Sender_Base_stub
+  sharedname  = Hello_Sender_Base_skel
+  libs       += Hello_Sender_Base_stub
+ 
   
-  dynamicflags = HELLO_SENDER_BASE_SVNT_BUILD_DLL
+  dynamicflags = HELLO_SENDER_BASE_SKEL_BUILD_DLL
   
   IDL_Files {
   }
@@ -54,7 +56,7 @@ project(Hello_Sender_Base_svnt) : ciao_servant, dds4ccm_base {
 
   Header_Files {
     Hello_Sender_BaseS.h
-    Hello_Sender_Base_svnt_export.h
+    Hello_Sender_Base_skel_export.h
   }
 
   Inline_Files {

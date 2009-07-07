@@ -39,12 +39,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "Sender_exec_export.h"
+#include /**/ "Hello_Sender_exec_export.h"
 #include "tao/LocalObject.h"
 
 namespace CIAO_Hello_DDS_Sender_Impl
 {
-  class SENDER_EXEC_Export Sender_exec_i
+  class HELLO_SENDER_EXEC_Export Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -74,13 +74,13 @@ namespace CIAO_Hello_DDS_Sender_Impl
     ::Hello_DDS::CCM_Sender_Context_var context_;
   };
   
-  extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Sender_Impl (void);
 }
 
 namespace CIAO_Hello_DDS_Sender_Impl
 {
-  class SENDER_EXEC_Export SenderHome_exec_i
+  class HELLO_SENDER_EXEC_Export SenderHome_exec_i
     : public virtual SenderHome_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -101,7 +101,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     create (void);
   };
   
-  extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  extern "C" HELLO_SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_DDS_SenderHome_Impl (void);
 }
 
