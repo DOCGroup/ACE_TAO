@@ -34,6 +34,7 @@ namespace CIAO
 
     {
       CIAO_TRACE ("CIAO_ServerActivator_i::CIAO_ServerActivator_i");
+      ACE_Utils::UUID_GENERATOR::instance ()->init ();
     }
 
     CIAO_ServerActivator_i::~CIAO_ServerActivator_i(void)
