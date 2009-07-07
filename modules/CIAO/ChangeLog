@@ -1,3 +1,11 @@
+Tue Jul  7 16:31:47 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Included_Component/IC_Foo.mpc:
+        * tests/IDL_Test/Included_Component/IC_Bar.mpc:
+        
+          Added 'after' lines for *_svnt projects, and add executor
+          projects.
+
 Tue Jul  7 15:43:57 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL_Test/Lem_Specific_Export:
