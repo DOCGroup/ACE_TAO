@@ -250,7 +250,10 @@ typedef union TAO_YYSTYPE
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
   AST_Decl::NodeType            ntval;          /* Node type value      */
-  AST_Interface::ParamInfo      *pival;         /* Template interface param */
+  FE_Utils::T_Param_Info        *pival;         /* Template interface param */
+  FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
+  FE_Utils::T_Ref_Info          *trval;         /* Template interface info */
+  FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
 }
 /* Line 1489 of yacc.c.  */
 

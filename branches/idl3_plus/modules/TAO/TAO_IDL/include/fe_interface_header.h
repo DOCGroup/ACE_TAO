@@ -115,12 +115,12 @@ protected:
   // Called from compile_inheritance().
   int check_inherit (AST_Interface *i,
                      bool for_valuetype);
-                     
+
   void add_inheritance (AST_Interface *i);
   void add_inheritance_flat (AST_Interface *i);
   bool already_seen (AST_Interface *ip);
   bool already_seen_flat (AST_Interface *ip);
-                     
+
   // Data.
 protected:
   UTL_ScopedName *interface_name_;

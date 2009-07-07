@@ -12,7 +12,7 @@ AST_Template_Interface::AST_Template_Interface (
       long nih,
       AST_Interface **ih_flat,
       long nih_flat,
-      const PARAMLIST_INFO &template_params)
+      const FE_Utils::T_PARAMLIST_INFO &template_params)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_interface,

@@ -106,6 +106,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_event_header.h"
 #include "fe_component_header.h"
 #include "fe_home_header.h"
+#include "fe_utils.h"
 #include "utl_identifier.h"
 #include "utl_err.h"
 #include "utl_string.h"
@@ -171,7 +172,10 @@ AST_Decl *tao_enum_constant_decl = 0;
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
   AST_Decl::NodeType            ntval;          /* Node type value      */
-  AST_Interface::ParamInfo      *pival;         /* Template interface param */
+  FE_Utils::T_Param_Info        *pival;         /* Template interface param */
+  FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
+  FE_Utils::T_Ref_Info          *trval;         /* Template interface info */
+  FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
 }
 
 /*
@@ -282,7 +286,8 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <idlist>  home_inheritance_spec primary_key_spec
 
 %type <slval>   opt_context at_least_one_string_literal
-%type <slval>   string_literals
+%type <slval>   string_literals template_param_refs
+%type <slval>   at_least_one_template_param_ref
 
 %type <nlval>   at_least_one_scoped_name scoped_names inheritance_spec
 %type <nlval>   opt_raises opt_getraises opt_setraises supports_spec
@@ -333,6 +338,17 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <ntval>   type_classifier
 
 %type <pival>   template_param
+
+%type <plval>   template_params at_least_one_template_param
+
+%type <sval>    template_param_ref
+
+%type <trval>   template_ref
+
+%type <rlval>   template_refs at_least_one_template_ref
+%type <rlval>   template_inheritance_spec
+
+%type <thval>   template_interface_header
 %%
 
 /*
@@ -5873,7 +5889,7 @@ template_interface_def
         }
         exports
         {
-//      template_exports
+//      exports - TODO: change to include concatenated identifiers
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
         }
         '}'
@@ -5885,28 +5901,26 @@ template_interface_def
            * Done with this interface - pop it off the scopes stack
            */
  //         idl_global->scopes ().pop ();
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
         }
         ;
 
 template_interface_header
-        : template_interface_decl
+        : interface_decl at_least_one_template_param template_inheritance_spec
         {
-// template_interface_header : template_interface_decl
-        }
-        template_inheritance_spec
-        {
-//        template_inheritance_spec
-        }
-        ;
+// template_interface_header : interface_decl at_least_one_template_param template_inheritance_spec
+          UTL_ScopedName *n = 0;
+          ACE_NEW_RETURN (n,
+                          UTL_ScopedName ($1, 0),
+                          1);
 
-template_interface_decl
-        : interface_decl
-        {
-// template_interface_decl : interface_decl
-        }
-        at_least_one_template_param
-        {
-//        at_least_one_template_param
+          ACE_NEW_RETURN ($$,
+                          FE_Template_InterfaceHeader (n,
+                                                       $2,
+                                                       $3),
+                          1);
         }
         ;
 
@@ -5914,17 +5928,47 @@ at_least_one_template_param
         : '<' template_param template_params '>'
         {
 // at_least_one_template_param : '<' template_param template_params '>'
+          if ($3 == 0)
+            {
+              ACE_NEW_RETURN ($3,
+                              FE_Utils::T_PARAMLIST_INFO,
+                              1);
+            }
+
+          $3->enqueue_head (*$2);
+          delete $2;
+          $2 = 0;
+
+          $<plval>$ = $3;
         }
         ;
 
 template_params
-        : template_params ',' template_param
+        : template_params ','
         {
-// template_params : template_params ',' template_param
+// template_params : template_params ','
+          // Maybe add a new parse state to set here.
+        }
+        template_param
+        {
+//        template_param
+          if ($1 == 0)
+            {
+              ACE_NEW_RETURN ($1,
+                              FE_Utils::T_PARAMLIST_INFO,
+                              1);
+            }
+
+          $1->enqueue_tail (*$4);
+          delete $4;
+          $4 = 0;
+
+          $$ = $1;
         }
         | /* EMPTY */
         {
 //        /* EMPTY */
+          $<plval>$ = 0;
         }
         ;
 
@@ -5934,11 +5978,11 @@ template_param
 // template_param : type_classifier IDENTIFIER
 
           ACE_NEW_RETURN ($$,
-                          AST_Interface::ParamInfo,
-                          0);
+                          FE_Utils::T_Param_Info,
+                          1);
 
-          $$->type = $1;
-          $$->name = $2;
+          $<pival>$->type = $1;
+          $<pival>$->name = $2;
         }
         ;
 
@@ -5946,10 +5990,12 @@ template_inheritance_spec
         : ':' at_least_one_template_ref
         {
 // template_inheritance_spec : ':' at_least_one_template_ref
+          $<rlval>$ = $2;
         }
         | /* EMPTY */
         {
 //        /* EMPTY */
+          $<rlval>$ = 0;
         }
         ;
 
@@ -5957,6 +6003,18 @@ at_least_one_template_ref
         : template_ref template_refs
         {
 // at_least_one_template_ref : template_ref template_refs
+          if ($2 == 0)
+            {
+              ACE_NEW_RETURN ($2,
+                              FE_Utils::T_REFLIST_INFO,
+                              1);
+            }
+
+          $2->enqueue_head (*$1);
+          delete $1;
+          $1 = 0;
+
+          $<rlval>$ = $2;
         }
         ;
 
@@ -5964,10 +6022,23 @@ template_refs
         : template_refs ',' template_ref
         {
 // template_refs : template_refs ',' template_ref
+          if ($1 == 0)
+            {
+              ACE_NEW_RETURN ($1,
+                              FE_Utils::T_REFLIST_INFO,
+                              1);
+
+              $1->enqueue_tail (*$3);
+              delete $3;
+              $3 = 0;
+
+              $<rlval>$ = $1;
+            }
         }
         | /* EMPTY */
         {
 //        /* EMPTY */
+          $<rlval>$ = 0;
         }
         ;
 
@@ -5975,6 +6046,9 @@ template_ref
         : scoped_name '<' at_least_one_template_param_ref '>'
         {
 // template_ref : scoped_name '<' at_least_one_template_param_ref '>'
+          ACE_NEW_RETURN ($$,
+                          FE_Utils::T_Ref_Info ($1, $3),
+                          1);
         }
         ;
 
@@ -5982,6 +6056,10 @@ at_least_one_template_param_ref
         : template_param_ref template_param_refs
         {
 // at_least_one_template_param_ref : template_param_ref template_param_refs
+          ACE_NEW_RETURN ($$,
+                          UTL_StrList ($1,
+                                       $2),
+                          1);
         }
         ;
 
@@ -5989,10 +6067,30 @@ template_param_refs
         : template_param_refs ',' template_param_ref
         {
 // template_param_refs : template_param_refs ',' template_param_ref
+          if ($1 == 0)
+            {
+              ACE_NEW_RETURN ($1,
+                              UTL_StrList ($3,
+                                           0),
+                              1);
+            }
+          else
+            {
+              UTL_StrList *l = 0;
+              ACE_NEW_RETURN (l,
+                              UTL_StrList ($3,
+                                           0),
+                              1);
+
+              $1->nconc (l);
+            }
+
+          $<slval>$ = $1;
         }
         | /* EMPTY */
         {
 //        /* EMPTY */
+          $<slval>$ = 0;
         }
         ;
 
@@ -6000,6 +6098,9 @@ template_param_ref
         : IDENTIFIER
         {
 // template_param_ref : IDENTIFIER
+          ACE_NEW_RETURN ($$,
+                          UTL_String ($1),
+                          1);
         }
         ;
 

@@ -1,8 +1,37 @@
+Tue Jul  7 18:56:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/include/fe_utils.h:
+
+          New files, defining datatypes used to hold information about a
+          template interface's template parameters and inheritance.
+ 
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          - Moved template interface info datatypes from class AST_Interface
+            to struct FE_Utils.
+
+          - Cosmetic changes to ast_component.h.
+
+          - Added semantic actions for template interface template parameters
+            and inheritance.
+
 Fri Jul  3 23:40:25 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
         * TAO_IDL/fe/lex.yy.cpp:
-        
+
           Added missing include.
 
 Fri Jul  3 23:26:45 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>

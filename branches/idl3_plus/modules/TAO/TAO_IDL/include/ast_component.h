@@ -45,7 +45,7 @@ public:
     Identifier *id;
     AST_Type *impl;
     bool is_multiple;
-    
+
     // These structs are queued, in a separate queue for each port type,
     // this helps some backends get a total ordering for a component's 
     // ports and attributes.
