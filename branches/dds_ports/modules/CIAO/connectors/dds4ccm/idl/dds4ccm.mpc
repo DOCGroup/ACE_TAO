@@ -31,7 +31,7 @@ project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib {
   Header_Files {
     dds4ccm_BaseC.h
     dds4ccm_PortStatusListenerC.h
-    dds4ccm_ListnerControlC.h
+    dds4ccm_ListenerControlC.h
     dds4ccm_ConnectorStatusListenerC.h
     dds_rtf2_dcpsC.h
   }
@@ -39,7 +39,7 @@ project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib {
   Source_Files {
     dds4ccm_BaseC.cpp
     dds4ccm_PortStatusListenerC.cpp
-    dds4ccm_ListnerControlC.cpp
+    dds4ccm_ListenerControlC.cpp
     dds4ccm_ConnectorStatusListenerC.cpp
     dds_rtf2_dcpsC.cpp
   }
@@ -65,7 +65,7 @@ project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib {
   Source_Files {
     dds4ccm_BaseS.cpp
     dds4ccm_PortStatusListenerS.cpp
-    dds4ccm_ListnerControlS.cpp
+    dds4ccm_ListenerControlS.cpp
     dds4ccm_ConnectorStatusListenerS.cpp
     dds_rtf2_dcpsS.cpp
   }

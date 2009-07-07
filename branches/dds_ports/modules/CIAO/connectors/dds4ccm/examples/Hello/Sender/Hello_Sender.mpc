@@ -53,7 +53,7 @@ project(Hello_Base_Sender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(Hello_Base_Sender_exec) : ciao_executor, ciao_connector_base {
+project(Hello_Base_Sender_exec) : ciao_executor, ciao_connector_base, dds4ccm_base {
   after   += Hello_Base_Sender_lem_gen Hello_Base_Sender_stub
   sharedname = Sender_exec
   libs += Sender_stub 
@@ -80,7 +80,7 @@ project(Hello_Base_Sender_exec) : ciao_executor, ciao_connector_base {
 }
 
 
-project(Hello_Base_Sender_svnt) : ciao_servant {
+project(Hello_Base_Sender_svnt) : ciao_servant, dds4ccm_base {
   after      += Hello_Base_Sender_exec Hello_Sender_Base_svnt 
   sharedname  = Sender_svnt
   libs       += Sender_exec \

@@ -1,3 +1,26 @@
+Tue Jul  7 00:49:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.idl3:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
+        
+          Added missing files. 
+        
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+
+          corrected spelling error.
+        
+        * connectors/dds4ccm/examples/Hello/Sender/Sender_exec_export.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Sender_stub_export.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Sender_svnt_export.h:
+
+          Removed these files.
+
 Tue Jul  7 00:14:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/idl/dds4ccm_Connector_Base.idl3p:
@@ -21,7 +44,7 @@ Tue Jul  7 00:14:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/idl/dds4ccm_StateListener.idl3p:
         * connectors/dds4ccm/idl/dds4ccm_Updater.idl3p:
         * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p:
-          
+
           fixed malformed include guards.
 
 Tue Jul  7 00:10:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
