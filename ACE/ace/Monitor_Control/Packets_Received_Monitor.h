@@ -56,8 +56,10 @@ namespace ACE
       , public Linux_Network_Interface_Monitor
 #elif defined (ACE_HAS_KSTAT)
       , public Solaris_Network_Interface_Monitor
-#elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__)
+#elif defined (__NetBSD__) || defined (__OpenBSD__)
       , public BSD_Network_Interface_Monitor
+#elif defined (__FreeBSD__)
+      , public FreeBSD_Network_Interface_Monitor
 #else
       , public Null_Network_Interface_Monitor
 #endif
