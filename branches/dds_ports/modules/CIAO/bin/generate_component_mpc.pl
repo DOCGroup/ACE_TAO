@@ -12,7 +12,7 @@ use Getopt::Std;
 
 $flags = join (" ", @ARGV);
 
-if (!getopts ('np:l:c:u:h') || $opt_h) {
+if (!getopts ('np:l:c:u:b:h') || $opt_h) {
     print "generate_component_mpc.pl [-h] component_name\n";
     print "\n";
     print "    -h         print help message explaining various options\n";
@@ -21,6 +21,7 @@ if (!getopts ('np:l:c:u:h') || $opt_h) {
     print "    -n         Suppress component make/project\n";
     print "    -c         Create a client makefile\n";
     print "    -u         Unique project name prefix (if not defined, name for -p flag will be used). \n";
+    print "    -b         common base project(s) for all generated projects\n";
     print "\n";
     print "generate_component_mpc creates and save a minimum mpc file\n";
     print "called $com_name.mpc that is needed for a single component implementation\n";
@@ -37,6 +38,12 @@ $UCOM_NAME = uc $com_name;
 
 ##############################################################################
 # Prologue
+
+if (defined $opt_b) {
+    $base_projs = ", $opt_b ";
+} else {
+    $base_projs = " ";
+}
 
 if (defined $opt_n) {
     $svr_suffix = "_skel";
@@ -78,7 +85,7 @@ if (defined $opt_l) {
 
 if (defined $opt_c) {
     $client_def =
-'project ('."$unique_prefix"."$opt_c".') : ccm_stub, valuetype {
+'project ('."$unique_prefix"."$opt_c".') : ccm_stub, valuetype ' . "$base_projs" . ' {
   exename = '."$opt_c".'
   after += '."$unique_prefix"."$com_name".'_stub
   libs  += '."$com_name".'_stub '."$stub_depend"."
@@ -102,12 +109,12 @@ if (defined $opt_c) {
 if (! defined $opt_n) {
     $cidl_gen =
 '
-project('."$unique_prefix"."$com_name".'_lem_gen) : ciaoidldefaults {
+project('."$unique_prefix"."$com_name".'_lem_gen) : ciaoidldefaults ' . "$base_projs" . ' {
   after += '."$unique_prefix"."$com_name".'_idl_gen
   custom_only = 1
-  idlflags += -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export \
-              -Wb,export_include='."$com_name".'_exec_export.h \
-              -SS
+  idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_LEM_STUB_Export \
+              -Wb,stub_export_include='."$com_name".'_lem_stub_export.h \
+              -SS -Gxhst
 
   IDL_Files {'."
     $com_name".'E.idl
@@ -117,10 +124,10 @@ project('."$unique_prefix"."$com_name".'_lem_gen) : ciaoidldefaults {
 
     $component_def =
 '
-project('."$unique_prefix"."$com_name".'_exec) : ciao_executor {
-  after   += '."$unique_prefix"."$com_name".'_lem_gen '."$unique_prefix"."$com_name".'_stub
+project('."$unique_prefix"."$com_name".'_exec) : ciao_executor ' . "$base_projs" . ' {
+  after   += '."$unique_prefix"."$com_name".'_lem_stub '."$unique_prefix"."$com_name".'_stub
   sharedname = '."$com_name".'_exec
-  libs += '."$com_name".'_stub '."$stub_depend
+  libs += '."$com_name".'_stub '."$com_name".'_lem_stub '."$stub_depend
   $lib_paths".'
   dynamicflags   = '."$UCOM_NAME".'_EXEC_BUILD_DLL
 
@@ -156,10 +163,9 @@ $cli_idlflags =
 
 $cli_base = "ccm_stub";
 $svr_base = "ciao_servant";
-$svr_after = "$unique_prefix"."$com_name".'_exec';
+$svr_after = "";
 
-$svr_libs = "$com_name".'_exec \
-                '."$com_name".'_stub';
+$svr_libs = "$com_name".'_stub '. "$com_name".'_lem_stub ';
 
 if (defined $opt_n) {
     $svr_after = "$unique_prefix"."$com_name".'_stub';
@@ -201,7 +207,7 @@ else {
 $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
-project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults {
+project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults ' . "$base_projs" . ' {
   custom_only = 1
   '."$cli_idlflags".'
 
@@ -210,7 +216,7 @@ project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults {
   }
 }
 '."$cidl_gen".'
-project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base".' {
+project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base ". "$base_projs" . ' {
   after += '."$unique_prefix"."$com_name".'_idl_gen '."$stub_depend".'
   libs  += '."$stub_depend"."
   $lib_paths".'
@@ -233,9 +239,33 @@ project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base".' {
     '."$com_name".'C.inl
   }
 }
+'.'
+project('."$unique_prefix"."$com_name".'_lem_stub) : ccm_svnt ' . "$base_projs" . ' {
+  after += '."$unique_prefix"."$com_name".'_lem_gen '."$stub_depend".'
+  libs  += '."$stub_depend"."
+  $lib_paths".'
+  sharedname = '."$com_name".'_lem_stub
+  dynamicflags   = '."$UCOM_NAME".'_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    '."$com_name".'EC.cpp
+  }
+
+  Header_Files {
+    '."$com_name".'EC.h
+    '."$com_name".'_lem_stub_export.h
+  }
+
+  Inline_Files {
+    '."$com_name".'EC.inl
+  }
+}
 '."$component_def".'
 
-project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base".' {
+project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base ". "$base_projs" . ' {
   after      += '."$svr_p_after "."$svr_after".'
   sharedname  = '."$com_name"."$svr_suffix".'
   libs       += '."$svr_libs $svr_plibs
