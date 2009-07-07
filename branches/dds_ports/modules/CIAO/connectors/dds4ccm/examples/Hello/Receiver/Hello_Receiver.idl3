@@ -1,4 +1,12 @@
-#include "Hello_Base.idl3p"
+// $Id$
+
+#ifndef HELLO_RECEIVER_IDL3
+#define HELLO_RECEIVER_IDL3
+
+#include <Components.idl>
+
+
+#include "Hello_Receiver_Base.idl3"
 
 module Hello_DDS
 {
@@ -11,3 +19,5 @@ module Hello_DDS
     provides CCM_DDS::PortStatusListener read_message_status;
   };
 };
+
+#endif

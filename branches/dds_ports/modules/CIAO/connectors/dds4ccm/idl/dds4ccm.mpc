@@ -1,4 +1,4 @@
-project (DDS4CCM_idl_gen) : ciaoidldefaults {
+project (DDS4CCM_idl_gen) : ciaoidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DDS4CCM_STUB_Export \
               -Wb,stub_export_include=dds4ccm_stub_export.h \
@@ -13,7 +13,7 @@ project (DDS4CCM_idl_gen) : ciaoidldefaults {
 
   IDL_Files {
     dds4ccm_PortStatusListener.idl3
-    dds4ccm_ListnerControl.idl3
+    dds4ccm_ListenerControl.idl3
     dds4ccm_ConnectorStatusListener.idl3
     dds_rtf2_dcps.idl
   }
@@ -57,7 +57,7 @@ project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib {
   Header_Files {
     dds4ccm_BaseS.h
     dds4ccm_PortStatusListenerS.h
-    dds4ccm_ListnerControlS.h
+    dds4ccm_ListenerControlS.h
     dds4ccm_ConnectorStatusListenerS.h
     dds_rtf2_dcpsS.h
   }

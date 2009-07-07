@@ -1,3 +1,55 @@
+Tue Jul  7 00:07:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3p:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl3:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Sender_exec_export.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Sender_stub_export.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Sender_svnt_export.h:
+        
+          Example now compiles, but there is no business logic yet.  
+          There are still missing symbols that I need to ferret out.  
+          
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_Base.idl3:
+        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
+        * connectors/dds4ccm/idl/dds4ccm_ListenerControl.idl3:
+        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+
+          Malformed include guards, and small updates to go with standard. 
+        
+        * connectors/dds4ccm/examples/Hello/Hello_Base:
+        * connectors/dds4ccm/examples/Hello/Hello_Base.idl3:
+        * connectors/dds4ccm/examples/Hello/Hello_Base.idl3p:
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base_skel_export.h:
+        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base_stub_export.h:
+        * connectors/dds4ccm/examples/Hello/Hello_Receiver.idl3:
+        * connectors/dds4ccm/examples/Hello/Hello_Receiver.idl3p:
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.cpp:
+        * connectors/dds4ccm/idl/dds4ccm_ListnerControl.idl3:
+
+          Removed these files.
+
 Mon Jul  6 19:47:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
 
@@ -9,7 +61,7 @@ Mon Jul  6 19:47:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           New test.  Codegen for IC_Bar attempts to generate
           IC_Foo elements.
-        
+
         * tests/IDL_Test/Forward_Declared_Ports:
         * tests/IDL_Test/Forward_Declared_Ports/FDP_Bar.idl:
         * tests/IDL_Test/Forward_Declared_Ports/FDP_Bar.mpc:
@@ -19,7 +71,7 @@ Mon Jul  6 19:47:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/IDL_Test/Forward_Declared_Ports/FDP_Foo.mpc:
 
           Removed these files, was determined this test case was
-          invalid. 
+          invalid.
 
 Mon Jul  6 13:47:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 

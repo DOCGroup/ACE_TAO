@@ -4,6 +4,6 @@ module Hello_DDS
 {
   component Receiver
   {
-    port DDS_Listen<string> read_message;
+    port DDS_RawListen<string> read_message;
   };
 };
