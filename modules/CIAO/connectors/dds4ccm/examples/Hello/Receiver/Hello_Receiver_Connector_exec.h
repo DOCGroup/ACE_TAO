@@ -39,12 +39,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "Receiver_Connector_exec_export.h"
+#include /**/ "Hello_Receiver_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
 namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 {
-  class RECEIVER_CONNECTOR_EXEC_Export string_Reader_exec_i
+  class HELLO_RECEIVER_CONNECTOR_EXEC_Export string_Reader_exec_i
     : public virtual ::CCM_DDS::CCM_string_Reader,
       public virtual ::CORBA::LocalObject
   {
@@ -53,9 +53,55 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     virtual ~string_Reader_exec_i (void);
     
     // Operations and attributes from ::CCM_DDS::string_Reader
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    read_all (
+      ::CCM_DDS::string_Reader::stringSeq_out instances,
+      ::CCM_DDS::ReadInfoSeq_out infos);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    read_all_history (
+      ::CCM_DDS::string_Reader::stringSeq_out instances,
+      ::CCM_DDS::ReadInfoSeq_out infos);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    read_one (
+      char *& an_instance,
+      ::CCM_DDS::ReadInfo_out info);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    read_one_history (
+      const char * an_instance,
+      ::CCM_DDS::string_Reader::stringSeq_out instances,
+      ::CCM_DDS::ReadInfoSeq_out infos);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::CCM_DDS::QueryFilter *
+    filter (void);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    filter (
+      const ::CCM_DDS::QueryFilter & filter);
   };
   
-  class RECEIVER_CONNECTOR_EXEC_Export ListenerControl_exec_i
+  class HELLO_RECEIVER_CONNECTOR_EXEC_Export ListenerControl_exec_i
     : public virtual ::CCM_DDS::CCM_ListenerControl,
       public virtual ::CORBA::LocalObject
   {
@@ -79,7 +125,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       ::CORBA::Boolean enabled);
   };
   
-  class RECEIVER_CONNECTOR_EXEC_Export DataReader_exec_i
+  class HELLO_RECEIVER_CONNECTOR_EXEC_Export DataReader_exec_i
     : public virtual ::DDS::CCM_DataReader,
       public virtual ::CORBA::LocalObject
   {
@@ -251,7 +297,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       ::DDS::InstanceHandle_t publication_handle);
   };
   
-  class RECEIVER_CONNECTOR_EXEC_Export Hello_receiver_Connector_exec_i
+  class HELLO_RECEIVER_CONNECTOR_EXEC_Export Hello_receiver_Connector_exec_i
     : public virtual Hello_receiver_Connector_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -290,8 +336,35 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     ::Hello_DDS::CCM_Hello_receiver_Connector_Context_var context_;
   };
   
-  extern "C" RECEIVER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_RECEIVER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Hello_receiver_Connector_Impl (void);
+}
+
+namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
+{
+  class HELLO_RECEIVER_CONNECTOR_EXEC_Export ReceiverConnectorHome_exec_i
+    : public virtual ReceiverConnectorHome_Exec,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    ReceiverConnectorHome_exec_i (void);
+    
+    virtual ~ReceiverConnectorHome_exec_i (void);
+    
+    // All operations and attributes.
+    
+    // Factory operations.
+    
+    // Finder operations.
+    
+    // Implicit operations.
+    
+    virtual ::Components::EnterpriseComponent_ptr
+    create (void);
+  };
+  
+  extern "C" HELLO_RECEIVER_CONNECTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
+  create_Hello_DDS_ReceiverConnectorHome_Impl (void);
 }
 
 #include /**/ "ace/post.h"

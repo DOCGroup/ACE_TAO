@@ -39,12 +39,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "Receiver_exec_export.h"
+#include /**/ "Hello_Receiver_exec_export.h"
 #include "tao/LocalObject.h"
 
 namespace CIAO_Hello_DDS_Receiver_Impl
 {
-  class RECEIVER_EXEC_Export string_RawListener_exec_i
+  class HELLO_RECEIVER_EXEC_Export string_RawListener_exec_i
     : public virtual ::CCM_DDS::CCM_string_RawListener,
       public virtual ::CORBA::LocalObject
   {
@@ -53,9 +53,17 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     virtual ~string_RawListener_exec_i (void);
     
     // Operations and attributes from ::CCM_DDS::string_RawListener
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    on_data (
+      const char * an_instance,
+      const ::CCM_DDS::ReadInfo & info);
   };
   
-  class RECEIVER_EXEC_Export PortStatusListener_exec_i
+  class HELLO_RECEIVER_EXEC_Export PortStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_PortStatusListener,
       public virtual ::CORBA::LocalObject
   {
@@ -82,7 +90,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
       const ::DDS::SampleLostStatus & status);
   };
   
-  class RECEIVER_EXEC_Export Receiver_exec_i
+  class HELLO_RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -118,8 +126,35 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     ::Hello_DDS::CCM_Receiver_Context_var context_;
   };
   
-  extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Receiver_Impl (void);
+}
+
+namespace CIAO_Hello_DDS_Receiver_Impl
+{
+  class HELLO_RECEIVER_EXEC_Export ReceiverHome_exec_i
+    : public virtual ReceiverHome_Exec,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    ReceiverHome_exec_i (void);
+    
+    virtual ~ReceiverHome_exec_i (void);
+    
+    // All operations and attributes.
+    
+    // Factory operations.
+    
+    // Finder operations.
+    
+    // Implicit operations.
+    
+    virtual ::Components::EnterpriseComponent_ptr
+    create (void);
+  };
+  
+  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  create_Hello_DDS_ReceiverHome_Impl (void);
 }
 
 #include /**/ "ace/post.h"
