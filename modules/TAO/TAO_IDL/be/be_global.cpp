@@ -2900,6 +2900,8 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // Disable skeleton file generation.
                 be_global->gen_skel_files (false);
+                be_global->gen_server_inline (false);
+                be_global->gen_server_skeleton (false);
               }
             else
               {

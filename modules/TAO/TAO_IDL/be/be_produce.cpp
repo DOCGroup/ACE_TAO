@@ -179,13 +179,6 @@ BE_produce (void)
   be_visitor_root_sh root_sh_visitor (&ctx);
   BE_visit_root (root_sh_visitor, "server header");
 
-  // If skeleton file generation is suppressed, we're done.
-  if (!be_global->gen_skel_files ())
-    {
-        BE_cleanup ();
-        return;
-    }
-
   if (be_global->gen_server_inline ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SI);

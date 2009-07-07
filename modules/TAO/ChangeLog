@@ -1,3 +1,21 @@
+Tue Jul  7 17:11:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_produce.cpp:
+        
+          Removed the short-circuit cleanup and return after skeleton
+          header generation if the -SS option is in effect - the 
+          overhead saved is negligible and other passes, plus export
+          header file generation, may still be needed. Thanks to
+          Will Otte <wotte@dre.vanderbilt.edu> for reporting the
+          bug.
+          
+        * TAO_IDL/be/be_global.cpp:
+        
+          Added lines to unset the skeleton inline and skeleton
+          source file generation flags when the -SS option is
+          seen, making for cleaner logic in BE_produce, as noted
+          above.
+
 Tue Jul  7 16:27:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_home/home_svs.cpp:
