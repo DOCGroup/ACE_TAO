@@ -46,6 +46,53 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   }
   
   // Operations from ::CCM_DDS::string_Reader
+  
+  void
+  string_Reader_exec_i::read_all (
+    ::CCM_DDS::string_Reader::stringSeq_out /* instances */,
+    ::CCM_DDS::ReadInfoSeq_out /* infos */)
+  {
+    /* Your code here. */
+  }
+  
+  void
+  string_Reader_exec_i::read_all_history (
+    ::CCM_DDS::string_Reader::stringSeq_out /* instances */,
+    ::CCM_DDS::ReadInfoSeq_out /* infos */)
+  {
+    /* Your code here. */
+  }
+  
+  void
+  string_Reader_exec_i::read_one (
+    char *& /* an_instance */,
+    ::CCM_DDS::ReadInfo_out /* info */)
+  {
+    /* Your code here. */
+  }
+  
+  void
+  string_Reader_exec_i::read_one_history (
+    const char * /* an_instance */,
+    ::CCM_DDS::string_Reader::stringSeq_out /* instances */,
+    ::CCM_DDS::ReadInfoSeq_out /* infos */)
+  {
+    /* Your code here. */
+  }
+  
+  ::CCM_DDS::QueryFilter *
+  string_Reader_exec_i::filter (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  void
+  string_Reader_exec_i::filter (
+    const ::CCM_DDS::QueryFilter & /* filter */)
+  {
+    /* Your code here. */
+  }
   //============================================================
   // Facet Executor Implementation Class: ListenerControl_exec_i
   //============================================================
@@ -349,7 +396,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     /* Your code here. */
   }
   
-  extern "C" RECEIVER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_RECEIVER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Hello_receiver_Connector_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
@@ -359,6 +406,57 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       retval,
       Hello_receiver_Connector_exec_i,
       ::Components::EnterpriseComponent::_nil ());
+    
+    return retval;
+  }
+}
+
+namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
+{
+  //============================================================
+  // Home Executor Implementation Class: ReceiverConnectorHome_exec_i
+  //============================================================
+  
+  ReceiverConnectorHome_exec_i::ReceiverConnectorHome_exec_i (void)
+  {
+  }
+  
+  ReceiverConnectorHome_exec_i::~ReceiverConnectorHome_exec_i (void)
+  {
+  }
+  
+  // All operations and attributes.
+  
+  // Factory operations.
+  
+  // Finder operations.
+  
+  // Implicit operations.
+  
+  ::Components::EnterpriseComponent_ptr
+  ReceiverConnectorHome_exec_i::create (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+    
+    ACE_NEW_THROW_EX (
+      retval,
+      Hello_receiver_Connector_exec_i,
+      ::CORBA::NO_MEMORY ());
+    
+    return retval;
+  }
+  
+  extern "C" HELLO_RECEIVER_CONNECTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
+  create_Hello_DDS_ReceiverConnectorHome_Impl (void)
+  {
+    ::Components::HomeExecutorBase_ptr retval =
+      ::Components::HomeExecutorBase::_nil ();
+    
+    ACE_NEW_RETURN (
+      retval,
+      ReceiverConnectorHome_exec_i,
+      ::Components::HomeExecutorBase::_nil ());
     
     return retval;
   }

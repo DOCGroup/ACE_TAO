@@ -18,6 +18,10 @@ module Hello_DDS
     uses DDS::DataReader read_message_dds_entity;
     provides CCM_DDS::PortStatusListener read_message_status;
   };
+  
+  home ReceiverHome manages Receiver
+  {
+  };
 };
 
 #endif

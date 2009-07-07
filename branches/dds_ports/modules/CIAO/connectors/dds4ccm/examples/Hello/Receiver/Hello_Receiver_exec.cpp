@@ -46,6 +46,14 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   }
   
   // Operations from ::CCM_DDS::string_RawListener
+  
+  void
+  string_RawListener_exec_i::on_data (
+    const char * /* an_instance */,
+    const ::CCM_DDS::ReadInfo & /* info */)
+  {
+    /* Your code here. */
+  }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
@@ -147,7 +155,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     /* Your code here. */
   }
   
-  extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Receiver_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
@@ -157,6 +165,57 @@ namespace CIAO_Hello_DDS_Receiver_Impl
       retval,
       Receiver_exec_i,
       ::Components::EnterpriseComponent::_nil ());
+    
+    return retval;
+  }
+}
+
+namespace CIAO_Hello_DDS_Receiver_Impl
+{
+  //============================================================
+  // Home Executor Implementation Class: ReceiverHome_exec_i
+  //============================================================
+  
+  ReceiverHome_exec_i::ReceiverHome_exec_i (void)
+  {
+  }
+  
+  ReceiverHome_exec_i::~ReceiverHome_exec_i (void)
+  {
+  }
+  
+  // All operations and attributes.
+  
+  // Factory operations.
+  
+  // Finder operations.
+  
+  // Implicit operations.
+  
+  ::Components::EnterpriseComponent_ptr
+  ReceiverHome_exec_i::create (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+    
+    ACE_NEW_THROW_EX (
+      retval,
+      Receiver_exec_i,
+      ::CORBA::NO_MEMORY ());
+    
+    return retval;
+  }
+  
+  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
+  create_Hello_DDS_ReceiverHome_Impl (void)
+  {
+    ::Components::HomeExecutorBase_ptr retval =
+      ::Components::HomeExecutorBase::_nil ();
+    
+    ACE_NEW_RETURN (
+      retval,
+      ReceiverHome_exec_i,
+      ::Components::HomeExecutorBase::_nil ());
     
     return retval;
   }
