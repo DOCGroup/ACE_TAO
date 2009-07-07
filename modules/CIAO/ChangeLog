@@ -1,11 +1,37 @@
+Tue Jul  7 00:14:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Base.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Connector_State.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Getter.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiUpdater.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiWriter.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Get.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiUpdate.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiWrite.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Update.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Write.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_RawListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Reader.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_StateListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Updater.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p:
+          
+          fixed malformed include guards.
+
 Tue Jul  7 00:10:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_connector_base.mpb:
         * MPC/config/connectoridldefaults.mpb:
         * MPC/config/dds4ccm_base.mpb:
 
-          Adding new base projects. 
-        
+          Adding new base projects.
+
 Tue Jul  7 00:07:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3:
