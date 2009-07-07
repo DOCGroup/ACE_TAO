@@ -41,6 +41,11 @@ be_visitor_component_exh::~be_visitor_component_exh (void)
 int
 be_visitor_component_exh::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+    
   node_ = node;
   TAO_OutStream &os_  = *this->ctx_->stream ();
   

@@ -52,6 +52,11 @@ be_visitor_component_svs::~be_visitor_component_svs (void)
 int
 be_visitor_component_svs::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+    
   node_ = node;
   
   if (! be_global->gen_lem_force_all ())

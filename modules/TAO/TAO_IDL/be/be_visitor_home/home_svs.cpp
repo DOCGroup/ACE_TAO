@@ -51,6 +51,11 @@ be_visitor_home_svs::~be_visitor_home_svs (void)
 int
 be_visitor_home_svs::visit_home (be_home *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+    
   node_ = node;
   TAO_OutStream &os_  = *this->ctx_->stream ();
   comp_ = node_->managed_component ();
