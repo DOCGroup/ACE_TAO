@@ -4,6 +4,7 @@
  */
 
 #ifndef DDS4CCM_STATELISTENER_IDL3P
+#define DDS4CCM_STATELISTENER_IDL3P
 
 #include "dds4ccm/idl/dds4ccm_Base.idl3"
 

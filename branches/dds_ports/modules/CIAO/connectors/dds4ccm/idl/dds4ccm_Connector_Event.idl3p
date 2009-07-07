@@ -4,6 +4,7 @@
  */
 
 #ifndef DDS4CCM_CONNECTOR_EVENT_IDL3P
+#define DDS4CCM_CONNECTOR_EVENT_IDL3P
 
 #include "dds4ccm/idl/dds4ccm_Port_Write.idl3p"
 #include "dds4ccm/idl/dds4ccm_Port_Get.idl3p"
