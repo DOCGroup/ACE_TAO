@@ -1,14 +1,42 @@
+Tue Jul  7 18:05:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Further updates. 
+        
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        
+          Compile/linking problems now taken care of. 
+        
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.idl3:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl3:
+
+          Removed these files.
+
 Tue Jul  7 17:31:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/generate_component_mpc.pl:
 
-          Updated to create a separate E.idl lib.  
-        
+          Updated to create a separate E.idl lib.
+
         * tests/IDL_Test/Lem_Specific_Export/Lem_Export_exec.h:
         * tests/IDL_Test/Lem_Specific_Export/Lem_Export_exec.cpp:
 
-          Added exec implementation. 
-        
+          Added exec implementation.
+
 Tue Jul  7 16:31:47 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Included_Component/IC_Foo.mpc:

@@ -39,12 +39,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "Sender_Connector_exec_export.h"
+#include /**/ "Hello_Sender_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
 namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
 {
-  class SENDER_CONNECTOR_EXEC_Export string_Writer_exec_i
+  class HELLO_SENDER_CONNECTOR_EXEC_Export string_Writer_exec_i
     : public virtual ::CCM_DDS::CCM_string_Writer,
       public virtual ::CORBA::LocalObject
   {
@@ -62,7 +62,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
       const char * an_instance);
   };
   
-  class SENDER_CONNECTOR_EXEC_Export DataWriter_exec_i
+  class HELLO_SENDER_CONNECTOR_EXEC_Export DataWriter_exec_i
     : public virtual ::DDS::CCM_DataWriter,
       public virtual ::CORBA::LocalObject
   {
@@ -193,7 +193,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
       ::DDS::InstanceHandle_t subscription_handle);
   };
   
-  class SENDER_CONNECTOR_EXEC_Export Hello_sender_Connector_exec_i
+  class HELLO_SENDER_CONNECTOR_EXEC_Export Hello_sender_Connector_exec_i
     : public virtual Hello_sender_Connector_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -229,13 +229,13 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
     ::Hello_DDS::CCM_Hello_sender_Connector_Context_var context_;
   };
   
-  extern "C" SENDER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" HELLO_SENDER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Hello_sender_Connector_Impl (void);
 }
 
 namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
 {
-  class SENDER_CONNECTOR_EXEC_Export SenderConnectorHome_exec_i
+  class HELLO_SENDER_CONNECTOR_EXEC_Export SenderConnectorHome_exec_i
     : public virtual SenderConnectorHome_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -256,7 +256,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
     create (void);
   };
   
-  extern "C" SENDER_CONNECTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
+  extern "C" HELLO_SENDER_CONNECTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_DDS_SenderConnectorHome_Impl (void);
 }
 
