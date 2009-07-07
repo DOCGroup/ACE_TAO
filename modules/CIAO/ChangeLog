@@ -1,8 +1,19 @@
+Tue Jul  7 17:31:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Updated to create a separate E.idl lib.  
+        
+        * tests/IDL_Test/Lem_Specific_Export/Lem_Export_exec.h:
+        * tests/IDL_Test/Lem_Specific_Export/Lem_Export_exec.cpp:
+
+          Added exec implementation. 
+        
 Tue Jul  7 16:31:47 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Included_Component/IC_Foo.mpc:
         * tests/IDL_Test/Included_Component/IC_Bar.mpc:
-        
+
           Added 'after' lines for *_svnt projects, and add executor
           projects.
 
@@ -13,8 +24,8 @@ Tue Jul  7 15:43:57 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/IDL_Test/Lem_Specific_Export/Lem_Export.mpc:
 
           Test which apparently shows the export file not being
-          generated for a LEM project. 
-        
+          generated for a LEM project.
+
 Tue Jul  7 00:49:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
 
