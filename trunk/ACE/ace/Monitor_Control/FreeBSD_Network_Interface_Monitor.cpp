@@ -67,9 +67,9 @@ namespace ACE
       if (::sysctl(req_name, 5, &ifcount, &ifcount_len, (void *)0, 0) == -1)
       {
         ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) %p\n"),
-				      ACE_TEXT("sysctl failed")));
+                  ACE_TEXT("sysctl failed")));
 
-	      return;
+        return;
       }
 
       for (int i = 1; i <= ifcount; i++)
