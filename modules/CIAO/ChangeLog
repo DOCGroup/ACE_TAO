@@ -1,3 +1,8 @@
+Wed Jul  8 18:51:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/03.html:
+          Updated picl_to_idl command line parameters 
+
 Wed Jul  8 17:30:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm.mpc:

@@ -99,11 +99,14 @@ div.Section1 {
       .NET tools so that <i>idl_to_picml</i> works properly.<br>
       in my machine, VCVARS32.bat is in C:\Program Files\Microsoft Visual Studio .NET
       2003\Vc7\bin
-    <li style='COLOR:black;'> In the same command prompt, change directory to <code> <span style='FONT-SIZE:10pt'>Quoter\</span></code>, and type the
+    <li style='COLOR:black;'> In the same command prompt, change directory to <code> <span style='FONT-SIZE:10pt'>Quoter\Simple</span></code>, and type the
       following command:<br>
-      &nbsp;&nbsp; &gt; <kbd> <span style='FONT-SIZE:10pt'> idl_to_picml -x Quoter -r .&nbsp;</span></kbd><br>
-      <em>idl_to_picml</em> will parse your IDL files and generated a <code> <span style='FONT-SIZE:10pt'>Quoter.xme</span></code> file in the <code> <span style='FONT-SIZE:10pt'>Quoter</span></code> directory. Note that if
+      &nbsp;&nbsp; &gt; <kbd> <span style='FONT-SIZE:10pt'> idl_to_picml -I%CIAO_ROOT% -x Quoter -r .&nbsp;</span></kbd><br>
+      <em>idl_to_picml</em> will parse your IDL files and generated a <code> <span style='FONT-SIZE:10pt'>Quoter.xme</span></code> file in the <code>
+      <span style='FONT-SIZE:10pt'>Quoter</span></code> directory. Note that if
       -x option is not used, the default xme file name will be <code> <span style='FONT-SIZE:10pt'>PICML_default_xme_file.xme.</span></code><br>
+      <span style='COLOR:black;'>When this command is run a second time, be sure to delete all E.idl files first!</span><br>
+      <br>
     <LI style="COLOR: black;    "> Start GME, select <strong>File-&gt;Import xml..</strong>, and choose the xme
       file just generated. You should be able to see an imported PICML model similar
       to the one shown in Figure 2. </LI>
