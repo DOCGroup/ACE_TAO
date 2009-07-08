@@ -1,3 +1,10 @@
+Wed Jul  8 14:22:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Control/Makefile.am:
+        
+          Added new files FreeBSD_Network_Interface_Monitor.{h,cpp}
+          to the makefile.
+
 Tue Jul  7 22:21:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/FreeBSD_Network_Interface_Monitor.cpp:
