@@ -1,10 +1,21 @@
+Wed Jul  8 12:12:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
+
+          Change project names to not clash. 
+        
 Wed Jul  8 11:48:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dds4ccm_skel.mpb:
         * MPC/config/example_output.mpb:
-        
-          Missing base projects. 
-        
+
+          Missing base projects.
+
 Tue Jul  7 19:14:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
