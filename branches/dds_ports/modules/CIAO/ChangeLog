@@ -1,10 +1,17 @@
+Wed Jul  8 11:48:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dds4ccm_skel.mpb:
+        * MPC/config/example_output.mpb:
+        
+          Missing base projects. 
+        
 Tue Jul  7 19:14:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
         * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
 
-          Components now deploy. 
-        
+          Components now deploy.
+
 Tue Jul  7 18:32:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
