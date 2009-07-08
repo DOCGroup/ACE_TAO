@@ -1,3 +1,32 @@
+Wed Jul  8 15:12:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM.mpc
+        * ccm/CCM_Configurator.idl
+        * ccm/CCM_Cookie.idl
+        * ccm/CCM_Enumeration.idl
+        * ccm/CCM_EventBase.idl
+        * ccm/CCM_EventConsumerBase.idl
+        * ccm/CCM_Events.idl
+        * ccm/CCM_Exceptions.idl
+        * ccm/CCM_Home.idl
+        * ccm/CCM_HomeConfiguration.idl
+        * ccm/CCM_HomeFinder.idl
+        * ccm/CCM_Homes.idl
+        * ccm/CCM_KeylessCCMHome.idl
+        * ccm/CCM_Navigation.idl
+        * ccm/CCM_Object.idl
+        * ccm/CCM_Receptacle.idl
+        * ccm/CCM_StandardConfigurator.idl
+        * ccm/ComponentServer/CCM_ComponentServer.idl
+        * ciao/ComponentServer/CIAO_ComponentServer.idl
+          Moved CCM_Homes to their own file and added to each header whether
+          they are compliant or not and which section of the OMG spec 06-04-01
+          they are defined in
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+          Layout
+
 Wed Jul  8 14:08:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/generate_component_mpc.pl:
@@ -6,7 +35,7 @@ Wed Jul  8 14:08:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
           Besides this, there were some dependency error.
           Also added -o option. This option allows the user to specify
           a  library output dir. This dir is set to all projects.
-          
+
         * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc:
         * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
         * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
@@ -21,8 +50,8 @@ Wed Jul  8 12:12:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
 
-          Change project names to not clash. 
-        
+          Change project names to not clash.
+
 Wed Jul  8 11:48:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dds4ccm_skel.mpb:
