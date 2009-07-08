@@ -127,8 +127,7 @@ AST_Template_Interface::dump (ACE_OSTREAM_TYPE &o)
 int
 AST_Template_Interface::ast_accept (ast_visitor *visitor)
 {
-  // TODO
-  return visitor->visit_interface (this);
+  return visitor->visit_template_interface (this);
 }
 
 IMPL_NARROW_FROM_DECL(AST_Template_Interface)

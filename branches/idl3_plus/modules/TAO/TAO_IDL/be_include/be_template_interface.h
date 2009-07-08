@@ -50,6 +50,8 @@ public:
   virtual ~be_template_interface (void);
 
   virtual void destroy (void);
+  
+  virtual int accept (be_visitor *visitor);
 };
 
 #endif /* TAO_BE_TEMPLATE_INTERFACE_H */

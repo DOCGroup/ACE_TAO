@@ -67,6 +67,9 @@ public:
   virtual int visit_interface_fwd (AST_InterfaceFwd *node);
   // Visit a forward interface declaration
 
+  virtual int visit_template_interface (AST_Template_Interface *node);
+  // Visit template interface.
+  
   virtual int visit_valuebox (AST_ValueBox *node);
   // Visit valuebox.
 
@@ -81,6 +84,9 @@ public:
 
   virtual int visit_component_fwd (AST_ComponentFwd *node);
   // Visit component_fwd
+
+  virtual int visit_porttype (AST_PortType *node);
+  // Visit porttype.
 
   virtual int visit_eventtype (AST_EventType *node);
   // Visit valuetype.

@@ -72,6 +72,11 @@ int be_visitor::visit_interface_fwd (be_interface_fwd *)
   return 0;
 }
 
+int be_visitor::visit_template_interface (be_template_interface *)
+{
+  return 0;
+}
+
 int be_visitor::visit_valuebox (be_valuebox *)
 {
   return 0;
@@ -103,6 +108,11 @@ int be_visitor::visit_component (be_component *)
 }
 
 int be_visitor::visit_component_fwd (be_component_fwd *)
+{
+  return 0;
+}
+
+int be_visitor::visit_porttype (be_porttype *)
 {
   return 0;
 }
