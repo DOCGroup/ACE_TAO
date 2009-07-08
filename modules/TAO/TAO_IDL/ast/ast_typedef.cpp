@@ -168,15 +168,6 @@ AST_Typedef::owns_base_type (bool val)
 void
 AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
 {
-  if (this->is_local ())
-    {
-      this->dump_i (o, "(local) ");
-    }
-  else
-    {
-      this->dump_i (o, "(abstract) ");
-    }
-
   this->dump_i (o, "typedef ");
   this->pd_base_type->dump (o);
   this->dump_i (o, " ");

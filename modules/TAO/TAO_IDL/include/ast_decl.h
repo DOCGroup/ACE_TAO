@@ -315,6 +315,9 @@ protected:
   void compute_flat_name (void);
   // Compute the flattened fully scoped name.
 
+  const char *node_type_to_string (NodeType nt);
+  // Convert a NodeType to a string for dumping.
+  
 private:
   // Data
 

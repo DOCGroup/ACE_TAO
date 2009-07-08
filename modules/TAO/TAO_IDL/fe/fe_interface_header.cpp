@@ -243,8 +243,6 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
   AST_Decl *d = 0;
   UTL_ScopedName *item = 0;;
   AST_Interface *i = 0;
-  long j = 0;
-  long k = 0;
   int inh_err = 0;
 
   // Compute expanded flattened non-repeating list of interfaces
@@ -254,8 +252,10 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
     {
       item = l.item ();
 
+      UTL_Scope *s = idl_global->scopes ().top ();
+
       // Check that scope stack is valid.
-      if (idl_global->scopes ().top () == 0)
+      if (s == 0)
         {
           idl_global->err ()->lookup_error (item);
 
@@ -265,8 +265,6 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         }
 
       // Look it up.
-      UTL_Scope *s = idl_global->scopes ().top ();
-
       d = s->lookup_by_name  (item,
                               true,
                               true,
@@ -347,33 +345,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
     }
 
   // OK, install in interface header.
-  // First the flat list (all ancestors).
-  if (this->iused_flat_ > 0)
-    {
-      ACE_NEW (this->inherits_flat_,
-               AST_Interface *[this->iused_flat_]);
-
-      for (j = 0; j < this->iused_flat_; ++j)
-        {
-          this->inherits_flat_[j] = this->iseen_flat_[j];
-        }
-
-      this->n_inherits_flat_ = iused_flat_;
-    }
-
-  // Then the list of immediate ancestors.
-  if (this->iused_ > 0)
-    {
-      ACE_NEW (this->inherits_,
-               AST_Interface *[this->iused_]);
-
-      for (k = 0; k < this->iused_; ++k)
-        {
-          this->inherits_[k] = this->iseen_[k];
-        }
-
-      this->n_inherits_ = this->iused_;
-    }
+  this->install_in_header ();
 }
 
 int
@@ -501,6 +473,41 @@ FE_InterfaceHeader::already_seen_flat (AST_Interface *ip)
     }
 
   return false;
+}
+
+void
+FE_InterfaceHeader::install_in_header (void)
+{
+  long j = 0;
+  long k = 0;
+
+  // First the flat list (all ancestors).
+  if (this->iused_flat_ > 0)
+    {
+      ACE_NEW (this->inherits_flat_,
+               AST_Interface *[this->iused_flat_]);
+
+      for (j = 0; j < this->iused_flat_; ++j)
+        {
+          this->inherits_flat_[j] = this->iseen_flat_[j];
+        }
+
+      this->n_inherits_flat_ = iused_flat_;
+    }
+
+  // Then the list of immediate ancestors.
+  if (this->iused_ > 0)
+    {
+      ACE_NEW (this->inherits_,
+               AST_Interface *[this->iused_]);
+
+      for (k = 0; k < this->iused_; ++k)
+        {
+          this->inherits_[k] = this->iseen_[k];
+        }
+
+      this->n_inherits_ = this->iused_;
+    }
 }
 
 // Data accessors.

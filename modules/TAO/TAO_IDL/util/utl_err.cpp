@@ -165,6 +165,8 @@ error_string (UTL_Error::ErrorCode c)
       return "abstract type expected: ";
     case UTL_Error::EIDL_EVENTTYPE_EXPECTED:
       return "event type expected: ";
+    case UTL_Error::EIDL_TMPL_IFACE_EXPECTED:
+      return "template interface expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_INCOMPATIBLE_TYPE:
@@ -215,6 +217,10 @@ error_string (UTL_Error::ErrorCode c)
       return "valuetype not allowed as type of boxed value type";
     case UTL_Error::EIDL_ILLEGAL_PRIMARY_KEY:
       return "illegal primary key";
+    case UTL_Error::EIDL_MISMATCHED_T_PARAM:
+      return "mismatched parameter in template interface parent";
+    case UTL_Error::EIDL_DUPLICATE_T_PARAM:
+      return "duplicate template parameter id";
   }
 
   return 0;
@@ -656,6 +662,7 @@ UTL_Error::error1 (UTL_Error::ErrorCode c,
   idl_error_header (c,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR, " - "));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1407,6 +1414,18 @@ UTL_Error::illegal_primary_key (AST_Decl *d)
                     d->line (),
                     d->file_name ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::duplicate_param_id (UTL_ScopedName *n)
+{
+  idl_error_header (EIDL_DUPLICATE_T_PARAM,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR, " - "));
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR, "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
