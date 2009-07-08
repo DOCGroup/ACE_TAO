@@ -168,6 +168,8 @@ namespace SA_POP {
 		TaskID task_id;
 	};
 
+
+
   ///List of TaskChoices
   typedef std::list<TaskChoice> TaskChoiceList;
 
@@ -491,7 +493,13 @@ namespace SA_POP {
   };
 
   
+  /// Type of particular Task Implementation mapped to a Task Implementation Set.
+  /// This is a particular Precedence set. Like Before, After etc.
+  typedef std::map <TaskInstID, TaskInstSet> PrecedenceSet;
 
+  /// Type of a Precedence Relation mapped to a Precedence Set.
+  /// This gives the whole Precedence Graph
+  typedef std::map <PrecedenceRelation, PrecedenceSet> PrecedenceGraph;
   
 
   /// Type of a set of open conditions, each associated with task instances

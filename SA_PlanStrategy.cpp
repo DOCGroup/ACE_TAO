@@ -235,48 +235,47 @@ bool SA_PlanStrategy::satisfy_everything(){
     TaskImplList impl_list;
 
     // Choose a task implementation.
-	assoc_impl_cmd =
-      static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
-    if(!this->planner_->inst_exists(this->cur_task_inst_)) impl_list = this->impl_choice_->choose_impl (this->cur_task_inst_);
-    else impl_list.push_back(this->planner_->get_impl_id(this->cur_task_inst_));
-    assoc_impl_cmd->set_id (this->get_next_cmd_id ());
-    assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
-    this->planner_->add_command (assoc_impl_cmd);
 
-	this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
+//	if(this->planner_->get_working_plan()->get_task_impl_from_inst(this->cur_task_inst_)== NULL_TASK_IMPL_ID){
+		assoc_impl_cmd =
+		  static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
+		if(!this->planner_->inst_exists(this->cur_task_inst_)) impl_list = this->impl_choice_->choose_impl (this->cur_task_inst_);
+		else impl_list.push_back(this->planner_->get_impl_id(this->cur_task_inst_));
+		assoc_impl_cmd->set_id (this->get_next_cmd_id ());
+		assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
+		this->planner_->add_command (assoc_impl_cmd);
 
-  ////TEMP***
-  //if(this->cur_task_inst_ == 10)
-  //{
-  //  throw "At the 10th task instance";
-  //}
+		this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
+		
 
-    while (this->planner_->try_next (assoc_impl_cmd->get_id ())) 
-    {
+		while (this->planner_->try_next (assoc_impl_cmd->get_id ())) 
+		{
 
-      if(this->get_next_threat_resolution()){
-        return true;
-      }
-      else{
-        //this->planner_->undo_command(assoc_impl_cmd->get_id());
-      
-          this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
-      }
-  //    assoc_impl_cmd =
-  //      static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
-//      if(!this->planner_->inst_exists(this->cur_task_inst_)) impl_list = this->impl_choice_->choose_impl (this->cur_task_inst_);
-//      else impl_list.push_back(this->planner_->get_impl_id(this->cur_task_inst_));
-//      assoc_impl_cmd->set_id (this->get_next_cmd_id ());
- //     impl_list.pop_front();
-//      assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
- //     this->planner_->add_command (assoc_impl_cmd);
-//		  this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
+		  if(this->get_next_threat_resolution()){
+			return true;
+		  }
+		  else{
+	      
+			  this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
+		  }
 
-    }
+
+		}
 
     //Undo the AssocImplCmd
 
 	planner_->undo_command(assoc_impl_cmd->get_id());
+
+//	}else{
+//      if(this->get_next_threat_resolution()){
+ //       return true;
+ //     }
+//      else{
+      
+          this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
+//      }
+//	}
+
 
     return false;
 }
