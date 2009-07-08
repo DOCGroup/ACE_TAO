@@ -126,6 +126,12 @@ basic_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 }
 
 int
+basic_visitor::visit_template_interface (AST_Template_Interface *)
+{
+  return 0;
+}
+
+int
 basic_visitor::visit_valuebox (AST_ValueBox *node)
 {
   if (node->imported ())
@@ -262,6 +268,12 @@ basic_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << ";";
 
+  return 0;
+}
+
+int
+basic_visitor::visit_porttype (AST_PortType *)
+{
   return 0;
 }
 
