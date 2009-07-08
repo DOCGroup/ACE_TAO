@@ -1,12 +1,19 @@
+Wed Jul  8 01:13:05 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * SA_POP_Types.h:
+        * SA_WorkingPlan.cpp:
+
+	Fixed the comparison operator of less than to work correctly.
+
 Tue Jul  7 23:10:22 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SA_PlanCommands.h:
-		* SA_PlanHeuristics.cpp:
-		
-		Changed the order in which tasks are chosen to satisfy open conditions.
-		Working on getting it to choose the correct tasks.
-		
-		* PlanCommands.h:
+                * SA_PlanHeuristics.cpp:
+
+                Changed the order in which tasks are chosen to satisfy open conditions.
+                Working on getting it to choose the correct tasks.
+
+                * PlanCommands.h:
         * PlanHeuristics.h:
         * Planner.h:
         * SA_POP_Types.h:
@@ -15,8 +22,8 @@ Tue Jul  7 23:10:22 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SA_PlanStrategy.cpp:
         * SA_WorkingPlan.h:
         * SA_WorkingPlan.cpp:
-		
-		
+
+
 
 Mon Jul  6 20:27:43 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 

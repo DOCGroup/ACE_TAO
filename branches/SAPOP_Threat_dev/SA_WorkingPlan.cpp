@@ -576,65 +576,7 @@ void SA_WorkingPlan::generate_all_threats(void)
   }
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
 
-/*
 
-    for(InstToImplMap::iterator iterator = this->task_impls_.begin(); iterator != this->task_impls_.end(); iterator++){
-    TaskInstID threat_possibility = (*iterator).first;
-    TaskID threat_possibility_taskid = this->task_insts_.find(threat_possibility)->second;
-    
-    file_op<<"  Task :"<<iterator->first<<"("<<threat_possibility_taskid<<")"<<std::endl;
-  }
-
-
-  for(InstToImplMap::iterator iterator = this->task_impls_.begin(); iterator != this->task_impls_.end(); iterator++){
-
-    TaskInstID threat_possibility = iterator->first;
-    TaskID threat_possibility_taskid = this->task_insts_.find(threat_possibility)->second;
-    CondSet set = this->planner_->get_effects(threat_possibility_taskid);
-
-    for(CondSet::iterator arr = set.begin(); arr != set.end(); arr++){ 
-
-        Condition condition = (*arr);
-
-        std::pair<
-          CondToCLinksMap::iterator,
-          CondToCLinksMap::iterator
-            > ret = this->causal_links_.equal_range(condition);
-      
-
-        for(CondToCLinksMap::iterator nit = ret.first; nit != ret.second; nit++){
-
-            CausalLink causal_threatened = (*nit).second;
-            TaskID threatened_task = this->task_insts_.find(causal_threatened.first)->second;
-
-            SANet::LinkWeight threat_effect = this->planner_->get_link(threat_possibility_taskid, condition.id);
-            SANet::LinkWeight causal_effect = this->planner_->get_link(threatened_task, causal_threatened.cond.id);
-
-           
-            if((threat_effect > 0 && causal_effect < 0 )|| (threat_effect < 0 && causal_effect > 0)){
-
-              if(causal_threatened.first != threat_possibility && causal_threatened.second != threat_possibility)
-              {
-                TaskID threatened_task1 = this->task_insts_.find(causal_threatened.first)->second;
-                TaskID threatened_task2 = this->task_insts_.find(causal_threatened.second)->second;
-
-                CLThreat new_threat;
-                new_threat.clink = causal_threatened;
-                new_threat.threat = threat_possibility;
-                threat_set.insert(new_threat);
-
-                file_op<<"        New threat: causal link from "<<causal_threatened.first<<" ("<<threatened_task1<<") to "<<causal_threatened.second<<" ("<<threatened_task2<<") using condition "<<causal_threatened.cond.id<<" threatened by "<<threat_possibility<<" ("<<threat_possibility_taskid<<")\n";
-
-              }
-             }
-        }
-      }
-   }
-
-  file_op.close();
-
-
-*/
 
   debug_text.clear();
 
@@ -687,7 +629,12 @@ void SA_WorkingPlan::generate_all_threats(void)
                 CLThreat new_threat;
                 new_threat.clink = causal_threatened;
                 new_threat.threat = threat_possibility;
-                threat_set.insert(new_threat);
+
+               
+
+                std::pair<CLThreatSet::iterator, bool> asdf = threat_set.insert(new_threat);
+
+              
 
                 TaskID threatened_task1 = this->task_insts_.find(causal_threatened.first)->second;
                 if(causal_threatened.second != SA_POP::GOAL_TASK_INST_ID)
@@ -851,6 +798,7 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 
   Condition cond = cmd->cond_;
   TaskInstID task_inst;
+  //bool hadInsts = false;
   
   // If trying a new task (i.e., not still trying task instances for same task), get existing task instances for that task from working plan. 
   if(cmd->last_task_ != task)
@@ -858,7 +806,10 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 	  // Get existing task instances for current task.
     for(InstToTaskMap::iterator iter = this->task_insts_.begin(); iter!=this->task_insts_.end();iter++)
       if(iter->second==cmd->tasks_.front()) 
+      {
+        //hadInsts = true;       
         cmd->used_task_insts_.insert(iter->first);
+      }
   }
 
 
