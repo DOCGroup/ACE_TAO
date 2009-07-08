@@ -272,7 +272,7 @@ namespace SA_POP {
     {
       if (this->first == s.first) {
         if (this->second == s.second)
-          return this->cond < cond;
+          return this->cond < s.cond;
         return this->second < s.second;
       }
       return this->first < s.first;
