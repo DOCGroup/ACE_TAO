@@ -1,7 +1,7 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockBrokerDriver StockBroker"
+// This file is generated with "generate_component_mpc.pl -p Stock_Base -c StockBrokerDriver StockBroker -l ../lib -o ../lib"
 
-project(Stock_Base_StockBroker_idl_gen) : componentidldefaults {
+project(Stock_Base_StockBroker_idl_gen) : componentidldefaults   {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKBROKER_STUB_Export \
               -Wb,stub_export_include=StockBroker_stub_export.h \
@@ -15,24 +15,48 @@ project(Stock_Base_StockBroker_idl_gen) : componentidldefaults {
   }
 }
 
-project(Stock_Base_StockBroker_lem_gen) : ciaoidldefaults {
-  custom_only = 1
+project(Stock_Base_StockBroker_lem_gen) : ciaoidldefaults   {
   after += Stock_Base_StockBroker_idl_gen
-  idlflags += -Wb,export_macro=STOCKBROKER_EXEC_Export \
-              -Wb,export_include=StockBroker_exec_export.h \
-              -SS
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=STOCKBROKER_LEM_STUB_Export \
+              -Wb,stub_export_include=StockBroker_lem_stub_export.h \
+              -SS -Gxhst
 
   IDL_Files {
     StockBrokerE.idl
   }
 }
 
-project(Stock_Base_StockBroker_stub) : ccm_stub {
+project(Stock_Base_StockBroker_lem_stub) : ccm_svnt   {
+  after += Stock_Base_StockBroker_lem_gen Stock_Base_StockBroker_stub Stock_Base_stub
+  libs  += Stock_Base_stub StockBroker_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = StockBroker_lem_stub
+  dynamicflags   = STOCKBROKER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    StockBrokerEC.cpp
+  }
+
+  Header_Files {
+    StockBrokerEC.h
+    StockBroker_lem_stub_export.h
+  }
+
+  Inline_Files {
+    StockBrokerEC.inl
+  }
+}
+
+project(Stock_Base_StockBroker_stub) : ccm_stub   {
   after += Stock_Base_StockBroker_idl_gen Stock_Base_stub
   libs  += Stock_Base_stub
-  libout    = ../lib
   libpaths += ../lib
-
+  libout = ../lib
   sharedname = StockBroker_stub
   dynamicflags   = STOCKBROKER_STUB_BUILD_DLL
 
@@ -53,47 +77,41 @@ project(Stock_Base_StockBroker_stub) : ccm_stub {
   }
 }
 
-project(Stock_Base_StockBroker_exec) : ciao_executor {
-  after   += Stock_Base_StockBroker_lem_gen Stock_Base_StockBroker_stub
+project(Stock_Base_StockBroker_exec) : ciao_executor   {
+  after   += Stock_Base_StockBroker_lem_stub Stock_Base_StockBroker_stub
   sharedname = StockBroker_exec
-  libs += StockBroker_stub Stock_Base_stub
-  libout    = ../lib
+  libs += StockBroker_stub StockBroker_lem_stub Stock_Base_stub
   libpaths += ../lib
-
+  libout = ../lib
   dynamicflags   = STOCKBROKER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    StockBrokerEC.cpp
     StockBroker_exec.cpp
   }
 
   Header_Files {
-    StockBrokerEC.h
     StockBroker_exec.h
     StockBroker_exec_export.h
   }
 
   Inline_Files {
-    StockBrokerEC.inl
   }
 }
 
 
-project(Stock_Base_StockBroker_svnt) : ciao_servant {
-  after      += Stock_Base_skel Stock_Base_StockBroker_exec
+project(Stock_Base_StockBroker_svnt) : ciao_servant   {
+  after      += Stock_Base_skel  Stock_Base_StockBroker_lem_stub
   sharedname  = StockBroker_svnt
-  libs       += StockBroker_exec \
-                StockBroker_stub \
+  libs       += StockBroker_stub StockBroker_lem_stub  \
                 Stock_Base_skel \
                 Stock_Base_stub
-  libout    = ../lib
   libpaths += ../lib
-
+  libout = ../lib
   dynamicflags = STOCKBROKER_SVNT_BUILD_DLL
-
+  
   IDL_Files {
   }
 
@@ -113,13 +131,12 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant {
   }
 }
 
-project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype {
+project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype   {
   exename = StockBrokerDriver
   after += Stock_Base_StockBroker_stub
   libs  += StockBroker_stub Stock_Base_stub
-  libout    = ../lib
   libpaths += ../lib
-
+  libout = ../lib
   IDL_Files {
   }
 
