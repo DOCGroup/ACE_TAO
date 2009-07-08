@@ -1,3 +1,11 @@
+Wed Jul  8 17:30:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+          Added anytypecode to resolve link problems with msvc
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Added include of tao sequence file to resolve link problems with mwvc
+
 Wed Jul  8 15:12:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM.mpc
