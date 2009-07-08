@@ -70,180 +70,6 @@ add_threats_cmd_ (0)
   this->precedence_graph_.insert(std::make_pair(SIMUL,temp));
   this->precedence_graph_.insert(std::make_pair(UNRANKED,temp));
 
-  ////////////////////TEMPORARY///////////TEMPORARY/////////////////
-///For SPACE
-//this->durations.insert(std::make_pair(1,2));
-//this->durations.insert(std::make_pair(2,5));
-//this->durations.insert(std::make_pair(3,2));
-//this->durations.insert(std::make_pair(4,10));
-//this->durations.insert(std::make_pair(5,1));
-//this->durations.insert(std::make_pair(6,4));
-//
-//this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(22,28)));
-//this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(24,30)));
-//this->init_start.insert(std::make_pair(2,(TimeWindow)std::make_pair(17,23)));
-//this->init_end.insert(std::make_pair(2,(TimeWindow)std::make_pair(22,28)));
-//this->init_start.insert(std::make_pair(3,(TimeWindow)std::make_pair(15,21)));
-//this->init_end.insert(std::make_pair(3,(TimeWindow)std::make_pair(17,23)));
-//this->init_start.insert(std::make_pair(4,(TimeWindow)std::make_pair(5,19)));
-//this->init_end.insert(std::make_pair(4,(TimeWindow)std::make_pair(15,21)));
-//this->init_start.insert(std::make_pair(5,(TimeWindow)std::make_pair(0,18)));
-//this->init_end.insert(std::make_pair(5,(TimeWindow)std::make_pair(1,19)));
-//this->init_start.insert(std::make_pair(6,(TimeWindow)std::make_pair(0,9)));
-//this->init_end.insert(std::make_pair(6,(TimeWindow)std::make_pair(4,13)));
-///For sched_test1
-//this->durations.insert(std::make_pair(1,10));
-//this->durations.insert(std::make_pair(2,2));
-//this->durations.insert(std::make_pair(3,8));
-//this->durations.insert(std::make_pair(4,8));
-//this->durations.insert(std::make_pair(5,10));
-//this->durations.insert(std::make_pair(7,15));
-//this->durations.insert(std::make_pair(6,10));
-//
-//this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(10,30)));
-//this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(20,40)));
-//this->init_start.insert(std::make_pair(2,(TimeWindow)std::make_pair(8,28)));
-//this->init_end.insert(std::make_pair(2,(TimeWindow)std::make_pair(10,30)));
-//this->init_start.insert(std::make_pair(3,(TimeWindow)std::make_pair(0,20)));
-//this->init_end.insert(std::make_pair(3,(TimeWindow)std::make_pair(8,28)));
-//this->init_start.insert(std::make_pair(4,(TimeWindow)std::make_pair(0,20)));
-//this->init_end.insert(std::make_pair(4,(TimeWindow)std::make_pair(8,28)));
-//this->init_start.insert(std::make_pair(5,(TimeWindow)std::make_pair(0,20)));
-//this->init_end.insert(std::make_pair(5,(TimeWindow)std::make_pair(10,30)));
-//this->init_start.insert(std::make_pair(7,(TimeWindow)std::make_pair(10,NULL_TIME)));
-//this->init_end.insert(std::make_pair(7,(TimeWindow)std::make_pair(25,NULL_TIME)));
-//this->init_start.insert(std::make_pair(6,(TimeWindow)std::make_pair(25,NULL_TIME)));
-//this->init_end.insert(std::make_pair(6,(TimeWindow)std::make_pair(35,NULL_TIME)));
-//this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(10,NULL_TIME)));
-//this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(20,NULL_TIME)));
-//this->init_start.insert(std::make_pair(2,(TimeWindow)std::make_pair(8,NULL_TIME)));
-//this->init_end.insert(std::make_pair(2,(TimeWindow)std::make_pair(10,NULL_TIME)));
-//this->init_start.insert(std::make_pair(3,(TimeWindow)std::make_pair(0,NULL_TIME)));
-//this->init_end.insert(std::make_pair(3,(TimeWindow)std::make_pair(8,NULL_TIME)));
-//this->init_start.insert(std::make_pair(4,(TimeWindow)std::make_pair(0,NULL_TIME)));
-//this->init_end.insert(std::make_pair(4,(TimeWindow)std::make_pair(8,NULL_TIME)));
-//this->init_start.insert(std::make_pair(5,(TimeWindow)std::make_pair(0,NULL_TIME)));
-//this->init_end.insert(std::make_pair(5,(TimeWindow)std::make_pair(10,NULL_TIME)));
-
-/////For sched_test4
-//this->durations.insert(std::make_pair(1,10));
-//this->durations.insert(std::make_pair(2,5));
-//this->durations.insert(std::make_pair(3,5));
-//this->durations.insert(std::make_pair(4,5));
-//
-//this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_start.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_end.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_start.insert(std::make_pair(3,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_end.insert(std::make_pair(3,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_start.insert(std::make_pair(4,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_end.insert(std::make_pair(4,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-
-/////For sched_test5
-//this->durations.insert(std::make_pair(1,0));
-//this->durations.insert(std::make_pair(2,0));
-//this->durations.insert(std::make_pair(3,0));
-//this->durations.insert(std::make_pair(4,10));
-//
-//this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_start.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_end.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_start.insert(std::make_pair(3,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_end.insert(std::make_pair(3,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_start.insert(std::make_pair(4,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-//this->init_end.insert(std::make_pair(4,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-
-///For sched_main_test
-//this->durations.insert(std::make_pair(1,0));
-//this->durations.insert(std::make_pair(2,0));
-//this->durations.insert(std::make_pair(3,0));
-//this->durations.insert(std::make_pair(4,0));
-//this->durations.insert(std::make_pair(5,0));
-//this->durations.insert(std::make_pair(6,0));
-//this->durations.insert(std::make_pair(7,0));
-//this->durations.insert(std::make_pair(8,0));
-//this->durations.insert(std::make_pair(9,1));
-//this->durations.insert(std::make_pair(10,0));
-//this->durations.insert(std::make_pair(11,0));
-//this->durations.insert(std::make_pair(12,0));
-//this->durations.insert(std::make_pair(13,0));
-//this->durations.insert(std::make_pair(14,0));
-//this->durations.insert(std::make_pair(15,0));
-//this->durations.insert(std::make_pair(16,0));
-//this->durations.insert(std::make_pair(17,0));
-
-/*
-this->init_start.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(1,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(2,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(3,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(3,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(4,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(4,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(5,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(5,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(6,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(6,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(7,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(7,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(8,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(8,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(9,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(9,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(10,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(10,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(11,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(11,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(12,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(12,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(13,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(13,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(14,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(14,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(15,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(15,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(16,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(16,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(17,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(17,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(17,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(17,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(18,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(18,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(19,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(19,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(20,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(20,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(21,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(21,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(22,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(22,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(23,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(23,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(24,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(24,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(25,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(25,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(26,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(26,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(27,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(27,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(28,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(28,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(29,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(29,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(30,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(30,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(31,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(31,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_start.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-this->init_end.insert(std::make_pair(32,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
-
-*/
-
 for(int i = 0; i < 2; i++){
 	this->init_start.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 	this->init_end.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
@@ -549,7 +375,13 @@ TaskID SA_WorkingPlan::get_task_from_inst (TaskInstID inst_id)
 /// Get task implementation id of a task instance.
 TaskImplID SA_WorkingPlan::get_task_impl_from_inst(TaskInstID inst_id)
 {
+	if(!inst_has_impl(inst_id)) return NULL_TASK_IMPL_ID;
 	return this->task_impls_.find(inst_id)->second;
+}
+
+bool SA_WorkingPlan::inst_has_impl(TaskInstID inst_id){
+	
+	return !(task_impls_.find(inst_id) == task_impls_.end());
 }
 
 void SA_WorkingPlan::generate_all_threats(void)
@@ -575,10 +407,8 @@ void SA_WorkingPlan::generate_all_threats(void)
 
   }
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+  debug_text.str("");
 
-
-
-  debug_text.clear();
 
   debug_text << "SA_WorkingPlan::generate_all_threats:  All Tasks Instances: " << std::endl;
     
@@ -590,7 +420,7 @@ void SA_WorkingPlan::generate_all_threats(void)
   }
   
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-  debug_text.clear();
+  debug_text.str("");
 
   debug_text << "SA_WorkingPlan::generate_all_threats:  All Causal Threats: " << std::endl;
 
@@ -659,10 +489,69 @@ void SA_WorkingPlan::generate_all_threats(void)
 
   
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-  debug_text.clear();
+  debug_text.str("");
 
+  print_precedence_graph("SA_WorkingPlan::generate_all_threats");
   
-  
+}
+
+void SA_WorkingPlan::print_precedence_graph(std::string source){
+
+  std::ostringstream debug_text;
+
+    PrecedenceSet* new_befores = &this->precedence_graph_.find(BEFORE)->second;
+    PrecedenceSet* new_afters = &this->precedence_graph_.find(AFTER)->second;
+    PrecedenceSet* new_simuls = &this->precedence_graph_.find(SIMUL)->second;
+    PrecedenceSet* new_unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+
+    debug_text << source<<": Precendence Sets: BEFORE: " << std::endl;
+    for(PrecedenceSet::iterator it = new_befores->begin(); it != new_befores->end(); it++){
+      debug_text<<"  TaskInst ID "<<it->first<<" : ";
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        debug_text<<" "<<*jt;
+      }
+      debug_text<<std::endl;
+    }
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.str("");
+
+    debug_text << source<<": Precendence Sets: AFTER: " << std::endl;
+    for(PrecedenceSet::iterator it = new_afters->begin(); it != new_afters->end(); it++){
+      debug_text<<"  TaskInst ID "<<it->first<<" : ";
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        debug_text<<" "<<*jt;
+      }
+            debug_text<<std::endl;
+    }
+    
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.str("");
+
+
+    debug_text << source<<": Precendence Sets: SIMUL: " << std::endl;
+    for(PrecedenceSet::iterator it = new_simuls->begin(); it != new_simuls->end(); it++){
+      debug_text<<"  TaskInst ID "<<it->first<<" : ";
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        debug_text<<" "<<*jt;
+      }
+            debug_text<<std::endl;
+    }
+
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.str("");
+
+    debug_text << source<<": Precendence Sets: UNRANKED: " << std::endl;
+    for(PrecedenceSet::iterator it = new_unrankeds->begin(); it != new_unrankeds->end(); it++){
+      debug_text<<"  TaskInst ID "<<it->first<<" : ";
+      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
+        debug_text<<" "<<*jt;
+      }
+            debug_text<<std::endl;
+    }
+    
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+    debug_text.str("");
+
 }
 
 
@@ -921,15 +810,15 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 {
 
-	  if(cmd->last_task_ == 20)
-  {
-	 planner_->init_added = false;
-  }
-	  if(cmd->last_task_choice_.choice == NEW_INST){
+	if(cmd->last_task_ == 20)
+	{
+		planner_->init_added = false;
+	}
+	if(cmd->last_task_choice_.choice == NEW_INST){
 		this->task_insts_.erase (this->task_insts_.find(cmd->last_task_inst_));  
-	  }else{
-		  this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
-	  }
+	 }else{
+		 this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
+	 }
 
 /*
   if(cmd->last_task_ == 20)
@@ -1005,6 +894,18 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 // task instance in the plan.
 bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
 {
+	//cmd->precedence_graph_ = *this->precedence_graph_;
+
+  PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
+  PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
+  PrecedenceSet* simuls = &this->precedence_graph_.find(SIMUL)->second;
+  PrecedenceSet* unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+
+  cmd->befores = *befores;
+  cmd->afters = *afters;
+  cmd->simuls = *simuls;
+  cmd->unrankeds = *unrankeds;
+
   // Associate task instance with first implementation in list from command.
   if(this->reused_insts_.find(cmd->task_inst_)==this->reused_insts_.end())
   {
@@ -1018,10 +919,10 @@ bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
 
   //Ben changed this.  undo by returning that stuff
 
-  cmd->got_to_scheduling = true;
+
 
   if(is_cycle_in_ordering()){
-    cmd->got_to_scheduling = false;
+   // cmd->got_to_scheduling = false;
     return false;
   }
 
@@ -1059,7 +960,7 @@ bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
   }
 */
 
-
+  cmd->got_to_scheduling = true;
   return this->init_prec_insert(cmd->task_inst_,cmd);
 };
 
@@ -1117,6 +1018,8 @@ void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
 	  this->prec_erase(cmd->task_inst_,cmd);
     cmd->causal_insertions.clear();
     cmd->simul_insertions.clear();
+
+
   }
 
   if(this->reused_insts_.find(cmd->task_inst_)==this->reused_insts_.end())
@@ -1124,12 +1027,27 @@ void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
     this->durations.erase(this->durations.find(cmd->task_inst_));
     this->task_impls_.erase (cmd->task_inst_);
   }
+
+  PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
+  PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
+  PrecedenceSet* simuls = &this->precedence_graph_.find(SIMUL)->second;
+  PrecedenceSet* unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+
+  if(cmd->befores != *befores ||
+	  cmd->afters != *afters ||
+	  cmd->simuls != *simuls ||
+	  cmd->unrankeds != *unrankeds)
+	 {
+	bool hi = true;
+  }
+
 };
 
 // Execute a command to resolve a causal link threat in the
 // plan (with promotion or demotion).
 bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 {
+
 
 	std::ostringstream debug_text;
 
@@ -1142,16 +1060,15 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(first_task_inst, second_task_inst));
   this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(second_task_inst, first_task_inst));
 
-  cmd->got_to_change_precedences = true;
+
 
 
   if(task_insts_.find(cmd->second)->second == 20){
 
     debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule before initial task"<<std::endl;
     SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-    debug_text.clear();
+    debug_text.str("");
 
-    cmd->got_to_change_precedences = false;
 	return false;
   }
 
@@ -1159,9 +1076,8 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 
     debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot push threat to after goal"<<std::endl;
     SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-	debug_text.clear();
+	debug_text.str("");
 
-	cmd->got_to_change_precedences = false;
 	return false;
   }
 
@@ -1181,6 +1097,44 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   TaskInstSet *unranked_B = &unrankeds->find(cmd->second)->second;
 
 
+  if(before_B->find(cmd->first) != before_B->end()){
+	//Don't need to resolve
+
+	  debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Threat has already been resolved: "<<cmd->first<<" is before "<<cmd->second<<std::endl;
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.str("");
+
+
+	if(this->is_cycle_in_ordering()){
+		bool this_means_ben_failed = true;
+	}
+
+	  return true;
+  }
+
+  if(after_B->find(cmd->first) != after_B->end()){
+	//impossible?
+    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule task inst"<<cmd->first<<" before task inst"<<cmd->second<<std::endl;
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.str("");
+	if(!this->is_cycle_in_ordering()){
+		bool this_means_ben_failed = true;
+	}
+
+//	  loop_detected = true;
+
+	cmd->got_to_change_precedences = false;
+	return false;
+
+  }else{
+	if(this->is_cycle_in_ordering()){
+		bool this_means_ben_failed = true;
+	}
+
+  }
+
+  cmd->got_to_change_precedences = true;
+
   cmd->befores = *befores;
   cmd->afters = *afters;
   cmd->simuls = *simuls;
@@ -1191,14 +1145,15 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   before_B->insert(cmd->first);
   unranked_B->erase(cmd->first);
 
-  bool loop_detected = false;
+ // bool loop_detected = false;
 
   for(TaskInstSet::iterator it = before_A->begin(); it != before_A->end(); it++){
   
+	  /*
 	if(after_B->find(*it) != after_B->end()){
 		loop_detected = true;
 	}
-	
+	*/
 	before_B->insert(*it);
     unranked_B->erase(*it);
 
@@ -1211,10 +1166,11 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 
   for(TaskInstSet::iterator it = after_B->begin(); it != after_B->end(); it++){
 
+	  /*
 	if(before_A->find(*it) != before_A->end()){
 		loop_detected = true;
 	}
-    
+	*/
 	after_A->insert(*it);
     unranked_A->erase(*it);
 
@@ -1222,83 +1178,34 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
     unrankeds->find(*it)->second.erase(cmd->first);
   }
 
-  if(loop_detected){
+ // if(loop_detected){
 
-    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule task inst"<<cmd->first<<" before task inst"<<cmd->second<<std::endl;
-    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-    debug_text.clear();
+ //   debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule task inst"<<cmd->first<<" before task inst"<<cmd->second<<std::endl;
+ //   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+  //  debug_text.str("");
 
-
+/*
 	if(!this->is_cycle_in_ordering()){
 		bool this_means_ben_failed = true;
 	}
+*/
 
-    return false;
-  }
+  //  return false;
+ // }
 
+  /*
   if(is_cycle_in_ordering()){
 	bool this_means_ben_failed = true;
   }
 
+  */
 
   debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Now scheduling task "<<cmd->first<<" before "<<cmd->second<<std::endl;
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-  debug_text.clear();
+  debug_text.str("");
 
+  print_precedence_graph("SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)");
 
-
-    PrecedenceSet* new_befores = &this->precedence_graph_.find(BEFORE)->second;
-    PrecedenceSet* new_afters = &this->precedence_graph_.find(AFTER)->second;
-    PrecedenceSet* new_simuls = &this->precedence_graph_.find(SIMUL)->second;
-    PrecedenceSet* new_unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
-
-    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Precendence Sets: BEFORE: " << std::endl;
-    for(PrecedenceSet::iterator it = new_befores->begin(); it != new_befores->end(); it++){
-      debug_text<<"  TaskInst ID "<<it->first<<" : ";
-      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
-        debug_text<<" "<<*jt;
-      }
-      debug_text<<std::endl;
-    }
-    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-    debug_text.clear();
-
-    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Precendence Sets: AFTER: " << std::endl;
-    for(PrecedenceSet::iterator it = new_afters->begin(); it != new_afters->end(); it++){
-      debug_text<<"  TaskInst ID "<<it->first<<" : ";
-      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
-        debug_text<<" "<<*jt;
-      }
-            debug_text<<std::endl;
-    }
-    
-    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-    debug_text.clear();
-
-
-    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Precendence Sets: SIMUL: " << std::endl;
-    for(PrecedenceSet::iterator it = new_simuls->begin(); it != new_simuls->end(); it++){
-      debug_text<<"  TaskInst ID "<<it->first<<" : ";
-      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
-        debug_text<<" "<<*jt;
-      }
-            debug_text<<std::endl;
-    }
-
-    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-    debug_text.clear();
-
-    debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Precendence Sets: UNRANKED: " << std::endl;
-    for(PrecedenceSet::iterator it = new_unrankeds->begin(); it != new_unrankeds->end(); it++){
-      debug_text<<"  TaskInst ID "<<it->first<<" : ";
-      for(TaskInstSet::iterator jt = it->second.begin(); jt != it->second.end(); jt++){
-        debug_text<<" "<<*jt;
-      }
-            debug_text<<std::endl;
-    }
-    
-    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-    debug_text.clear();
 
   return true;
 };
@@ -1356,7 +1263,7 @@ void SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd)
   
 
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-  debug_text.clear();
+  debug_text.str("");
 
   if(cmd->got_to_change_precedences){
 
@@ -1394,84 +1301,7 @@ void SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd)
       }
     }
 
-/*
-
-  TaskInstSet *before_A = &this->precedence_graph_.find(BEFORE)->second.find(cmd->first)->second;
-  TaskInstSet *after_A = &this->precedence_graph_.find(AFTER)->second.find(cmd->first)->second;
-  TaskInstSet *simul_A = &this->precedence_graph_.find(SIMUL)->second.find(cmd->first)->second;
-  TaskInstSet *unranked_A = &this->precedence_graph_.find(UNRANKED)->second.find(cmd->first)->second;
-	
-  TaskInstSet *before_B = &this->precedence_graph_.find(BEFORE)->second.find(cmd->second)->second;
-  TaskInstSet *after_B = &this->precedence_graph_.find(AFTER)->second.find(cmd->second)->second;
-  TaskInstSet *simul_B = &this->precedence_graph_.find(SIMUL)->second.find(cmd->second)->second;
-  TaskInstSet *unranked_B = &this->precedence_graph_.find(UNRANKED)->second.find(cmd->second)->second;
-
-  before_A->clear();
-  for(TaskInstSet::iterator it = cmd->before_A_old.begin(); it != cmd->before_A_old.end(); it++){
-    before_A->insert(*it);
   }
-
-  after_A->clear();
-  for(TaskInstSet::iterator it = cmd->after_A_old.begin(); it != cmd->after_A_old.end(); it++){
-    after_A->insert(*it);
-  }
-
-  simul_A->clear();
-  for(TaskInstSet::iterator it = cmd->simul_A_old.begin(); it != cmd->simul_A_old.end(); it++){
-    simul_A->insert(*it);
-  }
-
-  unranked_A->clear();
-  for(TaskInstSet::iterator it = cmd->unsched_A_old.begin(); it != cmd->unsched_A_old.end(); it++){
-    unranked_A->insert(*it);
-  }
-
-  before_B->clear();
-  for(TaskInstSet::iterator it = cmd->before_B_old.begin(); it != cmd->before_B_old.end(); it++){
-    before_B->insert(*it);
-  }
-
-  after_B->clear();
-  for(TaskInstSet::iterator it = cmd->after_B_old.begin(); it != cmd->after_B_old.end(); it++){
-    after_B->insert(*it);
-  }
-
-  simul_B->clear();
-  for(TaskInstSet::iterator it = cmd->simul_B_old.begin(); it != cmd->simul_B_old.end(); it++){
-    simul_B->insert(*it);
-  }
-
-  unranked_B->clear();
-  for(TaskInstSet::iterator it = cmd->unsched_B_old.begin(); it != cmd->unsched_B_old.end(); it++){
-    unranked_B->insert(*it);
-  }
-
-  */
-  }
-
-  //before_A = cmd->before_A_old;
- // after_A = cmd->after_A_old
-  //simul_A = cmd->simul_A_old;
-  //unranked_A = cmd->unsched_A_old;
-
-  //before_B = cmd->before_B_old;
- // after_B = cmd->after_B_old;
-  //simul_B = cmd->simul_B_old;
- // unranked_B = cmd->unsched_B_old;
-
-  //return;
-
-//  std::pair<CondToCLinksMap::iterator, CondToCLinksMap::iterator> firstmap
-//    = this->causal_links_.equal_range(cmd->condition);
-
-//  CondToCLinksMap::iterator firstit;
-
-//  for(firstit = firstmap.first; firstit != firstmap.second; firstit++){
- //   if(firstit->second.first == cmd->first && firstit->second.second == cmd->second)
- //     break;
- // }
-
-//  this->causal_links_.erase(firstit);
 
   std::pair<
       std::multimap<TaskInstID, TaskInstID >::iterator,

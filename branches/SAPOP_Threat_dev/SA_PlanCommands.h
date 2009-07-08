@@ -365,6 +365,14 @@ namespace SA_POP {
 	// are recorded in these sets.
 	std::set< std::pair<TaskInstID,TaskInstID> > causal_insertions;
 	std::set< std::pair<TaskInstID,TaskInstID> > simul_insertions;
+
+
+    std::map <TaskInstID, TaskInstSet> befores;
+    std::map <TaskInstID, TaskInstSet> afters;
+    std::map <TaskInstID, TaskInstSet> simuls;
+    std::map <TaskInstID, TaskInstSet> unrankeds;
+//	PrecedenceGraph precedence_graph_;
+
   };
 
   /**

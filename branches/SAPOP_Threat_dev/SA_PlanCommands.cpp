@@ -316,8 +316,12 @@ bool SA_AssocTaskImplCmd::execute_next (void)
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
 
   this->undo();
-  if (this->impls_.empty ())
+
+  got_to_scheduling = false;
+
+  if (this->impls_.empty ()){
     return false;
+  }
 
   this->num_tries_++;
   return this->working_plan_->execute (this);
@@ -707,7 +711,7 @@ PlanCommand *SA_ResolveCLThreatCmd::clone (void)
 bool SA_ResolveCLThreatCmd::execute_next (void)
 {
   bool goodOption = true;
-
+  got_to_change_precedences = false;
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
   if(choices == 0)
   {

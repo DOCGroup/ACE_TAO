@@ -334,6 +334,10 @@ namespace SA_POP {
 
 	virtual InstToTaskMap get_task_insts(void){return task_insts_;};
 
+	virtual bool inst_has_impl(TaskInstID inst_id);
+
+	void print_precedence_graph(std::string source);
+
   protected:
     // ************************************************************************
     // State information.
@@ -368,13 +372,8 @@ namespace SA_POP {
     /// Helper function to create next instance id.
     virtual TaskInstID get_next_inst_id (void);
 
-  	/// Type of particular Task Implementation mapped to a Task Implementation Set.
-  	/// This is a particular Precedence set. Like Before, After etc.
-	  typedef std::map <TaskInstID, TaskInstSet> PrecedenceSet;
 
-	  /// Type of a Precedence Relation mapped to a Precedence Set.
-	  /// This gives the whole Precedence Graph
-	  typedef std::map <PrecedenceRelation, PrecedenceSet> PrecedenceGraph;
+
 
 	/// PrecedenceGraph
 	PrecedenceGraph precedence_graph_;

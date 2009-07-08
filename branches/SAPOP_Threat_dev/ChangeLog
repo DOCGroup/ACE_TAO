@@ -1,9 +1,20 @@
+Wed Jul  8 22:17:52 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SA_POP_Types.h:
+        * SA_PlanCommands.h:
+        * SA_PlanCommands.cpp:
+        * SA_PlanStrategy.cpp:
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+
+	Debugging output improved.
+
 Wed Jul  8 01:13:05 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
         * SA_POP_Types.h:
         * SA_WorkingPlan.cpp:
 
-	Fixed the comparison operator of less than to work correctly.
+        Fixed the comparison operator of less than to work correctly.
 
 Tue Jul  7 23:10:22 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
