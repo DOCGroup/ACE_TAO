@@ -29,11 +29,13 @@ class AST_PredefinedType;
 class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
+class AST_Template_Interface;
 class AST_ValueBox;
 class AST_ValueType;
 class AST_ValueTypeFwd;
 class AST_Component;
 class AST_ComponentFwd;
+class AST_PortType;
 class AST_EventType;
 class AST_EventTypeFwd;
 class AST_Home;
@@ -100,13 +102,16 @@ public:
   // Visit interface.
 
   virtual int visit_interface_fwd (AST_InterfaceFwd *node) = 0;
-  // Visit interface_fwd
-
+  // Visit interface_fwd.
+  
+  virtual int visit_template_interface (AST_Template_Interface *node) = 0;
+  // Visit template interface.
+  
   virtual int visit_valuetype (AST_ValueType *node) = 0;
   // Visit valuetype.
 
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node) = 0;
-  // Visit valuetype_fwd
+  // Visit valuetype_fwd.
 
   virtual int visit_component (AST_Component *node) = 0;
   // Visit component.
@@ -115,13 +120,16 @@ public:
   // Visit home.
 
   virtual int visit_component_fwd (AST_ComponentFwd *node) = 0;
-  // Visit component_fwd
+  // Visit component_fwd.
+  
+  virtual int visit_porttype (AST_PortType *node) = 0;
+  // Visit porttype.
 
   virtual int visit_eventtype (AST_EventType *node) = 0;
   // Visit eventtype.
 
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
-  // Visit eventtype_fwd
+  // Visit eventtype_fwd.
 
   virtual int visit_factory (AST_Factory *node) = 0;
   // Visit a OBV factory construct.
@@ -133,7 +141,7 @@ public:
   // Visit a structure.
 
   virtual int visit_exception (AST_Exception *node) = 0;
-  // Visit exception
+  // Visit exception.
 
   virtual int visit_expression (AST_Expression *node) = 0;
   // Visit expression.

@@ -784,6 +784,8 @@ AST_Decl::node_type_to_string (NodeType nt)
         return "typename";
       case NT_fixed:
         return "fixed";
+      case NT_porttype:
+        return "porttype";
       // No useful output for these.
       case NT_enum_val:
       case NT_field:

@@ -1,3 +1,31 @@
+Wed Jul  8 22:37:55 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be_include/be_porttype.h:
+        
+          New files, containing frontend and backend definitions
+          of classes corresponding to the IDL3+ keyword 'porttype'.
+        
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        
+          Added traversal methods for the new port type classes,
+          and other changes relating to the new AST node types.
+          
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        
+          Added the new traversal methods to make this visitor base
+          class concrete.
+
 Wed Jul  8 20:22:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/fe_template_interface_header.h:

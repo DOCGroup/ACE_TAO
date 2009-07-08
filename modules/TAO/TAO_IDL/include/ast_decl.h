@@ -161,6 +161,7 @@ public:
       , NT_valuebox                 // Denotes an value box
       , NT_type                     // Template interface parameter
       , NT_fixed                    // Denotes (unsupported) fixed type
+      , NT_porttype                 // Denotes a port type
   };
 
   // Operations.

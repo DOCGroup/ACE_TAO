@@ -76,6 +76,11 @@ ifr_visitor::visit_interface_fwd (AST_InterfaceFwd *)
   return 0;
 }
 
+int ifr_visitor::visit_template_interface (AST_Template_Interface *)
+{
+  return 0;
+}
+
 int 
 ifr_visitor::visit_valuebox (AST_ValueBox *)
 {
@@ -102,6 +107,11 @@ ifr_visitor::visit_component (AST_Component *)
 
 int 
 ifr_visitor::visit_component_fwd (AST_ComponentFwd *)
+{
+  return 0;
+}
+
+int ifr_visitor::visit_porttype (AST_PortType *)
 {
   return 0;
 }

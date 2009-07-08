@@ -1,6 +1,7 @@
 // $Id$
 
 #include "be_template_interface.h"
+#include "be_visitor.h"
 
 ACE_RCSID (be,
            be_template_interface,
@@ -49,5 +50,11 @@ be_template_interface::destroy (void)
   this->AST_Template_Interface::destroy ();
   this->be_scope::destroy ();
   this->be_type::destroy ();
+}
+
+int
+be_template_interface::accept(be_visitor *visitor)
+{
+  return visitor->visit_template_interface (this);
 }
 
