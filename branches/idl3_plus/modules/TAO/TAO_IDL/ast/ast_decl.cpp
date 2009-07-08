@@ -728,6 +728,74 @@ AST_Decl::compute_flat_name (void)
     }
 }
 
+const char *
+AST_Decl::node_type_to_string (NodeType nt)
+{
+  switch (nt)
+    {
+      case NT_module:
+        return "module";
+      case NT_interface:
+      case NT_interface_fwd:
+        return "interface";
+      case NT_valuetype:
+      case NT_valuetype_fwd:
+      case NT_valuebox:
+        return "valuetype";
+      case NT_const:
+        return "const";
+      case NT_except:
+        return "exception";
+      case NT_attr:
+        return "attribute";
+      case NT_union:
+      case NT_union_fwd:
+        return "union";
+      case NT_struct:
+      case NT_struct_fwd:
+        return "struct";
+      case NT_enum:
+        return "enum";
+      case NT_string:
+        return "string";
+      case NT_wstring:
+        return "wstring";
+      case NT_array:
+        return "array";
+      case NT_sequence:
+        return "sequence";
+      case NT_typedef:
+        return "typedef";
+      case NT_pre_defined:
+        return "primitive";
+      case NT_native:
+        return "native";
+      case NT_factory:
+        return "factory";
+      case NT_component:
+      case NT_component_fwd:
+        return "component";
+      case NT_home:
+        return "home";
+      case NT_eventtype:
+      case NT_eventtype_fwd:
+        return "eventtype";
+      case NT_type:
+        return "typename";
+      case NT_fixed:
+        return "fixed";
+      // No useful output for these.
+      case NT_enum_val:
+      case NT_field:
+      case NT_union_branch:
+      case NT_op:
+      case NT_argument:
+      case NT_root:
+      default:
+        return "";
+    }
+}
+
 // Return TRUE if one of my ancestor scopes is "s"
 // and FALSE otherwise.
 bool

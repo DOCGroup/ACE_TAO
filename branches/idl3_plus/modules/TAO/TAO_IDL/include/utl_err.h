@@ -117,6 +117,7 @@ public:
     EIDL_CONCRETE_VT_EXPECTED,  // We got something else..
     EIDL_ABSTRACT_EXPECTED,     // We got something else..
     EIDL_EVENTTYPE_EXPECTED,    // We got something else..
+    EIDL_TMPL_IFACE_EXPECTED,   // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
@@ -140,6 +141,8 @@ public:
     EIDL_TC_SUPPRESSION_WARNING,// -St option used with exception decl
     EIDL_ILLEGAL_BOXED_TYPE,    // Valuetype not allowed for box value type
     EIDL_ILLEGAL_PRIMARY_KEY,   // Primary key doesn't meet spec constraints
+    EIDL_MISMATCHED_T_PARAM,    // Between parent and child tempalte interface
+    EIDL_DUPLICATE_T_PARAM,     // A template interface's param ids must be unique
     EIDL_OK                     // No error
   };
 
@@ -339,6 +342,8 @@ public:
   // Valuetype violates a spec-defined constraint on a
   // valuetype used as a primary key.
   void illegal_primary_key (AST_Decl *d);
+  
+  void duplicate_param_id (UTL_ScopedName *n);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

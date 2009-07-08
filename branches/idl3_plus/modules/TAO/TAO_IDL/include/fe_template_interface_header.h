@@ -9,6 +9,8 @@
 #include "fe_interface_header.h"
 #include "fe_utils.h"
 
+class AST_Template_Interface;
+
 class TAO_IDL_FE_Export FE_Template_InterfaceHeader
   : public FE_InterfaceHeader
 {
@@ -32,6 +34,8 @@ protected:
 
 protected:
   void compile_template_inheritance (void);
+  bool match_params (AST_Template_Interface *ti);
+  bool duplicate_param_id (void);
 };
 
 #endif           // FE_TEMPLATE_INTERFACE_HEADER_H

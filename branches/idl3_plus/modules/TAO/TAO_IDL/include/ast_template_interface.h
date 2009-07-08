@@ -21,8 +21,22 @@ public:
     const FE_Utils::T_PARAMLIST_INFO *template_params);
 
   virtual ~AST_Template_Interface (void);
+  
+  FE_Utils::T_PARAMLIST_INFO &template_params (void);
 
+  // Cleanup function.
   virtual void destroy (void);
+
+  // Narrowing.
+
+  DEF_NARROW_FROM_DECL(AST_Template_Interface);
+  DEF_NARROW_FROM_SCOPE(AST_Template_Interface);
+
+  // AST Dumping.
+  virtual void dump (ACE_OSTREAM_TYPE &o);
+
+  // Visiting.
+  virtual int ast_accept (ast_visitor *visitor);
 
 protected:
   FE_Utils::T_PARAMLIST_INFO template_params_;

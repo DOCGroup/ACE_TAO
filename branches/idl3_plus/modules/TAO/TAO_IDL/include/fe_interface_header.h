@@ -120,6 +120,8 @@ protected:
   void add_inheritance_flat (AST_Interface *i);
   bool already_seen (AST_Interface *ip);
   bool already_seen_flat (AST_Interface *ip);
+  
+  void install_in_header (void);
 
   // Data.
 protected:

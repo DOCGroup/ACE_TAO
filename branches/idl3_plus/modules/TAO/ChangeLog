@@ -1,3 +1,31 @@
+Wed Jul  8 20:22:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          - Added check for duplicate template parameter ids in
+            a template interface.
+            
+          - Added check for mismatched template parameters (type
+            and id) between parent and child template interface.
+            
+          - Added appropriate error messages for the above errors.
+          
+          - Added narrowing, visiting and dumping methods to
+            AST_Template_Interface.
+            
+          - Refactored code in FE_InterfaceHeader to get more
+            reuse.
+
 Tue Jul  7 21:38:11 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
