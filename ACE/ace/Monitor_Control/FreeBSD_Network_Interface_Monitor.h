@@ -2,11 +2,11 @@
 
 //=============================================================================
 /**
- * @file BSD_Network_Interface_Monitor.h
+ * @file FreeBSD_Network_Interface_Monitor.h
  *
  * $Id$
  *
- * @author Boyan Kasarov 
+ * @author Boyan Kasarov
  */
 //=============================================================================
 
