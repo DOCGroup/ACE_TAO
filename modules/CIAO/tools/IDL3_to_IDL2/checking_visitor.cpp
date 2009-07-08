@@ -111,6 +111,12 @@ checking_visitor::visit_interface_fwd (AST_InterfaceFwd *)
 }
 
 int
+checking_visitor::visit_template_interface (AST_Template_Interface *)
+{
+  return 0;
+}
+
+int
 checking_visitor::visit_valuebox (AST_ValueBox *)
 {
   return 0;
@@ -153,6 +159,12 @@ checking_visitor::visit_component_fwd (AST_ComponentFwd *node)
     }
 
   this->is_local_idl3_ = true;
+  return 0;
+}
+
+int
+checking_visitor::visit_porttype (AST_PortType *)
+{
   return 0;
 }
 
