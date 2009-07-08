@@ -19,7 +19,7 @@ project (DDS4CCM_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib {
+project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib, anytypecode {
 
   after += DDS4CCM_idl_gen
   includes += $(CIAO_ROOT)/connectors
@@ -45,7 +45,7 @@ project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib {
   }
 }
 
-project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib {
+project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib, anytypecode {
   after += DDS4CCM_stub
   libs  += DDS4CCM_stub
   includes += $(CIAO_ROOT)/connectors
