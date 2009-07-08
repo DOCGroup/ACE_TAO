@@ -28,6 +28,7 @@ project(CCM_stub_idl) : ciaolib_with_idl, valuetype {
     CCM_HomeConfiguration.idl
     CCM_StandardConfigurator.idl
     CCM_Home.idl
+    CCM_Homes.idl
     CCM_Object.idl
     CCM_PrimaryKeyBase.idl
   }
@@ -65,6 +66,7 @@ project(CCM_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client {
     CCM_ComponentC.cpp
     CCM_EnumerationC.cpp
     CCM_HomeC.cpp
+    CCM_HomesC.cpp
     CCM_ConfiguratorC.cpp
     CCM_HomeConfigurationC.cpp
     CCM_KeylessCCMHomeC.cpp
@@ -168,6 +170,7 @@ project(CCM_svnt) : orbsvcslib, orbsvcs_output \
     CCM_KeylessCCMHomeS.cpp
     CCM_StandardConfiguratorS.cpp
     CCM_HomeS.cpp
+    CCM_HomesS.cpp
     CCM_ObjectS.cpp
     CCM_PrimaryKeyBaseS.cpp
     CCM_HomeFinderS.cpp
