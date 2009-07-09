@@ -80,16 +80,30 @@ namespace ACE
             
           p = ifa->ifa_name; 
 
+#if defined (__OpenBSD__)
+          struct ifreq ifdr;
+#else
           struct ifdatareq ifdr;
+#endif
           memset (&ifdr, 0, sizeof (ifdr));
-          strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr));
 
+#if defined (__OpenBSD__)
+          struct if_data if_data;
+          ifdr.ifr_data = reinterpret_cast<caddr_t> (&if_data);
+          strncpy (ifdr.ifr_name, ifa->ifa_name, IFNAMSIZ-1);
+#else
+          strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr));
+#endif
           if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1) 
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("SIOCGIFDATA failed\n")));
             }
 
+#if defined (__OpenBSD__)
+          struct if_data * const ifi = &if_data;
+#else
           struct if_data * const ifi = &ifdr.ifdr_data;
+#endif
 
           if (this->lookup_str_ == "ibytes")
             {
