@@ -1,10 +1,16 @@
+Thu Jul  9 13:27:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+          Add $DANCE_ROOT/MPC as config directory, dance base projects will
+          move to there
+
 Mon Jun 29 00:29:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/make_release.py:
 
           Stab at update of the spec file upon release.  This will need to
-          be tested. 
-        
+          be tested.
+
 Tue Jun 22 15:49:30 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/MPC.cfg:
