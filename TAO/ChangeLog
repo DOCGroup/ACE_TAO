@@ -1,3 +1,18 @@
+Thu Jul 09 13:10:00 UTC 2009  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+        * tao/Invocation_Adapter.cpp:
+        * tests/Bug_3333_Regression/Bug3333.mpc
+        * tests/Bug_3333_Regression/README
+        * tests/Bug_3333_Regression/Test.idl
+        * tests/Bug_3333_Regression/Hello.h
+        * tests/Bug_3333_Regression/Hello.cpp
+        * tests/Bug_3333_Regression/client.cpp
+        * tests/Bug_3333_Regression/server.cpp
+        * tests/Bug_3333_Regression/run_test.pl
+
+          Fixed bugzilla 3333.
+
 Mon Jun 29 15:08:12 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Connection_Handler.cpp:
