@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance_lib, ciao_output, dance_domainapplicationmanager_skel, naming  {
+project : dance_lib, ciao_output, dance_domainapplicationmanager_skel, dance_domainapplication, dance_nodemanager_stub, naming  {
   sharedname   = DAnCE_DomainApplicationManager
   dynamicflags = DOMAINAPPLICATIONMANAGER_BUILD_DLL
 

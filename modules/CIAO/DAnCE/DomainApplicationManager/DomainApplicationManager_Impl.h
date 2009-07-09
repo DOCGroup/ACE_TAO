@@ -19,10 +19,10 @@
 #include "ace/SStringfwd.h"
 #include "ace/Map_Manager.h"
 #include "DomainApplicationManager_Export.h"
-#include "Deployment/Deployment_DomainApplicationManagerS.h"
-#include "DomainApplication/Domain_Application_Impl.h"
+#include "Node_Locator.h"
 #include "Deployment/Deployment_NodeManagerC.h"
-#include "DomainApplicationManager/Node_Locator.h"
+#include "DomainApplication/Domain_Application_Impl.h"
+#include "Deployment/Deployment_DomainApplicationManagerS.h"
 
 namespace DAnCE
   {
