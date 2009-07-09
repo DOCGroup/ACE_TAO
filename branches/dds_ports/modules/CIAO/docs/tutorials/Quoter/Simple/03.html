@@ -218,10 +218,26 @@ div.Section1 {
         the &lt;&lt;ComponentImplementationArtifact&gt;&gt; icon should change into a
         &lt;&lt;ImplementationArtifactReference&gt;&gt; icon.
       </li>
-      <li>Now we should define which entry point is used. This should be done
-        by selecting the <em>ComponentImplemtationArtifact</em> and specify it's entry point in the attribute window.
-        This should be "exec_entry_point". The <em>ComponentServantArtifact</em> should have an entry point
-        called "servant_entry_point".
+      <li>Now we should define which entry point is used. Since this tutorial is about unhomed components and the
+        in the IDL we used homed component, we should create an entry point in code in order to support unhomed component.
+        This can be done by:
+        <ol>
+          <li>Opening StockBroker_exec.h and add an entry point in the extern "C" section. This function should return
+           a <code>::Components::EnterpriseComponent_ptr</code> instead of a <code>::Components::HomeExecutorBase_ptr</code>. See
+            <a href="Broker/StockBroker_exec.h">StockBroker_exec.h</a> for more details.
+          </li>
+          <li>Opening StockBroker_exec.cpp and implement the extern "C" function. See
+            <a href="Broker/StockBroker_exec.cpp">StockBroker_exec.cpp</a> for more details.
+          </li>
+          <li>Now we should turn back to the model to configure this entry point. This should be done
+            by selecting the <em>ComponentImplemtationArtifact</em> and specify this new extern "C" function
+            (<code>create_Stock_StockBrokerComp_Impl</code>) in the attribute window.<br>
+          </li>
+        </ol>
+        The same has to be done for the <em>ComponentServantArtifact</em>. Mind that the entry point in code should be
+        implemented in the right namespace (<code>CIAO_Stock_StockBroker_Impl</code>). In this case the function is called
+        "create_Stock_StockBroker_Servant". See <a href="Broker/StockBroker_svnt.h">StockBroker_exec.h</a> and
+        <a href="Broker/StockBroker_svnt.cpp">StockBroker_exec.cpp</a> for more details.
       </li>
       <li>Connect <em>ComponentServantArtifact</em> and <em>ComponentImplementationArtifact</em> to
         <em>StockBrokerMonolithicImpl</em>. To connect two items, one should switch to connect mode by clicking
@@ -229,6 +245,7 @@ div.Section1 {
         <em>StockBrokerMonolithicImpl</em> and then <em>ComponentServantArtifact</em>.
       </li>
     </ol>
+    Don't forget to perform the previous steps for StockDistributor!<br/>
     The result of these actions is shown in figure 5a.</span>
   </p>
   <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1033" src="images/fig5a.jpg"><br>
@@ -265,8 +282,9 @@ div.Section1 {
      <em><span style="FONT-SIZE:10pt;FONT-FAMILY:'Courier New'">InterfaceDefinitions/StockBroker</span></em>, then
      <em><span style="FONT-SIZE:10pt;FONT-FAMILY:'Courier New'">InterfaceDefinitions/StockBroker/Stock</span></em> until the interface definition of <em>StockBroker</em> shows.
       While expanding the tree, always keep the "StockQuoter" &lt;&lt;ComponentAssembly&gt;&gt; window open.
-      Then drag <code> <span style='FONT-SIZE:10pt'>Quoter/InterfaceDefinitions/Broker/Stock/StockBroker</span></code> in the browser to the "StockQuoter" &lt;&lt;ComponentAssembly&gt;&gt; window
-      while pressing ALT key. Repeat the same steps for <code> <span style='FONT-SIZE:10pt'>Quoter/InterfaceDefinitions/Distributor/Stock/StockDistributor</span></code>,
+      Then press the ALT key and drag <code> <span style='FONT-SIZE:10pt'>Quoter/InterfaceDefinitions/Broker/Stock/StockBroker</span></code>
+      in the browser to the "StockQuoter" &lt;&lt;ComponentAssembly&gt;&gt; window'
+      Repeat the same steps for <code> <span style='FONT-SIZE:10pt'>Quoter/InterfaceDefinitions/Distributor/Stock/StockDistributor</span></code>,
       and you will see two instances of component interfaces have been created as
       shown in Figure 6 (the black line in the figure only indicates .mapping)
       </li>
@@ -382,10 +400,11 @@ div.Section1 {
       <li>Nagivate to <code><span style='FONT-SIZE:10pt'>
         Quoter/InterfaceDefinitions/StockBroker/Stock</span></code> and double click it.
       </li>
-      <li>Switch to connect mode and connect <em>StockDistributorHome</em> and
-        <em>StockDistributor</em> with each other.
+      <li>Switch to connect mode and connect <em>StockBrokerHome</em> and
+        <em>StockBroker</em> with each other.
       </li>
     </ol></span>
+    Do the same for Distributor.
   </p>
 
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>

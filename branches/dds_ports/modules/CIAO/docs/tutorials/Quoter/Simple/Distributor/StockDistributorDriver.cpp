@@ -46,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "usage:  %s\n"
                            "-o (Start the distribution service)\n"
                            "-f (Stop the distribution service)\n"
-                           "-k <Distributor IOR> (default is file:\\distributor.ior)\n"
+                           "-k <Distributor IOR> (default is file://StockDistributor.ior)\n"
                            "-r <broadcast frequency in Hertz> (default is 2)\n"
                            "\n",
                            argv [0]),
