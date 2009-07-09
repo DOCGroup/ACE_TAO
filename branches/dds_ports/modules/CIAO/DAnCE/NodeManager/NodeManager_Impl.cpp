@@ -35,7 +35,7 @@ namespace DAnCE
     while (!i.done ())
       {
         DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_Impl::NodeManager_Impl - "
-                      "Binding property %s provided by caller.\n", i->key ().c_str ()));
+                      "Binding property %C provided by caller.\n", i->key ().c_str ()));
         this->properties_.bind (i->key (), i->item ());
         i.advance ();
       }
@@ -65,7 +65,7 @@ namespace DAnCE
           {
             DANCE_ERROR ((LM_WARNING, DLINFO
                           "NodeManager_impl::~NodeManager_impl - Caught exception while removing "
-                          "NodeApplicationManager %s\n", (*iter).ext_id_.c_str ()));
+                          "NodeApplicationManager %C\n", (*iter).ext_id_.c_str ()));
           }
       }
   }

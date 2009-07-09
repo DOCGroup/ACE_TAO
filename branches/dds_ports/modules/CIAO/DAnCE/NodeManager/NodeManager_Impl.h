@@ -59,6 +59,7 @@ namespace DAnCE
     CORBA::ORB_var orb_;
     PortableServer::POA_var poa_;
     ACE_CString name_;
+    // @todo, see if we can use a _ptr
     typedef ACE_Map_Manager<ACE_CString, NodeApplicationManager_Impl*, ACE_Null_Mutex > TManagers;
     TManagers managers_;
 //    RedirectionService& redirection_;

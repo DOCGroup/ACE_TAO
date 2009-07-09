@@ -17,7 +17,6 @@
 #include "DAnCE/Deployment/DAnCE_PropertiesC.h"
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
-//#include "RedirectionService/RedirectionService.h"
 
 ACE_RCSID (DAnCE,
            Node_Manager_Module,
