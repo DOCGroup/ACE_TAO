@@ -42,10 +42,12 @@ project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream 
 
 project(Deployment_ExecutionManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=Deployment_ExecutionManager_Stub_Export \
+  idlflags     += -Wb,stub_export_macro=DEPLOYMENT_EXECUTIONMANAGER_STUB_Export \
                   -Wb,stub_export_include=Deployment_ExecutionManager_stub_export.h \
-                  -Wb,skel_export_macro=Deployment_ExecutionManager_Skel_Export \
-                  -Wb,skel_export_include=Deployment_ExecutionManager_skel_export.h
+                  -Wb,skel_export_macro=DEPLOYMENT_EXECUTIONMANAGER_SKEL_Export \
+                  -Wb,skel_export_include=Deployment_ExecutionManager_skel_export.h \
+                  -Gxhst -Gxhsk
+
   IDL_Files {
     Deployment_ExecutionManager.idl
   }
@@ -53,10 +55,12 @@ project(Deployment_ExecutionManager_IDL) : ciaolib_with_idl, ciao_output, valuet
 
 project(Deployment_DomainApplicationManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=Deployment_DomainApplicationManager_Stub_Export \
+  idlflags     += -Wb,stub_export_macro=DEPLOYMENT_DOMAINAPPLICATIONMANAGER_STUB_Export \
                   -Wb,stub_export_include=Deployment_DomainApplicationManager_stub_export.h \
-                  -Wb,skel_export_macro=Deployment_DomainApplicationManager_Skel_Export \
-                  -Wb,skel_export_include=Deployment_DomainApplicationManager_skel_export.h
+                  -Wb,skel_export_macro=DEPLOYMENT_DOMAINAPPLICATIONMANAGER_SKEL_Export \
+                  -Wb,skel_export_include=Deployment_DomainApplicationManager_skel_export.h \
+                  -Gxhst -Gxhsk
+                  
   IDL_Files {
     Deployment_DomainApplicationManager.idl
   }
@@ -64,10 +68,12 @@ project(Deployment_DomainApplicationManager_IDL) : ciaolib_with_idl, ciao_output
 
 project(Deployment_DomainApplication_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=Deployment_DomainApplication_Stub_Export \
+  idlflags     += -Wb,stub_export_macro=DEPLOYMENT_DOMAINAPPLICATION_STUB_Export \
                   -Wb,stub_export_include=Deployment_DomainApplication_stub_export.h \
-                  -Wb,skel_export_macro=Deployment_DomainApplication_Skel_Export \
-                  -Wb,skel_export_include=Deployment_DomainApplication_skel_export.h
+                  -Wb,skel_export_macro=DEPLOYMENT_DOMAINAPPLICATION_SKEL_Export \
+                  -Wb,skel_export_include=Deployment_DomainApplication_skel_export.h \
+                  -Gxhst -Gxhsk
+                  
   IDL_Files {
     Deployment_DomainApplication.idl
   }
@@ -75,10 +81,12 @@ project(Deployment_DomainApplication_IDL) : ciaolib_with_idl, ciao_output, value
 
 project(Deployment_NodeApplicationManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=Deployment_NodeApplicationManager_Stub_Export \
+  idlflags     += -Wb,stub_export_macro=DEPLOYMENT_NODEAPPLICATIONMANAGER_STUB_Export \
                   -Wb,stub_export_include=Deployment_NodeApplicationManager_stub_export.h \
-                  -Wb,skel_export_macro=Deployment_NodeApplicationManager_Skel_Export \
-                  -Wb,skel_export_include=Deployment_NodeApplicationManager_skel_export.h
+                  -Wb,skel_export_macro=DEPLOYMENT_NODEAPPLICATIONMANAGER_SKEL_Export \
+                  -Wb,skel_export_include=Deployment_NodeApplicationManager_skel_export.h \
+                  -Gxhst -Gxhsk
+                  
   IDL_Files {
     Deployment_NodeApplicationManager.idl
   }
@@ -86,10 +94,12 @@ project(Deployment_NodeApplicationManager_IDL) : ciaolib_with_idl, ciao_output, 
 
 project(Deployment_NodeManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=Deployment_NodeManager_Stub_Export \
+  idlflags     += -Wb,stub_export_macro=DEPLOYMENT_NODEMANAGER_STUB_Export \
                   -Wb,stub_export_include=Deployment_NodeManager_stub_export.h \
-                  -Wb,skel_export_macro=Deployment_NodeManager_Skel_Export \
-                  -Wb,skel_export_include=Deployment_NodeManager_skel_export.h
+                  -Wb,skel_export_macro=DEPLOYMENT_NODEMANAGER_SKEL_Export \
+                  -Wb,skel_export_include=Deployment_NodeManager_skel_export.h \
+                  -Gxhst -Gxhsk
+                  
   IDL_Files {
     Deployment_NodeManager.idl
   }
@@ -97,10 +107,12 @@ project(Deployment_NodeManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, 
 
 project(Deployment_NodeApplication_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=Deployment_NodeApplication_Stub_Export \
+  idlflags     += -Wb,stub_export_macro=DEPLOYMENT_NODEAPPLICATION_STUB_Export \
                   -Wb,stub_export_include=Deployment_NodeApplication_stub_export.h \
-                  -Wb,skel_export_macro=Deployment_NodeApplication_Skel_Export \
-                  -Wb,skel_export_include=Deployment_NodeApplication_skel_export.h
+                  -Wb,skel_export_macro=DEPLOYMENT_NODEAPPLICATION_SKEL_Export \
+                  -Wb,skel_export_include=Deployment_NodeApplication_skel_export.h \
+                  -Gxhst -Gxhsk
+                  
   IDL_Files {
     Deployment_NodeApplication.idl
   }
