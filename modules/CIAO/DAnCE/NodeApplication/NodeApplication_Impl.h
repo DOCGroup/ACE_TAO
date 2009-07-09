@@ -27,7 +27,7 @@
 #include "ccm/ComponentsC.h"
 //#include "RedirectionService/RedirectionService.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
-//#include "Cdmw/CDMW_IDLC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "ccm/ComponentServer/CCM_ComponentServerC.h"
 #include "Deployment/Deployment_NodeApplicationS.h"
@@ -35,7 +35,6 @@
 #include "Deployment/DeploymentC.h"
 #include "Deployment/Deployment_common.h"
 
-//#include "ComponentInstallation_Impl.h"
 namespace DAnCE
 {
 
