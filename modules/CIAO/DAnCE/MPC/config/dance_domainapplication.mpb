@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance, dance_deployment_svnt, dance_logger {
+project : dance, dance_deployment_svnt, dance_logger, dance_nodeapplication_stub, dance_nodemanager_stub, dance_nodemanager_stub {
   after += DomainApplication
   libs  += DAnCE_DomainApplication
 }
