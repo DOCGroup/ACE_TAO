@@ -302,7 +302,7 @@ project(Deployment_NodeApplicationManager_skel) : ciao_output, dance_deployment_
   }
 }
 
-project(Deployment_NodeManager_stub) : ciao_output, dance_deployment_stub, dance_nodeapplicationmanager_stub {
+project(Deployment_NodeManager_stub) : ciao_output, dance_deployment_stub, dance_nodeapplicationmanager_stub, dance_targetmanager_stub {
   sharedname = DAnCE_NodeManager_stub
   after += Deployment_NodeManager_IDL
   dynamicflags = DEPLOYMENT_NODEMANAGER_STUB_BUILD_DLL
