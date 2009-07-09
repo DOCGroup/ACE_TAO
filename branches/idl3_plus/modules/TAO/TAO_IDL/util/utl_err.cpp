@@ -304,6 +304,8 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed exception declaration";
   case IDL_GlobalData::PS_InterfaceDeclSeen:
     return "Malformed interface declaration";
+  case IDL_GlobalData::PS_TmplInterfaceDeclSeen:
+    return "Malformed template interface declaration";
   case IDL_GlobalData::PS_ValueTypeDeclSeen:
     return "Malformed value type declaration";
   case IDL_GlobalData::PS_ComponentDeclSeen:
@@ -312,6 +314,8 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed home declaration";
   case IDL_GlobalData::PS_EventDeclSeen:
     return "Malformed event type declaration";
+  case IDL_GlobalData::PS_PorttypeDeclSeen:
+    return "Malformed port type declaration";
   case IDL_GlobalData::PS_ModuleDeclSeen:
     return "Malformed module declaration";
   case IDL_GlobalData::PS_AttrDeclSeen:
@@ -319,9 +323,13 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_OpDeclSeen:
     return "Malformed operation declaration";
   case IDL_GlobalData::PS_ProvidesDeclSeen:
-    return "Malformed provides declaration";
+    return "Malformed simple provides declaration";
+  case IDL_GlobalData::PS_ExtProvidesDeclSeen:
+    return "Malformed extended provides declaration";
   case IDL_GlobalData::PS_UsesDeclSeen:
-    return "Malformed uses declaration";
+    return "Malformed simple uses declaration";
+  case IDL_GlobalData::PS_ExtUsesDeclSeen:
+    return "Malformed extended uses declaration";
   case IDL_GlobalData::PS_EmitsDeclSeen:
     return "Malformed emits declaration";
   case IDL_GlobalData::PS_PublishesDeclSeen:
@@ -366,6 +374,12 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following interface '}' closer";
   case IDL_GlobalData::PS_InterfaceBodySeen:
     return "Illegal syntax following interface body statement(s)";
+  case IDL_GlobalData::PS_TmplInterfaceSqSeen:
+    return "Illegal syntax or missing type following '<' in template interface";
+  case IDL_GlobalData::PS_TmplInterfaceQsSeen:
+    return "Illegal syntax or missing type following '>' in template interface";
+  case IDL_GlobalData::PS_TmplInterfaceBodySeen:
+    return "Illegal syntax following template interface body statement(s)";
   case IDL_GlobalData::PS_ValueTypeSeen:
     return "Missing interface identifier following VALUETYPE keyword";
   case IDL_GlobalData::PS_ValueTypeForwardSeen:
@@ -619,6 +633,16 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax for #pragma prefix";
   case IDL_GlobalData::PS_ValueBoxDeclSeen:
     return "Missing boxed valuetype identifier following VALUETYPE keyword";
+  case IDL_GlobalData::PS_PorttypeSeen:
+    return "Illegal syntax or missing identifier after PORTTYPE keyword";
+  case IDL_GlobalData::PS_PorttypeIDSeen:
+    return "Illegal syntax or missing '{' after porttype identifier";
+  case IDL_GlobalData::PS_PorttypeSqSeen:
+    return "Illegal syntax after porttype '{' opener";
+  case IDL_GlobalData::PS_PorttypeQsSeen:
+    return "Illegal syntax after porttype '}' closer";
+  case IDL_GlobalData::PS_PorttypeBodySeen:
+    return "Illegal syntax after porttype body statement(s)";
   default:
     return "Some syntax error";
   }
