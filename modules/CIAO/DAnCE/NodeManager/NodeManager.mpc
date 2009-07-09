@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Node_Manager_Module) : dance_lib, naming_serv, dance_nodeapplicationmanager_stub, dance_nodeapplication_stub, dance_deployment_svnt, dynamicinterface, utils, gen_ostream, dance_nodemanager_skel, dance_redirectionservice {
+project(Node_Manager_Module) : dance_lib, naming_serv, dance_nodeapplicationmanager_stub, dance_nodeapplication_stub, dance_deployment_svnt, dynamicinterface, utils, gen_ostream, dance_nodemanager_skel {
   sharedname   = DAnCE_NodeManager
   dynamicflags = NODEMANAGER_BUILD_DLL DANCE_NODEMANAGER_MODULE_BUILD_DLL
 
