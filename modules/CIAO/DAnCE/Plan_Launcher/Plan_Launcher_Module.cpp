@@ -2,8 +2,6 @@
 // $Id$
 
 #include "Plan_Launcher_Module.h"
-#include "tao/TAO_Singleton_Manager.h"
-#include "tao/StringSeqC.h"
 #include "Plan_Launcher_Impl.h"
 #include "ace/Get_Opt.h"
 #include "DAnCE/Logger/Log_Macros.h"
@@ -37,7 +35,7 @@ DAnCE_Plan_Launcher_Module::create_object (CORBA::ORB_ptr orb,
   catch (const Plan_Launcher_Base_Impl::Deployment_Failure& e)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_Plan_Launcher_Module::create_object - "
-                     "Error : %s.\n", e.error_.c_str()));
+                     "Error : %C.\n", e.error_.c_str()));
     }
   catch (const CORBA::Exception& ex)
     {
