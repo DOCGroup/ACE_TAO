@@ -206,18 +206,18 @@ namespace
         exception.reason = reason;
       }
   }
-  
-  const char * get_artifact_location (const char * name, 
+
+  const char * get_artifact_location (const char * name,
                                       const ::Deployment::ArtifactDeploymentDescriptions &art)
   {
     DANCE_TRACE ("NodeApplication::<anonymous>::get_artifact_location");
-    
+
     for (CORBA::ULong i = 0; i < art.length (); ++i)
       {
         if (ACE_OS::strcmp (name, art[0].name.in ()) == 0)
           return art[0].location[0].in ();
       }
-    
+
     return 0;
   }
 }
@@ -226,13 +226,13 @@ namespace
 NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa,
                                             const Deployment::DeploymentPlan& plan,
-                                            RedirectionService & redirection,
+//                                            RedirectionService & redirection,
                                             const ACE_CString& node_name,
                                             const PROPERTY_MAP &properties)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     plan_ (plan),
-    redirection_ (redirection),
+//    redirection_ (redirection),
     node_name_ (node_name),
     properties_ (),
     instances_ (plan.instance.length ())
@@ -284,7 +284,7 @@ NodeApplication_Impl::~NodeApplication_Impl()
                 {
                   if (!CORBA::is_nil (container.ref))
                     server.ref->remove_container (container.ref.in ());
-                  
+
                   container.ref = CIAO::Deployment::Container::_nil ();
                 }
               catch (const CORBA::Exception &ex)
@@ -359,23 +359,23 @@ NodeApplication_Impl::init()
 
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_Impl::init - "
                 "Spawning server activator\n"));
-  
+
   CIAO::Deployment::ComponentInstallation_Impl *tmp_ci;
 
-  ACE_NEW_THROW_EX (tmp_ci, 
+  ACE_NEW_THROW_EX (tmp_ci,
                     CIAO::Deployment::ComponentInstallation_Impl (),
                     CORBA::NO_MEMORY ());
-  
+
   PortableServer::ServantBase_var safe_servant = tmp_ci;
-  
+
   this->poa_->activate_object (tmp_ci);
-  
+
   for (CORBA::ULong i = 0; i < this->plan_.artifact.length (); ++i)
     {
       tmp_ci->install (this->plan_.artifact[i].name,
                        this->plan_.artifact[i].location[0]);
     }
-  
+
   CIAO::Deployment::CIAO_ServerActivator_i *tmp_act;
   ACE_NEW_THROW_EX (tmp_act,
                     CIAO::Deployment::CIAO_ServerActivator_i (spawn,
@@ -387,7 +387,7 @@ NodeApplication_Impl::init()
                                                               this->poa_.in()),
                     CORBA::NO_MEMORY ());
   this->activator_.reset (tmp_act);
-  
+
   PortableServer::ObjectId_var sa_id =
     this->poa_->activate_object (this->activator_.get ());
 
@@ -605,7 +605,7 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
   // need to get significant property values
   const char *entrypt = 0;
   get_property_value (DAnCE::HOME_FACTORY, mdd.execParameter, entrypt);
-  
+
   if (entrypt == 0)
     {
       DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_Impl::install_home - "
