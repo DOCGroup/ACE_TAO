@@ -1,5 +1,6 @@
 // $Id$
 #include "Dump_Obj.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (Config_Handlers,
            Dump_Obj,
