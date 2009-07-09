@@ -4,7 +4,6 @@
 #define DEPLOYMENT_PLANERROR_IDL
 
 module Deployment {
-
   exception PlanError {
     string name;
     string reason;

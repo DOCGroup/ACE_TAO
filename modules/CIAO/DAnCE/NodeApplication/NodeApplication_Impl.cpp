@@ -16,6 +16,7 @@
 #include "DAnCE/Logger/Log_Macros.h"
 #include "Deployment/Deployment_BaseC.h"
 #include "Deployment/Deployment_ApplicationC.h"
+#include "Deployment/Deployment_PlanErrorC.h"
 #include "Deployment/Deployment_common.h"
 #include "Deployment/DAnCE_PropertiesC.h"
 #include "ComponentAttributesSetter.h"

@@ -1,7 +1,33 @@
+Thu Jul  9 11:02:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/Deployment/Deployment.idl
+        * DAnCE/Deployment/Deployment_Application.idl
+        * DAnCE/Deployment/Deployment_ApplicationManager.idl
+        * DAnCE/Deployment/Deployment_Connection.idl
+        * DAnCE/Deployment/Deployment_Core.idl
+        * DAnCE/Deployment/Deployment_Data.idl
+        * DAnCE/Deployment/Deployment_DomainApplication.idl
+        * DAnCE/Deployment/Deployment_DomainApplicationManager.idl
+        * DAnCE/Deployment/Deployment_ExecutionManager.idl
+        * DAnCE/Deployment/Deployment_NodeApplication.idl
+        * DAnCE/Deployment/Deployment_NodeApplicationManager.idl
+        * DAnCE/Deployment/Deployment_NodeManager.idl
+        * DAnCE/Deployment/Deployment_PlanError.idl
+        * DAnCE/Deployment/Deployment_StartError.idl
+        * DAnCE/Deployment/Deployment_StopError.idl
+        * DAnCE/Deployment/Deployment_TargetManager.idl
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/Plan_Generator/PCVisitorBase.h
+        * DAnCE/Utils/Plan_Handler.h
+        * tools/Config_Handlers/DnC_Dump.h
+          First step in refactoring all DAnCE IDL in seperate files
+          and create more seperate dlls
+
 Wed Jul  8 18:51:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/03.html:
-          Updated picl_to_idl command line parameters 
+          Updated picl_to_idl command line parameters
 
 Wed Jul  8 17:30:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 

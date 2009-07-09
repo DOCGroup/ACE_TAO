@@ -33,7 +33,8 @@ project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream 
   IDL_Files {
     Deployment_ResourceCommitmentManager.idl
     Deployment_TargetManager.idl
-    Deployment_Core.idl
+    Deployment_StopError.idl
+    Deployment_StartError.idl
     Deployment_NodeApplication.idl
     Deployment_Application.idl
     Deployment.idl
@@ -60,7 +61,8 @@ project(Deployment_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client,
   IDL_Files {
   }
   Source_Files {
-    Deployment_CoreC.cpp
+    Deployment_StopErrorC.cpp
+    Deployment_StartErrorC.cpp
     Deployment_BaseC.cpp
     Deployment_ConnectionC.cpp
     Deployment_DataC.cpp
@@ -99,7 +101,8 @@ project(Deployment_svnt) : dance_deployment_stub, ciao_output, ciaolib_with_idl,
   }
 
   Source_Files {
-    Deployment_CoreS.cpp
+    Deployment_StopErrorS.cpp
+    Deployment_StartErrorS.cpp
     Deployment_ApplicationS.cpp
     Deployment_NodeApplicationS.cpp
     DeploymentS.cpp

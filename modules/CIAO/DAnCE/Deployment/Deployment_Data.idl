@@ -6,36 +6,34 @@
 #include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 
 module Deployment {
-        //@! in DOCGroup requiredType has type string
-        struct ComponentPackageReference {
-                string requiredUUID;
-                string requiredName;
-                ComponentInterfaceDescription requiredType;
-        };
+  struct ComponentPackageReference {
+    string requiredUUID;
+    string requiredName;
+    ComponentInterfaceDescription requiredType;
+  };
 
-        typedef sequence < ComponentPackageReference > ComponentPackageReferences;
-        
-        typedef sequence < ResourceUsageKind > ResourceUsageKinds;
+  typedef sequence < ComponentPackageReference > ComponentPackageReferences;
 
-        struct ImplementationRequirement {
-                ResourceUsageKinds resourceUsage;
-                string resourcePort;
-                string componentPort;
-                string name;
-                string resourceType;
-                Properties property;
-        };
+  typedef sequence < ResourceUsageKind > ResourceUsageKinds;
 
-        typedef sequence < ImplementationRequirement > ImplementationRequirements;
+  struct ImplementationRequirement {
+    ResourceUsageKinds resourceUsage;
+    string resourcePort;
+    string componentPort;
+    string name;
+    string resourceType;
+    Properties property;
+  };
 
-        struct Capability {
-                string name;
-                ::CORBA::StringSeq resourceType;
-                SatisfierProperties property;
-        };
+  typedef sequence < ImplementationRequirement > ImplementationRequirements;
 
-        typedef sequence < Capability > Capabilities;
+  struct Capability {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    SatisfierProperties property;
+  };
 
+  typedef sequence < Capability > Capabilities;
 };
 
 #endif /* DEPLOYMENT_DATA_IDL */
