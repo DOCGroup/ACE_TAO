@@ -2,7 +2,7 @@
 // $Id$
 
 project(NodeApplication): dance_lib, dynamicinterface, dance_component_server_svnt, \
-                          dance_nodeapplication_skel, dance_redirection_service, \
+                          dance_nodeapplication_skel, \
                           dance_logger, iortable, naming, ccm_configvalue, ciao_cs_client, ccm_componentserver_svnt, \
                           gen_ostream {
   sharedname   = DAnCE_NodeApplication
