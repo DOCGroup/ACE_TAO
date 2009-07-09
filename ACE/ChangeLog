@@ -1,3 +1,8 @@
+Thu Jul  9 11:54:57 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Monitor_Control/BSD_Network_Interface_Monitor.cpp:
+          Added support for OpenBSD.
+
 Thu Jul  9 06:44:32 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/Monitor_Control/Bytes_Received_Monitor.h:
