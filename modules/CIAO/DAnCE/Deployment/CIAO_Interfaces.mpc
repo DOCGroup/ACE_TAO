@@ -3,10 +3,12 @@
 
 project (CIAO_ExecutionManager_idl): ciaoidldefaults, anytypecode {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=CIAO_ExecutionManager_stub_Export \
+  idlflags += -Wb,stub_export_macro=CIAO_EXECUTIONMANAGER_STUB_Export \
               -Wb,stub_export_include=CIAO_ExecutionManager_stub_export.h \
-              -Wb,skel_export_macro=CIAO_ExecutionManager_skel_Export \
-              -Wb,skel_export_include=CIAO_ExecutionManager_skel_export.h
+              -Wb,skel_export_macro=CIAO_EXECUTIONMANAGER_SKEL_Export \
+              -Wb,skel_export_include=CIAO_ExecutionManager_skel_export.h \
+              -Gxhst -Gxhsk
+
   IDL_Files {
     CIAO_ExecutionManagerDaemon.idl
   }
@@ -40,10 +42,12 @@ project (CIAO_ExecutionManager_skel): dance_lib, messaging, dance_executionmanag
 
 project (CIAO_NodeManager_idl): ciaoidldefaults, anytypecode {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=CIAO_NodeManager_stub_Export \
+  idlflags     += -Wb,stub_export_macro=CIAO_NODEMANAGER_STUB_Export \
                   -Wb,stub_export_include=CIAO_NodeManager_stub_export.h \
-                  -Wb,skel_export_macro=CIAO_NodeManager_skel_Export \
-                  -Wb,skel_export_include=CIAO_NodeManager_skel_export.h
+                  -Wb,skel_export_macro=CIAO_NODEMANAGER_SKEL_Export \
+                  -Wb,skel_export_include=CIAO_NodeManager_skel_export.h \
+                  -Gxhst -Gxhsk
+                  
   IDL_Files {
    CIAO_NodeManagerDaemon.idl
   }
