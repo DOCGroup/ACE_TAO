@@ -1,3 +1,25 @@
+Thu Jul  9 18:04:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/MPC/config/dance_repository_manager.mpb
+        * DAnCE/MPC/config/dance_repository_manager_base.mpb
+        * DAnCE/MPC/config/dance_repositorymanager.mpb
+        * DAnCE/MPC/config/dance_repositorymanager_skel.mpb
+        * DAnCE/MPC/config/dance_repositorymanager_stub.mpb
+        * DAnCE/MPC/config/dance_repositorymanagerbase.mpb
+        * DAnCE/MPC/config/dance_target_manager.mpb
+        * DAnCE/MPC/config/dance_targetmanager.mpb
+        * DAnCE/MPC/config/dance_targetmanager_skel.mpb
+        * DAnCE/MPC/config/dance_targetmanager_stub.mpb
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp
+        * DAnCE/NodeApplication/ComponentAttributesSetter.h
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/TargetManager/DAnCE_TargetManagerDaemon.idl
+        * DAnCE/TargetManager/TargetManager.mpc
+        * DAnCE/TargetManager/TargetManagerDaemon.idl
+          Splitted target and repository manager in seperate projects
+
 Thu Jul  9 13:23:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Deployment/CIAO_ExecutionManager_stub_export.h

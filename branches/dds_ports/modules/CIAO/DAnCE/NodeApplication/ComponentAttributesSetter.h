@@ -15,10 +15,8 @@
 #ifndef COMPONENTATTRIBUTESSETTER_H_
 #define COMPONENTATTRIBUTESSETTER_H_
 
-//#include "ComponentAttributesSetter_Export.h"
 #include "NodeApplication_Export.h"
 #include "Deployment/Deployment_BaseC.h"
-#include "ccm/CCM_ObjectC.h"
 
 class NodeApplication_Export ComponentAttributesSetter
   {
