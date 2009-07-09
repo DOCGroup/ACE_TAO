@@ -53,7 +53,7 @@ project (DAnCE_RepositoryManager_Admin) : dance_repositorymanager_stub, ciao_con
   }
 }
 
-project (DAnCE_RepositoryManager_Admin_Exec) : dance_repositorymanager_skel, ciao_config_handlers, naming, dance_exe {
+project (DAnCE_RepositoryManager_Admin_Exec) : dance_repositorymanager_skel, ciao_config_handlers, naming, dance_exe, dance_logger {
   exename = dance_rm_admin
 
   libs += DAnCE_RepositoryManager_Admin

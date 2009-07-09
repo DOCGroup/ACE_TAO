@@ -33,7 +33,7 @@ namespace DAnCE
           DANCE_DEBUG ((LM_TRACE, DLINFO "Admin::install_package - "
                         "Package installed successfully\n"));
         }
-      catch (Deployment::NameExists &ex)
+      catch (Deployment::NameExists &)
         {
           DANCE_ERROR ((LM_ERROR, DLINFO "Admin::install_package - "
                         "Package with name %C already installed.\n",
@@ -95,7 +95,7 @@ namespace DAnCE
                         "Successfully uninstalled package %s\n",
                         uuid));
         }
-      catch (Deployment::NoSuchName &ex)
+      catch (Deployment::NoSuchName &)
         {
           DANCE_ERROR ((LM_ERROR, DLINFO "Admin::uninstall_package - "
                         "No package with the given UUID found: %C\n",
