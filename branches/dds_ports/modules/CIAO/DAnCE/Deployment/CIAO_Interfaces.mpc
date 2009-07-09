@@ -67,7 +67,7 @@ project (CIAO_NodeManager_stub): dance_lib, messaging, dance_nodemanager_stub {
   }
 }
 
-project (CIAO_NodeManager_skel): dance_lib, messaging, dance_nodemanager_skel {
+project (CIAO_NodeManager_skel): dance_lib, messaging, dance_nodemanager_skel, ciao_nodemanager_stub {
   after += CIAO_NodeManager_idl
   sharedname = CIAO_NodeManager_skel
 
