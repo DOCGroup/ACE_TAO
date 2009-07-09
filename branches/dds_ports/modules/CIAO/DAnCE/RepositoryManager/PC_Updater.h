@@ -20,6 +20,7 @@
 #include /**/ "ace/pre.h"
 
 #include "DAnCE/Deployment/DeploymentC.h"
+#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "ace/SString.h"             //for the ACE_CString
 
 #include "ZIP_Wrapper.h"             //Wrapper around zzip
