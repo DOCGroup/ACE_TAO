@@ -13,7 +13,6 @@
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ExecutionManager_Module.h"
 #include "ExecutionManager_Impl.h"
-#include "RedirectionService/RedirectionService.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 ACE_RCSID (DAnCE,
@@ -230,15 +229,15 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
 
           policies[0] = poa->create_id_assignment_policy (PortableServer::USER_ID);
           policies[1] = poa->create_lifespan_policy (PortableServer::PERSISTENT);
-          persistent_poa = poa->create_POA ("Managers", 
-                                            mgr.in(), 
+          persistent_poa = poa->create_POA ("Managers",
+                                            mgr.in(),
                                             policies);
         }
       catch (const PortableServer::POA::AdapterAlreadyExists &)
         {
           persistent_poa = poa->find_POA ("Managers", 0);
         }
-      
+
       CosNaming::NamingContext_var domain_nc;
 
       // Resolve DomainNC
@@ -347,7 +346,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
           if (CORBA::is_nil (nm_obj))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_ExecutionManager::create_object - "
-                             "Failed to narrow the object to node manager : %C\n", 
+                             "Failed to narrow the object to node manager : %C\n",
                              this->options_.node_managers_[i].c_str()));
               continue;
             }
@@ -355,7 +354,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
           DANCE_DEBUG ((LM_TRACE, DLINFO "Placing node \"%C\" to EM's map.\n", node_name.c_str()));
           this->em_impl_->add_node_manager (node_name.c_str(), nm_ior.c_str ());
         }
-      
+
       if (this->options_.node_map_ != 0)
         {
           DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_ExecutionManager_Module::create_object - "
@@ -363,7 +362,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
                         this->options_.node_map_));
           this->em_impl_->load_node_map (this->options_.node_map_);
         }
-      
+
 
       mgr->activate ();
 
