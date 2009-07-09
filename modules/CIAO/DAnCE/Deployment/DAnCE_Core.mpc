@@ -330,7 +330,7 @@ project(Deployment_NodeApplication_stub) : ciao_output, dance_deployment_stub {
 project(Deployment_NodeApplication_skel) : ciao_output, dance_deployment_svnt, dance_nodeapplication_stub {
   sharedname = DAnCE_NodeApplication_skel
   after += Deployment_NodeApplication_IDL
-  dynamicflags = DEPLOYMENT_NODEAPPLICATIONMANAGER_SKEL_BUILD_DLL
+  dynamicflags = DEPLOYMENT_NODEAPPLICATION_SKEL_BUILD_DLL
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
