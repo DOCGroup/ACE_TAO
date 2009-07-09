@@ -1,9 +1,12 @@
 // $Id$
+// Compliant with OMG 06-04-01 section 15
+
 #ifndef DEPLOYMENT_APPLICATIONMANAGER_IDL
 #define DEPLOYMENT_APPLICATIONMANAGER_IDL
 
-#include "DAnCE/Deployment/Deployment_Core.idl"
 #include "DAnCE/Deployment/Deployment.idl"
+#include "DAnCE/Deployment/Deployment_Application.idl"
+#include "DAnCE/Deployment/Deployment_Connection.idl"
 
 module Deployment {
 
@@ -16,15 +19,14 @@ module Deployment {
   };
 
   interface ApplicationManager {
-    //@! in DOCGroup has additional parameter
-    Application startLaunch (       in Properties configProperty, 
-                                    out Connections providedReference)
-      raises (ResourceNotAvailable, 
-              StartError, 
-              InvalidProperty, 
-              InvalidNodeExecParameter, 
+    Application startLaunch (in Properties configProperty,
+                             out Connections providedReference)
+      raises (ResourceNotAvailable,
+              StartError,
+              InvalidProperty,
+              InvalidNodeExecParameter,
               InvalidComponentExecParameter);
-                        
+
     void destroyApplication (in Application app)
       raises (StopError);
   };

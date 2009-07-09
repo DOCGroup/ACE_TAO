@@ -3,11 +3,8 @@
 #ifndef TARGETMANAGER_IDL
 #define TARGETMANAGER_IDL
 
-#include "DAnCE/Deployment/Deployment_PlanError.idl"
 #include "DAnCE/Deployment/Deployment_TargetData.idl"
 #include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
-// Only needed for ResourceNotAvailable but that should go, so this include also
-#include "DAnCE/Deployment/Deployment_ApplicationManager.idl"
 #include "DAnCE/Deployment/Deployment_ResourceCommitmentManager.idl"
 
 module Deployment {
@@ -19,7 +16,6 @@ module Deployment {
   };
 
   interface TargetManager {
-
     Domain getAllResources ();
 
     Domain getAvailableResources ();

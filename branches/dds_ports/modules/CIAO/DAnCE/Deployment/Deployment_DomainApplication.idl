@@ -4,14 +4,13 @@
 #define DEPLOYMENT_DOMAINAPPLICATION_IDL
 
 #include "DAnCE/Deployment/Deployment_Application.idl"
-#include "DAnCE/Deployment/Deployment_Core.idl"
 
 module Deployment
 {
-        interface DomainApplication : 
-                Application
-        {
-        };
+  interface DomainApplication :
+    Application
+  {
+  };
 };
 
 

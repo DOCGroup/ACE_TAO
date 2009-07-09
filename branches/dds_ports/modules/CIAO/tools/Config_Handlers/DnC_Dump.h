@@ -12,7 +12,7 @@
 #define DNC_DUMP_H
 #include /**/ "ace/pre.h"
 
-#include "DAnCE/Deployment/DeploymentC.h"
+#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "DAnCE/Deployment/Deployment_TargetDataC.h"
 #include "Config_Handlers_Export.h"
 
