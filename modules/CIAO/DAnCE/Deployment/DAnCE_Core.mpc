@@ -3,10 +3,10 @@
 
 project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
-  idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
-  idlflags     += -Wb,skel_export_macro=Deployment_svnt_Export
-  idlflags     += -Wb,skel_export_include=Deployment_svnt_export.h
+  idlflags     += -Wb,stub_export_macro=Deployment_stub_Export \
+                  -Wb,stub_export_include=Deployment_stub_export.h \
+                  -Wb,skel_export_macro=Deployment_svnt_Export \
+                  -Wb,skel_export_include=Deployment_svnt_export.h
 
   IDL_Files {
     idlflags += -SS -Sci
@@ -27,7 +27,6 @@ project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream 
   IDL_Files {
     idlflags += -GC
     Deployment_ApplicationManager.idl
-    Deployment_NodeApplicationManager.idl
   }
 
   IDL_Files {
@@ -35,16 +34,76 @@ project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream 
     Deployment_TargetManager.idl
     Deployment_StopError.idl
     Deployment_StartError.idl
-    Deployment_NodeApplication.idl
     Deployment_Application.idl
     Deployment.idl
-    Deployment_NodeManager.idl
-    Deployment_DomainApplicationManager.idl
-    Deployment_DomainApplication.idl
-    Deployment_ExecutionManager.idl
     Deployment_RepositoryManager.idl
   }
+}
 
+project(Deployment_ExecutionManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=Deployment_ExecutionManager_Stub_Export \
+                  -Wb,stub_export_include=Deployment_ExecutionManager_stub_export.h \
+                  -Wb,skel_export_macro=Deployment_ExecutionManager_Skel_Export \
+                  -Wb,skel_export_include=Deployment_ExecutionManager_skel_export.h
+  IDL_Files {
+    Deployment_ExecutionManager.idl
+  }
+}
+
+project(Deployment_DomainApplicationManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=Deployment_DomainApplicationManager_Stub_Export \
+                  -Wb,stub_export_include=Deployment_DomainApplicationManager_stub_export.h \
+                  -Wb,skel_export_macro=Deployment_DomainApplicationManager_Skel_Export \
+                  -Wb,skel_export_include=Deployment_DomainApplicationManager_skel_export.h
+  IDL_Files {
+    Deployment_DomainApplicationManager.idl
+  }
+}
+
+project(Deployment_DomainApplication_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=Deployment_DomainApplication_Stub_Export \
+                  -Wb,stub_export_include=Deployment_DomainApplication_stub_export.h \
+                  -Wb,skel_export_macro=Deployment_DomainApplication_Skel_Export \
+                  -Wb,skel_export_include=Deployment_DomainApplication_skel_export.h
+  IDL_Files {
+    Deployment_DomainApplication.idl
+  }
+}
+
+project(Deployment_NodeApplicationManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=Deployment_NodeApplicationManager_Stub_Export \
+                  -Wb,stub_export_include=Deployment_NodeApplicationManager_stub_export.h \
+                  -Wb,skel_export_macro=Deployment_NodeApplicationManager_Skel_Export \
+                  -Wb,skel_export_include=Deployment_NodeApplicationManager_skel_export.h
+  IDL_Files {
+    Deployment_NodeApplicationManager.idl
+  }
+}
+
+project(Deployment_NodeManager_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=Deployment_NodeManager_Stub_Export \
+                  -Wb,stub_export_include=Deployment_NodeManager_stub_export.h \
+                  -Wb,skel_export_macro=Deployment_NodeManager_Skel_Export \
+                  -Wb,skel_export_include=Deployment_NodeManager_skel_export.h
+  IDL_Files {
+    Deployment_NodeManager.idl
+  }
+}
+
+project(Deployment_NodeApplication_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=Deployment_NodeApplication_Stub_Export \
+                  -Wb,stub_export_include=Deployment_NodeApplication_stub_export.h \
+                  -Wb,skel_export_macro=Deployment_NodeApplication_Skel_Export \
+                  -Wb,skel_export_include=Deployment_NodeApplication_skel_export.h
+  IDL_Files {
+    Deployment_NodeApplication.idl
+  }
 }
 
 // Valuetype library must be linked for this project.
@@ -68,24 +127,209 @@ project(Deployment_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client,
     Deployment_DataC.cpp
     Deployment_DeploymentPlanC.cpp
     Deployment_TargetDataC.cpp
-    Deployment_NodeApplicationC.cpp
     Deployment_ApplicationC.cpp
     Deployment_Packaging_DataC.cpp
     Deployment_PlanErrorC.cpp
     DeploymentC.cpp
     Deployment_TargetManagerC.cpp
-    Deployment_NodeManagerC.cpp
-    Deployment_NodeApplicationManagerC.cpp
     Deployment_ApplicationManagerC.cpp
-    Deployment_DomainApplicationManagerC.cpp
-    Deployment_DomainApplicationC.cpp
-    Deployment_ExecutionManagerC.cpp
     Deployment_RepositoryManagerC.cpp
     Deployment_ResourceCommitmentManagerC.cpp
     DAnCE_PropertiesC.cpp
   }
 }
 
+project(Deployment_DomainApplicationManager_stub) : ciao_output, dance_deployment_stub {
+  sharedname = DAnCE_DomainApplicationManager_stub
+  after += Deployment_DomainApplicationManager_IDL
+  dynamicflags = DEPLOYMENT_DOMAINAPPLICATIONMANAGER_STUB_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_DomainApplicationManagerC.cpp
+  }
+}
+
+project(Deployment_DomainApplicationManager_skel) : ciao_output, dance_deployment_svnt, dance_domainapplicationmanager_stub {
+  sharedname = DAnCE_DomainApplicationManager_skel
+  after += Deployment_DomainApplicationManager_IDL
+  dynamicflags = DEPLOYMENT_DOMAINAPPLICATIONMANAGER_SKEL_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_DomainApplicationManagerS.cpp
+  }
+}
+
+project(Deployment_ExecutionManager_stub) : ciao_output, dance_deployment_stub {
+  sharedname = DAnCE_ExecutionManager_stub
+  after += Deployment_ExecutionManager_IDL
+  dynamicflags = DEPLOYMENT_EXECUTIONMANAGER_STUB_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_ExecutionManagerC.cpp
+  }
+}
+
+project(Deployment_ExecutionManager_skel) : ciao_output, dance_deployment_svnt, dance_domainapplicationmanager_stub {
+  sharedname = DAnCE_ExecutionManager_skel
+  after += Deployment_ExecutionManager_IDL
+  dynamicflags = DEPLOYMENT_EXECUTIONMANAGER_SKEL_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_ExecutionManagerS.cpp
+  }
+}
+
+project(Deployment_DomainApplication_stub) : ciao_output, dance_deployment_stub {
+  sharedname = DAnCE_DomainApplication_stub
+  after += Deployment_DomainApplication_IDL
+  dynamicflags = DEPLOYMENT_DOMAINAPPLICATION_STUB_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_DomainApplicationC.cpp
+  }
+}
+
+project(Deployment_DomainApplication_skel) : ciao_output, dance_deployment_svnt, dance_domainapplication_stub {
+  sharedname = DAnCE_DomainApplication_skel
+  after += Deployment_DomainApplication_IDL
+  dynamicflags = DEPLOYMENT_DOMAINAPPLICATIONMANAGER_SKEL_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_DomainApplicationS.cpp
+  }
+}
+
+project(Deployment_NodeApplicationManager_stub) : ciao_output, dance_deployment_stub {
+  sharedname = DAnCE_NodeApplicationManager_stub
+  after += Deployment_NodeApplicationManager_IDL
+  dynamicflags = DEPLOYMENT_NODEAPPLICATIONMANAGER_STUB_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_NodeApplicationManagerC.cpp
+  }
+}
+
+project(Deployment_NodeApplicationManager_skel) : ciao_output, dance_deployment_svnt, dance_nodeapplicationmanager_stub {
+  sharedname = DAnCE_NodeApplicationManager_skel
+  after += Deployment_NodeApplicationManager_IDL
+  dynamicflags = DEPLOYMENT_NODEAPPLICATIONMANAGER_SKEL_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_NodeApplicationManagerS.cpp
+  }
+}
+
+project(Deployment_NodeManager_stub) : ciao_output, dance_deployment_stub, dance_nodeapplicationmanager_stub {
+  sharedname = DAnCE_NodeManager_stub
+  after += Deployment_NodeManager_IDL
+  dynamicflags = DEPLOYMENT_NODEMANAGER_STUB_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_NodeManagerC.cpp
+  }
+}
+
+project(Deployment_NodeManager_skel) : ciao_output, dance_deployment_svnt, dance_nodemanager_stub, dance_nodeapplicationmanager_skel {
+  sharedname = DAnCE_NodeManager_skel
+  after += Deployment_NodeManager_IDL
+  dynamicflags = DEPLOYMENT_NODEMANAGER_SKEL_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_NodeManagerS.cpp
+  }
+}
+
+project(Deployment_NodeApplication_stub) : ciao_output, dance_deployment_stub {
+  sharedname = DAnCE_NodeApplication_stub
+  after += Deployment_NodeApplication_IDL
+  dynamicflags = DEPLOYMENT_NODEAPPLICATION_STUB_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_NodeApplicationC.cpp
+  }
+}
+
+project(Deployment_NodeApplication_skel) : ciao_output, dance_deployment_svnt, dance_nodeapplication_stub {
+  sharedname = DAnCE_NodeApplication_skel
+  after += Deployment_NodeApplication_IDL
+  dynamicflags = DEPLOYMENT_NODEAPPLICATIONMANAGER_SKEL_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_NodeApplicationS.cpp
+  }
+}
 
 // CIAO_DnC_Client library must be linked for this project.
 // Please don't remove. dance_deployment_stub,
@@ -104,15 +348,9 @@ project(Deployment_svnt) : dance_deployment_stub, ciao_output, ciaolib_with_idl,
     Deployment_StopErrorS.cpp
     Deployment_StartErrorS.cpp
     Deployment_ApplicationS.cpp
-    Deployment_NodeApplicationS.cpp
     DeploymentS.cpp
     Deployment_RepositoryManagerS.cpp
-    Deployment_NodeManagerS.cpp
-    Deployment_NodeApplicationManagerS.cpp
     Deployment_ApplicationManagerS.cpp
-    Deployment_DomainApplicationManagerS.cpp
-    Deployment_DomainApplicationS.cpp
-    Deployment_ExecutionManagerS.cpp
     Deployment_TargetManagerS.cpp
     Deployment_ResourceCommitmentManagerS.cpp
   }

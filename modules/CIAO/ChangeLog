@@ -1,3 +1,69 @@
+Thu Jul  9 13:23:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/CIAO_ExecutionManager_stub_export.h
+        * DAnCE/Deployment/CIAO_ExecutionManagerDaemon.idl
+        * DAnCE/Deployment/CIAO_Interfaces.mpc
+        * DAnCE/Deployment/CIAO_NodeManager_skel_export.h
+        * DAnCE/Deployment/CIAO_NodeManager_stub_export.h
+        * DAnCE/Deployment/CIAO_NodeManagerDaemon.idl
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/Deployment/Deployment_DomainApplication_skel_export.h
+        * DAnCE/Deployment/Deployment_DomainApplication_stub_export.h
+        * DAnCE/Deployment/Deployment_DomainApplicationManager.idl
+        * DAnCE/Deployment/Deployment_ExecutionManager_skel_export.h
+        * DAnCE/Deployment/Deployment_ExecutionManager_stub_export.h
+        * DAnCE/Deployment/Deployment_NodeApplicationManager_skel_export.h
+        * DAnCE/Deployment/Deployment_NodeApplicationManager_stub_export.h
+        * DAnCE/Deployment/Deployment_NodeManager_skel_export.h
+        * DAnCE/Deployment/Deployment_NodeManager_stub_export.h
+        * DAnCE/DomainApplication/DomainApplication.mpc
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h
+        * DAnCE/Interfaces/ExecutionManager_stub_export.h
+        * DAnCE/Interfaces/ExecutionManagerDaemon.idl
+        * DAnCE/Interfaces/Interfaces.mpc
+        * DAnCE/Interfaces/NodeManager_stub_export.h
+        * DAnCE/Interfaces/NodeManager_svnt_export.h
+        * DAnCE/Interfaces/NodeManagerDaemon.idl
+        * DAnCE/Interfaces/README
+        * DAnCE/Logger/Logger.mpc
+        * DAnCE/MPC
+        * DAnCE/MPC/config
+        * DAnCE/NodeApplication/NodeApplication.mpc
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h
+        * DAnCE/TargetManager/TargetManager.mpc
+        * MPC/config/ciao_executionmanager_skel.mpb
+        * MPC/config/ciao_executionmanager_stub.mpb
+        * MPC/config/ciao_nodemanager_skel.mpb
+        * MPC/config/ciao_nodemanager_stub.mpb
+        * MPC/config/ciao_nodemanager_svnt.mpb
+        * MPC/config/dance_domain_application.mpb
+        * MPC/config/dance_domain_application_manager.mpb
+        * MPC/config/dance_domainapplication.mpb
+        * MPC/config/dance_domainapplicationmanager.mpb
+        * MPC/config/dance_domainapplicationmanager_skel.mpb
+        * MPC/config/dance_domainapplicationmanager_stub.mpb
+        * MPC/config/dance_executionmanager_stub.mpb
+        * MPC/config/dance_extension_stub.mpb
+        * MPC/config/dance_node_application.mpb
+        * MPC/config/dance_node_application_manager.mpb
+        * MPC/config/dance_node_manager.mpb
+        * MPC/config/dance_nodeapplication.mpb
+        * MPC/config/dance_nodeapplication_skel.mpb
+        * MPC/config/dance_nodeapplication_stub.mpb
+        * MPC/config/dance_nodeapplicationmanager.mpb
+        * MPC/config/dance_nodeapplicationmanager_skel.mpb
+        * MPC/config/dance_nodeapplicationmanager_stub.mpb
+        * MPC/config/dance_nodemanager.mpb
+        * MPC/config/dance_nodemanager_skel.mpb
+        * MPC/config/dance_nodemanager_stub.mpb
+        * MPC/config/dance_nodemanager_svnt.mpb
+          Major splitting up in seperate libraries
+
 Thu Jul  9 13:00:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/03.html:

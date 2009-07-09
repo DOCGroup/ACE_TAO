@@ -7,7 +7,6 @@
  */
 
 #include "DAnCE/Deployment/Deployment_NodeManager.idl"
-#include "DAnCE/Deployment/Deployment_NodeApplicationManager.idl"
 
 module DAnCE
 {

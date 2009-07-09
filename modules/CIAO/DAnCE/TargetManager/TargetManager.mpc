@@ -26,7 +26,7 @@ project(DAnCE_TargetManager_stub) : dance_lib, dance_deployment_stub {
   }
 }
 
-project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming, iortable, utils, dance_deployment_svnt {
+project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming, iortable, utils, dance_deployment_svnt, dance_nodemanager_stub {
   sharedname = DAnCE_TargetManager_Impl
   libs += DAnCE_TargetManager_stub DAnCE_TargetManager_svnt
   after += DAnCE_TargetManager_stub DAnCE_TargetManager_svnt

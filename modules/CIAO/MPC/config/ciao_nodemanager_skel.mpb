@@ -2,6 +2,6 @@
 // $Id$
 
 project : ciao_nodemanager_stub, ciao_noop_configurator {
-  libs  += NodeManager
-  after += NodeManager_svnt
+  libs  += CIAO_NodeManager_skel
+  after += CIAO_NodeManager_skel
 }

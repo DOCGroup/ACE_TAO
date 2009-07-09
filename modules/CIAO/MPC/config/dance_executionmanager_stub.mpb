@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance, dance_deployment_stub, dance_logger, portableserver, messaging, ifr_client {
+project : dance, dance_deployment_stub {
   libs     += DAnCE_ExecutionManager_stub
   after    += ExecutionManager_stub
 }
