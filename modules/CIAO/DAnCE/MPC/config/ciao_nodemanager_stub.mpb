@@ -1,6 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance_deployment_stub, dance_nodemanager_stub {
+project : dance_nodemanager_stub {
+  after += CIAO_NodeManager_stub
+  libs +=  CIAO_NodeManager_stub
   includes += $(CIAO_ROOT)/DAnCE/NodeManager
 }
