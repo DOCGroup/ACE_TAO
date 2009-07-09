@@ -2,5 +2,4 @@
 // $Id$
 
 project : dance_deployment_stub {
-  includes += $(CIAO_ROOT)/DAnCE/Interfaces
 }

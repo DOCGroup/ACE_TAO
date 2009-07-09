@@ -11,7 +11,8 @@
 
 #include "Plan_Launcher_Base_Impl_Export.h"
 #include "ciao/CIAO_common.h"
-#include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
+#include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
+#include "DAnCE/Deployment/CIAO_ExecutionManagerDaemonC.h"
 #include "DAnCE/Deployment/Deployment_ConnectionC.h"
 #include "ace/Map_Manager.h"
 #include "DAnCE/Deployment/Deployment_DeploymentPlanC.h"
@@ -91,6 +92,7 @@ public:
 
   /// Cached ORB pointer
   CORBA::ORB_var orb_;
+  
   /// Object reference of the ExecutionManager
   ::DAnCE::ExecutionManagerDaemon_var em_;
 

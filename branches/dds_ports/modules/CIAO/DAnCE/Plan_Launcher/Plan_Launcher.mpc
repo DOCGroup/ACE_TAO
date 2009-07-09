@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Plan_Launcher_Base) : dance_lib, taolib, ciao_output, naming, dance_executionmanager_stub {
+project(Plan_Launcher_Base) : dance_lib, taolib, ciao_output, naming, ciao_executionmanager_stub {
   sharedname = DAnCE_Plan_Launcher_Base
   dynamicflags = PLAN_LAUNCHER_BASE_IMPL_BUILD_DLL DANCE_PLAN_LAUNCHER_BASE_MODULE_BUILD_DLL
 
@@ -18,7 +18,7 @@ project(Plan_Launcher_Base) : dance_lib, taolib, ciao_output, naming, dance_exec
   }
 }
 
-project(Plan_Launcher) : dance_lib, taolib, ciao_output, xerces, naming, dance_executionmanager_stub, ciao_config_handlers {
+project(Plan_Launcher) : dance_lib, taolib, ciao_output, xerces, naming, dance_domainapplicationmanager_stub, ciao_config_handlers, ciao_executionmanager_stub {
   sharedname = DAnCE_Plan_Launcher
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL DANCE_PLAN_LAUNCHER_MODULE_BUILD_DLL
   after += Plan_Launcher_Base

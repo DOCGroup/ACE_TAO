@@ -2,6 +2,5 @@
 // $Id$
 
 project : dance_deployment_stub, dance_nodemanager_stub {
-  includes += $(CIAO_ROOT)/DAnCE/Interfaces
   includes += $(CIAO_ROOT)/DAnCE/NodeManager
 }

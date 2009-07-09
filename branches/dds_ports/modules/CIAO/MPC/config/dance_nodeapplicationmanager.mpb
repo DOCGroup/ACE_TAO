@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance, dance_node_application {
+project : dance, dance_nodeapplication {
   after += NodeApplicationManager
   libs  += DAnCE_NodeApplicationManager
 }
