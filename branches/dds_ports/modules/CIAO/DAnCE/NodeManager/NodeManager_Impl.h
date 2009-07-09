@@ -22,7 +22,7 @@
 #include "Deployment/Deployment_common.h"
 #include "Deployment/Deployment_NodeManagerS.h"
 #include "NodeApplicationManager/NodeApplicationManager_Impl.h"
-#include "RedirectionService/RedirectionService.h"
+//#include "RedirectionService/RedirectionService.h"
 
 namespace DAnCE
 {
@@ -30,10 +30,10 @@ namespace DAnCE
   {
   public:
     // the fixed listener port is caused by the usage of CCM Object locator
-    NodeManager_Impl (CORBA::ORB_ptr orb, 
-                      PortableServer::POA_ptr poa, 
-                      const char* name, 
-                      RedirectionService& redirection,
+    NodeManager_Impl (CORBA::ORB_ptr orb,
+                      PortableServer::POA_ptr poa,
+                      const char* name,
+//                      RedirectionService& redirection,
                       const PROPERTY_MAP &options);
 
     virtual ~NodeManager_Impl();
@@ -61,7 +61,7 @@ namespace DAnCE
     ACE_CString name_;
     typedef ACE_Map_Manager<ACE_CString, NodeApplicationManager_Impl*, ACE_Null_Mutex > TManagers;
     TManagers managers_;
-    RedirectionService& redirection_;
+//    RedirectionService& redirection_;
     PROPERTY_MAP properties_;
   };
 }

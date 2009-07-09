@@ -17,7 +17,7 @@
 #include "DAnCE/Deployment/DAnCE_PropertiesC.h"
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
-#include "RedirectionService/RedirectionService.h"
+//#include "RedirectionService/RedirectionService.h"
 
 ACE_RCSID (DAnCE,
            Node_Manager_Module,
@@ -47,7 +47,7 @@ namespace DAnCE
 }
 
 DAnCE_NodeManager_Module::DAnCE_NodeManager_Module (void)
-  : redirection_ (0)
+  //: redirection_ (0)
 {
   DANCE_TRACE("DAnCE_NodeManager_Module::DAnCE_NodeManager_Module");
 }
@@ -63,7 +63,7 @@ DAnCE_NodeManager_Module::~DAnCE_NodeManager_Module (void)
       delete (*it).int_id_;
     }
 
-  delete this->redirection_;
+  //delete this->redirection_;
 }
 
 const char *
@@ -171,14 +171,14 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                         get_opts.opt_arg ()));
           this->options_.timeout_ = ACE_OS::atoi (get_opts.opt_arg ());
           break;
-          
+
         case 'd':
           DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
                         "Binding to provided Domain Naming Context: '%s'\n",
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
           break;
-          
+
         case 'h':
           //case '?': // Display help for use of the server.
           //default:
@@ -443,7 +443,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
         }
 
       //Creating redirection object
-      if (this->redirection_ == 0)
+/*      if (this->redirection_ == 0)
         {
           DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
                         "Creating redirection service object\n"));
@@ -453,7 +453,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                                                               rebind_nc.in (),
                                                               this->options_.create_plan_ns_,
                                                               this->options_.port_indirection_);
-        }
+        }*/
 
       // Make sure that we have only one Node Manager
       if (this->options_.node_managers_.size () != 1)
@@ -496,7 +496,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                           DAnCE::NodeManager_Impl (orb,
                                                    this->root_poa_.in (),
                                                    node_name.c_str(),
-                                                   *this->redirection_,
+//                                                   *this->redirection_,
                                                    properties),
                           CORBA::Object::_nil ());
           DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
@@ -540,7 +540,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                           "Error: Unable to write IOR to file %C\n",
                           node_file.c_str ()));
         }
-      
+
       // Activate POA manager
       PortableServer::POAManager_var mgr = this->root_poa_->the_POAManager ();
       mgr->activate ();
@@ -548,7 +548,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       // Finishing Deployment part
       DANCE_DEBUG ((LM_NOTICE, DLINFO "DAnCE_NodeManager_Module::create_object - "
                     "DAnCE_NodeManager is running...\n"));
-      
+
       DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE_NodeManager_Module::create_object - "
                     "NodeManager IOR: %s\n", ior.in ()));
 

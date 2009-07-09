@@ -38,7 +38,7 @@
 namespace DAnCE
 {
   class NodeManager_Impl;
-  class RedirectionService;
+//  class RedirectionService;
 }
 
 /**
@@ -70,7 +70,7 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
         const char * server_args_;
         const char * domain_nc_;
         const char * instance_nc_;
-        
+
         SOptions()
             : process_ns_ (false),
               process_ns_file_ (0),
@@ -119,7 +119,7 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
   CosNaming::NamingContext_var domain_nc_;
 
   /// Single redirection service for all NMs.
-  DAnCE::RedirectionService * redirection_;
+  //DAnCE::RedirectionService * redirection_;
   SOptions options_;
 
   PortableServer::POA_var root_poa_;

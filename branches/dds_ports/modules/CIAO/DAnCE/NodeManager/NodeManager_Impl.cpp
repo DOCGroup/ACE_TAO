@@ -19,16 +19,16 @@ namespace DAnCE
   NodeManager_Impl::NodeManager_Impl(CORBA::ORB_ptr orb,
                                      PortableServer::POA_ptr poa,
                                      const char* name,
-                                     RedirectionService& redirection,
+//                                     RedirectionService& redirection,
                                      const PROPERTY_MAP &properties)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
       name_ (name),
-      redirection_ (redirection),
+//      redirection_ (redirection),
       properties_ (properties.current_size ())
   {
     DANCE_TRACE ( "NodeManager_Impl::NodeManager_Impl");
-    redirection.add_node (name);
+//    redirection.add_node (name);
     DANCE_DEBUG ((LM_INFO, DLINFO "NodeManager_impl::NodeManager_impl has been created\n"));
 
     PROPERTY_MAP::const_iterator i = properties.begin ();
@@ -127,7 +127,7 @@ namespace DAnCE
                       NodeApplicationManager_Impl (this->orb_.in(),
                                                    this->poa_.in(),
                                                    plan,
-                                                   this->redirection_,
+//                                                   this->redirection_,
                                                    this->name_,
                                                    this->properties_),
                       CORBA::NO_MEMORY());

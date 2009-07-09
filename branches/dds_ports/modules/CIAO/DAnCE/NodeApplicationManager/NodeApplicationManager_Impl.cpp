@@ -14,14 +14,14 @@ using namespace DAnCE;
 NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
                                                           PortableServer::POA_ptr poa,
                                                           const Deployment::DeploymentPlan& plan,
-                                                          RedirectionService & redirection,
+//                                                          RedirectionService & redirection,
                                                           const ACE_CString& node_name,
                                                           const PROPERTY_MAP &properties)
     : plan_ (plan),
       orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
       application_ (0),
-      redirection_ (redirection),
+      //redirection_ (redirection),
       node_name_ (node_name),
       properties_ ()
 {
@@ -79,7 +79,7 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
                     NodeApplication_Impl (this->orb_.in(),
                                           this->poa_.in(),
                                           this->plan_,
-                                          this->redirection_,
+//                                          this->redirection_,
                                           this->node_name_,
                                           this->properties_),
                     CORBA::NO_MEMORY ());
@@ -117,7 +117,7 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
                      "application is equivalent to current application\n"));
         throw ::Deployment::StopError();
       }
-    this->redirection_.unregister (this->node_name_, this->plan_.UUID.in());
+//    this->redirection_.unregister (this->node_name_, this->plan_.UUID.in());
 
     CORBA::Any val;
 
@@ -173,14 +173,14 @@ NodeApplicationManager_Impl::register_plan(void)
 {
   DANCE_TRACE ("NodeApplicationManager_Impl::register_plan()");
 
-  this->redirection_.registration_start (this->node_name_, this->plan_.UUID.in());
+//  this->redirection_.registration_start (this->node_name_, this->plan_.UUID.in());
   DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_Impl::register_plan - registering objects...\n"));
   for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
     {
-      this->redirection_.registration (this->node_name_,
-                                       this->plan_.UUID.in(),
-                                       this->plan_.instance[i].name.in(),
-                                       CORBA::Object::_nil());
+//      this->redirection_.registration (this->node_name_,
+  //                                     this->plan_.UUID.in(),
+    //                                   this->plan_.instance[i].name.in(),
+      //                                 CORBA::Object::_nil());
     }
 
   DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_Impl::register_plan - registering endpoints...\n"));
@@ -195,15 +195,15 @@ NodeApplicationManager_Impl::register_plan(void)
                             this->plan_.connection[i].internalEndpoint[j].portName.in(),
                             this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in(),
                             this->node_name_.c_str ()));
-              this->redirection_.registration (this->node_name_,
-                                               this->plan_.UUID.in(),
-                                               this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in(),
-                                               this->plan_.connection[i].internalEndpoint[j].portName.in(),
-                                               CORBA::Object::_nil());
+//              this->redirection_.registration (this->node_name_,
+  //                                             this->plan_.UUID.in(),
+    //                                           this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in(),
+      //                                         this->plan_.connection[i].internalEndpoint[j].portName.in(),
+        //                                       CORBA::Object::_nil());
             }
         }
     }
   DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicationManager_Impl::register_plan - "
                 "Finishing registration\n"));
-  this->redirection_.registration_finish (this->node_name_, this->plan_.UUID.in());
+  //this->redirection_.registration_finish (this->node_name_, this->plan_.UUID.in());
 }
