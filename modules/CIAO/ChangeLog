@@ -1,3 +1,17 @@
+Thu Jul  9 13:00:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/03.html:
+        * docs/tutorials/Quoter/Simple/04.html:
+          Changed to meet the latest version of Dance.
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp:
+          Changed help text to meet the actual value of the IOR files.
+
+        * docs/tutorials/Quoter/Simple/descriptors/Domain.cdd:
+        * docs/tutorials/Quoter/Simple/descriptors/Plan.cdp:
+          Changed to meet the latest version of dance
+
 Thu Jul  9 11:02:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Deployment/DAnCE_Core.mpc
