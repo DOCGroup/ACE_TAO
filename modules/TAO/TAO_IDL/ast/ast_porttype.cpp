@@ -39,7 +39,7 @@ AST_PortType::destroy (void)
 }
 
 void
-AST_PortType::dump (ACE_OSTREAM_TYPE &o)
+AST_PortType::dump (ACE_OSTREAM_TYPE & /* o */)
 {
 }
 

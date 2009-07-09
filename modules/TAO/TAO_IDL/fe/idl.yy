@@ -283,7 +283,7 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <dcval>   param_type_spec
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
-%type <idlist>  home_inheritance_spec primary_key_spec
+%type <idlist>  home_inheritance_spec primary_key_spec provides_type
 
 %type <slval>   opt_context at_least_one_string_literal
 %type <slval>   string_literals template_param_refs
@@ -327,7 +327,7 @@ AST_Decl *tao_enum_constant_decl = 0;
 
 %type <deval>   declarator simple_declarator complex_declarator
 
-%type <bval>    opt_truncatable opt_multiple
+%type <bval>    opt_truncatable opt_multiple uses_opt_multiple
 
 %type <idval>   interface_decl value_decl union_decl struct_decl id
 %type <idval>   event_header event_plain_header event_custom_header
@@ -367,9 +367,9 @@ definition
 // definition : type_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | typeid_dcl
@@ -377,9 +377,9 @@ definition
 //      | typeid_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeIdDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | typeprefix_dcl
@@ -387,9 +387,9 @@ definition
 //      | typeprefix_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypePrefixDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | const_dcl
@@ -397,9 +397,9 @@ definition
 //      | const_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | exception
@@ -407,9 +407,9 @@ definition
 //      | exception
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
         idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | interface_def
@@ -417,19 +417,19 @@ definition
 //      | interface_def
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | template_interface_def
         {
 //      | template_interface_def
-          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | module
@@ -437,9 +437,9 @@ definition
 //      | module
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | value_def
@@ -447,9 +447,9 @@ definition
 //      | value_def
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | component
@@ -457,9 +457,9 @@ definition
 //      | component
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | home_decl
@@ -467,9 +467,9 @@ definition
 //      | home_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | event
@@ -477,9 +477,19 @@ definition
 //      | event
           idl_global->set_parse_state (IDL_GlobalData::PS_EventDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | porttype_decl
+        {
+//      | porttype_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeDeclSeen);
+        }
+        ';'
+        {
+//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | error
@@ -4269,7 +4279,7 @@ param_type_spec
             {
               d->last_referenced_as ($1);
               AST_Decl::NodeType nt = d->node_type ();
-              AST_Type *t = AST_Type::narrow_from_decl (d);                  
+              AST_Type *t = AST_Type::narrow_from_decl (d);
               AST_Typedef *td = 0;
               bool can_be_undefined = false;
 
@@ -4286,7 +4296,7 @@ param_type_spec
                     {
                       td = AST_Typedef::narrow_from_decl (d);
                       AST_Type *pbt = td->primitive_base_type ();
-                      
+
                       if (pbt->node_type () == AST_Decl::NT_sequence)
                         {
                           t = pbt;
@@ -4296,7 +4306,7 @@ param_type_spec
                             seq_type->base_type ();
                           AST_Decl::NodeType elem_nt =
                             elem_type->node_type ();
-                            
+
                           if (elem_nt == AST_Decl::NT_typedef)
                             {
                               AST_Typedef *elem_td =
@@ -4304,7 +4314,7 @@ param_type_spec
                               elem_type = elem_td->primitive_base_type ();
                               elem_nt = elem_type->node_type ();
                             }
-                            
+
                           if (elem_nt == AST_Decl::NT_interface
                               || elem_nt == AST_Decl::NT_interface_fwd
                               || elem_nt == AST_Decl::NT_valuetype
@@ -4316,7 +4326,7 @@ param_type_spec
                             }
                         }
                     }
-                    
+
                   if (! t->is_defined () && ! can_be_undefined)
                     {
                       idl_global->err ()->error1 (
@@ -4739,7 +4749,7 @@ component_export
 // component_export : provides_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
         }
-          ';'
+        ';'
         {
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
@@ -4749,7 +4759,7 @@ component_export
 //      | uses_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
         }
-          ';'
+        ';'
         {
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
@@ -4759,7 +4769,7 @@ component_export
 //      | emits_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_EmitsDeclSeen);
         }
-          ';'
+        ';'
         {
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
@@ -4769,7 +4779,7 @@ component_export
 //      | publishes_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_PublishesDeclSeen);
         }
-          ';'
+        ';'
         {
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
@@ -4779,7 +4789,7 @@ component_export
 //      | consumes_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ConsumesDeclSeen);
         }
-          ';'
+        ';'
         {
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
@@ -4789,37 +4799,35 @@ component_export
 //      | attribute
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
-          ';'
+        ';'
         {
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         ;
 
-provides_decl :
-        IDL_PROVIDES
-        interface_type
-        id
+provides_decl
+        : provides_type id
         {
-// provides_decl : IDL_PROVIDES interface_type id
+// provides_decl : provides_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Component *c = AST_Component::narrow_from_scope (s);
 
           if (c != 0)
             {
-              AST_Decl *d = s->lookup_by_name ($2,
+              AST_Decl *d = s->lookup_by_name ($1,
                                                true);
               if (0 == d)
                 {
-                  idl_global->err ()->lookup_error ($2);
+                  idl_global->err ()->lookup_error ($1);
+
+                  $1->destroy ();
+                  delete $1;
+                  $1 = 0;
 
                   $2->destroy ();
                   delete $2;
                   $2 = 0;
-
-                  $3->destroy ();
-                  delete $3;
-                  $3 = 0;
 
                   break;
                 }
@@ -4833,13 +4841,13 @@ provides_decl :
                     {
                       idl_global->err ()->interface_expected (d);
 
+                      $1->destroy ();
+                      delete $1;
+                      $1 = 0;
+
                       $2->destroy ();
                       delete $2;
                       $2 = 0;
-
-                      $3->destroy ();
-                      delete $3;
-                      $3 = 0;
 
                       break;
                     }
@@ -4851,17 +4859,27 @@ provides_decl :
               AST_Component::port_description pd;
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($3);
+              idl_global->original_local_name ($2);
 
-              pd.id = $3;
+              pd.id = $2;
               pd.impl = interface_type;
               pd.line_number = idl_global->lineno ();
               c->provides ().enqueue_tail (pd);
             }
 
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
+        }
+        ;
+
+provides_type
+        : IDL_PROVIDES interface_type
+        {
+// provides_type : IDL_PROVIDES interface_type
+          // We use this extra rule here to use in both provides_decl and
+          // extended_provides_decl, so the LALR(1) parser can avoid conflicts.
+          $$ = $2;
         }
         ;
 
@@ -4870,7 +4888,8 @@ interface_type
         {
 // interface_type : scoped_name
           // Lookups and checking are done where the 'interface_type'
-          // token is used, in 'provides_decl' and 'uses_decl'.
+          // token is used, in 'provides_decl', 'extended_provides_decl'
+          // 'uses_decl' and 'extended_uses_decl'.
           $$ = $1;
         }
         | IDL_OBJECT
@@ -4897,28 +4916,25 @@ interface_type
         }
         ;
 
-uses_decl :
-        IDL_USES
-        opt_multiple
-        interface_type
-        id
+uses_decl
+        : uses_opt_multiple interface_type id
         {
-// uses_decl : IDL_USES opt_multiple interface_type id
+// uses_decl : uses_opt_multiple interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($3,
+          AST_Decl *d = s->lookup_by_name ($2,
                                            true);
 
           if (0 == d)
             {
-              idl_global->err ()->lookup_error ($3);
+              idl_global->err ()->lookup_error ($2);
+
+              $2->destroy ();
+              delete $2;
+              $2 = 0;
 
               $3->destroy ();
               delete $3;
               $3 = 0;
-
-              $4->destroy ();
-              delete $4;
-              $4 = 0;
 
               break;
             }
@@ -4930,13 +4946,13 @@ uses_decl :
                 {
                   idl_global->err ()->interface_expected (d);
 
+                  $2->destroy ();
+                  delete $2;
+                  $2 = 0;
+
                   $3->destroy ();
                   delete $3;
                   $3 = 0;
-
-                  $4->destroy ();
-                  delete $4;
-                  $4 = 0;
 
                   break;
                 }
@@ -4950,11 +4966,11 @@ uses_decl :
               AST_Component::port_description ud;
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($4);
+              idl_global->original_local_name ($3);
 
-              ud.id = $4;
+              ud.id = $3;
               ud.impl = interface_type;
-              ud.is_multiple = $2;
+              ud.is_multiple = $1;
               ud.line_number = idl_global->lineno ();
               c->uses ().enqueue_tail (ud);
 
@@ -4969,9 +4985,19 @@ uses_decl :
                 }
             }
 
-          $3->destroy ();
-          delete $3;
-          $3 = 0;
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+        }
+        ;
+
+uses_opt_multiple
+        : IDL_USES opt_multiple
+        {
+// uses_opt_multiple : IDL_USES opt_multiple
+          // We use this extra rule here to use in both uses_decl and
+          // extended_uses_decl, so the LALR(1) parser can avoid conflicts.
+          $$ = $2;
         }
         ;
 
@@ -5908,7 +5934,7 @@ template_interface_def
         exports
         {
 //      exports - TODO: change to include concatenated identifiers
-          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceBodySeen);
         }
         '}'
         {
@@ -5940,21 +5966,31 @@ template_interface_header
         ;
 
 at_least_one_template_param
-        : '<' template_param template_params '>'
+        : '<'
+        {
+// at_least_one_template_param : '<'
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceSqSeen);
+        }
+        template_param template_params
         {
 // at_least_one_template_param : '<' template_param template_params '>'
-          if ($3 == 0)
+          if ($4 == 0)
             {
-              ACE_NEW_RETURN ($3,
+              ACE_NEW_RETURN ($4,
                               FE_Utils::T_PARAMLIST_INFO,
                               1);
             }
 
-          $3->enqueue_head (*$2);
-          delete $2;
-          $2 = 0;
+          $4->enqueue_head (*$3);
+          delete $3;
+          $3 = 0;
 
-          $<plval>$ = $3;
+          $<plval>$ = $4;
+        }
+        '>'
+        {
+//        '>'
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceQsSeen);
         }
         ;
 
@@ -6116,6 +6152,122 @@ template_param_ref
           ACE_NEW_RETURN ($$,
                           UTL_String ($1),
                           1);
+        }
+        ;
+
+porttype_decl
+        : IDL_PORTTYPE
+        {
+// porttype_decl : IDL_PORTTYPE
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSeen);
+        }
+        IDENTIFIER
+        {
+//        IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeIDSeen);
+        }
+        opt_template_params
+        {
+//        opt_template_params
+        }
+        '{'
+        {
+//        '{'
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSqSeen);
+        }
+        at_least_one_port_export
+        {
+//        at_least_one_port_export
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeBodySeen);
+        }
+        '}'
+        {
+//        '}'
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeQsSeen);
+        }
+        ;
+
+opt_template_params
+        : at_least_one_template_param
+        {
+// opt_template_params : at_least_one_template_param
+        }
+        | /* EMPTY */
+        {
+//        | /* EMPTY */
+        }
+        ;
+
+at_least_one_port_export
+        : port_export port_exports
+        {
+// at_least_one_port_export : port_export port_exports
+        }
+        ;
+
+port_exports
+        : port_exports port_export
+        {
+// port_exports : port_exports port_export
+        }
+        | /* EMPTY */
+        {
+//        | /* EMPTY */
+        }
+        ;
+
+port_export
+        : extended_provides_decl
+        {
+// port_export : extended_provides_decl
+        }
+        ';'
+        {
+//        ';'
+        }
+        | extended_uses_decl
+        {
+//        | extended_uses_decl
+        }
+        ';'
+        {
+//        ';'
+        }
+        ;
+
+extended_provides_decl
+        : provides_decl
+        {
+// extended_provides_decl : provides_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
+        }
+        | provides_type at_least_one_template_param_ref IDENTIFIER
+        {
+//        | provides_type at_least_one_template_param_ref IDENTIFIER
+
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtProvidesDeclSeen);
+
+          // We allow 'Object' in the grammar, to use more grammar in common with
+          // provides_decl and avoid conflicts in the LALR(1) parser. We just
+          // check for CORBA::Object below and report an error if found.
+        }
+        ;
+
+extended_uses_decl
+        : uses_decl
+        {
+// extended_uses_decl : uses_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
+        }
+        | uses_opt_multiple interface_type at_least_one_template_param_ref IDENTIFIER
+        {
+//        | uses_opt_multiple interface_type at_least_one_template_param_ref IDENTIFIER
+
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtUsesDeclSeen);
+
+          // We allow 'Object' in the grammar, to use more grammar in common with
+          // uses_decl and avoid conflicts in the LALR(1) parser. We just
+          // check for CORBA::Object below and report an error if found.
         }
         ;
 
