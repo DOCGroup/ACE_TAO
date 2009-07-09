@@ -3,5 +3,5 @@
 
 project : dance, dance_deployment_stub {
   libs     += DAnCE_ExecutionManager_stub
-  after    += ExecutionManager_stub
+  after    += Deployment_ExecutionManager_stub
 }
