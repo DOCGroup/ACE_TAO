@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(ExecutionManager_Module): dance_lib, taolib, iortable, ciao_output, utils, strategies, naming, dance_executionmanager_skel, dance_domainapplicationmanager_stub, dance_deployment_svnt, avoids_minimum_corba, ciao_executionmanager_skel {
+project(ExecutionManager_Module): dance_lib, taolib, iortable, ciao_output, utils, strategies, naming, dance_executionmanager_skel, dance_domainapplicationmanager, dance_deployment_svnt, avoids_minimum_corba, ciao_executionmanager_skel {
   sharedname = DAnCE_ExecutionManager
   dynamicflags = EXECUTIONMANAGER_BUILD_DLL DANCE_EXECUTIONMANAGER_MODULE_BUILD_DLL
 
