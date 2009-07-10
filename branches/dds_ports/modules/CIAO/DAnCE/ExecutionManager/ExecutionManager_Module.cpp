@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"

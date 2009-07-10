@@ -5,7 +5,7 @@
 #include "ace/Sched_Params.h"
 #include "ccm/CCM_ObjectC.h"
 #include "ace/Env_Value_T.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
