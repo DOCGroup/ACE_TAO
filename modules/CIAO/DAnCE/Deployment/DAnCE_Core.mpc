@@ -35,7 +35,6 @@ project(Deployment_IDL) : ciaolib_with_idl, ciao_output, valuetype, gen_ostream 
     Deployment_StartError.idl
     Deployment_Application.idl
     Deployment.idl
-    Deployment_RepositoryManager.idl
   }
 }
 
