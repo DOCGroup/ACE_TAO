@@ -1,10 +1,8 @@
-Fri Jul 10 17:12:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+Fri Jul 10 17:23:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ChangeLog:
-        * ChangeLog-dds4ccm:
+        * DAnCE/MPC/config/dance_targetmanager.mpb:
+          Updated base
 
-          Split out dds4ccm connector entries. 
-        
 Fri Jul 10 07:17:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/DataType_Handler.cpp
@@ -789,7 +787,7 @@ Thu Jun 18 18:48:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Jun 18 16:51:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO.mwc:
-          Added connectors and performance-tests directory, removed CCF
+          Added performance-tests directory, removed CCF
 
 Thu Jun 18 14:35:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1381,13 +1379,6 @@ Sat Jun 13 01:35:43 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
 
           Fixed a memory management error.  Thanks to Jeff for pointing it out.
-
-Wed Jun 10 18:31:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/examples/Hello/descriptors:
-        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
-
-          First pass at deployment plan.
 
 Wed Jun 10 17:53:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
