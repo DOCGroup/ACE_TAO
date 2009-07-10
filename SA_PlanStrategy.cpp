@@ -19,6 +19,7 @@
 #include "Planner.h"
 #include "PlanHeuristics.h"
 #include "PlanCommands.h"
+#include "SA_WorkingPlan.h"
 #include <fstream>
 
 using namespace SA_POP;
@@ -142,7 +143,7 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   if (this->open_conds_.empty ())
 	  return this->planner_->full_sched();
 
-
+//  if(!(this->planner_->get_working_plan()->get_all_insts().size() > 8)){
   // Increment step counter.
   this->cur_step_++;
 
@@ -156,6 +157,12 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   // Choose an open condition to satisfy.
   Condition open_cond = this->cond_choice_->choose_cond (this->open_conds_);
 
+
+
+
+
+
+
   // Choose task to satisfy open condition (actually an ordered list of
   // tasks to try), passing command to planner to be executed next.
   AddTaskCmd *add_task_cmd = this->satisfy_cond (open_cond);
@@ -164,6 +171,9 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   while (this->planner_->try_next (add_task_cmd->get_id ())) {
     // Get current task and task instance.
     this->cur_task_ = add_task_cmd->get_task ();
+
+	TaskInstID prev_cur_inst = this->cur_task_inst_;
+
     this->cur_task_inst_ = add_task_cmd->get_task_inst ();
     // Remove open condition.
 	CommandID rmv_cond_cmd_id = this->rmv_open_cond (open_cond, add_task_cmd->get_satisfied_tasks());
@@ -198,7 +208,7 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
     if (this->satisfy_everything())
       return true;
 
-
+	this->cur_task_inst_ = prev_cur_inst;
 
     SA_POP_DEBUG(SA_POP_DEBUG_NORMAL, "Backtracking from task addition...");
     // Undo addition of causal link threats from this task.
@@ -218,8 +228,14 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   // Undo addition of task.
   this->planner_->undo_command (add_task_cmd->get_id ());
 
+
+
   // Decrement step.
   this->cur_step_--;
+
+ // }else{
+//	  std::cout<<"Backing up beccause of iterative deepening"<<std::endl;
+ // }
 
   // No task could satisfy open condition, so return failure.
   return false;
@@ -235,9 +251,7 @@ bool SA_PlanStrategy::satisfy_everything(){
     TaskImplList impl_list;
 
     // Choose a task implementation.
-
-//	if(this->planner_->get_working_plan()->get_task_impl_from_inst(this->cur_task_inst_)== NULL_TASK_IMPL_ID){
-		assoc_impl_cmd =
+	assoc_impl_cmd =
 		  static_cast<AssocTaskImplCmd *> (this->assoc_impl_cmd_->clone ());
 		if(!this->planner_->inst_exists(this->cur_task_inst_)) impl_list = this->impl_choice_->choose_impl (this->cur_task_inst_);
 		else impl_list.push_back(this->planner_->get_impl_id(this->cur_task_inst_));
@@ -250,7 +264,8 @@ bool SA_PlanStrategy::satisfy_everything(){
 
 		while (this->planner_->try_next (assoc_impl_cmd->get_id ())) 
 		{
-
+		((SA_WorkingPlan*)(this->planner_->get_working_plan()))->
+			print_precedence_graph("SA_PlanStrategy::get_next_threat_resolution");
 		  if(this->get_next_threat_resolution()){
 			return true;
 		  }
@@ -266,16 +281,7 @@ bool SA_PlanStrategy::satisfy_everything(){
 
 	planner_->undo_command(assoc_impl_cmd->get_id());
 
-//	}else{
-//      if(this->get_next_threat_resolution()){
- //       return true;
- //     }
-//      else{
-      
-          this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
-//      }
-//	}
-
+    this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
 
     return false;
 }
@@ -310,6 +316,8 @@ bool SA_PlanStrategy::get_next_threat_resolution(){
 
         //Should have been done in the command
         //this->open_threats_.erase(threat);
+
+
 
 
         this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
