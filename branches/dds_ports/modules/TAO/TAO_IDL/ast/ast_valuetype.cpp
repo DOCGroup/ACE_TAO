@@ -263,7 +263,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
               if (d != d_before)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "warning in %s line %d: ",
+                              "warning in %C line %d: ",
                               idl_global->filename ()->get_string (),
                               idl_global->lineno ()));
 

@@ -1802,7 +1802,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Unable to insert type")
-                      ACE_TEXT (" into DCPS type container: %s.\n"),
+                      ACE_TEXT (" into DCPS type container: %C.\n"),
                       id));
           return;
         }
@@ -1810,7 +1810,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
   else
     {
       ACE_ERROR ((LM_WARNING,
-                  ACE_TEXT ("(%P|%t) Duplicate DCPS type defined: %s.\n"),
+                  ACE_TEXT ("(%P|%t) Duplicate DCPS type defined: %C.\n"),
                   id));
     }
 

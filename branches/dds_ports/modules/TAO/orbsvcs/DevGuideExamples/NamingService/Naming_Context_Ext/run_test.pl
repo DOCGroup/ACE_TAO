@@ -16,7 +16,7 @@ unlink $ior;
 # start Naming Service
 unlink($nsior);
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
-$NS = new PerlACE::Process($NameService, "-ORBEndPoint iiop://localhost:2809 -o $nsior");
+$NS = new PerlACE::Process($NameService, "-ORBListenEndpoints iiop://localhost:2809 -o $nsior");
 $NS->Spawn();
 
 if (PerlACE::waitforfile_timed ($nsior, 10) == -1) {

@@ -9,7 +9,7 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Echo_Client_i::Echo_Client_i (void)
+Echo_Client_i::Echo_Client_i (void) : payload_length_ (0)
 {
   //no-op
 }
@@ -21,12 +21,33 @@ Echo_Client_i::~Echo_Client_i (void)
 }
 
 int
+Echo_Client_i::parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'p':
+        this->payload_length_ = ACE_OS::atoi(get_opts.opt_arg ()) * 1000000;
+        break;
+      }
+  // Indicates successful parsing of the command line
+  return 0;
+}
+
+
+int
 Echo_Client_i::run (const char *name,
                     int argc,
                     ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client_.init (name, argc, argv) == -1)
+    return -1;
+
+  if (this->parse_args (argc, argv) == -1)
     return -1;
 
   try
@@ -44,31 +65,20 @@ Echo_Client_i::run (const char *name,
       CORBA::Object_var object =
         client_->_set_policy_overrides(policyList, CORBA::ADD_OVERRIDE);
 
-      Echo_var srv(Echo::_narrow(object));
+      Echo_var srv(Echo::_narrow(object.in ()));
 
-/*
-      // Get the input message which has to be displayed.
-      // When we are reading potentially large inputs like this, we
-      // cannot use ACE_Read_Buffer, as it uses recursion, and this might
-      // smash the stack when the input is large (>2M or so)
-      std::string buf;
-      std::string line;
-      while (cin.good())
-        {
-          char* lstring = 0;
-          std::cin >> lstring;
-          buf += line;
-          buf += " ";
-        }
-*/
-      ACE_CString buf;
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("read len: %d \n"), buf.length())); 
+      char* buf = new char [this->payload_length_+ 1];
+      ACE_OS::memset (buf, 'a', this->payload_length_);
+      buf[this->payload_length_] = '\0';
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sending len: %d \n"), ACE_OS::strlen (buf)));
 
-      CORBA::String_var s = srv->echo_string (buf.c_str());
+      CORBA::String_var s = srv->echo_string (buf);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nString echoed by client has len %d\n"),
                   ACE_OS::strlen(s.in ())));
+
+      delete [] buf;
 
       if (client_.do_shutdown () == 1)
         client_->shutdown ();

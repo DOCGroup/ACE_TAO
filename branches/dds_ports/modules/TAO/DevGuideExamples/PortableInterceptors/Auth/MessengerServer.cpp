@@ -14,12 +14,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ServerInitializer *temp_initializer = 0;
-
-      temp_initializer = new ServerInitializer;
-
       PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+        new ServerInitializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
@@ -35,10 +31,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       mgr->activate();
 
       // Create an object
-      Messenger_i messenger_servant;
+      PortableServer::Servant_var<Messenger_i> messenger_servant = new Messenger_i;
 
       PortableServer::ObjectId_var oid =
-        poa->activate_object( &messenger_servant );
+        poa->activate_object( messenger_servant.in());
       CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
 
       CORBA::String_var str = orb->object_to_string( messenger_obj.in() );

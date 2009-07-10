@@ -12,11 +12,12 @@ use PerlACE::Run_Test;
 $TARGETHOSTNAME = "localhost";
 $def_port = 2809;
 $nsior = "ns.ior";
+$msfile = "MessengerServer.ready";
 
 # start Naming Service
 unlink($nsior);
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
-$NS = new PerlACE::Process($NameService, "-ORBEndpoint iiop://$TARGETHOSTNAME:$def_port -o $nsior");
+$NS = new PerlACE::Process($NameService, "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$def_port -o $nsior");
 $NS->Spawn();
 
 if (PerlACE::waitforfile_timed ($nsior, 10) == -1) {
@@ -26,11 +27,19 @@ if (PerlACE::waitforfile_timed ($nsior, 10) == -1) {
 }
 
 # start the server
+unlink($msfile);
 print "Start Messenger Server \n";
 $SR =  new PerlACE::Process("MessengerServer", 
   "-ORBInitRef NameService=iiop://$TARGETHOSTNAME:$def_port/NameService");
 $SR->Spawn();
-sleep(2);
+
+if (PerlACE::waitforfile_timed ($msfile, 10) == -1) {
+  print STDERR "ERROR: cannot find file <$msfile>\n";
+  $SR->Kill ();
+  $NS->Kill ();
+  exit 1;
+}
+unlink($msfile);
 
 
 @corbaname_clients = ("corbaname:iiop:$TARGETHOSTNAME:2809#example/Messenger",

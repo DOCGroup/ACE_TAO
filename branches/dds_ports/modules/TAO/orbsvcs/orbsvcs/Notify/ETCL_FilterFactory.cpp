@@ -187,7 +187,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
     const char* value = 0;
     if (attrs.find ("FilterId", value))
     {
-      TAO_Notify_Object::ID id = ACE_OS::atoi (value);
+      TAO_Notify_Object::ID const id = ACE_OS::atoi (value);
       if (DEBUG_LEVEL) 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reload filter %d\n"),
@@ -245,8 +245,7 @@ TAO_Notify_ETCL_FilterFactory::get_filter (const TAO_Notify_Object::ID& id)
   else
   {
     CORBA::Object_var obj =
-      this->filter_poa_->servant_to_reference (filter
-     );
+      this->filter_poa_->servant_to_reference (filter);
 
     CosNotifyFilter::Filter_var filter 
       = CosNotifyFilter::Filter::_narrow (obj.in ());

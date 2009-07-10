@@ -1,7 +1,7 @@
 // $Id$
-/*  A Bison parser, made by GNU Bison 1.875d.  */
+/* A Bison parser, made by GNU Bison 1.875c.  */
 
-/*   Skeleton parser for Yacc-like parsing with Bison,
+/* Skeleton parser for Yacc-like parsing with Bison,
    Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -45,6 +45,8 @@
 
 /* Using locations.  */
 #define TAO_YYLSP_NEEDED 0
+
+
 
 /* Tokens.  */
 #ifndef TAO_YYTOKENTYPE
@@ -334,6 +336,13 @@ typedef union TAO_YYSTYPE {
 
 #if ! defined (tao_yyoverflow) || TAO_YYERROR_VERBOSE
 
+# ifndef TAO_YYFREE
+#  define TAO_YYFREE free
+# endif
+# ifndef TAO_YYMALLOC
+#  define TAO_YYMALLOC malloc
+# endif
+
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
 # ifdef TAO_YYSTACK_USE_ALLOCA
@@ -358,8 +367,8 @@ typedef union TAO_YYSTYPE {
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
 #   define TAO_YYSIZE_T size_t
 #  endif
-#  define TAO_YYSTACK_ALLOC malloc
-#  define TAO_YYSTACK_FREE free
+#  define TAO_YYSTACK_ALLOC TAO_YYMALLOC
+#  define TAO_YYSTACK_FREE TAO_YYFREE
 # endif
 #endif /* ! defined (tao_yyoverflow) || TAO_YYERROR_VERBOSE */
 
@@ -676,48 +685,48 @@ static const unsigned short tao_yyrline[] =
      457,   483,   488,   451,   504,   505,   510,   549,   554,   509,
      572,   571,   585,   623,   654,   688,   687,   699,   706,   707,
      708,   709,   713,   724,   729,   773,   778,   728,   807,   846,
-     851,   805,   870,   868,   919,   918,   932,   938,   945,   952,
-     959,   985,  1012,  1067,  1068,  1072,  1073,  1074,  1080,  1079,
-    1087,  1086,  1096,  1097,  1102,  1101,  1112,  1111,  1122,  1121,
-    1132,  1131,  1142,  1141,  1152,  1151,  1162,  1161,  1172,  1171,
-    1185,  1198,  1196,  1226,  1233,  1244,  1243,  1271,  1269,  1296,
-    1308,  1354,  1382,  1413,  1418,  1423,  1428,  1412,  1481,  1482,
-    1483,  1484,  1485,  1486,  1487,  1499,  1504,  1579,  1581,  1583,
-    1584,  1598,  1599,  1613,  1614,  1627,  1628,  1638,  1651,  1652,
-    1662,  1675,  1676,  1686,  1696,  1709,  1710,  1720,  1730,  1743,
-    1778,  1779,  1788,  1793,  1800,  1808,  1813,  1818,  1824,  1829,
-    1834,  1842,  1914,  1913,  1923,  1928,  1933,  1938,  1965,  1974,
-    1973,  2032,  2033,  2037,  2045,  2046,  2074,  2075,  2076,  2077,
-    2078,  2079,  2080,  2081,  2085,  2086,  2087,  2091,  2092,  2093,
-    2097,  2098,  2102,  2115,  2113,  2143,  2150,  2151,  2155,  2168,
-    2166,  2196,  2203,  2220,  2239,  2240,  2244,  2249,  2254,  2262,
-    2267,  2272,  2280,  2285,  2290,  2298,  2312,  2317,  2325,  2333,
-    2341,  2349,  2358,  2357,  2373,  2407,  2412,  2372,  2431,  2434,
-    2435,  2439,  2439,  2449,  2454,  2448,  2517,  2516,  2531,  2530,
-    2545,  2550,  2555,  2560,  2607,  2612,  2544,  2636,  2644,  2658,
-    2668,  2676,  2677,  2785,  2788,  2789,  2794,  2799,  2793,  2835,
-    2834,  2848,  2859,  2881,  2889,  2888,  2904,  2909,  2903,  2926,
-    2925,  2978,  3002,  3027,  3032,  3065,  3070,  3026,  3096,  3101,
-    3099,  3106,  3110,  3147,  3152,  3145,  3219,  3274,  3284,  3273,
-    3299,  3304,  3297,  3345,  3369,  3379,  3384,  3377,  3414,  3437,
-    3446,  3445,  3481,  3492,  3514,  3522,  3527,  3521,  3564,  3565,
-    3570,  3575,  3580,  3585,  3569,  3654,  3659,  3664,  3669,  3653,
-    3747,  3752,  3782,  3787,  3746,  3805,  3810,  3863,  3868,  3803,
-    3905,  3911,  3918,  3925,  3926,  3938,  3944,  3986,  3937,  4008,
-    4007,  4018,  4017,  4030,  4035,  4033,  4040,  4045,  4050,  4044,
-    4091,  4090,  4101,  4100,  4113,  4118,  4116,  4123,  4128,  4133,
-    4127,  4180,  4188,  4189,  4190,  4233,  4238,  4243,  4252,  4257,
-    4251,  4269,  4277,  4282,  4276,  4294,  4302,  4307,  4301,  4319,
-    4327,  4332,  4326,  4344,  4351,  4364,  4362,  4390,  4397,  4426,
-    4464,  4465,  4469,  4499,  4539,  4544,  4498,  4563,  4568,  4561,
-    4610,  4609,  4620,  4627,  4628,  4633,  4632,  4643,  4642,  4653,
-    4652,  4663,  4662,  4673,  4672,  4683,  4682,  4695,  4759,  4766,
-    4791,  4864,  4870,  4877,  4935,  4993,  5052,  5051,  5101,  5106,
-    5111,  5116,  5121,  5126,  5100,  5180,  5179,  5190,  5197,  5204,
-    5212,  5217,  5211,  5229,  5230,  5234,  5236,  5235,  5246,  5245,
-    5260,  5296,  5258,  5330,  5366,  5328,  5398,  5399,  5400,  5404,
-    5405,  5409,  5437,  5468,  5513,  5518,  5466,  5535,  5545,  5564,
-    5576,  5575,  5626,  5676,  5681,  5624,  5698,  5703
+     851,   805,   870,   868,   908,   907,   921,   927,   934,   941,
+     948,   974,  1001,  1066,  1067,  1071,  1072,  1073,  1079,  1078,
+    1086,  1085,  1095,  1096,  1101,  1100,  1111,  1110,  1121,  1120,
+    1131,  1130,  1141,  1140,  1151,  1150,  1161,  1160,  1171,  1170,
+    1184,  1197,  1195,  1225,  1232,  1243,  1242,  1270,  1268,  1295,
+    1307,  1353,  1381,  1412,  1417,  1422,  1427,  1411,  1480,  1481,
+    1482,  1483,  1484,  1485,  1486,  1498,  1503,  1578,  1580,  1582,
+    1583,  1597,  1598,  1612,  1613,  1626,  1627,  1637,  1650,  1651,
+    1661,  1674,  1675,  1685,  1695,  1708,  1709,  1719,  1729,  1742,
+    1777,  1778,  1787,  1792,  1799,  1807,  1812,  1817,  1823,  1828,
+    1833,  1841,  1913,  1912,  1922,  1927,  1932,  1937,  1964,  1973,
+    1972,  2043,  2044,  2048,  2056,  2057,  2085,  2086,  2087,  2088,
+    2089,  2090,  2091,  2092,  2096,  2097,  2098,  2102,  2103,  2104,
+    2108,  2109,  2113,  2126,  2124,  2154,  2161,  2162,  2166,  2179,
+    2177,  2207,  2214,  2231,  2250,  2251,  2255,  2260,  2265,  2273,
+    2278,  2283,  2291,  2296,  2301,  2309,  2323,  2328,  2336,  2344,
+    2352,  2360,  2369,  2368,  2384,  2418,  2423,  2383,  2442,  2445,
+    2446,  2450,  2450,  2460,  2465,  2459,  2528,  2527,  2542,  2541,
+    2556,  2561,  2566,  2571,  2618,  2623,  2555,  2647,  2655,  2669,
+    2679,  2687,  2688,  2796,  2799,  2800,  2805,  2810,  2804,  2846,
+    2845,  2859,  2870,  2892,  2900,  2899,  2915,  2920,  2914,  2937,
+    2936,  2989,  3013,  3038,  3043,  3076,  3081,  3037,  3107,  3112,
+    3110,  3117,  3121,  3158,  3163,  3156,  3230,  3285,  3295,  3284,
+    3310,  3315,  3308,  3356,  3382,  3392,  3397,  3390,  3427,  3452,
+    3461,  3460,  3496,  3507,  3529,  3537,  3542,  3536,  3579,  3580,
+    3585,  3590,  3595,  3600,  3584,  3669,  3674,  3679,  3684,  3668,
+    3762,  3767,  3797,  3802,  3761,  3820,  3825,  3878,  3883,  3818,
+    3920,  3926,  3933,  3940,  3941,  3953,  3959,  4001,  3952,  4023,
+    4022,  4033,  4032,  4045,  4050,  4048,  4055,  4060,  4065,  4059,
+    4106,  4105,  4116,  4115,  4128,  4133,  4131,  4138,  4143,  4148,
+    4142,  4195,  4203,  4204,  4205,  4293,  4298,  4303,  4312,  4317,
+    4311,  4329,  4337,  4342,  4336,  4354,  4362,  4367,  4361,  4379,
+    4387,  4392,  4386,  4404,  4411,  4424,  4422,  4450,  4457,  4486,
+    4524,  4525,  4529,  4559,  4599,  4604,  4558,  4623,  4628,  4621,
+    4670,  4669,  4680,  4687,  4688,  4693,  4692,  4703,  4702,  4713,
+    4712,  4723,  4722,  4733,  4732,  4743,  4742,  4755,  4820,  4827,
+    4852,  4926,  4932,  4939,  4998,  5057,  5117,  5116,  5166,  5171,
+    5176,  5181,  5186,  5191,  5165,  5245,  5244,  5255,  5262,  5269,
+    5277,  5282,  5276,  5294,  5295,  5299,  5301,  5300,  5311,  5310,
+    5325,  5361,  5323,  5395,  5431,  5393,  5463,  5464,  5465,  5469,
+    5470,  5474,  5502,  5533,  5578,  5583,  5531,  5600,  5610,  5629,
+    5641,  5640,  5680,  5730,  5735,  5678,  5752,  5757
 };
 #endif
 
@@ -2550,7 +2559,7 @@ tao_yyreduce:
     {
 // valuetype : IDL_CUSTOM value_concrete_decl
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("error in %s line %d\n"),
+                       ACE_TEXT ("error in %C line %d\n"),
                        idl_global->filename ()->get_string (),
                        idl_global->lineno ()));
            ACE_DEBUG ((LM_DEBUG,
@@ -4277,7 +4286,7 @@ tao_yyreduce:
     {
 // fixed_type : IDL_FIXED
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("error in %s line %d\n"),
+                      ACE_TEXT ("error in %C line %d\n"),
                       idl_global->filename ()->get_string (),
                       idl_global->lineno ()));
           ACE_DEBUG ((LM_DEBUG,
@@ -5430,7 +5439,7 @@ tao_yyreduce:
            * Create a node representing a string.
            */
           ACE_CDR::ULong bound = 0UL;
-          
+
           tao_yyval.dcval =
             idl_global->gen ()->create_string (
                 idl_global->gen ()->create_expr (bound,
@@ -5510,7 +5519,7 @@ tao_yyreduce:
            * Create a node representing a wstring.
            */
           ACE_CDR::ULong bound = 0UL;
-          
+
           tao_yyval.dcval =
             idl_global->gen ()->create_wstring (
                 idl_global->gen ()->create_expr (bound,
@@ -6103,7 +6112,7 @@ tao_yyreduce:
             {
               //@@ Fire error
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("error in %s line %d:\n")
+                          ACE_TEXT ("error in %C line %d:\n")
                           ACE_TEXT ("Abstract valuetype can't have a ")
                           ACE_TEXT ("factory construct.\n"),
                           idl_global->filename ()->get_string (),
@@ -6388,7 +6397,7 @@ tao_yyreduce:
             {
               d->last_referenced_as (tao_yyvsp[0].idlist);
               AST_Decl::NodeType nt = d->node_type ();
-              AST_Type *t = AST_Type::narrow_from_decl (d);                  
+              AST_Type *t = AST_Type::narrow_from_decl (d);
               AST_Typedef *td = 0;
               bool can_be_undefined = false;
 
@@ -6405,7 +6414,7 @@ tao_yyreduce:
                     {
                       td = AST_Typedef::narrow_from_decl (d);
                       AST_Type *pbt = td->primitive_base_type ();
-                      
+
                       if (pbt->node_type () == AST_Decl::NT_sequence)
                         {
                           t = pbt;
@@ -6415,7 +6424,7 @@ tao_yyreduce:
                             seq_type->base_type ();
                           AST_Decl::NodeType elem_nt =
                             elem_type->node_type ();
-                            
+
                           if (elem_nt == AST_Decl::NT_typedef)
                             {
                               AST_Typedef *elem_td =
@@ -6423,7 +6432,7 @@ tao_yyreduce:
                               elem_type = elem_td->primitive_base_type ();
                               elem_nt = elem_type->node_type ();
                             }
-                            
+
                           if (elem_nt == AST_Decl::NT_interface
                               || elem_nt == AST_Decl::NT_interface_fwd
                               || elem_nt == AST_Decl::NT_valuetype
@@ -6435,7 +6444,7 @@ tao_yyreduce:
                             }
                         }
                     }
-                    
+
                   if (! t->is_defined () && ! can_be_undefined)
                     {
                       idl_global->err ()->error1 (
@@ -7244,7 +7253,7 @@ tao_yyreduce:
                   pd.id = tao_yyvsp[0].idval;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();
-                 c->emits ().enqueue_tail (pd);
+                  c->emits ().enqueue_tail (pd);
                 }
             }
 
@@ -7917,7 +7926,7 @@ tao_yyreduce:
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("error in %s line %d\n"),
+                      ACE_TEXT ("error in %C line %d\n"),
                       idl_global->filename ()->get_string (),
                       idl_global->lineno ()));
           ACE_DEBUG ((LM_DEBUG,
@@ -7942,7 +7951,6 @@ tao_yyreduce:
     {
 // event_rest_of_header : inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
-
         }
     break;
 
@@ -8080,7 +8088,7 @@ tao_yyreduce:
 
     }
 
-/* Line 993 of yacc.c.  */
+/* Line 1000 of yacc.c.  */
 
 
   tao_yyvsp -= tao_yylen;
@@ -8326,6 +8334,7 @@ void
 tao_yyerror (const char *msg)
 {
   ACE_ERROR ((LM_ERROR,
-              "%s\n",
+              "%C\n",
               msg));
 }
+

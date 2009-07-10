@@ -17,7 +17,7 @@ Callback_i::~Callback_i (void)
 void Callback_i::shutdown ()
 {
   std::cout << "Performing clean shutdown." << std::endl;
-  const int wait = 0;
+  CORBA::Boolean wait = false;
   orb_->shutdown(wait);
 }
 

@@ -326,7 +326,7 @@ TAO_CodeGen::start_client_header (const char *fname)
           else
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("\nERROR, invalid file '%s' included"),
+                                 ACE_TEXT ("\nERROR, invalid file '%C' included"),
                                  idl_name),
                                 -1);
             }

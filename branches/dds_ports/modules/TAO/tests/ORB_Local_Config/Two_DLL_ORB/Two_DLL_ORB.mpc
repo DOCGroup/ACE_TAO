@@ -39,7 +39,7 @@ project(ORB_DLL_Server) : taolib_with_idl, portableserver, threads {
 }
 
 project(ORB_DLL_Client) : taolib_with_idl, portableserver {
-  after += ORB_DLL_Server
+  after += ORB_DLL_Server *idl
   sharedname   = ORB_DLL_Client
   dynamicflags = SERVICE_CONFIG_ORB_DLL_BUILD_DLL
 

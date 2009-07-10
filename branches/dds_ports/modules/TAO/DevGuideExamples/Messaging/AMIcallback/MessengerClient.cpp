@@ -43,8 +43,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     mgr->activate();
 
     // Register an AMI handler for the Messenger interface
-    MessengerHandler servant(orb.in());
-    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
+    PortableServer::Servant_var<MessengerHandler> servant = 
+      new MessengerHandler(orb.in());
+    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
     obj = poa->id_to_reference(oid.in());
     AMI_MessengerHandler_var handler = AMI_MessengerHandler::_narrow(obj.in());
 
@@ -82,7 +83,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     // Our simple servant will exit as soon as it receives the results.
     orb->run();
 
-    if (servant.message_was_sent())
+    if (servant->message_was_sent())
     {
       // Note : We can't use the
       ACE_Time_Value delay = ACE_OS::gettimeofday() - time_sent;

@@ -2,6 +2,7 @@
 
 #include "MessengerC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/OS_NS_unistd.h"
 #include <iostream>
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -24,7 +25,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     name.length( 2 );
     name[0].id = CORBA::string_dup( "example" );
     name[1].id = CORBA::string_dup( "Messenger" );
-    CORBA::Object_var obj = root->resolve_str("example/Messenger");
+    CORBA::Object_var obj = CORBA::Object::_nil();
+    while (CORBA::is_nil(obj.in())) {
+      try {
+        obj = root->resolve_str("example/Messenger");
+      } catch (const CosNaming::NamingContext::NotFound&) {
+        // Sleep for a second and try again
+        ACE_OS::sleep(1);
+      }
+    }
 
     // Narrow the Messenger object reference
     Messenger_var messenger = Messenger::_narrow(obj.in());

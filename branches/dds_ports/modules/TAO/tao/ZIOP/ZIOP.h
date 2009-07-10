@@ -60,7 +60,7 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
-  
+
   /// Converts compressor ID to a compressor name.
   static const char * ziop_compressorid_name (::Compression::CompressorId st);
 
@@ -72,8 +72,8 @@ private:
 
   /// dump a ZIOP datablock after (de)compression
   void dump_msg (const char *type,  const u_char *ptr,
-                size_t len, size_t original_data_length, 
-                ::Compression::CompressorId  compressor_id, 
+                size_t len, size_t original_data_length,
+                ::Compression::CompressorId  compressor_id,
                 ::Compression::CompressionLevel compression_level);
 
 /// Get the compression low value, returns 0 when it is not set
@@ -94,14 +94,14 @@ private:
                              ACE_Message_Block& mb,
                              char *initial_rd_ptr,
                              CORBA::ULong low_value,
-                             CORBA::Long min_ratio,
+                             Compression::CompressionRatio min_ratio,
                              CORBA::ULong original_data_length,
                              Compression::CompressorId compressor_id);
 
   bool compress_data (TAO_OutputCDR &cdr,
                       CORBA::Object_ptr compression_manager,
                       CORBA::ULong low_value,
-                      CORBA::Long min_ratio,
+                      ::Compression::CompressionRatio min_ratio,
                       ::Compression::CompressorId compressor_id,
                       ::Compression::CompressionLevel compression_level);
 
@@ -112,13 +112,13 @@ private:
   bool decompress (Compression::Compressor_ptr compressor,
                    const ::Compression::Buffer &source,
                    ::Compression::Buffer &target);
-  
-  CORBA::ULong get_ratio (CORBA::OctetSeq& uncompressed, 
+
+  ::Compression::CompressionRatio get_ratio (CORBA::OctetSeq& uncompressed,
                           CORBA::OctetSeq& compressed);
 
-  bool check_min_ratio (const CORBA::ULong& this_ratio,
+  bool check_min_ratio (const ::Compression::CompressionRatio& this_ratio,
                         ::Compression::CompressionRatio overall_ratio,
-                        CORBA::Long min_ratio) const;
+                        ::Compression::CompressionRatio  min_ratio) const;
 };
 
 static int

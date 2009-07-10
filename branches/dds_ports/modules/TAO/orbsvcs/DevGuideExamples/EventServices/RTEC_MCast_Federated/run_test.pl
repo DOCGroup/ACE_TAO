@@ -53,7 +53,7 @@ $ec1iorfile = PerlACE::LocalFile ("ec1.ior");
 $ec2iorfile = PerlACE::LocalFile ("ec2.ior");
 
 $arg_ns_ref = "-ORBInitRef NameService=file://$nsiorfile";
-$end_point = "-ORBEndpoint iiop://localhost";
+$end_point = "-ORBListenEndpoints iiop://localhost";
 $ns_port = PerlACE::random_port();
 
 unlink $nsiorfile;

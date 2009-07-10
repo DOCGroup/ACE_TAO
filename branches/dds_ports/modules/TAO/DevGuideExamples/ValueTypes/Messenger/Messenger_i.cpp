@@ -21,6 +21,6 @@ CORBA::Boolean Messenger_i::send_message (Message*& msg)
   msg->subject(out.str().c_str());
   msg->text("Ok. I'm on my way.");
 
-  return 1;
+  return true;
 }
 

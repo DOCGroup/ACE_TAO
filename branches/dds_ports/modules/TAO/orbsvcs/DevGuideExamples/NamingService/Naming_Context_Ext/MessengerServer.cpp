@@ -46,8 +46,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     name[1].kind = CORBA::string_dup( "kind2" );
 
     // Create an object
-    Messenger_i servant;
-    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
+    PortableServer::Servant_var<Messenger_i> servant = new Messenger_i;
+    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
     CORBA::Object_var messenger_obj = poa->id_to_reference(oid.in());
     root->rebind(name, messenger_obj.in());
 

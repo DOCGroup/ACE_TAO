@@ -10,6 +10,8 @@ use PerlACE::Run_Test;
 
 # start MessengerServer
 my($iorfile) = 'Messenger.ior';
+unlink($iorfile);
+
 $S = new PerlACE::Process("MessengerServer");
 $S->Spawn();
 if (PerlACE::waitforfile_timed (
@@ -31,6 +33,7 @@ if ($C->SpawnWaitKill(15) != 0) {
 
 # clean-up 
 $S->Kill();
+unlink($iorfile);
 
 exit 0;
 

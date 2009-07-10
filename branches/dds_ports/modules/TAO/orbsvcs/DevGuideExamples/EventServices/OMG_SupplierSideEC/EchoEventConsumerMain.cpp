@@ -9,6 +9,8 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include "ace/OS_NS_unistd.h"
+
 #include <iostream>
 const int EVENT_LIMIT = 10;
 
@@ -23,8 +25,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
      CORBA::Object_var obj = orb->resolve_initial_references("NameService");
     CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
 
-    // Find the EchoEventChannel.
-    obj = root_context->resolve_str("CosEventService");
+    obj = CORBA::Object::_nil();
+
+    while (CORBA::is_nil(obj.in())) {
+      try {
+        // Find the EchoEventChannel.
+        obj = root_context->resolve_str("CosEventService");
+      } catch (const CosNaming::NamingContext::NotFound&) {
+        // Sleep for a second and try again
+        ACE_OS::sleep(1);
+      }
+    }
 
     // Downcast the object reference to an EventChannel reference.
     CosEventChannelAdmin::EventChannel_var echoEC =
@@ -44,12 +55,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       consumerAdmin->obtain_push_supplier();
 
     // Instantiate an EchoEventConsumer_i servant.
-    EchoEventConsumer_i servant(orb.in(), supplier.in(), EVENT_LIMIT);
+    PortableServer::Servant_var<EchoEventConsumer_i> servant =
+      new EchoEventConsumer_i(orb.in(), supplier.in(), EVENT_LIMIT);
 
     // Register it with the RootPOA.
     obj = orb->resolve_initial_references("RootPOA");
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
+    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
     CORBA::Object_var consumer_obj = poa->id_to_reference(oid.in());
     CosEventComm::PushConsumer_var consumer =
       CosEventComm::PushConsumer::_narrow(consumer_obj.in());

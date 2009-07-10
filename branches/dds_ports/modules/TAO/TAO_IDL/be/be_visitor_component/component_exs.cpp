@@ -344,7 +344,7 @@ be_visitor_component_exs::gen_provides (AST_Type *obj,
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
       << your_code_here_ << be_nl
-      << "return " << global << sname << "::CCM_"
+      << "// return " << global << sname << "::CCM_"
       << lname << "::_nil ();" << be_uidt_nl
       << "}";
 }
