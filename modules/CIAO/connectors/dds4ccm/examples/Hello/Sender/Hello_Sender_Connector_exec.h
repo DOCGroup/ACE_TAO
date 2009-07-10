@@ -42,14 +42,20 @@
 #include /**/ "Hello_Sender_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
+#include "dds4ccm/impl/ndds/DataWriter.h"
+#include "dds4ccm/impl/ndds/Writer.h"
+#include "dds4ccm/impl/ndds/NDDS_Traits.h"
+
 namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
 {
+  typedef CIAO::DDS4CCM::RTI::Writer_T< CIAO::DDS4CCM::RTI::String_Traits, ::CCM_DDS::CCM_string_Writer > String_Writer;
+  
   class HELLO_SENDER_CONNECTOR_EXEC_Export string_Writer_exec_i
     : public virtual ::CCM_DDS::CCM_string_Writer,
       public virtual ::CORBA::LocalObject
   {
   public:
-    string_Writer_exec_i (void);
+    string_Writer_exec_i (String_Writer wr);
     virtual ~string_Writer_exec_i (void);
     
     // Operations and attributes from ::CCM_DDS::string_Writer
@@ -57,142 +63,24 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
-    virtual void
-    write (
-      const char * an_instance);
+    virtual void write (const char * an_instance);
+    
+  private:
+    String_Writer writer_;
   };
   
-  class HELLO_SENDER_CONNECTOR_EXEC_Export DataWriter_exec_i
-    : public virtual ::DDS::CCM_DataWriter,
-      public virtual ::CORBA::LocalObject
+  /*
+  class HELLO_SENDER_CONNECTOR_EXEC_Export DDSWriter_i :
+    public virtual CIAO::DDS4CCM::RTI::RTI_DataWriter_i,
+    public virtual ::CORBA::LocalObject
   {
-  public:
-    DataWriter_exec_i (void);
-    virtual ~DataWriter_exec_i (void);
-    
-    // Operations and attributes from ::DDS::DataWriter
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    enable (void);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::StatusCondition_ptr
-    get_statuscondition (void);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::StatusMask
-    get_status_changes (void);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::InstanceHandle_t
-    get_instance_handle (void);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    set_qos (
-      const ::DDS::DataWriterQos & qos);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    get_qos (
-      ::DDS::DataWriterQos & qos);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    set_listener (
-      ::DDS::DataWriterListener_ptr a_listener,
-      ::DDS::StatusMask mask);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::DataWriterListener_ptr
-    get_listener (void);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::Topic_ptr
-    get_topic (void);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::Publisher_ptr
-    get_publisher (void);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    wait_for_acknowledgments (
-      const ::DDS::Duration_t & max_wait);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    get_liveliness_lost_status (
-      ::DDS::LivelinessLostStatus & status);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    get_offered_deadline_missed_status (
-      ::DDS::OfferedDeadlineMissedStatus & status);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    get_offered_incompatible_qos_status (
-      ::DDS::OfferedIncompatibleQosStatus & status);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    get_publication_matched_status (
-      ::DDS::PublicationMatchedStatus & status);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    assert_liveliness (void);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    get_matched_subscriptions (
-      ::DDS::InstanceHandleSeq & subscription_handles);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::DDS::ReturnCode_t
-    get_matched_subscription_data (
-      ::DDS::SubscriptionBuiltinTopicData & subscription_data,
-      ::DDS::InstanceHandle_t subscription_handle);
+    DDSWriter_i (CIAO::DDS4CCM::RTI::RTI_DataWriter_i rti_dw)
+      : CIAO::DDS4CCM::RTI::RTI_DataWriter_i (rti_dw)
+      {
+      }
   };
-  
+  */
+
   class HELLO_SENDER_CONNECTOR_EXEC_Export Hello_sender_Connector_exec_i
     : public virtual Hello_sender_Connector_Exec,
       public virtual ::CORBA::LocalObject
@@ -224,9 +112,19 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-  
+    
+    void configure_dds (void);
+    
   private:
     ::Hello_DDS::CCM_Hello_sender_Connector_Context_var context_;
+    
+    bool dds_configured_;
+    ::DDS::DomainParticipantFactory_var dpf_;
+    ::DDS::DomainParticipant_var dp_;
+    ::DDS::Topic_var t_;
+    ::DDS::Publisher_var pub_;
+    ::DDS::CCM_DataWriter_var dw_;
+    ::CCM_DDS::CCM_string_Writer_var sw_;
   };
   
   extern "C" HELLO_SENDER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

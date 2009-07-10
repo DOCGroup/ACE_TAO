@@ -693,52 +693,52 @@
     <name>Hello_Receiver_exec</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_exec</location>
+    <location>DDS_Hello_Receiver_exec</location>
   </artifact>
   <artifact xmi:id="Hello_Receiver_SvntArtifact">
     <name>Hello_Receiver_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_svnt</location>
+    <location>DDS_Hello_Receiver_svnt</location>
   </artifact>
 
   <artifact xmi:id="Hello_Sender_ExecArtifact">
     <name>Hello_Sender_exec</name>
     <source/>
     <node/>
-    <location>Hello_Sender_exec</location>
+    <location>DDS_Hello_Sender_exec</location>
   </artifact>
   <artifact xmi:id="Hello_Sender_SvntArtifact">
     <name>Hello_Sender_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Sender_svnt</location>
+    <location>DDS_Hello_Sender_svnt</location>
   </artifact>
 
   <artifact xmi:id="Hello_ReceiverConnector_ExecArtifact">
     <name>Hello_ReceiverConnector_exec</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_Connector_exec</location>
+    <location>DDS_Hello_Receiver_Connector_exec</location>
   </artifact>
   <artifact xmi:id="Hello_ReceiverConnector_SvntArtifact">
     <name>Hello_ReceiverConnector_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_Connector_svnt</location>
+    <location>DDS_Hello_Receiver_Connector_svnt</location>
   </artifact>
 
   <artifact xmi:id="Hello_SenderConnector_ExecArtifact">
     <name>Hello_SenderConnector_exec</name>
     <source/>
     <node/>
-    <location>Hello_Sender_Connector_exec</location>
+    <location>DDS_Hello_Sender_Connector_exec</location>
   </artifact>
   <artifact xmi:id="Hello_SenderConnector_SvntArtifact">
     <name>Hello_SenderConnector_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Sender_Connector_svnt</location>
+    <location>DDS_Hello_Sender_Connector_svnt</location>
   </artifact>
 
 </Deployment:DeploymentPlan>

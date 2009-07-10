@@ -31,13 +31,16 @@
 #include "Hello_Sender_Connector_exec.h"
 #include "ciao/CIAO_common.h"
 
+#include "dds4ccm/impl/ndds/ParticipantFactory.h"
+
 namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
 {
   //============================================================
   // Facet Executor Implementation Class: string_Writer_exec_i
   //============================================================
   
-  string_Writer_exec_i::string_Writer_exec_i (void)
+  string_Writer_exec_i::string_Writer_exec_i (String_Writer sw)
+    : writer_ (sw)
   {
   }
   
@@ -45,164 +48,10 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   {
   }
   
-  // Operations from ::CCM_DDS::string_Writer
-  
   void
-  string_Writer_exec_i::write (
-    const char * /* an_instance */)
+  string_Writer_exec_i::write (const char *an_instance)
   {
-    /* Your code here. */
-  }
-  //============================================================
-  // Facet Executor Implementation Class: DataWriter_exec_i
-  //============================================================
-  
-  DataWriter_exec_i::DataWriter_exec_i (void)
-  {
-  }
-  
-  DataWriter_exec_i::~DataWriter_exec_i (void)
-  {
-  }
-  
-  // Operations from ::DDS::DataWriter
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::enable (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::StatusCondition_ptr
-  DataWriter_exec_i::get_statuscondition (void)
-  {
-    /* Your code here. */
-    return ::DDS::StatusCondition::_nil ();
-  }
-  
-  ::DDS::StatusMask
-  DataWriter_exec_i::get_status_changes (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::InstanceHandle_t
-  DataWriter_exec_i::get_instance_handle (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::set_qos (
-    const ::DDS::DataWriterQos & /* qos */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_qos (
-    ::DDS::DataWriterQos & /* qos */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::set_listener (
-    ::DDS::DataWriterListener_ptr /* a_listener */,
-    ::DDS::StatusMask /* mask */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::DataWriterListener_ptr
-  DataWriter_exec_i::get_listener (void)
-  {
-    /* Your code here. */
-    return ::DDS::DataWriterListener::_nil ();
-  }
-  
-  ::DDS::Topic_ptr
-  DataWriter_exec_i::get_topic (void)
-  {
-    /* Your code here. */
-    return ::DDS::Topic::_nil ();
-  }
-  
-  ::DDS::Publisher_ptr
-  DataWriter_exec_i::get_publisher (void)
-  {
-    /* Your code here. */
-    return ::DDS::Publisher::_nil ();
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::wait_for_acknowledgments (
-    const ::DDS::Duration_t & /* max_wait */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_liveliness_lost_status (
-    ::DDS::LivelinessLostStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_offered_deadline_missed_status (
-    ::DDS::OfferedDeadlineMissedStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_offered_incompatible_qos_status (
-    ::DDS::OfferedIncompatibleQosStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_publication_matched_status (
-    ::DDS::PublicationMatchedStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::assert_liveliness (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_matched_subscriptions (
-    ::DDS::InstanceHandleSeq & /* subscription_handles */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_matched_subscription_data (
-    ::DDS::SubscriptionBuiltinTopicData & /* subscription_data */,
-    ::DDS::InstanceHandle_t /* subscription_handle */)
-  {
-    /* Your code here. */
-    return 0;
+    writer_.write (an_instance);
   }
   
   //============================================================
@@ -210,6 +59,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   //============================================================
   
   Hello_sender_Connector_exec_i::Hello_sender_Connector_exec_i (void)
+    : dds_configured_ (false)
   {
   }
   
@@ -226,15 +76,16 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   ::CCM_DDS::CCM_string_Writer_ptr
   Hello_sender_Connector_exec_i::get_sender_data (void)
   {
-    /* Your code here. */
-    // return ::CCM_DDS::CCM_string_Writer::_nil ();
+    this->configure_dds ();
+    return ::CCM_DDS::CCM_string_Writer::_duplicate (this->sw_.in ());
   }
   
   ::DDS::CCM_DataWriter_ptr
   Hello_sender_Connector_exec_i::get_sender_dds_entity (void)
   {
-    /* Your code here. */
-    // return ::DDS::CCM_DataWriter::_nil ();
+    this->configure_dds ();
+    
+    return ::DDS::CCM_DataWriter::_duplicate (this->dw_.in ());
   }
   
   // Operations from Components::SessionComponent.
@@ -252,6 +103,63 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
       }
   }
   
+  void 
+  Hello_sender_Connector_exec_i::configure_dds (void)
+  {
+    if (this->dds_configured_)
+      return;
+    
+    try
+      {
+        //NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
+        //                                                          NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
+
+        dpf_ = new CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
+        ::DDS::DomainParticipantQos qos;
+        dp_ = dpf_->create_participant (0, qos, 0, 0);
+        
+        ::DDS::TopicQos tqos;
+        t_ = dp_->create_topic ("Hello, World",
+                                CIAO::DDS4CCM::RTI::String_Traits::type_support::get_type_name (),
+                                tqos,
+                                0,
+                                0);
+        
+        ::DDS::PublisherQos pqos;
+        pub_ = dp_->create_publisher (pqos,
+                                      0,
+                                      0);
+        
+        ::DDS::DataWriterQos dwqos;
+        DDS::DataWriter_var dwv_tmp = pub_->create_datawriter (t_.in (),
+                                                               dwqos,
+                                                               0,
+                                                               0);
+
+        dw_ = DDS::CCM_DataWriter::_narrow (dwv_tmp);
+        
+          
+        String_Writer sw (dw_.in ());
+        
+        sw_ = new string_Writer_exec_i (sw);
+        
+      }
+    catch (CORBA::Exception &ex)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Hello_sender_Connector_exec_i::configure_dds - "
+                     "Caught CORBA exception %C\n",
+                     ex._info ().c_str ()));
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Hello_sender_Connector_exec_i::configure_dds - "
+                     "Error: caught unknown C++ exception while configuring DDS\n"));
+      }
+    
+    this->dds_configured_ = true;
+  }
+  
+      
   void
   Hello_sender_Connector_exec_i::configuration_complete (void)
   {

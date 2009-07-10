@@ -15,8 +15,31 @@ project (DDS4CCM_idl_gen) : ciaoidldefaults, anytypecode {
     dds4ccm_PortStatusListener.idl3
     dds4ccm_ListenerControl.idl3
     dds4ccm_ConnectorStatusListener.idl3
+  }
+  
+  IDL_Files {
+    idlflags += -Glem -Glfa
     dds_rtf2_dcps.idl
   }
+}     
+
+project (DDS4CCM_lem_gen) : ciaoidldefaults, anytypecode {
+  custom_only = 1
+  idlflags += -I$(CIAO_ROOT)/connectors \
+              -Wb,stub_export_macro=DDS4CCM_LEM_STUB_Export \
+              -Wb,stub_export_include=dds4ccm_lem_stub_export.h 
+
+  IDL_Files {
+     idlflags += -Gxhst -SS
+     dds_rtf2_dcpsE.idl    
+  }
+
+//  IDL_Files {
+//     dds4ccm_PortStatusListenerE.idl
+//     dds4ccm_ListenerControlE.idl
+//     dds4ccm_ConnectorStatusListenerE.idl
+//
+//  }
 }
 
 project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib, anytypecode {
@@ -45,7 +68,27 @@ project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib, anytypecode {
   }
 }
 
-project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib, anytypecode {
+project (DDS4CCM_lem_stub) : ciaolib_with_idl, ciao_output, taolib, valuetype {
+  after += DDS4CCM_stub DDS4CCM_lem_gen
+  libs  += DDS4CCM_stub
+  includes += $(CIAO_ROOT)/connectors
+
+  dynamicflags += DDS4CCM_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+   dds_rtf2_dcpsEC.cpp
+  }
+  
+  Header_Files {
+   dds_rtf2_dcpsEC.h
+   dds4ccm_lem_stub_export.h
+  }
+}
+
+project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib, anytypecode, portableserver {
   after += DDS4CCM_stub
   libs  += DDS4CCM_stub
   includes += $(CIAO_ROOT)/connectors

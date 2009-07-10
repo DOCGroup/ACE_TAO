@@ -30,6 +30,7 @@
 
 #include "Hello_Sender_exec.h"
 #include "ciao/CIAO_common.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Hello_DDS_Sender_Impl
 {
@@ -75,7 +76,14 @@ namespace CIAO_Hello_DDS_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    /* Your code here. */
+    ::CCM_DDS::string_Writer_var writer = 
+      this->context_->get_connection_push_data_data ();
+    
+    for (size_t i = 0; i < 10; ++i)
+      {
+        ACE_OS::sleep (2);
+        writer->write ("Hi Johnny! I'm a CCM Component talking over DDS!\n");
+      }
   }
   
   void
