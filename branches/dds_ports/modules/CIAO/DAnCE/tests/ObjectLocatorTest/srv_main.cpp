@@ -5,6 +5,7 @@
 #include "DummyImpl.h"
 #include "RegistrationPath.h"
 #include "DAnCE/Logger/Log_Macros.h"
+#include "DAnCE/RedirectionService/CCMObjectLocator.h"
 
 using namespace ObjectLocatorTest;
 
