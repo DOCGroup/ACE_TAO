@@ -22,6 +22,7 @@
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
 #include "ace/Vector_T.h"
+#include "ace/Tokenizer_T.h"
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS > 0x600) && defined (__RTP__)
 # include <rtpLib.h>

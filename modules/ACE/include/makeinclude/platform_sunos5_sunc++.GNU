@@ -42,7 +42,7 @@
 
 compat4 ?= 0
 debug ?= 1
-distrib ?= 0
+distrib ?= 1
 stdcpplib ?= 1
 threads ?= 1
 versioned_so ?= 1
@@ -107,7 +107,7 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
   ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
       inline = 0
   else
-    ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
+    ifeq (C++ 5.1 ,$(findstring C++ 5.1 ,$(CC_VERSION)))
       inline = 0
     else # ! 5.1
       inline ?= 1
@@ -159,9 +159,14 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
               CFLAGS += -m64
               LDFLAGS += -m64
             else
-              CFLAGS += -xarch=v9
-              LDFLAGS += -xarch=v9
-            endif
+              ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
+                CFLAGS += -m64
+                LDFLAGS += -m64
+              else
+                CFLAGS += -xarch=v9
+                LDFLAGS += -xarch=v9
+              endif # C++ 5.10
+            endif # C++ 5.9
           endif # C++ 5.8
         endif # C++ 5.7
       endif # buildbits

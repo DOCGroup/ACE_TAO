@@ -133,6 +133,7 @@
 
 #define ACE_LACKS_ISBLANK
 #define ACE_LACKS_ISWBLANK
+#define ACE_LACKS_CORRECT_ISWPRINT_TAB
 #define ACE_ISCTYPE_EQUIVALENT ::_isctype
 
 // Turn off warnings for /W4

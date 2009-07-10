@@ -64,22 +64,22 @@ ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   CIAO_ROOT:=$(subst \,/,$(CIAO_ROOT))
   HOST_ROOT:=$(subst \,/,$(HOST_ROOT))
   override RM=rm -f
+  HOST_EXE_EXT = .exe
 endif # x86-win32
 
 ifneq (,$(HOST_ROOT))
 TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
-ifeq ("$(WIND_HOST_TYPE)","x86-win32")
-  TAO_IDL = $(HOST_ROOT)/bin/tao_idl.exe
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
-  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc.exe
-else
-  TAO_IDL = $(HOST_ROOT)/bin/tao_idl
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
-  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc
-endif
+TAO_IDL = $(HOST_ROOT)/bin/tao_idl$(HOST_EXE_EXT)
+TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2$(HOST_EXE_EXT)
+CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc$(HOST_EXE_EXT)
 TAO_IDL_DEP = $(TAO_IDL)
 TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
 CIDLC_DEP = $(CIDLC)
+else
+# Append the HOST_EXE_EXT if it's not already there
+TAO_IDL_DEP = $(TAO_IDL:$(HOST_EXE_EXT)=)$(HOST_EXE_EXT)
+TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2:$(HOST_EXE_EXT)=)$(HOST_EXE_EXT)
+CIDLC_DEP = $(CIDLC:$(HOST_EXE_EXT)=)$(HOST_EXE_EXT)
 endif
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
@@ -224,6 +224,7 @@ ifeq ("$(TOOL_FAMILY)","gnu")
   ifeq ($(rtp),1)
     PIC = -fpic
     SOFLAGS += -fpic
+    LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
   endif
   SOFLAGS += -shared
   LDFLAGS += -non-static

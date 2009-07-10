@@ -3,12 +3,23 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . RPM packaging as part of the release process by the doc_group (Remedy and user community)
 
+USER VISIBLE CHANGES BETWEEN ACE-5.7.1 and ACE-5.7.1
+====================================================
+
+. Added support for Sun Studio 12 Update Pack 1
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.9 and ACE-5.7.0
 ====================================================
 
 . Added support for the VxWorks vxAtomicLib which is available with VxWorks 6.6
   and newer. If you don't want to use this library undef ACE_HAS_VXATOMICLIB
   in your config.h file
+
+. Added support for C++ Builder 2009 Update 3
+
+. Added support for ACE/TAO using the CEGCC project
+
+. Added support for upcoming Fedora 11 and OpenSuSE Factory
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.8 and ACE-5.6.9
 ====================================================

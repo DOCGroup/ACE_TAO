@@ -74,38 +74,6 @@ ACE_OS::ace_flock_t::dump (void) const
 
 /*****************************************************************************/
 
-#if defined (ACE_USES_WCHAR)
-void ACE_OS::checkUnicodeFormat (FILE* fp)
-{
-  if (fp != 0)
-    {
-      // Due to the ACE_TCHAR definition, all default input files, such as
-      // svc.conf, have to be in Unicode format (small endian) on WinCE
-      // because ACE has all 'char' converted into ACE_TCHAR.
-      // However, for TAO, ASCII files, such as IOR file, can still be read
-      // and be written without any error since given buffers are all in 'char'
-      // type instead of ACE_TCHAR.  Therefore, it is user's reponsibility to
-      // select correct buffer type.
-
-      // At this point, check if the file is Unicode or not.
-      ACE_UINT16 first_two_bytes = 0;
-      size_t const numRead =
-        ACE_OS::fread(&first_two_bytes, sizeof (first_two_bytes), 1, fp);
-
-      if (numRead <= 1)
-        {
-          if ((first_two_bytes != 0xFFFE) && // not a small endian Unicode file
-              (first_two_bytes != 0xFEFF))   // not a big endian Unicode file
-            {
-              // set file pointer back to the beginning
-              ACE_OS::fseek(fp, 0, SEEK_SET);
-            }
-        }
-      // if it is a Unicode file, file pointer will be right next to the first
-      // two-bytes
-    }
-}
-#endif  // ACE_USES_WCHAR
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 namespace
@@ -193,9 +161,6 @@ ACE_OS::fopen (const char *filename,
 #   endif /* defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {
-#   if defined (ACE_USES_WCHAR)
-            checkUnicodeFormat(fp);
-#   endif  // ACE_USES_WCHAR
             return fp;
           }
           ::_close (fd);
@@ -251,9 +216,6 @@ ACE_OS::fopen (const wchar_t *filename,
 #   endif /* defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {
-#   if defined (ACE_USES_WCHAR)
-            checkUnicodeFormat(fp);
-#   endif  // ACE_USES_WCHAR
             return fp;
           }
           ::_close (fd);

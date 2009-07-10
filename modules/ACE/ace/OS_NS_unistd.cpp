@@ -136,7 +136,8 @@ ACE_OS::argv_to_string (int argc,
                   ++quotes;
             }
           argv_p[i] =
-            (ACE_TCHAR *) ACE_OS::malloc (ACE_OS::strlen (temp) * sizeof (ACE_TCHAR) + quotes + 3);
+            (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (temp) + quotes + 3)
+                                          * sizeof (ACE_TCHAR));
           if (argv_p[i] == 0)
             {
               ACE_OS::free (argv_p);

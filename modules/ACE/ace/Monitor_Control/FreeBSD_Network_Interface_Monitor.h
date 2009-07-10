@@ -2,16 +2,16 @@
 
 //=============================================================================
 /**
- * @file BSD_Network_Interface_Monitor.h
+ * @file FreeBSD_Network_Interface_Monitor.h
  *
  * $Id$
  *
- * @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ * @author Boyan Kasarov
  */
 //=============================================================================
 
-#ifndef BSD_NETWORK_INTERFACE_MONITOR_H
-#define BSD_NETWORK_INTERFACE_MONITOR_H
+#ifndef FREEBSD_NETWORK_INTERFACE_MONITOR_H
+#define FREEBSD_NETWORK_INTERFACE_MONITOR_H
 
 #include /**/ "ace/pre.h"
 
@@ -23,7 +23,7 @@
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
 
-#if defined (__NetBSD__) || defined (__OpenBSD__)
+#if defined (__FreeBSD__)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,15 +32,15 @@ namespace ACE
   namespace Monitor_Control
   {
     /**
-     * @class BSD_Network_Interface_Monitor
+     * @class FreeBSD_Network_Interface_Monitor
      *
      * @brief Mixin class for network interface monitors compiled on
-     *        xxxBSD machines.
+     *        FreeBSD machines.
      */
-    class MONITOR_CONTROL_Export BSD_Network_Interface_Monitor
+    class MONITOR_CONTROL_Export FreeBSD_Network_Interface_Monitor
     {
     protected:
-      BSD_Network_Interface_Monitor (const ACE_TCHAR *lookup_str);
+      FreeBSD_Network_Interface_Monitor (const ACE_TCHAR *lookup_str);
 
       /// Platform-specific implementation.
       void update_i (void);
@@ -50,7 +50,7 @@ namespace ACE
 
     protected:
       ACE_UINT64 value_;
-      
+
     private:
       void init (void);
       void fetch (ACE_UINT64& value) const;
@@ -63,8 +63,9 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (__NetBSD__) || defined (__OpenBSD__) */
+#endif /* defined (__FreeBSD__) */
 
 #include /**/ "ace/post.h"
 
-#endif // BSD_NETWORK_INTERFACE_MONITOR_H
+#endif // FREEBSD_NETWORK_INTERFACE_MONITOR_H
+
