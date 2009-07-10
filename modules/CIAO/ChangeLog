@@ -1,3 +1,10 @@
+Fri Jul 10 17:12:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ChangeLog:
+        * ChangeLog-dds4ccm:
+
+          Split out dds4ccm connector entries. 
+        
 Fri Jul 10 07:17:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/DataType_Handler.cpp
@@ -140,14 +147,6 @@ Wed Jul  8 18:51:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * docs/tutorials/Quoter/Simple/03.html:
           Updated picl_to_idl command line parameters
 
-Wed Jul  8 17:30:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * connectors/dds4ccm/idl/dds4ccm.mpc:
-          Added anytypecode to resolve link problems with msvc
-
-        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
-          Added include of tao sequence file to resolve link problems with mwvc
-
 Wed Jul  8 15:12:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM.mpc
@@ -173,10 +172,6 @@ Wed Jul  8 15:12:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
           they are compliant or not and which section of the OMG spec 06-04-01
           they are defined in
 
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
-          Layout
-
 Wed Jul  8 14:08:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/generate_component_mpc.pl:
@@ -191,17 +186,6 @@ Wed Jul  8 14:08:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
           Updated using the latest version of generate_component_mpc.pl.
 
-Wed Jul  8 12:12:59 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
-
-          Change project names to not clash.
-
 Wed Jul  8 11:48:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dds4ccm_skel.mpb:
@@ -209,57 +193,17 @@ Wed Jul  8 11:48:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Missing base projects.
 
-Tue Jul  7 19:14:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
-        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
-
-          Components now deploy.
-
 Tue Jul  7 18:32:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
 
           Properly init the UUID generator.
 
-Tue Jul  7 18:17:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
-
-          Added homes.
-
 Tue Jul  7 18:05:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/generate_component_mpc.pl:
 
           Further updates.
-
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.idl:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.h:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
-
-          Compile/linking problems now taken care of.
-
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.idl3:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl3:
-
-          Removed these files.
 
 Tue Jul  7 17:31:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
@@ -289,55 +233,6 @@ Tue Jul  7 15:43:57 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
           Test which apparently shows the export file not being
           generated for a LEM project.
 
-Tue Jul  7 00:49:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.idl3:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.idl:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
-
-          Added missing files.
-
-        * connectors/dds4ccm/idl/dds4ccm.mpc:
-
-          corrected spelling error.
-
-        * connectors/dds4ccm/examples/Hello/Sender/Sender_exec_export.h:
-        * connectors/dds4ccm/examples/Hello/Sender/Sender_stub_export.h:
-        * connectors/dds4ccm/examples/Hello/Sender/Sender_svnt_export.h:
-
-          Removed these files.
-
-Tue Jul  7 00:14:45 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/idl/dds4ccm_Connector_Base.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Connector_State.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Getter.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_MultiListener.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_MultiUpdater.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_MultiWriter.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_Get.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_MultiListen.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_MultiUpdate.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_MultiWrite.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_Update.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_Write.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_RawListener.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Reader.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_StateListener.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Updater.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p:
-
-          fixed malformed include guards.
-
 Tue Jul  7 00:10:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_connector_base.mpb:
@@ -345,58 +240,6 @@ Tue Jul  7 00:10:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * MPC/config/dds4ccm_base.mpb:
 
           Adding new base projects.
-
-Tue Jul  7 00:07:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3p:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl3:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.idl:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.h:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
-        * connectors/dds4ccm/examples/Hello/Sender/Sender_exec_export.h:
-        * connectors/dds4ccm/examples/Hello/Sender/Sender_stub_export.h:
-        * connectors/dds4ccm/examples/Hello/Sender/Sender_svnt_export.h:
-
-          Example now compiles, but there is no business logic yet.
-          There are still missing symbols that I need to ferret out.
-
-        * connectors/dds4ccm/idl/dds4ccm.mpc:
-        * connectors/dds4ccm/idl/dds4ccm_Base.idl3:
-        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
-        * connectors/dds4ccm/idl/dds4ccm_ListenerControl.idl3:
-        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3:
-        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
-
-          Malformed include guards, and small updates to go with standard.
-
-        * connectors/dds4ccm/examples/Hello/Hello_Base:
-        * connectors/dds4ccm/examples/Hello/Hello_Base.idl3:
-        * connectors/dds4ccm/examples/Hello/Hello_Base.idl3p:
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.mpc:
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base_skel_export.h:
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base_stub_export.h:
-        * connectors/dds4ccm/examples/Hello/Hello_Receiver.idl3:
-        * connectors/dds4ccm/examples/Hello/Hello_Receiver.idl3p:
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.idl:
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.mpc:
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h:
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.cpp:
-        * connectors/dds4ccm/idl/dds4ccm_ListnerControl.idl3:
-
-          Removed these files.
 
 Mon Jul  6 19:47:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
@@ -452,9 +295,6 @@ Fri Jul  3 01:13:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 Thu Jul  2 01:47:53 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_component_mpc.pl
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.mpc
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc
         * DAnCE/tests/CIAO/Components/ProcessColocation.mpc
         * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc
         * DAnCE/tests/CIAO/Components/SimpleConsumer.mpc
@@ -556,47 +396,6 @@ Tue Jun 30 21:32:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/04.html:
           Fixed typo
-
-Tue Jun 30 19:11:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/idl/dds4ccm.mpc:
-        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
-
-          Added last remanining non-idl3p dds4ccm item into the mpc file.
-
-        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3p:
-
-          Removed this file.
-
-Tue Jun 30 17:49:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/impl:
-        * connectors/dds4ccm/impl/ndds:
-        * connectors/dds4ccm/impl/ndds/ListnerControl.h:
-        * connectors/dds4ccm/impl/ndds/ListnerControl.cpp:
-        * connectors/dds4ccm/impl/ndds/PortStatusListener.h:
-        * connectors/dds4ccm/impl/ndds/PortStatusListener.cpp:
-        * connectors/dds4ccm/impl/ndds/RawListener.h:
-        * connectors/dds4ccm/impl/ndds/RawListener.cpp:
-        * connectors/dds4ccm/impl/ndds/Reader.h:
-        * connectors/dds4ccm/impl/ndds/Reader.cpp:
-        * connectors/dds4ccm/impl/ndds/Writer.h:
-        * connectors/dds4ccm/impl/ndds/Writer.cpp:
-
-          implementation stubs.
-
-Tue Jun 30 17:39:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/idl/dds4ccm.mpc:
-        * connectors/dds4ccm/idl/dds4ccm_ListnerControl.idl3:
-        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3:
-
-          Generate/compile idl necessary for hello example.
-
-        * connectors/dds4ccm/idl/dds4ccm_ListnerControl.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3p:
-
-          Removed these files.
 
 Tue Jun 30 17:19:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -823,10 +622,6 @@ Mon Jun 22 09:22:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
           Partly updated for CIDLC removal
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.mpc
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.mpc
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc
         * DAnCE/TargetManager/TargetManager.mpc
         * DAnCE/TargetManager/TM_Client.mpc
         * DAnCE/tests/CIAO/Components/ProcessColocation.mpc
@@ -921,11 +716,6 @@ Fri Jun 19 19:40:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/IDL_Test/Keywords/Keyword_Clash_svnt_export.h:
 
           Removed export header files, they're now generated.
-
-Fri Jun 19 18:15:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p:
-          Corrected this connector based on OMG issue 13953
 
 Fri Jun 19 18:03:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1037,7 +827,6 @@ Thu Jun 18 13:54:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
 Thu Jun 18 13:37:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
         * examples/BasicSP/BasicSP.mpc
         * performance-tests/Protocols/Receiver/Receiver.mpc
         * performance-tests/Protocols/Sender/Sender_exec.h
@@ -1045,7 +834,6 @@ Thu Jun 18 13:37:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 18 13:34:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h
         * examples/BasicSP/EC/EC_exec.h
         * examples/Display/GPS/GPS_exec.h
         * examples/Display/NavDisplay/NavDisplay_exec.h
@@ -1055,7 +843,6 @@ Thu Jun 18 13:34:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 18 13:17:02 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h
         * examples/BasicSP/BMClosedED/BMClosedED.mpc
         * examples/BasicSP/BMDisplay/BMDisplay_exec.h
         * examples/Display/GPS/GPS_exec.h
@@ -1083,7 +870,6 @@ Thu Jun 18 13:02:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
 Thu Jun 18 13:00:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
         * examples/BasicSP/BasicSP.mpc
         * examples/BasicSP/EC/EC_exec.h
         * examples/Display/GPS/GPS_exec.h
@@ -1117,21 +903,6 @@ Thu Jun 18 10:24:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
           Naming convention of namespace is different now since CIDL
           compiler is removed.
 
-Thu Jun 18 09:32:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.idl
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base.mpc
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base_skel_export.h
-        * connectors/dds4ccm/examples/Hello/Hello_Base/Hello_Base_stub_export.h
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.idl
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver.mpc
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.cpp
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec.h
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_exec_export.h
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_stub_export.h
-        * connectors/dds4ccm/examples/Hello/Receiver/Receiver_svnt_export.h
-          Put these under version control. Copy of regular hello world
-
 Thu Jun 18 06:48:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/03.html:
@@ -1163,8 +934,6 @@ Wed Jun 17 19:37:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
 Wed Jun 17 18:07:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.cidl:
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.cidl:
         * docs/tutorials/Quoter/Simple/Broker/StockBroker.cidl:
         * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.cidl:
         * examples/BasicSP/BMClosedED/BMClosedED.cidl:
@@ -1206,8 +975,6 @@ Wed Jun 17 18:04:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
 Wed Jun 17 10:07:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc
         * DAnCE/tests/CIAO/Components/ProcessColocation.mpc
         * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc
         * DAnCE/tests/CIAO/Components/SimpleConsumer.mpc
@@ -1693,14 +1460,6 @@ Mon Jun  8 09:12:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * examples/Hello/step-by-step.html:
           Adapted to the current status.
 
-Fri Jun  5 20:10:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors/dds4ccm/examples/Hello/Hello_Base.idl3:
-        * connectors/dds4ccm/examples/Hello/Hello_Receiver.idl3:
-        * connectors/dds4ccm/examples/Hello/Hello_Sender.idl3:
-
-          Finished the by-hand translation to idl3.
-
 Fri Jun  5 19:48:15 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Logger_Service.cpp:
@@ -1734,52 +1493,6 @@ Tue Jun  2 03:43:30 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * examples/Hello/descriptors/run_test.pl
 
           Added logging regarding processes and commandline parameters
-
-Tue Jun  2 03:43:30 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * connectors:
-        * connectors/dds4ccm:
-        * connectors/dds4ccm/example:
-        * connectors/dds4ccm/example/Hello:
-        * connectors/dds4ccm/example/Hello/Hello_Base.idl3:
-        * connectors/dds4ccm/example/Hello/Hello_Base.idl3p:
-        * connectors/dds4ccm/example/Hello/Hello_Receiver.idl3:
-        * connectors/dds4ccm/example/Hello/Hello_Receiver.idl3p:
-        * connectors/dds4ccm/example/Hello/Hello_Sender.idl3:
-        * connectors/dds4ccm/example/Hello/Hello_Sender.idl3p:
-
-          Outline of a driving use case for phase 1.  Note that the
-          idl3p files are the IDL3+ for the components/connector, and the
-          idl3 files are my best guess at the implied IDL3 mapping.
-
-        * connectors/dds4ccm/idl:
-        * connectors/dds4ccm/idl/dds4ccm_Base.idl3:
-        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Connector_Base.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Connector_State.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Getter.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_ListnerControl.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_MultiListener.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_MultiUpdater.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_MultiWriter.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_Get.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_MultiListen.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_MultiUpdate.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_MultiWrite.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_Update.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Port_Write.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_RawListener.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Reader.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_StateListener.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Updater.idl3p:
-        * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p:
-
-          DDS4CCM IDL.
 
 Local Variables:
 mode: change-log
