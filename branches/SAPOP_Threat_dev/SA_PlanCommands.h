@@ -371,6 +371,12 @@ namespace SA_POP {
     std::map <TaskInstID, TaskInstSet> afters;
     std::map <TaskInstID, TaskInstSet> simuls;
     std::map <TaskInstID, TaskInstSet> unrankeds;
+
+    std::map <TaskInstID, TaskInstSet> befores_after_ex;
+    std::map <TaskInstID, TaskInstSet> afters_after_ex;
+    std::map <TaskInstID, TaskInstSet> simuls_after_ex;
+    std::map <TaskInstID, TaskInstSet> unrankeds_after_ex;
+
 //	PrecedenceGraph precedence_graph_;
 
   };

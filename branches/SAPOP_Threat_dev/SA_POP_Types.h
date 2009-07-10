@@ -181,13 +181,13 @@ namespace SA_POP {
 	  TaskInstID last_instance;
 	
 	  void note_instance(TaskInstID instance){
-		  if (last_instance > instance){
+		  if (last_instance < instance){
 			this->last_instance = instance;
 		  }
 	  }
 
 	 bool operator<(const SortTaskByTime & s) {
-		return this->last_instance < s.last_instance;
+		return this->last_instance > s.last_instance;
 	}
 	 bool operator!=(const SortTaskByTime & s) {
 		return this->last_instance != s.last_instance;

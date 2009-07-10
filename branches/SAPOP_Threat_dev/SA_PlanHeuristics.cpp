@@ -71,13 +71,18 @@ SA_TaskStrategy::~SA_TaskStrategy (void)
 
 TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 {
-  TaskSet tasks = this->planner_->get_satisfying_tasks (open_cond);
 
-  /*
-  if(this->planner_->init_added){
-    tasks.erase(20);
-  }
-  */
+  TaskSet tasks;
+
+ // if(this->planner_->get_working_plan()->get_all_insts().size() > 8){
+		
+//	  TaskChoiceList s;
+	//  s.clear();
+//	  return s;
+ // }
+
+  tasks = this->planner_->get_satisfying_tasks (open_cond);
+
     
   // Add tasks to map with EU (to sort).
   std::multimap<EUCalc, TaskID> task_map;
@@ -118,6 +123,10 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 		task_choice.task_inst_id = -2;
 
 		task_list.push_back(task_choice);
+
+
+
+
 	  }else{
 
 		  SortTaskByTime to_sort;
@@ -136,7 +145,9 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 			to_sort.note_instance(it->second);
 		  }
 	
-		  tasks_with_existing_instances.push_back(to_sort);
+		  if(!(iter->second == 20 && this->planner_->init_added)){
+			tasks_with_existing_instances.push_back(to_sort);
+		 }
 	  
 	  }
   }
@@ -145,32 +156,14 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 
   for(std::vector<SortTaskByTime>::iterator it = tasks_with_existing_instances.begin(); it != tasks_with_existing_instances.end(); it++){
 		
-
-	  if(it->task_id== 20 && this->planner_->init_added){
-			continue;
-	  }
+		
 
 		TaskChoice task_choice;
 		task_choice.choice = NEW_INST;
 		task_choice.task_id = it->task_id;
 		task_choice.task_inst_id = -2;
-
-  }
-
-  	  /*
-
-	  for(std::multimap<TaskID, TaskInstID>::iterator it = tasks_to_insts.lower_bound(iter->second); it != tasks_to_insts.upper_bound(iter->second);
-		  it++){
-
-	    TaskChoice task_choice;
-		task_choice.choice = REUSE_INST;
-		task_choice.task_id = it->first;
-		task_choice.task_inst_id = it->second;
-
 		task_list.push_back(task_choice);
-	  }
-	  */
-
+  }
 
 
   return task_list;

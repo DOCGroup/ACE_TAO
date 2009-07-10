@@ -647,6 +647,8 @@ AdjustMaxTimesCmd *SA_WorkingPlan::get_AdjustMaxTimesCmd (void)
 void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 {
 
+//	if(cmd->id_.step == 13 && cmd->id_.decision_pt == 1 && cmd->id_.seq_num == 1 && cmd->task_choice == 20)
+
   TaskChoice task_choice = cmd->tasks_.front();
   TaskID task = task_choice.task_id;
   TaskInstID task_inst;
@@ -656,8 +658,8 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 
   if(task_choice.choice == REUSE_INST){
 
-		task_inst = task_choice.task_inst_id;
-			this->reused_insts_.insert(task_inst);
+	task_inst = task_choice.task_inst_id;
+	this->reused_insts_.insert(task_inst);
 	cmd->tasks_.pop_front();
   }
   else if(task_choice.choice == NEW_INST){
@@ -667,8 +669,9 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
       throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
     }
 
-	if(task == 20)
+	if(task == 20){
 		this->planner_->init_added =  true;
+	}
   
     task_inst = this->get_next_inst_id ();
     // Add task instance.
@@ -678,53 +681,6 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
   }
 
 
-/*
-
-	// Get task ID, condition, and instance ID.
-  TaskID task = cmd->tasks_.front ();
-
-  
-
-  Condition cond = cmd->cond_;
-  TaskInstID task_inst;
-  //bool hadInsts = false;
-  
-  // If trying a new task (i.e., not still trying task instances for same task), get existing task instances for that task from working plan. 
-  if(cmd->last_task_ != task)
-  {
-	  // Get existing task instances for current task.
-    for(InstToTaskMap::iterator iter = this->task_insts_.begin(); iter!=this->task_insts_.end();iter++)
-      if(iter->second==cmd->tasks_.front()) 
-      {
-        //hadInsts = true;       
-        cmd->used_task_insts_.insert(iter->first);
-      }
-  }
-
-
-  // If there are no/no-more existing task instances to try, create new task instance.
-  if(cmd->used_task_insts_.empty()) 
-  {
-    if(task == 20 && this->planner_->init_added)
-    {
-      throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
-    }
-
-	  if(task == 20)
-		  this->planner_->init_added =  true;
-    
-    
-  }
-  else
-  {
-		  // Reuse the task instance
-		task_inst = *cmd->used_task_insts_.begin();
-			this->reused_insts_.insert(task_inst);
-
-		// NOTE: task instance removed from existing task instances to try in undo.
-	}
-
-*/
 
 	  std::ostringstream debug_text;
 	  debug_text << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding task (" << task << ") instance (" << task_inst << ") for condition (" << cond.id << ").";
@@ -768,81 +724,22 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 	cmd->last_task_inst_ = task_inst;
 };
 
-//void note_ordering_link(TaskInstID first, TaskInstID second){
-
-//	std::pair<CountedSchedulingLinks::iterator, CountedSchedulingLinks::iterator>
-//		find_pair = ordering_links.equal_range(first);
-	
-//	CountedSchedulingLinks::iterator find_it;
-
-//	for(find_it = find_pair.first; find_it != find_pair.second; find_it++){
-//		if(find_it->second.first == second){
-///			break;
-//		}
-//	}
-
-//	if(find_it == find_pair.second){
-//		ordering_links.insert(std::pair<TaskInstID, std::pair<TaskInstID, int> >(first, std::pair<TaskInstID, int>(second, 1)));
-//		reverse_ordering_links.insert(std::pair<TaskInstID, std::pair<TaskInstID, int> >(second, std::pair<TaskInstID, int>(first, 1)));
-//	}else{
-		
-	//	int prev_count = find_it->second.second;
-
-	//	ordering_links.insert(std::pair<TaskInstID, std::pair<TaskInstID, int> >(first, std::pair<TaskInstID, int>(second, prev_count+1)));
-	//	reverse_ordering_links.insert(std::pair<TaskInstID, std::pair<TaskInstID, int> >(second, std::pair<TaskInstID, int>(first, prev_count+1)));
-
-//	}
-
-//}
-
-//void decrement_ordering_link(TaskInstID first, TaskInstID second){
-
-//	std::pair<CountedSchedulingLinks::iterator, CountedSchedulingLinks::iterator>
-//		find_pair = ordering_links.equal_range(first);
-
-//	CountedSchedulingLinks::iterator find_it;
-
-//	for(find_it = find_pair.
-
-//}
-
 
 void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 {
+	
 
-	if(cmd->last_task_ == 20)
-	{
-		planner_->init_added = false;
-	}
 	if(cmd->last_task_choice_.choice == NEW_INST){
+		if(cmd->last_task_ == 20){
+			planner_->init_added = false;
+		}
+
 		this->task_insts_.erase (this->task_insts_.find(cmd->last_task_inst_));  
 	 }else{
 		 this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
 	 }
 
-/*
-  if(cmd->last_task_ == 20)
-  {
-	 planner_->init_added = false;
-  }
 
-  if(cmd->used_task_insts_.empty())
-  {
-    // Remove task instance.
-    this->task_insts_.erase (this->task_insts_.find(cmd->last_task_inst_));  
-  }
-  else {
-	// Remove the task instance from the set of reusable task instances
-	  cmd->used_task_insts_.erase(cmd->used_task_insts_.begin());
-    this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
-  }
-*/
-
-
-
-
-
-  // Remove causal links.
   for (SA_WorkingPlan::CondToCLinksMap::iterator cl_iter =
     this->causal_links_.lower_bound (cmd->cond_);
     cl_iter != this->causal_links_.upper_bound (cmd->cond_);)
@@ -894,6 +791,9 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 // task instance in the plan.
 bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
 {
+
+
+
 	//cmd->precedence_graph_ = *this->precedence_graph_;
 
   PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
@@ -926,42 +826,17 @@ bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
     return false;
   }
 
-/*
-
-  std::map<TaskInstID, bool> un_visited_map;
-  std::map<TaskInstID, bool> visited_map;
-  std::stack<TaskInstID> s;
-
-  for(InstToTaskMap::iterator it = this->task_insts_.begin(); it != this->task_insts_.end(); it++){
-    un_visited_map.insert(std::pair<TaskInstID, bool>(it->first, true));
-
-  }
-
-  int total_num = un_visited_map.size();
-  while(!(s.size()== total_num)){
-
-    std::map<TaskInstID, bool>::iterator some_it = un_visited_map.begin();
-    TaskInstID next = some_it->first;
-    dfs_aux(next, s, visited_map, un_visited_map);
-  }
-
-  visited_map.clear();
-
   cmd->got_to_scheduling = true;
+  
+  bool toReturn	= this->init_prec_insert(cmd->task_inst_,cmd);
 
-  while(!s.empty()){
-    TaskInstID next = s.top();
-    s.pop();
+  cmd->befores_after_ex = *befores;
+  cmd->afters_after_ex = *afters;
+  cmd->simuls_after_ex = *simuls;
+  cmd->unrankeds_after_ex = *unrankeds;
 
-    if(!dfs_aux2(next, visited_map)){
-      cmd->got_to_scheduling = false;     
-      return false;
-    }
-  }
-*/
+  return toReturn;
 
-  cmd->got_to_scheduling = true;
-  return this->init_prec_insert(cmd->task_inst_,cmd);
 };
 
 
@@ -1012,7 +887,24 @@ bool SA_WorkingPlan::is_cycle_in_ordering(){
 void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
 {
 	// Undo the time window adjustments and the precedence graph updations.
+
+  PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
+  PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
+  PrecedenceSet* simuls = &this->precedence_graph_.find(SIMUL)->second;
+  PrecedenceSet* unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+	
+	
   if(cmd->got_to_scheduling){
+
+	  if(cmd->afters_after_ex != *afters ||
+		  cmd->befores_after_ex != *befores ||
+		  cmd->simuls_after_ex != *simuls ||
+		  cmd->unrankeds_after_ex != *unrankeds)
+		 {
+		bool hi = true;
+	  }  
+
+
     this->undo(&cmd->max_adj_cmd);
     this->undo(&cmd->min_adj_cmd);
 	  this->prec_erase(cmd->task_inst_,cmd);
@@ -1028,10 +920,7 @@ void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
     this->task_impls_.erase (cmd->task_inst_);
   }
 
-  PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
-  PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
-  PrecedenceSet* simuls = &this->precedence_graph_.find(SIMUL)->second;
-  PrecedenceSet* unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+
 
   if(cmd->befores != *befores ||
 	  cmd->afters != *afters ||
@@ -1052,16 +941,32 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 	std::ostringstream debug_text;
 
 
-	TaskInstID first_task_inst = cmd->first;
-	TaskInstID second_task_inst = cmd->second;
-	Condition condition = cmd->condition;
+  TaskInstID first_task_inst = cmd->first;
+  TaskInstID second_task_inst = cmd->second;
+  Condition condition = cmd->condition;
 
 
   this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(first_task_inst, second_task_inst));
   this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(second_task_inst, first_task_inst));
 
 
+  PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
+  PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
+  PrecedenceSet* simuls = &this->precedence_graph_.find(SIMUL)->second;
+  PrecedenceSet* unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
 
+  cmd->befores = *befores;
+  cmd->afters = *afters;
+  cmd->simuls = *simuls;
+  cmd->unrankeds = *unrankeds;
+
+//  if(cmd->first == 11 && cmd->second == 12){
+//	bool hi = false;
+ // }
+
+  if(this->task_insts_.size() > 9){
+	 return false;
+  }
 
   if(task_insts_.find(cmd->second)->second == 20){
 
@@ -1078,13 +983,14 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
     SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
 	debug_text.str("");
 
+	if(cmd->second == 12){
+		bool a = true;
+	}
+
 	return false;
   }
 
-  PrecedenceSet* befores = &this->precedence_graph_.find(BEFORE)->second;
-  PrecedenceSet* afters = &this->precedence_graph_.find(AFTER)->second;
-  PrecedenceSet* simuls = &this->precedence_graph_.find(SIMUL)->second;
-  PrecedenceSet* unrankeds = &this->precedence_graph_.find(UNRANKED)->second;
+
 
   TaskInstSet *before_A = &befores->find(cmd->first)->second;
   TaskInstSet *after_A = &afters->find(cmd->first)->second;
@@ -1095,6 +1001,9 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
   TaskInstSet *after_B = &afters->find(cmd->second)->second;
   TaskInstSet *simul_B = &simuls->find(cmd->second)->second;
   TaskInstSet *unranked_B = &unrankeds->find(cmd->second)->second;
+
+
+
 
 
   if(before_B->find(cmd->first) != before_B->end()){
@@ -1123,7 +1032,7 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 
 //	  loop_detected = true;
 
-	cmd->got_to_change_precedences = false;
+//	cmd->got_to_change_precedences = false;
 	return false;
 
   }else{
@@ -1135,10 +1044,7 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 
   cmd->got_to_change_precedences = true;
 
-  cmd->befores = *befores;
-  cmd->afters = *afters;
-  cmd->simuls = *simuls;
-  cmd->unrankeds = *unrankeds;
+
 
   TaskInstSet tmp;
 
@@ -1149,16 +1055,20 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 
   for(TaskInstSet::iterator it = before_A->begin(); it != before_A->end(); it++){
   
-	  /*
-	if(after_B->find(*it) != after_B->end()){
-		loop_detected = true;
-	}
-	*/
 	before_B->insert(*it);
     unranked_B->erase(*it);
 
     afters->find(*it)->second.insert(cmd->second);
     unrankeds->find(*it)->second.erase(cmd->second);
+
+
+	for(TaskInstSet::iterator it2 = after_B->begin(); it2 != after_B->end(); it2++){
+		befores->find(*it2)->second.insert(*it);
+		unrankeds->find(*it2)->second.erase(*it);
+
+		afters->find(*it)->second.insert(*it2);
+		unrankeds->find(*it)->second.erase(*it2);
+	}
   }
 
   after_A->insert(cmd->second);
@@ -1166,39 +1076,23 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 
   for(TaskInstSet::iterator it = after_B->begin(); it != after_B->end(); it++){
 
-	  /*
-	if(before_A->find(*it) != before_A->end()){
-		loop_detected = true;
-	}
-	*/
 	after_A->insert(*it);
     unranked_A->erase(*it);
 
     befores->find(*it)->second.insert(cmd->first);
     unrankeds->find(*it)->second.erase(cmd->first);
-  }
 
- // if(loop_detected){
+	/*
+	for(TaskInstSet::iterator it2 = before_A->begin(); it2 != before_A->end(); it2++){
+		afters->find(*it2)->second.insert(*it);
+		unrankeds->find(*it2)->second.erase(*it);
 
- //   debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule task inst"<<cmd->first<<" before task inst"<<cmd->second<<std::endl;
- //   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
-  //  debug_text.str("");
-
-/*
-	if(!this->is_cycle_in_ordering()){
-		bool this_means_ben_failed = true;
+		befores->find(*it)->second.insert(*it2);
+		unrankeds->find(*it)->second.erase(*it2);
 	}
-*/
-
-  //  return false;
- // }
-
-  /*
-  if(is_cycle_in_ordering()){
-	bool this_means_ben_failed = true;
+	*/	
   }
 
-  */
 
   debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd): Now scheduling task "<<cmd->first<<" before "<<cmd->second<<std::endl;
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
@@ -1260,7 +1154,17 @@ void SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd)
   std::ostringstream debug_text;
 
   debug_text << "SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd): Undoing scheduling task "<<cmd->first<<" before "<<cmd->second<<std::endl;
-  
+  if(!cmd->got_to_change_precedences){
+	  debug_text <<"		no changes to the precedence graph to undo"<<std::endl;
+
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.str("");
+
+		print_precedence_graph("SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd)");
+  }
+  // if(cmd->first == 11 && cmd->second == 12){
+//	bool hi = false;
+//  }
 
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
   debug_text.str("");
@@ -1330,31 +1234,6 @@ void SA_WorkingPlan::undo (SA_ResolveCLThreatCmd * cmd)
   }
 
   this->reverse_ordering_links.erase(it);
-
-
-  /*
-  
-  for(std::list<SA_ResolveCLThreatCmd*>::reverse_iterator iter=cmd->cmds_.rbegin();iter!=cmd->cmds_.rend();iter++)
-		this->undo(*iter);
-	
-	TaskInstID first_task_inst = cmd->first;
-	TaskInstID second_task_inst = cmd->second;
-
-	PrecedenceSet *before = &this->precedence_graph_.find(BEFORE)->second;
-	PrecedenceSet *after = &this->precedence_graph_.find(AFTER)->second;
-	PrecedenceSet *unranked = &this->precedence_graph_.find(UNRANKED)->second;
-	
-	before->find(second_task_inst)->second.erase(before->find(second_task_inst)->second.find(first_task_inst));
-	after->find(first_task_inst)->second.erase(after->find(first_task_inst)->second.find(second_task_inst));
-	unranked->find(first_task_inst)->second.insert(second_task_inst);
-	unranked->find(second_task_inst)->second.insert(first_task_inst);
-	if(cmd->adj_max_times_cmd_ != NULL) {
-		this->undo(cmd->adj_max_times_cmd_);
-	}
-	if(cmd->adj_min_times_cmd_ != NULL)this->undo(cmd->adj_min_times_cmd_);
-
-  
-  */
   };
 
 // Execute a command to resolve a scheduling conflict (i.e.
@@ -1788,6 +1667,10 @@ void SA_WorkingPlan::remove_sched_link(TaskInstID first_task_inst, TaskInstID se
 // Update the precedence graph by inserting the task instance.
 bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd *cmd)
 {
+
+	if(cmd->get_id().step == 12 && cmd->get_id().decision_pt== 2 && cmd->get_id().seq_num == 1 && task_inst == 3)
+		bool yep = true;
+
   TaskInstSet temp;
   this->precedence_graph_.find(BEFORE)->second.insert(std::make_pair(task_inst,temp));
   this->precedence_graph_.find(AFTER)->second.insert(std::make_pair(task_inst,temp));
@@ -1879,7 +1762,7 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
   unranked = &this->precedence_graph_.find(UNRANKED)->second.find(task_inst)->second;
   simul = &this->precedence_graph_.find(SIMUL)->second.find(task_inst)->second;
   // If this task instance is not reused, insert all the task instances in it unranked set.
-  if(unranked->empty())
+  if(unranked->empty() && (this->reused_insts_.find(task_inst)== this->reused_insts_.end()))
   {
     for(PrecedenceSet::iterator iter=this->precedence_graph_.find(BEFORE)->second.begin();iter!=this->precedence_graph_.find(BEFORE)->second.end();iter++)
     {

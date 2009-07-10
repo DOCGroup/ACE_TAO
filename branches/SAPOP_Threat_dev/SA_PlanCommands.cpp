@@ -180,9 +180,13 @@ PlanCommand *SA_AddTaskCmd::clone (void)
 // Execute next option for this command.
 bool SA_AddTaskCmd::execute_next (void)
 {
+
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
 
+
   this->undo();
+
+
 
   bool isInitial = false;
 
@@ -194,7 +198,6 @@ bool SA_AddTaskCmd::execute_next (void)
     isInitial = true;
   }
   */
-
   this->working_plan_->execute (this);
   this->num_tries_++;
 
@@ -206,8 +209,6 @@ void SA_AddTaskCmd::undo (void)
 {
   if (this->last_task_ == SA_POP::NULL_TASK_ID)
     return;
-
-
 
   this->working_plan_->undo (this);
   
@@ -315,13 +316,19 @@ bool SA_AssocTaskImplCmd::execute_next (void)
 {
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
 
+  	if(get_id().step == 12 && get_id().decision_pt == 2 && get_id().seq_num == 1){
+		bool k = true;
+	}
+
   this->undo();
 
   got_to_scheduling = false;
 
+
   if (this->impls_.empty ()){
     return false;
   }
+
 
   this->num_tries_++;
   return this->working_plan_->execute (this);
@@ -711,10 +718,12 @@ PlanCommand *SA_ResolveCLThreatCmd::clone (void)
 bool SA_ResolveCLThreatCmd::execute_next (void)
 {
   bool goodOption = true;
-  got_to_change_precedences = false;
+
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
   if(choices == 0)
   {
+	got_to_change_precedences = false;
+
     //Add this next line to execute function
     this->working_plan_->add_sched_link(this->threat.threat,this->threat.clink.first);
     choices++;
@@ -735,6 +744,8 @@ bool SA_ResolveCLThreatCmd::execute_next (void)
   if(choices == 1)
   {
      this->undo();
+
+	 got_to_change_precedences = false;
 
     //Add this next line to execute function
      this->working_plan_->add_sched_link(this->threat.clink.second, this->threat.threat);
@@ -758,7 +769,6 @@ bool SA_ResolveCLThreatCmd::execute_next (void)
   }
   else
   {
- //   this->undo();
     return false;
   }
 	

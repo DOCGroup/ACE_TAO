@@ -1,3 +1,15 @@
+Fri Jul 10 22:27:30 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SA_POP_Types.h:
+        * SA_PlanCommands.h:
+        * SA_PlanCommands.cpp:
+        * SA_PlanHeuristics.cpp:
+        * SA_PlanStrategy.cpp:
+        * SA_WorkingPlan.cpp:
+
+	Iterative deeping, fix on last_task_inst_ in planstrat, fixed precedence graph inconsistencies,
+	fixed unranked bug in init prec insert, different task choice strategy.
+
 Wed Jul  8 22:17:52 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SA_POP_Types.h:
@@ -7,7 +19,7 @@ Wed Jul  8 22:17:52 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SA_WorkingPlan.h:
         * SA_WorkingPlan.cpp:
 
-	Debugging output improved.
+        Debugging output improved.
 
 Wed Jul  8 01:13:05 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
 
