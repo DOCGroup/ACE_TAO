@@ -1,7 +1,9 @@
 // $Id$
 
-#include "dds4ccm/idl/dds4ccm_Base.idl3"
+#ifndef HELLO_SENDER_BASE_IDL_
+#define HELLO_SENDER_BASE_IDL_
 
+#include "dds4ccm/idl/dds4ccm_Base.idl3"
 module CCM_DDS
 {
   interface string_Writer
@@ -12,3 +14,5 @@ module CCM_DDS
       raises (InternalError);
   };
 };
+
+#endif

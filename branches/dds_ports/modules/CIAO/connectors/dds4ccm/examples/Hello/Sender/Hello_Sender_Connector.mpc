@@ -8,9 +8,10 @@ project(DDS_Hello_Sender_Connector_idl_gen) : connectoridldefaults , example_out
               -Wb,skel_export_macro=HELLO_SENDER_CONNECTOR_SVNT_Export \
               -Wb,skel_export_include=Hello_Sender_Connector_svnt_export.h \
               -Wb,exec_export_macro=HELLO_SENDER_CONNECTOR_EXEC_Export \
-              -Wb,exec_export_include=Hello_Sender_Connector_exec_export.h
+              -Wb,exec_export_include=Hello_Sender_Connector_exec_export.h 
 
   IDL_Files {
+    idlflags -= -Glem
     Hello_Sender_Connector.idl
   }
 }
@@ -20,7 +21,7 @@ project(DDS_Hello_Sender_Connector_lem_gen) : ciaoidldefaults , example_output, 
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Sender_Connector_lem_stub_export.h \
-              -SS -Gxhst -I$(CIAO_ROOT)/connectors
+              -SS -Gxhst -I$(CIAO_ROOT)/connectors -DAVOID_E_IDL
 
   IDL_Files {
     Hello_Sender_ConnectorE.idl
@@ -75,11 +76,11 @@ project(DDS_Hello_Sender_Connector_lem_stub) : ccm_svnt , example_output, dds4cc
   }
 }
 
-project(DDS_Hello_Sender_Connector_exec) : ciao_executor , example_output, dds4ccm_base  {
-  after   += DDS_Hello_Sender_Connector_lem_stub DDS_Hello_Sender_Connector_stub
+project(DDS_Hello_Sender_Connector_exec) : ciao_executor , example_output, dds4ccm_skel, nddslib  {
+  after   += DDS_Hello_Sender_Connector_lem_stub DDS_Hello_Sender_Connector_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub  
   sharedname = DDS_Hello_Sender_Connector_exec
-  libs += DDS_Hello_Sender_Connector_stub DDS_Hello_Sender_Connector_lem_stub 
-  
+  libs += DDS_Hello_Sender_Connector_stub DDS_Hello_Sender_Connector_lem_stub CIAO_DDS4CCM_NDDS_Impl 
+  libs += DDS4CCM_lem_stub  
   dynamicflags   = HELLO_SENDER_CONNECTOR_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -100,10 +101,10 @@ project(DDS_Hello_Sender_Connector_exec) : ciao_executor , example_output, dds4c
 
 
 project(Hello_Sender_Connector_svnt) : ciao_servant , example_output, dds4ccm_skel  {
-  after      +=  DDS_Hello_Sender_Base_stub DDS_Hello_Sender_Base_skel
+  after      +=  DDS_Hello_Sender_Base_stub DDS_Hello_Sender_Base_skel DDS4CCM_lem_stub    
   sharedname  = DDS_Hello_Sender_Connector_svnt
-  libs       += DDS_Hello_Sender_Connector_stub Hello_DDS_Sender_DDS_Connector_lem_stub  DDS_Hello_Sender_Base_stub DDS_Hello_Sender_Base_skel
-  
+  libs       += DDS_Hello_Sender_Connector_stub DDS_Hello_Sender_Connector_lem_stub  DDS_Hello_Sender_Base_stub DDS_Hello_Sender_Base_skel
+  libs += DDS4CCM_lem_stub    
   dynamicflags = HELLO_SENDER_CONNECTOR_SVNT_BUILD_DLL
   
   IDL_Files {

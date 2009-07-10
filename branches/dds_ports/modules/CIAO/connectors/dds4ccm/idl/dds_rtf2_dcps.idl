@@ -1,8 +1,6 @@
 #ifndef DDS_RFT2_DCPS_IDL
 #define DDS_RFT2_DCPS_IDL
 
-#include <tao/StringSeq.pidl>
-
 #define DOMAINID_TYPE_NATIVE    long
 #define HANDLE_TYPE_NATIVE      long
 #define HANDLE_NIL_NATIVE       0
