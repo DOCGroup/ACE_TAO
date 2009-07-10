@@ -9,7 +9,7 @@
 #include "ace/Sched_Params.h"
 #include "ccm/CCM_ObjectC.h"
 
-#include "ace/OS.h"
+#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "DAnCE/Logger/Log_Macros.h"
 

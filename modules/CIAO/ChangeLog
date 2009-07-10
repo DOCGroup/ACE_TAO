@@ -1,3 +1,19 @@
+Fri Jul 10 18:02:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/Logger/File_Logger_Backend.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * DAnCE/Plan_Launcher/launcher.cpp:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+        * DAnCE/TargetManager/Target_Manager_Module.cpp:
+        * DAnCE/tests/RedirectionServiceTest/clt_main.cpp:
+          Got rid of ace/OS.h. Made these includes more specific.
+
+        * DAnCE/Logger/Logger_Service.cpp:
+          Used the default way of parsing command line arguments.
+
 Fri Jul 10 17:23:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/MPC/config/dance_targetmanager.mpb:
