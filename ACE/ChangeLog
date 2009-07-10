@@ -1,3 +1,10 @@
+Fri Jul 10 09:20:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.{h,cpp,inl}:
+          Removed workarounds for old eVC, the extern causes major
+          problems when trying to compile ACE in release mode for a
+          Windows CE x86 target
+
 Thu Jul  9 11:54:57 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/Monitor_Control/BSD_Network_Interface_Monitor.cpp:

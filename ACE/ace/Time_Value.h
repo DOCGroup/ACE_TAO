@@ -41,6 +41,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // -------------------------------------------------------------------
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 /**
  * @class ACE_Time_Value
  *
@@ -51,18 +54,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  * ACE.  These time values are typically used in conjunction with OS
  * mechanisms like <select>, <poll>, or <cond_timedwait>.
  */
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-// Something is a bit brain-damaged here and I'm not sure what... this code
-// compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
-// complains that the operators that return ACE_Time_Value are C-linkage
-// functions that can't return a C++ class. The only way I've found to
-// defeat this is to wrap the whole class in extern "C++".
-//    - Steve Huston, 23-Aug-2004
-extern "C++" {
-#endif
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Export ACE_Time_Value
 {
 public:
@@ -360,10 +351,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
 
 #if defined (__MINGW32__)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
