@@ -16,7 +16,7 @@ namespace DAnCE
   ::Deployment::NodeManager_ptr
   Node_Locator::locate_node (const ACE_TCHAR *name)
   {
-    ACE_CString ior;
+    ACE_TString ior;
 
     if (this->nodes_.find (name, ior) == 0)
       {
@@ -35,8 +35,8 @@ namespace DAnCE
 
     if (filename == 0)
       {
-        DANCE_ERROR ((LM_ERROR, DLINFO "Node_Locator::process_node_map - "
-                      "Error: Provided with nil filename\n"));
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
+                      ACE_TEXT("Error: Provided with nil filename\n")));
         return false;
       }
 
@@ -44,8 +44,8 @@ namespace DAnCE
 
     if (inf == 0)
       {
-        DANCE_ERROR ((LM_ERROR, DLINFO "Node_Locator::process_node_map - "
-                      "Fail to open node manager map data file: <%s>\n",
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
+                      ACE_TEXT("Fail to open node manager map data file: <%s>\n"),
                       filename));
         return false;
       }
@@ -69,8 +69,8 @@ namespace DAnCE
         ACE_CString ior (ior_start + 1,  ACE_OS::strlen (ior_start + 1));
         reader.alloc ()->free (string);
 
-        DANCE_DEBUG ((LM_INFO, DLINFO "Node_Locator::process_node_map - "
-                      "Storing IOR %C for destination %C\n",
+        DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
+                      ACE_TEXT("Storing IOR %C for destination %C\n"),
                       ior.c_str (), destination.c_str ()));
         this->nodes_.bind (destination, ior);
       }
@@ -83,17 +83,17 @@ namespace DAnCE
   {
     DANCE_TRACE ("Node_Locator::resolve_ior");
 
-    DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Locator::resolve_ior - "
-                  "Resolving ior %s for destination %s\n",
+    DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
+                  ACE_TEXT("Resolving ior %s for destination %s\n"),
                   ior, name));
 
     CORBA::Object_var obj = this->orb_->string_to_object (ior);
 
     if (CORBA::is_nil (obj.in ()))
       {
-        DANCE_ERROR ((LM_ERROR, DLINFO "Node_Locator::resolve_ior - "
-                      "Error:  Unable to resolve object reference for destination "
-                      "%s and ior %s\n",
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
+                      ACE_TEXT("Error:  Unable to resolve object reference for destination ")
+                      ACE_TEXT("%s and ior %s\n"),
                       name, ior));
         return false;
       }
@@ -102,9 +102,9 @@ namespace DAnCE
 
     if (CORBA::is_nil (nm.in ()))
       {
-        DANCE_ERROR ((LM_ERROR, DLINFO "Node_Locator::resolve_ior - "
-                      "Error:  Unable to narrow reference for destination "
-                      "%s and ior %s\n",
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
+                      ACE_TEXT("Error:  Unable to narrow reference for destination ")
+                      ACE_TEXT("%s and ior %s\n"),
                       name, ior));
         return false;
       }
@@ -126,8 +126,8 @@ namespace DAnCE
 
     if (CORBA::is_nil (this->nc_.in ()))
       {
-        DANCE_ERROR ((LM_ERROR, DLINFO "Node_Locator::ns_lookup - "
-                      "Nameservice lookup of %s failed because there is no naming service.\n",
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
+                      ACE_TEXT("Nameservice lookup of %s failed because there is no naming service.\n"),
                       nodename));
         return ::Deployment::NodeManager::_nil ();
       }
@@ -145,8 +145,8 @@ namespace DAnCE
 
         if (CORBA::is_nil (nm.in ()))
           {
-            DANCE_ERROR ((LM_ERROR, DLINFO "Node_Locator::ns_lookup - "
-                          "Unable to narrow provided reference for node %s\n",
+            DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
+                          ACE_TEXT("Unable to narrow provided reference for node %s\n"),
                           nodename));
             return ::Deployment::NodeManager::_nil ();
           }
@@ -155,8 +155,8 @@ namespace DAnCE
       }
     catch (const CORBA::Exception &e)
       {
-        DANCE_ERROR ((LM_ERROR, DLINFO "Node_Locator::ns_lookup - "
-                      "Caught CORBA exception while looking up name %s:%C\n",
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
+                      ACE_TEXT("Caught CORBA exception while looking up name %s:%C\n"),
                       nodename, e._info ().c_str ()));
       }
     catch (...)

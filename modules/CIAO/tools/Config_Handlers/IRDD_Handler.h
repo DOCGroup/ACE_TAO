@@ -12,8 +12,8 @@
 #define CIAO_CONFIG_HANDLERS_IRDD_Handler_H
 #include /**/ "ace/pre.h"
 
-#include "Common.h"
 #include "Config_Handlers_Export.h"
+#include "Common.h"
 #include "ace/config-lite.h"
 #include "Utils/Functors.h"
 

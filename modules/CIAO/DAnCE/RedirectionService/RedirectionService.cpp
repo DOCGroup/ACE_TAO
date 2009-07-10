@@ -22,8 +22,8 @@ RedirectionService::RedirectionService (CORBA::ORB_ptr orb,
     {
       if (CORBA::is_nil (hosting_naming))
         {
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "RedirectionService::RedirectionService - "
-                        "Name Service redirection is enabled but name context is nil.\n"));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("RedirectionService::RedirectionService - ")
+                        ACE_TEXT("Name Service redirection is enabled but name context is nil.\n")));
         }
     }
 }
@@ -83,8 +83,8 @@ void
 RedirectionService::registration (const ACE_CString& node, const ACE_CString& plan, const ACE_CString& component, const ACE_CString& port, CORBA::Object_ptr obj)
 {
   DANCE_TRACE ("RedirectionService::registration");
-  DANCE_DEBUG ((LM_DEBUG, DLINFO "RedirectionService::registration - "
-                "for node %s plan %s component %s and port %s is started.\n",
+  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("RedirectionService::registration - ")
+                ACE_TEXT("for node %C plan %C component %C and port %C is started.\n"),
                 node.c_str(),
                 plan.c_str(),
                 component.c_str(),
@@ -111,8 +111,8 @@ RedirectionService::registration (const ACE_CString& node, const ACE_CString& pl
           this->naming_.bind (node, plan, component, port, ns_obj.in());
         }
     }
-  DANCE_DEBUG ((LM_DEBUG, DLINFO "RedirectionService::registration - "
-                "Registration has been finished.\n"));
+  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("RedirectionService::registration - ")
+                ACE_TEXT("Registration has been finished.\n")));
 }
 
 void
@@ -146,17 +146,17 @@ void
 RedirectionService::unregister (const ACE_CString& node, const ACE_CString& plan)
 {
   DANCE_TRACE ("RedirectionService::unregister");
-  DANCE_DEBUG((LM_TRACE, DLINFO "RedirectionService::unregister - "
-               "unregistering %s/%s...\n", node.c_str(), plan.c_str()));
+  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("RedirectionService::unregister - ")
+               ACE_TEXT("unregistering %C/%C...\n"), node.c_str(), plan.c_str()));
   if (this->ns_)
     {
       this->naming_.unbind_context (node, plan);
-      DANCE_DEBUG((LM_TRACE, DLINFO "RedirectionService::unregister - "
-                   "finished.\n"));
+      DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("RedirectionService::unregister - ")
+                   ACE_TEXT("finished.\n")));
     }
   else
     {
-      DANCE_DEBUG((LM_TRACE, DLINFO "RedirectionService::unregister - "
-                   "nothing to do.\n"));
+      DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("RedirectionService::unregister - ")
+                   ACE_TEXT("nothing to do.\n")));
     }
 }

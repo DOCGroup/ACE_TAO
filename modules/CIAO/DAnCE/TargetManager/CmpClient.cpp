@@ -289,7 +289,7 @@ namespace TM_Tester
           std::string file_name = "NA_";
           file_name += domain.node[i].name.in ();
           ACE_FILE_IO file_io;
-          ACE_FILE_Connector (file_io, ACE_FILE_Addr (file_name.c_str ()));
+          ACE_FILE_Connector (file_io, ACE_FILE_Addr (ACE_TEXT_ALWAYS_CHAR (file_name.c_str ())));
           CORBA::Double na_node_cpu;
           domain.node[i].resource[j].property[0].value >>= na_node_cpu;
           char buf[BUFSIZ];

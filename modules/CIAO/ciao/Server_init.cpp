@@ -7,6 +7,7 @@
 #include "Valuetype_Factories/Cookies.h"
 #include "CIAO_common.h"
 #include "Client_init.h"
+#include "ace/Tokenizer_T.h"
 
 namespace CIAO
 {
@@ -22,9 +23,9 @@ namespace CIAO
 
   namespace Utility
   {
-    int write_IOR (const char *pathname, const char *ior)
+    int write_IOR (const ACE_TCHAR *pathname, const char *ior)
     {
-      FILE* ior_output_file_ = ACE_OS::fopen (pathname, "w");
+      FILE* ior_output_file_ = ACE_OS::fopen (pathname, ACE_TEXT("w"));
 
       if (ior_output_file_)
         {
@@ -71,13 +72,13 @@ namespace CIAO
     NameUtility::create_name (const char *namestr, CosNaming::Name &name)
     {
       ACE_Auto_Basic_Array_Ptr<char> namebfr (ACE::strnew (namestr));
-      ACE_Tokenizer tok (namebfr.get ());
+      ACE_Tokenizer_T<char> tok (namebfr.get ());
 
       tok.delimiter ('/');
 
       for (char *p = tok.next (); p; p=tok.next ())
         {
-          CORBA::ULong pos = name.length ();
+          CORBA::ULong const pos = name.length ();
           name.length (pos + 1);
           name[pos].id = CORBA::string_dup (p);
         }
@@ -88,7 +89,7 @@ namespace CIAO
     {
       bool isNotFound = false;
       CORBA::ULong lengthMissing = 0;
-      CORBA::ULong OriginalLength = name.length ();
+      CORBA::ULong const OriginalLength = name.length ();
       CosNaming::Name tmpName;
       CosNaming::NamingContext_var tmpCtxVar;
 

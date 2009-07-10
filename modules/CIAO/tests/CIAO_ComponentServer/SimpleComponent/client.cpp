@@ -24,7 +24,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 's':
-        cs_path = get_opts.opt_arg ();
+        cs_path = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
 
       case 'd':
@@ -34,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
+                           "usage: %s "
                            "-s <path> "
                            "-d <uint> "
                            "\n",

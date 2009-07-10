@@ -119,61 +119,61 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
       switch (c)
         {
         case 'n':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Provided Node Manager name: %C\n", get_opts.opt_arg ()));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Provided Node Manager name: %s\n"), get_opts.opt_arg ()));
           this->options_.node_managers_.push_back (get_opts.opt_arg ());
           break;
 
         case 'p':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Instructed to create process ns with file %C\n", get_opts.opt_arg ()));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Instructed to create process ns with file %s\n"), get_opts.opt_arg ()));
           this->options_.process_ns_ = true;
           this->options_.process_ns_file_ = get_opts.opt_arg ();
           break;
 
         case 'c':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Instructed to create plan NS in context: %C\n", get_opts.opt_arg ()));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Instructed to create plan NS in context: %s\n"), get_opts.opt_arg ()));
           this->options_.create_plan_ns_ = true;
           this->options_.create_plan_ns_ior_ = get_opts.opt_arg ();
           break;
 
         case 'r':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Instructed to rebind plan NS in context: %C\n", get_opts.opt_arg ()));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Instructed to rebind plan NS in context: %s\n"), get_opts.opt_arg ()));
           this->options_.rebind_plan_ns_ = true;
           this->options_.rebind_plan_ns_ior_ = get_opts.opt_arg ();
           break;
 
         case 'i':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Instructed to create port indirection service\n"));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Instructed to create port indirection service\n")));
           this->options_.port_indirection_ = true;
           break;
 
         case 'f':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Instructed to ignore deployment errors\n"));
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Instructed to ignore deployment errors\n")));
           this->options_.ignore_failure_ = true;
           break;
 
         case 's':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Using provided component server executable:%C\n",
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Using provided component server executable:%s\n"),
                         get_opts.opt_arg ()));
           this->options_.cs_path_ = get_opts.opt_arg ();
           break;
 
         case 't':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Using provided component server spawn timeout:%C\n",
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Using provided component server spawn timeout:%s\n"),
                         get_opts.opt_arg ()));
           this->options_.timeout_ = ACE_OS::atoi (get_opts.opt_arg ());
           break;
 
         case 'd':
-          DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                        "Binding to provided Domain Naming Context: '%s'\n",
+          DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                        ACE_TEXT("Binding to provided Domain Naming Context: '%s'\n"),
                         get_opts.opt_arg ()));
           this->options_.domain_nc_ = get_opts.opt_arg ();
           break;
@@ -190,52 +190,52 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
         case 0:
           if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("standalone-nm")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                            "Found option directing NodeManager to run as standalone entity.\n"));
+              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                            ACE_TEXT("Found option directing NodeManager to run as standalone entity.\n")));
               this->options_.standalone_ = true;
             }
           else if (ACE_OS::strcmp (get_opts.long_option (),
                                    ACE_TEXT("server-args")) == 0)
             {
-              DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                            "Using provided compoent server arguments: '%C'\n",
+              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                            ACE_TEXT("Using provided compoent server arguments: '%s'\n"),
                             get_opts.opt_arg ()));
               this->options_.server_args_ = get_opts.opt_arg ();
             }
           else if (ACE_OS::strcmp (get_opts.long_option (),
-                                   "instance-nc") == 0)
+                                   ACE_TEXT("instance-nc")) == 0)
             {
               if (get_opts.opt_arg () == 0)
                 {
                   if (this->options_.domain_nc_ == 0)
                     {
-                      DANCE_ERROR ((LM_ERROR, DLINFO "Node_Manager_Module::parse_args - "
-                                    "ERROR: instance-nc provided no argument, but domain-nc did not appear before.\n"));
+                      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                                    ACE_TEXT("ERROR: instance-nc provided no argument, but domain-nc did not appear before.\n")));
                       DANCE_ERROR_RETURN ((LM_ERROR, this->usage (), argv[0], c), false);
                     }
-                  DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                                "Instance NC defaulting to Domain NC\n"));
+                  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                               ACE_TEXT("Instance NC defaulting to Domain NC\n")));
                   this->options_.instance_nc_ = this->options_.domain_nc_;
                 }
               else
                 {
-                  DANCE_DEBUG ((LM_DEBUG, DLINFO "Node_Manager_Module::parse_args - "
-                                "Using provided instance NC: %C\n",
+                  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                                ACE_TEXT("Using provided instance NC: %s\n"),
                                 get_opts.opt_arg ()));
                   this->options_.instance_nc_ = get_opts.opt_arg ();
                 }
             }
           else
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO "Node_Manager_Module::parse_args - "
-                            "ERROR: unknown long option %C\n",
+              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                            ACE_TEXT("ERROR: unknown long option %s\n"),
                             get_opts.long_option ()));
             }
 
           break;
 
         default:
-          DANCE_DEBUG ((LM_TRACE, DLINFO "Node_Manager_Module::parse_args - ignoring unknown option %i\n",
+          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ignoring unknown option %i\n"),
                         c));
         }
     }
@@ -251,21 +251,21 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
     {
       if (CORBA::is_nil(orb))
         {
-          DANCE_ERROR((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                       "Attempted to create Node Manager with a nil orb.\n"));
+          DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
+                       ACE_TEXT("Attempted to create Node Manager with a nil orb.\n")));
           return CORBA::Object::_nil();
         }
 
       if (CORBA::is_nil(this->orb_.in()))
         {
-          DANCE_DEBUG((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                       "NM's orb is nil.\n"));
+          DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
+                       ACE_TEXT("NM's orb is nil.\n")));
           this->orb_ = CORBA::ORB::_duplicate (orb);
         }
       else if (ACE_OS::strcmp(orb->id(), this->orb_->id()) != 0)
         {
-          DANCE_DEBUG((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                       "Resetting NM's orb.\n"));
+          DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
+                       ACE_TEXT("Resetting NM's orb.\n")));
           this->orb_ = CORBA::ORB::_duplicate (orb);
           this->domain_nc_ = CosNaming::NamingContext::_nil();
         }
@@ -317,36 +317,36 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
         {
           try
             {
-              DANCE_DEBUG((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                           "Resolving DomainNC.\n"));
+              DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
+                           ACE_TEXT("Resolving DomainNC.\n")));
               CORBA::Object_var domain_obj = this->orb_->string_to_object (this->options_.domain_nc_);
               if (!CORBA::is_nil (domain_obj.in ()))
                 {
                   this->domain_nc_ = CosNaming::NamingContext::_narrow (domain_obj.in());
                   if (CORBA::is_nil (this->domain_nc_.in ()))
                     {
-                      DANCE_ERROR ((LM_ERROR,DLINFO "DAnCE_NodeManager_Module::create_object - "
-                                    "Narrow to NamingContext return nil for DomainNC.\n"));
+                      DANCE_ERROR ((LM_ERROR,DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
+                                    ACE_TEXT("Narrow to NamingContext return nil for DomainNC.\n")));
                       return CORBA::Object::_nil ();
                     }
                 }
             }
-          catch (CORBA::Exception&)
+          catch (const CORBA::Exception&)
             {
-              DANCE_DEBUG  ((LM_WARNING, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                             "DomainNC context not found!\n"));
+              DANCE_DEBUG  ((LM_WARNING, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
+                             ACE_TEXT("DomainNC context not found!\n")));
             }
         }
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                    "Resolving plan NS naming context.\n"));
+      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
+                    ACE_TEXT("Resolving plan NS naming context.\n")));
       CosNaming::NamingContext_var rebind_nc;
       if (this->options_.rebind_plan_ns_)
         {
           if (!this->options_.create_plan_ns_)
             {
-              DANCE_ERROR((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                           "Rebind_plan_ns option is enabled but Create_plan_ns is not.\n"));
+              DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
+                           ACE_TEXT ("Rebind_plan_ns option is enabled but Create_plan_ns is not.\n")));
               return CORBA::Object::_nil();
             }
           CORBA::Object_var tmp_obj;
@@ -359,11 +359,11 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
             {
               if (CORBA::is_nil (this->domain_nc_.in ()))
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                                "The rebind plan is enabled but neither NC "
-                                "nor DomainNC are not supplied. No rebinding will be done.\n"
-                                "Use the \"-rebind-plan-ns NC ior\" "
-                                "or \"-ORBInitRef DomainNC\" option.\n"));
+                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
+                                ACE_TEXT ("The rebind plan is enabled but neither NC ")
+                                ACE_TEXT ("nor DomainNC are not supplied. No rebinding will be done.\n")
+                                ACE_TEXT ("Use the \"-rebind-plan-ns NC ior\" ")
+                                ACE_TEXT ("or \"-ORBInitRef DomainNC\" option.\n")));
                   return CORBA::Object::_nil ();
                 }
               rebind_nc = CosNaming::NamingContext::_duplicate (this->domain_nc_.in ());
@@ -377,8 +377,8 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (CORBA::is_nil (adapter.in ()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                         "Unable to RIR the IORTable.\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
+                        ACE_TEXT ("Unable to RIR the IORTable.\n")));
           return CORBA::Object::_nil ();
         }
 

@@ -148,7 +148,7 @@ namespace DAnCE
       }
 
     ACE_Log_Msg::instance()->priority_mask(new_mask, ACE_Log_Msg::PROCESS);
-    DANCE_DEBUG ( (LM_TRACE, DLINFO "Logging level is set to %i\n", this->log_level_));
+    DANCE_DEBUG ( (LM_TRACE, DLINFO ACE_TEXT("Logging level is set to %i\n"), this->log_level_));
   }
 
   ACE_Log_Msg_Backend *

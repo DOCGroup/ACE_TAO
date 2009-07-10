@@ -57,8 +57,8 @@ namespace DAnCE
   public:
     /// Constructor
     RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
-                               const ACE_TCHAR* server = "localhost:5432",
-                               const ACE_TCHAR* install_dir = "RepositoryManager");
+                               const ACE_TCHAR* server = ACE_TEXT("localhost:5432"),
+                               const ACE_TCHAR* install_dir = ACE_TEXT("RepositoryManager"));
 
     /// Destructor
     virtual ~RepositoryManagerDaemon_i (void);

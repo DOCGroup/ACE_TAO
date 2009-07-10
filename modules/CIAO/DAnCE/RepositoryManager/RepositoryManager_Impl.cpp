@@ -56,9 +56,9 @@ namespace
 {
   static const char* PC_EXTENSION = ".epc";
 
-  static const char *RM_RECORD_FILE = "RM_record";
-  static const char *RM_RECORD_NAME_SECTION = "Names";
-  static const char *RM_RECORD_UUID_SECTION = "UUIDs";
+  static const ACE_TCHAR *RM_RECORD_FILE = ACE_TEXT("RM_record");
+  static const ACE_TCHAR *RM_RECORD_NAME_SECTION = ACE_TEXT("Names");
+  static const ACE_TCHAR *RM_RECORD_UUID_SECTION = ACE_TEXT("UUIDs");
 }
 
 namespace DAnCE
@@ -70,7 +70,7 @@ namespace DAnCE
   //-----------------------------------------------------------------
 
   RepositoryManagerDaemon_i::RepositoryManagerDaemon_i
-  (CORBA::ORB_ptr the_orb, const char* server, const char* install_dir)
+  (CORBA::ORB_ptr the_orb, const ACE_TCHAR* server, const ACE_TCHAR* install_dir)
     : the_orb_ (CORBA::ORB::_duplicate (the_orb)),
       install_root_ (""),
       HTTP_server_ ("http://"),
