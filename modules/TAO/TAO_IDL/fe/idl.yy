@@ -714,7 +714,7 @@ valuetype
         {
 // valuetype : IDL_CUSTOM value_concrete_decl
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("error in %s line %d\n"),
+                       ACE_TEXT ("error in %C line %d\n"),
                        idl_global->filename ()->get_string (),
                        idl_global->lineno ()));
            ACE_DEBUG ((LM_DEBUG,
@@ -2310,7 +2310,7 @@ fixed_type
         {
 // fixed_type : IDL_FIXED
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("error in %s line %d\n"),
+                      ACE_TEXT ("error in %C line %d\n"),
                       idl_global->filename ()->get_string (),
                       idl_global->lineno ()));
           ACE_DEBUG ((LM_DEBUG,
@@ -3964,7 +3964,7 @@ init_decl
             {
               //@@ Fire error
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("error in %s line %d:\n")
+                          ACE_TEXT ("error in %C line %d:\n")
                           ACE_TEXT ("Abstract valuetype can't have a ")
                           ACE_TEXT ("factory construct.\n"),
                           idl_global->filename ()->get_string (),
@@ -5635,7 +5635,7 @@ event_custom_header :
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("error in %s line %d\n"),
+                      ACE_TEXT ("error in %C line %d\n"),
                       idl_global->filename ()->get_string (),
                       idl_global->lineno ()));
           ACE_DEBUG ((LM_DEBUG,
@@ -5800,6 +5800,6 @@ void
 yyerror (const char *msg)
 {
   ACE_ERROR ((LM_ERROR,
-              "%s\n",
+              "%C\n",
               msg));
 }

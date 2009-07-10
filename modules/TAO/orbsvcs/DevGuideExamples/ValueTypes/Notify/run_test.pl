@@ -16,7 +16,7 @@ my $notifyior = PerlACE::LocalFile ("notify.ior");
 my $notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 
 my $TS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Notify_Service/Notify_Service",
-                            "-boot -orbendpoint iiop://:8888 -NoNameSvc -IORoutput $notifyior -ORBSvcConf " .
+                            "-boot -orblistenendpoints iiop://:8888 -NoNameSvc -IORoutput $notifyior -ORBSvcConf " .
                             "$notify_conf");
 my $SUP = new PerlACE::Process ("supplier");
 my $CONS = new PerlACE::Process ("consumer");

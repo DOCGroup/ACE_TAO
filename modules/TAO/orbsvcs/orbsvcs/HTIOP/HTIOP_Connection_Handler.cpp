@@ -304,4 +304,10 @@ TAO::HTIOP::Connection_Handler::set_dscp_codepoint (
   return 0;
 }
 
+int
+TAO::HTIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+{
+  return ACE::handle_write_ready (this->peer ().get_handle (), t);
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

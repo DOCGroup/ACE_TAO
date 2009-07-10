@@ -1,16 +1,323 @@
+Fri Jul 10 19:40:50 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * .:
+        * DevGuideExamples/AMH/AMH_Messenger_i.cpp:
+        * DevGuideExamples/AMH/MessengerServer.cpp:
+        * DevGuideExamples/AMH/Messenger_i.cpp:
+        * DevGuideExamples/AMH_AMI/inner_server.cpp:
+        * DevGuideExamples/BiDirectionalGIOP/callback_i.cpp:
+        * DevGuideExamples/BiDirectionalGIOP/client.cpp:
+        * DevGuideExamples/BiDirectionalGIOP/server.cpp:
+        * DevGuideExamples/BiDirectionalGIOP/simple_i.cpp:
+        * DevGuideExamples/DevGuideExamples.mwc:
+        * DevGuideExamples/GettingStarted/MessengerServer.cpp:
+        * DevGuideExamples/LocalObjects/Messenger/Messenger_i.cpp:
+        * DevGuideExamples/LocalObjects/ServantLocator/MessengerServer.cpp:
+        * DevGuideExamples/Messaging/AMIcallback/MessengerClient.cpp:
+        * DevGuideExamples/Messaging/AMIcallback/MessengerHandler.cpp:
+        * DevGuideExamples/Messaging/AMIcallback/MessengerServer.cpp:
+        * DevGuideExamples/Messaging/AMIcallback/Messenger_i.cpp:
+        * DevGuideExamples/Messaging/RelativeRoundtripTimeout/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/GracefulShutdown/MessengerServer.h:
+        * DevGuideExamples/Multithreading/GracefulShutdown/MessengerShutdownTimer.cpp:
+        * DevGuideExamples/Multithreading/GracefulShutdown/Messenger_i.cpp:
+        * DevGuideExamples/Multithreading/GracefulShutdown/run_test.pl:
+        * DevGuideExamples/Multithreading/Reactive/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/Reactive/Messenger_i.cpp:
+        * DevGuideExamples/Multithreading/Reactive/run_test.pl:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/Messenger_i.cpp:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl:
+        * DevGuideExamples/Multithreading/ThreadPool/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/ThreadPool/Messenger_i.cpp:
+        * DevGuideExamples/Multithreading/ThreadPool/run_test.pl:
+        * DevGuideExamples/PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/ServerInitializer.h:
+        * DevGuideExamples/PortableInterceptors/Auth/run_test.pl:
+        * DevGuideExamples/PortableInterceptors/IOR/ClientInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerIORInterceptor.h:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerIORInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/ClientInitializer.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/ClientInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/run_test.pl:
+        * DevGuideExamples/RTCORBA/MessengerServer.cpp:
+        * DevGuideExamples/RTCORBA/Messenger_i.cpp:
+        * DevGuideExamples/SmartProxies/LoggerServer.cpp:
+        * DevGuideExamples/SmartProxies/Logger_i.cpp:
+        * DevGuideExamples/SmartProxies/MessengerServer.cpp:
+        * DevGuideExamples/SmartProxies/Messenger_i.cpp:
+        * DevGuideExamples/ValueTypes/Bank/server.cpp:
+        * DevGuideExamples/ValueTypes/Messenger/Message_i.cpp:
+        * DevGuideExamples/ValueTypes/Messenger/MessengerServer.cpp:
+        * DevGuideExamples/ValueTypes/Messenger/Messenger_i.cpp:
+        * MPC/config/taodefaults.mpb:
+        * NEWS:
+        * PROBLEM-REPORT-FORM:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_init.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/contrib:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * VERSION:
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+        * docs/Options.html:
+        * docs/compiler.html:
+        * docs/rtcorba/features.html:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_SupplierSideEC/run_test.pl:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/EchoEventSupplierMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/run_test.pl:
+        * orbsvcs/DevGuideExamples/ImplRepo/Basic/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/ImplRepo/IORTable/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/ImplRepo/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/Messenger/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/Messenger/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/Messenger/run_test.pl:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Client/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Client/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Client/run_test.pl:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/README:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/run_test.pl:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Server/MessengerTask.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/README:
+        * orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/run_test.pl:
+        * orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/README:
+        * orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl:
+        * orbsvcs/DevGuideExamples/NotifyService/EventSequence/MessengerConsumer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/EventSequence/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/EventSequence/Messenger_i.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/Filtering/MessengerConsumer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/Filtering/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/Messenger/MessengerConsumer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/Messenger/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/Messenger/Messenger_i.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/QoSProperties/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/QoSProperties/Messenger_i.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/MessengerConsumer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/Messenger_i.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/run_test.pl:
+        * orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/MessengerConsumer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+        * orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/ClientInitializer.cpp:
+        * orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/README:
+        * orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/run_test.pl:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/ValueTypes/Notify/run_test.pl:
+        * orbsvcs/DevGuideExamples/readme.txt:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/README:
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.inl:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/tests/Bug_3486_Regression/run_test.pl:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/Bug_3646d_Regression.mpc:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/DllORB.h:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/DllORB.cpp:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/bug3646d_export.h:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/Bug_3688_Regression.mpc:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/common.h:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/supplier.cpp:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/Bug_3688b.mpc:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/DllORB.h:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/DllORB.cpp:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.h:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.cpp:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestListener.h:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestListener.cpp:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/bug3688_export.h:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/server.cpp:
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Compression/Base_Compressor.cpp:
+        * tao/Compression/Compression.pidl:
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/Connection_Handler.cpp:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/Incoming_Message_Stack.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.h:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/Version.h:
+        * tao/ZIOP/ZIOP.h:
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.pidl:
+        * tests/BiDirectional/run_test3557.pl:
+        * tests/Bug_2593_Regression/run_test.pl:
+        * tests/Bug_2683_Regression/client.cpp:
+        * tests/Bug_3333_Regression:
+        * tests/Bug_3333_Regression/Bug3333.mpc:
+        * tests/Bug_3333_Regression/Hello.h:
+        * tests/Bug_3333_Regression/Hello.cpp:
+        * tests/Bug_3333_Regression/README:
+        * tests/Bug_3333_Regression/Test.idl:
+        * tests/Bug_3333_Regression/client.cpp:
+        * tests/Bug_3333_Regression/run_test.pl:
+        * tests/Bug_3333_Regression/server.cpp:
+        * tests/Bug_3630_Regression/server.cpp:
+        * tests/Bug_3647_Regression/Backend_Impl.h:
+        * tests/Bug_3647_Regression/Middle_Impl.h:
+        * tests/Bug_3676_Regression/Bug_3676_Regression.mpc:
+        * tests/Bug_3683_Regression/Echo_Client_i.h:
+        * tests/Bug_3683_Regression/Echo_Client_i.cpp:
+        * tests/Bug_3683_Regression/Simple_util.cpp:
+        * tests/Bug_3683_Regression/run_test.pl:
+        * tests/Bug_3683_Regression/svc.conf:
+        * tests/Bug_3695_Regression:
+        * tests/Bug_3695_Regression/Bug_3695.cpp:
+        * tests/Bug_3695_Regression/Bug_3695_Regression.mpc:
+        * tests/Bug_3695_Regression/run_test.pl:
+        * tests/Crashed_Callback/run_test.pl:
+        * tests/ForwardUponObjectNotExist/client.cpp:
+        * tests/IDL_Test/union.idl:
+        * tests/IPV6/run_test.pl:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+        * tests/Reliable_Oneways/run_test.pl:
+        * tests/ZIOP/client.cpp:
+        * tests/ZIOP/server.cpp:
+        * utils/NamingViewer/NamingViewerDlg.cpp:
+        * utils/README:
+        * utils/logWalker:
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Log.h:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerObject.h:
+        * utils/logWalker/PeerObject.cpp:
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/README:
+        * utils/logWalker/Session.h:
+        * utils/logWalker/Session.cpp:
+        * utils/logWalker/Thread.h:
+        * utils/logWalker/Thread.cpp:
+        * utils/logWalker/hello.mft:
+        * utils/logWalker/helloClient.log:
+        * utils/logWalker/helloServer.log:
+        * utils/logWalker/logWalker.cpp:
+        * utils/logWalker/logWalker.mpc:
+        * utils/monitor/monitor_client.cpp:
+        * utils/nslist/nslist.cpp:
+        * tests/Bug_3683_Regression/README:
+        * tests/ORB_Local_Config/ORB_Local_Config.mwc:
+
+          Merged in from trunk.
+
 Tue Jul  7 17:11:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_produce.cpp:
-        
+
           Removed the short-circuit cleanup and return after skeleton
-          header generation if the -SS option is in effect - the 
+          header generation if the -SS option is in effect - the
           overhead saved is negligible and other passes, plus export
           header file generation, may still be needed. Thanks to
           Will Otte <wotte@dre.vanderbilt.edu> for reporting the
           bug.
-          
+
         * TAO_IDL/be/be_global.cpp:
-        
+
           Added lines to unset the skeleton inline and skeleton
           source file generation flags when the -SS option is
           seen, making for cleaner logic in BE_produce, as noted
@@ -26,36 +333,36 @@ Tue Jul  7 16:27:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_component/component_exs.cpp:
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:
         * TAO_IDL/be/be_visitor_component/component_svs.cpp:
-        
+
           Added check to skip code generation for declarations
           from included IDL files. Thanks to Will Otte
           <wotte@dre.vanderbilt.edu> for reporting the problem.
-          
+
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Cosmetic changes.
 
 Wed Jul  1 16:27:07 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component.cpp:
         * TAO_IDL/be/be_visitor_component/component_svs.cpp:
-        
+
           Conditionalized generation of value factory registration
-          with a check to see if the eventtype in question has a 
+          with a check to see if the eventtype in question has a
           concrete factory. Registration macro should be generated
           only if this check returns true.
 
 Wed Jul  1 15:57:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
-        
+
           Added component swapping option -Gsw to the usage message.
 
 Wed Jul  1 15:53:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
         * docs/compiler.html:
-        
+
           Updated documentation with new IDL compiler functionality,
           CIAO-related generation and export header file generation.
 
@@ -63,8 +370,8 @@ Wed Jul  1 14:13:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
 
-          Re-enabled the capability to dump preprocessor output. 
-        
+          Re-enabled the capability to dump preprocessor output.
+
 Tue Jun 30 15:26:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:

@@ -124,8 +124,8 @@ TAO_ZIOP_Loader::ziop_compressorid_name (::Compression::CompressorId st)
 
 void
 TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
-                                size_t len, size_t original_data_length, 
-                                ::Compression::CompressorId  compressor_id, 
+                                size_t len, size_t original_data_length,
+                                ::Compression::CompressorId  compressor_id,
                                 ::Compression::CompressionLevel compression_level)
 {
   if (TAO_debug_level < 10)
@@ -197,7 +197,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 
   if (!CORBA::is_nil(manager.in ()))
     {
-      ZIOP::CompressedData data;
+      ZIOP::CompressionData data;
       // first set the read pointer after the header
       size_t begin = qd.msg_block ()-> rd_ptr() - qd.msg_block ()->base ();
       char * initial_rd_ptr = qd.msg_block ()-> rd_ptr();
@@ -216,7 +216,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
         return false;
 
       Compression::Compressor_var compressor =
-            manager->get_compressor (data.compressorid, 6);
+            manager->get_compressor (data.compressor, 6);
       CORBA::OctetSeq myout;
       myout.length (data.original_length);
 
@@ -245,10 +245,10 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
           if (TAO_debug_level > 9)
             {  // we're only logging ZIOP messages. Log datablock before it's
                // replaced by it's decompressed datablock
-               this->dump_msg ("before decompression", 
+               this->dump_msg ("before decompression",
                     reinterpret_cast <u_char *>(qd.msg_block ()->rd_ptr ()),
                     qd.msg_block ()->length (), data.original_length,
-                    data.compressorid, compressor->compression_level ());
+                    data.compressor, compressor->compression_level ());
             }
           //replace data block
           *db = mb.data_block ()->duplicate ();
@@ -308,20 +308,18 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
   return true;
 }
 
-CORBA::ULong
+::Compression::CompressionRatio
 TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq& uncompressed, CORBA::OctetSeq& compressed)
 {
-  return CORBA::ULong (100 - ((CORBA::Double)compressed.length () / uncompressed.length () *
-              (CORBA::Double)100));
+  return (::Compression::CompressionRatio)uncompressed.length () / compressed.length ();
 }
 
 bool
-TAO_ZIOP_Loader::check_min_ratio (const CORBA::ULong& this_ratio,
+TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio& this_ratio,
                                   ::Compression::CompressionRatio overall_ratio,
-                                  CORBA::Long min_ratio) const
+                                  ::Compression::CompressionRatio min_ratio) const
 {
-  bool accepted = min_ratio == 0 ||
-          static_cast < ::Compression::CompressionRatio>(this_ratio) > min_ratio;
+  bool accepted = min_ratio == 0 || (this_ratio * 10000) > (min_ratio * 10000);
   if (TAO_debug_level > 8)
     {
       ACE_ERROR ((LM_ERROR,
@@ -420,7 +418,7 @@ TAO_ZIOP_Loader::get_compression_details(
                                     compressor_id, compression_level);
             }
         }
-      else 
+      else
         {
           if (TAO_debug_level > 6)
             {
@@ -441,7 +439,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
                                        ACE_Message_Block& mb,
                                        char *initial_rd_ptr,
                                        CORBA::ULong low_value,
-                                       CORBA::Long min_ratio,
+                                       Compression::CompressionRatio min_ratio,
                                        CORBA::ULong original_data_length,
                                        Compression::CompressorId compressor_id)
 {
@@ -460,8 +458,8 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
         {
           mb.wr_ptr (mb.rd_ptr ());
           cdr.current_alignment (mb.wr_ptr() - mb.base ());
-          ZIOP::CompressedData data;
-          data.compressorid = compressor_id;
+          ZIOP::CompressionData data;
+          data.compressor = compressor_id;
           data.original_length = input.length();
           data.data = output;
           cdr << data;
@@ -475,7 +473,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
             {
                this->dump_msg ("after compression", reinterpret_cast <u_char *>(mb.rd_ptr ()),
                     mb.length (), data.original_length,
-                    data.compressorid, compressor->compression_level ());
+                    data.compressor, compressor->compression_level ());
             }
 
         }
@@ -497,12 +495,12 @@ bool
 TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr,
                CORBA::Object_ptr compression_manager,
                CORBA::ULong low_value,
-               CORBA::Long min_ratio,
-               Compression::CompressorId compressor_id,
-               Compression::CompressionLevel compression_level)
+               ::Compression::CompressionRatio min_ratio,
+               ::Compression::CompressorId compressor_id,
+               ::Compression::CompressionLevel compression_level)
 {
   bool compressed = true;
-  
+
   cdr.consolidate ();
 
   ACE_Message_Block* current = const_cast <ACE_Message_Block*> (cdr.current ());
@@ -570,7 +568,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub& stub)
 
       CORBA::ULong low_value =
         this->compression_policy_value (policy_low_value.in ());
-      CORBA::Long min_ratio =
+      Compression::CompressionRatio min_ratio =
         this->compression_policy_value (policy_min_ratio.in ());
 
       return compress_data(cdr, compression_manager.in (),
@@ -620,7 +618,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
 
       CORBA::ULong low_value =
         this->compression_policy_value (policy_low_value.in ());
-      CORBA::Long min_ratio =
+      Compression::CompressionRatio min_ratio =
         this->compression_policy_value (policy_min_ratio.in ());
 
       return compress_data(cdr, compression_manager.in (),

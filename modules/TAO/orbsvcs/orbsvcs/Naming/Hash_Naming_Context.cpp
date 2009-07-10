@@ -81,7 +81,7 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
     {
       // Add the last component of the name, which was stripped before
       // the call to resolve.
-      CORBA::ULong rest_len = ex.rest_of_name.length () + 1;
+      CORBA::ULong const rest_len = ex.rest_of_name.length () + 1;
       ex.rest_of_name.length (rest_len);
       ex.rest_of_name[rest_len - 1] = name[name_len - 1];
 

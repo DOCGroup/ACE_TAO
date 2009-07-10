@@ -1573,7 +1573,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
               if (d != d_before)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "warning in %s line %d: ",
+                              "warning in %C line %d: ",
                               idl_global->filename ()->get_string (),
                               idl_global->lineno ()));
 

@@ -46,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
     if (ACE_OS::strncmp (ior,
                           corbaloc_prefix,
-                          sizeof corbaloc_prefix -1) != 0)
+                          ACE_OS::strlen (corbaloc_prefix)) != 0)
       return 1;
 
   // Indicates sucessful parsing of the command line

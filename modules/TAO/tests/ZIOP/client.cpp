@@ -151,7 +151,7 @@ CORBA::Policy_ptr
 create_min_ratio_policy (CORBA::ORB_ptr orb)
 {
   CORBA::Any min_compression_ratio_any;
-  CORBA::Long min_compression_ratio = 50;
+  Compression::CompressionRatio min_compression_ratio = 0.50;
   min_compression_ratio_any <<= min_compression_ratio;
 
   return orb->create_policy (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID, min_compression_ratio_any);
@@ -286,7 +286,7 @@ check_results (CORBA::ORB_ptr orb)
 #endif
 }
 
-int 
+int
 run_string_test (Test::Hello_ptr hello)
 {
   ACE_DEBUG((LM_DEBUG,
@@ -313,7 +313,7 @@ run_string_test (Test::Hello_ptr hello)
   return 0;
 }
 
-int 
+int
 run_big_reply_test (Test::Hello_ptr hello)
 {
   ACE_DEBUG((LM_DEBUG,
@@ -337,7 +337,7 @@ run_big_reply_test (Test::Hello_ptr hello)
   return 0;
 }
 
-int 
+int
 run_big_request_test (Test::Hello_ptr hello)
 {
   int length = 40000;
@@ -351,7 +351,7 @@ run_big_request_test (Test::Hello_ptr hello)
   return 0;
 }
 
-int 
+int
 start_tests (Test::Hello_ptr hello, CORBA::ORB_ptr orb)
 {
   int result = 0;

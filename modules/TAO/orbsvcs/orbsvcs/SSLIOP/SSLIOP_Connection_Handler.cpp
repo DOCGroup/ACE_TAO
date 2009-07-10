@@ -440,4 +440,10 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
   this->current_->teardown (previous_current_impl, setup_done);
 }
 
+int
+TAO::SSLIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+{
+  return ACE::handle_write_ready (this->peer ().get_handle (), t);
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

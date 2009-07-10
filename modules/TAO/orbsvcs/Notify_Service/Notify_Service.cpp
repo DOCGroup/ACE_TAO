@@ -144,7 +144,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
       this->notify_service_->init_service (this->orb_.in ());
     }
 
-  logging_worker_.start();
+  this->logging_worker_.start();
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
@@ -222,10 +222,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
     }
 
   // Register with the Name service, if asked
-  if (this->use_name_svc_)
+  if (this->use_name_svc_ && !CORBA::is_nil (this->naming_.in ()))
     {
-      ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
-
       CosNaming::Name_var name =
         this->naming_->to_name (this->notify_factory_name_.c_str ());
 
@@ -345,11 +343,13 @@ TAO_Notify_Service_Driver::run (void)
 
   if (this->nthreads_ > 0)
     {
-      worker_.thr_mgr ()->wait ();
+      this->worker_.wait ();
       return 0;
     }
-
-  this->orb_->run ();
+  else
+    {
+      this->orb_->run ();
+    }
 
   this->logging_worker_.end();
   return 0;
@@ -370,49 +370,71 @@ TAO_Notify_Service_Driver::fini (void)
   // correctly.  Depending upon the type of service loaded, it may
   // or may not actually perform any actions.
   this->notify_service_->finalize_service (factory.in ());
+  factory = CosNotifyChannelAdmin::EventChannelFactory::_nil ();
 
   this->notify_service_->fini ();
-
-  // Unbind all event channels from the naming service
-  if (this->register_event_channel_ && !CORBA::is_nil (naming.in ()))
-    {
-      for (ACE_Unbounded_Set<ACE_CString>::const_iterator ci (
-           this->notify_channel_name_); !ci.done(); ci++)
-        {
-          CosNaming::Name_var name = naming->to_name ((*ci).c_str ());
-          naming->unbind (name.in ());
-        }
-    }
 
   // Deactivate.
   if (this->use_name_svc_ && !CORBA::is_nil (naming.in ()))
     {
+      // Unbind all event channels from the naming service
+      if (this->register_event_channel_)
+        {
+          for (ACE_Unbounded_Set<ACE_CString>::const_iterator ci (
+               this->notify_channel_name_); !ci.done(); ci++)
+            {
+              CosNaming::Name_var name = naming->to_name ((*ci).c_str ());
+              naming->unbind (name.in ());
+            }
+        }
+
       // Unbind from the naming service.
       CosNaming::Name_var name =
         naming->to_name (this->notify_factory_name_.c_str ());
 
       naming->unbind (name.in ());
+      
+      naming = CosNaming::NamingContextExt::_nil ();
     }
 
   if (!CORBA::is_nil (poa.in ()))
     {
       poa->destroy (true, true);
+      poa = PortableServer::POA::_nil ();
     }
-
+    
+  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
+    {
+      dispatching_orb->shutdown ();
+    }
+   
   // shutdown the ORB.
   if (this->shutdown_orb_ && !CORBA::is_nil (orb.in ()))
     {
       orb->shutdown ();
+    }
 
+  // Make sure all worker threads are gone.
+  this->worker_.wait ();
+  this->logging_worker_.wait ();
+
+  // Destroy the ORB
+  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
+    {
+      dispatching_orb->destroy ();
+    }
+
+  // Destroy the ORB.
+  if (this->shutdown_orb_ && !CORBA::is_nil (orb.in ()))
+    {
       orb->destroy ();
     }
 
-  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
-    {
-      dispatching_orb->shutdown ();
+  dispatching_orb_ = CORBA::ORB::_nil ();  
 
-      dispatching_orb->destroy ();
-    }
+  worker_.orb (CORBA::ORB::_nil ());
+    
+  orb = CORBA::ORB::_nil ();  
 
   return 0;
 }
@@ -592,7 +614,8 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 /*****************************************************************/
 LoggingWorker::LoggingWorker(TAO_Notify_Service_Driver* ns)
 : ns_ (ns),
-  started_ (false)
+  started_ (false),
+  timer_id_ (-1)
 {
 }
 
@@ -620,15 +643,15 @@ LoggingWorker::start ()
       else {
         if (this->ns_->logging_interval_ > ACE_Time_Value::zero)
         {
-          ACE_Time_Value delay;
-          if (this->ns_->orb_->orb_core()->reactor()->
-              schedule_timer (logging_strategy, 0, delay,
-                              this->ns_->logging_interval_) == -1)
-          {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT("(%P|%t) Failed to schedule ")
-                        ACE_TEXT("logging switch timer\n")));
-          }
+          timer_id_ = this->ns_->orb_->orb_core()->reactor()->
+              schedule_timer (logging_strategy, 0, this->ns_->logging_interval_,
+                              this->ns_->logging_interval_);
+          if (timer_id_ == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT("(%P|%t) Failed to schedule ")
+                          ACE_TEXT("logging switch timer\n")));
+            }
         }
       }
     }
@@ -654,8 +677,15 @@ LoggingWorker::end ()
   if (started_)
   {
     this->logging_reactor_.end_event_loop();
-    this->thr_mgr ()->wait ();
+    this->wait ();
   }
+
+  if (timer_id_ != -1)
+    {
+      this->ns_->orb_->orb_core()->reactor()->
+        cancel_timer (timer_id_);
+      timer_id_ = -1;
+    }
 }
 
 Worker::Worker (void)
@@ -703,7 +733,10 @@ Worker::svc (void)
 
   try
     {
-      this->orb_->run ();
+      if (!CORBA::is_nil (this->orb_.in ()))
+        {
+          this->orb_->run ();
+        }
     }
   catch (const CORBA::Exception&)
     {

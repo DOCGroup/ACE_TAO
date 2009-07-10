@@ -2145,7 +2145,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             // I expect 'c' or 's' or 'I' or 'T' after this.
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2161,7 +2161,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand")
-                ACE_TEXT (" the '%s' option\n"),
+                ACE_TEXT (" the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2190,7 +2190,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             // I expect 's' or 'i' after 'c'.
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2236,7 +2236,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             // I expect 's' or 'T' or 'i' or 't' after 's'.
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2280,7 +2280,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         else
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%s: unknown operation lookup <%s>\n"),
+                        ACE_TEXT ("%C: unknown operation lookup <%C>\n"),
                         av[0],
                         av[i + 1]));
           }
@@ -2302,7 +2302,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2330,7 +2330,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand")
-                ACE_TEXT (" the '%s' option\n"),
+                ACE_TEXT (" the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2355,7 +2355,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 ACE_ERROR ((
                     LM_ERROR,
-                    ACE_TEXT ("IDL: unable to create directory %s")
+                    ACE_TEXT ("IDL: unable to create directory %C")
                     ACE_TEXT (" specified by -o option\n"),
                     av[i + 1]
                   ));
@@ -2383,7 +2383,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                   {
                     ACE_ERROR ((
                         LM_ERROR,
-                        ACE_TEXT ("IDL: unable to create directory %s")
+                        ACE_TEXT ("IDL: unable to create directory %C")
                         ACE_TEXT (" specified by -oA option\n"),
                         av[i + 1]
                       ));
@@ -2399,7 +2399,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand")
-                    ACE_TEXT (" the '%s' option\n"),
+                    ACE_TEXT (" the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2421,7 +2421,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                   {
                     ACE_ERROR ((
                         LM_ERROR,
-                        ACE_TEXT ("IDL: unable to create directory %s")
+                        ACE_TEXT ("IDL: unable to create directory %C")
                         ACE_TEXT (" specified by -oS option\n"),
                         av[i + 1]
                       ));
@@ -2437,7 +2437,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand")
-                    ACE_TEXT (" the '%s' option\n"),
+                    ACE_TEXT (" the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2447,7 +2447,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand")
-                ACE_TEXT (" the '%s' option\n"),
+                ACE_TEXT (" the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2513,7 +2513,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%s' option\n"),
+                    ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2609,7 +2609,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%s' option\n"),
+                    ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2628,7 +2628,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%s' option\n"),
+                    ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2646,7 +2646,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%s' option\n"),
+                    ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2707,7 +2707,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                         ACE_ERROR ((
                             LM_ERROR,
                             ACE_TEXT ("IDL: I don't understand ")
-                            ACE_TEXT ("the '%s' option\n"),
+                            ACE_TEXT ("the '%C' option\n"),
                             av[i]
                           ));
                       }
@@ -2717,7 +2717,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_ERROR ((
                         LM_ERROR,
                         ACE_TEXT ("IDL: I don't understand ")
-                        ACE_TEXT ("the '%s' option\n"),
+                        ACE_TEXT ("the '%C' option\n"),
                         av[i]
                       ));
                   }
@@ -2732,7 +2732,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%s' option\n"),
+                    ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2749,7 +2749,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%s' option\n"),
+                    ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2805,7 +2805,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_ERROR ((
                         LM_ERROR,
                         ACE_TEXT ("IDL: I don't understand")
-                        ACE_TEXT (" the '%s' option\n"),
+                        ACE_TEXT (" the '%C' option\n"),
                         av[i]
                       ));
 
@@ -2820,7 +2820,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2884,7 +2884,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 ACE_ERROR ((
                     LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                    ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2907,7 +2907,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 ACE_ERROR ((
                     LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                    ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2928,7 +2928,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 ACE_ERROR ((
                     LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                    ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                     av[i]
                   ));
               }
@@ -2943,7 +2943,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
           }
@@ -2952,7 +2952,7 @@ BE_GlobalData::parse_args (long &i, char **av)
       default:
         ACE_ERROR ((
             LM_ERROR,
-            ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+            ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
             av[i]
           ));
 
@@ -3103,11 +3103,8 @@ BE_GlobalData::prep_be_arg (char *s)
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s%s%s%s"),
-                      idl_global->prog_name (),
-                      ACE_TEXT (": invalid or unknown argument <"),
-                      arg,
-                      ACE_TEXT ("> to back end\n")));
+                      ACE_TEXT ("%C: invalid or unknown argument <%C> to back end\n"),
+                      idl_global->prog_name (), arg));
         }
     }
 }

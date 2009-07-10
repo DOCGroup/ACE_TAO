@@ -27,7 +27,7 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-f $client_iorfile -x -ORBSvcConf svc.conf");
+$CL = $client->CreateProcess ("client", "-f $client_iorfile -x -ORBSvcConf svc.conf -p 16");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {

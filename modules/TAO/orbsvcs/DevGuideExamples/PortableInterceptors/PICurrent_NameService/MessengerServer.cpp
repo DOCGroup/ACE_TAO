@@ -35,7 +35,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       mgr->activate();
 
       // Create an object
-      Messenger_i messenger_servant;
+      PortableServer::Servant_var<Messenger_i> messenger_servant =
+        new Messenger_i;
 
       // Find the Naming Service
       CORBA::Object_var naming_obj =
@@ -53,7 +54,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       name[0].id = CORBA::string_dup( "Messenger" );
 
       PortableServer::ObjectId_var oid =
-        poa->activate_object( &messenger_servant );
+        poa->activate_object( messenger_servant.in() );
       CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
 
       root->rebind(name, messenger_obj.in());

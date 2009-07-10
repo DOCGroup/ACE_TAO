@@ -515,7 +515,7 @@ TAO_Notify_EventChannelFactory::activate_self (void)
   {
     if (DEBUG_LEVEL > 9)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) TAO_Notify_EventChannelFactory::activate_self") ));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) TAO_Notify_EventChannelFactory::activate_self\n") ));
     }
     this->reconnect ();
   }

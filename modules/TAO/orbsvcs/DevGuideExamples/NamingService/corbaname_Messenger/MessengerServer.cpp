@@ -3,6 +3,7 @@
 #include "Messenger_i.h"
 #include "orbsvcs/CosNamingC.h"
 #include <iostream>
+#include <fstream>
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
@@ -42,13 +43,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     name[1].id = CORBA::string_dup("Messenger");
 
     // Create an object
-    Messenger_i servant;
-    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
+    PortableServer::Servant_var<Messenger_i> servant = new Messenger_i;
+    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
     obj = poa->id_to_reference(oid.in());
     Messenger_var messenger = Messenger::_narrow(obj.in());
     root->rebind(name, messenger.in());
 
     std::cout << "Messenger object bound in Naming Service" << std::endl;
+
+    // Write a file to let the run_test.pl script know we are ready.
+    std::ofstream iorFile( "MessengerServer.ready" );
+    iorFile << "Ready" << std::endl;
+    iorFile.close();
 
     // Accept requests
     orb->run();
