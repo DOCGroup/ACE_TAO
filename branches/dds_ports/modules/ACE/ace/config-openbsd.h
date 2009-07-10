@@ -231,6 +231,7 @@
 //#define ACE_HAS_IPV6
 
 #define ACE_HAS_3_PARAM_READDIR_R
+#define ACE_HAS_VOID_UNSETENV
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

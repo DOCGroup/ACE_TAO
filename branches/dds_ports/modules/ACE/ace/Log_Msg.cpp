@@ -1025,7 +1025,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // bp is pointer to where to put next part of logged message.
   // bspace is the number of characters remaining in msg_.
   ACE_TCHAR *bp = const_cast<ACE_TCHAR *> (this->msg ());
-  size_t bspace = ACE_Log_Record::MAXLOGMSGLEN;  // Leave room for Nul term.
+  size_t bspace = ACE_MAXLOGMSGLEN;  // Leave room for Nul term.
   if (this->msg_off_ <= ACE_Log_Record::MAXLOGMSGLEN)
     bspace -= static_cast<size_t> (this->msg_off_);
 

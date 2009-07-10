@@ -4,6 +4,7 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Tokenizer_T.h"
 
 // Can remove this when import_config and export_config are removed from
 // ACE_Configuration. They're deprecated at ACE 5.2.

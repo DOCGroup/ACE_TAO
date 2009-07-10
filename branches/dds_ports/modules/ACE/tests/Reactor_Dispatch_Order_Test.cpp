@@ -78,7 +78,7 @@ Handler::Handler (ACE_Reactor &reactor)
       if (0 != this->reactor ()->register_handler
                  (this->pipe_.read_handle (),
                   this,
-                  ACE_Event_Handler::ALL_EVENTS_MASK))
+                  ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK))
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
       else
         this->ok_ = true;

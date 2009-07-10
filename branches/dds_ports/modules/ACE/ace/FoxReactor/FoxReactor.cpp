@@ -137,6 +137,8 @@ long ACE_FoxReactor::onFileEvents(FXObject* /* ob */, FXSelector se, void* handl
     f=true;
   };
   if(f) dispatch (1, dispatch_set);
+
+  return 1;
 }
 
 long ACE_FoxReactor::onTimerEvents(FXObject* /* ob */, FXSelector /* sel */, void* /* handle */)
@@ -147,7 +149,7 @@ long ACE_FoxReactor::onTimerEvents(FXObject* /* ob */, FXSelector /* sel */, voi
 
   // Set next timeout signal
   this->reset_timeout ();
-  
+
   return 0;
 }
 

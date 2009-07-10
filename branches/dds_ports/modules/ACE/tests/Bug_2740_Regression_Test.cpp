@@ -65,7 +65,6 @@ protected:
   // content - this is mostly a stress test for multithreaded reactor.
   size_t echo_cnt_;
   size_t iter_;
-  ACE_Thread_Mutex mtx_;
   unsigned long timer_;
 };
 
@@ -75,12 +74,10 @@ const char *ClientSvcHandler::send_str =
 class ServerSvcHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
+  int open (void* factory);
   int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE);
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask mask = 0);
-
-protected:
-  ACE_Thread_Mutex mtx_;
 };
 
 
@@ -134,8 +131,6 @@ ClientSvcHandler::open (void* factory)
 int
 ClientSvcHandler::handle_input (ACE_HANDLE handle)
 {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->mtx_, -1);
-
     // Get socket data
     char buffer[ACE_DEFAULT_MAX_SOCKET_BUFSIZ];
     ssize_t bc;
@@ -197,8 +192,6 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
 int
 ClientSvcHandler::handle_timeout (const ACE_Time_Value &, const void*)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->mtx_, -1);
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%t: client h %d: timeout\n"),
               this->peer ().get_handle ()));
@@ -209,22 +202,13 @@ ClientSvcHandler::handle_timeout (const ACE_Time_Value &, const void*)
 int
 ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%t: client h %d handle_close\n"),
+              handle));
 
-  bool must_delete = false;
-
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->mtx_, -1);
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%t: client h %d handle_close\n"),
-                handle));
-
-    // If not done iterating, just close the socket and reopen the connection.
-    // Else shut down and delete. Figure it out then let the mutex go so
-    // the guard isn't left holding a bad lock.
-    must_delete = (this->iter_ >= ACE_MAX_ITERATIONS);
-  }
-
-  if (must_delete)
+  // If not done iterating, just close the socket and reopen the connection.
+  // Else shut down and delete.
+  if (this->iter_ >= ACE_MAX_ITERATIONS)
     return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close(handle,
                                                                           mask);
   this->shutdown ();
@@ -236,10 +220,17 @@ ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 }
 
 int
+ServerSvcHandler::open (void* factory)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %d open\n"),
+              this->peer ().get_handle ()));
+
+  return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory);
+}
+
+int
 ServerSvcHandler::handle_input (ACE_HANDLE handle)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->mtx_, -1);
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %d input\n"), handle));
 
   // Receive whatever is here and send it back.
@@ -258,7 +249,7 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
                            handle, ACE_TEXT ("send")),
                           -1);
     }
-  else if (bc == 0) // Socket was closed by client
+  else if (bc == 0 || errno == ECONNRESET) // Socket was closed by client
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          ACE_TEXT ("%t: server h %d: closed by client\n"),
