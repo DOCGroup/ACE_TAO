@@ -4,7 +4,6 @@ ACE_RCSID (ace,
            Time_Value,
            "$Id$")
 
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
@@ -14,25 +13,24 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Static constant representing `zero-time'.
-// Note: this object requires static construction.
+/// Static constant representing `zero-time'.
+/// Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::zero;
 
-// Constant for maximum time representable.  Note that this time
-// is not intended for use with select () or other calls that may
-// have *their own* implementation-specific maximum time representations.
-// Its primary use is in time computations such as those used by the
-// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
-// Note: this object requires static construction.
+/// Constant for maximum time representable.  Note that this time
+/// is not intended for use with select () or other calls that may
+/// have *their own* implementation-specific maximum time representations.
+/// Its primary use is in time computations such as those used by the
+/// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
+/// Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::max_time (
   ACE_Numeric_Limits<time_t>::max (),
   ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 
-// Increment microseconds (the only reason this is here is to allow
-// the use of ACE_Atomic_Op with ACE_Time_Value).
-
+/// Increment microseconds (the only reason this is here is to allow
+/// the use of ACE_Atomic_Op with ACE_Time_Value).
 ACE_Time_Value
 ACE_Time_Value::operator ++ (int)
 {
@@ -51,9 +49,8 @@ ACE_Time_Value::operator ++ (void)
   return *this;
 }
 
-// Decrement microseconds (the only reason this is here is / to allow
-// the use of ACE_Atomic_Op with ACE_Time_Value).
-
+/// Decrement microseconds (the only reason this is here is / to allow
+/// the use of ACE_Atomic_Op with ACE_Time_Value).
 ACE_Time_Value
 ACE_Time_Value::operator -- (int)
 {
@@ -73,13 +70,13 @@ ACE_Time_Value::operator -- (void)
 }
 
 #if defined (ACE_WIN32)
-// Static constant to remove time skew between FILETIME and POSIX
-// time.  POSIX and Win32 use different epochs (Jan. 1, 1970 v.s.
-// Jan. 1, 1601).  The following constant defines the difference
-// in 100ns ticks.
-//
-// In the beginning (Jan. 1, 1601), there was no time and no computer.
-// And Bill said: "Let there be time," and there was time....
+/// Static constant to remove time skew between FILETIME and POSIX
+/// time.  POSIX and Win32 use different epochs (Jan. 1, 1970 v.s.
+/// Jan. 1, 1601).  The following constant defines the difference
+/// in 100ns ticks.
+///
+/// In the beginning (Jan. 1, 1601), there was no time and no computer.
+/// And Bill said: "Let there be time," and there was time....
 # if defined (ACE_LACKS_LONGLONG_T)
 const ACE_U_LongLong ACE_Time_Value::FILETIME_to_timval_skew =
 ACE_U_LongLong (0xd53e8000, 0x19db1de);
@@ -88,8 +85,7 @@ const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
 ACE_INT64_LITERAL (0x19db1ded53e8000);
 # endif
 
-//  Initializes the ACE_Time_Value object from a Win32 FILETIME
-
+///  Initializes the ACE_Time_Value object from a Win32 FILETIME
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
   // // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
@@ -122,8 +118,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   this->normalize ();
 }
 
-// Returns the value of the object as a Win32 FILETIME.
-
+/// Returns the value of the object as a Win32 FILETIME.
 ACE_Time_Value::operator FILETIME () const
 {
   FILETIME file_time;
