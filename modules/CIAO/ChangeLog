@@ -1,3 +1,79 @@
+Fri Jul 10 19:35:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * .:
+        * CIAO-INSTALL.html:
+        * CIAO.mwc:
+        * CIAO_DAnCE.mwc:
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+        * COPYING:
+        * ChangeLog-dds4ccm:
+        * DAnCE/Deployment/Module_Main.h:
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/Logger/Log_Macros.h:
+        * DAnCE/Logger/Logger_Service.cpp:
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+        * DAnCE/NodeApplication/Name_Utilities.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+        * DAnCE/RedirectionService/NameServiceRedirection.cpp:
+        * DAnCE/RedirectionService/RedirectionService.cpp:
+        * DAnCE/RepositoryManager:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+        * DAnCE/RepositoryManager/URL_Parser.h:
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+        * DAnCE/Starter/Starter.cpp:
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * MPC/config/dance_plan_launcher_base.mpc:
+        * NEWS:
+        * PROBLEM-REPORT-FORM:
+        * VERSION:
+        * bin:
+        * ciao:
+        * ciao/ComponentServer/CIAO_ComponentServer.h:
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/Server_init.h:
+        * ciao/Server_init.cpp:
+        * ciao/Version.h:
+        * docs:
+        * etc/ciao.doxygen:
+        * etc/ciao_DAnCE.doxygen:
+        * etc/ciao_config_handlers.doxygen:
+        * examples:
+        * examples/Hello/Sender/starter.cpp:
+        * examples/Hello/descriptors/Aliased_Map.dat:
+        * examples/Hello/descriptors/run_test_alias.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+        * performance-tests:
+        * rules.ciao.GNU:
+        * tests:
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
+        * tools:
+        * tools/Config_Handlers/IRDD_Handler.h:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          Merge in from trunk. 
+        
 Fri Jul 10 18:02:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
