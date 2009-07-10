@@ -45,11 +45,11 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (30);
+$client_status = $CL->SpawnWaitKill (60);
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $SHUTDOWN = $client->CreateProcess ("Bug3333_Client", " -k file://$server_iorfile -s");
-    $SHUTDOWN->SpawnWaitKill (30);
+    $SHUTDOWN->SpawnWaitKill ($client->ProcessStartWaitInterval() + $client->ProcessStopWaitInterval() + 5);
     $status = 1;
 }
 
