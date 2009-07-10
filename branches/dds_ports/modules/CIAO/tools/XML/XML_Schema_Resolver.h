@@ -44,7 +44,7 @@ namespace CIAO
     {
     public:
       XML_Schema_Resolver (void);
-      
+
       XML_Schema_Resolver (Resolver &resolver);
 
       /// This function is called by the Xerces infrastructure to
@@ -57,7 +57,7 @@ namespace CIAO
 
       Resolver &resolver_;
     };
-    
+
     /**
      * @class NoOp_Resolver
      * @brief Resolver that does nothing.
@@ -76,27 +76,27 @@ namespace CIAO
     struct Basic_Resolver
     {
       Basic_Resolver (const ACE_TCHAR *path);
-      
+
       XMLCh* operator() (const XMLCh *const publicId,
                          const XMLCh *const systemId) const;
       XStr path_;
     };
-    
+
     /**
      * @class Environment_Resolver
      * @brief Resolves a schema location from a path from an environment variable.
      */
     struct CIAO_XML_Utils_Export Environment_Resolver
     {
-      Environment_Resolver (const ACE_TCHAR *variable = "",
-                            const ACE_TCHAR *path = "./");
-      
-      void add_path (const ACE_TCHAR *variable, 
+      Environment_Resolver (const ACE_TCHAR *variable = ACE_TEXT(""),
+                            const ACE_TCHAR *path = ACE_TEXT("./"));
+
+      void add_path (const ACE_TCHAR *variable,
                      const ACE_TCHAR *path);
-      
+
       XMLCh* operator() (const XMLCh *const publicId,
                          const XMLCh *const systemId) const;
-      
+
       std::vector<XStr> paths_;
     };
   }

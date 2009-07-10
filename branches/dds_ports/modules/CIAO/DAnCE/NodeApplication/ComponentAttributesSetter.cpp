@@ -56,8 +56,8 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
           continue;
         }
       DANCE_DEBUG ((LM_DEBUG, DLINFO
-                    "ComponentAttributesSetter::SetComponentAttributes - "
-                    "Populating attribute name %C\n", name.c_str()));
+                    ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
+                    ACE_TEXT("Populating attribute name %C\n"), name.c_str()));
       ACE_CString method = "_set_";
       method += prop[i].name.in();
 
@@ -73,8 +73,8 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
       catch (const CORBA::BAD_OPERATION &)
         {
           DANCE_ERROR ((LM_WARNING, DLINFO
-                        "ComponentAttributesSetter::SetComponentAttributes - "
-                        "Caught BAD_OPERATION while trying to set attribute %C\n",
+                        ACE_TEXT("ComponentAttributesSetter::SetComponentAttributes - ")
+                        ACE_TEXT("Caught BAD_OPERATION while trying to set attribute %C\n"),
                         name.c_str ()));
         }
       catch (const CORBA::Exception &e)

@@ -84,7 +84,7 @@ namespace CIAO
 
       ::Deployment::PackageConfiguration_var pc;
 
-      ACE_TCHAR package[PACKAGE_NAME_LEN];
+      char package[PACKAGE_NAME_LEN];
 
       size_t length = ACE_OS::strlen (package_uri);
       size_t pos1 = 0;
@@ -133,12 +133,11 @@ namespace CIAO
           return false;
         }
 
-      ::Deployment::PackageConfiguration_var pc;
-
       CORBA::StringSeq_var seq = rm_->findNamesByType (specific_type);
       for (CORBA::ULong i = 0; i < seq->length (); ++i)
         {
-          pc = rm_->findPackageByName (seq[i]);
+          ::Deployment::PackageConfiguration_var pc =
+            rm_->findPackageByName (seq[i]);
 
           PCVisitor pcv (plan, *pc, false);
           index = pcv.Visit ();

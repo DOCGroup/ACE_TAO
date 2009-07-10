@@ -83,7 +83,7 @@ namespace CIAO
     ComponentServer_Task::ComponentServer_Task (int argc, ACE_TCHAR **argv)
       : orb_ (0),
         uuid_ (""),
-        callback_ior_str_ ("")
+        callback_ior_str_ (ACE_TEXT(""))
     {
       CIAO_TRACE ("CIAO_ComponentServer_Task::CIAO_ComponentServer_Task ()");
 
@@ -169,7 +169,7 @@ namespace CIAO
         }
 
 
-      if (this->callback_ior_str_ != "")
+      if (this->callback_ior_str_ != ACE_TEXT(""))
         {
           CIAO_DEBUG ((LM_TRACE, CLINFO " resolving callback IOR\n"));
           CORBA::Object_ptr obj = this->orb_->string_to_object (this->callback_ior_str_.c_str ());
@@ -337,7 +337,7 @@ namespace CIAO
               CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::parse_args - "
                            "uuid is %s\n",
                            opts.opt_arg ()));
-              this->uuid_ = opts.opt_arg ();
+              this->uuid_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
               break;
 
             case 'c':
@@ -370,8 +370,8 @@ namespace CIAO
               CIAO_ERROR ((LM_ERROR, CLINFO " Unknown option: %s\n",
                           opts.last_option ()));
               this->usage ();
-              ACE_TString err (ACE_TEXT("Unknown option "));
-              err += opts.last_option ();
+              ACE_CString err ("Unknown option ");
+              err += ACE_TEXT_ALWAYS_CHAR (opts.last_option ());
               throw Error (err);
             }
         }
@@ -379,7 +379,7 @@ namespace CIAO
       // check required options.
       if (this->uuid_ == "")
         throw Error ("Option required: -u|--uuid");
-      if (this->callback_ior_str_ == "")
+      if (this->callback_ior_str_ == ACE_TEXT(""))
         CIAO_ERROR ((LM_WARNING, CLINFO
                      "ComponentServer_Task::parse_args - Starting ComponentServer without a callback IOR\n"));
     }

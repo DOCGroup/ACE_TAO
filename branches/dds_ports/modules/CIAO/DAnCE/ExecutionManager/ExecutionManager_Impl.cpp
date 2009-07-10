@@ -26,17 +26,17 @@ ExecutionManager_Impl::~ExecutionManager_Impl()
        iter != this->managers_.end();
        ++iter)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO "ExecutionManager_Impl::~ExecutionManager_Impl - "
-                    "deactivating DAM \"%C\"\n", (*iter).ext_id_.c_str()));
+      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
+                    ACE_TEXT("deactivating DAM \"%C\"\n"), (*iter).ext_id_.c_str()));
       PortableServer::ObjectId_var id = this->poa_->servant_to_id ( (*iter).int_id_);
-      DANCE_DEBUG ((LM_TRACE, DLINFO "ExecutionManager_Impl::~ExecutionManager_Impl - "
-                    "before deactivate_object...\n"));
+      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
+                    ACE_TEXT("before deactivate_object...\n")));
       this->poa_->deactivate_object (id.in());
-      DANCE_DEBUG ((LM_TRACE, DLINFO "ExecutionManager_Impl::~ExecutionManager_Impl - "
-                    "deleting DomainApplicationManager\n"));
+      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
+                    ACE_TEXT("deleting DomainApplicationManager\n")));
       delete (*iter).int_id_;
-      DANCE_DEBUG ((LM_TRACE, DLINFO "ExecutionManager_Impl::~ExecutionManager_Impl - "
-                    "DomainApplicationManager deleted\n"));
+      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
+                    ACE_TEXT("DomainApplicationManager deleted\n")));
     }
 }
 
@@ -50,8 +50,8 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
   DomainApplicationManager_Impl * dam = 0;
   if (0 == this->managers_.find (plan.UUID.in(), dam))
     {
-      DANCE_DEBUG((LM_NOTICE, DLINFO "ExecutionManager_Impl::preparePlan - "
-                   "DomainApplicationManager with specified UUID already exists\n"));
+      DANCE_DEBUG((LM_NOTICE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
+                   ACE_TEXT("DomainApplicationManager with specified UUID already exists\n")));
       // Should we return on this situation reference on existed DomainApplicationManager or
       // we should throw PlanError exception?
       CORBA::Object_var ref = this->poa_->servant_to_reference (dam);
@@ -66,13 +66,15 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
                                                           this->locator_),
                     CORBA::NO_MEMORY ());
   this->managers_.rebind (plan.UUID.in(), dam_servant);
-  DANCE_DEBUG((LM_TRACE, DLINFO "ExecutionManager_Impl::preparePlan - "
-               "Domain Application Manager  was successfully created.\n"));
+  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
+               ACE_TEXT("Domain Application Manager was successfully created.\n")));
 
   PortableServer::ObjectId_var id = this->poa_->activate_object (dam_servant);
 
-  DANCE_DEBUG((LM_NOTICE, DLINFO "ExecutionManager_Impl::preparePlan - "
-               "Plan with UUID %C was successfully prepared.\n", plan.UUID.in()));
+  DANCE_DEBUG((LM_NOTICE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
+               ACE_TEXT("Plan with UUID %C was successfully prepared.\n",
+                        plan.UUID.in ())));
+
   CORBA::Object_var ref = this->poa_->id_to_reference (id.in());
   return Deployment::DomainApplicationManager::_narrow (ref.in ());
 }
@@ -105,7 +107,7 @@ ExecutionManager_Impl::getManagers ()
 void
 ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_ptr appManager)
 {
-  DANCE_DEBUG((LM_DEBUG, DLINFO "ExecutionManager_Impl::destroyManager - started\n"));
+  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - started\n")));
 
   for (TDomainManagers::iterator iter = this->managers_.begin();
        iter != this->managers_.end();
@@ -117,17 +119,17 @@ ExecutionManager_Impl::destroyManager (::Deployment::DomainApplicationManager_pt
           this->managers_.unbind ( (*iter).ext_id_);
           PortableServer::ObjectId_var id = this->poa_->reference_to_id (appManager);
           this->poa_->deactivate_object (id.in());
-          DANCE_DEBUG((LM_INFO, DLINFO "ExecutionManager_Impl::destroyManager - deleting DomainApplicationManager\n"));
+          DANCE_DEBUG((LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - deleting DomainApplicationManager\n")));
           delete (*iter).int_id_;
           (*iter).int_id_ = 0;
-          DANCE_DEBUG((LM_INFO, DLINFO "ExecutionManager_Impl::destroyManager - DomainApplicationManager deleted\n"));
+          DANCE_DEBUG((LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - DomainApplicationManager deleted\n")));
           //this->managers_.unbind ( (*iter).ext_id_);
-          DANCE_DEBUG((LM_INFO, DLINFO "ExecutionManager_Impl::destroyManager - finished\n"));
+          DANCE_DEBUG((LM_INFO, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - finished\n")));
           return;
         }
     }
-  DANCE_ERROR ((LM_ERROR, DLINFO "ExecutionManager_Impl::destroyManager - "
-                 "corresponding DomainApplicationManager cannot be found\n"));
+  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - ")
+                 ACE_TEXT("corresponding DomainApplicationManager cannot be found\n")));
   throw ::Deployment::StopError();
 }
 

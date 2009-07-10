@@ -56,20 +56,20 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
       struct SOptions
       {
         bool process_ns_;
-        const char* process_ns_file_;
+        const ACE_TCHAR* process_ns_file_;
         bool create_plan_ns_;
-        const char* create_plan_ns_ior_;
+        const ACE_TCHAR* create_plan_ns_ior_;
         bool rebind_plan_ns_;
-        const char* rebind_plan_ns_ior_;
+        const ACE_TCHAR* rebind_plan_ns_ior_;
         bool port_indirection_;
-        ACE_Vector<ACE_CString> node_managers_;
+        ACE_Vector<ACE_TString> node_managers_;
         bool ignore_failure_;
-        const char * cs_path_;
+        const ACE_TCHAR * cs_path_;
         unsigned int timeout_;
         CORBA::Boolean standalone_;
-        const char * server_args_;
-        const char * domain_nc_;
-        const char * instance_nc_;
+        const ACE_TCHAR * server_args_;
+        const ACE_TCHAR * domain_nc_;
+        const ACE_TCHAR * instance_nc_;
 
         SOptions()
             : process_ns_ (false),

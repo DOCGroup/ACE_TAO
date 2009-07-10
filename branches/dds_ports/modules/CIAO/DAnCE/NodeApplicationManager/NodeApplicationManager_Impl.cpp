@@ -27,8 +27,8 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
 {
   DANCE_TRACE ("NodeApplicationManager_Impl::NodeApplicationManager_Impl");
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO " NodeApplicationManager_Impl::NodeApplicationManager_Impl - "
-               "Initializing for node '%s' and plan '%s' starting...\n",
+  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT(" NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
+               ACE_TEXT("Initializing for node '%C' and plan '%C' starting...\n"),
                node_name.c_str(),
                plan_.UUID.in()));
   this->register_plan();
@@ -36,8 +36,8 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
   PROPERTY_MAP::const_iterator i = properties.begin ();
   while (!i.done ())
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplicationManager_Impl::NodeApplicationManager_Impl - "
-                    "Binding value for property %s\n", i->key ().c_str ()));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
+                    ACE_TEXT("Binding value for property %s\n"), i->key ().c_str ()));
       this->properties_.bind (i->key (), i->item ());
       i.advance ();
     }
@@ -61,8 +61,8 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_WARNING, DLINFO "NodeApplicationManager_Impl::~NodeApplicationManager_Impl - "
-                    "Caught exception in NodeApplicationManager destructor\n"));
+      DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplicationManager_Impl::~NodeApplicationManager_Impl - ")
+                    ACE_TEXT("Caught exception in NodeApplicationManager destructor\n")));
     }
 }
 
@@ -73,8 +73,8 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
   DANCE_TRACE ("NodeApplicationManager_Impl::startLaunch");
 
   // Creating NodeApplication object
-  DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_impl::startLaunch - "
-               "Initializing NodeApplication\n"));
+  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+               ACE_TEXT("Initializing NodeApplication\n")));
   ACE_NEW_THROW_EX (this->application_,
                     NodeApplication_Impl (this->orb_.in(),
                                           this->poa_.in(),
@@ -84,17 +84,17 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
                                           this->properties_),
                     CORBA::NO_MEMORY ());
 
-  DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_impl::startLaunch - "
-               "Instructing NodeApplication to initialize components.\n"));
+  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+               ACE_TEXT("Instructing NodeApplication to initialize components.\n")));
   this->application_->init_components();
 
-  DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_impl::startLaunch - "
-               "Collecting connection references\n"));
+  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+               ACE_TEXT("Collecting connection references\n")));
   providedReference = this->application_->getAllConnections();
   //this->parent_.registerConnections(this->plan_.UUID.in(), *providedReference);
 
-  DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplicationManager_impl::startLaunch - "
-               "Activating NodeApplication servant\n"));
+  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+               ACE_TEXT("Activating NodeApplication servant\n")));
   PortableServer::ObjectId_var as_id =
     this->poa_->activate_object (this->application_);
 
@@ -113,8 +113,8 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
   {
     if (!application->_is_equivalent (this->poa_->servant_to_reference (this->application_)))
       {
-        DANCE_ERROR((LM_ERROR, DLINFO "NodeApplicationManager_Impl::destroyApplication - "
-                     "application is equivalent to current application\n"));
+        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
+                     ACE_TEXT("application is equivalent to current application\n")));
         throw ::Deployment::StopError();
       }
 //    this->redirection_.unregister (this->node_name_, this->plan_.UUID.in());
@@ -124,16 +124,16 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
     if (this->properties_.find (DAnCE::STANDALONE_NM,
                                 val) == 0)
       {
-        DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicationManager_Impl::destroyApplication - "
-                      "Found STANDALONE_NM property\n"));
+        DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
+                      ACE_TEXT("Found STANDALONE_NM property\n")));
 
         CORBA::Boolean standalone (false);
 
         val >>= CORBA::Any::to_boolean (standalone);
         if (standalone)
           {
-            DANCE_DEBUG ((LM_DEBUG, DLINFO "NodeApplicationManager_Impl::destroyApplication - "
-                          "Acting as a standalone NM, passivating and removing installed components\n"));
+            DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
+                          ACE_TEXT("Acting as a standalone NM, passivating and removing installed components\n")));
 
             this->application_->passivate_components ();
             this->application_->remove_components ();
@@ -147,23 +147,23 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
     delete this->application_;
     this->application_ = 0;
   }
-  catch (CORBA::SystemException &)
+  catch (const CORBA::SystemException &)
   {
     throw;
   }
-  catch (Deployment::StopError &)
+  catch (const Deployment::StopError &)
   {
     throw;
   }
-  catch (CORBA::UserException &e)
+  catch (const CORBA::UserException &e)
   {
-    DANCE_ERROR((LM_ERROR, DLINFO "NodeApplicationManager_Impl::destroyApplication failed with UserException %s(%s) \"%s\"\n",
+    DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with UserException %C(%C) \"%C\"\n"),
                  e._name(), e._rep_id(), e._info().c_str()));
     throw Deployment::StopError(e._name(), e._info().c_str());
   }
   catch (...)
   {
-    DANCE_ERROR((LM_ERROR, DLINFO "NodeApplicationManager_Impl::destroyApplication failed with unknown exception.\n"));
+    DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with unknown exception.\n")));
     throw Deployment::StopError();
   }
 }
@@ -171,10 +171,10 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
 void
 NodeApplicationManager_Impl::register_plan(void)
 {
-  DANCE_TRACE ("NodeApplicationManager_Impl::register_plan()");
+  DANCE_TRACE("NodeApplicationManager_Impl::register_plan()");
 
 //  this->redirection_.registration_start (this->node_name_, this->plan_.UUID.in());
-  DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_Impl::register_plan - registering objects...\n"));
+  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::register_plan - registering objects...\n")));
   for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
     {
 //      this->redirection_.registration (this->node_name_,
@@ -183,15 +183,15 @@ NodeApplicationManager_Impl::register_plan(void)
       //                                 CORBA::Object::_nil());
     }
 
-  DANCE_DEBUG((LM_TRACE, DLINFO "NodeApplicationManager_Impl::register_plan - registering endpoints...\n"));
+  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::register_plan - registering endpoints...\n")));
   for (unsigned int i = 0; i < this->plan_.connection.length(); i++)
     {
       for (unsigned int j = 0; j < this->plan_.connection[i].internalEndpoint.length(); j++)
         {
           if (this->plan_.connection[i].internalEndpoint[j].provider)
             {
-              DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicationManager_Impl::register_plan - ",
-                            "Registering Port '%s' on instance '%s' on node '%s'\n",
+              DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::register_plan - "),
+                            ACE_TEXT("Registering Port '%s' on instance '%s' on node '%s'\n"),
                             this->plan_.connection[i].internalEndpoint[j].portName.in(),
                             this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in(),
                             this->node_name_.c_str ()));
@@ -203,7 +203,7 @@ NodeApplicationManager_Impl::register_plan(void)
             }
         }
     }
-  DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplicationManager_Impl::register_plan - "
-                "Finishing registration\n"));
+  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::register_plan - ")
+                ACE_TEXT("Finishing registration\n")));
   //this->redirection_.registration_finish (this->node_name_, this->plan_.UUID.in());
 }
