@@ -1,3 +1,12 @@
+Fri Jul 10 07:17:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/DataType_Handler.cpp
+        * tools/Config_Handlers/Dump_Obj.cpp
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.h
+        * tools/Config_Handlers/Req_Handler.cpp
+          Fixed includes because of refactoring of the deployment idl
+
 Thu Jul  9 18:04:09 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Deployment/DAnCE_Core.mpc
