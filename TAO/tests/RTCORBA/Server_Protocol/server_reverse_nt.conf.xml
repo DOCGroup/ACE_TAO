@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from server_reverse_nt.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  Options for SHMIOP protocol -->
- <static id="SHMIOP_Factory" params="-MMAPFilePrefix server_shmiop"/>
- <!--  Protocol options -->
- <static id="Advanced_Resource_Factory" params="-ORBProtocolFactory SHMIOP_Factory -ORBProtocolFactory IIOP_Factory"/>
-</ACE_Svc_Conf>
