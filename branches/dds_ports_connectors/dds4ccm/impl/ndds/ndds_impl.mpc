@@ -1,0 +1,16 @@
+project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib {
+
+  after += DDS4CCM_lem_stub
+  libs += DDS4CCM_lem_stub
+
+  dynamicflags = DDS4CCM_NDDS_IMPL_BUILD_DLL
+  macros += BUILDING_NDDS_LIB
+  Source_Files {
+    DataWriter.cpp
+    Participant.cpp
+    ParticipantFactory.cpp
+    Topic.cpp
+    Publisher.cpp
+    Utils.cpp
+  }
+}
