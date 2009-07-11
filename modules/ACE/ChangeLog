@@ -1,3 +1,9 @@
+Sat Jul 11 20:01:36 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_linux.GNU:
+
+         Undo bad merge. 
+        
 Fri Jul 10 19:44:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * .:
