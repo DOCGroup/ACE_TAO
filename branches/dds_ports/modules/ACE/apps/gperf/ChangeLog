@@ -1,3 +1,9 @@
+Mon Jul 13 15:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * src/Bool_Array.h
+        * src/Vectors.h
+          Doxygen changes
+
 Sun Jun 28 03:20:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * src/*.{h,cpp}:
