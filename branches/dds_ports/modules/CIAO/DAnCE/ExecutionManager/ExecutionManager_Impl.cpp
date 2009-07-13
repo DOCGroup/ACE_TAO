@@ -73,7 +73,7 @@ ExecutionManager_Impl::preparePlan (const ::Deployment::DeploymentPlan & plan,
 
   DANCE_DEBUG((LM_NOTICE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
                ACE_TEXT("Plan with UUID %C was successfully prepared.\n"),
-                        plan.UUID.in ())));
+                        plan.UUID.in ()));
 
   CORBA::Object_var ref = this->poa_->id_to_reference (id.in());
   return Deployment::DomainApplicationManager::_narrow (ref.in ());
