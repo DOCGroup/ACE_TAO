@@ -46,9 +46,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - ORB_init\n"));
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Obtain RootPOA\n"));
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 
@@ -62,9 +64,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - parse args\n"));
       if (parse_args (argc, argv) != 0)
         return 1;
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - init hello\n"));
       Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
@@ -80,6 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var ior = orb->object_to_string (hello.in ());
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Create the forwarding loop\n"));
       CORBA::Object_var iorTableObj =
             orb->resolve_initial_references ("IORTable");
 
@@ -94,6 +99,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // itself. Acessing this will  make the server reply with LOCATION_FORWARD
       // indefinitely.
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Corbaloc is\n  \"%C\"\n", full_corbaloc.c_str()));
       // Get the endpoint info only...
       CORBA::ULong first_slash = full_corbaloc.find ("/", 0);
       ACE_CString forward_forever = full_corbaloc.substring (0,
@@ -103,6 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       forward_forever += "/hello";
       iorTable->bind("hello", forward_forever.c_str ());
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Forward forever is\n  \"%C\"\n", forward_forever.c_str()));
       // Output the IORs
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
@@ -124,6 +131,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - orb->run()\n"));
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
