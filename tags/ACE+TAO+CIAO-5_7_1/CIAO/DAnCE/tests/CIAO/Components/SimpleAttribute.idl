@@ -1,0 +1,25 @@
+// $Id$
+
+#ifndef SIMPLE_ATTRIBUTE_IDL
+#define SIMPLE_ATTRIBUTE_IDL
+
+#include "Components.idl"
+
+module Simple
+{
+  component SimpleAttribute
+  {
+    attribute string str_attr;
+    attribute long long_attr;
+    attribute short short_attr;
+  };
+  
+  home SimpleAttributeHome manages SimpleAttribute
+  {
+    attribute string str_attr;
+    attribute long long_attr;
+    attribute short short_attr;
+  };
+};
+
+#endif /*SIMPLE_ATTRIBUTE_IDL*/

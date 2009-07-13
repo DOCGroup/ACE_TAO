@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : aceexe, avoids_ace_for_tao {
+  exename = main
+  specific(bmake) {
+    avoids += uses_wchar
+  }
+}

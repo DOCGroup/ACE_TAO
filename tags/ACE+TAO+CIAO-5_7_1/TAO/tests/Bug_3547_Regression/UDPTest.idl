@@ -1,0 +1,14 @@
+// $Id$
+
+#ifndef _COMMON_UDPTEST_IDL_
+#define _COMMON_UDPTEST_IDL_
+
+interface UDPTestI
+{
+    typedef octet BufferT[1000] ;
+
+    oneway void send( in BufferT Msg );
+};
+
+
+#endif

@@ -1,0 +1,11 @@
+// $Id$
+
+#ifndef FOO_IDL
+#define FOO_IDL
+
+struct Foo
+{
+  long bar[5];
+};
+
+#endif

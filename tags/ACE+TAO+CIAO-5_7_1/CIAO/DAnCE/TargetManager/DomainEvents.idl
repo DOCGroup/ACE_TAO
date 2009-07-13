@@ -1,0 +1,25 @@
+/**
+ * @file DomainEvents.idl
+ * @brief Contains Events in the Domain
+ *
+ * @author Nilabja R <nilabjar@dre.vanderbilt.edu>
+ *
+ * $Id$
+ */
+
+#ifndef DOMAIN_CHANGE_IDL
+#define DOMAIN_CHANGE_IDL
+
+#include "DAnCE/Deployment/Deployment_TargetManager.idl"
+#include "ccm/CCM_Events.idl"
+
+module CIAO
+{
+    eventtype Domain_Changed_Event
+    {
+      public ::Deployment::Domain changes;
+      public ::Deployment::DomainUpdateKind change_kind;
+    };
+};
+
+#endif

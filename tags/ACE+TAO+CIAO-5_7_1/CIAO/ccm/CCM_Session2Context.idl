@@ -1,0 +1,37 @@
+// $Id$
+
+#if !defined (CCM_SESSION2CONTEXT_IDL)
+#define CCM_SESSION2CONTEXT_IDL
+
+#include "ccm/CCM_CCM2Context.idl"
+
+// *************** Extended Container Interfaces ***************
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  enum BadComponentReferenceReason
+  {
+    NON_LOCAL_REFERENCE,
+    NON_COMPONENT_REFERENCE,
+    WRONG_CONTAINER
+  };
+  exception BadComponentReference
+  {
+    BadComponentReferenceReason reason;
+  };
+
+  local interface Session2Context : SessionContext, CCM2Context
+  {
+    Object create_ref (in CORBA::RepositoryId repid);
+
+    Object create_ref_from_oid (in CORBA::OctetSeq oid,
+                                in CORBA::RepositoryId repid);
+
+    CORBA::OctetSeq get_oid_from_ref (in Object objref)
+      raises (IllegalState,
+              BadComponentReference);
+  };
+};
+#endif /* CCM_SESSION2CONTEXT_IDL */

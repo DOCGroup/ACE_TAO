@@ -1,0 +1,18 @@
+/**
+
+@page Activation Test README File
+
+	This test measures the time required to activate (via _this)
+and deactivate a large number of objects.  The measurements include
+the time required to allocate a simple servant and, in the test using
+a separate client/server, the time required to pass the object
+reference around.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful, and prints
+out the performance numbers.
+
+*/

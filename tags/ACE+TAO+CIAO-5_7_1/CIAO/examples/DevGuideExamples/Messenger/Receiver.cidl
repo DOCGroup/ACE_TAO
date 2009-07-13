@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ *  @file Receiver.cidl
+ *
+ *  @author Don Busch <busch_d@ociweb.com>
+ */
+
+#ifndef RECEIVER_CIDL
+#define RECEIVER_CIDL
+
+#include "Receiver.idl"
+
+composition session Receiver_Impl
+{
+    home executor ReceiverHome_Exec
+    {
+        implements ReceiverHome;
+        manages    Receiver_Exec;
+    };
+};
+
+#endif
