@@ -43,8 +43,8 @@
 To: tao-bugs@cs.wustl.edu
 Subject: [area]: [synopsis]
 
-    TAO VERSION: 1.7
-    ACE VERSION: 5.7
+    TAO VERSION: 1.7.1
+    ACE VERSION: 5.7.1
 
     HOST MACHINE and OPERATING SYSTEM:
         If on Windows based OS's, which version of WINSOCK do you
