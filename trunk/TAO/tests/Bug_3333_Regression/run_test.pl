@@ -23,13 +23,15 @@ $client->DeleteFile($forward_forever);
 $SV = $server->CreateProcess ("Bug3333_Server", "-o $server_iorfile -p $client_iorfile -ORBObjRefStyle URL -ORBCollocation NO");
 $CL = $client->CreateProcess ("Bug3333_Client", "-k file://$server_iorfile -l file://$client_iorfile");
 
+print "Spawn server\n";
 $server_status = $SV->Spawn ();
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
+print "Wait for server ior file\n";
 if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
+                               $server->ProcessStartWaitInterval()+10) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -45,15 +47,17 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (60);
+print "Spawn client\n";
+$client_status = $CL->SpawnWaitKill (60); # 60= 20x the actual roundtrip timeout policy value of 3sec, just to be sure.
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $SHUTDOWN = $client->CreateProcess ("Bug3333_Client", " -k file://$server_iorfile -s");
-    $SHUTDOWN->SpawnWaitKill ($client->ProcessStartWaitInterval() + $client->ProcessStopWaitInterval() + 5);
+    $SHUTDOWN->SpawnWaitKill ($client->ProcessStartWaitInterval()+$client->ProcessStopWaitInterval()+10);
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+print "Wait for server to finish\n";
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval()+10);
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;

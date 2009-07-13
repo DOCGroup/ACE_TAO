@@ -1,3 +1,12 @@
+Mon Jul 13 12:28:00 UTC 2009  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_3333_Regression/run_test.pl:
+        * tests/Bug_3333_Regression/client.cpp:
+        * tests/Bug_3333_Regression/server.cpp:
+
+          Add more progress output to attempt to see why this
+          test is failing on the remady virtual machines.
+
 Fri Jul 10 10:38:00 UTC 2009  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_orb_tests.lst:
