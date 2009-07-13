@@ -21,7 +21,7 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($forward_forever);
 
 $SV = $server->CreateProcess ("Bug3333_Server", "-o $server_iorfile -p $client_iorfile -ORBObjRefStyle URL -ORBCollocation NO");
-$CL = $client->CreateProcess ("Bug3333_Client", "-k file://$server_iorfile -l file://$client_iorfile");
+$CL = $client->CreateProcess ("Bug3333_Client", "-ORBDebugLevel0 -k file://$server_iorfile -l file://$client_iorfile");
 
 print "Spawn server\n";
 $server_status = $SV->Spawn ();
@@ -41,7 +41,23 @@ if ($server->GetFile ($iorbase) == -1) {
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
-if ($client->PutFile ($iorbase) == -1) {
+if ($server->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($server->WaitForFileTimed ($forward_forever,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($server->GetFile ($forward_forever) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($server->PutFile ($forward_forever) == -1) {
     print STDERR "ERROR: cannot set file <$client_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;

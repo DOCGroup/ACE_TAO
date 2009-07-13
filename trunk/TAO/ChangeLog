@@ -1,3 +1,9 @@
+Mon Jul 13 14:00:00 UTC 2009  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_3333_Regression/run_test.pl:
+
+          Ensure second iorfile is output by server.
+
 Mon Jul 13 12:28:00 UTC 2009  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_3333_Regression/run_test.pl:
