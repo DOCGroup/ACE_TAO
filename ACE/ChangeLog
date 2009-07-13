@@ -1,3 +1,7 @@
+Mon Jul 13 12:32:13 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ACE version 5.7.1 released.
+
 Fri Jul 10 09:20:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.{h,cpp,inl}:
