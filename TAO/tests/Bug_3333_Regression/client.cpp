@@ -47,6 +47,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - ORB_init()\n"));
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
@@ -67,6 +68,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 1);
             }
 
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - create timeout policy\n"));
           // Three second relative roundtrip timeout.
           TimeBase::TimeT timeout_period = 30000000u;
 
@@ -101,6 +103,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 1);
                 }
 
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - loop_forever call\n"));
               CORBA::String_var the_string = hello->get_string ();
 
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -114,6 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
         }
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown server\n"));
       tmp = orb->string_to_object (ior);
 
       hello = Test::Hello::_narrow(tmp.in ());
@@ -128,6 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       hello->shutdown ();
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - End\n"));
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
