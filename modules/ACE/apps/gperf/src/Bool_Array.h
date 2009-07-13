@@ -36,41 +36,40 @@
 
 #if defined (ACE_HAS_GPERF)
 
+/**
+ * Efficient lookup table abstraction implemented as a "Generation
+ * Number" Array.
+ *
+ * Uses a "Generation Numbering" implementation to minimize
+ * initialization time.
+ */
 class Bool_Array
 {
-  // = TITLE
-  //   Efficient lookup table abstraction implemented as a "Generation
-  //   Number" Array.
-  //
-  // = DESCRIPTION
-  //   Uses a "Generation Numbering" implementation to minimize
-  //   initialization time.
 public:
-  // = Initialization and termination methods.
+  /// Constructor
   Bool_Array (void);
-  // Constructor
 
+  /// Initialize the array (requires O(n) time).
   int open (u_long);
-  // Initialize the array (requires O(n) time).
 
+  /// Destructor.
   ~Bool_Array (void);
-  // Destructor.
 
+  /// Locate the @a value in the array (requires O(1) time).
   int find (u_long value);
-  // Locate the <value> in the array (requires O(1) time).
 
+  /// Reinitializes the array (requires O(1) time).
   void reset (void);
-  // Reinitializes the array (requires O(1) time).
 
 private:
+  /// Initialization of the index space.
   unsigned long *storage_array_;
-  // Initialization of the index space.
 
+  /// Keep track of the current Generation.
   unsigned long generation_number_;
-  // Keep track of the current Generation.
 
+  /// Keep track of array size.
   unsigned long size_;
-  // Keep track of array size.
 };
 
 #endif /* ACE_HAS_GPERF */

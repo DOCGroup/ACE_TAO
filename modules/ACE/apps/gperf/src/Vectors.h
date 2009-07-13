@@ -52,7 +52,6 @@
  */
 class Vectors
 {
-  // = TITLE
 public:
   /// Counts occurrences of each key set character.
   static int occurrences[ACE_STANDARD_CHARACTER_SET_SIZE];
