@@ -1,9 +1,17 @@
+Tue Jul 14 20:59:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Fixed problem with created MPC package
+
+        * rpmbuild/ace-tao-rpmlintrc.txt:
+          Removed txt mapping
+
 Tue Jul 14 15:16:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * apps/gperf/src/gperf_export.h:
 
           Missing file from earlier merge, thanks to Phil Mesnier for
-          pointing this out. 
+          pointing this out.
 
 Tue Jul 14 14:24:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
