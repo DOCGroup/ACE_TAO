@@ -1,3 +1,13 @@
+Tue Jul 14 14:21:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+          Resolved Fuzz errors.
+
 Tue Jul 14 11:12:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * .:
@@ -133,8 +143,8 @@ Tue Jul 14 11:12:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/Bug_3647_Regression/Backend_Impl.h:
         * tests/Bug_3647_Regression/Middle_Impl.h:
 
-          Merged in dds_ports branch, changelog entries pasted below. 
-        
+          Merged in dds_ports branch, changelog entries pasted below.
+
         * TAO_IDL/be/be_stream_factory.cpp:
         * TAO_IDL/be/be_sunsoft.cpp:
         * TAO_IDL/be_include/be_stream_factory.h:
@@ -639,7 +649,7 @@ Tue Jul 14 11:12:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
              Changes to existing files in support of the new CIAO servant
              code and executor IDL code generation.
-        
+
 
 Tue Jul 14 02:45:10 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 

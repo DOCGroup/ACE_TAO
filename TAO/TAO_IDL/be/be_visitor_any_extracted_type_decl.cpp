@@ -1,3 +1,5 @@
+// $Id$
+
 #include "be_visitor_any_extracted_type_decl.h"
 
 #include "be_visitor_context.h"
