@@ -1,10 +1,16 @@
+Tue Jul 14 20:46:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Further warning fixes. 
+        
 Tue Jul 14 20:32:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_exs.cpp:
 
           Roll back commented out port provider, while a good idea in theory,
-          causes warnings in generated code which may be part of the automated  
-          build. 
+          causes warnings in generated code which may be part of the automated
+          build.
 
 Tue Jul 14 20:15:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 

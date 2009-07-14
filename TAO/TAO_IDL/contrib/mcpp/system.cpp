@@ -284,7 +284,7 @@ static long     std_val = -1L;  /* Value of __STDC_VERSION__ or __cplusplus */
 #define MAX_DEF   256
 #define MAX_UNDEF (MAX_DEF/4)
 static char *   def_list[ MAX_DEF];     /* Macros to be defined     */
-static char *   undef_list[ MAX_UNDEF]; /* Macros to be undefined   */
+static const char *   undef_list[ MAX_UNDEF]; /* Macros to be undefined   */
 static int      def_cnt;                /* Count of def_list        */
 static int      undef_cnt;              /* Count of undef_list      */
 
@@ -1715,9 +1715,15 @@ static void def_a_macro(
   ACE_OS::strcpy( definition, def);
   if ((cp = ACE_OS::strchr( definition, '=')) != 0) {
     *cp = ' ';                          /* Remove the '='       */
-    cp = "\n";                          /* Append <newline>     */
+    // cp = "\n";                          /* Append <newline>     */
+    *(cp + 0) = '\n';
+    *(cp + 1) = '\0';
   } else {
-    cp = " 1\n";                        /* With definition "1"  */
+    *(cp + 0) = ' ';
+    *(cp + 1) = '1';
+    *(cp + 2) = '\n';
+    *(cp + 3) = '\0';
+    //cp = " 1\n";                        /* With definition "1"  */
   }
   ACE_OS::strcat( definition, cp);
   cp = definition;
@@ -2854,7 +2860,7 @@ static void     undef_macros( void)
  * This routine should be called after init_predefine().
  */
 {
-  char *      name;
+  const char *      name;
   int         i;
 
   for (i = 0; i < undef_cnt; i++) {
