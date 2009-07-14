@@ -47,6 +47,10 @@ BE_GlobalData::BE_GlobalData (void)
     stub_export_include_ (0),
     anyop_export_macro_ (0),
     anyop_export_include_ (0),
+    exec_export_macro_ (0),
+    exec_export_include_ (0),
+    svnt_export_macro_ (0),
+    svnt_export_include_ (0),
     pch_include_ (0),
     pre_include_ (0),
     post_include_ (0),
@@ -71,6 +75,12 @@ BE_GlobalData::BE_GlobalData (void)
     server_inline_ending_ (ACE::strnew ("S.inl")),
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
+    ciao_svnt_hdr_ending_ (ACE::strnew ("_svnt.h")),
+    ciao_svnt_src_ending_ (ACE::strnew ("_svnt.cpp")),
+    ciao_exec_hdr_ending_ (ACE::strnew ("_exec.h")),
+    ciao_exec_src_ending_ (ACE::strnew ("_exec.cpp")),
+    ciao_exec_stub_hdr_ending_ (ACE::strnew ("EC.h")),
+    ciao_exec_idl_ending_ (ACE::strnew ("E.idl")),
     output_dir_ (0),
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
@@ -112,7 +122,18 @@ BE_GlobalData::BE_GlobalData (void)
     use_clonable_in_args_ (false),
     gen_template_export_ (false),
     gen_ostream_operators_ (false),
-    gen_custom_ending_ (true)
+    gen_custom_ending_ (true),
+    gen_ciao_svnt_ (false),
+    gen_ciao_exec_idl_ (false),
+    gen_ciao_exec_impl_ (false),
+    gen_component_swapping_ (false),
+    gen_ciao_static_config_ (false),
+    gen_ciao_valuefactory_reg_ (true),
+    gen_stub_export_hdr_file_ (false),
+    gen_skel_export_hdr_file_ (false),
+    gen_svnt_export_hdr_file_ (false),
+    gen_exec_export_hdr_file_ (false),
+    gen_lem_force_all_ (false)
 {
 }
 
@@ -384,7 +405,68 @@ BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
 }
 
 const char *
-BE_GlobalData::be_get_client_hdr_fname (bool base_name_only)
+BE_GlobalData::be_get_ciao_svnt_header (UTL_String *idl_file_name,
+                                        bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->ciao_svnt_header_ending (),
+                                       base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_svnt_source (UTL_String *idl_file_name,
+                                        bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->ciao_svnt_source_ending (),
+                                       base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_exec_header (UTL_String *idl_file_name,
+                                        bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->ciao_exec_header_ending (),
+                                       base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_exec_source (UTL_String *idl_file_name,
+                                        bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->ciao_exec_source_ending (),
+                                       base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_exec_stub_header (
+  UTL_String *idl_file_name,
+  bool base_name_only)
+{
+  return
+    be_change_idl_file_extension (
+      idl_file_name,
+      be_global->ciao_exec_stub_header_ending (),
+      base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_exec_idl (
+  UTL_String *idl_file_name,
+  bool base_name_only)
+{
+  return
+    be_change_idl_file_extension (
+      idl_file_name,
+      be_global->ciao_exec_idl_ending (),
+      base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_client_hdr_fname (
+  bool base_name_only)
 {
   return be_get_client_hdr (idl_global->stripped_filename (),
                             base_name_only);
@@ -444,31 +526,87 @@ BE_GlobalData::be_get_implementation_skeleton_fname (void)
 }
 
 const char *
-BE_GlobalData::be_get_server_template_skeleton_fname (bool base_name_only)
+BE_GlobalData::be_get_server_template_skeleton_fname (
+  bool base_name_only)
 {
   return be_get_server_template_skeleton (idl_global->stripped_filename (),
                                           base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_inline_fname (bool base_name_only)
+BE_GlobalData::be_get_server_inline_fname (
+  bool base_name_only)
 {
   return be_get_server_inline (idl_global->stripped_filename (),
                                base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_anyop_source_fname (bool base_name_only)
+BE_GlobalData::be_get_anyop_source_fname (
+  bool base_name_only)
 {
   return be_get_anyop_source (idl_global->stripped_filename (),
                               base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_anyop_header_fname (bool base_name_only)
+BE_GlobalData::be_get_anyop_header_fname (
+  bool base_name_only)
 {
   return be_get_anyop_header (idl_global->stripped_filename (),
                               base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_svnt_hdr_fname (
+  bool base_name_only)
+{
+  return be_get_ciao_svnt_header (idl_global->stripped_filename (),
+                                  base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_svnt_src_fname (
+  bool base_name_only)
+{
+  return be_get_ciao_svnt_source (idl_global->stripped_filename (),
+                                  base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_exec_hdr_fname (
+  bool base_name_only)
+{
+  return be_get_ciao_exec_header (idl_global->stripped_filename (),
+                                  base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_exec_src_fname (
+  bool base_name_only)
+{
+  return be_get_ciao_exec_source (idl_global->stripped_filename (),
+                                  base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_exec_stub_hdr_fname (
+  bool base_name_only)
+{
+  return
+    be_get_ciao_exec_stub_header (
+      idl_global->stripped_filename (),
+      base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_exec_idl_fname (
+  bool base_name_only)
+{
+  return
+    be_get_ciao_exec_idl (
+      idl_global->stripped_filename (),
+      base_name_only);
 }
 
 const char*
@@ -485,7 +623,8 @@ BE_GlobalData::skel_export_macro (void) const
 void
 BE_GlobalData::skel_export_macro (const char *s)
 {
-  this->skel_export_macro_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->skel_export_macro_);
+  this->skel_export_macro_ = ACE::strnew (s);
 }
 
 const char*
@@ -497,7 +636,8 @@ BE_GlobalData::skel_export_include (void) const
 void
 BE_GlobalData::skel_export_include (const char *s)
 {
-  this->skel_export_include_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->skel_export_include_);
+  this->skel_export_include_ = ACE::strnew (s);
 }
 
 const char*
@@ -514,7 +654,8 @@ BE_GlobalData::stub_export_macro (void) const
 void
 BE_GlobalData::stub_export_macro (const char *s)
 {
-  this->stub_export_macro_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->stub_export_macro_);
+  this->stub_export_macro_ = ACE::strnew (s);
 }
 
 const char*
@@ -526,7 +667,8 @@ BE_GlobalData::stub_export_include (void) const
 void
 BE_GlobalData::stub_export_include (const char *s)
 {
-  this->stub_export_include_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->stub_export_include_);
+  this->stub_export_include_ = ACE::strnew (s);
 }
 
 const char*
@@ -543,7 +685,8 @@ BE_GlobalData::anyop_export_macro (void) const
 void
 BE_GlobalData::anyop_export_macro (const char *s)
 {
-  this->anyop_export_macro_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->anyop_export_macro_);
+  this->anyop_export_macro_ = ACE::strnew (s);
 }
 
 const char*
@@ -555,7 +698,70 @@ BE_GlobalData::anyop_export_include (void) const
 void
 BE_GlobalData::anyop_export_include (const char *s)
 {
-  this->anyop_export_include_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->anyop_export_include_);
+  this->anyop_export_include_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::exec_export_macro (void) const
+{
+  if (this->exec_export_macro_ == 0)
+    {
+      return "";
+    }
+
+  return this->exec_export_macro_;
+}
+
+void
+BE_GlobalData::exec_export_macro (const char *s)
+{
+  ACE::strdelete (this->exec_export_macro_);
+  this->exec_export_macro_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::exec_export_include (void) const
+{
+  return this->exec_export_include_;
+}
+
+void
+BE_GlobalData::exec_export_include (const char *s)
+{
+  ACE::strdelete (this->exec_export_include_);
+  this->exec_export_include_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::svnt_export_macro (void) const
+{
+  if (this->svnt_export_macro_ == 0)
+    {
+      return "";
+    }
+
+  return this->svnt_export_macro_;
+}
+
+void
+BE_GlobalData::svnt_export_macro (const char *s)
+{
+  ACE::strdelete (this->svnt_export_macro_);
+  this->svnt_export_macro_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::svnt_export_include (void) const
+{
+  return this->svnt_export_include_;
+}
+
+void
+BE_GlobalData::svnt_export_include (const char *s)
+{
+  ACE::strdelete (this->svnt_export_include_);
+  this->svnt_export_include_ = ACE::strnew (s);
 }
 
 const char*
@@ -567,7 +773,8 @@ BE_GlobalData::pch_include (void) const
 void
 BE_GlobalData::pch_include (const char *s)
 {
-  this->pch_include_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->pch_include_);
+  this->pch_include_ = ACE::strnew (s);
 }
 
 const char*
@@ -579,7 +786,8 @@ BE_GlobalData::pre_include (void) const
 void
 BE_GlobalData::pre_include (const char *s)
 {
-  this->pre_include_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->pre_include_);
+  this->pre_include_ = ACE::strnew (s);
 }
 
 const char*
@@ -591,7 +799,8 @@ BE_GlobalData::post_include (void) const
 void
 BE_GlobalData::post_include (const char *s)
 {
-  this->post_include_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->post_include_);
+  this->post_include_ = ACE::strnew (s);
 }
 
 const char*
@@ -603,7 +812,8 @@ BE_GlobalData::include_guard (void) const
 void
 BE_GlobalData::include_guard (const char *s)
 {
-  this->include_guard_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->include_guard_);
+  this->include_guard_ = ACE::strnew (s);
 }
 
 const char*
@@ -615,7 +825,8 @@ BE_GlobalData::safe_include (void) const
 void
 BE_GlobalData::safe_include (const char *s)
 {
-  this->safe_include_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->safe_include_);
+  this->safe_include_ = ACE::strnew (s);
 }
 
 const char*
@@ -627,7 +838,8 @@ BE_GlobalData::unique_include (void) const
 void
 BE_GlobalData::unique_include (const char *s)
 {
-  this->unique_include_ = ACE_OS::strdup (s);
+  ACE::strdelete (this->unique_include_);
+  this->unique_include_ = ACE::strnew (s);
 }
 
 void
@@ -638,7 +850,8 @@ BE_GlobalData::versioning_begin (const char * s)
     + ACE_CString (s)
     + ACE_CString ("\n\n");
 
-  this->core_versioning_end_ += this->versioning_begin_;  // Yes, "begin".
+  this->core_versioning_end_ += this->versioning_begin_;
+  // Yes, "begin".
 }
 
 const char *
@@ -682,7 +895,7 @@ BE_GlobalData::core_versioning_end (void) const
 void
 BE_GlobalData::client_hdr_ending (const char* s)
 {
-  delete [] this->client_hdr_ending_;
+  ACE::strdelete (client_hdr_ending_);
   this->client_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -696,7 +909,7 @@ BE_GlobalData::client_hdr_ending (void) const
 void
 BE_GlobalData::client_inline_ending  (const char* s)
 {
-  delete [] this->client_inline_ending_;
+  ACE::strdelete (client_inline_ending_);
   this->client_inline_ending_ = ACE::strnew (s);
 }
 
@@ -710,7 +923,7 @@ BE_GlobalData::client_inline_ending (void) const
 void
 BE_GlobalData::client_stub_ending (const char* s)
 {
-  delete [] this->client_stub_ending_;
+  ACE::strdelete (this->client_stub_ending_);
   this->client_stub_ending_ = ACE::strnew (s);
 }
 
@@ -723,7 +936,7 @@ BE_GlobalData::client_stub_ending (void) const
 void
 BE_GlobalData::server_hdr_ending (const char* s)
 {
-  delete [] this->server_hdr_ending_;
+  ACE::strdelete (this->server_hdr_ending_);
   this->server_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -736,28 +949,28 @@ BE_GlobalData::server_hdr_ending (void) const
 void
 BE_GlobalData::implementation_hdr_ending (const char* s)
 {
-  delete [] this->implementation_hdr_ending_;
+  ACE::strdelete (this->implementation_hdr_ending_);
   this->implementation_hdr_ending_ = ACE::strnew (s);
 }
 
 void
 BE_GlobalData::implementation_skel_ending (const char* s)
 {
-  delete [] this->implementation_skel_ending_;
+  ACE::strdelete (this->implementation_skel_ending_);
   this->implementation_skel_ending_ = ACE::strnew (s);
 }
 
 void
 BE_GlobalData::impl_class_prefix (const char* s)
 {
-  delete [] this->impl_class_prefix_;
+  ACE::strdelete (this->impl_class_prefix_);
   this->impl_class_prefix_ = ACE::strnew (s);
 }
 
 void
 BE_GlobalData::impl_class_suffix (const char* s)
 {
-  delete [] this->impl_class_suffix_;
+  ACE::strdelete (this->impl_class_suffix_);
   this->impl_class_suffix_ = ACE::strnew (s);
 }
 
@@ -788,7 +1001,7 @@ BE_GlobalData::implementation_skel_ending (void) const
 void
 BE_GlobalData::server_template_hdr_ending (const char* s)
 {
-  delete [] this->server_template_hdr_ending_;
+  ACE::strdelete (this->server_template_hdr_ending_);
   this->server_template_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -801,7 +1014,7 @@ BE_GlobalData::server_template_hdr_ending (void) const
 void
 BE_GlobalData::server_skeleton_ending (const char* s)
 {
-  delete [] this->server_skeleton_ending_;
+  ACE::strdelete (this->server_skeleton_ending_);
   this->server_skeleton_ending_ = ACE::strnew (s);
 }
 
@@ -814,7 +1027,7 @@ BE_GlobalData::server_skeleton_ending (void) const
 void
 BE_GlobalData::server_template_skeleton_ending (const char* s)
 {
-  delete [] this->server_template_skeleton_ending_;
+  ACE::strdelete (this->server_template_skeleton_ending_);
   this->server_template_skeleton_ending_ = ACE::strnew (s);
 }
 
@@ -827,7 +1040,7 @@ BE_GlobalData::server_template_skeleton_ending (void) const
 void
 BE_GlobalData::server_inline_ending (const char* s)
 {
-  delete [] this->server_inline_ending_;
+  ACE::strdelete (this->server_inline_ending_);
   this->server_inline_ending_ = ACE::strnew (s);
 }
 
@@ -840,7 +1053,7 @@ BE_GlobalData::server_inline_ending (void) const
 void
 BE_GlobalData::anyop_header_ending (const char* s)
 {
-  delete [] this->anyop_hdr_ending_;
+  ACE::strdelete (this->anyop_hdr_ending_);
   this->anyop_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -889,7 +1102,7 @@ BE_GlobalData::anyop_header_ending (void) const
 void
 BE_GlobalData::anyop_source_ending (const char* s)
 {
-  delete [] this->anyop_src_ending_;
+  ACE::strdelete (this->anyop_src_ending_);
   this->anyop_src_ending_ = ACE::strnew (s);
 }
 
@@ -900,9 +1113,87 @@ BE_GlobalData::anyop_source_ending (void) const
 }
 
 void
+BE_GlobalData::ciao_svnt_header_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_svnt_hdr_ending_);
+  this->ciao_svnt_hdr_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_svnt_header_ending (void) const
+{
+  return this->ciao_svnt_hdr_ending_;
+}
+
+void
+BE_GlobalData::ciao_svnt_source_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_svnt_src_ending_);
+  this->ciao_svnt_src_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_svnt_source_ending (void) const
+{
+  return this->ciao_svnt_src_ending_;
+}
+
+void
+BE_GlobalData::ciao_exec_header_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_exec_hdr_ending_);
+  this->ciao_exec_hdr_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_exec_header_ending (void) const
+{
+  return this->ciao_exec_hdr_ending_;
+}
+
+void
+BE_GlobalData::ciao_exec_source_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_exec_src_ending_);
+  this->ciao_exec_src_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_exec_source_ending (void) const
+{
+  return this->ciao_exec_src_ending_;
+}
+
+void
+BE_GlobalData::ciao_exec_stub_header_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
+  this->ciao_exec_stub_hdr_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_exec_stub_header_ending (void) const
+{
+  return this->ciao_exec_stub_hdr_ending_;
+}
+
+void
+BE_GlobalData::ciao_exec_idl_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_exec_idl_ending_);
+  this->ciao_exec_idl_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_exec_idl_ending (void) const
+{
+  return this->ciao_exec_idl_ending_;
+}
+
+void
 BE_GlobalData::output_dir (const char* s)
 {
-  delete [] this->output_dir_;
+  ACE::strdelete (this->output_dir_);
   this->output_dir_ = ACE::strnew (s);
 }
 
@@ -915,7 +1206,7 @@ BE_GlobalData::output_dir (void) const
 void
 BE_GlobalData::skel_output_dir (const char* s)
 {
-  delete [] this->skel_output_dir_;
+  ACE::strdelete (this->skel_output_dir_);
   this->skel_output_dir_ = ACE::strnew (s);
 }
 
@@ -928,7 +1219,7 @@ BE_GlobalData::skel_output_dir (void) const
 void
 BE_GlobalData::anyop_output_dir (const char* s)
 {
-  delete [] this->anyop_output_dir_;
+  ACE::strdelete (this->anyop_output_dir_);
   this->anyop_output_dir_ = ACE::strnew (s);
 }
 
@@ -1206,70 +1497,118 @@ BE_GlobalData::lookup_strategy (void) const
 void
 BE_GlobalData::destroy (void)
 {
-  ACE_OS::free (this->pch_include_);
+  ACE::strdelete (this->skel_export_macro_);
+  this->skel_export_macro_ = 0;
+
+  ACE::strdelete (this->skel_export_include_);
+  this->skel_export_include_ = 0;
+
+  ACE::strdelete (this->stub_export_macro_);
+  this->stub_export_macro_ = 0;
+
+  ACE::strdelete (this->stub_export_include_);
+  this->stub_export_include_ = 0;
+
+  ACE::strdelete (this->anyop_export_macro_);
+  this->anyop_export_macro_ = 0;
+
+  ACE::strdelete (this->anyop_export_include_);
+  this->anyop_export_include_ = 0;
+
+  ACE::strdelete (this->exec_export_macro_);
+  this->exec_export_macro_ = 0;
+
+  ACE::strdelete (this->exec_export_include_);
+  this->exec_export_include_ = 0;
+
+  ACE::strdelete (this->svnt_export_macro_);
+  this->svnt_export_macro_ = 0;
+
+  ACE::strdelete (this->svnt_export_include_);
+  this->svnt_export_include_ = 0;
+
+  ACE::strdelete (this->pch_include_);
   this->pch_include_ = 0;
 
-  ACE_OS::free (this->pre_include_);
+  ACE::strdelete (this->pre_include_);
   this->pre_include_ = 0;
 
-  ACE_OS::free (this->post_include_);
+  ACE::strdelete (this->post_include_);
   this->post_include_ = 0;
 
-  ACE_OS::free (this->include_guard_);
+  ACE::strdelete (this->include_guard_);
   this->include_guard_ = 0;
 
-  ACE_OS::free (this->safe_include_);
+  ACE::strdelete (this->safe_include_);
   this->safe_include_ = 0;
 
-  ACE_OS::free (this->unique_include_);
+  ACE::strdelete (this->unique_include_);
   this->unique_include_ = 0;
 
-  delete [] this->client_hdr_ending_;
+  ACE::strdelete (this->client_hdr_ending_);
   this->client_hdr_ending_ = 0;
 
-  delete [] this->client_stub_ending_;
+  ACE::strdelete (this->client_stub_ending_);
   this->client_stub_ending_ = 0;
 
-  delete [] this->client_inline_ending_;
+  ACE::strdelete (this->client_inline_ending_);
   this->client_inline_ending_ = 0;
 
-  delete [] this->server_hdr_ending_;
+  ACE::strdelete (this->server_hdr_ending_);
   this->server_hdr_ending_ = 0;
 
-  delete [] this->implementation_hdr_ending_;
+  ACE::strdelete (this->implementation_hdr_ending_);
   this->implementation_hdr_ending_ = 0;
 
-  delete [] this->implementation_skel_ending_;
+  ACE::strdelete (this->implementation_skel_ending_);
   this->implementation_skel_ending_ = 0;
 
-  delete [] this->impl_class_prefix_;
+  ACE::strdelete (this->impl_class_prefix_);
   this->impl_class_prefix_ = 0;
 
-  delete [] this->impl_class_suffix_;
+  ACE::strdelete (this->impl_class_suffix_);
   this->impl_class_suffix_ = 0;
 
-  delete [] this->server_template_hdr_ending_;
+  ACE::strdelete (this->server_template_hdr_ending_);
   this->server_template_hdr_ending_ = 0;
 
-  delete [] this->server_skeleton_ending_;
+  ACE::strdelete (this->server_skeleton_ending_);
   this->server_skeleton_ending_ = 0;
 
-  delete [] this->server_template_skeleton_ending_;
+  ACE::strdelete (this->server_template_skeleton_ending_);
   this->server_template_skeleton_ending_ = 0;
 
-  delete [] this->server_inline_ending_;
+  ACE::strdelete (this->server_inline_ending_);
   this->server_inline_ending_ = 0;
 
-  delete [] this->anyop_hdr_ending_;
+  ACE::strdelete (this->anyop_hdr_ending_);
   this->anyop_hdr_ending_ = 0;
 
-  delete [] this->anyop_src_ending_;
+  ACE::strdelete (this->anyop_src_ending_);
   this->anyop_src_ending_ = 0;
 
-  delete [] this->output_dir_;
+  ACE::strdelete (this->ciao_svnt_hdr_ending_);
+  this->ciao_svnt_hdr_ending_ = 0;
+
+  ACE::strdelete (this->ciao_svnt_src_ending_);
+  this->ciao_svnt_src_ending_ = 0;
+
+  ACE::strdelete (this->ciao_exec_hdr_ending_);
+  this->ciao_exec_hdr_ending_ = 0;
+
+  ACE::strdelete (this->ciao_exec_src_ending_);
+  this->ciao_exec_src_ending_ = 0;
+  
+  ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
+  this->ciao_exec_stub_hdr_ending_ = 0;
+
+  ACE::strdelete (this->ciao_exec_idl_ending_);
+  this->ciao_exec_idl_ending_ = 0;
+
+  ACE::strdelete (this->output_dir_);
   this->output_dir_ = 0;
 
-  delete [] this->anyop_output_dir_;
+  ACE::strdelete (this->anyop_output_dir_);
   this->anyop_output_dir_ = 0;
 
   if (0 != this->messaging_)
@@ -1615,6 +1954,138 @@ void
 BE_GlobalData::gen_custom_ending (bool val)
 {
   this->gen_custom_ending_ = val;
+}
+
+bool
+BE_GlobalData::gen_ciao_svnt (void) const
+{
+  return this->gen_ciao_svnt_;
+}
+
+void
+BE_GlobalData::gen_ciao_svnt (bool val)
+{
+  this->gen_ciao_svnt_ = val;
+}
+
+bool
+BE_GlobalData::gen_ciao_exec_idl (void) const
+{
+  return this->gen_ciao_exec_idl_;
+}
+
+void
+BE_GlobalData::gen_ciao_exec_idl (bool val)
+{
+  this->gen_ciao_exec_idl_ = val;
+}
+
+bool
+BE_GlobalData::gen_ciao_exec_impl (void) const
+{
+  return this->gen_ciao_exec_impl_;
+}
+
+void
+BE_GlobalData::gen_ciao_exec_impl (bool val)
+{
+  this->gen_ciao_exec_impl_ = val;
+}
+
+bool
+BE_GlobalData::gen_component_swapping (void) const
+{
+  return this->gen_component_swapping_;
+}
+
+void
+BE_GlobalData::gen_component_swapping (bool val)
+{
+  this->gen_component_swapping_ = val;
+}
+
+bool
+BE_GlobalData::gen_ciao_static_config (void) const
+{
+  return this->gen_ciao_static_config_;
+}
+
+void
+BE_GlobalData::gen_ciao_static_config (bool val)
+{
+  this->gen_ciao_static_config_ = val;
+}
+
+bool
+BE_GlobalData::gen_ciao_valuefactory_reg (void) const
+{
+  return this->gen_ciao_valuefactory_reg_;
+}
+
+void
+BE_GlobalData::gen_ciao_valuefactory_reg (bool val)
+{
+  this->gen_ciao_valuefactory_reg_ = val;
+}
+
+bool
+BE_GlobalData::gen_stub_export_hdr_file (void) const
+{
+  return this->gen_stub_export_hdr_file_;
+}
+
+void
+BE_GlobalData::gen_stub_export_hdr_file (bool val)
+{
+  this->gen_stub_export_hdr_file_ = val;
+}
+
+bool
+BE_GlobalData::gen_skel_export_hdr_file (void) const
+{
+  return this->gen_skel_export_hdr_file_;
+}
+
+void
+BE_GlobalData::gen_skel_export_hdr_file (bool val)
+{
+  this->gen_skel_export_hdr_file_ = val;
+}
+
+bool
+BE_GlobalData::gen_svnt_export_hdr_file (void) const
+{
+  return this->gen_svnt_export_hdr_file_;
+}
+
+void
+BE_GlobalData::gen_svnt_export_hdr_file (bool val)
+{
+  this->gen_svnt_export_hdr_file_ = val;
+}
+
+bool
+BE_GlobalData::gen_exec_export_hdr_file (void) const
+{
+  return this->gen_exec_export_hdr_file_;
+}
+
+void
+BE_GlobalData::gen_exec_export_hdr_file (bool val)
+{
+  this->gen_exec_export_hdr_file_ = val;
+}
+
+bool
+BE_GlobalData::gen_lem_force_all (void) const
+{
+  return this->gen_lem_force_all_;
+}
+
+void
+BE_GlobalData::gen_lem_force_all (bool val)
+{
+  this->gen_lem_force_all_ = val;
 }
 
 ACE_CString
@@ -2022,6 +2493,21 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // Explicit sequence base class template export.
                 be_global->gen_template_export (true);
               }
+            else if (av[i][3] == 'v')
+              {
+                // CIAO servant code generation.
+                be_global->gen_ciao_svnt (true);
+              }
+            else if (av[i][3] == 'w')
+              {
+                // CIAO swapping container code generation.
+                be_global->gen_component_swapping (true);
+              }
+            else if (av[i][3] == 'c')
+              {
+                // CIAO static configuration code generation.
+                be_global->gen_ciao_static_config (true);
+              }
             else
               {
                 ACE_ERROR ((
@@ -2032,6 +2518,83 @@ BE_GlobalData::parse_args (long &i, char **av)
                   ));
               }
 
+            break;
+          }
+        else if (av[i][2] == 'e')
+          {
+            if (av[i][3] == 'x') 
+              {
+                // CIAO executor impl code generation.
+                be_global->gen_ciao_exec_impl (true);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+              }
+              
+            break;
+          }
+        else if (av[i][2] == 'x')
+          {
+            if (av[i][3] == 'h')
+              {
+                if (av[i][4] == 's')
+                  {
+                    if (av[i][5] == 't')
+                      {
+                        be_global->gen_stub_export_hdr_file (true);
+                      }
+                    else if (av[i][5] == 'k')
+                      {
+                        be_global->gen_skel_export_hdr_file (true);
+                      }
+                    else if (av[i][5] == 'v')
+                      {
+                        be_global->gen_svnt_export_hdr_file (true);
+                      }
+                    else
+                      {
+                        ACE_ERROR ((
+                            LM_ERROR,
+                            ACE_TEXT ("IDL: I don't understand ")
+                            ACE_TEXT ("the '%s' option\n"),
+                            av[i]
+                          ));
+                      }
+                      
+                    break;
+                  }
+                else if (av[i][4] == 'e' && av[i][5] == 'x')
+                  {
+                    be_global->gen_exec_export_hdr_file (true);
+                  }
+                else
+                  {
+                    ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("IDL: I don't understand ")
+                        ACE_TEXT ("the '%s' option\n"),
+                        av[i]
+                      ));
+                  }
+                  
+                break;
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+              }
+              
             break;
           }
         else if (av[i][2] == 'u')
@@ -2098,6 +2661,28 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // Generating Thru_POA collocated stubs.
             be_global->gen_thru_poa_collocation (true);
+          }
+        else if (av[i][2] == 'l')
+          {
+            if (av[i][3] == 'e' && av[i][4] == 'm')
+              {
+                be_global->gen_ciao_exec_idl (true);
+              }
+            else if (av[i][3] == 'f' && av[i][4] == 'a')
+              {
+                be_global->gen_lem_force_all (true);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+              }
+              
+            break;
           }
         else if (av[i][2] == 'd')
           {
@@ -2256,9 +2841,15 @@ BE_GlobalData::parse_args (long &i, char **av)
                 be_global->any_support (false);
               }
           }
-        else if (av[i][2] == 'o' && av[i][3] == 'r' && av[i][4] =='b' && '\0' == av[i][5])
+        else if (av[i][2] == 'o' && av[i][3] == 'r' && av[i][4] == 'b' && '\0' == av[i][5])
           {
             be_global->gen_orb_h_include (false);
+          }
+        else if (av[i][2] == 'f' && av[i][3] == 'r')
+          {
+            // Suppress generation of valuetype factory registration
+            // in CIAO servants.
+            be_global->gen_ciao_valuefactory_reg (false);
           }
         else if (av[i][2] == 't')
           {
@@ -2309,6 +2900,8 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // Disable skeleton file generation.
                 be_global->gen_skel_files (false);
+                be_global->gen_server_inline (false);
+                be_global->gen_server_skeleton (false);
               }
             else
               {
@@ -2381,6 +2974,10 @@ BE_GlobalData::prep_be_arg (char *s)
   static const char stub_arg_include[]     = "stub_export_include=";
   static const char anyop_arg_macro[]      = "anyop_export_macro=";
   static const char anyop_arg_include[]    = "anyop_export_include=";
+  static const char exec_arg_macro[]       = "exec_export_macro=";
+  static const char exec_arg_include[]     = "exec_export_include=";
+  static const char svnt_arg_macro[]       = "svnt_export_macro=";
+  static const char svnt_arg_include[]     = "svnt_export_include=";
   static const char arg_pch_include[]      = "pch_include=";
   static const char arg_pre_include[]      = "pre_include=";
   static const char arg_post_include[]     = "post_include=";
@@ -2438,6 +3035,26 @@ BE_GlobalData::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (anyop_arg_include) - 1;
           be_global->anyop_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, exec_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (exec_arg_macro) - 1;
+          be_global->exec_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, exec_arg_include) == arg)
+        {
+          char* val = arg + sizeof (exec_arg_include) - 1;
+          be_global->exec_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, svnt_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (svnt_arg_macro) - 1;
+          be_global->svnt_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, svnt_arg_include) == arg)
+        {
+          char* val = arg + sizeof (svnt_arg_include) - 1;
+          be_global->svnt_export_include (val);
         }
       else if (ACE_OS::strstr (arg, arg_pch_include) == arg)
         {
@@ -2592,7 +3209,31 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Wb,anyop_export_include=<include path>\tsets export ")
-      ACE_TEXT ("include file typecode/Any operator files only, when -GA ")
+      ACE_TEXT ("include file for typecode/Any operator files only, when -GA ")
+      ACE_TEXT ("option is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,svnt_export_macro=<macro name>\t\tsets export macro ")
+      ACE_TEXT ("for CIAO servant files only, when -Gsv option ")
+      ACE_TEXT ("is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,svnt_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for CIAO servant files only, when -Gsv ")
+      ACE_TEXT ("option is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,exec_export_macro=<macro name>\t\tsets export macro ")
+      ACE_TEXT ("for CIAO executor impl files only, when -Gex option ")
+      ACE_TEXT ("is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,exec_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for CIAO executor impl files only, when -Gex ")
       ACE_TEXT ("option is used\n")
     ));
   ACE_DEBUG ((
@@ -2695,7 +3336,7 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gdcpsonly \t\t\tGenerate code only supporting DDS DCPS ")
+      ACE_TEXT (" -Gdcpsonly \t\tGenerate code only supporting DDS DCPS ")
       ACE_TEXT ("type serializer definitions.\n")
     ));
   ACE_DEBUG ((
@@ -2774,6 +3415,56 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Gse\t\t\tgenerate explicit export of sequence's ")
       ACE_TEXT ("template base class (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gsv\t\t\tgenerate CIAO servant code ")
+      ACE_TEXT ("(not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Glem\t\t\tgenerate CIAO executor IDL ")
+      ACE_TEXT ("(not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Glfa\t\t\tgenerate facet code for all interfaces ")
+      ACE_TEXT ("(not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gex\t\t\tgenerate CIAO executor implementation ")
+      ACE_TEXT ("code (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gsw\t\t\tgenerate CIAO code to support component ")
+      ACE_TEXT ("swapping (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gsc\t\t\tgenerate CIAO code for static ")
+      ACE_TEXT ("configuration (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gxhst\t\t\tgenerate export header file ")
+      ACE_TEXT ("for stub (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gxhsk\t\t\tgenerate export header file ")
+      ACE_TEXT ("for skeleton (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gxhsv\t\t\tgenerate export header file ")
+      ACE_TEXT ("for CIAO servant (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gxhex\t\t\tgenerate export header file ")
+      ACE_TEXT ("for CIAO executor (not generated by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -2900,6 +3591,11 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Sorb\t\t\tsuppress generating include of ORB.h")
       ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sfr\t\t\tsuppress generating valuetype factory")
+      ACE_TEXT (" registration in CIAO (generated by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

@@ -2622,7 +2622,7 @@ static char *   norm_path(
   if (*start != '/') {    /* Relative path to current directory   */
     /* Make absolute path   */
     abs_path = xmalloc( len + ACE_OS::strlen( cur_work_dir) + 1);
-    cp1 = stpcpy( abs_path, cur_work_dir);
+    cp1 = mcpp_stpcpy( abs_path, cur_work_dir);
     ACE_OS::strcpy( cp1, start);
     ACE_OS::free( norm_name);
     norm_name = abs_path;
@@ -2903,7 +2903,7 @@ void    put_depend(
     llen = ACE_OS::strlen( output);
     pos_num = 0;            /* Initialize for MCPP_LIB build    */
   } else if (filename == 0) {              /* End of input     */
-    out_p = stpcpy( out_p, "\n\n");
+    out_p = mcpp_stpcpy( out_p, "\n\n");
     if (mkdep & MD_PHONY) {
       /* Output the phony target line for each recorded header files. */
       char *  cp;
@@ -2936,8 +2936,8 @@ void    put_depend(
           c = *(++cp);
         }
         *cp = EOS;
-        out_p = stpcpy( out_p, output + *pos_p);
-        out_p = stpcpy( out_p, ":\n\n");
+        out_p = mcpp_stpcpy( out_p, output + *pos_p);
+        out_p = mcpp_stpcpy( out_p, ":\n\n");
         *cp = c;
       }
     }
@@ -2959,7 +2959,7 @@ void    put_depend(
   }
   /* Any new header.  Append its name to output.  */
   if (llen + fnamlen > MAX_OUT_LEN) {         /* Line is long     */
-    out_p = stpcpy( out_p, " \\\n ");       /* Fold it          */
+    out_p = mcpp_stpcpy( out_p, " \\\n ");       /* Fold it          */
     llen = 1;
   }
   llen += fnamlen + 1;
@@ -2979,7 +2979,7 @@ void    put_depend(
   *out_p++ = ' ';
   pos[ pos_num++] = out_p - output;       /* Remember the offset  */
   /* Don't use pointer, since 'output' may be reallocated later.  */
-  out_p = stpcpy( out_p, filename);
+  out_p = mcpp_stpcpy( out_p, filename);
 }
 
 static char *   md_init(
@@ -3025,11 +3025,11 @@ static char *   md_init(
     if (mkdep & MD_QUOTE) {         /* 'Quote' $, \t and space  */
       out_p = md_quote( output);
     } else {
-      out_p = stpcpy( output, mkdep_target);
+      out_p = mcpp_stpcpy( output, mkdep_target);
     }
   } else {
     ACE_OS::strcpy( cp, OBJEXT);
-    out_p = stpcpy( output, prefix);
+    out_p = mcpp_stpcpy( output, prefix);
   }
 
   *out_p++ = ':';
@@ -3117,7 +3117,7 @@ int     do_include(
       /* Expand any macros in the line    */
       if (header + PATHMAX < hp + (int) (workp - work_buf))
         cfatal( toolong_fname, header, 0L, work_buf);
-      hp = stpcpy( hp, work_buf);
+      hp = mcpp_stpcpy( hp, work_buf);
       while (char_type[ c = get_ch()] & HSP)
         *hp++ = c;
     }
@@ -3632,7 +3632,7 @@ static char *   search_header_map(
   while ((key_offs = buckets[ i].key) != 0) {
     if (str_case_eq( filename, strings + key_offs)) {
       /* The names match.  Make path-list.    */
-      char *  cp = stpcpy( pathlist, strings + buckets[ i].value.prefix);
+      char *  cp = mcpp_stpcpy( pathlist, strings + buckets[ i].value.prefix);
       ACE_OS::strcpy( cp, strings + buckets[ i].value.suffix);
       break;
     }
@@ -3721,7 +3721,7 @@ static int      search_framework(
 
   /* Search framework[] directories   */
   for (i = 0; i < num_framework; i++) {
-    cp1 = stpcpy( fullname, framework[ i]);
+    cp1 = mcpp_stpcpy( fullname, framework[ i]);
     /* 'fullname' e.g.: /System/Library/Frameworks/ */
     if (search_subdir( fullname, cp1, frame, fname, sys_framework <= i))
       return  TRUE;
@@ -3756,7 +3756,7 @@ static int      search_framework(
     len = dot - file->real_fname + ACE_OS::strlen( dot_frame) + 1;
     ACE_OS::memcpy( fullname, file->real_fname, len);
     cp1 = fullname + len;
-    cp1 = stpcpy( cp1, "Frameworks/");
+    cp1 = mcpp_stpcpy( cp1, "Frameworks/");
     /* 'fullname' e.g.:                                             */
     /* /System/Library/Frameworks/Foundation.framework/Frameworks/  */
     if (search_subdir( fullname, cp1, frame, fname, sys_frame))
@@ -4062,7 +4062,7 @@ void    do_pragma( void)
       bp = mp = xmalloc( (size_t)(NMACWORK + IDMAX));
       /* Buffer for macro expansion   */
       mp_end = mp + NMACWORK;
-      tp = stpcpy( mp, identifier);
+      tp = mcpp_stpcpy( mp, identifier);
       do {                /* Expand all the macros in the line    */
         int     has_pragma;
         if (token_type == NAM && (defp = is_macro( &tp)) != 0) {
@@ -4840,7 +4840,7 @@ void    do_pragma( void)
   }
 
 #if defined(HOST_HAVE_STPCPY) && HOST_HAVE_STPCPY == FALSE
-  char *  stpcpy(
+  char *  mcpp_stpcpy(
                  char *          dest,
                  const char *    src
                  ) 

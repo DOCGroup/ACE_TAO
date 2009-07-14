@@ -303,12 +303,6 @@ be_visitor_ccm_pre_proc::gen_provides (be_component *node)
         {
           return -1;
         }
-        
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -384,12 +378,6 @@ be_visitor_ccm_pre_proc::gen_uses (be_component *node)
                                 -1);
             }
         }
-        
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -424,12 +412,6 @@ be_visitor_ccm_pre_proc::gen_emits (be_component *node)
                              "gen_emits_disconnect failed\n"),
                             -1);
         }
-        
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -464,12 +446,6 @@ be_visitor_ccm_pre_proc::gen_publishes (be_component *node)
                              "gen_unsubscribe failed\n"),
                             -1);
         }
-        
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -495,12 +471,6 @@ be_visitor_ccm_pre_proc::gen_consumes (be_component *node)
                              "gen_consumes_get_connection failed\n"),
                             -1);
         }
-              
-      // Might as well clean up here instead of putting 5 loops in 
-      // AST_Component::destroy ().
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
     }
 
   return 0;
@@ -1568,10 +1538,10 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   UTL_NameList parent_list (&parent_full_name,
                             0);
   FE_InterfaceHeader header (consumer_name,
-                              &parent_list,
-                              false,
-                              false,
-                              true);
+                             &parent_list,
+                             false,
+                             false,
+                             true);
   ACE_NEW_RETURN (event_consumer,
                   be_interface (header.name (),
                                 header.inherits (),
@@ -1589,6 +1559,9 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   event_consumer->set_defined_in (s);
   event_consumer->set_imported (node->imported ());
   event_consumer->set_name (consumer_name);
+  be_interface *bec =
+    be_interface::narrow_from_decl (event_consumer);
+  bec->original_interface (node);
 
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the eventtype's prefix. All this is
@@ -1651,7 +1624,7 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                             "Explicit",
                             ScopeAsDecl (node->defined_in ()));
 
-  AST_Interface *i = 0;
+  be_interface *i = 0;
   ACE_NEW_RETURN (i,
                   be_interface (explicit_name,
                                 header.inherits (),
@@ -1668,7 +1641,8 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
   i->set_name (explicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
-  be_interface::narrow_from_decl (i)->gen_fwd_helper_name ();
+  i->gen_fwd_helper_name ();
+  i->original_interface (node);
 
   // Reuse the home's decls in the explicit interface. No need
   // to check for name clashes, redefinition, etc. because it
@@ -1746,7 +1720,7 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                               "Implicit",
                               ScopeAsDecl (node->defined_in ()));
                               
-  AST_Interface *i = 0;
+  be_interface *i = 0;
   ACE_NEW_RETURN (i,
                   be_interface (implicit_name,
                                 header.inherits (),
@@ -1767,7 +1741,8 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
   
-  be_interface::narrow_from_decl (i)->gen_fwd_helper_name ();
+  i->gen_fwd_helper_name ();
+  i->original_interface (node);
   AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
   m->be_add_interface (i);
   
@@ -1800,7 +1775,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
   // interface construction time.
   idl_global->scopes ().push (node->defined_in ());
 
-  AST_Interface *retval = 0;
+  be_interface *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_interface (equiv_name,
                                 header.inherits (),
@@ -1820,7 +1795,9 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
   retval->set_name (equiv_name);
   retval->set_defined_in (s);
   retval->set_imported (node->imported ());
-  be_interface::narrow_from_decl (retval)->gen_fwd_helper_name ();
+  retval->gen_fwd_helper_name ();
+  retval->original_interface (node);
+  
   UTL_ScopedName *unmangled_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
   UTL_ScopedName *mangled_name =

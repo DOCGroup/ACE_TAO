@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_util.h
@@ -25,11 +25,12 @@
 
 class be_util
 {
- public:
-  static void gen_nested_namespace_begin (TAO_OutStream *os, be_module *node);
+public:
+  static void
+  gen_nested_namespace_begin (TAO_OutStream *os, be_module *node);
 
-  static void gen_nested_namespace_end (TAO_OutStream *os, be_module *node);
-
+  static void
+  gen_nested_namespace_end (TAO_OutStream *os, be_module *node);
 };
 
 

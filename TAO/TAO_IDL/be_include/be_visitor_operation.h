@@ -24,6 +24,8 @@
 
 #include "idl_defines.h"
 
+#include "be_null_return_emitter.h"
+
 #include "be_visitor_scope.h"
 #include "be_visitor_operation/operation.h"
 #include "be_visitor_operation/operation_ch.h"
@@ -32,6 +34,8 @@
 #include "be_visitor_operation/operation_ih.h"
 #include "be_visitor_operation/operation_ss.h"
 #include "be_visitor_operation/operation_is.h"
+#include "be_visitor_operation/operation_svs.h"
+#include "be_visitor_operation/operation_exs.h"
 #include "be_visitor_operation/tie_sh.h"
 #include "be_visitor_operation/tie_ss.h"
 #include "be_visitor_operation/arglist.h"

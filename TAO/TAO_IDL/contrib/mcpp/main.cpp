@@ -780,7 +780,7 @@ static void do_pragma_op( void)
                 && defp->nargs == DEF_PRAGMA) {     /* _Pragma() operator   */
             if (prev) {
                 putout( output);    /* Putout the previous sequence */
-                cp1 = stpcpy( output, "pragma ");   /* From top of buffer   */
+                cp1 = mcpp_stpcpy( output, "pragma ");   /* From top of buffer   */
             }
             /* is_macro() already read over possible spaces after _Pragma   */
             *cp1++ = get_ch();                              /* '('  */
@@ -936,7 +936,7 @@ static void devide_line(
             *out_ptr++ = '\n';                  /* Append newline   */
             *out_ptr = EOS;
             put_a_line( out);           /* Putout the former tokens */
-            wp = out_ptr = stpcpy( out, save);      /* Restore the token    */
+            wp = out_ptr = mcpp_stpcpy( out, save);      /* Restore the token    */
             ACE_OS::free( save);
         } else {                            /* Still in size        */
             out_ptr = wp;                   /* Advance the pointer  */

@@ -185,7 +185,7 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Wp,<arg1,...,argn>\t\t\t\tpasses args to preprocessor\n")
+      ACE_TEXT (" -Wp,<arg1,...,argn>\tpasses args to preprocessor\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

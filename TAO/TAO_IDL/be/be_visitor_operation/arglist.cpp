@@ -31,7 +31,8 @@ ACE_RCSID (be_visitor_operation,
 be_visitor_operation_arglist::be_visitor_operation_arglist (
     be_visitor_context *ctx
   )
-  : be_visitor_operation (ctx)
+  : be_visitor_operation (ctx),
+    unused_ (false)
 {
 }
 
@@ -43,16 +44,21 @@ int
 be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+  bool has_args = node->argument_count () > 0;
 
-  *os << " (" << be_idt << be_idt_nl;
+  *os << " (";
+  
+  if (has_args)
+    {
+      *os << be_idt_nl;
+    }
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
       *os << "::CORBA::Object *_collocated_tao_target_";
 
-      if (node->argument_count () > 0)
+      if (has_args)
         {
           *os << "," << be_nl;
         }
@@ -72,12 +78,17 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  if (node->argument_count () == 0)
+  if (!has_args)
     {
       *os << "void";
     }
 
-  *os << ")" << be_uidt << be_uidt;
+  *os << ")";
+  
+  if (has_args)
+    {
+      *os << be_uidt;
+    }
 
   switch (this->ctx_->state ())
     {
@@ -90,7 +101,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
         }
 
       break;
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH:
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
@@ -148,6 +158,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
 
   // Create a visitor.
   be_visitor_args_arglist visitor (&ctx);
+  visitor.unused (unused_);
 
   if (visitor.visit_argument (node) == -1)
     {
@@ -175,4 +186,10 @@ be_visitor_operation_arglist::post_process (be_decl *bd)
     }
 
   return 0;
+}
+
+void
+be_visitor_operation_arglist::unused (bool val)
+{
+  unused_ = val;
 }

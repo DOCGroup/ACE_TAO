@@ -531,7 +531,7 @@ int     scan_token(
     default:                        /* An identifier            */
     ident:
       scan_id( c);
-      out = stpcpy( out, identifier);
+      out = mcpp_stpcpy( out, identifier);
       token_type = NAM;
       break;
     }

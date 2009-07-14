@@ -185,19 +185,25 @@ public:
 
   /// Iterate over the inheritance hierarchy and call the
   /// worker->emit() method for each interface on it.
+  /// CCMObject is traversed only for components regardless
+  /// of the flag, it is there to disable this traversal for
+  /// component servant and executor code generation.
   int traverse_inheritance_graph (
-      TAO_IDL_Inheritance_Hierarchy_Worker &worker,
-      TAO_OutStream *os,
-      bool abstract_paths_only = false
-    );
+    TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+    TAO_OutStream *os,
+    bool abstract_paths_only = false,
+    bool add_ccm_object = true);
 
   /// Wrap the @c gen parameter and call the generic version of
-  /// traverse_inheritance_graph()
+  /// traverse_inheritance_graph().
+  /// CCMObject is traversed only for components regardless
+  /// of the flag, it is there to disable this traversal for
+  /// component servant and executor code generation.
   int traverse_inheritance_graph (
-      tao_code_emitter gen,
-      TAO_OutStream *os,
-      bool abstract_paths_only = false
-    );
+    tao_code_emitter gen,
+    TAO_OutStream *os,
+    bool abstract_paths_only = false,
+    bool add_ccm_object = true);
 
   int in_mult_inheritance (void);
   // Am I in some form of multiple inheritance
@@ -340,6 +346,19 @@ public:
 
   bool is_event_consumer (void);
   // Is EventConsumerBase our parent?
+  
+  void gen_facet_idl (TAO_OutStream &os);
+  int gen_facet_svnt_hdr (be_visitor *visitor,
+                          TAO_OutStream &os);
+  int gen_facet_svnt_src (be_visitor *visitor,
+                          TAO_OutStream &os);
+  // Common code for facet generation, whether we are
+  // navigating from the component port or forcing
+  // facet generation for all interfaces.
+  
+  void gen_nesting_open (TAO_OutStream &os);
+  void gen_nesting_close (TAO_OutStream &os);
+  // Helper function called from visitors and used internally.
 
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);

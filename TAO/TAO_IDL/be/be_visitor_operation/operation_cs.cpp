@@ -44,7 +44,7 @@ be_visitor_operation_cs::post_process (be_decl *bd)
 
   if (!this->last_node (bd))
     {
-      *os << ",\n";
+      *os << "," << be_nl;
     }
 
   return 0;
@@ -103,7 +103,8 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     }
 
   // Generate the operation name
-  *os << " " << node->name ();
+  *os << be_nl
+      << node->name ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -119,8 +120,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                         -1);
     }
 
-  return this->gen_stub_operation_body (node,
-                                        bt);
+  return this->gen_stub_operation_body (node, bt);
 }
 
 int
