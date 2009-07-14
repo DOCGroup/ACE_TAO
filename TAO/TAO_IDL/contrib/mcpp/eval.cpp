@@ -1327,11 +1327,12 @@ static VAL_SIGN *   eval_eval(
   }
   if ((op == OP_SL || op == OP_SR)
       && ((! skip && (warn_level & 1)) || (skip && (warn_level & 8)))) {
-    if (v2 < 0L || v2 >= sizeof (expr_t) * CHARBIT)
+    if (v2 < 0L || 
+        v2 >= static_cast<expr_t> (sizeof (expr_t) * CHARBIT))
       cwarn( "Illegal shift count %.0s\"%ld\"%s"      /* _W1_ _W8_    */
              , 0, (long) v2, skip ? non_eval : 0);
 #if HAVE_LONG_LONG
-    else if (! stdc3 && v2 >= sizeof (long) * CHARBIT
+    else if (! stdc3 && v2 >= static_cast <expr_t> (sizeof (long) * CHARBIT)
              && ((! skip && (warn_level & w_level))
                  || (skip && (warn_level & 8))))
       cwarn(

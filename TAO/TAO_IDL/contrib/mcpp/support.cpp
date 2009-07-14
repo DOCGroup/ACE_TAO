@@ -1173,7 +1173,7 @@ static char *   scan_ucn(
     value = (value << 4) | c;
   }
   if (infile->fp                              /* In source        */
-      && ((value >= 0L && value <= 0x9FL
+      && ((value <= 0x9FL
            && value != 0x24L && value != 0x40L && value != 0x60L)
           /* Basic source character       */
           || (stdc3 && (value >= 0xD800L && value <= 0xDFFFL))))
