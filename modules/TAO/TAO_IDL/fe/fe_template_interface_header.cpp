@@ -81,14 +81,14 @@ FE_Template_InterfaceHeader::compile_template_inheritance (void)
       iter.next (item);
       
       UTL_Scope *s = idl_global->scopes ().top_non_null ();
-      AST_Decl *d = s->lookup_by_name (item->name,
+      AST_Decl *d = s->lookup_by_name (item->name_,
                                        true,
                                        true,
                                        true);
                                        
       if (d == 0)
         {
-          idl_global->err ()->lookup_error (item->name);
+          idl_global->err ()->lookup_error (item->name_);
           
           // Bad IDL, best to avoid a possible crash.
           throw Bailout ();
@@ -145,8 +145,8 @@ FE_Template_InterfaceHeader::match_params (AST_Template_Interface *ti)
           FE_Utils::T_Param_Info *my_item = 0;
           j.next (my_item);
           
-          if (item->type == my_item->type
-              && item->name == my_item->name)
+          if (item->type_ == my_item->type_
+              && item->name_ == my_item->name_)
             {
               one_matched = true;
               break;
@@ -183,7 +183,7 @@ FE_Template_InterfaceHeader::duplicate_param_id (void)
         {
           this->param_info_->get (that_one, j);
           
-          if (this_one->name == that_one->name)
+          if (this_one->name_ == that_one->name_)
             {
               return true;
             }

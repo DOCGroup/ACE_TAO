@@ -73,9 +73,9 @@ AST_Template_Interface::dump (ACE_OSTREAM_TYPE &o)
         
       iter.next (item);
       
-      this->dump_i (o, this->node_type_to_string (item->type));
+      this->dump_i (o, this->node_type_to_string (item->type_));
       this->dump_i (o, " ");
-      this->dump_i (o, item->name.c_str ());
+      this->dump_i (o, item->name_.c_str ());
     }
     
   this->dump_i (o, "> ");
@@ -104,7 +104,7 @@ AST_Template_Interface::dump (ACE_OSTREAM_TYPE &o)
                 }
                 
               iter.next (item);
-              this->dump_i (o, item->name.c_str ());
+              this->dump_i (o, item->name_.c_str ());
             }
             
           this->dump_i (o, ">");

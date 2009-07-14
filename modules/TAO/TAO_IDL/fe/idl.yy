@@ -6023,8 +6023,8 @@ template_param
                           FE_Utils::T_Param_Info,
                           1);
 
-          $<pival>$->type = $1;
-          $<pival>$->name = $2;
+          $<pival>$->type_ = $1;
+          $<pival>$->name_ = $2;
         }
         ;
 
