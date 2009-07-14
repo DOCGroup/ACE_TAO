@@ -1,3 +1,11 @@
+Tue Jul 14 15:30:20 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Reverted some changes to template interface production rules
+          to eliminate runtime errors.
+
 Thu Jul  9 21:13:38 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_porttype.cpp:
