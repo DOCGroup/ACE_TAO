@@ -1,3 +1,8 @@
+Tue Jul 14 20:34:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/viao_vcwarnings.mpb:
+          Added vc10
+
 Tue Jul 14 20:31:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dance_plan_launcher_base.mpc:
