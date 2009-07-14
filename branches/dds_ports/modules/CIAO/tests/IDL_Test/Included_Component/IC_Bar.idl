@@ -1,7 +1,0 @@
-// $Id$
-
-#include "IC_Foo.idl"
-
-component Bar
-{
-};

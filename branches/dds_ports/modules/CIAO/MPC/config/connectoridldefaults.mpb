@@ -1,3 +1,0 @@
-project : componentidldefaults {
-   idlflags += -I$(CIAO_ROOT)/connectors
-}
