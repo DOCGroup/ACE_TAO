@@ -1,3 +1,18 @@
+Tue Jul 14 20:31:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dance_plan_launcher_base.mpc:
+        * DAnCE/MPC/config/dance_plan_launcher_base.mpb:
+          Moved to DAnCE and corrected extension
+
+Tue Jul 14 20:14:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/MPC/config/dance_domainapplicationmanager_skel.mpb
+        * DAnCE/MPC/config/dance_domainapplicationmanager_stub.mpb
+        * DAnCE/MPC/config/dance_nodeapplicationmanager_skel.mpb
+        * DAnCE/MPC/config/dance_nodeapplicationmanager_stub.mpb
+          Shortened some project names to fix fuzz errors
+
 Tue Jul 14 17:56:19 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Logger/File_Logger_Backend.cpp:
