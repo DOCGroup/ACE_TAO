@@ -4291,7 +4291,7 @@ param_type_spec
                     {
                       td = AST_Typedef::narrow_from_decl (d);
                       AST_Type *pbt = td->primitive_base_type ();
-                      
+
                       if (pbt->node_type () == AST_Decl::NT_sequence)
                         {
                           t = pbt;
@@ -4301,7 +4301,7 @@ param_type_spec
                             seq_type->base_type ();
                           AST_Decl::NodeType elem_nt =
                             elem_type->node_type ();
-                            
+
                           if (elem_nt == AST_Decl::NT_typedef)
                             {
                               AST_Typedef *elem_td =
@@ -4309,7 +4309,7 @@ param_type_spec
                               elem_type = elem_td->primitive_base_type ();
                               elem_nt = elem_type->node_type ();
                             }
-                            
+
                           if (elem_nt == AST_Decl::NT_interface
                               || elem_nt == AST_Decl::NT_interface_fwd
                               || elem_nt == AST_Decl::NT_valuetype
@@ -4321,7 +4321,7 @@ param_type_spec
                             }
                         }
                     }
-                    
+
                   if (! t->is_defined () && ! can_be_undefined)
                     {
                       idl_global->err ()->error1 (
@@ -5958,21 +5958,30 @@ template_interface_header
         ;
 
 at_least_one_template_param
-        : '<' template_param template_params '>'
+        : '<'
         {
-// at_least_one_template_param : '<' template_param template_params '>'
-          if ($3 == 0)
+// at_least_one_template_param : '<'
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceSqSeen);
+        }
+        template_param template_params
+        {
+//        template_param template_params
+          if ($4 == 0)
             {
-              ACE_NEW_RETURN ($3,
+              ACE_NEW_RETURN ($4,
                               FE_Utils::T_PARAMLIST_INFO,
                               1);
             }
 
-          $3->enqueue_head (*$2);
-          delete $2;
-          $2 = 0;
-
-          $<plval>$ = $3;
+          $4->enqueue_head (*$3);
+          delete $3;
+          $3 = 0;
+        }
+        '>'
+        {
+//        '>'
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceQsSeen);
+          $<plval>$ = $4;
         }
         ;
 
