@@ -1,0 +1,36 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    Echo.idl
+  }
+  custom_only = 1
+}
+
+project(*server): namingexe, iortable, utils, avoids_corba_e_micro {
+  exename = server
+  after += *IDL
+  Source_Files {
+    Echo_i.cpp
+    ../Simple_util.cpp
+    server.cpp
+    EchoS.cpp
+    EchoC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*client): namingexe, iortable, utils {
+  exename = client
+  after += *IDL
+  Source_Files {
+    Echo_Client_i.cpp
+    ../Simple_util.cpp
+    client.cpp
+    EchoC.cpp
+  }
+  IDL_Files {
+  }
+}

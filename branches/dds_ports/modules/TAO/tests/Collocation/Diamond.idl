@@ -1,0 +1,24 @@
+// $Id$
+
+module Diamond
+{
+  interface Top
+    {
+      string shape ();
+    };
+
+  interface Left : Top
+    {
+      string color ();
+    };
+
+  interface Right : Top
+    {
+      long width ();
+    };
+
+  interface Buttom : Left, Right
+    {
+      string name ();
+    };
+};
