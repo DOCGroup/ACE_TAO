@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project : rmcast, orbsvcsexe, notification, notification_skel, notification_serv, typecodefactory {
+  exename = agent
+  after += Gate
+  libs += Gate
+  libpaths += ../Gate/.
+
+  specific (automake) {
+    includes += $(srcdir)/..
+  } else {
+    includes += ..
+  }
+}
