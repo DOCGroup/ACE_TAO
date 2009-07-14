@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.7.0
-%define TAOVER  1.7.0
-%define CIAOVER 0.7.0
+%define ACEVER  5.7.1
+%define TAOVER  1.7.1
+%define CIAOVER 0.7.1
 
 # TODO
 # Test whether a TAO app with MPC can be build against MPC installed version
@@ -2666,6 +2666,9 @@ fi
 # ================================================================
 
 %changelog
+* Mon Jul 13 2009 Phil Mesnier <mesnier_p@ociweb.com> - 5.7.1-0
+- New micro release
+
 * Wed Jun 24 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.7.0-0
 - New minor release
 

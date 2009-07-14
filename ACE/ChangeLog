@@ -1,6 +1,16 @@
+Tue Jul 14 02:44:58 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * etc/index.html:
+        * rpmbuild/ace-tao-ciao.spec:
+        
+          updated for new release
+
 Mon Jul 13 12:32:13 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ACE version 5.7.1 released.
+        * ACE version 5.7.1 released.
 
 Fri Jul 10 09:20:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
