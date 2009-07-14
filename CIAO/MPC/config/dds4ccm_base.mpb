@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : ciao_connector_base {
   after += DDS4CCM_stub
   libs += DDS4CCM_stub
