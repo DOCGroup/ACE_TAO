@@ -133,8 +133,8 @@ static void     set_pragma_op( void);
 /* Set the _Pragma() operator       */
 static void     put_info( FILEINFO * sharp_file);
 /* Print compiler-specific-inf      */
-static char *   set_files( int argc, char ** argv, char ** in_pp
-                           , char ** out_pp);
+static char *   set_files( int argc, char ** argv, const char ** in_pp
+                           , const char ** out_pp);
 /* Set input, output, diagnostic    */
 static void     set_sys_dirs( int set_cplus_dir);
 /* Set system-specific include dirs */
@@ -413,8 +413,8 @@ void    init_system( void)
 void    do_options(
                    int         argc,
                    char **     argv,
-                   char **     in_pp,                      /* Input file name      */
-                   char **     out_pp                      /* Output file name     */
+                   const char **     in_pp,                      /* Input file name      */
+                   const char **     out_pp                      /* Output file name     */
                    )
 /*
  * Process command line arguments, called only at MCPP startup.
@@ -2137,8 +2137,8 @@ static void put_info(
 static char *   set_files(
                           int     argc,
                           char ** argv,
-                          char ** in_pp,
-                          char ** out_pp
+                          const char ** in_pp,
+                          const char ** out_pp
                           )
 /*
  * Set input and/or output files.
