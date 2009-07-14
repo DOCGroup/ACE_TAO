@@ -293,6 +293,37 @@ def update_version_files (component):
     return retval
 
 
+def update_spec_file ():
+    
+    global comp_versions, opts
+
+    with open ("ACE/rpmbuild/ace-tao-ciao.spec") as spec_file:
+        new_spec = ""
+        for line in spec_file.readlines ():
+            if line.find ("define ACEVER") is not -1:
+                line = "%define ACEVER  " + comp_versions["ACE_version"] + "\n"
+            if line.find ("define TAOVER") is not -1:
+                line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
+            if line.find ("CIAOVER") is not -1:
+                line = "%define CIAOVER " + comp_versions["CIAO_version"] + "\n"
+            if line.find ("define is_major_ver") is not -1:
+                if opts.release_type == "beta":
+                    line = "%define is_major_ver 0\n"
+                else:
+                    line = "%define is_major_ver 1\n"
+                    
+            new_spec += line
+        
+        if opts.take_action:
+            spec_file.seek (0)
+            spec_file.truncate (0)
+            spec_file.writelines (new_spec)
+        else:
+            print "New spec file:"
+            print "".join (new_spec)
+            
+    return ["ACE/rpmbuild/ace-tao-ciao.spec"]
+
 def get_and_update_versions ():
     """ Gets current version information for each component,
     updates the version files, creates changelog entries,
@@ -310,6 +341,7 @@ def get_and_update_versions ():
         files += create_changelog ("ACE")
         files += create_changelog ("TAO")
         files += create_changelog ("CIAO")
+        files += update_spec_file ()
 
         commit (files)
     except:
