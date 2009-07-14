@@ -29,7 +29,8 @@ ACE_RCSID (be_visitor_argument,
 // ************************************************************
 
 be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
-  : be_visitor_args (ctx)
+  : be_visitor_args (ctx),
+    unused_ (false)
 {
 }
 
@@ -67,9 +68,11 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
 
   if (this->ctx_->state () != TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH)
     {
-      *os << " " << node->local_name ();
+      *os << " " << (unused_ ? "/* " : "" )
+          << node->local_name ()->get_string ()
+          << (unused_ ? " */" : "");
     }
-    
+
   return 0;
 }
 
@@ -279,7 +282,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
   // There seems to be one case where the two conditions below
   // are true - in generating get/set operations for an
   // inherited valuetype member, which is included from
-  // another IDL file, and whose type is an anonymous 
+  // another IDL file, and whose type is an anonymous
   // sequence. There is also no better place to make the
   // call to create_name() - the node constructor sets the
   // 'anonymous' flag to false, the typedef that resets it
@@ -293,7 +296,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -473,4 +476,10 @@ int be_visitor_args_arglist::emit_common (be_type *node)
     }
 
   return 0;
+}
+
+void
+be_visitor_args_arglist::unused (bool val)
+{
+  this->unused_ = val;
 }

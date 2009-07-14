@@ -98,8 +98,6 @@ public:
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
       TAO_TIE_OPERATION_ARGLIST_SH,           // ... for TIE class header
 
-      TAO_OPERATION_ARGLIST_PROXY_IMPL_XH,    // Proxy impl arg list generation
-      // in client/server  header
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XS,
 
 
@@ -145,6 +143,11 @@ public:
       TAO_ROOT_TIE_SS,
       TAO_ROOT_IH,
       TAO_ROOT_IS,
+      TAO_ROOT_SVH,
+      TAO_ROOT_SVS,
+      TAO_ROOT_EXH,
+      TAO_ROOT_EXS,
+      TAO_ROOT_EX_IDL,
       TAO_ROOT_ANY_OP_CH,
       TAO_ROOT_ANY_OP_CS,
       TAO_ROOT_CDR_OP_CH,
@@ -268,6 +271,12 @@ public:
 
   int start_anyop_source (const char *fname);
   // Set the anyop source stream.
+  
+  int start_ciao_svnt_header (const char *fname);
+  int start_ciao_svnt_source (const char *fname);
+  int start_ciao_exec_header (const char *fname);
+  int start_ciao_exec_source (const char *fname);
+  int start_ciao_exec_idl (const char *fname);
 
   int end_client_header (void);
   // Generate code at the end such as the <<= and >>= operators along
@@ -305,6 +314,12 @@ public:
 
   int end_anyop_source (void);
   // Make sure we end with a newline.
+  
+  int end_ciao_svnt_header (void);
+  int end_ciao_svnt_source (void);
+  int end_ciao_exec_header (void);
+  int end_ciao_exec_source (void);
+  int end_ciao_exec_idl (void);
 
   TAO_OutStream *client_header (void);
   // Get the client header stream.
@@ -345,6 +360,21 @@ public:
   TAO_OutStream *anyop_source (void);
   // Get the anyop source stream.
 
+  TAO_OutStream *ciao_svnt_header (void);
+  // Get the CIAO servant header stream.
+
+  TAO_OutStream *ciao_svnt_source (void);
+  // Get the CIAO servant source stream.
+
+  TAO_OutStream *ciao_exec_header (void);
+  // Get the CIAO executor impl header stream.
+
+  TAO_OutStream *ciao_exec_source (void);
+  // Get the CIAO executor impl source stream.
+
+  TAO_OutStream *ciao_exec_idl (void);
+  // Get the CIAO executor impl source stream.
+
   void gperf_input_stream (TAO_OutStream *gperf_input);
   // Set the gperf input file stream.
 
@@ -382,6 +412,9 @@ public:
 
   void gen_ident_string (TAO_OutStream *stream) const;
   // Pass along the #ident string, if any, from the IDL file.
+  
+  void gen_export_files (void);
+  // Generates the export files selected on the command line.
 
   void destroy (void);
   // Cleanup.
@@ -394,9 +427,9 @@ private:
 
   void gen_standard_include (TAO_OutStream *stream,
                              const char *included_file,
-                             bool add_comment=false);
+                             bool add_comment = false);
 
-  // Utility methods for generating ORB file includes.
+  /// Utility methods for generating file includes.
   void gen_stub_hdr_includes (void);
   void gen_stub_src_includes (void);
   void gen_skel_src_includes (void);
@@ -409,6 +442,17 @@ private:
                               const char *filepath,
                               TAO_OutStream *stream);
   void gen_typecode_includes (TAO_OutStream * stream);
+  
+  /// Used if one or both of the CIAO code gen flags are set.
+  void gen_svnt_hdr_includes (void);
+  void gen_svnt_src_includes (void);
+  void gen_exec_hdr_includes (void);
+  void gen_exec_src_includes (void);
+  void gen_exec_idl_includes (void);
+  
+  void gen_export_file (const char *filename,
+                        const char *macro,
+                        const char *msg);
 
 private:
   TAO_OutStream *client_header_;
@@ -450,13 +494,28 @@ private:
   TAO_OutStream *gperf_input_stream_;
   // TAO_OutStream to collect the input for gperf program.
 
+  TAO_OutStream *ciao_svnt_header_;
+  // Component servant header file.
+
+  TAO_OutStream *ciao_svnt_source_;
+  // Component servant source file.
+
+  TAO_OutStream *ciao_exec_header_;
+  // Component executor impl header file.
+
+  TAO_OutStream *ciao_exec_source_;
+  // Component executor impl source file.
+
+  TAO_OutStream *ciao_exec_idl_;
+  // Component executor impl source file.
+
+  TAO_OutStream *curr_os_;
+  // Currently used out stream.
+
   char *gperf_input_filename_;
   // Name of the temp file used to collect the input for gperf
   // program. This is needed coz I do ACE_OS::open on this when I need
   // ACE_HANDLE for the file instead FILE*.
-
-  TAO_OutStream *curr_os_;
-  // Currently used out stream.
 
   be_decl *node_;
   // Save current node in this.

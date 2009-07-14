@@ -1,3 +1,646 @@
+Tue Jul 14 11:12:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * .:
+        * MPC/modules:
+        * MPC/modules/IDLHelper.pm:
+        * NEWS:
+        * TAO_IDL/TAO_IDL_ACE.mwc:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_concrete_type.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_identifier_helper.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_null_return_emitter.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svs.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_identifier_helper.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_null_return_emitter.h:
+        * TAO_IDL/be_include/be_util.h:
+        * TAO_IDL/be_include/be_visitor_any_extracted_type_decl.h:
+        * TAO_IDL/be_include/be_visitor_argument/arglist.h:
+        * TAO_IDL/be_include/be_visitor_attribute.h:
+        * TAO_IDL/be_include/be_visitor_attribute/attribute.h:
+        * TAO_IDL/be_include/be_visitor_attribute/component_init.h:
+        * TAO_IDL/be_include/be_visitor_attribute/set_from_extracted.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ch.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/be_include/be_visitor_home.h:
+        * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_home/home_exh.h:
+        * TAO_IDL/be_include/be_visitor_home/home_exs.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svh.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svs.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_svh.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_svs.h:
+        * TAO_IDL/be_include/be_visitor_null_return_value.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+        * TAO_IDL/be_include/be_visitor_operation/arglist.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_exs.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svs.h:
+        * TAO_IDL/contrib:
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/lib.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * docs/compiler.html:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * tests/Bug_3647_Regression/Backend_Impl.h:
+        * tests/Bug_3647_Regression/Middle_Impl.h:
+
+          Merged in dds_ports branch, changelog entries pasted below. 
+        
+        * TAO_IDL/be/be_stream_factory.cpp:
+        * TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/be_include/be_stream_factory.h:
+        * TAO_IDL/be_include/be_sunsoft.h:
+
+          Removed these files.
+
+   Tue Jul  7 17:11:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_produce.cpp:
+
+             Removed the short-circuit cleanup and return after skeleton
+             header generation if the -SS option is in effect - the
+             overhead saved is negligible and other passes, plus export
+             header file generation, may still be needed. Thanks to
+             Will Otte <wotte@dre.vanderbilt.edu> for reporting the
+             bug.
+
+           * TAO_IDL/be/be_global.cpp:
+
+             Added lines to unset the skeleton inline and skeleton
+             source file generation flags when the -SS option is
+             seen, making for cleaner logic in BE_produce, as noted
+             above.
+
+   Tue Jul  7 16:27:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+           * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+           * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+           * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+             Added check to skip code generation for declarations
+             from included IDL files. Thanks to Will Otte
+             <wotte@dre.vanderbilt.edu> for reporting the problem.
+
+           * TAO_IDL/util/utl_global.cpp:
+
+             Cosmetic changes.
+
+   Wed Jul  1 16:27:07 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_component.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+             Conditionalized generation of value factory registration
+             with a check to see if the eventtype in question has a
+             concrete factory. Registration macro should be generated
+             only if this check returns true.
+
+   Wed Jul  1 15:57:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_global.cpp:
+
+             Added component swapping option -Gsw to the usage message.
+
+   Wed Jul  1 15:53:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * NEWS:
+           * docs/compiler.html:
+
+             Updated documentation with new IDL compiler functionality,
+             CIAO-related generation and export header file generation.
+
+   Wed Jul  1 14:13:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+           * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+
+             Re-enabled the capability to dump preprocessor output.
+
+   Tue Jun 30 15:26:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_interface.cpp:
+
+             Commented out an unused parameter.
+
+   Mon Jun 29 23:07:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+           * TAO_IDL/be/be_visitor_interface/interface_svh.cpp:
+           * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+           * TAO_IDL/be_include/be_visitor_interface/interface_svh.h:
+           * TAO_IDL/be_include/be_visitor_interface/interface_svs.h:
+           * TAO_IDL/be_include/be_visitor_interface/interface_ex_idl.h:
+
+             New visitors, to support the generation of facet servant
+             code for every interface in the translation unit, replacing
+             the default mechanism of generating this code by navigation
+             from components' lists of provides ports.
+
+           * TAO_IDL/be/be_visitor_interface.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+           * TAO_IDL/be/be_codegen.cpp:
+           * TAO_IDL/be/be_visitor_root/root.cpp:
+           * TAO_IDL/be/be_visitor_module/module.cpp:
+           * TAO_IDL/be/be_global.cpp:
+           * TAO_IDL/be/be_produce.cpp:
+           * TAO_IDL/be/be_interface.cpp:
+           * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+           * TAO_IDL/be_include/be_interface.h:
+           * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+           * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+           * TAO_IDL/be_include/be_visitor_component/component_ex_idl.h:
+           * TAO_IDL/be_include/be_global.h:
+           * TAO_IDL/be_include/be_visitor_interface.h:
+
+             Changes to existing IDL files to support standalone
+             interface facet servant generation.
+
+   Thu Jun 25 14:52:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+
+             Restored a line of code that causes the argument list of
+             empty executor implementation operations in the source file
+             to be commented out, since the operation body is empty until
+             the user fills it in.
+
+   Wed Jun 24 14:56:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+           * TAO_IDL/contrib/mcpp/directive.cpp:
+           * TAO_IDL/contrib/mcpp/expand.cpp:
+           * TAO_IDL/contrib/mcpp/internal.H:
+           * TAO_IDL/contrib/mcpp/lib.cpp:
+           * TAO_IDL/contrib/mcpp/main.cpp:
+           * TAO_IDL/contrib/mcpp/noconfig.H:
+           * TAO_IDL/contrib/mcpp/support.cpp:
+           * TAO_IDL/contrib/mcpp/system.cpp:
+
+             Renamed stpcpy to mcpp_stpcpy to avoid clashes if a system defined
+             stpcpy is present.
+
+   Tue Jun 23 15:19:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * MPC/modules/IDLHelper.pm:
+             cleanup and slight improvement when the export include is the last
+             option on the line
+
+   Tue Jun 23 14:53:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * MPC/modules/IDLHelper.pm:
+             new IDL helper to let MPC generate the export file names so that
+             they get removed using a clean. Thanks to Adam Mitz for assisting
+             with this
+
+   Mon Jun 22 09:22:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * TAO_IDL/be/be_codegen.cpp:
+             Generate closign )
+
+   Fri Jun 19 19:33:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_sunsoft.cpp:
+           * TAO_IDL/be_include/be_sunsoft.h:
+           * TAO_IDL/be_include/be_stream_factory.h:
+           * TAO_IDL/be/be_stream_factory.cpp:
+
+             Removed files, no longer needed.
+
+           * TAO_IDL/be/be_codegen.cpp:
+           * TAO_IDL/be/be_tmplinst.cpp:
+           * TAO_IDL/be/be_global.cpp:
+           * TAO_IDL/be/be_produce.cpp:
+           * TAO_IDL/be/be_helper.cpp:
+           * TAO_IDL/be/be_interface.cpp:
+           * TAO_IDL/be_include/be_helper.h:
+           * TAO_IDL/be_include/be_codegen.h:
+           * TAO_IDL/be_include/be_global.h:
+
+             - Made abstract class TAO_OutStream concrete
+               by moving 3 method implementations from
+               derived class TAO_SunSoft_OutStream and
+               eliminating the derived class.
+
+             - Added code generation of export header files.
+
+   Fri Jun 19 12:41:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_component/component.cpp:
+
+             Added the new visitor context states to switch
+             statements in visit_typedef() and visit_operation().
+
+   Thu Jun 18 18:44:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/include/idl_global.h:
+           * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+           * TAO_IDL/be/be_visitor_operation.cpp:
+           * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+           * TAO_IDL/be/be_identifier_helper.cpp:
+           * TAO_IDL/be/be_interface_strategy.cpp:
+           * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+           * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+           * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+           * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+           * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+           * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+           * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+           * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+           * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+           * TAO_IDL/be/be_visitor_null_return_value.cpp:
+           * TAO_IDL/be/be_decl.cpp:
+           * TAO_IDL/ast/ast_decl.cpp:
+           * TAO_IDL/be_include/be_visitor_operation/rettype.h:
+           * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+           * TAO_IDL/be_include/be_visitor_component/component_exs.h:
+           * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+           * TAO_IDL/be_include/be_identifier_helper.h:
+           * TAO_IDL/fe/y.tab.cpp:
+           * TAO_IDL/fe/idl.yy:
+           * TAO_IDL/util/utl_global.cpp:
+
+             - Fixed warnings in compilation of new visitors.
+
+             - Modified flat name computation, and initialization of
+               port name in component port descriptors, to leave off
+               the '_cxx_' prefix (indicating a clash with a C++
+               keyword) if it exists. Flat name and port name are
+               always used in concatenation with other strings, and
+               so the prefix isn't necessary, and is confusing to
+               read.
+
+             - Fixed CIAO servant, executor IDL and executor impl
+               code generation to be consistent when the IDL file
+               contains C++ keywords and escaped IDL keywords. There
+               is also a new test in CIAO_ROOT/tests/IDL_Test to
+               cover these use cases.
+
+             - Fixed bug in code generation for home servant finder
+               operations. These aren't implemented yet in CIAO, so
+               the arguments, if any, must be generated as commented
+               out, to avoid 'unused arg' warnings. Thanks to
+               Johnny Willemsen <jwillemsen@remedy.nl> for reporting
+               the bug.
+
+   Tue Jun 16 20:40:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+
+             Fixed bug in code generation of home operation body,
+             where the call is delegated to the executor.
+
+           * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+           * TAO_IDL/be/be_decl.cpp:
+           * TAO_IDL/be_include/be_decl.h:
+
+             Fixed code generation bug where the facet servant
+             class and the facet executor interface were generated
+             for each use of a given interface in a facet. This
+             class and interface must be generated exactly once.
+
+   Tue Jun 16 16:46:15 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+             Fixed a couple of code generation bugs related to
+             scoping adjustments. Thanks to Johnny Willemsen
+             <jwillemsen@remedy.nl> for reporting the problems.
+
+   Tue Jun 16 15:40:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+           * TAO_IDL/contrib:
+           * TAO_IDL/contrib/mcpp/Makefile.am:
+           * TAO_IDL/contrib/mcpp/cc1.cpp:
+           * TAO_IDL/contrib/mcpp/configed.H:
+           * TAO_IDL/contrib/mcpp/directive.cpp:
+           * TAO_IDL/contrib/mcpp/eval.cpp:
+           * TAO_IDL/contrib/mcpp/expand.cpp:
+           * TAO_IDL/contrib/mcpp/internal.H:
+           * TAO_IDL/contrib/mcpp/lib.cpp:
+           * TAO_IDL/contrib/mcpp/main.cpp:
+           * TAO_IDL/contrib/mcpp/main_libmcpp.c:
+           * TAO_IDL/contrib/mcpp/mbchar.cpp:
+           * TAO_IDL/contrib/mcpp/mcpp.mpc:
+           * TAO_IDL/contrib/mcpp/mcpp_lib.h:
+           * TAO_IDL/contrib/mcpp/mcpp_out.h:
+           * TAO_IDL/contrib/mcpp/noconfig.H:
+           * TAO_IDL/contrib/mcpp/support.cpp:
+           * TAO_IDL/contrib/mcpp/system.H:
+           * TAO_IDL/contrib/mcpp/system.cpp:
+           * TAO_IDL/contrib/mcpp/testmain.c:
+
+             Merged in from trunk.
+
+   Tue Jun 16 13:09:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+           * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+
+             Added a method that restores the state of the home's
+             scope. The CCM pre_proc visitor makes some invasive
+             changes, and restoration was never done since at that
+             time, the home node was ignored from that point and
+             all code generation came from the added implied IDL
+             nodes. Now that we are doing addition code generation,
+             this scope state must be restored.
+
+           * TAO_IDL/be/be_visitor_root/root.cpp:
+
+             Added the new context states related to CIAO code
+             generation to some switch statements in this visitor,
+             to avoid getting "bad context" errors.
+
+   Fri Jun 12 20:39:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+
+             Implemented overlooked generation of home servant factory
+             function.
+
+   Thu Jun 11 19:35:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+             Fixed errors in CIAO servant code generation.
+
+   Thu Jun 11 17:53:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+           * TAO_IDL/be/be_null_return_emitter.cpp:
+           * TAO_IDL/be/be_visitor_null_return_value.cpp:
+           * TAO_IDL/be_include/be_null_return_emitter.h:
+
+             Fixed mistakes in executor implementation code generation.
+
+   Thu Jun 11 000:36:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+           * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+           * TAO_IDL/be/be_visitor_root/root_exs.cpp:
+           * TAO_IDL/be/be_null_return_emitter.cpp:
+           * TAO_IDL/be/be_visitor_null_return_value.cpp:
+           * TAO_IDL/be_include/be_visitor_null_return_value.h:
+           * TAO_IDL/be_include/be_visitor_home/home_exs.h:
+           * TAO_IDL/be_include/be_visitor_operation/operation_exs.h:
+           * TAO_IDL/be_include/be_visitor_component/component_exs.h:
+           * TAO_IDL/be_include/be_visitor_root/root_exs.h:
+           * TAO_IDL/be_include/be_null_return_emitter.h:
+
+             New files containing visitors in support of code generation
+             for CIAO executor implementation source files.
+
+           * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+           * TAO_IDL/be/be_visitor_home.cpp:
+           * TAO_IDL/be/be_visitor_operation.cpp:
+           * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+           * TAO_IDL/be/be_visitor_component.cpp:
+           * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+           * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+           * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+           * TAO_IDL/be/be_visitor_root.cpp:
+           * TAO_IDL/be/be_codegen.cpp:
+           * TAO_IDL/be/be_visitor_root/root.cpp:
+           * TAO_IDL/be/be_visitor_root/root_exh.cpp:
+           * TAO_IDL/be/be_visitor_module/module.cpp:
+           * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+           * TAO_IDL/be/be_produce.cpp:
+           * TAO_IDL/be_include/be_visitor_argument/arglist.h:
+           * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+           * TAO_IDL/be_include/be_visitor_operation/arglist.h:
+           * TAO_IDL/be_include/be_visitor_component/component_exh.h:
+           * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+           * TAO_IDL/be_include/be_visitor_root.h:
+           * TAO_IDL/be_include/be_util.h:
+           * TAO_IDL/be_include/be_visitor_any_extracted_type_decl.h:
+           * TAO_IDL/be_include/be_visitor_home.h:
+           * TAO_IDL/be_include/be_visitor_operation.h:
+           * TAO_IDL/be_include/be_visitor_component.h:
+
+             Existing files modified in support of code generation for
+             CIAO executor implementation source files.
+
+   Tue Jun  9 20:55:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+           * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+           * TAO_IDL/be/be_visitor_root/root_exh.cpp:
+           * TAO_IDL/be_include/be_visitor_home/home_exh.h:
+           * TAO_IDL/be_include/be_visitor_component/component_exh.h:
+           * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+
+             New files, visitors that generate the CIAO executor
+             implementation header file.
+
+           * TAO_IDL/be/be_visitor_home.cpp:
+           * TAO_IDL/be/be_visitor_component.cpp:
+           * TAO_IDL/be/be_visitor_root.cpp:
+           * TAO_IDL/be/be_codegen.cpp:
+           * TAO_IDL/be/be_visitor_root/root.cpp:
+           * TAO_IDL/be/be_visitor_module/module.cpp:
+           * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+           * TAO_IDL/be/be_produce.cpp:
+           * TAO_IDL/be_include/be_visitor_root.h:
+           * TAO_IDL/be_include/be_visitor_home.h:
+           * TAO_IDL/be_include/be_visitor_component.h:
+
+             Files modified to support the generation of the CIAO
+             executor implementation header file.
+
+   Fri Jun  5 16:38:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+           * TAO_IDL/be/be_identifier_helper.cpp:
+           * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+           * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+           * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+           * TAO_IDL/be/be_visitor_root/root_svh.cpp:
+           * TAO_IDL/be/be_visitor_root/root_ex_idl.cpp:
+           * TAO_IDL/be/be_visitor_root/root_svs.cpp:
+           * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+           * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+           * TAO_IDL/be_include/be_visitor_any_extracted_type_decl.h:
+           * TAO_IDL/be_include/be_identifier_helper.h:
+           * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+           * TAO_IDL/be_include/be_visitor_home/home_svs.h:
+           * TAO_IDL/be_include/be_visitor_home/home_svh.h:
+           * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+           * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+           * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+           * TAO_IDL/be_include/be_visitor_component/component_ex_idl.h:
+           * TAO_IDL/be_include/be_visitor_root/root_svh.h:
+           * TAO_IDL/be_include/be_visitor_root/root_ex_idl.h:
+           * TAO_IDL/be_include/be_visitor_root/root_svs.h:
+           * TAO_IDL/be_include/be_visitor_attribute/set_from_extracted.h:
+           * TAO_IDL/be_include/be_visitor_attribute/component_init.h:
+
+             New files, visitors and utility classes to add support for
+             generation of CIAO servant code and executor IDL.
+
+           * TAO_IDL/TAO_IDL_ACE.mwc:
+
+             New file, for convenience when compiling the IDL compiler
+             after ACE has been updated.
+
+           * TAO_IDL/include/idl_global.h:
+           * TAO_IDL/include/ast_home.h:
+           * TAO_IDL/include/ast_operation.h:
+           * TAO_IDL/include/ast_component.h:
+           * TAO_IDL/include/ast_array.h:
+           * TAO_IDL/be/be_visitor_home.cpp:
+           * TAO_IDL/be/be_visitor_operation.cpp:
+           * TAO_IDL/be/be_visitor_component.cpp:
+           * TAO_IDL/be/be_visitor_scope.cpp:
+           * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+           * TAO_IDL/be/be_visitor_operation/operation.cpp:
+           * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+           * TAO_IDL/be/be_visitor_root.cpp:
+           * TAO_IDL/be/be_codegen.cpp:
+           * TAO_IDL/be/be_visitor_root/root.cpp:
+           * TAO_IDL/be/be_visitor_attribute.cpp:
+           * TAO_IDL/be/be_visitor_module/module.cpp:
+           * TAO_IDL/be/be_global.cpp:
+           * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+           * TAO_IDL/be/be_produce.cpp:
+           * TAO_IDL/be/be_interface.cpp:
+           * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+           * TAO_IDL/ast/ast_home.cpp:
+           * ast/ast_operation.cpp:
+           * ast/ast_interface.cpp:
+           * ast/ast_component.cpp:
+           * ast/ast_concrete_type.cpp:
+           * ast/ast_string.cpp:
+           * be_include/be_interface.h:
+           * be_include/be_visitor_component/component_ch.h:
+           * be_include/be_helper.h:
+           * be_include/be_visitor_attribute/attribute.h:
+           * be_include/be_visitor_root.h:
+           * be_include/be_codegen.h:
+           * be_include/be_visitor_attribute.h:
+           * be_include/be_global.h:
+           * be_include/be_visitor_home.h:
+           * be_include/be_visitor_operation.h:
+           * be_include/be_visitor_component.h:
+           * driver/drv_args.cpp:
+           * util/utl_global.cpp:
+
+             Changes to existing files in support of the new CIAO servant
+             code and executor IDL code generation.
+        
+
 Tue Jul 14 02:45:10 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:

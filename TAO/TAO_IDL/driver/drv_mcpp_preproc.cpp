@@ -1014,13 +1014,12 @@ DRV_pre_proc (const char *myfile)
     }
 
   FE_set_yyin (yyin);
-
-  /** @@TODO worry about this later.
+  
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
       char buffer[ACE_MAXLOGMSGLEN];
       size_t bytes;
-
+      
       // ACE_DEBUG sends to stderr - we want stdout for this dump
       // of the preprocessor output. So we modify the singleton that
       // was created in this process. Since IDL_CF_ONLY_PREPROC causes
@@ -1030,7 +1029,15 @@ DRV_pre_proc (const char *myfile)
       out->msg_ostream (&cout);
       out->clr_flags (ACE_Log_Msg::STDERR);
       out->set_flags (ACE_Log_Msg::OSTREAM);
-
+      
+      size_t end = ACE_OS::strlen (yyin);
+      
+      for (size_t i = 0; i < end; i += ACE_MAXLOGMSGLEN)
+        {
+          ACE_DEBUG ((LM_DEBUG, "%s",
+                      yyin + i));
+        }
+      /*
       while ((bytes = ACE_OS::fread (buffer,
                                      sizeof (char),
                                      ACE_MAXLOGMSGLEN - 1,
@@ -1043,8 +1050,7 @@ DRV_pre_proc (const char *myfile)
                       buffer));
         }
 
-      ACE_OS::fclose (preproc);
+        ACE_OS::fclose (preproc);*/
       }
       // need to free buffers?
-  */
 }

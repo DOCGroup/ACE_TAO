@@ -101,6 +101,4 @@ AST_ConcreteType::destroy (void)
   this->AST_Type::destroy ();
 }
 
-
-
 IMPL_NARROW_FROM_DECL(AST_ConcreteType)

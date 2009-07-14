@@ -7060,6 +7060,10 @@ tao_yyreduce:
                 AST_Type::narrow_from_decl (d);
 
               AST_Component::port_description pd;
+              
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name (tao_yyvsp[0].idval);
+              
               pd.id = tao_yyvsp[0].idval;
               pd.impl = interface_type;
               pd.line_number = idl_global->lineno ();
@@ -7155,6 +7159,10 @@ tao_yyreduce:
           if (c != 0)
             {
               AST_Component::port_description ud;
+              
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name (tao_yyvsp[0].idval);
+              
               ud.id = tao_yyvsp[0].idval;
               ud.impl = interface_type;
               ud.is_multiple = tao_yyvsp[-2].bval;
@@ -7238,6 +7246,10 @@ tao_yyreduce:
               if (c != 0)
                 {
                   AST_Component::port_description pd;
+              
+                  // Strip off _cxx_, if any, for port name.
+                  idl_global->original_local_name (tao_yyvsp[0].idval);
+              
                   pd.id = tao_yyvsp[0].idval;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();
@@ -7295,6 +7307,10 @@ tao_yyreduce:
               if (c != 0)
                 {
                   AST_Component::port_description pd;
+              
+                  // Strip off _cxx_, if any, for port name.
+                  idl_global->original_local_name (tao_yyvsp[0].idval);
+              
                   pd.id = tao_yyvsp[0].idval;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();
@@ -7352,6 +7368,10 @@ tao_yyreduce:
               if (c != 0)
                 {
                   AST_Component::port_description pd;
+              
+                  // Strip off _cxx_, if any, for port name.
+                  idl_global->original_local_name (tao_yyvsp[0].idval);
+              
                   pd.id = tao_yyvsp[0].idval;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();

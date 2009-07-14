@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_visitor_operation.cpp
@@ -44,6 +44,7 @@
 #include "be_home.h"
 #include "be_extern.h"
 #include "be_helper.h"
+#include "be_identifier_helper.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
 #include "nr_extern.h"
@@ -67,6 +68,8 @@
 #include "be_visitor_operation/operation_ih.cpp"
 #include "be_visitor_operation/operation_ss.cpp"
 #include "be_visitor_operation/operation_is.cpp"
+#include "be_visitor_operation/operation_svs.cpp"
+#include "be_visitor_operation/operation_exs.cpp"
 #include "be_visitor_operation/rettype.cpp"
 #include "be_visitor_operation/rettype_return_cs.cpp"
 #include "be_visitor_operation/tie_sh.cpp"

@@ -531,7 +531,7 @@ extern void     at_end( void);
 extern void     print_heap( void);
                 /* Print blocks of heap memory  */
 #if defined(HOST_HAVE_STPCPY) && HOST_HAVE_STPCPY == FALSE
-extern char *   stpcpy( char * dest, const char * src);
+extern char *   mcpp_stpcpy( char * dest, const char * src);
                 /* Non-Standard library function*/
 #endif
 
@@ -558,5 +558,5 @@ extern void     init_system( void);
 #endif
 
 ///#if defined(HOST_HAVE_STPCPY) && HOST_HAVE_STPCPY == FALSE
-//extern char *   stpcpy( char * dest, const char * src);
+//extern char *   mcpp_stpcpy( char * dest, const char * src);
 //#endif
