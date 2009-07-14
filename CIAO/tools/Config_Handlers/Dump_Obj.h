@@ -30,45 +30,45 @@ namespace Deployment
 */
 class Config_Handlers_Export Dump_Obj
 {
-public:
-/// Exception thrown when there is a node with the same name in the
-/// map
-class Node_Exist { };
+  public:
+  /// Exception thrown when there is a node with the same name in the
+  /// map
+  class Node_Exist { };
 
-/// Exception thrown when there is no node with the name given in
-/// the map
-class Node_Not_Exist { };
+  /// Exception thrown when there is no node with the name given in
+  /// the map
+  class Node_Not_Exist { };
 
-/// Constructors prints out the caption and increases indent
-Dump_Obj (const char *caption);
+  /// Constructors prints out the caption and increases indent
+  Dump_Obj (const char *caption);
 
-/// Additionally insets <val> into the map
-Dump_Obj (const char* caption,
-CORBA::Any &val);
+  /// Additionally insets @a val into the map
+  Dump_Obj (const char* caption, CORBA::Any &val);
 
-// Destructor
-~Dump_Obj (void);
-// return the indent string
-static const char* indent()
-{
-return indent_.c_str();
-}
+  /// Destructor
+  ~Dump_Obj (void);
 
-static CORBA::Any& desc(const char* caption)
-{
-return desc_map_[caption];
-}
+  /// return the indent string
+  static const char* indent()
+  {
+    return indent_.c_str();
+  }
+
+  static CORBA::Any& desc(const char* caption)
+  {
+  return desc_map_[caption];
+  }
 
 private:
-// indent string
-static std::string indent_;
+  /// indent string
+  static std::string indent_;
 
-// map for reference lookup
-static std::map<std::string, CORBA::Any> desc_map_;
+  /// map for reference lookup
+  static std::map<std::string, CORBA::Any> desc_map_;
 
-// descriptor - used by destructor for deleting the
-// correct descriptor from the map
-std::string desc_;
+  /// descriptor - used by destructor for deleting the
+  /// correct descriptor from the map
+  std::string desc_;
 };
 }
 

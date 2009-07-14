@@ -24,7 +24,7 @@ namespace XMI
 
   Extension::
   Extension ()
-  : 
+    :  XSCRT::Type (),
   regulator__ ()
   {
   }
@@ -32,7 +32,6 @@ namespace XMI
   Extension::
   Extension (Extension const& s)
   :
-    XSCRT::Type (),
   id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
   label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
   uuid_ (s.uuid_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.uuid_) : 0),
@@ -381,49 +380,49 @@ namespace XMI
     {
       ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
       ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-      if (n == "id")
+      if (n == ACE_TEXT ("id"))
       {
         ::XMLSchema::ID< ACE_TCHAR > t (a);
         id (t);
       }
 
-      else if (n == "label")
+      else if (n == ACE_TEXT ("label"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         label (t);
       }
 
-      else if (n == "uuid")
+      else if (n == ACE_TEXT ("uuid"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         uuid (t);
       }
 
-      else if (n == "href")
+      else if (n == ACE_TEXT ("href"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         href (t);
       }
 
-      else if (n == "idref")
+      else if (n == ACE_TEXT ("idref"))
       {
         ::XMLSchema::IDREF< ACE_TCHAR > t (a);
         idref (t);
       }
 
-      else if (n == "version")
+      else if (n == ACE_TEXT ("version"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         version (t);
       }
 
-      else if (n == "extender")
+      else if (n == ACE_TEXT ("extender"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         extender (t);
       }
 
-      else if (n == "extenderID")
+      else if (n == ACE_TEXT ("extenderID"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         extenderID (t);
@@ -444,7 +443,7 @@ namespace XMI
     extension (xercesc::DOMDocument const* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "extension")
+      if (e.name () == ACE_TEXT ("extension"))
       {
         ::XMI::Extension r (e);
         return r;
@@ -841,7 +840,7 @@ namespace XMI
     extension (::XMI::Extension const& s, xercesc::DOMDocument* d)
     {
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () != "extension")
+      if (e.name () != ACE_TEXT ("extension"))
       {
         throw 1;
       }

@@ -32,7 +32,7 @@
 #include "SimpleConsumer_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_SimpleConsumer_Impl
+namespace CIAO_Simple_SimpleConsumer_Impl
 {
   class SIMPLECONSUMER_EXEC_Export SimpleConsumer_exec_i
     : public virtual SimpleConsumer_Exec,

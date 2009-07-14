@@ -47,8 +47,6 @@ class DAnCE_Plan_Launcher_Module_Export DAnCE_Plan_Launcher_Module
     virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                              int argc,
                                              ACE_TCHAR *argv []);
-
-  private:
   };
 
 ACE_FACTORY_DECLARE (DAnCE_Plan_Launcher_Module, DAnCE_Plan_Launcher_Module)

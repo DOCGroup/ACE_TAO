@@ -136,13 +136,14 @@ namespace CIAO
           break;
 
         default:
-          ACE_ERROR ((LM_ERROR, "Invalid port kind in connection %s\n",
+          ACE_ERROR ((LM_ERROR, ACE_TEXT("Invalid port kind in connection %C\n"),
                       name.c_str ()));
         }
 
-      for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i);
-      
-        //cpd.add_supportedType (XMLSchema::string< char > ((src.supportedType[i])));
+      for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
+        {
+          //cpd.add_supportedType (XMLSchema::string< char > ((src.supportedType[i])));
+        }
 
       return cpd;
     }

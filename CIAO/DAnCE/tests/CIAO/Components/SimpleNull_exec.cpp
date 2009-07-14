@@ -21,7 +21,7 @@
 #include "SimpleNull_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_SimpleNull_Impl
+namespace CIAO_Simple_SimpleNull_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   SimpleNull_exec_i

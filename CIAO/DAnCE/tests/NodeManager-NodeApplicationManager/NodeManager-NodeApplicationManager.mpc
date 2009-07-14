@@ -1,5 +1,5 @@
 // $Id$
-project : dance_exe, dance_deployment_svnt, dance_deployment_stub, dance_node_application_manager, dance_node_application, dance_logger  {
+project : dance_exe, dance_nodemanager_stub, dance_logger  {
   exename   = NodeManagerNodeApplicationManagerTest
 
   Source_Files {

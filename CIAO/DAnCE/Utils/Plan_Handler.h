@@ -13,7 +13,7 @@
 #define CIAO_DANCE_UTILS_H
 
 #include "DAnCE_Utils_Export.h"
-#include "Deployment/DeploymentC.h"
+#include "Deployment/Deployment_DeploymentPlanC.h"
 
 namespace DAnCE
 {

@@ -2,8 +2,6 @@
 // $Id$
 
 #include "Plan_Launcher_Module.h"
-#include "tao/TAO_Singleton_Manager.h"
-#include "tao/StringSeqC.h"
 #include "Plan_Launcher_Impl.h"
 #include "ace/Get_Opt.h"
 #include "DAnCE/Logger/Log_Macros.h"
@@ -30,6 +28,9 @@ DAnCE_Plan_Launcher_Module::create_object (CORBA::ORB_ptr orb,
                     
       Plan_Launcher_Impl pl (orb, argc, argv);
       pl.execute();
+    }
+  catch (const Plan_Launcher_Base_Impl::Help_Issued& )
+    {
     }
   catch (const Plan_Launcher_Base_Impl::Deployment_Failure& e)
     {

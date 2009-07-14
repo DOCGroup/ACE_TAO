@@ -43,7 +43,7 @@ namespace CIAO
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
         case TCKind::tk_objref_l:
-        case TCKind::tk_wfixed_l:
+        case TCKind::tk_fixed_l:
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
 

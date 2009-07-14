@@ -32,10 +32,10 @@
 #include "SimpleNull_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_SimpleNull_Impl
+namespace CIAO_Simple_SimpleNull_Impl
 {
   class SIMPLENULL_EXEC_Export SimpleNull_exec_i
-    : public virtual SimpleProvider_Exec,
+    : public virtual SimpleNull_Exec,
       public virtual ::CORBA::LocalObject
   {
     public:

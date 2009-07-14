@@ -65,6 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       
       DANCE_DEBUG ((LM_TRACE, DLINFO 
                     ACE_TEXT("Module_Main.h - initializing module instance")));
+
       DANCE_MODULE_MAIN_CLASS_NAME module_instance;
       
       CORBA::Object_var obj = module_instance.create_object (orb.in (),
@@ -73,9 +74,6 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 #ifndef DANCE_MODULE_MAIN_SKIP_ORB_RUN      
       if (!CORBA::is_nil (obj.in ()))
         orb->run ();
-      else
-        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Module_Main.h - ")
-                      ACE_TEXT("Got nil object reference from Module\n")));
       
       DANCE_DEBUG ((LM_TRACE, DLINFO
                     ACE_TEXT("Module_Main.h - ORB event loop finished, exiting.\n")));

@@ -40,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                           "usage:  %s\n"
-                          "-k <Broker IOR> (default is file:\\broker.ior)\n"
+                          "-k <Broker IOR> (default is file://StockBroker.ior)\n"
                           "-s <stock name you wish to subscribe>\n"
                           "-u <stock name you wish to unsubscribe>\n"
                           "\n",

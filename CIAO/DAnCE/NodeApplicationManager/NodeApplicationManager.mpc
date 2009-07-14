@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: dance_lib, naming, dance_node_application, dance_deployment_svnt, dance_deployment_stub, dynamicinterface, ccm_componentserver_svnt, ciao_cs_client {
+project: dance_lib, naming, dance_nodeapplicationmanager_skel, dynamicinterface, ccm_componentserver_svnt, ciao_cs_client {
   sharedname   = DAnCE_NodeApplicationManager
   dynamicflags = NODEAPPLICATIONMANAGER_BUILD_DLL
 

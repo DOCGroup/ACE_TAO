@@ -33,7 +33,10 @@
 //for the PackageConfiguration parsing
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
+#include "DAnCE/Logger/Log_Macros.h"
+
 #include "Package_Handlers/PCD_Handler.h"
+#include "XML_Typedefs.h"
 
 #include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration
 #include "ace/Message_Block.h"    //for ACE_Message_Block
@@ -139,6 +142,10 @@ namespace DAnCE
         if(!this->add_type (pc, element.ext_id_.c_str ()))
           ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
       }
+    
+    CIAO::Config_Handlers::XML_Helper::_path_resolver.add_path (ACE_TEXT ("CIAO_ROOT"),
+                                                                ACE_TEXT ("/docs/schema/"));
+    
   }
 
   //-----------------------------------------------------------------
@@ -183,6 +190,8 @@ namespace DAnCE
     PCEntry *entry = 0;
     if (this->names_.find (ACE_CString (installationName), entry) == 0)
       {
+        DANCE_DEBUG ((LM_INFO, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+                      "Found package %s already installed.\n"));
         if (!replace)
           throw Deployment::NameExists ();
         else
@@ -206,33 +215,51 @@ namespace DAnCE
 
     ACE_CString descriptor_dir (path);
     descriptor_dir += "/descriptors/"; //location of the descriptor directory
-
-
+    
+    DANCE_DEBUG ((LM_DEBUG, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+                  "Package Path: %s\n",
+                  package_path.c_str ()));
+    DANCE_DEBUG ((LM_DEBUG, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+                  "Descriptor path: %s\n",
+                  descriptor_dir.c_str ()));
+    
     //check if URL or local file
     //download or load into memory
 
     if (ACE_OS::strstr (location, "http://"))
       {
-
-        //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
+        DANCE_DEBUG ((LM_INFO, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+                      "Downloading package over HTTP: %s\n",
+                      location));
+        
         ACE_Message_Block* mb = 0;
         ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
 
-        //get the remote file
-        if (!HTTP_Get (location, *mb))
+        try
           {
-            mb->release ();
-            throw CORBA::INTERNAL ();
-          }
+            //get the remote file
+            if (!HTTP_Get (location, *mb))
+              {
+                throw CORBA::INTERNAL ();
+              }
+            
+            // Write file to designated location on disk
+            if (!RM_Helper::write_to_disk (package_path.c_str (), *mb))
+              {
+                throw CORBA::INTERNAL ();
+              }
 
-        // Write file to designated location on disk
-        if (!RM_Helper::write_to_disk (package_path.c_str (), *mb))
+            mb->release ();
+          }
+        catch (...)
           {
+            DANCE_ERROR ((LM_ERROR, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+                          "Caught unexpected exception while fetching path %s\n",
+                          location));
+            
             mb->release ();
-            throw CORBA::INTERNAL ();
+            throw;
           }
-
-        mb->release ();
       }
     else
       {
@@ -240,7 +267,12 @@ namespace DAnCE
           throw CORBA::INTERNAL ();
       }
 
-
+    
+    DANCE_DEBUG ((LM_TRACE, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+                  "Uncompressing file %s to directory %s\n",
+                  package_path.c_str (),
+                  this->install_root_.c_str ()));
+    
     ZIP_Wrapper::uncompress (const_cast<char*> (package_path.c_str ()),
                              const_cast<char*> (this->install_root_.c_str ()),
                              false //not verbose
@@ -255,6 +287,11 @@ namespace DAnCE
     //if the PackageConfiguration name cannot be found, then there is nothing to install
     if (pc_name == "")
       {
+        DANCE_ERROR ((LM_ERROR, DLINFO "RepositoryManagerDaemon_i::installPackage - "
+                      "Unable to find PC name %s in path %s\n",
+                      pc_name.c_str (),
+                      package_path.c_str ()));
+
         //clean the extracted files
         remove_extracted_package (path.c_str ());
         //remove the package
@@ -299,7 +336,7 @@ namespace DAnCE
 
     if (!updater.update (pc))
       {
-        ACE_DEBUG ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+        DANCE_DEBUG ((LM_ERROR, DLINFO "[RM] problem updating the PackageConfiguration!\n"));
 
         //clean the extracted files
         remove_extracted_package (path.c_str ());
@@ -905,7 +942,7 @@ namespace DAnCE
   {
     //change the working dir
     ACE_OS::chdir (descriptor_dir);
-
+    
     Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
     //parse the PCD to make sure that there are no package errors
     try

@@ -32,7 +32,7 @@
 #include "SimpleAttribute_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_SimpleAttribute_Impl
+namespace CIAO_Simple_SimpleAttribute_Impl
 {
   class SIMPLEATTRIBUTE_EXEC_Export SimpleAttribute_exec_i
     : public virtual SimpleAttribute_Exec,

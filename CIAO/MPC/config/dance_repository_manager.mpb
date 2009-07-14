@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance_logger, dance_deployment_svnt, ciao_config_handlers, ccm_stub, dance_repository_manager_base, naming, iortable, utils, zlib, minizip {
-  requires += zlib
-  after += DAnCE_RepositoryManager
-  libs += DAnCE_RepositoryManager
-}

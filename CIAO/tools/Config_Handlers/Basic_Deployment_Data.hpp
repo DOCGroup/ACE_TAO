@@ -157,7 +157,7 @@ namespace CIAO
       static TCKind const tk_longdouble;
       static TCKind const tk_wchar;
       static TCKind const tk_wstring;
-      static TCKind const tk_wfixed;
+      static TCKind const tk_fixed;
       static TCKind const tk_value;
       static TCKind const tk_value_box;
       static TCKind const tk_native;
@@ -169,7 +169,7 @@ namespace CIAO
 
       enum Value
       {
-        tk_null_l, tk_void_l, tk_short_l, tk_long_l, tk_ushort_l, tk_ulong_l, tk_float_l, tk_double_l, tk_boolean_l, tk_char_l, tk_octet_l, tk_any_l, tk_TypeCode_l, tk_Principal_l, tk_objref_l, tk_struct_l, tk_union_l, tk_enum_l, tk_string_l, tk_sequence_l, tk_array_l, tk_alias_l, tk_except_l, tk_longlong_l, tk_ulonglong_l, tk_longdouble_l, tk_wchar_l, tk_wstring_l, tk_wfixed_l, tk_value_l, tk_value_box_l, tk_native_l, tk_abstract_interface_l, tk_local_interface_l, tk_component_l, tk_home_l, tk_event_l
+        tk_null_l, tk_void_l, tk_short_l, tk_long_l, tk_ushort_l, tk_ulong_l, tk_float_l, tk_double_l, tk_boolean_l, tk_char_l, tk_octet_l, tk_any_l, tk_TypeCode_l, tk_Principal_l, tk_objref_l, tk_struct_l, tk_union_l, tk_enum_l, tk_string_l, tk_sequence_l, tk_array_l, tk_alias_l, tk_except_l, tk_longlong_l, tk_ulonglong_l, tk_longdouble_l, tk_wchar_l, tk_wstring_l, tk_fixed_l, tk_value_l, tk_value_box_l, tk_native_l, tk_abstract_interface_l, tk_local_interface_l, tk_component_l, tk_home_l, tk_event_l
       };
 
 
@@ -1183,15 +1183,6 @@ namespace CIAO
       public:
       typedef ACE_Refcounted_Auto_Ptr < Requirement, ACE_Null_Mutex > _ptr;
 
-      // resourceType
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
-      void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
-
       // name
       // 
       public:
@@ -1200,6 +1191,15 @@ namespace CIAO
 
       protected:
       ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
+
+      // resourceType
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
+      void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
 
       // property
       // 
@@ -1217,8 +1217,8 @@ namespace CIAO
       ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > property_;
 
       public:
-      Requirement (::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-                   ::XMLSchema::string< ACE_TCHAR > const& name__);
+      Requirement (::XMLSchema::string< ACE_TCHAR > const& name__,
+                   ::XMLSchema::string< ACE_TCHAR > const& resourceType__);
 
       Requirement (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Requirement (Requirement const& s);
@@ -1739,10 +1739,12 @@ namespace CIAO
       static CCMComponentPortKind const EventEmitter;
       static CCMComponentPortKind const EventPublisher;
       static CCMComponentPortKind const EventConsumer;
+      static CCMComponentPortKind const ExtendedPort;
+      static CCMComponentPortKind const MirrorPort;
 
       enum Value
       {
-        Facet_l, SimplexReceptacle_l, MultiplexReceptacle_l, EventEmitter_l, EventPublisher_l, EventConsumer_l
+        Facet_l, SimplexReceptacle_l, MultiplexReceptacle_l, EventEmitter_l, EventPublisher_l, EventConsumer_l, ExtendedPort_l, MirrorPort_l
       };
 
 
@@ -1851,6 +1853,21 @@ namespace CIAO
 
       protected:
       ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > kind_;
+
+      // templateParam
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator templateParam_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator templateParam_const_iterator;
+      templateParam_iterator begin_templateParam ();
+      templateParam_iterator end_templateParam ();
+      templateParam_const_iterator begin_templateParam () const;
+      templateParam_const_iterator end_templateParam () const;
+      void add_templateParam ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      size_t count_templateParam (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > templateParam_;
 
       public:
       ComponentPortDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -2606,15 +2623,21 @@ namespace CIAO
       // constrainedInstance
       // 
       public:
-      ::CIAO::Config_Handlers::IdRef const& constrainedInstance () const;
-      void constrainedInstance (::CIAO::Config_Handlers::IdRef const& );
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > >::iterator constrainedInstance_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > >::const_iterator constrainedInstance_const_iterator;
+      constrainedInstance_iterator begin_constrainedInstance ();
+      constrainedInstance_iterator end_constrainedInstance ();
+      constrainedInstance_const_iterator begin_constrainedInstance () const;
+      constrainedInstance_const_iterator end_constrainedInstance () const;
+      void add_constrainedInstance ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > const& );
+      size_t count_constrainedInstance (void) const;
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > constrainedInstance_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > > constrainedInstance_;
 
       public:
       PlanLocality (::CIAO::Config_Handlers::PlanLocalityKind const& constraint__,
-                    ::CIAO::Config_Handlers::IdRef const& constrainedInstance__);
+                    ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > > const& constrainedInstance__);
 
       PlanLocality (::XSCRT::XML::Element< ACE_TCHAR > const&);
       PlanLocality (PlanLocality const& s);
@@ -3851,16 +3874,16 @@ namespace CIAO
         pre (Type const&);
 
         virtual void
-        resourceType (Type&);
-
-        virtual void
-        resourceType (Type const&);
-
-        virtual void
         name (Type&);
 
         virtual void
         name (Type const&);
+
+        virtual void
+        resourceType (Type&);
+
+        virtual void
+        resourceType (Type const&);
 
         virtual void
         property (Type&);
@@ -4613,6 +4636,36 @@ namespace CIAO
 
         virtual void
         kind (Type const&);
+
+        virtual void
+        templateParam (Type&);
+
+        virtual void
+        templateParam (Type const&);
+
+        virtual void
+        templateParam_pre (Type&);
+
+        virtual void
+        templateParam_pre (Type const&);
+
+        virtual void
+        templateParam_next (Type&);
+
+        virtual void
+        templateParam_next (Type const&);
+
+        virtual void
+        templateParam_post (Type&);
+
+        virtual void
+        templateParam_post (Type const&);
+
+        virtual void
+        templateParam_none (Type&);
+
+        virtual void
+        templateParam_none (Type const&);
 
         virtual void
         post (Type&);
@@ -5487,6 +5540,24 @@ namespace CIAO
 
         virtual void
         constrainedInstance (Type const&);
+
+        virtual void
+        constrainedInstance_pre (Type&);
+
+        virtual void
+        constrainedInstance_pre (Type const&);
+
+        virtual void
+        constrainedInstance_next (Type&);
+
+        virtual void
+        constrainedInstance_next (Type const&);
+
+        virtual void
+        constrainedInstance_post (Type&);
+
+        virtual void
+        constrainedInstance_post (Type const&);
 
         virtual void
         post (Type&);
@@ -6725,15 +6796,6 @@ namespace CIAO
         traverse (Type const&);
 
         virtual void 
-        resourceType (Type &o)
-        {
-          this->resourceType (const_cast <Type const &> (o));
-        }
-
-        virtual void
-        resourceType (Type const&);
-
-        virtual void 
         name (Type &o)
         {
           this->name (const_cast <Type const &> (o));
@@ -6741,6 +6803,15 @@ namespace CIAO
 
         virtual void
         name (Type const&);
+
+        virtual void 
+        resourceType (Type &o)
+        {
+          this->resourceType (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        resourceType (Type const&);
 
         virtual void 
         property_pre (Type &o)
@@ -7503,6 +7574,33 @@ namespace CIAO
 
         virtual void
         kind (Type const&);
+
+        virtual void 
+        templateParam_pre (Type &o)
+        {
+          this->templateParam_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        templateParam_pre (Type const&);
+
+        virtual void 
+        templateParam_next (Type &o)
+        {
+          this->templateParam_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        templateParam_next (Type const&);
+
+        virtual void 
+        templateParam_post (Type &o)
+        {
+          this->templateParam_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        templateParam_post (Type const&);
 
         protected:
         ComponentPortDescription ();
@@ -8363,13 +8461,31 @@ namespace CIAO
         constraint (Type const&);
 
         virtual void 
-        constrainedInstance (Type &o)
+        constrainedInstance_pre (Type &o)
         {
-          this->constrainedInstance (const_cast <Type const &> (o));
+          this->constrainedInstance_pre (const_cast <Type const &> (o));
         }
 
         virtual void
-        constrainedInstance (Type const&);
+        constrainedInstance_pre (Type const&);
+
+        virtual void 
+        constrainedInstance_next (Type &o)
+        {
+          this->constrainedInstance_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        constrainedInstance_next (Type const&);
+
+        virtual void 
+        constrainedInstance_post (Type &o)
+        {
+          this->constrainedInstance_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        constrainedInstance_post (Type const&);
 
         protected:
         PlanLocality ();

@@ -16,6 +16,7 @@
 #include "DAnCE/Logger/Log_Macros.h"
 #include "Deployment/Deployment_BaseC.h"
 #include "Deployment/Deployment_ApplicationC.h"
+#include "Deployment/Deployment_PlanErrorC.h"
 #include "Deployment/Deployment_common.h"
 #include "Deployment/DAnCE_PropertiesC.h"
 #include "ComponentAttributesSetter.h"
@@ -226,13 +227,13 @@ namespace
 NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa,
                                             const Deployment::DeploymentPlan& plan,
-                                            RedirectionService & redirection,
+//                                            RedirectionService & redirection,
                                             const ACE_CString& node_name,
                                             const PROPERTY_MAP &properties)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     plan_ (plan),
-    redirection_ (redirection),
+//    redirection_ (redirection),
     node_name_ (node_name),
     properties_ (),
     instances_ (plan.instance.length ())
@@ -1190,7 +1191,7 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a standalone component\n"),
                               this->plan_.instance[i].name.in ()));
-                size_t pos = this->servers_[0].containers[0].homes.size ();
+                size_t pos = this->servers_[0].containers[0].components.size ();
                 this->servers_[0].containers[0].components.size (pos + 1);
                 this->servers_[0].containers[0].components[pos] = Instance (eComponent,
                                                                             &this->servers_[0].containers[0],

@@ -21,7 +21,7 @@
 #include "SimpleEmitter_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_SimpleEmitter_Impl
+namespace CIAO_Simple_SimpleEmitter_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   SimpleEmitter_exec_i

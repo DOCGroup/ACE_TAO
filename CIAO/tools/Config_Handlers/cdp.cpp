@@ -21,13 +21,231 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    // PlanSubcomponentPropertyReference
+    // 
+
+    PlanSubcomponentPropertyReference::
+    PlanSubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
+                                       ::CIAO::Config_Handlers::InstanceDeploymentDescription const& instance__)
+    : 
+    ::XSCRT::Type (), 
+    propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (propertyName__)),
+    instance_ (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (instance__)),
+    regulator__ ()
+    {
+      propertyName_->container (this);
+      instance_->container (this);
+    }
+
+    PlanSubcomponentPropertyReference::
+    PlanSubcomponentPropertyReference (PlanSubcomponentPropertyReference const& s)
+    :
+    ::XSCRT::Type (),
+    propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.propertyName_)),
+    instance_ (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (*s.instance_)),
+    regulator__ ()
+    {
+      propertyName_->container (this);
+      instance_->container (this);
+    }
+
+    PlanSubcomponentPropertyReference& PlanSubcomponentPropertyReference::
+    operator= (PlanSubcomponentPropertyReference const& s)
+    {
+      propertyName (*s.propertyName_);
+
+      instance (*s.instance_);
+
+      return *this;
+    }
+
+
+    // PlanSubcomponentPropertyReference
+    // 
+    ::XMLSchema::string< ACE_TCHAR > const& PlanSubcomponentPropertyReference::
+    propertyName () const
+    {
+      return *propertyName_;
+    }
+
+    void PlanSubcomponentPropertyReference::
+    propertyName (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      *propertyName_ = e;
+    }
+
+    // PlanSubcomponentPropertyReference
+    // 
+    ::CIAO::Config_Handlers::InstanceDeploymentDescription const& PlanSubcomponentPropertyReference::
+    instance () const
+    {
+      return *instance_;
+    }
+
+    void PlanSubcomponentPropertyReference::
+    instance (::CIAO::Config_Handlers::InstanceDeploymentDescription const& e)
+    {
+      *instance_ = e;
+    }
+
+
+    // PlanPropertyMapping
+    // 
+
+    PlanPropertyMapping::
+    PlanPropertyMapping (::XMLSchema::string< ACE_TCHAR > const& name__,
+                         ::XMLSchema::string< ACE_TCHAR > const& externalName__,
+                         ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > > const& delegatesTo__)
+    : 
+    name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
+    externalName_ (new ::XMLSchema::string< ACE_TCHAR > (externalName__)),
+    delegatesTo_ (delegatesTo__),
+    regulator__ ()
+    {
+      name_->container (this);
+      externalName_->container (this);
+    }
+
+    PlanPropertyMapping::
+    PlanPropertyMapping (PlanPropertyMapping const& s)
+    :
+    ::XSCRT::Type (),
+    name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
+    source_ (s.source_),
+    externalName_ (new ::XMLSchema::string< ACE_TCHAR > (*s.externalName_)),
+    delegatesTo_ (s.delegatesTo_),
+    regulator__ ()
+    {
+      name_->container (this);
+      externalName_->container (this);
+    }
+
+    PlanPropertyMapping& PlanPropertyMapping::
+    operator= (PlanPropertyMapping const& s)
+    {
+      name (*s.name_);
+
+      source_ = s.source_;
+
+      externalName (*s.externalName_);
+
+      delegatesTo_ = s.delegatesTo_;
+
+      return *this;
+    }
+
+
+    // PlanPropertyMapping
+    // 
+    ::XMLSchema::string< ACE_TCHAR > const& PlanPropertyMapping::
+    name () const
+    {
+      return *name_;
+    }
+
+    void PlanPropertyMapping::
+    name (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      *name_ = e;
+    }
+
+    // PlanPropertyMapping
+    // 
+    PlanPropertyMapping::source_iterator PlanPropertyMapping::
+    begin_source ()
+    {
+      return source_.begin ();
+    }
+
+    PlanPropertyMapping::source_iterator PlanPropertyMapping::
+    end_source ()
+    {
+      return source_.end ();
+    }
+
+    PlanPropertyMapping::source_const_iterator PlanPropertyMapping::
+    begin_source () const
+    {
+      return source_.begin ();
+    }
+
+    PlanPropertyMapping::source_const_iterator PlanPropertyMapping::
+    end_source () const
+    {
+      return source_.end ();
+    }
+
+    void PlanPropertyMapping::
+    add_source (ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  const& e)
+    {
+      source_.push_back (e);
+    }
+
+    size_t PlanPropertyMapping::
+    count_source(void) const
+    {
+      return source_.size ();
+    }
+
+    // PlanPropertyMapping
+    // 
+    ::XMLSchema::string< ACE_TCHAR > const& PlanPropertyMapping::
+    externalName () const
+    {
+      return *externalName_;
+    }
+
+    void PlanPropertyMapping::
+    externalName (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      *externalName_ = e;
+    }
+
+    // PlanPropertyMapping
+    // 
+    PlanPropertyMapping::delegatesTo_iterator PlanPropertyMapping::
+    begin_delegatesTo ()
+    {
+      return delegatesTo_.begin ();
+    }
+
+    PlanPropertyMapping::delegatesTo_iterator PlanPropertyMapping::
+    end_delegatesTo ()
+    {
+      return delegatesTo_.end ();
+    }
+
+    PlanPropertyMapping::delegatesTo_const_iterator PlanPropertyMapping::
+    begin_delegatesTo () const
+    {
+      return delegatesTo_.begin ();
+    }
+
+    PlanPropertyMapping::delegatesTo_const_iterator PlanPropertyMapping::
+    end_delegatesTo () const
+    {
+      return delegatesTo_.end ();
+    }
+
+    void PlanPropertyMapping::
+    add_delegatesTo (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex >  const& e)
+    {
+      delegatesTo_.push_back (e);
+    }
+
+    size_t PlanPropertyMapping::
+    count_delegatesTo(void) const
+    {
+      return delegatesTo_.size ();
+    }
+
+
     // deploymentPlan
     // 
 
     deploymentPlan::
     deploymentPlan ()
     : 
-    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -42,6 +260,7 @@ namespace CIAO
     implementation_ (s.implementation_),
     instance_ (s.instance_),
     connection_ (s.connection_),
+    externalProperty_ (s.externalProperty_),
     dependsOn_ (s.dependsOn_),
     artifact_ (s.artifact_),
     infoProperty_ (s.infoProperty_),
@@ -76,6 +295,8 @@ namespace CIAO
       instance_ = s.instance_;
 
       connection_ = s.connection_;
+
+      externalProperty_ = s.externalProperty_;
 
       dependsOn_ = s.dependsOn_;
 
@@ -292,6 +513,44 @@ namespace CIAO
 
     // deploymentPlan
     // 
+    deploymentPlan::externalProperty_iterator deploymentPlan::
+    begin_externalProperty ()
+    {
+      return externalProperty_.begin ();
+    }
+
+    deploymentPlan::externalProperty_iterator deploymentPlan::
+    end_externalProperty ()
+    {
+      return externalProperty_.end ();
+    }
+
+    deploymentPlan::externalProperty_const_iterator deploymentPlan::
+    begin_externalProperty () const
+    {
+      return externalProperty_.begin ();
+    }
+
+    deploymentPlan::externalProperty_const_iterator deploymentPlan::
+    end_externalProperty () const
+    {
+      return externalProperty_.end ();
+    }
+
+    void deploymentPlan::
+    add_externalProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex >  const& e)
+    {
+      externalProperty_.push_back (e);
+    }
+
+    size_t deploymentPlan::
+    count_externalProperty(void) const
+    {
+      return externalProperty_.size ();
+    }
+
+    // deploymentPlan
+    // 
     deploymentPlan::dependsOn_iterator deploymentPlan::
     begin_dependsOn ()
     {
@@ -448,6 +707,84 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    // PlanSubcomponentPropertyReference
+    //
+
+    PlanSubcomponentPropertyReference::
+    PlanSubcomponentPropertyReference (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == ACE_TEXT ("propertyName"))
+        {
+          propertyName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          propertyName_->container (this);
+        }
+
+        else if (n == ACE_TEXT ("instance"))
+        {
+          instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceDeploymentDescription > (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (e));
+          instance_->container (this);
+        }
+
+        else 
+        {
+        }
+      }
+    }
+
+    // PlanPropertyMapping
+    //
+
+    PlanPropertyMapping::
+    PlanPropertyMapping (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == ACE_TEXT ("name"))
+        {
+          name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          name_->container (this);
+        }
+
+        else if (n == ACE_TEXT ("source"))
+        {
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
+          add_source (t);
+        }
+
+        else if (n == ACE_TEXT ("externalName"))
+        {
+          externalName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          externalName_->container (this);
+        }
+
+        else if (n == ACE_TEXT ("delegatesTo"))
+        {
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference (e));
+          add_delegatesTo (t);
+        }
+
+        else 
+        {
+        }
+      }
+    }
+
     // deploymentPlan
     //
 
@@ -463,61 +800,67 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT ("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "realizes")
+        else if (n == ACE_TEXT ("realizes"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           realizes (t);
         }
 
-        else if (n == "implementation")
+        else if (n == ACE_TEXT ("implementation"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (e));
           add_implementation (t);
         }
 
-        else if (n == "instance")
+        else if (n == ACE_TEXT ("instance"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (e));
           add_instance (t);
         }
 
-        else if (n == "connection")
+        else if (n == ACE_TEXT ("connection"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanConnectionDescription (e));
           add_connection (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT ("externalProperty"))
+        {
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanPropertyMapping (e));
+          add_externalProperty (t);
+        }
+
+        else if (n == ACE_TEXT ("dependsOn"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
-        else if (n == "artifact")
+        else if (n == ACE_TEXT ("artifact"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ArtifactDeploymentDescription (e));
           add_artifact (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT ("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
-        else if (n == "localityConstraint")
+        else if (n == ACE_TEXT ("localityConstraint"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanLocality (e));
           add_localityConstraint (t);
@@ -548,6 +891,34 @@ namespace CIAO
     {
       ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
 
+      struct PlanSubcomponentPropertyReferenceTypeInfoInitializer
+      {
+        PlanSubcomponentPropertyReferenceTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PlanSubcomponentPropertyReference));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      PlanSubcomponentPropertyReferenceTypeInfoInitializer PlanSubcomponentPropertyReferenceTypeInfoInitializer_;
+
+      struct PlanPropertyMappingTypeInfoInitializer
+      {
+        PlanPropertyMappingTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::PlanPropertyMapping));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      PlanPropertyMappingTypeInfoInitializer PlanPropertyMappingTypeInfoInitializer_;
+
       struct deploymentPlanTypeInfoInitializer
       {
         deploymentPlanTypeInfoInitializer ()
@@ -571,6 +942,296 @@ namespace CIAO
   {
     namespace Traversal
     {
+      // PlanSubcomponentPropertyReference
+      //
+      //
+
+      void PlanSubcomponentPropertyReference::
+      traverse (Type& o)
+      {
+        pre (o);
+        propertyName (o);
+        instance (o);
+        post (o);
+      }
+
+      void PlanSubcomponentPropertyReference::
+      traverse (Type const& o)
+      {
+        pre (o);
+        propertyName (o);
+        instance (o);
+        post (o);
+      }
+
+      void PlanSubcomponentPropertyReference::
+      pre (Type&)
+      {
+      }
+
+      void PlanSubcomponentPropertyReference::
+      pre (Type const&)
+      {
+      }
+
+      void PlanSubcomponentPropertyReference::
+      propertyName (Type& o)
+      {
+        dispatch (o.propertyName ());
+      }
+
+      void PlanSubcomponentPropertyReference::
+      propertyName (Type const& o)
+      {
+        dispatch (o.propertyName ());
+      }
+
+      void PlanSubcomponentPropertyReference::
+      instance (Type& o)
+      {
+        dispatch (o.instance ());
+      }
+
+      void PlanSubcomponentPropertyReference::
+      instance (Type const& o)
+      {
+        dispatch (o.instance ());
+      }
+
+      void PlanSubcomponentPropertyReference::
+      post (Type&)
+      {
+      }
+
+      void PlanSubcomponentPropertyReference::
+      post (Type const&)
+      {
+      }
+
+      // PlanPropertyMapping
+      //
+      //
+
+      void PlanPropertyMapping::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        source (o);
+        externalName (o);
+        delegatesTo (o);
+        post (o);
+      }
+
+      void PlanPropertyMapping::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        source (o);
+        externalName (o);
+        delegatesTo (o);
+        post (o);
+      }
+
+      void PlanPropertyMapping::
+      pre (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      pre (Type const&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void PlanPropertyMapping::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void PlanPropertyMapping::
+      source (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::PlanPropertyMapping::source_iterator b (o.begin_source()), e (o.end_source());
+
+        if (b != e)
+        {
+          source_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) source_next (o);
+          }
+
+          source_post (o);
+        }
+
+        else source_none (o);
+      }
+
+      void PlanPropertyMapping::
+      source (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::PlanPropertyMapping::source_const_iterator b (o.begin_source()), e (o.end_source());
+
+        if (b != e)
+        {
+          source_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) source_next (o);
+          }
+
+          source_post (o);
+        }
+
+        else source_none (o);
+      }
+
+      void PlanPropertyMapping::
+      source_pre (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      source_pre (Type const&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      source_next (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      source_next (Type const&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      source_post (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      source_post (Type const&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      source_none (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      source_none (Type const&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      externalName (Type& o)
+      {
+        dispatch (o.externalName ());
+      }
+
+      void PlanPropertyMapping::
+      externalName (Type const& o)
+      {
+        dispatch (o.externalName ());
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::PlanPropertyMapping::delegatesTo_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
+
+        if (b != e)
+        {
+          delegatesTo_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) delegatesTo_next (o);
+          }
+
+          delegatesTo_post (o);
+        }
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::PlanPropertyMapping::delegatesTo_const_iterator b (o.begin_delegatesTo()), e (o.end_delegatesTo());
+
+        if (b != e)
+        {
+          delegatesTo_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) delegatesTo_next (o);
+          }
+
+          delegatesTo_post (o);
+        }
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_pre (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_pre (Type const&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_next (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_next (Type const&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_post (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_post (Type const&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      post (Type&)
+      {
+      }
+
+      void PlanPropertyMapping::
+      post (Type const&)
+      {
+      }
+
       // deploymentPlan
       //
       //
@@ -588,6 +1249,7 @@ namespace CIAO
         implementation (o);
         instance (o);
         connection (o);
+        externalProperty (o);
         dependsOn (o);
         artifact (o);
         infoProperty (o);
@@ -608,6 +1270,7 @@ namespace CIAO
         implementation (o);
         instance (o);
         connection (o);
+        externalProperty (o);
         dependsOn (o);
         artifact (o);
         infoProperty (o);
@@ -940,6 +1603,90 @@ namespace CIAO
 
       void deploymentPlan::
       connection_none (Type const&)
+      {
+      }
+
+      void deploymentPlan::
+      externalProperty (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::deploymentPlan::externalProperty_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
+
+        if (b != e)
+        {
+          externalProperty_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) externalProperty_next (o);
+          }
+
+          externalProperty_post (o);
+        }
+
+        else externalProperty_none (o);
+      }
+
+      void deploymentPlan::
+      externalProperty (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::deploymentPlan::externalProperty_const_iterator b (o.begin_externalProperty()), e (o.end_externalProperty());
+
+        if (b != e)
+        {
+          externalProperty_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) externalProperty_next (o);
+          }
+
+          externalProperty_post (o);
+        }
+
+        else externalProperty_none (o);
+      }
+
+      void deploymentPlan::
+      externalProperty_pre (Type&)
+      {
+      }
+
+      void deploymentPlan::
+      externalProperty_pre (Type const&)
+      {
+      }
+
+      void deploymentPlan::
+      externalProperty_next (Type&)
+      {
+      }
+
+      void deploymentPlan::
+      externalProperty_next (Type const&)
+      {
+      }
+
+      void deploymentPlan::
+      externalProperty_post (Type&)
+      {
+      }
+
+      void deploymentPlan::
+      externalProperty_post (Type const&)
+      {
+      }
+
+      void deploymentPlan::
+      externalProperty_none (Type&)
+      {
+      }
+
+      void deploymentPlan::
+      externalProperty_none (Type const&)
       {
       }
 
@@ -1298,6 +2045,118 @@ namespace CIAO
   {
     namespace Writer
     {
+      // PlanSubcomponentPropertyReference
+      //
+      //
+
+      PlanSubcomponentPropertyReference::
+      PlanSubcomponentPropertyReference (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      PlanSubcomponentPropertyReference::
+      PlanSubcomponentPropertyReference ()
+      {
+      }
+
+      void PlanSubcomponentPropertyReference::
+      traverse (Type const& o)
+      {
+        Traversal::PlanSubcomponentPropertyReference::traverse (o);
+      }
+
+      void PlanSubcomponentPropertyReference::
+      propertyName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("propertyName", top_ ()));
+        Traversal::PlanSubcomponentPropertyReference::propertyName (o);
+        pop_ ();
+      }
+
+      void PlanSubcomponentPropertyReference::
+      instance (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("instance", top_ ()));
+        Traversal::PlanSubcomponentPropertyReference::instance (o);
+        pop_ ();
+      }
+
+      // PlanPropertyMapping
+      //
+      //
+
+      PlanPropertyMapping::
+      PlanPropertyMapping (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      PlanPropertyMapping::
+      PlanPropertyMapping ()
+      {
+      }
+
+      void PlanPropertyMapping::
+      traverse (Type const& o)
+      {
+        Traversal::PlanPropertyMapping::traverse (o);
+      }
+
+      void PlanPropertyMapping::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::PlanPropertyMapping::name (o);
+        pop_ ();
+      }
+
+      void PlanPropertyMapping::
+      source_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("source", top_ ()));
+      }
+
+      void PlanPropertyMapping::
+      source_next (Type const& o)
+      {
+        source_post (o);
+        source_pre (o);
+      }
+
+      void PlanPropertyMapping::
+      source_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void PlanPropertyMapping::
+      externalName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("externalName", top_ ()));
+        Traversal::PlanPropertyMapping::externalName (o);
+        pop_ ();
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("delegatesTo", top_ ()));
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_next (Type const& o)
+      {
+        delegatesTo_post (o);
+        delegatesTo_pre (o);
+      }
+
+      void PlanPropertyMapping::
+      delegatesTo_post (Type const&)
+      {
+        pop_ ();
+      }
+
       // deploymentPlan
       //
       //
@@ -1396,6 +2255,25 @@ namespace CIAO
 
       void deploymentPlan::
       connection_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void deploymentPlan::
+      externalProperty_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("externalProperty", top_ ()));
+      }
+
+      void deploymentPlan::
+      externalProperty_next (Type const& o)
+      {
+        externalProperty_post (o);
+        externalProperty_pre (o);
+      }
+
+      void deploymentPlan::
+      externalProperty_post (Type const&)
       {
         pop_ ();
       }

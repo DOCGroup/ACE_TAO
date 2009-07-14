@@ -2,6 +2,7 @@
 
 #include "DataType_Handler.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "ciao/CIAO_common.h"
 namespace CIAO
 {

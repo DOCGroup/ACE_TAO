@@ -109,14 +109,12 @@ namespace CIAO
     configProperty_ (s.configProperty_),
     implementation_ (s.implementation_),
     infoProperty_ (s.infoProperty_),
-    contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
     href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     regulator__ ()
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       if (realizes_.get ()) realizes_->container (this);
-      if (contentLocation_.get ()) contentLocation_->container (this);
       if (href_.get ()) href_->container (this);
     }
 
@@ -143,11 +141,6 @@ namespace CIAO
       implementation_ = s.implementation_;
 
       infoProperty_ = s.infoProperty_;
-
-      if (s.contentLocation_.get ())
-        contentLocation (*(s.contentLocation_));
-      else
-        contentLocation_.reset (0);
 
       if (s.href_.get ()) href (*(s.href_));
       else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
@@ -360,35 +353,6 @@ namespace CIAO
     // ComponentPackageDescription
     // 
     bool ComponentPackageDescription::
-    contentLocation_p () const
-    {
-      return contentLocation_.get () != 0;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR > const& ComponentPackageDescription::
-    contentLocation () const
-    {
-      return *contentLocation_;
-    }
-
-    void ComponentPackageDescription::
-    contentLocation (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      if (contentLocation_.get ())
-      {
-        *contentLocation_ = e;
-      }
-
-      else
-      {
-        contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        contentLocation_->container (this);
-      }
-    }
-
-    // ComponentPackageDescription
-    // 
-    bool ComponentPackageDescription::
     href_p () const
     {
       return href_.get () != 0;
@@ -407,6 +371,303 @@ namespace CIAO
     }
 
     void ComponentPackageDescription::
+    href (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (href_.get ())
+      {
+        *href_ = e;
+      }
+
+      else
+      {
+        href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        href_->container (this);
+      }
+    }
+
+
+    // ConnectorPackageDescription
+    // 
+
+    ConnectorPackageDescription::
+    ConnectorPackageDescription ()
+    : 
+    regulator__ ()
+    {
+    }
+
+    ConnectorPackageDescription::
+    ConnectorPackageDescription (ConnectorPackageDescription const& s)
+    :
+    ::XSCRT::Type (),
+    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
+    realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
+    configProperty_ (s.configProperty_),
+    implementation_ (s.implementation_),
+    infoProperty_ (s.infoProperty_),
+    href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
+    regulator__ ()
+    {
+      if (label_.get ()) label_->container (this);
+      if (UUID_.get ()) UUID_->container (this);
+      if (realizes_.get ()) realizes_->container (this);
+      if (href_.get ()) href_->container (this);
+    }
+
+    ConnectorPackageDescription& ConnectorPackageDescription::
+    operator= (ConnectorPackageDescription const& s)
+    {
+      if (s.label_.get ())
+        label (*(s.label_));
+      else
+        label_.reset (0);
+
+      if (s.UUID_.get ())
+        UUID (*(s.UUID_));
+      else
+        UUID_.reset (0);
+
+      if (s.realizes_.get ())
+        realizes (*(s.realizes_));
+      else
+        realizes_.reset (0);
+
+      configProperty_ = s.configProperty_;
+
+      implementation_ = s.implementation_;
+
+      infoProperty_ = s.infoProperty_;
+
+      if (s.href_.get ()) href (*(s.href_));
+      else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      return *this;
+    }
+
+
+    // ConnectorPackageDescription
+    // 
+    bool ConnectorPackageDescription::
+    label_p () const
+    {
+      return label_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& ConnectorPackageDescription::
+    label () const
+    {
+      return *label_;
+    }
+
+    void ConnectorPackageDescription::
+    label (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (label_.get ())
+      {
+        *label_ = e;
+      }
+
+      else
+      {
+        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        label_->container (this);
+      }
+    }
+
+    // ConnectorPackageDescription
+    // 
+    bool ConnectorPackageDescription::
+    UUID_p () const
+    {
+      return UUID_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& ConnectorPackageDescription::
+    UUID () const
+    {
+      return *UUID_;
+    }
+
+    void ConnectorPackageDescription::
+    UUID (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (UUID_.get ())
+      {
+        *UUID_ = e;
+      }
+
+      else
+      {
+        UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        UUID_->container (this);
+      }
+    }
+
+    // ConnectorPackageDescription
+    // 
+    bool ConnectorPackageDescription::
+    realizes_p () const
+    {
+      return realizes_.get () != 0;
+    }
+
+    ::CIAO::Config_Handlers::ComponentInterfaceDescription const& ConnectorPackageDescription::
+    realizes () const
+    {
+      return *realizes_;
+    }
+
+    void ConnectorPackageDescription::
+    realizes (::CIAO::Config_Handlers::ComponentInterfaceDescription const& e)
+    {
+      if (realizes_.get ())
+      {
+        *realizes_ = e;
+      }
+
+      else
+      {
+        realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
+        realizes_->container (this);
+      }
+    }
+
+    // ConnectorPackageDescription
+    // 
+    ConnectorPackageDescription::configProperty_iterator ConnectorPackageDescription::
+    begin_configProperty ()
+    {
+      return configProperty_.begin ();
+    }
+
+    ConnectorPackageDescription::configProperty_iterator ConnectorPackageDescription::
+    end_configProperty ()
+    {
+      return configProperty_.end ();
+    }
+
+    ConnectorPackageDescription::configProperty_const_iterator ConnectorPackageDescription::
+    begin_configProperty () const
+    {
+      return configProperty_.begin ();
+    }
+
+    ConnectorPackageDescription::configProperty_const_iterator ConnectorPackageDescription::
+    end_configProperty () const
+    {
+      return configProperty_.end ();
+    }
+
+    void ConnectorPackageDescription::
+    add_configProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    {
+      configProperty_.push_back (e);
+    }
+
+    size_t ConnectorPackageDescription::
+    count_configProperty(void) const
+    {
+      return configProperty_.size ();
+    }
+
+    // ConnectorPackageDescription
+    // 
+    ConnectorPackageDescription::implementation_iterator ConnectorPackageDescription::
+    begin_implementation ()
+    {
+      return implementation_.begin ();
+    }
+
+    ConnectorPackageDescription::implementation_iterator ConnectorPackageDescription::
+    end_implementation ()
+    {
+      return implementation_.end ();
+    }
+
+    ConnectorPackageDescription::implementation_const_iterator ConnectorPackageDescription::
+    begin_implementation () const
+    {
+      return implementation_.begin ();
+    }
+
+    ConnectorPackageDescription::implementation_const_iterator ConnectorPackageDescription::
+    end_implementation () const
+    {
+      return implementation_.end ();
+    }
+
+    void ConnectorPackageDescription::
+    add_implementation (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectorImplementationDescription, ACE_Null_Mutex >  const& e)
+    {
+      implementation_.push_back (e);
+    }
+
+    size_t ConnectorPackageDescription::
+    count_implementation(void) const
+    {
+      return implementation_.size ();
+    }
+
+    // ConnectorPackageDescription
+    // 
+    ConnectorPackageDescription::infoProperty_iterator ConnectorPackageDescription::
+    begin_infoProperty ()
+    {
+      return infoProperty_.begin ();
+    }
+
+    ConnectorPackageDescription::infoProperty_iterator ConnectorPackageDescription::
+    end_infoProperty ()
+    {
+      return infoProperty_.end ();
+    }
+
+    ConnectorPackageDescription::infoProperty_const_iterator ConnectorPackageDescription::
+    begin_infoProperty () const
+    {
+      return infoProperty_.begin ();
+    }
+
+    ConnectorPackageDescription::infoProperty_const_iterator ConnectorPackageDescription::
+    end_infoProperty () const
+    {
+      return infoProperty_.end ();
+    }
+
+    void ConnectorPackageDescription::
+    add_infoProperty (ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  const& e)
+    {
+      infoProperty_.push_back (e);
+    }
+
+    size_t ConnectorPackageDescription::
+    count_infoProperty(void) const
+    {
+      return infoProperty_.size ();
+    }
+
+    // ConnectorPackageDescription
+    // 
+    bool ConnectorPackageDescription::
+    href_p () const
+    {
+      return href_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& ConnectorPackageDescription::
+    href () const
+    {
+      return *href_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& ConnectorPackageDescription::
+    href ()
+    {
+      return *href_;
+    }
+
+    void ConnectorPackageDescription::
     href (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (href_.get ())
@@ -442,13 +703,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT ("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "referencedImplementation")
+        else if (n == ACE_TEXT ("referencedImplementation"))
         {
           referencedImplementation_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentImplementationDescription > (new ::CIAO::Config_Handlers::ComponentImplementationDescription (e));
           referencedImplementation_->container (this);
@@ -475,46 +736,40 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT ("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT ("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "realizes")
+        else if (n == ACE_TEXT ("realizes"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           realizes (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT ("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "implementation")
+        else if (n == ACE_TEXT ("implementation"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackagedComponentImplementation, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PackagedComponentImplementation (e));
           add_implementation (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT ("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
-        }
-
-        else if (n == "contentLocation")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          contentLocation (t);
         }
 
         else 
@@ -526,7 +781,79 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "href")
+        if (n == ACE_TEXT ("href"))
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (a);
+          href (t);
+        }
+
+        else 
+        {
+        }
+      }
+    }
+
+    // ConnectorPackageDescription
+    //
+
+    ConnectorPackageDescription::
+    ConnectorPackageDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == ACE_TEXT ("label"))
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          label (t);
+        }
+
+        else if (n == ACE_TEXT ("UUID"))
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          UUID (t);
+        }
+
+        else if (n == ACE_TEXT ("realizes"))
+        {
+          ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
+          realizes (t);
+        }
+
+        else if (n == ACE_TEXT ("configProperty"))
+        {
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          add_configProperty (t);
+        }
+
+        else if (n == ACE_TEXT ("implementation"))
+        {
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectorImplementationDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ConnectorImplementationDescription (e));
+          add_implementation (t);
+        }
+
+        else if (n == ACE_TEXT ("infoProperty"))
+        {
+          ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
+          add_infoProperty (t);
+        }
+
+        else 
+        {
+        }
+      }
+
+      while (p.more_attributes ())
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+        if (n == ACE_TEXT ("href"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);
@@ -584,6 +911,20 @@ namespace CIAO
       };
 
       ComponentPackageDescriptionTypeInfoInitializer ComponentPackageDescriptionTypeInfoInitializer_;
+
+      struct ConnectorPackageDescriptionTypeInfoInitializer
+      {
+        ConnectorPackageDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (::CIAO::Config_Handlers::ConnectorPackageDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ConnectorPackageDescriptionTypeInfoInitializer ConnectorPackageDescriptionTypeInfoInitializer_;
     }
   }
 }
@@ -677,8 +1018,6 @@ namespace CIAO
         configProperty (o);
         implementation (o);
         infoProperty (o);
-        if (o.contentLocation_p ()) contentLocation (o);
-        else contentLocation_none (o);
         if (o.href_p ()) href (o);
         else href_none (o);
         post (o);
@@ -697,8 +1036,6 @@ namespace CIAO
         configProperty (o);
         implementation (o);
         infoProperty (o);
-        if (o.contentLocation_p ()) contentLocation (o);
-        else contentLocation_none (o);
         if (o.href_p ()) href (o);
         else href_none (o);
         post (o);
@@ -1033,28 +1370,6 @@ namespace CIAO
       }
 
       void ComponentPackageDescription::
-      contentLocation (Type& o)
-      {
-        dispatch (o.contentLocation ());
-      }
-
-      void ComponentPackageDescription::
-      contentLocation (Type const& o)
-      {
-        dispatch (o.contentLocation ());
-      }
-
-      void ComponentPackageDescription::
-      contentLocation_none (Type&)
-      {
-      }
-
-      void ComponentPackageDescription::
-      contentLocation_none (Type const&)
-      {
-      }
-
-      void ComponentPackageDescription::
       href (Type& o)
       {
         dispatch (o.href ());
@@ -1082,6 +1397,406 @@ namespace CIAO
       }
 
       void ComponentPackageDescription::
+      post (Type const&)
+      {
+      }
+
+      // ConnectorPackageDescription
+      //
+      //
+
+      void ConnectorPackageDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.realizes_p ()) realizes (o);
+        else realizes_none (o);
+        configProperty (o);
+        implementation (o);
+        infoProperty (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
+        post (o);
+      }
+
+      void ConnectorPackageDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.realizes_p ()) realizes (o);
+        else realizes_none (o);
+        configProperty (o);
+        implementation (o);
+        infoProperty (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
+        post (o);
+      }
+
+      void ConnectorPackageDescription::
+      pre (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void ConnectorPackageDescription::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void ConnectorPackageDescription::
+      label_none (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      label_none (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      UUID (Type& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void ConnectorPackageDescription::
+      UUID (Type const& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void ConnectorPackageDescription::
+      UUID_none (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      UUID_none (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      realizes (Type& o)
+      {
+        dispatch (o.realizes ());
+      }
+
+      void ConnectorPackageDescription::
+      realizes (Type const& o)
+      {
+        dispatch (o.realizes ());
+      }
+
+      void ConnectorPackageDescription::
+      realizes_none (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      realizes_none (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      configProperty (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ConnectorPackageDescription::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+
+        if (b != e)
+        {
+          configProperty_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) configProperty_next (o);
+          }
+
+          configProperty_post (o);
+        }
+
+        else configProperty_none (o);
+      }
+
+      void ConnectorPackageDescription::
+      configProperty (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ConnectorPackageDescription::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+
+        if (b != e)
+        {
+          configProperty_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) configProperty_next (o);
+          }
+
+          configProperty_post (o);
+        }
+
+        else configProperty_none (o);
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_pre (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_pre (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_next (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_next (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_post (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_post (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_none (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_none (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      implementation (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ConnectorPackageDescription::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
+
+        if (b != e)
+        {
+          implementation_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) implementation_next (o);
+          }
+
+          implementation_post (o);
+        }
+
+        else implementation_none (o);
+      }
+
+      void ConnectorPackageDescription::
+      implementation (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ConnectorPackageDescription::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
+
+        if (b != e)
+        {
+          implementation_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) implementation_next (o);
+          }
+
+          implementation_post (o);
+        }
+
+        else implementation_none (o);
+      }
+
+      void ConnectorPackageDescription::
+      implementation_pre (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      implementation_pre (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      implementation_next (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      implementation_next (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      implementation_post (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      implementation_post (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      implementation_none (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      implementation_none (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ConnectorPackageDescription::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+
+        if (b != e)
+        {
+          infoProperty_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) infoProperty_next (o);
+          }
+
+          infoProperty_post (o);
+        }
+
+        else infoProperty_none (o);
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::CIAO::Config_Handlers::ConnectorPackageDescription::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+
+        if (b != e)
+        {
+          infoProperty_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) infoProperty_next (o);
+          }
+
+          infoProperty_post (o);
+        }
+
+        else infoProperty_none (o);
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_pre (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_pre (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_next (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_next (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_post (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_post (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_none (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_none (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      href (Type& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void ConnectorPackageDescription::
+      href (Type const& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void ConnectorPackageDescription::
+      href_none (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      href_none (Type const&)
+      {
+      }
+
+      void ConnectorPackageDescription::
+      post (Type&)
+      {
+      }
+
+      void ConnectorPackageDescription::
       post (Type const&)
       {
       }
@@ -1235,19 +1950,122 @@ namespace CIAO
       }
 
       void ComponentPackageDescription::
-      contentLocation (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
-        Traversal::ComponentPackageDescription::contentLocation (o);
-        pop_ ();
-      }
-
-      void ComponentPackageDescription::
       href (Type const& o)
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
         attr_ (&a);
         Traversal::ComponentPackageDescription::href (o);
+        attr_ (0);
+      }
+
+      // ConnectorPackageDescription
+      //
+      //
+
+      ConnectorPackageDescription::
+      ConnectorPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      ConnectorPackageDescription::
+      ConnectorPackageDescription ()
+      {
+      }
+
+      void ConnectorPackageDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ConnectorPackageDescription::traverse (o);
+      }
+
+      void ConnectorPackageDescription::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        Traversal::ConnectorPackageDescription::label (o);
+        pop_ ();
+      }
+
+      void ConnectorPackageDescription::
+      UUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        Traversal::ConnectorPackageDescription::UUID (o);
+        pop_ ();
+      }
+
+      void ConnectorPackageDescription::
+      realizes (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("realizes", top_ ()));
+        Traversal::ConnectorPackageDescription::realizes (o);
+        pop_ ();
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_next (Type const& o)
+      {
+        configProperty_post (o);
+        configProperty_pre (o);
+      }
+
+      void ConnectorPackageDescription::
+      configProperty_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ConnectorPackageDescription::
+      implementation_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("implementation", top_ ()));
+      }
+
+      void ConnectorPackageDescription::
+      implementation_next (Type const& o)
+      {
+        implementation_post (o);
+        implementation_pre (o);
+      }
+
+      void ConnectorPackageDescription::
+      implementation_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_next (Type const& o)
+      {
+        infoProperty_post (o);
+        infoProperty_pre (o);
+      }
+
+      void ConnectorPackageDescription::
+      infoProperty_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ConnectorPackageDescription::
+      href (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        attr_ (&a);
+        Traversal::ConnectorPackageDescription::href (o);
         attr_ (0);
       }
     }

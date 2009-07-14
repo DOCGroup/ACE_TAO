@@ -32,7 +32,7 @@
 #include "Null_Component_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_Null_Component_Impl
+namespace CIAO_Null_Component_Impl
 {
   class NULL_COMPONENT_EXEC_Export Null_Interface_exec_i
     : public virtual ::CCM_Null_Interface,

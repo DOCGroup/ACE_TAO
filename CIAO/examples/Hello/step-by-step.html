@@ -59,11 +59,11 @@ This Hello example is contructed in the following ways:
 <h3>For Every Components</h3>
 
 <ol>
-<li>Use: <br>
-
-<code>$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Sender <br>
-      $CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Receiver
-</code><br></ul>
+<li>Execute : <br>
+<ul>
+<code>$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Sender</code> in Sender directory<br>
+<code>$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Receiver</code> in Receiver directory<br>
+</ul>
 Note:
 <ul>
 <li>I have different directories for <code>"Hello_Base", "Sender", "Receiver"</code> respectively.</li>
@@ -71,18 +71,24 @@ Note:
 <li>For every <code>_stub</code> project, add:<br>
   <code>"libs  += Hello_Base_DnC_stub"</code><br>
 
-</ul><P>
+</ul>
+The output of this scripts includes an MPC file and 3 export header files
+(..._svnt_export.h, ..._exec_export.h and ..._stub_export.h).
+<P>
 
-<li>Use the $(ACE_ROOT)/bin/generate_export_file.pl to generate the export header files. (3 files per
-    component (..._svnt_export.h, ..._exec_export.h and ..._stub_export.h)).</li> <P>
-
-<li>Write an idl file for every component. Here you can put the
-    component specific IDL definitions in this file. In this example
-    we have a interface <code>trigger</code> specific to the
-    Sender. Please note that the Sender component
+<li>Write an idl file for every component (<a href="Sender/Sender.idl"><code>Sender.idl</code></a> and
+    <a href="Receiver/Receiver.idl"><code>Receiver.idl</code></a>). <br> Here you can put the
+    component specific IDL definitions in this file. In this example we have a interface <code>trigger</code>
+    specific to the Sender. Please note that the Sender component
     <code>"supports"</code> (IDL keyword) this interface. </li> <P>
 
-<li>Write the CIDL file for every component.</li> <P>
+<li>Write the CIDL file for every component (<a href="Sender/Sender.cidl"><code>Sender.cidl</code></a> and
+    <a href="Receiver/Receiver.cidl"><code>Receiver.cidl</code></a>).
+</li><P>
+
+<li>Compile these cidl files, using <code>$CIAO_ROOT/bin/cidlc.exe Receiver.cidl --gen-exec-impl -I$CIAO_ROOT/ccm -I$CIAO_ROOT -I$TAO_ROOT</code>.
+    This'll result in ..._exec.cpp/..._exec.h and ..._svnt.cpp/..._svnt.h files.
+</li><P>
 
 <li>Write <code>_exec.h</code> and <code>_exec.cpp</code> files which actually implement the component.</li>
 <P>
@@ -116,10 +122,13 @@ supplied as a command argument. Please see the the last part of
 <li>Go to the directory <code>$CIAO_ROOT/DAnCE</code> and do:<br>
     <code>$ACE_ROOT/bin/mwc.pl</code></li>
     <br>For example, using <code>$ACE_ROOT/bin/mwc.pl -type vc71</code> if you are using Visual C++ 7.1 IDE
-    <br>or $ACE_ROOT/bin/mwc.pl -type gnuace on Linux platforms.</li><P>
+    <br>or <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code> on Linux platforms.</li><P>
 <li>Look at the generated Makefile(*unx) or Solution/workspace files(Windows) and you got it.</li>
 </UL>
-
+After building DAnCE, a solution or makefile should be generated for this CIAO example.
+Navigate to <code>$CIAO_ROOT/examples/Hello</code> and execute <code>$ACE_ROOT/bin/mwc.pl -type vc71</code> for
+Visual C++ 7.1 or <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code> on Linux platforms.
+Build this example using Visual Studio or make.
 <P><hr>
 
 <h3>Assemble</h3>
@@ -145,11 +154,12 @@ Note: Creating the deployment plan descriptor is a tedious and
 The former file can be found in $CIAO_ROOT/docs/schema directory. <P>
 
 <li> Create the <em>NodeManagerMap.dat</em> file containing the CORBALOC IIOP address of each <code>NodeManager</code>
-     where it is running. Please refer to the existing <code>NodeManagerMap.dat</code> for details,
-     as you can see, we only specify 2 <code>NodeManagers</code>, which means these two components
+     where it is running. Please refer to the existing <a href="./descriptors/NodeManagerMap.dat">
+     <code>NodeManagerMap.dat</code></a> for details.
+     As you can see, we only specify 2 <code>NodeManagers</code>, which means these two components
      will be installed in the different <code>NodeApplication</code> server. Please refer to the
      <em>flattened_deploymentplan.cdp</em> file to see how a deployer
-    could specify the mapping between components and nodes.</li>
+     could specify the mapping between components and nodes.</li>
 </li>
 </UL>
 
@@ -160,41 +170,56 @@ Finally you are ready to deploy the component-based application you have develop
 
 <UL>
   <LI> If you wish to register one or more of your component
-      instances with CORBA <em> naming service</em>, then please start your naming service
-      first with multicast mode first ("-m 1" option). <P>
+      instances with CORBA <em>naming service</em>, then please start your naming service
+      first with multicast mode first ("-m 1" option). Use <code>-o</code> to define where
+      the output ior should be saved.<P>
 
   <LI> Go into the <em> descriptors </em> directory Start NodeManagers
       (NodeDameon) by running <code> run_NodeDaemons.pl </code> <P>
 
-  <LI> Now you can start the execution manager from the same directory:
-  <code>$CIAO_ROOT/DAnCE/bin/dance_execution_manager -o EM.ior -i NodeManagerMap.dat </code>
-  </LI>
+  <LI> There are two ways to start the execution manager :
+    <ol>
+      <li>Using the naming service to locate the node deamons<br/>
+      Navigate to <em>$CIAO_ROOT/examples/Hello/descriptor</em> and execute
+      <code>$DANCE_ROOT/bin/dance_execution_manager -eEM.ior --domain-nc file://ns.ior</code><br/>
+      --domain-nc should point to the ior file of the naming service.
+      </li>
 
-  <ul type="square"> <li> <em>NOTE</em>: As one can see, we use the "NodeManagerMap.dat" file to instruct the
-       Execution_Manager how to find the endpoint of each individual NodeManager (i.e., Node Daemon) where
-       component(s) will be deployed, so this is non-standard. We plan to use Naming Service to do this in the future.
+      <li>Without using the naming service.<br/>
+      Navigate to <em>$CIAO_ROOT/examples/Hello/descriptor</em> and execute:<br/>
+      <code>$DANCE_ROOT/bin/dance_execution_manager -eEM.ior --node-map NodeManagerMap.dat </code><br/>
+      <em>NOTE</em>: As one can see, we use the "NodeManagerMap.dat" file to instruct the
+        Execution_Manager how to find the endpoint of each individual NodeManager (i.e., Node Daemon) where
+        component(s) will be deployed. This is non-standard.
+      </li>
+    </ol>
+  </LI>
   </ul><P>
 
-  <LI> Start the plan launcher, using the Naming Service. Go to <em>descriptors_naming</em> and execute:<br/>
-  <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -p deploymentplan_naming.cdp -k file://EM.ior </code><br/>
+  <LI> Start the plan launcher, with or without using the Naming Service: <br/>
+    <ol>
+      <li>Using the naming service<br/>
+        Navigate to <em>$CIAO_ROOT/examples/Hello/descriptors_naming</em> and execute:<br/>
+        <code> $DANCE_ROOT/bin/dance_plan_launcher -d deploymentplan_naming.cdp -k file://../descriptors/EM.ior </code>
+      </li>
+      <li>Without using the naming service<br/>
+        Navigate to <em>$CIAO_ROOT/examples/Hello/descriptors</em> and execute:<br/>
+        <code> $DANCE_ROOT/bin/dance_plan_launcher -x deploymentplan.cdp -k file://EM.ior </code><P>
+      </li>
+    After this, components should be deployed successfully.<P>
+    </ol>
+</LI>
 
-  <ul type="square"> <li> If you don't want to register component(s) with CORBA naming service, then you don't have to start
-  your naming service, and you can use the below code to start the executor:<br/>
-
-  <code> $CIAO_ROOT/DAnCE/bin/dance_plan_launcher -p deploymentplan.cdp -k file://EM.ior </code><P>
-
-  After this, components should be deployed successfully.</li></ul><P>
-
-  <LI> You can go into the <em>
-      $CIAO_ROOT/DAnCE/examples/Hello/descriptor </em> directory and
-      run the
-      <code>$CIAO_ROOT/DAnCE/examples/Hello/Sender/starter</code> to
-      start the application. Please make sure that the component IOR
-      file for the Sender component (<code>Sender.ior</code>) is
-      present when you run this client. <P>
-
+  <LI> You can go into the <em>$CIAO_ROOT/examples/Hello/descriptor</em> directory and
+      run execute <code>$CIAO_ROOT/examples/Hello/Sender/starter -k file://Sender.ior</code> to start the application. Please make sure that the component IOR
+      file for the Sender component (<code>Sender.ior</code>) is present when you run this client.<P>
+  </LI>
+  <LI>To stop deployment just run $DANCE_ROOT/bin/dance_plan_launcher -x DeploymentPlan.cdp -k file://EM.ior -q
   </LI>
 </UL>
+<br/>
+<br/>
+In addition, have a look at <a href="./descriptors/run_test.pl"><code>run_test.pl</code></a> and see how this can be established.
 
 <hr>
 <h3>More Features</h3>

@@ -91,6 +91,7 @@ project (XSC_Config_Handlers) : dance_deployment_stub, ciao_config_handlers_base
     ComponentPropertyDescription_Handler.cpp
     RDD_Handler.cpp
     ID_Handler.cpp
+    PL_Handler.cpp
     XML_File_Intf.cpp
     IDREF_Base.cpp
     Dump_Obj.cpp

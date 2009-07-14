@@ -3,7 +3,6 @@
 #include "tao/DynamicInterface/Request.h"
 
 #include "ComponentAttributesSetter.h"
-//#include "Cdmw_ccm_dance1_cif.stub.hpp"
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
 #include "tao/DynamicInterface/Context.h"
 #include "tao/AnyTypeCode/NVList.h"

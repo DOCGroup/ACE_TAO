@@ -553,10 +553,9 @@ namespace CIAO
         // standard forbids casting a pointer-to-object (including
         // void*) directly to a pointer-to-function.
         void *void_ptr = executor_dll.symbol (entry_point);
-        ACE_DEBUG ((LM_EMERGENCY, "***** vp: %u\n", void_ptr));
         ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
         ccreator = reinterpret_cast<ComponentFactory> (tmp_ptr);
-        ACE_DEBUG ((LM_EMERGENCY, "***** cc: %u\n", ccreator));
+
         void_ptr = servant_dll.symbol (servant_entrypoint);
         tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
         screator = reinterpret_cast<ComponentServantFactory> (tmp_ptr);
@@ -686,7 +685,7 @@ namespace CIAO
           throw CIAO::InvalidComponent  ();
 
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::activate_component - "
-                     "Invoking CCM activate on provided component object reference."));
+                     "Invoking CCM activate on provided component object reference.\n"));
         sess->activate_component ();
       }
     catch (const CIAO::InvalidComponent &)

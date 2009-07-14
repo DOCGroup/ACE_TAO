@@ -4,29 +4,25 @@
 #define DEPLOYMENT_APPLICATION_IDL
 
 #include "DAnCE/Deployment/Deployment_Connection.idl"
+#include "DAnCE/Deployment/Deployment_StartError.idl"
+#include "DAnCE/Deployment/Deployment_StopError.idl"
 
 module Deployment
 {
-        exception StartError {
-                string name;
-                string reason;
-        };
+  exception InvalidConnection {
+    string name;
+    string reason;
+  };
 
-        exception InvalidConnection {
-                string name;
-                string reason;
-        };
+  interface Application {
+    void finishLaunch (in Connections providedReference, in boolean start)
+      raises (StartError, InvalidConnection);
 
-        interface Application {
-                //@! in DOCGroup has additional parameter
-                void finishLaunch (in Connections providedReference, in boolean start)
-                        raises (StartError, InvalidConnection);
-                        
-                void start ()
-                        raises (StartError);
-        };
-        
-        typedef sequence < Application > Applications;
+    void start ()
+      raises (StartError);
+    };
+
+    typedef sequence < Application > Applications;
 };
 
 #endif /* DEPLOYMENT_APPLICATION_IDL */

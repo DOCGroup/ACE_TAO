@@ -35,7 +35,9 @@
 #include "StockBroker_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_StockBroker_Impl
+//namespace CIAO_Stock_StockDistributor_Impl
+//namespace CIDL_StockDistributor_Impl
+namespace CIAO_Stock_StockBroker_Impl
 {
 
   /**
@@ -117,6 +119,9 @@ namespace CIDL_StockBroker_Impl
     create ();
   };
 
+
+  extern "C" STOCKBROKER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Stock_StockBrokerComp_Impl (void);
   extern "C" STOCKBROKER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Stock_StockBrokerHome_Impl (void);
 }

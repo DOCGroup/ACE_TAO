@@ -20,7 +20,7 @@
 #include "Deployment/Deployment_NodeApplicationManagerS.h"
 #include "Deployment/Deployment_NodeApplicationC.h"
 #include "NodeApplication/NodeApplication_Impl.h"
-#include "RedirectionService/RedirectionService.h"
+//#include "RedirectionService/RedirectionService.h"
 
 namespace DAnCE
   {
@@ -30,10 +30,10 @@ namespace DAnCE
   class NodeApplicationManager_Export NodeApplicationManager_Impl : public virtual POA_Deployment::NodeApplicationManager
     {
     public:
-      NodeApplicationManager_Impl (CORBA::ORB_ptr orb, 
+      NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
                                    PortableServer::POA_ptr poa,
-                                   const Deployment::DeploymentPlan& plan, 
-                                   RedirectionService & redirection, 
+                                   const Deployment::DeploymentPlan& plan,
+//                                   RedirectionService & redirection,
                                    const ACE_CString& name,
                                    const PROPERTY_MAP &properties);
 
@@ -51,7 +51,7 @@ namespace DAnCE
       CORBA::ORB_var orb_;
       PortableServer::POA_var poa_;
       NodeApplication_Impl* application_;
-      RedirectionService & redirection_;
+//      RedirectionService & redirection_;
       ACE_CString node_name_;
       PROPERTY_MAP properties_;
     };
