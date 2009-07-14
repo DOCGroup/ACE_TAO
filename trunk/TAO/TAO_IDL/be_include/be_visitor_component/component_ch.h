@@ -26,7 +26,7 @@ class be_visitor_component_ch : public be_visitor_component
 {
   //
   // = TITLE
-  //   be_visitor_interface_ch
+  //   be_visitor_component_ch
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the client header for component.

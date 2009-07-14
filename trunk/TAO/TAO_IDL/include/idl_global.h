@@ -282,6 +282,7 @@ public:
   bool bd_string_arg_seen_;
   bool boolean_seq_seen_;
   bool char_seq_seen_;
+  bool component_seen_;
   bool double_seq_seen_;
   bool enum_seen_;
   bool exception_seen_;
@@ -623,6 +624,9 @@ public:
 
   bool validate_orb_include (UTL_String *);
   // Check if included file is in TAO specific include dirs.
+  
+  void original_local_name (Identifier *local_name);
+  // Strips _cxx_ prefix for use in port names.
 
 private:
   // Data

@@ -124,7 +124,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
+  
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.

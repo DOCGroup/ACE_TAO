@@ -4804,6 +4804,10 @@ provides_decl :
                 AST_Type::narrow_from_decl (d);
 
               AST_Component::port_description pd;
+              
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
+              
               pd.id = $3;
               pd.impl = interface_type;
               pd.line_number = idl_global->lineno ();
@@ -4899,6 +4903,10 @@ uses_decl :
           if (c != 0)
             {
               AST_Component::port_description ud;
+              
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($4);
+              
               ud.id = $4;
               ud.impl = interface_type;
               ud.is_multiple = $2;
@@ -4981,6 +4989,10 @@ emits_decl :
               if (c != 0)
                 {
                   AST_Component::port_description pd;
+              
+                  // Strip off _cxx_, if any, for port name.
+                  idl_global->original_local_name ($3);
+              
                   pd.id = $3;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();
@@ -5040,6 +5052,10 @@ publishes_decl :
               if (c != 0)
                 {
                   AST_Component::port_description pd;
+              
+                  // Strip off _cxx_, if any, for port name.
+                  idl_global->original_local_name ($3);
+              
                   pd.id = $3;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();
@@ -5099,6 +5115,10 @@ consumes_decl :
               if (c != 0)
                 {
                   AST_Component::port_description pd;
+              
+                  // Strip off _cxx_, if any, for port name.
+                  idl_global->original_local_name ($3);
+              
                   pd.id = $3;
                   pd.impl = event_type;
                   pd.line_number = idl_global->lineno ();

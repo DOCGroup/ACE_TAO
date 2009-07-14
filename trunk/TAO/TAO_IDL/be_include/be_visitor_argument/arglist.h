@@ -106,9 +106,15 @@ public:
 
   virtual int visit_valuebox (be_valuebox *node);
   // visit valuebox
+  
+  void unused (bool val);
+  // Set the member.
 
- private:
+private:
   int emit_common (be_type *node);
+  
+private:
+  bool unused_;
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_ARGLIST_H_ */

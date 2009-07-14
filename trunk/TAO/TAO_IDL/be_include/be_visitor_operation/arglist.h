@@ -50,7 +50,13 @@ public:
   // visit each argument
 
   virtual int post_process (be_decl *);
-  // stuff to o/p after each element of the scope is handled
+  // stuff to o/p after each element of the scope is handled.
+  
+  void unused (bool val);
+  // Set the member.
+  
+private:
+  bool unused_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_ARGLIST_H_ */

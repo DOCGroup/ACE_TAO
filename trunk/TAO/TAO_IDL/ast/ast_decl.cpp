@@ -656,8 +656,11 @@ AST_Decl::compute_flat_name (void)
               first = second = false;
             }
 
-          // Print the identifier.
-          item_name = i.item ()->get_string ();
+          // Print the identifier, leaving out
+          // _cxx_ prefix, if any.
+          Identifier *tmp = i.item ()->copy ();
+          idl_global->original_local_name (tmp);
+          item_name = tmp->get_string ();
           namelen += ACE_OS::strlen (item_name);
 
           if (first)
@@ -672,6 +675,10 @@ AST_Decl::compute_flat_name (void)
                   second = true;
                 }
             }
+            
+          tmp->destroy ();
+          delete tmp;
+          tmp = 0;
         }
 
       ACE_NEW (this->flat_name_,
@@ -694,8 +701,11 @@ AST_Decl::compute_flat_name (void)
               first = second = false;
             }
 
-          // Print the identifier.
-          item_name = j.item ()->get_string ();
+          // Print the identifier, leaving out
+          // _cxx_ prefix, if any.
+          Identifier *tmp = j.item ()->copy ();
+          idl_global->original_local_name (tmp);
+          item_name = tmp->get_string ();
           ACE_OS::strcat (this->flat_name_, item_name);
 
           if (first)
@@ -710,6 +720,10 @@ AST_Decl::compute_flat_name (void)
                   second = true;
                 }
             }
+          
+          tmp->destroy ();
+          delete tmp;
+          tmp = 0;
         }
     }
 }
@@ -1345,7 +1359,7 @@ AST_Decl::original_local_name (Identifier *local_name)
                       "_cxx_")
         == local_name->get_string ())
     {
-      // CSting class is good to do this stuff.
+      // AACE_CString class is good to do this stuff.
       ACE_CString name_str (local_name->get_string ());
 
       // Remove _cxx_.

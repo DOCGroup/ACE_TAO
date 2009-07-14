@@ -108,7 +108,12 @@ public:
       TAO_SVR_TMPL_INL,
       TAO_SVR_IMPL,
       TAO_SVR_TMPL_IMPL,
-      TAO_GPERF_INPUT
+      TAO_GPERF_INPUT,
+      CIAO_SVNT_HDR,
+      CIAO_SVNT_IMPL,
+      CIAO_EXEC_HDR,
+      CIAO_EXEC_IMPL,
+      CIAO_EXEC_IDL
     };
 
   TAO_OutStream (void);
@@ -191,12 +196,11 @@ public:
   TAO_OutStream &operator<< (AST_Expression *expr);
   // output an AST_Expression node
 
-  // provided by specialized classes
-  virtual TAO_OutStream &print (Identifier *id) = 0;
+  TAO_OutStream &print (Identifier *id);
 
-  virtual TAO_OutStream &print (UTL_IdList *idl) = 0;
+  TAO_OutStream &print (UTL_IdList *idl);
 
-  virtual TAO_OutStream &print (AST_Expression *idl) = 0;
+  TAO_OutStream &print (AST_Expression *idl);
 
 protected:
   FILE *fp_;

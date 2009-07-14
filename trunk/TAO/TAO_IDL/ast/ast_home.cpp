@@ -126,7 +126,10 @@ AST_Home::base_home (void) const
 AST_Interface **
 AST_Home::supports (void) const
 {
-  return this->pd_base_home ? this->inherits () + 1 : this->inherits ();
+  return
+    this->pd_base_home == 0
+      ? this->inherits ()
+      : this->inherits () + 1;
 }
 
 long
@@ -147,13 +150,13 @@ AST_Home::primary_key (void) const
   return this->pd_primary_key;
 }
 
-ACE_Unbounded_Queue<AST_Operation *> &
+AST_Home::INIT_LIST &
 AST_Home::factories (void)
 {
   return this->pd_factories;
 }
 
-ACE_Unbounded_Queue<AST_Operation *> &
+AST_Home::INIT_LIST &
 AST_Home::finders (void)
 {
   return this->pd_finders;

@@ -46,10 +46,12 @@ public:
   AST_Component *managed_component (void) const;
 
   AST_ValueType *primary_key (void) const;
+  
+  typedef ACE_Unbounded_Queue<AST_Operation *> INIT_LIST;
 
-  ACE_Unbounded_Queue<AST_Operation *> &factories (void);
+  INIT_LIST &factories (void);
 
-  ACE_Unbounded_Queue<AST_Operation *> &finders (void);
+  INIT_LIST &finders (void);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -69,8 +71,8 @@ private:
   AST_Home *pd_base_home;
   AST_Component *pd_managed_component;
   AST_ValueType *pd_primary_key;
-  ACE_Unbounded_Queue<AST_Operation *> pd_factories;
-  ACE_Unbounded_Queue<AST_Operation *> pd_finders;
+  INIT_LIST pd_factories;
+  INIT_LIST pd_finders;
 };
 
 #endif // _AST_HOME_AST_HOME_HH

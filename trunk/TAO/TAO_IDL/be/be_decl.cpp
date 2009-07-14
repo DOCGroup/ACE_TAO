@@ -94,7 +94,10 @@ be_decl::be_decl (void)
     srv_outarg_pragma_inst_gen_ (false),
     srv_retarg_tmpl_class_gen_ (false),
     srv_retarg_pragma_inst_gen_ (false),
-    ccm_pre_proc_gen_ (false)
+    ccm_pre_proc_gen_ (false),
+    ex_idl_facet_gen_ (false),
+    svnt_hdr_facet_gen_ (false),
+    svnt_src_facet_gen_ (false)
 {
 }
 
@@ -244,8 +247,10 @@ be_decl::compute_flat_name  (const char *prefix,
       // Prefix.
       result_str = prefix_str;
 
-      // Local name.
-      result_str += ACE_CString (this->local_name ()->get_string ());
+      // Local name. Leave out _cxx_ prefix, if any.
+      result_str +=
+        ACE_CString (
+          this->original_local_name ()->get_string ());
 
       // Suffix.
       result_str += suffix_str;
@@ -275,8 +280,10 @@ be_decl::compute_flat_name  (const char *prefix,
       // Prefix.
       result_str += prefix_str;
 
-      // Local name.
-      result_str += ACE_CString (this->local_name ()->get_string ());
+      // Local name. Leave out _cxx_ prefix, if any.
+      result_str +=
+        ACE_CString (
+          this->original_local_name ()->get_string ());
 
       // Suffix.
       result_str += suffix_str;
@@ -604,6 +611,24 @@ be_decl::ccm_pre_proc_gen (void)
   return this->ccm_pre_proc_gen_;
 }
 
+bool
+be_decl::ex_idl_facet_gen (void)
+{
+  return this->ex_idl_facet_gen_;
+}
+
+bool
+be_decl::svnt_hdr_facet_gen (void)
+{
+  return this->svnt_hdr_facet_gen_;
+}
+
+bool
+be_decl::svnt_src_facet_gen (void)
+{
+  return this->svnt_src_facet_gen_;
+}
+
 // Set the flag indicating that code generation is done.
 void
 be_decl::cli_hdr_gen (bool val)
@@ -856,6 +881,24 @@ void
 be_decl::ccm_pre_proc_gen (bool val)
 {
   this->ccm_pre_proc_gen_ = val;
+}
+
+void
+be_decl::ex_idl_facet_gen (bool val)
+{
+  this->ex_idl_facet_gen_ = val;
+}
+
+void
+be_decl::svnt_hdr_facet_gen (bool val)
+{
+  this->svnt_hdr_facet_gen_ = val;
+}
+
+void
+be_decl::svnt_src_facet_gen (bool val)
+{
+  this->svnt_src_facet_gen_ = val;
 }
 
 //==========================================

@@ -179,13 +179,6 @@ BE_produce (void)
   be_visitor_root_sh root_sh_visitor (&ctx);
   BE_visit_root (root_sh_visitor, "server header");
 
-  // If skeleton file generation is suppressed, we're done.
-  if (!be_global->gen_skel_files ())
-    {
-        BE_cleanup ();
-        return;
-    }
-
   if (be_global->gen_server_inline ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SI);
@@ -219,6 +212,38 @@ BE_produce (void)
       be_visitor_root_is root_is_visitor (&ctx);
       BE_visit_root (root_is_visitor, "implementation skeleton");
     }
+    
+  if (be_global->gen_ciao_svnt ())
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
+      be_visitor_root_svh root_svh_visitor (&ctx);
+      BE_visit_root (root_svh_visitor, "CIAO servant header");
+
+      ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
+      be_visitor_root_svs root_svs_visitor (&ctx);
+      BE_visit_root (root_svs_visitor, "CIAO servant source");
+    }
+      
+  if (be_global->gen_ciao_exec_idl ())
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_EX_IDL);
+      be_visitor_root_ex_idl root_svs_visitor (&ctx);
+      BE_visit_root (root_svs_visitor, "CIAO executor IDL");
+    }
+
+  // We can eliminate some overhead in IDL files without components.
+  if (be_global->gen_ciao_exec_impl () && idl_global->component_seen_)
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_EXH);
+      be_visitor_root_exh root_exh_visitor (&ctx);
+      BE_visit_root (root_exh_visitor, "CIAO exec impl header");
+
+      ctx.state (TAO_CodeGen::TAO_ROOT_EXS);
+      be_visitor_root_exs root_exs_visitor (&ctx);
+      BE_visit_root (root_exs_visitor, "CIAO exec impl source");
+    }
+    
+  tao_cg->gen_export_files ();
 
   // Done with this IDL file.
   BE_cleanup ();

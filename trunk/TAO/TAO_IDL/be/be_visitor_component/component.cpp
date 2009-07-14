@@ -120,6 +120,11 @@ be_visitor_component::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SVH:
+    case TAO_CodeGen::TAO_ROOT_SVS:
+    case TAO_CodeGen::TAO_ROOT_EXH:
+    case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
       return 0; // nothing to be done
     default:
       {
@@ -334,6 +339,11 @@ be_visitor_component::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
+    case TAO_CodeGen::TAO_ROOT_SVH:
+    case TAO_CodeGen::TAO_ROOT_SVS:
+    case TAO_CodeGen::TAO_ROOT_EXH:
+    case TAO_CodeGen::TAO_ROOT_EXS:
+    case TAO_CodeGen::TAO_ROOT_EX_IDL:
       return 0; // nothing to be done
     default:
       {

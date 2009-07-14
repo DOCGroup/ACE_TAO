@@ -108,7 +108,7 @@ public:
 
   // Public operations.
 
-  int void_return_type (void);
+  bool void_return_type (void);
   /// Returns 1 if the operation has a void return type.
 
   /// Return the number of arguments

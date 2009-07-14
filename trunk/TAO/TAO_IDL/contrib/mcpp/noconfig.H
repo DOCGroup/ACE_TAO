@@ -528,7 +528,7 @@
 #endif
 #define HOST_HAVE_STPCPY            TRUE
 #if     __STDC__
-#define stpcpy( dest, src)  __stpcpy__( dest, src)
+#define mcpp_stpcpy( dest, src)  __mcpp_stpcpy__( dest, src)
 #endif
 #endif
 

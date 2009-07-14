@@ -119,6 +119,9 @@ public:
   bool srv_retarg_tmpl_class_gen (void);
   bool srv_retarg_pragma_inst_gen (void);
   bool ccm_pre_proc_gen (void);
+  bool ex_idl_facet_gen (void);
+  bool svnt_hdr_facet_gen (void);
+  bool svnt_src_facet_gen (void);
 
   // Set the flag indicating that code generation is done.
   void cli_hdr_gen (bool);
@@ -165,6 +168,9 @@ public:
   void srv_retarg_tmpl_class_gen (bool);
   void srv_retarg_pragma_inst_gen (bool);
   void ccm_pre_proc_gen (bool);
+  void ex_idl_facet_gen (bool);
+  void svnt_hdr_facet_gen (bool);
+  void svnt_src_facet_gen (bool);
 
   // Narrowing
 
@@ -221,6 +227,9 @@ private:
   bool srv_retarg_tmpl_class_gen_;
   bool srv_retarg_pragma_inst_gen_;
   bool ccm_pre_proc_gen_;
+  bool ex_idl_facet_gen_;
+  bool svnt_hdr_facet_gen_;
+  bool svnt_src_facet_gen_;
 };
 
 #endif // if !defined
