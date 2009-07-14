@@ -1,3 +1,10 @@
+Tue Jul 14 14:52:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * apps/gperf/src/gperf_export.h:
+
+          Missing file from earlier merge, thanks to Phil Mesnier for
+          pointing this out. 
+        
 Tue Jul 14 13:31:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
          * include/makeinclude/platform_linux.GNU:
