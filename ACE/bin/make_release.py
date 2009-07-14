@@ -294,7 +294,7 @@ def update_version_files (component):
 
 
 def update_spec_file ():
-    
+
     global comp_versions, opts
 
     with open ("ACE/rpmbuild/ace-tao-ciao.spec") as spec_file:
@@ -311,9 +311,9 @@ def update_spec_file ():
                     line = "%define is_major_ver 0\n"
                 else:
                     line = "%define is_major_ver 1\n"
-                    
+
             new_spec += line
-        
+
         if opts.take_action:
             spec_file.seek (0)
             spec_file.truncate (0)
@@ -321,7 +321,7 @@ def update_spec_file ():
         else:
             print "New spec file:"
             print "".join (new_spec)
-            
+
     return ["ACE/rpmbuild/ace-tao-ciao.spec"]
 
 def get_and_update_versions ():
@@ -759,9 +759,6 @@ def generate_workspaces (stage_dir):
 
     print "\tGenerating VC71 solutions..."
     ex (mpc_command + " -type vc71 " + mpc_option + vc71_option + redirect_option)
-
-    print "\tGenerating Borland makefiles"
-    ex (mpc_command + " -type bmake " + mpc_option + exclude_option + redirect_option)
 
     print "\tGenerating VC71 Static solutions"
     ex (mpc_command + " -type vc71 " + static_vc71_option + redirect_option)
