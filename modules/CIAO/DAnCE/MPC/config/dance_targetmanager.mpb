@@ -1,4 +1,0 @@
-project : dance_deployment_svnt, ciao_config_handlers, dance_targetmanager_skel {
-  after += DAnCE_TargetManager_Impl
-  libs += DAnCE_TargetManager_Impl
-}

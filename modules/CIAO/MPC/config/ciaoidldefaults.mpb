@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : taoidldefaults {
-  idlflags += -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ccm 
-}

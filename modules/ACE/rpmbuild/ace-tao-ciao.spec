@@ -1,12 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.7
-%define TAOVER  1.7
-%define CIAOVER 0.7
-# Set is_major_ver if the version is X.Y instead X.Y.Z
-%define is_major_ver 1
-
-# TODO
-# Test whether a TAO app with MPC can be build against MPC installed version
+%define ACEVER  5.7.1
+%define TAOVER  1.7.1
+%define CIAOVER 0.7.1
 
 # Conditional build
 # Default values are
@@ -51,7 +46,6 @@
 
 %{!?skip_make:%define skip_make 0}
 %{!?make_nosrc:%define make_nosrc 0}
-%{!?is_major_ver:%define is_major_ver 0}
 
 %define have_fox 0
 
@@ -66,7 +60,7 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.bz2
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.gz
 Source1:      ace-tao-rpmlintrc
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -820,6 +814,7 @@ using the XtResource_Factory.
 export ACE_ROOT=`pwd`
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
+export DANCE_ROOT=$CIAO_ROOT/DAnCE
 
 # patch0 and patch1 are applied a bit later
 
@@ -976,6 +971,11 @@ export ACE_ROOT=`pwd`
 export TAO_ROOT=$ACE_ROOT/TAO
 export LD_LIBRARY_PATH=$ACE_ROOT/lib
 
+# Dump the g++ versions, in case the g++ version is broken we can
+# easily see this in the build log
+g++ --version
+g++ -dumpversion
+
 %if %skip_make
 cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
 %else
@@ -1071,17 +1071,9 @@ $MAKECMD -C $TAO_ROOT/utils
 # install
 # ================================================================
 
-# For major releases the package version will be the shortened version
-# tuple and the shared-object version needs a placeholder '.0'
-%if %is_major_ver
-%define ACEVERSO %{ACEVER}.0
-%define TAOVERSO %{TAOVER}.0
-%define CIAOVERSO %{CIAOVER}.0
-%else
 %define ACEVERSO %{ACEVER}
 %define TAOVERSO %{TAOVER}
 %define CIAOVERSO %{CIAOVER}
-%endif
 
 %install
 
@@ -1296,13 +1288,20 @@ install ${ACE_ROOT}/bin/tao_nslist %{buildroot}%{_bindir}/tao_nslist
 # ================================================================
 
 install -d %{buildroot}%{_sysconfdir}
-cp -R ${ACE_ROOT}/rpmbuild/logrotate.d %{buildroot}%{_sysconfdir}/logrotate.d
-cp -R ${ACE_ROOT}/tao %{buildroot}%{_sysconfdir}/tao
+mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
+mkdir -p %{buildroot}%{_sysconfdir}/tao
+cp -R ${ACE_ROOT}/rpmbuild/etc/logrotate.d/* %{buildroot}%{_sysconfdir}/logrotate.d/
+cp -R ${ACE_ROOT}/rpmbuild/etc/tao/* %{buildroot}%{_sysconfdir}/tao/
 
 %if %{defined suse_version}
-cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse %{buildroot}%{_sysconfdir}
+mkdir -p %{buildroot}%{_sysconfdir}/init.d
+mkdir -p %{buildroot}%{_localstatedir}/adm
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/init.d/* %{buildroot}%{_sysconfdir}/init.d/
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/tao/* %{buildroot}%{_sysconfdir}/tao/
 %else
-cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora %{buildroot}%{_sysconfdir}
+mkdir -p %{buildroot}%{_sysconfdir}/rc.d/init.d
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/rc.d/init.d/* %{buildroot}%{_sysconfdir}/rc.d/init.d/
+cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/tao/* %{buildroot}%{_sysconfdir}/tao/
 %endif
 
 %if %{defined suse_version}
@@ -2044,6 +2043,7 @@ fi
 %files -n ace-gperf
 %defattr(-,root,root,-)
 %{_bindir}/ace_gperf
+%{_libdir}/ACE_gperfd.so.%{ACEVERSO}
 %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
 %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
@@ -2664,6 +2664,12 @@ fi
 # ================================================================
 
 %changelog
+* Mon Jul 13 2009 Phil Mesnier <mesnier_p@ociweb.com> - 5.7.1-0
+- New micro release
+
+* Wed Jun 24 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.7.0-0
+- New minor release
+
 * Fri Mar 13 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.6.8-2
 - Removed specific OS checks
 

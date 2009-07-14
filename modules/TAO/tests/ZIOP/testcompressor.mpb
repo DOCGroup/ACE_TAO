@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : taolib, compression {
-  libs    += TAO_TestCompressor
-}
