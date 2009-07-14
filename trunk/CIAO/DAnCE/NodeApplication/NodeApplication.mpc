@@ -2,12 +2,11 @@
 // $Id$
 
 project(NodeApplication): dance_lib, dynamicinterface, dance_component_server_svnt, \
-                          dance_deployment_stub, dance_deployment_svnt, dance_redirection_service, \
+                          dance_nodeapplication_skel, \
                           dance_logger, iortable, naming, ccm_configvalue, ciao_cs_client, ccm_componentserver_svnt, \
                           gen_ostream {
   sharedname   = DAnCE_NodeApplication
   dynamicflags = NODEAPPLICATION_BUILD_DLL
-
 
 Source_Files {
 //    ComponentInstallation_Impl.cpp

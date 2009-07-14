@@ -36,7 +36,7 @@
 #include <string>
 #include "ace/Task.h"
 
-namespace CIDL_Messenger_Impl
+namespace CIAO_Messenger_Impl
 {
   class Runnable_exec_i;
   class Publication_exec_i;

@@ -41,43 +41,56 @@ namespace DAnCE
   void
   Logger_Service::parse_args (int argc, ACE_TCHAR **argv)
   {
-    const ACE_TCHAR *shortl = ACE_TEXT("-l");
-    const ACE_TCHAR *longl = ACE_TEXT("--log-level");
-    const ACE_TCHAR *tracel = ACE_TEXT("--trace");
-    //    const ACE_TCHAR *traces = "-t";
-    const ACE_TCHAR *lfl = ACE_TEXT("--log-file");
-    const ACE_TCHAR *lfs = ACE_TEXT("-f");
+    DANCE_TRACE ("DAnCE_Logger::parse_args");
 
-    // We need to actually FIND the -l option, as the get_opt won't ignore
-    // the ORB options and such.
-    for (int i = 0; i < argc; ++i)
+    ACE_Get_Opt get_opts (argc,
+                          argv,
+                          "l:tf:",
+                          0,
+                          0,
+                          ACE_Get_Opt::RETURN_IN_ORDER);
+
+    get_opts.long_option (ACE_TEXT("log-level"), 'l', ACE_Get_Opt::ARG_OPTIONAL);
+    get_opts.long_option (ACE_TEXT("trace"), 't', ACE_Get_Opt::ARG_REQUIRED);
+    get_opts.long_option (ACE_TEXT("log-file"), 'f', ACE_Get_Opt::ARG_OPTIONAL);
+
+    char c;
+    int level = 0;
+    while ( (c = get_opts ()) != -1)
       {
-        if (//ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
-            ACE_OS::strncmp (argv[i], tracel, 7) == 0)
+        switch (c)
           {
+          case 'l':
+            DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_Logger::parse_args -  "
+                          "Log level is %C\n",
+                          get_opts.opt_arg ()));
+            level = ACE_OS::atoi (get_opts.opt_arg ());
+            if (level != 0)
+              this->log_level_ = level;
+            break;
+          case 't':
+            DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_Logger::parse_args -  "
+                          "Trace enabled\n"));
             this->trace_ = true;
-            continue;
-          }
+            break;
 
-        if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
-            ACE_OS::strncmp (argv[i], longl, 11 ) == 0)
-          {
-            if ((i + 1) < argc && *argv[i + 1] != '-')
-              {
-                int level = ACE_OS::atoi (argv[i + 1]);
-
-                if (level != 0)
-                  this->log_level_ = level;
-              }
-          }
-
-        if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
-            ACE_OS::strncmp (argv[i], lfl, 10 ) == 0)
-          {
-            if ((i + 1) < argc && *argv[i + 1] != '-')
-              {
-                this->filename_ = ACE_TEXT_ALWAYS_CHAR (argv[i+1]);
-              }
+          case 'f':
+            DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_Logger::parse_args -  "
+                          "Log file becomes %C\n",
+                          get_opts.opt_arg ()));
+            this->filename_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+            break;
+          case 'h':
+            //case '?': // Display help for use of the server.
+            //default:
+            DANCE_ERROR ((LM_ERROR,
+                          "Log service options:  %C\n"
+                          "\t-l|--log-level <level>\t\tLog level [1-10]\n"
+                          "\t-t|--trace\t\tEnable trace. Log level is set to 10\n"
+                          "\t-f|--log-file <file name> \t\tLog file\n"
+                          "\t-h|--help\t\t\tThis help message\n"
+                          ,argv [0]));
+            break;
           }
       }
   }

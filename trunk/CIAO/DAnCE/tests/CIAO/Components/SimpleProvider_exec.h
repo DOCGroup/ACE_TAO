@@ -32,7 +32,7 @@
 #include "SimpleProvider_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_SimpleProvider_Impl
+namespace CIAO_Simple_SimpleProvider_Impl
 {
   class SIMPLEPROVIDER_EXEC_Export Trigger_exec_i
     : public virtual ::Simple::CCM_Trigger,

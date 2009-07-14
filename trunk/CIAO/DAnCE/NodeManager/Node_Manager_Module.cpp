@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"
@@ -17,7 +17,6 @@
 #include "DAnCE/Deployment/DAnCE_PropertiesC.h"
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
-#include "RedirectionService/RedirectionService.h"
 
 ACE_RCSID (DAnCE,
            Node_Manager_Module,
@@ -47,7 +46,7 @@ namespace DAnCE
 }
 
 DAnCE_NodeManager_Module::DAnCE_NodeManager_Module (void)
-  : redirection_ (0)
+  //: redirection_ (0)
 {
   DANCE_TRACE("DAnCE_NodeManager_Module::DAnCE_NodeManager_Module");
 }
@@ -63,7 +62,7 @@ DAnCE_NodeManager_Module::~DAnCE_NodeManager_Module (void)
       delete (*it).int_id_;
     }
 
-  delete this->redirection_;
+  //delete this->redirection_;
 }
 
 const char *
@@ -71,20 +70,20 @@ DAnCE_NodeManager_Module::usage (void)
 {
   DANCE_TRACE ("DAnCE_NodeManager_Module::usage");
   return "Node Manager Options:\n"
-    "\t-e,--exec-mgr\t\t [execution manager ior file name]\n"
-    "\t-n,--node-mgr\t\t <node name> [=node manager ior file name]\n"
-    //    "\t-p,--process-ns\t\t\t [file name] create process name service and store its ior to file name\n"
-    "\t-c,--create-plan-ns [NC] create plan objects (components and ports) representation in name context with ior NC\n"
-    "\t-r,--rebind-plan-ns [NC] bind plan representation name context to NC\n"
-    "\t-i,--port-indirection\t enable plan objects indirection via servant locator\n"
-    //"\t-f,--ignore-failure\t\t ignore deployment failures\n"
-    "\t-s,--server-executable\t default component server executable\n"
+    "\t-e|--exec-mgr\t\t [execution manager ior file name]\n"
+    "\t-n|--node-mgr\t\t <node name> [=node manager ior file name]\n"
+    //    "\t-p|--process-ns\t\t\t [file name] create process name service and store its ior to file name\n"
+    "\t-c|--create-plan-ns [NC] create plan objects (components and ports) representation in name context with ior NC\n"
+    "\t-r|--rebind-plan-ns [NC] bind plan representation name context to NC\n"
+    "\t-i|--port-indirection\t enable plan objects indirection via servant locator\n"
+    //"\t-f|--ignore-failure\t\t ignore deployment failures\n"
+    "\t-s|--server-executable\t default component server executable\n"
     "\t--server-args\t\t additional arguments to supply to the component server\n"
     "\t--standalone-nm\t\t Indicates that this NodeManager is not managed by an ExecutionManager\n"
-    "\t-t,--timeout\t\t default timeout in seconds to wait for component server spawn\n"
-    "\t-d,--domain-nc [NC]\t Default naming context for domain objects.\n"
+    "\t-t|--timeout\t\t default timeout in seconds to wait for component server spawn\n"
+    "\t-d|--domain-nc [NC]\t Default naming context for domain objects.\n"
     "\t--instance-nc [NC]\t Default naming context for instance registration directives. No argument indicates Domain NC.\n"
-    "\t-h,help\t\t\t print this help message\n";
+    "\t-h|help\t\t\t print this help message\n";
 }
 
 bool
@@ -273,8 +272,6 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (!this->parse_args (argc, argv))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DAnCE_NodeManager_Module::create_object - ")
-                        ACE_TEXT("Failed to parse command line arguments, exiting\n")));
           return CORBA::Object::_nil ();
         }
 
@@ -348,8 +345,8 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
         {
           if (!this->options_.create_plan_ns_)
             {
-              DANCE_ERROR((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                           "Rebind_plan_ns option is enabled but Create_plan_ns is not.\n"));
+              DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
+                           ACE_TEXT ("Rebind_plan_ns option is enabled but Create_plan_ns is not.\n")));
               return CORBA::Object::_nil();
             }
           CORBA::Object_var tmp_obj;
@@ -362,11 +359,11 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
             {
               if (CORBA::is_nil (this->domain_nc_.in ()))
                 {
-                  DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                                "The rebind plan is enabled but neither NC "
-                                "nor DomainNC are not supplied. No rebinding will be done.\n"
-                                "Use the \"-rebind-plan-ns NC ior\" "
-                                "or \"-ORBInitRef DomainNC\" option.\n"));
+                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
+                                ACE_TEXT ("The rebind plan is enabled but neither NC ")
+                                ACE_TEXT ("nor DomainNC are not supplied. No rebinding will be done.\n")
+                                ACE_TEXT ("Use the \"-rebind-plan-ns NC ior\" ")
+                                ACE_TEXT ("or \"-ORBInitRef DomainNC\" option.\n")));
                   return CORBA::Object::_nil ();
                 }
               rebind_nc = CosNaming::NamingContext::_duplicate (this->domain_nc_.in ());
@@ -380,8 +377,8 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
 
       if (CORBA::is_nil (adapter.in ()))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                         "Unable to RIR the IORTable.\n"));
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
+                        ACE_TEXT ("Unable to RIR the IORTable.\n")));
           return CORBA::Object::_nil ();
         }
 
@@ -445,7 +442,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
         }
 
       //Creating redirection object
-      if (this->redirection_ == 0)
+/*      if (this->redirection_ == 0)
         {
           DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
                         "Creating redirection service object\n"));
@@ -455,7 +452,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                                                               rebind_nc.in (),
                                                               this->options_.create_plan_ns_,
                                                               this->options_.port_indirection_);
-        }
+        }*/
 
       // Make sure that we have only one Node Manager
       if (this->options_.node_managers_.size () != 1)
@@ -498,7 +495,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                           DAnCE::NodeManager_Impl (orb,
                                                    this->root_poa_.in (),
                                                    node_name.c_str(),
-                                                   *this->redirection_,
+//                                                   *this->redirection_,
                                                    properties),
                           CORBA::Object::_nil ());
           DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "

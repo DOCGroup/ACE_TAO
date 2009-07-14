@@ -11,7 +11,7 @@
 
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerC.h"
-#include "DAnCE/TargetManager/TargetManagerImplC.h"
+#include "DAnCE/TargetManager/TargetManagerC.h"
 #include "ace/streams.h"
 #include "ace/FILE_IO.h"
 #include "ace/FILE_Connector.h"

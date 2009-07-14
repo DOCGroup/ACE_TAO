@@ -32,7 +32,7 @@
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_Receiver_Impl
+namespace CIAO_Minimum_Receiver_Impl
 {
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,

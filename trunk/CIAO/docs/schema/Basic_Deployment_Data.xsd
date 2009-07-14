@@ -13,7 +13,7 @@
   </xsd:complexType>
 
   <xsd:simpleType name="TCKind">
-    <xsd:restriction base="xsd:NCName">
+    <xsd:restriction base="xsd:NCName"> <!-- std says xsd:string -->
       <xsd:enumeration value="tk_null"/>
       <xsd:enumeration value="tk_void"/>
       <xsd:enumeration value="tk_short"/>
@@ -42,7 +42,7 @@
       <xsd:enumeration value="tk_longdouble"/>
       <xsd:enumeration value="tk_wchar"/>
       <xsd:enumeration value="tk_wstring"/>
-      <xsd:enumeration value="tk_wfixed"/>
+      <xsd:enumeration value="tk_fixed"/>
       <xsd:enumeration value="tk_value"/>
       <xsd:enumeration value="tk_value_box"/>
       <xsd:enumeration value="tk_native"/>
@@ -216,8 +216,8 @@
 
   <xsd:complexType name="Requirement">
     <xsd:sequence>
-      <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="resourceType" type="xsd:string"/>
       <xsd:element name="property" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
@@ -296,6 +296,8 @@
       <xsd:enumeration value="EventEmitter"/>
       <xsd:enumeration value="EventPublisher"/>
       <xsd:enumeration value="EventConsumer"/>
+      <xsd:enumeration value="ExtendedPort"/>
+      <xsd:enumeration value="MirrorPort"/>
     </xsd:restriction>
   </xsd:simpleType>
 
@@ -310,6 +312,7 @@
       <xsd:element name="exclusiveUser" type="xsd:boolean"/>
       <xsd:element name="optional" type="xsd:boolean"/>
       <xsd:element name="kind" type="Deployment:CCMComponentPortKind"/>
+      <xsd:element name="templateParam" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -420,7 +423,7 @@
   <xsd:complexType name="PlanLocality">
     <xsd:sequence>
       <xsd:element name="constraint" type="Deployment:PlanLocalityKind"/>
-      <xsd:element name="constrainedInstance" type="Deployment:IdRef"/> <!-- InstanceDeploymentDescription -->
+      <xsd:element name="constrainedInstance" type="Deployment:IdRef" maxOccurs="unbounded" /> <!-- InstanceDeploymentDescription -->
     </xsd:sequence>
   </xsd:complexType>
 

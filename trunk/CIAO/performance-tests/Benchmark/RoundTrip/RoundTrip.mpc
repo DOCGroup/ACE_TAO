@@ -1,29 +1,26 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Benchmark -l .. -c client Roundtrip"
 
-project(Benchmark_RoundTrip_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Benchmark_RoundTrip_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ROUNDTRIP_STUB_Export \
               -Wb,stub_export_include=RoundTrip_stub_export.h \
               -Wb,skel_export_macro=ROUNDTRIP_SVNT_Export \
-              -Wb,skel_export_include=RoundTrip_svnt_export.h
+              -Wb,skel_export_include=RoundTrip_svnt_export.h \
+              -Wb,exec_export_macro=ROUNDTRIP_EXEC_Export \
+              -Wb,exec_export_include=RoundTrip_exec_export.h
 
   IDL_Files {
     RoundTrip.idl
   }
 }
 
-project(Benchmark_RoundTrip_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(Benchmark_RoundTrip_lem_gen) : ciaoidldefaults {
   custom_only = 1
-  cidlflags += --svnt-export-macro ROUNDTRIP_SVNT_Export \
-               --svnt-export-include RoundTrip_svnt_export.h
+  after += Benchmark_RoundTrip_idl_gen
   idlflags += -Wb,export_macro=ROUNDTRIP_EXEC_Export \
               -Wb,export_include=RoundTrip_exec_export.h \
               -SS
-
-  CIDL_Files {
-    RoundTrip.cidl
-  }
 
   IDL_Files {
     RoundTripE.idl
@@ -31,7 +28,7 @@ project(Benchmark_RoundTrip_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoid
   }
 }
 
-project(Benchmark_RoundTrip_stub) : ccm_stub, avoids_ace_for_tao {
+project(Benchmark_RoundTrip_stub) : ccm_stub {
   after += Benchmark_RoundTrip_idl_gen Benchmark_stub
   libs  += Benchmark_stub
   libpaths += ..
@@ -55,8 +52,8 @@ project(Benchmark_RoundTrip_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Benchmark_RoundTrip_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += Benchmark_RoundTrip_cidl_gen Benchmark_RoundTrip_stub
+project(Benchmark_RoundTrip_exec) : ciao_executor {
+  after   += Benchmark_RoundTrip_lem_gen Benchmark_RoundTrip_stub
   sharedname = RoundTrip_exec
   libs += RoundTrip_stub Benchmark_stub
   libpaths += ..
@@ -85,7 +82,7 @@ project(Benchmark_RoundTrip_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Benchmark_RoundTrip_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Benchmark_RoundTrip_svnt) : ciao_servant {
   after      += Benchmark_skel Benchmark_RoundTrip_exec
   sharedname  = RoundTrip_svnt
   libs       += RoundTrip_exec \
@@ -94,9 +91,6 @@ project(Benchmark_RoundTrip_svnt) : ciao_servant, avoids_ace_for_tao {
                 Benchmark_stub
   libpaths += ..
   dynamicflags = ROUNDTRIP_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }
@@ -117,7 +111,7 @@ project(Benchmark_RoundTrip_svnt) : ciao_servant, avoids_ace_for_tao {
   }
 }
 
-project (RoundTrip_client) : ccm_stub, valuetype, strategies, avoids_ace_for_tao {
+project (RoundTrip_client) : ccm_stub, valuetype, strategies {
   exename = client
   after += Benchmark_RoundTrip_stub
   libs  += RoundTrip_stub Benchmark_stub

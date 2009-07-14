@@ -49,20 +49,20 @@ namespace CIAO
       public:
       typedef ACE_Refcounted_Auto_Ptr < TopLevelPackageDescription, ACE_Null_Mutex > _ptr;
 
-      // basePackage
+      // package
       // 
       public:
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::iterator basePackage_iterator;
-      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::const_iterator basePackage_const_iterator;
-      basePackage_iterator begin_basePackage ();
-      basePackage_iterator end_basePackage ();
-      basePackage_const_iterator begin_basePackage () const;
-      basePackage_const_iterator end_basePackage () const;
-      void add_basePackage ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > const& );
-      size_t count_basePackage (void) const;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::iterator package_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > >::const_iterator package_const_iterator;
+      package_iterator begin_package ();
+      package_iterator end_package ();
+      package_const_iterator begin_package () const;
+      package_const_iterator end_package () const;
+      void add_package ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > const& );
+      size_t count_package (void) const;
 
       protected:
-      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > > basePackage_;
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > > package_;
 
       public:
       TopLevelPackageDescription ();
@@ -109,34 +109,34 @@ namespace CIAO
         pre (Type const&);
 
         virtual void
-        basePackage (Type&);
+        package (Type&);
 
         virtual void
-        basePackage (Type const&);
+        package (Type const&);
 
         virtual void
-        basePackage_pre (Type&);
+        package_pre (Type&);
 
         virtual void
-        basePackage_pre (Type const&);
+        package_pre (Type const&);
 
         virtual void
-        basePackage_next (Type&);
+        package_next (Type&);
 
         virtual void
-        basePackage_next (Type const&);
+        package_next (Type const&);
 
         virtual void
-        basePackage_post (Type&);
+        package_post (Type&);
 
         virtual void
-        basePackage_post (Type const&);
+        package_post (Type const&);
 
         virtual void
-        basePackage_none (Type&);
+        package_none (Type&);
 
         virtual void
-        basePackage_none (Type const&);
+        package_none (Type const&);
 
         virtual void
         post (Type&);
@@ -172,31 +172,31 @@ namespace CIAO
         traverse (Type const&);
 
         virtual void 
-        basePackage_pre (Type &o)
+        package_pre (Type &o)
         {
-          this->basePackage_pre (const_cast <Type const &> (o));
+          this->package_pre (const_cast <Type const &> (o));
         }
 
         virtual void
-        basePackage_pre (Type const&);
+        package_pre (Type const&);
 
         virtual void 
-        basePackage_next (Type &o)
+        package_next (Type &o)
         {
-          this->basePackage_next (const_cast <Type const &> (o));
+          this->package_next (const_cast <Type const &> (o));
         }
 
         virtual void
-        basePackage_next (Type const&);
+        package_next (Type const&);
 
         virtual void 
-        basePackage_post (Type &o)
+        package_post (Type &o)
         {
-          this->basePackage_post (const_cast <Type const &> (o));
+          this->package_post (const_cast <Type const &> (o));
         }
 
         virtual void
-        basePackage_post (Type const&);
+        package_post (Type const&);
 
         protected:
         TopLevelPackageDescription ();

@@ -1,14 +1,13 @@
 //$Id$
 
 project(ENW_stub): ccm_stub, event {
-
   sharedname = ENW_stub
   idlflags -= -GT
   idlflags += -Wb,stub_export_macro=ENW_STUB_Export \
               -Wb,stub_export_include=ENW_stub_export.h \
               -Wb,skel_export_macro=ENW_SKEL_Export \
               -Wb,skel_export_include=ENW_skel_export.h
-  dynamicflags   = ENW_STUB_BUILD_DLL
+  dynamicflags = ENW_STUB_BUILD_DLL
 
   IDL_Files {
     ENW.idl

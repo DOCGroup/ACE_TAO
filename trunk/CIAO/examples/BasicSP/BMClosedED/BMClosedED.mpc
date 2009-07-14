@@ -1,31 +1,27 @@
 // $Id$
 
-project(BMClosedED_stub_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(BMClosedED_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
-  idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export
-  idlflags += -Wb,stub_export_include=BMClosedED_stub_export.h
-  idlflags += -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export
-  idlflags += -Wb,skel_export_include=BMClosedED_svnt_export.h
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+              -Wb,stub_export_macro=BMCLOSEDED_STUB_Export \
+              -Wb,stub_export_include=BMClosedED_stub_export.h \
+              -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export \
+              -Wb,skel_export_include=BMClosedED_svnt_export.h \
+              -Wb,exec_export_macro=BMCLOSEDED_EXEC_Export \
+              -Wb,exec_export_include=BMClosedED_exec_export.h \
+              -Glfa
 
   IDL_Files {
     BMClosedED.idl
   }
 }
 
-project(BMClosedED_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
-  after += BasicSP_lem_gen
+project(BMClosedED_lem_gen) : ciaoidldefaults {
+  after += BMClosedED_idl_gen
   custom_only = 1
-  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
-
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags  +=  -Wb,export_macro=BMCLOSEDED_EXEC_Export \
                 -Wb,export_include=BMClosedED_exec_export.h \
-                -SS
-
-  CIDL_Files {
-    BMClosedED.cidl
-  }
+                -SS -I $(CIAO_ROOT)/examples/BasicSP
 
   IDL_Files {
     BMClosedEDE.idl
@@ -33,10 +29,10 @@ project(BMClosedED_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_
 
 }
 
-project(BMClosedED_stub): ccm_stub, avoids_ace_for_tao {
+project(BMClosedED_stub): ccm_stub {
   libout = ../lib
   libpaths += ../lib
-  after += BasicSP_stub BMClosedED_stub_gen
+  after += BasicSP_stub BMClosedED_idl_gen
   sharedname = BMClosedED_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
   libs += BasicSP_stub
@@ -54,13 +50,11 @@ project(BMClosedED_stub): ccm_stub, avoids_ace_for_tao {
   }
 
   Inline_Files {
-
   }
-
 }
 
 
-project(BMClosedED_exec) : ciao_executor, avoids_ace_for_tao {
+project(BMClosedED_exec) : ciao_executor {
   after      += BMClosedED_stub BMClosedED_lem_gen BasicSP_exec
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub
@@ -86,12 +80,10 @@ project(BMClosedED_exec) : ciao_executor, avoids_ace_for_tao {
   }
 
   Inline_Files {
-
   }
-
 }
 
-project(BMClosedED_svnt) : ciao_servant, avoids_ace_for_tao {
+project(BMClosedED_svnt) : ciao_servant {
   after += BasicSP_svnt BMClosedED_exec
 
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -104,9 +96,6 @@ project(BMClosedED_svnt) : ciao_servant, avoids_ace_for_tao {
   libpaths += ../lib
 
   dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }
@@ -122,7 +111,5 @@ project(BMClosedED_svnt) : ciao_servant, avoids_ace_for_tao {
   }
 
   Inline_Files {
-
   }
-
 }

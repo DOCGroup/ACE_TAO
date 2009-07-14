@@ -43,7 +43,7 @@ namespace CIAO
         
             tpd = reader::topLevelPackageDescription (dom);
 
-            PCD_Handler::package_config (*(*tpd.begin_basePackage ()),
+            PCD_Handler::package_config (*(*tpd.begin_package ()),
                                          toconfig);
           }
         else if (root == XStr ("Deployment:packageConfiguration"))

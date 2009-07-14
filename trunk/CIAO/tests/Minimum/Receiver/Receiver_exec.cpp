@@ -21,7 +21,7 @@
 #include "Receiver_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_Receiver_Impl
+namespace CIAO_Minimum_Receiver_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   Receiver_exec_i

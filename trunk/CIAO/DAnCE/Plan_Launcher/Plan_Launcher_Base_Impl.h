@@ -11,7 +11,8 @@
 
 #include "Plan_Launcher_Base_Impl_Export.h"
 #include "ciao/CIAO_common.h"
-#include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
+#include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
+#include "DAnCE/Deployment/CIAO_ExecutionManagerDaemonC.h"
 #include "DAnCE/Deployment/Deployment_ConnectionC.h"
 #include "ace/Map_Manager.h"
 #include "DAnCE/Deployment/Deployment_DeploymentPlanC.h"
@@ -29,15 +30,17 @@ namespace Plan_Launcher
 class Plan_Launcher_Base_Impl_Export Plan_Launcher_Base_Impl
 {
 public:
-  class Deployment_Failure
+  struct Deployment_Failure
   {
-public:
     Deployment_Failure(const ACE_CString &error) :
       error_(error)
-    {
-    }
-    ;
+    {}
     ACE_CString error_;
+  };
+
+  struct Help_Issued
+  {
+    Help_Issued() {}
   };
 
   Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[]);
@@ -89,6 +92,7 @@ public:
 
   /// Cached ORB pointer
   CORBA::ORB_var orb_;
+  
   /// Object reference of the ExecutionManager
   ::DAnCE::ExecutionManagerDaemon_var em_;
 

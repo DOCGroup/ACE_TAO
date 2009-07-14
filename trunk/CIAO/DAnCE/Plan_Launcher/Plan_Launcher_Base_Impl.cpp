@@ -5,7 +5,7 @@
 #include "ace/Sched_Params.h"
 #include "ccm/CCM_ObjectC.h"
 #include "ace/Env_Value_T.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
@@ -383,7 +383,7 @@ void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
       DANCE_ERROR ( (LM_ERROR, ACE_TEXT ("[(%P|%t) Executor] Usage: %s <options>\n"), program));
     }
 
-  DANCE_ERROR ( (LM_ERROR, ACE_TEXT ("Options :\n")
+  DANCE_ERROR ( (LM_ERROR, ACE_TEXT ("Plan Launcher Options :\n")
           ACE_TEXT ("-k|--em-ior <EXECUTION_MANAGER_IOR>")
           ACE_TEXT (" : Default file://em.ior\n")
           ACE_TEXT ("-d|--read-cdr-plan <CDR_DEPLOYMENT_PLAN_URL>\n")
@@ -399,11 +399,11 @@ void Plan_Launcher_Base_Impl::usage(const ACE_TCHAR* program)
 void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
 {
   DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("PL options : \"")));
+
   for (int i = 0; i < argc; ++i)
     {
-      DANCE_DEBUG ( (LM_TRACE, " %s", argv[i]));
+      DANCE_DEBUG ( (LM_TRACE, "\t%s\n", argv[i]));
     }
-  DANCE_DEBUG ( (LM_TRACE, "\"\n"));
 
   ACE_Get_Opt get_opt(argc, argv,
   ACE_TEXT ("k:d:w:t:a:qx:h"), 0);
@@ -470,6 +470,9 @@ void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
             this->xml_plan_urls_.push_back(expand_env_vars (get_opt.opt_arg()));
             break;
           case 'h':
+            usage (argv[0]);
+            throw Help_Issued ();
+            break;
           default:
             usage (argv[0]);
             throw Deployment_Failure ("parse_args : invalid arguments");

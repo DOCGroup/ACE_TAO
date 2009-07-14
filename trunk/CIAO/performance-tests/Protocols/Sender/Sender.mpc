@@ -1,36 +1,33 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Protocols Sender"
 
-project(Protocols_Sender_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Protocols_Sender_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
               -Wb,skel_export_macro=SENDER_SVNT_Export \
-              -Wb,skel_export_include=Sender_svnt_export.h
+              -Wb,skel_export_include=Sender_svnt_export.h \
+              -Wb,exec_export_macro=SENDER_EXEC_Export \
+              -Wb,exec_export_include=Sender_exec_export.h
 
   IDL_Files {
     Sender.idl
   }
 }
 
-project(Protocols_Sender_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(Protocols_Sender_lem_gen) : ciaoidldefaults {
   custom_only = 1
-  cidlflags += --svnt-export-macro SENDER_SVNT_Export \
-               --svnt-export-include Sender_svnt_export.h
+  after += Protocols_Sender_idl_gen
   idlflags += -Wb,export_macro=SENDER_EXEC_Export \
               -Wb,export_include=Sender_exec_export.h \
               -SS
-
-  CIDL_Files {
-    Sender.cidl
-  }
 
   IDL_Files {
     SenderE.idl
   }
 }
 
-project(Protocols_Sender_stub) : ccm_stub, avoids_ace_for_tao {
+project(Protocols_Sender_stub) : ccm_stub {
   after += Protocols_Sender_idl_gen Protocols_stub
   libs  += Protocols_stub
   libpaths += ../common
@@ -55,8 +52,8 @@ project(Protocols_Sender_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Protocols_Sender_exec) : ciao_executor, rtcorba, avoids_ace_for_tao {
-  after   += Protocols_Sender_cidl_gen Protocols_Sender_stub
+project(Protocols_Sender_exec) : ciao_executor, rtcorba {
+  after   += Protocols_Sender_lem_gen Protocols_Sender_stub
   sharedname = Protocols_Sender_exec
   libs += Protocols_Sender_stub \
           Protocols_stub
@@ -86,7 +83,7 @@ project(Protocols_Sender_exec) : ciao_executor, rtcorba, avoids_ace_for_tao {
 }
 
 
-project(Protocols_Sender_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Protocols_Sender_svnt) : ciao_servant {
   after      += Protocols_skel Protocols_Sender_exec
   sharedname  = Protocols_Sender_svnt
   libs       += Protocols_Sender_exec \
@@ -96,9 +93,6 @@ project(Protocols_Sender_svnt) : ciao_servant, avoids_ace_for_tao {
   libpaths += ../common
 
   dynamicflags = SENDER_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

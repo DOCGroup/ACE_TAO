@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"
@@ -13,7 +13,6 @@
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ExecutionManager_Module.h"
 #include "ExecutionManager_Impl.h"
-#include "RedirectionService/RedirectionService.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 ACE_RCSID (DAnCE,
@@ -167,9 +166,9 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
                                "\t--node-mgr,-n <node name>[=node manager ior file name]\n"
                                "\t--node-map <file name> \t\tFile containing a node manager map\n"
                                "\t--domain-nc <nc ior> \t\tIOR for the Domain Naming Context\n"
-                               //"--process-ns,-p [file name] \t\tcreate process name service and store its ior to file name\n"
-                               //"--create-plan-ns,-c [NC] \t\tcreate plan objects (components and ports) representation in name context with ior NC\n"
-                               //"--rebind-plan-ns,-r [NC] \t\tbind plan representation name context to NC\n"
+                               //"-p|--process-ns [file name] \t\tcreate process name service and store its ior to file name\n"
+                               //"-c|--create-plan-ns [NC] \t\tcreate plan objects (components and ports) representation in name context with ior NC\n"
+                               //"-r|--rebind-plan-ns [NC] \t\tbind plan representation name context to NC\n"
                                //"-i \t\t\t\tenable plan objects indirection via servant locator\n",
                                ,argv [0]),
                               false);
@@ -230,15 +229,15 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
 
           policies[0] = poa->create_id_assignment_policy (PortableServer::USER_ID);
           policies[1] = poa->create_lifespan_policy (PortableServer::PERSISTENT);
-          persistent_poa = poa->create_POA ("Managers", 
-                                            mgr.in(), 
+          persistent_poa = poa->create_POA ("Managers",
+                                            mgr.in(),
                                             policies);
         }
       catch (const PortableServer::POA::AdapterAlreadyExists &)
         {
           persistent_poa = poa->find_POA ("Managers", 0);
         }
-      
+
       CosNaming::NamingContext_var domain_nc;
 
       // Resolve DomainNC
@@ -347,7 +346,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
           if (CORBA::is_nil (nm_obj))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_ExecutionManager::create_object - "
-                             "Failed to narrow the object to node manager : %C\n", 
+                             "Failed to narrow the object to node manager : %C\n",
                              this->options_.node_managers_[i].c_str()));
               continue;
             }
@@ -355,7 +354,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
           DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Placing node \"%C\" to EM's map.\n"), node_name.c_str()));
           this->em_impl_->add_node_manager (node_name.c_str(), nm_ior.c_str ());
         }
-      
+
       if (this->options_.node_map_ != 0)
         {
           DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::create_object - ")
@@ -363,7 +362,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
                         this->options_.node_map_));
           this->em_impl_->load_node_map (this->options_.node_map_);
         }
-      
+
 
       mgr->activate ();
 

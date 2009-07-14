@@ -1,4 +1,5 @@
 // $Id$
+/// Compliant with OMG 06-04-01 Section 6.10.1.2
 
 #if !defined (CCM_STANDARDCONFIGURATOR_IDL)
 #define CCM_STANDARDCONFIGURATOR_IDL

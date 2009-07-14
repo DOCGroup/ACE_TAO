@@ -1,36 +1,33 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleEmitter"
 
-project(SimpleCommon_SimpleEmitter_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleCommon_SimpleEmitter_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLEEMITTER_STUB_Export \
               -Wb,stub_export_include=SimpleEmitter_stub_export.h \
               -Wb,skel_export_macro=SIMPLEEMITTER_SVNT_Export \
-              -Wb,skel_export_include=SimpleEmitter_svnt_export.h
+              -Wb,skel_export_include=SimpleEmitter_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLEEMITTER_EXEC_Export \
+              -Wb,exec_export_include=SimpleEmitter_exec_export.h \
 
   IDL_Files {
     SimpleEmitter.idl
   }
 }
 
-project(SimpleCommon_SimpleEmitter_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(SimpleCommon_SimpleEmitter_lem_gen) : ciaoidldefaults {
+  after += SimpleCommon_SimpleEmitter_idl_gen
   custom_only = 1
-  cidlflags += --svnt-export-macro SIMPLEEMITTER_SVNT_Export \
-               --svnt-export-include SimpleEmitter_svnt_export.h
   idlflags += -Wb,export_macro=SIMPLEEMITTER_EXEC_Export \
               -Wb,export_include=SimpleEmitter_exec_export.h \
               -SS
-
-  CIDL_Files {
-    SimpleEmitter.cidl
-  }
 
   IDL_Files {
     SimpleEmitterE.idl
   }
 }
 
-project(SimpleCommon_SimpleEmitter_stub) : ccm_stub, avoids_ace_for_tao {
+project(SimpleCommon_SimpleEmitter_stub) : ccm_stub {
   after += SimpleCommon_SimpleEmitter_idl_gen SimpleCommon_stub
   libs  += SimpleCommon_stub
 
@@ -54,8 +51,8 @@ project(SimpleCommon_SimpleEmitter_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(SimpleCommon_SimpleEmitter_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += SimpleCommon_SimpleEmitter_cidl_gen SimpleCommon_SimpleEmitter_stub
+project(SimpleCommon_SimpleEmitter_exec) : ciao_executor {
+  after   += SimpleCommon_SimpleEmitter_lem_gen SimpleCommon_SimpleEmitter_stub
   sharedname = SimpleEmitter_exec
   libs += SimpleEmitter_stub SimpleCommon_stub
 
@@ -81,7 +78,7 @@ project(SimpleCommon_SimpleEmitter_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(SimpleCommon_SimpleEmitter_svnt) : ciao_servant, avoids_ace_for_tao {
+project(SimpleCommon_SimpleEmitter_svnt) : ciao_servant {
   after      += SimpleCommon_skel SimpleCommon_SimpleEmitter_exec
   sharedname  = SimpleEmitter_svnt
   libs       += SimpleEmitter_exec \
@@ -90,9 +87,6 @@ project(SimpleCommon_SimpleEmitter_svnt) : ciao_servant, avoids_ace_for_tao {
                 SimpleCommon_stub
 
   dynamicflags = SIMPLEEMITTER_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

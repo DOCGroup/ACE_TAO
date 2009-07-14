@@ -10,7 +10,7 @@
 namespace CIDL_ReceiverImpl
 {
   class RECEIVER_EXEC_Export ReceiverExec_i :
-    public virtual ReceiverExec,
+    public virtual ::CIAO_Protocols_Receiver_Impl::Receiver_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -33,7 +33,7 @@ namespace CIDL_ReceiverImpl
 
   protected:
 
-    ReceiverExec_Context_var context_;
+    ::CIAO_Protocols_Receiver_Impl::Receiver_Exec_Context_var context_;
 
     CORBA::ORB_var orb_;
 
@@ -81,7 +81,7 @@ namespace CIDL_ReceiverImpl
   };
 
   class RECEIVER_EXEC_Export ReceiverHomeExec_i :
-    public virtual ReceiverHomeExec,
+    public virtual ::CIAO_Protocols_Receiver_Impl::ReceiverHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

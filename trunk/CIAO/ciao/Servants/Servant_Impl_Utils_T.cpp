@@ -120,7 +120,7 @@ namespace CIAO
 
     elem->name (port_name);
     elem->type_id (port_type_repo_id);
-    elem->consumer ().length (consumers.size ());
+    elem->consumers ().length (consumers.size ());
 
     ptrdiff_t map_slot = 0UL;
     ::Components::SubscriberDescription *sub = 0;
@@ -147,7 +147,7 @@ namespace CIAO
 
         sub->consumer (iter->second.in ());
 
-        elem->consumer ()[map_slot] = safe_sub._retn ();
+        elem->consumers ()[map_slot] = safe_sub._retn ();
       }
 
     descriptions[slot] = safe_elem._retn ();

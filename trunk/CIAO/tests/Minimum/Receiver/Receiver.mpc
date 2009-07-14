@@ -1,35 +1,32 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Minimum_Base Receiver"
 
-project(Minimum_Base_Receiver_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(Minimum_Base_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
               -Wb,skel_export_macro=RECEIVER_SVNT_Export \
-              -Wb,skel_export_include=Receiver_svnt_export.h
+              -Wb,skel_export_include=Receiver_svnt_export.h \
+              -Wb,exec_export_macro=RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=Receiver_exec_export.h
 
   IDL_Files {
     Receiver.idl
   }
 }
 
-project(Minimum_Base_Receiver_cidl_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+project(Minimum_Base_Receiver_lem_gen) : ciaoidldefaults {
   custom_only = 1
-  cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
-               --svnt-export-include Receiver_svnt_export.h
-
-  cidlflags += -I$(CIAO_ROOT)/ccm
-
-  CIDL_Files {
-    Receiver.cidl
-  }
+  after += Minimum_Base_Receiver_idl_gen
+  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
+              -Wb,export_include=Receiver_exec_export.h
 
   IDL_Files {
     ReceiverE.idl
   }
 }
 
-project(Minimum_Base_Receiver_stub) : ccm_stub, avoids_ace_for_tao {
+project(Minimum_Base_Receiver_stub) : ccm_stub {
   after += Minimum_Base_Receiver_idl_gen Minimum_Base_stub
   libs  += Minimum_Base_stub
   libpaths += ../Minimum_Base
@@ -54,8 +51,8 @@ project(Minimum_Base_Receiver_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(Minimum_Base_Receiver_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += Minimum_Base_Receiver_cidl_gen Minimum_Base_Receiver_stub
+project(Minimum_Base_Receiver_exec) : ciao_executor {
+  after   += Minimum_Base_Receiver_lem_gen Minimum_Base_Receiver_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Minimum_Base_stub
   libpaths += ../Minimum_Base
@@ -82,7 +79,7 @@ project(Minimum_Base_Receiver_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Minimum_Base_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Minimum_Base_Receiver_svnt) : ciao_servant {
   after      += Minimum_Base_skel Minimum_Base_Receiver_exec
   sharedname  = Receiver_svnt
   libs       += Minimum_Base_stub \
@@ -91,9 +88,6 @@ project(Minimum_Base_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
   libpaths += ../Minimum_Base
 
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }

@@ -46,7 +46,7 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, ciaolib_with_idl,
 }
 
 project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
-    ciao_client, ciao_lib, threads, avoids_ace_for_tao {
+    ciao_client, ciao_lib, threads {
   dynamicflags = CIAO_CS_CLIENT_SVNT_BUILD_DLL
   after += CIAO_CS_Client_IDL
   IDL_Files {

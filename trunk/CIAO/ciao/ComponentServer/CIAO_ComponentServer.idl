@@ -58,7 +58,7 @@ module CIAO
         raises (::Components::RemoveFailure);
         
       /// Returns a sequence of all homeless components.
-          ::Components::CCMObjectSeq get_components ();
+      ::Components::CCMObjectSeq get_components ();
     };
   };
 };
