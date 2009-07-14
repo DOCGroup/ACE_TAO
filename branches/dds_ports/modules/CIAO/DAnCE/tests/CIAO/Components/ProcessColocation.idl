@@ -1,0 +1,15 @@
+// $Id$
+
+#include <Components.idl>
+
+module Simple
+{
+  component ProcessColocation
+  {
+    attribute string process_name;
+  };
+  
+  home ProcessColocationHome manages ProcessColocation
+  {
+  };
+};
