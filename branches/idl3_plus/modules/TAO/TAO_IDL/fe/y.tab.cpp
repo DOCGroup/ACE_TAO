@@ -8810,8 +8810,8 @@ tao_yyreduce:
                           FE_Utils::T_Param_Info,
                           1);
 
-          (tao_yyval.pival)->type = (tao_yyvsp[(1) - (2)].ntval);
-          (tao_yyval.pival)->name = (tao_yyvsp[(2) - (2)].strval);
+          (tao_yyval.pival)->type_ = (tao_yyvsp[(1) - (2)].ntval);
+          (tao_yyval.pival)->name_ = (tao_yyvsp[(2) - (2)].strval);
         }
     break;
 
