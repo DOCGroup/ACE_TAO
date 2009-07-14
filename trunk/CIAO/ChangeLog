@@ -1,3 +1,21 @@
+Tue Jul 14 14:24:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Deployment/CIAO_ExecutionManagerDaemon.idl:
+        * DAnCE/Deployment/CIAO_NodeManagerDaemon.idl:
+        * DAnCE/MPC/config/dance_targetmanager.mpb:
+        * DAnCE/RepositoryManager/repository_manager_admin.h:
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+        * DAnCE/TargetManager/TargetManager.idl:
+        * MPC/config/ciao_connector_base.mpb:
+        * MPC/config/connectoridldefaults.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+        * MPC/config/dds4ccm_skel.mpb:
+        * MPC/config/example_output.mpb:
+        * tests/IDL_Test/Keywords/Keyword_Clash.idl:
+        * tools/Config_Handlers/PL_Handler.h:
+        * tools/Config_Handlers/PL_Handler.cpp:
+          Resolved Fuzz errors.
+
 Tue Jul 14 11:11:57 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * .:
@@ -2583,7 +2601,7 @@ Tue Jul 14 11:11:57 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
             * examples/Hello/descriptors/run_test.pl
 
               Added logging regarding processes and commandline parameters
-        
+
 
 Tue Jul 14 02:45:22 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
