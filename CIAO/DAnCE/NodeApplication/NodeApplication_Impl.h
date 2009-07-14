@@ -25,9 +25,9 @@
 #include "tao/Object.h"
 #include "ccm/CCM_KeylessCCMHomeC.h"
 #include "ccm/ComponentsC.h"
-#include "RedirectionService/RedirectionService.h"
+//#include "RedirectionService/RedirectionService.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
-//#include "Cdmw/CDMW_IDLC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "ccm/ComponentServer/CCM_ComponentServerC.h"
 #include "Deployment/Deployment_NodeApplicationS.h"
@@ -35,7 +35,6 @@
 #include "Deployment/DeploymentC.h"
 #include "Deployment/Deployment_common.h"
 
-//#include "ComponentInstallation_Impl.h"
 namespace DAnCE
 {
 
@@ -47,7 +46,7 @@ namespace DAnCE
     NodeApplication_Impl (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa,
                           const Deployment::DeploymentPlan& plan,
-                          RedirectionService & redirection,
+//                          RedirectionService & redirection,
                           const ACE_CString& node_name,
                           const PROPERTY_MAP &properties);
 
@@ -95,8 +94,8 @@ namespace DAnCE
       eRemoved,
       eInvalidState
     };
-    
-      
+
+
   protected:
     //TODO Add throw specification
     void init();
@@ -164,9 +163,9 @@ namespace DAnCE
     void install_component (Container &cont, Instance &inst);
 
     void install_homed_component (Container &cont, Instance &inst);
-    
+
     void store_instance_ior (Instance &inst);
-    
+
     Components::Cookie* connect_receptacle (Components::CCMObject_ptr inst,
                                            const ACE_CString& port_name,
                                            CORBA::Object_ptr facet);
@@ -196,16 +195,16 @@ namespace DAnCE
     //ComponentInstallation_Impl* installation_;
     auto_ptr<CIAO::Deployment::CIAO_ServerActivator_i>  activator_;
 
-    RedirectionService & redirection_;
+//    RedirectionService & redirection_;
 
     ACE_CString node_name_;
 
     PROPERTY_MAP properties_;
-    
+
     COMPONENTSERVERS servers_;
-    
+
     INSTANCE_PTRS instances_;
-    
+
     CosNaming::NamingContext_var instance_nc_;
   };
 }

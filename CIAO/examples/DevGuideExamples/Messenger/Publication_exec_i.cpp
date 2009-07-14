@@ -21,7 +21,7 @@
 #include "Publication_exec_i.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_Messenger_Impl
+namespace CIAO_Messenger_Impl
 {
   //==================================================================
   // Facet Executor Implementation Class:   Publication_exec_i

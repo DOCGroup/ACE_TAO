@@ -21,7 +21,7 @@
 #include "Null_Component_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_Null_Component_Impl
+namespace CIAO_Null_Component_Impl
 {
   //==================================================================
   // Facet Executor Implementation Class:   Null_Interface_exec_i

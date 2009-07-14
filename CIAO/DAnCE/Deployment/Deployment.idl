@@ -3,34 +3,31 @@
 #ifndef DEPLOYMENT_IDL
 #define DEPLOYMENT_IDL
 
-#include "DAnCE/Deployment/Deployment_Packaging_Data.idl"
-#include "DAnCE/Deployment/Deployment_PlanError.idl"
-
 module Deployment {
-        exception InvalidProperty {
-                string name;
-                string reason;
-        };
+  exception InvalidProperty {
+    string name;
+    string reason;
+  };
 
-        exception InvalidNodeExecParameter {
-                string name;
-                string reason;
-        };
+  exception InvalidNodeExecParameter {
+    string name;
+    string reason;
+  };
 
-        exception InvalidComponentExecParameter {
-                string name;
-                string reason;
-        };
+  exception InvalidComponentExecParameter {
+    string name;
+    string reason;
+  };
 
-        exception NoSuchName {
-        };
+  exception NoSuchName {
+  };
 
-        exception LastConfiguration {
-        };
+  exception LastConfiguration {
+  };
 
-        exception InvalidReference {
-        };
-        //@! in DOCGroup added 1 additional exception and one structure
+  exception InvalidReference {
+  };
+  //@! in DOCGroup added 1 additional exception and one structure
 };
 
 #endif /* DEPLOYMENT_IDL */

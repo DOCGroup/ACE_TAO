@@ -25,6 +25,8 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    class PlanSubcomponentPropertyReference;
+    class PlanPropertyMapping;
     class deploymentPlan;
   }
 }
@@ -42,6 +44,117 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    class XSC_XML_Handlers_Export PlanSubcomponentPropertyReference : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PlanSubcomponentPropertyReference, ACE_Null_Mutex > _ptr;
+
+      // propertyName
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& propertyName () const;
+      void propertyName (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > propertyName_;
+
+      // instance
+      // 
+      public:
+      ::CIAO::Config_Handlers::InstanceDeploymentDescription const& instance () const;
+      void instance (::CIAO::Config_Handlers::InstanceDeploymentDescription const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceDeploymentDescription > instance_;
+
+      public:
+      PlanSubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
+                                         ::CIAO::Config_Handlers::InstanceDeploymentDescription const& instance__);
+
+      PlanSubcomponentPropertyReference (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      PlanSubcomponentPropertyReference (PlanSubcomponentPropertyReference const& s);
+
+      PlanSubcomponentPropertyReference&
+      operator= (PlanSubcomponentPropertyReference const& s);
+
+      private:
+      char regulator__;
+    };
+
+
+    class XSC_XML_Handlers_Export PlanPropertyMapping : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < PlanPropertyMapping, ACE_Null_Mutex > _ptr;
+
+      // name
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& name () const;
+      void name (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
+
+      // source
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::iterator source_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > >::const_iterator source_const_iterator;
+      source_iterator begin_source ();
+      source_iterator end_source ();
+      source_const_iterator begin_source () const;
+      source_const_iterator end_source () const;
+      void add_source ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      size_t count_source (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > > source_;
+
+      // externalName
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& externalName () const;
+      void externalName (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > externalName_;
+
+      // delegatesTo
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > >::iterator delegatesTo_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > >::const_iterator delegatesTo_const_iterator;
+      delegatesTo_iterator begin_delegatesTo ();
+      delegatesTo_iterator end_delegatesTo ();
+      delegatesTo_const_iterator begin_delegatesTo () const;
+      delegatesTo_const_iterator end_delegatesTo () const;
+      void add_delegatesTo ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > const& );
+      size_t count_delegatesTo (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > > delegatesTo_;
+
+      public:
+      PlanPropertyMapping (::XMLSchema::string< ACE_TCHAR > const& name__,
+                           ::XMLSchema::string< ACE_TCHAR > const& externalName__,
+                           ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex > > const& delegatesTo__);
+
+      PlanPropertyMapping (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      PlanPropertyMapping (PlanPropertyMapping const& s);
+
+      PlanPropertyMapping&
+      operator= (PlanPropertyMapping const& s);
+
+      private:
+      char regulator__;
+    };
+
+
     class XSC_XML_Handlers_Export deploymentPlan : public ::XSCRT::Type
     {
       typedef ::XSCRT::Type Base;
@@ -123,6 +236,21 @@ namespace CIAO
 
       protected:
       ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex > > connection_;
+
+      // externalProperty
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex > >::iterator externalProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex > >::const_iterator externalProperty_const_iterator;
+      externalProperty_iterator begin_externalProperty ();
+      externalProperty_iterator end_externalProperty ();
+      externalProperty_const_iterator begin_externalProperty () const;
+      externalProperty_const_iterator end_externalProperty () const;
+      void add_externalProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex > const& );
+      size_t count_externalProperty (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex > > externalProperty_;
 
       // dependsOn
       // 
@@ -214,6 +342,126 @@ namespace CIAO
   {
     namespace Traversal
     {
+      struct XSC_XML_Handlers_Export PlanSubcomponentPropertyReference : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        propertyName (Type&);
+
+        virtual void
+        propertyName (Type const&);
+
+        virtual void
+        instance (Type&);
+
+        virtual void
+        instance (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct XSC_XML_Handlers_Export PlanPropertyMapping : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PlanPropertyMapping >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        source (Type&);
+
+        virtual void
+        source (Type const&);
+
+        virtual void
+        source_pre (Type&);
+
+        virtual void
+        source_pre (Type const&);
+
+        virtual void
+        source_next (Type&);
+
+        virtual void
+        source_next (Type const&);
+
+        virtual void
+        source_post (Type&);
+
+        virtual void
+        source_post (Type const&);
+
+        virtual void
+        source_none (Type&);
+
+        virtual void
+        source_none (Type const&);
+
+        virtual void
+        externalName (Type&);
+
+        virtual void
+        externalName (Type const&);
+
+        virtual void
+        delegatesTo (Type&);
+
+        virtual void
+        delegatesTo (Type const&);
+
+        virtual void
+        delegatesTo_pre (Type&);
+
+        virtual void
+        delegatesTo_pre (Type const&);
+
+        virtual void
+        delegatesTo_next (Type&);
+
+        virtual void
+        delegatesTo_next (Type const&);
+
+        virtual void
+        delegatesTo_post (Type&);
+
+        virtual void
+        delegatesTo_post (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
       struct XSC_XML_Handlers_Export deploymentPlan : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::deploymentPlan >
       {
         virtual void
@@ -355,6 +603,36 @@ namespace CIAO
         connection_none (Type const&);
 
         virtual void
+        externalProperty (Type&);
+
+        virtual void
+        externalProperty (Type const&);
+
+        virtual void
+        externalProperty_pre (Type&);
+
+        virtual void
+        externalProperty_pre (Type const&);
+
+        virtual void
+        externalProperty_next (Type&);
+
+        virtual void
+        externalProperty_next (Type const&);
+
+        virtual void
+        externalProperty_post (Type&);
+
+        virtual void
+        externalProperty_post (Type const&);
+
+        virtual void
+        externalProperty_none (Type&);
+
+        virtual void
+        externalProperty_none (Type const&);
+
+        virtual void
         dependsOn (Type&);
 
         virtual void
@@ -492,6 +770,134 @@ namespace CIAO
   {
     namespace Writer
     {
+      struct PlanSubcomponentPropertyReference : Traversal::PlanSubcomponentPropertyReference, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference Type;
+        PlanSubcomponentPropertyReference (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        propertyName (Type &o)
+        {
+          this->propertyName (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        propertyName (Type const&);
+
+        virtual void 
+        instance (Type &o)
+        {
+          this->instance (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        instance (Type const&);
+
+        protected:
+        PlanSubcomponentPropertyReference ();
+      };
+
+      struct PlanPropertyMapping : Traversal::PlanPropertyMapping, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::PlanPropertyMapping Type;
+        PlanPropertyMapping (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        name (Type &o)
+        {
+          this->name (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        name (Type const&);
+
+        virtual void 
+        source_pre (Type &o)
+        {
+          this->source_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        source_pre (Type const&);
+
+        virtual void 
+        source_next (Type &o)
+        {
+          this->source_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        source_next (Type const&);
+
+        virtual void 
+        source_post (Type &o)
+        {
+          this->source_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        source_post (Type const&);
+
+        virtual void 
+        externalName (Type &o)
+        {
+          this->externalName (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        externalName (Type const&);
+
+        virtual void 
+        delegatesTo_pre (Type &o)
+        {
+          this->delegatesTo_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        delegatesTo_pre (Type const&);
+
+        virtual void 
+        delegatesTo_next (Type &o)
+        {
+          this->delegatesTo_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        delegatesTo_next (Type const&);
+
+        virtual void 
+        delegatesTo_post (Type &o)
+        {
+          this->delegatesTo_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        delegatesTo_post (Type const&);
+
+        protected:
+        PlanPropertyMapping ();
+      };
+
       struct deploymentPlan : Traversal::deploymentPlan, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
@@ -614,6 +1020,33 @@ namespace CIAO
 
         virtual void
         connection_post (Type const&);
+
+        virtual void 
+        externalProperty_pre (Type &o)
+        {
+          this->externalProperty_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        externalProperty_pre (Type const&);
+
+        virtual void 
+        externalProperty_next (Type &o)
+        {
+          this->externalProperty_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        externalProperty_next (Type const&);
+
+        virtual void 
+        externalProperty_post (Type &o)
+        {
+          this->externalProperty_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        externalProperty_post (Type const&);
 
         virtual void 
         dependsOn_pre (Type &o)

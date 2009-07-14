@@ -3,31 +3,30 @@
 #define NODEMANAGER_IDL
 
 #include "DAnCE/Deployment/Deployment.idl"
-#include "DAnCE/Deployment/Deployment_Core.idl"
 #include "DAnCE/Deployment/Deployment_TargetManager.idl"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManager.idl"
+#include "DAnCE/Deployment/Deployment_PlanError.idl"
 
 module Deployment {
 
   interface Logger {
   };
 
-  //@! in DOCGroup this interface has a lot extensions
   interface NodeManager {
-    void joinDomain (   in Domain theDomain, 
-                        in TargetManager manager, 
-                        in Logger log, 
+    void joinDomain (   in Domain theDomain,
+                        in TargetManager manager,
+                        in Logger log,
                         in long updateInterval);
-                                                        
+
     void leaveDomain ();
-                
-    NodeApplicationManager preparePlan (in DeploymentPlan plan, 
+
+    NodeApplicationManager preparePlan (in DeploymentPlan plan,
                                         in ResourceCommitmentManager resourceCommitment)
       raises (StartError, PlanError);
-                        
+
     void destroyManager (in NodeApplicationManager appManager)
-      raises (StopError, InvalidReference);
-                        
+      raises (StopError);
+
     Resources getDynamicResources ();
   };
 };

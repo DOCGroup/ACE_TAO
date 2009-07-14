@@ -4,40 +4,58 @@
 #include "tools/Config_Handlers/DD_Handler.h"
 #include "tools/Config_Handlers/DnC_Dump.h"
 #include "ciao/CIAO_common.h"
+#include "DAnCE/Logger/Log_Macros.h"
 
-const ACE_TCHAR * domain_file_name = ACE_TEXT("Domain.cdd");
-
-CIAO::DomainDataManager* CIAO::DomainDataManager::global_data_manager_ = 0;
-
-CIAO::DomainDataManager * CIAO::DomainDataManager::create (CORBA::ORB_ptr orb,
-                            ::Deployment::TargetManager_ptr target)
-{
-  if (global_data_manager_ == 0)
-    {
-      global_data_manager_ = new DomainDataManager (orb , target);
-    }
-  return global_data_manager_;
-}
-
-// Returns the pointer to the static variable
-CIAO::DomainDataManager*
-CIAO::DomainDataManager::get_data_manager ()
-{
-  return global_data_manager_;
-}
+#ifdef GEN_OSTREAM_OPS
+#include <iostream>
+#include <sstream>
+#endif /* GEN_OSTREAM_OPS */
 
 void
-CIAO::DomainDataManager::delete_data_manger ()
+DAnCE::DomainDataManager::init (CORBA::ORB_ptr orb,
+                                ::Deployment::TargetManager_ptr target,
+                                const ACE_TCHAR *domain_name)
 {
-  if (global_data_manager_)
-    delete global_data_manager_;
+  DANCE_TRACE ("DAnCE::DomainDataManager::init");
+  
+  this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->target_mgr_ = ::Deployment::TargetManager::_duplicate(target);
+
+  DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE::DomainDataManager::init - "
+                "Parsing initial domain from file %s\n",
+                domain_name));
+  
+  CIAO::Config_Handlers::DD_Handler dd (domain_name);
+  ::Deployment::Domain* dmn = dd.domain_idl ();
+  
+  DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
+                "Initial domain successfully parsed\n"));
+#ifdef GEN_OSTREAM_OPS
+  std::ostringstream _stream;
+  _stream << *dmn << std::endl;
+
+  DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
+                "Contents of Domain:%s\n",
+                _stream.str ().c_str ()));
+#endif
+
+  current_domain_ = *dmn;
+  initial_domain_ = current_domain_;
+
+  // initialize the provisioning domain
+  provisioned_data_ = initial_domain_;
+
+  update_node_status ();
+
+  call_all_node_managers ();
 }
 
-int CIAO::DomainDataManager::update_domain (
-                             const ::CORBA::StringSeq &,
-                             const ::Deployment::Domain & domainSubset,
-                             ::Deployment::DomainUpdateKind update_kind)
+int DAnCE::DomainDataManager::update_domain (const ::CORBA::StringSeq &,
+                                             const ::Deployment::Domain & domainSubset,
+                                             ::Deployment::DomainUpdateKind update_kind)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::update_domain");
+  
   // Update the subset of the domain which the above
   // parameter corresponds to
 
@@ -86,54 +104,38 @@ int CIAO::DomainDataManager::update_domain (
   return 0;
 }
 
-CIAO::DomainDataManager::
-DomainDataManager (CORBA::ORB_ptr orb,
-                   ::Deployment::TargetManager_ptr target)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-//    deployment_config_ (orb_.in()),
-    target_mgr_ (::Deployment::TargetManager::_duplicate(target))
+::Deployment::Domain* DAnCE::DomainDataManager::get_current_domain ()
 {
-  CIAO::Config_Handlers::DD_Handler dd (domain_file_name);
-  ::Deployment::Domain* dmn = dd.domain_idl ();
-
-//  if (CIAO::debug_level () > 9)
-    //::Deployment::DnC_Dump::dump (*dmn);
-
-  current_domain_ = *dmn;
-  initial_domain_ = current_domain_;
-
-  // initialize the provisioning domain
-  provisioned_data_ = initial_domain_;
-
-  update_node_status ();
-
-  call_all_node_managers ();
-}
-
-::Deployment::Domain* CIAO::DomainDataManager::get_current_domain ()
-{
+  DANCE_TRACE ("DAnCE::DomainDataManager::get_current_domain");
+  
   return new ::Deployment::Domain (provisioned_data_);
 }
 
-::Deployment::Domain* CIAO::DomainDataManager::get_initial_domain ()
+::Deployment::Domain* DAnCE::DomainDataManager::get_initial_domain ()
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::get_initial_domain");
+  
   return new ::Deployment::Domain (initial_domain_);
 }
 
-int CIAO::DomainDataManager::readin_domain_data ()
+int DAnCE::DomainDataManager::readin_domain_data ()
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::readin_domain_data");
+  
   // here read in Domain data ...
   //
   return 0;
 }
 
-int CIAO::DomainDataManager::call_all_node_managers ()
+int DAnCE::DomainDataManager::call_all_node_managers ()
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::call_all_node_managers");
+  
 /*  if ( this->deployment_config_.init ("NodeDetails.dat") == -1 )
     {
       ACE_ERROR ((LM_ERROR,
                   "TargetM (%P|%t) DomainDataManager.cpp -"
-                  "CIAO::DomainDataManager::call_all_node_managers -"
+                  "DAnCE::DomainDataManager::call_all_node_managers -"
                   "ERROR while trying to initialize after reading "
                   "node details DAT file\n"));
       return 0;
@@ -194,9 +196,11 @@ int CIAO::DomainDataManager::call_all_node_managers ()
 }
 
 
-::Deployment::ResourceCommitmentManager_ptr CIAO::DomainDataManager
+::Deployment::ResourceCommitmentManager_ptr DAnCE::DomainDataManager
 ::commitResources (const ::Deployment::ResourceAllocations &)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::commitResources");
+  
 /*
   // commit the resources
   // parse into the plan and commit resources ...
@@ -236,9 +240,11 @@ int CIAO::DomainDataManager::call_all_node_managers ()
 }
 
 
-void CIAO::DomainDataManager::
+void DAnCE::DomainDataManager::
 releaseResources (const ::Deployment::ResourceCommitmentManager_ptr)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::releaseResources");
+  
   // release the resources
 /*
 
@@ -263,12 +269,12 @@ releaseResources (const ::Deployment::ResourceCommitmentManager_ptr)
 }
 
 
-void CIAO::DomainDataManager::
-match_requirement_resource (
+void DAnCE::DomainDataManager::match_requirement_resource (
       ::Deployment::InstanceResourceDeploymentDescriptions deployed,
-      ::Deployment::Resources & available
-         )
+      ::Deployment::Resources & available)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::match_requirement_resource");
+  
   // here match the deployed to the available
 
   for (CORBA::ULong i = 0;i < deployed.length ();i++)
@@ -302,11 +308,12 @@ match_requirement_resource (
 
 }
 
-void CIAO::DomainDataManager::
-match_properties (
+void DAnCE::DomainDataManager::match_properties (
       ::Deployment::Properties deployed,
       ::Deployment::SatisfierProperties & available)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::match_properties");
+  
   bool property_found;
 
   for (CORBA::ULong i = 0;i < deployed.length ();i++)
@@ -343,10 +350,12 @@ match_properties (
     } // outside for ...
 }
 
-void CIAO::DomainDataManager::commit_release_resource (
+void DAnCE::DomainDataManager::commit_release_resource (
            ::Deployment::Property & deployed,
            ::Deployment::SatisfierProperty & available)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::commit_release_resource");
+  
   if (current_action_ == commit)
     {
 
@@ -395,9 +404,10 @@ void CIAO::DomainDataManager::commit_release_resource (
     }
 }
 
-void CIAO::DomainDataManager::stop_monitors ()
+void DAnCE::DomainDataManager::stop_monitors ()
 {
-
+  DANCE_TRACE ("DAnCE::DomainDataManager::stop_monitors");
+  
   CORBA::ULong const length = initial_domain_.node.length ();
 
   for (CORBA::ULong i=0;i < length;i++)
@@ -436,9 +446,11 @@ void CIAO::DomainDataManager::stop_monitors ()
 
 }
 
-int CIAO::DomainDataManager::add_to_domain (
+int DAnCE::DomainDataManager::add_to_domain (
     const ::Deployment::Domain& domain)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::add_to_domain");
+  
   // here add the domain to the Domain
   // right now use only a node
 
@@ -473,10 +485,11 @@ int CIAO::DomainDataManager::add_to_domain (
   return 0;
 }
 
-bool CIAO::DomainDataManager::
-find_in_initial_domain (const char* node_name,
+bool DAnCE::DomainDataManager::find_in_initial_domain (const char* node_name,
                         ::Deployment::Node& node)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::find_in_initial_domain");
+  
   for (CORBA::ULong i =0;
       i < this->initial_domain_.node.length ();
       i++)
@@ -493,10 +506,11 @@ find_in_initial_domain (const char* node_name,
 }
 
 
-bool CIAO::DomainDataManager::
-find_in_provisioned_domain (const char* node_name,
+bool DAnCE::DomainDataManager::find_in_provisioned_domain (const char* node_name,
                         ::Deployment::Node& node)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::find_in_provisioned_domain");
+  
   for (CORBA::ULong i =0;
       i < this->provisioned_data_.node.length ();
       i++)
@@ -512,9 +526,11 @@ find_in_provisioned_domain (const char* node_name,
   return false;
 }
 
-int CIAO::DomainDataManager::delete_from_domain (
+int DAnCE::DomainDataManager::delete_from_domain (
     const ::Deployment::Domain& domain)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::delete_from_domain");
+  
   // validate input
   if (domain.node.length () == 0)
     return 1;
@@ -565,9 +581,11 @@ int CIAO::DomainDataManager::delete_from_domain (
   return 1;
 }
 
-int CIAO::DomainDataManager::intimate_planner (
+int DAnCE::DomainDataManager::intimate_planner (
     const ::Deployment::Domain& domain)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::intimate_planner");
+  
  // use the connection with the planner and get a reference to the planner
  // make a call top the planner
   Deployment::Domain d = domain;
@@ -575,15 +593,19 @@ int CIAO::DomainDataManager::intimate_planner (
 
 }
 
-bool CIAO::DomainDataManager::update_node_status ()
+bool DAnCE::DomainDataManager::update_node_status ()
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::update_node_status");
+  
   // update the node status here ...
   return 0;
 }
 
-void CIAO::DomainDataManager::commitResourceAllocation (
+void DAnCE::DomainDataManager::commitResourceAllocation (
           const ::Deployment::ResourceAllocations & resources)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::commitResourceAllocation");
+  
   // commit the resources
   // parse into the plan and commit resources ...
 
@@ -593,9 +615,11 @@ void CIAO::DomainDataManager::commitResourceAllocation (
   this->commit_release_RA (resources);
 }
 
-void CIAO::DomainDataManager::releaseResourceAllocation (
+void DAnCE::DomainDataManager::releaseResourceAllocation (
     const ::Deployment::ResourceAllocations & resources)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::releaseResourceAllocation");
+  
   // set the action value
   current_action_ = release;
 
@@ -603,9 +627,10 @@ void CIAO::DomainDataManager::releaseResourceAllocation (
 }
 
 
-int CIAO::DomainDataManager::
-commit_release_RA (const ::Deployment::ResourceAllocations& resources)
+int DAnCE::DomainDataManager::commit_release_RA (const ::Deployment::ResourceAllocations& resources)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::commit_release_RA");
+  
   // temporary used to guard against exceptions
   temp_provisioned_data_ = provisioned_data_;
 
@@ -634,9 +659,11 @@ commit_release_RA (const ::Deployment::ResourceAllocations& resources)
 }
 
 ::Deployment::Resource&
-CIAO::DomainDataManager::find_resource (
+DAnCE::DomainDataManager::find_resource (
     const ::Deployment::ResourceAllocation& resource)
 {
+  DANCE_TRACE ("DAnCE::DomainDataManager::find_resource");
+  
   // for now search the resource in the Node sequence; Later need
   // to add it to the Bridges and Interconnects too according to the
   // spec

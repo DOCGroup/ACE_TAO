@@ -434,8 +434,8 @@ Impl::TSEC_CheckPoint_exec_i::set_session_context
     throw CORBA::INTERNAL();
   }
 
-  CIDL_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context* p_checkPoint_Context =
-             CIDL_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context::_narrow( Ctx );
+  CIAO_ENW_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context* p_checkPoint_Context =
+    CIAO_ENW_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context::_narrow( Ctx );
 
   if( !p_checkPoint_Context )
   {

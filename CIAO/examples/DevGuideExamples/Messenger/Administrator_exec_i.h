@@ -34,7 +34,7 @@
 
 #include "ace/Task.h"
 
-namespace CIDL_Administrator_Impl
+namespace CIAO_Administrator_Impl
 {
   class ADMINISTRATOR_EXEC_Export Administrator_exec_i
     : public virtual Administrator_Exec,

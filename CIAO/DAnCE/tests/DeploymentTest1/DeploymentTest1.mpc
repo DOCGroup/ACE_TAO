@@ -1,5 +1,5 @@
 // $Id$
-project : dance, taolib, xerces, ciao_config_handlers, dance_logger {
+project : dance, xerces, ciao_config_handlers, dance_logger, dance_domainapplication_stub, dance_executionmanager_stub {
   exename   = DeploymentTest1
 
   Source_Files {

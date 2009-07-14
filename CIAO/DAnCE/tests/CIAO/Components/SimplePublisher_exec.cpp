@@ -21,7 +21,7 @@
 #include "SimplePublisher_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_SimplePublisher_Impl
+namespace CIAO_Simple_SimplePublisher_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   SimplePublisher_exec_i

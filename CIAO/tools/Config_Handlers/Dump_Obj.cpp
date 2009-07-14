@@ -1,5 +1,7 @@
 // $Id$
 #include "Dump_Obj.h"
+#include "ace/Log_Msg.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID (Config_Handlers,
            Dump_Obj,
@@ -14,7 +16,7 @@ ACE_RCSID (Config_Handlers,
     Dump_Obj::Dump_Obj(const char* caption)
       : desc_()
     {
-      ACE_DEBUG ((LM_DEBUG, "%s%s:\n", indent_.c_str(), caption));
+      ACE_DEBUG ((LM_DEBUG, "%C%C:\n", indent_.c_str(), caption));
       indent_.append("  ");
     }
 
@@ -23,7 +25,7 @@ ACE_RCSID (Config_Handlers,
                        CORBA::Any &val)
       : desc_(caption)
     {
-      ACE_DEBUG ((LM_DEBUG, "%s%s:\n",
+      ACE_DEBUG ((LM_DEBUG, "%C%C:\n",
                   indent_.c_str(),
                   caption));
 
@@ -32,7 +34,7 @@ ACE_RCSID (Config_Handlers,
       if (desc_map_.find (std::string (caption)) != desc_map_.end())
         {
           ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - \
-The item with name %s is already in \
+The item with name %C is already in \
 the node map.\n", caption));
           throw Node_Exist();
         }
@@ -54,7 +56,7 @@ the node map.\n", caption));
           else
             {
               ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - \
-The item with name %s is not in the node map.\n",
+The item with name %C is not in the node map.\n",
                           desc_.c_str()));
               throw Node_Not_Exist();
             }

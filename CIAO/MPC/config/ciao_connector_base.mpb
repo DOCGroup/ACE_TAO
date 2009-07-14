@@ -1,0 +1,3 @@
+project {
+  includes += $(CIAO_ROOT)/connectors
+}

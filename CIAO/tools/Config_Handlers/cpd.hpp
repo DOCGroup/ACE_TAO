@@ -27,6 +27,7 @@ namespace CIAO
   {
     class PackagedComponentImplementation;
     class ComponentPackageDescription;
+    class ConnectorPackageDescription;
   }
 }
 
@@ -165,16 +166,6 @@ namespace CIAO
       protected:
       ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
 
-      // contentLocation
-      // 
-      public:
-      bool contentLocation_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
-      void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > contentLocation_;
-
       // href
       // 
       public:
@@ -194,6 +185,113 @@ namespace CIAO
 
       ComponentPackageDescription&
       operator= (ComponentPackageDescription const& s);
+
+      private:
+      char regulator__;
+    };
+
+
+    class XSC_XML_Handlers_Export ConnectorPackageDescription : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ConnectorPackageDescription, ACE_Null_Mutex > _ptr;
+
+      // label
+      // 
+      public:
+      bool label_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& label () const;
+      void label (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
+
+      // UUID
+      // 
+      public:
+      bool UUID_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
+      void UUID (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > UUID_;
+
+      // realizes
+      // 
+      public:
+      bool realizes_p () const;
+      ::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes () const;
+      void realizes (::CIAO::Config_Handlers::ComponentInterfaceDescription const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > realizes_;
+
+      // configProperty
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator configProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator configProperty_const_iterator;
+      configProperty_iterator begin_configProperty ();
+      configProperty_iterator end_configProperty ();
+      configProperty_const_iterator begin_configProperty () const;
+      configProperty_const_iterator end_configProperty () const;
+      void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      size_t count_configProperty (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > configProperty_;
+
+      // implementation
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectorImplementationDescription, ACE_Null_Mutex > >::iterator implementation_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectorImplementationDescription, ACE_Null_Mutex > >::const_iterator implementation_const_iterator;
+      implementation_iterator begin_implementation ();
+      implementation_iterator end_implementation ();
+      implementation_const_iterator begin_implementation () const;
+      implementation_const_iterator end_implementation () const;
+      void add_implementation ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectorImplementationDescription, ACE_Null_Mutex > const& );
+      size_t count_implementation (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectorImplementationDescription, ACE_Null_Mutex > > implementation_;
+
+      // infoProperty
+      // 
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::iterator infoProperty_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > >::const_iterator infoProperty_const_iterator;
+      infoProperty_iterator begin_infoProperty ();
+      infoProperty_iterator end_infoProperty ();
+      infoProperty_const_iterator begin_infoProperty () const;
+      infoProperty_const_iterator end_infoProperty () const;
+      void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      size_t count_infoProperty (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > > infoProperty_;
+
+      // href
+      // 
+      public:
+      bool href_p () const;
+      ::XMLSchema::string< ACE_TCHAR > const& href () const;
+      ::XMLSchema::string< ACE_TCHAR >& href ();
+      void href (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > href_;
+
+      public:
+      ConnectorPackageDescription ();
+
+      ConnectorPackageDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      ConnectorPackageDescription (ConnectorPackageDescription const& s);
+
+      ConnectorPackageDescription&
+      operator= (ConnectorPackageDescription const& s);
 
       private:
       char regulator__;
@@ -390,16 +488,163 @@ namespace CIAO
         infoProperty_none (Type const&);
 
         virtual void
-        contentLocation (Type&);
+        href (Type&);
 
         virtual void
-        contentLocation (Type const&);
+        href (Type const&);
 
         virtual void
-        contentLocation_none (Type&);
+        href_none (Type&);
 
         virtual void
-        contentLocation_none (Type const&);
+        href_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct XSC_XML_Handlers_Export ConnectorPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectorPackageDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        label (Type&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        label_none (Type&);
+
+        virtual void
+        label_none (Type const&);
+
+        virtual void
+        UUID (Type&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        UUID_none (Type&);
+
+        virtual void
+        UUID_none (Type const&);
+
+        virtual void
+        realizes (Type&);
+
+        virtual void
+        realizes (Type const&);
+
+        virtual void
+        realizes_none (Type&);
+
+        virtual void
+        realizes_none (Type const&);
+
+        virtual void
+        configProperty (Type&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        configProperty_pre (Type&);
+
+        virtual void
+        configProperty_pre (Type const&);
+
+        virtual void
+        configProperty_next (Type&);
+
+        virtual void
+        configProperty_next (Type const&);
+
+        virtual void
+        configProperty_post (Type&);
+
+        virtual void
+        configProperty_post (Type const&);
+
+        virtual void
+        configProperty_none (Type&);
+
+        virtual void
+        configProperty_none (Type const&);
+
+        virtual void
+        implementation (Type&);
+
+        virtual void
+        implementation (Type const&);
+
+        virtual void
+        implementation_pre (Type&);
+
+        virtual void
+        implementation_pre (Type const&);
+
+        virtual void
+        implementation_next (Type&);
+
+        virtual void
+        implementation_next (Type const&);
+
+        virtual void
+        implementation_post (Type&);
+
+        virtual void
+        implementation_post (Type const&);
+
+        virtual void
+        implementation_none (Type&);
+
+        virtual void
+        implementation_none (Type const&);
+
+        virtual void
+        infoProperty (Type&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        infoProperty_pre (Type&);
+
+        virtual void
+        infoProperty_pre (Type const&);
+
+        virtual void
+        infoProperty_next (Type&);
+
+        virtual void
+        infoProperty_next (Type const&);
+
+        virtual void
+        infoProperty_post (Type&);
+
+        virtual void
+        infoProperty_post (Type const&);
+
+        virtual void
+        infoProperty_none (Type&);
+
+        virtual void
+        infoProperty_none (Type const&);
 
         virtual void
         href (Type&);
@@ -592,13 +837,140 @@ namespace CIAO
         infoProperty_post (Type const&);
 
         virtual void 
-        contentLocation (Type &o)
+        href (Type &o)
         {
-          this->contentLocation (const_cast <Type const &> (o));
+          this->href (const_cast <Type const &> (o));
         }
 
         virtual void
-        contentLocation (Type const&);
+        href (Type const&);
+
+        protected:
+        ComponentPackageDescription ();
+      };
+
+      struct ConnectorPackageDescription : Traversal::ConnectorPackageDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::ConnectorPackageDescription Type;
+        ConnectorPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        label (Type &o)
+        {
+          this->label (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        label (Type const&);
+
+        virtual void 
+        UUID (Type &o)
+        {
+          this->UUID (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void 
+        realizes (Type &o)
+        {
+          this->realizes (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        realizes (Type const&);
+
+        virtual void 
+        configProperty_pre (Type &o)
+        {
+          this->configProperty_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        configProperty_pre (Type const&);
+
+        virtual void 
+        configProperty_next (Type &o)
+        {
+          this->configProperty_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        configProperty_next (Type const&);
+
+        virtual void 
+        configProperty_post (Type &o)
+        {
+          this->configProperty_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        configProperty_post (Type const&);
+
+        virtual void 
+        implementation_pre (Type &o)
+        {
+          this->implementation_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        implementation_pre (Type const&);
+
+        virtual void 
+        implementation_next (Type &o)
+        {
+          this->implementation_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        implementation_next (Type const&);
+
+        virtual void 
+        implementation_post (Type &o)
+        {
+          this->implementation_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        implementation_post (Type const&);
+
+        virtual void 
+        infoProperty_pre (Type &o)
+        {
+          this->infoProperty_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        infoProperty_pre (Type const&);
+
+        virtual void 
+        infoProperty_next (Type &o)
+        {
+          this->infoProperty_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        infoProperty_next (Type const&);
+
+        virtual void 
+        infoProperty_post (Type &o)
+        {
+          this->infoProperty_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        infoProperty_post (Type const&);
 
         virtual void 
         href (Type &o)
@@ -610,7 +982,7 @@ namespace CIAO
         href (Type const&);
 
         protected:
-        ComponentPackageDescription ();
+        ConnectorPackageDescription ();
       };
     }
   }

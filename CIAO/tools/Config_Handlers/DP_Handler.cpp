@@ -9,6 +9,7 @@
 #include "MDD_Handler.h"
 #include "IDD_Handler.h"
 #include "ID_Handler.h"
+#include "PL_Handler.h"
 #include "Property_Handler.h"
 #include "cdp.hpp"
 
@@ -152,7 +153,13 @@ ACE_RCSID (Config_Handlers,
         std::for_each (xsc_dp.begin_connection (),
                        xsc_dp.end_connection (),
                        PCD_Functor (this->idl_dp_->connection));
-
+        
+        this->idl_dp_->localityConstraint.length (xsc_dp.count_localityConstraint ());
+        
+        std::for_each (xsc_dp.begin_localityConstraint (),
+                       xsc_dp.end_localityConstraint (),
+                       PL_Functor (this->idl_dp_->localityConstraint));
+        
         //PCD_Handler::get_PlanConnectionDescription (xsc_dp, this->idl_dp_->connection);
 
         return true;

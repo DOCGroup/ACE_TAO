@@ -4,6 +4,7 @@
 workspace {
   $(ACE_ROOT)/ace
   $(ACE_ROOT)/apps/gperf/src
+  $(ACE_ROOT)/apps/JAWS/server
   $(ACE_ROOT)/ACEXML/common
   $(ACE_ROOT)/ACEXML/parser/parser
   $(ACE_ROOT)/ACEXML/apps/svcconf
@@ -19,7 +20,6 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
   ccm
-  CIDLC/CIDLC.mwc
   ciao
   DAnCE
   tools/Config_Handlers

@@ -32,7 +32,7 @@
 #include "SimplePublisher_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_SimplePublisher_Impl
+namespace CIAO_Simple_SimplePublisher_Impl
 {
   class SIMPLEPUBLISHER_EXEC_Export SimplePublisher_exec_i
     : public virtual SimplePublisher_Exec,

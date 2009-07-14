@@ -78,6 +78,9 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.1 and CIAO-0.7.2
 =======================================================
 
+. CIDL compiler, and .cidl files, have been eliminated. All
+  CIAO code generation is now handled by the TAO IDL compiler.
+  See $TAO_ROOT/docs/compiler.html for details.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.0 and CIAO-0.7.1
 =======================================================

@@ -32,7 +32,7 @@
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_Sender_Impl
+namespace CIAO_Hello_Sender_Impl
 {
   /**
    * @class Sender_exec_i

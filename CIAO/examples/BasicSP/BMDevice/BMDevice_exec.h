@@ -28,7 +28,7 @@ namespace MyImpl
    * An example RateGen executor implementation class.
    */
   class BMDEVICE_EXEC_Export BMDevice_exec_i :
-    public virtual CIDL_BMDevice_Impl::BMDevice_Exec,
+    public virtual CIAO_BasicSP_BMDevice_Impl::BMDevice_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -80,7 +80,7 @@ namespace MyImpl
    * BMDevice home executor implementation class.
    */
   class BMDEVICE_EXEC_Export BMDeviceHome_exec_i :
-    public virtual CIDL_BMDevice_Impl::BMDeviceHome_Exec,
+    public virtual CIAO_BasicSP_BMDevice_Impl::BMDeviceHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

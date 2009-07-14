@@ -27,12 +27,15 @@ unlink $iorfile1;
 unlink $iorfile2;
 
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
+$DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
+
+PerlACE::add_lib_path ('../lib');
 
 $SV1 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:60001 -s $ACE_ROOT/lib/DAnCE_NodeApplication -d 1000");
+                             "-ORBEndpoint iiop://localhost:60001 -s $CIAO_ROOT/bin/ciao_componentserver -n Sender=NodeApp1.ior -t 30 --instance-nc corbaloc:rir:/NameService");
 
 $SV2 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:60002 -s $ACE_ROOT/lib/DAnCE_NodeApplication -d 1000");
+                             "-ORBEndpoint iiop://localhost:60002 -s $CIAO_ROOT/bin/ciao_componentserver -n Receiver=NodeApp2.ior -t 30 --instance-nc corbaloc:rir:/NameService");
 
 $SV1->Spawn ();
 $SV2->Spawn ();

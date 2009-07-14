@@ -4,7 +4,7 @@
 #include "DAnCE/Logger/Log_Macros.h"
 #include "RegistrationPath.h"
 #include "DummyC.h"
-#include "ace/OS.h"
+#include "ace/SString.h"
 
 using namespace Test;
 

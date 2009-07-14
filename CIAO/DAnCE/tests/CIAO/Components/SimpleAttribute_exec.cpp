@@ -21,7 +21,7 @@
 #include "SimpleAttribute_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_SimpleAttribute_Impl
+namespace CIAO_Simple_SimpleAttribute_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   SimpleAttribute_exec_i

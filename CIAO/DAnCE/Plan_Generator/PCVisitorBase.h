@@ -21,7 +21,7 @@
 #define PC_VISITOR_BASE_H
 
 #include /**/ "ace/pre.h"
-#include "DAnCE/Deployment/DeploymentC.h"
+#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 
 //========================================================================
 /**

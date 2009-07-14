@@ -1,40 +1,36 @@
 // $Id$
 
-project(EC_stub_gen): ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(EC_idl_gen): componentidldefaults {
   custom_only = 1
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
-  idlflags += -Wb,stub_export_macro=EC_STUB_Export
-  idlflags += -Wb,stub_export_include=EC_stub_export.h
-  idlflags += -Wb,skel_export_macro=EC_SVNT_Export
-  idlflags += -Wb,skel_export_include=EC_svnt_export.h
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+              -Wb,stub_export_macro=EC_STUB_Export \
+              -Wb,stub_export_include=EC_stub_export.h \
+              -Wb,skel_export_macro=EC_SVNT_Export \
+              -Wb,skel_export_include=EC_svnt_export.h \
+              -Wb,exec_export_macro=EC_EXEC_Export \
+              -Wb,exec_export_include=EC_exec_export.h
 
   IDL_Files {
     EC.idl
   }
 }
 
-project(EC_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
-  after += BasicSP_lem_gen
+project(EC_lem_gen) : ciaoidldefaults {
+  after += BasicSP_lem_gen EC_idl_gen
   custom_only = 1
-  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
 
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags  +=  -Wb,export_macro=EC_EXEC_Export \
                 -Wb,export_include=EC_exec_export.h \
-                -SS
-
-  CIDL_Files {
-    EC.cidl
-  }
+                -SS \
+                -I $(CIAO_ROOT)/examples/BasicSP
 
   IDL_Files {
     ECE.idl
   }
-
 }
 
-project(EC_stub): ccm_stub, avoids_ace_for_tao {
-  after += BasicSP_stub EC_stub_gen
+project(EC_stub): ccm_stub {
+  after += BasicSP_stub EC_idl_gen
   sharedname = EC_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
   libpaths += ..
@@ -58,14 +54,11 @@ project(EC_stub): ccm_stub, avoids_ace_for_tao {
   }
 
   Inline_Files {
-
   }
-
 }
 
-project(EC_exec) : ciao_executor, avoids_ace_for_tao {
+project(EC_exec) : ciao_executor {
   after      += EC_stub EC_lem_gen BasicSP_exec
-
   sharedname = EC_exec
   libs       += EC_stub BasicSP_stub
   libs       += BasicSP_exec
@@ -93,7 +86,7 @@ project(EC_exec) : ciao_executor, avoids_ace_for_tao {
   }
 }
 
-project(EC_svnt) : ciao_servant, avoids_ace_for_tao {
+project(EC_svnt) : ciao_servant {
   after += BasicSP_svnt EC_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
 
@@ -104,9 +97,6 @@ project(EC_svnt) : ciao_servant, avoids_ace_for_tao {
   dynamicflags = EC_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
-
-  CIDL_Files {
-  }
 
   IDL_Files {
   }
@@ -121,10 +111,9 @@ project(EC_svnt) : ciao_servant, avoids_ace_for_tao {
     ECS.cpp
     EC_svnt.cpp
   }
-
 }
 
-project (EC_client) : ccm_stub, avoids_ace_for_tao {
+project (EC_client) : ccm_stub {
   after += EC_stub
   exename = client
   libs += EC_stub BasicSP_stub
@@ -136,7 +125,6 @@ project (EC_client) : ccm_stub, avoids_ace_for_tao {
   }
 
   Header_Files {
-
   }
 
   Source_Files {
@@ -144,12 +132,10 @@ project (EC_client) : ccm_stub, avoids_ace_for_tao {
   }
 
   Inline_Files {
-
   }
-
 }
 
-project (EC_controller) : ccm_stub, avoids_ace_for_tao {
+project (EC_controller) : ccm_stub {
   after += EC_stub
   exename = controller
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -161,7 +147,6 @@ project (EC_controller) : ccm_stub, avoids_ace_for_tao {
   }
 
   Header_Files {
-
   }
 
   Source_Files {
@@ -169,7 +154,5 @@ project (EC_controller) : ccm_stub, avoids_ace_for_tao {
   }
 
   Inline_Files {
-
   }
-
 }

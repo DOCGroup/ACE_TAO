@@ -28,7 +28,7 @@
 /**
  * TargetManager Executor namespace
  */
-namespace CIDL_TargetManager_i
+namespace CIAO_CIAO_TargetManagerImpl_Impl
 {
   class TARGETMANAGER_EXEC_Export TargetManagerImpl_exec_i
   : public virtual TargetManagerImpl_Exec,
@@ -104,9 +104,6 @@ namespace CIDL_TargetManager_i
 
   private:
     TargetManagerImpl_exec_i * exec_;
-
-    /// The pointer to the Domain Manager
-    auto_ptr<CIAO::DomainDataManager> dataManager_;
 
     /// The CORBA ORB ...
     CORBA::ORB_var orb_;

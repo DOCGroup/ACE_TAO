@@ -32,7 +32,7 @@
 #include "SimpleEmitter_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_SimpleEmitter_Impl
+namespace CIAO_Simple_SimpleEmitter_Impl
 {
   class SIMPLEEMITTER_EXEC_Export SimpleEmitter_exec_i
     : public virtual SimpleEmitter_Exec,

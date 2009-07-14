@@ -1,31 +1,25 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleComponent"
 
-project(SimpleComponent_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+project(SimpleComponent_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECOMPONENT_STUB_Export \
               -Wb,stub_export_include=SimpleComponent_stub_export.h \
               -Wb,skel_export_macro=SIMPLECOMPONENT_SVNT_Export \
-              -Wb,skel_export_include=SimpleComponent_svnt_export.h
+              -Wb,skel_export_include=SimpleComponent_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLECOMPONENT_EXEC_Export \
+              -Wb,exec_export_include=SimpleComponent_exec_export.h
 
   IDL_Files {
     SimpleComponent.idl
   }
 }
 
-project(SimpleComponent_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
+project(SimpleComponent_lem_gen) : ciaoidldefaults {
   custom_only = 1
-
-  CIDL_Files {
-    SimpleComponent.cidl
-  }
-}
-
-project(SimpleComponent_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
-  custom_only = 1
-  after += SimpleComponent_cidl_gen
-  idlflags  += -Wb,stub_export_macro=SIMPLECOMPONENT_EXEC_Export \
-               -Wb,stub_export_include=SimpleComponent_exec_export.h \
+  after += SimpleComponent_idl_gen
+  idlflags  += -Wb,export_macro=SIMPLECOMPONENT_EXEC_Export \
+               -Wb,export_include=SimpleComponent_exec_export.h \
                -SS
 
   IDL_Files {
@@ -33,7 +27,7 @@ project(SimpleComponent_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
   }
 }
 
-project(SimpleComponent_stub) : ccm_stub, avoids_ace_for_tao {
+project(SimpleComponent_stub) : ccm_stub {
   after += SimpleComponent_idl_gen
 
   sharedname = SimpleComponent_stub
@@ -56,8 +50,8 @@ project(SimpleComponent_stub) : ccm_stub, avoids_ace_for_tao {
   }
 }
 
-project(SimpleComponent_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += SimpleComponent_idle_gen SimpleComponent_stub
+project(SimpleComponent_exec) : ciao_executor {
+  after   += SimpleComponent_lem_gen SimpleComponent_stub
   sharedname = SimpleComponent_exec
   libs += SimpleComponent_stub
 
@@ -83,14 +77,12 @@ project(SimpleComponent_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(SimpleComponent_svnt) : ciao_servant, avoids_ace_for_tao {
+project(SimpleComponent_svnt) : ciao_servant {
   sharedname  = SimpleComponent_svnt
   libs       += SimpleComponent_stub SimpleComponent_exec
   after      += SimpleComponent_stub SimpleComponent_exec
   dynamicflags = SIMPLECOMPONENT_SVNT_BUILD_DLL
 
-  CIDL_Files {
-  }
   IDL_Files {
   }
   Source_Files {

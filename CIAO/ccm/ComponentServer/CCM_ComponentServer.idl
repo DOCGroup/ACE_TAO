@@ -4,6 +4,7 @@
 #define COMPONENTSERVER_IDL
 
 #include "ccm/ComponentServer/CCM_ComponentServer_Base.idl"
+#include "ccm/CCM_Homes.idl"
 
 module Components
 {

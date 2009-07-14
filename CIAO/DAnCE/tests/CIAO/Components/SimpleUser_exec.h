@@ -32,7 +32,7 @@
 #include "SimpleUser_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIDL_SimpleUser_Impl
+namespace CIAO_Simple_SimpleUser_Impl
 {
   class SIMPLEUSER_EXEC_Export SimpleUser_exec_i
     : public virtual SimpleUser_Exec,

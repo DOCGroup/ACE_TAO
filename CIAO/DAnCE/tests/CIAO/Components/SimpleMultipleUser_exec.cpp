@@ -21,7 +21,7 @@
 #include "SimpleMultipleUser_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIDL_SimpleMultipleUser_Impl
+namespace CIAO_Simple_SimpleMultipleUser_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   SimpleMultipleUser_exec_i

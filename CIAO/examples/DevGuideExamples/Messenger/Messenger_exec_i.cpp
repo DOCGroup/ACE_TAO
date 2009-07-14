@@ -27,7 +27,7 @@
 #include "Runnable_exec_i.h"
 #include "Publication_exec_i.h"
 
-namespace CIDL_Messenger_Impl
+namespace CIAO_Messenger_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   Messenger_exec_i
