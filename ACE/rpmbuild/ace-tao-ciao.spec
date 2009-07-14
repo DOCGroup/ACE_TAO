@@ -3,9 +3,6 @@
 %define TAOVER  1.7.1
 %define CIAOVER 0.7.1
 
-# TODO
-# Test whether a TAO app with MPC can be build against MPC installed version
-
 # Conditional build
 # Default values are
 #                    --with rnq        (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
@@ -2046,6 +2043,7 @@ fi
 %files -n ace-gperf
 %defattr(-,root,root,-)
 %{_bindir}/ace_gperf
+%{_libdir}/ACE_gperfd.so.%{ACEVERSO}
 %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
 %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
