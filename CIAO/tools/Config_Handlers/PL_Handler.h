@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file PL_Handler.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
@@ -19,7 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 namespace Deployment
-{
+{// $Id$
+
   struct PlanLocality;
   class PlanLocalities;
 }
