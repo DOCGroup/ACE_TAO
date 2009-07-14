@@ -1,0 +1,4 @@
+project : dds4ccm_base {
+  libs += DDS4CCM_skel
+  after += DDS4CCM_skel
+}
