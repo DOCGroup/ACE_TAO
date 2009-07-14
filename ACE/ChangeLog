@@ -1,3 +1,8 @@
+Tue Jul 14 14:24:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          No need to update the spec file manually anymore
+
 Tue Jul 14 14:13:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
