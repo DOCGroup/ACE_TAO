@@ -14,9 +14,13 @@ be_porttype::be_porttype (
                  false),
     AST_Decl (AST_Decl::NT_porttype,
               n),
+    UTL_Scope (AST_Decl::NT_porttype),
     AST_Template_Common (template_params),
     AST_PortType (n,
-                  template_params)
+                  template_params),
+    be_scope (AST_Decl::NT_porttype),
+    be_decl (AST_Decl::NT_porttype,
+             n)
 {
 }
 

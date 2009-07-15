@@ -41,7 +41,9 @@ struct TAO_IDL_FE_Export FE_Utils
     PUBLISHES,
     CONSUMES,
     EMITS,
-    NUM_PORT_KINDS
+    EXT_PROVIDES,
+    EXT_USES,
+    EXT_PORT
   };
 
   struct Ext_Port_Description

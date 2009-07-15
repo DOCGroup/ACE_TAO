@@ -1,3 +1,22 @@
+Wed Jul 15 21:41:00 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_porttype.cpp
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/fe/fe_porttype_header.cpp:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/fe_porttype_header.h:
+        * TAO_IDL/include/fe_template_header_common.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/include/fe_utils.h:
+        
+          Modified and refactored the IDL3+ info datatypes
+          and FE header classes.
+
 Wed Jul 15 14:09:13 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

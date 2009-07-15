@@ -5,11 +5,13 @@
 #define AST_PORTTYPE_H
 
 #include "ast_decl.h"
-
 #include "ast_template_common.h"
+#include "utl_scope.h"
 
-class TAO_IDL_FE_Export AST_PortType : public virtual AST_Decl,
-                                       public virtual AST_Template_Common
+class TAO_IDL_FE_Export AST_PortType
+  : public virtual AST_Decl,
+    public virtual UTL_Scope,
+    public virtual AST_Template_Common
 {
 public:
   AST_PortType (
