@@ -955,7 +955,7 @@ sub check_for_OS_h_include ()
                 if (/FUZZ\: enable check_for_OS_h_include/) {
                     $disable = 0;
                 }
-                if ($disable == 0
+                if ($disable == 0 and ($file =~ /.*CIAO.*/)
                     and /^\s*#\s*include\s*\"ace\/OS\.h\"/) {
                     print_error ("$file:$.: expensive ace/OS.h included; consider an OS_NS_*.h file");
                     print " OS.h is very expensive in both ";
@@ -2054,7 +2054,7 @@ check_for_NULL () if ($opt_l >= 1);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);
 check_for_synch_include () if ($opt_l >= 6);
-check_for_OS_h_include () if ($opt_l >= 6);
+check_for_OS_h_include () if ($opt_l >= 5);
 check_for_line_length () if ($opt_l >= 8);
 check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
