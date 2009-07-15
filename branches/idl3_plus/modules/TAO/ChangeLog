@@ -1,3 +1,11 @@
+Wed Jul 15 14:09:13 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Changed rules for extended provides and uses declarations to
+          parse overlooked template brackets.
+
 Wed Jul 15 13:23:25 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

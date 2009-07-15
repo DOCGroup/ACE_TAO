@@ -283,7 +283,7 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <dcval>   param_type_spec
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
-%type <idlist>  home_inheritance_spec primary_key_spec provides_type
+%type <idlist>  home_inheritance_spec primary_key_spec
 
 %type <slval>   opt_context at_least_one_string_literal
 %type <slval>   string_literals template_param_refs
@@ -4806,27 +4806,27 @@ component_export
         }
         ;
 
-provides_decl : provides_type id
+provides_decl : IDL_PROVIDES interface_type id
         {
-// provides_decl : provides_type id
+// provides_decl : IDL_PROVIDES interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Component *c = AST_Component::narrow_from_scope (s);
 
           if (c != 0)
             {
-              AST_Decl *d = s->lookup_by_name ($1,
+              AST_Decl *d = s->lookup_by_name ($2,
                                                true);
               if (0 == d)
                 {
-                  idl_global->err ()->lookup_error ($1);
-
-                  $1->destroy ();
-                  delete $1;
-                  $1 = 0;
+                  idl_global->err ()->lookup_error ($2);
 
                   $2->destroy ();
                   delete $2;
                   $2 = 0;
+
+                  $3->destroy ();
+                  delete $3;
+                  $3 = 0;
 
                   break;
                 }
@@ -4840,13 +4840,13 @@ provides_decl : provides_type id
                     {
                       idl_global->err ()->interface_expected (d);
 
-                      $1->destroy ();
-                      delete $1;
-                      $1 = 0;
-
                       $2->destroy ();
                       delete $2;
                       $2 = 0;
+
+                      $3->destroy ();
+                      delete $3;
+                      $3 = 0;
 
                       break;
                     }
@@ -4858,27 +4858,17 @@ provides_decl : provides_type id
               AST_Component::port_description pd;
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($2);
+              idl_global->original_local_name ($3);
 
-              pd.id = $2;
+              pd.id = $3;
               pd.impl = interface_type;
               pd.line_number = idl_global->lineno ();
               c->provides ().enqueue_tail (pd);
             }
 
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
-        }
-        ;
-
-provides_type
-        : IDL_PROVIDES interface_type
-        {
-// provides_type : IDL_PROVIDES interface_type
-          // We use this extra rule here to use in both provides_decl and
-          // extended_provides_decl, so the LALR(1) parser can avoid conflicts.
-          $$ = $2;
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
         }
         ;
 
@@ -6237,7 +6227,7 @@ extended_provides_decl
 // extended_provides_decl : provides_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
         }
-        | provides_type at_least_one_template_param_ref IDENTIFIER
+        | IDL_PROVIDES template_ref IDENTIFIER
         {
 //        | provides_type at_least_one_template_param_ref IDENTIFIER
 
@@ -6255,9 +6245,9 @@ extended_uses_decl
 // extended_uses_decl : uses_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
         }
-        | uses_opt_multiple interface_type at_least_one_template_param_ref IDENTIFIER
+        | uses_opt_multiple template_ref IDENTIFIER
         {
-//        | uses_opt_multiple interface_type at_least_one_template_param_ref IDENTIFIER
+//        | uses_opt_multiple template_ref IDENTIFIER
 
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtUsesDeclSeen);
 
