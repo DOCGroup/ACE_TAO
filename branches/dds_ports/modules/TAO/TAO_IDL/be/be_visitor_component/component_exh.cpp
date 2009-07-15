@@ -47,7 +47,6 @@ be_visitor_component_exh::visit_component (be_component *node)
     }
     
   node_ = node;
-  TAO_OutStream &os_  = *this->ctx_->stream ();
   
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
