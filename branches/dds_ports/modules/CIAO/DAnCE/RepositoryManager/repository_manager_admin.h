@@ -1,3 +1,6 @@
+
+// $Id$
+
 /**
  * @file repository_manager_admin.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>?
@@ -8,7 +11,7 @@
 #ifndef REPOSITORY_MANAGER_ADMIN_H_
 #define REPOSITORY_MANAGER_ADMIN_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "Deployment/Deployment_RepositoryManagerC.h"
 
 #include "Repository_Manager_Admin_Export.h"
@@ -60,6 +63,6 @@ namespace DAnCE
   }
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* REPOSITORY_MANAGER_ADMIN_H_ */
