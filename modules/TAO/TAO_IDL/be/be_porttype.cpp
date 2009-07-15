@@ -14,6 +14,7 @@ be_porttype::be_porttype (
                  false),
     AST_Decl (AST_Decl::NT_porttype,
               n),
+    AST_Template_Common (template_params),
     AST_PortType (n,
                   template_params)
 {

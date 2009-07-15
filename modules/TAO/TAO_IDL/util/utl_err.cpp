@@ -1454,3 +1454,15 @@ UTL_Error::duplicate_param_id (UTL_ScopedName *n)
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
+void
+UTL_Error::mismatched_template_param (UTL_ScopedName *n)
+{
+  idl_error_header (EIDL_MISMATCHED_T_PARAM,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR, " - "));
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+

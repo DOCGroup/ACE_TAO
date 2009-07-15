@@ -15,7 +15,7 @@ FE_Template_InterfaceHeader::FE_Template_InterfaceHeader (
                         false,
                         false,
                         false),
-    FE_TemplateHeader_Common (params),
+    FE_TemplateHeader_Common (0, params),
     parent_info_ (inherited)
 {
   this->compile_template_inheritance ();

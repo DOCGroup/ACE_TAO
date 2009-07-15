@@ -28,6 +28,7 @@ be_template_interface::be_template_interface (
                    nih_flat,
                    false,
                    false),
+    AST_Template_Common (template_params),
     AST_Template_Interface (n,
                             ih,
                             nih,

@@ -342,8 +342,12 @@ public:
   // Valuetype violates a spec-defined constraint on a
   // valuetype used as a primary key.
   void illegal_primary_key (AST_Decl *d);
-  
+
+  // Template parameter was repeated.
   void duplicate_param_id (UTL_ScopedName *n);
+
+  // Referenced template parameter not matched in param list.
+  void mismatched_template_param (UTL_ScopedName *n);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

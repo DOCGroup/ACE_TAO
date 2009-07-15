@@ -1,3 +1,15 @@
+Wed Jul 15 01:06:51 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Fixed g++ build & runtime errors.
+
 Wed Jul 15 00:08:05 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/fe_template_header_common.h:

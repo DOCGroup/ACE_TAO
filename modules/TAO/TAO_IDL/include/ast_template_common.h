@@ -4,11 +4,9 @@
 #ifndef AST_TEMPLATE_COMMON_H
 #define AST_TEMPLATE_COMMON_H
 
-#include "ast_decl.h"
-
 #include "fe_utils.h"
 
-class TAO_IDL_FE_Export AST_Template_Common : public virtual AST_Decl
+class TAO_IDL_FE_Export AST_Template_Common
 {
 public:
   AST_Template_Common (const FE_Utils::T_PARAMLIST_INFO *template_params);

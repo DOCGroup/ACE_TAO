@@ -27,6 +27,13 @@ FE_TemplateHeader_Common::param_info (void) const
 void
 FE_TemplateHeader_Common::destroy (void)
 {
+  if (this->name_ != 0)
+    {
+      this->name_->destroy ();
+      delete this->name_;
+      this->name_ = 0;
+    }
+
   // Queue element members have self-managed memory.
   delete this->param_info_;
   this->param_info_ = 0;
@@ -61,8 +68,15 @@ FE_TemplateHeader_Common::match_params (AST_Template_Common *node)
 
       if (! one_matched)
         {
-          idl_global->err ()->error1 (UTL_Error::EIDL_MISMATCHED_T_PARAM,
-                                      node);
+          UTL_ScopedName *name = this->name_;
+
+          if (name == 0)
+            {
+              name = dynamic_cast<AST_Decl *> (node)->name ();
+            }
+
+          idl_global->err ()->mismatched_template_param (name);
+
           return false;
         }
     }
