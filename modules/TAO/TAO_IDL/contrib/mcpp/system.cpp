@@ -133,8 +133,8 @@ static void     set_pragma_op( void);
 /* Set the _Pragma() operator       */
 static void     put_info( FILEINFO * sharp_file);
 /* Print compiler-specific-inf      */
-static char *   set_files( int argc, char ** argv, char ** in_pp
-                           , char ** out_pp);
+static char *   set_files( int argc, char ** argv, const char ** in_pp
+                           , const char ** out_pp);
 /* Set input, output, diagnostic    */
 static void     set_sys_dirs( int set_cplus_dir);
 /* Set system-specific include dirs */
@@ -284,7 +284,7 @@ static long     std_val = -1L;  /* Value of __STDC_VERSION__ or __cplusplus */
 #define MAX_DEF   256
 #define MAX_UNDEF (MAX_DEF/4)
 static char *   def_list[ MAX_DEF];     /* Macros to be defined     */
-static char *   undef_list[ MAX_UNDEF]; /* Macros to be undefined   */
+static const char *   undef_list[ MAX_UNDEF]; /* Macros to be undefined   */
 static int      def_cnt;                /* Count of def_list        */
 static int      undef_cnt;              /* Count of undef_list      */
 
@@ -413,8 +413,8 @@ void    init_system( void)
 void    do_options(
                    int         argc,
                    char **     argv,
-                   char **     in_pp,                      /* Input file name      */
-                   char **     out_pp                      /* Output file name     */
+                   const char **     in_pp,                      /* Input file name      */
+                   const char **     out_pp                      /* Output file name     */
                    )
 /*
  * Process command line arguments, called only at MCPP startup.
@@ -1715,9 +1715,15 @@ static void def_a_macro(
   ACE_OS::strcpy( definition, def);
   if ((cp = ACE_OS::strchr( definition, '=')) != 0) {
     *cp = ' ';                          /* Remove the '='       */
-    cp = "\n";                          /* Append <newline>     */
+    // cp = "\n";                          /* Append <newline>     */
+    *(cp + 0) = '\n';
+    *(cp + 1) = '\0';
   } else {
-    cp = " 1\n";                        /* With definition "1"  */
+    *(cp + 0) = ' ';
+    *(cp + 1) = '1';
+    *(cp + 2) = '\n';
+    *(cp + 3) = '\0';
+    //cp = " 1\n";                        /* With definition "1"  */
   }
   ACE_OS::strcat( definition, cp);
   cp = definition;
@@ -2137,8 +2143,8 @@ static void put_info(
 static char *   set_files(
                           int     argc,
                           char ** argv,
-                          char ** in_pp,
-                          char ** out_pp
+                          const char ** in_pp,
+                          const char ** out_pp
                           )
 /*
  * Set input and/or output files.
@@ -2854,7 +2860,7 @@ static void     undef_macros( void)
  * This routine should be called after init_predefine().
  */
 {
-  char *      name;
+  const char *      name;
   int         i;
 
   for (i = 0; i < undef_cnt; i++) {

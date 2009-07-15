@@ -111,7 +111,7 @@
     const char **   inc_dirp;       /* Directory of #includer       */
     const char *    cur_fname;      /* Current source file name     */
                 /* cur_fname is not rewritten by #line directive    */
-    char *      cur_fullname;
+    const char *      cur_fullname;
         /* Full path of current source file (i.e. infile->full_fname)       */
     int         no_source_line;     /* Do not output line in diag.  */
     char        identifier[ IDMAX + IDMAX/8];       /* Current identifier   */
@@ -343,9 +343,9 @@ int     main
     char ** argv
 )
 {
-  char *  in_file = 0;
-  char *  out_file = 0;
-  char *  stdin_name = "<stdin>";
+  const char *  in_file = 0;
+  const char *  out_file = 0;
+  const char *  stdin_name = "<stdin>";
 
     if (setjmp( error_exit) == -1) {
         errors++;
@@ -433,10 +433,10 @@ int     main
 fatal_error_exit:
 #ifdef MCPP_LIB
     /* Free malloced memory */
-    if (mcpp_debug & MACRO_CALL) {
+    /*    if (mcpp_debug & MACRO_CALL) {
         if (in_file != stdin_name)
             ACE_OS::free( in_file);
-    }
+            }*/
     clear_filelist();
     clear_symtable();
 #endif
