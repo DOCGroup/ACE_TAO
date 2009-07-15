@@ -18,18 +18,12 @@ AST_PortType::AST_PortType (
                  false),
     AST_Decl (AST_Decl::NT_porttype,
               n),
-    template_params_ (*template_params)
+    AST_Template_Common (template_params)
 {
 }
 
 AST_PortType::~AST_PortType (void)
 {
-}
-
-FE_Utils::T_PARAMLIST_INFO &
-AST_PortType::template_params (void)
-{
-  return this->template_params_;
 }
 
 void

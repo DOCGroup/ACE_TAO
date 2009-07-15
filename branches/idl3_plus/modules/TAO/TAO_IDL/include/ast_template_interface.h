@@ -5,11 +5,11 @@
 #define AST_TEMPLATE_INTERFACE_H
 
 #include "ast_interface.h"
-
-#include "fe_utils.h"
+#include "ast_template_common.h"
 
 class TAO_IDL_FE_Export AST_Template_Interface
-  : public virtual AST_Interface
+  : public virtual AST_Interface,
+    public virtual AST_Template_Common
 {
 public:
   AST_Template_Interface (
@@ -21,7 +21,7 @@ public:
     const FE_Utils::T_PARAMLIST_INFO *template_params);
 
   virtual ~AST_Template_Interface (void);
-  
+
   FE_Utils::T_PARAMLIST_INFO &template_params (void);
 
   // Cleanup function.

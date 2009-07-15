@@ -28,12 +28,12 @@ struct TAO_IDL_FE_Export FE_Utils
 
     T_Ref_Info (void);
     T_Ref_Info (UTL_ScopedName *n, UTL_StrList *strs);
-    
+
     void destroy (void);
   };
 
   typedef ACE_Unbounded_Queue<T_Ref_Info> T_REFLIST_INFO;
-  
+
   enum Port_Kind
   {
     PROVIDES,
@@ -50,16 +50,16 @@ struct TAO_IDL_FE_Export FE_Utils
     Identifier *port_name_;
     T_Ref_Info *obj_ref_;
     bool is_multiple_;
-    
+
     Ext_Port_Description (void);
     Ext_Port_Description (Port_Kind port_kind,
                           Identifier *port_name,
                           T_Ref_Info *obj_ref,
                           bool is_multiple = false);
-                          
+
     void destroy (void);
   };
-  
+
   typedef ACE_Unbounded_Queue<Ext_Port_Description> EXT_PORTLIST_INFO;
 };
 
