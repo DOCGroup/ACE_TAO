@@ -196,12 +196,14 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_global.cpp \
   be/be_helper.cpp \
   be/be_home.cpp \
+  be/be_identifier_helper.cpp \
   be/be_init.cpp \
   be/be_interface.cpp \
   be/be_interface_fwd.cpp \
   be/be_interface_strategy.cpp \
   be/be_module.cpp \
   be/be_native.cpp \
+  be/be_null_return_emitter.cpp \
   be/be_operation.cpp \
   be/be_operation_strategy.cpp \
   be/be_predefined_type.cpp \
@@ -209,11 +211,9 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_root.cpp \
   be/be_scope.cpp \
   be/be_sequence.cpp \
-  be/be_stream_factory.cpp \
   be/be_string.cpp \
   be/be_structure.cpp \
   be/be_structure_fwd.cpp \
-  be/be_sunsoft.cpp \
   be/be_tmplinst.cpp \
   be/be_type.cpp \
   be/be_typedef.cpp \
@@ -228,6 +228,7 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor.cpp \
   be/be_visitor_amh_pre_proc.cpp \
   be/be_visitor_ami_pre_proc.cpp \
+  be/be_visitor_any_extracted_type_decl.cpp \
   be/be_visitor_arg_traits.cpp \
   be/be_visitor_argument.cpp \
   be/be_visitor_array.cpp \
@@ -247,6 +248,7 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_interface_fwd.cpp \
   be/be_visitor_module.cpp \
   be/be_visitor_native.cpp \
+  be/be_visitor_null_return_value.cpp \
   be/be_visitor_operation.cpp \
   be/be_visitor_root.cpp \
   be/be_visitor_scope.cpp \
@@ -287,22 +289,22 @@ noinst_HEADERS += \
   be_include/be_global.h \
   be_include/be_helper.h \
   be_include/be_home.h \
+  be_include/be_identifier_helper.h \
   be_include/be_interface.h \
   be_include/be_interface_fwd.h \
   be_include/be_interface_strategy.h \
   be_include/be_module.h \
   be_include/be_native.h \
+  be_include/be_null_return_emitter.h \
   be_include/be_operation.h \
   be_include/be_operation_strategy.h \
   be_include/be_predefined_type.h \
   be_include/be_root.h \
   be_include/be_scope.h \
   be_include/be_sequence.h \
-  be_include/be_stream_factory.h \
   be_include/be_string.h \
   be_include/be_structure.h \
   be_include/be_structure_fwd.h \
-  be_include/be_sunsoft.h \
   be_include/be_type.h \
   be_include/be_typedef.h \
   be_include/be_union.h \
@@ -316,6 +318,7 @@ noinst_HEADERS += \
   be_include/be_visitor.h \
   be_include/be_visitor_amh_pre_proc.h \
   be_include/be_visitor_ami_pre_proc.h \
+  be_include/be_visitor_any_extracted_type_decl.h \
   be_include/be_visitor_arg_traits.h \
   be_include/be_visitor_argument.h \
   be_include/be_visitor_array.h \
@@ -335,6 +338,7 @@ noinst_HEADERS += \
   be_include/be_visitor_interface_fwd.h \
   be_include/be_visitor_module.h \
   be_include/be_visitor_native.h \
+  be_include/be_visitor_null_return_value.h \
   be_include/be_visitor_operation.h \
   be_include/be_visitor_root.h \
   be_include/be_visitor_scope.h \
