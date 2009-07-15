@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file keyword_clash.idl
+ * @file Keyword_Clash.idl
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  *
  * Tests handling of C++ keywords and escaped identifiers (IDL

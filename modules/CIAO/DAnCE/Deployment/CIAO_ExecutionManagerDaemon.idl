@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file ExecutionManagerDaemon.idl
+ * @file CIAO_ExecutionManagerDaemon.idl
  *
  * @brief Simple interface to control the ExecutionManager. This
  * interface currently provides an additional method called shutdown

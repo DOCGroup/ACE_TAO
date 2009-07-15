@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file NodeManagerDaemon.idl
+ * @file CIAO_NodeManagerDaemon.idl
  *
  * @brief Controling interface for managing and controling CIAO daemon.
  */

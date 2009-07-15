@@ -2,6 +2,6 @@
 // $Id$
 
 project : dance, dance_deployment_stub {
-  after += Deployment_DomainApplicationManager_stub
+  after += Deployment_DAM_stub
   libs  += DAnCE_DomainApplicationManager_stub
 }

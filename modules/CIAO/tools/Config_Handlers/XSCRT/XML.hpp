@@ -143,13 +143,13 @@ namespace XSCRT
     template <>
     struct dom_traits<xercesc::DOMElement *>
     {
-      enum { node_type = xercesc::DOMNode::ELEMENT_NODE };
+      static const xercesc::DOMNode::NodeType node_type = xercesc::DOMNode::ELEMENT_NODE;
     };
 
     template <>
     struct dom_traits<xercesc::DOMAttr *>
     {
-      enum { node_type = xercesc::DOMNode::ATTRIBUTE_NODE };
+      static const xercesc::DOMNode::NodeType node_type = xercesc::DOMNode::ATTRIBUTE_NODE;
     };
 
     template <typename DERIVED_PTR>
