@@ -1,3 +1,8 @@
+Wed Jul 15 14:41:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/gperf_export.h:
+          Fixed problem with static builds
+
 Tue Jul 14 20:59:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
