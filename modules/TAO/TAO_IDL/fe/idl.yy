@@ -487,6 +487,11 @@ definition
 //      | porttype_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeDeclSeen);
         }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
         | error
         {
 //      | error

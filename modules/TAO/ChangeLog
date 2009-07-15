@@ -1,3 +1,10 @@
+Wed Jul 15 13:23:25 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added overlooked semicolon rule after porttype declaration.
+
 Wed Jul 15 01:06:51 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_porttype.cpp:
