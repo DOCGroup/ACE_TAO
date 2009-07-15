@@ -57,7 +57,6 @@ be_visitor_home_svs::visit_home (be_home *node)
     }
     
   node_ = node;
-  TAO_OutStream &os_  = *this->ctx_->stream ();
   comp_ = node_->managed_component ();
   
   /// CIDL-generated namespace used 'CIDL_' + composition name.
