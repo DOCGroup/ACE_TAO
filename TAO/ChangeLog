@@ -1,9 +1,14 @@
+Wed Jul 15 13:24:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/Makefile.am:
+          Updated with all recent changes
+
 Tue Jul 14 20:46:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/system.cpp:
 
-          Further warning fixes. 
-        
+          Further warning fixes.
+
 Tue Jul 14 20:32:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_exs.cpp:
