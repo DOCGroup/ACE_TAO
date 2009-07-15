@@ -1,10 +1,38 @@
-Tue Jul 14 14:52:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+Wed Jul 15 14:43:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/gperf.mpc:
+          Made the library name different to resolve problems with vxtest
+
+Wed Jul 15 14:41:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/gperf_export.h:
+          Fixed problem with static builds
+
+Tue Jul 14 20:59:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Fixed problem with created MPC package
+
+        * rpmbuild/ace-tao-rpmlintrc.txt:
+          Removed txt mapping
+
+Tue Jul 14 15:16:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * apps/gperf/src/gperf_export.h:
 
           Missing file from earlier merge, thanks to Phil Mesnier for
-          pointing this out. 
-        
+          pointing this out.
+
+Tue Jul 14 14:24:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          No need to update the spec file manually anymore
+
+Tue Jul 14 14:13:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          ace/OS.h is now illegal to be used in CIAO
+
 Tue Jul 14 13:31:20 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
          * include/makeinclude/platform_linux.GNU:

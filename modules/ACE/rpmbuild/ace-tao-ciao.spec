@@ -498,7 +498,7 @@ Summary:      Make Project Creator
 Version:      %{ACEVER}
 Group:        Development/Tools/Building
 %if !0%{?suse_version}
-Provides:     perl(Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter)
+Provides:     perl(Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter) perl (WIXProjectCreator)
 %endif
 
 %description -n mpc
@@ -2043,7 +2043,7 @@ fi
 %files -n ace-gperf
 %defattr(-,root,root,-)
 %{_bindir}/ace_gperf
-%{_libdir}/ACE_gperfd.so.%{ACEVERSO}
+%{_libdir}/ACE_gperfd_lib.so.%{ACEVERSO}
 %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
 %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
