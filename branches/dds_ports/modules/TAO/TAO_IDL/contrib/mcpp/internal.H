@@ -383,7 +383,7 @@ extern int      bsl_need_escape;/* '\\' in mbchar should be escaped */
 extern int      mcpp_debug;         /* Class of debug information   */
 extern long     in_asm;             /* In #asm - #endasm block      */
 extern jmp_buf  error_exit;         /* Exit on fatal error          */
-extern char *   cur_fullname;       /* Full name of current source  */
+extern const char *   cur_fullname;       /* Full name of current source  */
 extern short *  char_type;          /* Character classifier         */
 extern char *   workp;              /* Free space in work[]         */
 extern char * const     work_end;   /* End of work[] buffer         */
@@ -504,8 +504,8 @@ extern int      (* mcpp_fputc)( int c, OUTDEST od),
                 (* mcpp_fprintf)( OUTDEST od, const char * format, ...);
 
 /* system.c */
-extern void     do_options( int argc, char ** argv, char ** in_pp
-        , char ** out_pp);
+extern void     do_options( int argc, char ** argv, const char ** in_pp
+                            , const char ** out_pp);
                 /* Process command line args    */
 extern void     init_sys_macro( void);
                 /* Define system-specific macro */

@@ -1,3 +1,51 @@
+Wed Jul 15 16:10:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+
+          Fix for compile error on OS X. 
+        
+Wed Jul 15 13:24:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/Makefile.am:
+          Updated with all recent changes
+
+Tue Jul 14 20:46:18 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Further warning fixes.
+
+Tue Jul 14 20:32:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+
+          Roll back commented out port provider, while a good idea in theory,
+          causes warnings in generated code which may be part of the automated
+          build.
+
+Tue Jul 14 20:15:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/eval.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/lib.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/mbchar.cpp:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Address some warnings.
+
+Tue Jul 14 14:21:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+          Resolved Fuzz errors.
+
 Tue Jul 14 11:12:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * .:
@@ -133,8 +181,8 @@ Tue Jul 14 11:12:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/Bug_3647_Regression/Backend_Impl.h:
         * tests/Bug_3647_Regression/Middle_Impl.h:
 
-          Merged in dds_ports branch, changelog entries pasted below. 
-        
+          Merged in dds_ports branch, changelog entries pasted below.
+
         * TAO_IDL/be/be_stream_factory.cpp:
         * TAO_IDL/be/be_sunsoft.cpp:
         * TAO_IDL/be_include/be_stream_factory.h:
@@ -639,7 +687,7 @@ Tue Jul 14 11:12:09 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
              Changes to existing files in support of the new CIAO servant
              code and executor IDL code generation.
-        
+
 
 Tue Jul 14 02:45:10 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 

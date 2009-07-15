@@ -741,7 +741,7 @@ static size_t   mb_read_utf8(
 
     do {
         unsigned int    codepoint;
-        int             i, bytes;
+        int             i = 0, bytes = 0;
 
         if ((char_type[ c1 & UCHARMAX] & U4_1) == U4_1)
             bytes = 4;                          /* 4-byte character */

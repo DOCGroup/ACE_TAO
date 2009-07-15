@@ -50,6 +50,8 @@ void    init_lib( void)
     opterr = 1;
 }
 #endif
+
+#if 0
 //FUZZ: disable check_for_lack_ACE_OS
 int     getopt(
     int         argc,
@@ -106,7 +108,7 @@ int     getopt(
     }
     return  c;
 }
-
+#endif
 #endif
 
 #if defined(HOST_HAVE_STPCPY) && HOST_HAVE_STPCPY == FALSE
