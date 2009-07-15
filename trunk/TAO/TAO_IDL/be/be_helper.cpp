@@ -325,6 +325,13 @@ TAO_OutStream::operator<< (const char *str)
 }
 
 TAO_OutStream &
+TAO_OutStream::operator<< (size_t sz)
+{
+  ACE_OS::fprintf (this->fp_, "%u", sz);
+  return *this;
+}
+
+TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::UShort num)
 {
   ACE_OS::fprintf (this->fp_,

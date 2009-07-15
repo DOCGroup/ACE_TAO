@@ -1,3 +1,10 @@
+Wed Jul 15 16:10:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+
+          Fix for compile error on OS X. 
+        
 Wed Jul 15 13:24:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/Makefile.am:
