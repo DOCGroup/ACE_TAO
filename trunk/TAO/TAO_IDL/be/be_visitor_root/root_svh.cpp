@@ -19,7 +19,7 @@
 // ============================================================================
 
 ACE_RCSID (be_visitor_root,
-           root_ch,
+           root_svh,
            "$Id$")
 
 // ********************************
@@ -42,7 +42,7 @@ be_visitor_root_svh::init (void)
   int status =
     tao_cg->start_ciao_svnt_header (
       be_global->be_get_ciao_svnt_hdr_fname ());
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
