@@ -38,7 +38,7 @@ FE_Utils::T_Ref_Info::destroy (void)
 }
   
 FE_Utils::Ext_Port_Description::Ext_Port_Description (void)
-  : port_kind_ (NUM_PORT_KINDS),
+  : port_kind_ (PROVIDES),
     port_name_ (0),
     obj_ref_ (0),
     is_multiple_ (false)

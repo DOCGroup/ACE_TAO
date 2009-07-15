@@ -10,8 +10,7 @@ class AST_Template_Common;
 class TAO_IDL_FE_Export FE_TemplateHeader_Common
 {
 public:
-  FE_TemplateHeader_Common (UTL_ScopedName *n,
-                            FE_Utils::T_PARAMLIST_INFO *params);
+  FE_TemplateHeader_Common (FE_Utils::T_PARAMLIST_INFO *params);
 
   ~FE_TemplateHeader_Common (void);
 
@@ -22,11 +21,9 @@ public:
   virtual void destroy (void);
 
 protected:
-  bool match_params (AST_Template_Common *node);
   bool duplicate_param_id (void);
 
 protected:
-  UTL_ScopedName *name_;
   FE_Utils::T_PARAMLIST_INFO *param_info_;
 };
 

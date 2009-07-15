@@ -7,10 +7,8 @@
 #include "global_extern.h"
 
 FE_TemplateHeader_Common::FE_TemplateHeader_Common (
-      UTL_ScopedName *n,
       FE_Utils::T_PARAMLIST_INFO *params)
-  : name_ (n),
-    param_info_ (params)
+  : param_info_ (params)
 {
 }
 
@@ -27,61 +25,9 @@ FE_TemplateHeader_Common::param_info (void) const
 void
 FE_TemplateHeader_Common::destroy (void)
 {
-  if (this->name_ != 0)
-    {
-      this->name_->destroy ();
-      delete this->name_;
-      this->name_ = 0;
-    }
-
   // Queue element members have self-managed memory.
   delete this->param_info_;
   this->param_info_ = 0;
-}
-
-bool
-FE_TemplateHeader_Common::match_params (AST_Template_Common *node)
-{
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (node->template_params ());
-       !i.done ();
-       i.advance ())
-    {
-      FE_Utils::T_Param_Info *item = 0;
-      i.next (item);
-
-      bool one_matched = false;
-
-      for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR j (*this->param_info_);
-           !j.done ();
-           j.advance ())
-        {
-          FE_Utils::T_Param_Info *my_item = 0;
-          j.next (my_item);
-
-          if (item->type_ == my_item->type_
-              && item->name_ == my_item->name_)
-            {
-              one_matched = true;
-              break;
-            }
-        }
-
-      if (! one_matched)
-        {
-          UTL_ScopedName *name = this->name_;
-
-          if (name == 0)
-            {
-              name = dynamic_cast<AST_Decl *> (node)->name ();
-            }
-
-          idl_global->err ()->mismatched_template_param (name);
-
-          return false;
-        }
-    }
-
-  return true;
 }
 
 bool

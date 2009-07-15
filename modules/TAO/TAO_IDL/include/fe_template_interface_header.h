@@ -9,6 +9,8 @@
 #include "fe_interface_header.h"
 #include "fe_template_header_common.h"
 
+class AST_Template_Interface;
+
 class TAO_IDL_FE_Export FE_Template_InterfaceHeader
   : public FE_InterfaceHeader,
     public FE_TemplateHeader_Common
@@ -25,6 +27,7 @@ public:
 
 private:
   void compile_template_inheritance (void);
+  bool match_params (AST_Template_Interface *node);
 
   // Data.
 private:

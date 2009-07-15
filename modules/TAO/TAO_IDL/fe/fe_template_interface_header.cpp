@@ -15,7 +15,7 @@ FE_Template_InterfaceHeader::FE_Template_InterfaceHeader (
                         false,
                         false,
                         false),
-    FE_TemplateHeader_Common (0, params),
+    FE_TemplateHeader_Common (params),
     parent_info_ (inherited)
 {
   this->compile_template_inheritance ();
@@ -115,5 +115,44 @@ FE_Template_InterfaceHeader::compile_template_inheritance (void)
 
   // Same as for non-template interface.  
   this->install_in_header ();
+}
+
+bool
+FE_Template_InterfaceHeader::match_params (AST_Template_Interface *node)
+{
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (node->template_params ());
+       !i.done ();
+       i.advance ())
+    {
+      FE_Utils::T_Param_Info *item = 0;
+      i.next (item);
+
+      bool one_matched = false;
+
+      for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR j (*this->param_info_);
+           !j.done ();
+           j.advance ())
+        {
+          FE_Utils::T_Param_Info *my_item = 0;
+          j.next (my_item);
+
+          if (item->type_ == my_item->type_
+              && item->name_ == my_item->name_)
+            {
+              one_matched = true;
+              break;
+            }
+        }
+
+      if (! one_matched)
+        {
+          idl_global->err ()->error1 (UTL_Error::EIDL_MISMATCHED_T_PARAM,
+                                      node);
+
+          return false;
+        }
+    }
+
+  return true;
 }
 

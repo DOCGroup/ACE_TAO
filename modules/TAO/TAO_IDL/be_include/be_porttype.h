@@ -24,9 +24,14 @@
 
 #include "ast_porttype.h"
 
+#include "be_scope.h"
+#include "be_decl.h"
+
 class be_visitor;
 
-class be_porttype : public virtual AST_PortType
+class be_porttype : public virtual AST_PortType,
+                    public virtual be_scope,
+                    public virtual be_decl
 {
   //
   // = TITLE

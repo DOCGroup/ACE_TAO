@@ -22,8 +22,6 @@ public:
 
   virtual ~AST_Template_Interface (void);
 
-  FE_Utils::T_PARAMLIST_INFO &template_params (void);
-
   // Cleanup function.
   virtual void destroy (void);
 
