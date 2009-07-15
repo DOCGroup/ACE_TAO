@@ -1,10 +1,21 @@
+Wed Jul 15 22:04:32 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        
+          Removed redundant instantiations of TAO_OutStream.
+
 Wed Jul 15 16:10:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_helper.cpp:
         * TAO_IDL/be_include/be_helper.h:
 
-          Fix for compile error on OS X. 
-        
+          Fix for compile error on OS X.
+
 Wed Jul 15 13:24:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/Makefile.am:
