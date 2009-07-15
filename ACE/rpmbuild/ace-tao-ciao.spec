@@ -2043,7 +2043,7 @@ fi
 %files -n ace-gperf
 %defattr(-,root,root,-)
 %{_bindir}/ace_gperf
-%{_libdir}/ACE_gperfd.so.%{ACEVERSO}
+%{_libdir}/ACE_gperfd_lib.so.%{ACEVERSO}
 %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
 %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
