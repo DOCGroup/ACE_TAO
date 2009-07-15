@@ -1,3 +1,33 @@
+Wed Jul 15 00:08:05 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_template_header_common.h:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/include/fe_porttype_header.h:
+        * TAO_IDL/fe/fe_porttype_header.cpp:
+
+          New files, defining:
+          - a porttype header class, to gather information about a porttype
+            declaration from the parser
+          - a template header base class, containing members and methods
+            common to classes FE_PorttypeHeader and FE_Template_InterfaceHeader
+          - a template ast base class containing members and methods common
+            to classes AST_PortType and AST_Template_Interface.
+
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          Changes to make use of the new base classes above.
+
+        * TAO_IDL/include/fe_utils.h:
+
+          Removed whitespace.
+
 Tue Jul 14 20:36:44 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_template_interface.cpp:
@@ -6,11 +36,11 @@ Tue Jul 14 20:36:44 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/include/fe_utils.h:
-        
+
           - Added data types to FE_Utils for storage of descriptions
             of porttype contents.
-            
-          - Changed all member names in FE_Utils data types to 
+
+          - Changed all member names in FE_Utils data types to
             have a trailing underscore.
 
 Tue Jul 14 18:26:09 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>

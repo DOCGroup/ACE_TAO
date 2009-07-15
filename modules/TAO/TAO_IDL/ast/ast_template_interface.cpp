@@ -32,18 +32,12 @@ AST_Template_Interface::AST_Template_Interface (
                    nih_flat,
                    false,
                    false),
-    template_params_ (*template_params)
+    AST_Template_Common (template_params)
 {
 }
 
 AST_Template_Interface::~AST_Template_Interface (void)
 {
-}
-
-FE_Utils::T_PARAMLIST_INFO &
-AST_Template_Interface::template_params (void)
-{
-  return this->template_params_;
 }
 
 void
