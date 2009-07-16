@@ -166,19 +166,12 @@ public:
   // =overloaded operators
 
   TAO_OutStream &operator<< (const char *str);
-  TAO_OutStream &operator<< (size_t);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);
   TAO_OutStream &operator<< (const ACE_CDR::Long num);
-
-// (JP) 2008-10-02 - let's try depending on the ACE_CDR basic
-// types to make the two operators below unambiguous and portable.
-//#if defined (ACE_WIN64) || ! (! defined (ACE_HAS_UINT64_T) && ACE_SIZEOF_LONG == 8)
   TAO_OutStream &operator<< (const ACE_CDR::ULongLong num);
-
   TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
-//#endif
 
   // = MANIPULATORS
 
