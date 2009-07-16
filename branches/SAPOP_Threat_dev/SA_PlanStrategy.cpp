@@ -142,100 +142,109 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   // If all open conditions have been satisfied, then return true for success.
   if (this->open_conds_.empty ())
 	  return this->planner_->full_sched();
+//)
+  if(!(this->planner_->get_working_plan()->get_all_insts().size() > 8)){
+	  // Increment step counter.
+	  this->cur_step_++;
 
-//  if(!(this->planner_->get_working_plan()->get_all_insts().size() > 8)){
-  // Increment step counter.
-  this->cur_step_++;
+	  // Set decision point and reset sequence number for commands.
+	  this->cur_decision_pt_ = SA_PlanStrategy::TASK_DECISION;
+	  this->cur_seq_num_ = 1;
 
-  // Set decision point and reset sequence number for commands.
-  this->cur_decision_pt_ = SA_PlanStrategy::TASK_DECISION;
-  this->cur_seq_num_ = 1;
+	  // Variable for preconditions of current task.
+	  CondSet preconds;
 
-  // Variable for preconditions of current task.
-  CondSet preconds;
-
-  // Choose an open condition to satisfy.
-  Condition open_cond = this->cond_choice_->choose_cond (this->open_conds_);
-
-
+	  // Choose an open condition to satisfy.
+	  Condition open_cond = this->cond_choice_->choose_cond (this->open_conds_);
 
 
 
+	  // Choose task to satisfy open condition (actually an ordered list of
+	  // tasks to try), passing command to planner to be executed next.
+	  AddTaskCmd *add_task_cmd = this->satisfy_cond (open_cond);
+
+	  TaskInstSet old_satisfied_insts = this->satisfied_insts;
+
+	  this->satisfied_insts = add_task_cmd->get_satisfied_tasks();
+	  
+	  TaskInstID prev_cur_inst = this->cur_task_inst_;
+
+	  // Try tasks until one yields a complete plan or all have been tried.
+	  while (this->planner_->try_next (add_task_cmd->get_id ())) {
+
+		// Get current task and task instance.
+		this->cur_task_ = add_task_cmd->get_task ();
+
+		this->cur_task_inst_ = add_task_cmd->get_task_inst ();
+		// Remove open condition.
+		CommandID rmv_cond_cmd_id = this->rmv_open_cond (open_cond, add_task_cmd->get_satisfied_tasks());
+
+		TaskID stored_task = this->cur_task_;
+
+			bool to_fail = false;
+
+			// Add preconditions of this task of we didn't reuse the task instance.
+			CommandID add_preconds_cmd_id;
+			if(!add_task_cmd->inst_exists())
+  			{
+     			preconds = this->planner_->get_unsat_preconds (this->cur_task_);
+			  add_preconds_cmd_id = 
+			  this->add_open_conds (preconds, this->cur_task_inst_);
+  			}
+
+			if(this->store_map.should_continue(add_task_cmd->get_id(), add_task_cmd->get_condition(), 
+				stored_task, this->open_conds_, this->planner_->get_working_plan()->get_task_insts()))
+			{
+				// Try to satisfy threats and continue recursive planning.
+				if (this->satisfy_everything())
+					return true;
+				this->store_map.undo_binding(add_task_cmd->get_id(), add_task_cmd->get_condition(), stored_task);
+
+			}else{
+				to_fail = true;
+				bool k = 0;
+			}
+			//	else{
+			//		this->planner_->undo_command (rmv_cond_cmd_id);
+			//		break;
+			//	}
 
 
-  // Choose task to satisfy open condition (actually an ordered list of
-  // tasks to try), passing command to planner to be executed next.
-  AddTaskCmd *add_task_cmd = this->satisfy_cond (open_cond);
+			std::ostringstream debug_text;
+			debug_text<<" the task instance being deleted is "<<add_task_cmd->get_task_inst()<<std::endl;
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+			debug_text.str("");
 
-  // Try tasks until one yields a complete plan or all have been tried.
-  while (this->planner_->try_next (add_task_cmd->get_id ())) {
-    // Get current task and task instance.
-    this->cur_task_ = add_task_cmd->get_task ();
-
-	TaskInstID prev_cur_inst = this->cur_task_inst_;
-
-    this->cur_task_inst_ = add_task_cmd->get_task_inst ();
-    // Remove open condition.
-	CommandID rmv_cond_cmd_id = this->rmv_open_cond (open_cond, add_task_cmd->get_satisfied_tasks());
-
-    // Add preconditions of this task of we didn't reuse the task instance.
-	    CommandID add_preconds_cmd_id;
-	  if(!add_task_cmd->inst_exists())
-  	{
-     	preconds = this->planner_->get_unsat_preconds (this->cur_task_);
-      add_preconds_cmd_id = 
-      this->add_open_conds (preconds, this->cur_task_inst_);
-  	}
-    //Move this code to the threat resolution sequence
-    // Set decision point and reset sequence number for commands.
-    this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
-    this->cur_seq_num_ = 1;
-
-
-    //Deal with threats
-
-    //Actually build the list of threats
-    this->planner_->generate_all_threats();
-
-    // Add causal link threats to open threats.
-    bool are_threats = !(this->planner_->get_all_threats().empty ());
-    CommandID add_threats_cmd_id;
-    if (are_threats)
-      add_threats_cmd_id = 
-        this->add_open_threats (this->planner_->get_all_threats ());
-
-    // Try to satisfy threats and continue recursive planning.
-    if (this->satisfy_everything())
-      return true;
-
-	this->cur_task_inst_ = prev_cur_inst;
-
-    SA_POP_DEBUG(SA_POP_DEBUG_NORMAL, "Backtracking from task addition...");
-    // Undo addition of causal link threats from this task.
-    if (are_threats)
-      this->planner_->undo_command (add_threats_cmd_id);
-    std::cout<<" the task instance being deleted is "<<add_task_cmd->get_task_inst()<<std::endl;
-    // Undo addition of preconditions from this task if we didn't reuse the task instance.
-	if(!add_task_cmd->inst_exists())
-		this->planner_->undo_command (add_preconds_cmd_id);
-
-    // Undo removal of open condition.
-    this->planner_->undo_command (rmv_cond_cmd_id);
-
-  }
-
-  SA_POP_DEBUG (SA_POP_DEBUG_NORMAL, "Backtracking to previous step...");
-  // Undo addition of task.
-  this->planner_->undo_command (add_task_cmd->get_id ());
+			// Undo addition of preconditions from this task if we didn't reuse the task instance.
+			if(!add_task_cmd->inst_exists())
+				this->planner_->undo_command (add_preconds_cmd_id);
 
 
 
-  // Decrement step.
-  this->cur_step_--;
+		// Undo removal of open condition.
+		this->planner_->undo_command (rmv_cond_cmd_id);
 
- // }else{
+		if(to_fail){
+			break;
+		}
+	  }
+
+	  this->cur_task_inst_ = prev_cur_inst;
+
+	  SA_POP_DEBUG (SA_POP_DEBUG_NORMAL, "Backtracking to previous step...");
+	  // Undo addition of task.
+	  
+	  this->satisfied_insts = old_satisfied_insts;
+	  this->planner_->undo_command (add_task_cmd->get_id ());
+
+
+
+	  // Decrement step.
+	  this->cur_step_--;
+
+  }else{
 //	  std::cout<<"Backing up beccause of iterative deepening"<<std::endl;
- // }
+  }
 
   // No task could satisfy open condition, so return failure.
   return false;
@@ -259,20 +268,45 @@ bool SA_PlanStrategy::satisfy_everything(){
 		assoc_impl_cmd->set_assoc (this->cur_task_inst_, impl_list);
 		this->planner_->add_command (assoc_impl_cmd);
 
+		assoc_impl_cmd->set_satisfied_insts(this->satisfied_insts);
+
 		this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
 		
-
 		while (this->planner_->try_next (assoc_impl_cmd->get_id ())) 
 		{
-		((SA_WorkingPlan*)(this->planner_->get_working_plan()))->
-			print_precedence_graph("SA_PlanStrategy::get_next_threat_resolution");
-		  if(this->get_next_threat_resolution()){
-			return true;
-		  }
-		  else{
+
+			//Move this code to the threat resolution sequence
+			// Set decision point and reset sequence number for commands.
+			this->cur_decision_pt_ = SA_PlanStrategy::THREAT_DECISION;
+			this->cur_seq_num_ = 1;
+
+
+			//Deal with threats
+
+			//Actually build the list of threats
+			this->planner_->generate_all_threats();
+
+			// Add causal link threats to open threats.
+			bool are_threats = !(this->planner_->get_all_threats().empty ());
+			CommandID add_threats_cmd_id;
+			if (are_threats)
+			  add_threats_cmd_id = 
+				this->add_open_threats (this->planner_->get_all_threats ());
+
+	//		((SA_WorkingPlan*)(this->planner_->get_working_plan()))->
+	//		print_precedence_graph("SA_PlanStrategy::get_next_threat_resolution");
+			if(this->get_next_threat_resolution()){
+				return true;
+			}
+			else{
 	      
 			  this->cur_decision_pt_ = SA_PlanStrategy::IMPL_DECISION;
-		  }
+			}
+
+		     SA_POP_DEBUG(SA_POP_DEBUG_NORMAL, "Backtracking from task assoc...");
+			// Undo addition of causal link threats from this task.
+			if (are_threats)
+				this->planner_->undo_command (add_threats_cmd_id);
 
 
 		}
@@ -397,12 +431,14 @@ void SA_PlanStrategy::execute (SA_AddOpenCondsCmd *cmd)
 // Undo a command to add open conditions to planning.
 void SA_PlanStrategy::undo (SA_AddOpenCondsCmd *cmd)
 {
+	std::ostringstream debug_text;
+
   // Remove open conditions mapped to the specified task instance.
-	std::cout<<"removing open conds mapped to "<<cmd->task_inst_<<std::endl;
+	debug_text<<"removing open conds mapped to "<<cmd->task_inst_<<std::endl;
 	for (CondSet::iterator cond_iter = cmd->conds_.begin ();
     cond_iter != cmd->conds_.end (); cond_iter++)
   {
-	  std::cout<<"checking for "<<cond_iter->id<<std::endl;
+	  debug_text<<"checking for "<<cond_iter->id<<std::endl;
 	  for (OpenCondMap::iterator open_iter =
       this->open_conds_.lower_bound (*cond_iter);
       open_iter != this->open_conds_.upper_bound (*cond_iter);)
@@ -411,11 +447,15 @@ void SA_PlanStrategy::undo (SA_AddOpenCondsCmd *cmd)
       open_iter++;
       if (prev_iter->second == cmd->task_inst_)
 	  {
-		  std::cout<<"in planstrat erasing from open_conds_ "<<prev_iter->first.id<<" to "<<prev_iter->second<<std::endl;
+		  debug_text<<"in planstrat erasing from open_conds_ "<<prev_iter->first.id<<" to "<<prev_iter->second<<std::endl;
 		  this->open_conds_.erase (prev_iter);
 	  }
 	}
   }
+
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.str("");
+
 };
 
 // Execute a command to remove open conditions from planning.
@@ -470,14 +510,18 @@ void SA_PlanStrategy::execute (SA_RemoveOpenCondsCmd *cmd)
 // Undo a command to remove open conditions from planning.
 void SA_PlanStrategy::undo (SA_RemoveOpenCondsCmd *cmd)
 {
+
+std::ostringstream debug_text;
   // Insert removed open condition to task instance mapping.
   for (OpenCondMap::iterator open_iter = cmd->removed_.begin ();
       open_iter != cmd->removed_.end (); open_iter++)
   {
-	  std::cout<<"in planstrat undo adding "<<open_iter->first.id<<" to "<<open_iter->second<<std::endl;
+	 debug_text<<"in planstrat undo adding "<<open_iter->first.id<<" to "<<open_iter->second<<std::endl;
 	  this->open_conds_.push_front (std::make_pair
       (open_iter->first, open_iter->second));
   }
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+debug_text.str("");
 };
 
 // Execute a command to add causal link threats to planning.
@@ -497,21 +541,30 @@ void SA_PlanStrategy::execute (SA_AddOpenThreatsCmd *cmd)
 // Undo a command to add causal link threats to planning.
 void SA_PlanStrategy::undo (SA_AddOpenThreatsCmd * cmd)
 {
+	std::ostringstream debug_text;
   // Remove open conditions mapped to the specified task instance.
-	std::cout<<"undoing open threats" <<std::endl;
+	debug_text<<"undoing open threats" <<std::endl;
 	for (CLThreatSet::iterator cond_iter = cmd->threats_.begin ();
     cond_iter != cmd->threats_.end (); cond_iter++)
   {
       CLThreat threat = *cond_iter;
 		  this->open_threats_.erase (threat);
   }
+
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.str("");
 };
 
 // Execute a command to remove causal link threats from planning.
 void SA_PlanStrategy::execute (SA_RemoveOpenThreatsCmd * cmd)
 {
+	std::ostringstream debug_text;
     // Remove open conditions mapped to the specified task instance.
-	std::cout<<"removing open threats" <<std::endl;
+	debug_text<<"removing open threats" <<std::endl;
+
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
+	debug_text.str("");
+
 	for (CLThreatSet::iterator cond_iter = cmd->threats_.begin ();
     cond_iter != cmd->threats_.end (); cond_iter++)
   {

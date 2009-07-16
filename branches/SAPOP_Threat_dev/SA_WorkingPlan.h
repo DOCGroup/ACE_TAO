@@ -412,9 +412,11 @@ namespace SA_POP {
   SchedulingLinks reverse_ordering_links;
  // SA_AssocTaskImplCmd* associate_cmd;
   
+  /*
   bool is_cycle_in_ordering(void);
   void dfs_aux(TaskInstID current, std::stack<TaskInstID>& s, std::map<TaskInstID, bool>& visited, std::map<TaskInstID, bool>& unvisited);
   bool dfs_aux2(TaskInstID current, std::map<TaskInstID, bool>& visited);
+ */
 
   /// Insert initially task by task in the precedence graph
   /**

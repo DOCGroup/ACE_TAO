@@ -19,6 +19,7 @@
 #include <list>
 #include <map>
 #include <sstream>
+#include <iostream>
 
 #include "SA_POP_Utils.h"
 
@@ -27,15 +28,17 @@
 #include "ace/Log_Priority.h"
 #endif  /* SA_POP_HAS_ACE */
 
+#define ANKET 1
 #define SA_POP_DEBUG_NORMAL 5
+#define SPARTAN 9
 #define SA_POP_DEBUG_HIGH 10
 
 #if defined (SA_POP_HAS_ACE)
 #define SA_POP_DEBUG(x,y) \
-if (x > 0) \
+if (x > 8) \
 ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("SA-POP: %s\n"), y));
 #define SA_POP_DEBUG_STR(x,y) \
-if (x > 0) \
+if (x > 8) \
 ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("SA-POP: %s\n"), y.c_str ()));
 #else  /* SA_POP_HAS_ACE not defined */
 #include <iostream>
@@ -137,7 +140,7 @@ namespace SA_POP {
 
   /// Type of a task instance id.
   /// (must be unique across all task instances).
-  typedef int TaskInstID;
+  typedef long TaskInstID;
 
   /// Goal task instance ID (for task instance placeholders in open goals).
   const TaskInstID GOAL_TASK_INST_ID = -1;
@@ -249,9 +252,9 @@ namespace SA_POP {
     int step;
     int decision_pt;
     int seq_num;
-    bool operator== (CommandID &s) const { return (this->step == s.step && this->decision_pt == s.decision_pt && this->seq_num == s.seq_num); };
-    bool operator!= (CommandID &s) const { return !(*this == s); };
-    bool operator< (CommandID &s) const
+    bool operator== (const CommandID &s) const { return (this->step == s.step && this->decision_pt == s.decision_pt && this->seq_num == s.seq_num); };
+    bool operator!= (const CommandID &s) const { return !(*this == s); };
+    bool operator< (const CommandID &s) const
     {
       if (this->step == s.step) {
         if (this->decision_pt == s.decision_pt)
@@ -509,6 +512,162 @@ namespace SA_POP {
   /// Type of a set of open conditions, each associated with task instances
   /// for which it is a precondition. With new list functionality
   typedef SA_POP::ListMultiMap<Condition, TaskInstID> OpenCondMap;
+
+
+
+  struct StoredCondition{
+	
+	Condition satisfied_cond;
+	TaskID satisfying_task;
+
+	StoredCondition(){};
+
+	StoredCondition(Condition cond, TaskID task){
+		this->satisfied_cond = cond;
+		this->satisfying_task = task;
+	}
+
+	bool operator==(const StoredCondition & s)const{
+		return (satisfied_cond == s.satisfied_cond &&
+			satisfying_task == s.satisfying_task);
+	};
+
+	bool operator<(const StoredCondition & s) const{
+		if(this->satisfied_cond == s.satisfied_cond)
+			return this->satisfying_task < s.satisfying_task;
+		return this->satisfied_cond < s.satisfied_cond;
+	};
+  };
+
+  struct StoredConditionKey{
+
+	CommandID satisfying_cmd;
+	StoredCondition satisfy_set;
+
+	StoredConditionKey(Condition cond, TaskID task, CommandID cmd){
+		satisfying_cmd = cmd;
+		satisfy_set.satisfied_cond = cond;
+		satisfy_set.satisfying_task = task;
+	}
+
+	bool operator==(const StoredConditionKey & s)const{
+		return (this->satisfy_set == s.satisfy_set);
+	};
+
+	bool operator<(const StoredConditionKey & s) const {
+	//	if(this->satisfying_cmd == s.satisfying_cmd)
+			return this->satisfy_set < s.satisfy_set;
+	//	return this->satisfying_cmd < s.satisfying_cmd;
+	};
+
+  };
+
+
+
+  typedef std::set<StoredCondition> StoredConditionSet;
+  typedef std::multimap<StoredConditionKey, StoredConditionSet> StoredConditionMap;
+
+  struct StoredConditionEvaluator{
+	  StoredConditionMap condition_map;
+	
+	  bool should_continue(CommandID cur_cmd, Condition satisfied_cond, 
+		  TaskID satisfying_task, OpenCondMap & open_conds, InstToTaskMap & task_insts){
+
+
+
+			  StoredConditionKey stored_cond (satisfied_cond, satisfying_task, cur_cmd);
+
+			  std::pair<StoredConditionMap::iterator,
+				   StoredConditionMap::iterator>
+				  range 
+				  = condition_map.equal_range(stored_cond);
+
+			  bool should_continue = true;
+	
+			  if(range.first != range.second)
+			  {
+				for(StoredConditionMap::iterator it = range.first; it != range.second; it++)
+				{
+					bool all_pairs_in_open_conds = true;
+
+					StoredConditionSet old_open_conds = it->second;
+		
+					for(StoredConditionSet::iterator it = old_open_conds.begin();
+						it != old_open_conds.end(); it++)
+					{
+						if((*it).satisfying_task == -1) 
+							bool breakkk = 0;
+
+
+						std::pair<OpenCondMap::iterator, OpenCondMap::iterator>
+							cond_map_range = open_conds.equal_range((*it).satisfied_cond);
+
+						bool found_no_equiv_in_open = true;
+
+						for(OpenCondMap::iterator it2 = cond_map_range.first; it2 != cond_map_range.second; it2++){
+
+							if((*it).satisfying_task == task_insts.find((*it2).second)->second){
+								found_no_equiv_in_open = false;
+							}
+						}
+
+						if(found_no_equiv_in_open){
+							all_pairs_in_open_conds = false;
+							break;
+						}
+					}
+
+					if(all_pairs_in_open_conds){
+						should_continue = false;
+						break;
+					}
+				}
+			}else{
+				should_continue = true;
+			}
+
+			if(should_continue)
+			{
+
+				StoredConditionSet current_open;
+				for(OpenCondMap::iterator it = open_conds.begin(); it != open_conds.end(); it++)
+				{
+					if(it->second == -1)
+					{
+						current_open.insert(StoredCondition(it->first, -1));
+					}else{
+						current_open.insert(StoredCondition(it->first, task_insts.find(it->second)->second));
+					}
+				}
+
+				StoredConditionKey this_choice(satisfied_cond, satisfying_task, cur_cmd);
+
+				this->condition_map.insert(
+					std::pair<StoredConditionKey, StoredConditionSet>(this_choice, current_open));
+			}
+
+			return should_continue;
+		}
+
+	  void undo_binding(CommandID cur_cmd, Condition satisfied_cond, TaskID satisfying_task){
+		StoredConditionKey key(satisfied_cond, satisfying_task, cur_cmd);
+
+		std::pair<StoredConditionMap::iterator, StoredConditionMap::iterator> range
+			= condition_map.equal_range(key);
+
+		StoredConditionMap::iterator it;
+
+		for(it = range.first; it != range.second; it++){
+			if(it->first.satisfying_cmd == cur_cmd){
+				break;
+			}
+		}
+
+		condition_map.erase(it);
+
+	  }
+  };
+
 
   inline std::string to_string(int x)
   {

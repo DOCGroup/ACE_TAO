@@ -186,18 +186,11 @@ bool SA_AddTaskCmd::execute_next (void)
 
   this->undo();
 
-
-
   bool isInitial = false;
 
   if (this->tasks_.empty())
     return false;
 
-  /*
-  if(this->tasks_.front().task_id == 20 && this->tasks_.front){
-    isInitial = true;
-  }
-  */
   this->working_plan_->execute (this);
   this->num_tries_++;
 
@@ -387,6 +380,10 @@ TaskInstID SA_AssocTaskImplCmd::get_task_inst (void)
 {
   return this->task_inst_;
 };
+
+void SA_AssocTaskImplCmd::set_satisfied_insts(TaskInstSet set){
+	this->satisfied_insts = set;
+}
 
 
 // Constructor.
