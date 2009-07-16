@@ -181,6 +181,8 @@ private:
 
   virtual AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
 
+  virtual AST_PortType *fe_add_porttype (AST_PortType *pt);
+
   bool pd_has_nested_valuetype;
 
   ACE_Unbounded_Set<AST_Decl *> previous_;

@@ -1,3 +1,22 @@
+Thu Jul 16 22:03:56 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/fe_porttype_header.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Added semantic actions for creating a porttype node in
+          the AST.
+
 Wed Jul 15 21:41:00 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_porttype.cpp
@@ -13,7 +32,7 @@ Wed Jul 15 21:41:00 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/fe_template_header_common.h:
         * TAO_IDL/include/fe_template_interface_header.h:
         * TAO_IDL/include/fe_utils.h:
-        
+
           Modified and refactored the IDL3+ info datatypes
           and FE header classes.
 

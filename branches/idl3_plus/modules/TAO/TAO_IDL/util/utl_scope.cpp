@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
+#include "ast_porttype.h"
 #include "ast_typedef.h"
 #include "ast_type.h"
 #include "ast_root.h"
@@ -1005,7 +1006,7 @@ UTL_Scope::add_native (AST_Native *n)
 AST_Factory *
 UTL_Scope::add_factory (AST_Factory *f)
 {
-  //We don't invite any new types so there is nothing actually to add
+  // We don't invite any new types so there is nothing actually to add
   if (f == 0)
     {
       return 0;
@@ -1013,6 +1014,18 @@ UTL_Scope::add_factory (AST_Factory *f)
 
   f->set_added (true);
   return f;
+}
+
+AST_PortType *
+UTL_Scope::add_porttype (AST_PortType *p)
+{
+  if (p == 0)
+    {
+      return 0;
+    }
+
+  p->set_added (true);
+  return p;
 }
 
 // Protected Front End Scope Management Protocol.
@@ -1216,6 +1229,12 @@ UTL_Scope::fe_add_native (AST_Native *)
 
 AST_Factory *
 UTL_Scope::fe_add_factory (AST_Factory *)
+{
+  return 0;
+}
+
+AST_PortType *
+UTL_Scope::fe_add_porttype (AST_PortType *)
 {
   return 0;
 }

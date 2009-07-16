@@ -80,6 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component_fwd.h"
 #include "ast_home.h"
 #include "ast_template_interface.h"
+#include "ast_porttype.h"
 #include "ast_exception.h"
 #include "ast_enum.h"
 #include "ast_attribute.h"
@@ -940,6 +941,20 @@ AST_Generator::create_template_interface (
                                           nih_flat,
                                           template_params),
                   0);
-                  
+
+  return retval;
+}
+
+AST_PortType *
+AST_Generator::create_porttype (
+  UTL_ScopedName *n,
+  const FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  AST_PortType *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_PortType (n,
+                                template_params),
+                  0);
+
   return retval;
 }

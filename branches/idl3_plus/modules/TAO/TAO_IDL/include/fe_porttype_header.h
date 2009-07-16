@@ -16,7 +16,7 @@ public:
   UTL_ScopedName *name (void) const;
 
   virtual void destroy (void);
-  
+
 private:
   UTL_ScopedName *name_;
 };

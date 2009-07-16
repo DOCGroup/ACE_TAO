@@ -119,6 +119,7 @@ class AST_String;
 class AST_Array;
 class AST_Native;
 class AST_Factory;
+class AST_PortType;
 class UTL_StrList;
 class UTL_NameList;
 
@@ -208,6 +209,8 @@ public:
   virtual AST_Native *add_native (AST_Native *n);
 
   virtual AST_Factory *add_factory (AST_Factory *f);
+
+  virtual AST_PortType *add_porttype (AST_PortType *p);
 
   // Call back end add_XXX functions for this scope.
   virtual AST_Decl *call_add (void);
@@ -433,6 +436,8 @@ private:
   virtual AST_Factory *fe_add_factory (AST_Factory *f);
 
   virtual AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
+
+  virtual AST_PortType *fe_add_porttype (AST_PortType *pt);
 };
 
 // Active iterator for a UTL_Scope node
