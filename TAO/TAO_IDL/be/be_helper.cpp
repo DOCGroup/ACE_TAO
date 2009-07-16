@@ -243,7 +243,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
   ACE_OS::sprintf (macro,
                    "_%s_",
                    tao_cg->upcase (flat_name));
-                   
+
   if (suffix != 0)
     {
       ACE_OS::strcat (macro, "_");
@@ -321,13 +321,6 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);
-  return *this;
-}
-
-TAO_OutStream &
-TAO_OutStream::operator<< (size_t sz)
-{
-  ACE_OS::fprintf (this->fp_, "%u", sz);
   return *this;
 }
 
