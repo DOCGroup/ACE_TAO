@@ -14,7 +14,7 @@ project (DAnCE_TargetManagerDaemon_IDL) : ciaoidldefaults {
   }
 }
 
-project(DAnCE_TargetManagerDaemon_stub) : dance_lib, dance_deployment_stub {
+project(DAnCE_TargetManagerDaemon_stub) : dance_lib, dance_targetmanager_stub {
   sharedname = DAnCE_TargetManagerDaemon_stub
   dynamicflags = TARGETMANAGERDAEMON_STUB_BUILD_DLL
   after += DAnCE_TargetManagerDaemon_IDL
