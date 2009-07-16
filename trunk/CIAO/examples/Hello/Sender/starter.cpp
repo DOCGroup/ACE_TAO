@@ -22,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
 
         case 'm':
-          message = get_opts.opt_arg ();
+          message = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
           break;
 
         case '?':  // display help for use of the server.
