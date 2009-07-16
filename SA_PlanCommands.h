@@ -250,6 +250,8 @@ namespace SA_POP {
 
 	virtual TaskInstSet get_satisfied_tasks(void);
 
+	virtual Condition get_condition(void){return cond_;};
+
   protected:
     /// WorkingPlan object that this command works on.
     SA_WorkingPlan *working_plan_;
@@ -338,6 +340,8 @@ namespace SA_POP {
      */
     virtual TaskInstID get_task_inst (void);
 
+	virtual void set_satisfied_insts(TaskInstSet set);
+
   protected:
     /// WorkingPlan object that this command works on.
     SA_WorkingPlan *working_plan_;
@@ -366,7 +370,8 @@ namespace SA_POP {
 	std::set< std::pair<TaskInstID,TaskInstID> > causal_insertions;
 	std::set< std::pair<TaskInstID,TaskInstID> > simul_insertions;
 
-
+	TaskInstSet satisfied_insts;
+/*
     std::map <TaskInstID, TaskInstSet> befores;
     std::map <TaskInstID, TaskInstSet> afters;
     std::map <TaskInstID, TaskInstSet> simuls;
@@ -376,6 +381,7 @@ namespace SA_POP {
     std::map <TaskInstID, TaskInstSet> afters_after_ex;
     std::map <TaskInstID, TaskInstSet> simuls_after_ex;
     std::map <TaskInstID, TaskInstSet> unrankeds_after_ex;
+*/
 
 //	PrecedenceGraph precedence_graph_;
 

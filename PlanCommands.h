@@ -196,6 +196,8 @@ namespace SA_POP {
     virtual bool inst_exists (void) = 0;
 
 	virtual TaskInstSet get_satisfied_tasks(void) = 0;
+
+	virtual Condition get_condition(void) = 0;
   };
 
   /**
@@ -224,6 +226,8 @@ namespace SA_POP {
      * @return  ID of instance of this command.
      */
     virtual TaskInstID get_task_inst (void) = 0;
+
+	virtual void set_satisfied_insts(TaskInstSet set)=0;
   };
 
   /**

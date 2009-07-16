@@ -222,6 +222,8 @@ namespace SA_POP {
     /// Current sequence number for commands in this decision point.
     int cur_seq_num_;
 
+	///Holds info about which tasks an add task cmd has satisfied
+	TaskInstSet satisfied_insts;
 
 
     // ************************************************************************
@@ -240,8 +242,8 @@ namespace SA_POP {
     /// Scheduling is fourth decision point.
     static const int SCHEDULE_DECISION = 4;
 
-
-
+	StoredConditionEvaluator store_map;
+	
     // ************************************************************************
     // Decision point heuristic strategies.
     // ************************************************************************
