@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_eventtype_fwd.h"
 #include "ast_component.h"
 #include "ast_component_fwd.h"
+#include "ast_porttype.h"
 #include "ast_home.h"
 #include "ast_constant.h"
 #include "ast_exception.h"
@@ -351,7 +352,7 @@ AST_Module::fe_add_interface (AST_Interface *t)
   // since fwd declared structs and unions must be defined in
   // the same translation unit.
   AST_InterfaceFwd *fd = t->fwd_decl ();
-  
+
   if (0 != fd)
     {
       fd->set_as_defined ();
@@ -1681,6 +1682,44 @@ AST_Module::fe_add_native (AST_Native *t)
                            t->local_name ());
 
   return t;
+}
+
+AST_PortType *
+AST_Module::fe_add_porttype (AST_PortType *pt)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (pt, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      pt,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, pt->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      pt,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (pt);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (pt,
+                           false,
+                           pt->local_name ());
+
+  return pt;
 }
 
 // Dump this AST_Module node to the ostream o.

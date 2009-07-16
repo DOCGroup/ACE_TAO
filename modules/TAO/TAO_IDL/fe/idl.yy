@@ -88,6 +88,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component_fwd.h"
 #include "ast_home.h"
 #include "ast_template_interface.h"
+#include "ast_porttype.h"
 #include "ast_constant.h"
 #include "ast_union.h"
 #include "ast_union_fwd.h"
@@ -340,6 +341,7 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <pival>   template_param
 
 %type <plval>   template_params at_least_one_template_param
+%type <plval>   opt_template_params
 
 %type <sval>    template_param_ref
 
@@ -6155,6 +6157,25 @@ porttype_decl
         opt_template_params
         {
 //        opt_template_params
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          Identifier id ($3);
+          ACE::strdelete ($3);
+          $3 = 0;
+
+          UTL_ScopedName sn (&id,
+                             0);
+
+          AST_PortType *p =
+            idl_global->gen ()->create_porttype (&sn,
+                                                 $5);
+
+          (void) s->fe_add_porttype (p);
+
+          // Push it on the scopes stack.
+          idl_global->scopes ().push (p);
+
+          sn.destroy ();
         }
         '{'
         {
@@ -6170,6 +6191,9 @@ porttype_decl
         {
 //        '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeQsSeen);
+
+          // Done with this port type - pop it off the scopes stack.
+          idl_global->scopes ().pop ();
         }
         ;
 
@@ -6177,10 +6201,12 @@ opt_template_params
         : at_least_one_template_param
         {
 // opt_template_params : at_least_one_template_param
+          $$ = $1;
         }
         | /* EMPTY */
         {
 //        | /* EMPTY */
+          $$ = 0;
         }
         ;
 

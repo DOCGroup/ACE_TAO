@@ -79,7 +79,7 @@ public:
   AST_Root (UTL_ScopedName *n);
 
   virtual ~AST_Root (void);
-  
+
   virtual unsigned long nmembers (void);
 
   // Narrowing.
@@ -95,7 +95,7 @@ public:
 
   // Cleanup.
   virtual void destroy ();
-  
+
   // Final cleanup.
   void fini (void);
 

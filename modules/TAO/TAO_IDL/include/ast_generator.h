@@ -80,6 +80,7 @@ class AST_Root;
 class AST_EventType;
 class AST_EventTypeFwd;
 class AST_Template_Interface;
+class AST_PortType;
 
 // Defines base class for node generators.
 
@@ -340,7 +341,7 @@ public:
   // Create a node representing a valuebox.
   virtual AST_ValueBox *create_valuebox (UTL_ScopedName *n,
                                          AST_Type *boxed_type);
-                                         
+
   virtual
   AST_Template_Interface *create_template_interface (
     UTL_ScopedName *n,
@@ -348,6 +349,11 @@ public:
     long nih,
     AST_Interface **ih_flat,
     long nih_flat,
+    const FE_Utils::T_PARAMLIST_INFO *template_params);
+
+  virtual
+  AST_PortType *create_porttype (
+    UTL_ScopedName *n,
     const FE_Utils::T_PARAMLIST_INFO *template_params);
 };
 

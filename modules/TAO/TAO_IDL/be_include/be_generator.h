@@ -263,7 +263,7 @@ public:
 
   // Create a node representing a OBV factory construct
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
-                                         
+
   virtual
   AST_Template_Interface *create_template_interface (
     UTL_ScopedName *n,
@@ -271,6 +271,11 @@ public:
     long nih,
     AST_Interface **ih_flat,
     long nih_flat,
+    const FE_Utils::T_PARAMLIST_INFO *template_params);
+
+  virtual
+  AST_PortType *create_porttype (
+    UTL_ScopedName *n,
     const FE_Utils::T_PARAMLIST_INFO *template_params);
 };
 
