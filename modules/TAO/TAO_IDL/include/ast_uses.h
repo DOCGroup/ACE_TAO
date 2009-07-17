@@ -13,12 +13,14 @@ class TAO_IDL_FE_Export AST_Uses : public virtual AST_Field
 {
 public:
   AST_Uses (UTL_ScopedName *n,
-                AST_Interface *uses_type);
+            AST_Interface *uses_type,
+            bool is_multiple);
             
   virtual ~AST_Uses (void);
   
-  // Data Accessor.
+  // Data Accessors.
   AST_Interface *uses_type (void) const;
+  bool is_multiple (void) const;
 
   // Narrowing.
   DEF_NARROW_FROM_DECL(AST_Uses);
@@ -31,6 +33,9 @@ public:
   
   // Cleanup.
   virtual void destroy (void);
+  
+private:
+  bool is_multiple_;
 };
 
 #endif // AST_USES_H

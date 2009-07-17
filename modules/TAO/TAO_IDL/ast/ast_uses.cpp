@@ -27,6 +27,12 @@ AST_Uses::uses_type (void) const
   return AST_Interface::narrow_from_decl (this->field_type ());
 }
 
+bool
+AST_Uses::is_multiple (void) const
+{
+  return this->is_multiple_;
+}
+
 void
 AST_Uses::dump (ACE_OSTREAM_TYPE &o)
 {

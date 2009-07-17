@@ -5,7 +5,7 @@
 #include "be_visitor.h"
 
 be_publishes::be_publishes (UTL_ScopedName *n,
-                            be_eventtype *publishes_type)
+                            AST_EventType *publishes_type)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_publishes,
               n),

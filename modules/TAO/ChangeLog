@@ -1,3 +1,27 @@
+Fri Jul 17 19:49:03 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be_include/be_consumes.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_uses.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_uses.h:
+        
+          - Changed BE provides, uses, publishes, emits and
+            consumes node constructor signatures.
+            
+          - Added FE and BE factory functions for new port nodes.
+
 Fri Jul 17 19:03:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_provides.h:
@@ -39,10 +63,10 @@ Fri Jul 17 19:03:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Changes corresponding to the new nodes
           above, and cosmetic changes.
-          
+
         * orbsvcs/IFR_Service/ifr_visitor.h:
         * orbsvcs/IFR_Service/ifr_visitor.cpp:
-        
+
           Added new visit_* methods corresponding to the new
           nodes.
 

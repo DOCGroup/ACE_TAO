@@ -176,7 +176,8 @@ public:
                                            bool is_local,
                                            bool is_abstract);
 
-  virtual AST_Field *create_field (AST_Type *ft, UTL_ScopedName *n,
+  virtual AST_Field *create_field (AST_Type *ft,
+                                   UTL_ScopedName *n,
                                    AST_Field::Visibility vis =
                                      AST_Field::vis_NA);
 
@@ -277,6 +278,27 @@ public:
   AST_PortType *create_porttype (
     UTL_ScopedName *n,
     const FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Provides *create_provides (UTL_ScopedName *n,
+                                 AST_Interface *provides_type);
+                                 
+  virtual
+  AST_Uses *create_uses (UTL_ScopedName *n,
+                         AST_Interface *uses_type,
+                         bool is_multiple);
+    
+  virtual
+  AST_Publishes *create_publishes (UTL_ScopedName *n,
+                                   AST_EventType *publishes_type);
+    
+  virtual
+  AST_Emits *create_emits (UTL_ScopedName *n,
+                           AST_EventType *emits_type);
+    
+  virtual
+  AST_Consumes *create_consumes (UTL_ScopedName *n,
+                                 AST_EventType *consumes_type);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

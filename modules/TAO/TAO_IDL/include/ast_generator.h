@@ -81,6 +81,11 @@ class AST_EventType;
 class AST_EventTypeFwd;
 class AST_Template_Interface;
 class AST_PortType;
+class AST_Provides;
+class AST_Uses;
+class AST_Publishes;
+class AST_Emits;
+class AST_Consumes;
 
 // Defines base class for node generators.
 
@@ -355,6 +360,27 @@ public:
   AST_PortType *create_porttype (
     UTL_ScopedName *n,
     const FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Provides *create_provides (UTL_ScopedName *n,
+                                 AST_Interface *provides_type);
+                                 
+  virtual
+  AST_Uses *create_uses (UTL_ScopedName *n,
+                         AST_Interface *uses_type,
+                         bool is_multiple);
+    
+  virtual
+  AST_Publishes *create_publishes (UTL_ScopedName *n,
+                                   AST_EventType *publishes_type);
+    
+  virtual
+  AST_Emits *create_emits (UTL_ScopedName *n,
+                           AST_EventType *emits_type);
+    
+  virtual
+  AST_Consumes *create_consumes (UTL_ScopedName *n,
+                                 AST_EventType *consumes_type);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH
