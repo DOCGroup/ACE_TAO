@@ -1,3 +1,13 @@
+Fri Jul 17 14:41:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeApplication/Name_Utilities.h:
+        * DAnCE/NodeApplication/Name_Utilities.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+          Resolved some unicode compiler errors.
+
 Fri Jul 17 13:35:03 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Logger/File_Logger_Backend.h:

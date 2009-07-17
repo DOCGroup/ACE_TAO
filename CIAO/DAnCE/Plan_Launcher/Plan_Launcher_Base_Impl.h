@@ -81,7 +81,7 @@ public:
   {
     return 0 == s.length();
   }
-  ;
+
   void write_dam_ior(::Deployment::DomainApplicationManager_ptr dam);
 
   void create_external_connections(const ::Deployment::DeploymentPlan &plan,
