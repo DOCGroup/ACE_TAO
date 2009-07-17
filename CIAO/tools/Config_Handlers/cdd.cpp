@@ -2898,7 +2898,7 @@ namespace CIAO
       void Domain::
       UUID (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("UUID"), top_ ()));
         Traversal::Domain::UUID (o);
         pop_ ();
       }
@@ -2906,7 +2906,7 @@ namespace CIAO
       void Domain::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::Domain::label (o);
         pop_ ();
       }
@@ -2914,7 +2914,7 @@ namespace CIAO
       void Domain::
       node_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("node", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("node"), top_ ()));
       }
 
       void Domain::
@@ -2933,7 +2933,7 @@ namespace CIAO
       void Domain::
       interconnect_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("interconnect", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("interconnect"), top_ ()));
       }
 
       void Domain::
@@ -2952,7 +2952,7 @@ namespace CIAO
       void Domain::
       bridge_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("bridge", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("bridge"), top_ ()));
       }
 
       void Domain::
@@ -2971,7 +2971,7 @@ namespace CIAO
       void Domain::
       sharedResource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("sharedResource", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("sharedResource"), top_ ()));
       }
 
       void Domain::
@@ -2990,7 +2990,7 @@ namespace CIAO
       void Domain::
       infoProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("infoProperty"), top_ ()));
       }
 
       void Domain::
@@ -3030,7 +3030,7 @@ namespace CIAO
       void Bridge::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::Bridge::name (o);
         pop_ ();
       }
@@ -3038,7 +3038,7 @@ namespace CIAO
       void Bridge::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::Bridge::label (o);
         pop_ ();
       }
@@ -3046,7 +3046,7 @@ namespace CIAO
       void Bridge::
       connect_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connect", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("connect"), top_ ()));
       }
 
       void Bridge::
@@ -3065,7 +3065,7 @@ namespace CIAO
       void Bridge::
       resource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resource"), top_ ()));
       }
 
       void Bridge::
@@ -3105,7 +3105,7 @@ namespace CIAO
       void Interconnect::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::Interconnect::name (o);
         pop_ ();
       }
@@ -3113,7 +3113,7 @@ namespace CIAO
       void Interconnect::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::Interconnect::label (o);
         pop_ ();
       }
@@ -3121,7 +3121,7 @@ namespace CIAO
       void Interconnect::
       connection_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("connection"), top_ ()));
       }
 
       void Interconnect::
@@ -3140,7 +3140,7 @@ namespace CIAO
       void Interconnect::
       connect_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connect", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("connect"), top_ ()));
       }
 
       void Interconnect::
@@ -3159,7 +3159,7 @@ namespace CIAO
       void Interconnect::
       resource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resource"), top_ ()));
       }
 
       void Interconnect::
@@ -3199,7 +3199,7 @@ namespace CIAO
       void Node::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::Node::name (o);
         pop_ ();
       }
@@ -3207,7 +3207,7 @@ namespace CIAO
       void Node::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::Node::label (o);
         pop_ ();
       }
@@ -3215,7 +3215,7 @@ namespace CIAO
       void Node::
       connection_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("connection"), top_ ()));
       }
 
       void Node::
@@ -3234,7 +3234,7 @@ namespace CIAO
       void Node::
       sharedResource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("sharedResource", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("sharedResource"), top_ ()));
       }
 
       void Node::
@@ -3253,7 +3253,7 @@ namespace CIAO
       void Node::
       resource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resource"), top_ ()));
       }
 
       void Node::
@@ -3293,7 +3293,7 @@ namespace CIAO
       void SharedResource::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::SharedResource::name (o);
         pop_ ();
       }
@@ -3301,7 +3301,7 @@ namespace CIAO
       void SharedResource::
       resourceType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resourceType", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceType"), top_ ()));
         Traversal::SharedResource::resourceType (o);
         pop_ ();
       }
@@ -3309,7 +3309,7 @@ namespace CIAO
       void SharedResource::
       node (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("node", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("node"), top_ ()));
         Traversal::SharedResource::node (o);
         pop_ ();
       }
@@ -3317,7 +3317,7 @@ namespace CIAO
       void SharedResource::
       property (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("property", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
         Traversal::SharedResource::property (o);
         pop_ ();
       }

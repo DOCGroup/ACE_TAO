@@ -1338,7 +1338,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::ComponentInterfaceDescription::label (o);
         pop_ ();
       }
@@ -1346,7 +1346,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       UUID (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("UUID"), top_ ()));
         Traversal::ComponentInterfaceDescription::UUID (o);
         pop_ ();
       }
@@ -1354,7 +1354,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       specificType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("specificType", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("specificType"), top_ ()));
         Traversal::ComponentInterfaceDescription::specificType (o);
         pop_ ();
       }
@@ -1362,7 +1362,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       supportedType_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("supportedType", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("supportedType"), top_ ()));
       }
 
       void ComponentInterfaceDescription::
@@ -1381,7 +1381,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       idlFile_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("idlFile", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("idlFile"), top_ ()));
       }
 
       void ComponentInterfaceDescription::
@@ -1400,7 +1400,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       configProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("configProperty"), top_ ()));
       }
 
       void ComponentInterfaceDescription::
@@ -1419,7 +1419,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       port_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("port", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("port"), top_ ()));
       }
 
       void ComponentInterfaceDescription::
@@ -1438,7 +1438,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       property_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("property", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
       }
 
       void ComponentInterfaceDescription::
@@ -1457,7 +1457,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       infoProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("infoProperty"), top_ ()));
       }
 
       void ComponentInterfaceDescription::
@@ -1476,7 +1476,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       contentLocation (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("contentLocation"), top_ ()));
         Traversal::ComponentInterfaceDescription::contentLocation (o);
         pop_ ();
       }
@@ -1484,7 +1484,7 @@ namespace CIAO
       void ComponentInterfaceDescription::
       href (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("href"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::ComponentInterfaceDescription::href (o);
         attr_ (0);
