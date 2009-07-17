@@ -21,19 +21,19 @@ namespace DAnCE
     
     /// Binds object to provided name, which may be formatted with / to indicate
     /// naming contexts, e.g. A/B/C. 
-    static bool bind_object (const char *name, 
+    static bool bind_object (const ACE_TCHAR *name,
                              CORBA::Object_ptr obj, 
                              CosNaming::NamingContext_ptr);
     
     /// Will unbind the provided name.  
-    static bool unbind_object (const char *name, 
+    static bool unbind_object (const ACE_TCHAR *name,
                                CosNaming::NamingContext_ptr);
     
   private:
     static void bind_context (CosNaming::Name &nm,
                               CosNaming::NamingContext_ptr);
     
-    static void build_name (const char *nm,
+    static void build_name (const ACE_TCHAR *nm,
                             CosNaming::Name &);
     
   };

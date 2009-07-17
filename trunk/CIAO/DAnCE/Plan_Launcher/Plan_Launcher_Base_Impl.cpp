@@ -520,7 +520,7 @@ Plan_Launcher_Base_Impl::stop_plan()
       DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
                    ACE_TEXT("Stopping plan \"%C\"\n"), this->plan_uuid_));
 
-      if (!this->teardown_plan(this->plan_uuid_))
+      if (!this->teardown_plan((const char *)this->plan_uuid_))
         {
           DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
                         ACE_TEXT("tear down assembly failed: unknown plan uuid.\n")));
@@ -761,7 +761,7 @@ Plan_Launcher_Base_Impl::check_mode_consistentness()
 ACE_CString
 Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
   {
-    ACE_CString src(const_cast<char *> (s));
+    ACE_CString src((const char *)s);
     ACE_CString res;
     size_t pos_done = 0;
     while (pos_done < (size_t) src.length())
