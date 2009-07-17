@@ -1,3 +1,9 @@
+Fri Jul 17 11:50:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+          Resolved UNICODE compiler errors.
+
 Fri Jul 17 10:26:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tools/XML/XML_Schema_Resolver.cpp:
