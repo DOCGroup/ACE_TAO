@@ -1,3 +1,15 @@
+Fri Jul 17 13:37:43 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed a double deletion bug in AST memory management.
+
+        * TAO_IDL/fe/fe_porttype_header.cpp:
+        * TAO_IDL/include/fe_porttype_header.h:
+
+          Removed these files.
+
 Thu Jul 16 22:03:56 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_generator.cpp:

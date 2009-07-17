@@ -6174,8 +6174,6 @@ porttype_decl
 
           // Push it on the scopes stack.
           idl_global->scopes ().push (p);
-
-          sn.destroy ();
         }
         '{'
         {
