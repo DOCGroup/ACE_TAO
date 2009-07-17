@@ -898,17 +898,17 @@ static const tao_yytype_uint16 tao_yyrline[] =
     4514,  4543,  4581,  4582,  4586,  4616,  4656,  4661,  4615,  4680,
     4685,  4678,  4727,  4726,  4737,  4744,  4745,  4750,  4749,  4760,
     4759,  4770,  4769,  4780,  4779,  4790,  4789,  4800,  4799,  4811,
-    4878,  4885,  4909,  4984,  4994,  5000,  5007,  5070,  5133,  5197,
-    5196,  5246,  5251,  5256,  5261,  5266,  5271,  5245,  5325,  5324,
-    5335,  5342,  5349,  5357,  5362,  5356,  5374,  5375,  5379,  5381,
-    5380,  5391,  5390,  5405,  5441,  5403,  5475,  5511,  5473,  5543,
-    5544,  5545,  5549,  5550,  5554,  5582,  5613,  5658,  5663,  5611,
-    5680,  5690,  5709,  5721,  5720,  5760,  5810,  5815,  5758,  5832,
-    5837,  5845,  5850,  5855,  5860,  5865,  5878,  5883,  5888,  5897,
-    5919,  5924,  5896,  5941,  5959,  5964,  5958,  5987,  5986,  6008,
-    6015,  6029,  6035,  6042,  6061,  6078,  6085,  6095,  6106,  6130,
-    6137,  6148,  6153,  6158,  6179,  6184,  6147,  6199,  6205,  6212,
-    6219,  6224,  6231,  6230,  6239,  6238,  6249,  6254,  6267,  6272
+    4882,  4889,  4913,  4988,  4998,  5004,  5011,  5074,  5137,  5201,
+    5200,  5250,  5255,  5260,  5265,  5270,  5275,  5249,  5329,  5328,
+    5339,  5346,  5353,  5361,  5366,  5360,  5378,  5379,  5383,  5385,
+    5384,  5395,  5394,  5409,  5445,  5407,  5479,  5515,  5477,  5547,
+    5548,  5549,  5553,  5554,  5558,  5586,  5617,  5662,  5667,  5615,
+    5684,  5694,  5713,  5725,  5724,  5764,  5814,  5819,  5762,  5836,
+    5841,  5849,  5854,  5859,  5864,  5869,  5882,  5887,  5892,  5901,
+    5923,  5928,  5900,  5945,  5963,  5968,  5962,  5991,  5990,  6012,
+    6019,  6033,  6039,  6046,  6065,  6082,  6089,  6099,  6110,  6134,
+    6141,  6152,  6157,  6162,  6183,  6188,  6151,  6203,  6209,  6216,
+    6223,  6228,  6235,  6234,  6243,  6242,  6253,  6258,  6271,  6276
 };
 #endif
 
@@ -7519,49 +7519,53 @@ tao_yyreduce:
     {
 // provides_decl : IDL_PROVIDES interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Component *c = AST_Component::narrow_from_scope (s);
+          AST_Decl *scope = ScopeAsDecl (s);
+          AST_Decl::NodeType scope_nt = scope->node_type ();
+          bool so_far_so_good = true;
 
-          if (c != 0)
+          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
+                                           true);
+          if (d == 0)
             {
-              AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
-                                               true);
-              if (0 == d)
+              idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
+              so_far_so_good = false;
+            }
+          else if (d->node_type () != AST_Decl::NT_interface)
+            {
+              // Nothing else but CORBA::Object can have
+              // this identifier.
+              int comp_result =
+                ACE_OS::strcmp (d->local_name ()->get_string (),
+                                "Object");
+
+              // Simple provides port must use IDL interface
+              // or CORBA::Object.
+              if (comp_result != 0)
                 {
-                  idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
-
-                  (tao_yyvsp[(2) - (3)].idlist)->destroy ();
-                  delete (tao_yyvsp[(2) - (3)].idlist);
-                  (tao_yyvsp[(2) - (3)].idlist) = 0;
-
-                  (tao_yyvsp[(3) - (3)].idval)->destroy ();
-                  delete (tao_yyvsp[(3) - (3)].idval);
-                  (tao_yyvsp[(3) - (3)].idval) = 0;
-
-                  break;
+                  idl_global->err ()->interface_expected (d);
+                  so_far_so_good = false;
                 }
-              else if (d->node_type () != AST_Decl::NT_interface)
-                {
-                  // Nothing else but CORBA::Object can have
-                  // this identifier.
-                  if (ACE_OS::strcmp (d->local_name ()->get_string (),
-                                      "Object")
-                        != 0)
-                    {
-                      idl_global->err ()->interface_expected (d);
+            }
 
-                      (tao_yyvsp[(2) - (3)].idlist)->destroy ();
-                      delete (tao_yyvsp[(2) - (3)].idlist);
-                      (tao_yyvsp[(2) - (3)].idlist) = 0;
+          // Clean up and move on.
+          if (! so_far_so_good)
+            {
+              (tao_yyvsp[(2) - (3)].idlist)->destroy ();
+              delete (tao_yyvsp[(2) - (3)].idlist);
+              (tao_yyvsp[(2) - (3)].idlist) = 0;
 
-                      (tao_yyvsp[(3) - (3)].idval)->destroy ();
-                      delete (tao_yyvsp[(3) - (3)].idval);
-                      (tao_yyvsp[(3) - (3)].idval) = 0;
+              (tao_yyvsp[(3) - (3)].idval)->destroy ();
+              delete (tao_yyvsp[(3) - (3)].idval);
+              (tao_yyvsp[(3) - (3)].idval) = 0;
 
-                      break;
-                    }
-                }
+              break;
+            }
 
-              AST_Type *interface_type =
+          if (scope_nt == AST_Decl::NT_component)
+            {
+              AST_Component *c =
+                AST_Component::narrow_from_decl (scope);
+              AST_Type *port_interface_type =
                 AST_Type::narrow_from_decl (d);
 
               AST_Component::port_description pd;
@@ -7570,7 +7574,7 @@ tao_yyreduce:
               idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
               pd.id = (tao_yyvsp[(3) - (3)].idval);
-              pd.impl = interface_type;
+              pd.impl = port_interface_type;
               pd.line_number = idl_global->lineno ();
               c->provides ().enqueue_tail (pd);
             }
