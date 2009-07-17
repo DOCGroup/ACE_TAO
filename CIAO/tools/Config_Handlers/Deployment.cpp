@@ -40,10 +40,18 @@ namespace CIAO
       ::CIAO::Config_Handlers::Domain
       domain (xercesc::DOMDocument const* d)
       {
+        //Initiate our Singleton as an ACE_TSS object (ensures thread
+        //specific storage
+        ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+
+
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == ACE_TEXT ("domain"))
+        if (e.name () == "domain")
         {
           ::CIAO::Config_Handlers::Domain r (e);
+
+          (*TSS_ID_Map)->resolve_idref();
+
           return r;
         }
 
@@ -59,10 +67,18 @@ namespace CIAO
       ::CIAO::Config_Handlers::deploymentPlan
       DeploymentPlan (xercesc::DOMDocument const* d)
       {
+        //Initiate our Singleton as an ACE_TSS object (ensures thread
+        //specific storage
+        ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+
+
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == ACE_TEXT ("DeploymentPlan"))
+        if (e.name () == "DeploymentPlan")
         {
           ::CIAO::Config_Handlers::deploymentPlan r (e);
+
+          (*TSS_ID_Map)->resolve_idref();
+
           return r;
         }
 
@@ -78,10 +94,18 @@ namespace CIAO
       ::CIAO::Config_Handlers::ImplementationArtifactDescription
       implementationArtifactDescription (xercesc::DOMDocument const* d)
       {
+        //Initiate our Singleton as an ACE_TSS object (ensures thread
+        //specific storage
+        ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+
+
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == ACE_TEXT ("implementationArtifactDescription"))
+        if (e.name () == "implementationArtifactDescription")
         {
           ::CIAO::Config_Handlers::ImplementationArtifactDescription r (e);
+
+          (*TSS_ID_Map)->resolve_idref();
+
           return r;
         }
 
@@ -97,10 +121,18 @@ namespace CIAO
       ::CIAO::Config_Handlers::ComponentInterfaceDescription
       componentInterfaceDescription (xercesc::DOMDocument const* d)
       {
+        //Initiate our Singleton as an ACE_TSS object (ensures thread
+        //specific storage
+        ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+
+
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == ACE_TEXT ("componentInterfaceDescription"))
+        if (e.name () == "componentInterfaceDescription")
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription r (e);
+
+          (*TSS_ID_Map)->resolve_idref();
+
           return r;
         }
 
@@ -116,10 +148,18 @@ namespace CIAO
       ::CIAO::Config_Handlers::ComponentImplementationDescription
       componentImplementationDescription (xercesc::DOMDocument const* d)
       {
+        //Initiate our Singleton as an ACE_TSS object (ensures thread
+        //specific storage
+        ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+
+
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == ACE_TEXT ("componentImplementationDescription"))
+        if (e.name () == "componentImplementationDescription")
         {
           ::CIAO::Config_Handlers::ComponentImplementationDescription r (e);
+
+          (*TSS_ID_Map)->resolve_idref();
+
           return r;
         }
 
@@ -135,10 +175,18 @@ namespace CIAO
       ::CIAO::Config_Handlers::ComponentPackageDescription
       componentPackageDescription (xercesc::DOMDocument const* d)
       {
+        //Initiate our Singleton as an ACE_TSS object (ensures thread
+        //specific storage
+        ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+
+
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == ACE_TEXT ("componentPackageDescription"))
+        if (e.name () == "componentPackageDescription")
         {
           ::CIAO::Config_Handlers::ComponentPackageDescription r (e);
+
+          (*TSS_ID_Map)->resolve_idref();
+
           return r;
         }
 
@@ -154,10 +202,18 @@ namespace CIAO
       ::CIAO::Config_Handlers::PackageConfiguration
       packageConfiguration (xercesc::DOMDocument const* d)
       {
+        //Initiate our Singleton as an ACE_TSS object (ensures thread
+        //specific storage
+        ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+
+
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == ACE_TEXT ("packageConfiguration"))
+        if (e.name () == "packageConfiguration")
         {
           ::CIAO::Config_Handlers::PackageConfiguration r (e);
+
+          (*TSS_ID_Map)->resolve_idref();
+
           return r;
         }
 
@@ -173,10 +229,18 @@ namespace CIAO
       ::CIAO::Config_Handlers::TopLevelPackageDescription
       topLevelPackageDescription (xercesc::DOMDocument const* d)
       {
+        //Initiate our Singleton as an ACE_TSS object (ensures thread
+        //specific storage
+        ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+
+
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == ACE_TEXT ("topLevelPackageDescription"))
+        if (e.name () == "topLevelPackageDescription")
         {
           ::CIAO::Config_Handlers::TopLevelPackageDescription r (e);
+
+          (*TSS_ID_Map)->resolve_idref();
+
           return r;
         }
 
@@ -336,6 +400,8 @@ namespace CIAO
         virtual ::CIAO::Config_Handlers::Writer::PlanSubcomponentPortEndpoint,
         virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
         virtual ::CIAO::Config_Handlers::Writer::ConnectionResourceDeploymentDescription,
+        virtual ::CIAO::Config_Handlers::Writer::PlanPropertyMapping,
+        virtual ::CIAO::Config_Handlers::Writer::PlanSubcomponentPropertyReference,
         virtual ::CIAO::Config_Handlers::Writer::ImplementationDependency,
         virtual ::CIAO::Config_Handlers::Writer::ArtifactDeploymentDescription,
         virtual ::CIAO::Config_Handlers::Writer::ResourceDeploymentDescription,
@@ -516,6 +582,8 @@ namespace CIAO
         virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
         virtual ::CIAO::Config_Handlers::Writer::AssemblyPropertyMapping,
         virtual ::CIAO::Config_Handlers::Writer::SubcomponentPropertyReference,
+        virtual ::CIAO::Config_Handlers::Writer::Locality,
+        virtual ::CIAO::Config_Handlers::Writer::LocalityKind,
         virtual ::CIAO::Config_Handlers::Writer::MonolithicImplementationDescription,
         virtual ::CIAO::Config_Handlers::Writer::ImplementationRequirement,
         virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,
@@ -595,6 +663,8 @@ namespace CIAO
         virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
         virtual ::CIAO::Config_Handlers::Writer::AssemblyPropertyMapping,
         virtual ::CIAO::Config_Handlers::Writer::SubcomponentPropertyReference,
+        virtual ::CIAO::Config_Handlers::Writer::Locality,
+        virtual ::CIAO::Config_Handlers::Writer::LocalityKind,
         virtual ::CIAO::Config_Handlers::Writer::MonolithicImplementationDescription,
         virtual ::CIAO::Config_Handlers::Writer::ImplementationRequirement,
         virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,
@@ -674,6 +744,8 @@ namespace CIAO
         virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
         virtual ::CIAO::Config_Handlers::Writer::AssemblyPropertyMapping,
         virtual ::CIAO::Config_Handlers::Writer::SubcomponentPropertyReference,
+        virtual ::CIAO::Config_Handlers::Writer::Locality,
+        virtual ::CIAO::Config_Handlers::Writer::LocalityKind,
         virtual ::CIAO::Config_Handlers::Writer::MonolithicImplementationDescription,
         virtual ::CIAO::Config_Handlers::Writer::ImplementationRequirement,
         virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,
@@ -754,6 +826,8 @@ namespace CIAO
         virtual ::CIAO::Config_Handlers::Writer::ExternalReferenceEndpoint,
         virtual ::CIAO::Config_Handlers::Writer::AssemblyPropertyMapping,
         virtual ::CIAO::Config_Handlers::Writer::SubcomponentPropertyReference,
+        virtual ::CIAO::Config_Handlers::Writer::Locality,
+        virtual ::CIAO::Config_Handlers::Writer::LocalityKind,
         virtual ::CIAO::Config_Handlers::Writer::MonolithicImplementationDescription,
         virtual ::CIAO::Config_Handlers::Writer::ImplementationRequirement,
         virtual ::CIAO::Config_Handlers::Writer::ResourceUsageKind,

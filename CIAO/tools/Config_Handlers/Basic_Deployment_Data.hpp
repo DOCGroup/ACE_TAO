@@ -70,9 +70,11 @@ namespace CIAO
 #include <memory>
 #include <list>
 #include "XMLSchema/Types.hpp"
-
+#include "XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
+#include "ace/TSS_T.h"
+#include "ace/Singleton.h"
 
 #include "XMI.hpp"
 
@@ -105,6 +107,8 @@ namespace CIAO
       ::XMLSchema::IDREF< ACE_TCHAR > const& idref () const;
       ::XMLSchema::IDREF< ACE_TCHAR >& idref ();
       void idref (::XMLSchema::IDREF< ACE_TCHAR > const& );
+      ::XSCRT::Type* idref_ptr ();
+
 
       protected:
       ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > idref_;
