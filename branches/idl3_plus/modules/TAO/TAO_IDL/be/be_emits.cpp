@@ -5,7 +5,7 @@
 #include "be_visitor.h"
 
 be_emits::be_emits (UTL_ScopedName *n,
-                    be_eventtype *emits_type)
+                    AST_EventType *emits_type)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_emits,
               n),

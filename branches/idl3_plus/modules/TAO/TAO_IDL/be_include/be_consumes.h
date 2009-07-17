@@ -16,7 +16,7 @@ class be_consumes : public virtual AST_Consumes,
 {
 public:
   be_consumes (UTL_ScopedName *n,
-               be_eventtype *consumes_type);
+               AST_EventType *consumes_type);
             
   virtual ~be_consumes (void);
   

@@ -5,7 +5,7 @@
 #include "be_visitor.h"
 
 be_uses::be_uses (UTL_ScopedName *n,
-                  be_interface *uses_type,
+                  AST_Interface *uses_type,
                   bool is_multiple)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_uses,

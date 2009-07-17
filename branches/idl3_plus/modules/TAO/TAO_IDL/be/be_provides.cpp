@@ -5,7 +5,7 @@
 #include "be_visitor.h"
 
 be_provides::be_provides (UTL_ScopedName *n,
-                          be_interface *provides_type)
+                          AST_Interface *provides_type)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_provides,
               n),

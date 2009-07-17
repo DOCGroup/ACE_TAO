@@ -81,6 +81,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_home.h"
 #include "ast_template_interface.h"
 #include "ast_porttype.h"
+#include "ast_provides.h"
+#include "ast_uses.h"
+#include "ast_publishes.h"
+#include "ast_emits.h"
+#include "ast_consumes.h"
 #include "ast_exception.h"
 #include "ast_enum.h"
 #include "ast_attribute.h"
@@ -957,4 +962,70 @@ AST_Generator::create_porttype (
                   0);
 
   return retval;
+}
+
+AST_Provides *
+AST_Generator::create_provides (UTL_ScopedName *n,
+                                AST_Interface *provides_type)
+{
+  AST_Provides *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Provides (n,
+                                provides_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Uses *
+AST_Generator::create_uses (UTL_ScopedName *n,
+                            AST_Interface *uses_type,
+                            bool is_multiple)
+{
+  AST_Uses *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Uses (n,
+                            uses_type,
+                            is_multiple),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Publishes *
+AST_Generator::create_publishes (UTL_ScopedName *n,
+                                 AST_EventType *publishes_type)
+{
+  AST_Publishes *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Publishes (n,
+                                 publishes_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Emits *
+AST_Generator::create_emits (UTL_ScopedName *n,
+                             AST_EventType *emits_type)
+{
+  AST_Emits *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Emits (n,
+                             emits_type),
+                  0);
+                  
+  return retval;              
+}
+AST_Consumes *
+AST_Generator::create_consumes (UTL_ScopedName *n,
+                                AST_EventType *consumes_type)
+{
+  AST_Consumes *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Consumes (n,
+                                consumes_type),
+                  0);
+                  
+  return retval;              
 }

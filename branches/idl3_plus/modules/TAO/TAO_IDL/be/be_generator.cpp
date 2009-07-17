@@ -83,6 +83,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_home.h"
 #include "be_template_interface.h"
 #include "be_porttype.h"
+#include "be_provides.h"
+#include "be_uses.h"
+#include "be_publishes.h"
+#include "be_emits.h"
+#include "be_consumes.h"
 #include "be_union.h"
 #include "be_union_fwd.h"
 #include "be_structure.h"
@@ -948,4 +953,70 @@ be_generator::create_porttype (
                   0);
 
   return retval;
+}
+
+AST_Provides *
+be_generator::create_provides (UTL_ScopedName *n,
+                               AST_Interface *provides_type)
+{
+  be_provides *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_provides (n,
+                               provides_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Uses *
+be_generator::create_uses (UTL_ScopedName *n,
+                           AST_Interface *uses_type,
+                           bool is_multiple)
+{
+  be_uses *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_uses (n,
+                           uses_type,
+                           is_multiple),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Publishes *
+be_generator::create_publishes (UTL_ScopedName *n,
+                                AST_EventType *publishes_type)
+{
+  be_publishes *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_publishes (n,
+                                publishes_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Emits *
+be_generator::create_emits (UTL_ScopedName *n,
+                            AST_EventType *emits_type)
+{
+  be_emits *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_emits (n,
+                            emits_type),
+                  0);
+                  
+  return retval;              
+}
+AST_Consumes *
+be_generator::create_consumes (UTL_ScopedName *n,
+                               AST_EventType *consumes_type)
+{
+  be_consumes *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_consumes (n,
+                               consumes_type),
+                  0);
+                  
+  return retval;              
 }

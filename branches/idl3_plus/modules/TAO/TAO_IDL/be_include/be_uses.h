@@ -16,7 +16,7 @@ class be_uses : public virtual AST_Uses,
 {
 public:
   be_uses (UTL_ScopedName *n,
-           be_interface *uses_type,
+           AST_Interface *uses_type,
            bool is_multiple);
             
   virtual ~be_uses (void);

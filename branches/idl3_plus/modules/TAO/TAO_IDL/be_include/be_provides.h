@@ -16,7 +16,7 @@ class be_provides : public virtual AST_Provides,
 {
 public:
   be_provides (UTL_ScopedName *n,
-               be_interface *provides_type);
+               AST_Interface *provides_type);
             
   virtual ~be_provides (void);
   
