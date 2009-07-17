@@ -16,7 +16,7 @@ namespace CIAO
     if (0 == this->fh_)
       {
         ACE_CString s = "Failed to open log file \"";
-        s += this->filename_;
+        s += this->filename_.c_str ();
         s += "\"";
         throw LoggerError (s.c_str());
       }
