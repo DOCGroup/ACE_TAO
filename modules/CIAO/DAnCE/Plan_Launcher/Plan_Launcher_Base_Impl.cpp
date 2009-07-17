@@ -514,13 +514,13 @@ void
 Plan_Launcher_Base_Impl::stop_plan()
 {
   bool stopped = false;
-  if (!is_empty (this->plan_uuid_))
+  if (ACE_OS::strlen (this->plan_uuid_) > 0)
     {
       stopped = true;
       DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
-                   ACE_TEXT("Stopping plan \"%C\"\n"), this->plan_uuid_.c_str()));
+                   ACE_TEXT("Stopping plan \"%C\"\n"), this->plan_uuid_));
 
-      if (!this->teardown_plan(this->plan_uuid_.c_str()))
+      if (!this->teardown_plan((const char *)this->plan_uuid_))
         {
           DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
                         ACE_TEXT("tear down assembly failed: unknown plan uuid.\n")));
@@ -761,7 +761,7 @@ Plan_Launcher_Base_Impl::check_mode_consistentness()
 ACE_CString
 Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
   {
-    ACE_CString src = s;
+    ACE_CString src((const char *)s);
     ACE_CString res;
     size_t pos_done = 0;
     while (pos_done < (size_t) src.length())
@@ -799,7 +799,7 @@ Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
 
             if (pos_end - pos_start > 1)
               {
-                ACE_Env_Value<const char*> val (src.substring (pos_start + 1, pos_end - pos_start - 1).c_str(), 0);
+                ACE_Env_Value<const ACE_TCHAR*> val ((ACE_TCHAR *)src.substring (pos_start + 1, pos_end - pos_start - 1).c_str(), 0);
                 res += val;
                 pos_done = pos_end;
               }

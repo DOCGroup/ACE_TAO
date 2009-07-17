@@ -81,7 +81,7 @@ public:
   {
     return 0 == s.length();
   }
-  ;
+
   void write_dam_ior(::Deployment::DomainApplicationManager_ptr dam);
 
   void create_external_connections(const ::Deployment::DeploymentPlan &plan,
@@ -97,7 +97,7 @@ public:
   ::DAnCE::ExecutionManagerDaemon_var em_;
 
   ACE_Vector<ACE_CString> cdr_plan_urls_;
-  ACE_CString plan_uuid_;
+  ACE_TCHAR* plan_uuid_;
   ACE_CString em_ior_;
   ACE_CString dam_ior_;
   ACE_Vector<ACE_CString> xml_plan_urls_;

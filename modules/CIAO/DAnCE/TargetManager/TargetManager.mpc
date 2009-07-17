@@ -14,7 +14,7 @@ project (DAnCE_TargetManagerDaemon_IDL) : ciaoidldefaults {
   }
 }
 
-project(DAnCE_TargetManagerDaemon_stub) : dance_lib, dance_deployment_stub {
+project(DAnCE_TargetManagerDaemon_stub) : dance_lib, dance_targetmanager_stub {
   sharedname = DAnCE_TargetManagerDaemon_stub
   dynamicflags = TARGETMANAGERDAEMON_STUB_BUILD_DLL
   after += DAnCE_TargetManagerDaemon_IDL
@@ -43,7 +43,8 @@ project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming, ior
   }
 }
 
-project(DAnCE_TargetManagerDaemon_svnt) : dance_lib, dance_deployment_svnt, ciao_config_handlers {
+project(DAnCE_TargetManagerDaemon_svnt) : dance_lib, dance_deployment_svnt, \
+    dance_targetmanager_stub, dance_targetmanager_skel, ciao_config_handlers {
   sharedname  = DAnCE_TargetManagerDaemon_svnt
 
   libs += DAnCE_TargetManagerDaemon_stub

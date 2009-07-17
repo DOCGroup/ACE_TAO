@@ -36,7 +36,7 @@ project(Plan_Launcher) : dance_lib, taolib, ciao_output, xerces, naming, dance_d
   }
 }
 
-project(Plan_Launcher_Exec) : dance_exe, xerces, naming, dance_executionmanager_stub, ciao_config_handlers {
+project(Plan_Launcher_Exec) : dance_exe, dance_logger, xerces, naming, dance_executionmanager_stub, ciao_config_handlers {
   after += Plan_Launcher
   libs += DAnCE_Plan_Launcher DAnCE_Plan_Launcher_Base
   exename = dance_plan_launcher

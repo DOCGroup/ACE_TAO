@@ -1,3 +1,15 @@
+Fri Jul 17 18:32:45 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_time.cpp (mktime): Set t_sys.wMilliseconds to 0 so
+          it's initialized properly.  Thanks to Ryan Carmichael
+          <RCarmichael at drs-tem dot com> for this fix.
+
+Fri Jul 17 14:36:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * apps/JAWS/server/HTTP_Response.cpp:
+        * apps/JAWS/server/JAWS_IO.cpp:
+          Resolved UNICODE compiler errors.
+
 Wed Jul 15 14:43:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/src/gperf.mpc:

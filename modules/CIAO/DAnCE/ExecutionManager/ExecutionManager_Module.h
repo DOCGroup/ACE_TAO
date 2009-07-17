@@ -54,11 +54,11 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
         bool rebind_plan_ns_;
         const ACE_TCHAR* rebind_plan_ns_ior_;
         bool port_indirection_;
-        ACE_Vector<ACE_TString> node_managers_;
+        ACE_Vector<ACE_CString> node_managers_;
         bool ignore_failure_;
-        const char *node_map_;
-        const char *domain_nc_;
-        
+        const ACE_TCHAR *node_map_;
+        const ACE_TCHAR *domain_nc_;
+
         SOptions()
             : exec_mgr_file_ (0),
               process_ns_ (false),
