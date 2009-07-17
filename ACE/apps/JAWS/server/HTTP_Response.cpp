@@ -237,46 +237,46 @@ HTTP_Response::cgi_response (void)
     cgi_options.command_line ("%s", this->request_.path ());
 
   // Build environment variables
-  cgi_options.setenv ("SERVER_SOFTWARE", "%s", "JAWS/1.0");
-  cgi_options.setenv ("SERVER_NAME", "%s", "localhost");
-  cgi_options.setenv ("GATEWAY_INTERFACE", "%s", "CGI/1.1");
+  cgi_options.setenv (ACE_TEXT ("SERVER_SOFTWARE"), ACE_TEXT ("%s"), ACE_TEXT ("JAWS/1.0"));
+  cgi_options.setenv (ACE_TEXT ("SERVER_NAME"), ACE_TEXT ("%s"), ACE_TEXT ("localhost"));
+  cgi_options.setenv (ACE_TEXT ("GATEWAY_INTERFACE"), ACE_TEXT ("%s"), ACE_TEXT ("CGI/1.1"));
 
-  cgi_options.setenv ("SERVER_PROTOCOL", "%s",
+  cgi_options.setenv (ACE_TEXT ("SERVER_PROTOCOL"), ACE_TEXT ("%s"),
                       this->request_.version ()
                       ? this->request_.version ()
                       : "HTTP/0.9");
-  cgi_options.setenv ("SERVER_PORT", "%d", 5432);
+  cgi_options.setenv (ACE_TEXT ("SERVER_PORT"), ACE_TEXT ("%d"), 5432);
 
-  cgi_options.setenv ("REQUEST_METHOD", "%s", this->request_.method ());
+  cgi_options.setenv (ACE_TEXT ("REQUEST_METHOD"), ACE_TEXT ("%s"), this->request_.method ());
 
   if (this->request_.path_info ())
     {
-      cgi_options.setenv ("PATH_INFO", "%s",
+      cgi_options.setenv (ACE_TEXT ("PATH_INFO"), ACE_TEXT ("%s"),
                           this->request_.path_info ());
-      cgi_options.setenv ("PATH_TRANSLATED",
-                          "%s/%s",
+      cgi_options.setenv (ACE_TEXT ("PATH_TRANSLATED"),
+                          ACE_TEXT ("%s/%s"),
                           HTTP_Config::instance ()->document_root (),
                           this->request_.path_info ());
     }
 
-  cgi_options.setenv ("SCRIPT_NAME",
-                      "%s",
+  cgi_options.setenv (ACE_TEXT ("SCRIPT_NAME"),
+                      ACE_TEXT ("%s"),
                       this->request_.uri ());
 
   if (this->request_.query_string ())
-    cgi_options.setenv ("QUERY_STRING",
-                        "%s",
+    cgi_options.setenv (ACE_TEXT ("QUERY_STRING"),
+                        ACE_TEXT ("%s"),
                         this->request_.query_string ());
 
   if (this->request_.cgi_env ())
     for (size_t i = 0; this->request_.cgi_env ()[i]; i += 2)
-      cgi_options.setenv (this->request_.cgi_env ()[i],
-                          "%s",
-                          this->request_.cgi_env ()[i+1]);
+      cgi_options.setenv ((const ACE_TCHAR *)this->request_.cgi_env ()[i],
+                          ACE_TEXT ("%s"),
+                          (const ACE_TCHAR *)this->request_.cgi_env ()[i+1]);
 
-  char buf[BUFSIZ];
-  char *p, *q;
-  ACE_OS::strcpy (buf, "HTTP_");
+  ACE_TCHAR buf[BUFSIZ];
+  ACE_TCHAR *p, *q;
+  ACE_OS::strcpy (buf, ACE_TEXT ("HTTP_"));
   p = q = buf + ACE_OS::strlen (buf);
 
   for (size_t i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; i++)
