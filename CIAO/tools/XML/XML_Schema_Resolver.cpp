@@ -16,7 +16,7 @@ namespace CIAO
   namespace XML
   {    
     Basic_Resolver::Basic_Resolver (const ACE_TCHAR *path)
-      : path_ (path)
+      : path_ (const_cast<char *>(path))
     {
     }
     
