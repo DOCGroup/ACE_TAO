@@ -26,7 +26,7 @@ namespace DAnCE
   }
 
   bool
-  Name_Utilities::bind_object (const char *name,
+  Name_Utilities::bind_object (const ACE_TCHAR *name,
                                CORBA::Object_ptr obj,
                                CosNaming::NamingContext_ptr ctx)
   {
@@ -121,7 +121,7 @@ namespace DAnCE
   }
 
   bool
-  Name_Utilities::unbind_object (const char *name,
+  Name_Utilities::unbind_object (const ACE_TCHAR *name,
                                  CosNaming::NamingContext_ptr ctx)
   {
     DANCE_TRACE ("Name_Utilities::unbind_object");
@@ -151,14 +151,14 @@ namespace DAnCE
   }
 
   void
-  Name_Utilities::build_name (const char *name,
+  Name_Utilities::build_name (const ACE_TCHAR *name,
                               CosNaming::Name &nm)
   {
     DANCE_TRACE ("Name_Utilities::build_name");
 
     /*ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>*/  char *safe_array (new char[ACE_OS::strlen (name) + 1]);
 
-    ACE_Tokenizer_T<char> parser (ACE_OS::strcpy (safe_array/*.get ()*/, name));
+    ACE_Tokenizer_T<char> parser (ACE_OS::strcpy (safe_array/*.get ()*/, (const char *)name));
     parser.delimiter ('/');
 
     char *next (0);
