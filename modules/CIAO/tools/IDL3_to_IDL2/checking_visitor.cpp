@@ -169,6 +169,36 @@ checking_visitor::visit_porttype (AST_PortType *)
 }
 
 int
+checking_visitor::visit_provides (AST_Provides *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_uses (AST_Uses *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_publishes (AST_Publishes *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_emits (AST_Emits *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_consumes (AST_Consumes *)
+{
+  return 0;
+}
+
+int
 checking_visitor::visit_eventtype (AST_EventType *node)
 {
   this->is_idl3_ = true;
