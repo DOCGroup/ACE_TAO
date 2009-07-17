@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 // $Id$
 /*
 
@@ -136,10 +136,10 @@ public:
 private:
   // Data.
 
-  AST_Type *pd_field_type;
+  AST_Type *ref_type_;
   // Base type for field.
 
-  Visibility pd_visibility;
+  Visibility visibility_;
   // Used with valuetype and eventtype fields.
   
   bool anonymous_type_;

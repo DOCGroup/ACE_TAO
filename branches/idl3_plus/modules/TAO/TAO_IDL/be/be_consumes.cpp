@@ -1,0 +1,39 @@
+// $Id$
+
+#include "be_consumes.h"
+#include "be_eventtype.h"
+#include "be_visitor.h"
+
+be_consumes::be_consumes (UTL_ScopedName *n,
+                          be_eventtype *consumes_type)
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_consumes,
+              n),
+    AST_Field (AST_Decl::NT_consumes,
+               consumes_type,
+               n),
+    AST_Consumes (n,
+                  consumes_type),
+    be_decl (AST_Decl::NT_consumes,
+             n)
+{
+}
+
+be_consumes::~be_consumes (void)
+{
+}
+
+int
+be_consumes::accept (be_visitor *visitor)
+{
+  return visitor->visit_consumes (this);
+}
+
+void
+be_consumes::destroy (void)
+{
+  this->AST_Consumes::destroy ();
+  this->be_decl::destroy ();
+}
+
+IMPL_NARROW_FROM_DECL(be_consumes)

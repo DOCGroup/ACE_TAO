@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 // $Id$
 
 #ifndef AST_TEMPLATE_INTERFACE_H

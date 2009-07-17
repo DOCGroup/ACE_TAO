@@ -7,7 +7,8 @@
 #include "ast_interface.h"
 #include "ace/Unbounded_Queue.h"
 
-class TAO_IDL_FE_Export AST_Component : public virtual AST_Interface
+class TAO_IDL_FE_Export AST_Component
+  : public virtual AST_Interface
 {
 public:
   AST_Component (void);
