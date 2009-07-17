@@ -1941,19 +1941,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("requiredUUID"))
+        if (n == "requiredUUID")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           requiredUUID (t);
         }
 
-        else if (n == ACE_TEXT ("requiredName"))
+        else if (n == "requiredName")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           requiredName (t);
         }
 
-        else if (n == ACE_TEXT ("requiredType"))
+        else if (n == "requiredType")
         {
           requiredType_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
           requiredType_->container (this);
@@ -1980,43 +1980,43 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("name"))
+        if (n == "name")
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == ACE_TEXT ("basePackage"))
+        else if (n == "basePackage")
         {
           ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
           basePackage (t);
         }
 
-        else if (n == ACE_TEXT ("specializedConfig"))
+        else if (n == "specializedConfig")
         {
           ::CIAO::Config_Handlers::PackageConfiguration t (e);
           specializedConfig (t);
         }
 
-        else if (n == ACE_TEXT ("selectRequirement"))
+        else if (n == "selectRequirement")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_selectRequirement (t);
         }
 
-        else if (n == ACE_TEXT ("configProperty"))
+        else if (n == "configProperty")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == ACE_TEXT ("referencedPackage"))
+        else if (n == "referencedPackage")
         {
           ::CIAO::Config_Handlers::ComponentPackageReference t (e);
           referencedPackage (t);
         }
 
-        else if (n == ACE_TEXT ("importedPackage"))
+        else if (n == "importedPackage")
         {
           ::CIAO::Config_Handlers::ComponentPackageImport t (e);
           importedPackage (t);
@@ -2031,10 +2031,11 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == ACE_TEXT ("id"))
+        if (n == "id")
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
+          (*ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance())->add_id(*id_, dynamic_cast<XSCRT::Type*> (this));
         }
 
         else 
@@ -2058,13 +2059,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("propertyName"))
+        if (n == "propertyName")
         {
           propertyName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           propertyName_->container (this);
         }
 
-        else if (n == ACE_TEXT ("instance"))
+        else if (n == "instance")
         {
           instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
           instance_->container (this);
@@ -2091,19 +2092,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("name"))
+        if (n == "name")
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == ACE_TEXT ("externalName"))
+        else if (n == "externalName")
         {
           externalName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           externalName_->container (this);
         }
 
-        else if (n == ACE_TEXT ("delegatesTo"))
+        else if (n == "delegatesTo")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (e));
           add_delegatesTo (t);
@@ -2124,12 +2125,12 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (e.value ());
 
-      if (v == ACE_TEXT ("SameNodeAnyProcess")) v_ = SameNodeAnyProcess_l;
-      else if (v == ACE_TEXT ("SameNodeSameProcess")) v_ = SameNodeSameProcess_l;
-      else if (v == ACE_TEXT ("SameNodeDifferentProcess")) v_ = SameNodeDifferentProcess_l;
-      else if (v == ACE_TEXT ("DifferentNode")) v_ = DifferentNode_l;
-      else if (v == ACE_TEXT ("DifferentProcess")) v_ = DifferentProcess_l;
-      else if (v == ACE_TEXT ("NoConstraint")) v_ = NoConstraint_l;
+      if (v == "SameNodeAnyProcess") v_ = SameNodeAnyProcess_l;
+      else if (v == "SameNodeSameProcess") v_ = SameNodeSameProcess_l;
+      else if (v == "SameNodeDifferentProcess") v_ = SameNodeDifferentProcess_l;
+      else if (v == "DifferentNode") v_ = DifferentNode_l;
+      else if (v == "DifferentProcess") v_ = DifferentProcess_l;
+      else if (v == "NoConstraint") v_ = NoConstraint_l;
       else 
       {
       }
@@ -2141,12 +2142,12 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
-      if (v == ACE_TEXT ("SameNodeAnyProcess")) v_ = SameNodeAnyProcess_l;
-      else if (v == ACE_TEXT ("SameNodeSameProcess")) v_ = SameNodeSameProcess_l;
-      else if (v == ACE_TEXT ("SameNodeDifferentProcess")) v_ = SameNodeDifferentProcess_l;
-      else if (v == ACE_TEXT ("DifferentNode")) v_ = DifferentNode_l;
-      else if (v == ACE_TEXT ("DifferentProcess")) v_ = DifferentProcess_l;
-      else if (v == ACE_TEXT ("NoConstraint")) v_ = NoConstraint_l;
+      if (v == "SameNodeAnyProcess") v_ = SameNodeAnyProcess_l;
+      else if (v == "SameNodeSameProcess") v_ = SameNodeSameProcess_l;
+      else if (v == "SameNodeDifferentProcess") v_ = SameNodeDifferentProcess_l;
+      else if (v == "DifferentNode") v_ = DifferentNode_l;
+      else if (v == "DifferentProcess") v_ = DifferentProcess_l;
+      else if (v == "NoConstraint") v_ = NoConstraint_l;
       else 
       {
       }
@@ -2174,13 +2175,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("constraint"))
+        if (n == "constraint")
         {
           constraint_ = ::std::auto_ptr< ::CIAO::Config_Handlers::LocalityKind > (new ::CIAO::Config_Handlers::LocalityKind (e));
           constraint_->container (this);
         }
 
-        else if (n == ACE_TEXT ("constrainedInstance"))
+        else if (n == "constrainedInstance")
         {
           constrainedInstance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
           constrainedInstance_->container (this);
@@ -2207,25 +2208,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("instance"))
+        if (n == "instance")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (e));
           add_instance (t);
         }
 
-        else if (n == ACE_TEXT ("connection"))
+        else if (n == "connection")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::AssemblyConnectionDescription (e));
           add_connection (t);
         }
 
-        else if (n == ACE_TEXT ("externalProperty"))
+        else if (n == "externalProperty")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::AssemblyPropertyMapping (e));
           add_externalProperty (t);
         }
 
-        else if (n == ACE_TEXT ("locality"))
+        else if (n == "locality")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Locality (e));
           add_locality (t);
@@ -2252,25 +2253,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("nodeExecParameter"))
+        if (n == "nodeExecParameter")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_nodeExecParameter (t);
         }
 
-        else if (n == ACE_TEXT ("componentExecParameter"))
+        else if (n == "componentExecParameter")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_componentExecParameter (t);
         }
 
-        else if (n == ACE_TEXT ("deployRequirement"))
+        else if (n == "deployRequirement")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationRequirement (e));
           add_deployRequirement (t);
         }
 
-        else if (n == ACE_TEXT ("primaryArtifact"))
+        else if (n == "primaryArtifact")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::NamedImplementationArtifact (e));
           add_primaryArtifact (t);
@@ -2297,55 +2298,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("label"))
+        if (n == "label")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == ACE_TEXT ("UUID"))
+        else if (n == "UUID")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == ACE_TEXT ("implements"))
+        else if (n == "implements")
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           implements (t);
         }
 
-        else if (n == ACE_TEXT ("assemblyImpl"))
+        else if (n == "assemblyImpl")
         {
           ::CIAO::Config_Handlers::ComponentAssemblyDescription t (e);
           assemblyImpl (t);
         }
 
-        else if (n == ACE_TEXT ("monolithicImpl"))
+        else if (n == "monolithicImpl")
         {
           ::CIAO::Config_Handlers::MonolithicImplementationDescription t (e);
           monolithicImpl (t);
         }
 
-        else if (n == ACE_TEXT ("configProperty"))
+        else if (n == "configProperty")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == ACE_TEXT ("capability"))
+        else if (n == "capability")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Capability (e));
           add_capability (t);
         }
 
-        else if (n == ACE_TEXT ("dependsOn"))
+        else if (n == "dependsOn")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
-        else if (n == ACE_TEXT ("infoProperty"))
+        else if (n == "infoProperty")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
@@ -2360,7 +2361,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == ACE_TEXT ("href"))
+        if (n == "href")
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);
@@ -2387,55 +2388,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("label"))
+        if (n == "label")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == ACE_TEXT ("UUID"))
+        else if (n == "UUID")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == ACE_TEXT ("implements"))
+        else if (n == "implements")
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           implements (t);
         }
 
-        else if (n == ACE_TEXT ("assemblyImpl"))
+        else if (n == "assemblyImpl")
         {
           ::CIAO::Config_Handlers::ComponentAssemblyDescription t (e);
           assemblyImpl (t);
         }
 
-        else if (n == ACE_TEXT ("monolithicImpl"))
+        else if (n == "monolithicImpl")
         {
           ::CIAO::Config_Handlers::MonolithicImplementationDescription t (e);
           monolithicImpl (t);
         }
 
-        else if (n == ACE_TEXT ("configProperty"))
+        else if (n == "configProperty")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == ACE_TEXT ("capability"))
+        else if (n == "capability")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Capability (e));
           add_capability (t);
         }
 
-        else if (n == ACE_TEXT ("dependsOn"))
+        else if (n == "dependsOn")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
-        else if (n == ACE_TEXT ("infoProperty"))
+        else if (n == "infoProperty")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
@@ -2450,7 +2451,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == ACE_TEXT ("href"))
+        if (n == "href")
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);
@@ -5246,7 +5247,7 @@ namespace CIAO
       void ComponentPackageReference::
       requiredUUID (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("requiredUUID", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("requiredUUID"), top_ ()));
         Traversal::ComponentPackageReference::requiredUUID (o);
         pop_ ();
       }
@@ -5254,7 +5255,7 @@ namespace CIAO
       void ComponentPackageReference::
       requiredName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("requiredName", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("requiredName"), top_ ()));
         Traversal::ComponentPackageReference::requiredName (o);
         pop_ ();
       }
@@ -5262,7 +5263,7 @@ namespace CIAO
       void ComponentPackageReference::
       requiredType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("requiredType", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("requiredType"), top_ ()));
         Traversal::ComponentPackageReference::requiredType (o);
         pop_ ();
       }
@@ -5291,7 +5292,7 @@ namespace CIAO
       void SubcomponentInstantiationDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::SubcomponentInstantiationDescription::name (o);
         pop_ ();
       }
@@ -5299,7 +5300,7 @@ namespace CIAO
       void SubcomponentInstantiationDescription::
       basePackage (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("basePackage", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("basePackage"), top_ ()));
         Traversal::SubcomponentInstantiationDescription::basePackage (o);
         pop_ ();
       }
@@ -5307,7 +5308,7 @@ namespace CIAO
       void SubcomponentInstantiationDescription::
       specializedConfig (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("specializedConfig", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("specializedConfig"), top_ ()));
         Traversal::SubcomponentInstantiationDescription::specializedConfig (o);
         pop_ ();
       }
@@ -5315,7 +5316,7 @@ namespace CIAO
       void SubcomponentInstantiationDescription::
       selectRequirement_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("selectRequirement", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("selectRequirement"), top_ ()));
       }
 
       void SubcomponentInstantiationDescription::
@@ -5334,7 +5335,7 @@ namespace CIAO
       void SubcomponentInstantiationDescription::
       configProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("configProperty"), top_ ()));
       }
 
       void SubcomponentInstantiationDescription::
@@ -5353,7 +5354,7 @@ namespace CIAO
       void SubcomponentInstantiationDescription::
       referencedPackage (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("referencedPackage", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("referencedPackage"), top_ ()));
         Traversal::SubcomponentInstantiationDescription::referencedPackage (o);
         pop_ ();
       }
@@ -5361,7 +5362,7 @@ namespace CIAO
       void SubcomponentInstantiationDescription::
       importedPackage (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("importedPackage", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("importedPackage"), top_ ()));
         Traversal::SubcomponentInstantiationDescription::importedPackage (o);
         pop_ ();
       }
@@ -5369,7 +5370,7 @@ namespace CIAO
       void SubcomponentInstantiationDescription::
       id (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::SubcomponentInstantiationDescription::id (o);
         attr_ (0);
@@ -5399,7 +5400,7 @@ namespace CIAO
       void SubcomponentPropertyReference::
       propertyName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("propertyName", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("propertyName"), top_ ()));
         Traversal::SubcomponentPropertyReference::propertyName (o);
         pop_ ();
       }
@@ -5407,7 +5408,7 @@ namespace CIAO
       void SubcomponentPropertyReference::
       instance (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("instance", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("instance"), top_ ()));
         Traversal::SubcomponentPropertyReference::instance (o);
         pop_ ();
       }
@@ -5436,7 +5437,7 @@ namespace CIAO
       void AssemblyPropertyMapping::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
         Traversal::AssemblyPropertyMapping::name (o);
         pop_ ();
       }
@@ -5444,7 +5445,7 @@ namespace CIAO
       void AssemblyPropertyMapping::
       externalName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("externalName", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("externalName"), top_ ()));
         Traversal::AssemblyPropertyMapping::externalName (o);
         pop_ ();
       }
@@ -5452,7 +5453,7 @@ namespace CIAO
       void AssemblyPropertyMapping::
       delegatesTo_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("delegatesTo", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("delegatesTo"), top_ ()));
       }
 
       void AssemblyPropertyMapping::
@@ -5533,7 +5534,7 @@ namespace CIAO
       void Locality::
       constraint (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("constraint", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("constraint"), top_ ()));
         Traversal::Locality::constraint (o);
         pop_ ();
       }
@@ -5541,7 +5542,7 @@ namespace CIAO
       void Locality::
       constrainedInstance (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("constrainedInstance", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("constrainedInstance"), top_ ()));
         Traversal::Locality::constrainedInstance (o);
         pop_ ();
       }
@@ -5570,7 +5571,7 @@ namespace CIAO
       void ComponentAssemblyDescription::
       instance_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("instance", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("instance"), top_ ()));
       }
 
       void ComponentAssemblyDescription::
@@ -5589,7 +5590,7 @@ namespace CIAO
       void ComponentAssemblyDescription::
       connection_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("connection"), top_ ()));
       }
 
       void ComponentAssemblyDescription::
@@ -5608,7 +5609,7 @@ namespace CIAO
       void ComponentAssemblyDescription::
       externalProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("externalProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("externalProperty"), top_ ()));
       }
 
       void ComponentAssemblyDescription::
@@ -5627,7 +5628,7 @@ namespace CIAO
       void ComponentAssemblyDescription::
       locality_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("locality", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("locality"), top_ ()));
       }
 
       void ComponentAssemblyDescription::
@@ -5667,7 +5668,7 @@ namespace CIAO
       void MonolithicImplementationDescription::
       nodeExecParameter_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("nodeExecParameter", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("nodeExecParameter"), top_ ()));
       }
 
       void MonolithicImplementationDescription::
@@ -5686,7 +5687,7 @@ namespace CIAO
       void MonolithicImplementationDescription::
       componentExecParameter_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("componentExecParameter", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("componentExecParameter"), top_ ()));
       }
 
       void MonolithicImplementationDescription::
@@ -5705,7 +5706,7 @@ namespace CIAO
       void MonolithicImplementationDescription::
       deployRequirement_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("deployRequirement", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployRequirement"), top_ ()));
       }
 
       void MonolithicImplementationDescription::
@@ -5724,7 +5725,7 @@ namespace CIAO
       void MonolithicImplementationDescription::
       primaryArtifact_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("primaryArtifact", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("primaryArtifact"), top_ ()));
       }
 
       void MonolithicImplementationDescription::
@@ -5764,7 +5765,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::ComponentImplementationDescription::label (o);
         pop_ ();
       }
@@ -5772,7 +5773,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       UUID (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("UUID"), top_ ()));
         Traversal::ComponentImplementationDescription::UUID (o);
         pop_ ();
       }
@@ -5780,7 +5781,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       implements (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("implements", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("implements"), top_ ()));
         Traversal::ComponentImplementationDescription::implements (o);
         pop_ ();
       }
@@ -5788,7 +5789,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       assemblyImpl (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("assemblyImpl", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("assemblyImpl"), top_ ()));
         Traversal::ComponentImplementationDescription::assemblyImpl (o);
         pop_ ();
       }
@@ -5796,7 +5797,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       monolithicImpl (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("monolithicImpl", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("monolithicImpl"), top_ ()));
         Traversal::ComponentImplementationDescription::monolithicImpl (o);
         pop_ ();
       }
@@ -5804,7 +5805,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       configProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("configProperty"), top_ ()));
       }
 
       void ComponentImplementationDescription::
@@ -5823,7 +5824,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       capability_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("capability", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("capability"), top_ ()));
       }
 
       void ComponentImplementationDescription::
@@ -5842,7 +5843,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       dependsOn_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dependsOn", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("dependsOn"), top_ ()));
       }
 
       void ComponentImplementationDescription::
@@ -5861,7 +5862,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       infoProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("infoProperty"), top_ ()));
       }
 
       void ComponentImplementationDescription::
@@ -5880,7 +5881,7 @@ namespace CIAO
       void ComponentImplementationDescription::
       href (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("href"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::ComponentImplementationDescription::href (o);
         attr_ (0);
@@ -5910,7 +5911,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       label (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("label"), top_ ()));
         Traversal::ConnectorImplementationDescription::label (o);
         pop_ ();
       }
@@ -5918,7 +5919,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       UUID (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("UUID"), top_ ()));
         Traversal::ConnectorImplementationDescription::UUID (o);
         pop_ ();
       }
@@ -5926,7 +5927,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       implements (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("implements", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("implements"), top_ ()));
         Traversal::ConnectorImplementationDescription::implements (o);
         pop_ ();
       }
@@ -5934,7 +5935,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       assemblyImpl (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("assemblyImpl", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("assemblyImpl"), top_ ()));
         Traversal::ConnectorImplementationDescription::assemblyImpl (o);
         pop_ ();
       }
@@ -5942,7 +5943,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       monolithicImpl (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("monolithicImpl", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("monolithicImpl"), top_ ()));
         Traversal::ConnectorImplementationDescription::monolithicImpl (o);
         pop_ ();
       }
@@ -5950,7 +5951,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       configProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("configProperty"), top_ ()));
       }
 
       void ConnectorImplementationDescription::
@@ -5969,7 +5970,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       capability_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("capability", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("capability"), top_ ()));
       }
 
       void ConnectorImplementationDescription::
@@ -5988,7 +5989,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       dependsOn_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dependsOn", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("dependsOn"), top_ ()));
       }
 
       void ConnectorImplementationDescription::
@@ -6007,7 +6008,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       infoProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("infoProperty"), top_ ()));
       }
 
       void ConnectorImplementationDescription::
@@ -6026,7 +6027,7 @@ namespace CIAO
       void ConnectorImplementationDescription::
       href (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("href"), ACE_TEXT (""), top_ ());
         attr_ (&a);
         Traversal::ConnectorImplementationDescription::href (o);
         attr_ (0);

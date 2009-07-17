@@ -43,7 +43,8 @@ project(DAnCE_TargetManager_Impl) : dance_lib, ciao_config_handlers, naming, ior
   }
 }
 
-project(DAnCE_TargetManagerDaemon_svnt) : dance_lib, dance_deployment_svnt, ciao_config_handlers {
+project(DAnCE_TargetManagerDaemon_svnt) : dance_lib, dance_deployment_svnt, \
+    dance_targetmanager_stub, dance_targetmanager_skel, ciao_config_handlers {
   sharedname  = DAnCE_TargetManagerDaemon_svnt
 
   libs += DAnCE_TargetManagerDaemon_stub
