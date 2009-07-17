@@ -4812,49 +4812,53 @@ provides_decl : IDL_PROVIDES interface_type id
         {
 // provides_decl : IDL_PROVIDES interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Component *c = AST_Component::narrow_from_scope (s);
+          AST_Decl *scope = ScopeAsDecl (s);
+          AST_Decl::NodeType scope_nt = scope->node_type ();
+          bool so_far_so_good = true;
 
-          if (c != 0)
+          AST_Decl *d = s->lookup_by_name ($2,
+                                           true);
+          if (d == 0)
             {
-              AST_Decl *d = s->lookup_by_name ($2,
-                                               true);
-              if (0 == d)
+              idl_global->err ()->lookup_error ($2);
+              so_far_so_good = false;
+            }
+          else if (d->node_type () != AST_Decl::NT_interface)
+            {
+              // Nothing else but CORBA::Object can have
+              // this identifier.
+              int comp_result =
+                ACE_OS::strcmp (d->local_name ()->get_string (),
+                                "Object");
+
+              // Simple provides port must use IDL interface
+              // or CORBA::Object.
+              if (comp_result != 0)
                 {
-                  idl_global->err ()->lookup_error ($2);
-
-                  $2->destroy ();
-                  delete $2;
-                  $2 = 0;
-
-                  $3->destroy ();
-                  delete $3;
-                  $3 = 0;
-
-                  break;
+                  idl_global->err ()->interface_expected (d);
+                  so_far_so_good = false;
                 }
-              else if (d->node_type () != AST_Decl::NT_interface)
-                {
-                  // Nothing else but CORBA::Object can have
-                  // this identifier.
-                  if (ACE_OS::strcmp (d->local_name ()->get_string (),
-                                      "Object")
-                        != 0)
-                    {
-                      idl_global->err ()->interface_expected (d);
+            }
 
-                      $2->destroy ();
-                      delete $2;
-                      $2 = 0;
+          // Clean up and move on.
+          if (! so_far_so_good)
+            {
+              $2->destroy ();
+              delete $2;
+              $2 = 0;
 
-                      $3->destroy ();
-                      delete $3;
-                      $3 = 0;
+              $3->destroy ();
+              delete $3;
+              $3 = 0;
 
-                      break;
-                    }
-                }
+              break;
+            }
 
-              AST_Type *interface_type =
+          if (scope_nt == AST_Decl::NT_component)
+            {
+              AST_Component *c =
+                AST_Component::narrow_from_decl (scope);
+              AST_Type *port_interface_type =
                 AST_Type::narrow_from_decl (d);
 
               AST_Component::port_description pd;
@@ -4863,7 +4867,7 @@ provides_decl : IDL_PROVIDES interface_type id
               idl_global->original_local_name ($3);
 
               pd.id = $3;
-              pd.impl = interface_type;
+              pd.impl = port_interface_type;
               pd.line_number = idl_global->lineno ();
               c->provides ().enqueue_tail (pd);
             }

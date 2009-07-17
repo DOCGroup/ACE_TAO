@@ -59,7 +59,7 @@ public:
   AST_Interface **supports (void) const;
 
   long n_supports (void) const;
-  
+
   typedef ACE_Unbounded_Queue<port_description> PORTS;
 
   PORTS &provides (void);
