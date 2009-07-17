@@ -162,6 +162,11 @@ public:
       , NT_type                     // Template interface parameter
       , NT_fixed                    // Denotes (unsupported) fixed type
       , NT_porttype                 // Denotes a port type
+      , NT_provides                 // Denotes a facet
+      , NT_uses                     // Denotes a receptacle
+      , NT_publishes                // Denotes an event source
+      , NT_emits                    // Denotes a one-to-one event source
+      , NT_consumes                 // Denotes an event sink
   };
 
   // Operations.

@@ -124,7 +124,7 @@ AST_Attribute::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, (this->pd_readonly == true ?
                     "readonly attribute " : "attribute "));
-  AST_Field::dump (o);
+  this->AST_Field::dump (o);
 }
 
 int
@@ -317,7 +317,5 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 
   return t;
 }
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Attribute)

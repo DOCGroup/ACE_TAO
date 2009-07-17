@@ -1,3 +1,51 @@
+Fri Jul 17 19:03:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/ast/ast_provides.cpp:
+        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_publishes.cpp:
+        * TAO_IDL/ast/ast_emits.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_uses.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_consumes.h:
+
+          New files, making component and porttype
+          port declarations full-fledged nodes in
+          the AST. Formerly they were stored as
+          a list of info structs.
+
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+
+          Changes corresponding to the new nodes
+          above, and cosmetic changes.
+          
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        
+          Added new visit_* methods corresponding to the new
+          nodes.
+
 Fri Jul 17 15:07:49 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

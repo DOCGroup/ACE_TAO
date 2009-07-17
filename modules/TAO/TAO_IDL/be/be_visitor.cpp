@@ -117,6 +117,36 @@ int be_visitor::visit_porttype (be_porttype *)
   return 0;
 }
 
+int
+be_visitor::visit_provides (be_provides *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_uses (be_uses *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_publishes (be_publishes *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_emits (be_emits *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_consumes (be_consumes *)
+{
+  return 0;
+}
+
 int be_visitor::visit_home (be_home *)
 {
   return 0;
