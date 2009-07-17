@@ -1,3 +1,8 @@
+Fri Jul 17 10:26:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tools/XML/XML_Schema_Resolver.cpp:
+          Resolved UNICODE compiler errors.
+
 Fri Jul 17 07:06:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
