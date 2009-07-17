@@ -86,18 +86,15 @@ project(Lem_Export_exec) : ciao_executor   {
   }
 
   Source_Files {
-    Lem_ExportEC.cpp
     Lem_Export_exec.cpp
   }
 
   Header_Files {
-    Lem_ExportEC.h
     Lem_Export_exec.h
     Lem_Export_exec_export.h
   }
 
   Inline_Files {
-    Lem_ExportEC.inl
   }
 }
 

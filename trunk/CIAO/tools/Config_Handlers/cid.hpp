@@ -41,9 +41,11 @@ namespace CIAO
 #include <memory>
 #include <list>
 #include "XMLSchema/Types.hpp"
-
+#include "XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
+#include "ace/TSS_T.h"
+#include "ace/Singleton.h"
 
 #include "Basic_Deployment_Data.hpp"
 
