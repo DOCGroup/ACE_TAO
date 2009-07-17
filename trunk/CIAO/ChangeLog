@@ -1,3 +1,9 @@
+Fri Jul 17 21:18:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
+
+          Disabled this.  there's lots wrong with it. 
+        
 Fri Jul 17 18:06:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplication/DomainApplication.mpc:
@@ -9,7 +15,7 @@ Fri Jul 17 18:06:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/Minimum/Receiver/Receiver.mpc:
 
           Linking fixes for Windows.
-        
+
         * tools/Config_Handlers/Basic_Deployment_Data.hpp:
         * tools/Config_Handlers/Basic_Deployment_Data.cpp:
         * tools/Config_Handlers/Deployment.hpp:
@@ -36,8 +42,8 @@ Fri Jul 17 18:06:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/toplevel.hpp:
 
           Updated generated code to 1) update to latest version of XSC,
-          2) resolve unicode errors in the generator. 
-        
+          2) resolve unicode errors in the generator.
+
 Fri Jul 17 14:41:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
