@@ -59,6 +59,11 @@ public:
   virtual int visit_component (AST_Component *node);
   virtual int visit_component_fwd (AST_ComponentFwd *node);
   virtual int visit_porttype (AST_PortType *node);
+  virtual int visit_provides (AST_Provides *node);
+  virtual int visit_uses (AST_Uses *node);
+  virtual int visit_publishes (AST_Publishes *node);
+  virtual int visit_emits (AST_Emits *node);
+  virtual int visit_consumes (AST_Consumes *node);
   virtual int visit_eventtype (AST_EventType *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);

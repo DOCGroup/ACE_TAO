@@ -1,10 +1,20 @@
+Fri Jul 17 19:07:47 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        
+          Added new visit_* methods corresponding to new nodes
+          added in the IDL compiler front end.
+
 Wed Jul  8 22:44:15 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/checking_visitor.h:
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
         * tools/IDL3_to_IDL2/basic_visitor.h:
         * tools/IDL3_to_IDL2/checking_visitor.cpp:
-        
+
           Added new visit_template_interface() and
           visit_porttype() methods to keep these classes up to
           date with the IDL compiler frontend. The methods are

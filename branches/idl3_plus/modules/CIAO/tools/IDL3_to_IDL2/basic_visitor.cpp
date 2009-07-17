@@ -278,6 +278,36 @@ basic_visitor::visit_porttype (AST_PortType *)
 }
 
 int
+basic_visitor::visit_provides (AST_Provides *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_uses (AST_Uses *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_publishes (AST_Publishes *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_emits (AST_Emits *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_consumes (AST_Consumes *)
+{
+  return 0;
+}
+
+int
 basic_visitor::visit_factory  (AST_Factory *node)
 {
   if (node->imported ())
