@@ -407,7 +407,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
           else if (this->options_.process_ns_)
             {
               const int argc_ns = 1;
-              char* argv_ns[argc_ns];
+              ACE_TCHAR* argv_ns[argc_ns];
               argv_ns[0] = argv[0];
               naming_obj = orb->resolve_initial_references ("NameService");
               if (0 != this->options_.process_ns_file_)
@@ -618,7 +618,7 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   }
   {
     CORBA::Any val;
-    val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.cs_path_),0);
+    val <<= CORBA::Any::from_string (CORBA::string_dup (const_cast<char *>(this->options_.cs_path_)),0);
     props.bind (CIAO::Deployment::SERVER_EXECUTABLE, val);
   }
   {
@@ -628,19 +628,19 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   }
   {
     CORBA::Any val;
-    val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.server_args_),0);
+    val <<= CORBA::Any::from_string (CORBA::string_dup (const_cast<char *>(this->options_.server_args_)),0);
     props.bind (CIAO::Deployment::SERVER_ARGUMENTS, val);
   }
   if (this->options_.instance_nc_)
     {
       CORBA::Any val;
-      val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.instance_nc_), 0);
+      val <<= CORBA::Any::from_string (CORBA::string_dup (const_cast<char *>(this->options_.instance_nc_)), 0);
       props.bind (DAnCE::INSTANCE_NC, val);
     }
   if (this->options_.domain_nc_)
     {
       CORBA::Any val;
-      val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.domain_nc_), 0);
+      val <<= CORBA::Any::from_string (CORBA::string_dup (const_cast<char *>(this->options_.domain_nc_)), 0);
       props.bind (DAnCE::DOMAIN_NC, val);
     }
 }
