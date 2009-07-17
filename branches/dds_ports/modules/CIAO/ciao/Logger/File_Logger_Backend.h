@@ -23,7 +23,7 @@ namespace CIAO
     {
     public:
       File_Logger_Backend (const ACE_TCHAR * fname)
-          : fh_ (0), filename_ (fname) {}
+          : fh_ (0), filename_ ((char *)fname) {}
 
       virtual ~File_Logger_Backend (void)
       {
@@ -44,7 +44,7 @@ namespace CIAO
 
     private:
       FILE * fh_;
-      ACE_TString filename_;
+      ACE_CString filename_;
     };
 
 } // CIAO

@@ -109,7 +109,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == ACE_TEXT ("package"))
+        if (n == "package")
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PackageConfiguration (e));
           add_package (t);
@@ -320,7 +320,7 @@ namespace CIAO
       void TopLevelPackageDescription::
       package_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("package", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("package"), top_ ()));
       }
 
       void TopLevelPackageDescription::
