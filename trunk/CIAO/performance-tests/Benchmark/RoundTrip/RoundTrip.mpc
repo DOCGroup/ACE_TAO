@@ -111,7 +111,7 @@ project(Benchmark_RoundTrip_svnt) : ciao_servant {
   }
 }
 
-project (RoundTrip_client) : ccm_stub, valuetype, strategies {
+project (RoundTrip_client) : ccm_stub, valuetype, strategies, avoids_ace_for_tao {
   exename = client
   after += Benchmark_RoundTrip_stub
   libs  += RoundTrip_stub Benchmark_stub
