@@ -800,7 +800,7 @@ Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
             if (pos_end - pos_start > 1)
               {
                 ACE_Env_Value<const ACE_TCHAR*> val ((ACE_TCHAR *)src.substring (pos_start + 1, pos_end - pos_start - 1).c_str(), 0);
-                res += val;
+                //res += val;
                 pos_done = pos_end;
               }
             else

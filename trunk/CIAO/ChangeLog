@@ -1,9 +1,17 @@
+Sat Jul 18 09:20:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Starter/Starter.h:
+        * DAnCE/Starter/Starter.cpp:
+        * tests/CIAO_ComponentServer/Activator/client.cpp:
+          Fixed UNICODE compiler errors.
+
 Sat Jul 18 05:12:00 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Logger_Service.cpp:
 
-          stab at some unicode problems on Windows. 
-        
+          stab at some unicode problems on Windows.
+
 Sat Jul 18 05:01:32 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:

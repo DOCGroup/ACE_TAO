@@ -59,10 +59,10 @@ namespace DAnCE
       CORBA::Object_ptr initExecutionManager();
       void runPlanLauncher();
       void argCopyForNaming (int & c, char **& v);
-      void argCopyForNode (const char * node, int & c, char **& v);
-      void argCopyForEM (int & c, char **& v);
-      void argCopyForPL (int & c, char **& v);
-      void releaseArgs (int c, char ** v);
+      void argCopyForNode (const char * node, int & c, ACE_TCHAR **& v);
+      void argCopyForEM (int & c, ACE_TCHAR **& v);
+      void argCopyForPL (int & c, ACE_TCHAR **& v);
+      void releaseArgs (int c, ACE_TCHAR ** v);
       static bool isPossibleOption(const char* opt);
 
       void configure_logging_backend (void);
