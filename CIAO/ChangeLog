@@ -1,14 +1,23 @@
+Sat Jul 18 05:01:32 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/MPC/config/dance_tm_daemon.mpb:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/TargetManager/TargetManager.mpc:
+
+          Static linking fixes. 
+        
 Sat Jul 18 00:50:20 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/CIAO_Interfaces.mpc:
-        
-          linker fixes. 
-        
+
+          linker fixes.
+
         * examples/Hello/Receiver/Receiver.mpc:
-        
+
           this mpc specified more than was generated, causing it to be
           re-run.
-          
+
 Fri Jul 17 21:18:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
