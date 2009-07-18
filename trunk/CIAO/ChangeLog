@@ -1,3 +1,8 @@
+Sat Jul 18 09:34:30 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+          Corrected a coding error during last commit.
+
 Sat Jul 18 09:20:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
