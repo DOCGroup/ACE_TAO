@@ -10,6 +10,10 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#ifdef __INTEL_COMPILER 
+#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+#endif
+
 #if !defined (ACE_SIZEOF_LONG_DOUBLE)
 # if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
    // Size of long double in GCC 3.3 is 8.
