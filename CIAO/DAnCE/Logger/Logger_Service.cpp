@@ -61,22 +61,22 @@ namespace DAnCE
         switch (c)
           {
           case 'l':
-            DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_Logger::parse_args -  "
-                          "Log level is %C\n",
+            DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT ("DAnCE_Logger::parse_args -  ")
+                          ACE_TEXT ("Log level is %C\n"),
                           get_opts.opt_arg ()));
             level = ACE_OS::atoi (get_opts.opt_arg ());
             if (level != 0)
               this->log_level_ = level;
             break;
           case 't':
-            DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_Logger::parse_args -  "
-                          "Trace enabled\n"));
+            DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT ("DAnCE_Logger::parse_args -  ")
+                          ACE_TEXT ("Trace enabled\n")));
             this->trace_ = true;
             break;
 
           case 'f':
-            DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_Logger::parse_args -  "
-                          "Log file becomes %C\n",
+            DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT ("DAnCE_Logger::parse_args -  ")
+                          ACE_TEXT ("Log file becomes %C\n"),
                           get_opts.opt_arg ()));
             this->filename_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
             break;

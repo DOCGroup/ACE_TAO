@@ -1,3 +1,9 @@
+Sat Jul 18 05:12:00 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/Logger_Service.cpp:
+
+          stab at some unicode problems on Windows. 
+        
 Sat Jul 18 05:01:32 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
@@ -5,8 +11,8 @@ Sat Jul 18 05:01:32 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
         * DAnCE/TargetManager/TargetManager.mpc:
 
-          Static linking fixes. 
-        
+          Static linking fixes.
+
 Sat Jul 18 00:50:20 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/CIAO_Interfaces.mpc:
