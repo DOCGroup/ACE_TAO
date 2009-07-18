@@ -7,7 +7,7 @@
 #include "ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h"
 #include "ciao/Valuetype_Factories/ConfigValue.h"
 
-const ACE_TCHAR *cs_path = "ciao_componentserver";
+const char *cs_path = "ciao_componentserver";
 CORBA::ULong spawn_delay = 30;
 
 int
@@ -20,7 +20,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 's':
-        cs_path = get_opts.opt_arg ();
+        cs_path = (char *)get_opts.opt_arg ();
         break;
 
       case 'd':
