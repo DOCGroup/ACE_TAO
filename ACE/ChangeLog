@@ -1,3 +1,9 @@
+Sat Jul 18 00:52:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-leopard.h:
+
+          Intel on OS X requires explicit template visibility. 
+        
 Fri Jul 17 18:32:45 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_time.cpp (mktime): Set t_sys.wMilliseconds to 0 so
