@@ -1,3 +1,10 @@
+Sat Jul 18 04:14:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/POSIX_Proactor.cpp:
+
+          Attempt to fix a compile warning that appears to be the result
+          of a bug in the optimizer in GCC 4.1.2.
+        
 Sat Jul 18 00:52:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-macosx-leopard.h:
