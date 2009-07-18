@@ -16,7 +16,7 @@ namespace CIAO
   namespace XML
   {    
     Basic_Resolver::Basic_Resolver (const ACE_TCHAR *path)
-      : path_ ((char *)path)
+      : path_ (path)
     {
     }
     
@@ -44,12 +44,12 @@ namespace CIAO
     {
       ACE_Env_Value <const ACE_TCHAR *> path_env (variable,
                                                   ACE_TEXT(""));
-
-      XStr xpath ((const char *)path_env.varname ());
-      XStr xrelpath ((const char *)relpath);
+      
+      XStr xpath (path_env);
+      XStr xrelpath (relpath);
 
       xpath.append (xrelpath);
-
+      
       paths_.push_back (xpath);
     }
 

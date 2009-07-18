@@ -1,9 +1,19 @@
+Sat Jul 18 17:41:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          Rolling back changes from
+         Fri Jul 17 11:50:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+         Fri Jul 17 10:26:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+        
+         as they broke all tests involving XMl. 
+        
 Sat Jul 18 17:19:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
 
           avoids_ace_for_tao.
-        
+
 Sat Jul 18 15:56:16 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication.mpc:
