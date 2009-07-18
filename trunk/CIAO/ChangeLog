@@ -1,9 +1,20 @@
+Sat Jul 18 00:50:20 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/CIAO_Interfaces.mpc:
+        
+          linker fixes. 
+        
+        * examples/Hello/Receiver/Receiver.mpc:
+        
+          this mpc specified more than was generated, causing it to be
+          re-run.
+          
 Fri Jul 17 21:18:11 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
 
-          Disabled this.  there's lots wrong with it. 
-        
+          Disabled this.  there's lots wrong with it.
+
 Fri Jul 17 18:06:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplication/DomainApplication.mpc:
