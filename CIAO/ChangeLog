@@ -1,3 +1,9 @@
+Sat Jul 18 17:19:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+
+          avoids_ace_for_tao.
+        
 Sat Jul 18 15:56:16 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication.mpc:
@@ -9,7 +15,7 @@ Sat Jul 18 15:56:16 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * performance-tests/Protocols/Sender/Sender.mpc:
 
           avoids_ace_for_tao.
-        
+
 Sat Jul 18 09:34:30 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
