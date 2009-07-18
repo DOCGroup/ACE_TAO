@@ -52,7 +52,7 @@ project(Benchmark_RoundTripClient_stub) : ccm_stub {
   }
 }
 
-project(Benchmark_RoundTripClient_exec) : ciao_executor {
+project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
   after   += Benchmark_RoundTripClient_lem_gen Benchmark_RoundTripClient_stub
   sharedname = RoundTripClient_exec
   libs += RoundTripClient_stub Benchmark_stub
@@ -111,7 +111,7 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant {
   }
 }
 
-project (RoundTripClient_client) : ccm_stub, valuetype {
+project (RoundTripClient_client) : ccm_stub, valuetype, avoids_ace_for_tao {
   exename = client
   after += Benchmark_RoundTripClient_stub
   libs  += RoundTripClient_stub Benchmark_stub
