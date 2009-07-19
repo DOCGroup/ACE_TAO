@@ -75,7 +75,8 @@ namespace DAnCE
   }
 
   void
-  DomainApplication_Impl::startLaunch (const Deployment::Properties & configProperty)
+  DomainApplication_Impl::startLaunch (
+    const Deployment::Properties & configProperty)
   {
     DANCE_TRACE ("DomainApplication_Impl::startLaunch");
 
@@ -95,7 +96,8 @@ namespace DAnCE
                          ACE_TEXT("Received nil object reference from  startLaunch on node managers.\n")));
             throw Deployment::StartError();
           }
-        DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
+        DANCE_DEBUG ((LM_TRACE, DLINFO
+                      ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                       ACE_TEXT("Application startLaunch succeeded, received %u connections\n"),
                       conn->length ()));
 
@@ -109,7 +111,8 @@ namespace DAnCE
           }
       }
 
-    DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
+    DANCE_DEBUG ((LM_DEBUG, DLINFO
+                  ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                   ACE_TEXT("Received %u connections from applications\n"),
                   this->connections_.length ()));
   }

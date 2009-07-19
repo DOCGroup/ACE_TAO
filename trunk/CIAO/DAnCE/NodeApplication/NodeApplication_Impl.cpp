@@ -76,9 +76,9 @@ namespace
     if (properties.find (name, any) == 0)
       {
         if (any >>= CORBA::Any::to_boolean(val))
-                  {
+          {
             return true;
-                  }
+          }
         else
           {
             DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<T> - ")
@@ -106,9 +106,9 @@ namespace
     if (properties.find (name, any) == 0)
       {
         if (any >>= CORBA::Any::to_string(val, 0))
-                  {
+          {
             return true;
-                }
+          }
         else
           {
             DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<const char *> - ")
@@ -361,7 +361,7 @@ NodeApplication_Impl::init()
   DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
                 ACE_TEXT("Spawning server activator\n")));
 
-  CIAO::Deployment::ComponentInstallation_Impl *tmp_ci;
+  CIAO::Deployment::ComponentInstallation_Impl *tmp_ci = 0;
 
   ACE_NEW_THROW_EX (tmp_ci,
                     CIAO::Deployment::ComponentInstallation_Impl (),
@@ -377,7 +377,7 @@ NodeApplication_Impl::init()
                        this->plan_.artifact[i].location[0]);
     }
 
-  CIAO::Deployment::CIAO_ServerActivator_i *tmp_act;
+  CIAO::Deployment::CIAO_ServerActivator_i *tmp_act = 0;
   ACE_NEW_THROW_EX (tmp_act,
                     CIAO::Deployment::CIAO_ServerActivator_i (spawn,
                                                               cs_path,
@@ -422,7 +422,7 @@ NodeApplication_Impl::configuration_complete_components ()
 {
   DANCE_TRACE( "NodeApplication_Impl::configuration_complete_components");
 
-  bool error (false);
+  bool error = false;
   Deployment::StartError exception;
 
   for (size_t k = 0; k < this->instances_.size (); ++k)
@@ -594,8 +594,10 @@ NodeApplication_Impl::install_home (Container &cont, Instance &inst)
 {
   DANCE_TRACE( "NodeApplication_Impl::install_home");
 
-  const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
-  const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
+  const ::Deployment::MonolithicDeploymentDescription &mdd =
+    this->plan_.implementation[inst.mdd_idx];
+  const ::Deployment::InstanceDeploymentDescription &idd =
+    this->plan_.instance[inst.idd_idx];
 
   DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::install_home - ")
                 ACE_TEXT("Starting installation of home %C on node %C\n"),

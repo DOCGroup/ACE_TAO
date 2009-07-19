@@ -30,7 +30,7 @@ DAnCE_Plan_Launcher_Base_Module::create_object (CORBA::ORB_ptr orb,
     }
   catch (const Plan_Launcher_Base_Impl::Deployment_Failure& e)
     {
-      DANCE_ERROR ( (LM_ERROR, "[%M] PlanLauncher error : %s.\n", e.error_.c_str()));
+      DANCE_ERROR ( (LM_ERROR, "[%M] PlanLauncher error : %C.\n", e.error_.c_str()));
     }
   catch (const CORBA::Exception& ex)
     {
