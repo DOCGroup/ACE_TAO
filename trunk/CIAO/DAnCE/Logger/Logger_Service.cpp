@@ -9,7 +9,7 @@
 namespace DAnCE
   {
   Logger_Service::Logger_Service (void)
-    : filename_ (""),
+    : filename_ (ACE_TEXT("")),
       trace_ (false),
       log_level_ (5)
   {
@@ -27,7 +27,7 @@ namespace DAnCE
     ACE_Env_Value<int> trace (ACE_TEXT("DANCE_TRACE_ENABLE"), this->trace_);
     this->trace_ = trace;
 
-    ACE_Env_Value<const char *> filename (ACE_TEXT("DANCE_LOG_FILE"), this->filename_.c_str ());
+    ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("DANCE_LOG_FILE"), this->filename_.c_str ());
     this->filename_ = filename;
 
     this->parse_args (argc, argv);
@@ -62,7 +62,7 @@ namespace DAnCE
           {
           case 'l':
             DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT ("DAnCE_Logger::parse_args -  ")
-                          ACE_TEXT ("Log level is %C\n"),
+                          ACE_TEXT ("Log level is %s\n"),
                           get_opts.opt_arg ()));
             level = ACE_OS::atoi (get_opts.opt_arg ());
             if (level != 0)
@@ -76,9 +76,9 @@ namespace DAnCE
 
           case 'f':
             DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT ("DAnCE_Logger::parse_args -  ")
-                          ACE_TEXT ("Log file becomes %C\n"),
+                          ACE_TEXT ("Log file becomes %s\n"),
                           get_opts.opt_arg ()));
-            this->filename_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+            this->filename_ = get_opts.opt_arg ();
             break;
           case 'h':
             //case '?': // Display help for use of the server.
@@ -154,9 +154,9 @@ namespace DAnCE
   ACE_Log_Msg_Backend *
   Logger_Service::get_logger_backend (CORBA::ORB_ptr)
   {
-    if (this->filename_ != "")
+    if (this->filename_ != ACE_TEXT(""))
       {
-        File_Logger_Backend * the_backend;
+        File_Logger_Backend * the_backend = 0;
         ACE_NEW_THROW_EX (the_backend,
                           File_Logger_Backend (this->filename_.c_str()),
                           CORBA::NO_MEMORY());
