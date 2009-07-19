@@ -1,16 +1,22 @@
+Sun Jul 19 08:18:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS/server/HTTP_Response.cpp:
+        * apps/JAWS/server/JAWS_IO.cpp:
+          Unicode fixes
+
 Sat Jul 18 04:14:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/POSIX_Proactor.cpp:
 
           Attempt to fix a compile warning that appears to be the result
           of a bug in the optimizer in GCC 4.1.2.
-        
+
 Sat Jul 18 00:52:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-macosx-leopard.h:
 
-          Intel on OS X requires explicit template visibility. 
-        
+          Intel on OS X requires explicit template visibility.
+
 Fri Jul 17 18:32:45 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_time.cpp (mktime): Set t_sys.wMilliseconds to 0 so
