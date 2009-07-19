@@ -8,7 +8,6 @@
 
 #include "ace/OS_NS_string.h"
 
-
 namespace CIAO
 {
   template <typename SERV,
