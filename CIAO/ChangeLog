@@ -1,3 +1,38 @@
+Sun Jul 19 09:46:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+          Layout changes
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.h:
+          Made startLaunch public
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          Layout, const, datatype changes
+
+        * DAnCE/MPC/config/dance_repositorymanagerbase.mpb:
+          Added after JAWS
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Layout changes
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+          Layout, datatype, const changes
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+          Layout changes
+
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
+          Corrected messages
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.cpp:
+          Unicode fix
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          JAWS is added by the base project
+
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+          Corrected base class
+
 Sat Jul 18 22:33:47 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Starter/Starter.mpc:
@@ -5,7 +40,7 @@ Sat Jul 18 22:33:47 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
           Temporarily disable this project, there's no way it works properly
           at run-time, even if it compiles.  We will take another look at this
           after 0.7.2.
-        
+
 Sat Jul 18 17:41:10 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/XML/XML_Schema_Resolver.cpp:
