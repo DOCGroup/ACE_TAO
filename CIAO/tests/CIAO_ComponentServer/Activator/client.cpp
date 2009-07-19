@@ -20,7 +20,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 's':
-        cs_path = (char *)get_opts.opt_arg ();
+        cs_path = get_opts.opt_arg ();
         break;
 
       case 'd':
@@ -84,12 +84,12 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
       ServerActivator_var sa = sa_tmp->_this ();
 
       // Make our configvalues
-      // ::Components::ConfigValues_var configs = new 
+      // ::Components::ConfigValues_var configs = new
       ::Components::ConfigValues configs(2);
       //ACE_DEBUG ((LM_DEBUG, "Attempting to create componentserver with no configvalues\n"));
       // Make a componentserver with no configvalues
       ComponentServer_var server1 (ComponentServer::_narrow (sa->create_component_server (configs)));
-      //ACE_DEBUG ((LM_DEBUG, "Componentserver with no configvalues created!\n")); 
+      //ACE_DEBUG ((LM_DEBUG, "Componentserver with no configvalues created!\n"));
 
       //ACE_DEBUG ((LM_DEBUG, "Attempting to create componentserver with UUID configvalues\n"));
       CORBA::Any val;
