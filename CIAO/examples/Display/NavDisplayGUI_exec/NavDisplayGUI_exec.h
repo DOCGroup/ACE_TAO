@@ -28,7 +28,7 @@ namespace MyImpl
    * RateGen executor implementation class.
    */
   class NAVDISPLAY_EXEC_Export NavDisplayGUI_exec_impl
-    : public virtual CIAO_HUDisplay_NavDisplay_Impl::NavDisplay_exec,
+    : public virtual ::CIAO_HUDisplay_NavDisplay_Impl::NavDisplay_exec,
       public virtual ::CORBA::LocalObject
   {
   public:
