@@ -117,7 +117,8 @@ Plan_Launcher_Base_Impl::launch_plan(const ::Deployment::DeploymentPlan &plan)
 
   try
     {
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - Starting...\n")));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO
+                    ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - Starting...\n")));
       if (CORBA::is_nil (this->em_.in ()))
         {
           DANCE_ERROR ( (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher_Base_Impl::launch_plan - ")
@@ -520,7 +521,7 @@ Plan_Launcher_Base_Impl::stop_plan()
       DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
                    ACE_TEXT("Stopping plan \"%C\"\n"), this->plan_uuid_));
 
-      if (!this->teardown_plan((const char *)this->plan_uuid_))
+      if (!this->teardown_plan(this->plan_uuid_))
         {
           DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::stop_plan - ")
                         ACE_TEXT("tear down assembly failed: unknown plan uuid.\n")));
@@ -696,14 +697,14 @@ Plan_Launcher_Base_Impl::write_cdr_plan_file(const char * filename,
 {
   try
     {
-      TAO_OutputCDR cdr;
-      cdr << plan;
-      size_t buf_size = cdr.total_length();
       FILE * file = ACE_OS::fopen (filename, "w");
       if (0 == file)
         {
           throw Deployment_Failure ("write_cdr_plan_file : failed to open file.");
         }
+      TAO_OutputCDR cdr;
+      cdr << plan;
+      size_t buf_size = cdr.total_length();
       ACE_OS::fwrite (&buf_size, sizeof (buf_size), 1, file);
       for (const ACE_Message_Block *i = cdr.begin ();
           i != 0;
@@ -761,7 +762,7 @@ Plan_Launcher_Base_Impl::check_mode_consistentness()
 ACE_CString
 Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
   {
-    ACE_CString src((const char *)s);
+    ACE_CString src(s);
     ACE_CString res;
     size_t pos_done = 0;
     while (pos_done < (size_t) src.length())
