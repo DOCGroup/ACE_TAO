@@ -467,7 +467,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                     this->options_.node_managers_[0].c_str()));
 
       // Parsing Node name and node manager ior file name
-      ACE_CString node_name = (const char *)this->options_.node_managers_[0].c_str ();
+      ACE_CString node_name = this->options_.node_managers_[0].c_str ();
       ACE_CString node_file;
       size_t npos = node_name.find ('=');
       if (ACE_CString::npos != npos)
@@ -618,7 +618,7 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   }
   {
     CORBA::Any val;
-    val <<= CORBA::Any::from_string (CORBA::string_dup ((const char *)this->options_.cs_path_),0);
+    val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.cs_path_),0);
     props.bind (CIAO::Deployment::SERVER_EXECUTABLE, val);
   }
   {
@@ -628,19 +628,19 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   }
   {
     CORBA::Any val;
-    val <<= CORBA::Any::from_string (CORBA::string_dup ((const char *)this->options_.server_args_),0);
+    val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.server_args_),0);
     props.bind (CIAO::Deployment::SERVER_ARGUMENTS, val);
   }
   if (this->options_.instance_nc_)
     {
       CORBA::Any val;
-      val <<= CORBA::Any::from_string (CORBA::string_dup ((const char *)this->options_.instance_nc_), 0);
+      val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.instance_nc_), 0);
       props.bind (DAnCE::INSTANCE_NC, val);
     }
   if (this->options_.domain_nc_)
     {
       CORBA::Any val;
-      val <<= CORBA::Any::from_string (CORBA::string_dup ((const char *)this->options_.domain_nc_), 0);
+      val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.domain_nc_), 0);
       props.bind (DAnCE::DOMAIN_NC, val);
     }
 }
