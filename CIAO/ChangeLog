@@ -1,10 +1,16 @@
+Sun Jul 19 18:25:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Logger/Logger_Service.cpp:
+        * DAnCE/Logger/Logger_Service.h:
+          Unicode fixes
+
 Sun Jul 19 17:22:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL_Test/Keywords/Keywords.mpc:
 
           avoids mfc, as building with mfc enabled causes 'interface'
           to become a language keyword, where it otherwise would not be.
-        
+
 Sun Jul 19 09:50:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Port_Activator_T.cpp:

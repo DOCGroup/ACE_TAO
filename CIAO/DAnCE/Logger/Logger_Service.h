@@ -19,7 +19,7 @@ namespace DAnCE
       void parse_args (int argc, ACE_TCHAR **argv);
       void set_levels (void);
 
-      ACE_CString filename_;
+      ACE_TString filename_;
       bool trace_;
       int log_level_;
     };
