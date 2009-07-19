@@ -1,3 +1,11 @@
+Sun Jul 19 09:50:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Port_Activator_T.cpp:
+          Layout change
+
+        * ciao/Servants/Servants.mpc:
+          Port_Activator_T is a template file, not a source file
+
 Sun Jul 19 09:46:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
