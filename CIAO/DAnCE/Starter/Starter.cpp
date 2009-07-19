@@ -154,7 +154,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
             this->optNSFile_ = opts.opt_arg();
             break;
           case 'n':
-            s = (const char *)opts.opt_arg();
+            s = opts.opt_arg();
             if (0 < s.length())
               {
                 ACE_CString nodename;
@@ -162,8 +162,8 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
                 size_t const pos = s.find("=");
                 if (ACE_CString::npos != pos)
                   {
-                    nodename = (const char *)s.substring(0, pos).c_str ();
-                    node.ior_ = (const char *)s.substring(pos + 1).c_str ();
+                    nodename = s.substring(0, pos).c_str ();
+                    node.ior_ = s.substring(pos + 1).c_str ();
                     /*
                     node.obj = this->orb_->string_to_object(objstr.c_str());
                     if (CORBA::is_nil (node.obj))
@@ -177,7 +177,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
                   {
                     nodename = s;
                     DANCE_DEBUG ( (LM_TRACE, "[%M] Node \"%s\" will be started.\n", nodename.c_str()));
-                    if (opts.optind < opts.argc_&& '-' != (s = (const char *)opts.argv_[opts.optind])[0])
+                    if (opts.optind < opts.argc_&& '-' != (s = opts.argv_[opts.optind])[0])
                       {
                         ++opts.optind;
                         node.iorfile_ = s;
@@ -208,7 +208,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
               }
             this->optEM_ = true;
             DANCE_DEBUG ( (LM_TRACE, "[%M] ExecutionManager will be started.\n"));
-            this->optEMFile_ = (const char *)opts.opt_arg();
+            this->optEMFile_ = opts.opt_arg();
             break;
           case 'l':
             j = ACE_OS::atoi (opts.opt_arg());
@@ -235,17 +235,17 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
             break;
           case 'g':
             DANCE_DEBUG ( (LM_TRACE, "[%M] Object key will be generated.\n"));
-            this->optGenObjKey_ = (const char *)opts.opt_arg();
+            this->optGenObjKey_ = opts.opt_arg();
             if (0 == this->optGenObjKey_.length())
               {
                 DANCE_ERROR ( (LM_ERROR, "[%M] --gen-object-key without argument. Doing nothing.\n"));
               }
             break;
           case 0: // long options that do not have short
-            s = (const char *)opts.last_option();
+            s = opts.last_option();
             if (s == "process-ns-options")
               {
-                this->optNSOptions_ = (const char *)opts.opt_arg();
+                this->optNSOptions_ = opts.opt_arg();
                 if (0 == this->optNSOptions_.length())
                   {
                     DANCE_ERROR ( (LM_ERROR, "[%M] --process-ns-options without argument\n"));
@@ -260,7 +260,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
               }
             break;
           default:
-            if (!isPossibleOption((const char *)opts.last_option()))
+            if (!isPossibleOption(opts.last_option()))
               {
                 DANCE_ERROR((LM_ERROR, "[%M] Invalid option : %s\n", opts.last_option()));
                 this->usage();
@@ -663,7 +663,7 @@ Starter::argCopyForNaming (int & c, char **& v)
     v = new char*[total_sz];
     c = 0;
     //take the 0-th argument anyway
-    v[c++] = CORBA::string_dup ((const char *)this->argv_[0]);
+    v[c++] = CORBA::string_dup (this->argv_[0]);
 
     for (int i = 1; i < total_sz; ++i) v[i] = 0;
 
@@ -721,21 +721,21 @@ Starter::argCopyForNode (const char * node, int & c, ACE_TCHAR **& v)
                     if (i + 1 < this->argc_
                         && (0 == ACE_OS::strcmp (this->argv_[i], ACE_TEXT("--node-mgr")) || 0 == ACE_OS::strcmp (this->argv_[i], ACE_TEXT("-n"))))
                       {
-                        ACE_CString s = (const char *)this->argv_[i+1];
+                        ACE_CString s = this->argv_[i+1];
                         if (ACE_CString::npos != s.find ('='))
                           {
                             break;
                           }
                         else if (s == node)
                           {
-                            v[c++] = (ACE_TCHAR *)CORBA::string_dup ((const char *)this->argv_[i]);
+                            v[c++] = (ACE_TCHAR *)CORBA::string_dup (this->argv_[i]);
                             take = true;
                             break;
                           }
                       }
                     else
                       {
-                        v[c++] = (ACE_TCHAR *)CORBA::string_dup ((const char *)this->argv_[i]);
+                        v[c++] = (ACE_TCHAR *)CORBA::string_dup (this->argv_[i]);
                         take = true;
                         break;
                       }
@@ -744,7 +744,7 @@ Starter::argCopyForNode (const char * node, int & c, ACE_TCHAR **& v)
           }
         else if (take)
           {
-            v[c++] = (ACE_TCHAR *)CORBA::string_dup ((const char *)this->argv_[i]);
+            v[c++] = (ACE_TCHAR *)CORBA::string_dup (this->argv_[i]);
           }
       }
     v[c] = 0;
@@ -779,7 +779,7 @@ Starter::argCopyForEM (int & c, ACE_TCHAR **& v)
               {
                 if (this->argv_[i] == ACE_OS::strstr (this->argv_[i], (const ACE_TCHAR *)validOptions[j]))
                   {
-                    v[c++] = (ACE_TCHAR *)CORBA::string_dup ((const char *)this->argv_[i]);
+                    v[c++] = (ACE_TCHAR *)CORBA::string_dup (this->argv_[i]);
                     take = true;
                     break;
                   }
@@ -787,7 +787,7 @@ Starter::argCopyForEM (int & c, ACE_TCHAR **& v)
           }
         else if (take)
           {
-            v[c++] = (ACE_TCHAR *)CORBA::string_dup ((const char *)this->argv_[i]);
+            v[c++] = (ACE_TCHAR *)CORBA::string_dup (this->argv_[i]);
           }
       }
 
@@ -847,7 +847,7 @@ Starter::argCopyForPL (int & c, ACE_TCHAR **& v)
               {
                 if (this->argv_[i] == ACE_OS::strstr (this->argv_[i], (const ACE_TCHAR *)validOptions[j]))
                   {
-                    v[c++] = (ACE_TCHAR *)CORBA::string_dup ((const char *)this->argv_[i]);
+                    v[c++] = (ACE_TCHAR *)CORBA::string_dup (this->argv_[i]);
                     take = true;
                     break;
                   }
@@ -855,7 +855,7 @@ Starter::argCopyForPL (int & c, ACE_TCHAR **& v)
           }
         else if (take)
           {
-            v[c++] = (ACE_TCHAR *)CORBA::string_dup ((const char *)this->argv_[i]);
+            v[c++] = (ACE_TCHAR *)CORBA::string_dup (this->argv_[i]);
           }
       }
     v[c] = 0;
