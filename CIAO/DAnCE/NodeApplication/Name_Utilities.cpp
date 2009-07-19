@@ -158,7 +158,7 @@ namespace DAnCE
 
     /*ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>*/  char *safe_array (new char[ACE_OS::strlen (name) + 1]);
 
-    ACE_Tokenizer_T<char> parser (ACE_OS::strcpy (safe_array/*.get ()*/, (const char *)name));
+    ACE_Tokenizer_T<char> parser (ACE_OS::strcpy (safe_array/*.get ()*/, name));
     parser.delimiter ('/');
 
     char *next (0);
