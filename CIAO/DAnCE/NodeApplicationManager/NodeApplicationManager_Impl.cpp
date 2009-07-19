@@ -37,7 +37,7 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
   while (!i.done ())
     {
       DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
-                    ACE_TEXT("Binding value for property %s\n"), i->key ().c_str ()));
+                    ACE_TEXT("Binding value for property %C\n"), i->key ().c_str ()));
       this->properties_.bind (i->key (), i->item ());
       i.advance ();
     }
@@ -51,7 +51,8 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
     {
       if (this->application_ != 0)
         {
-          CORBA::Object_var app = this->poa_->servant_to_reference (this->application_);
+          CORBA::Object_var app =
+            this->poa_->servant_to_reference (this->application_);
           PortableServer::ObjectId_var id = this->poa_->reference_to_id (app);
           this->poa_->deactivate_object (id);
 
@@ -61,7 +62,8 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplicationManager_Impl::~NodeApplicationManager_Impl - ")
+      DANCE_ERROR ((LM_WARNING, DLINFO
+                    ACE_TEXT("NodeApplicationManager_Impl::~NodeApplicationManager_Impl - ")
                     ACE_TEXT("Caught exception in NodeApplicationManager destructor\n")));
     }
 }
@@ -121,8 +123,7 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
 
     CORBA::Any val;
 
-    if (this->properties_.find (DAnCE::STANDALONE_NM,
-                                val) == 0)
+    if (this->properties_.find (DAnCE::STANDALONE_NM, val) == 0)
       {
         DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
                       ACE_TEXT("Found STANDALONE_NM property\n")));
@@ -174,8 +175,9 @@ NodeApplicationManager_Impl::register_plan(void)
   DANCE_TRACE("NodeApplicationManager_Impl::register_plan()");
 
 //  this->redirection_.registration_start (this->node_name_, this->plan_.UUID.in());
-  DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::register_plan - registering objects...\n")));
-  for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
+  DANCE_DEBUG((LM_TRACE, DLINFO
+               ACE_TEXT("NodeApplicationManager_Impl::register_plan - registering objects...\n")));
+  for (CORBA::ULong i = 0; i < this->plan_.instance.length(); i++)
     {
 //      this->redirection_.registration (this->node_name_,
   //                                     this->plan_.UUID.in(),
@@ -184,9 +186,9 @@ NodeApplicationManager_Impl::register_plan(void)
     }
 
   DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::register_plan - registering endpoints...\n")));
-  for (unsigned int i = 0; i < this->plan_.connection.length(); i++)
+  for (CORBA::ULong i = 0; i < this->plan_.connection.length(); i++)
     {
-      for (unsigned int j = 0; j < this->plan_.connection[i].internalEndpoint.length(); j++)
+      for (CORBA::ULong j = 0; j < this->plan_.connection[i].internalEndpoint.length(); j++)
         {
           if (this->plan_.connection[i].internalEndpoint[j].provider)
             {
@@ -203,7 +205,8 @@ NodeApplicationManager_Impl::register_plan(void)
             }
         }
     }
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::register_plan - ")
+  DANCE_DEBUG ((LM_TRACE, DLINFO
+                ACE_TEXT("NodeApplicationManager_Impl::register_plan - ")
                 ACE_TEXT("Finishing registration\n")));
   //this->redirection_.registration_finish (this->node_name_, this->plan_.UUID.in());
 }
