@@ -7,7 +7,7 @@ namespace DAnCE
   namespace Plan_Launcher
     {
       int
-      run_main_implementation (int argc, char *argv[])
+      run_main_implementation (int argc, ACE_TCHAR *argv[])
       {
         try
           {

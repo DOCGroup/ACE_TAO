@@ -19,7 +19,7 @@ namespace DAnCE
   {
   namespace Plan_Launcher
     {
-      int run_main_implementation (int, char*[]);
+      int run_main_implementation (int, ACE_TCHAR*[]);
     }
 }
 
