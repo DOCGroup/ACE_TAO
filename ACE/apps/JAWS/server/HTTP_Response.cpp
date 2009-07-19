@@ -112,7 +112,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
     ;
 
 
-  char *buf;
+  char *buf = 0;
   char buf1[4 * BUFSIZ];
   char buf2[BUFSIZ];
 
@@ -270,12 +270,12 @@ HTTP_Response::cgi_response (void)
 
   if (this->request_.cgi_env ())
     for (size_t i = 0; this->request_.cgi_env ()[i]; i += 2)
-      cgi_options.setenv ((const ACE_TCHAR *)this->request_.cgi_env ()[i],
+      cgi_options.setenv (this->request_.cgi_env ()[i],
                           ACE_TEXT ("%s"),
-                          (const ACE_TCHAR *)this->request_.cgi_env ()[i+1]);
+                          this->request_.cgi_env ()[i+1]);
 
   ACE_TCHAR buf[BUFSIZ];
-  ACE_TCHAR *p, *q;
+  ACE_TCHAR *p = 0, *q = 0;
   ACE_OS::strcpy (buf, ACE_TEXT ("HTTP_"));
   p = q = buf + ACE_OS::strlen (buf);
 
