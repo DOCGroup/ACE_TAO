@@ -1239,6 +1239,36 @@ UTL_Scope::fe_add_porttype (AST_PortType *)
   return 0;
 }
 
+AST_Provides *
+UTL_Scope::fe_add_provides (AST_Provides *)
+{
+  return 0;
+}
+
+AST_Uses *
+UTL_Scope::fe_add_uses (AST_Uses *)
+{
+  return 0;
+}
+
+AST_Publishes *
+UTL_Scope::fe_add_publishes (AST_Publishes *)
+{
+  return 0;
+}
+
+AST_Emits *
+UTL_Scope::fe_add_emits (AST_Emits *)
+{
+  return 0;
+}
+
+AST_Consumes *
+UTL_Scope::fe_add_consumes (AST_Consumes *)
+{
+  return 0;
+}
+
 // This is the second pass of the front end
 // It calls the public add protocol on everything in scope.
 // It calls the add_xx functions of the most derived AST_Node.
