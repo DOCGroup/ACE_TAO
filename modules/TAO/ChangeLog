@@ -7,7 +7,7 @@ Mon Jul 20 13:49:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_consumes.h:
         * TAO_IDL/include/ast_porttype.h:
         
-          Added fe_add_*() methods to AST_Component and
+          Added fe_add_*() methods for ports to AST_Component and
           AST_PortType.
 
 Fri Jul 17 19:49:03 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
