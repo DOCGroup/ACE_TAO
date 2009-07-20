@@ -1,3 +1,10 @@
+Mon Jul 20 07:02:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/Configurators/Server_Configurator.cpp:
+        * ciao/ComponentServer/Configurators/Server_Configurator.h:
+          Use bool for rt_support_ and added a default value to the constructor
+          to resolve problems with older gcc versions
+
 Sun Jul 19 18:25:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Logger/Logger_Service.cpp:
