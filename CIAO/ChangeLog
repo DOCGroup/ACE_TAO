@@ -1,3 +1,8 @@
+Mon Jul 20 10:32:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+          Removed old msvc checks
+
 Mon Jul 20 07:02:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/Configurators/Server_Configurator.cpp:
