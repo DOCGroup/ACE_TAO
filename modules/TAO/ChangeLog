@@ -1,14 +1,22 @@
+Mon Jul 20 14:33:57 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Changed semantic actions for component ports to use the new
+          AST_* port nodes.
+
 Mon Jul 20 13:49:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_component.cpp:
         * TAO_IDL/ast/ast_porttype.cpp:
-        * TAO_IDL/util/utl_scope.cpp
+        * TAO_IDL/util/utl_scope.cpp:
         * TAO_IDL/ast/ast_redef.cpp:
         * TAO_IDL/include/ast_component.h:
         * TAO_IDL/include/ast_consumes.h:
         * TAO_IDL/include/ast_porttype.h:
         * TAO_IDL/include/utl_scope.h:
-        
+
           Added fe_add_*() methods for ports to AST_Component and
           AST_PortType, and to the common base class UTL_Scope.
 
