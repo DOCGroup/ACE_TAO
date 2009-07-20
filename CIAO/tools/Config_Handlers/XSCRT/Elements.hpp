@@ -241,8 +241,8 @@ namespace XSCRT
     }
 
     //Get and set methods for the idref_ data member
-    Type* get_idref (void) 
-    { 
+    Type* get_idref (void)
+    {
       return this->idref_;
     }
 
@@ -540,7 +540,7 @@ namespace XSCRT
   //
   //
 
-#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
+#if !defined (_MSC_VER)
 
   template<>
   template<>
