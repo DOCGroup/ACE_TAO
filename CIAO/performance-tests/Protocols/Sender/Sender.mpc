@@ -83,7 +83,7 @@ project(Protocols_Sender_exec) : ciao_executor, rtcorba, avoids_ace_for_tao {
 }
 
 
-project(Protocols_Sender_svnt) : ciao_servant {
+project(Protocols_Sender_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Protocols_skel Protocols_Sender_exec
   sharedname  = Protocols_Sender_svnt
   libs       += Protocols_Sender_exec \

@@ -1,3 +1,10 @@
+Mon Jul 20 10:50:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+          Also disabled svnt projects with ace_for_tao
+
 Mon Jul 20 10:32:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/XSCRT/Elements.hpp:
