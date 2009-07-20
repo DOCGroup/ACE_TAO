@@ -13,7 +13,7 @@ class TAO_IDL_FE_Export AST_Consumes : public virtual AST_Field
 {
 public:
   AST_Consumes (UTL_ScopedName *n,
-                 AST_EventType *consumes_type);
+                AST_EventType *consumes_type);
             
   virtual ~AST_Consumes (void);
   
