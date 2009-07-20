@@ -13,49 +13,6 @@
 #include <XSCRT/Parser.hpp>
 #include "ace/Refcounted_Auto_Ptr.h"
 
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-
-// Stuff for broken VC6. Don't like what you see - use better compiler!
-//
-
-inline
-std::wistream&
-operator>> (std::wistream& is, __int64& v)
-{
-  long t;
-  is >> t;
-  v = t;
-  return is;
-}
-
-inline
-std::wistream&
-operator>> (std::wistream& is, unsigned __int64& v)
-{
-  unsigned long t;
-  is >> t;
-  v = t;
-  return is;
-}
-
-inline
-std::wostream&
-operator<< (std::wostream& os, __int64 const& v)
-{
-  os << long (v);
-  return os;
-}
-
-inline
-std::wostream&
-operator<< (std::wostream& os, unsigned __int64 const& v)
-{
-  os << unsigned long (v);
-  return os;
-}
-
-#endif
-
 namespace XSCRT
 {
   struct IdentityProvider
@@ -332,7 +289,7 @@ namespace XSCRT
     X x_;
   };
 
-#if (!defined (_MSC_VER) || (_MSC_VER >= 1300)) && \
+#if (!defined (_MSC_VER)) && \
     (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 2)))
 
 
