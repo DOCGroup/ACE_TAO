@@ -1,20 +1,21 @@
 // -*- C++ -*-
+// $Id$
 
 //=============================================================================
 /**
  * @file    id_map.hpp
  *
  * This file contains the ID_Map class which has the responsibility of linking
- * XML IDREF objects to their XML ID counterparts.  In the output files, this 
- * means that a <IDREF name>_ptr() will return a pointer to the identified 
+ * XML IDREF objects to their XML ID counterparts.  In the output files, this
+ * means that a <IDREF name>_ptr() will return a pointer to the identified
  * object.
- * 
+ *
  * Exception NULL_PTR_Entry is thrown when a program attempts to add a NULL_PTR
- * to either the id_map or idref_map.  
- * 
+ * to either the id_map or idref_map.
+ *
  * Exception Unresolved_IDREF is thrown if an element in an XML document attempts
  * to reference an ID that does not exist.
- * 
+ *
  * @author Jason R. Cody <jason.r.cody@vanderbilt.edu; jason.r.cody@gmail.com>
  */
 //=============================================================================
@@ -49,8 +50,8 @@
     //NULL_PTR_Entry thrown when a NULL PTR is added to the
     //ID_Map
     class NULL_PTR_Entry {};
- 
-    //Unresolved_IDREF thrown when there are IDREF's in the 
+
+    //Unresolved_IDREF thrown when there are IDREF's in the
     //XML document.
     class Unresolved_IDREF {};
 
@@ -87,7 +88,7 @@
         //this->idref_map_[idref] = obj_ref;
         this->idref_map_.insert(std::pair<XMLSchema::NCName<ACE_TCHAR>, XSCRT::Type*>(idref, obj_ref));
       }
-      else 
+      else
       {
         throw NULL_PTR_Entry();
       }
@@ -95,7 +96,7 @@
     }
 
 
-    //Sets the referencing elements XSCRT::Type::idref_ to point to the 
+    //Sets the referencing elements XSCRT::Type::idref_ to point to the
     //referenced element.
     //Note: The pointer is of type "XSCRT::Type*"
     void resolve_idref ( void )
@@ -104,7 +105,7 @@
       ID_Map::id_iterator id_iterator;
       ID_Map::idref_iterator idref_iterator;
 
-      for (idref_iterator = this->idref_map_.begin(); 
+      for (idref_iterator = this->idref_map_.begin();
            idref_iterator != this->idref_map_.end();
            ++idref_iterator)
       {
@@ -124,7 +125,7 @@
     private:
     //id_map_: maps the ID string to the element with the
     //         ID attribute
-    //idref_map_: multimap that maps the IDREF string to the 
+    //idref_map_: multimap that maps the IDREF string to the
     //            element with the IDREF attribute
     std::map<XMLSchema::ID<ACE_TCHAR>, XSCRT::Type*> id_map_;
     std::multimap<XMLSchema::NCName<ACE_TCHAR>, XSCRT::Type*> idref_map_;
