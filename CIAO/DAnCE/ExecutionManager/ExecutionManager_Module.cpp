@@ -218,7 +218,6 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
         = PortableServer::POA::_narrow (poa_obj.in ());
 
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
-
       PortableServer::POA_var persistent_poa;
       TAO::Utils::PolicyList_Destroyer policies (2);
       policies.length (2);

@@ -16,11 +16,11 @@ namespace DAnCE
   ::Deployment::NodeManager_ptr
   Node_Locator::locate_node (const ACE_TCHAR *name)
   {
-    ACE_CString ior;
+    ACE_TString ior;
 
-    if (this->nodes_.find ((char*)name, ior) == 0)
+    if (this->nodes_.find (name, ior) == 0)
       {
-        return this->resolve_ior (name, (const ACE_TCHAR *)ior.c_str ());
+        return this->resolve_ior (name, ior.c_str ());
       }
     else
       {
@@ -116,7 +116,7 @@ namespace DAnCE
   Node_Locator::store_ior (const ACE_TCHAR *name, const ACE_TCHAR *ior)
   {
     DANCE_TRACE ("Node_Locator::store_ior");
-    this->nodes_.bind ((char *)name, (char *)ior);
+    this->nodes_.bind (name, ior);
   }
 
   ::Deployment::NodeManager_ptr
@@ -137,7 +137,7 @@ namespace DAnCE
         CosNaming::Name name;
         name.length (1);
 
-        name[0].id = (char *)nodename;
+        name[0].id = nodename;
         name[0].kind = "NodeManager";
 
         CORBA::Object_var obj = this->nc_->resolve (name);
