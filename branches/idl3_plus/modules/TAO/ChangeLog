@@ -1,3 +1,15 @@
+Mon Jul 20 13:49:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_porttype.h:
+        
+          Added fe_add_*() methods to AST_Component and
+          AST_PortType.
+
 Fri Jul 17 19:49:03 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_generator.cpp:
@@ -16,10 +28,10 @@ Fri Jul 17 19:49:03 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_uses.h:
         * TAO_IDL/include/ast_generator.h:
         * TAO_IDL/include/ast_uses.h:
-        
+
           - Changed BE provides, uses, publishes, emits and
             consumes node constructor signatures.
-            
+
           - Added FE and BE factory functions for new port nodes.
 
 Fri Jul 17 19:03:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
