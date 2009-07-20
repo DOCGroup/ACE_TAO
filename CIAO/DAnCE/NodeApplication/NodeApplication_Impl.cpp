@@ -423,7 +423,7 @@ NodeApplication_Impl::configuration_complete_components ()
   DANCE_TRACE( "NodeApplication_Impl::configuration_complete_components");
 
   bool error = false;
-  Deployment::StartError exception;
+  ::Deployment::StartError exception;
 
   for (size_t k = 0; k < this->instances_.size (); ++k)
     {
@@ -506,7 +506,7 @@ NodeApplication_Impl::start ()
   DANCE_TRACE( "NodeApplication_Impl::start");
 
   bool error (false);
-  Deployment::StartError exception;
+  ::Deployment::StartError exception;
 
   for (size_t k = 0; k < this->instances_.size (); ++k)
     {
@@ -886,8 +886,8 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
                     ACE_TEXT("Unable to find home instance matching %C allocated to same container as component %C\n"),
                     home_id,
                     idd.name.in ()));
-      throw Deployment::InvalidProperty (idd.name.in (),
-                                         "Unable to find valid home allocated to same container.");
+      throw ::Deployment::InvalidProperty (idd.name.in (),
+                                           "Unable to find valid home allocated to same container.");
     }
 
   Components::KeylessCCMHome_var home =
@@ -899,8 +899,8 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
                     ACE_TEXT("Object reference for home '%C' for homed component '%C' is nil\n"),
                     home_id,
                     idd.name.in ()));
-      throw Deployment::PlanError (idd.name.in (),
-                                   "Installed home for explicitly homed component has nil object reference\n");
+      throw ::Deployment::PlanError (idd.name.in (),
+                                     "Installed home for explicitly homed component has nil object reference\n");
     }
 
   try
@@ -919,8 +919,8 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
       ACE_TEXT("Received nil component reference from create_component on home %C ")
       ACE_TEXT(" while creating component %C\n"),
                         home_id, idd.name.in ()));
-          throw Deployment::StartError (idd.name.in (),
-                                        "Home for explicitly homed component returned nil");
+          throw ::Deployment::StartError (idd.name.in (),
+                                          "Home for explicitly homed component returned nil");
         }
 
       inst.ref = CORBA::Object::_narrow (ccm_obj.in ());
@@ -944,8 +944,8 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
                     ACE_TEXT("Caught CreateFailure exception from home '%C' while installing component '%C'\n"),
                     home_inst,
                     idd.name.in ()));
-      throw Deployment::StartError (idd.name.in (),
-                                    "Caught CreateFailure exception");
+      throw ::Deployment::StartError (idd.name.in (),
+                                      "Caught CreateFailure exception");
     }
   catch (const CORBA::Exception &ex)
     {
@@ -1250,7 +1250,7 @@ NodeApplication_Impl::passivate_components()
   DANCE_TRACE ("NodeApplication_Impl::passivate_components()");
 
   bool error (false);
-  Deployment::StopError exception ("unfilled", "unfilled passivate components");
+  ::Deployment::StopError exception ("unfilled", "unfilled passivate components");
 
   for (size_t k = 0; k < this->instances_.size (); ++k)
     {
@@ -1334,7 +1334,7 @@ NodeApplication_Impl::remove_components()
   DANCE_TRACE ("NodeApplication_Impl::remove_components()");
 
   bool error (false);
-  Deployment::StopError exception ("unfilled", "unfilled remove_components");
+  ::Deployment::StopError exception ("unfilled", "unfilled remove_components");
 
   // Removing components first.
   for (size_t k = 0; k < this->instances_.size (); ++k)
@@ -1573,9 +1573,9 @@ NodeApplication_Impl::getAllConnections()
 {
   DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - started\n")));
 
-  Deployment::Connections_var conn;
+  ::Deployment::Connections_var conn;
   ACE_NEW_THROW_EX (conn,
-                    Deployment::Connections (),
+                    ::Deployment::Connections (),
                     CORBA::NO_MEMORY ());
   unsigned int index = 0;
   /*
@@ -1619,7 +1619,7 @@ NodeApplication_Impl::getAllConnections()
               //                                                                        , this->plan_.connection[i].internalEndpoint[j].portName.in());
               switch (this->plan_.connection[i].internalEndpoint[j].kind)
                 {
-                case Deployment::Facet:
+                case ::Deployment::Facet:
                   {
                     try
                       {
@@ -1665,7 +1665,7 @@ NodeApplication_Impl::getAllConnections()
                       }
                     break;
                   }
-                case Deployment::EventConsumer:
+                case ::Deployment::EventConsumer:
                   {
                     try
                       {
@@ -1760,8 +1760,8 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
           DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
                         ACE_TEXT("Unable to narrow apparent component instance reference to CCMObject for instance '%C'\n"),
                         this->plan_.instance[inst].name.in ()));
-          throw Deployment::InvalidConnection (this->plan_.instance[inst].name.in (),
-                                               "Unable to narrow apparent component instance reference to CCMObject\n");
+          throw ::Deployment::InvalidConnection (this->plan_.instance[inst].name.in (),
+                                                 "Unable to narrow apparent component instance reference to CCMObject\n");
         }
 
       const ::Deployment::PlanConnectionDescription &conn = this->plan_.connection[j];
@@ -1781,7 +1781,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                 {
                   switch (conn.internalEndpoint[0].kind)
                     {
-                    case Deployment::Facet:
+                    case ::Deployment::Facet:
                       {
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
                                      ACE_TEXT("set for facet %C\n"), name.c_str ()));
@@ -1791,8 +1791,8 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                             if (0 == conn.externalReference.length())
                               {
                                 if (conn.internalEndpoint.length () == 2 &&
-                                    (conn.internalEndpoint[1].kind == Deployment::MultiplexReceptacle ||
-                                     conn.internalEndpoint[1].kind == Deployment::SimplexReceptacle))
+                                    (conn.internalEndpoint[1].kind == ::Deployment::MultiplexReceptacle ||
+                                     conn.internalEndpoint[1].kind == ::Deployment::SimplexReceptacle))
                                   {
                                     obj = Components::CCMObject::
                                       _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
@@ -1837,7 +1837,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
 
                         break;
                       }
-                    case Deployment::EventConsumer:
+                    case ::Deployment::EventConsumer:
                       {
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - set for consumer\n")));
                         Components::CCMObject_var ext_inst;
@@ -1883,8 +1883,8 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                           }
                         break;
                       }
-                    case Deployment::MultiplexReceptacle:
-                    case Deployment::SimplexReceptacle:
+                    case ::Deployment::MultiplexReceptacle:
+                    case ::Deployment::SimplexReceptacle:
                       {
                         // What we should do with Cookie, returned from connect call???
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - set for receptacle\n")));
@@ -1893,7 +1893,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                                                   providedReference[i].endpoint[0].in());
                         break;
                       }
-                    case Deployment::EventEmitter:
+                    case ::Deployment::EventEmitter:
                       {
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - set for emitter\n")));
                         this->connect_emitter (obj.in(),
@@ -1901,7 +1901,7 @@ NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedRefe
                                                providedReference[i].endpoint[0].in());
                         break;
                       }
-                    case Deployment::EventPublisher:
+                    case ::Deployment::EventPublisher:
                       {
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - set for publisher\n")));
                         this->connect_publisher (obj.in(),
