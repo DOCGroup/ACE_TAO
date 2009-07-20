@@ -1,3 +1,9 @@
+Mon Jul 20 07:34:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/Bool_Array.h:
+        * apps/gperf/src/Key_List.h:
+          Added workaround for BCB linker which needs these classes exported
+
 Sun Jul 19 08:18:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS/server/HTTP_Response.cpp:
