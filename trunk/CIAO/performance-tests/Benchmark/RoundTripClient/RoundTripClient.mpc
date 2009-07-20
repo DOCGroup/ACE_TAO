@@ -82,7 +82,7 @@ project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Benchmark_RoundTripClient_svnt) : ciao_servant {
+project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Benchmark_skel Benchmark_RoundTripClient_exec
   sharedname  = RoundTripClient_svnt
   libs       += RoundTripClient_exec \
