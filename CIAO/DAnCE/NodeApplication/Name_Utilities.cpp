@@ -26,7 +26,7 @@ namespace DAnCE
   }
 
   bool
-  Name_Utilities::bind_object (const ACE_TCHAR *name,
+  Name_Utilities::bind_object (const char *name,
                                CORBA::Object_ptr obj,
                                CosNaming::NamingContext_ptr ctx)
   {
@@ -121,7 +121,7 @@ namespace DAnCE
   }
 
   bool
-  Name_Utilities::unbind_object (const ACE_TCHAR *name,
+  Name_Utilities::unbind_object (const char *name,
                                  CosNaming::NamingContext_ptr ctx)
   {
     DANCE_TRACE ("Name_Utilities::unbind_object");
@@ -151,7 +151,7 @@ namespace DAnCE
   }
 
   void
-  Name_Utilities::build_name (const ACE_TCHAR *name,
+  Name_Utilities::build_name (const char *name,
                               CosNaming::Name &nm)
   {
     DANCE_TRACE ("Name_Utilities::build_name");

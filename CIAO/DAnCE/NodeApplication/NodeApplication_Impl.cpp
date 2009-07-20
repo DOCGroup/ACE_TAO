@@ -1021,7 +1021,7 @@ NodeApplication_Impl::store_instance_ior (Instance &inst)
 {
   DANCE_TRACE ("NodeApplication_impl::store_instance_ior");
 
-  const ACE_TCHAR *name = 0;
+  const char *name = 0;
 
   if (get_property_value (DAnCE::REGISTER_NAMING,
                           this->plan_.instance[inst.idd_idx].configProperty,
