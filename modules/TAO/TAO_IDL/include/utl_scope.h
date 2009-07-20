@@ -120,6 +120,11 @@ class AST_Array;
 class AST_Native;
 class AST_Factory;
 class AST_PortType;
+class AST_Provides;
+class AST_Uses;
+class AST_Publishes;
+class AST_Emits;
+class AST_Consumes;
 class UTL_StrList;
 class UTL_NameList;
 
@@ -438,6 +443,16 @@ private:
   virtual AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
 
   virtual AST_PortType *fe_add_porttype (AST_PortType *pt);
+
+  virtual AST_Provides *fe_add_provides (AST_Provides *p);
+
+  virtual AST_Uses *fe_add_uses (AST_Uses *p);
+
+  virtual AST_Publishes *fe_add_publishes (AST_Publishes *p);
+
+  virtual AST_Emits *fe_add_emits (AST_Emits *p);
+
+  virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
 };
 
 // Active iterator for a UTL_Scope node
