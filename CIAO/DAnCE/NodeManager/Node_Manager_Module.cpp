@@ -534,7 +534,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
         {
           DANCE_DEBUG ((LM_TRACE,  DLINFO "DAnCE_NodeManager_Module::create_object - "
                         "Writing node IOR %C to file %C.\n", node_file.c_str (), ior.in ()));
-          if (!DAnCE::Node_Manager::write_IOR ((const ACE_TCHAR *)node_file.c_str (), ior.in ()))
+          if (!DAnCE::Node_Manager::write_IOR (node_file.c_str (), ior.in ()))
             DANCE_ERROR ((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
                           "Error: Unable to write IOR to file %C\n",
                           node_file.c_str ()));
