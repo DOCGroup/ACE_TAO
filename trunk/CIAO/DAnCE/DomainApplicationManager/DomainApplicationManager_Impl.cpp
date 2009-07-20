@@ -449,7 +449,7 @@ DomainApplicationManager_Impl::preparePlan()
            ++iter_plans)
         {
           // Finding correspondent NodeManager
-          Deployment::NodeManager_var nm = this->nodes_.locate_node ((const ACE_TCHAR*)(*iter_plans).ext_id_.c_str ());;
+          Deployment::NodeManager_var nm = this->nodes_.locate_node ((*iter_plans).ext_id_.c_str ());;
           // If NodeManager not found throw StartError exception
           if (CORBA::is_nil (nm.in ()))
             {
