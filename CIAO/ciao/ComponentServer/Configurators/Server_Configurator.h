@@ -43,7 +43,7 @@ namespace CIAO
     public:
 
       /// Default constructor.
-      ComponentServer_Configurator (bool rt);
+      ComponentServer_Configurator (bool rt = false);
 
       /// Default destructor.
       virtual ~ComponentServer_Configurator (void);
@@ -75,7 +75,6 @@ namespace CIAO
       /// @@ Perhaps we also need a finalizer method here.  Perhaps we
       /// even need to differentiate finalizer before ORB is destroyed
       /// and the one after that.
-
       bool rt_support (void);
 
       void set_rt_support (void);
@@ -88,8 +87,7 @@ namespace CIAO
         find_policies_by_name (const char *name);
 
     protected:
-
-      int rt_support_;
+      bool rt_support_;
 
       CORBA::ORB_var orb_;
 
