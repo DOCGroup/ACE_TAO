@@ -1,3 +1,8 @@
+Mon Jul 20 11:16:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Fixed compile error on HPUX
+
 Mon Jul 20 11:13:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
