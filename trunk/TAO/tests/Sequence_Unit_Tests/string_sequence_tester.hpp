@@ -223,7 +223,7 @@ struct string_sequence_tester
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
 
-    CORBA::ULong max;
+    CORBA::ULong max = 0;
     {
       tested_sequence b(a);
       FAIL_RETURN_IF_NOT(d.expect(16), d);
@@ -297,7 +297,7 @@ struct string_sequence_tester
 
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
-    CORBA::ULong max;
+    CORBA::ULong max = 0;
     {
       tested_sequence b;
       b = a;

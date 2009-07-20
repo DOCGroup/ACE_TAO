@@ -1,3 +1,8 @@
+Mon Jul 20 07:51:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+          Fixed warnings on Solaris
+
 Sun Jul 19 10:20:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_svs.cpp:
