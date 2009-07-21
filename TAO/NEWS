@@ -1,37 +1,34 @@
-PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
-===========================================================================
-
 USER VISIBLE CHANGES BETWEEN TAO-1.7.1 and TAO-1.7.2
 ====================================================
 
-  . Extended IDL compiler to take over all code generation from
-    the CIAO CIDL compiler, which has been eliminated.
-    See $TAO_ROOT/docs/compiler.html for details.
-    
-  . Added code generation for export header files. See
-    $TAO_ROOT/docs/compiler.html for details.
+. Extended IDL compiler to take over all code generation from
+  the CIAO CIDL compiler, which has been eliminated.
+  See $TAO_ROOT/docs/compiler.html for details.
+
+. Added code generation for export header files. See
+  $TAO_ROOT/docs/compiler.html for details.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.7.0 and TAO-1.7.1
 ====================================================
 
- . Improved Unicode compatibility.
+. Improved Unicode compatibility.
 
- . Improved service configuration processing.
+. Improved service configuration processing.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.6.9 and TAO-1.7.0
 ====================================================
 
- . Merged in changes from OCI's distribution which originate from
-   OCI request ticket [RT 12912]. In their totality, the changes
-   added new features for IMR to support the capability of client
-   automatically reconnects servers within same port range upon
-   server restart. The ServerId is added to ServerInfo in IMR to
-   help identify server process. The -UnregisterIfAddressReused
-   option is added to IMR to enable the address reuse checking
-   upon server registering. The servers that address is reused
-   are unregistered from IMR. The -ORBForwardInvocationOnObjectNotExist
-   option is added to forward request to next available profile
-   upon receiving OBJECT_NOT_EXIST exception reply.
+. Merged in changes from OCI's distribution which originate from
+  OCI request ticket [RT 12912]. In their totality, the changes
+  added new features for IMR to support the capability of client
+  automatically reconnects servers within same port range upon
+  server restart. The ServerId is added to ServerInfo in IMR to
+  help identify server process. The -UnregisterIfAddressReused
+  option is added to IMR to enable the address reuse checking
+  upon server registering. The servers that address is reused
+  are unregistered from IMR. The -ORBForwardInvocationOnObjectNotExist
+  option is added to forward request to next available profile
+  upon receiving OBJECT_NOT_EXIST exception reply.
 
 . The -ORBRunThreads of the notification service has been renamed
   to -RunThreads and the notification service can now be loaded
@@ -51,7 +48,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.6.9 and TAO-1.7.0
 . The MCPP version optionally used by TAO_IDL has been updated to 2.7.2.
   Efforts have been taken to port this to as many platforms as possible,
   however, since it is not currently the default configuration it may
-  not work across all platforms.  
+  not work across all platforms.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.6.8 and TAO-1.6.9
 ====================================================
