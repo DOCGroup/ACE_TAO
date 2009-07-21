@@ -33,6 +33,7 @@ class be_module;
 class be_interface;
 class be_interface_fwd;
 class be_template_interface;
+class be_instantiated_interface;
 class be_valuebox;
 class be_valuetype;
 class be_valuetype_fwd;
@@ -95,7 +96,10 @@ public:
   virtual int visit_module (be_module *node);
   virtual int visit_interface (be_interface *node);
   virtual int visit_interface_fwd (be_interface_fwd *node);
-  virtual int visit_template_interface (be_template_interface *node);
+  virtual int visit_template_interface (
+    be_template_interface *node);
+  virtual int visit_instantiated_interface (
+    be_instantiated_interface *node);
   virtual int visit_valuebox (be_valuebox *node);
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);

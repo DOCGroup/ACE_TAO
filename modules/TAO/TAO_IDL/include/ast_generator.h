@@ -80,6 +80,7 @@ class AST_Root;
 class AST_EventType;
 class AST_EventTypeFwd;
 class AST_Template_Interface;
+class AST_Instantiated_Interface;
 class AST_PortType;
 class AST_Provides;
 class AST_Uses;
@@ -355,6 +356,12 @@ public:
     AST_Interface **ih_flat,
     long nih_flat,
     const FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Instantiated_Interface *create_instantiated_interface (
+    UTL_ScopedName *n,
+    AST_Template_Interface *template_ref,
+    UTL_NameList *template_args);  
 
   virtual
   AST_PortType *create_porttype (
