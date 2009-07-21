@@ -1,0 +1,8 @@
+// -*- MPC -*-
+//$Id$
+
+project : csd_pt_testinf_lib {
+  after += csd_pt_testservant
+  libs += CSD_PT_TestServant
+  libpaths += $(TAO_ROOT)/performance-tests/CSD_Strategy/TestServant
+}
