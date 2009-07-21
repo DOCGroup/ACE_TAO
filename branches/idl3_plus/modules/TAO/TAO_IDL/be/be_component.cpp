@@ -126,7 +126,5 @@ be_component::be_add_typedef (AST_Typedef *t)
   return this->fe_add_typedef (t);
 }
 
-
-
 IMPL_NARROW_FROM_DECL (be_component)
 IMPL_NARROW_FROM_SCOPE (be_component)

@@ -66,22 +66,14 @@ public:
   AST_Interface **supports (void) const;
 
   long n_supports (void) const;
-/*
-  typedef ACE_Unbounded_Queue<port_description> PORTS;
 
-  PORTS &provides (void);
-  PORTS &uses (void);
-  PORTS &emits (void);
-  PORTS &publishes (void);
-  PORTS &consumes (void);
-*/
   // Cleanup function.
   virtual void destroy (void);
 
   // Narrowing.
 
-  DEF_NARROW_FROM_DECL(AST_Component);
-  DEF_NARROW_FROM_SCOPE(AST_Component);
+  DEF_NARROW_FROM_DECL (AST_Component);
+  DEF_NARROW_FROM_SCOPE (AST_Component);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
@@ -102,13 +94,6 @@ protected:
 
 private:
   AST_Component *pd_base_component;
-/*
-  PORTS pd_provides;
-  PORTS pd_uses;
-  PORTS pd_emits;
-  PORTS pd_publishes;
-  PORTS pd_consumes;
-*/
 };
 
 #endif // _AST_COMPONENT_AST_COMPONENT_HH

@@ -240,6 +240,6 @@ AST_PortType::fe_add_consumes (AST_Consumes *c)
   return c;
 }
 
-IMPL_NARROW_FROM_DECL(AST_PortType)
-IMPL_NARROW_FROM_SCOPE(AST_PortType)
+IMPL_NARROW_FROM_DECL (AST_PortType)
+IMPL_NARROW_FROM_SCOPE (AST_PortType)
 

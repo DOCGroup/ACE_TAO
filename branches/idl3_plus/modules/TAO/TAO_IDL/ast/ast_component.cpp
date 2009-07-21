@@ -75,13 +75,6 @@ AST_Component::redefine (AST_Interface *from)
   this->AST_Interface::redefine (from);
 
   this->pd_base_component = c->pd_base_component;
-  /*
-  this->pd_provides = c->pd_provides;
-  this->pd_uses = c->pd_uses;
-  this->pd_emits = c->pd_emits;
-  this->pd_publishes = c->pd_publishes;
-  this->pd_consumes = c->pd_consumes;
-  */
 }
 
 AST_Decl *
@@ -153,92 +146,10 @@ AST_Component::n_supports (void) const
 {
   return this->n_inherits ();
 }
-/*
-AST_Component::PORTS &
-AST_Component::provides (void)
-{
-  return this->pd_provides;
-}
 
-AST_Component::PORTS &
-AST_Component::uses (void)
-{
-  return this->pd_uses;
-}
-
-AST_Component::PORTS &
-AST_Component::emits (void)
-{
-  return this->pd_emits;
-}
-
-AST_Component::PORTS &
-AST_Component::publishes (void)
-{
-  return this->pd_publishes;
-}
-
-AST_Component::PORTS &
-AST_Component::consumes (void)
-{
-  return this->pd_consumes;
-}
-*/
 void
 AST_Component::destroy (void)
-{/*
-  port_description *pd = 0;
-  
-  for (PORTS::ITERATOR i = this->pd_provides.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
-  for (PORTS::ITERATOR i = this->pd_uses.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
-  for (PORTS::ITERATOR i = this->pd_publishes.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
-  for (PORTS::ITERATOR i = this->pd_consumes.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
-  for (PORTS::ITERATOR i = this->pd_emits.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-*/    
+{
   this->AST_Interface::destroy ();
 }
 
@@ -476,5 +387,5 @@ AST_Component::fe_add_consumes (AST_Consumes *c)
   return c;
 }
 
-IMPL_NARROW_FROM_DECL(AST_Component)
-IMPL_NARROW_FROM_SCOPE(AST_Component)
+IMPL_NARROW_FROM_DECL (AST_Component)
+IMPL_NARROW_FROM_SCOPE (AST_Component)

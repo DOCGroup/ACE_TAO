@@ -38,7 +38,7 @@ void
 be_uses::destroy (void)
 {
   this->AST_Uses::destroy ();
-  this->be_decl::destroy ();
+  this->be_field::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL(be_uses)
+IMPL_NARROW_FROM_DECL (be_uses)
