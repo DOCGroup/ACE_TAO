@@ -1,3 +1,11 @@
+Tue Jul 21 01:43:50 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL3/ImpliedIDL/All/all.mpc:
+
+           Disabled this on MFC systems due to the fact that it produces 
+           errors in newer VS compilers due to the mixing in of c# language
+           elements. 
+        
 Mon Jul 20 11:16:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
