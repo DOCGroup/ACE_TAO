@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_structure.h"
 #include "ast_sequence.h"
 #include "ast_valuetype.h"
+#include "ast_uses.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_err.h"
@@ -1609,12 +1610,10 @@ IDL_GlobalData::fini (void)
 }
 
 void
-IDL_GlobalData::create_uses_multiple_stuff (
-    AST_Component *c,
-    AST_Component::port_description &pd
-  )
+IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
+                                            AST_Uses *u)
 {
-  ACE_CString struct_name (pd.id->get_string ());
+  ACE_CString struct_name (u->local_name ()->get_string ());
   struct_name += "Connection";
   Identifier struct_id (struct_name.c_str ());
   UTL_ScopedName sn (&struct_id, 0);
@@ -1626,7 +1625,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
   UTL_ScopedName object_name (&object_id,
                               0);
   AST_Field *object_field =
-    idl_global->gen ()->create_field (pd.impl,
+    idl_global->gen ()->create_field (u->uses_type (),
                                       &object_name,
                                       AST_Field::vis_NA);
   (void) DeclAsScope (connection)->fe_add_field (object_field);
@@ -1675,7 +1674,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
                                          0,
                                          0);
 
-  ACE_CString seq_string (pd.id->get_string ());
+  ACE_CString seq_string (struct_name);
   seq_string += "Connections";
   Identifier seq_id (seq_string.c_str ());
   UTL_ScopedName seq_name (&seq_id,

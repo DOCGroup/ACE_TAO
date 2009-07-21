@@ -61,14 +61,11 @@ private:
                   
   void gen_provides_r (AST_Component *node);
    
-  void gen_provides (AST_Type *obj,
-                     const char *port_name);
+  void gen_provides (AST_Provides *p);
                      
   void gen_uses_context_r (AST_Component *node);
                                      
-  void gen_uses_context (AST_Type *obj,
-                         const char *port_name,
-                         bool is_multiple);
+  void gen_uses_context (AST_Uses *u);
                          
   void gen_uses_context_simplex (AST_Type *obj,
                                  const char *port_name);
@@ -78,70 +75,54 @@ private:
                                    
   void gen_uses_servant_top (void);
   
-  void gen_connect_block (const char *obj_name,
-                          const char *port_name,
-                          bool is_multiple);
+  void gen_connect_block (AST_Uses *u);
                           
-  void gen_disconnect_block (const char *port_name,
-                             bool is_multiple);
+  void gen_disconnect_block (AST_Uses *u);
                              
   void gen_uses_servant_r (AST_Component *node);
   
-  void gen_uses_servant (const char *obj_name,
-                         const char *port_name,
-                         bool is_multiple);
+  void gen_uses_servant (AST_Uses *u);
                          
-  void gen_receptacle_description (AST_Type *obj,
-                                   const char *port_name,
-                                   bool is_multiple,
+  void gen_receptacle_description (AST_Uses *u,
                                    ACE_CDR::ULong slot);
   
   void gen_publishes_context_r (AST_Component *node);
                 
-  void gen_publishes_context (AST_Type *obj,
-                              const char *port_name);
+  void gen_publishes_context (AST_Publishes *p);
                               
   void gen_publishes_servant_top (void);
   
-  void gen_subscribe_block (const char *obj_name,
-                            const char *port_name);
+  void gen_subscribe_block (AST_Publishes *p);
                             
-  void gen_unsubscribe_block (const char *port_name);
+  void gen_unsubscribe_block (AST_Publishes *p);
                               
-  void gen_event_source_description (AST_Type *obj,
-                                     const char *port_name,
+  void gen_event_source_description (AST_Publishes *p,
                                      ACE_CDR::ULong slot);
                                      
   void gen_publishes_servant_r (AST_Component *node);
                               
-  void gen_publishes_servant (const char *obj_name,
-                              const char *port_name);
+  void gen_publishes_servant (AST_Publishes *p);
                               
   void gen_consumes_r (AST_Component *node);
   
-  void gen_consumes (AST_Type *obj,
-                     const char *port_name);
+  void gen_consumes (AST_Consumes *c);
                      
   void gen_emits_context_r (AST_Component *node);
                                      
-  void gen_emits_context (AST_Type *obj,
-                          const char *port_name);
+  void gen_emits_context (AST_Emits *e);
                           
   void gen_emits_servant_top (void);
   
-  void gen_connect_consumer_block (const char *obj_name,
-                                   const char *port_name);
+  void gen_connect_consumer_block (AST_Emits *e);
   
-  void gen_disconnect_consumer_block (const char *port_name);
+  void gen_disconnect_consumer_block (AST_Emits *e);
                                       
-  void gen_emitter_description (AST_Type *obj,
-                                const char *port_name,
+  void gen_emitter_description (AST_Emits *e,
                                 ACE_CDR::ULong slot);
   
   void gen_emits_servant_r (AST_Component *node);
   
-  void gen_emits_servant (const char *obj_name,
-                          const char *port_name);
+  void gen_emits_servant (AST_Emits *e);
                           
   void gen_attr_set_r (AST_Component *node);
      
@@ -154,6 +135,8 @@ private:
   
   void gen_swapping_get_consumers_r (AST_Component *node);
   void gen_swapping_get_comsumer_block (const char *port_name);
+  
+  void compute_slots (AST_Component *node);
                   
 private:
   be_component *node_;
@@ -162,6 +145,11 @@ private:
   ACE_CString export_macro_;
   static bool in_facets_;
   bool swapping_;
+  ACE_CDR::ULong n_provides_;
+  ACE_CDR::ULong n_uses_;
+  ACE_CDR::ULong n_publishes_;
+  ACE_CDR::ULong n_emits_;
+  ACE_CDR::ULong n_consumes_;
 };
 
 /// Worker class passed to traverse_inheritance_graph(),

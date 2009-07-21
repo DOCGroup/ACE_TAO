@@ -5,8 +5,9 @@
 #include "be_visitor.h"
 
 be_provides::be_provides (UTL_ScopedName *n,
-                          AST_Interface *provides_type)
-  : COMMON_Base (),
+                          AST_Type *provides_type)
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_provides,
               n),
     AST_Field (AST_Decl::NT_provides,
@@ -15,7 +16,9 @@ be_provides::be_provides (UTL_ScopedName *n,
     AST_Provides (n,
                   provides_type),
     be_decl (AST_Decl::NT_provides,
-             n)
+             n),
+    be_field (provides_type,
+              n)
 {
 }
 

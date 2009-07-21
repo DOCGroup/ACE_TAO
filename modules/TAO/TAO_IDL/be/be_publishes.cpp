@@ -6,7 +6,8 @@
 
 be_publishes::be_publishes (UTL_ScopedName *n,
                             AST_EventType *publishes_type)
-  : COMMON_Base (),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_publishes,
               n),
     AST_Field (AST_Decl::NT_publishes,
@@ -15,7 +16,9 @@ be_publishes::be_publishes (UTL_ScopedName *n,
     AST_Publishes (n,
                   publishes_type),
     be_decl (AST_Decl::NT_publishes,
-             n)
+             n),
+    be_field (publishes_type,
+              n)
 {
 }
 

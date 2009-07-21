@@ -261,6 +261,7 @@
 #include "ast_home.h"
 #include "ast_template_interface.h"
 #include "ast_porttype.h"
+#include "ast_uses.h"
 #include "ast_constant.h"
 #include "ast_union.h"
 #include "ast_union_fwd.h"
@@ -7559,8 +7560,8 @@ tao_yyreduce:
               break;
             }
 
-          AST_Interface *port_interface_type =
-            AST_Interface::narrow_from_decl (d);
+          AST_Type *port_interface_type =
+            AST_Type::narrow_from_decl (d);
 
           // Strip off _cxx_, if any, for port name.
           idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
@@ -7660,8 +7661,8 @@ tao_yyreduce:
               break;
             }
 
-          AST_Interface *port_interface_type =
-            AST_Interface::narrow_from_decl (d);
+          AST_Type *port_interface_type =
+            AST_Type::narrow_from_decl (d);
 
           // Strip off _cxx_, if any, for port name.
           idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
@@ -7675,6 +7676,20 @@ tao_yyreduce:
                                              (tao_yyvsp[(1) - (3)].bval));
 
           (void) s->fe_add_uses (u);
+
+          AST_Component *c =
+            AST_Component::narrow_from_scope (s);
+
+          if (c != 0
+              && u->is_multiple ()
+              && !idl_global->using_ifr_backend ()
+              && !idl_global->ignore_idl3 ())
+            {
+              // These datatypes must be created in the
+              // front end so they can be looked up
+              // when compiling the generated executor IDL.
+              idl_global->create_uses_multiple_stuff (c, u);
+            }
 
           (tao_yyvsp[(2) - (3)].idlist)->destroy ();
           delete (tao_yyvsp[(2) - (3)].idlist);

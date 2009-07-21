@@ -89,6 +89,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_home.h"
 #include "ast_template_interface.h"
 #include "ast_porttype.h"
+#include "ast_uses.h"
 #include "ast_constant.h"
 #include "ast_union.h"
 #include "ast_union_fwd.h"
@@ -4852,8 +4853,8 @@ provides_decl : IDL_PROVIDES interface_type id
               break;
             }
 
-          AST_Interface *port_interface_type =
-            AST_Interface::narrow_from_decl (d);
+          AST_Type *port_interface_type =
+            AST_Type::narrow_from_decl (d);
 
           // Strip off _cxx_, if any, for port name.
           idl_global->original_local_name ($3);
@@ -4949,8 +4950,8 @@ uses_decl : uses_opt_multiple interface_type id
               break;
             }
 
-          AST_Interface *port_interface_type =
-            AST_Interface::narrow_from_decl (d);
+          AST_Type *port_interface_type =
+            AST_Type::narrow_from_decl (d);
 
           // Strip off _cxx_, if any, for port name.
           idl_global->original_local_name ($3);
@@ -4965,6 +4966,20 @@ uses_decl : uses_opt_multiple interface_type id
 
           (void) s->fe_add_uses (u);
  
+          AST_Component *c =
+            AST_Component::narrow_from_scope (s);
+
+          if (c != 0
+              && u->is_multiple ()
+              && !idl_global->using_ifr_backend ()
+              && !idl_global->ignore_idl3 ())
+            {
+              // These datatypes must be created in the
+              // front end so they can be looked up
+              // when compiling the generated executor IDL.
+              idl_global->create_uses_multiple_stuff (c, u);
+            }
+
           $2->destroy ();
           delete $2;
           $2 = 0;

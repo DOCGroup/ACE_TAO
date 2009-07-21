@@ -33,7 +33,12 @@ be_visitor_component_svs::be_visitor_component_svs (be_visitor_context *ctx)
     node_ (0),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ()),
-    swapping_ (be_global->gen_component_swapping ())
+    swapping_ (be_global->gen_component_swapping ()),
+    n_provides_ (0UL),
+    n_uses_ (0UL),
+    n_publishes_ (0UL),
+    n_emits_ (0UL),
+    n_consumes_ (0UL)
 {
   /// All existing CIAO examples set the servant export values in the CIDL
   /// compiler to equal the IDL compiler's skel export values. Below is a
@@ -53,7 +58,14 @@ int
 be_visitor_component_svs::visit_component (be_component *node)
 {
   node_ = node;
-  TAO_OutStream &os_  = *this->ctx_->stream ();
+  n_provides_ = 0UL;
+  n_uses_ = 0UL;
+  n_publishes_ = 0UL;
+  n_emits_ = 0UL;
+  n_consumes_ = 0UL;
+  TAO_OutStream &os_ = *this->ctx_->stream ();
+  
+  this->compute_slots (node_);
   
   if (this->gen_facets () == -1)
     {
@@ -114,28 +126,34 @@ be_visitor_component_svs::visit_attribute (be_attribute *node)
 int
 be_visitor_component_svs::gen_facets (void)
 {
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node_->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      be_interface *intf =
-        be_interface::narrow_from_decl (pd->impl);
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
         
-      if (intf->svnt_src_facet_gen ())
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
+        
+      if (impl->svnt_src_facet_gen ())
         {
           continue;
         }
       
       // No '_cxx_' prefix.
       const char *lname =
-        intf->original_local_name ()->get_string ();
+        impl->original_local_name ()->get_string ();
       
       be_decl *scope =
-        be_scope::narrow_from_scope (intf->defined_in ())->decl ();
+        be_scope::narrow_from_scope (impl->defined_in ())->decl ();
         
       ACE_CString sname_str (scope->full_name ());
         
@@ -175,14 +193,22 @@ be_visitor_component_svs::gen_facets (void)
           << "}";
           
       be_visitor_component_svs::in_facets_ = true;
-      this->op_scope_ = intf;
-          
-      if (this->gen_facet_ops_attrs (intf) == -1)
+      bool is_intf = impl->node_type () == AST_Decl::NT_interface;
+        
+      if (is_intf)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_component_svs::gen_facet - "
-                             "gen_facet_ops_attrs() failed\n"),
-                            -1);
+          be_interface *intf =
+            be_interface::narrow_from_decl (impl);
+                
+          this->op_scope_ = intf;
+
+          if (this->gen_facet_ops_attrs (intf) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_component_svs::gen_facet - "
+                                 "gen_facet_ops_attrs() failed\n"),
+                                -1);
+            }
         }
         
       be_visitor_component_svs::in_facets_ = false;
@@ -213,7 +239,7 @@ be_visitor_component_svs::gen_facets (void)
       os_ << be_uidt_nl
           << "}";
       
-      intf->svnt_src_facet_gen (true);
+      impl->svnt_src_facet_gen (true);
     }
 
   return 0;
@@ -567,18 +593,22 @@ be_visitor_component_svs::gen_provides_top (void)
       << "}" << be_uidt;
       
   AST_Component *node = node_;  
-  AST_Component::port_description *pd = 0;
       
   while (node != 0)
     {  
-      for (AST_Component::PORTS::ITERATOR i =
-             node->provides ().begin ();
-           !i.done ();
-           i.advance ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_facet_executor_block (pd->id->get_string ());
+          if (d->node_type () != AST_Decl::NT_provides)
+            {
+              continue;
+            }
+            
+          this->gen_facet_executor_block (
+            d->local_name ()->get_string ());
         }
         
       node = node->base_component ();
@@ -612,15 +642,21 @@ be_visitor_component_svs::gen_provides_r (AST_Component *node)
       return;
     }
     
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
-      this->gen_provides (pd->impl,
-                          pd->id->get_string ());
+      AST_Decl *d = si.item ();
+      
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
+        
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      this->gen_provides (p);
     }
     
   node = node->base_component ();
@@ -628,10 +664,11 @@ be_visitor_component_svs::gen_provides_r (AST_Component *node)
 }
 
 void
-be_visitor_component_svs::gen_provides (AST_Type *obj,
-                                        const char *port_name)
+be_visitor_component_svs::gen_provides (AST_Provides *p)
 {
+  AST_Type *obj = p->provides_type ();
   const char *obj_name = obj->full_name ();
+  const char *port_name = p->local_name ()->get_string ();
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
@@ -736,17 +773,21 @@ be_visitor_component_svs::gen_uses_context_r (AST_Component *node)
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node->uses ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      this->gen_uses_context (pd->impl,
-                              pd->id->get_string (),
-                              pd->is_multiple);
+      if (d->node_type () != AST_Decl::NT_uses)
+        {
+          continue;
+        }
+        
+      AST_Uses *u =
+        AST_Uses::narrow_from_decl (d);
+
+      this->gen_uses_context (u);
     }
     
   node = node->base_component ();
@@ -755,10 +796,12 @@ be_visitor_component_svs::gen_uses_context_r (AST_Component *node)
 
 void
 be_visitor_component_svs::gen_uses_context (
-  AST_Type *obj,
-  const char *port_name,
-  bool is_multiple)
+  AST_Uses *u)
 {
+  AST_Type *obj = u->uses_type ();
+  const char *port_name = u->local_name ()->get_string ();
+  bool is_multiple = u->is_multiple ();
+  
   if (is_multiple)
     {
       this->gen_uses_context_multiplex (obj, port_name);
@@ -1011,20 +1054,24 @@ be_visitor_component_svs::gen_uses_servant_top (void)
       << "}" << be_uidt;
       
   AST_Component *node = node_;  
-  AST_Component::port_description *pd = 0;
       
   while (node != 0)
     {  
-      for (AST_Component::PORTS::ITERATOR i =
-             node->uses ().begin ();
-           !i.done ();
-           i.advance ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_connect_block (pd->impl->full_name (),
-                                   pd->id->get_string (),
-                                   pd->is_multiple);
+          if (d->node_type () != AST_Decl::NT_uses)
+            {
+              continue;
+            }
+            
+          AST_Uses *u =
+            AST_Uses::narrow_from_decl (d);
+
+          this->gen_connect_block (u);
         }
         
       node = node->base_component ();
@@ -1057,15 +1104,21 @@ be_visitor_component_svs::gen_uses_servant_top (void)
       
   while (node != 0)
     {  
-      for (AST_Component::PORTS::ITERATOR i =
-             node->uses ().begin ();
-           !i.done ();
-           i.advance ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_disconnect_block (pd->id->get_string (),
-                                      pd->is_multiple);
+          if (d->node_type () != AST_Decl::NT_uses)
+            {
+              continue;
+            }
+            
+          AST_Uses *u =
+            AST_Uses::narrow_from_decl (d);
+
+          this->gen_disconnect_block (u);
         }
         
       node = node->base_component ();
@@ -1088,7 +1141,7 @@ be_visitor_component_svs::gen_uses_servant_top (void)
       << "                0);" << be_nl
       << "::Components::ReceptacleDescriptions_var "
       << "safe_retval = retval;" << be_nl
-      << "safe_retval->length (" << node_->uses ().size ()
+      << "safe_retval->length (" << n_uses_
       << "UL);";
       
   node = node_;
@@ -1096,17 +1149,21 @@ be_visitor_component_svs::gen_uses_servant_top (void)
       
   while (node != 0)
     {  
-      for (AST_Component::PORTS::ITERATOR i =
-             node->uses ().begin ();
-           !i.done ();
-           i.advance (), ++slot)
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_receptacle_description (pd->impl,
-                                            pd->id->get_string (),
-                                            pd->is_multiple,
-                                            slot);
+          if (d->node_type () != AST_Decl::NT_uses)
+            {
+              continue;
+            }
+            
+          AST_Uses *u =
+            AST_Uses::narrow_from_decl (d);
+
+          this->gen_receptacle_description (u, slot++);
         }
         
       node = node->base_component ();
@@ -1120,11 +1177,12 @@ be_visitor_component_svs::gen_uses_servant_top (void)
 }
 
 void
-be_visitor_component_svs::gen_connect_block (
-  const char *obj_name,
-  const char *port_name,
-  bool is_multiple)
+be_visitor_component_svs::gen_connect_block (AST_Uses *u)
 {
+  const char *obj_name = u->uses_type ()->full_name ();
+  const char *port_name = u->local_name ()->get_string ();
+  bool is_multiple = u->is_multiple ();
+  
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
@@ -1177,10 +1235,11 @@ be_visitor_component_svs::gen_connect_block (
 }
 
 void
-be_visitor_component_svs::gen_disconnect_block (
-  const char *port_name,
-  bool is_multiple)
+be_visitor_component_svs::gen_disconnect_block (AST_Uses *u)
 {
+  const char *port_name = u->local_name ()->get_string ();
+  bool is_multiple = u->is_multiple ();
+
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
@@ -1210,17 +1269,21 @@ be_visitor_component_svs::gen_uses_servant_r (
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node->uses ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      this->gen_uses_servant (pd->impl->full_name (),
-                              pd->id->get_string (),
-                              pd->is_multiple);
+      if (d->node_type () != AST_Decl::NT_uses)
+        {
+          continue;
+        }
+        
+      AST_Uses *u =
+        AST_Uses::narrow_from_decl (d);
+
+      this->gen_uses_servant (u);
     }
     
   node = node->base_component ();
@@ -1228,10 +1291,12 @@ be_visitor_component_svs::gen_uses_servant_r (
 }
 
 void
-be_visitor_component_svs::gen_uses_servant (const char *obj_name,
-                                            const char *port_name,
-                                            bool is_multiple)
+be_visitor_component_svs::gen_uses_servant (AST_Uses *u)
 {
+  const char *obj_name = u->uses_type ()->full_name ();
+  const char *port_name = u->local_name  ()->get_string ();
+  bool is_multiple = u->is_multiple ();
+
   os_ << be_nl << be_nl
       << (is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
@@ -1314,11 +1379,13 @@ be_visitor_component_svs::gen_uses_servant (const char *obj_name,
 
 void
 be_visitor_component_svs::gen_receptacle_description (
-  AST_Type *obj,
-  const char *port_name,
-  bool is_multiple,
+  AST_Uses *u,
   ACE_CDR::ULong slot)
 {
+  AST_Type *obj = u->uses_type ();
+  const char *port_name = u->local_name ()->get_string ();
+  bool is_multiple = u->is_multiple ();
+
   os_ << be_nl << be_nl;
   
   bool gen_guard =
@@ -1361,16 +1428,21 @@ be_visitor_component_svs::gen_publishes_context_r (
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node->publishes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      this->gen_publishes_context (pd->impl,
-                                   pd->id->get_string ());
+      if (d->node_type () != AST_Decl::NT_publishes)
+        {
+          continue;
+        }
+        
+      AST_Publishes *p =
+        AST_Publishes::narrow_from_decl (d);
+
+      this->gen_publishes_context (p);
     }
     
   node = node->base_component ();
@@ -1379,9 +1451,10 @@ be_visitor_component_svs::gen_publishes_context_r (
 
 void
 be_visitor_component_svs::gen_publishes_context (
-  AST_Type *obj,
-  const char *port_name)
+  AST_Publishes *p)
 {
+  AST_Type *obj = p->publishes_type ();
+  const char *port_name = p->local_name ()->get_string ();
   const char *fname = obj->full_name ();
   const char *lname = obj->local_name ()->get_string ();
   ACE_CString sname_str (
@@ -1650,19 +1723,24 @@ be_visitor_component_svs::gen_publishes_servant_top (void)
       << "}" << be_uidt;
       
   AST_Component *node = node_;
-  AST_Component::port_description *pd = 0;
   
   while (node != 0)
     {
-      for (AST_Component::PORTS::ITERATOR i =
-             node->publishes ().begin ();
-           !i.done ();
-           i.advance ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_subscribe_block (pd->impl->full_name (),
-                                     pd->id->get_string ());
+          if (d->node_type () != AST_Decl::NT_publishes)
+            {
+              continue;
+            }
+            
+          AST_Publishes *p =
+            AST_Publishes::narrow_from_decl (d);
+
+          this->gen_subscribe_block (p);
         }
         
       node = node->base_component ();
@@ -1695,14 +1773,21 @@ be_visitor_component_svs::gen_publishes_servant_top (void)
   
   while (node != 0)
     {
-      for (AST_Component::PORTS::ITERATOR i =
-             node->publishes ().begin ();
-           !i.done ();
-           i.advance ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_unsubscribe_block (pd->id->get_string ());
+          if (d->node_type () != AST_Decl::NT_publishes)
+            {
+              continue;
+            }
+            
+          AST_Publishes *p =
+            AST_Publishes::narrow_from_decl (d);
+
+          this->gen_unsubscribe_block (p);
         }
         
       node = node->base_component ();
@@ -1725,7 +1810,7 @@ be_visitor_component_svs::gen_publishes_servant_top (void)
       << "                0);" << be_nl << be_nl
       << "::Components::PublisherDescriptions_var "
       << "safe_retval = retval;" << be_nl
-      << "safe_retval->length (" << node_->publishes ().size ()
+      << "safe_retval->length (" << n_publishes_
       << "UL);";
     
   node = node_;
@@ -1733,16 +1818,21 @@ be_visitor_component_svs::gen_publishes_servant_top (void)
   
   while (node != 0)
     {
-      for (AST_Component::PORTS::ITERATOR i =
-             node->publishes ().begin ();
-           !i.done ();
-           i.advance (), ++slot)
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_event_source_description (pd->impl,
-                                              pd->id->get_string (),
-                                              slot);
+          if (d->node_type () != AST_Decl::NT_publishes)
+            {
+              continue;
+            }
+            
+          AST_Publishes *p =
+            AST_Publishes::narrow_from_decl (d);
+
+          this->gen_event_source_description (p, slot++);
         }
         
       node = node->base_component ();
@@ -1757,9 +1847,11 @@ be_visitor_component_svs::gen_publishes_servant_top (void)
 
 void
 be_visitor_component_svs::gen_subscribe_block (
-  const char *obj_name,
-  const char *port_name)
+  AST_Publishes *p)
 {
+  const char *obj_name = p->publishes_type ()->full_name ();
+  const char *port_name = p->local_name ()->get_string ();
+
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (publisher_name, \""
       << port_name << "\") == 0)" << be_idt_nl
@@ -1794,8 +1886,10 @@ be_visitor_component_svs::gen_subscribe_block (
 
 void
 be_visitor_component_svs::gen_unsubscribe_block (
-  const char *port_name)
+  AST_Publishes *p)
 {
+  const char *port_name = p->local_name ()->get_string ();
+
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (publisher_name, \""
       << port_name << "\") == 0)" << be_idt_nl
@@ -1807,10 +1901,12 @@ be_visitor_component_svs::gen_unsubscribe_block (
 
 void
 be_visitor_component_svs::gen_event_source_description (
-  AST_Type *obj,
-  const char *port_name,
+  AST_Publishes *p,
   ACE_CDR::ULong slot)
 {
+  AST_Type *obj = p->publishes_type ();
+  const char *port_name = p->local_name ()->get_string ();
+
   os_ << be_nl << be_nl;
   
   if (! be_global->gen_ciao_static_config ())
@@ -1849,16 +1945,21 @@ be_visitor_component_svs::gen_publishes_servant_r (AST_Component *node)
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node->publishes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      this->gen_publishes_servant (pd->impl->full_name (),
-                                   pd->id->get_string ());
+      if (d->node_type () != AST_Decl::NT_publishes)
+        {
+          continue;
+        }
+        
+      AST_Publishes *p =
+        AST_Publishes::narrow_from_decl (d);
+
+      this->gen_publishes_servant (p);
     }
     
   node = node->base_component ();
@@ -1867,9 +1968,11 @@ be_visitor_component_svs::gen_publishes_servant_r (AST_Component *node)
 
 void
 be_visitor_component_svs::gen_publishes_servant (
-  const char *obj_name,
-  const char *port_name)
+  AST_Publishes *p)
 {
+  const char *obj_name = p->publishes_type ()->full_name ();
+  const char *port_name = p->local_name ()->get_string ();
+
   os_ << be_nl << be_nl
       << "::Components::Cookie *" << be_nl
       << node_->local_name () << "_Servant::subscribe_"
@@ -1927,16 +2030,21 @@ be_visitor_component_svs::gen_consumes_r (AST_Component *node)
       return;
     }
     
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node->consumes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      this->gen_consumes (pd->impl,
-                          pd->id->get_string ());
+      if (d->node_type () != AST_Decl::NT_consumes)
+        {
+          continue;
+        }
+        
+      AST_Consumes *c =
+        AST_Consumes::narrow_from_decl (d);
+
+      this->gen_consumes (c);
     }
     
   node = node->base_component ();
@@ -1944,9 +2052,11 @@ be_visitor_component_svs::gen_consumes_r (AST_Component *node)
 }
 
 void
-be_visitor_component_svs::gen_consumes (AST_Type *obj,
-                                        const char *port_name)
+be_visitor_component_svs::gen_consumes (AST_Consumes *c)
 {
+  AST_Type  *obj = c->consumes_type ();
+  const char *port_name = c->local_name ()->get_string ();
+
   const char *comp_lname = node_->local_name ();
   ACE_CString comp_sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());   
@@ -2163,16 +2273,21 @@ be_visitor_component_svs::gen_emits_context_r (AST_Component *node)
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node->emits ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      this->gen_emits_context (pd->impl,
-                               pd->id->get_string ());
+      if (d->node_type () != AST_Decl::NT_emits)
+        {
+          continue;
+        }
+        
+      AST_Emits *e =
+        AST_Emits::narrow_from_decl (d);
+
+      this->gen_emits_context (e);
     }
     
   node = node->base_component ();
@@ -2181,9 +2296,11 @@ be_visitor_component_svs::gen_emits_context_r (AST_Component *node)
 
 void
 be_visitor_component_svs::gen_emits_context (
-  AST_Type *obj,
-  const char *port_name)
+  AST_Emits *e)
 {
+  AST_Type *obj = e->emits_type ();
+  const char *port_name = e->local_name ()->get_string ();
+
   const char *fname = obj->full_name ();
   const char *lname = obj->local_name ()->get_string ();
   
@@ -2260,19 +2377,24 @@ be_visitor_component_svs::gen_emits_servant_top (void)
       << "}" << be_uidt;
       
   AST_Component *node = node_;
-  AST_Component::port_description *pd = 0;
   
   while (node != 0)
     {
-      for (AST_Component::PORTS::ITERATOR i =
-             node->emits ().begin ();
-           !i.done ();
-           i.advance ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_connect_consumer_block (pd->impl->full_name (),
-                                            pd->id->get_string ());
+          if (d->node_type () != AST_Decl::NT_emits)
+            {
+              continue;
+            }
+            
+          AST_Emits *e =
+            AST_Emits::narrow_from_decl (d);
+
+          this->gen_connect_consumer_block (e);
         }
         
       node = node->base_component ();
@@ -2304,14 +2426,21 @@ be_visitor_component_svs::gen_emits_servant_top (void)
   
   while (node != 0)
     {
-      for (AST_Component::PORTS::ITERATOR i =
-             node->emits ().begin ();
-           !i.done ();
-           i.advance ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_disconnect_consumer_block (pd->id->get_string ());
+          if (d->node_type () != AST_Decl::NT_emits)
+            {
+              continue;
+            }
+            
+          AST_Emits *e =
+            AST_Emits::narrow_from_decl (d);
+
+          this->gen_disconnect_consumer_block (e);
         }
         
       node = node->base_component ();
@@ -2334,7 +2463,7 @@ be_visitor_component_svs::gen_emits_servant_top (void)
       << "                0);" << be_nl << be_nl
       << "::Components::EmitterDescriptions_var "
       << "safe_retval = retval;" << be_nl
-      << "safe_retval->length (" << node_->emits ().size ()
+      << "safe_retval->length (" << n_emits_
       << "UL);";
       
   node = node_;
@@ -2342,16 +2471,21 @@ be_visitor_component_svs::gen_emits_servant_top (void)
   
   while (node != 0)
     {
-      for (AST_Component::PORTS::ITERATOR i =
-             node->emits ().begin ();
-           !i.done ();
-           i.advance (), ++slot)
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          i.next (pd);
+          AST_Decl *d = si.item ();
           
-          this->gen_emitter_description (pd->impl,
-                                         pd->id->get_string (),
-                                         slot);
+          if (d->node_type () != AST_Decl::NT_emits)
+            {
+              continue;
+            }
+            
+          AST_Emits *e =
+            AST_Emits::narrow_from_decl (d);
+
+          this->gen_emitter_description (e, slot++);
         }
         
       node = node->base_component ();
@@ -2366,9 +2500,11 @@ be_visitor_component_svs::gen_emits_servant_top (void)
 
 void
 be_visitor_component_svs::gen_connect_consumer_block (
-  const char *obj_name,
-  const char *port_name)
+  AST_Emits *e)
 {
+  const char *obj_name = e->emits_type ()->full_name ();
+  const char *port_name = e->local_name ()->get_string ();
+
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (emitter_name, \""
       << port_name << "\") == 0)" << be_idt_nl
@@ -2390,8 +2526,10 @@ be_visitor_component_svs::gen_connect_consumer_block (
 
 void
 be_visitor_component_svs::gen_disconnect_consumer_block (
-  const char *port_name)
+  AST_Emits *e)
 {
+  const char *port_name = e->local_name ()->get_string ();
+
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (source_name, \""
       << port_name << "\") == 0)" << be_idt_nl
@@ -2403,10 +2541,12 @@ be_visitor_component_svs::gen_disconnect_consumer_block (
 
 void
 be_visitor_component_svs::gen_emitter_description (
-  AST_Type *obj,
-  const char *port_name,
+  AST_Emits *e,
   ACE_CDR::ULong slot)
 {
+  AST_Type *obj = e->emits_type ();
+  const char *port_name = e->local_name ()->get_string ();
+
   os_ << be_nl << be_nl
       << "::CIAO::Servant::describe_emit_event_source<"
       << be_idt_nl
@@ -2428,16 +2568,21 @@ be_visitor_component_svs::gen_emits_servant_r (AST_Component *node)
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node->emits ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      this->gen_emits_servant (pd->impl->full_name (),
-                               pd->id->get_string ());
+      if (d->node_type () != AST_Decl::NT_emits)
+        {
+          continue;
+        }
+        
+      AST_Emits *e =
+        AST_Emits::narrow_from_decl (d);
+
+      this->gen_emits_servant (e);
     }
     
   node = node->base_component ();
@@ -2445,9 +2590,11 @@ be_visitor_component_svs::gen_emits_servant_r (AST_Component *node)
 }
 
 void
-be_visitor_component_svs::gen_emits_servant (const char *obj_name,
-                                             const char *port_name)
+be_visitor_component_svs::gen_emits_servant (AST_Emits *e)
 {
+  const char *obj_name = e->emits_type ()->full_name ();
+  const char *port_name = e->local_name ()->get_string ();
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name () << "_Servant::connect_"
@@ -2513,30 +2660,29 @@ be_visitor_component_svs::gen_populate_r (AST_Component *node)
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i =
-         node->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      os_ << be_nl
-          << "obj_var = this->provide_"
-          << pd->id->get_string () << "_i ();";
-    }
-    
-  for (AST_Component::PORTS::ITERATOR i =
-         node->consumes ().begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      
-      os_ << be_nl
-          << "ecb_var = this->get_consumer_"
-          << pd->id->get_string () << "_i ();";
+      switch (d->node_type ())
+        {
+          case AST_Decl::NT_provides:
+            os_ << be_nl
+                << "obj_var = this->provide_"
+                << d->local_name ()->get_string () << "_i ();";
+                
+            break;
+          case AST_Decl::NT_consumes:
+            os_ << be_nl
+                << "ecb_var = this->get_consumer_"
+                << d->local_name ()->get_string () << "_i ();";
+                
+            break;
+          default:
+            break;
+        }
     }
     
   node = node->base_component ();
@@ -2585,30 +2731,25 @@ be_visitor_component_svs::gen_entrypoint (void)
 void
 be_visitor_component_svs::gen_all_factory_registration (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i = node_->publishes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
-      this->gen_one_factory_registration (pd->impl);
-    }
-    
-  for (AST_Component::PORTS::ITERATOR i = node_->emits ().begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      this->gen_one_factory_registration (pd->impl);
-    }
-    
-  for (AST_Component::PORTS::ITERATOR i = node_->consumes ().begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      this->gen_one_factory_registration (pd->impl);
+      AST_Decl *d = si.item ();
+      AST_Type *port_type = 0;
+      
+      switch (d->node_type ())
+        {
+          case AST_Decl::NT_publishes:
+          case AST_Decl::NT_emits:
+          case AST_Decl::NT_consumes:
+            port_type =
+              AST_Field::narrow_from_decl (d)->field_type ();
+            this->gen_one_factory_registration (port_type);
+            break;
+          default:
+            break;
+        }  
     }
 }
 
@@ -2630,16 +2771,18 @@ be_visitor_component_svs::gen_swapping_get_consumers_r (
       return;
     }
     
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node->publishes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      this->gen_swapping_get_comsumer_block (pd->id->get_string ());
+      if (d->node_type () != AST_Decl::NT_publishes)
+        {
+          continue;
+        }
+        
+      this->gen_swapping_get_comsumer_block (d->local_name ()->get_string ());
     }
     
   node = node->base_component ();
@@ -2712,6 +2855,43 @@ be_visitor_component_svs::gen_swapping_get_comsumer_block (
   os_ << be_uidt_nl << be_nl
       << "return retval._retn ();" << be_uidt_nl
       << "}";
+}
+
+void
+be_visitor_component_svs::compute_slots (AST_Component *node)
+{
+  while (node != 0)
+    {
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
+        {
+          AST_Decl *d = si.item ();
+          
+          switch (d->node_type ())
+            {
+              case AST_Decl::NT_provides:
+                ++n_provides_;
+                break;
+              case AST_Decl::NT_uses:
+                ++n_uses_;
+                break;
+              case AST_Decl::NT_publishes:
+                ++n_publishes_;
+                break;
+              case AST_Decl::NT_emits:
+                ++n_emits_;
+                break;
+              case AST_Decl::NT_consumes:
+                ++n_consumes_;
+                break;
+              default:
+                break;
+            }
+        }
+        
+      node = node->base_component ();
+    }
 }
 
 Component_Op_Attr_Generator::Component_Op_Attr_Generator (

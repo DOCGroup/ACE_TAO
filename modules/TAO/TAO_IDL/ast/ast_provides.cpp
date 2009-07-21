@@ -5,7 +5,7 @@
 #include "ast_visitor.h"
 
 AST_Provides::AST_Provides (UTL_ScopedName *n,
-                            AST_Interface *provides_type)
+                            AST_Type *provides_type)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_provides,
               n),

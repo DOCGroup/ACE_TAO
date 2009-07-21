@@ -1,3 +1,43 @@
+Tue Jul 21 16:09:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_provides.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be_include/be_consumes.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_uses.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          More changes resulting from the new port AST nodes,
+          including changes to code generation.
+
 Mon Jul 20 14:33:57 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

@@ -13,7 +13,7 @@ class TAO_IDL_FE_Export AST_Provides : public virtual AST_Field
 {
 public:
   AST_Provides (UTL_ScopedName *n,
-                AST_Interface *provides_type);
+                AST_Type *provides_type);
             
   virtual ~AST_Provides (void);
   

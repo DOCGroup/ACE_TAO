@@ -5,9 +5,10 @@
 #include "be_visitor.h"
 
 be_uses::be_uses (UTL_ScopedName *n,
-                  AST_Interface *uses_type,
+                  AST_Type *uses_type,
                   bool is_multiple)
-  : COMMON_Base (),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_uses,
               n),
     AST_Field (AST_Decl::NT_uses,
@@ -17,7 +18,9 @@ be_uses::be_uses (UTL_ScopedName *n,
               uses_type,
               is_multiple),
     be_decl (AST_Decl::NT_uses,
-             n)
+             n),
+    be_field (uses_type,
+              n)
 {
 }
 

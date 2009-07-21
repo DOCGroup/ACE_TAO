@@ -6,13 +6,13 @@
 
 #include "ast_consumes.h"
 
-#include "be_decl.h"
+#include "be_field.h"
 
 class be_eventtype;
 class be_visitor;
 
 class be_consumes : public virtual AST_Consumes,
-                    public virtual be_decl
+                    public virtual be_field
 {
 public:
   be_consumes (UTL_ScopedName *n,
