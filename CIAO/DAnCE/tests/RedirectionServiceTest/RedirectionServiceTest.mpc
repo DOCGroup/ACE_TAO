@@ -1,5 +1,5 @@
 // $Id$
-project (RedirectionServiceTestServer): dance, taoserver, iortable, naming, dance_redirectionservice, dance_logger, naming_serv  {
+project (RedirectionServiceTestServer): dance, taoserver, iortable, naming, dance_redirectionservice, dance_logger, naming_serv, avoids_minimum_corba  {
   exename = RedirectionServiceTestServer
 
   IDL_Files {
@@ -14,7 +14,7 @@ project (RedirectionServiceTestServer): dance, taoserver, iortable, naming, danc
   }
 }
 
-project (RedirectionServiceTestClient): dance, taoclient, naming, dance_logger, naming, portableserver, anytypecode {
+project (RedirectionServiceTestClient): dance, taoclient, naming, dance_logger, naming, portableserver, anytypecode, avoids_minimum_corba {
   after = RedirectionServiceTestServer
   exename = RedirectionServiceTestClient
 
