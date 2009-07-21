@@ -1,3 +1,9 @@
+Tue Jul 21 17:38:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Dump_Obj.cpp:
+        * tools/Config_Handlers/Dump_Obj.h:
+          Moved include to header file to fix compile errors with CB2009
+
 Tue Jul 21 13:48:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/XSCRT/Elements.hpp:

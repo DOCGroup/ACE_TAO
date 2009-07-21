@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Config_Handlers_Export.h"
+#include "tao/AnyTypeCode/Any.h"
 #include <string>
 #include <map>
 
