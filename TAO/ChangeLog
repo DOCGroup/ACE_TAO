@@ -1,3 +1,13 @@
+Tue Jul 21 11:43:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * be/be_helper.cpp:
+          Use doxygen style of copyright
+
+        * be/be_interface.cpp:
+        * be/be_visitor_operation/operation_svs.cpp:
+          Generate the facet servant as regular class and not as a template.
+          This fixes several problems with visibility enabled
+
 Mon Jul 20 07:51:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:

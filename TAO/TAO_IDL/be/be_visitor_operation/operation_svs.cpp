@@ -45,11 +45,6 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
   this->ctx_->node (node);
 
   os << be_nl << be_nl;
-     
-  if (this->for_facets_)
-    {
-      os << "template<typename T>" << be_nl;
-    }
 
   // Retrieve the operation return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -80,12 +75,7 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
   os << be_nl
      << scope_->original_local_name ()->get_string ()
      << "_Servant";
-  
-  if (this->for_facets_)
-    {
-      os << "_T<T>";
-    }
-    
+
   os << "::" << node->local_name ();
 
   // Generate the argument list with the appropriate mapping (same as
@@ -109,24 +99,24 @@ int
 be_visitor_operation_svs::gen_op_body (be_operation *node)
 {
   TAO_OutStream &os = *this->ctx_->stream ();
-  
+
   os << be_nl
      << "{" << be_idt_nl;
-     
+
   if (swapping_)
     {
       os << "this->activate_component ();" << be_nl;
     }
-     
+
   bool vrt = node->void_return_type ();
-     
+
   if (!vrt)
     {
       os << "return ";
     }
-     
+
   os << "this->executor_->" << node->local_name () << " (";
-     
+
   if (node->argument_count () == 0)
     {
       os << ");";
@@ -134,7 +124,7 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
   else
     {
       os << be_idt_nl;
-      
+
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -144,10 +134,10 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
                             -1);
         }
     }
-    
+
   os << be_uidt_nl
      << "}";
-     
+
   return 0;
 }
 
@@ -155,9 +145,9 @@ int
 be_visitor_operation_svs::visit_argument (be_argument *node)
 {
   TAO_OutStream &os = *this->ctx_->stream ();
-  
+
   os << node->local_name ();
-  
+
   return 0;
 }
 
