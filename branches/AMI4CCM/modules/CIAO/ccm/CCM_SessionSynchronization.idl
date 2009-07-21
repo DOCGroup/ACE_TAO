@@ -1,0 +1,26 @@
+// $Id$
+
+#if !defined (CCM_SESSIONSYNCHRONIZATION_IDL)
+#define CCM_SESSIONSYNCHRONIZATION_IDL
+
+#include "ccm/CCM_CCMException.idl"
+
+// *************** Basic Container interfaces ***************
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  local interface SessionSynchronization
+  {
+    void after_begin ()
+      raises (CCMException);
+
+    void before_completion ()
+      raises (CCMException);
+
+    void after_completion (in boolean committed)
+      raises (CCMException);
+  };
+};
+#endif /* CCM_SESSIONSYNCHRONIZATION_IDL */
