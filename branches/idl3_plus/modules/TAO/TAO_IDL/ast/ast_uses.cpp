@@ -5,7 +5,7 @@
 #include "ast_visitor.h"
 
 AST_Uses::AST_Uses (UTL_ScopedName *n,
-                    AST_Interface *uses_type,
+                    AST_Type *uses_type,
                     bool is_multiple)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_uses,

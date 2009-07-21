@@ -29,7 +29,13 @@
 #include "ast_exception.h"
 
 #include "be_component.h"
+#include "be_provides.h"
+#include "be_uses.h"
+#include "be_publishes.h"
+#include "be_emits.h"
+#include "be_consumes.h"
 #include "be_attribute.h"
+#include "be_eventtype.h"
 #include "be_typedef.h"
 #include "be_operation.h"
 #include "be_sequence.h"

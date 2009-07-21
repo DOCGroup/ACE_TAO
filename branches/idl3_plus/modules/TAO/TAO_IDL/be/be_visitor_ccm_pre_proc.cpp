@@ -20,6 +20,11 @@
 #include "be_field.h"
 #include "be_typedef.h"
 #include "be_component.h"
+#include "be_provides.h"
+#include "be_uses.h"
+#include "be_publishes.h"
+#include "be_emits.h"
+#include "be_consumes.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
@@ -68,7 +73,9 @@ be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (be_visitor_context *ctx)
     finder_failure_ (0),
     invalid_key_ (0),
     unknown_key_value_ (0),
-    duplicate_key_value_ (0)
+    duplicate_key_value_ (0),
+    comp_ (0),
+    home_ (0)
 {
 }
 
@@ -83,7 +90,7 @@ be_visitor_ccm_pre_proc::visit_root (be_root *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "visit_root - visit scope failed\n"),
                         -1);
     }
@@ -97,7 +104,7 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "visit_module - visit scope failed\n"),
                         -1);
     }
@@ -111,7 +118,7 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
   if (this->lookup_cookie (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "visit_component - "
                          "Components::Cookie lookup failed\n"),
                         -1);
@@ -120,54 +127,182 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
   if (this->lookup_exceptions (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "visit_component - "
                          "component exception lookups failed\n"),
                         -1);
     }
-
-  if (this->gen_provides (node) == -1)
+    
+  // Set working node for all port code generation.
+  this->comp_ = node;
+    
+  if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "visit_component - "
-                         "code generation for provides declarations failed\n"),
+                         "code generation for scope3 failed\n"),
                         -1);
     }
 
-  if (this->gen_uses (node) == -1)
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
+{
+  AST_Operation *provides_op = 0;
+  UTL_ScopedName *op_name =
+    this->create_scoped_name ("provide_",
+                              node->local_name ()->get_string (),
+                              0,
+                              comp_);
+  ACE_NEW_RETURN (provides_op,
+                  be_operation (node->provides_type (),
+                                AST_Operation::OP_noflags,
+                                0,
+                                0,
+                                0),
+                  -1);
+                  
+  provides_op->set_defined_in (comp_);
+  provides_op->set_imported (comp_->imported ());
+  provides_op->set_name (op_name);
+
+  if (0 == comp_->be_add_operation (provides_op))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_component - "
-                         "code generation for uses declarations failed\n"),
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_provides - ")
+                         ACE_TEXT ("be_add_operation() failed\n")),
                         -1);
     }
 
-  if (this->gen_emits (node) == -1)
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
+{
+  if (node->is_multiple ())
+    {
+      if (this->gen_connect_multiple (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_ccm_pre_proc::"
+                             "visit_uses - "
+                             "gen_connect_multiple failed\n"),
+                            -1);
+        }
+
+      if (this->gen_disconnect_multiple (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_ccm_pre_proc::"
+                             "visit_uses - "
+                             "gen_disconnect_multiple failed\n"),
+                            -1);
+        }
+
+      if (this->gen_get_connection_multiple (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_ccm_pre_proc::"
+                             "visit_uses - "
+                             "gen_get_connection_single failed\n"),
+                            -1);
+        }
+    }
+  else
+    {
+      if (this->gen_connect_single (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_ccm_pre_proc::"
+                             "visit_uses - "
+                             "gen_connect_single failed\n"),
+                            -1);
+        }
+
+      if (this->gen_disconnect_single (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_ccm_pre_proc::"
+                             "visit_uses - "
+                             "gen_disconnect_single failed\n"),
+                            -1);
+        }
+
+      if (this->gen_get_connection_single (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_ccm_pre_proc::"
+                             "visit_uses - "
+                             "gen_get_connection_single failed\n"),
+                            -1);
+        }
+    }
+
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_publishes (be_publishes *node)
+{
+  if (this->gen_subscribe (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_component - "
-                         "code generation for emits declarations failed\n"),
+                         "be_visitor_ccm_pre_proc::"
+                         "visit_publishes - "
+                         "gen_subscribe failed\n"),
                         -1);
     }
 
-  if (this->gen_publishes (node) == -1)
+  if (this->gen_unsubscribe (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_component - "
-                         "code generation for publishes declarations failed\n"),
+                         "be_visitor_ccm_pre_proc::"
+                         "visit_publishes - "
+                         "gen_unsubscribe failed\n"),
                         -1);
     }
 
-  if (this->gen_consumes (node) == -1)
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_emits (be_emits *node)
+{
+  if (this->gen_emits_connect (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_component - "
-                         "code generation for consumes declarations failed\n"),
+                         "be_visitor_ccm_pre_proc::"
+                         "visit_emits - "
+                         "gen_emits_connect failed\n"),
+                        -1);
+    }
+
+  if (this->gen_emits_disconnect (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_ccm_pre_proc::"
+                         "visit_emits - "
+                         "gen_emits_disconnect failed\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_consumes (be_consumes *node)
+{
+  if (this->gen_get_consumer (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_ccm_pre_proc::"
+                         "visit_comsumes - "
+                         "gen_get_consumer failed\n"),
                         -1);
     }
 
@@ -267,213 +402,6 @@ be_visitor_ccm_pre_proc::visit_eventtype_fwd (be_eventtype_fwd *node)
     be_eventtype::narrow_from_decl (node->full_definition ());
 
   return this->visit_eventtype (fd);
-}
-
-// ****************************************************************
-
-int
-be_visitor_ccm_pre_proc::gen_provides (be_component *node)
-{
-  ACE_Unbounded_Queue<AST_Component::port_description> &s = node->provides ();
-  AST_Component::port_description *pd = 0;
-  AST_Operation *provides_op = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> iter (s);
-       ! iter.done ();
-       iter.advance ())
-    {
-      iter.next (pd);
-      UTL_ScopedName *op_name =
-        this->create_scoped_name ("provide_",
-                                  pd->id->get_string (),
-                                  0,
-                                  node);
-      ACE_NEW_RETURN (provides_op,
-                      be_operation (pd->impl,
-                                    AST_Operation::OP_noflags,
-                                    0,
-                                    0,
-                                    0),
-                      -1);
-      provides_op->set_defined_in (node);
-      provides_op->set_imported (node->imported ());
-      provides_op->set_name (op_name);
-
-      if (0 == node->be_add_operation (provides_op))
-        {
-          return -1;
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::gen_uses (be_component *node)
-{
-  ACE_Unbounded_Queue<AST_Component::port_description> &s = node->uses ();
-  AST_Component::port_description *pd = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> iter (s);
-       ! iter.done ();
-       iter.advance ())
-    {
-      iter.next (pd);
-
-      if (pd->is_multiple == false)
-        {
-          if (this->gen_connect_single (node, pd) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ccm_pre_proc::"
-                                 "gen_uses - "
-                                 "gen_connect_single failed\n"),
-                                -1);
-            }
-
-          if (this->gen_disconnect_single (node, pd) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ccm_pre_proc::"
-                                 "gen_uses - "
-                                 "gen_disconnect_single failed\n"),
-                                -1);
-            }
-
-          if (this->gen_get_connection_single (node, pd) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ccm_pre_proc::"
-                                 "gen_uses - "
-                                 "gen_get_connection_single failed\n"),
-                                -1);
-            }
-        }
-      else
-        {
-          if (this->gen_connect_multiple (node, pd) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ccm_pre_proc::"
-                                 "gen_uses - "
-                                 "gen_connect_multiple failed\n"),
-                                -1);
-            }
-
-          if (this->gen_disconnect_multiple (node, pd) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ccm_pre_proc::"
-                                 "gen_uses - "
-                                 "gen_disconnect_multiple failed\n"),
-                                -1);
-            }
-
-          if (this->gen_get_connection_multiple (node, pd) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ccm_pre_proc::"
-                                 "gen_uses - "
-                                 "gen_get_connection_single failed\n"),
-                                -1);
-            }
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::gen_emits (be_component *node)
-{
-  ACE_Unbounded_Queue<AST_Component::port_description> &s = node->emits ();
-  AST_Component::port_description *pd = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> iter (s);
-       ! iter.done ();
-       iter.advance ())
-    {
-      iter.next (pd);
-
-      if (this->gen_emits_connect (node, pd) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ccm_pre_proc::"
-                             "gen_emits - "
-                             "gen_emits_connect failed\n"),
-                            -1);
-        }
-
-      if (this->gen_emits_disconnect (node, pd) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ccm_pre_proc::"
-                             "gen_emits - "
-                             "gen_emits_disconnect failed\n"),
-                            -1);
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::gen_publishes (be_component *node)
-{
-  ACE_Unbounded_Queue<AST_Component::port_description> &s = node->publishes ();
-  AST_Component::port_description *pd = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> iter (s);
-       ! iter.done ();
-       iter.advance ())
-    {
-      iter.next (pd);
-
-      if (this->gen_subscribe (node, pd) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ccm_pre_proc::"
-                             "gen_publishes - "
-                             "gen_subscribe failed\n"),
-                            -1);
-        }
-
-      if (this->gen_unsubscribe (node, pd) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ccm_pre_proc::"
-                             "gen_publishes - "
-                             "gen_unsubscribe failed\n"),
-                            -1);
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::gen_consumes (be_component *node)
-{
-  ACE_Unbounded_Queue<AST_Component::port_description> &s = node->consumes ();
-  AST_Component::port_description *pd = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> iter (s);
-       ! iter.done ();
-       iter.advance ())
-    {
-      iter.next (pd);
-
-      if (this->gen_get_consumer (node, pd) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ccm_pre_proc::"
-                             "gen_consumes - "
-                             "gen_consumes_get_connection failed\n"),
-                            -1);
-        }
-    }
-
-  return 0;
 }
 
 int
@@ -603,21 +531,13 @@ be_visitor_ccm_pre_proc::gen_implicit_ops (be_home *node,
 // **************************************************************
 
 int
-be_visitor_ccm_pre_proc::gen_connect_single (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
 {
-  if (pd == 0)
-    {
-      return -1;
-    }
-
   UTL_ScopedName *op_full_name =
     this->create_scoped_name ("connect_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
@@ -626,8 +546,8 @@ be_visitor_ccm_pre_proc::gen_connect_single (
                                 0,
                                 0),
                   -1);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
   op->set_name (op_full_name);
   Identifier arg_id ("conxn");
   UTL_ScopedName arg_name (&arg_id,
@@ -635,7 +555,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (
   be_argument *arg = 0;
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
-                               pd->impl,
+                               node->uses_type (),
                                &arg_name),
                   -1);
   arg_id.destroy ();
@@ -653,7 +573,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (
                  -1);
   op->be_add_exceptions (connect_single);
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -662,32 +582,24 @@ be_visitor_ccm_pre_proc::gen_connect_single (
 }
 
 int
-be_visitor_ccm_pre_proc::gen_disconnect_single (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
 {
-  if (pd == 0)
-    {
-      return -1;
-    }
-
   UTL_ScopedName *op_full_name =
     this->create_scoped_name ("disconnect_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
-                  be_operation (pd->impl,
+                  be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
                                 0,
                                 0,
                                 0),
                   -1);
   op->set_name (op_full_name);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
   UTL_ExceptList *disconnect_single = 0;
   ACE_NEW_RETURN (disconnect_single,
                   UTL_ExceptList (this->no_connection_,
@@ -695,7 +607,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (
                  -1);
   op->be_add_exceptions (disconnect_single);
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -704,33 +616,26 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (
 }
 
 int
-be_visitor_ccm_pre_proc::gen_get_connection_single (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
 {
-  if (pd == 0)
-    {
-      return -1;
-    }
-
   UTL_ScopedName *op_full_name =
     this->create_scoped_name ("get_connection_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
-                  be_operation (pd->impl,
+                  be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
                                 0,
                                 0,
                                 0),
                   -1);
   op->set_name (op_full_name);
-  op->set_defined_in (node);
-
-  if (0 == node->be_add_operation (op))
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
+  
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -739,21 +644,13 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (
 }
 
 int
-be_visitor_ccm_pre_proc::gen_connect_multiple (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
 {
-  if (pd == 0)
-    {
-      return -1;
-    }
-
   UTL_ScopedName *op_full_name =
     this->create_scoped_name ("connect_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
 
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
@@ -764,15 +661,15 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (
                                 0),
                   -1);
   op->set_name (op_full_name);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
   Identifier arg_id ("connection");
   UTL_ScopedName arg_name (&arg_id,
                            0);
   be_argument *arg = 0;
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
-                               pd->impl,
+                               node->uses_type (),
                                &arg_name),
                   -1);
   arg_id.destroy ();
@@ -789,7 +686,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (
                  -1);
   op->be_add_exceptions (connect_multiple);
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -798,32 +695,24 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (
 }
 
 int
-be_visitor_ccm_pre_proc::gen_disconnect_multiple (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
 {
-  if (pd == 0)
-    {
-      return -1;
-    }
-
   UTL_ScopedName *op_full_name =
     this->create_scoped_name ("disconnect_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
-                  be_operation (pd->impl,
+                  be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
                                 0,
                                 0,
                                 0),
                   -1);
   op->set_name (op_full_name);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
   Identifier arg_id ("ck");
   UTL_ScopedName arg_name (&arg_id,
                            0);
@@ -842,7 +731,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (
                  -1);
   op->be_add_exceptions (disconnect_multiple);
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -851,31 +740,24 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (
 }
 
 int
-be_visitor_ccm_pre_proc::gen_get_connection_multiple (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
 {
-  if (pd == 0)
-    {
-      return -1;
-    }
-
   UTL_ScopedName *op_full_name =
     this->create_scoped_name ("get_connections_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
 
   // Look up the implied IDL typedef created in the front end.
   // It will be the return type of the created operation.
-  ACE_CString connections_string (pd->id->get_string ());
+  ACE_CString connections_string (
+    node->local_name ()->get_string ());
   connections_string += "Connections";
   Identifier connections_id (connections_string.c_str ());
   UTL_ScopedName connections_name (&connections_id,
                                    0);
-  AST_Decl *d = node->lookup_by_name (&connections_name,
-                                      true);
+  AST_Decl *d = comp_->lookup_by_name (&connections_name,
+                                       true);
   be_typedef *td = be_typedef::narrow_from_decl (d);
   connections_id.destroy ();
 
@@ -888,10 +770,10 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (
                                 0),
                   -1);
   op->set_name (op_full_name);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -944,14 +826,13 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
 }
 
 int
-be_visitor_ccm_pre_proc::gen_subscribe (be_component *node,
-                                        AST_Component::port_description *pd)
+be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
 {
   UTL_ScopedName *op_name =
     this->create_scoped_name ("subscribe_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (this->cookie_,
@@ -960,16 +841,16 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_component *node,
                                 0,
                                 0),
                   -1);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
   op->set_name (op_name);
 
-  AST_Interface *i = this->lookup_consumer (pd);
+  AST_Interface *i = this->lookup_consumer (node);
 
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "gen_subscribe - "
                          "consumer lookup failed\n"),
                         -1);
@@ -992,7 +873,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_component *node,
                   -1);
   op->be_add_exceptions (subscribe);
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -1001,15 +882,14 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_component *node,
 }
 
 int
-be_visitor_ccm_pre_proc::gen_unsubscribe (be_component *node,
-                                          AST_Component::port_description *pd)
+be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
 {
-  AST_Interface *i = this->lookup_consumer (pd);
+  AST_Interface *i = this->lookup_consumer (node);
 
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "gen_unsubscribe - "
                          "consumer lookup failed\n"),
                         -1);
@@ -1017,9 +897,9 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_component *node,
 
   UTL_ScopedName *op_name =
     this->create_scoped_name ("unsubscribe_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (i,
@@ -1028,8 +908,8 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_component *node,
                                 0,
                                 0),
                   -1);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
   op->set_name (op_name);
   Identifier arg_id ("ck");
   UTL_ScopedName arg_name (&arg_id,
@@ -1048,7 +928,7 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_component *node,
                   -1);
   op->be_add_exceptions (unsubscribe);
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -1057,16 +937,13 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_component *node,
 }
 
 int
-be_visitor_ccm_pre_proc::gen_emits_connect (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
 {
   UTL_ScopedName *op_name =
     this->create_scoped_name ("connect_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
@@ -1076,14 +953,14 @@ be_visitor_ccm_pre_proc::gen_emits_connect (
                                 0),
                   -1);
   op->set_name (op_name);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
-  AST_Interface *i = this->lookup_consumer (pd);
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
+  AST_Interface *i = this->lookup_consumer (node);
 
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "gen_emits_connect - "
                          "consumer lookup failed\n"),
                         -1);
@@ -1106,7 +983,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (
                   -1);
   op->be_add_exceptions (emits_connect);
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -1115,17 +992,14 @@ be_visitor_ccm_pre_proc::gen_emits_connect (
 }
 
 int
-be_visitor_ccm_pre_proc::gen_emits_disconnect (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
 {
-  AST_Interface *i = this->lookup_consumer (pd);
+  AST_Interface *i = this->lookup_consumer (node);
 
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "be_visitor_ccm_pre_proc::"
                          "gen_emits_disconnect - "
                          "consumer lookup failed\n"),
                         -1);
@@ -1133,9 +1007,9 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (
 
   UTL_ScopedName *op_name =
     this->create_scoped_name ("disconnect_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (i,
@@ -1145,8 +1019,8 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (
                                 0),
                   -1);
   op->set_name (op_name);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
   UTL_ExceptList *emits_disconnect = 0;
   ACE_NEW_RETURN (emits_disconnect,
                   UTL_ExceptList (this->no_connection_,
@@ -1154,7 +1028,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (
                   -1);
   op->be_add_exceptions (emits_disconnect);
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -1163,27 +1037,24 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (
 }
 
 int
-be_visitor_ccm_pre_proc::gen_get_consumer (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
+be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
 {
-  AST_Interface *i = this->lookup_consumer (pd);
+  AST_Interface *i = this->lookup_consumer (node);
 
   if (i == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "gen_consumes_get_connection - "
+                         "be_visitor_ccm_pre_proc::"
+                         "gen_get_consumer - "
                          "consumer lookup failed\n"),
                         -1);
     }
 
   UTL_ScopedName *op_name =
     this->create_scoped_name ("get_consumer_",
-                              pd->id->get_string (),
+                              node->local_name ()->get_string (),
                               0,
-                              node);
+                              comp_);
   be_operation *op = 0;
   ACE_NEW_RETURN (op,
                   be_operation (i,
@@ -1193,10 +1064,10 @@ be_visitor_ccm_pre_proc::gen_get_consumer (
                                 0),
                   -1);
   op->set_name (op_name);
-  op->set_defined_in (node);
-  op->set_imported (node->imported ());
+  op->set_defined_in (comp_);
+  op->set_imported (comp_->imported ());
 
-  if (0 == node->be_add_operation (op))
+  if (0 == comp_->be_add_operation (op))
     {
       return -1;
     }
@@ -1417,8 +1288,6 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
   return 0;
 }
 
-// ********************************************************************
-
 int
 be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
 {
@@ -1575,13 +1444,14 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
 }
 
 AST_Interface *
-be_visitor_ccm_pre_proc::lookup_consumer (AST_Component::port_description *pd)
+be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
 {
-  ACE_CString rettype_string (pd->impl->local_name ()->get_string ());
+  AST_Type *impl = node->field_type ();
+  ACE_CString rettype_string (impl->local_name ()->get_string ());
   rettype_string += "Consumer";
   Identifier rettype_id (rettype_string.fast_rep ());
-  AST_Decl *d = pd->impl->defined_in ()->lookup_by_name_local (&rettype_id,
-                                                               0);
+  AST_Decl *d =
+    impl->defined_in ()->lookup_by_name_local (&rettype_id, 0);
   rettype_id.destroy ();
 
   if (d == 0)

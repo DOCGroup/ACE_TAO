@@ -6,7 +6,8 @@
 
 be_emits::be_emits (UTL_ScopedName *n,
                     AST_EventType *emits_type)
-  : COMMON_Base (),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_emits,
               n),
     AST_Field (AST_Decl::NT_emits,
@@ -15,7 +16,9 @@ be_emits::be_emits (UTL_ScopedName *n,
     AST_Emits (n,
                emits_type),
     be_decl (AST_Decl::NT_emits,
-             n)
+             n),
+    be_field (emits_type,
+              n)
 {
 }
 

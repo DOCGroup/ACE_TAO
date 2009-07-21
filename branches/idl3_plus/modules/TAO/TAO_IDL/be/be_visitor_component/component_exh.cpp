@@ -94,22 +94,28 @@ be_visitor_component_exh::visit_attribute (be_attribute *node)
 int
 be_visitor_component_exh::gen_facets (void)
 {
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node_->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      be_interface *intf =
-        be_interface::narrow_from_decl (pd->impl);
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
+        
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
         
       // We don't want a '_cxx_' prefix here.
       const char *lname =
-        intf->original_local_name ()->get_string ();
+        impl->original_local_name ()->get_string ();
       
-      AST_Decl *s = ScopeAsDecl (intf->defined_in ());
+      AST_Decl *s = ScopeAsDecl (impl->defined_in ());
       ACE_CString sname_str =
         IdentifierHelper::orig_sn (s->name (), false);
       const char *sname = sname_str.c_str ();
@@ -126,17 +132,23 @@ be_visitor_component_exh::gen_facets (void)
           << "public:" << be_idt_nl
           << lname << "_exec_i (void);" << be_nl
           << "virtual ~" << lname << "_exec_i (void);";
-          
-      os_ << be_nl << be_nl
-          << "// Operations and attributes from ::"
-          << intf->full_name ();
-         
-      if (this->gen_facet_ops_attrs (intf) == -1)
+       
+      if (impl->node_type () == AST_Decl::NT_interface)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_component_exh::gen_facet - "
-                             "gen_facet_ops_attrs() failed\n"),
-                            -1);
+          be_interface *intf =
+            be_interface::narrow_from_decl (impl);
+                
+          os_ << be_nl << be_nl
+              << "// Operations and attributes from ::"
+              << intf->full_name ();
+             
+          if (this->gen_facet_ops_attrs (intf) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_component_exh::gen_facet - "
+                                 "gen_facet_ops_attrs() failed\n"),
+                                -1);
+            }
         }
         
       os_ << be_uidt_nl
@@ -287,14 +299,24 @@ be_visitor_component_exh::gen_provides_r (AST_Component *node)
       return;
     }
     
-  AST_Component::port_description *pd = 0;
-    
-  for (AST_Component::PORTS::ITERATOR i = node->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
-      this->gen_provides (pd->impl, pd->id->get_string ());
+      AST_Decl *d = si.item ();
+      
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
+        
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
+        
+      this->gen_provides (impl, p->local_name ()->get_string ());
     }  
   
   node = node->base_component ();
@@ -329,15 +351,25 @@ be_visitor_component_exh::gen_consumes_r (AST_Component *node)
       return;
     }
     
-  AST_Component::port_description *pd = 0;
-    
-  for (AST_Component::PORTS::ITERATOR i = node->consumes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
-      this->gen_consumes (pd->impl->full_name (),
-                          pd->id->get_string ());
+      AST_Decl *d = si.item ();
+      
+      if (d->node_type () != AST_Decl::NT_consumes)
+        {
+          continue;
+        }
+        
+      AST_Consumes *c =
+        AST_Consumes::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (c->consumes_type ());
+        
+      this->gen_consumes (impl->full_name (),
+                          c->local_name ()->get_string ());
     }
   
   node = node->base_component ();

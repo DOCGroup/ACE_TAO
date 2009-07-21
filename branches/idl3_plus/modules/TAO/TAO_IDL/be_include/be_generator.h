@@ -281,11 +281,11 @@ public:
     
   virtual
   AST_Provides *create_provides (UTL_ScopedName *n,
-                                 AST_Interface *provides_type);
+                                 AST_Type *provides_type);
                                  
   virtual
   AST_Uses *create_uses (UTL_ScopedName *n,
-                         AST_Interface *uses_type,
+                         AST_Type *uses_type,
                          bool is_multiple);
     
   virtual

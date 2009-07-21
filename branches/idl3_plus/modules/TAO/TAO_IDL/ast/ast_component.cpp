@@ -75,11 +75,13 @@ AST_Component::redefine (AST_Interface *from)
   this->AST_Interface::redefine (from);
 
   this->pd_base_component = c->pd_base_component;
+  /*
   this->pd_provides = c->pd_provides;
   this->pd_uses = c->pd_uses;
   this->pd_emits = c->pd_emits;
   this->pd_publishes = c->pd_publishes;
   this->pd_consumes = c->pd_consumes;
+  */
 }
 
 AST_Decl *
@@ -151,7 +153,7 @@ AST_Component::n_supports (void) const
 {
   return this->n_inherits ();
 }
-
+/*
 AST_Component::PORTS &
 AST_Component::provides (void)
 {
@@ -181,10 +183,10 @@ AST_Component::consumes (void)
 {
   return this->pd_consumes;
 }
-
+*/
 void
 AST_Component::destroy (void)
-{
+{/*
   port_description *pd = 0;
   
   for (PORTS::ITERATOR i = this->pd_provides.begin ();
@@ -236,7 +238,7 @@ AST_Component::destroy (void)
       delete pd->id;
       pd->id = 0;
     }
-    
+*/    
   this->AST_Interface::destroy ();
 }
 

@@ -6,13 +6,13 @@
 
 #include "ast_emits.h"
 
-#include "be_decl.h"
+#include "be_field.h"
 
 class be_eventtype;
 class be_visitor;
 
 class be_emits : public virtual AST_Emits,
-                 public virtual be_decl
+                 public virtual be_field
 {
 public:
   be_emits (UTL_ScopedName *n,

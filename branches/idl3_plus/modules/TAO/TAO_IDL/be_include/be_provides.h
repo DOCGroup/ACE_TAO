@@ -6,17 +6,17 @@
 
 #include "ast_provides.h"
 
-#include "be_decl.h"
+#include "be_field.h"
 
 class be_interface;
 class be_visitor;
 
 class be_provides : public virtual AST_Provides,
-                    public virtual be_decl
+                    public virtual be_field
 {
 public:
   be_provides (UTL_ScopedName *n,
-               AST_Interface *provides_type);
+               AST_Type *provides_type);
             
   virtual ~be_provides (void);
   

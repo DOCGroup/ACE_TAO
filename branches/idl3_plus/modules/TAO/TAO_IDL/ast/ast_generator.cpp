@@ -966,7 +966,7 @@ AST_Generator::create_porttype (
 
 AST_Provides *
 AST_Generator::create_provides (UTL_ScopedName *n,
-                                AST_Interface *provides_type)
+                                AST_Type *provides_type)
 {
   AST_Provides *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -979,7 +979,7 @@ AST_Generator::create_provides (UTL_ScopedName *n,
 
 AST_Uses *
 AST_Generator::create_uses (UTL_ScopedName *n,
-                            AST_Interface *uses_type,
+                            AST_Type *uses_type,
                             bool is_multiple)
 {
   AST_Uses *retval = 0;

@@ -38,7 +38,7 @@ public:
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
                                        bool treat_as_ref);
-
+/*
   // Utility data structure for port declarations.
   struct port_description
   {
@@ -58,7 +58,7 @@ public:
     // ports and attributes.
     long line_number;
   };
-
+*/
   // Accessors.
 
   AST_Component *base_component (void) const;
@@ -66,7 +66,7 @@ public:
   AST_Interface **supports (void) const;
 
   long n_supports (void) const;
-
+/*
   typedef ACE_Unbounded_Queue<port_description> PORTS;
 
   PORTS &provides (void);
@@ -74,7 +74,7 @@ public:
   PORTS &emits (void);
   PORTS &publishes (void);
   PORTS &consumes (void);
-
+*/
   // Cleanup function.
   virtual void destroy (void);
 
@@ -102,11 +102,13 @@ protected:
 
 private:
   AST_Component *pd_base_component;
+/*
   PORTS pd_provides;
   PORTS pd_uses;
   PORTS pd_emits;
   PORTS pd_publishes;
   PORTS pd_consumes;
+*/
 };
 
 #endif // _AST_COMPONENT_AST_COMPONENT_HH

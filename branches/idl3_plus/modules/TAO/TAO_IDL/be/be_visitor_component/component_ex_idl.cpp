@@ -189,39 +189,44 @@ be_visitor_component_ex_idl::gen_nesting_close (AST_Decl *node)
 void
 be_visitor_component_ex_idl::gen_facets (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      be_decl *intf =
-        be_decl::narrow_from_decl (pd->impl);
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
         
-      if (intf->ex_idl_facet_gen ())
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+        
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
+
+      if (impl->ex_idl_facet_gen ())
         {
           continue;
         }
       
-      this->gen_nesting_open (pd->impl);
+      this->gen_nesting_open (impl);
       
       os_ << be_nl
           << "local interface CCM_"
-          << pd->impl->original_local_name ()->get_string ()
+          << impl->original_local_name ()->get_string ()
           << " : ::"
-          << IdentifierHelper::orig_sn (intf->name ()).c_str ()
+          << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << be_nl
           << "{" << be_idt;
           
       os_ << be_uidt_nl
           << "};";
       
-      this->gen_nesting_close (pd->impl);
+      this->gen_nesting_close (impl);
       
-      intf->ex_idl_facet_gen (true);
+      impl->ex_idl_facet_gen (true);
     }
 }
 
@@ -312,47 +317,64 @@ be_visitor_component_ex_idl::gen_executor_contents (void)
 void
 be_visitor_component_ex_idl::gen_facet_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      AST_Decl *scope = ScopeAsDecl (pd->impl->defined_in ());
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
+        
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
+        
+      AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
       
       ACE_CString sname_str =
         IdentifierHelper::orig_sn (scope->name ());
       const char *sname = sname_str.c_str ();
       
       const char *lname =
-        pd->impl->original_local_name ()->get_string ();
+        impl->original_local_name ()->get_string ();
       
       const char *global = (sname_str == "" ? "" : "::");
       
       os_ << be_nl
           << global << sname << "::CCM_" << lname << " get_"
-          << pd->id->get_string () << " ();";
+          << p->local_name ()->get_string () << " ();";
     }
 }
 
 void
 be_visitor_component_ex_idl::gen_consumer_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->consumes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
+      if (d->node_type () != AST_Decl::NT_consumes)
+        {
+          continue;
+        }
+        
+      AST_Consumes *c =
+        AST_Consumes::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (c->consumes_type ());
+        
       os_ << be_nl
-          << "void push_" << pd->id->get_string () << " (in ::"
-          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << "void push_" << c->local_name ()->get_string ()
+          << " (in ::"
+          << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " e);";
     }
 }
@@ -434,18 +456,26 @@ be_visitor_component_ex_idl::gen_context (void)
 void
 be_visitor_component_ex_idl::gen_publisher_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->publishes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
+      if (d->node_type () != AST_Decl::NT_publishes)
+        {
+          continue;
+        }
+        
+      AST_Publishes *p =
+        AST_Publishes::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->publishes_type ());
+        
       os_ << be_nl
-          << "void push_" << pd->id->get_string () << " (in ::"
-          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << "void push_" << p->local_name ()->get_string () << " (in ::"
+          << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " e);";
     }
 }
@@ -453,18 +483,26 @@ be_visitor_component_ex_idl::gen_publisher_ops (void)
 void
 be_visitor_component_ex_idl::gen_emitter_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->emits ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
+      if (d->node_type () != AST_Decl::NT_emits)
+        {
+          continue;
+        }
+        
+      AST_Emits *e =
+        AST_Emits::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (e->emits_type ());
+        
       os_ << be_nl
-          << "void push_" << pd->id->get_string () << " (in ::"
-          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << "void push_" << e->local_name ()->get_string () << " (in ::"
+          << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " e);";
     }
 }
@@ -472,15 +510,23 @@ be_visitor_component_ex_idl::gen_emitter_ops (void)
 void
 be_visitor_component_ex_idl::gen_receptacle_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->uses ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
+      if (d->node_type () != AST_Decl::NT_uses)
+        {
+          continue;
+        }
+        
+      AST_Uses *u =
+        AST_Uses::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (u->uses_type ());
+        
       os_ << be_nl
           << "::";
       
@@ -489,18 +535,18 @@ be_visitor_component_ex_idl::gen_receptacle_ops (void)
       // create this implied IDL node with the '_cxx_' so lookup
       // will fail (when processing the *E.idl file) if we
       // strip it off here.
-      if (pd->is_multiple)
+      if (u->is_multiple ())
         {
           os_ << IdentifierHelper::orig_sn (node_->name ()).c_str ()
-              << "::" << pd->id->get_string ()
+              << "::" << u->local_name ()->get_string ()
               << "Connections get_connections_"
-              << pd->id->get_string () << " ();";
+              << u->local_name ()->get_string () << " ();";
         }
       else
         {
-          os_ << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          os_ << IdentifierHelper::orig_sn (impl->name ()).c_str ()
               << " get_connection_"
-              << pd->id->get_string () << " ();";
+              << u->local_name ()->get_string () << " ();";
         }
     }
 }

@@ -13,7 +13,7 @@ class TAO_IDL_FE_Export AST_Uses : public virtual AST_Field
 {
 public:
   AST_Uses (UTL_ScopedName *n,
-            AST_Interface *uses_type,
+            AST_Type *uses_type,
             bool is_multiple);
             
   virtual ~AST_Uses (void);
