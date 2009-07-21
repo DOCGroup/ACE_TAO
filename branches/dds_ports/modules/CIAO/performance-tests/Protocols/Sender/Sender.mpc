@@ -52,7 +52,7 @@ project(Protocols_Sender_stub) : ccm_stub {
   }
 }
 
-project(Protocols_Sender_exec) : ciao_executor, rtcorba {
+project(Protocols_Sender_exec) : ciao_executor, rtcorba, avoids_ace_for_tao {
   after   += Protocols_Sender_lem_gen Protocols_Sender_stub
   sharedname = Protocols_Sender_exec
   libs += Protocols_Sender_stub \
@@ -83,7 +83,7 @@ project(Protocols_Sender_exec) : ciao_executor, rtcorba {
 }
 
 
-project(Protocols_Sender_svnt) : ciao_servant {
+project(Protocols_Sender_svnt) : ciao_servant, avoids_ace_for_tao {
   after      += Protocols_skel Protocols_Sender_exec
   sharedname  = Protocols_Sender_svnt
   libs       += Protocols_Sender_exec \

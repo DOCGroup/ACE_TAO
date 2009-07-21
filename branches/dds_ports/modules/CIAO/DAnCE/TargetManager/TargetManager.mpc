@@ -60,7 +60,7 @@ project(DAnCE_TargetManagerDaemon_svnt) : dance_lib, dance_deployment_svnt, \
   }
 }
 
-project (DAnCE_TargetManager_Exec) : dance_targetmanager, naming, dance_exe, iortable, utils, dance_logger {
+project (DAnCE_TargetManager_Exec) : iortable, utils, naming, dance_logger, dance_tm_daemon, dance_nodemanager_stub, dance_targetmanager, dance_exe {
   exename = dance_target_manager
   IDL_Files {
   }

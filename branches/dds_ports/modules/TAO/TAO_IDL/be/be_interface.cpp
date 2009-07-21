@@ -1489,7 +1489,7 @@ be_interface::traverse_inheritance_graph (
             {
               (void) this->insert_non_dup (be_global->ccmobject ());
             }
-            
+
           AST_Component *base =
             AST_Component::narrow_from_decl (intf)->base_component ();
 
@@ -2620,9 +2620,9 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
     {
       return;
     }
-  
+
   this->gen_nesting_open (os);
-  
+
   os << be_nl
      << "local interface CCM_"
      << this->original_local_name ()->get_string ()
@@ -2630,12 +2630,12 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
      << IdentifierHelper::orig_sn (this->name ()).c_str ()
      << be_nl
      << "{" << be_idt;
-      
+
   os << be_uidt_nl
      << "};";
-  
+
   this->gen_nesting_close (os);
-  
+
   this->ex_idl_facet_gen (true);
 }
 
@@ -2681,53 +2681,59 @@ int
 be_interface::gen_facet_svnt_hdr (be_visitor *visitor,
                                   TAO_OutStream &os)
 {
-  // No '_cxx_' prefix>  
+  // No '_cxx_' prefix>
   const char *lname =
     this->original_local_name ()->get_string ();
-  
+
   be_decl *scope =
     be_scope::narrow_from_scope (this->defined_in ())->decl ();
   ACE_CString suffix (scope->flat_name ());
-  
+
+  ACE_CString export_macro (be_global->svnt_export_macro ());
+
+  if (export_macro == "")
+    {
+      export_macro = be_global->skel_export_macro ();
+    }
+
   if (suffix != "")
     {
       suffix = ACE_CString ("_") + suffix;
     }
-    
+
   os << be_nl << be_nl
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
-     
-  os << "template<typename T>" << be_nl
-     << "class " << lname << "_Servant_T" << be_idt_nl
+
+  os << "class " << export_macro.c_str () <<  " " << lname << "_Servant" << be_idt_nl
      << ": public virtual " << this->full_skel_name () << be_uidt_nl
      << "{" << be_nl
      << "public:" << be_idt_nl;
-     
+
   AST_Decl *s = ScopeAsDecl (this->defined_in ());
   ACE_CString sname_str (s->full_name ());
   const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
-     
-  os << lname << "_Servant_T (" << be_idt_nl
+
+  os << lname << "_Servant (" << be_idt_nl
      << global << sname << "::CCM_"
      << lname << "_ptr executor," << be_nl
      << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
-     
-  os << "virtual ~" << lname << "_Servant_T (void);";
-  
+
+  os << "virtual ~" << lname << "_Servant (void);";
+
   this->insert_queue.reset ();
   this->del_queue.reset ();
   this->insert_queue.enqueue_tail (this);
-  
+
   Facet_Op_Attr_Helper helper (visitor);
-  
+
   int status =
     this->traverse_inheritance_graph (helper,
                                       &os,
                                       false,
                                       false);
-     
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -2741,37 +2747,18 @@ be_interface::gen_facet_svnt_hdr (be_visitor *visitor,
   os << be_nl << be_nl << "// Get component implementation." << be_nl
      << "virtual CORBA::Object_ptr _get_component (void);"
      << be_uidt_nl << be_nl;
-     
+
   os << "protected:" << be_idt_nl;
-  
+
   os << "// Facet executor." << be_nl
      << global << sname << "::CCM_"
      << lname << "_var executor_;" << be_nl << be_nl;
-     
+
   os << "// Context object." << be_nl
      << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
-     
+
   os << "};" << be_nl << be_nl;
-  
-  os << "typedef " << lname << "_Servant_T<int> "
-     << lname << "_Servant;";
-     
-  if (be_global->gen_lem_force_all ())
-    {
-      ACE_CString export_macro (be_global->svnt_export_macro ());
-      
-      if (export_macro == "")
-        {
-          export_macro = be_global->skel_export_macro ();
-        }
-        
-      os << "\n#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT"
-         << be_nl
-         << "template class " << export_macro.c_str ()
-         << " " << lname << "_Servant_T<int>;"
-         << "\n#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */";
-    }
-     
+
   os << be_uidt_nl
      << "}";
 
@@ -2785,29 +2772,28 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
   // No '_cxx_' prefix.
   const char *lname =
     this->original_local_name ()->get_string ();
-  
+
   be_decl *scope =
     be_scope::narrow_from_scope (this->defined_in ())->decl ();
-    
+
   ACE_CString sname_str (scope->full_name ());
-    
+
   const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
-  
+
   ACE_CString suffix (scope->flat_name ());
-  
+
   if (suffix != "")
     {
       suffix = ACE_CString ("_") + suffix;
     }
-  
+
   os << be_nl << be_nl
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
-     
-  os << "template<typename T>" << be_nl
-     << lname << "_Servant_T<T>::"
-     << lname << "_Servant_T (" << be_idt << be_idt_nl
+
+  os << lname << "_Servant::"
+     << lname << "_Servant (" << be_idt << be_idt_nl
      << global << sname << "::CCM_"
      << lname << "_ptr executor," << be_nl
      << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
@@ -2818,31 +2804,30 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
      << be_uidt << be_uidt_nl
      << "{" << be_nl
      << "}";
-      
+
   os << be_nl << be_nl
-     << "template<typename T>" << be_nl
-     << lname << "_Servant_T<T>::~"
-     << lname << "_Servant_T (void)" << be_nl
+     << lname << "_Servant::~"
+     << lname << "_Servant (void)" << be_nl
      << "{" << be_nl
      << "}";
-      
+
   os << be_nl << be_nl
      << "// All facet operations and attributes.";
-      
+
   /// The overload of traverse_inheritance_graph() used here
-  /// doesn't automatically prime the queues. 
+  /// doesn't automatically prime the queues.
   this->insert_queue.reset ();
   this->del_queue.reset ();
   this->insert_queue.enqueue_tail (this);
-      
+
   Facet_Op_Attr_Helper op_attr_gen (visitor);
-  
+
   int status =
     this->traverse_inheritance_graph (op_attr_gen,
                                       &os,
                                       false,
                                       false);
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -2852,11 +2837,10 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   os << be_nl << be_nl
-     << "template<typename T>" << be_nl
      << "::CORBA::Object_ptr" << be_nl
-     << lname << "_Servant_T<T>::_get_component (void)"
+     << lname << "_Servant::_get_component (void)"
      << be_nl
      << "{" << be_idt_nl
      << "::Components::SessionContext_var sc =" << be_idt_nl
@@ -2875,10 +2859,10 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
      << "}" << be_uidt_nl << be_nl
      << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
      << "}";
-      
+
   os << be_uidt_nl
      << "}";
-  
+
   return 0;
 }
 
@@ -2886,7 +2870,7 @@ void
 be_interface::gen_nesting_open (TAO_OutStream &os)
 {
   os << be_nl;
-  
+
   for (UTL_IdListActiveIterator i (this->name ()); ! i.is_done () ;)
     {
       UTL_ScopedName tmp (i.item (), 0);

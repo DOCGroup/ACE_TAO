@@ -1,8 +1,3 @@
-PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
-===========================================================================
-
-. RPM packaging as part of the release process by the doc_group (Remedy and user community)
-
 USER VISIBLE CHANGES BETWEEN ACE-5.7.1 and ACE-5.7.2
 ====================================================
 
@@ -11,6 +6,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.1 and ACE-5.7.2
 
 . Refactored gperf to have its own shared library so that we can reuse
   that in TAO
+
+. Added support for SuSE Enterprise 10
 
 USER VISIBLE CHANGES BETWEEN ACE-5.7.0 and ACE-5.7.1
 ====================================================

@@ -85,7 +85,7 @@ JAWS_Synch_IO::receive_file (const char *filename,
                              int initial_data_length,
                              int entire_length)
 {
-  ACE_Filecache_Handle handle ((const ACE_TCHAR *)filename, entire_length);
+  ACE_Filecache_Handle handle (ACE_TEXT_CHAR_TO_TCHAR (filename), entire_length);
 
   int result = handle.error ();
 
@@ -118,7 +118,7 @@ JAWS_Synch_IO::transmit_file (const char *filename,
                               const char *trailer,
                               int trailer_size)
 {
-  ACE_Filecache_Handle handle ((const ACE_TCHAR *)filename);
+  ACE_Filecache_Handle handle (ACE_TEXT_CHAR_TO_TCHAR (filename));
 
   int result = handle.error ();
 

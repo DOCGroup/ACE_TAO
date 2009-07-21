@@ -27,7 +27,8 @@ namespace DAnCE
 
   class NodeManager_Impl;
 
-  class NodeApplicationManager_Export NodeApplicationManager_Impl : public virtual POA_Deployment::NodeApplicationManager
+  class NodeApplicationManager_Export NodeApplicationManager_Impl :
+    public virtual POA_Deployment::NodeApplicationManager
     {
     public:
       NodeApplicationManager_Impl (CORBA::ORB_ptr orb,

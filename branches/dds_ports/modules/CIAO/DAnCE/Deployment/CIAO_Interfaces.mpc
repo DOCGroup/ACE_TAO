@@ -27,7 +27,7 @@ project (CIAO_ExecutionManager_stub): dance_lib, messaging, dance_executionmanag
   }
 }
 
-project (CIAO_ExecutionManager_skel): dance_lib, messaging, dance_executionmanager_skel {
+project (CIAO_ExecutionManager_skel): dance_lib, messaging, ciao_executionmanager_stub, dance_executionmanager_skel {
   sharedname = CIAO_ExecutionManager_skel
   after += CIAO_ExecutionManager_stub
   dynamicflags = CIAO_EXECUTIONMANAGER_SKEL_BUILD_DLL

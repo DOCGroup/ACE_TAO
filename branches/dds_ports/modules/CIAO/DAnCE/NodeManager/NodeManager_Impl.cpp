@@ -98,13 +98,14 @@ namespace DAnCE
     DANCE_TRACE ( "NodeManager_Impl::preparePlan");
 
     DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - ")
-                  ACE_TEXT("started for node %C and plan %C\n"), this->name_.c_str(), plan.UUID.in()));
+                  ACE_TEXT("started for node %C and plan %C\n"),
+                  this->name_.c_str(), plan.UUID.in()));
 
 #ifdef GEN_OSTREAM_OPS
     {
       std::ostringstream plan_stream;
       plan_stream << plan << std::endl;
-      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::preparePlan - $s",
+      DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::preparePlan - %C",
                     plan_stream.str ().c_str ()));
     }
 #endif /* GEN_OSTREAM_OPS */
@@ -135,7 +136,7 @@ namespace DAnCE
     PortableServer::ObjectId_var id = this->poa_->activate_object (manager);
     CORBA::Object_var nam = this->poa_->id_to_reference (id.in());
 
-    //there is an idea to check if plan.UUID really exists
+    // There is an idea to check if plan.UUID really exists
     this->managers_.bind (plan.UUID.in(), manager);
     // narrow should return a nil reference if it fails.
     DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - NodeApplicationManager for plan %C completed\n"),

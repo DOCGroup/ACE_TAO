@@ -41,8 +41,8 @@ namespace DAnCE
 
     ::Deployment::NodeManager_ptr ns_lookup (const ACE_TCHAR *name);
 
-    typedef ACE_Map_Manager<ACE_CString,
-                            ACE_CString,
+    typedef ACE_Map_Manager<ACE_TString,
+                            ACE_TString,
                             ACE_Null_Mutex> NODEMAP;
 
     NODEMAP nodes_;
