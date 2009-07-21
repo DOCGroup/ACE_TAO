@@ -1,3 +1,27 @@
+Tue Jul 21 16:57:33 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/narrow/narrow.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          - Added missing narrowing code for porttypes.
+          - Removed unused out port list stuff in AST_Component.
+          - Updated port destroy() methods to include be_field.
+          - Cosmetic changes.
+          
+
 Tue Jul 21 16:09:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_component.cpp:
@@ -34,7 +58,7 @@ Tue Jul 21 16:09:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_uses.h:
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           More changes resulting from the new port AST nodes,
           including changes to code generation.
 

@@ -36,7 +36,7 @@ void
 be_provides::destroy (void)
 {
   this->AST_Provides::destroy ();
-  this->be_decl::destroy ();
+  this->be_field::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL(be_provides)
+IMPL_NARROW_FROM_DECL (be_provides)

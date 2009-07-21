@@ -39,3 +39,6 @@ be_porttype::accept (be_visitor *visitor)
 {
   return visitor->visit_porttype (this);
 }
+
+IMPL_NARROW_FROM_DECL (be_porttype)
+IMPL_NARROW_FROM_SCOPE (be_porttype)

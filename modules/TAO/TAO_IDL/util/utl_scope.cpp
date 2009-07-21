@@ -1825,7 +1825,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // The name does not start with "::"
   // Is name defined here?
   long index = 0;
-  AST_Decl *first_one_found= 0;
+  AST_Decl *first_one_found = 0;
   while (true)
     {
       d = this->lookup_by_name_local (e->head (),

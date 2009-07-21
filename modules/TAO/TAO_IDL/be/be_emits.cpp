@@ -36,7 +36,7 @@ void
 be_emits::destroy (void)
 {
   this->AST_Emits::destroy ();
-  this->be_decl::destroy ();
+  this->be_field::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL(be_emits)
+IMPL_NARROW_FROM_DECL (be_emits)
