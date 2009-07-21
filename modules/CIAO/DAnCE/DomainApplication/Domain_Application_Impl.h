@@ -29,7 +29,6 @@ namespace DAnCE
   {
 
   /**
-   *
    * @class DomainApplication_Impl
    *
    * @brief This class implements the DomainApplication interface.
@@ -51,6 +50,8 @@ namespace DAnCE
                               Deployment::Connections& conn);
       ~DomainApplication_Impl();
 
+      void startLaunch (const Deployment::Properties & configProperty);
+
       /**
       * The second step in launching an application in the
       * domain-level.  If the start parameter is true, the application
@@ -71,7 +72,6 @@ namespace DAnCE
       Deployment::Connections connections_;
       TNam2Nm & nams_;
       Deployment::Application_var na_;
-      void startLaunch (const Deployment::Properties & configProperty);
     };
 } // DAnCE
 

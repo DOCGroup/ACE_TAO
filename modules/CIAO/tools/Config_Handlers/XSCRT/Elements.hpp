@@ -13,49 +13,6 @@
 #include <XSCRT/Parser.hpp>
 #include "ace/Refcounted_Auto_Ptr.h"
 
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-
-// Stuff for broken VC6. Don't like what you see - use better compiler!
-//
-
-inline
-std::wistream&
-operator>> (std::wistream& is, __int64& v)
-{
-  long t;
-  is >> t;
-  v = t;
-  return is;
-}
-
-inline
-std::wistream&
-operator>> (std::wistream& is, unsigned __int64& v)
-{
-  unsigned long t;
-  is >> t;
-  v = t;
-  return is;
-}
-
-inline
-std::wostream&
-operator<< (std::wostream& os, __int64 const& v)
-{
-  os << long (v);
-  return os;
-}
-
-inline
-std::wostream&
-operator<< (std::wostream& os, unsigned __int64 const& v)
-{
-  os << unsigned long (v);
-  return os;
-}
-
-#endif
-
 namespace XSCRT
 {
   struct IdentityProvider
@@ -241,8 +198,8 @@ namespace XSCRT
     }
 
     //Get and set methods for the idref_ data member
-    Type* get_idref (void) 
-    { 
+    Type* get_idref (void)
+    {
       return this->idref_;
     }
 
@@ -283,7 +240,7 @@ namespace XSCRT
   public:
     // Trait for marshaling a FundamentalType X
     typedef X CDR_Type__;
-    typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
+//    typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
 
     FundamentalType ()
     {
@@ -332,80 +289,10 @@ namespace XSCRT
     X x_;
   };
 
-#if (!defined (_MSC_VER) || (_MSC_VER >= 1300)) && \
-    (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 2)))
 
-
-  // Stuff for normal compilers.
-  //
-
-  // Specialization for `signed char'
-  //
-  //
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<signed char>::
-  FundamentalType (XML::Element<C> const& e)
-  {
-    std::basic_stringstream<C> s;
-    s << e.value ();
-
-    short t;
-    s >> t;
-
-    x_ = static_cast<signed char> (t);
-  }
-
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<signed char>::
-  FundamentalType (XML::Attribute<C> const& a)
-  {
-    std::basic_stringstream<C> s;
-    s << a.value ();
-
-    short t;
-    s >> t;
-
-    x_ = static_cast<signed char> (t);
-  }
-
-  // Specialization for `unsigned char'
-  //
-  //
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<unsigned char>::
-  FundamentalType (XML::Element<C> const& e)
-  {
-    std::basic_stringstream<C> s;
-    s << e.value ();
-
-    unsigned short t;
-    s >> t;
-
-    x_ = static_cast<unsigned char> (t);
-  }
-
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<unsigned char>::
-  FundamentalType (XML::Attribute<C> const& a)
-  {
-    std::basic_stringstream<C> s;
-    s << a.value ();
-
-    unsigned short t;
-    s >> t;
-
-    x_ = static_cast<unsigned char> (t);
-  }
-
-#else
+#if ((defined (__GNUC__) && (__GNUC__ == 3 && (__GNUC_MINOR__ < 3))) || \
+    (defined (__BORLANDC__) && (__BORLANDC__ < 0x620)) || \
+    (defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x570)))
 
   // Stuff for broken VC6 & gcc < 3.3. Don't like what you see - use better
   // compiler!
@@ -533,14 +420,83 @@ namespace XSCRT
     unsigned char x_;
   };
 
+#else
+
+  // Stuff for normal compilers.
+  //
+
+  // Specialization for `signed char'
+  //
+  //
+  template<>
+  template<typename C>
+  inline
+  FundamentalType<signed char>::
+  FundamentalType (XML::Element<C> const& e)
+  {
+    std::basic_stringstream<C> s;
+    s << e.value ();
+
+    short t;
+    s >> t;
+
+    x_ = static_cast<signed char> (t);
+  }
+
+  template<>
+  template<typename C>
+  inline
+  FundamentalType<signed char>::
+  FundamentalType (XML::Attribute<C> const& a)
+  {
+    std::basic_stringstream<C> s;
+    s << a.value ();
+
+    short t;
+    s >> t;
+
+    x_ = static_cast<signed char> (t);
+  }
+
+  // Specialization for `unsigned char'
+  //
+  //
+  template<>
+  template<typename C>
+  inline
+  FundamentalType<unsigned char>::
+  FundamentalType (XML::Element<C> const& e)
+  {
+    std::basic_stringstream<C> s;
+    s << e.value ();
+
+    unsigned short t;
+    s >> t;
+
+    x_ = static_cast<unsigned char> (t);
+  }
+
+  template<>
+  template<typename C>
+  inline
+  FundamentalType<unsigned char>::
+  FundamentalType (XML::Attribute<C> const& a)
+  {
+    std::basic_stringstream<C> s;
+    s << a.value ();
+
+    unsigned short t;
+    s >> t;
+
+    x_ = static_cast<unsigned char> (t);
+  }
+
 #endif
 
 
   // Specialization for bool.
   //
   //
-
-#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
 
   template<>
   template<>
@@ -577,58 +533,6 @@ namespace XSCRT
   {
     x_ = (a.value () == L"true") || (a.value () == L"1");
   }
-
-#else
-
-  template <>
-  class FundamentalType<bool> : public Type
-  {
-  public:
-    FundamentalType ()
-    {
-    }
-
-    template<typename C>
-    FundamentalType (XML::Element<C> const& e)
-    {
-      x_ = (e.value ()[0] == 't') || (e.value ()[0] == '1');
-    }
-
-    template<typename C>
-    FundamentalType (XML::Attribute<C> const& a)
-    {
-      x_ = (a.value ()[0] == 't') || (a.value ()[0] == '1');
-    }
-
-    FundamentalType (bool const& x)
-        : x_ (x)
-    {
-    }
-
-    FundamentalType&
-    operator= (bool const& x)
-    {
-      x_ = x;
-      return *this;
-    }
-
-  public:
-    operator bool const& () const
-    {
-      return x_;
-    }
-
-    operator bool& ()
-    {
-      return x_;
-    }
-
-  protected:
-    bool x_;
-  };
-
-#endif
-
 }
 
 #include <XSCRT/Elements.ipp>

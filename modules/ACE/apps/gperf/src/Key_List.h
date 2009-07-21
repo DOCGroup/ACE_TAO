@@ -27,11 +27,16 @@
 #define KEY_LIST_H
 
 #include "Options.h"
+
+#if defined (ACE_HAS_GPERF)
+
 #include "List_Node.h"
 #include "Vectors.h"
 #include "ace/Copy_Disabled.h"
 
-#if defined (ACE_HAS_GPERF)
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x620)
+#include "gperf_export.h"
+#endif
 
 /**
  * Describes a duplicate entry.
@@ -59,7 +64,11 @@ public:
  * the Gen_Perf.hash function.  A Key_List is a singly-linked list
  * of List_Nodes.
  */
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x620)
+class ACE_GPERF_Export Key_List : private ACE_Copy_Disabled
+#else
 class Key_List : private ACE_Copy_Disabled
+#endif
 {
 public:
   Key_List (void);

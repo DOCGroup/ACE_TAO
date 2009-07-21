@@ -159,7 +159,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
               {
                 ACE_CString nodename;
                 Node node;
-                size_t const pos = s.find(ACE_TEXT("="));
+                size_t const pos = s.find(ACE_TEXT ("="));
                 if (ACE_CString::npos != pos)
                   {
                     nodename = s.substring(0, pos);
@@ -181,7 +181,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
                       {
                         ++opts.optind;
                         node.iorfile_ = s;
-                        DANCE_DEBUG ( (LM_TRACE, "[%M] and its IOR will be written to file \"%s\".\n", node.iorfile_.c_str()));
+                        DANCE_DEBUG ( (LM_TRACE, "[%M] and its IOR will be written to file \"%C\".\n", node.iorfile_.c_str()));
                       }
 
                   }

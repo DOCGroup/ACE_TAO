@@ -118,18 +118,21 @@ DomainApplicationManager_Impl::destroyApplication (Deployment::Application_ptr a
     }
   catch (const Deployment::StopError &e)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+      ACE_ERROR ((LM_ERROR, DLINFO
+                  ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
                   ACE_TEXT("Propagating a received StopError exception\n")));
       throw e;
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+      DANCE_ERROR ((LM_ERROR, DLINFO
+                    ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
                     ACE_TEXT("Caught unknown exception.")));
       throw Deployment::StopError();
     }
 
-  ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+  ACE_ERROR ((LM_ERROR, DLINFO
+              ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
               ACE_TEXT("Provided application reference unknown\n")));
   throw Deployment::StopError();
 }
@@ -144,7 +147,7 @@ DomainApplicationManager_Impl::getApplications ()
                     Deployment::Applications(),
                     CORBA::NO_MEMORY());
   running_app->length (this->running_app_.size());
-  unsigned int index = 0;
+  CORBA::ULong index = 0;
   for (size_t i = 0; i < this->running_app_.size(); ++i)
     {
       CORBA::Object_var ref = this->poa_->servant_to_reference (this->running_app_[i]);
@@ -172,7 +175,7 @@ DomainApplicationManager_Impl::getPlan ()
   return plan;
 }
 
-// This methhod is commented because it requred rework for processing connections
+// This methhod is commented because it required rework for processing connections
 // sequence together with correspondent DeploymentPlan
 void
 DomainApplicationManager_Impl::
@@ -275,12 +278,14 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
 
       sub_plans.bind (node, tmp_plan);
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+      DANCE_DEBUG ((LM_TRACE, DLINFO
+                    ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                     ACE_TEXT("Created sub-plan for node %C with UUID %C\n"),
                     node.c_str (), child_uuid.c_str ()));
     }
 
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+  DANCE_DEBUG ((LM_DEBUG, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                 ACE_TEXT("First phase produced %u child plans, proceeding to second\n")));
 
   // (1) Iterate over the <instance> field of the global DeploymentPlan
@@ -289,7 +294,8 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
   //     plans one by one.
   for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
     {
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+      DANCE_DEBUG ((LM_TRACE, DLINFO
+                    ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                     ACE_TEXT("Processing instance : %C\n"), plan.instance[i].name.in()));
       // @@TODO Fill in the child deployment plan in the map.
       // If the component instance already exists in the child plan,
@@ -304,7 +310,8 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
 
       if (0 != sub_plans.find (ACE_CString (my_instance.node.in()), child_plan))
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+          DANCE_ERROR ((LM_ERROR, DLINFO
+                        ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                         ACE_TEXT("ERROR: Unable to find sub-plan for instance %C\n"),
                         my_instance.node.in ()));
         }
@@ -341,7 +348,7 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
           child_plan.artifact.length (++index_art);
           child_plan.artifact[index_art-1] = plan.artifact[artifact_ref];
 
-          // Fill in the <artifactRef> field of the MonolithicDeploymentDescription
+          // Fill in the artifactRef field of the MonolithicDeploymentDescription
           ulong_seq[iter] = index_art - 1;
         }
 
@@ -362,16 +369,19 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
       // duplicate <implementation> for the optimization.
       child_plan.instance[index_ins-1].implementationRef = index_imp - 1;
 
-      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+      DANCE_DEBUG ((LM_TRACE, DLINFO
+                    ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                     ACE_TEXT("Processing connections.\n")));
       // Copy connections
       for (CORBA::ULong j = 0; j < plan.connection.length(); ++j)
         {
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+          DANCE_DEBUG ((LM_TRACE, DLINFO
+                        ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                         ACE_TEXT("For connection : %C\n"), plan.connection[j].name.in()));
           for (CORBA::ULong k = 0; k < plan.connection[j].internalEndpoint.length(); ++k)
             {
-              DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+              DANCE_DEBUG ((LM_TRACE, DLINFO
+                            ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                             ACE_TEXT("For endpoint : %C(%C)\n"),
                             plan.connection[j].internalEndpoint[k].portName.in(),
                             plan.connection[j].internalEndpoint[k].provider ? "provider" : "client"));
@@ -409,14 +419,13 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
     }
 
   //Debug
-  DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
+  DANCE_DEBUG ((LM_DEBUG, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                 ACE_TEXT("Original plan connection count : %u\n"), plan.connection.length()));
   CORBA::ULong cnt = 0;
   for (TNodePlans::iterator it = sub_plans.begin(); it != sub_plans.end(); ++it)
     {
       cnt += (*it).int_id_.connection.length();
-      //        DANCE_DEBUG((LM_DEBUG, "[%M] Dumping deployment plan #%C:\n", (*it).ext_id_.c_str()));
-      //        Deployment::DnC_Dump::dump((*it).int_id_);
     }
   DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
                 ACE_TEXT("Child plans connection count : %u\n"), cnt));
@@ -440,7 +449,7 @@ DomainApplicationManager_Impl::preparePlan()
            ++iter_plans)
         {
           // Finding correspondent NodeManager
-          Deployment::NodeManager_var nm = this->nodes_.locate_node ((const ACE_TCHAR*)(*iter_plans).ext_id_.c_str ());;
+          Deployment::NodeManager_var nm = this->nodes_.locate_node ((*iter_plans).ext_id_.c_str ());;
           // If NodeManager not found throw StartError exception
           if (CORBA::is_nil (nm.in ()))
             {
@@ -461,7 +470,8 @@ DomainApplicationManager_Impl::preparePlan()
 
           if (CORBA::is_nil (nam))
             {
-              DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+              DANCE_ERROR ((LM_ERROR, DLINFO
+                            ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                             ACE_TEXT("PreparePlan failed for node %C, returning a nill ")
                             ACE_TEXT("NodeApplicationManager pointer.\n"),
                             (*iter_plans).ext_id_.c_str()));
@@ -470,27 +480,31 @@ DomainApplicationManager_Impl::preparePlan()
           // We save NAM reference ptr in TNodes vector were it places to var variable
           this->sub_app_mgr_.bind (nam, nm);
 
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+          DANCE_DEBUG ((LM_INFO, DLINFO
+                        ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                         ACE_TEXT("Sucessfully prepared node %C for deployment\n"),
                         (*iter_plans).ext_id_.c_str()));
         }
     }
   catch (Deployment::StartError &e)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+      DANCE_ERROR ((LM_ERROR, DLINFO
+                    ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                     ACE_TEXT("Propagating StartError exception caught here\n")));
       throw e;
     }
   catch (CORBA::Exception &ex)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+      DANCE_ERROR ((LM_ERROR, DLINFO
+                    ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                     ACE_TEXT("Caught a CORBA exception, propagating StartError: %C\n"),
                     ex._info ().c_str ()));
       throw ::Deployment::StartError ();
     }
   catch (...)
     {
-      DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+      DANCE_ERROR ((LM_ERROR, DLINFO
+                    ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                     ACE_TEXT("Caught unknown exception.  Propagating StartError\n")));
       throw ::Deployment::StartError ();
     }

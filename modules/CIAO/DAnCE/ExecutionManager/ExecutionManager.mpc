@@ -11,7 +11,8 @@ project(ExecutionManager_Module): dance_lib, taolib, iortable, ciao_output, util
   }
 }
 
-project(Execution_Manager_Exec) : dance_exe, dance_domainapplicationmanager_stub, naming_serv, dance_executionmanager_stub, utils, dance_logger, avoids_minimum_corba  {
+project(Execution_Manager_Exec) : dance_exe, naming_serv, ciao_executionmanager_skel, \
+                                dance_domainapplicationmanager, dance_executionmanager_skel, utils, dance_logger, avoids_minimum_corba  {
   exename = dance_execution_manager
   after += ExecutionManager_Module
   libs += DAnCE_ExecutionManager

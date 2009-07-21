@@ -100,7 +100,7 @@ DAnCE_ExecutionManager_Module::parse_args (int argc, ACE_TCHAR *argv[])
         case 'n':
           DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("DAnCE_ExecutionManager_Module::parse_args - ")
                         ACE_TEXT("--node-mgr option was parsed out for EM\n")));
-          this->options_.node_managers_.push_back ((const char *)get_opts.opt_arg ());
+          this->options_.node_managers_.push_back (get_opts.opt_arg ());
           break;
 
         case 'p':
@@ -218,7 +218,6 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
         = PortableServer::POA::_narrow (poa_obj.in ());
 
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
-
       PortableServer::POA_var persistent_poa;
       TAO::Utils::PolicyList_Destroyer policies (2);
       policies.length (2);
@@ -352,7 +351,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
             }
           */
           DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Placing node \"%C\" to EM's map.\n"), node_name.c_str()));
-          this->em_impl_->add_node_manager ((const ACE_TCHAR *)node_name.c_str(), (const ACE_TCHAR *)nm_ior.c_str ());
+          this->em_impl_->add_node_manager (node_name.c_str(), nm_ior.c_str ());
         }
 
       if (this->options_.node_map_ != 0)

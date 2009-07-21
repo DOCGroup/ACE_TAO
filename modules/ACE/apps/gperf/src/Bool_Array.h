@@ -36,6 +36,10 @@
 
 #if defined (ACE_HAS_GPERF)
 
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x620)
+#include "gperf_export.h"
+#endif
+
 /**
  * Efficient lookup table abstraction implemented as a "Generation
  * Number" Array.
@@ -43,7 +47,11 @@
  * Uses a "Generation Numbering" implementation to minimize
  * initialization time.
  */
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x620)
+class ACE_GPERF_Export Bool_Array
+#else
 class Bool_Array
+#endif
 {
 public:
   /// Constructor

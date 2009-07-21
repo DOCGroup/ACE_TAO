@@ -9,7 +9,7 @@ namespace CIAO
 {
   namespace Deployment
   {
-    
+
     ComponentServer_Configurator::ComponentServer_Configurator (bool rt)
       : rt_support_ (rt)
     {
@@ -23,9 +23,9 @@ namespace CIAO
     void
     ComponentServer_Configurator::set_rt_support (void)
     {
-      this->rt_support_ = 1;
+      this->rt_support_ = true;
     }
-    
+
     bool
     ComponentServer_Configurator::rt_support (void)
     {
@@ -58,7 +58,7 @@ namespace CIAO
         this->config_dll_.symbol (ACE_TEXT ("create_basic_config_manager"));
 
       ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
-      
+
       // "id" is for na_intelligent-designer.
       na_intelligent_designer config_id =
         reinterpret_cast<na_intelligent_designer> (tmp);
@@ -150,13 +150,13 @@ namespace CIAO
       this->orb_ = CORBA::ORB::_duplicate (o);
 
       (*this->na_config_manager_.get ()).init (this->orb_.in ());
-      if (this->rt_support_ == 1)
+      if (this->rt_support_)
         {
           (*this->rt_config_manager_.get ()).init (this->orb_.in ());
         }
 
       (*this->na_config_manager_.get ()).post_orb_initialize (this->orb_.in ());
-      if (this->rt_support_ == 1)
+      if (this->rt_support_)
         {
           (*this->rt_config_manager_.get ()).post_orb_initialize (this->orb_.in ());
         }
@@ -178,7 +178,7 @@ namespace CIAO
                   (*this->na_config_manager_.get ()).
                     init_resources (*svr_resource);
 
-                  if (this->rt_support_ == 1)
+                  if (this->rt_support_)
                     {
                       (*this->rt_config_manager_.get ()).
                         init_resources (*svr_resource);
@@ -223,7 +223,7 @@ namespace CIAO
                       p_length = configured_policies->length ();
                     }
 
-                  if (this->rt_support_ == 1)
+                  if (this->rt_support_)
                     {
                       rt_configured_policies = (*this->rt_config_manager_.get ()).
                         find_policies_by_name (policy_name);
@@ -281,7 +281,7 @@ namespace CIAO
           p_length = configured_policies->length ();
         }
 
-      if (this->rt_support_ == 1)
+      if (this->rt_support_)
         {
           rt_configured_policies = (*this->rt_config_manager_.get ()).
             find_policies_by_name (policy_name);
@@ -322,7 +322,7 @@ namespace CIAO
 
       if (result == false)
         {
-          if (this->rt_support_ == 1)
+          if (this->rt_support_)
             {
               result = (*this->rt_config_manager_.get ()).
                 policy_exists (policy_set_id);

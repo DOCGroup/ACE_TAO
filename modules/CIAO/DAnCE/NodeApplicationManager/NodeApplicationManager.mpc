@@ -3,7 +3,7 @@
 
 project: dance_lib, naming, dance_nodeapplicationmanager_skel, \
         dynamicinterface, ccm_componentserver_svnt, ciao_cs_client, \
-        dance_nodeapplication {
+        dance_nodeapplication, avoids_ace_for_tao {
   sharedname   = DAnCE_NodeApplicationManager
   dynamicflags = NODEAPPLICATIONMANAGER_BUILD_DLL
 
