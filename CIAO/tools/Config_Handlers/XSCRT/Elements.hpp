@@ -289,80 +289,10 @@ namespace XSCRT
     X x_;
   };
 
-#if (!defined (_MSC_VER)) && \
-    (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 2)))
 
-
-  // Stuff for normal compilers.
-  //
-
-  // Specialization for `signed char'
-  //
-  //
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<signed char>::
-  FundamentalType (XML::Element<C> const& e)
-  {
-    std::basic_stringstream<C> s;
-    s << e.value ();
-
-    short t;
-    s >> t;
-
-    x_ = static_cast<signed char> (t);
-  }
-
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<signed char>::
-  FundamentalType (XML::Attribute<C> const& a)
-  {
-    std::basic_stringstream<C> s;
-    s << a.value ();
-
-    short t;
-    s >> t;
-
-    x_ = static_cast<signed char> (t);
-  }
-
-  // Specialization for `unsigned char'
-  //
-  //
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<unsigned char>::
-  FundamentalType (XML::Element<C> const& e)
-  {
-    std::basic_stringstream<C> s;
-    s << e.value ();
-
-    unsigned short t;
-    s >> t;
-
-    x_ = static_cast<unsigned char> (t);
-  }
-
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<unsigned char>::
-  FundamentalType (XML::Attribute<C> const& a)
-  {
-    std::basic_stringstream<C> s;
-    s << a.value ();
-
-    unsigned short t;
-    s >> t;
-
-    x_ = static_cast<unsigned char> (t);
-  }
-
-#else
+#if ((defined (__GNUC__) && (__GNUC__ == 3 && (__GNUC_MINOR__ < 3))) || \
+    (defined (__BORLANDC__) && (__BORLANDC__ < 0x620)) || \
+    (defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x570)))
 
   // Stuff for broken VC6 & gcc < 3.3. Don't like what you see - use better
   // compiler!
@@ -489,6 +419,77 @@ namespace XSCRT
   protected:
     unsigned char x_;
   };
+
+#else
+
+  // Stuff for normal compilers.
+  //
+
+  // Specialization for `signed char'
+  //
+  //
+  template<>
+  template<typename C>
+  inline
+  FundamentalType<signed char>::
+  FundamentalType (XML::Element<C> const& e)
+  {
+    std::basic_stringstream<C> s;
+    s << e.value ();
+
+    short t;
+    s >> t;
+
+    x_ = static_cast<signed char> (t);
+  }
+
+  template<>
+  template<typename C>
+  inline
+  FundamentalType<signed char>::
+  FundamentalType (XML::Attribute<C> const& a)
+  {
+    std::basic_stringstream<C> s;
+    s << a.value ();
+
+    short t;
+    s >> t;
+
+    x_ = static_cast<signed char> (t);
+  }
+
+  // Specialization for `unsigned char'
+  //
+  //
+  template<>
+  template<typename C>
+  inline
+  FundamentalType<unsigned char>::
+  FundamentalType (XML::Element<C> const& e)
+  {
+    std::basic_stringstream<C> s;
+    s << e.value ();
+
+    unsigned short t;
+    s >> t;
+
+    x_ = static_cast<unsigned char> (t);
+  }
+
+  template<>
+  template<typename C>
+  inline
+  FundamentalType<unsigned char>::
+  FundamentalType (XML::Attribute<C> const& a)
+  {
+    std::basic_stringstream<C> s;
+    s << a.value ();
+
+    unsigned short t;
+    s >> t;
+
+    x_ = static_cast<unsigned char> (t);
+  }
 
 #endif
 
