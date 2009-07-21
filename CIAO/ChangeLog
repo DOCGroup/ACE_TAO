@@ -1,3 +1,8 @@
+Tue Jul 21 10:51:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Fixed compile error on HPUX
+
 Tue Jul 21 02:23:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:

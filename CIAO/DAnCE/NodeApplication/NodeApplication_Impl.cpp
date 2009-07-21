@@ -1495,7 +1495,7 @@ if (error)
 }
 
 NodeApplication_Impl::EInstanceType
-NodeApplication_Impl::get_instance_type (const Deployment::Properties& prop) const
+NodeApplication_Impl::get_instance_type (const ::Deployment::Properties& prop) const
 {
   DANCE_TRACE ("NodeApplication_Impl::get_instance_type");
 
@@ -1534,13 +1534,12 @@ NodeApplication_Impl::get_instance_type (const Deployment::Properties& prop) con
 }
 
 void
-NodeApplication_Impl::create_config_values (const Deployment::Properties& /*prop*/,
+NodeApplication_Impl::create_config_values (const ::Deployment::Properties& /*prop*/,
                                             const ERequestType request,
                                             Components::ConfigValues& /*cfg*/) const
 {
   DANCE_TRACE ("NodeApplication_Impl::create_config_values");
 
-  //unsigned int ind = 0;
   CORBA::Any_var feature_any;
   switch (request)
     {
@@ -1716,7 +1715,7 @@ NodeApplication_Impl::getAllConnections()
 }
 
 void
-NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedReference,
+NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedReference,
                                     ::CORBA::Boolean start)
 {
   DANCE_TRACE ("NodeApplication_Impl::finishLaunch");
@@ -2150,7 +2149,7 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
   return res;
 }
 
-void NodeApplication_Impl::create_config_values(const Deployment::Properties& prop,
+void NodeApplication_Impl::create_config_values(const ::Deployment::Properties& prop,
                                                 Components::ConfigValues& cfg) const
 {
   ACE_CString cdmw_name = "cdmw.config.";
