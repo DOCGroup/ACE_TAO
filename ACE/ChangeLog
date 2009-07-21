@@ -1,3 +1,12 @@
+Tue Jul 21 11:44:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, it was triggered by template problems in TAO_IDL
+        generated code
+
+        Sat Jul 18 00:52:14 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+        * ace/config-macosx-leopard.h:
+          Intel on OS X requires explicit template visibility.
+
 Tue Jul 21 10:57:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
