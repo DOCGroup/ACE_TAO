@@ -77,6 +77,12 @@ int be_visitor::visit_template_interface (be_template_interface *)
   return 0;
 }
 
+int be_visitor::visit_instantiated_interface (
+  be_instantiated_interface *)
+{
+  return 0;
+}
+
 int be_visitor::visit_valuebox (be_valuebox *)
 {
   return 0;

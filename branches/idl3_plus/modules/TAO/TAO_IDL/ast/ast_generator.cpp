@@ -80,6 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component_fwd.h"
 #include "ast_home.h"
 #include "ast_template_interface.h"
+#include "ast_instantiated_interface.h"
 #include "ast_porttype.h"
 #include "ast_provides.h"
 #include "ast_uses.h"
@@ -947,6 +948,22 @@ AST_Generator::create_template_interface (
                                           template_params),
                   0);
 
+  return retval;
+}
+
+AST_Instantiated_Interface *
+AST_Generator::create_instantiated_interface (
+  UTL_ScopedName *n,
+  AST_Template_Interface *template_ref,
+  UTL_NameList *template_args)
+{
+  AST_Instantiated_Interface *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Instantiated_Interface (n,
+                                              template_ref,
+                                              template_args),
+                  0);
+                  
   return retval;
 }
 

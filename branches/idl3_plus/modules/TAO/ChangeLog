@@ -1,3 +1,26 @@
+Tue Jul 21 19:47:09 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_instantiated_interface.cpp:
+        * TAO_IDL/include/ast_instantiated_interface.h:
+        * TAO_IDL/be/be_instantiated_interface.cpp:
+        * TAO_IDL/be_include/be_instantiated_interface.h:
+        
+          New files, defining frontend and backend versions of
+          an interface that is instantiated in an extended 
+          provides or uses declaration from a previously defined
+          template interface.
+        
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/utl_namelist.h:
+        
+          Changes corresponding to the new AST node type above.
+
 Tue Jul 21 17:51:34 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

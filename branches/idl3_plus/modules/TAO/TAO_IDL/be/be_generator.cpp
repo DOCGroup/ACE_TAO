@@ -82,6 +82,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_component_fwd.h"
 #include "be_home.h"
 #include "be_template_interface.h"
+#include "be_instantiated_interface.h"
 #include "be_porttype.h"
 #include "be_provides.h"
 #include "be_uses.h"
@@ -938,6 +939,22 @@ be_generator::create_template_interface (
                                          template_params),
                   0);
 
+  return retval;
+}
+
+AST_Instantiated_Interface *
+be_generator::create_instantiated_interface (
+  UTL_ScopedName *n,
+  AST_Template_Interface *template_ref,
+  UTL_NameList *template_args)
+{
+  be_instantiated_interface *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_instantiated_interface (n,
+                                             template_ref,
+                                             template_args),
+                  0);
+                  
   return retval;
 }
 

@@ -275,6 +275,12 @@ public:
     const FE_Utils::T_PARAMLIST_INFO *template_params);
 
   virtual
+  AST_Instantiated_Interface *create_instantiated_interface (
+    UTL_ScopedName *n,
+    AST_Template_Interface *template_ref,
+    UTL_NameList *template_args);  
+
+  virtual
   AST_PortType *create_porttype (
     UTL_ScopedName *n,
     const FE_Utils::T_PARAMLIST_INFO *template_params);
