@@ -1,3 +1,8 @@
+Tue Jul 21 13:48:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+          Backported some CB2009 fixes
+
 Tue Jul 21 10:51:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
