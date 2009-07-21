@@ -1,3 +1,11 @@
+Tue Jul 21 17:51:34 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Refactored semantic action code creating simple ports,
+          and fixed an incorrect comment.
+
 Tue Jul 21 16:57:33 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_component.cpp:
@@ -15,12 +23,11 @@ Tue Jul 21 16:57:33 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_porttype.h:
         * TAO_IDL/narrow/narrow.cpp:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           - Added missing narrowing code for porttypes.
           - Removed unused out port list stuff in AST_Component.
           - Updated port destroy() methods to include be_field.
           - Cosmetic changes.
-          
 
 Tue Jul 21 16:09:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 

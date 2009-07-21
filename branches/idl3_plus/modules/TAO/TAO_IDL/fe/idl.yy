@@ -4839,38 +4839,31 @@ provides_decl : IDL_PROVIDES interface_type id
                 }
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
+              AST_Type *port_interface_type =
+                AST_Type::narrow_from_decl (d);
 
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
 
-              break;
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Provides *p =
+                idl_global->gen ()->create_provides (&sn,
+                                                     port_interface_type);
+
+              (void) s->fe_add_provides (p);
             }
-
-          AST_Type *port_interface_type =
-            AST_Type::narrow_from_decl (d);
-
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ($3);
-
-          UTL_ScopedName sn ($3,
-                             0);
-
-          AST_Provides *p =
-            idl_global->gen ()->create_provides (&sn,
-                                                 port_interface_type);
-
-          (void) s->fe_add_provides (p);
  
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
         }
         ;
 
@@ -4936,53 +4929,46 @@ uses_decl : uses_opt_multiple interface_type id
                 }
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
+              AST_Type *port_interface_type =
+                AST_Type::narrow_from_decl (d);
 
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
 
-              break;
-            }
+              UTL_ScopedName sn ($3,
+                                 0);
 
-          AST_Type *port_interface_type =
-            AST_Type::narrow_from_decl (d);
+              AST_Uses *u =
+                idl_global->gen ()->create_uses (&sn,
+                                                 port_interface_type,
+                                                 $1);
 
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ($3);
-
-          UTL_ScopedName sn ($3,
-                             0);
-
-          AST_Uses *u =
-            idl_global->gen ()->create_uses (&sn,
-                                             port_interface_type,
-                                             $1);
-
-          (void) s->fe_add_uses (u);
+              (void) s->fe_add_uses (u);
  
-          AST_Component *c =
-            AST_Component::narrow_from_scope (s);
+              AST_Component *c =
+                AST_Component::narrow_from_scope (s);
 
-          if (c != 0
-              && u->is_multiple ()
-              && !idl_global->using_ifr_backend ()
-              && !idl_global->ignore_idl3 ())
-            {
-              // These datatypes must be created in the
-              // front end so they can be looked up
-              // when compiling the generated executor IDL.
-              idl_global->create_uses_multiple_stuff (c, u);
+              if (c != 0
+                  && u->is_multiple ()
+                  && !idl_global->using_ifr_backend ()
+                  && !idl_global->ignore_idl3 ())
+                {
+                  // These datatypes must be created in the
+                  // front end so they can be looked up
+                  // when compiling the generated executor IDL.
+                  idl_global->create_uses_multiple_stuff (c, u);
+                }
             }
 
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
         }
         ;
 
@@ -5028,38 +5014,31 @@ emits_decl : IDL_EMITS scoped_name id
               so_far_so_good = false;
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
 
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
 
-              break;
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Emits *e =
+                idl_global->gen ()->create_emits (&sn,
+                                                  event_type);
+
+              (void) s->fe_add_emits (e);
             }
-
-
-          AST_EventType *event_type = AST_EventType::narrow_from_decl (d);
-
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ($3);
-
-          UTL_ScopedName sn ($3,
-                             0);
-
-          AST_Emits *e =
-            idl_global->gen ()->create_emits (&sn,
-                                              event_type);
-
-          (void) s->fe_add_emits (e);
 
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
         }
         ;
 
@@ -5082,38 +5061,31 @@ publishes_decl : IDL_PUBLISHES scoped_name id
               so_far_so_good = false;
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
 
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
 
-              break;
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Publishes *p =
+                idl_global->gen ()->create_publishes (&sn,
+                                                      event_type);
+
+              (void) s->fe_add_publishes (p);
             }
-
-
-          AST_EventType *event_type = AST_EventType::narrow_from_decl (d);
-
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ($3);
-
-          UTL_ScopedName sn ($3,
-                             0);
-
-          AST_Publishes *p =
-            idl_global->gen ()->create_publishes (&sn,
-                                                  event_type);
-
-          (void) s->fe_add_publishes (p);
 
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
         }
         ;
 
@@ -5136,38 +5108,31 @@ consumes_decl : IDL_CONSUMES scoped_name id
               so_far_so_good = false;
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
 
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
 
-              break;
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Consumes *c =
+                idl_global->gen ()->create_consumes (&sn,
+                                                     event_type);
+
+              (void) s->fe_add_consumes (c);
             }
-
-
-          AST_EventType *event_type = AST_EventType::narrow_from_decl (d);
-
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ($3);
-
-          UTL_ScopedName sn ($3,
-                             0);
-
-          AST_Consumes *c =
-            idl_global->gen ()->create_consumes (&sn,
-                                                 event_type);
-
-          (void) s->fe_add_consumes (c);
 
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
        }
         ;
 
@@ -6232,13 +6197,9 @@ extended_provides_decl
         }
         | IDL_PROVIDES template_ref IDENTIFIER
         {
-//        | provides_type at_least_one_template_param_ref IDENTIFIER
+//        | IDL_PROVIDES template_ref IDENTIFIER
 
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtProvidesDeclSeen);
-
-          // We allow 'Object' in the grammar, to use more grammar in common with
-          // provides_decl and avoid conflicts in the LALR(1) parser. We just
-          // check for CORBA::Object below and report an error if found.
         }
         ;
 
@@ -6254,9 +6215,6 @@ extended_uses_decl
 
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtUsesDeclSeen);
 
-          // We allow 'Object' in the grammar, to use more grammar in common with
-          // uses_decl and avoid conflicts in the LALR(1) parser. We just
-          // check for CORBA::Object below and report an error if found.
         }
         ;
 

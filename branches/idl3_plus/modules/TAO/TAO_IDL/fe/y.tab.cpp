@@ -857,59 +857,59 @@ static const tao_yytype_int16 tao_yyrhs[] =
 /* TAO_YYRLINE[TAO_YYN] -- source line where rule number TAO_YYN was defined.  */
 static const tao_yytype_uint16 tao_yyrline[] =
 {
-       0,   359,   359,   362,   363,   368,   367,   378,   377,   388,
-     387,   398,   397,   408,   407,   418,   417,   428,   427,   438,
-     437,   448,   447,   458,   457,   468,   467,   478,   477,   488,
-     487,   498,   497,   511,   516,   542,   547,   510,   563,   564,
-     569,   608,   613,   568,   631,   630,   644,   682,   713,   747,
-     746,   758,   765,   766,   767,   768,   772,   783,   788,   832,
-     837,   787,   866,   905,   910,   864,   929,   927,   967,   966,
-     980,   986,   993,  1000,  1007,  1033,  1060,  1125,  1126,  1130,
-    1131,  1132,  1137,  1143,  1152,  1153,  1158,  1157,  1168,  1167,
-    1178,  1177,  1188,  1187,  1198,  1197,  1208,  1207,  1218,  1217,
-    1228,  1227,  1241,  1254,  1252,  1282,  1289,  1300,  1299,  1327,
-    1325,  1352,  1364,  1410,  1438,  1469,  1474,  1479,  1484,  1468,
-    1537,  1538,  1539,  1540,  1541,  1542,  1543,  1555,  1560,  1635,
-    1637,  1639,  1640,  1654,  1655,  1669,  1670,  1683,  1684,  1694,
-    1707,  1708,  1718,  1731,  1732,  1742,  1752,  1765,  1766,  1776,
-    1786,  1799,  1834,  1835,  1844,  1849,  1856,  1864,  1869,  1874,
-    1880,  1885,  1890,  1898,  1970,  1969,  1979,  1984,  1989,  1994,
-    2021,  2030,  2029,  2100,  2101,  2105,  2113,  2114,  2142,  2143,
-    2144,  2145,  2146,  2147,  2148,  2149,  2153,  2154,  2155,  2159,
-    2160,  2161,  2165,  2166,  2170,  2183,  2181,  2211,  2218,  2219,
-    2223,  2236,  2234,  2264,  2271,  2288,  2307,  2308,  2312,  2317,
-    2322,  2330,  2335,  2340,  2348,  2353,  2358,  2366,  2380,  2385,
-    2393,  2401,  2409,  2417,  2426,  2425,  2441,  2475,  2480,  2440,
-    2499,  2502,  2503,  2507,  2507,  2517,  2522,  2516,  2585,  2584,
-    2599,  2598,  2613,  2618,  2623,  2628,  2675,  2680,  2612,  2704,
-    2712,  2726,  2736,  2744,  2745,  2853,  2856,  2857,  2862,  2867,
-    2861,  2903,  2902,  2916,  2927,  2949,  2957,  2956,  2972,  2977,
-    2971,  2994,  2993,  3046,  3070,  3095,  3100,  3133,  3138,  3094,
-    3164,  3169,  3167,  3174,  3178,  3215,  3220,  3213,  3287,  3342,
-    3352,  3341,  3367,  3372,  3365,  3413,  3439,  3449,  3454,  3447,
-    3484,  3509,  3518,  3517,  3553,  3564,  3586,  3594,  3599,  3593,
-    3636,  3637,  3642,  3647,  3652,  3657,  3641,  3726,  3731,  3736,
-    3741,  3725,  3819,  3824,  3854,  3859,  3818,  3877,  3882,  3935,
-    3940,  3875,  3977,  3983,  3990,  3997,  3998,  4010,  4016,  4058,
-    4009,  4080,  4079,  4090,  4089,  4102,  4107,  4105,  4112,  4117,
-    4122,  4116,  4163,  4162,  4173,  4172,  4185,  4190,  4188,  4195,
-    4200,  4205,  4199,  4252,  4260,  4261,  4262,  4350,  4355,  4360,
-    4369,  4374,  4368,  4386,  4394,  4399,  4393,  4411,  4419,  4424,
-    4418,  4436,  4444,  4449,  4443,  4461,  4468,  4481,  4479,  4507,
-    4514,  4543,  4581,  4582,  4586,  4616,  4656,  4661,  4615,  4680,
-    4685,  4678,  4727,  4726,  4737,  4744,  4745,  4750,  4749,  4760,
-    4759,  4770,  4769,  4780,  4779,  4790,  4789,  4800,  4799,  4811,
-    4877,  4884,  4908,  4975,  4985,  4991,  4997,  5051,  5105,  5161,
-    5160,  5210,  5215,  5220,  5225,  5230,  5235,  5209,  5289,  5288,
-    5299,  5306,  5313,  5321,  5326,  5320,  5338,  5339,  5343,  5345,
-    5344,  5355,  5354,  5369,  5405,  5367,  5439,  5475,  5437,  5507,
-    5508,  5509,  5513,  5514,  5518,  5546,  5577,  5622,  5627,  5575,
-    5644,  5654,  5673,  5685,  5684,  5724,  5774,  5779,  5722,  5796,
-    5801,  5809,  5814,  5819,  5824,  5829,  5842,  5847,  5852,  5861,
-    5883,  5888,  5860,  5905,  5923,  5928,  5922,  5951,  5950,  5972,
-    5979,  5993,  5999,  6006,  6025,  6042,  6049,  6059,  6070,  6094,
-    6101,  6112,  6117,  6122,  6143,  6148,  6111,  6163,  6169,  6176,
-    6183,  6188,  6195,  6194,  6203,  6202,  6213,  6218,  6231,  6236
+       0,   360,   360,   363,   364,   369,   368,   379,   378,   389,
+     388,   399,   398,   409,   408,   419,   418,   429,   428,   439,
+     438,   449,   448,   459,   458,   469,   468,   479,   478,   489,
+     488,   499,   498,   512,   517,   543,   548,   511,   564,   565,
+     570,   609,   614,   569,   632,   631,   645,   683,   714,   748,
+     747,   759,   766,   767,   768,   769,   773,   784,   789,   833,
+     838,   788,   867,   906,   911,   865,   930,   928,   968,   967,
+     981,   987,   994,  1001,  1008,  1034,  1061,  1126,  1127,  1131,
+    1132,  1133,  1138,  1144,  1153,  1154,  1159,  1158,  1169,  1168,
+    1179,  1178,  1189,  1188,  1199,  1198,  1209,  1208,  1219,  1218,
+    1229,  1228,  1242,  1255,  1253,  1283,  1290,  1301,  1300,  1328,
+    1326,  1353,  1365,  1411,  1439,  1470,  1475,  1480,  1485,  1469,
+    1538,  1539,  1540,  1541,  1542,  1543,  1544,  1556,  1561,  1636,
+    1638,  1640,  1641,  1655,  1656,  1670,  1671,  1684,  1685,  1695,
+    1708,  1709,  1719,  1732,  1733,  1743,  1753,  1766,  1767,  1777,
+    1787,  1800,  1835,  1836,  1845,  1850,  1857,  1865,  1870,  1875,
+    1881,  1886,  1891,  1899,  1971,  1970,  1980,  1985,  1990,  1995,
+    2022,  2031,  2030,  2101,  2102,  2106,  2114,  2115,  2143,  2144,
+    2145,  2146,  2147,  2148,  2149,  2150,  2154,  2155,  2156,  2160,
+    2161,  2162,  2166,  2167,  2171,  2184,  2182,  2212,  2219,  2220,
+    2224,  2237,  2235,  2265,  2272,  2289,  2308,  2309,  2313,  2318,
+    2323,  2331,  2336,  2341,  2349,  2354,  2359,  2367,  2381,  2386,
+    2394,  2402,  2410,  2418,  2427,  2426,  2442,  2476,  2481,  2441,
+    2500,  2503,  2504,  2508,  2508,  2518,  2523,  2517,  2586,  2585,
+    2600,  2599,  2614,  2619,  2624,  2629,  2676,  2681,  2613,  2705,
+    2713,  2727,  2737,  2745,  2746,  2854,  2857,  2858,  2863,  2868,
+    2862,  2904,  2903,  2917,  2928,  2950,  2958,  2957,  2973,  2978,
+    2972,  2995,  2994,  3047,  3071,  3096,  3101,  3134,  3139,  3095,
+    3165,  3170,  3168,  3175,  3179,  3216,  3221,  3214,  3288,  3343,
+    3353,  3342,  3368,  3373,  3366,  3414,  3440,  3450,  3455,  3448,
+    3485,  3510,  3519,  3518,  3554,  3565,  3587,  3595,  3600,  3594,
+    3637,  3638,  3643,  3648,  3653,  3658,  3642,  3727,  3732,  3737,
+    3742,  3726,  3820,  3825,  3855,  3860,  3819,  3878,  3883,  3936,
+    3941,  3876,  3978,  3984,  3991,  3998,  3999,  4011,  4017,  4059,
+    4010,  4081,  4080,  4091,  4090,  4103,  4108,  4106,  4113,  4118,
+    4123,  4117,  4164,  4163,  4174,  4173,  4186,  4191,  4189,  4196,
+    4201,  4206,  4200,  4253,  4261,  4262,  4263,  4351,  4356,  4361,
+    4370,  4375,  4369,  4387,  4395,  4400,  4394,  4412,  4420,  4425,
+    4419,  4437,  4445,  4450,  4444,  4462,  4469,  4482,  4480,  4508,
+    4515,  4544,  4582,  4583,  4587,  4617,  4657,  4662,  4616,  4681,
+    4686,  4679,  4728,  4727,  4738,  4745,  4746,  4751,  4750,  4761,
+    4760,  4771,  4770,  4781,  4780,  4791,  4790,  4801,  4800,  4812,
+    4871,  4878,  4902,  4976,  4986,  4992,  4998,  5045,  5092,  5141,
+    5140,  5190,  5195,  5200,  5205,  5210,  5215,  5189,  5269,  5268,
+    5279,  5286,  5293,  5301,  5306,  5300,  5318,  5319,  5323,  5325,
+    5324,  5335,  5334,  5349,  5385,  5347,  5419,  5455,  5417,  5487,
+    5488,  5489,  5493,  5494,  5498,  5526,  5557,  5602,  5607,  5555,
+    5624,  5634,  5653,  5665,  5664,  5704,  5754,  5759,  5702,  5776,
+    5781,  5789,  5794,  5799,  5804,  5809,  5822,  5827,  5832,  5841,
+    5863,  5868,  5840,  5885,  5903,  5908,  5902,  5931,  5930,  5952,
+    5959,  5973,  5979,  5986,  6005,  6022,  6029,  6039,  6050,  6074,
+    6081,  6092,  6097,  6102,  6123,  6128,  6091,  6143,  6149,  6156,
+    6163,  6168,  6175,  6174,  6183,  6182,  6193,  6198,  6211,  6216
 };
 #endif
 
@@ -7546,38 +7546,31 @@ tao_yyreduce:
                 }
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              (tao_yyvsp[(2) - (3)].idlist)->destroy ();
-              delete (tao_yyvsp[(2) - (3)].idlist);
-              (tao_yyvsp[(2) - (3)].idlist) = 0;
+              AST_Type *port_interface_type =
+                AST_Type::narrow_from_decl (d);
 
-              (tao_yyvsp[(3) - (3)].idval)->destroy ();
-              delete (tao_yyvsp[(3) - (3)].idval);
-              (tao_yyvsp[(3) - (3)].idval) = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
-              break;
+              UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
+                                 0);
+
+              AST_Provides *p =
+                idl_global->gen ()->create_provides (&sn,
+                                                     port_interface_type);
+
+              (void) s->fe_add_provides (p);
             }
-
-          AST_Type *port_interface_type =
-            AST_Type::narrow_from_decl (d);
-
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
-
-          UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
-                             0);
-
-          AST_Provides *p =
-            idl_global->gen ()->create_provides (&sn,
-                                                 port_interface_type);
-
-          (void) s->fe_add_provides (p);
 
           (tao_yyvsp[(2) - (3)].idlist)->destroy ();
           delete (tao_yyvsp[(2) - (3)].idlist);
           (tao_yyvsp[(2) - (3)].idlist) = 0;
+
+          (tao_yyvsp[(3) - (3)].idval)->destroy ();
+          delete (tao_yyvsp[(3) - (3)].idval);
+          (tao_yyvsp[(3) - (3)].idval) = 0;
         }
     break;
 
@@ -7647,53 +7640,46 @@ tao_yyreduce:
                 }
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              (tao_yyvsp[(2) - (3)].idlist)->destroy ();
-              delete (tao_yyvsp[(2) - (3)].idlist);
-              (tao_yyvsp[(2) - (3)].idlist) = 0;
+              AST_Type *port_interface_type =
+                AST_Type::narrow_from_decl (d);
 
-              (tao_yyvsp[(3) - (3)].idval)->destroy ();
-              delete (tao_yyvsp[(3) - (3)].idval);
-              (tao_yyvsp[(3) - (3)].idval) = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
-              break;
-            }
+              UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
+                                 0);
 
-          AST_Type *port_interface_type =
-            AST_Type::narrow_from_decl (d);
+              AST_Uses *u =
+                idl_global->gen ()->create_uses (&sn,
+                                                 port_interface_type,
+                                                 (tao_yyvsp[(1) - (3)].bval));
 
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
+              (void) s->fe_add_uses (u);
 
-          UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
-                             0);
+              AST_Component *c =
+                AST_Component::narrow_from_scope (s);
 
-          AST_Uses *u =
-            idl_global->gen ()->create_uses (&sn,
-                                             port_interface_type,
-                                             (tao_yyvsp[(1) - (3)].bval));
-
-          (void) s->fe_add_uses (u);
-
-          AST_Component *c =
-            AST_Component::narrow_from_scope (s);
-
-          if (c != 0
-              && u->is_multiple ()
-              && !idl_global->using_ifr_backend ()
-              && !idl_global->ignore_idl3 ())
-            {
-              // These datatypes must be created in the
-              // front end so they can be looked up
-              // when compiling the generated executor IDL.
-              idl_global->create_uses_multiple_stuff (c, u);
+              if (c != 0
+                  && u->is_multiple ()
+                  && !idl_global->using_ifr_backend ()
+                  && !idl_global->ignore_idl3 ())
+                {
+                  // These datatypes must be created in the
+                  // front end so they can be looked up
+                  // when compiling the generated executor IDL.
+                  idl_global->create_uses_multiple_stuff (c, u);
+                }
             }
 
           (tao_yyvsp[(2) - (3)].idlist)->destroy ();
           delete (tao_yyvsp[(2) - (3)].idlist);
           (tao_yyvsp[(2) - (3)].idlist) = 0;
+
+          (tao_yyvsp[(3) - (3)].idval)->destroy ();
+          delete (tao_yyvsp[(3) - (3)].idval);
+          (tao_yyvsp[(3) - (3)].idval) = 0;
         }
     break;
 
@@ -7743,38 +7729,31 @@ tao_yyreduce:
               so_far_so_good = false;
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              (tao_yyvsp[(2) - (3)].idlist)->destroy ();
-              delete (tao_yyvsp[(2) - (3)].idlist);
-              (tao_yyvsp[(2) - (3)].idlist) = 0;
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
 
-              (tao_yyvsp[(3) - (3)].idval)->destroy ();
-              delete (tao_yyvsp[(3) - (3)].idval);
-              (tao_yyvsp[(3) - (3)].idval) = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
-              break;
+              UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
+                                 0);
+
+              AST_Emits *e =
+                idl_global->gen ()->create_emits (&sn,
+                                                  event_type);
+
+              (void) s->fe_add_emits (e);
             }
-
-
-          AST_EventType *event_type = AST_EventType::narrow_from_decl (d);
-
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
-
-          UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
-                             0);
-
-          AST_Emits *e =
-            idl_global->gen ()->create_emits (&sn,
-                                              event_type);
-
-          (void) s->fe_add_emits (e);
 
           (tao_yyvsp[(2) - (3)].idlist)->destroy ();
           delete (tao_yyvsp[(2) - (3)].idlist);
           (tao_yyvsp[(2) - (3)].idlist) = 0;
+
+          (tao_yyvsp[(3) - (3)].idval)->destroy ();
+          delete (tao_yyvsp[(3) - (3)].idval);
+          (tao_yyvsp[(3) - (3)].idval) = 0;
         }
     break;
 
@@ -7798,38 +7777,31 @@ tao_yyreduce:
               so_far_so_good = false;
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              (tao_yyvsp[(2) - (3)].idlist)->destroy ();
-              delete (tao_yyvsp[(2) - (3)].idlist);
-              (tao_yyvsp[(2) - (3)].idlist) = 0;
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
 
-              (tao_yyvsp[(3) - (3)].idval)->destroy ();
-              delete (tao_yyvsp[(3) - (3)].idval);
-              (tao_yyvsp[(3) - (3)].idval) = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
-              break;
+              UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
+                                 0);
+
+              AST_Publishes *p =
+                idl_global->gen ()->create_publishes (&sn,
+                                                      event_type);
+
+              (void) s->fe_add_publishes (p);
             }
-
-
-          AST_EventType *event_type = AST_EventType::narrow_from_decl (d);
-
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
-
-          UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
-                             0);
-
-          AST_Publishes *p =
-            idl_global->gen ()->create_publishes (&sn,
-                                                  event_type);
-
-          (void) s->fe_add_publishes (p);
 
           (tao_yyvsp[(2) - (3)].idlist)->destroy ();
           delete (tao_yyvsp[(2) - (3)].idlist);
           (tao_yyvsp[(2) - (3)].idlist) = 0;
+
+          (tao_yyvsp[(3) - (3)].idval)->destroy ();
+          delete (tao_yyvsp[(3) - (3)].idval);
+          (tao_yyvsp[(3) - (3)].idval) = 0;
         }
     break;
 
@@ -7853,38 +7825,31 @@ tao_yyreduce:
               so_far_so_good = false;
             }
 
-          // Clean up and move on.
-          if (! so_far_so_good)
+          if (so_far_so_good)
             {
-              (tao_yyvsp[(2) - (3)].idlist)->destroy ();
-              delete (tao_yyvsp[(2) - (3)].idlist);
-              (tao_yyvsp[(2) - (3)].idlist) = 0;
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
 
-              (tao_yyvsp[(3) - (3)].idval)->destroy ();
-              delete (tao_yyvsp[(3) - (3)].idval);
-              (tao_yyvsp[(3) - (3)].idval) = 0;
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
-              break;
+              UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
+                                 0);
+
+              AST_Consumes *c =
+                idl_global->gen ()->create_consumes (&sn,
+                                                     event_type);
+
+              (void) s->fe_add_consumes (c);
             }
-
-
-          AST_EventType *event_type = AST_EventType::narrow_from_decl (d);
-
-          // Strip off _cxx_, if any, for port name.
-          idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
-
-          UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
-                             0);
-
-          AST_Consumes *c =
-            idl_global->gen ()->create_consumes (&sn,
-                                                 event_type);
-
-          (void) s->fe_add_consumes (c);
 
           (tao_yyvsp[(2) - (3)].idlist)->destroy ();
           delete (tao_yyvsp[(2) - (3)].idlist);
           (tao_yyvsp[(2) - (3)].idlist) = 0;
+
+          (tao_yyvsp[(3) - (3)].idval)->destroy ();
+          delete (tao_yyvsp[(3) - (3)].idval);
+          (tao_yyvsp[(3) - (3)].idval) = 0;
        }
     break;
 
