@@ -1,3 +1,8 @@
+Tue Jul 21 10:57:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Updated link to bugzilla
+
 Mon Jul 20 07:34:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/src/Bool_Array.h:
