@@ -1,3 +1,18 @@
+Wed Jul 22 11:13:50 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/README:
+        * tests/AMI_CCM/ami_ccm.idl:
+        * tests/AMI_CCM/ami_ccm.mpc:
+        * tests/AMI_CCM/ami_ccm_i.h:
+        * tests/AMI_CCM/ami_ccm_i.cpp:
+        * tests/AMI_CCM/client.cpp:
+        * tests/AMI_CCM/exclusive.conf:
+        * tests/AMI_CCM/muxed.conf:
+        * tests/AMI_CCM/run_test.pl:
+        * tests/AMI_CCM/server.conf:
+        * tests/AMI_CCM/server.cpp:
+          Added test to prepare AMI for ccm.
+
 Mon Jul 20 07:51:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:

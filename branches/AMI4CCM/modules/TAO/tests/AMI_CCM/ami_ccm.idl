@@ -1,0 +1,29 @@
+
+//=============================================================================
+/**
+ *  @file    ami_msm.idl
+ *
+ *  $Id$
+ *
+ *  IDL description of the AMI Test interface
+ *
+ */
+//=============================================================================
+
+
+
+module A
+  {
+    exception InternalError {
+      long id;
+      string error;
+    };
+
+    interface AMI_Msm
+      {
+        void foo (in string hello, out string answer)
+          raises (InternalError);
+
+        oneway void shutdown ();
+      };
+  };
