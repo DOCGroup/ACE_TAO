@@ -1,3 +1,9 @@
+Wed Jul 22 08:44:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds.pl:
+          Don't use the page with the builds run today, but use the page that
+          lists the builds on the specified date.
+
 Tue Jul 21 11:44:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, it was triggered by template problems in TAO_IDL
