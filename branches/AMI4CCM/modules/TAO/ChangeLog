@@ -1,3 +1,9 @@
+Wed Jul 22 19:27:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/ami_ccm_i.cpp:
+        * tests/AMI_CCM/client.cpp:
+          Improved reply handler per request.
+
 Wed Jul 22 17:41:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/ami_ccm.idl:

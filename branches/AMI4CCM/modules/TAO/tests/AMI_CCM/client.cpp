@@ -16,11 +16,11 @@ class RH_Manager;
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char * in_str = "Let's talk AMI.";
-const int nthreads_ = 2;
+const int nthreads_ = 5;
 const int niterations_ = 10;
 int number_of_replies_ = 0;
-int client_id = 0;
-TAO_SYNCH_MUTEX     lock_;
+int global_client_id = 0;
+TAO_SYNCH_MUTEX lock_;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -76,7 +76,9 @@ private:
 class Handler : public POA_A::AMI_AMI_CCMHandler
 {
 public:
-  Handler (void)
+  Handler (void) :
+        done_ (false),
+        client_id_ (0)
   {
   };
 
@@ -87,16 +89,20 @@ public:
       --number_of_replies_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P | %t)\nCallback method called: Result <%d>\nNumber of replies to go <%d>\nout_arg <%s>\n\n\n",
+                  ACE_TEXT ("(%P | %t):\n\nCallback method called:")
+                  ACE_TEXT ("Result <%d>\nNumber of replies ")
+                  ACE_TEXT ("to go <%d>\nout_arg <%s>\n\n\n"),
                   result,
                   number_of_replies_,
                   answer));
-    };
+      this->client_id_ = result;
+      this->done_ = true;
+    }
 
   void asynch_foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <foo_excep> called:\n"));
+                  ACE_TEXT ("Callback method <foo_excep> called:\n")));
       try
         {
           excep_holder->raise_exception ();
@@ -105,11 +111,21 @@ public:
         {
           ex._tao_print_exception ("Caught exception:");
         }
-    };
+      done_ = true;
+    }
+
+  bool done ()
+    {
+      return done_;
+    }
   ~Handler (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("destructor called\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P | %t): destructor called for <%d>\n"),
+                    this->client_id_));
   };
+private:
+  bool done_;
+  int client_id_;
 };
 
 /**
@@ -118,7 +134,7 @@ public:
  * @brief Manager of created handlers
  *
  */
-class RH_Manager : public ACE_Task_Base
+class RH_Manager
 {
 private:
   struct HandlerID {
@@ -131,9 +147,11 @@ public:
   ~RH_Manager ();
 
   void add (Handler* handler, int client_id);
+  void clean_up ();
 
 private:
   vector<HandlerID> handlers_;
+  TAO_SYNCH_MUTEX   lock_;
 };
 
 
@@ -143,11 +161,13 @@ RH_Manager::RH_Manager ()
 
 RH_Manager::~RH_Manager ()
 {
+  /*
   for (vector<HandlerID>::iterator iter = handlers_.begin();
         iter != handlers_.end(); ++iter)
     {
       delete iter->hnd;
     }
+*/
 }
 
 void RH_Manager::add (Handler* handler, int client_id)
@@ -155,8 +175,26 @@ void RH_Manager::add (Handler* handler, int client_id)
   HandlerID tmp;
   tmp.hnd = handler;
   tmp.id = client_id;
+  ACE_Guard<TAO_SYNCH_MUTEX> guard (this->lock_);
   handlers_.push_back (tmp);
 }
+
+void RH_Manager::clean_up ()
+{
+  for (vector<HandlerID>::iterator iter = handlers_.begin();
+        iter != handlers_.end(); ++iter)
+    {
+      if (iter->hnd->done ())
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P | %t): Cleaning up <%d>\n"), iter->id));
+          delete iter->hnd;
+          ACE_Guard<TAO_SYNCH_MUTEX> guard (this->lock_);
+          this->handlers_.erase (iter);
+          break;
+        }
+    }
+}
+
 
 /**
  * @class Main
@@ -185,7 +223,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
                              ior),
                             1);
         }
@@ -197,7 +235,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
       PortableServer::POA_var root_poa =
@@ -214,15 +252,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads_) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
+                           ACE_TEXT ("Cannot activate client threads\n")),
                           1);
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
-      number_of_replies_ = nthreads_ *niterations_;
+      number_of_replies_ = nthreads_ * niterations_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
+                  ACE_TEXT ("(%P|%t) : Entering perform_work loop to receive <%d> replies\n"),
                   number_of_replies_));
 
       // ORB loop.
@@ -234,11 +272,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (pending)
             {
               orb->perform_work();
+              manager->clean_up ();
             }
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
+                  ACE_TEXT ("(%P|%t) : Exited perform_work loop Received <%d> replies\n"),
                   (nthreads_*niterations_) - number_of_replies_));
 
       client.thr_mgr ()->wait ();
@@ -282,22 +321,22 @@ Client::svc (void)
       for (int i = 0; i < this->niterations_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                    "(%P | %t):Start <%d>\n",
+                    ACE_TEXT ("(%P | %t):Start <%d>\n"),
                     i));
           ACE_Guard<TAO_SYNCH_MUTEX> guard (lock_);
           Handler* handler = new Handler ();
-          manager_->add (handler, ++client_id);
+          manager_->add (handler, ++global_client_id);
           A::AMI_AMI_CCMHandler_var my_handler_var_ = handler->_this ();
-          ami_test_var_->sendc_asynch_foo (my_handler_var_.in (), in_str, client_id);
+          ami_test_var_->sendc_asynch_foo (my_handler_var_.in (), in_str, global_client_id);
         }
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P | %t):<%d> Asynchronous methods issued\n",
+                    ACE_TEXT ("(%P | %t):<%d> Asynchronous methods issued\n"),
                     this->niterations_));
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P | %t) Thread ended")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P | %t) Thread ended\n")));
   return 0;
 }

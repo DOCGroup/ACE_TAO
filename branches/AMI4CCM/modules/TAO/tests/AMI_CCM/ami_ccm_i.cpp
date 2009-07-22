@@ -15,7 +15,7 @@ AMI_CCM_i::asynch_foo (const char* string, ::CORBA::Long client_id,
 {
   try
     {
-      ACE_OS::sleep (1);
+      ACE_OS::sleep (ACE_OS::rand () % 2);
       ++answer_count_;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%N:%l:(%P:%t):AMI_CCM_i::foo:  %d %C\n"),
