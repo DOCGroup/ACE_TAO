@@ -22,7 +22,8 @@ public:
   AMI_CCM_i (CORBA::ORB_ptr orb);
 
   // The AMI_Test methods.
-  void asynch_foo (const char* string, ::CORBA::String_out answer);
+  CORBA::Long asynch_foo (const char* string, ::CORBA::Long client_id,
+      ::CORBA::String_out answer);
 
   void shutdown (void);
 

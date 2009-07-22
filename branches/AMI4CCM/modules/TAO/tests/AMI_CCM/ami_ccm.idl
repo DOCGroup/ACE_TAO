@@ -21,7 +21,7 @@ module A
 
     interface AMI_CCM
       {
-        void asynch_foo (in string hello, out string answer)
+        long asynch_foo (in string hello, in long client_id, out string answer)
           raises (InternalError);
 
         oneway void shutdown ();

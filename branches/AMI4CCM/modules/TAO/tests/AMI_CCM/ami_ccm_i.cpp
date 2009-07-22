@@ -9,8 +9,9 @@ AMI_CCM_i::AMI_CCM_i (CORBA::ORB_ptr orb)
 {
 }
 
-void
-AMI_CCM_i::asynch_foo (const char* string, ::CORBA::String_out answer)
+CORBA::Long
+AMI_CCM_i::asynch_foo (const char* string, ::CORBA::Long client_id,
+          ::CORBA::String_out answer)
 {
   try
     {
@@ -23,6 +24,7 @@ AMI_CCM_i::asynch_foo (const char* string, ::CORBA::String_out answer)
       char tmp[255] = {0};
       ACE_OS::sprintf(tmp, "Hello World %d", answer_count_);
       answer = CORBA::string_dup (tmp);
+      return client_id;
     }
   catch (const CORBA::Exception& e)
     {

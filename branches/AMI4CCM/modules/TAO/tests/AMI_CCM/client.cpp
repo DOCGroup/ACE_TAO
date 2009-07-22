@@ -4,17 +4,23 @@
 #include "ace/Task.h"
 #include "ami_ccmC.h"
 #include "ami_ccmS.h"
+#include <vector>
+
+using namespace std;
 
 ACE_RCSID (AMI,
            client,
            "$Id$")
+
+class RH_Manager;
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char * in_str = "Let's talk AMI.";
 const int nthreads_ = 2;
 const int niterations_ = 10;
 int number_of_replies_ = 0;
-
+int client_id = 0;
+TAO_SYNCH_MUTEX     lock_;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -41,7 +47,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 /**
  * @class Client
  *
@@ -52,33 +57,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Client : public ACE_Task_Base
 {
 public:
-  /// ctor
-  Client (A::AMI_CCM_ptr server, int niterations);
+  Client (A::AMI_CCM_ptr server, int niterations, RH_Manager* manager);
 
-  /// The thread entry point.
   virtual int svc (void);
 
-  // private:
-  /// Var for the AMI_CCM object.
+private:
   A::AMI_CCM_var ami_test_var_;
-
-  /// The number of iterations on each client thread.
-  int niterations_;
-
-  /// Var for AMI_AMI_CCM_ReplyHandler object.
-  A::AMI_AMI_CCMHandler_var the_handler_var_;
+  int         niterations_;
+  RH_Manager* manager_;
 };
 
-
-//+++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++ REPLY HANDLER+++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++
-
+/**
+ * @class Handler
+ *
+ * @brief The AMI (callback) reply handler
+ *
+ */
 class Handler : public POA_A::AMI_AMI_CCMHandler
 {
 public:
@@ -87,12 +81,14 @@ public:
   };
 
   //callback implementation
-  void asynch_foo (const char * answer)
+  void asynch_foo (CORBA::Long result,
+                   const char * answer)
     {
       --number_of_replies_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P | %t) : Callback method called: Replies to go <%d>, out_arg <%s>\n",
+                  "(%P | %t)\nCallback method called: Result <%d>\nNumber of replies to go <%d>\nout_arg <%s>\n\n\n",
+                  result,
                   number_of_replies_,
                   answer));
     };
@@ -112,15 +108,66 @@ public:
     };
   ~Handler (void)
   {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("destructor called\n")));
   };
 };
 
-// ReplyHandler.
-Handler handler;
+/**
+ * @class RH_Manager
+ *
+ * @brief Manager of created handlers
+ *
+ */
+class RH_Manager : public ACE_Task_Base
+{
+private:
+  struct HandlerID {
+    int id;
+    Handler* hnd;
+  };
 
+public:
+  RH_Manager ();
+  ~RH_Manager ();
+
+  void add (Handler* handler, int client_id);
+
+private:
+  vector<HandlerID> handlers_;
+};
+
+
+RH_Manager::RH_Manager ()
+{
+}
+
+RH_Manager::~RH_Manager ()
+{
+  for (vector<HandlerID>::iterator iter = handlers_.begin();
+        iter != handlers_.end(); ++iter)
+    {
+      delete iter->hnd;
+    }
+}
+
+void RH_Manager::add (Handler* handler, int client_id)
+{
+  HandlerID tmp;
+  tmp.hnd = handler;
+  tmp.id = client_id;
+  handlers_.push_back (tmp);
+}
+
+/**
+ * @class Main
+ *
+ * @brief Main function
+ *
+ */
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  RH_Manager* manager = new RH_Manager ();
   try
     {
       CORBA::ORB_var orb =
@@ -163,7 +210,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Let the client perform the test in a separate thread
 
-      Client client (server.in (), niterations_);
+      Client client (server.in (), niterations_, manager);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads_) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -209,18 +256,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-
+  delete manager;
   return 0;
 }
 
-// ****************************************************************
-
+/**
+ *
+ * Client task implementation
+ *
+ */
 Client::Client (A::AMI_CCM_ptr server,
-                int niterations)
-                :  ami_test_var_ (A::AMI_CCM::_duplicate (server)),
-     niterations_ (niterations)
+                int niterations,
+                RH_Manager* manager)
+                : ami_test_var_ (A::AMI_CCM::_duplicate (server)),
+                  niterations_ (niterations),
+                  manager_(manager)
 {
-  the_handler_var_ = handler._this (/* */);
 }
 
 int
@@ -233,7 +284,11 @@ Client::svc (void)
           ACE_DEBUG ((LM_DEBUG,
                     "(%P | %t):Start <%d>\n",
                     i));
-          ami_test_var_->sendc_asynch_foo (the_handler_var_.in (), in_str);
+          ACE_Guard<TAO_SYNCH_MUTEX> guard (lock_);
+          Handler* handler = new Handler ();
+          manager_->add (handler, ++client_id);
+          A::AMI_AMI_CCMHandler_var my_handler_var_ = handler->_this ();
+          ami_test_var_->sendc_asynch_foo (my_handler_var_.in (), in_str, client_id);
         }
         ACE_DEBUG ((LM_DEBUG,
                     "(%P | %t):<%d> Asynchronous methods issued\n",
@@ -243,5 +298,6 @@ Client::svc (void)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P | %t) Thread ended")));
   return 0;
 }

@@ -1,3 +1,12 @@
+Wed Jul 22 17:41:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/ami_ccm.idl:
+        * tests/AMI_CCM/ami_ccm_i.h:
+        * tests/AMI_CCM/ami_ccm_i.cpp:
+        * tests/AMI_CCM/client.cpp:
+          Reply handler per request. Implemented a manager
+          to handle this.
+
 Wed Jul 22 11:45:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/ami_ccm.idl:
