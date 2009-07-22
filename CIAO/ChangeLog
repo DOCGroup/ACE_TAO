@@ -1,3 +1,8 @@
+Wed Jul 22 08:06:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          NodeManager-Deployments is known to fail
+
 Tue Jul 21 17:38:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Dump_Obj.cpp:
