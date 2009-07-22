@@ -1,3 +1,9 @@
+Wed Jul 22 14:26:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+          Reverted changes to add dependency on mcpp. Thanks for Adam pointing out
+          that this broke one build
+
 Tue Jul 21 11:43:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * be/be_helper.cpp:
