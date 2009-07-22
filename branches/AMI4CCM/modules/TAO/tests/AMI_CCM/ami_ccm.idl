@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    ami_msm.idl
+ *  @file    ami_ccm.idl
  *
  *  $Id$
  *
@@ -19,9 +19,9 @@ module A
       string error;
     };
 
-    interface AMI_Msm
+    interface AMI_CCM
       {
-        void foo (in string hello, out string answer)
+        void asynch_foo (in string hello, out string answer)
           raises (InternalError);
 
         oneway void shutdown ();

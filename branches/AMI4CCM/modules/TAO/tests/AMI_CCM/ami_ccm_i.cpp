@@ -1,23 +1,23 @@
-#include "ami_msm_i.h"
+#include "ami_ccm_i.h"
 #include "tao/debug.h"
 
 ACE_RCSID(AMI, ami_test_i, "$Id$")
 
-AMI_Msm_i::AMI_Msm_i (CORBA::ORB_ptr orb)
+AMI_CCM_i::AMI_CCM_i (CORBA::ORB_ptr orb)
     :  orb_ (CORBA::ORB::_duplicate (orb)),
        answer_count_ (0)
 {
 }
 
 void
-AMI_Msm_i::foo (const char* string, ::CORBA::String_out answer)
+AMI_CCM_i::asynch_foo (const char* string, ::CORBA::String_out answer)
 {
   try
     {
       ACE_OS::sleep (1);
       ++answer_count_;
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%N:%l:(%P:%t):AMI_Msm_i::foo:  %d %C\n"),
+                  ACE_TEXT ("%N:%l:(%P:%t):AMI_CCM_i::foo:  %d %C\n"),
                   answer_count_,
                   string));
       char tmp[255] = {0};
@@ -36,7 +36,7 @@ AMI_Msm_i::foo (const char* string, ::CORBA::String_out answer)
 }
 
 void
-AMI_Msm_i::shutdown (void)
+AMI_CCM_i::shutdown (void)
 {
   this->orb_->shutdown (0);
 }

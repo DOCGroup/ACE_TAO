@@ -1,17 +1,18 @@
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ami_msmC.h"
-#include "ami_msmS.h"
+#include "ami_ccmC.h"
+#include "ami_ccmS.h"
 
 ACE_RCSID (AMI,
            client,
-           "$")
+           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char * in_str = "Let's talk AMI.";
-const int nthreads_ = 1;
-const int niterations_ = 5;
+const int nthreads_ = 2;
+const int niterations_ = 10;
 int number_of_replies_ = 0;
 
 
@@ -52,20 +53,20 @@ class Client : public ACE_Task_Base
 {
 public:
   /// ctor
-  Client (A::AMI_Msm_ptr server, int niterations);
+  Client (A::AMI_CCM_ptr server, int niterations);
 
   /// The thread entry point.
   virtual int svc (void);
 
   // private:
-  /// Var for the AMI_Msm object.
-  A::AMI_Msm_var ami_test_var_;
+  /// Var for the AMI_CCM object.
+  A::AMI_CCM_var ami_test_var_;
 
   /// The number of iterations on each client thread.
   int niterations_;
 
-  /// Var for AMI_AMI_Msm_ReplyHandler object.
-  A::AMI_AMI_MsmHandler_var the_handler_var_;
+  /// Var for AMI_AMI_CCM_ReplyHandler object.
+  A::AMI_AMI_CCMHandler_var the_handler_var_;
 };
 
 
@@ -78,7 +79,7 @@ public:
 //+++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++++++++
 
-class Handler : public POA_A::AMI_AMI_MsmHandler
+class Handler : public POA_A::AMI_AMI_CCMHandler
 {
 public:
   Handler (void)
@@ -86,7 +87,7 @@ public:
   };
 
   //callback implementation
-  void foo (const char * answer)
+  void asynch_foo (const char * answer)
     {
       --number_of_replies_;
 
@@ -96,7 +97,7 @@ public:
                   answer));
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void asynch_foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"));
@@ -128,11 +129,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      A::AMI_Msm_var server;
+      A::AMI_CCM_var server;
 
       CORBA::Object_var object =
         orb->string_to_object (ior);
-      server =  A::AMI_Msm::_narrow (object.in ());
+      server =  A::AMI_CCM::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -214,9 +215,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Client::Client (A::AMI_Msm_ptr server,
+Client::Client (A::AMI_CCM_ptr server,
                 int niterations)
-                :  ami_test_var_ (A::AMI_Msm::_duplicate (server)),
+                :  ami_test_var_ (A::AMI_CCM::_duplicate (server)),
      niterations_ (niterations)
 {
   the_handler_var_ = handler._this (/* */);
@@ -232,7 +233,7 @@ Client::svc (void)
           ACE_DEBUG ((LM_DEBUG,
                     "(%P | %t):Start <%d>\n",
                     i));
-          ami_test_var_->sendc_foo (the_handler_var_.in (), in_str);
+          ami_test_var_->sendc_asynch_foo (the_handler_var_.in (), in_str);
         }
         ACE_DEBUG ((LM_DEBUG,
                     "(%P | %t):<%d> Asynchronous methods issued\n",

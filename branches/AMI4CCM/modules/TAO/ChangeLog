@@ -1,3 +1,14 @@
+Wed Jul 22 11:45:21 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/ami_ccm.idl:
+        * tests/AMI_CCM/ami_ccm.mpc:
+        * tests/AMI_CCM/ami_ccm_i.h:
+        * tests/AMI_CCM/ami_ccm_i.cpp:
+        * tests/AMI_CCM/client.cpp:
+        * tests/AMI_CCM/server.cpp:
+          Changed naming convention of some of the
+          interfaces/functions
+
 Wed Jul 22 11:13:50 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/README:

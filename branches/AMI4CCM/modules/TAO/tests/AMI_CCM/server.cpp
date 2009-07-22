@@ -1,4 +1,6 @@
-#include "ami_msm_i.h"
+// $Id$
+
+#include "ami_ccm_i.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
@@ -57,18 +59,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      AMI_Msm_i ami_test_i (orb.in ());
+      AMI_CCM_i ami_ccm_i (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&ami_test_i);
+        root_poa->activate_object (&ami_ccm_i);
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
-      A::AMI_Msm_var ami_test_var =
-        A::AMI_Msm::_narrow (object.in ());
+      A::AMI_CCM_var ami_ccm_var =
+        A::AMI_CCM::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (ami_test_var.in ());
+        orb->object_to_string (ami_ccm_var.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 

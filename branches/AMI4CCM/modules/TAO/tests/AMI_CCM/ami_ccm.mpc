@@ -3,7 +3,7 @@
 
 project(*idl): taoidldefaults, ami {
   IDL_Files {
-    ami_msm.idl
+    ami_ccm.idl
   }
   custom_only = 1
 }
@@ -11,9 +11,9 @@ project(*idl): taoidldefaults, ami {
 project(*Server): taoserver, messaging, ami {
   after += *idl
   Source_Files {
-    ami_msm_i.cpp
-    ami_msmC.cpp
-    ami_msmS.cpp
+    ami_ccm_i.cpp
+    ami_ccmC.cpp
+    ami_ccmS.cpp
     server.cpp
   }
   IDL_Files {
@@ -25,8 +25,8 @@ project(*Client): messaging, taoserver, ami {
   after += *idl
   Source_Files {
     client.cpp
-    ami_msmS.cpp
-    ami_msmC.cpp
+    ami_ccmS.cpp
+    ami_ccmC.cpp
   }
   IDL_Files {
   }
