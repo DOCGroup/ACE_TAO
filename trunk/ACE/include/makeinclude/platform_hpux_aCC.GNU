@@ -104,18 +104,8 @@ ifeq (03,$(CXXMAJORVERS))
   # Suppress Warning 361 (missing return from non-void function)
   # Suppress Warning 1039(Binary incompatabilty between old and new compilers)
   CCFLAGS                += +W302,361,1039
-
-  ifeq (57,$(CXXMINORVERS))
-    # aCC 3.57 has a bug. When a class has private constructors
-    # and is trying to be created from a friend class we end up with
-    # a compile error. We disable array optimization in the compiler
-    # by setting this environment variable. HP CR JAGaf43094
-    export aCC_ARRAY_OPT=OFF
-  endif
-  ifeq (60,$(CXXMINORVERS))
-    # Same bug as above
-    export aCC_ARRAY_OPT=OFF
-  endif
+  # Enabled template meta programming
+  CCFLAGS += +hpxstd98
 endif
 
 ifeq (05,$(CXXMAJORVERS))
