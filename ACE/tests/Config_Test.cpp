@@ -1086,7 +1086,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                  sectionName.c_str (),
                                  0); // do not remove subsections.
 
-      sectionIndex++;
+      ++sectionIndex;
 
     }// end section while loop
 
@@ -1096,7 +1096,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
          (!original.enumerate_sections (originalRoot,
                                         sectionIndex,
                                         sectionName)))
-    sectionIndex++;
+    ++sectionIndex;
 
   rc = sectionIndex == 0;
 

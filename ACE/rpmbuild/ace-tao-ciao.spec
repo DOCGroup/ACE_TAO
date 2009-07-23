@@ -1071,9 +1071,9 @@ $MAKECMD -C $TAO_ROOT/utils
 # install
 # ================================================================
 
-%define ACEVER  5.7.2
-%define TAOVER  1.7.2
-%define CIAOVER 0.7.2
+%define ACEVERSO %{ACEVER}
+%define TAOVERSO %{TAOVER}
+%define CIAOVERSO %{CIAOVER}
 
 %install
 

@@ -42,7 +42,7 @@ def parse_args ():
         parser.error ("must specify either a branch or tag action")
 
     if opts.project is None:
-        parser.error ("must specity a project to branch")
+        parser.error ("must specify a project to branch")
 
     return (opts, args)
 
