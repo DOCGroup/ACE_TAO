@@ -1,3 +1,15 @@
+Thu Jul 23 17:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
+          is_gateway is a bool
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
+          Unicode fix, prefix increment
+
 Thu Jul 23 17:50:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LF_Event.inl:
