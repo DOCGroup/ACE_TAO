@@ -12,11 +12,9 @@ ACE_RCSID (AMI,
            client,
            "$Id$")
 
-class RH_Manager;
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char * in_str = "Let's talk AMI.";
-const int nthreads_ = 5;
+const int nthreads_ = 20;
 const int niterations_ = 10;
 int number_of_replies_ = 0;
 int global_client_id = 0;
@@ -57,14 +55,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Client : public ACE_Task_Base
 {
 public:
-  Client (A::AMI_CCM_ptr server, int niterations, RH_Manager* manager);
+  Client (A::AMI_CCM_ptr server, int niterations);
 
   virtual int svc (void);
 
 private:
   A::AMI_CCM_var ami_test_var_;
   int         niterations_;
-  RH_Manager* manager_;
 };
 
 /**
@@ -77,7 +74,6 @@ class Handler : public POA_A::AMI_AMI_CCMHandler
 {
 public:
   Handler (void) :
-        done_ (false),
         client_id_ (0)
   {
   };
@@ -96,7 +92,7 @@ public:
                   number_of_replies_,
                   answer));
       this->client_id_ = result;
-      this->done_ = true;
+      this->_remove_ref ();
     }
 
   void asynch_foo_excep (::Messaging::ExceptionHolder * excep_holder)
@@ -111,90 +107,16 @@ public:
         {
           ex._tao_print_exception ("Caught exception:");
         }
-      done_ = true;
+      this->_remove_ref ();
     }
 
-  bool done ()
-    {
-      return done_;
-    }
   ~Handler (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P | %t): destructor called for <%d>\n"),
-                    this->client_id_));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P | %t): destructor called\n")));
   };
 private:
-  bool done_;
   int client_id_;
 };
-
-/**
- * @class RH_Manager
- *
- * @brief Manager of created handlers
- *
- */
-class RH_Manager
-{
-private:
-  struct HandlerID {
-    int id;
-    Handler* hnd;
-  };
-
-public:
-  RH_Manager ();
-  ~RH_Manager ();
-
-  void add (Handler* handler, int client_id);
-  void clean_up ();
-
-private:
-  vector<HandlerID> handlers_;
-  TAO_SYNCH_MUTEX   lock_;
-};
-
-
-RH_Manager::RH_Manager ()
-{
-}
-
-RH_Manager::~RH_Manager ()
-{
-  /*
-  for (vector<HandlerID>::iterator iter = handlers_.begin();
-        iter != handlers_.end(); ++iter)
-    {
-      delete iter->hnd;
-    }
-*/
-}
-
-void RH_Manager::add (Handler* handler, int client_id)
-{
-  HandlerID tmp;
-  tmp.hnd = handler;
-  tmp.id = client_id;
-  ACE_Guard<TAO_SYNCH_MUTEX> guard (this->lock_);
-  handlers_.push_back (tmp);
-}
-
-void RH_Manager::clean_up ()
-{
-  for (vector<HandlerID>::iterator iter = handlers_.begin();
-        iter != handlers_.end(); ++iter)
-    {
-      if (iter->hnd->done ())
-        {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P | %t): Cleaning up <%d>\n"), iter->id));
-          delete iter->hnd;
-          ACE_Guard<TAO_SYNCH_MUTEX> guard (this->lock_);
-          this->handlers_.erase (iter);
-          break;
-        }
-    }
-}
-
 
 /**
  * @class Main
@@ -205,7 +127,8 @@ void RH_Manager::clean_up ()
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  RH_Manager* manager = new RH_Manager ();
+  ACE_DEBUG ((LM_DEBUG, "CHECK MEM !!!"));
+  ACE_OS::sleep (10);
   try
     {
       CORBA::ORB_var orb =
@@ -248,7 +171,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Let the client perform the test in a separate thread
 
-      Client client (server.in (), niterations_, manager);
+      Client client (server.in (), niterations_);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads_) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -272,7 +195,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (pending)
             {
               orb->perform_work();
-              manager->clean_up ();
             }
         }
 
@@ -295,7 +217,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  delete manager;
+  ACE_DEBUG ((LM_DEBUG, "CHECK MEM !!!"));
+  ACE_OS::sleep (10);
   return 0;
 }
 
@@ -305,11 +228,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
  *
  */
 Client::Client (A::AMI_CCM_ptr server,
-                int niterations,
-                RH_Manager* manager)
+                int niterations)
                 : ami_test_var_ (A::AMI_CCM::_duplicate (server)),
-                  niterations_ (niterations),
-                  manager_(manager)
+                  niterations_ (niterations)
 {
 }
 
@@ -325,7 +246,6 @@ Client::svc (void)
                     i));
           ACE_Guard<TAO_SYNCH_MUTEX> guard (lock_);
           Handler* handler = new Handler ();
-          manager_->add (handler, ++global_client_id);
           A::AMI_AMI_CCMHandler_var my_handler_var_ = handler->_this ();
           ami_test_var_->sendc_asynch_foo (my_handler_var_.in (), in_str, global_client_id);
         }
