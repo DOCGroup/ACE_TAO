@@ -1,0 +1,23 @@
+// $Id$
+
+#ifndef HELLO_RECEIVER_IDL
+#define HELLO_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "../Hello_Base/Hello_Base.idl"
+
+module Hello_AMI
+{
+  component Receiver
+  {
+    provides CCM_AMI::AMI_foo asynch_foo;
+    uses CCM_AMI::AMI_foo callback_foo;
+  };
+
+  home ReceiverHome manages Receiver
+  {
+  };
+};
+
+#endif

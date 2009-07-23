@@ -1,3 +1,24 @@
+Thu Jul 23 14:20:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM:
+        * tests/AMI_CCM/Hello_Base:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * tests/AMI_CCM/Receiver:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender:
+        * tests/AMI_CCM/Sender/Hello_Sender.idl:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Added as a starter for ami4ccm
+
 Tue Jul 21 02:23:41 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:

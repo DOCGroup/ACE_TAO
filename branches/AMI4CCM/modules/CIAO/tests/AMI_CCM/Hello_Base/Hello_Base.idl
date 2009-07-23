@@ -1,0 +1,16 @@
+// $Id$
+
+module CCM_AMI
+{
+   exception InternalError {
+      long id;
+      string error;
+  };
+
+  interface AMI_foo
+    {
+      long asynch_foo (in string in_str, out string answer)
+        raises (InternalError);
+      void foo_callback (in long result, in string answer);
+    };
+};
