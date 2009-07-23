@@ -125,6 +125,9 @@ ACE_OS::strerror (int errnum)
   errmsg = ret_errortext;
   ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof(ret_errortext), errnum),
                      char *, 0, errmsg);
+  if (errnum < 0 || errnum >= _sys_nerr)
+    g = EINVAL;
+
   return errmsg;
 #elif defined (ACE_WIN32)
   if (errnum < 0 || errnum >= _sys_nerr)
