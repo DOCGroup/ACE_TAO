@@ -224,7 +224,7 @@ typedef union TAO_YYSTYPE
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
-  FE_Template_InterfaceHeader   *thval;         /* Template interface header */
+  FE_Template_InterfaceHeader   *thval;         /* Template interface hdr */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */

@@ -25,6 +25,9 @@ public:
   // Cleanup function.
   virtual void destroy (void);
 
+  // Further check after reference lookup succeeds.
+  bool match_param_names (UTL_StrList *names);
+
   // Narrowing.
 
   DEF_NARROW_FROM_DECL(AST_Template_Interface);
