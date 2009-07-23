@@ -1,3 +1,8 @@
+Thu Jul 23 17:57:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Updated for x.7.2
+
 Thu Jul 23 17:47:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

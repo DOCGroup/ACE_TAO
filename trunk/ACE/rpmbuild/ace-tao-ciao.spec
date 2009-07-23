@@ -2664,6 +2664,9 @@ fi
 # ================================================================
 
 %changelog
+* Thu Jul 23 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.7.2-0
+- New micro release
+
 * Mon Jul 13 2009 Phil Mesnier <mesnier_p@ociweb.com> - 5.7.1-0
 - New micro release
 
