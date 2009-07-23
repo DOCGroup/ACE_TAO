@@ -38,9 +38,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-protected:
-  FE_Utils::T_PARAMLIST_INFO template_params_;
 };
 
 #endif /* AST_TEMPLATE_INTERFACE_H */
