@@ -1,3 +1,8 @@
+Thu Jul 23 06:58:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Corrected bug in updating spec file
+
 Wed Jul 22 08:44:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds.pl:
