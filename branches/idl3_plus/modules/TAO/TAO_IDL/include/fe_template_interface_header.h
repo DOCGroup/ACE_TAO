@@ -3,8 +3,8 @@
 #ifndef FE_TEMPLATE_INTERFACE_HEADER_H
 #define FE_TEMPLATE_INTERFACE_HEADER_H
 
-// FE_template_interfade_header
-// Internal class for FE to describe template interface headers.
+// FE_template_InterfaceHeader
+// Internal class for FE to describe template interfaces.
 
 #include "fe_interface_header.h"
 #include "fe_template_header_common.h"
