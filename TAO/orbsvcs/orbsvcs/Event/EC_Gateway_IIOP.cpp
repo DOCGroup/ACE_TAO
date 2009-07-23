@@ -258,7 +258,7 @@ TAO_EC_Gateway_IIOP::open_i (
     this->consumer_ec_->for_suppliers ();
 
   RtecEventChannelAdmin::ConsumerQOS sub = c_qos;
-  sub.is_gateway = 1;
+  sub.is_gateway = true;
 
   // Change the RT_Info in the consumer QoS.
   // On the same loop we discover the subscriptions by event source,
@@ -316,7 +316,7 @@ TAO_EC_Gateway_IIOP::open_i (
         {
           RtecEventChannelAdmin::SupplierQOS pub;
           pub.publications.length (sub.dependencies.length () + 1);
-          pub.is_gateway = 1;
+          pub.is_gateway = true;
 
           int c = 0;
 
@@ -356,7 +356,7 @@ TAO_EC_Gateway_IIOP::open_i (
   // then connect to the default consumer proxy.
   RtecEventChannelAdmin::SupplierQOS pub;
   pub.publications.length (sub.dependencies.length () + 1);
-  pub.is_gateway = 1;
+  pub.is_gateway = true;
   int c = 0;
   for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
     {
