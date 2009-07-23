@@ -1,3 +1,14 @@
+Thu Jul 23 16:26:17 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/IDL_Test/Inherited_Component:
+        * tests/IDL_Test/Inherited_Component/IhC_Bar.idl:
+        * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
+        * tests/IDL_Test/Inherited_Component/IhC_Foo.idl:
+        * tests/IDL_Test/Inherited_Component/IhC_Foo.mpc:
+
+          Test which demonstrates an inability to generate code properly
+          for inherited components. 
+        
 Thu Jul 23 17:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
@@ -9,7 +20,7 @@ Thu Jul 23 17:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 23 02:11:02 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.7.2 released.
+        * CIAO version 0.7.2 released.
 
 Wed Jul 22 08:06:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
