@@ -1,3 +1,4 @@
+
 # $Id$
 #
 # This is the list of tests that need to be run by run_test.pl.
@@ -51,6 +52,8 @@ Bug_3532_Regression_Test
 Bug_3541_Regression_Test
 Bug_3505_Regression_Test
 Bug_3673_Regression_Test
+Bug_3709_Regression_Test
+Bug_3710_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
