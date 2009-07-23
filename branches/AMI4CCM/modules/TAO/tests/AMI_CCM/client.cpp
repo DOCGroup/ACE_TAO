@@ -4,7 +4,6 @@
 #include "ace/Task.h"
 #include "ami_ccmC.h"
 #include "ami_ccmS.h"
-#include <vector>
 
 using namespace std;
 
@@ -127,8 +126,6 @@ private:
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "CHECK MEM !!!"));
-  ACE_OS::sleep (10);
   try
     {
       CORBA::ORB_var orb =
@@ -217,8 +214,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_DEBUG ((LM_DEBUG, "CHECK MEM !!!"));
-  ACE_OS::sleep (10);
   return 0;
 }
 

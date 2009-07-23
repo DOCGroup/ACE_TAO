@@ -1,3 +1,11 @@
+Thu Jul 23 09:07:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/ami_ccm_i.cpp:
+          Fixed compiler error on windows.
+
+        * tests/AMI_CCM/client.cpp:
+          Removed unnecessary debug lines.
+
 Thu Jul 23 08:51:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/client.cpp:
