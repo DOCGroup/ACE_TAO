@@ -1,3 +1,10 @@
+Thu Jul 23 18:53:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Few minor changes regarding names of IOR and
+          dll's.
+
 Thu Jul 23 15:31:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:

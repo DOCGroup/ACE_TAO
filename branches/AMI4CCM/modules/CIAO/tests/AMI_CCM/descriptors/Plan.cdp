@@ -195,7 +195,7 @@
     <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
     <source/>
     <node/>
-    <location>Receiver_exec</location>
+    <location>Hello_Receiver_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -231,7 +231,7 @@
     <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
     <source/>
     <node/>
-    <location>Sender_exec</location>
+    <location>Hello_Sender_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
