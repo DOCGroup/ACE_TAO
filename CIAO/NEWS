@@ -72,7 +72,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.1 and CIAO-0.7.2
   CIAO code generation is now handled by the TAO IDL compiler.
   See $TAO_ROOT/docs/compiler.html for details.
 
-. DAnCE has been refactored in seperate libraries to reduce
+. DAnCE has been refactored in separate libraries to reduce
   footprint and dependencies
 
 . Logging has been improved
