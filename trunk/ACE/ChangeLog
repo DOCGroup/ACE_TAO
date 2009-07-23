@@ -1,3 +1,8 @@
+Thu Jul 23 17:47:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
 Thu Jul 23 17:46:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
