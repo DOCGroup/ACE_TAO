@@ -30,7 +30,8 @@ project(Hello_Base_Hello_Sender_lem_gen) : ciaoidldefaults   {
 project(Hello_Base_Hello_Sender_lem_stub) : ccm_svnt   {
   after += Hello_Base_Hello_Sender_lem_gen Hello_Base_Hello_Sender_stub Hello_Base_stub
   libs  += Hello_Base_stub Hello_Sender_stub
-  
+  libout = ../lib
+  libpaths += ../lib
   
   sharedname = Hello_Sender_lem_stub
   dynamicflags   = HELLO_SENDER_LEM_STUB_BUILD_DLL
@@ -55,6 +56,8 @@ project(Hello_Base_Hello_Sender_lem_stub) : ccm_svnt   {
 project(Hello_Base_Hello_Sender_stub) : ccm_stub   {
   after += Hello_Base_Hello_Sender_idl_gen Hello_Base_stub
   libs  += Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
   
   
   sharedname = Hello_Sender_stub
@@ -81,6 +84,8 @@ project(Hello_Base_Hello_Sender_exec) : ciao_executor   {
   after   += Hello_Base_Hello_Sender_lem_stub Hello_Base_Hello_Sender_stub
   sharedname = Hello_Sender_exec
   libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
   
   
   dynamicflags   = HELLO_SENDER_EXEC_BUILD_DLL
@@ -108,6 +113,8 @@ project(Hello_Base_Hello_Sender_svnt) : ciao_servant   {
   libs       += Hello_Sender_stub Hello_Sender_lem_stub  \
                 Hello_Base_skel \
                 Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
   
   
   dynamicflags = HELLO_SENDER_SVNT_BUILD_DLL

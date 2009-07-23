@@ -49,7 +49,6 @@ project(Hello_Base_skel) : ciao_executor   {
   libs       += Hello_Base_stub
   libout = ../lib
   libpaths += ../lib
- 
   
   
   dynamicflags = HELLO_BASE_SKEL_BUILD_DLL
