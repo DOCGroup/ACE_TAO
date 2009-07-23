@@ -1,3 +1,10 @@
+Thu Jul 23 16:40:55 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_string.cpp: Added some additional error checking to
+          ACE_OS::strerror() to avoid problems when errnum is out of
+          bounds.  Thanks to Aleksandar Vukajlovic <aleksandar dot
+          vukajlovic at finsoft dot rs> for reporting this.
+
 Thu Jul 23 18:10:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
