@@ -124,7 +124,7 @@ namespace
   }
 
   template<class T>
-  bool get_property_value (const char *name, const Deployment::Properties &properties, T &val)
+  bool get_property_value (const char *name, const ::Deployment::Properties &properties, T &val)
   {
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<T>");
 
@@ -157,7 +157,7 @@ namespace
   }
 
   template<>
-  bool get_property_value (const char *name, const Deployment::Properties &properties, const char * &val)
+  bool get_property_value (const char *name, const ::Deployment::Properties &properties, const char * &val)
   {
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<const char *>");
 
@@ -226,7 +226,7 @@ namespace
 
 NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa,
-                                            const Deployment::DeploymentPlan& plan,
+                                            const ::Deployment::DeploymentPlan& plan,
 //                                            RedirectionService & redirection,
                                             const ACE_CString& node_name,
                                             const PROPERTY_MAP &properties)
