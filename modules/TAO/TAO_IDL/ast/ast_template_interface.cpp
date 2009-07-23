@@ -3,6 +3,8 @@
 #include "ast_template_interface.h"
 #include "ast_visitor.h"
 
+#include "utl_strlist.h"
+#include "utl_string.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "global_extern.h"
@@ -44,6 +46,37 @@ void
 AST_Template_Interface::destroy (void)
 {
   this->AST_Interface::destroy ();
+}
+
+bool
+AST_Template_Interface::match_param_names (UTL_StrList *names)
+{
+  size_t names_len = static_cast<size_t> (names->length ());
+
+  if (names_len != this->template_params_.size ())
+    {
+      return false;
+    }
+
+  size_t slot = 0UL;
+
+  for (UTL_StrlistActiveIterator iter (names);
+       !iter.is_done ();
+       iter.next (), ++slot)
+    {
+      UTL_String *str = iter.item ();
+      FE_Utils::T_Param_Info *param = 0;
+
+      int result =
+        this->template_params_.get (param, slot);
+
+      if (result == -1 || param->name_ != str->get_string ())
+        {
+          return false;
+        }
+    }
+
+  return true;
 }
 
 void

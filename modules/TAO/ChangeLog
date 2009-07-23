@@ -1,3 +1,16 @@
+Thu Jul 23 18:12:16 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added semantic actions for extended port creation.
+
 Thu Jul 23 13:14:51 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_instantiated_interface_header.cpp:
@@ -6,7 +19,7 @@ Thu Jul 23 13:14:51 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
           New files, defining a class to collect info in the parser
           about interfaces instantiated in an extended port declatation
           from a previously defined template interface.
-          
+
         * TAO_IDL/include/fe_template_interface_header.h:
 
           Fixed typo in comment.

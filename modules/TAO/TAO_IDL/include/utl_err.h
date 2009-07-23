@@ -141,7 +141,7 @@ public:
     EIDL_TC_SUPPRESSION_WARNING,// -St option used with exception decl
     EIDL_ILLEGAL_BOXED_TYPE,    // Valuetype not allowed for box value type
     EIDL_ILLEGAL_PRIMARY_KEY,   // Primary key doesn't meet spec constraints
-    EIDL_MISMATCHED_T_PARAM,    // Between parent and child tempalte interface
+    EIDL_MISMATCHED_T_PARAM,    // Between defined & referenced template interfaces
     EIDL_DUPLICATE_T_PARAM,     // A template interface's param ids must be unique
     EIDL_OK                     // No error
   };

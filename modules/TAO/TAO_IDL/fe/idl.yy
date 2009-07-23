@@ -104,6 +104,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
 #include "fe_template_interface_header.h"
+#include "fe_instantiated_interface_header.h"
 #include "fe_obv_header.h"
 #include "fe_event_header.h"
 #include "fe_component_header.h"
@@ -148,7 +149,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
-  FE_Template_InterfaceHeader   *thval;         /* Template interface header */
+  FE_Template_InterfaceHeader   *thval;         /* Template interface hdr */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
@@ -6198,8 +6199,53 @@ extended_provides_decl
         | IDL_PROVIDES template_ref IDENTIFIER
         {
 //        | IDL_PROVIDES template_ref IDENTIFIER
-
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtProvidesDeclSeen);
+          bool so_far_so_good =  true;
+          AST_Template_Interface *i = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2->name_,
+                                           true);
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2->name_);
+              so_far_so_good = false;
+            }
+          else
+            {
+              i = AST_Template_Interface::narrow_from_decl (d);
+
+              if (i == 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_TMPL_IFACE_EXPECTED,
+                    d);
+                  so_far_so_good = false;
+                }
+              else if (! i->match_param_names ($2->params_))
+                {
+                  idl_global->err ()->mismatched_template_param ($2->name_);
+                  so_far_so_good = false;
+                }
+            }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              UTL_ScopedName sn (&id, 0);
+
+              AST_Provides *p =
+                idl_global->gen ()->create_provides (&sn, i);
+
+              (void) s->fe_add_provides (p);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+
+          ACE::strdelete ($3);
+          $3 = 0;
         }
         ;
 
@@ -6212,9 +6258,53 @@ extended_uses_decl
         | uses_opt_multiple template_ref IDENTIFIER
         {
 //        | uses_opt_multiple template_ref IDENTIFIER
-
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtUsesDeclSeen);
+          bool so_far_so_good =  true;
+          AST_Template_Interface *i = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2->name_,
+                                           true);
 
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2->name_);
+              so_far_so_good = false;
+            }
+          else
+            {
+              i = AST_Template_Interface::narrow_from_decl (d);
+
+              if (i == 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_TMPL_IFACE_EXPECTED,
+                    d);
+                  so_far_so_good = false;
+                }
+              else if (! i->match_param_names ($2->params_))
+                {
+                  idl_global->err ()->mismatched_template_param ($2->name_);
+                  so_far_so_good = false;
+                }
+            }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              UTL_ScopedName sn (&id, 0);
+
+              AST_Uses *u =
+                idl_global->gen ()->create_uses (&sn, i, $1);
+
+              (void) s->fe_add_uses (u);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+
+          ACE::strdelete ($3);
+          $3 = 0;
         }
         ;
 
