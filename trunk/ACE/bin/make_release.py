@@ -297,7 +297,7 @@ def update_spec_file ():
 
     global comp_versions, opts
 
-    with open ("ACE/rpmbuild/ace-tao-ciao.spec") as spec_file:
+    with open ("ACE/rpmbuild/ace-tao-ciao.spec", 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
             if line.find ("define ACEVER") is not -1:
