@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.7.1
-%define TAOVER  1.7.1
-%define CIAOVER 0.7.1
+%define ACEVER  5.7.2
+%define TAOVER  1.7.2
+%define CIAOVER 0.7.2
 
 # Conditional build
 # Default values are
@@ -1071,9 +1071,9 @@ $MAKECMD -C $TAO_ROOT/utils
 # install
 # ================================================================
 
-%define ACEVERSO %{ACEVER}
-%define TAOVERSO %{TAOVER}
-%define CIAOVERSO %{CIAOVER}
+%define ACEVER  5.7.2
+%define TAOVER  1.7.2
+%define CIAOVER 0.7.2
 
 %install
 
