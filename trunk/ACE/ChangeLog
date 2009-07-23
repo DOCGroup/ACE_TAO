@@ -1,3 +1,32 @@
+Thu Jul 23 17:46:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * etc/index.html:
+        * docs/Download.html:
+          Updated for the new release
+
+        * bin/sets-manager.py:
+          Fixed a typo
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Fixed a wrong replacement by the release script
+
+        * tests/Bug_3709_Regression_Test.cpp:
+          New test to see which compilers can handle template template arguments
+
+        * tests/Bug_3710_Regression_Test.cpp:
+          New test for bugzilla 3710 which is already fixed
+
+        * tests/Config_Test.cpp:
+          Use prefix increment
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Add 3709 and 3710
+
+        * bin/make_release.py:
+          DANCE_ROOT now also has to be set when generating all project files
+
 Thu Jul 23 02:11:02 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ACE version 5.7.2 released.
