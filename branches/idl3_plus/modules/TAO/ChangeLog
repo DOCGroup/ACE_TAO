@@ -1,3 +1,9 @@
+Thu Jul 23 18:33:54 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_interface.h:
+
+          Removed protected member duplicated in base class.
+
 Thu Jul 23 18:12:16 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_template_interface.cpp:
