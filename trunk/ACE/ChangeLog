@@ -1,3 +1,9 @@
+Thu Jul 23 18:12:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/make_release.py:
+
+          Fix small bug with specfile generation. 
+        
 Thu Jul 23 16:40:55 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_string.cpp: Added some additional error checking to
@@ -51,7 +57,7 @@ Thu Jul 23 17:46:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 23 02:11:02 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.7.2 released.
+        * ACE version 5.7.2 released.
 
 Thu Jul 23 06:58:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 

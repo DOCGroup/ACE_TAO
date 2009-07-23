@@ -300,11 +300,11 @@ def update_spec_file ():
     with open ("ACE/rpmbuild/ace-tao-ciao.spec", 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
-            if line.find ("define ACEVER") is not -1:
+            if line.find ("define ACEVER ") is not -1:
                 line = "%define ACEVER  " + comp_versions["ACE_version"] + "\n"
-            if line.find ("define TAOVER") is not -1:
+            if line.find ("define TAOVER ") is not -1:
                 line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
-            if line.find ("CIAOVER") is not -1:
+            if line.find ("define CIAOVER ") is not -1:
                 line = "%define CIAOVER " + comp_versions["CIAO_version"] + "\n"
             if line.find ("define is_major_ver") is not -1:
                 if opts.release_type == "beta":
