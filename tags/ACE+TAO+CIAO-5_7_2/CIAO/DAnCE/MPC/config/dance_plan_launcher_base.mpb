@@ -1,0 +1,6 @@
+// $Id$
+
+project : naming, dance_executionmanager_stub {
+  after += Plan_Launcher_Base
+  libs += DAnCE_Plan_Launcher_Base
+}

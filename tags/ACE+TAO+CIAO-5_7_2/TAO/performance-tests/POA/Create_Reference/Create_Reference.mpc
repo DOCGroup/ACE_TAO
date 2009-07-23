@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project: taoserver, avoids_corba_e_micro, avoids_ace_for_tao {
+  exename = create_reference
+}

@@ -1,0 +1,3 @@
+usr/include/ace/TMCast
+usr/lib/libACE_TMCast.so
+usr/lib/pkgconfig/ACE_TMCast.pc
