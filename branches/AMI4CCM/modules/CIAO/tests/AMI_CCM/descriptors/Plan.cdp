@@ -15,7 +15,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_ReceiverComp_Impl</string>
+          <string>create_Hello_AMI_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -66,7 +66,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_SenderComp_Impl</string>
+          <string>create_Hello_AMI_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -142,6 +142,38 @@
   </instance>
 
   <connection>
+    <name>asynch_foo_connection</name>
+    <internalEndpoint>
+      <portName>asynch_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>asynch_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>callback_foo_connection</name>
+    <internalEndpoint>
+      <portName>callback_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>callback_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+  </connection>
+  
+  <!--connection>
     <name>Hello.ComponentImplementations.HelloImplementation.Hello.Receiver:read_quoter-Hello.ComponentImplementations.HelloImplementation.Hello.Sender:push_quoter</name>
     <internalEndpoint>
       <portName>read_quoter</portName>
@@ -155,9 +187,9 @@
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender"/>
     </internalEndpoint>
-  </connection>
+  </connection-->
 
-  <connection>
+  <!--connection>
     <name>Hello.ComponentImplementations.HelloImplementation.Hello.Sender:notify_out-Hello.ComponentImplementations.HelloImplementation.Hello.Receiver:notify_in</name>
     <internalEndpoint>
       <portName>notify_out</portName>
@@ -171,7 +203,7 @@
       <kind>EventConsumer</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver"/>
     </internalEndpoint>
-  </connection>
+  </connection-->
 
   <artifact xmi:id="_6C99E1A6-14DA-43DF-A0AD-7AC397F90899">
     <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>

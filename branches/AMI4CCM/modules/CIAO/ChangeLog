@@ -1,3 +1,18 @@
+Fri Jul 24 11:54:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Rerun example. 
+
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+          Added connectors. Now both components
+          can be deployed.
+
 Fri Jul 24 07:34:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:

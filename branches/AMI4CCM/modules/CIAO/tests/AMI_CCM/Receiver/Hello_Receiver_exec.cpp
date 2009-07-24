@@ -129,16 +129,16 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   }
   
   extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_ReceiverComp_Impl (void)
+  create_Hello_AMI_Receiver_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-
+    
     ACE_NEW_RETURN (
       retval,
       Receiver_exec_i,
       ::Components::EnterpriseComponent::_nil ());
-
+    
     return retval;
   }
 }
@@ -184,12 +184,12 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-
+    
     ACE_NEW_RETURN (
       retval,
       ReceiverHome_exec_i,
       ::Components::HomeExecutorBase::_nil ());
-
+    
     return retval;
   }
 }

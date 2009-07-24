@@ -33,6 +33,7 @@
 
 
 #include "Hello_SenderEC.h"
+#include "Hello_Sender_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -102,8 +103,8 @@ namespace CIAO_Hello_AMI_Sender_Impl
     ::Hello_AMI::CCM_Sender_Context_var context_;
   };
   
-  extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_SenderComp_Impl (void);
+  extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Hello_AMI_Sender_Impl (void);
 }
 
 namespace CIAO_Hello_AMI_Sender_Impl
@@ -129,7 +130,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     create (void);
   };
   
-  extern "C"  ::Components::HomeExecutorBase_ptr
+  extern "C" HELLO_SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_AMI_SenderHome_Impl (void);
 }
 

@@ -114,6 +114,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     /* Your code here. */
+    
   }
   
   void
@@ -129,7 +130,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   }
   
   extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_SenderComp_Impl (void)
+  create_Hello_AMI_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();

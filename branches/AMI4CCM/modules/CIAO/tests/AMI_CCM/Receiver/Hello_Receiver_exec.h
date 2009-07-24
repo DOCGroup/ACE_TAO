@@ -33,6 +33,7 @@
 
 
 #include "Hello_ReceiverEC.h"
+#include "Hello_Receiver_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -102,8 +103,8 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     ::Hello_AMI::CCM_Receiver_Context_var context_;
   };
   
-  extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_ReceiverComp_Impl (void);
+  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Hello_AMI_Receiver_Impl (void);
 }
 
 namespace CIAO_Hello_AMI_Receiver_Impl
@@ -118,7 +119,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual ~ReceiverHome_exec_i (void);
     
     // All operations and attributes.
-
+    
     // Factory operations.
     
     // Finder operations.
@@ -129,7 +130,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     create (void);
   };
   
-  extern "C"  ::Components::HomeExecutorBase_ptr
+  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_AMI_ReceiverHome_Impl (void);
 }
 

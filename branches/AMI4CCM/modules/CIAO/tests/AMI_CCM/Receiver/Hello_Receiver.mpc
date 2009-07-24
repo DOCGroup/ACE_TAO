@@ -33,6 +33,7 @@ project(Hello_Base_Hello_Receiver_lem_stub) : ccm_svnt   {
   libout = ../lib
   libpaths += ../lib
   
+  
   sharedname = Hello_Receiver_lem_stub
   dynamicflags   = HELLO_RECEIVER_LEM_STUB_BUILD_DLL
 
@@ -58,6 +59,7 @@ project(Hello_Base_Hello_Receiver_stub) : ccm_stub   {
   libs  += Hello_Base_stub
   libout = ../lib
   libpaths += ../lib
+  
   
   sharedname = Hello_Receiver_stub
   dynamicflags   = HELLO_RECEIVER_STUB_BUILD_DLL
@@ -86,6 +88,7 @@ project(Hello_Base_Hello_Receiver_exec) : ciao_executor   {
   libout = ../lib
   libpaths += ../lib
   
+  
   dynamicflags   = HELLO_RECEIVER_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -113,7 +116,7 @@ project(Hello_Base_Hello_Receiver_svnt) : ciao_servant   {
                 Hello_Base_stub
   libout = ../lib
   libpaths += ../lib
-
+  
   
   dynamicflags = HELLO_RECEIVER_SVNT_BUILD_DLL
   

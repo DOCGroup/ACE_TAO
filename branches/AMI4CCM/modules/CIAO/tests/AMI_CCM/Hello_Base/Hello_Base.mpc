@@ -48,7 +48,7 @@ project(Hello_Base_skel) : ciao_executor   {
   sharedname  = Hello_Base_skel
   libs       += Hello_Base_stub
   libout = ../lib
-  libpaths += ../lib
+  libpaths += ../lib 
   
   
   dynamicflags = HELLO_BASE_SKEL_BUILD_DLL
