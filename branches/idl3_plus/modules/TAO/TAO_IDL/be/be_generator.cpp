@@ -84,6 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_template_interface.h"
 #include "be_instantiated_interface.h"
 #include "be_porttype.h"
+#include "be_mirror_port.h"
 #include "be_provides.h"
 #include "be_uses.h"
 #include "be_publishes.h"
@@ -1037,3 +1038,34 @@ be_generator::create_consumes (UTL_ScopedName *n,
                   
   return retval;              
 }
+
+AST_Extended_Port *
+be_generator::create_extended_port (UTL_ScopedName *n,
+                                    AST_PortType *porttype_ref,
+                                    UTL_NameList *template_args)
+{
+  be_extended_port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_extended_port (n,
+                                    porttype_ref,
+                                    template_args),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Mirror_Port *
+be_generator::create_mirror_port (UTL_ScopedName *n,
+                                  AST_PortType *porttype_ref,
+                                  UTL_NameList *template_args)
+{
+  be_mirror_port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_mirror_port (n,
+                                  porttype_ref,
+                                  template_args),
+                  0);
+                  
+  return retval;              
+}
+

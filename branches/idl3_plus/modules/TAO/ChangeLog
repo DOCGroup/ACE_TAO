@@ -1,3 +1,31 @@
+Fri Jul 24 19:08:55 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_mirror_port.cpp:
+        * TAO_IDL/include/ast_mirror_port.h:
+        * TAO_IDL/be/be_mirror_port.cpp:
+        * TAO_IDL/be_include/be_mirror_port.h:
+        
+          New files, defining a mirror port, which
+          is found in a component, and is an instantiation
+          of a porttype declaration, similar to an
+          extended port, but with all the 'uses' and
+          'provides' keywords interchanged.
+        
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_visitor.h:
+
+          Other changes corresponding to the new mirror
+          port classes.
+
 Fri Jul 24 17:49:30 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_consumes.cpp:
@@ -8,7 +36,7 @@ Fri Jul 24 17:49:30 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
           New files, defining an extended port, which
           is found in a component, and is an instantiation
           of a porttype declaration.
-                  
+
         * TAO_IDL/ast/ast_extended_port.cpp:
         * TAO_IDL/ast/ast_porttype.cpp:
         * TAO_IDL/ast/ast_redef.cpp:

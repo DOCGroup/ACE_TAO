@@ -43,6 +43,7 @@ class AST_Publishes;
 class AST_Emits;
 class AST_Consumes;
 class AST_Extended_Port;
+class AST_Mirror_Port;
 class AST_EventType;
 class AST_EventTypeFwd;
 class AST_Home;
@@ -109,6 +110,7 @@ public:
   virtual int visit_emits (AST_Emits *node) = 0;
   virtual int visit_consumes (AST_Consumes *node) = 0;
   virtual int visit_extended_port (AST_Extended_Port *node) = 0;
+  virtual int visit_mirror_port (AST_Mirror_Port *node) = 0;
   virtual int visit_eventtype (AST_EventType *node) = 0;
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
   virtual int visit_factory (AST_Factory *node) = 0;

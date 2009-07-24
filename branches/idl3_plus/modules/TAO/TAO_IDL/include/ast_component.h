@@ -12,6 +12,8 @@ class AST_Uses;
 class AST_Publishes;
 class AST_Emits;
 class AST_Consumes;
+class AST_Extended_Port;
+class AST_Mirror_Port;
 
 class TAO_IDL_FE_Export AST_Component
   : public virtual AST_Interface
@@ -38,27 +40,7 @@ public:
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
                                        bool treat_as_ref);
-/*
-  // Utility data structure for port declarations.
-  struct port_description
-  {
-    port_description (void)
-      : id (0),
-        impl (0),
-        is_multiple (false),
-        line_number (0)
-    {}
 
-    Identifier *id;
-    AST_Type *impl;
-    bool is_multiple;
-
-    // These structs are queued, in a separate queue for each port type,
-    // this helps some backends get a total ordering for a component's 
-    // ports and attributes.
-    long line_number;
-  };
-*/
   // Accessors.
 
   AST_Component *base_component (void) const;
@@ -91,6 +73,10 @@ protected:
   virtual AST_Emits *fe_add_emits (AST_Emits *p);
 
   virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
+  
+  virtual AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p);
+
+  virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p);
 
 private:
   AST_Component *pd_base_component;
