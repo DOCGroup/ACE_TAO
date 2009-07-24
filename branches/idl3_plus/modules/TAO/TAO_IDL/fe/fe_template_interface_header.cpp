@@ -120,7 +120,7 @@ FE_Template_InterfaceHeader::compile_template_inheritance (void)
 bool
 FE_Template_InterfaceHeader::match_params (AST_Template_Interface *node)
 {
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (node->template_params ());
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*node->template_params ());
        !i.done ();
        i.advance ())
     {

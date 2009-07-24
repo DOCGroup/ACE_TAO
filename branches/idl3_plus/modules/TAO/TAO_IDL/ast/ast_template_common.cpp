@@ -7,8 +7,8 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Template_Common::AST_Template_Common (
-      const FE_Utils::T_PARAMLIST_INFO *template_params)
-  : template_params_ (*template_params)
+      FE_Utils::T_PARAMLIST_INFO *template_params)
+  : template_params_ (template_params)
 {
 }
 
@@ -16,9 +16,16 @@ AST_Template_Common::~AST_Template_Common (void)
 {
 }
 
-FE_Utils::T_PARAMLIST_INFO &
+FE_Utils::T_PARAMLIST_INFO *
 AST_Template_Common::template_params (void)
 {
   return this->template_params_;
+}
+
+void
+AST_Template_Common::destroy (void)
+{
+  delete this->template_params_;
+  this->template_params_ = 0;
 }
 

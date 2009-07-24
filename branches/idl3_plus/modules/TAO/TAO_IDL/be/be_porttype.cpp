@@ -9,7 +9,7 @@ ACE_RCSID (be,
 
 be_porttype::be_porttype (
       UTL_ScopedName *n,
-      const FE_Utils::T_PARAMLIST_INFO *template_params)
+      FE_Utils::T_PARAMLIST_INFO *template_params)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_porttype,

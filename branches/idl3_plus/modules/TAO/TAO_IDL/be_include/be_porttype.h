@@ -43,7 +43,7 @@ class be_porttype : public virtual AST_PortType,
 public:
   be_porttype (
     UTL_ScopedName *n,
-    const FE_Utils::T_PARAMLIST_INFO *template_params);
+    FE_Utils::T_PARAMLIST_INFO *template_params);
     
   virtual ~be_porttype (void);
   
