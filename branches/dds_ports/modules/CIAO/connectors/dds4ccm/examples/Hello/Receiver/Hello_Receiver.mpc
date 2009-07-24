@@ -55,8 +55,9 @@ project(DDS_Hello_Receiver_stub) : ccm_stub , ciao_example_output, dds4ccm_base 
 }
 
 project(DDS_Hello_Receiver_lem_stub) : ccm_svnt , ciao_example_output, dds4ccm_base  {
-  after += DDS_Hello_Receiver_lem_gen
+  after += DDS_Hello_Receiver_lem_gen DDS_Hello_Receiver_Base_stub
   libpaths    += ../lib
+  libs += DDS_Hello_Receiver_Base_stub
 
   sharedname = DDS_Hello_Receiver_lem_stub
   dynamicflags   = HELLO_RECEIVER_LEM_STUB_BUILD_DLL
@@ -79,9 +80,10 @@ project(DDS_Hello_Receiver_lem_stub) : ccm_svnt , ciao_example_output, dds4ccm_b
 }
 
 project(DDS_Hello_Receiver_exec) : ciao_executor , ciao_example_output, dds4ccm_base  {
-  after   += DDS_Hello_Receiver_lem_stub DDS_Hello_Receiver_stub
+  after   += DDS_Hello_Receiver_lem_stub DDS_Hello_Receiver_stub DDS_Hello_Receiver_Base_stub
   sharedname = DDS_Hello_Receiver_exec
-  libs += DDS_Hello_Receiver_stub DDS_Hello_Receiver_lem_stub
+  libs += DDS_Hello_Receiver_stub DDS_Hello_Receiver_lem_stub DDS_Hello_Receiver_Base_stub
+  libpaths    += ../lib
 
   dynamicflags   = HELLO_RECEIVER_EXEC_BUILD_DLL
 

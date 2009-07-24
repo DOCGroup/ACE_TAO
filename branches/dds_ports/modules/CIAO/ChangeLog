@@ -1,3 +1,12 @@
+Fri Jul 24 12:55:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc:
+          Fixed link problems
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcpsE.idl:
+          Include StringSeq.pidl directly
+
 Fri Jul 24 12:37:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcpsE.idl:
