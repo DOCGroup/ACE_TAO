@@ -1,3 +1,15 @@
+Fri Jul 24 12:32:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp
+          Various changes to get the code to compile on windows
+
 Fri Jul 24 10:49:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
