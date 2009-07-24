@@ -936,7 +936,7 @@ AST_Generator::create_template_interface (
   long nih,
   AST_Interface **ih_flat,
   long nih_flat,
-  const FE_Utils::T_PARAMLIST_INFO *template_params)
+  FE_Utils::T_PARAMLIST_INFO *template_params)
 {
   AST_Template_Interface *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -970,7 +970,7 @@ AST_Generator::create_instantiated_interface (
 AST_PortType *
 AST_Generator::create_porttype (
   UTL_ScopedName *n,
-  const FE_Utils::T_PARAMLIST_INFO *template_params)
+  FE_Utils::T_PARAMLIST_INFO *template_params)
 {
   AST_PortType *retval = 0;
   ACE_NEW_RETURN (retval,

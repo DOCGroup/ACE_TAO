@@ -22,7 +22,7 @@ class TAO_IDL_FE_Export AST_PortType
 public:
   AST_PortType (
     UTL_ScopedName *n,
-    const FE_Utils::T_PARAMLIST_INFO *template_params);
+    FE_Utils::T_PARAMLIST_INFO *template_params);
 
   virtual ~AST_PortType (void);
 

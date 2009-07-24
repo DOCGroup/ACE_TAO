@@ -1,3 +1,27 @@
+Fri Jul 24 13:56:43 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        
+          Changed template param list member to be a pointer
+          so it can just be passed in from the parser, and then
+          can be 0 if there are no template parameters (for
+          porttype and port declarations, they are optional).
+
 Thu Jul 23 18:33:54 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_template_interface.h:

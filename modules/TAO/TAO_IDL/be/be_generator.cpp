@@ -927,7 +927,7 @@ be_generator::create_template_interface (
   long nih,
   AST_Interface **ih_flat,
   long nih_flat,
-  const FE_Utils::T_PARAMLIST_INFO *template_params)
+  FE_Utils::T_PARAMLIST_INFO *template_params)
 {
   be_template_interface *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -961,7 +961,7 @@ be_generator::create_instantiated_interface (
 AST_PortType *
 be_generator::create_porttype (
   UTL_ScopedName *n,
-  const FE_Utils::T_PARAMLIST_INFO *template_params)
+  FE_Utils::T_PARAMLIST_INFO *template_params)
 {
   be_porttype *retval = 0;
   ACE_NEW_RETURN (retval,

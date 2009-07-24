@@ -25,9 +25,6 @@ FE_TemplateHeader_Common::param_info (void) const
 void
 FE_TemplateHeader_Common::destroy (void)
 {
-  // Queue element members have self-managed memory.
-  delete this->param_info_;
-  this->param_info_ = 0;
 }
 
 bool

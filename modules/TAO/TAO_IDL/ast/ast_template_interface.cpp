@@ -19,7 +19,7 @@ AST_Template_Interface::AST_Template_Interface (
       long nih,
       AST_Interface **ih_flat,
       long nih_flat,
-      const FE_Utils::T_PARAMLIST_INFO *template_params)
+      FE_Utils::T_PARAMLIST_INFO *template_params)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_interface,
@@ -46,6 +46,7 @@ void
 AST_Template_Interface::destroy (void)
 {
   this->AST_Interface::destroy ();
+  this->AST_Template_Common::destroy ();
 }
 
 bool
@@ -53,7 +54,7 @@ AST_Template_Interface::match_param_names (UTL_StrList *names)
 {
   size_t names_len = static_cast<size_t> (names->length ());
 
-  if (names_len != this->template_params_.size ())
+  if (names_len != this->template_params_->size ())
     {
       return false;
     }
@@ -68,7 +69,7 @@ AST_Template_Interface::match_param_names (UTL_StrList *names)
       FE_Utils::T_Param_Info *param = 0;
 
       int result =
-        this->template_params_.get (param, slot);
+        this->template_params_->get (param, slot);
 
       if (result == -1 || param->name_ != str->get_string ())
         {
@@ -89,7 +90,7 @@ AST_Template_Interface::dump (ACE_OSTREAM_TYPE &o)
   unsigned long index = 0UL;
   FE_Utils::T_Param_Info *item = 0;
   
-  for (FE_Utils::T_PARAMLIST_INFO::ITERATOR iter (this->template_params_);
+  for (FE_Utils::T_PARAMLIST_INFO::ITERATOR iter (*this->template_params_);
        !iter.done ();
        iter.advance (), ++index)
     {
@@ -121,7 +122,7 @@ AST_Template_Interface::dump (ACE_OSTREAM_TYPE &o)
           index = 0UL;
 
           for (FE_Utils::T_PARAMLIST_INFO::ITERATOR iter (
-                 ti->template_params_);
+                 *ti->template_params_);
                !iter.done ();
                iter.advance (), ++index)
             {
