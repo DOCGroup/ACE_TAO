@@ -1083,6 +1083,43 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
         }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnceOnObjectNotExist"))))
+        {
+          int forward = ACE_OS::atoi (current_arg);
+          if (forward)
+            this->orb_params_.forward_once_exception (TAO::FOE_OBJECT_NOT_EXIST);
+
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnceOnCommFailure"))))
+        {
+          int forward = ACE_OS::atoi (current_arg);
+          if (forward)
+            this->orb_params_.forward_once_exception (TAO::FOE_COMM_FAILURE);
+
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnceOnTransient"))))
+        {
+          int forward = ACE_OS::atoi (current_arg);
+          if (forward)
+            this->orb_params_.forward_once_exception (TAO::FOE_TRANSIENT);
+
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnceOnInvObjref"))))
+        {
+          int forward = ACE_OS::atoi (current_arg);
+          if (forward)
+            this->orb_params_.forward_once_exception (TAO::FOE_INV_OBJREF);
+
+          arg_shifter.consume_arg ();
+        }
+
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////

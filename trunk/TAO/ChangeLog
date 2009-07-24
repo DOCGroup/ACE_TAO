@@ -1,3 +1,60 @@
+Fri Jul 24 21:48:40 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/Invocation_Utils.h:
+        * tao/ORB_Core.cpp:
+        * tao/Stub.h:
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+
+          Added following ORB options for request forwarding once feature.
+
+             -ORBForwardOnceOnObjectNotExist  [0|1]
+             -ORBForwardOnceOnCommFailure [0|1]
+             -ORBForwardOnceOnTransient [0|1]
+             -ORBForwardOnceOnInvObjref [0|1]
+
+          - Currently only four exception forwarding are supported.
+          - The stub was changed to remember if forwarding already happened.
+          - If the feature is enabled, the request is forwarded once. If multiple
+            exceptions forwarding are enabled, then any of those exception forwarding
+            will prevent forwarding upon next exception.
+
+        * tests/ForwardOnceUponException/ForwardOnceUponException.mpc:
+        * tests/ForwardOnceUponException/README:
+        * tests/ForwardOnceUponException/client.cpp:
+        * tests/ForwardOnceUponException/run_test.pl:
+        * tests/ForwardOnceUponException/server.cpp:
+        * tests/ForwardOnceUponException/test.idl:
+        * tests/ForwardOnceUponException/test_i.h:
+        * tests/ForwardOnceUponException/test_i.inl:
+        * tests/ForwardOnceUponException/test_i.cpp:
+
+          Added test cases for the new options independent on any services.
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/ORB_Task.h:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/ORB_Task.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/ReconnectServer.mpc:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+
+          - Added ORB thread and start it after wrong server(B) start
+            listening. This would easily reproduce the forward looping issue
+            with -ORBForwardInvocationOnObjectNotExist 1.
+          - Added "-ORBForwardOnceOnObjectNotExist 1" test case.
+
+        * bin/tao_orb_tests.lst:
+
+          Added ForwardOnceUponException.
+
+        * bin/tao_other_tests.lst:
+
+          Added more test cases to IMR ReconnectServer test.
+
 Fri Jul 24 08:25:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
 
         * tao/Synch_Invocation.cpp:

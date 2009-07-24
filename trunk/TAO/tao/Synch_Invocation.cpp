@@ -543,22 +543,40 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    // Special handling for non-fatal system exceptions.
-    //
-    // Note that we are careful to retain "at most once" semantics.
-    if ((CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES &&
-        (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0 ||
-         ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
-         ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
-         ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0 ||
-         (this->stub ()->orb_core ()->orb_params ()->forward_invocation_on_object_not_exist()
-         && ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)))
-    {
+    bool do_forward = false;
+    int foe_kind = this->stub ()->orb_core ()->orb_params ()->forward_once_exception();
+
+    if ((CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES 
+        && (((foe_kind & TAO::FOE_TRANSIENT) == 0
+              && ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0) ||
+            ACE_OS_String::strcmp (type_id.in (),
+                              "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
+            ACE_OS_String::strcmp (type_id.in (),
+                              "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
+            ((foe_kind & TAO::FOE_COMM_FAILURE) == 0
+              && ACE_OS_String::strcmp (type_id.in (),
+                              "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) || 
+            (this->stub ()->orb_core ()->orb_params ()->forward_invocation_on_object_not_exist ()
+             && ACE_OS_String::strcmp (type_id.in (),
+                              "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0) ||
+            (do_forward = ! this->stub ()->forwarded_on_exception ()
+             && ((((foe_kind & TAO::FOE_OBJECT_NOT_EXIST) == TAO::FOE_OBJECT_NOT_EXIST)
+                        && (ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)) ||
+                 (((foe_kind & TAO::FOE_COMM_FAILURE) == TAO::FOE_COMM_FAILURE)
+                        && (ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)) ||
+                 (((foe_kind & TAO::FOE_TRANSIENT) == TAO::FOE_TRANSIENT)
+                        && (ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)) ||
+                 (((foe_kind & TAO::FOE_INV_OBJREF) == TAO::FOE_INV_OBJREF)
+                        && (ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0))))))
+      {
+        if (do_forward)
+          this->stub ()->forwarded_on_exception (true);
+
         // Start the special case for FTCORBA.
         /**
           * There has been a unanimous view that this is not the

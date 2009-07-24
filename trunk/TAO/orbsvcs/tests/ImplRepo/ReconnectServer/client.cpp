@@ -8,6 +8,7 @@
 
 const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://serverA.ior");
 int test_duration_sec = 15;
+bool expect_object_not_exist = false; 
 
 class Client_Task : public ACE_Task_Base
 {
@@ -40,10 +41,9 @@ class Client_Task : public ACE_Task_Base
         }
         catch (const CORBA::OBJECT_NOT_EXIST &)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)caught OBJECT_NOT_EXIST exception for request %d\n"), i ));
-          caught_object_not_exist_ = false;
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)caught OBJECT_NOT_EXIST exception for request %d\n"), i ));
+          caught_object_not_exist_ = true;
           ACE_OS::sleep (1);
-          break;
         }
         catch (const CORBA::Exception & /*ex*/) 
         {
@@ -61,7 +61,8 @@ class Client_Task : public ACE_Task_Base
 
     bool test_passed () const
     {
-      return ! communication_failed_ && reconnected_ && ! caught_object_not_exist_;
+      return (! communication_failed_ && reconnected_ && ! expect_object_not_exist && ! caught_object_not_exist_)
+        || (communication_failed_ && ! reconnected_ && expect_object_not_exist && caught_object_not_exist_);
     }
 
   private:
@@ -76,7 +77,7 @@ class Client_Task : public ACE_Task_Base
 int
 parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:t:");
+  ACE_Get_Opt get_opts (argc, argv, "i:t:e:");
   int c;
 
 
@@ -88,6 +89,9 @@ parse_args (int argc, ACE_TCHAR* argv[])
           break;
         case 't':
           test_duration_sec = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'e':
+          expect_object_not_exist = ACE_OS::atoi (get_opts.opt_arg ());
           break;
         case '?':
           default:
