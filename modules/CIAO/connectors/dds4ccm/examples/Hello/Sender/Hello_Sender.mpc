@@ -77,9 +77,10 @@ project(DDS_Hello_Sender_lem_stub) : ccm_svnt , ciao_example_output, dds4ccm_bas
 }
 
 project(DDS_Hello_Sender_exec) : ciao_executor , ciao_example_output, dds4ccm_base  {
-  after   += DDS_Hello_Sender_lem_stub DDS_Hello_Sender_stub
+  after   += DDS_Hello_Sender_lem_stub DDS_Hello_Sender_stub DDS_Hello_Sender_Base_stub
   sharedname = DDS_Hello_Sender_exec
-  libs += DDS_Hello_Sender_stub DDS_Hello_Sender_lem_stub
+  libs += DDS_Hello_Sender_stub DDS_Hello_Sender_lem_stub DDS_Hello_Sender_Base_stub
+  libpaths    += ../lib
 
   dynamicflags   = HELLO_SENDER_EXEC_BUILD_DLL
 
