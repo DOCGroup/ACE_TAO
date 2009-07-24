@@ -297,14 +297,14 @@ def update_spec_file ():
 
     global comp_versions, opts
 
-    with open ("ACE/rpmbuild/ace-tao-ciao.spec") as spec_file:
+    with open ("ACE/rpmbuild/ace-tao-ciao.spec", 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
-            if line.find ("define ACEVER") is not -1:
+            if line.find ("define ACEVER ") is not -1:
                 line = "%define ACEVER  " + comp_versions["ACE_version"] + "\n"
-            if line.find ("define TAOVER") is not -1:
+            if line.find ("define TAOVER ") is not -1:
                 line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
-            if line.find ("CIAOVER") is not -1:
+            if line.find ("define CIAOVER ") is not -1:
                 line = "%define CIAOVER " + comp_versions["CIAO_version"] + "\n"
             if line.find ("define is_major_ver") is not -1:
                 if opts.release_type == "beta":
@@ -448,6 +448,17 @@ def get_comp_versions (component):
                       str (comp_versions[component + "_minor"])
 
 
+def update_latest_tag (which, branch):
+    """ Update one of the Latest_* tags externals to point the new release """
+    global opts
+    root_anon = re.sub ("^https:", "svn:", opts.repo_root)
+    propval = """ACE_wrappers %sMiddleware/tags/%s/ACE
+ACE_wrappers/TAO %sMiddleware/tags/%s/TAO
+ACE_wrappers/TAO/CIAO %sMiddleware/tags/%s/CIAO
+""" % (root_anon, branch, root_anon, branch, root_anon, branch)
+    svn_client.propset ("svn:externals", propval,
+                        opts.repo_root + "/Middleware/tags/Latest_" + which)
+
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
     global comp_versions, opts
@@ -458,6 +469,17 @@ def tag ():
     # Tag middleware
     svn_client.copy (opts.repo_root + "/Middleware/trunk",
                      opts.repo_root + "/Middleware/tags/" + branch)
+
+    # Update latest tag
+    if opts.release_type == "major":
+        update_latest_tag ("Major", branch)
+    elif opts.release_type == "minor":
+        update_latest_tag ("Minor", branch)
+    elif opts.release_type == "beta":
+        update_latest_tag ("Beta", branch)
+        update_latest_tag ("Micro", branch)
+        if comp_versions["ACE_beta"] == 1:
+                update_latest_tag ("BFO", branch)
 
     # Tag MPC
     svn_client.copy (opts.repo_root + "/MPC/trunk",
@@ -712,6 +734,7 @@ def generate_workspaces (stage_dir):
     os.putenv ("MPC_ROOT", os.path.join (stage_dir, "ACE_wrappers", "MPC"))
     os.putenv ("TAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO"))
     os.putenv ("CIAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO"))
+    os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO", "DAnCE"))
 
     # Create option strings
     mpc_command = os.path.join (stage_dir, "ACE_wrappers", "bin", "mwc.pl")
@@ -719,6 +742,7 @@ def generate_workspaces (stage_dir):
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
+    mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO/DAnCE '
 
     static_vc71_option = ' -static -name_modifier *_vc71_Static -apply_project -exclude TAO/CIAO '
     static_vc71_option += mpc_option
