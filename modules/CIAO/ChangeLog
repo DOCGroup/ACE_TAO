@@ -1,3 +1,8 @@
+Fri Jul 24 12:37:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcpsE.idl:
+          Add this file for the moment to the repository
+
 Fri Jul 24 12:32:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
