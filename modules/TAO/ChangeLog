@@ -1,3 +1,12 @@
+Fri Jul 24 15:38:24 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added production rules and parse state for extended port.
+
 Fri Jul 24 13:56:43 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_generator.cpp:
@@ -16,7 +25,7 @@ Fri Jul 24 13:56:43 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_porttype.h:
         * TAO_IDL/include/ast_template_common.h:
         * TAO_IDL/include/ast_template_interface.h:
-        
+
           Changed template param list member to be a pointer
           so it can just be passed in from the parser, and then
           can be 0 if there are no template parameters (for

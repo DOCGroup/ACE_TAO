@@ -336,6 +336,8 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed publishes declaration";
   case IDL_GlobalData::PS_ConsumesDeclSeen:
     return "Malformed consumes declaration";
+  case IDL_GlobalData::PS_ExtendedPortDeclSeen:
+    return "Malformed extended port declaration";
   case IDL_GlobalData::PS_FactoryDeclSeen:
     return "Malformed factory declaration";
   case IDL_GlobalData::PS_FinderDeclSeen:
