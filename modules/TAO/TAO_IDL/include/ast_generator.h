@@ -81,6 +81,8 @@ class AST_EventType;
 class AST_EventTypeFwd;
 class AST_Template_Interface;
 class AST_Instantiated_Interface;
+class AST_Extended_Port;
+class AST_Mirror_Port;
 class AST_PortType;
 class AST_Provides;
 class AST_Uses;
@@ -388,6 +390,18 @@ public:
   virtual
   AST_Consumes *create_consumes (UTL_ScopedName *n,
                                  AST_EventType *consumes_type);
+                                 
+  virtual
+  AST_Extended_Port *create_extended_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref,
+    UTL_NameList *template_args);
+    
+  virtual
+  AST_Mirror_Port *create_mirror_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref,
+    UTL_NameList *template_args);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

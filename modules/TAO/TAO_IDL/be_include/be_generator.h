@@ -305,6 +305,17 @@ public:
   virtual
   AST_Consumes *create_consumes (UTL_ScopedName *n,
                                  AST_EventType *consumes_type);
+  virtual
+  AST_Extended_Port *create_extended_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref,
+    UTL_NameList *template_args);
+    
+  virtual
+  AST_Mirror_Port *create_mirror_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref,
+    UTL_NameList *template_args);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

@@ -117,6 +117,7 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_emits:
     case AST_Decl::NT_consumes:
     case AST_Decl::NT_ext_port:
+    case AST_Decl::NT_mirror_port:
     default:
       return false;
     }

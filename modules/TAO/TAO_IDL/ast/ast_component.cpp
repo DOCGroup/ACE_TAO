@@ -7,6 +7,7 @@
 #include "ast_publishes.h"
 #include "ast_emits.h"
 #include "ast_consumes.h"
+#include "ast_mirror_port.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
@@ -385,6 +386,82 @@ AST_Component::fe_add_consumes (AST_Consumes *c)
                            c->local_name ());
 
   return c;
+}
+
+AST_Extended_Port *
+AST_Component::fe_add_extended_port (AST_Extended_Port *p)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (p, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, p->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (p);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (p,
+                           false,
+                           p->local_name ());
+
+  return p;
+}
+
+AST_Mirror_Port *
+AST_Component::fe_add_mirror_port (AST_Mirror_Port *p)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (p, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, p->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (p);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (p,
+                           false,
+                           p->local_name ());
+
+  return p;
 }
 
 IMPL_NARROW_FROM_DECL (AST_Component)
