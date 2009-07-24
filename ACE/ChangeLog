@@ -1,3 +1,15 @@
+Fri Jul 24 18:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosconcurrency:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosevent:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnaming:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnotification:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-costrading:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-rtevent:
+          Fixed location of the config files. Thanks to John Fletcher
+          <john dot fletcher at rd dot bbc dot co dot uk> for reporting
+          this. This fixes bugzilla 3664
+
 Fri Jul 24 09:33:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features:
