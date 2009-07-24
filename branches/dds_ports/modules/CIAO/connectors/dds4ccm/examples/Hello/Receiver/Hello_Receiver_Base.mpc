@@ -1,7 +1,7 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -n -b example_output, dds4ccm_base Hello_Receiver_Base"
+// This file is generated with "generate_component_mpc.pl -n -b ciao_example_output, dds4ccm_base Hello_Receiver_Base"
 
-project(DDS_Hello_Receiver_Base_idl_gen) : connectoridldefaults , example_output, dds4ccm_base  {
+project(DDS_Hello_Receiver_Base_idl_gen) : connectoridldefaults , ciao_example_output, dds4ccm_base  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Receiver_Base_stub_export.h \
@@ -15,10 +15,10 @@ project(DDS_Hello_Receiver_Base_idl_gen) : connectoridldefaults , example_output
   }
 }
 
-project(DDS_Hello_Receiver_Base_stub) : ccm_stub , example_output, dds4ccm_base  {
-  after += DDS_Hello_Receiver_Base_idl_gen 
-  libs  += 
-  
+project(DDS_Hello_Receiver_Base_stub) : ccm_stub , ciao_example_output, dds4ccm_base  {
+  after += DDS_Hello_Receiver_Base_idl_gen
+  libs  +=
+
   sharedname = DDS_Hello_Receiver_Base_stub
   dynamicflags   = HELLO_RECEIVER_BASE_STUB_BUILD_DLL
 
@@ -39,14 +39,14 @@ project(DDS_Hello_Receiver_Base_stub) : ccm_stub , example_output, dds4ccm_base 
   }
 }
 
-project(DDS_Hello_Receiver_Base_skel) : ciao_executor , example_output, dds4ccm_base  {
+project(DDS_Hello_Receiver_Base_skel) : ciao_executor , ciao_example_output, dds4ccm_base  {
   after      +=  DDS_Hello_Receiver_Base_stub
   sharedname  = DDS_Hello_Receiver_Base_skel
   libs       += DDS_Hello_Receiver_Base_stub
- 
-  
+
+
   dynamicflags = HELLO_RECEIVER_BASE_SKEL_BUILD_DLL
-  
+
   IDL_Files {
   }
 

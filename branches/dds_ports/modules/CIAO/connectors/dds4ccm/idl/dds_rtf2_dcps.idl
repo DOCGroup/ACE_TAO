@@ -16,6 +16,8 @@
 #define DATAWRITER_QOS_USE_TOPIC_QOS
 #define DATAREADER_QOS_USE_TOPIC_QOS
 
+#include <tao/StringSeq.pidl>
+
 module DDS {
     typedef long DomainId_t;
     typedef long InstanceHandle_t;

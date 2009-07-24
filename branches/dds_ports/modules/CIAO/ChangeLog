@@ -1,3 +1,18 @@
+Fri Jul 24 10:49:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc
+        * MPC/config/ciao_example_output.mpb
+        * MPC/config/example_output.mpb
+          Renamed example_output to ciao_example_output
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Added include of StringSeq.pidl
+
 Fri Jul 24 09:18:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO.mwc:
