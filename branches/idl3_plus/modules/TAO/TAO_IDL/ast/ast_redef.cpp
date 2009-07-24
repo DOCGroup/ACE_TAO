@@ -103,11 +103,6 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_enum:
     case AST_Decl::NT_typedef:
     case AST_Decl::NT_valuebox:
-    case AST_Decl::NT_provides:
-    case AST_Decl::NT_uses:
-    case AST_Decl::NT_publishes:
-    case AST_Decl::NT_emits:
-    case AST_Decl::NT_consumes:
       return true;
 
     case AST_Decl::NT_union_branch:
@@ -116,6 +111,12 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_op:
     case AST_Decl::NT_pre_defined:
     case AST_Decl::NT_factory:
+    case AST_Decl::NT_provides:
+    case AST_Decl::NT_uses:
+    case AST_Decl::NT_publishes:
+    case AST_Decl::NT_emits:
+    case AST_Decl::NT_consumes:
+    case AST_Decl::NT_ext_port:
     default:
       return false;
     }

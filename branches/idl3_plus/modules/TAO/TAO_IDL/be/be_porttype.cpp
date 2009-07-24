@@ -20,6 +20,8 @@ be_porttype::be_porttype (
                   template_params),
     be_scope (AST_Decl::NT_porttype),
     be_decl (AST_Decl::NT_porttype,
+             n),
+    be_type (AST_Decl::NT_porttype,
              n)
 {
 }

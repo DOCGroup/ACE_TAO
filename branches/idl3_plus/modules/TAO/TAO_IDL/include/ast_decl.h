@@ -167,6 +167,7 @@ public:
       , NT_publishes                // Denotes an event source
       , NT_emits                    // Denotes a one-to-one event source
       , NT_consumes                 // Denotes an event sink
+      , NT_ext_port                 // Denotes an extended port
   };
 
   // Operations.

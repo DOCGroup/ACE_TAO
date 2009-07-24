@@ -24,6 +24,8 @@ AST_PortType::AST_PortType (
                  false),
     AST_Decl (AST_Decl::NT_porttype,
               n),
+    AST_Type (AST_Decl::NT_porttype,
+              n),
     UTL_Scope (AST_Decl::NT_porttype),
     AST_Template_Common (template_params)
 {
@@ -36,7 +38,7 @@ AST_PortType::~AST_PortType (void)
 void
 AST_PortType::destroy (void)
 {
-  this->AST_Decl::destroy ();
+  this->AST_Type::destroy ();
   this->AST_Template_Common::destroy ();
 }
 

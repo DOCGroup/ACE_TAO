@@ -4,7 +4,7 @@
 #ifndef AST_PORTTYPE_H
 #define AST_PORTTYPE_H
 
-#include "ast_decl.h"
+#include "ast_type.h"
 #include "ast_template_common.h"
 #include "utl_scope.h"
 
@@ -15,7 +15,7 @@ class AST_Emits;
 class AST_Consumes;
 
 class TAO_IDL_FE_Export AST_PortType
-  : public virtual AST_Decl,
+  : public virtual AST_Type,
     public virtual UTL_Scope,
     public virtual AST_Template_Common
 {
