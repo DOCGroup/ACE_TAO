@@ -1,3 +1,9 @@
+Fri Jul 24 10:59:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/PIDL_Include/PIDLInclude.idl:
+        * tests/IDL_Test/PIDL_Include/PIDLInclude.mpc:
+          New test to reproduce a problem when including pidl files
+
 Thu Jul 23 16:26:17 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL_Test/Inherited_Component:
@@ -7,8 +13,8 @@ Thu Jul 23 16:26:17 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/IDL_Test/Inherited_Component/IhC_Foo.mpc:
 
           Test which demonstrates an inability to generate code properly
-          for inherited components. 
-        
+          for inherited components.
+
 Thu Jul 23 17:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
