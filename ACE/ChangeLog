@@ -1,7 +1,12 @@
+Fri Jul 24 08:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Only use the std98 flag for 3.80 and 3.85
+
 Fri Jul 24 08:25:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
 
         * ace/config-lynxos.h:
-        
+
           #define ACE_HAS_GETIFADDRS
 
 Fri Jul 24 07:18:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
