@@ -153,6 +153,12 @@ be_visitor::visit_consumes (be_consumes *)
   return 0;
 }
 
+int
+be_visitor::visit_extended_port (be_extended_port *)
+{
+  return 0;
+}
+
 int be_visitor::visit_home (be_home *)
 {
   return 0;

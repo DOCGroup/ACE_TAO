@@ -6,7 +6,8 @@
 
 AST_Consumes::AST_Consumes (UTL_ScopedName *n,
                             AST_EventType *consumes_type)
-  : COMMON_Base (),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_consumes,
               n),
     AST_Field (AST_Decl::NT_consumes,
