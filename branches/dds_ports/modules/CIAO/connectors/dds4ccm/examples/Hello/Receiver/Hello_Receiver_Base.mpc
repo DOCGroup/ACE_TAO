@@ -43,7 +43,7 @@ project(DDS_Hello_Receiver_Base_skel) : ciao_executor , ciao_example_output, dds
   after      +=  DDS_Hello_Receiver_Base_stub
   sharedname  = DDS_Hello_Receiver_Base_skel
   libs       += DDS_Hello_Receiver_Base_stub
-
+  libpaths   += ../lib
 
   dynamicflags = HELLO_RECEIVER_BASE_SKEL_BUILD_DLL
 

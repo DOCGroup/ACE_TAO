@@ -55,6 +55,7 @@ project(DDS_Hello_Sender_Base_skel) : ciao_executor, ciao_example_output, dds4cc
   after      +=  DDS_Hello_Sender_Base_stub
   sharedname  = DDS_Hello_Sender_Base_skel
   libs       += DDS_Hello_Sender_Base_stub
+  libpaths   += ../lib
 
   dynamicflags = HELLO_SENDER_BASE_SKEL_BUILD_DLL
 

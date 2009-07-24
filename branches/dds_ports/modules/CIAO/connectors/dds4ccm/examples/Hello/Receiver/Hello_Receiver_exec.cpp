@@ -106,14 +106,16 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   Receiver_exec_i::get_read_message_listener (void)
   {
     /* Your code here. */
-    // return ::CCM_DDS::CCM_string_RawListener::_nil ();
+    /// @todo
+    return ::CCM_DDS::CCM_string_RawListener::_nil ();
   }
   
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_read_message_status (void)
   {
     /* Your code here. */
-    // return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+    /// @todo
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
   
   // Operations from Components::SessionComponent.
