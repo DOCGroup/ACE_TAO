@@ -79,9 +79,9 @@ project(DDS_Hello_Sender_Connector_lem_stub) : ccm_svnt , ciao_example_output, d
 }
 
 project(DDS_Hello_Sender_Connector_exec) : ciao_executor , ciao_example_output, dds4ccm_skel, nddslib, ciao_dds4ccm_ndds_impl  {
-  after   += DDS_Hello_Sender_Connector_lem_stub DDS_Hello_Sender_Connector_stub DDS4CCM_lem_stub
+  after   += DDS_Hello_Sender_Connector_lem_stub DDS_Hello_Sender_Connector_stub DDS4CCM_lem_stub DDS_Hello_Sender_Base_stub
   sharedname = DDS_Hello_Sender_Connector_exec
-  libs += DDS_Hello_Sender_Connector_stub DDS_Hello_Sender_Connector_lem_stub
+  libs += DDS_Hello_Sender_Connector_stub DDS_Hello_Sender_Connector_lem_stub DDS_Hello_Sender_Base_stub
   libs += DDS4CCM_lem_stub
   libpaths += ../lib
   dynamicflags   = HELLO_SENDER_CONNECTOR_EXEC_BUILD_DLL

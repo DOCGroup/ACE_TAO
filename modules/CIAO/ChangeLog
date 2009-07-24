@@ -1,3 +1,13 @@
+Fri Jul 24 19:20:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc
+          More base project fixes
+
+        * connectors/dds4ccm/impl/ndds/Utils.cpp:
+          Simplified the conversion of return codes to string
+
 Fri Jul 24 18:34:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
