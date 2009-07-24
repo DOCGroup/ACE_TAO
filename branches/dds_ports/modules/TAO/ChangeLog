@@ -1,3 +1,9 @@
+Fri Jul 24 17:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/StringSeqE.idl:
+        * tao/StringSeqEC.h:
+          Temporarily added to get DDS4CCM compiling
+
 Tue Jul 21 11:43:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * be/be_helper.cpp:
