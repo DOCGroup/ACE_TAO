@@ -1,7 +1,7 @@
 // $Id$
 
 #include <Components.idl>
-#include <tao/StringSeq.pidl>
+#include "tao/StringSeq.pidl"
 
 interface foo_intf
 {
