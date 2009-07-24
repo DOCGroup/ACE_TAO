@@ -78,10 +78,10 @@ project(DDS_Hello_Receiver_Connector_lem_stub) : ccm_svnt , ciao_example_output,
   }
 }
 
-project(DDS_Hello_Receiver_Connector_exec) : ciao_executor , ciao_example_output, dds4ccm_base, nddslib  {
-  after   += DDS_Hello_Receiver_Connector_lem_stub DDS_Hello_Receiver_Connector_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub
+project(DDS_Hello_Receiver_Connector_exec) : ciao_executor , ciao_example_output, dds4ccm_base, nddslib, ciao_dds4ccm_ndds_impl  {
+  after   += DDS_Hello_Receiver_Connector_lem_stub DDS_Hello_Receiver_Connector_stub DDS4CCM_lem_stub
   sharedname = DDS_Hello_Receiver_Connector_exec
-  libs += DDS_Hello_Receiver_Connector_stub DDS_Hello_Receiver_Connector_lem_stub CIAO_DDS4CCM_NDDS_Impl
+  libs += DDS_Hello_Receiver_Connector_stub DDS_Hello_Receiver_Connector_lem_stub
   libs += DDS4CCM_lem_stub
   libpaths += ../lib
 
@@ -106,7 +106,7 @@ project(DDS_Hello_Receiver_Connector_exec) : ciao_executor , ciao_example_output
 
 
 project(Hello_Receiver_Connector_svnt) : ciao_servant , ciao_example_output, dds4ccm_skel  {
-  after      +=  DDS_Hello_Receiver_Base_skel
+  after      +=  DDS_Hello_Receiver_Base_skel DDS_Hello_Receiver_Connector_idl_gen DDS_Hello_Receiver_Connector_stub DDS_Hello_Receiver_Connector_lem_stub
   sharedname  = DDS_Hello_Receiver_Connector_svnt
   libs       += DDS_Hello_Receiver_Connector_stub DDS_Hello_Receiver_Connector_lem_stub  DDS_Hello_Receiver_Base_stub
   libs       += DDS_Hello_Receiver_Base_skel

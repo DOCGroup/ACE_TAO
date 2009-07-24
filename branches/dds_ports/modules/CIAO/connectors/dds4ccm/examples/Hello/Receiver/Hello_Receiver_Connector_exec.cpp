@@ -340,21 +340,24 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   Hello_receiver_Connector_exec_i::get_receiver_data (void)
   {
     /* Your code here. */
-    // return ::CCM_DDS::CCM_string_Reader::_nil ();
+    // @todo
+    return ::CCM_DDS::CCM_string_Reader::_nil ();
   }
   
   ::CCM_DDS::CCM_ListenerControl_ptr
   Hello_receiver_Connector_exec_i::get_receiver_control (void)
   {
     /* Your code here. */
-    // return ::CCM_DDS::CCM_ListenerControl::_nil ();
+    // @todo
+    return ::CCM_DDS::CCM_ListenerControl::_nil ();
   }
   
   ::DDS::CCM_DataReader_ptr
   Hello_receiver_Connector_exec_i::get_receiver_dds_entity (void)
   {
     /* Your code here. */
-    // return ::DDS::CCM_DataReader::_nil ();
+    // @todo
+    return ::DDS::CCM_DataReader::_nil ();
   }
   
   // Operations from Components::SessionComponent.

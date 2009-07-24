@@ -102,8 +102,8 @@ project(DDS_Hello_Sender_exec) : ciao_executor , ciao_example_output, dds4ccm_ba
 
 
 project(DDS_Hello_Sender_svnt) : ciao_servant , ciao_example_output, dds4ccm_base  {
-  after      +=  DDS_Hello_Sender_Base_stub
-  sharedname  = DDS_Hello_Sender_svnt
+  after      +=  DDS_Hello_Sender_Base_stub DDS_Hello_Sender_lem_stub DDS_Hello_Sender_stub
+  sharedname  = DDS_Hello_Sender_svnt 
   libs       += DDS_Hello_Sender_stub DDS_Hello_Sender_lem_stub  DDS_Hello_Sender_Base_stub
   libpaths    += ../lib
 

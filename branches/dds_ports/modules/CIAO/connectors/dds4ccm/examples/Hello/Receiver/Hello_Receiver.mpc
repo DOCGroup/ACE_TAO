@@ -106,7 +106,7 @@ project(DDS_Hello_Receiver_exec) : ciao_executor , ciao_example_output, dds4ccm_
 
 
 project(DDS_Hello_Receiver_svnt) : ciao_servant, ciao_example_output, dds4ccm_skel  {
-  after      +=  DDS_Hello_Receiver_Base_stub DDS_Hello_Receiver_Base_skel
+  after      +=  DDS_Hello_Receiver_Base_stub DDS_Hello_Receiver_Base_skel DDS_Hello_Receiver_idl_gen DDS_Hello_Receiver_lem_stub
   sharedname  = DDS_Hello_Receiver_svnt
   libs       += DDS_Hello_Receiver_stub DDS_Hello_Receiver_lem_stub  DDS_Hello_Receiver_Base_stub DDS_Hello_Receiver_Base_skel
   libpaths    += ../lib

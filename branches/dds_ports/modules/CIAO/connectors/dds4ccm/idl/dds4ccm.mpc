@@ -25,6 +25,7 @@ project (DDS4CCM_idl_gen) : ciaoidldefaults, anytypecode {
 
 project (DDS4CCM_lem_gen) : ciaoidldefaults, anytypecode {
   custom_only = 1
+  after += DDS4CCM_idl_gen
   idlflags += -I$(CIAO_ROOT)/connectors \
               -Wb,stub_export_macro=DDS4CCM_LEM_STUB_Export \
               -Wb,stub_export_include=dds4ccm_lem_stub_export.h 
