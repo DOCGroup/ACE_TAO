@@ -15,7 +15,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_Receiver_Impl</string>
+          <string>create_Hello_AMI_ReceiverComp_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -37,7 +37,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Receiver_Servant</string>
+          <string>create_Hello_AMI_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -66,7 +66,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_Sender_Impl</string>
+          <string>create_Hello_AMI_SenderComp_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -88,7 +88,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Sender_Servant</string>
+          <string>create_Hello_AMI_Sender_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -177,7 +177,7 @@
     <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
     <source/>
     <node/>
-    <location>Receiver_svnt</location>
+    <location>Hello_Receiver_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -185,7 +185,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverHome_Servant</string>
+          <string>create_Hello_AMI_ReceiverHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -203,7 +203,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverHome_Impl</string>
+          <string>create_Hello_AMI_ReceiverHome_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -213,7 +213,7 @@
     <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
     <source/>
     <node/>
-    <location>Sender_svnt</location>
+    <location>Hello_Sender_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -221,7 +221,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderHome_Servant</string>
+          <string>create_Hello_AMI_SenderHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -239,7 +239,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderHome_Impl</string>
+          <string>create_Hello_AMI_SenderHome_Impl</string>
         </value>
       </value>
     </execParameter>

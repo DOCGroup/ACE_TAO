@@ -103,7 +103,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   };
   
   extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_Sender_Impl (void);
+  create_Hello_AMI_SenderComp_Impl (void);
 }
 
 namespace CIAO_Hello_AMI_Sender_Impl

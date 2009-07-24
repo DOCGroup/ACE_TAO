@@ -103,7 +103,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   };
   
   extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_Receiver_Impl (void);
+  create_Hello_AMI_ReceiverComp_Impl (void);
 }
 
 namespace CIAO_Hello_AMI_Receiver_Impl
@@ -118,7 +118,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual ~ReceiverHome_exec_i (void);
     
     // All operations and attributes.
-    
+
     // Factory operations.
     
     // Finder operations.
