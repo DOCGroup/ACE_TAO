@@ -254,8 +254,13 @@ namespace TAO
      * exception. Success alone is returned through the return value.
      */
 
-    int const reply_error =
-      this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
+    bool const
+      expired= (max_wait_time && ACE_Time_Value::zero == *max_wait_time);
+    if (expired)
+      errno= ETIME;
+    int const
+      reply_error = expired ? -1 :
+        this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
 
     if (TAO_debug_level > 0 && max_wait_time)
       {

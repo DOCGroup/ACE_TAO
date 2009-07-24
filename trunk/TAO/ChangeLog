@@ -1,3 +1,14 @@
+Fri Jul 24 08:25:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * tao/Synch_Invocation.cpp:
+        * tests/Bug_3333_Regression/client.cpp:
+
+          If given, enforce the round-trip timeout value of zero.
+          (If the countdown time actually reaches zero, it actually
+          means we have timedout, not that it now doesn't have any
+          timeout value! Some OS's assume a timeout value of zero
+          means no timeout.)
+
 Thu Jul 23 17:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
