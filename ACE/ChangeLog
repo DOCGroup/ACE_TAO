@@ -1,3 +1,8 @@
+Fri Jul 24 07:14:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Corrected gperf library name
+
 Thu Jul 23 18:40:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3710_Regression_Test.cpp:
