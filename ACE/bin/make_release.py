@@ -448,6 +448,17 @@ def get_comp_versions (component):
                       str (comp_versions[component + "_minor"])
 
 
+def update_latest_tag (which, branch):
+    """ Update one of the Latest_* tags externals to point the new release """
+    global opts
+    root_anon = re.sub ("^https:", "svn:", opts.repo_root)
+    propval = """ACE_wrappers %sMiddleware/tags/%s/ACE
+ACE_wrappers/TAO %sMiddleware/tags/%s/TAO
+ACE_wrappers/TAO/CIAO %sMiddleware/tags/%s/CIAO
+""" % (root_anon, branch, root_anon, branch, root_anon, branch)
+    svn_client.propset ("svn:externals", propval,
+                        opts.repo_root + "/Middleware/tags/Latest_" + which)
+
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
     global comp_versions, opts
@@ -458,6 +469,17 @@ def tag ():
     # Tag middleware
     svn_client.copy (opts.repo_root + "/Middleware/trunk",
                      opts.repo_root + "/Middleware/tags/" + branch)
+
+    # Update latest tag
+    if opts.release_type == "major":
+        update_latest_tag ("Major", branch)
+    elif opts.release_type == "minor":
+        update_latest_tag ("Minor", branch)
+    elif opts.release_type == "beta":
+        update_latest_tag ("Beta", branch)
+        update_latest_tag ("Micro", branch)
+        if comp_versions["ACE_beta"] == 1:
+                update_latest_tag ("BFO", branch)
 
     # Tag MPC
     svn_client.copy (opts.repo_root + "/MPC/trunk",
