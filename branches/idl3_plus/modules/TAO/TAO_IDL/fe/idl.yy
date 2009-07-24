@@ -4808,6 +4808,16 @@ component_export
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
+        | extended_port_decl
+        {
+//      | extended_port_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
         ;
 
 provides_decl : IDL_PROVIDES interface_type id
@@ -6307,6 +6317,25 @@ extended_uses_decl
           $3 = 0;
         }
         ;
+
+extended_port_decl
+        : IDL_PORT template_inst IDENTIFIER
+        {
+// extended_port_decl : IDL_PORT template_inst IDENTIFIER
+        }
+        | IDL_PORT scoped_name IDENTIFIER
+        {
+//      | IDL_PORT scoped_name IDENTIFIER
+        }
+        ;
+
+template_inst
+        : scoped_name '<' at_least_one_scoped_name '>'
+        {
+// template_inst : scoped_name '<' at_least_one_scoped_name '>'
+        }
+        ;
+
 
 %%
 /* programs */
