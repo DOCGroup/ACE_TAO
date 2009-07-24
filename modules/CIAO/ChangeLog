@@ -1,3 +1,8 @@
+Fri Jul 24 09:18:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO.mwc:
+          Added connectors directory
+
 Fri Jul 10 17:13:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
@@ -17,11 +22,11 @@ Fri Jul 10 17:13:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
           sender connector and the sender component.  When deployed, the sender connector
           will register with DDS, and the sender component will use dds4ccm defined interfaces
           to send a series of messages.  Currently, this can be tested by using the ndds
-          Hello_simple example. 
-        
+          Hello_simple example.
+
           It should be noted that Hello_Sender_ConnectorE.idl IS checked in because it
           is hand-modified to remove the CCM_DataWriter interface until such a time
-          as the support for lem force all can be worked out. 
+          as the support for lem force all can be worked out.
 
         * connectors/dds4ccm/impl/ndds/DataWriter.h:
         * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
@@ -45,8 +50,8 @@ Fri Jul 10 17:13:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Initial implementation of the DataWriter, and a minimum of the IDL-defined
           DDS DCPS interfaces as a wrapper facade for RTI DDS as needed to implement
-          basic writing functionality. 
-        
+          basic writing functionality.
+
         * connectors/dds4ccm/impl/ndds/ListnerControl.h:
         * connectors/dds4ccm/impl/ndds/ListnerControl.cpp:
         * connectors/dds4ccm/impl/ndds/Writer.cpp:
