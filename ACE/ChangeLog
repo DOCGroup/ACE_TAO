@@ -1,3 +1,9 @@
+Fri Jul 24 08:25:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * ace/config-lynxos.h:
+        
+          #define ACE_HAS_GETIFADDRS
+
 Fri Jul 24 07:18:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
@@ -418,7 +424,6 @@ Tue Jul 14 11:12:20 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
            * contrib/utility:
 
              Removed these files.
-
 
 Tue Jul 14 02:44:58 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
