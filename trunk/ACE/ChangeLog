@@ -1,3 +1,8 @@
+Fri Jul 24 09:33:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set ndds to 0 by default
+
 Fri Jul 24 08:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.spec:
