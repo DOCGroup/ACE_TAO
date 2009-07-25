@@ -1,9 +1,15 @@
+Sat Jul 25 13:05:03 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * tests/IDL_Test/Inherited_Component/IhC_Foo.mpc:
+
+          Add -Gex. 
+        
 Fri Jul 24 11:26:23 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
 
-         Disabled this test until its fixed. 
-        
+         Disabled this test until its fixed.
+
 Fri Jul 24 10:59:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/PIDL_Include/PIDLInclude.idl:
