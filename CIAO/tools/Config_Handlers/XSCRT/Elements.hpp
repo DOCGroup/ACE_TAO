@@ -1,4 +1,4 @@
-// file      : XSCRT/Elements.hpp
+o// file      : XSCRT/Elements.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -292,7 +292,7 @@ namespace XSCRT
 
 #if ((defined (__GNUC__) && (__GNUC__ == 3 && (__GNUC_MINOR__ < 3))) || \
     (defined (__BORLANDC__) && (__BORLANDC__ < 0x620)) || \
-    (defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x570)))
+    (defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x5100)))
 
   // Stuff for broken VC6 & gcc < 3.3. Don't like what you see - use better
   // compiler!
