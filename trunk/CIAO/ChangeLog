@@ -1,9 +1,14 @@
+Sun Jul 26 07:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+          Updated for Sun Studio 12
+
 Sat Jul 25 13:05:03 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * tests/IDL_Test/Inherited_Component/IhC_Foo.mpc:
 
-          Add -Gex. 
-        
+          Add -Gex.
+
 Fri Jul 24 11:26:23 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
