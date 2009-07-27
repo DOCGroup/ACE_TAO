@@ -111,6 +111,7 @@ project(Hello_Receiver_Connector_svnt) : ciao_servant , ciao_example_output, dds
   libs       += DDS_Hello_Receiver_Connector_stub DDS_Hello_Receiver_Connector_lem_stub  DDS_Hello_Receiver_Base_stub
   libs       += DDS_Hello_Receiver_Base_skel
   libpaths   += ../lib
+  libs += DDS4CCM_lem_stub
 
   dynamicflags = HELLO_RECEIVER_CONNECTOR_SVNT_BUILD_DLL
 

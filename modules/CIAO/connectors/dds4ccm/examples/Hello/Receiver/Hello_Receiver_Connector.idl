@@ -16,10 +16,12 @@ module Hello_DDS
     provides CCM_DDS::string_Reader receiver_data;
     provides CCM_DDS::ListenerControl receiver_control;
     uses CCM_DDS::string_RawListener receiver_listener;
+#ifndef AVOID_E_IDL
     provides DDS::DataReader receiver_dds_entity;
+#endif
     uses CCM_DDS::PortStatusListener receiver_status;
   };
-  
+
   home ReceiverConnectorHome manages Hello_receiver_Connector
   {
   };

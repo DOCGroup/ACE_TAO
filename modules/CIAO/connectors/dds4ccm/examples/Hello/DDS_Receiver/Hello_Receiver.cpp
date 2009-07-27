@@ -76,7 +76,7 @@ int ACE_TMAIN(int, ACE_TCHAR*[]) {
 clean_exit:
     DDS_ReturnCode_t retcode;
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Exiting.")));
-    if (participant != 0) {
+    if (participant) {
         retcode = participant->delete_contained_entities();
         if (retcode != DDS_RETCODE_OK) {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
@@ -132,11 +132,4 @@ void HelloListener::on_data_available(DDSDataReader *reader) {
         }
     }
 }
-
-
-
-
-
-
-
 

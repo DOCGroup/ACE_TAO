@@ -113,7 +113,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     main_result = 0;
 clean_exit:
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Exiting.")));
-    if (!participant) {
+    if (participant) {
         retcode = participant->delete_contained_entities();
         if (retcode != DDS_RETCODE_OK) {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
