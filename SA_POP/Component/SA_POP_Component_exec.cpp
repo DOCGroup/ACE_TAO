@@ -98,7 +98,7 @@ namespace CIAO
           ::Components::SessionContext_ptr ctx)
         {
           this->context_ =
-            SA_POP_Component_Context::_narrow (
+            CIAO_CIAO_RACE_SA_POP_SA_POP_Component_Impl::SA_POP_Component_Context::_narrow (
               ctx
               );
 

@@ -1,0 +1,4 @@
+project : race_common {
+  libs += RACE_utils
+  after += RACE_utils
+}

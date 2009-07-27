@@ -12,7 +12,7 @@
  */
 
 #include <Components.idl>
-#include "ciao/Deployment_Target_Data.idl"
+#include "DAnCE/Deployment/Deployment_TargetData.idl"
 #include "TargetManager/TargetManagerExt.idl"
 #include "Interface.idl"
 #include "Monitor/Central_Monitor/Monitor.idl"

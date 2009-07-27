@@ -1,0 +1,4 @@
+project : race_opstring {
+  after += SA_POP_Input_Adapter_stub
+  libs += SA_POP_Input_Adapter_stub
+}

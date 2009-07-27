@@ -35,7 +35,7 @@ namespace CIAO
         (::Components::SessionContext_ptr ctx)
         {
           this->context_ =
-            SA_POP_IA_Component_Context::_narrow (ctx);
+            CIAO_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Impl::SA_POP_IA_Component_Context::_narrow (ctx);
 
           if (this->context_ == 0)
             {

@@ -1,0 +1,4 @@
+project : race_ia_stub {
+  after += Input_Adapter_Base_lem_stub
+  libs += Input_Adapter_Base_lem_stub
+}

@@ -41,7 +41,7 @@ namespace CIAO
       namespace CIDL_Tester_Component_Impl
       {
         class TESTER_COMPONENT_EXEC_Export Tester_Component_exec_i
-          : public virtual Tester_Component_Exec,
+          : public virtual CIAO_CIAO_RACE_SA_POP_Tester_Component_Impl::Tester_Component_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
@@ -90,11 +90,11 @@ namespace CIAO
           virtual void ccm_remove ();
 
           protected:
-          Tester_Component_Context *context_;
+          CIAO_CIAO_RACE_SA_POP_Tester_Component_Impl::Tester_Component_Context *context_;
         };
 
         class TESTER_COMPONENT_EXEC_Export Tester_Component_Home_exec_i
-          : public virtual Tester_Component_Home_Exec,
+          : public virtual CIAO_CIAO_RACE_SA_POP_Tester_Component_Impl::Tester_Component_Home_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:

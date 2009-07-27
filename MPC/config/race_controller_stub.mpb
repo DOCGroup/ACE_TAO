@@ -1,0 +1,4 @@
+project : tm_proxy_stub {
+   after += Controller_Base_stub
+   libs += Controller_Base_stub
+}

@@ -4,7 +4,7 @@
 #include "ConductorEC.h"
 #include "Conductor_exec_export.h"
 #include "tao/LocalObject.h"
-#include "Logger.h"
+#include "utils/Logger.h"
 
 namespace CIAO
 {

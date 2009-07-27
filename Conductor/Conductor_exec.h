@@ -11,7 +11,7 @@
 
 #include "Conductor_exec_export.h"
 #include "tao/LocalObject.h"
-#include "Logger.h"
+#include "utils/Logger.h"
 
 namespace CIAO
 {
@@ -22,7 +22,7 @@ namespace CIAO
       namespace CIDL_Conductor_Component_Impl
       {
         class CONDUCTOR_EXEC_Export Conductor_Component_exec_i
-          : public virtual Conductor_Component_Exec,
+          : public virtual CIAO_CIAO_RACE_Conductor_Conductor_Component_Impl::Conductor_Component_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
@@ -54,7 +54,7 @@ namespace CIAO
         };
 
         class CONDUCTOR_EXEC_Export Conductor_Component_Home_exec_i
-          : public virtual Conductor_Component_Home_Exec,
+          : public virtual CIAO_CIAO_RACE_Conductor_Conductor_Component_Impl::Conductor_Component_Home_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:

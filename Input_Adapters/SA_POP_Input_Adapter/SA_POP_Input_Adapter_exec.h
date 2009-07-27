@@ -4,7 +4,7 @@
 #include "SA_POP_Input_Adapter_svnt.h"
 #include "SA_POP_Input_Adapter_exec_export.h"
 #include "tao/LocalObject.h"
-#include "Logger.h"
+#include "utils/Logger.h"
 
 namespace CIAO
 {
@@ -15,7 +15,7 @@ namespace CIAO
       namespace CIDL_SA_POP_IA_Component_Impl
       {
         class SA_POP_INPUT_ADAPTER_EXEC_Export SA_POP_IA_Component_exec_i
-          : public virtual SA_POP_IA_Component_Exec,
+          : public virtual CIAO_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Impl::SA_POP_IA_Component_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
@@ -40,14 +40,14 @@ namespace CIAO
           virtual void ccm_remove ();
 
           protected:
-          SA_POP_IA_Component_Context *context_;
+          CIAO_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Impl::SA_POP_IA_Component_Context *context_;
 
           private:
           Logger logger_;
         };
 
         class SA_POP_INPUT_ADAPTER_EXEC_Export SA_POP_IA_Component_Home_exec_i
-          : public virtual SA_POP_IA_Component_Home_Exec,
+          : public virtual CIAO_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Impl::SA_POP_IA_Component_Home_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:

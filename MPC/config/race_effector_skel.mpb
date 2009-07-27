@@ -1,0 +1,4 @@
+project : race_effector_lem {
+  libs += Effector_Base_skel
+  after += Effector_Base_skel
+}

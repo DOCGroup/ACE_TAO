@@ -65,7 +65,7 @@ namespace CIAO
 */
 
         class SA_POP_COMPONENT_EXEC_Export SA_POP_Component_exec_i
-          : public virtual SA_POP_Component_Exec,
+          : public virtual CIAO_CIAO_RACE_SA_POP_SA_POP_Component_Impl::SA_POP_Component_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
@@ -99,11 +99,11 @@ namespace CIAO
           virtual void ccm_remove ();
 
           protected:
-          SA_POP_Component_Context *context_;
+          CIAO_CIAO_RACE_SA_POP_SA_POP_Component_Impl::SA_POP_Component_Context *context_;
         };
 
         class SA_POP_COMPONENT_EXEC_Export SA_POP_Component_Home_exec_i
-          : public virtual SA_POP_Component_Home_Exec,
+          : public virtual CIAO_CIAO_RACE_SA_POP_SA_POP_Component_Impl::SA_POP_Component_Home_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:

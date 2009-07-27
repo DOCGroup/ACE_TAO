@@ -1,0 +1,4 @@
+project : race_common, dance_deployment_stub {
+   after += OpString_stub
+   libs += OpString_stub
+}

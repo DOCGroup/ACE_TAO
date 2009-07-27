@@ -6,6 +6,7 @@
 #include "common/OpString.idl"
 #include "common/RACE_common.idl"
 #include "Input_Adapters/Base/Input_Adapter_Base.idl"
+#include "Input_Adapters/Base/Input_Adapter_BaseE.idl"
 
 module CIAO
 {

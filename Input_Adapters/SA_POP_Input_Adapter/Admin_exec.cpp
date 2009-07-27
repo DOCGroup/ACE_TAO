@@ -9,7 +9,7 @@ namespace CIAO
     {
       namespace CIDL_SA_POP_IA_Component_Impl
       {
-        Admin_exec_i::Admin_exec_i (SA_POP_IA_Component_Context *context,
+        Admin_exec_i::Admin_exec_i (CIAO_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Impl::SA_POP_IA_Component_Context *context,
                                     Logger &logger)
           : logger_ (logger)
         {

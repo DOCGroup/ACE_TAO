@@ -1,0 +1,4 @@
+project : race_common {
+  libs += Callback_stub
+  after += Callback_stub
+}

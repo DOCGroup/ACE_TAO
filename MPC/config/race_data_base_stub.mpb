@@ -1,0 +1,4 @@
+project : race_opstring {
+  after += Data_Base_stub
+  libs += Data_Base_stub
+}

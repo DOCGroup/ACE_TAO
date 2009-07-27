@@ -28,7 +28,7 @@ namespace CIAO
 
 
         class DATA_BASE_EXEC_Export Data_Base_Component_exec_i
-          : public virtual Data_Base_Component_Exec,
+          : public virtual CIAO_CIAO_RACE_Data_Base_Data_Base_Component_Impl::Data_Base_Component_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
@@ -57,7 +57,7 @@ namespace CIAO
           virtual void ccm_remove ();
 
           protected:
-          Data_Base_Component_Context *context_;
+          CIAO_CIAO_RACE_Data_Base_Data_Base_Component_Impl::Data_Base_Component_Context *context_;
 
           private:
           ACE_Hash_Map_Manager_Ex
@@ -73,7 +73,7 @@ namespace CIAO
         };
 
         class DATA_BASE_EXEC_Export Data_Base_Component_Home_exec_i
-          : public virtual Data_Base_Component_Home_Exec,
+          : public virtual CIAO_CIAO_RACE_Data_Base_Data_Base_Component_Impl::Data_Base_Component_Home_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:

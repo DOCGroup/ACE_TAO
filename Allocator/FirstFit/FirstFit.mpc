@@ -1,41 +1,65 @@
-project(FirstFit_idl_gen) : taoidldefaults, anytypecode, race_idl {
-  avoids += ace_for_tao
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b race_common -p Allocator_Base FirstFit"
+
+project(Allocator_Base_FirstFit_idl_gen) : componentidldefaults , race_idl  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=FIRSTFIT_STUB_Export \
               -Wb,stub_export_include=FirstFit_stub_export.h \
               -Wb,skel_export_macro=FIRSTFIT_SVNT_Export \
-              -Wb,skel_export_include=FirstFit_svnt_export.h
+              -Wb,skel_export_include=FirstFit_svnt_export.h \
+              -Wb,exec_export_macro=FIRSTFIT_EXEC_Export \
+              -Wb,exec_export_include=FirstFit_exec_export.h 
+             
+
+  idlflags -= -Gsv
 
   IDL_Files {
     FirstFit.idl
   }
 }
 
-project(FirstFit_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
-  avoids += ace_for_tao
+project(Allocator_Base_FirstFit_lem_gen) : ciaoidldefaults , race_idl  {
+  after += Allocator_Base_FirstFit_idl_gen
   custom_only = 1
-  cidlflags += --svnt-export-macro FIRSTFIT_SVNT_Export \
-               --svnt-export-include FirstFit_svnt_export.h
+  idlflags += -Wb,stub_export_macro=FIRSTFIT_LEM_STUB_Export \
+              -Wb,stub_export_include=FirstFit_lem_stub_export.h \
+              -SS -Gxhst
 
-	
-  idlflags += -Wb,export_macro=FIRSTFIT_EXEC_Export \
-              -Wb,export_include=FirstFit_exec_export.h \
-              -SS
-              
-  CIDL_Files {
-    FirstFit.cidl
-  }
-  
   IDL_Files {
     FirstFitE.idl
   }
 }
 
-project(FirstFit_stub) : ccm_stub, race_common {
-  avoids += ace_for_tao
-  after += FirstFit_idl_gen 
-  libs  += Allocator_Base_stub  
+project(Allocator_Base_FirstFit_lem_stub) : ccm_svnt , race_common, race_allocator_lem  {
+  after += Allocator_Base_FirstFit_lem_gen Allocator_Base_FirstFit_stub Allocator_Base_stub
+  libs  += Allocator_Base_stub FirstFit_stub
+  
+  
+  sharedname = FirstFit_lem_stub
+  dynamicflags   = FIRSTFIT_LEM_STUB_BUILD_DLL
 
+  IDL_Files {
+  }
+
+  Source_Files {
+    FirstFitEC.cpp
+  }
+
+  Header_Files {
+    FirstFitEC.h
+    FirstFit_lem_stub_export.h
+  }
+
+  Inline_Files {
+    FirstFitEC.inl
+  }
+}
+
+project(Allocator_Base_FirstFit_stub) : ccm_stub , race_common, race_allocator_stub  {
+  after += Allocator_Base_FirstFit_idl_gen Allocator_Base_stub
+  libs  += Allocator_Base_stub
+  
+  
   sharedname = FirstFit_stub
   dynamicflags   = FIRSTFIT_STUB_BUILD_DLL
 
@@ -56,16 +80,11 @@ project(FirstFit_stub) : ccm_stub, race_common {
   }
 }
 
-project(FirstFit_exec) : ciao_executor, ciao_config_handlers, race_common {
-  avoids += ace_for_tao
-  after   += FirstFit_cidl_gen FirstFit_stub
+project(Allocator_Base_FirstFit_exec) : ciao_executor , race_common, race_allocator_lem, ciao_config_handlers  {
+  after   += Allocator_Base_FirstFit_lem_stub Allocator_Base_FirstFit_stub
   sharedname = FirstFit_exec
-  libs += FirstFit_stub \
-          Allocator_Base_stub \
-          RACE_utils \
-          OpString_stub \
-          RACE_common_stub \
-          TM_Proxy_Component_stub 
+  libs += FirstFit_stub FirstFit_lem_stub Allocator_Base_stub
+  
   
   dynamicflags   = FIRSTFIT_EXEC_BUILD_DLL
 
@@ -73,40 +92,30 @@ project(FirstFit_exec) : ciao_executor, ciao_config_handlers, race_common {
   }
 
   Source_Files {
-    FirstFitEC.cpp
     FirstFit_exec.cpp
+    Single_D_BP.cpp
   }
-  
+
   Header_Files {
-    FirstFitEC.h
     FirstFit_exec.h
     FirstFit_exec_export.h
   }
-  
+
   Inline_Files {
-    FirstFitEC.inl
   }
 }
 
 
-project(FirstFit_svnt) : ciao_servant, race_common {
-  avoids += ace_for_tao
-  after      +=  FirstFit_exec
+project(Allocator_Base_FirstFit_svnt) : ciao_servant , race_common, race_allocator_skel  {
+  after      += Allocator_Base_skel  Allocator_Base_FirstFit_lem_stub
   sharedname  = FirstFit_svnt
-  libs       += FirstFit_exec \
-                FirstFit_stub \
-                Allocator_Base_svnt \
-                Allocator_Base_stub \
-                OpString_stub \
-                RACE_common_stub \
-                TM_Proxy_Component_stub 
-
+  libs       += FirstFit_stub FirstFit_lem_stub  \
+                Allocator_Base_skel \
+                Allocator_Base_stub
+  
   
   dynamicflags = FIRSTFIT_SVNT_BUILD_DLL
   
-  CIDL_Files {
-  }
-
   IDL_Files {
   }
 
@@ -114,13 +123,13 @@ project(FirstFit_svnt) : ciao_servant, race_common {
     FirstFitS.cpp
     FirstFit_svnt.cpp
   }
-  
+
   Header_Files {
     FirstFitS.h
     FirstFit_svnt.h
     FirstFit_svnt_export.h
   }
-  
+
   Inline_Files {
     FirstFitS.inl
   }

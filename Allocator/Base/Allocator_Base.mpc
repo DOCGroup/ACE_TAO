@@ -1,27 +1,61 @@
-project(Allocator_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
-  avoids += ace_for_tao
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b race_common, dance_deployment_stub Allocator_Base"
+
+project(Allocator_Base_idl_gen) : componentidldefaults , race_idl  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ALLOCATOR_BASE_STUB_Export \
               -Wb,stub_export_include=Allocator_Base_stub_export.h \
               -Wb,skel_export_macro=ALLOCATOR_BASE_SVNT_Export \
-              -Wb,skel_export_include=Allocator_Base_svnt_export.h
+              -Wb,skel_export_include=Allocator_Base_svnt_export.h \
+              -Wb,exec_export_macro=ALLOCATOR_BASE_EXEC_Export \
+              -Wb,exec_export_include=Allocator_Base_exec_export.h
 
   IDL_Files {
     Allocator_Base.idl
   }
 }
 
-project(Allocator_Base_stub) : ccm_stub, race_common {
-  avoids += ace_for_tao
-  after += Allocator_Base_idl_gen \
-           OpString_stub \
-           RACE_common_stub \
-           TM_Proxy_stub 
+project(Allocator_Base_lem_gen) : ciaoidldefaults , race_idl  {
+  after += Allocator_Base_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ALLOCATOR_BASE_LEM_STUB_Export \
+              -Wb,stub_export_include=Allocator_Base_lem_stub_export.h \
+              -SS -Gxhst
 
-  libs  += OpString_stub \
-           RACE_common_stub \
-           TM_Proxy_Component_stub 
+  IDL_Files {
+    Allocator_BaseE.idl
+  }
+}
 
+project(Allocator_Base_lem_stub) : ccm_svnt , race_common, dance_deployment_stub, tm_proxy_stub, race_opstring  {
+  after += Allocator_Base_lem_gen Allocator_Base_stub 
+  libs  +=  Allocator_Base_stub
+  
+  
+  sharedname = Allocator_Base_lem_stub
+  dynamicflags   = ALLOCATOR_BASE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Allocator_BaseEC.cpp
+  }
+
+  Header_Files {
+    Allocator_BaseEC.h
+    Allocator_Base_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Allocator_BaseEC.inl
+  }
+}
+
+project(Allocator_Base_stub) : ccm_stub, race_common, dance_deployment_stub, tm_proxy_stub, race_opstring   {
+  after += Allocator_Base_idl_gen 
+  libs  += 
+  
   
   sharedname = Allocator_Base_stub
   dynamicflags   = ALLOCATOR_BASE_STUB_BUILD_DLL
@@ -43,31 +77,28 @@ project(Allocator_Base_stub) : ccm_stub, race_common {
   }
 }
 
-project(Allocator_Base_svnt) : ciao_servant, race_common {
-  avoids += ace_for_tao
-  after      +=  Allocator_Base_exec
-  sharedname  = Allocator_Base_svnt
-  libs       += Allocator_Base_stub \
-                OpString_stub \
-                RACE_common_stub \
-                TM_Proxy_Component_stub
+project(Allocator_Base_skel) : ciao_servant, race_common,  dance_deployment_stub, tm_proxy_stub, race_opstring   {
+  after      +=   Allocator_Base_lem_stub
+  sharedname  = Allocator_Base_skel
+  libs       += Allocator_Base_stub Allocator_Base_lem_stub  
+  
   
   dynamicflags = ALLOCATOR_BASE_SVNT_BUILD_DLL
   
-  CIDL_Files {
-  }
-
   IDL_Files {
   }
 
   Source_Files {
     Allocator_BaseS.cpp
+    Allocator_Base_svnt.cpp
   }
-  
+
   Header_Files {
     Allocator_BaseS.h
+    Allocator_Base_svnt.h
+    Allocator_Base_svnt_export.h
   }
-  
+
   Inline_Files {
     Allocator_BaseS.inl
   }

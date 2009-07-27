@@ -1,109 +1,140 @@
 // $Id$
+// This file is generated with "generate_component_mpc.pl -b race_opstring -c tester_client Tester_Component"
 
-project(Tester_Component_stub): ccm_stub, dance_deployment_stub, race_idl {
-  
-  sharedname = Tester_Component_stub
-  
-  after += SA_POP_Component_stub SA_POP_Input_Adapter_stub OpString_stub \
-          RACE_common_stub
-
-
-  libs += SA_POP_Component_stub SA_POP_IA_Component_stub OpString_stub \
-          RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
-
-
-
-  idlflags -= -GT
-  idlflags += -St \
-              -Wb,stub_export_macro=TESTER_COMPONENT_STUB_Export \
+project(Tester_Component_idl_gen) : componentidldefaults , race_idl  {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=TESTER_COMPONENT_STUB_Export \
               -Wb,stub_export_include=Tester_Component_stub_export.h \
               -Wb,skel_export_macro=TESTER_COMPONENT_SVNT_Export \
-              -Wb,skel_export_include=Tester_Component_svnt_export.h
-
-  dynamicflags   = TESTER_COMPONENT_STUB_BUILD_DLL
+              -Wb,skel_export_include=Tester_Component_svnt_export.h \
+              -Wb,exec_export_macro=TESTER_COMPONENT_EXEC_Export \
+              -Wb,exec_export_include=Tester_Component_exec_export.h
 
   IDL_Files {
     Tester_Component.idl
+  }
+}
+
+project(Tester_Component_lem_gen) : ciaoidldefaults , race_idl  {
+  after += Tester_Component_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=TESTER_COMPONENT_LEM_STUB_Export \
+              -Wb,stub_export_include=Tester_Component_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    Tester_ComponentE.idl
+  }
+}
+
+project(Tester_Component_lem_stub) : ccm_svnt , race_opstring, race_ia_stub, sa_pop_ia_admin  {
+  after += Tester_Component_lem_gen Tester_Component_stub SA_POP_Component_stub
+  libs  +=  Tester_Component_stub SA_POP_Component_stub
+  
+  
+  sharedname = Tester_Component_lem_stub
+  dynamicflags   = TESTER_COMPONENT_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Tester_ComponentEC.cpp
+  }
+
+  Header_Files {
+    Tester_ComponentEC.h
+    Tester_Component_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Tester_ComponentEC.inl
+  }
+}
+
+project(Tester_Component_stub) : ccm_stub , race_opstring, race_ia_stub, sa_pop_ia_admin  {
+  after += Tester_Component_idl_gen SA_POP_Component_stub
+  libs  +=  SA_POP_Component_stub
+  
+  
+  sharedname = Tester_Component_stub
+  dynamicflags   = TESTER_COMPONENT_STUB_BUILD_DLL
+
+  IDL_Files {
   }
 
   Source_Files {
     Tester_ComponentC.cpp
   }
-}
 
-project(Tester_Component_svnt) : ciao_servant, race_idl {
-  after      +=  Tester_Component_stub
-  sharedname  = Tester_Component_svnt
-  libs       += Tester_Component_stub \
-                SA_POP_IA_Component_stub \
-                OpString_stub \
-                SA_POP_Component_stub \
-                RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
-                
-
-   
-  idlflags -= -GT
-  idlflags += -St -SS \
-              -Wb,export_macro=TESTER_COMPONENT_SVNT_Export \
-              -Wb,export_include=Tester_Component_svnt_export.h
-
-
-//  cidlflags += -I $(RACE_ROOT) --gen-exec-impl
-  cidlflags += -I $(RACE_ROOT)
-
-  dynamicflags = TESTER_COMPONENT_SVNT_BUILD_DLL
-  
-  CIDL_Files {
-    Tester_Component.cidl
+  Header_Files {
+    Tester_ComponentC.h
+    Tester_Component_stub_export.h
   }
 
-  IDL_Files {
-    Tester_ComponentE.idl
-  }
-
-  Source_Files {
-    Tester_ComponentEC.cpp
-    Tester_ComponentS.cpp
-    Tester_Component_svnt.cpp
+  Inline_Files {
+    Tester_ComponentC.inl
   }
 }
 
-project(Tester_Component_exec) : ciao_executor, race_common, dance_deployment_stub {
-  after   += Tester_Component_svnt
+project(Tester_Component_exec) : ciao_executor , race_opstring, race_ia_stub, sa_pop_ia_admin  {
+  after   += Tester_Component_lem_stub Tester_Component_stub Tester_Component_svnt SA_POP_Component_stub
   sharedname = Tester_Component_exec
-
-  libs += Tester_Component_stub Tester_Component_svnt \
-                SA_POP_IA_Component_stub \
-                OpString_stub \
-                SA_POP_Component_stub
-
-  libs += OpString_stub Data_Base_Component_stub DAnCE_OA_Component_stub RACE_common_stub   
-// TAO_Messaging CIAO_Container_Base TAO_PortableServer
-// CIAO_Events_Base 
-
-  libpaths += $(ACE_ROOT)/lib
-
+  libs += Tester_Component_stub Tester_Component_lem_stub Tester_Component_svnt SA_POP_Component_stub
+  
+  
   dynamicflags   = TESTER_COMPONENT_EXEC_BUILD_DLL
 
   IDL_Files {
-    
   }
 
   Source_Files {
-    
     Tester_Component_exec.cpp
+  }
+
+  Header_Files {
+    Tester_Component_exec.h
+    Tester_Component_exec_export.h
+  }
+
+  Inline_Files {
   }
 }
 
 
-project (Tester_Client) : ccm_stub, valuetype, dance_deployment_stub, race_common {
-  avoids += ace_for_tao
+project(Tester_Component_svnt) : ciao_servant , race_opstring, race_ia_stub, sa_pop_ia_admin  {
+  after      +=   Tester_Component_lem_stub SA_POP_Component_stub
+  sharedname  = Tester_Component_svnt
+  libs       += Tester_Component_stub Tester_Component_lem_stub  SA_POP_Component_stub
+  
+  
+  dynamicflags = TESTER_COMPONENT_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    Tester_ComponentS.cpp
+    Tester_Component_svnt.cpp
+  }
+
+  Header_Files {
+    Tester_ComponentS.h
+    Tester_Component_svnt.h
+    Tester_Component_svnt_export.h
+  }
+
+  Inline_Files {
+    Tester_ComponentS.inl
+  }
+}
+
+project (tester_client) : ccm_stub, valuetype , race_opstring, race_ia_stub, sa_pop_ia_admin  {
   exename = tester_client
-  after += Tester_Component_stub
-  libs += Tester_Component_stub OpString_stub Input_Adapter_Base_stub 	Conductor_Component_stub  Controller_Base_stub 	TM_Proxy_Component_stub Effector_Base_stub  
-  libs += SA_POP_Component_stub SA_POP_Component_stub SA_POP_IA_Component_stub RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
-
-
+  after += Tester_Component_stub SA_POP_Component_stub
+  libs  += Tester_Component_stub SA_POP_Component_stub
+  
+  
   IDL_Files {
   }
 

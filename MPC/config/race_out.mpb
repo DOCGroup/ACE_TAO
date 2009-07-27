@@ -1,0 +1,4 @@
+project {
+  libout     =  $(ACE_ROOT)/lib	
+  includes  +=  $(RACE_ROOT)
+}

@@ -1,0 +1,4 @@
+project : race_effector_stub {
+  after += Effector_Base_lem_stub
+  libs += Effector_Base_lem_stub
+}

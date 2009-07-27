@@ -4,7 +4,7 @@
 #include "SA_POP_Input_Adapter_svnt.h"
 #include "SA_POP_Input_Adapter_exec_export.h"
 #include "tao/LocalObject.h"
-#include "Logger.h"
+#include "utils/Logger.h"
 
 namespace CIAO
 {
@@ -19,7 +19,7 @@ namespace CIAO
             public virtual TAO_Local_RefCounted_Object
         {
           public:
-          Admin_exec_i (SA_POP_IA_Component_Context *context,
+          Admin_exec_i (CIAO_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Impl::SA_POP_IA_Component_Context *context,
                         Logger &logger);
 
           virtual ~Admin_exec_i (void);

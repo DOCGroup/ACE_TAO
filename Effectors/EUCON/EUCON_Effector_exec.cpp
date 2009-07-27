@@ -52,7 +52,7 @@ namespace CIAO
           ::Components::SessionContext_ptr ctx)
         {
           this->context_ =
-            EUCON_Effector_Context::_narrow (ctx);
+            CIAO_CIAO_RACE_Effector_EUCON_Effector_Impl::EUCON_Effector_Context::_narrow (ctx);
 
           if (CORBA::is_nil (this->context_))
           {

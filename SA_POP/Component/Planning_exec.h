@@ -17,8 +17,8 @@
 
 #include "common/OpStringC.h"
 
-#include "Planner.h"
-#include "LogScreenOut.h"
+#include "SA_POP/Planner.h"
+#include "SA_POP/LogScreenOut.h"
 
 
 namespace CIAO

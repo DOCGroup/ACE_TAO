@@ -1,0 +1,4 @@
+project : race_effector_callback_stub {
+  libs += Callback_skel
+  after += Callback_skel
+}

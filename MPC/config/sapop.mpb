@@ -1,0 +1,4 @@
+project {
+  after += SA_POP
+  libs += SA_POP
+}

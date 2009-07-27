@@ -1,0 +1,4 @@
+project : dance_deployment_stub {
+  libs += DAnCE_Output_Adapter_stub
+  after += DAnCE_Output_Adapter_stub
+}

@@ -35,7 +35,7 @@ namespace CIAO
       };
 
       class MONITOR_EXEC_Export Central_Monitor_exec_i
-        : public virtual Central_Monitor_Exec,
+        : public virtual CIAO_CIAO_RACE_Central_Monitor_Impl::Central_Monitor_Exec,
           public virtual TAO_Local_RefCounted_Object
       {
         public:
@@ -66,11 +66,11 @@ namespace CIAO
           throw (::CORBA::SystemException, ::Components::CCMException);
 
         protected:
-        Central_Monitor_Context *context_;
+        CIAO_CIAO_RACE_Central_Monitor_Impl::Central_Monitor_Context *context_;
       };
 
       class MONITOR_EXEC_Export Central_Monitor_Home_exec_i
-        : public virtual Central_Monitor_Home_Exec,
+        : public virtual CIAO_CIAO_RACE_Central_Monitor_Impl::Central_Monitor_Home_Exec,
           public virtual TAO_Local_RefCounted_Object
       {
         public:

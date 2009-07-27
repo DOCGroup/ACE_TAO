@@ -13,6 +13,7 @@
 
 #include <Components.idl>
 #include "Effectors/Base/Effector_Base.idl"
+#include "Effectors/Base/Effector_BaseE.idl"
 
 
 module CIAO

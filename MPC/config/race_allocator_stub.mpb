@@ -1,0 +1,4 @@
+project : dance_deployment_stub, tm_proxy_stub, race_opstring {
+  libs += Allocator_Base_stub
+  after += Allocator_Base_stub
+}

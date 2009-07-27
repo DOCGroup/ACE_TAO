@@ -1,17 +1,66 @@
 // $Id$
-project(TM_Proxy_stub) : ccm_stub, dance_deployment_stub, race_idl {
-  sharedname = TM_Proxy_Component_stub
-  dynamicflags   = TM_PROXY_STUB_BUILD_DLL
+// This file is generated with "generate_component_mpc.pl -b race_common, dance_deployment_stub TM_Proxy"
 
-  idlflags -= -GT
-  idlflags += -St \
-              -Wb,stub_export_macro=TM_PROXY_STUB_Export \
+project(TM_Proxy_idl_gen) : componentidldefaults , race_idl  {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=TM_PROXY_STUB_Export \
               -Wb,stub_export_include=TM_Proxy_stub_export.h \
               -Wb,skel_export_macro=TM_PROXY_SVNT_Export \
-              -Wb,skel_export_include=TM_Proxy_svnt_export.h
+              -Wb,skel_export_include=TM_Proxy_svnt_export.h \
+              -Wb,exec_export_macro=TM_PROXY_EXEC_Export \
+              -Wb,exec_export_include=TM_Proxy_exec_export.h
 
   IDL_Files {
     TM_Proxy.idl
+  }
+}
+
+project(TM_Proxy_lem_gen) : ciaoidldefaults , race_idl  {
+  after += TM_Proxy_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=TM_PROXY_LEM_STUB_Export \
+              -Wb,stub_export_include=TM_Proxy_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    TM_ProxyE.idl
+  }
+}
+
+project(TM_Proxy_lem_stub) : ccm_svnt , race_common, dance_deployment_stub  {
+  after += TM_Proxy_lem_gen TM_Proxy_stub 
+  libs  +=  TM_Proxy_stub
+  
+  
+  sharedname = TM_Proxy_lem_stub
+  dynamicflags   = TM_PROXY_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TM_ProxyEC.cpp
+  }
+
+  Header_Files {
+    TM_ProxyEC.h
+    TM_Proxy_lem_stub_export.h
+  }
+
+  Inline_Files {
+    TM_ProxyEC.inl
+  }
+}
+
+project(TM_Proxy_stub) : ccm_stub , race_common, dance_deployment_stub  {
+  after += TM_Proxy_idl_gen 
+  libs  += 
+  
+  
+  sharedname = TM_Proxy_stub
+  dynamicflags   = TM_PROXY_STUB_BUILD_DLL
+
+  IDL_Files {
   }
 
   Source_Files {
@@ -28,59 +77,12 @@ project(TM_Proxy_stub) : ccm_stub, dance_deployment_stub, race_idl {
   }
 }
 
-project(TM_Proxy_svnt) : ciao_servant, race_idl, dance_deployment_svnt {
-  after      += TM_Proxy_stub
-  sharedname  = TM_Proxy_Component_svnt
-  libs       += TM_Proxy_Component_stub
-
-  dynamicflags = TM_PROXY_SVNT_BUILD_DLL
-  idlflags -= -GT
-  idlflags += -St -SS \
-              -Wb,export_macro=TM_PROXY_SVNT_Export \
-              -Wb,export_include=TM_Proxy_svnt_export.h
-
-
-  CIDL_Files {
-    TM_Proxy.cidl
-  }
-
-  IDL_Files {
-    TM_ProxyE.idl
-  }
-
-  Source_Files {
-    TM_ProxyEC.cpp
-    TM_ProxyS.cpp
-    TM_Proxy_svnt.cpp
-  }
-
-  Header_Files {
-    TM_ProxyEC.h
-    TM_ProxyS.h
-    TM_Proxy_svnt.h
-    TM_Proxy_svnt_export.h
-  }
-
-  Inline_Files {
-    TM_ProxyEC.inl
-    TM_ProxyS.inl
-  }
-}
-
-project(TM_Proxy_exec) : ciao_executor, race_common, naming {
-  after   +=  TM_Proxy_svnt \
-              TM_Daemon_stub
-
-  sharedname = TM_Proxy_Component_exec
-
-  libs += TM_Proxy_Component_stub \
-     	  RACE_utils \
-          TM_Proxy_Component_svnt \
-          TM_Daemon_stub
-
- includes += $(RACE_ROOT)/utils \
-             $(RACE_ROOT)/TM_Daemon
-
+project(TM_Proxy_exec) : ciao_executor , race_common, dance_deployment_stub, naming, tm_daemon_stub, race_utils  {
+  after   += TM_Proxy_lem_stub TM_Proxy_stub TM_Proxy_svnt
+  sharedname = TM_Proxy_exec
+  libs += TM_Proxy_stub TM_Proxy_lem_stub CIAO_Context_Impl TM_Proxy_svnt
+  
+  
   dynamicflags   = TM_PROXY_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -88,16 +90,46 @@ project(TM_Proxy_exec) : ciao_executor, race_common, naming {
 
   Source_Files {
     TM_Proxy_exec.cpp
-    Utility.cpp
     SystemSnapshot.cpp
     ResourceManager.cpp
+    Utility.cpp
   }
 
   Header_Files {
     TM_Proxy_exec.h
     TM_Proxy_exec_export.h
-    Utility.h
-    SystemSnapshot.h
-    ResourceManager.h
+  }
+
+  Inline_Files {
   }
 }
+
+
+project(TM_Proxy_svnt) : ciao_servant , race_common, dance_deployment_stub, tm_daemon_stub  {
+  after      +=   TM_Proxy_lem_stub
+  sharedname  = TM_Proxy_svnt
+  libs       += TM_Proxy_stub TM_Proxy_lem_stub  
+  
+  
+  dynamicflags = TM_PROXY_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    TM_ProxyS.cpp
+    TM_Proxy_svnt.cpp
+  }
+
+  Header_Files {
+    TM_ProxyS.h
+    TM_Proxy_svnt.h
+    TM_Proxy_svnt_export.h
+  }
+
+  Inline_Files {
+    TM_ProxyS.inl
+  }
+}
+
+

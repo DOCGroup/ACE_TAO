@@ -1,0 +1,4 @@
+project : race_common {
+  after += TM_Proxy_stub
+  libs += TM_Proxy_stub
+}

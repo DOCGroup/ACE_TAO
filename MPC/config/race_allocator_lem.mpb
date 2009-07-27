@@ -1,0 +1,4 @@
+project : race_allocator_stub {
+   libs += Allocator_Base_lem_stub
+   after += Allocator_Base_lem_stub
+}
