@@ -1,3 +1,9 @@
+Mon Jul 27 09:23:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          Added idl3 and idl3p
+
 Fri Jul 24 18:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-init-suse/init.d/tao-cosconcurrency:
