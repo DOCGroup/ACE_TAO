@@ -1,0 +1,4 @@
+project : race_controller_stub {
+  after += Conductor_stub
+  libs += Conductor_stub
+}

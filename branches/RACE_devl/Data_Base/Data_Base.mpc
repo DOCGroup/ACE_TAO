@@ -1,75 +1,134 @@
-project(Data_Base_stub): ccm_stub, dance_deployment_stub, race_idl {
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b race_common Data_Base"
 
-  sharedname = Data_Base_Component_stub
-  after += OpString_stub
-
-  idlflags -= -GT
-  idlflags += -St \
-              -Wb,stub_export_macro=DATA_BASE_STUB_Export \
+project(Data_Base_idl_gen) : componentidldefaults , race_idl  {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=DATA_BASE_STUB_Export \
               -Wb,stub_export_include=Data_Base_stub_export.h \
               -Wb,skel_export_macro=DATA_BASE_SVNT_Export \
-              -Wb,skel_export_include=Data_Base_svnt_export.h
-  dynamicflags   = DATA_BASE_STUB_BUILD_DLL
-
-  libs +=	OpString_stub \
-			RACE_common_stub
+              -Wb,skel_export_include=Data_Base_svnt_export.h \
+              -Wb,exec_export_macro=DATA_BASE_EXEC_Export \
+              -Wb,exec_export_include=Data_Base_exec_export.h
 
   IDL_Files {
     Data_Base.idl
+  }
+}
+
+project(Data_Base_lem_gen) : ciaoidldefaults , race_idl  {
+  after += Data_Base_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=DATA_BASE_LEM_STUB_Export \
+              -Wb,stub_export_include=Data_Base_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    Data_BaseE.idl
+  }
+}
+
+project(Data_Base_lem_stub) : ccm_svnt , race_opstring  {
+  after += Data_Base_lem_gen Data_Base_stub 
+  libs  +=  Data_Base_stub
+  
+  
+  sharedname = Data_Base_lem_stub
+  dynamicflags   = DATA_BASE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Data_BaseEC.cpp
+  }
+
+  Header_Files {
+    Data_BaseEC.h
+    Data_Base_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Data_BaseEC.inl
+  }
+}
+
+project(Data_Base_stub) : ccm_stub , race_opstring  {
+  after += Data_Base_idl_gen 
+  libs  += 
+  
+  
+  sharedname = Data_Base_stub
+  dynamicflags   = DATA_BASE_STUB_BUILD_DLL
+
+  IDL_Files {
   }
 
   Source_Files {
     Data_BaseC.cpp
   }
-}
 
-project(Data_Base_svnt) : ciao_servant, race_idl, dance_deployment_stub {
-  after      +=  Data_Base_stub
-  sharedname  = Data_Base_Component_svnt
-  libs       += Data_Base_Component_stub \
-				OpString_stub \
-				RACE_common_stub
-
-  idlflags -= -GT
-  idlflags += -St -SS \
-              -Wb,export_macro=DATA_BASE_SVNT_Export \
-              -Wb,export_include=Data_Base_svnt_export.h
-
-  dynamicflags = DATA_BASE_SVNT_BUILD_DLL
-
-  CIDL_Files {
-    Data_Base.cidl
+  Header_Files {
+    Data_BaseC.h
+    Data_Base_stub_export.h
   }
 
-  IDL_Files {
-    Data_BaseE.idl
-  }
-
-  Source_Files {
-    Data_BaseEC.cpp
-    Data_BaseS.cpp
-    Data_Base_svnt.cpp
+  Inline_Files {
+    Data_BaseC.inl
   }
 }
 
-project(Data_Base_exec) : ciao_executor, race_common, dance_deployment_stub {
-  after   += Data_Base_svnt
-  sharedname = Data_Base_Component_exec
-  libs +=	Data_Base_Component_stub \
-			Data_Base_Component_svnt \
-			OpString_stub \	
-			RACE_common_stub
-
+project(Data_Base_exec) : ciao_executor , race_opstring  {
+  after   += Data_Base_lem_stub Data_Base_stub Data_Base_svnt
+  sharedname = Data_Base_exec
+  libs += Data_Base_stub Data_Base_lem_stub Data_Base_svnt
+  
+  
   dynamicflags   = DATA_BASE_EXEC_BUILD_DLL
 
   IDL_Files {
-
   }
 
   Source_Files {
-
     Data_Base_exec.cpp
     Admin_exec.cpp
     Query_exec.cpp
   }
+
+  Header_Files {
+    Data_Base_exec.h
+    Data_Base_exec_export.h
+  }
+
+  Inline_Files {
+  }
 }
+
+
+project(Data_Base_svnt) : ciao_servant , race_opstring  {
+  after      +=   Data_Base_lem_stub
+  sharedname  = Data_Base_svnt
+  libs       += Data_Base_stub Data_Base_lem_stub  
+  
+  
+  dynamicflags = DATA_BASE_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    Data_BaseS.cpp
+    Data_Base_svnt.cpp
+  }
+
+  Header_Files {
+    Data_BaseS.h
+    Data_Base_svnt.h
+    Data_Base_svnt_export.h
+  }
+
+  Inline_Files {
+    Data_BaseS.inl
+  }
+}
+
+

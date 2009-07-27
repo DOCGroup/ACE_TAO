@@ -1,94 +1,133 @@
-project(SA_POP_Input_Adapter_stub): ccm_stub, dance_deployment_stub, race_idl {
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b race_opstring, dance_deployment_stub SA_POP_Input_Adapter"
 
-  sharedname = SA_POP_IA_Component_stub
-
-  after += OpString_stub \
-           Input_Adapter_Base_stub
-
-  idlflags -= -GT
-  idlflags += -St \
-              -Wb,stub_export_macro=SA_POP_INPUT_ADAPTER_STUB_Export \
+project(SA_POP_Input_Adapter_idl_gen) : componentidldefaults , race_idl, dance_deployment_stub  {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SA_POP_INPUT_ADAPTER_STUB_Export \
               -Wb,stub_export_include=SA_POP_Input_Adapter_stub_export.h \
               -Wb,skel_export_macro=SA_POP_INPUT_ADAPTER_SVNT_Export \
-              -Wb,skel_export_include=SA_POP_Input_Adapter_svnt_export.h
-
-  dynamicflags   = SA_POP_INPUT_ADAPTER_STUB_BUILD_DLL
-
-  libs += OpString_stub \
-          Input_Adapter_Base_stub \
-          RACE_common_stub
+              -Wb,skel_export_include=SA_POP_Input_Adapter_svnt_export.h \
+              -Wb,exec_export_macro=SA_POP_INPUT_ADAPTER_EXEC_Export \
+              -Wb,exec_export_include=SA_POP_Input_Adapter_exec_export.h
 
   IDL_Files {
     SA_POP_Input_Adapter.idl
+  }
+}
+
+project(SA_POP_Input_Adapter_lem_gen) : ciaoidldefaults , race_idl, dance_deployment_stub  {
+  after += SA_POP_Input_Adapter_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SA_POP_INPUT_ADAPTER_LEM_STUB_Export \
+              -Wb,stub_export_include=SA_POP_Input_Adapter_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    SA_POP_Input_AdapterE.idl
+  }
+}
+
+project(SA_POP_Input_Adapter_lem_stub) : ccm_svnt , race_opstring, dance_deployment_stub, race_ia_lem  {
+  after += SA_POP_Input_Adapter_lem_gen SA_POP_Input_Adapter_stub 
+  libs  +=  SA_POP_Input_Adapter_stub
+  
+  
+  sharedname = SA_POP_Input_Adapter_lem_stub
+  dynamicflags   = SA_POP_INPUT_ADAPTER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SA_POP_Input_AdapterEC.cpp
+  }
+
+  Header_Files {
+    SA_POP_Input_AdapterEC.h
+    SA_POP_Input_Adapter_lem_stub_export.h
+  }
+
+  Inline_Files {
+    SA_POP_Input_AdapterEC.inl
+  }
+}
+
+project(SA_POP_Input_Adapter_stub) : ccm_stub , race_opstring, dance_deployment_stub, race_ia_stub  {
+  after += SA_POP_Input_Adapter_idl_gen 
+  libs  += 
+  
+  
+  sharedname = SA_POP_Input_Adapter_stub
+  dynamicflags   = SA_POP_INPUT_ADAPTER_STUB_BUILD_DLL
+
+  IDL_Files {
   }
 
   Source_Files {
     SA_POP_Input_AdapterC.cpp
   }
-}
 
-project(SA_POP_Input_Adapter_svnt) : ciao_servant, race_idl, dance_deployment_stub {
-
-  sharedname  = SA_POP_IA_Component_svnt
-
-  after      +=  SA_POP_Input_Adapter_stub \
-                 Input_Adapter_Base_svnt
-
-  libs       += SA_POP_IA_Component_stub \
-                OpString_stub \
-                Conductor_Component_stub \
-                RACE_common_stub \
-                Input_Adapter_Base_stub \
-                Input_Adapter_Base_svnt
-
-  idlflags -= -GT
-  idlflags += -St -SS \
-              -Wb,export_macro=SA_POP_INPUT_ADAPTER_SVNT_Export \
-              -Wb,export_include=SA_POP_Input_Adapter_svnt_export.h
-
-  dynamicflags = SA_POP_INPUT_ADAPTER_SVNT_BUILD_DLL
-
-
-  CIDL_Files {
-    SA_POP_Input_Adapter.cidl
+  Header_Files {
+    SA_POP_Input_AdapterC.h
+    SA_POP_Input_Adapter_stub_export.h
   }
 
+  Inline_Files {
+    SA_POP_Input_AdapterC.inl
+  }
+}
+
+project(SA_POP_Input_Adapter_exec) : ciao_executor , race_opstring, dance_deployment_stub, race_ia_lem, race_utils, race_conductor_stub  {
+  after   += SA_POP_Input_Adapter_lem_stub SA_POP_Input_Adapter_stub SA_POP_Input_Adapter_svnt
+  sharedname = SA_POP_Input_Adapter_exec
+  libs += SA_POP_Input_Adapter_stub SA_POP_Input_Adapter_lem_stub SA_POP_Input_Adapter_svnt
+  
+  
+  dynamicflags   = SA_POP_INPUT_ADAPTER_EXEC_BUILD_DLL
+
   IDL_Files {
-    SA_POP_Input_AdapterE.idl
   }
 
   Source_Files {
-    SA_POP_Input_AdapterEC.cpp
-    SA_POP_Input_AdapterS.cpp
-    SA_POP_Input_Adapter_svnt.cpp
+    SA_POP_Input_Adapter_exec.cpp
+    Admin_exec.cpp
+  }
+
+  Header_Files {
+    SA_POP_Input_Adapter_exec.h
+    SA_POP_Input_Adapter_exec_export.h
+  }
+
+  Inline_Files {
   }
 }
 
-project(SA_POP_Input_Adapter_exec) : ciao_executor, ciao_config_handlers, race_common {
 
- sharedname = SA_POP_IA_Component_exec
+project(SA_POP_Input_Adapter_svnt) : ciao_servant , race_opstring, dance_deployment_stub, race_ia_skel, race_ia_lem, race_conductor_stub  {
+  after      +=   SA_POP_Input_Adapter_lem_stub
+  sharedname  = SA_POP_Input_Adapter_svnt
+  libs       += SA_POP_Input_Adapter_stub SA_POP_Input_Adapter_lem_stub  
+  
+  
+  dynamicflags = SA_POP_INPUT_ADAPTER_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
 
- after   += SA_POP_Input_Adapter_svnt SA_POP_Component_stub RACE_utils
+  Source_Files {
+    SA_POP_Input_AdapterS.cpp
+    SA_POP_Input_Adapter_svnt.cpp
+  }
 
- libs += SA_POP_IA_Component_stub \
-         SA_POP_IA_Component_svnt \
-         OpString_stub \
-         Conductor_Component_stub \
-         RACE_common_stub \
-         RACE_utils \
-         Input_Adapter_Base_stub \
-         Input_Adapter_Base_svnt
+  Header_Files {
+    SA_POP_Input_AdapterS.h
+    SA_POP_Input_Adapter_svnt.h
+    SA_POP_Input_Adapter_svnt_export.h
+  }
 
- includes += $(RACE_ROOT)/utils
-
- dynamicflags   = SA_POP_INPUT_ADAPTER_EXEC_BUILD_DLL
-
- IDL_Files {
-
- }
-
- Source_Files {
-   Admin_exec.cpp
-   SA_POP_Input_Adapter_exec.cpp
- }
+  Inline_Files {
+    SA_POP_Input_AdapterS.inl
+  }
 }
+
+

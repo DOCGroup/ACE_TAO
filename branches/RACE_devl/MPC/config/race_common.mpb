@@ -1,5 +1,5 @@
-project {
-  libout     =  $(ACE_ROOT)/lib	
-  includes  +=  $(RACE_ROOT)
+project : race_out {
+  libs += RACE_common_stub
+  after += RACE_common_stub
 }
 

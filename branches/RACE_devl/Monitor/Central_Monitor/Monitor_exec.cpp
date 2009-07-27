@@ -137,7 +137,7 @@ namespace CIAO
                ::Components::CCMException)
       {
         this->context_ =
-          Central_Monitor_Context::_narrow (ctx);
+          CIAO_CIAO_RACE_Central_Monitor_Impl::Central_Monitor_Context::_narrow (ctx);
 
         if (this->context_ == 0)
         {

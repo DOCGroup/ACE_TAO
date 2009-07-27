@@ -1,109 +1,140 @@
-project(Controller_stub): dance_deployment_stub, race_idl {
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b race_common, dance_deployment_stub -c starter Controller"
 
-  after += CIAO_TargetManager_stub \
-           TargetManager_stub       \
-           NodeManager_stub \
-           Monitor_stub
-
-  sharedname = Controller_stub
-
-  libs += TargetManager_stub \
-          NodeManager_stub \
-          Monitor_stub
-
+project(Controller_idl_gen) : componentidldefaults , race_idl, dance_deployment_stub  {
+  custom_only = 1
   idlflags += -Wb,stub_export_macro=CONTROLLER_STUB_Export \
               -Wb,stub_export_include=Controller_stub_export.h \
               -Wb,skel_export_macro=CONTROLLER_SVNT_Export \
-              -Wb,skel_export_include=Controller_svnt_export.h
-
-  dynamicflags   = CONTROLLER_STUB_BUILD_DLL
+              -Wb,skel_export_include=Controller_svnt_export.h \
+              -Wb,exec_export_macro=CONTROLLER_EXEC_Export \
+              -Wb,exec_export_include=Controller_exec_export.h
 
   IDL_Files {
     Controller.idl
-    Interface.idl
-  }
-
-  Source_Files {
-    ControllerC.cpp
-    InterfaceC.cpp
   }
 }
 
-project(Controller_svnt) : ciao_servant, race_idl {
-  after +=  Controller_stub \
-            CIAO_TargetManager_svnt
-
-  sharedname  = Controller_svnt
-
-  libs    += Controller_stub \
-             TargetManager_stub \
-             TargetManager_svnt \
-             NodeManager_stub \
-             Monitor_stub
-
-  idlflags  +=  -Wb,export_macro=CONTROLLER_SVNT_Export \
-                -Wb,export_include=Controller_svnt_export.h
-
-  dynamicflags = CONTROLLER_SVNT_BUILD_DLL
-
-  CIDL_Files {
-    Controller.cidl
-  }
+project(Controller_lem_gen) : ciaoidldefaults , race_idl, dance_deployment_stub  {
+  after += Controller_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=CONTROLLER_LEM_STUB_Export \
+              -Wb,stub_export_include=Controller_lem_stub_export.h \
+              -SS -Gxhst
 
   IDL_Files {
     ControllerE.idl
   }
+}
+
+project(Controller_lem_stub) : ccm_svnt , race_common, dance_deployment_stub  {
+  after += Controller_lem_gen Controller_stub 
+  libs  +=  Controller_stub
+  
+  
+  sharedname = Controller_lem_stub
+  dynamicflags   = CONTROLLER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
 
   Source_Files {
     ControllerEC.cpp
-    ControllerS.cpp
-    InterfaceS.cpp
-    Controller_svnt.cpp
+  }
+
+  Header_Files {
+    ControllerEC.h
+    Controller_lem_stub_export.h
+  }
+
+  Inline_Files {
+    ControllerEC.inl
   }
 }
 
-project(Controller_exec) : ciao_executor, ciao_config_handlers, race_common {
-  after   += Controller_svnt \
-             XSC_Config_Handlers \
-             Path_stub
+project(Controller_stub) : ccm_stub , race_common, dance_deployment_stub  {
+  after += Controller_idl_gen 
+  libs  += 
+  
+  
+  sharedname = Controller_stub
+  dynamicflags   = CONTROLLER_STUB_BUILD_DLL
 
+  IDL_Files {
+  }
+
+  Source_Files {
+    ControllerC.cpp
+  }
+
+  Header_Files {
+    ControllerC.h
+    Controller_stub_export.h
+  }
+
+  Inline_Files {
+    ControllerC.inl
+  }
+}
+
+project(Controller_exec) : ciao_executor , race_common, dance_deployment_stub, ciao_config_handlers  {
+  after   += Controller_lem_stub Controller_stub
   sharedname = Controller_exec
-  includes += $(CIAO_ROOT)/DAnCE/
-
-  libs      += Controller_stub \
-               Controller_svnt \
-               TargetManager_stub \
-               TargetManager_svnt \
-               NodeManager_stub \
-               Monitor_stub
-
+  libs += Controller_stub Controller_lem_stub 
+  
+  
   dynamicflags   = CONTROLLER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
 
-  Header_Files {
-    Poller.h
-    Descriptor.h
+  Source_Files {
+    Controller_exec.cpp
   }
 
-  Source_Files {
-    Poller.cpp
-    Descriptor.cpp
-    Controller_exec.cpp
+  Header_Files {
+    Controller_exec.h
+    Controller_exec_export.h
+  }
+
+  Inline_Files {
   }
 }
 
 
-project (Controller_Starter) : ccm_stub, dance_deployment_stub, valuetype, race_common {
+project(Controller_svnt) : ciao_servant , race_common, dance_deployment_stub  {
+  after      +=   Controller_lem_stub
+  sharedname  = Controller_svnt
+  libs       += Controller_stub Controller_lem_stub  
+  
+  
+  dynamicflags = CONTROLLER_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    ControllerS.cpp
+    Controller_svnt.cpp
+  }
+
+  Header_Files {
+    ControllerS.h
+    Controller_svnt.h
+    Controller_svnt_export.h
+  }
+
+  Inline_Files {
+    ControllerS.inl
+  }
+}
+
+project (starter) : ccm_stub, valuetype , race_common, dance_deployment_stub  {
   exename = starter
   after += Controller_stub
-  libs += Controller_stub \
-          TargetManager_stub       \
-          NodeManager_stub \
-          Monitor_stub
-
-
+  libs  += Controller_stub 
+  
+  
   IDL_Files {
   }
 
@@ -117,3 +148,4 @@ project (Controller_Starter) : ccm_stub, dance_deployment_stub, valuetype, race_
   Inline_Files {
   }
 }
+

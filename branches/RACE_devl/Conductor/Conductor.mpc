@@ -1,54 +1,63 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl Conductor"
+// This file is generated with "generate_component_mpc.pl -b race_common Conductor"
 
-project(Conductor_idl_gen) : taoidldefaults, anytypecode, race_idl {
-  avoids += ace_for_tao
+project(Conductor_idl_gen) : componentidldefaults , race_idl  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CONDUCTOR_STUB_Export \
               -Wb,stub_export_include=Conductor_stub_export.h \
               -Wb,skel_export_macro=CONDUCTOR_SVNT_Export \
-              -Wb,skel_export_include=Conductor_svnt_export.h
+              -Wb,skel_export_include=Conductor_svnt_export.h \
+              -Wb,exec_export_macro=CONDUCTOR_EXEC_Export \
+              -Wb,exec_export_include=Conductor_exec_export.h
 
   IDL_Files {
     Conductor.idl
   }
 }
 
-project(Conductor_cidl_gen) : ciaocidldefaults, taoidldefaults, race_idl {
-  avoids += ace_for_tao
+project(Conductor_lem_gen) : ciaoidldefaults , race_idl  {
+  after += Conductor_idl_gen
   custom_only = 1
-  cidlflags += --svnt-export-macro CONDUCTOR_SVNT_Export \
-               --svnt-export-include Conductor_svnt_export.h
-
-  idlflags += -Wb,export_macro=CONDUCTOR_EXEC_Export \
-              -Wb,export_include=Conductor_exec_export.h \
-              -SS
-
-  CIDL_Files {
-    Conductor.cidl
-  }
+  idlflags += -Wb,stub_export_macro=CONDUCTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=Conductor_lem_stub_export.h \
+              -SS -Gxhst
 
   IDL_Files {
     ConductorE.idl
   }
 }
 
-project(Conductor_stub) : ccm_stub, race_common {
-  avoids += ace_for_tao
-  after += Conductor_idl_gen \
-           OpString_stub \
-           Data_Base_stub \
-           DAnCE_Output_Adapter_stub \
-           RACE_common_stub \
-           Controller_Base_stub
+project(Conductor_lem_stub) : ccm_svnt , race_opstring, race_controller_stub  {
+  after += Conductor_lem_gen Conductor_stub 
+  libs  +=  Conductor_stub
+  
+  
+  sharedname = Conductor_lem_stub
+  dynamicflags   = CONDUCTOR_LEM_STUB_BUILD_DLL
 
-  libs += OpString_stub \
-          Data_Base_Component_stub\
-          DAnCE_OA_Component_stub \
-          RACE_common_stub \
-          Controller_Base_stub
+  IDL_Files {
+  }
 
-  sharedname = Conductor_Component_stub
+  Source_Files {
+    ConductorEC.cpp
+  }
+
+  Header_Files {
+    ConductorEC.h
+    Conductor_lem_stub_export.h
+  }
+
+  Inline_Files {
+    ConductorEC.inl
+  }
+}
+
+project(Conductor_stub) : ccm_stub , race_opstring, race_controller_stub, race_dance_oa_stub, race_data_base_stub  {
+  after += Conductor_idl_gen 
+  libs  += 
+  
+  
+  sharedname = Conductor_stub
   dynamicflags   = CONDUCTOR_STUB_BUILD_DLL
 
   IDL_Files {
@@ -68,61 +77,41 @@ project(Conductor_stub) : ccm_stub, race_common {
   }
 }
 
-project(Conductor_exec) : ciao_executor, ciao_config_handlers, race_common {
-  avoids += ace_for_tao
-  after   += Conductor_cidl_gen Conductor_stub RACE_utils
-  sharedname = Conductor_Component_exec
-  libs += Conductor_Component_stub \
-           RACE_utils \
-           OpString_stub \
-           Data_Base_Component_stub \
-           DAnCE_OA_Component_stub \
-           RACE_common_stub \
-           Controller_Base_stub
-
-  includes += $(RACE_ROOT)/utils
+project(Conductor_exec) : ciao_executor , race_opstring, race_utils, ciao_config_handlers, race_controller_stub, \
+   race_dance_oa_stub, race_data_base_stub  {
+  after   += Conductor_lem_stub Conductor_stub
+  sharedname = Conductor_exec
+  libs += Conductor_stub Conductor_lem_stub 
+  
+  
   dynamicflags   = CONDUCTOR_EXEC_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    Admin_exec.cpp
-    ConductorEC.cpp
     Conductor_exec.cpp
+    Admin_exec.cpp
   }
 
   Header_Files {
-    Admin_exec.h
-    ConductorEC.h
     Conductor_exec.h
     Conductor_exec_export.h
   }
 
   Inline_Files {
-    ConductorEC.inl
   }
 }
 
 
-project(Conductor_svnt) : ciao_servant, race_common, dance_deployment_stub {
-  avoids += ace_for_tao
-  after += Conductor_exec
-
-  libs += OpString_stub \
-	  Data_Base_Component_stub\
-	  DAnCE_OA_Component_stub \
-	  RACE_common_stub \
-          Conductor_Component_exec \
-          Conductor_Component_stub \
-          Controller_Base_stub
-
-  sharedname  = Conductor_Component_svnt
+project(Conductor_svnt) : ciao_servant , race_opstring, race_controller_stub, race_dance_oa_stub, race_data_base_stub  {
+  after      +=   Conductor_lem_stub
+  sharedname  = Conductor_svnt
+  libs       += Conductor_stub Conductor_lem_stub  
+  
+  
   dynamicflags = CONDUCTOR_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
-
+  
   IDL_Files {
   }
 
@@ -141,3 +130,5 @@ project(Conductor_svnt) : ciao_servant, race_common, dance_deployment_stub {
     ConductorS.inl
   }
 }
+
+

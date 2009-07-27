@@ -24,7 +24,7 @@
 
 #if !defined (SANET_STANDALONE)
 
-#include "SA_POP_Types.h"
+#include "SA_POP/SA_POP_Types.h"
 
 namespace SANet {
   /// Type of a node id (tasks and conditions).

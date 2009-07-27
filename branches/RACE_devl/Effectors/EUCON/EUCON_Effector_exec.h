@@ -12,7 +12,7 @@
 
 #include "EUCON_Effector_exec_export.h"
 #include "tao/LocalObject.h"
-#include "Logger.h"
+#include "utils/Logger.h"
 
 namespace CIAO
 {
@@ -23,7 +23,7 @@ namespace CIAO
       namespace CIDL_EUCON_Effector_Impl
       {
         class EUCON_EFFECTOR_EXEC_Export EUCON_Effector_exec_i
-          : public virtual EUCON_Effector_Exec,
+          : public virtual CIAO_CIAO_RACE_Effector_EUCON_Effector_Impl::EUCON_Effector_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
@@ -52,14 +52,14 @@ namespace CIAO
           virtual void ccm_remove ();
 
           private:
-          EUCON_Effector_Context *context_;
+          CIAO_CIAO_RACE_Effector_EUCON_Effector_Impl::EUCON_Effector_Context *context_;
 
           Logger logger_;
 
         };
 
         class EUCON_EFFECTOR_EXEC_Export EUCON_Effector_Home_exec_i
-          : public virtual EUCON_Effector_Home_Exec,
+          : public virtual CIAO_CIAO_RACE_Effector_EUCON_Effector_Impl::EUCON_Effector_Home_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:

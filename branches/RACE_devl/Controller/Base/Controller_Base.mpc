@@ -1,33 +1,62 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl Controller_Base"
+// This file is generated with "generate_component_mpc.pl -b race_common Controller_Base"
 
-project(Controller_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
-  avoids += ace_for_tao
+project(Controller_Base_idl_gen) : componentidldefaults , race_idl  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CONTROLLER_BASE_STUB_Export \
               -Wb,stub_export_include=Controller_Base_stub_export.h \
               -Wb,skel_export_macro=CONTROLLER_BASE_SVNT_Export \
-              -Wb,skel_export_include=Controller_Base_svnt_export.h
+              -Wb,skel_export_include=Controller_Base_svnt_export.h \
+              -Wb,exec_export_macro=CONTROLLER_BASE_EXEC_Export \
+              -Wb,exec_export_include=Controller_Base_exec_export.h
 
   IDL_Files {
     Controller_Base.idl
   }
 }
 
-project(Controller_Base_stub) : ccm_stub, race_common {
-  avoids += ace_for_tao
-  after += Controller_Base_idl_gen \
-           OpString_stub \
-           RACE_common_stub \
-           TM_Proxy_stub \
-           Effector_Base_stub
+project(Controller_Base_lem_gen) : ciaoidldefaults , race_idl  {
+  after += Controller_Base_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=CONTROLLER_BASE_LEM_STUB_Export \
+              -Wb,stub_export_include=Controller_Base_lem_stub_export.h \
+              -SS -Gxhst
 
+  IDL_Files {
+    Controller_BaseE.idl
+  }
+}
 
-  libs  += OpString_stub \
-           RACE_common_stub \
-           TM_Proxy_Component_stub \
-           Effector_Base_stub
+project(Controller_Base_lem_stub) : ccm_svnt , race_opstring, tm_proxy_stub  {
+  after += Controller_Base_lem_gen Controller_Base_stub 
+  libs  +=  Controller_Base_stub
+  
+  
+  sharedname = Controller_Base_lem_stub
+  dynamicflags   = CONTROLLER_BASE_LEM_STUB_BUILD_DLL
 
+  IDL_Files {
+  }
+
+  Source_Files {
+    Controller_BaseEC.cpp
+  }
+
+  Header_Files {
+    Controller_BaseEC.h
+    Controller_Base_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Controller_BaseEC.inl
+  }
+}
+
+project(Controller_Base_stub) : ccm_stub , race_opstring, tm_proxy_stub, race_effector_stub  {
+  after += Controller_Base_idl_gen 
+  libs  += 
+  
+  
   sharedname = Controller_Base_stub
   dynamicflags   = CONTROLLER_BASE_STUB_BUILD_DLL
 
@@ -48,35 +77,31 @@ project(Controller_Base_stub) : ccm_stub, race_common {
   }
 }
 
-project(Controller_Base_svnt) : ciao_servant, race_common, dance_deployment_stub {
-  avoids += ace_for_tao
-  after      +=  Controller_Base_stub
-
-  sharedname  = Controller_Base_svnt
-
-  libs       += Controller_Base_stub \
-                OpString_stub \
-                RACE_common_stub \
-                TM_Proxy_Component_stub \
-                Effector_Base_stub
-
+project(Controller_Base_skel) : ciao_servant , race_opstring, tm_proxy_stub, race_effector_skel  {
+  after      +=   Controller_Base_lem_stub
+  sharedname  = Controller_Base_skel
+  libs       += Controller_Base_stub Controller_Base_lem_stub  
+  
+  
   dynamicflags = CONTROLLER_BASE_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
-
+  
   IDL_Files {
   }
 
   Source_Files {
     Controller_BaseS.cpp
+    Controller_Base_svnt.cpp
   }
 
   Header_Files {
     Controller_BaseS.h
+    Controller_Base_svnt.h
+    Controller_Base_svnt_export.h
   }
 
   Inline_Files {
     Controller_BaseS.inl
   }
 }
+
+

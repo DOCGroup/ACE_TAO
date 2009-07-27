@@ -1,25 +1,62 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl Effector_Base"
+// This file is generated with "generate_component_mpc.pl -b race_common Effector_Base"
 
-project(Effector_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
-  avoids += ace_for_tao
+project(Effector_Base_idl_gen) : componentidldefaults , race_idl  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=EFFECTOR_BASE_STUB_Export \
               -Wb,stub_export_include=Effector_Base_stub_export.h \
               -Wb,skel_export_macro=EFFECTOR_BASE_SVNT_Export \
-              -Wb,skel_export_include=Effector_Base_svnt_export.h
+              -Wb,skel_export_include=Effector_Base_svnt_export.h \
+              -Wb,exec_export_macro=EFFECTOR_BASE_EXEC_Export \
+              -Wb,exec_export_include=Effector_Base_exec_export.h
 
   IDL_Files {
     Effector_Base.idl
   }
 }
 
-project(Effector_Base_stub) : ccm_stub, race_common {
-  avoids += ace_for_tao
-  after += Effector_Base_idl_gen \
-           OpString_stub
-  libs  += OpString_stub
+project(Effector_Base_lem_gen) : ciaoidldefaults , race_idl  {
+  after += Effector_Base_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=EFFECTOR_BASE_LEM_STUB_Export \
+              -Wb,stub_export_include=Effector_Base_lem_stub_export.h \
+              -SS -Gxhst
 
+  IDL_Files {
+    Effector_BaseE.idl
+  }
+}
+
+project(Effector_Base_lem_stub) : ccm_svnt , race_common, race_opstring  {
+  after += Effector_Base_lem_gen Effector_Base_stub 
+  libs  +=  Effector_Base_stub
+  
+  
+  sharedname = Effector_Base_lem_stub
+  dynamicflags   = EFFECTOR_BASE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Effector_BaseEC.cpp
+  }
+
+  Header_Files {
+    Effector_BaseEC.h
+    Effector_Base_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Effector_BaseEC.inl
+  }
+}
+
+project(Effector_Base_stub) : ccm_stub , race_common, race_opstring  {
+  after += Effector_Base_idl_gen 
+  libs  += 
+  
+  
   sharedname = Effector_Base_stub
   dynamicflags   = EFFECTOR_BASE_STUB_BUILD_DLL
 
@@ -40,30 +77,31 @@ project(Effector_Base_stub) : ccm_stub, race_common {
   }
 }
 
-project(Effector_Base_svnt) : ciao_servant, race_common, dance_deployment_stub {
-  avoids += ace_for_tao
-  after      +=  Effector_Base_stub
-  sharedname  = Effector_Base_svnt
-  libs       += Effector_Base_stub \
-                OpString_stub
-
+project(Effector_Base_skel) : ciao_servant , race_common, race_opstring  {
+  after      +=   Effector_Base_lem_stub
+  sharedname  = Effector_Base_skel
+  libs       += Effector_Base_stub Effector_Base_lem_stub  
+  
+  
   dynamicflags = EFFECTOR_BASE_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
-
+  
   IDL_Files {
   }
 
   Source_Files {
     Effector_BaseS.cpp
+    Effector_Base_svnt.cpp
   }
 
   Header_Files {
     Effector_BaseS.h
+    Effector_Base_svnt.h
+    Effector_Base_svnt_export.h
   }
 
   Inline_Files {
     Effector_BaseS.inl
   }
 }
+
+

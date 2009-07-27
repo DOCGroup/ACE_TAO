@@ -6,10 +6,10 @@
 #include "ace/UUID.h"
 #include "common/OpStringC.h"
 
-#include "SA_POP_Types.h"
-#include "SA_Builder.h"
-#include "TaskMapFileIn.h"
-#include "SANet/SANetFileIn.h"
+#include "SA_POP/SA_POP_Types.h"
+#include "SA_POP/SA_Builder.h"
+#include "SA_POP/TaskMapFileIn.h"
+#include "SA_POP/SANet/SANetFileIn.h"
 
 namespace CIAO
 {

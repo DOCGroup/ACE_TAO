@@ -1,0 +1,4 @@
+project : dance_deployment_stub {
+  after += Input_Adapter_Base_stub
+  libs += Input_Adapter_Base_stub
+}

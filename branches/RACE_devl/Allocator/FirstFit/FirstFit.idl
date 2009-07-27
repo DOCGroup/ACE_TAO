@@ -13,6 +13,7 @@
 
 #include <Components.idl>
 #include "Allocator/Base/Allocator_Base.idl"
+#include "Allocator/Base/Allocator_BaseE.idl"
 
 
 module CIAO

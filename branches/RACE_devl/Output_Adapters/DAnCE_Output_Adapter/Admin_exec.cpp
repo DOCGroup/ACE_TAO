@@ -16,7 +16,7 @@ namespace CIAO
       namespace CIDL_DAnCE_OA_Impl
       {
         Admin_exec_i::Admin_exec_i (
-          DAnCE_OA_Component_Context *context,
+          CIAO_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Impl::DAnCE_OA_Component_Context *context,
           const char * repoman_id,
           Logger &logger)
           : DAnCE::Plan_Launcher::Plan_Launcher_Base_Impl (dynamic_cast<CIAO::Container_i *>

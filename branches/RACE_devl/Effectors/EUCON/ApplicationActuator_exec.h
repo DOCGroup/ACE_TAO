@@ -5,7 +5,7 @@
 #include /**/ "ace/pre.h"
 
 #include "EUCON_Effector_svnt.h"
-#include "Logger.h"
+#include "utils/Logger.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
@@ -32,7 +32,7 @@ namespace CIAO
         {
           public:
           ApplicationActuator_exec_i
-            (EUCON_Effector_Context *context,
+            (CIAO_CIAO_RACE_Effector_EUCON_Effector_Impl::EUCON_Effector_Context *context,
              Logger &logger);
 
           virtual ~ApplicationActuator_exec_i (void);
@@ -61,7 +61,7 @@ namespace CIAO
 
           Logger &logger_;
 
-          EUCON_Effector_Context *context_;
+          CIAO_CIAO_RACE_Effector_EUCON_Effector_Impl::EUCON_Effector_Context *context_;
 
           CosNaming::NamingContext_var naming_context_;
 

@@ -1,0 +1,4 @@
+project : race_allocator_lem {
+  after += Allocator_Base_skel
+  libs += Allocator_Base_skel
+}

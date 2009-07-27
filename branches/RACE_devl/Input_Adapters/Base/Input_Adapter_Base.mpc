@@ -1,25 +1,62 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl Input_Adapter_Base"
+// This file is generated with "generate_component_mpc.pl -b race_common, dance_deployment_stub -n Input_Adapter_Base"
 
-project(Input_Adapter_Base_idl_gen) : taoidldefaults, anytypecode, race_idl {
-  avoids += ace_for_tao
+project(Input_Adapter_Base_idl_gen) : componentidldefaults , race_idl, dance_deployment_stub  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=INPUT_ADAPTER_BASE_STUB_Export \
               -Wb,stub_export_include=Input_Adapter_Base_stub_export.h \
-              -Wb,skel_export_macro=INPUT_ADAPTER_BASE_SVNT_Export \
-              -Wb,skel_export_include=Input_Adapter_Base_svnt_export.h \
-              -I$(RACE_ROOT)
+              -Wb,skel_export_macro=INPUT_ADAPTER_BASE_SKEL_Export \
+              -Wb,skel_export_include=Input_Adapter_Base_skel_export.h \
+              -Wb,exec_export_macro=INPUT_ADAPTER_BASE_EXEC_Export \
+              -Wb,exec_export_include=Input_Adapter_Base_exec_export.h
 
   IDL_Files {
     Input_Adapter_Base.idl
   }
 }
 
-project(Input_Adapter_Base_stub) : ccm_stub, race_common {
-  avoids += ace_for_tao
-  after += Input_Adapter_Base_idl_gen  Conductor_stub
-  libs  += Conductor_Component_stub
+project(Input_Adapter_Base_lem_gen) : ciaoidldefaults , race_idl, dance_deployment_stub  {
+  after += Input_Adapter_Base_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=INPUT_ADAPTER_BASE_LEM_STUB_Export \
+              -Wb,stub_export_include=Input_Adapter_Base_lem_stub_export.h \
+              -SS -Gxhst
 
+  IDL_Files {
+    Input_Adapter_BaseE.idl
+  }
+}
+
+project(Input_Adapter_Base_lem_stub) : ccm_svnt , race_common, dance_deployment_stub, race_conductor_stub  {
+  after += Input_Adapter_Base_lem_gen Input_Adapter_Base_stub 
+  libs  +=  Input_Adapter_Base_stub
+  
+  
+  sharedname = Input_Adapter_Base_lem_stub
+  dynamicflags   = INPUT_ADAPTER_BASE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Input_Adapter_BaseEC.cpp
+  }
+
+  Header_Files {
+    Input_Adapter_BaseEC.h
+    Input_Adapter_Base_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Input_Adapter_BaseEC.inl
+  }
+}
+
+project(Input_Adapter_Base_stub) : ccm_stub , race_idl, dance_deployment_stub, race_conductor_stub  {
+  after += Input_Adapter_Base_idl_gen 
+  libs  += 
+  
+  
   sharedname = Input_Adapter_Base_stub
   dynamicflags   = INPUT_ADAPTER_BASE_STUB_BUILD_DLL
 
@@ -40,30 +77,32 @@ project(Input_Adapter_Base_stub) : ccm_stub, race_common {
   }
 }
 
-project(Input_Adapter_Base_svnt) : ciao_servant, race_common {
-  avoids += ace_for_tao
-  after      +=  Input_Adapter_Base_stub
-  sharedname  = Input_Adapter_Base_svnt
-  libs       += Input_Adapter_Base_stub \
-                Conductor_Component_stub
 
-  dynamicflags = INPUT_ADAPTER_BASE_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
-
+project(Input_Adapter_Base_skel) : ciao_servant , race_common, dance_deployment_stub, race_conductor_stub  {
+  after      +=  Input_Adapter_Base_stub Input_Adapter_Base_lem_stub
+  sharedname  = Input_Adapter_Base_skel
+  libs       += Input_Adapter_Base_stub Input_Adapter_Base_lem_stub
+ 
+  
+  
+  dynamicflags = INPUT_ADAPTER_BASE_SKEL_BUILD_DLL
+  
   IDL_Files {
   }
 
   Source_Files {
     Input_Adapter_BaseS.cpp
+    Input_Adapter_Base_svnt.cpp
   }
 
   Header_Files {
     Input_Adapter_BaseS.h
+    Input_Adapter_Base_skel_export.h
   }
 
   Inline_Files {
     Input_Adapter_BaseS.inl
   }
 }
+
+

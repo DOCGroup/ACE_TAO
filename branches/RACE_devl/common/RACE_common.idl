@@ -82,14 +82,14 @@ module CIAO
 
 //       typedef sequence <FlowItem> PlannerFlow;
 
-//       struct Plan_Action
-//       {
-//         Action command;
-//         Deployment::DeploymentPlan plan;
-//         Deployment::PackageConfiguration package;
-//       };
+//        struct Plan_Action
+//        {
+//          Action command;
+//          Deployment::DeploymentPlan plan;
+//          Deployment::PackageConfiguration package;
+//        };
 
-//       typedef sequence<Plan_Action> Plan_Actions;
+//        typedef sequence<Plan_Action> Plan_Actions;
 
     };
 };

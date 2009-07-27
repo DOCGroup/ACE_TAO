@@ -12,7 +12,7 @@ namespace CIAO
       namespace CIDL_EUCON_Effector_Impl
       {
         ApplicationActuator_exec_i::ApplicationActuator_exec_i
-        (EUCON_Effector_Context *context,
+        (CIAO_CIAO_RACE_Effector_EUCON_Effector_Impl::EUCON_Effector_Context *context,
          Logger &logger)
           : context_ (context),
             logger_ (logger)
@@ -121,8 +121,11 @@ namespace CIAO
           msg.str ("");
           try
             {
+              int argc = 0;
+              
               ::CORBA::ORB_ptr orb =
-                this->context_->_ciao_the_Container()->the_ORB();
+                CORBA::ORB_init (argc, 0);
+              
               /// Trying to get the object reference from the Naming Service.
               CORBA::Object_var naming_obj =
                 orb->resolve_initial_references ("NameService");

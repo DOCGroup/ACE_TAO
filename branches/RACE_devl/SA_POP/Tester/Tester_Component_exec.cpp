@@ -119,7 +119,7 @@ namespace CIAO
           ::Components::SessionContext_ptr ctx)
         {
           this->context_ =
-            Tester_Component_Context::_narrow (ctx);
+            CIAO_CIAO_RACE_SA_POP_Tester_Component_Impl::Tester_Component_Context::_narrow (ctx);
 
           if (this->context_ == 0)
           {

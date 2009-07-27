@@ -84,7 +84,7 @@ namespace CIAO
         };
 
         class FIRSTFIT_EXEC_Export First_Fit_Allocator_exec_i
-          : public virtual First_Fit_Allocator_Exec,
+          : public virtual CIAO_CIAO_RACE_Allocator_First_Fit_Allocator_Impl::First_Fit_Allocator_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
@@ -121,7 +121,7 @@ namespace CIAO
         };
 
         class FIRSTFIT_EXEC_Export First_Fit_Allocator_Home_exec_i
-          : public virtual First_Fit_Allocator_Home_Exec,
+          : public virtual CIAO_CIAO_RACE_Allocator_First_Fit_Allocator_Impl::First_Fit_Allocator_Home_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:

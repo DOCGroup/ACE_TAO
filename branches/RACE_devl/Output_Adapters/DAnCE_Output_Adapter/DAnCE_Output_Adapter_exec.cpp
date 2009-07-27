@@ -49,7 +49,7 @@ namespace CIAO
         DAnCE_OA_Component_exec_i::set_session_context (
           ::Components::SessionContext_ptr ctx)
         {
-          this->context_ = DAnCE_OA_Component_Context::_narrow (ctx);
+          this->context_ = CIAO_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Impl::DAnCE_OA_Component_Context::_narrow (ctx);
 
           if (this->context_ == 0)
             {

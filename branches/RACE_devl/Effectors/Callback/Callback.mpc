@@ -1,25 +1,30 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl Callback"
+// This file is generated with "generate_component_mpc.pl -n -b race_common Callback"
 
-project(Callback_idl_gen) : taoidldefaults, anytypecode, race_idl {
-  avoids += ace_for_tao
+project(Callback_idl_gen) : componentidldefaults , race_common  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CALLBACK_STUB_Export \
               -Wb,stub_export_include=Callback_stub_export.h \
-              -Wb,skel_export_macro=CALLBACK_SVNT_Export \
-              -Wb,skel_export_include=Callback_svnt_export.h
+              -Wb,skel_export_macro=CALLBACK_SKEL_Export \
+              -Wb,skel_export_include=Callback_skel_export.h \
+              -Wb,exec_export_macro=CALLBACK_EXEC_Export \
+              -Wb,exec_export_include=Callback_exec_export.h
 
   IDL_Files {
     Callback.idl
   }
 }
 
-project(Callback_stub) : taolib, anytypecode, race_common {
-  avoids += ace_for_tao
-  after += Callback_idl_gen
-  libout       = $(ACE_ROOT)/lib
+project(Callback_stub) : ccm_stub , race_common  {
+  after += Callback_idl_gen 
+  libs  += 
+  
+  
   sharedname = Callback_stub
   dynamicflags   = CALLBACK_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
 
   Source_Files {
     CallbackC.cpp
@@ -34,3 +39,32 @@ project(Callback_stub) : taolib, anytypecode, race_common {
     CallbackC.inl
   }
 }
+
+
+project(Callback_skel) : ciao_executor , race_common  {
+  after      +=  Callback_stub Callback_lem_stub
+  sharedname  = Callback_skel
+  libs       += Callback_stub
+ 
+  
+  
+  dynamicflags = CALLBACK_SKEL_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    CallbackS.cpp
+  }
+
+  Header_Files {
+    CallbackS.h
+    Callback_skel_export.h
+  }
+
+  Inline_Files {
+    CallbackS.inl
+  }
+}
+
+

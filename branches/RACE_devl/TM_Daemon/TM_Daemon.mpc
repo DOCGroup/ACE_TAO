@@ -1,19 +1,70 @@
-project(TM_Daemon_stub): dance_deployment_stub {
-  sharedname = TM_Daemon_stub
-  dynamicflags = TM_DAEMON_STUB_BUILD_DLL
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b race_common, dance_deployment_stub -n TM_Daemon"
 
-  idlflags -= -GT
-  idlflags += -St \
-              -Wb,stub_export_macro=TM_DAEMON_STUB_Export \
+project(TM_Daemon_idl_gen) : componentidldefaults , race_idl  {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=TM_DAEMON_STUB_Export \
               -Wb,stub_export_include=TM_Daemon_stub_export.h \
-              -Wb,skel_export_macro=TM_DAEMON_SVNT_Export \
-              -Wb,skel_export_include=TM_Daemon_svnt_export.h
+              -Wb,skel_export_macro=TM_DAEMON_SKEL_Export \
+              -Wb,skel_export_include=TM_Daemon_skel_export.h \
+              -Wb,exec_export_macro=TM_DAEMON_EXEC_Export \
+              -Wb,exec_export_include=TM_Daemon_exec_export.h
 
   IDL_Files {
     TM_Daemon.idl
+  }
+}
+
+project(TM_Daemon_stub) : ccm_stub , race_common, dance_deployment_stub  {
+  after += TM_Daemon_idl_gen 
+  libs  += 
+  
+  
+  sharedname = TM_Daemon_stub
+  dynamicflags   = TM_DAEMON_STUB_BUILD_DLL
+
+  IDL_Files {
   }
 
   Source_Files {
     TM_DaemonC.cpp
   }
+
+  Header_Files {
+    TM_DaemonC.h
+    TM_Daemon_stub_export.h
+  }
+
+  Inline_Files {
+    TM_DaemonC.inl
+  }
 }
+
+
+project(TM_Daemon_skel) : ciao_executor , race_common, dance_deployment_stub  {
+  after      +=  TM_Daemon_stub TM_Daemon_lem_stub
+  sharedname  = TM_Daemon_skel
+  libs       += TM_Daemon_stub
+ 
+  
+  
+  dynamicflags = TM_DAEMON_SKEL_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    TM_DaemonS.cpp
+  }
+
+  Header_Files {
+    TM_DaemonS.h
+    TM_Daemon_skel_export.h
+  }
+
+  Inline_Files {
+    TM_DaemonS.inl
+  }
+}
+
+

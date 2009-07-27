@@ -1,0 +1,87 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b race_common -n OpString"
+
+project(OpString_idl_gen) : ciaoidldefaults , race_common, anytypecode  {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=OPSTRING_STUB_Export \
+              -Wb,stub_export_include=OpString_stub_export.h \
+              -Wb,skel_export_macro=OPSTRING_SKEL_Export \
+              -Wb,skel_export_include=OpString_skel_export.h \
+              -Wb,exec_export_macro=OPSTRING_EXEC_Export \
+              -Wb,exec_export_include=OpString_exec_export.h \
+              -SS 
+
+  IDL_Files {
+    idlflags += -Gxhst
+    OpString.idl
+  }
+
+  IDL_Files {
+    Goal.idl
+    QoS.idl
+    Utils.idl
+  }
+}
+
+project(OpString_stub) : ccm_stub , race_common, anytypecode, dance_deployment_stub  {
+  after += OpString_idl_gen RACE_common_stub
+  libs  += RACE_common_stub
+  
+  
+  sharedname = OpString_stub
+  dynamicflags   = OPSTRING_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OpStringC.cpp
+    GoalC.cpp
+    QoSC.cpp
+    UtilsC.cpp
+  }
+
+  Header_Files {
+    OpStringC.h
+    GoalC.h
+    QoSC.h
+    UtilsC.h
+    OpString_stub_export.h
+  }
+
+  Inline_Files {
+    OpStringC.inl
+    GoalC.inl
+    QoSC.inl
+    UtilsC.inl
+  }
+}
+
+
+// project(OpString_skel) : ciao_executor , race_common  {
+//   after      +=  OpString_stub OpString_lem_stub
+//   sharedname  = OpString_skel
+//   libs       += OpString_stub
+ 
+  
+  
+//   dynamicflags = OPSTRING_SKEL_BUILD_DLL
+  
+//   IDL_Files {
+//   }
+
+//   Source_Files {
+//     OpStringS.cpp
+//   }
+
+//   Header_Files {
+//     OpStringS.h
+//     OpString_skel_export.h
+//   }
+
+//   Inline_Files {
+//     OpStringS.inl
+//   }
+// }
+
+

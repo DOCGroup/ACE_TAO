@@ -6,8 +6,8 @@
 #include "tao/LocalObject.h"
 
 #include "Plan_Launcher/Plan_Launcher_Base_Impl.h"
-#include "Plan_Generator_Impl.h"
-#include "Logger.h"
+#include "Plan_Generator/Plan_Generator_Impl.h"
+#include "utils/Logger.h"
 
 namespace CIAO
 {
@@ -23,7 +23,7 @@ namespace CIAO
             public DAnCE::Plan_Launcher::Plan_Launcher_Base_Impl
         {
         public:
-          Admin_exec_i (DAnCE_OA_Component_Context *context,
+          Admin_exec_i (CIAO_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Impl::DAnCE_OA_Component_Context *context,
                         const char * repoman_id,
                         Logger &logger);
 
@@ -54,7 +54,7 @@ namespace CIAO
         private:
 
           /// Pointer to the component's context object.
-          DAnCE_OA_Component_Context *context_;
+          CIAO_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Impl::DAnCE_OA_Component_Context *context_;
 
           /// ID of the repoman.
           CORBA::String_var repoman_id_;

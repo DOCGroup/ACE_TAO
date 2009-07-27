@@ -36,7 +36,7 @@ namespace CIAO
           ::Components::SessionContext_ptr ctx)
         {
           this->context_ =
-            Data_Base_Component_Context::_narrow (ctx);
+            CIAO_CIAO_RACE_Data_Base_Data_Base_Component_Impl::Data_Base_Component_Context::_narrow (ctx);
 
           if (this->context_ == 0)
           {

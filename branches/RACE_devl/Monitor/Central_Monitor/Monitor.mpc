@@ -1,93 +1,132 @@
-// project(Monitor_Interface_stub): taolib_with_idl, race_idl {
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b race_common Monitor"
 
-//   sharedname = Monitor_Interface_stub
-//   idlflags -= -GT
-//   idlflags += -St \
-//               -Wb,stub_export_macro=INTERFACE_STUB_Export \
-//               -Wb,stub_export_include=Interface_stub_export.h \
-//               -Wb,skel_export_macro=INTERFACE_SVNT_Export \
-//               -Wb,skel_export_include=Interface_svnt_export.h
-//   dynamicflags   = INTERFACE_STUB_BUILD_DLL
-
-//   IDL_Files {
-//     Interface.idl
-//   }
-
-//   Source_Files {
-//     InterfaceC.cpp
-//   }
-// }
-// project(Monitor_Interface_svnt): taolib_with_idl, portableserver, race_common {
-
-//   after += Monitor_Interface_stub
-//   sharedname = Monitor_Interface_svnt
-//   libs += Monitor_Interface_stub
-
-//   dynamicflags = INTERFACE_SVNT_BUILD_DLL
-
-//   IDL_Files {
-//   }
-
-//   Source_Files {
-//     InterfaceS.cpp
-//   }
-// }
-
-project(Monitor_stub): ccm_stub, race_idl {
-
-  sharedname = Monitor_stub
+project(Monitor_idl_gen) : componentidldefaults , race_common  {
+  custom_only = 1
   idlflags += -Wb,stub_export_macro=MONITOR_STUB_Export \
               -Wb,stub_export_include=Monitor_stub_export.h \
               -Wb,skel_export_macro=MONITOR_SVNT_Export \
-              -Wb,skel_export_include=Monitor_svnt_export.h
-  dynamicflags   = MONITOR_STUB_BUILD_DLL
+              -Wb,skel_export_include=Monitor_svnt_export.h \
+              -Wb,exec_export_macro=MONITOR_EXEC_Export \
+              -Wb,exec_export_include=Monitor_exec_export.h
 
   IDL_Files {
     Monitor.idl
+  }
+}
+
+project(Monitor_lem_gen) : ciaoidldefaults , race_common  {
+  after += Monitor_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=MONITOR_LEM_STUB_Export \
+              -Wb,stub_export_include=Monitor_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    MonitorE.idl
+  }
+}
+
+project(Monitor_lem_stub) : ccm_svnt , race_common  {
+  after += Monitor_lem_gen Monitor_stub 
+  libs  +=  Monitor_stub
+  
+  
+  sharedname = Monitor_lem_stub
+  dynamicflags   = MONITOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    MonitorEC.cpp
+  }
+
+  Header_Files {
+    MonitorEC.h
+    Monitor_lem_stub_export.h
+  }
+
+  Inline_Files {
+    MonitorEC.inl
+  }
+}
+
+project(Monitor_stub) : ccm_stub , race_common  {
+  after += Monitor_idl_gen 
+  libs  += 
+  
+  
+  sharedname = Monitor_stub
+  dynamicflags   = MONITOR_STUB_BUILD_DLL
+
+  IDL_Files {
   }
 
   Source_Files {
     MonitorC.cpp
   }
-}
 
-project(Monitor_svnt) : ciao_servant, race_idl {
-  after +=  Monitor_stub
-  sharedname  = Monitor_svnt
-  libs    += Monitor_stub
-
-  idlflags  +=  -Wb,export_macro=MONITOR_SVNT_Export \
-                -Wb,export_include=Monitor_svnt_export.h
-  dynamicflags = MONITOR_SVNT_BUILD_DLL
-
-  CIDL_Files {
-    Monitor.cidl
+  Header_Files {
+    MonitorC.h
+    Monitor_stub_export.h
   }
 
-  IDL_Files {
-    MonitorE.idl
-  }
-
-  Source_Files {
-    MonitorEC.cpp
-    MonitorS.cpp
-    Monitor_svnt.cpp
+  Inline_Files {
+    MonitorC.inl
   }
 }
 
-
-project(Monitor_exec) : ciao_executor, race_common {
-  after   += Monitor_svnt
+project(Monitor_exec) : ciao_executor , race_common  {
+  after   += Monitor_lem_stub Monitor_stub Monitor_svnt
   sharedname = Monitor_exec
-  libs      += Monitor_stub Monitor_svnt
-
+  libs += Monitor_stub Monitor_lem_stub CIAO_Context_Impl Monitor_svnt
+  
+  
   dynamicflags   = MONITOR_EXEC_BUILD_DLL
 
   IDL_Files {
-
   }
 
   Source_Files {
     Monitor_exec.cpp
   }
+
+  Header_Files {
+    Monitor_exec.h
+    Monitor_exec_export.h
+  }
+
+  Inline_Files {
+  }
 }
+
+
+project(Monitor_svnt) : ciao_servant , race_common  {
+  after      +=   Monitor_lem_stub
+  sharedname  = Monitor_svnt
+  libs       += Monitor_stub Monitor_lem_stub  
+  
+  
+  dynamicflags = MONITOR_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    MonitorS.cpp
+    Monitor_svnt.cpp
+  }
+
+  Header_Files {
+    MonitorS.h
+    Monitor_svnt.h
+    Monitor_svnt_export.h
+  }
+
+  Inline_Files {
+    MonitorS.inl
+  }
+}
+
+
