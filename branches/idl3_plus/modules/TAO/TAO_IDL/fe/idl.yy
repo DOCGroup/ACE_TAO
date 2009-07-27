@@ -179,6 +179,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
   FE_Utils::T_Ref_Info          *trval;         /* Template interface info */
   FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
+  FE_Utils::T_Inst_Info         *tival;         /* Template instantiation */
 }
 
 /*
@@ -353,6 +354,8 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <rlval>   template_inheritance_spec
 
 %type <thval>   template_interface_header
+
+%type <tival>   template_inst
 %%
 
 /*
@@ -6322,10 +6325,194 @@ extended_port_decl
         : IDL_PORT template_inst IDENTIFIER
         {
 // extended_port_decl : IDL_PORT template_inst IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2->name_, true);
+          AST_PortType *pt = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2->name_);
+              so_far_so_good = false;
+            }
+           else
+             {
+               pt = AST_PortType::narrow_from_decl (d);
+
+               if (pt == 0)
+                 {
+                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                               d);
+                   so_far_so_good = false;
+                 }
+             }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Extended_Port *ep =
+                idl_global->gen ()->create_extended_port (
+                  &sn,
+                  pt,
+                  $2->args_);
+
+              (void) s->fe_add_extended_port (ep);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
         }
         | IDL_PORT scoped_name IDENTIFIER
         {
-//      | IDL_PORT scoped_name IDENTIFIER
+// extended_port_decl : IDL_PORT scoped_name IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2, true);
+          AST_PortType *pt = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2);
+              so_far_so_good = false;
+            }
+           else
+             {
+               pt = AST_PortType::narrow_from_decl (d);
+
+               if (pt == 0)
+                 {
+                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                               d);
+                   so_far_so_good = false;
+                 }
+             }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Extended_Port *ep =
+                idl_global->gen ()->create_extended_port (
+                  &sn,
+                  pt,
+                  0);
+
+              (void) s->fe_add_extended_port (ep);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+        }
+        | IDL_MIRRORPORT template_inst IDENTIFIER
+        {
+//        | IDL_MIRRORPORT template_inst IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2->name_, true);
+          AST_PortType *pt = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2->name_);
+              so_far_so_good = false;
+            }
+           else
+             {
+               pt = AST_PortType::narrow_from_decl (d);
+
+               if (pt == 0)
+                 {
+                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                               d);
+                   so_far_so_good = false;
+                 }
+             }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Mirror_Port *mp =
+                idl_global->gen ()->create_mirror_port (
+                  &sn,
+                  pt,
+                  $2->args_);
+
+              (void) s->fe_add_mirror_port (mp);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+        }
+        | IDL_MIRRORPORT scoped_name IDENTIFIER
+        {
+//        | IDL_MIRRORPORT scoped_name IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2, true);
+          AST_PortType *pt = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2);
+              so_far_so_good = false;
+            }
+           else
+             {
+               pt = AST_PortType::narrow_from_decl (d);
+
+               if (pt == 0)
+                 {
+                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                               d);
+                   so_far_so_good = false;
+                 }
+             }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Mirror_Port *mp =
+                idl_global->gen ()->create_mirror_port (
+                  &sn,
+                  pt,
+                  0);
+
+              (void) s->fe_add_mirror_port (mp);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
         }
         ;
 
@@ -6333,6 +6520,10 @@ template_inst
         : scoped_name '<' at_least_one_scoped_name '>'
         {
 // template_inst : scoped_name '<' at_least_one_scoped_name '>'
+          ACE_NEW_RETURN ($<tival>$,
+                          FE_Utils::T_Inst_Info ($1,
+                                                 $3),
+                          1);
         }
         ;
 

@@ -53,7 +53,7 @@ AST_Extended_Port::destroy (void)
       delete this->template_args_;
       this->template_args_ = 0;
     }
-  
+
   this->AST_Field::destroy ();
 }
 
@@ -63,7 +63,7 @@ AST_Extended_Port::dump (ACE_OSTREAM_TYPE &o)
   this->dump_i (o, "port ");
 
   this->local_name ()->dump (o);
-  
+
   // TODO - template args
 }
 

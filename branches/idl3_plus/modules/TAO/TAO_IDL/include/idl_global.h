@@ -124,6 +124,7 @@ public:
     , PS_FinderDeclSeen         // Seen complete finder declaration
     , PS_ConsumesDeclSeen       // Seen complete subscribes declaration
     , PS_ExtendedPortDeclSeen   // Seen extended port
+    , PS_MirrorPortDeclSeen     // Seen mirror port
     , PS_ModuleSeen             // Seen a MODULE keyword
     , PS_ModuleIDSeen           // Seen the module ID
     , PS_ModuleSqSeen           // '{' seen for module

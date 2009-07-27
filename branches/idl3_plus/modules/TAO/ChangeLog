@@ -1,16 +1,39 @@
+Mon Jul 27 14:46:05 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_extended_port.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Added production rules and semantic actions for extended
+            ports and mirror ports, as they appear in a component
+            (the connector versions, since connectors may be
+            parameterized, will be slightly different).
+
+          - Removed spaces in blank lines in several files.
+
 Fri Jul 24 19:08:55 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_mirror_port.cpp:
         * TAO_IDL/include/ast_mirror_port.h:
         * TAO_IDL/be/be_mirror_port.cpp:
         * TAO_IDL/be_include/be_mirror_port.h:
-        
+
           New files, defining a mirror port, which
           is found in a component, and is an instantiation
           of a porttype declaration, similar to an
           extended port, but with all the 'uses' and
           'provides' keywords interchanged.
-        
+
         * TAO_IDL/ast/ast_redef.cpp:
         * TAO_IDL/ast/ast_component.cpp:
         * TAO_IDL/ast/ast_generator.cpp:
@@ -28,7 +51,7 @@ Fri Jul 24 19:08:55 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
 Fri Jul 24 17:49:30 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
-        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_extended_port.cpp:
         * TAO_IDL/include/ast_extended_port.h:
         * TAO_IDL/be/be_extended_port.cpp:
         * TAO_IDL/be_include/be_extended_port.h:
@@ -37,7 +60,7 @@ Fri Jul 24 17:49:30 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
           is found in a component, and is an instantiation
           of a porttype declaration.
 
-        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/ast/ast_consumes.cpp:
         * TAO_IDL/ast/ast_porttype.cpp:
         * TAO_IDL/ast/ast_redef.cpp:
         * TAO_IDL/be/be_porttype.cpp:

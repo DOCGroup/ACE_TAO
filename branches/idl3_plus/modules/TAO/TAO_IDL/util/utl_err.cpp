@@ -167,6 +167,8 @@ error_string (UTL_Error::ErrorCode c)
       return "event type expected: ";
     case UTL_Error::EIDL_TMPL_IFACE_EXPECTED:
       return "template interface expected: ";
+    case UTL_Error::EIDL_PORTTYPE_EXPECTED:
+      return "porttype expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_INCOMPATIBLE_TYPE:
@@ -338,6 +340,8 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed consumes declaration";
   case IDL_GlobalData::PS_ExtendedPortDeclSeen:
     return "Malformed extended port declaration";
+  case IDL_GlobalData::PS_MirrorPortDeclSeen:
+    return "Malformed mirror port declaration";
   case IDL_GlobalData::PS_FactoryDeclSeen:
     return "Malformed factory declaration";
   case IDL_GlobalData::PS_FinderDeclSeen:

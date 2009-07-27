@@ -19,7 +19,7 @@ public:
     UTL_NameList *template_args);
 
   virtual ~AST_Extended_Port (void);
-  
+
   AST_PortType *port_type (void) const;
   UTL_NameList *template_args (void) const;
 
