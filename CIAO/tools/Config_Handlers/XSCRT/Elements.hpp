@@ -1,4 +1,4 @@
-o// file      : XSCRT/Elements.hpp
+// file      : XSCRT/Elements.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
