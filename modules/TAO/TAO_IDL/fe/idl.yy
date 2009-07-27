@@ -6329,6 +6329,7 @@ extended_port_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ($2->name_, true);
           AST_PortType *pt = 0;
+          AST_PortType::T_ARGLIST *args = 0;
           bool so_far_so_good = true;
 
           if (d == 0)
@@ -6349,8 +6350,8 @@ extended_port_decl
                else
                  {
                    args =
-                     pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
-                
+                     pt->match_arg_names ($2->args_);
+
                    if (args == 0)
                      {
                        so_far_so_good = false;
@@ -6386,7 +6387,6 @@ extended_port_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ($2, true);
           AST_PortType *pt = 0;
-          AST_PortType::T_ARGLIST *args = 0;
           bool so_far_so_good = true;
 
           if (d == 0)
@@ -6408,7 +6408,7 @@ extended_port_decl
                 {
                   FE_Utils::T_PARAMLIST_INFO *p_list =
                     pt->template_params ();
-                    
+
                   if (p_list != 0 && p_list->size () != 0)
                     {
                       idl_global->err ()->error0 (
@@ -6468,8 +6468,8 @@ extended_port_decl
                else
                  {
                    args =
-                     pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
-                
+                     pt->match_arg_names ($2->args_);
+
                    if (args == 0)
                      {
                        so_far_so_good = false;
@@ -6526,7 +6526,7 @@ extended_port_decl
                  {
                    FE_Utils::T_PARAMLIST_INFO *p_list =
                      pt->template_params ();
-                    
+
                    if (p_list != 0 && p_list->size () != 0)
                      {
                        idl_global->err ()->error0 (

@@ -916,7 +916,7 @@ static const tao_yytype_uint16 tao_yyrline[] =
     5944,  5966,  5973,  5987,  5993,  6000,  6019,  6036,  6043,  6053,
     6064,  6088,  6095,  6106,  6111,  6116,  6137,  6142,  6105,  6157,
     6163,  6170,  6177,  6182,  6189,  6188,  6197,  6196,  6207,  6212,
-    6266,  6271,  6325,  6373,  6421,  6469,  6520
+    6266,  6271,  6325,  6383,  6443,  6501,  6564
 };
 #endif
 
@@ -9192,31 +9192,31 @@ tao_yyreduce:
           AST_PortType::T_ARGLIST *args = 0;
           bool so_far_so_good = true;
 
-         if (d == 0)
-           {
-             idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].tival)->name_);
-             so_far_so_good = false;
-           }
-          else
+          if (d == 0)
             {
-              pt = AST_PortType::narrow_from_decl (d);
+              idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].tival)->name_);
+              so_far_so_good = false;
+            }
+           else
+             {
+               pt = AST_PortType::narrow_from_decl (d);
 
-              if (pt == 0)
-                {
-                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
-                                              d);
-                  so_far_so_good = false;
-                }
-              else
-                {
-                  args =
-                    pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
-                
-                  if (args == 0)
-                    {
-                      so_far_so_good = false;
-                    }
-                }
+               if (pt == 0)
+                 {
+                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                               d);
+                   so_far_so_good = false;
+                 }
+               else
+                 {
+                   args =
+                     pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
+
+                   if (args == 0)
+                     {
+                       so_far_so_good = false;
+                     }
+                 }
              }
 
           if (so_far_so_good)
@@ -9257,29 +9257,29 @@ tao_yyreduce:
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
               so_far_so_good = false;
             }
-           else
-             {
-               pt = AST_PortType::narrow_from_decl (d);
+          else
+            {
+              pt = AST_PortType::narrow_from_decl (d);
 
-               if (pt == 0)
-                 {
-                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
-                                               d);
-                   so_far_so_good = false;
-                 }
-               else
-                 {
-                   FE_Utils::T_PARAMLIST_INFO *p_list =
-                     pt->template_params ();
-                    
-                   if (p_list != 0 && p_list->size () != 0)
-                     {
-                       idl_global->err ()->error0 (
-                         UTL_Error::EIDL_T_ARG_LENGTH);
-                       so_far_so_good = false;  
-                     }
-                 }
-             }
+              if (pt == 0)
+                {
+                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                              d);
+                  so_far_so_good = false;
+                }
+              else
+                {
+                  FE_Utils::T_PARAMLIST_INFO *p_list =
+                    pt->template_params ();
+
+                  if (p_list != 0 && p_list->size () != 0)
+                    {
+                      idl_global->err ()->error0 (
+                        UTL_Error::EIDL_T_ARG_LENGTH);
+                      so_far_so_good = false;
+                    }
+                }
+            }
 
           if (so_far_so_good)
             {
@@ -9335,7 +9335,7 @@ tao_yyreduce:
                  {
                    args =
                      pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
-                
+
                    if (args == 0)
                      {
                        so_far_so_good = false;
@@ -9395,12 +9395,12 @@ tao_yyreduce:
                  {
                    FE_Utils::T_PARAMLIST_INFO *p_list =
                      pt->template_params ();
-                    
+
                    if (p_list != 0 && p_list->size () != 0)
                      {
                        idl_global->err ()->error0 (
                          UTL_Error::EIDL_T_ARG_LENGTH);
-                       so_far_so_good = false;  
+                       so_far_so_good = false;
                      }
                  }
              }
