@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_argument.h"
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
+#include "ast_porttype.h"
 
 #include "fe_utils.h"
 
@@ -83,7 +84,6 @@ class AST_Template_Interface;
 class AST_Instantiated_Interface;
 class AST_Extended_Port;
 class AST_Mirror_Port;
-class AST_PortType;
 class AST_Provides;
 class AST_Uses;
 class AST_Publishes;
@@ -395,13 +395,13 @@ public:
   AST_Extended_Port *create_extended_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    UTL_NameList *template_args);
+    AST_PortType::T_ARGLIST *template_args);
     
   virtual
   AST_Mirror_Port *create_mirror_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    UTL_NameList *template_args);
+    AST_PortType::T_ARGLIST *template_args);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

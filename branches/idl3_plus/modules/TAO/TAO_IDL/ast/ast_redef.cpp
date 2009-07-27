@@ -103,6 +103,7 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_enum:
     case AST_Decl::NT_typedef:
     case AST_Decl::NT_valuebox:
+    case AST_Decl::NT_connector:
       return true;
 
     case AST_Decl::NT_union_branch:

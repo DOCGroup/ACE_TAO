@@ -1040,9 +1040,10 @@ be_generator::create_consumes (UTL_ScopedName *n,
 }
 
 AST_Extended_Port *
-be_generator::create_extended_port (UTL_ScopedName *n,
-                                    AST_PortType *porttype_ref,
-                                    UTL_NameList *template_args)
+be_generator::create_extended_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref,
+  AST_PortType::T_ARGLIST *template_args)
 {
   be_extended_port *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1055,9 +1056,10 @@ be_generator::create_extended_port (UTL_ScopedName *n,
 }
 
 AST_Mirror_Port *
-be_generator::create_mirror_port (UTL_ScopedName *n,
-                                  AST_PortType *porttype_ref,
-                                  UTL_NameList *template_args)
+be_generator::create_mirror_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref,
+  AST_PortType::T_ARGLIST *template_args)
 {
   be_mirror_port *retval = 0;
   ACE_NEW_RETURN (retval,

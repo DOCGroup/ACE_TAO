@@ -42,7 +42,7 @@ public:
   be_mirror_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    UTL_NameList *template_args);
+    AST_PortType::T_ARGLIST *template_args);
     
   virtual ~be_mirror_port (void);
   

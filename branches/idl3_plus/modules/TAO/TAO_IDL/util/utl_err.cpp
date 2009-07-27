@@ -220,9 +220,11 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_ILLEGAL_PRIMARY_KEY:
       return "illegal primary key";
     case UTL_Error::EIDL_MISMATCHED_T_PARAM:
-      return "mismatched parameter in template interface reference";
+      return "mismatched parameter in template instantiation";
     case UTL_Error::EIDL_DUPLICATE_T_PARAM:
       return "duplicate template parameter id";
+    case UTL_Error::EIDL_T_ARG_LENGTH:
+      return "wrong # of template args";
   }
 
   return 0;

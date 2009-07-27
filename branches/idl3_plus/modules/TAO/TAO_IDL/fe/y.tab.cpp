@@ -9189,23 +9189,34 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].tival)->name_, true);
           AST_PortType *pt = 0;
+          AST_PortType::T_ARGLIST *args = 0;
           bool so_far_so_good = true;
 
-          if (d == 0)
+         if (d == 0)
+           {
+             idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].tival)->name_);
+             so_far_so_good = false;
+           }
+          else
             {
-              idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].tival)->name_);
-              so_far_so_good = false;
-            }
-           else
-             {
-               pt = AST_PortType::narrow_from_decl (d);
+              pt = AST_PortType::narrow_from_decl (d);
 
-               if (pt == 0)
-                 {
-                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
-                                               d);
-                   so_far_so_good = false;
-                 }
+              if (pt == 0)
+                {
+                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                              d);
+                  so_far_so_good = false;
+                }
+              else
+                {
+                  args =
+                    pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
+                
+                  if (args == 0)
+                    {
+                      so_far_so_good = false;
+                    }
+                }
              }
 
           if (so_far_so_good)
@@ -9218,10 +9229,9 @@ tao_yyreduce:
                                  0);
 
               AST_Extended_Port *ep =
-                idl_global->gen ()->create_extended_port (
-                  &sn,
-                  pt,
-                  (tao_yyvsp[(2) - (3)].tival)->args_);
+                idl_global->gen ()->create_extended_port (&sn,
+                                                          pt,
+                                                          args);
 
               (void) s->fe_add_extended_port (ep);
             }
@@ -9257,6 +9267,18 @@ tao_yyreduce:
                                                d);
                    so_far_so_good = false;
                  }
+               else
+                 {
+                   FE_Utils::T_PARAMLIST_INFO *p_list =
+                     pt->template_params ();
+                    
+                   if (p_list != 0 && p_list->size () != 0)
+                     {
+                       idl_global->err ()->error0 (
+                         UTL_Error::EIDL_T_ARG_LENGTH);
+                       so_far_so_good = false;  
+                     }
+                 }
              }
 
           if (so_far_so_good)
@@ -9291,6 +9313,7 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].tival)->name_, true);
           AST_PortType *pt = 0;
+          AST_PortType::T_ARGLIST *args = 0;
           bool so_far_so_good = true;
 
           if (d == 0)
@@ -9308,6 +9331,16 @@ tao_yyreduce:
                                                d);
                    so_far_so_good = false;
                  }
+               else
+                 {
+                   args =
+                     pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
+                
+                   if (args == 0)
+                     {
+                       so_far_so_good = false;
+                     }
+                 }
              }
 
           if (so_far_so_good)
@@ -9320,10 +9353,9 @@ tao_yyreduce:
                                  0);
 
               AST_Mirror_Port *mp =
-                idl_global->gen ()->create_mirror_port (
-                  &sn,
-                  pt,
-                  (tao_yyvsp[(2) - (3)].tival)->args_);
+                idl_global->gen ()->create_mirror_port (&sn,
+                                                        pt,
+                                                        args);
 
               (void) s->fe_add_mirror_port (mp);
             }
@@ -9358,6 +9390,18 @@ tao_yyreduce:
                    idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
                                                d);
                    so_far_so_good = false;
+                 }
+               else
+                 {
+                   FE_Utils::T_PARAMLIST_INFO *p_list =
+                     pt->template_params ();
+                    
+                   if (p_list != 0 && p_list->size () != 0)
+                     {
+                       idl_global->err ()->error0 (
+                         UTL_Error::EIDL_T_ARG_LENGTH);
+                       so_far_so_good = false;  
+                     }
                  }
              }
 

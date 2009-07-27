@@ -5,9 +5,7 @@
 #define AST_EXTENDED_PORT_H
 
 #include "ast_field.h"
-
-class AST_PortType;
-class UTL_NameList;
+#include "ast_porttype.h"
 
 class TAO_IDL_FE_Export AST_Extended_Port
   : public virtual AST_Field
@@ -16,12 +14,12 @@ public:
   AST_Extended_Port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    UTL_NameList *template_args);
+    AST_PortType::T_ARGLIST *template_args);
 
   virtual ~AST_Extended_Port (void);
 
   AST_PortType *port_type (void) const;
-  UTL_NameList *template_args (void) const;
+  AST_PortType::T_ARGLIST *template_args (void) const;
 
   // Cleanup function.
   virtual void destroy (void);
@@ -37,7 +35,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
 protected:
-  UTL_NameList *template_args_;
+  AST_PortType::T_ARGLIST *template_args_;
 };
 
 #endif /* AST_EXTENDED_PORT_H */

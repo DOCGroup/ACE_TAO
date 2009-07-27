@@ -48,9 +48,11 @@ FE_Utils::T_Inst_Info::T_Inst_Info (UTL_ScopedName *n,
 void
 FE_Utils::T_Inst_Info::destroy (void)
 {
-  // The template args are owned by the AST type.
-
   this->name_->destroy ();
   delete this->name_;
   this->name_ = 0;
+  
+  this->args_->destroy ();
+  delete this->args_;
+  this->args_ = 0;
 }
