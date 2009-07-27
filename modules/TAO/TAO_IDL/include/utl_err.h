@@ -144,6 +144,7 @@ public:
     EIDL_ILLEGAL_PRIMARY_KEY,   // Primary key doesn't meet spec constraints
     EIDL_MISMATCHED_T_PARAM,    // Between defined & referenced template interfaces
     EIDL_DUPLICATE_T_PARAM,     // A template interface's param ids must be unique
+    EIDL_T_ARG_LENGTH,          // Wrong # of template args
     EIDL_OK                     // No error
   };
 

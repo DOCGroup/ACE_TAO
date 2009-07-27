@@ -1049,9 +1049,10 @@ AST_Generator::create_consumes (UTL_ScopedName *n,
 }
 
 AST_Extended_Port *
-AST_Generator::create_extended_port (UTL_ScopedName *n,
-                                     AST_PortType *porttype_ref,
-                                     UTL_NameList *template_args)
+AST_Generator::create_extended_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref,
+  AST_PortType::T_ARGLIST *template_args)
 {
   AST_Extended_Port *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1064,9 +1065,10 @@ AST_Generator::create_extended_port (UTL_ScopedName *n,
 }
 
 AST_Mirror_Port *
-AST_Generator::create_mirror_port (UTL_ScopedName *n,
-                                   AST_PortType *porttype_ref,
-                                   UTL_NameList *template_args)
+AST_Generator::create_mirror_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref,
+  AST_PortType::T_ARGLIST *template_args)
 {
   AST_Mirror_Port *retval = 0;
   ACE_NEW_RETURN (retval,

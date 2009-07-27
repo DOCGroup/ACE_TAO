@@ -6,7 +6,6 @@
 
 #include "utl_identifier.h"
 #include "utl_indenter.h"
-#include "utl_namelist.h"
 #include "global_extern.h"
 
 ACE_RCSID (ast,
@@ -16,7 +15,7 @@ ACE_RCSID (ast,
 AST_Mirror_Port::AST_Mirror_Port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    UTL_NameList *template_args)
+    AST_PortType::T_ARGLIST *template_args)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_mirror_port,

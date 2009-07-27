@@ -169,6 +169,7 @@ public:
       , NT_consumes                 // Denotes an event sink
       , NT_ext_port                 // Denotes an extended port
       , NT_mirror_port              // Denotes a mirror port
+      , NT_connector                // Denotes a CCM connector
   };
 
   // Operations.

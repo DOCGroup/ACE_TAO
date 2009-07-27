@@ -6346,6 +6346,16 @@ extended_port_decl
                                                d);
                    so_far_so_good = false;
                  }
+               else
+                 {
+                   args =
+                     pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
+                
+                   if (args == 0)
+                     {
+                       so_far_so_good = false;
+                     }
+                 }
              }
 
           if (so_far_so_good)
@@ -6358,10 +6368,9 @@ extended_port_decl
                                  0);
 
               AST_Extended_Port *ep =
-                idl_global->gen ()->create_extended_port (
-                  &sn,
-                  pt,
-                  $2->args_);
+                idl_global->gen ()->create_extended_port (&sn,
+                                                          pt,
+                                                          args);
 
               (void) s->fe_add_extended_port (ep);
             }
@@ -6377,6 +6386,7 @@ extended_port_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ($2, true);
           AST_PortType *pt = 0;
+          AST_PortType::T_ARGLIST *args = 0;
           bool so_far_so_good = true;
 
           if (d == 0)
@@ -6384,17 +6394,29 @@ extended_port_decl
               idl_global->err ()->lookup_error ($2);
               so_far_so_good = false;
             }
-           else
-             {
-               pt = AST_PortType::narrow_from_decl (d);
+          else
+            {
+              pt = AST_PortType::narrow_from_decl (d);
 
-               if (pt == 0)
-                 {
-                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
-                                               d);
-                   so_far_so_good = false;
-                 }
-             }
+              if (pt == 0)
+                {
+                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                              d);
+                  so_far_so_good = false;
+                }
+              else
+                {
+                  FE_Utils::T_PARAMLIST_INFO *p_list =
+                    pt->template_params ();
+                    
+                  if (p_list != 0 && p_list->size () != 0)
+                    {
+                      idl_global->err ()->error0 (
+                        UTL_Error::EIDL_T_ARG_LENGTH);
+                      so_far_so_good = false;  
+                    }
+                }
+            }
 
           if (so_far_so_good)
             {
@@ -6425,6 +6447,7 @@ extended_port_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ($2->name_, true);
           AST_PortType *pt = 0;
+          AST_PortType::T_ARGLIST *args = 0;
           bool so_far_so_good = true;
 
           if (d == 0)
@@ -6442,6 +6465,16 @@ extended_port_decl
                                                d);
                    so_far_so_good = false;
                  }
+               else
+                 {
+                   args =
+                     pt->match_arg_names ((tao_yyvsp[(2) - (3)].tival)->args_);
+                
+                   if (args == 0)
+                     {
+                       so_far_so_good = false;
+                     }
+                 }
              }
 
           if (so_far_so_good)
@@ -6454,10 +6487,9 @@ extended_port_decl
                                  0);
 
               AST_Mirror_Port *mp =
-                idl_global->gen ()->create_mirror_port (
-                  &sn,
-                  pt,
-                  $2->args_);
+                idl_global->gen ()->create_mirror_port (&sn,
+                                                        pt,
+                                                        args);
 
               (void) s->fe_add_mirror_port (mp);
             }
@@ -6489,6 +6521,18 @@ extended_port_decl
                    idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
                                                d);
                    so_far_so_good = false;
+                 }
+               else
+                 {
+                   FE_Utils::T_PARAMLIST_INFO *p_list =
+                     pt->template_params ();
+                    
+                   if (p_list != 0 && p_list->size () != 0)
+                     {
+                       idl_global->err ()->error0 (
+                         UTL_Error::EIDL_T_ARG_LENGTH);
+                       so_far_so_good = false;  
+                     }
                  }
              }
 

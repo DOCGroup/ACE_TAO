@@ -7,6 +7,7 @@
 #include "utl_string.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
+#include "utl_err.h"
 #include "global_extern.h"
 
 ACE_RCSID (ast,
@@ -56,6 +57,8 @@ AST_Template_Interface::match_param_names (UTL_StrList *names)
 
   if (names_len != this->template_params_->size ())
     {
+      idl_global->err ()->error1 (UTL_Error::EIDL_T_ARG_LENGTH,
+                                  this);
       return false;
     }
 

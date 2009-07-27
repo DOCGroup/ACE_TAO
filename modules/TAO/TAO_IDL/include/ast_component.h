@@ -78,7 +78,7 @@ protected:
 
   virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p);
 
-private:
+protected:
   AST_Component *pd_base_component;
 };
 

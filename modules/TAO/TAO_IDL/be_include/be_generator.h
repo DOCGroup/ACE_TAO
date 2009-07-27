@@ -309,13 +309,13 @@ public:
   AST_Extended_Port *create_extended_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    UTL_NameList *template_args);
+    AST_PortType::T_ARGLIST *template_args);
     
   virtual
   AST_Mirror_Port *create_mirror_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    UTL_NameList *template_args);
+    AST_PortType::T_ARGLIST *template_args);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

@@ -12,7 +12,7 @@ ACE_RCSID (be,
 be_extended_port::be_extended_port (
       UTL_ScopedName *n,
       AST_PortType *porttype_ref,
-      UTL_NameList *template_args)
+      AST_PortType::T_ARGLIST *template_args)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_ext_port,
