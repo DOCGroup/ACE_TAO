@@ -143,7 +143,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
         sw_ = new string_Writer_exec_i (sw);
 
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Hello_sender_Connector_exec_i::configure_dds - "
                      "Caught CORBA exception %C\n",
@@ -203,48 +203,48 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   //============================================================
   // Home Executor Implementation Class: SenderConnectorHome_exec_i
   //============================================================
-  
+
   SenderConnectorHome_exec_i::SenderConnectorHome_exec_i (void)
   {
   }
-  
+
   SenderConnectorHome_exec_i::~SenderConnectorHome_exec_i (void)
   {
   }
-  
+
   // All operations and attributes.
-  
+
   // Factory operations.
-  
+
   // Finder operations.
-  
+
   // Implicit operations.
-  
+
   ::Components::EnterpriseComponent_ptr
   SenderConnectorHome_exec_i::create (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_THROW_EX (
       retval,
       Hello_sender_Connector_exec_i,
       ::CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
-  
+
   extern "C" HELLO_SENDER_CONNECTOR_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_DDS_SenderConnectorHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-    
+
     ACE_NEW_RETURN (
       retval,
       SenderConnectorHome_exec_i,
       ::Components::HomeExecutorBase::_nil ());
-    
+
     return retval;
   }
 }

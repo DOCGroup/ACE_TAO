@@ -1,3 +1,37 @@
+Mon Jul 27 10:42:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+          Fixed incorrect comparison
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl:
+          Fixed issue related to lem generation
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
+          Added missing library
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h:
+          Create an subscribe a listener to see if we get some data from DDS
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Implemented on_data_available
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
+          Catch exceptions as const
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.h:
+          configure_dds is a private method
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Added an ACE_DEBUG to show we send a message
+
+        * connectors/dds4ccm/id3p_test
+        * connectors/dds4ccm/id3p_test/Multiple_Reader_Ports
+        * connectors/dds4ccm/id3p_test/Multiple_Reader_Ports/test.idl3p
+        * connectors/dds4ccm/impl/ndds/Participant.cpp
+          First start with IDL3+ tests for dds4ccm
+
 Mon Jul 27 06:58:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Receiver

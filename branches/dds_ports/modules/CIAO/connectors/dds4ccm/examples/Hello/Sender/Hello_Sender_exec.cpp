@@ -37,78 +37,79 @@ namespace CIAO_Hello_DDS_Sender_Impl
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
-  
+
   Sender_exec_i::Sender_exec_i (void)
   {
   }
-  
+
   Sender_exec_i::~Sender_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes.
-  
+
   // Port operations.
-  
+
   // Operations from Components::SessionComponent.
-  
+
   void
   Sender_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::Hello_DDS::CCM_Sender_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Sender_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::string_Writer_var writer = 
+    ::CCM_DDS::string_Writer_var writer =
       this->context_->get_connection_push_data_data ();
-    
+
     for (size_t i = 0; i < 10; ++i)
       {
         ACE_OS::sleep (2);
         writer->write ("Hi Johnny! I'm a CCM Component talking over DDS!\n");
+        ACE_DEBUG ((LM_DEBUG, "Sender has send string\n"));
       }
   }
-  
+
   void
   Sender_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Sender_exec_i::ccm_remove (void)
   {
     /* Your code here. */
   }
-  
+
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_DDS_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_RETURN (
       retval,
       Sender_exec_i,
       ::Components::EnterpriseComponent::_nil ());
-    
+
     return retval;
   }
 }
@@ -118,48 +119,48 @@ namespace CIAO_Hello_DDS_Sender_Impl
   //============================================================
   // Home Executor Implementation Class: SenderHome_exec_i
   //============================================================
-  
+
   SenderHome_exec_i::SenderHome_exec_i (void)
   {
   }
-  
+
   SenderHome_exec_i::~SenderHome_exec_i (void)
   {
   }
-  
+
   // All operations and attributes.
-  
+
   // Factory operations.
-  
+
   // Finder operations.
-  
+
   // Implicit operations.
-  
+
   ::Components::EnterpriseComponent_ptr
   SenderHome_exec_i::create (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_THROW_EX (
       retval,
       Sender_exec_i,
       ::CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
-  
+
   extern "C" HELLO_SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_DDS_SenderHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-    
+
     ACE_NEW_RETURN (
       retval,
       SenderHome_exec_i,
       ::Components::HomeExecutorBase::_nil ());
-    
+
     return retval;
   }
 }

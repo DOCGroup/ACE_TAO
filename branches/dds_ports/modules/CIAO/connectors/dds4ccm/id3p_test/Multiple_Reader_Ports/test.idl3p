@@ -1,0 +1,12 @@
+// $Id$
+
+// IDL3+
+module Hello_DDS
+{
+  component Sender
+  {
+    port DDS_Write<string> push_message;
+    port DDS_Write<int> push_state;
+  };
+};
+
