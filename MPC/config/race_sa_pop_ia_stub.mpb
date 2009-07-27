@@ -1,0 +1,4 @@
+project : dance_deployment_stub, race_ia_stub {
+  after += SA_POP_Input_Adapter_stub
+  libs += SA_POP_Input_Adapter_stub
+}
