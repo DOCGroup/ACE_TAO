@@ -1,10 +1,17 @@
+Mon Jul 27 19:20:07 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed typos in idl.yy and regenerated.
+
 Mon Jul 27 18:57:11 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_connector.h:
         * TAO_IDL/ast/ast_connector.cp:
-        
+
           New files, defining a connector node class.
-        
+
         * TAO_IDL/ast/ast_extended_port.cpp:
         * TAO_IDL/ast/ast_generator.cpp:
         * TAO_IDL/ast/ast_mirror_port.cpp:
@@ -28,7 +35,7 @@ Mon Jul 27 18:57:11 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_porttype.h:
         * TAO_IDL/include/utl_err.h:
         * TAO_IDL/util/utl_err.cpp:
-        
+
           Changed extended port and mirror port classes to take
           an actual list of AST nodes, instead of a list of names.
           Lookup and error checking on the list of names is now
