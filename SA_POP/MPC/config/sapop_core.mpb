@@ -1,4 +1,5 @@
 project {
+  includes += $(SAPOP_ROOT)
   after += SA_POP
   libs += SA_POP
 }

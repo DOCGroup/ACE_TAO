@@ -77,7 +77,7 @@ project(SA_POP_Component_stub) : ccm_stub , race_opstring, race_data_base_stub  
   }
 }
 
-project(SA_POP_Component_exec) : ciao_executor , race_opstring, race_data_base_stub, sapop  {
+project(SA_POP_Component_exec) : ciao_executor , race_opstring, race_data_base_stub, sapop_core  {
   after   += SA_POP_Component_lem_stub SA_POP_Component_stub SA_POP_Component_svnt
   sharedname = SA_POP_Component_exec
   libs += SA_POP_Component_stub SA_POP_Component_lem_stub SA_POP_Component_svnt

@@ -1,7 +1,7 @@
 $Id$
 
 Instructions for building middleware (including ACE, TAO, CIAO, DAnCE), MACRO (including ANA, RACE, SA-POP), & CoSMIC (including PICML)
-  03/19/2009 Revision (John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>)
+  07/27/2009 Revision (John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>)
 
 
 
@@ -34,23 +34,7 @@ Boost (06/08/2007):
 
 
 
-CIDLC (09/25/2008):
--CIDLC (IF using pre-built binary)
-  -Get appropriate version of cidlc.exe from http://www.dre.vanderbilt.edu/cidlc/binary/ (or http://www.dre.vanderbilt.edu/~isisbuilds/CIDLC/ for latest)
-  -Place cidlc.exe in %CIAO_ROOT%\bin\
--CIDLC (IF building) (Spring 2006):
-  -Install, build if necessary, and set environment variables for:
-    -Boost [install pre-built or build, & set env. vars.]
-  -Set MPC to use Boost and CIDL
-    -Open %ACE_ROOT%\bin\MakeProjectCreator\config\default.features, then set "cidl" and "boost" to 1, and save.
-  -Generate MSVC++ projects and solution, if necessary.
-    cd %CIAO_ROOT%\CIDLC
-    perl %ACE_ROOT%\bin\mwc.pl -type vc8 CIDLC.mwc
-  -Open CIDLC.sln and build solution (in MSVC++)
-    devenv /build "Debug|Win32" CIDLC.sln
-
-
-ACE/TAO/CIAO/DAnCE (09/25/2008):
+ACE/TAO/CIAO/DAnCE (07/27/2009):
 (http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html)
 (http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/TAO-INSTALL.html)
 (http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html)
@@ -58,9 +42,8 @@ ACE/TAO/CIAO/DAnCE (09/25/2008):
   -Microsoft Visual Studio 2005 Professional [install]
   -ActiveState ActivePerl (e.g., 5.8.8.820-MSWin32-x86-274739 or later) [install]
   -MPC [IF using packaged release of ACE+TAO+CIAO it comes with MPC and do *NOT* set MPC_ROOT; otherwise checkout development version or download release version, and set env. vars.]
-  -Subversion (e.g., 1.4.3-r23084 or later) [install]
-  -CIDLC [install pre-built or build] (AFTER extracting release archive or checkout of ACE/TAO/CIAO)
-  -Xerces-C (e.g., 2.7.0-win32-vc8 or 2.8.0-win32-vc8) [install pre-built & set env. vars.]
+  -Subversion (e.g., 1.6.1 or later) [install]
+  -Xerces-C (e.g., 2.8.0-win32-vc8) [install pre-built & set env. vars.]
 -FIRST TIME (Release version ONLY):
   -Download source for a release/micro-release from http://download.dre.vanderbilt.edu/
   -Extract (e.g. to C:\Middleware\X_Y_Z for version X.Y.Z so %ACE_ROOT% would be C:\Middleware\X_Y_Z\ACE_wrappers)
@@ -80,6 +63,8 @@ ACE/TAO/CIAO/DAnCE (09/25/2008):
   -Set Make Project Creator default configuration in %ACE_ROOT%\bin\MakeProjectCreator\config\
     cd %ACE_ROOT%\bin\MakeProjectCreator\config\
     copy global.features default.features
+    -Open %ACE_ROOT%\bin\MakeProjectCreator\config\default.features, then set "xerces2" to 1, and save.
+      notepad %ACE_ROOT%\bin\MakeProjectCreator\config\default.features
 -Set ACE, TAO, & CIAO environment variables
 -(SVN Dev version ONLY) Update ACE/CIAO/TAO from svn.dre.vanderbilt.edu
   cd C:\Middleware
@@ -117,7 +102,7 @@ RACE/SA-POP (09/25/2008):
 
 
 
-ACE [only ACE, without TAO & CIAO] (03/18/2009):
+ACE [only ACE, without TAO & CIAO] (06/11/2009):
 (http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html)
 -Install and set environment variables for:
   -Microsoft Visual Studio 2005 Professional [install]
@@ -138,6 +123,8 @@ ACE [only ACE, without TAO & CIAO] (03/18/2009):
   -Set Make Project Creator default configuration in %ACE_ROOT%\bin\MakeProjectCreator\config\
     cd %ACE_ROOT%\bin\MakeProjectCreator\config\
     copy global.features default.features
+    -Open %ACE_ROOT%\bin\MakeProjectCreator\config\default.features, then set "xerces2" to 1, and save.
+      notepad %ACE_ROOT%\bin\MakeProjectCreator\config\default.features
 -Build ACE
   -Generate (or regenerate) MSVC++ projects and solution.
     cd %ACE_ROOT%
@@ -184,7 +171,7 @@ DAnCE RepositoryManager (09/25/2008):
   -zlib (e.g., 1.2.3) [install pre-built & set env. vars.]
   -ACE/TAO/CIAO/DAnCE [set env. vars.; will all be built along with RepoMan if using CIAO_TAO_DAnCE.mwc]
 -FIRST TIME
-  -Open %ACE_ROOT%\bin\MakeProjectCreator\config\default.features, then set "zlib" to 1, and save.
+  -Open %ACE_ROOT%\bin\MakeProjectCreator\config\default.features, then set "zlib" and "xerces2" both to 1, and save.
     notepad %ACE_ROOT%\bin\MakeProjectCreator\config\default.features
 -For Repoman with ACE/TAO/CIAO/DAnCE, generate (or regenerate) MSVC++ projects and solution, if necessary.
   cd %CIAO_ROOT%
@@ -357,19 +344,26 @@ and then run appropriate environment batch file (example for ACE/TAO/CIAO 5.6.6)
 
 
 
-Environment variables that must be set (example for ACE/TAO/CIAO 5.6.6):
+Environment variables that must be set (example for ACE/TAO/CIAO 5.7.2 and MACRO):
 
 ACE:
-ACE_ROOT=C:/Middleware/5_6_6/ACE_wrappers
+ACE_ROOT=C:/Middleware/5_7_2/ACE_wrappers
 Path=%ACE_ROOT%/bin;%ACE_ROOT%/lib;%PATH%
 
 
 TAO:
-TAO_ROOT=C:/Middleware/5_6_6/ACE_wrappers/TAO
+TAO_ROOT=C:/Middleware/5_7_2/ACE_wrappers/TAO
+Path=%TAO_ROOT%/bin;%PATH%
 
 
 CIAO:
-CIAO_ROOT=C:/Middleware/5_6_6/ACE_wrappers/TAO/CIAO
+CIAO_ROOT=C:/Middleware/5_7_2/ACE_wrappers/TAO/CIAO
+Path=%CIAO_ROOT%/bin;%PATH%
+
+
+DAnCE:
+DANCE_ROOT=C:/Middleware/5_7_2/ACE_wrappers/TAO/CIAO/DAnCE
+Path=%DANCE_ROOT%/bin;%DANCE_ROOT%/lib;%PATH%
 
 
 Xerces:
@@ -401,6 +395,7 @@ Path=%CUTS_ROOT%/bin;%PATH%
 
 RACE:
 RACE_ROOT=C:/Middleware/MACRO/RACE
+Path=%RACE_ROOT%/lib;%PATH%
 
 
 SA-POP:

@@ -1,0 +1,3 @@
+project {
+  libout     =  $(SAPOP_ROOT)/lib	
+}

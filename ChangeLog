@@ -1,3 +1,48 @@
+Mon Jul 27 23:53:25 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * MPC/config/sapop.mpb:
+          Removed this file.
+
+        * RACE_SAPOP.mwc:
+
+        * SA_POP/C2W/C2W_Demo.mpc:
+
+        * SA_POP/Component/SA_POP_Component.mpc:
+
+        * SA_POP/Instructions for building middleware RACE SA-POP and CoSMIC.txt:
+        * SA_POP/MPC:
+
+        * SA_POP/MPC/config:
+
+        * SA_POP/MPC/config/sapop_core.mpb:
+        * SA_POP/MPC/config/sapop_core_standalone.mpb:
+        * SA_POP/MPC/config/sapop_out.mpb:
+        * SA_POP/MPC/config/sapop_xml.mpb:
+
+        * SA_POP/SAPOP_C2W.mwc:
+        * SA_POP/SAPOP_Standalone.mwc:
+        * SA_POP/SAPOP_w_ACE.mpc:
+
+        * SA_POP/Standalone/SAPOP_Demo.mpc:
+
+        * SA_POP/Standalone/XML_Utils/XML/XML.mpc:
+
+          Updates to SA-POP MWC build system.
+
+
+
+
+        * SA_POP/SANet/SANetFileIn.h:
+        * SA_POP/SANet/SANetFileIn.cpp:
+        * SA_POP/SANet/SANet_Standalone.mpc:
+        * SA_POP/SANet/SANet_Types.h:
+        * SA_POP/SANet/SANet_XML_Typedefs.h:
+        * SA_POP/SANet/SANet_XML_Typedefs.cpp:
+
+        * SA_POP/SANet_Standalone.mwc:
+
+          SANet Standalone updated for latest XML utilities.
+
 Thu Jul  2 20:14:08 UTC 2009  William R. Otte <wotte@dre.vanderbilt.edu>
 
         * Effectors/Base/Effector_Base.mpc:
@@ -5,7 +50,7 @@ Thu Jul  2 20:14:08 UTC 2009  William R. Otte <wotte@dre.vanderbilt.edu>
         * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
         * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
 
-	Compile fixes. 
+        Compile fixes.
 
 Mon Jun 15 17:51:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 

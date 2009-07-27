@@ -1,0 +1,5 @@
+project : sapop_core {
+
+  libpaths += $(SAPOP_ROOT)/lib
+
+}

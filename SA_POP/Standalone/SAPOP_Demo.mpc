@@ -1,18 +1,16 @@
-project(SA_POP_Demo) : xerces, aceexe {
+project(SA_POP_Demo) : xerces, aceexe, sapop_core_standalone {
   exename = SA_POP_Demo
 
-  after += SA_POP
+//  after += SA_POP
 
-  includes += $(SAPOP_ROOT) \
-              $(SAPOP_ROOT)/Standalone/XML_Utils
+//  includes += $(SAPOP_ROOT) \
+// //              $(SAPOP_ROOT)/Standalone/XML_Utils
 
-  libpaths += $(SAPOP_ROOT)/lib
+//  libpaths += $(SAPOP_ROOT)/lib
 
-  libs += SA_POP
+//  libs += SA_POP
 
-//  dynamicflags = CIAO_XML_UTILS_BUILD_DLL
-
-//  macros = SA_POP_HAS_ACE
+// //  macros = SA_POP_HAS_ACE
 
   Source_Files {
     SA_POP_Demo.cpp
