@@ -1,3 +1,14 @@
+Mon Jul 27 06:58:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/DDS_Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp
+        * connectors/dds4ccm/examples/Hello/DDS_Sender
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/DDS_Sender.mpc
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp
+          Receiver and sender to send plain strings as addition to the CCM based
+          sender/receiver. These programs use RTI DDS
+
 Fri Jul 24 19:20:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
