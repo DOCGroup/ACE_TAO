@@ -1269,6 +1269,18 @@ UTL_Scope::fe_add_consumes (AST_Consumes *)
   return 0;
 }
 
+AST_Extended_Port *
+UTL_Scope::fe_add_extended_port (AST_Extended_Port *)
+{
+  return 0;
+}
+
+AST_Mirror_Port *
+UTL_Scope::fe_add_mirror_port (AST_Mirror_Port *)
+{
+  return 0;
+}
+
 // This is the second pass of the front end
 // It calls the public add protocol on everything in scope.
 // It calls the add_xx functions of the most derived AST_Node.
@@ -1715,12 +1727,12 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
                 }
 
               t = (0 == d ? 0 : AST_Type::narrow_from_decl (d));
-              
+
               if (0 != t && full_def_only && !t->is_defined ())
                 {
                   continue;
                 }
-                
+
               return d;
             }
           else
@@ -1746,12 +1758,12 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       AST_Module *m = AST_Module::narrow_from_decl (last_chance);
       d = m->look_in_previous (e);
       t = (0 == d ? 0 : AST_Type::narrow_from_decl (d));
-    
+
       if (0 != t && full_def_only && !t->is_defined ())
         {
           return 0;
         }
-        
+
       return d;
     }
   else
@@ -1836,13 +1848,13 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         {
           // A no-op unless d can inherit.
           d = look_in_inherited (e, treat_as_ref);
-        
+
           if (0 == d)
             {
               // A no-op unless d can support interfaces.
               d = look_in_supported (e, treat_as_ref);
             }
-            
+
           if ((0 == d) && in_parent)
             {
               if (full_def_only && (0 != first_one_found))
@@ -1973,7 +1985,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                     }
                 }
             }
-            
+
           // OK, now return whatever we found.
           return d;
         }
@@ -2571,7 +2583,7 @@ UTL_Scope::destroy (void)
   this->pd_decls = 0;
   this->pd_decls_used = 0;
   this->pd_locals_used = 0;
-    
+
   for (long i = this->pd_name_referenced_used; i > 0; --i)
     {
       Identifier *id = this->pd_name_referenced[i - 1];

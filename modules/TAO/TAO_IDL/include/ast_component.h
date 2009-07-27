@@ -62,7 +62,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
 protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);
 
@@ -73,7 +73,7 @@ protected:
   virtual AST_Emits *fe_add_emits (AST_Emits *p);
 
   virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
-  
+ 
   virtual AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p);
 
   virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p);
