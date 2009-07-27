@@ -1,3 +1,41 @@
+Mon Jul 27 23:53:25 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * C2W/C2W_Demo.mpc:
+
+        * Component/SA_POP_Component.mpc:
+
+        * Instructions for building middleware RACE SA-POP and CoSMIC.txt:
+        * MPC:
+
+        * MPC/config:
+
+        * MPC/config/sapop_core.mpb:
+        * MPC/config/sapop_core_standalone.mpb:
+        * MPC/config/sapop_out.mpb:
+        * MPC/config/sapop_xml.mpb:
+
+        * SAPOP_C2W.mwc:
+        * SAPOP_Standalone.mwc:
+        * SAPOP_w_ACE.mpc:
+
+        * Standalone/SAPOP_Demo.mpc:
+
+        * Standalone/XML_Utils/XML/XML.mpc:
+
+          Updates to SA-POP MWC build system.
+
+
+        * SANet/SANetFileIn.h:
+        * SANet/SANetFileIn.cpp:
+        * SANet/SANet_Standalone.mpc:
+        * SANet/SANet_Types.h:
+        * SANet/SANet_XML_Typedefs.h:
+        * SANet/SANet_XML_Typedefs.cpp:
+
+        * SANet_Standalone.mwc:
+
+          SANet Standalone updated for latest XML utilities.
+
 Fri Jun 12 20:58:24 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SANet/SANetFileIn.cpp:

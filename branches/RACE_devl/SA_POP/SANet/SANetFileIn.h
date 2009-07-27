@@ -19,8 +19,8 @@
 #include "SANet.h"
 
 #if !defined (SANET_STANDALONE)
-#include "SA_POP/Builder.h"
-#include "SA_POP/SANet/SANetFileIn_Export.h"
+#include "Builder.h"
+#include "SANet/SANetFileIn_Export.h"
 #endif
 
 namespace SANet {

@@ -1,5 +1,6 @@
 workspace {
   cmdline += -include $RACE_ROOT/MPC/config
+  cmdline += -include $SAPOP_ROOT/MPC/config
   common
   utils
   Controller/Base

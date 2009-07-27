@@ -1,9 +1,9 @@
 // $Id$
 
-project (SAPOP_XML_Utils) : acelib, xerces {
+project (SAPOP_XML_Utils) : acelib, xerces, sapop_out {
   sharedname   += SAPOP_XML_Utils
 
-  libout = $(SAPOP_ROOT)/lib
+//  libout = $(SAPOP_ROOT)/lib
 
   includes += ..
 

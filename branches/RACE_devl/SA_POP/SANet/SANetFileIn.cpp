@@ -17,9 +17,11 @@
 
 #if !defined (SANET_STANDALONE)
 #include "Builder.h"
+#include "SA_POP_XML_Typedefs.h"
+#else
+#include "SANet_XML_Typedefs.h"
 #endif
 
-#include "SA_POP_XML_Typedefs.h"
 #include "XML_SANet.hpp"
 
 using namespace SANet;

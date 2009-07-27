@@ -1,0 +1,10 @@
+project {
+
+  after += SAPOP_XML_Utils
+
+  includes += $(SAPOP_ROOT)/Standalone/XML_Utils
+
+  libpaths += $(SAPOP_ROOT)/lib
+
+  libs += SAPOP_XML_Utils
+}

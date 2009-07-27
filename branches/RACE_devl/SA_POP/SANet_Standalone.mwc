@@ -1,6 +1,5 @@
 workspace {
   cmdline += -include $SAPOP_ROOT/MPC/config
   Standalone/XML_Utils/XML/XML.mpc
-  SAPOP_w_ACE.mpc
-  C2W/C2W_Demo.mpc
+  SANet/SANet_Standalone.mpc
 }
