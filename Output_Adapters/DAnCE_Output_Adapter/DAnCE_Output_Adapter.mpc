@@ -78,10 +78,10 @@ project(DAnCE_Output_Adapter_stub) : ccm_stub , race_opstring, dance_deployment_
 }
 
 project(DAnCE_Output_Adapter_exec) : ciao_executor , race_opstring, dance_deployment_stub, race_utils, \
-   ciao_config_handlers, dance_plan_launcher_base, dance_repositorymanager_stub, dance_plan_generator  {
+   ciao_config_handlers, dance_plan_launcher_base, dance_repositorymanager_stub, dance_plan_generator, ciao_executionmanager_stub  {
   after   += DAnCE_Output_Adapter_lem_stub DAnCE_Output_Adapter_stub DAnCE_Output_Adapter_svnt
   sharedname = DAnCE_Output_Adapter_exec
-  libs += DAnCE_Output_Adapter_stub DAnCE_Output_Adapter_lem_stub DAnCE_Output_Adapter_svnt
+  libs += DAnCE_Output_Adapter_stub DAnCE_Output_Adapter_lem_stub DAnCE_Output_Adapter_svnt CIAO_Context_Impl
   
   
   dynamicflags   = DANCE_OUTPUT_ADAPTER_EXEC_BUILD_DLL
