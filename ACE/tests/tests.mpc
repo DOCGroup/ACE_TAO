@@ -1701,3 +1701,27 @@ project(Wild_Match_Test) : acetest {
     Wild_Match_Test.cpp
   }
 }
+
+project(Service Config Stream DLL) : acelib {
+  libout       = .
+  sharedname   = Service_Config_Stream_DLL
+  dynamicflags = SERVICE_CONFIG_STREAM_DLL_BUILD_DLL
+
+  Source_Files {
+    Service_Config_Stream_DLL.cpp
+  }
+  Header_Files {
+    Service_Config_Stream_DLL.h
+    Service_Config_Stream_DLL_Export.h
+  }
+  Resource_Files {
+  }
+}
+
+project(Service Config Stream Test) : acetest {
+  after  += Service_Config_Stream_DLL
+  exename = Service_Config_Stream_Test
+  Source_Files {
+    Service_Config_Stream_Test.cpp
+  }
+}
