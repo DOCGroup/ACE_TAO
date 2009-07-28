@@ -34,22 +34,24 @@
 #include "ciao/CIAO_common.h"
 
 #include "dds4ccm/impl/ndds/ParticipantFactory.h"
+#include "dds4ccm/impl/ndds/DataReader.h"
 
 /* This method gets called back by DDS when one or more data samples have been
  * received.
  */
- 
+
 HelloListener::HelloListener ( ::CCM_DDS::string_RawListener_ptr listener) :
   listener_ ( ::CCM_DDS::string_RawListener::_duplicate (listener))
 {
 }
 
-void HelloListener::on_data_available(DDSDataReader *reader) 
+void HelloListener::on_data_available( ::DDS::DataReader *reader)
 {
     /* Perform a safe type-cast from a generic data reader into a
      * specific data reader for the type "DDS::String"
      */
-    DDSStringDataReader * string_reader = DDSStringDataReader::narrow(reader);
+    ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd = dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(reader);
+    DDSStringDataReader * string_reader = DDSStringDataReader::narrow(rd->get_datareader ());
     if (!string_reader) {
         /* In this specific case, this will never fail */
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("DDSStringDataReader::narrow failed.\n")));
@@ -174,8 +176,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   // Facet Executor Implementation Class: DataReader_exec_i
   //============================================================
 
-  DataReader_exec_i::DataReader_exec_i (DDSDataReader* dr) :
-    dr_ (dr)
+  DataReader_exec_i::DataReader_exec_i (::DDS::DataReader_ptr dr) :
+    dr_ ( ::DDS::DataReader::_duplicate (dr))
   {
   }
 
@@ -188,192 +190,162 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   ::DDS::ReturnCode_t
   DataReader_exec_i::enable (void)
   {
-    //return this->dr_->enable
-    //return this->dr_
-    /* Your code here. */
-    return 0;
+    return this->dr_->enable ();
   }
 
   ::DDS::StatusCondition_ptr
   DataReader_exec_i::get_statuscondition (void)
   {
-    //return this->dr_->get_statuscondition ();
-    /* Your code here. */
-    return ::DDS::StatusCondition::_nil ();
+    return this->dr_->get_statuscondition ();
   }
 
   ::DDS::StatusMask
   DataReader_exec_i::get_status_changes (void)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_status_changes ();
   }
 
   ::DDS::InstanceHandle_t
   DataReader_exec_i::get_instance_handle (void)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_instance_handle ();
   }
 
   ::DDS::ReadCondition_ptr
   DataReader_exec_i::create_readcondition (
-    ::DDS::SampleStateMask /* sample_states */,
-    ::DDS::ViewStateMask /* view_states */,
-    ::DDS::InstanceStateMask /* instance_states */)
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states)
   {
-    /* Your code here. */
-    return ::DDS::ReadCondition::_nil ();
+    return this->dr_->create_readcondition (sample_states, view_states, instance_states);
   }
 
   ::DDS::QueryCondition_ptr
   DataReader_exec_i::create_querycondition (
-    ::DDS::SampleStateMask /* sample_states */,
-    ::DDS::ViewStateMask /* view_states */,
-    ::DDS::InstanceStateMask /* instance_states */,
-    const char * /* query_expression */,
-    const ::DDS::StringSeq & /* query_parameters */)
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states,
+    const char * query_expression,
+    const ::DDS::StringSeq & query_parameters)
   {
-    /* Your code here. */
-    return ::DDS::QueryCondition::_nil ();
+    return this->dr_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::delete_readcondition (
-    ::DDS::ReadCondition_ptr /* a_condition */)
+    ::DDS::ReadCondition_ptr a_condition)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->delete_readcondition (a_condition);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::delete_contained_entities (void)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->delete_contained_entities ();
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::set_qos (
-    const ::DDS::DataReaderQos & /* qos */)
+    const ::DDS::DataReaderQos & qos)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->set_qos (qos);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_qos (
-    ::DDS::DataReaderQos & /* qos */)
+    ::DDS::DataReaderQos & qos)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_qos (qos);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::set_listener (
-    ::DDS::DataReaderListener_ptr /* a_listener */,
-    ::DDS::StatusMask /* mask */)
+    ::DDS::DataReaderListener_ptr a_listener,
+    ::DDS::StatusMask mask)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->set_listener (a_listener, mask);
   }
 
   ::DDS::DataReaderListener_ptr
   DataReader_exec_i::get_listener (void)
   {
-  return ::DDS::DataReaderListener::_nil ();
-   // return new string_RawListener_exec_i (*this);
+    return this->dr_->get_listener ();
   }
 
   ::DDS::TopicDescription_ptr
   DataReader_exec_i::get_topicdescription (void)
   {
-    /* Your code here. */
-    return ::DDS::TopicDescription::_nil ();
+    return this->dr_->get_topicdescription ();
   }
 
   ::DDS::Subscriber_ptr
   DataReader_exec_i::get_subscriber (void)
   {
-    /* Your code here. */
-    return ::DDS::Subscriber::_nil ();
+    return this->dr_->get_subscriber ();
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_sample_rejected_status (
     ::DDS::SampleRejectedStatus & status)
   {
-    ::DDS_SampleRejectedStatus rti_status;
-    ::DDS_ReturnCode_t rti_retval = this->dr_->get_sample_rejected_status (rti_status);
-    
-    return static_cast < ::DDS::ReturnCode_t> (rti_status);
-    /* Your code here. */
-    //return 0;
+    return this->dr_->get_sample_rejected_status (status);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_liveliness_changed_status (
-    ::DDS::LivelinessChangedStatus & /* status */)
+    ::DDS::LivelinessChangedStatus & status)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_liveliness_changed_status (status);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_requested_deadline_missed_status (
-    ::DDS::RequestedDeadlineMissedStatus & /* status */)
+    ::DDS::RequestedDeadlineMissedStatus & status)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_requested_deadline_missed_status (status);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_requested_incompatible_qos_status (
-    ::DDS::RequestedIncompatibleQosStatus & /* status */)
+    ::DDS::RequestedIncompatibleQosStatus & status)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_requested_incompatible_qos_status (status);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_subscription_matched_status (
-    ::DDS::SubscriptionMatchedStatus & /* status */)
+    ::DDS::SubscriptionMatchedStatus & status)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_subscription_matched_status (status);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_sample_lost_status (
-    ::DDS::SampleLostStatus & /* status */)
+    ::DDS::SampleLostStatus & status)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_sample_lost_status (status);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::wait_for_historical_data (
-    const ::DDS::Duration_t & /* max_wait */)
+    const ::DDS::Duration_t & max_wait)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->wait_for_historical_data (max_wait);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_matched_publications (
-    ::DDS::InstanceHandleSeq & /* publication_handles */)
+    ::DDS::InstanceHandleSeq & publication_handles)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_matched_publications (publication_handles);
   }
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_matched_publication_data (
-    ::DDS::PublicationBuiltinTopicData & /* publication_data */,
-    ::DDS::InstanceHandle_t /* publication_handle */)
+    ::DDS::PublicationBuiltinTopicData & publication_data,
+    ::DDS::InstanceHandle_t publication_handle)
   {
-    /* Your code here. */
-    return 0;
+    return this->dr_->get_matched_publication_data (publication_data, publication_handle);
   }
 
   //============================================================
@@ -473,9 +445,9 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     try
       {
         //NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
-        //                                                          NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
+          //                                                        NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
 
-        /*dpf_ = new CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
+        dpf_ = new CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
         ::DDS::DomainParticipantQos qos;
         dp_ = dpf_->create_participant (0, qos, 0, 0);
 
@@ -492,52 +464,17 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
                                       0);
 
         ::DDS::DataReaderQos drqos;
+        ::CCM_DDS::string_RawListener_var rawlistener =
+          this->context_->get_connection_receiver_listener ();
+        ::DDS::DataReaderListener_ptr temp = new HelloListener (rawlistener.in ());
+        this->listener_ = temp;
         DDS::DataReader_var drv_tmp = sub_->create_datareader (t_.in (),
                                                                drqos,
-                                                               &listener_,
-                                                               0);
+                                                               listener_.in (),
+                                                               DDS_DATA_AVAILABLE_STATUS);
 
-        dr_ = DDS::CCM_DataReader::_narrow (drv_tmp);*/
-
-            /* Create the domain participant on domain ID 0 */
-            
-              //  ::CCM_DDS::string_RawListener_var writer =
-    //  this->context_->get_connection_receiver_listener ();
-
-    this->dp_ = DDSDomainParticipantFactory::get_instance()->
-                       create_participant(
-                        0,                              /* Domain ID */
-                        DDS_PARTICIPANT_QOS_DEFAULT,    /* QoS */
-                        0,                           /* Listener */
-                        DDS_STATUS_MASK_NONE);
-    if (!this->dp_) {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create domain participant.\n")));
-    }
-
-    /* Create the topic "Hello, World" for the String type */
-    this->t_ = this->dp_->create_topic(
-                        "Hello, World",                        /* Topic name*/
-                        DDSStringTypeSupport::get_type_name(), /* Type name */
-                        DDS_TOPIC_QOS_DEFAULT,                 /* Topic QoS */
-                        0,                                  /* Listener  */
-                        DDS_STATUS_MASK_NONE);
-    if (!this->t_) {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
-    }
-
-listener_ = new ::HelloListener (this->context_->get_connection_receiver_listener ());
-
-    /* Create the data writer using the default publisher */
-    this->dr_ = this->dp_->create_datareader(
-                        this->t_,
-                        DDS_DATAREADER_QOS_DEFAULT,    /* QoS */
-                        listener_,                      /* Listener */
-                        DDS_DATA_AVAILABLE_STATUS);
-    if (!this->dr_) {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
-    }
-
-printf ("setup done\n");
+        dr_ = DDS::CCM_DataReader::_narrow (drv_tmp);
+        printf ("setup done\n");
       }
     catch (const CORBA::Exception &ex)
       {

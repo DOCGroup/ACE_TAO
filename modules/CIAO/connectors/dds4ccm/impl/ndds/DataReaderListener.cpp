@@ -1,7 +1,7 @@
 // $Id$
 
 #include "DataReaderListener.h"
-#include "Subscriber.h"
+#include "DataReader.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -57,6 +57,14 @@ namespace CIAO
       }
 
       void
+      RTI_DataReaderListener_i::on_data_available(DDSDataReader *reader)
+      {
+printf ("on data available\n");      
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (reader);
+        this->on_data_available (dds_reader.in ());
+      }
+
+      void
       RTI_DataReaderListener_i::on_data_available (
         ::DDS::DataReader_ptr the_reader)
       {
@@ -82,7 +90,7 @@ namespace CIAO
       DDSDataReaderListener *
       RTI_DataReaderListener_i::get_datareaderlistener (void)
       {
-        return this->drl_;
+        return this;//->drl_;
       }
     }
   }
