@@ -1,3 +1,11 @@
+Tue Jul 28 15:29:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed parsing mistake that did not allow non-template
+          extended ports in a connector.
+
 Tue Jul 28 14:34:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

@@ -6332,6 +6332,11 @@ extended_uses_decl
         ;
 
 extended_port_decl
+        : template_port_decl
+        | non_template_port_decl
+        ;
+
+template_port_decl
         : IDL_PORT template_inst IDENTIFIER
         {
 // extended_port_decl : IDL_PORT template_inst IDENTIFIER
@@ -6382,66 +6387,6 @@ extended_port_decl
                 idl_global->gen ()->create_extended_port (&sn,
                                                           pt,
                                                           args);
-
-              (void) s->fe_add_extended_port (ep);
-            }
-
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
-        }
-        | IDL_PORT scoped_name IDENTIFIER
-        {
-// extended_port_decl : IDL_PORT scoped_name IDENTIFIER
-          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2, true);
-          AST_PortType *pt = 0;
-          bool so_far_so_good = true;
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error ($2);
-              so_far_so_good = false;
-            }
-          else
-            {
-              pt = AST_PortType::narrow_from_decl (d);
-
-              if (pt == 0)
-                {
-                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
-                                              d);
-                  so_far_so_good = false;
-                }
-              else
-                {
-                  FE_Utils::T_PARAMLIST_INFO *p_list =
-                    pt->template_params ();
-
-                  if (p_list != 0 && p_list->size () != 0)
-                    {
-                      idl_global->err ()->error0 (
-                        UTL_Error::EIDL_T_ARG_LENGTH);
-                      so_far_so_good = false;  
-                    }
-                }
-            }
-
-          if (so_far_so_good)
-            {
-              Identifier id ($3);
-              ACE::strdelete ($3);
-              $3 = 0;
-
-              UTL_ScopedName sn (&id,
-                                 0);
-
-              AST_Extended_Port *ep =
-                idl_global->gen ()->create_extended_port (
-                  &sn,
-                  pt,
-                  0);
 
               (void) s->fe_add_extended_port (ep);
             }
@@ -6502,6 +6447,69 @@ extended_port_decl
                                                         args);
 
               (void) s->fe_add_mirror_port (mp);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+        }
+        ;
+
+non_template_port_decl
+        : IDL_PORT scoped_name IDENTIFIER
+        {
+// extended_port_decl : IDL_PORT scoped_name IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2, true);
+          AST_PortType *pt = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2);
+              so_far_so_good = false;
+            }
+          else
+            {
+              pt = AST_PortType::narrow_from_decl (d);
+
+              if (pt == 0)
+                {
+                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                              d);
+                  so_far_so_good = false;
+                }
+              else
+                {
+                  FE_Utils::T_PARAMLIST_INFO *p_list =
+                    pt->template_params ();
+
+                  if (p_list != 0 && p_list->size () != 0)
+                    {
+                      idl_global->err ()->error0 (
+                        UTL_Error::EIDL_T_ARG_LENGTH);
+                      so_far_so_good = false;  
+                    }
+                }
+            }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Extended_Port *ep =
+                idl_global->gen ()->create_extended_port (
+                  &sn,
+                  pt,
+                  0);
+
+              (void) s->fe_add_extended_port (ep);
             }
 
           $2->destroy ();
@@ -6627,6 +6635,16 @@ connector_export
         {
 //      | attribute
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | non_template_port_decl
+        {
+//      | template_extended_port_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
         }
           ';'
         {
