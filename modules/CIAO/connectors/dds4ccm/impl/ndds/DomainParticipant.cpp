@@ -5,6 +5,7 @@
 #include "Publisher.h"
 #include "Topic.h"
 #include "Utils.h"
+#include "StatusCondition.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -360,9 +361,7 @@ namespace CIAO
       ::DDS::DomainId_t
       RTI_DomainParticipant_i::get_domain_id (void)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::get_domain_id");
-        throw CORBA::NO_IMPLEMENT ();
-
+        return this->participant_->get_domain_id ();
       }
 
       ::DDS::ReturnCode_t
@@ -464,8 +463,11 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_current_time (::DDS::Time_t & current_time)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::get_current_time");
-        throw CORBA::NO_IMPLEMENT ();
+        DDS_Time_t rti_time;
+        ::DDS::ReturnCode_t const retval = this->participant_->get_current_time (rti_time);
+        current_time.sec = rti_time.sec;
+        current_time.nanosec = rti_time.nanosec;
+        return retval;
 
       }
 
@@ -478,9 +480,9 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_DomainParticipant_i::get_statuscondition (void)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::get_statuscondition");
-        throw CORBA::NO_IMPLEMENT ();
-
+        DDSStatusCondition* sc = this->participant_->get_statuscondition ();
+        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
+        return retval._retn ();
       }
 
       ::DDS::StatusMask

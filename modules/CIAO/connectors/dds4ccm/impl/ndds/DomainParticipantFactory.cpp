@@ -39,7 +39,7 @@ namespace CIAO
                               0,
                               mask);
         
-        if (part == 0)
+        if (!part)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::create_participant - "
                          "Error: Unable to create DomainParticipant\n"));
@@ -59,7 +59,7 @@ namespace CIAO
         
         RTI_DomainParticipant_i *part = dynamic_cast< RTI_DomainParticipant_i * > (a_participant);
         
-        if (part == 0)
+        if (!part)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipantFactory_i::delete_participant - "
                          "Unable to cast provided object reference to servant type, bailing.\n"));
@@ -86,9 +86,9 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr 
       RTI_DomainParticipantFactory_i::lookup_participant (::DDS::DomainId_t domain_id)
       {
-        CIAO_TRACE ("RTI_DomainParticipantFactory_i::lookup_participant");
-        
-        throw CORBA::NO_IMPLEMENT ();
+        DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (dp);
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t 

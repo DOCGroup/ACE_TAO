@@ -20,10 +20,10 @@
 
 module DDS {
     typedef long DomainId_t;
-    typedef long InstanceHandle_t;
+    typedef octet InstanceHandle_t[24];
 
     struct BuiltinTopicKey_t {
-        long value;//[3];
+        long value[3];
     };
 
     typedef sequence<InstanceHandle_t> InstanceHandleSeq;
