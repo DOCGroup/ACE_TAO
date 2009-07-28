@@ -52,6 +52,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     const char * an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
+    printf ("string raw listener received %s\n", an_instance);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Receiver received: %C\n"), an_instance));
   }
   //============================================================
@@ -73,7 +74,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-    /* Your code here. */
+    printf ("port status listener::on_requested_deadline_missed\n");
   }
 
   void
@@ -81,7 +82,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::SampleLostStatus & /* status */)
   {
-    /* Your code here. */
+    printf ("port status listener::on_sample_lost\n");
   }
 
   //============================================================
@@ -105,17 +106,13 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   ::CCM_DDS::CCM_string_RawListener_ptr
   Receiver_exec_i::get_read_message_listener (void)
   {
-    /* Your code here. */
-    /// @todo
-    return ::CCM_DDS::CCM_string_RawListener::_nil ();
+    return new string_RawListener_exec_i ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_read_message_status (void)
   {
-    /* Your code here. */
-    /// @todo
-    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+    return new PortStatusListener_exec_i ();
   }
 
   // Operations from Components::SessionComponent.

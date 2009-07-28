@@ -49,9 +49,13 @@
 #include <ndds/ndds_cpp.h>
 
 /* The listener of events and data from the middleware */
-class HelloListener: public ::DDSDataReaderListener { 
-    public:
-        void on_data_available(DDSDataReader *reader);
+class HelloListener: public ::DDSDataReaderListener 
+{ 
+  public:
+    explicit HelloListener ( ::CCM_DDS::string_RawListener_ptr listener);
+    void on_data_available(DDSDataReader *reader);
+  private:      
+    ::CCM_DDS::string_RawListener_var listener_;        
 };
 
 
@@ -358,7 +362,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     ::DDS::Topic_var t_;
     ::DDS::Subscriber_var sub_;
     ::DDS::CCM_DataReader_var dr_;
-    ::HelloListener listener_;
+    ::DDSDataReaderListener* listener_;
   };
 
   extern "C" HELLO_RECEIVER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

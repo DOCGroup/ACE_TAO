@@ -135,8 +135,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
                                                                0,
                                                                0);
 
-        dw_ = DDS::CCM_DataWriter::_narrow (dwv_tmp);
-
+        dw_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
 
         String_Writer sw (dw_.in ());
 

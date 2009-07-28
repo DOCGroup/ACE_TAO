@@ -38,7 +38,14 @@
 /* This method gets called back by DDS when one or more data samples have been
  * received.
  */
-void HelloListener::on_data_available(DDSDataReader *reader) {
+ 
+HelloListener::HelloListener ( ::CCM_DDS::string_RawListener_ptr listener) :
+  listener_ ( ::CCM_DDS::string_RawListener::_duplicate (listener))
+{
+}
+
+void HelloListener::on_data_available(DDSDataReader *reader) 
+{
     /* Perform a safe type-cast from a generic data reader into a
      * specific data reader for the type "DDS::String"
      */
@@ -65,11 +72,10 @@ void HelloListener::on_data_available(DDSDataReader *reader) {
             return;
         }
         if (info.valid_data) {
-            // Valid (this isn't just a lifecycle sample): print it
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C\n"), sample));
-            printf ("received string %s\n", sample);
-        }
+            ::CCM_DDS::ReadInfo empty;
+            listener_->on_data (sample, empty);
     }
+  }
 }
 
 namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
@@ -364,7 +370,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   //============================================================
 
   Hello_receiver_Connector_exec_i::Hello_receiver_Connector_exec_i (void)
-    : dds_configured_ (false)
+    : dds_configured_ (false),
+      listener_ (0)
   {
   }
 
@@ -404,7 +411,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     this->configure_dds ();
     /* Your code here. */
     // @todo
-    return ::DDS::CCM_DataReader::_nil ();
+    return new DataReader_exec_i ();
   }
 
   // Operations from Components::SessionComponent.
@@ -481,8 +488,12 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
                                                                0);
 
         dr_ = DDS::CCM_DataReader::_narrow (drv_tmp);*/
-        
+
             /* Create the domain participant on domain ID 0 */
+            
+              //  ::CCM_DDS::string_RawListener_var writer =
+    //  this->context_->get_connection_receiver_listener ();
+
     DDSDomainParticipant *participant = DDSDomainParticipantFactory::get_instance()->
                        create_participant(
                         0,                              /* Domain ID */
@@ -504,17 +515,19 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
     }
 
+listener_ = new ::HelloListener (this->context_->get_connection_receiver_listener ());
+
     /* Create the data writer using the default publisher */
     DDSDataReader *data_reader = participant->create_datareader(
                         topic,
                         DDS_DATAREADER_QOS_DEFAULT,    /* QoS */
-                        &listener_,                      /* Listener */
+                        listener_,                      /* Listener */
                         DDS_DATA_AVAILABLE_STATUS);
     if (!data_reader) {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
     }
 
-printf ("setup done\n");        
+printf ("setup done\n");
       }
     catch (const CORBA::Exception &ex)
       {
