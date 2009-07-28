@@ -316,6 +316,12 @@ public:
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
     AST_PortType::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Connector *create_connector (
+    UTL_ScopedName *n,
+    AST_Connector *base_connector,
+    FE_Utils::T_PARAMLIST_INFO *template_params);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

@@ -1,3 +1,26 @@
+Tue Jul 28 16:46:35 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_connector.h:
+        * TAO_IDL/be/be_connector.cpp:
+
+          New files, defining the backend version of connectors.
+
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Changes related to the new backend type.
+
 Tue Jul 28 15:29:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

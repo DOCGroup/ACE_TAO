@@ -127,6 +127,7 @@ class AST_Emits;
 class AST_Consumes;
 class AST_Extended_Port;
 class AST_Mirror_Port;
+class AST_Connector;
 class UTL_StrList;
 class UTL_NameList;
 
@@ -399,6 +400,8 @@ private:
   virtual AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
 
   virtual AST_Home *fe_add_home (AST_Home *i);
+
+  virtual AST_Connector *fe_add_connector (AST_Connector *i);
 
   virtual AST_Constant *fe_add_constant (AST_Constant *i);
 

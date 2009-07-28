@@ -37,10 +37,6 @@ AST_Connector::AST_Connector (
                    0),
     template_params_ (template_params)
 {
-  if (!this->imported ())
-    {
-      idl_global->component_seen_ = true;
-    }
 }
 
 AST_Connector::~AST_Connector (void)
@@ -87,7 +83,7 @@ AST_Connector::dump (ACE_OSTREAM_TYPE &o)
 int
 AST_Connector::ast_accept (ast_visitor *visitor)
 {
-  return visitor->visit_component (this);
+  return visitor->visit_connector (this);
 }
 
 IMPL_NARROW_FROM_DECL (AST_Connector)

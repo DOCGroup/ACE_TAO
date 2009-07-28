@@ -83,6 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_instantiated_interface.h"
 #include "ast_porttype.h"
 #include "ast_mirror_port.h"
+#include "ast_connector.h"
 #include "ast_provides.h"
 #include "ast_uses.h"
 #include "ast_publishes.h"
@@ -1075,6 +1076,22 @@ AST_Generator::create_mirror_port (
                   AST_Mirror_Port (n,
                                    porttype_ref,
                                    template_args),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Connector *
+AST_Generator::create_connector (
+  UTL_ScopedName *n,
+  AST_Connector *base_connector,
+  FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  AST_Connector *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Connector (n,
+                                 base_connector,
+                                 template_params),
                   0);
                   
   return retval;              
