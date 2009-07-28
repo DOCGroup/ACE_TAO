@@ -1,3 +1,22 @@
+Tue Jul 28 21:39:32 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * C2W/C2W_Demo.mpc:
+        * SANet/SANet_Standalone.mpc:
+        * SAPOP_w_ACE.mpc:
+        * Standalone/SAPOP_Demo.mpc:
+        * Standalone/XML_Utils/XML/XML.mpc:
+
+          Updates to SA-POP MWC build system.
+
+
+        * SA_POP_Types.h:
+        * TaskMapFileIn.cpp:
+        * SANet/SANetFileIn.cpp:
+        * SANet/SANet_Types.h:
+
+          Updates to SA-POP XML handling (now checks $(SAPOP_ROOT)/docs/schema/ for XSD files).
+
+
 Mon Jul 27 23:53:25 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * C2W/C2W_Demo.mpc:
@@ -36,6 +55,13 @@ Mon Jul 27 23:53:25 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
 
           SANet Standalone updated for latest XML utilities.
 
+Mon Jun 15 17:51:23 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Component/SA_POP_Component.mpc:
+        * Tester/Tester_Component.mpc:
+
+          Linking fixes.
+
 Fri Jun 12 20:58:24 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SANet/SANetFileIn.cpp:
@@ -64,62 +90,50 @@ Fri Jun 12 17:37:05 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.ed
 
 Thu Jun 11 20:02:58 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
-        * common/RACE_common.mpc:
-        * MPC/config/race_common.mpb:
-
-          RACE libraries output to $(ACE_ROOT)/lib
-
-
-        * RACE.mwc:
-        * RACE_SAPOP.mwc:
-
-          Updated with revised filenames
-
-
-        * SA_POP/SAPOP_C2W.mwc:
-        * SA_POP/SAPOP_Standalone.mwc:
-        * SA_POP/SAPOP_for_RACE.mpc:
-        * SA_POP/SAPOP_w_ACE.mpc:
-        * SA_POP/SA_POP_XML_Typedefs.cpp:
+        * SAPOP_C2W.mwc:
+        * SAPOP_Standalone.mwc:
+        * SAPOP_for_RACE.mpc:
+        * SAPOP_w_ACE.mpc:
+        * SA_POP_XML_Typedefs.cpp:
 
           Updated for latest version of CIAO XML Utilities
 
 
-        * SA_POP/Standalone/XML_Utils/XML:
+        * Standalone/XML_Utils/XML:
 
-        * SA_POP/Standalone/XML_Utils/XML/CIAO_XML_Utils_Export.h:
-        * SA_POP/Standalone/XML_Utils/XML/XML.mpc:
-        * SA_POP/Standalone/XML_Utils/XML/XML_Error_Handler.h:
-        * SA_POP/Standalone/XML_Utils/XML/XML_Error_Handler.cpp:
-        * SA_POP/Standalone/XML_Utils/XML/XML_Helper.h:
-        * SA_POP/Standalone/XML_Utils/XML/XML_Helper.tpp:
-        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.h:
-        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.tpp:
-        * SA_POP/Standalone/XML_Utils/XML/XML_Schema_Resolver.cpp:
-        * SA_POP/Standalone/XML_Utils/XML/XercesString.h:
-        * SA_POP/Standalone/XML_Utils/XML/XercesString.cpp:
+        * Standalone/XML_Utils/XML/CIAO_XML_Utils_Export.h:
+        * Standalone/XML_Utils/XML/XML.mpc:
+        * Standalone/XML_Utils/XML/XML_Error_Handler.h:
+        * Standalone/XML_Utils/XML/XML_Error_Handler.cpp:
+        * Standalone/XML_Utils/XML/XML_Helper.h:
+        * Standalone/XML_Utils/XML/XML_Helper.tpp:
+        * Standalone/XML_Utils/XML/XML_Schema_Resolver.h:
+        * Standalone/XML_Utils/XML/XML_Schema_Resolver.tpp:
+        * Standalone/XML_Utils/XML/XML_Schema_Resolver.cpp:
+        * Standalone/XML_Utils/XML/XercesString.h:
+        * Standalone/XML_Utils/XML/XercesString.cpp:
 
-        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.tpp:
-        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.hpp:
+        * Standalone/XML_Utils/XMLSchema/TypeInfo.tpp:
+        * Standalone/XML_Utils/XMLSchema/Types.hpp:
 
-        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.tpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/XML.hpp:
-        * SA_POP/Standalone/XML_Utils/XSCRT/XMLSchema.hpp:
+        * Standalone/XML_Utils/XSCRT/Elements.hpp:
+        * Standalone/XML_Utils/XSCRT/Traversal.hpp:
+        * Standalone/XML_Utils/XSCRT/Traversal.tpp:
+        * Standalone/XML_Utils/XSCRT/XML.hpp:
+        * Standalone/XML_Utils/XSCRT/XMLSchema.hpp:
 
           Updated to latest version of CIAO XML Utilities
 
 
-        * SA_POP/Tester/Tester_Component.mpc:
+        * Tester/Tester_Component.mpc:
 
           Updated for changes to CIAO and DAnCE
 
 
-        * SA_POP/SA_POP_for_RACE.mpc:
-        * SA_POP/Standalone/XML_Utils/Common.h:
-        * SA_POP/Standalone/XML_Utils/SAPOP_XSC.mpc:
-        * SA_POP/Standalone/XML_Utils/XSC_XML_Handlers_Export.h:
+        * SA_POP_for_RACE.mpc:
+        * Standalone/XML_Utils/Common.h:
+        * Standalone/XML_Utils/SAPOP_XSC.mpc:
+        * Standalone/XML_Utils/XSC_XML_Handlers_Export.h:
 
           Removed these files for CIAO XML Utilities update.
 

@@ -1,19 +1,6 @@
 project(C2W_Demo) : xerces, aceexe, sapop_core_standalone {
   exename = C2W_Demo
 
-//  after += SA_POP
-
-//  includes += $(SAPOP_ROOT) \
-// //              $(SAPOP_ROOT)/Standalone/XML_Utils
-
-//  libpaths += $(SAPOP_ROOT)/lib
-
-//  libs += SA_POP
-
-// //  dynamicflags = CIAO_XML_UTILS_BUILD_DLL
-
-  macros = SA_POP_HAS_ACE
-
   Source_Files {
     C2W_Demo.cpp
     UserInput.cpp

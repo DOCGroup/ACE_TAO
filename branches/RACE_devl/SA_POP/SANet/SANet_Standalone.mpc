@@ -1,13 +1,9 @@
 project(SANet_Demo) : xerces, aceexe, sapop_xml {
   exename = SANet_Demo
 
-//  includes += $(SAPOP_ROOT)/Standalone/XML_Utils
   includes += $(SAPOP_ROOT)
 
-//  dynamicflags = CIAO_XML_UTILS_BUILD_DLL
-
   macros = SANET_STANDALONE
-
 
 
   Header_Files {
@@ -33,10 +29,6 @@ project(SANet_Demo) : xerces, aceexe, sapop_xml {
     SANet_XML_Typedefs.cpp
     SANetFileIn.cpp
     XML_SANet.cpp
-//    $(SAPOP_ROOT)/Standalone/XML_Utils/Utils/XML_Helper.cpp
-//    $(SAPOP_ROOT)/Standalone/XML_Utils/Utils/XML_Error_Handler.cpp
-//    $(SAPOP_ROOT)/Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp
-//    $(SAPOP_ROOT)/Standalone/XML_Utils/Utils/XercesString.cpp
   }
 
   Documentation_Files {

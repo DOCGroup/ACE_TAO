@@ -48,6 +48,12 @@ if (x > 0) \
 
 namespace SA_POP {
 
+  /// Environment variable for root path.
+  const std::string ROOT_PATH_STR = "SAPOP_ROOT";
+
+  /// Relative path (from root path) to SA-POP XML schemas.
+  const std::string XSD_REL_PATH_STR = "/docs/schema/";
+
   /// Type of a node id (tasks and conditions).
   /// (must be > 0 and unique across all tasks *and* conditions).
   typedef int NodeID;

@@ -1,3 +1,22 @@
+Tue Jul 28 21:39:32 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/C2W/C2W_Demo.mpc:
+        * SA_POP/SANet/SANet_Standalone.mpc:
+        * SA_POP/SAPOP_w_ACE.mpc:
+        * SA_POP/Standalone/SAPOP_Demo.mpc:
+        * SA_POP/Standalone/XML_Utils/XML/XML.mpc:
+
+          Updates to SA-POP MWC build system.
+
+
+        * SA_POP/SA_POP_Types.h:
+        * SA_POP/TaskMapFileIn.cpp:
+        * SA_POP/SANet/SANetFileIn.cpp:
+        * SA_POP/SANet/SANet_Types.h:
+
+          Updates to SA-POP XML handling (now checks $(SAPOP_ROOT)/docs/schema/ for XSD files).
+
+
 Mon Jul 27 23:53:25 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * MPC/config/sapop.mpb:

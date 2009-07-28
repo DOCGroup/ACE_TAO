@@ -3,8 +3,6 @@
 project (SAPOP_XML_Utils) : acelib, xerces, sapop_out {
   sharedname   += SAPOP_XML_Utils
 
-//  libout = $(SAPOP_ROOT)/lib
-
   includes += ..
 
   dynamicflags  = CIAO_XML_UTILS_BUILD_DLL
