@@ -79,12 +79,10 @@ namespace CIAO
           }
         DDSTopic *rti_topic = topic->get_topic ();
         DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
-
         DDSDataReader *rti_dr = this->sub_->create_datareader (rti_topic,
                                                                DDS_DATAREADER_QOS_DEFAULT,
                                                                rti_drl,
                                                                mask);
-
         if (!rti_dr)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "

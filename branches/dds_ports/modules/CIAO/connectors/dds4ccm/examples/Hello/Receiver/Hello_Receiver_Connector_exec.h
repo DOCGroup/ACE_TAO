@@ -42,18 +42,19 @@
 #include /**/ "Hello_Receiver_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/ndds/DataWriter.h"
+#include "dds4ccm/impl/ndds/DataReader.h"
 #include "dds4ccm/impl/ndds/Writer.h"
+#include "dds4ccm/impl/ndds/DataReaderListener.h"
 #include "dds4ccm/impl/ndds/NDDS_Traits.h"
 
 #include <ndds/ndds_cpp.h>
 
 /* The listener of events and data from the middleware */
-class HelloListener: public ::DDSDataReaderListener 
+class HelloListener : public ::CIAO::DDS4CCM::RTI::RTI_DataReaderListener_i
 { 
   public:
-    explicit HelloListener ( ::CCM_DDS::string_RawListener_ptr listener);
-    void on_data_available(DDSDataReader *reader);
+    HelloListener ( ::CCM_DDS::string_RawListener_ptr listener);
+    void on_data_available( ::DDS::DataReader *reader);
   private:      
     ::CCM_DDS::string_RawListener_var listener_;        
 };
@@ -149,7 +150,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    DataReader_exec_i (DDSDataReader* dr);
+    DataReader_exec_i (::DDS::DataReader_ptr dr);
     virtual ~DataReader_exec_i (void);
 
     // Operations and attributes from ::DDS::DataReader
@@ -315,7 +316,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       ::DDS::PublicationBuiltinTopicData & publication_data,
       ::DDS::InstanceHandle_t publication_handle);
   private:
-    DDSDataReader* dr_;      
+    ::DDS::DataReader_var dr_;
   };
 
   class HELLO_RECEIVER_CONNECTOR_EXEC_Export Hello_receiver_Connector_exec_i
@@ -360,11 +361,11 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 
     bool dds_configured_;
     ::DDS::DomainParticipantFactory_var dpf_;
-    DDSDomainParticipant* dp_;
-    ::DDSTopic* t_;
+    ::DDS::DomainParticipant_var dp_;
+    ::DDS::Topic_var t_;
     ::DDS::Subscriber_var sub_;
-    DDSDataReader* dr_;
-    ::DDSDataReaderListener* listener_;
+    ::DDS::DataReader_var dr_;
+    ::DDS::DataReaderListener_var listener_;
   };
 
   extern "C" HELLO_RECEIVER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -27,11 +27,12 @@ namespace CIAO
     namespace RTI
     {
       class DDS4CCM_NDDS_IMPL_Export RTI_DataReaderListener_i :
-        public virtual ::DDS::CCM_DataReaderListener
+        public virtual ::DDS::CCM_DataReaderListener,
+        public virtual ::DDSDataReaderListener
       {
       public:
-        // Constructor
-        RTI_DataReaderListener_i (DDSDataReaderListener *p);
+        // Constructor @todo zap default argument
+        RTI_DataReaderListener_i (DDSDataReaderListener *p = 0);
 
         // Destructor
         virtual ~RTI_DataReaderListener_i (void);
@@ -59,6 +60,9 @@ namespace CIAO
         virtual void
         on_data_available (
           ::DDS::DataReader_ptr the_reader);
+          
+        virtual void 
+          on_data_available(DDSDataReader *reader);
 
         virtual void
         on_subscription_matched (
