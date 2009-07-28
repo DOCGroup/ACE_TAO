@@ -59,7 +59,6 @@ namespace CIAO
       void
       RTI_DataReaderListener_i::on_data_available(DDSDataReader *reader)
       {
-printf ("on data available\n");      
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (reader);
         this->on_data_available (dds_reader.in ());
       }

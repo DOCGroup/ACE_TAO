@@ -3,6 +3,7 @@
 #include "Publisher.h"
 #include "Topic.h"
 #include "DataWriter.h"
+#include "StatusCondition.h"
 #include "Utils.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
@@ -206,15 +207,15 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_Publisher_i::get_statuscondition (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::get_statuscondition");
-        throw CORBA::NO_IMPLEMENT ();
+        DDSStatusCondition* sc = this->pub_->get_statuscondition ();
+        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
+        return retval._retn ();
       }
 
       ::DDS::StatusMask
       RTI_Publisher_i::get_status_changes (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::get_status_changes");
-        throw CORBA::NO_IMPLEMENT ();
+        return this->pub_->get_status_changes ();
       }
 
       ::DDS::InstanceHandle_t
