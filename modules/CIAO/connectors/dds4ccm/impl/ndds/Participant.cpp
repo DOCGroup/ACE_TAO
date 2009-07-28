@@ -224,18 +224,18 @@ namespace CIAO
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::find_topic");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::TopicDescription_ptr 
+      ::DDS::TopicDescription_ptr
       RTI_DomainParticipant_i::lookup_topicdescription (const char * name)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::lookup_topicdescription");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ContentFilteredTopic_ptr 
+      ::DDS::ContentFilteredTopic_ptr
       RTI_DomainParticipant_i::create_contentfilteredtopic (const char * name,
                                                             ::DDS::Topic_ptr related_topic,
                                                             const char * filter_expression,
@@ -243,18 +243,18 @@ namespace CIAO
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_contentfilteredtopic");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_contentfilteredtopic (::DDS::ContentFilteredTopic_ptr a_contentfilteredtopic)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::delete_contentfilteredtopic");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::MultiTopic_ptr 
+      ::DDS::MultiTopic_ptr
       RTI_DomainParticipant_i::create_multitopic (const char * name,
                                                   const char * type_name,
                                                   const char * subscription_expression,
@@ -262,237 +262,237 @@ namespace CIAO
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_multitopic");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_multitopic (::DDS::MultiTopic_ptr a_multitopic)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::delete_multitopic");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_contained_entities (void)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::delete_contained_entities");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::set_qos (const ::DDS::DomainParticipantQos & qos)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_qos (::DDS::DomainParticipantQos & qos)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::set_listener (::DDS::DomainParticipantListener_ptr a_listener,
                                              ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_listener");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::DomainParticipantListener_ptr 
+      ::DDS::DomainParticipantListener_ptr
       RTI_DomainParticipant_i::get_listener (void)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_listener");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::ignore_participant (::DDS::InstanceHandle_t handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::ignore_participant");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::ignore_topic (::DDS::InstanceHandle_t handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::ignore_topic");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::ignore_publication (::DDS::InstanceHandle_t handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::ignore_publication");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::ignore_subscription (::DDS::InstanceHandle_t handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::ignore_subscription");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::DomainId_t 
+      ::DDS::DomainId_t
       RTI_DomainParticipant_i::get_domain_id (void)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_domain_id");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::assert_liveliness (void)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::assert_liveliness");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::set_default_publisher_qos (const ::DDS::PublisherQos & qos)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_default_publisher_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_default_publisher_qos (::DDS::PublisherQos & qos)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::set_default_subscriber_qos (const ::DDS::SubscriberQos & qos)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_default_subscriber_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_default_subscriber_qos (::DDS::SubscriberQos & qos)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::set_default_topic_qos (const ::DDS::TopicQos & qos)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_default_topic_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_default_topic_qos (::DDS::TopicQos & qos)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_participants (::DDS::InstanceHandleSeq & participant_handles)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & participant_data,
                                                                 ::DDS::InstanceHandle_t participant_handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_topics (::DDS::InstanceHandleSeq & topic_handles)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_topics");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_topic_data (::DDS::TopicBuiltinTopicData & topic_data,
                                                           ::DDS::InstanceHandle_t topic_handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::CORBA::Boolean 
+      ::CORBA::Boolean
       RTI_DomainParticipant_i::contains_entity (::DDS::InstanceHandle_t a_handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::contains_entity");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_current_time (::DDS::Time_t & current_time)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_current_time");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::enable (void)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::enable");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::StatusCondition_ptr 
+      ::DDS::StatusCondition_ptr
       RTI_DomainParticipant_i::get_statuscondition (void)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_statuscondition");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::StatusMask 
+      ::DDS::StatusMask
       RTI_DomainParticipant_i::get_status_changes (void)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_status_changes");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
 
-      ::DDS::InstanceHandle_t 
+      ::DDS::InstanceHandle_t
       RTI_DomainParticipant_i::get_instance_handle (void)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_instance_handle");
         throw CORBA::NO_IMPLEMENT ();
-        
+
       }
-      
-      DDSDomainParticipant * 
+
+      DDSDomainParticipant *
       RTI_DomainParticipant_i::get_participant (void)
       {
         return this->participant_;
