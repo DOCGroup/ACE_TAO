@@ -1,3 +1,17 @@
+Tue Jul 28 21:29:35 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Stream_Test.cpp:
+        * tests/Service_Config_Stream_Test.conf:
+        * tests/Service_Config_Stream_DLL.h:
+        * tests/Service_Config_Stream_DLL_Export.h:
+        * tests/Service_Config_Stream_DLL.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          New test Service_Config_Stream_Test to exercise service-config'd
+          stream behavior. Bugzilla #3721 is reported using this as a
+          initial test case. More behavioral testing can be added to this
+          test program in the future.
+
 Tue Jul 28 20:02:59 UTC 2009  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
