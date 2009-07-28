@@ -1,6 +1,10 @@
 // $Id$
 
 #include "DataWriter.h"
+#include "StatusCondition.h"
+#include "Publisher.h"
+#include "DataWriterListener.h"
+#include "Topic.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -14,16 +18,14 @@ namespace CIAO
       RTI_DataWriter_i::RTI_DataWriter_i (DDSDataWriter * dw)
         : dw_ (dw)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::RTI_DataWriter_i");
       }
 
       // Implementation skeleton destructor
       RTI_DataWriter_i::~RTI_DataWriter_i (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::~RTI_DataWriter_i");
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::set_qos (const ::DDS::DataWriterQos & qos)
       {
         CIAO_TRACE ("RTI_DataWriter_i::set_qos");
@@ -31,7 +33,7 @@ namespace CIAO
         // Add your implementation here
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_qos (::DDS::DataWriterQos & qos)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_qos");
@@ -39,40 +41,41 @@ namespace CIAO
         // Add your implementation here
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::set_listener (::DDS::DataWriterListener_ptr a_listener,
                                       ::DDS::StatusMask mask)
       {
-        
+
         CIAO_TRACE ("RTI_DataWriter_i::set_listener");
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
       }
 
-      ::DDS::DataWriterListener_ptr 
+      ::DDS::DataWriterListener_ptr
       RTI_DataWriter_i::get_listener (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_listener");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSDataWriterListener* wr = this->dw_->get_listener ();
+        ::DDS::DataWriterListener_var retval = new RTI_DataWriterListener_i (wr);
+        return retval._retn ();
       }
 
-      ::DDS::Topic_ptr RTI_DataWriter_i::get_topic (void)
+      ::DDS::Topic_ptr 
+      RTI_DataWriter_i::get_topic (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_topic");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSTopic* t = this->dw_->get_topic ();
+        ::DDS::Topic_var retval = new RTI_Topic_i (t);
+        return retval._retn ();
       }
 
-      ::DDS::Publisher_ptr 
+      ::DDS::Publisher_ptr
       RTI_DataWriter_i::get_publisher (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_publisher");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSPublisher* p = this->dw_->get_publisher ();
+        ::DDS::Publisher_var retval = new RTI_Publisher_i (p);
+        return retval._retn ();
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
       {
         CIAO_TRACE ("RTI_DataWriter_i::wait_for_acknowledgments");
@@ -80,7 +83,7 @@ namespace CIAO
         // Add your implementation here
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_liveliness_lost_status (::DDS::LivelinessLostStatus & status)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_liveliness_lost_status");
@@ -88,7 +91,7 @@ namespace CIAO
         // Add your implementation here
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_offered_deadline_missed_status (::DDS::OfferedDeadlineMissedStatus & status)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_offered_deadline_missed_status");
@@ -96,7 +99,7 @@ namespace CIAO
         // Add your implementation here
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_offered_incompatible_qos_status (::DDS::OfferedIncompatibleQosStatus & status)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_offered_incompatible_qos_status");
@@ -104,7 +107,7 @@ namespace CIAO
         // Add your implementation here
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_publication_matched_status (::DDS::PublicationMatchedStatus & status)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_publication_matched_status");
@@ -112,15 +115,13 @@ namespace CIAO
         // Add your implementation here
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::assert_liveliness (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::assert_liveliness");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        return this->dw_->assert_liveliness ();
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_matched_subscriptions (::DDS::InstanceHandleSeq & subscription_handles)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_matched_subscriptions");
@@ -128,7 +129,7 @@ namespace CIAO
         // Add your implementation here
       }
 
-      ::DDS::ReturnCode_t 
+      ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & subscription_data,
                                                        ::DDS::InstanceHandle_t subscription_handle)
       {
@@ -140,36 +141,32 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::enable (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::enable");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        return this->dw_->enable ();
       }
 
-      ::DDS::StatusCondition_ptr 
+      ::DDS::StatusCondition_ptr
       RTI_DataWriter_i::get_statuscondition (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSStatusCondition* sc = this->dw_->get_statuscondition ();
+        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
+        return retval._retn ();
       }
 
-      ::DDS::StatusMask 
+      ::DDS::StatusMask
       RTI_DataWriter_i::get_status_changes (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_status_changes");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        return this->dw_->get_status_changes ();
       }
 
-      ::DDS::InstanceHandle_t 
+      ::DDS::InstanceHandle_t
       RTI_DataWriter_i::get_instance_handle (void)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_instance_handle");
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
       }
-      
-      DDSDataWriter * 
+
+      DDSDataWriter *
       RTI_DataWriter_i::get_datawriter (void)
       {
         return this->dw_;

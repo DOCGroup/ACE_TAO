@@ -40,17 +40,17 @@ namespace CIAO
         virtual void
         on_offered_deadline_missed (
           ::DDS::DataWriter_ptr the_writer,
-          const ::DDS::RequestedDeadlineMissedStatus & status);
+          const ::DDS::OfferedDeadlineMissedStatus & status);
 
         virtual void
         on_offered_incompatible_qos (
           ::DDS::DataWriter_ptr the_writer,
-          const ::DDS::RequestedIncompatibleQosStatus & status);
+          const ::DDS::OfferedIncompatibleQosStatus & status);
 
         virtual void
         on_liveliness_lost (
           ::DDS::DataWriter_ptr the_writer,
-          const ::DDS::LivelinessChangedStatus & status);
+          const ::DDS::LivelinessLostStatus & status);
 
         virtual void
         on_publication_matched (

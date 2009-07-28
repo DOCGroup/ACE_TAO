@@ -27,7 +27,7 @@ namespace CIAO
       void
       RTI_DataWriterListener_i::on_offered_deadline_missed (
         ::DDS::DataWriter_ptr the_writer,
-        const ::DDS::RequestedDeadlineMissedStatus & status)
+        const ::DDS::OfferedDeadlineMissedStatus & status)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
@@ -35,7 +35,7 @@ namespace CIAO
       void
       RTI_DataWriterListener_i::on_offered_incompatible_qos (
         ::DDS::DataWriter_ptr the_writer,
-        const ::DDS::RequestedIncompatibleQosStatus & status)
+        const ::DDS::OfferedIncompatibleQosStatus & status)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
@@ -43,7 +43,7 @@ namespace CIAO
       void
       RTI_DataWriterListener_i::on_liveliness_lost (
         ::DDS::DataWriter_ptr the_writer,
-        const ::DDS::LivelinessChangedStatus & status)
+        const ::DDS::LivelinessLostStatus & status)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
