@@ -1,6 +1,8 @@
 // $Id$
 
 #include "DataReader.h"
+#include "StatusCondition.h"
+#include "ReadCondition.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -30,8 +32,9 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_DataReader_i::get_statuscondition (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSStatusCondition* sc = this->dr_->get_statuscondition ();
+        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
+        return retval._retn ();
       }
 
       ::DDS::StatusMask
@@ -43,6 +46,7 @@ namespace CIAO
       ::DDS::InstanceHandle_t
       RTI_DataReader_i::get_instance_handle (void)
       {
+        //return this->dr_->get_instance_handle ();
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
       }
@@ -53,8 +57,9 @@ namespace CIAO
         ::DDS::ViewStateMask view_states,
         ::DDS::InstanceStateMask instance_states)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSReadCondition* rc = this->dr_->create_readcondition (sample_states, view_states, instance_states);
+        ::DDS::ReadCondition_var retval = new RTI_ReadCondition_i (rc);
+        return retval._retn ();
       }
 
       ::DDS::QueryCondition_ptr
