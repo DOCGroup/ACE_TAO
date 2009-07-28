@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
-#include <ndds/ndds_cpp.h>
+#include <ndds/ndds_namespace_cpp.h>
 
 /* By default DDS::String type manage strings up to 1k */
 #define MAX_STRING_SIZE         1024
@@ -12,9 +12,9 @@
 bool shutdown_flag = false;
 
 /* The listener of events and data from the middleware */
-class HelloListener: public DDSDataReaderListener {
+class HelloListener: public ::DDS::DataReaderListener {
     public:
-        void on_data_available(DDSDataReader *reader);
+        void on_data_available(::DDS::DataReader *reader);
 };
 
 
@@ -23,7 +23,7 @@ int ACE_TMAIN(int, ACE_TCHAR*[]) {
     int           main_result = 1; /* error by default */
 
     /* Create the domain participant on domain ID 0 */
-    DDSDomainParticipant *participant = DDSDomainParticipantFactory::get_instance()->
+    ::DDS::DomainParticipant *participant = ::DDS::DomainParticipantFactory::get_instance()->
                        create_participant(
                         0,                              /* Domain ID */
                         DDS_PARTICIPANT_QOS_DEFAULT,    /* QoS */
@@ -35,9 +35,9 @@ int ACE_TMAIN(int, ACE_TCHAR*[]) {
     }
 
     /* Create the topic "Hello, World" for the String type */
-    DDSTopic *topic = participant->create_topic(
+    ::DDS::Topic *topic = participant->create_topic(
                         "Hello, World",                        /* Topic name*/
-                        DDSStringTypeSupport::get_type_name(), /* Type name */
+                        ::DDS::StringTypeSupport::get_type_name(), /* Type name */
                         DDS_TOPIC_QOS_DEFAULT,                 /* Topic QoS */
                         0,                                  /* Listener  */
                         DDS_STATUS_MASK_NONE);
@@ -47,7 +47,7 @@ int ACE_TMAIN(int, ACE_TCHAR*[]) {
     }
 
     /* Create the data writer using the default publisher */
-    DDSDataReader *data_reader = participant->create_datareader(
+    ::DDS::DataReader *data_reader = participant->create_datareader(
                         topic,
                         DDS_DATAREADER_QOS_DEFAULT,    /* QoS */
                         &listener,                      /* Listener */
@@ -74,7 +74,7 @@ int ACE_TMAIN(int, ACE_TCHAR*[]) {
 
     main_result = 0;
 clean_exit:
-    DDS_ReturnCode_t retcode;
+    ::DDS::ReturnCode_t retcode;
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Exiting.")));
     if (participant) {
         retcode = participant->delete_contained_entities();
@@ -82,7 +82,7 @@ clean_exit:
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
             main_result = 1;
         }
-        retcode = DDSDomainParticipantFactory::get_instance()->
+        retcode = ::DDS::DomainParticipantFactory::get_instance()->
                         delete_participant(participant);
         if (retcode != DDS_RETCODE_OK) {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
@@ -97,14 +97,14 @@ clean_exit:
 /* This method gets called back by DDS when one or more data samples have been
  * received.
  */
-void HelloListener::on_data_available(DDSDataReader *reader) {
+void HelloListener::on_data_available(::DDS::DataReader *reader) {
     /* Perform a safe type-cast from a generic data reader into a
      * specific data reader for the type "DDS::String"
      */
-    DDSStringDataReader * string_reader = DDSStringDataReader::narrow(reader);
+    ::DDS::StringDataReader * string_reader = ::DDS::StringDataReader::narrow(reader);
     if (!string_reader) {
         /* In this specific case, this will never fail */
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("DDSStringDataReader::narrow failed.\n")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("::DDS::StringDataReader::narrow failed.\n")));
         return;
     }
 
@@ -112,8 +112,8 @@ void HelloListener::on_data_available(DDSDataReader *reader) {
     char                  sample[MAX_STRING_SIZE];
     char *ptr_sample = &sample[0];
     for(;;) {
-        DDS_SampleInfo        info;
-        DDS_ReturnCode_t retcode = string_reader->take_next_sample(
+        ::DDS::SampleInfo        info;
+        ::DDS::ReturnCode_t retcode = string_reader->take_next_sample(
                             ptr_sample,
                             info);
         if (retcode == DDS_RETCODE_NO_DATA) {

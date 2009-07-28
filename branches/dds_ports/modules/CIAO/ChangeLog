@@ -1,3 +1,9 @@
+Tue Jul 28 15:09:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp
+          Use ndds_namespace_cpp.h so that we get everything in the DDS namespace
+
 Tue Jul 28 15:00:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp

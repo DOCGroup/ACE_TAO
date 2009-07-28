@@ -3,7 +3,7 @@
 #include "ace/OS_main.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include <ndds/ndds_cpp.h>
+#include <ndds/ndds_namespace_cpp.h>
 
 int number_of_iterations = 100;
 const char* send_string = "This is a DDS sender";
@@ -39,14 +39,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
-    DDS_ReturnCode_t retcode;
+    ::DDS::ReturnCode_t retcode;
     int              main_result = 1; /* error by default */
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
     /* Create the domain participant */
-    DDSDomainParticipant *participant = DDSDomainParticipantFactory::get_instance()->
+    ::DDS::DomainParticipant *participant = ::DDS::DomainParticipantFactory::get_instance()->
                         create_participant(
                                 0,                              /* Domain ID */
                                 DDS_PARTICIPANT_QOS_DEFAULT,    /* QoS */
@@ -58,9 +58,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     }
 
     /* Create the topic "Hello, World" for the String type */
-    DDSTopic *topic = participant->create_topic(
+    ::DDS::Topic *topic = participant->create_topic(
                         "Hello, World",                        /* Topic name*/
-                        DDSStringTypeSupport::get_type_name(), /* Type name */
+                        ::DDS::StringTypeSupport::get_type_name(), /* Type name */
                         DDS_TOPIC_QOS_DEFAULT,                 /* Topic QoS */
                         0,                                  /* Listener  */
                         DDS_STATUS_MASK_NONE);
@@ -70,7 +70,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     }
 
     /* Create the data writer using the default publisher */
-    DDSDataWriter *data_writer = participant->create_datawriter(
+    ::DDS::DataWriter *data_writer = participant->create_datawriter(
                                 topic,
                                 DDS_DATAWRITER_QOS_DEFAULT,     /* QoS */
                                 0,                           /* Listener */
@@ -83,7 +83,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     /* Perform a safe type-cast from a generic data writer into a
      * specific data writer for the type "DDS::String"
      */
-    DDSStringDataWriter *string_writer = DDSStringDataWriter::narrow(data_writer);
+    ::DDS::StringDataWriter *string_writer = ::DDS::StringDataWriter::narrow(data_writer);
     if (!string_writer) {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("DDS_StringDataWriter_narrow failed.\n")));
         /* In this specific case, this will never fail */
@@ -119,7 +119,7 @@ clean_exit:
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
             main_result = 1;
         }
-        retcode = DDSDomainParticipantFactory::get_instance()->
+        retcode = ::DDS::DomainParticipantFactory::get_instance()->
                         delete_participant(participant);
         if (retcode != DDS_RETCODE_OK) {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
