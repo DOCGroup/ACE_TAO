@@ -1,3 +1,11 @@
+Tue Jul 28 08:08:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
+          The CCM receiver listener component now gets called.
+
 Mon Jul 27 10:42:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
