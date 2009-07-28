@@ -44,7 +44,7 @@ namespace CIAO
                                                 0,
                                                 mask);
 
-        if (rti_pub == 0)
+        if (!rti_pub)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_publisher - "
                          "Error: Unable to create Participant\n"));
@@ -62,11 +62,9 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_publisher (::DDS::Publisher_ptr p)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::delete_publisher");
-
         RTI_Publisher_i *rti_pub = dynamic_cast < RTI_Publisher_i * > (p);
 
-        if (rti_pub == 0)
+        if (!rti_pub)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_publisher - "
                          "Unable to cast provided object refence to servant pointer.\n"));
@@ -123,14 +121,28 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_subscriber (::DDS::Subscriber_ptr s)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::delete_subscriber");
-        throw CORBA::NO_IMPLEMENT ();
+        RTI_Subscriber_i *rti_sub = dynamic_cast < RTI_Subscriber_i * > (s);
 
+        if (!rti_sub)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
+                         "Unable to cast provided object refence to servant pointer.\n"));
+            return ::DDS::RETCODE_ERROR;
+          }
+
+        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::delete_subscriber - "
+                     "Successfully casted provided object refence to RTI_Subscriber_i\n"));
+
+        return this->participant_->delete_subscriber (rti_sub->get_subscriber ());
       }
 
       ::DDS::Subscriber_ptr
       RTI_DomainParticipant_i::get_builtin_subscriber (void)
       {
+        DDSSubscriber* rti_sub = this->participant_->get_builtin_subscriber ();
+        ::DDS::Subscriber_var retval = new RTI_Subscriber_i (rti_sub);
+        return retval._retn ();
+
         CIAO_TRACE ("DDS_DomainParticipant_i::get_builtin_subscriber");
         throw CORBA::NO_IMPLEMENT ();
 
@@ -276,8 +288,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::delete_contained_entities (void)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::delete_contained_entities");
-        throw CORBA::NO_IMPLEMENT ();
+        return this->participant_->delete_contained_entities ();
 
       }
 
@@ -357,9 +368,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::assert_liveliness (void)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::assert_liveliness");
-        throw CORBA::NO_IMPLEMENT ();
-
+        return this->participant_->assert_liveliness ();
       }
 
       ::DDS::ReturnCode_t
@@ -463,9 +472,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::enable (void)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::enable");
-        throw CORBA::NO_IMPLEMENT ();
-
+        return this->participant_->enable ();
       }
 
       ::DDS::StatusCondition_ptr
@@ -479,9 +486,7 @@ namespace CIAO
       ::DDS::StatusMask
       RTI_DomainParticipant_i::get_status_changes (void)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::get_status_changes");
-        throw CORBA::NO_IMPLEMENT ();
-
+        return this->participant_->get_status_changes ();
       }
 
       ::DDS::InstanceHandle_t
