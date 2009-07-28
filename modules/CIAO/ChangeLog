@@ -1,3 +1,12 @@
+Tue Jul 28 14:46:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h:
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h:
+          Added ReadCondition
+
 Tue Jul 28 14:19:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp

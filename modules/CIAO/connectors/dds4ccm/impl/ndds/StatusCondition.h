@@ -27,7 +27,7 @@ namespace CIAO
     namespace RTI
     {
       class DDS4CCM_NDDS_IMPL_Export RTI_StatusCondition_i :
-        public virtual DDS::CCM_StatusCondition
+        public virtual ::DDS::CCM_StatusCondition
       {
       public:
         // Constructor
