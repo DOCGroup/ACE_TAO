@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Publisher.h"
+#include "PublisherListener.h"
 #include "Topic.h"
 #include "DataWriter.h"
 #include "StatusCondition.h"
@@ -99,8 +100,9 @@ namespace CIAO
       ::DDS::DataWriter_ptr
       RTI_Publisher_i::lookup_datawriter (const char * topic_name)
       {
-        CIAO_TRACE ("RTI_Publisher_i::lookup_datawriter");
-        throw CORBA::NO_IMPLEMENT ();
+        DDSDataWriter* dw = this->pub_->lookup_datawriter (topic_name);
+        ::DDS::DataWriter_var retval = new RTI_DataWriter_i (dw);
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t
@@ -134,8 +136,9 @@ namespace CIAO
       ::DDS::PublisherListener_ptr
       RTI_Publisher_i::get_listener (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::get_listener");
-        throw CORBA::NO_IMPLEMENT ();
+        DDSPublisherListener* pl = this->pub_->get_listener ();
+        ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t
@@ -165,15 +168,18 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
       {
-        CIAO_TRACE ("RTI_Publisher_i::wait_for_acknowledgments");
-        throw CORBA::NO_IMPLEMENT ();
+        DDS_Duration_t rti_dds_duration;
+        rti_dds_duration.sec = max_wait.sec; 
+        rti_dds_duration.nanosec = max_wait.nanosec;
+        return this->pub_->wait_for_acknowledgments (rti_dds_duration);
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_Publisher_i::get_participant (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::get_participant");
-        throw CORBA::NO_IMPLEMENT ();
+        DDSDomainParticipant* p = this->pub_->get_participant ();
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t
