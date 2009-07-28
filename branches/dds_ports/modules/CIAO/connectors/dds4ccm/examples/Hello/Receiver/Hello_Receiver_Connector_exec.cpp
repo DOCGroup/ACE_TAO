@@ -33,7 +33,7 @@
 #include "Hello_Receiver_Connector_exec.h"
 #include "ciao/CIAO_common.h"
 
-#include "dds4ccm/impl/ndds/ParticipantFactory.h"
+#include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DataReader.h"
 
 /* This method gets called back by DDS when one or more data samples have been

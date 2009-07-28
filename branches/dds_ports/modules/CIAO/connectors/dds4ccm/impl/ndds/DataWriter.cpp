@@ -41,8 +41,9 @@ namespace CIAO
 
       ::DDS::ReturnCode_t 
       RTI_DataWriter_i::set_listener (::DDS::DataWriterListener_ptr a_listener,
-                                                          ::DDS::StatusMask mask)
+                                      ::DDS::StatusMask mask)
       {
+        
         CIAO_TRACE ("RTI_DataWriter_i::set_listener");
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here

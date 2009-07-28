@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Participant.h"
+#include "DomainParticipant.h"
 #include "Subscriber.h"
 #include "Publisher.h"
 #include "Topic.h"
