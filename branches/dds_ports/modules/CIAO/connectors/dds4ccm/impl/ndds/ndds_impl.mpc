@@ -7,10 +7,12 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, cc
   macros += BUILDING_NDDS_LIB
   Source_Files {
     DataWriter.cpp
+    DataReader.cpp
     Participant.cpp
     ParticipantFactory.cpp
     Topic.cpp
     Publisher.cpp
+    Subscriber.cpp
     Utils.cpp
   }
 }

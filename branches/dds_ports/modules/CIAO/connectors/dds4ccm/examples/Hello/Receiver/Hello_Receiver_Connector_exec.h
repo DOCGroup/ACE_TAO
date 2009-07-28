@@ -149,7 +149,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    DataReader_exec_i (void);
+    DataReader_exec_i (DDSDataReader* dr);
     virtual ~DataReader_exec_i (void);
 
     // Operations and attributes from ::DDS::DataReader
@@ -314,6 +314,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     get_matched_publication_data (
       ::DDS::PublicationBuiltinTopicData & publication_data,
       ::DDS::InstanceHandle_t publication_handle);
+  private:
+    DDSDataReader* dr_;      
   };
 
   class HELLO_RECEIVER_CONNECTOR_EXEC_Export Hello_receiver_Connector_exec_i
@@ -358,10 +360,10 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 
     bool dds_configured_;
     ::DDS::DomainParticipantFactory_var dpf_;
-    ::DDS::DomainParticipant_var dp_;
-    ::DDS::Topic_var t_;
+    DDSDomainParticipant* dp_;
+    ::DDSTopic* t_;
     ::DDS::Subscriber_var sub_;
-    ::DDS::CCM_DataReader_var dr_;
+    DDSDataReader* dr_;
     ::DDSDataReaderListener* listener_;
   };
 

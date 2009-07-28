@@ -18,7 +18,7 @@ namespace CIAO
       /**
        * @struct Type_Traits
        * @brief Convenience traits struct.
-       * 
+       *
        * This is a convenience struct that is used by most of the
        * DDS4CCM infrastructure; it is not necessary to use this exact
        * struct, so long as all of the needed fields are filled in.
@@ -36,13 +36,12 @@ namespace CIAO
         typedef DATA_WRITER data_writer;
         typedef DATA_READER data_reader;
       };
-      
+
       typedef Type_Traits < const char *,
                             DDS_StringSeq,
                             DDSStringTypeSupport,
                             DDSStringDataWriter,
                             DDSStringDataReader > String_Traits;
-      
     }
   }
 }

@@ -163,15 +163,19 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 
   void
   ListenerControl_exec_i::enabled (
-    ::CORBA::Boolean /* enabled */)
+    ::CORBA::Boolean enabled)
   {
-    /* Your code here. */
+    if (enabled)
+      {
+        // @todo
+      }
   }
   //============================================================
   // Facet Executor Implementation Class: DataReader_exec_i
   //============================================================
 
-  DataReader_exec_i::DataReader_exec_i (void)
+  DataReader_exec_i::DataReader_exec_i (DDSDataReader* dr) :
+    dr_ (dr)
   {
   }
 
@@ -184,6 +188,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   ::DDS::ReturnCode_t
   DataReader_exec_i::enable (void)
   {
+    //return this->dr_->enable
+    //return this->dr_
     /* Your code here. */
     return 0;
   }
@@ -191,6 +197,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   ::DDS::StatusCondition_ptr
   DataReader_exec_i::get_statuscondition (void)
   {
+    //return this->dr_->get_statuscondition ();
     /* Your code here. */
     return ::DDS::StatusCondition::_nil ();
   }
@@ -294,10 +301,14 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_sample_rejected_status (
-    ::DDS::SampleRejectedStatus & /* status */)
+    ::DDS::SampleRejectedStatus & status)
   {
+    ::DDS_SampleRejectedStatus rti_status;
+    ::DDS_ReturnCode_t rti_retval = this->dr_->get_sample_rejected_status (rti_status);
+    
+    return static_cast < ::DDS::ReturnCode_t> (rti_status);
     /* Your code here. */
-    return 0;
+    //return 0;
   }
 
   ::DDS::ReturnCode_t
@@ -371,7 +382,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 
   Hello_receiver_Connector_exec_i::Hello_receiver_Connector_exec_i (void)
     : dds_configured_ (false),
-      listener_ (0)
+      listener_ (0),
+      dr_ (0)
   {
   }
 
@@ -389,9 +401,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   Hello_receiver_Connector_exec_i::get_receiver_data (void)
   {
     this->configure_dds ();
-    /* Your code here. */
-    // @todo
-    return ::CCM_DDS::CCM_string_Reader::_nil ();
+    return new string_Reader_exec_i ();
   }
 
   ::CCM_DDS::CCM_ListenerControl_ptr
@@ -402,7 +412,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 
     /* Your code here. */
     // @todo
-    return ::CCM_DDS::CCM_ListenerControl::_nil ();
+    return new ListenerControl_exec_i ();
   }
 
   ::DDS::CCM_DataReader_ptr
@@ -411,7 +421,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     this->configure_dds ();
     /* Your code here. */
     // @todo
-    return new DataReader_exec_i ();
+    return new DataReader_exec_i (this->dr_);
   }
 
   // Operations from Components::SessionComponent.
@@ -494,36 +504,36 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
               //  ::CCM_DDS::string_RawListener_var writer =
     //  this->context_->get_connection_receiver_listener ();
 
-    DDSDomainParticipant *participant = DDSDomainParticipantFactory::get_instance()->
+    this->dp_ = DDSDomainParticipantFactory::get_instance()->
                        create_participant(
                         0,                              /* Domain ID */
                         DDS_PARTICIPANT_QOS_DEFAULT,    /* QoS */
                         0,                           /* Listener */
                         DDS_STATUS_MASK_NONE);
-    if (!participant) {
+    if (!this->dp_) {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create domain participant.\n")));
     }
 
     /* Create the topic "Hello, World" for the String type */
-    DDSTopic *topic = participant->create_topic(
+    this->t_ = this->dp_->create_topic(
                         "Hello, World",                        /* Topic name*/
                         DDSStringTypeSupport::get_type_name(), /* Type name */
                         DDS_TOPIC_QOS_DEFAULT,                 /* Topic QoS */
                         0,                                  /* Listener  */
                         DDS_STATUS_MASK_NONE);
-    if (!topic) {
+    if (!this->t_) {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
     }
 
 listener_ = new ::HelloListener (this->context_->get_connection_receiver_listener ());
 
     /* Create the data writer using the default publisher */
-    DDSDataReader *data_reader = participant->create_datareader(
-                        topic,
+    this->dr_ = this->dp_->create_datareader(
+                        this->t_,
                         DDS_DATAREADER_QOS_DEFAULT,    /* QoS */
                         listener_,                      /* Listener */
                         DDS_DATA_AVAILABLE_STATUS);
-    if (!data_reader) {
+    if (!this->dr_) {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
     }
 
