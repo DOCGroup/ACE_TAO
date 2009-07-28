@@ -1,3 +1,13 @@
+Tue Jul 28 14:34:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Production rules for connectors, and corresponding new
+          parse state and associated error message.
+
 Mon Jul 27 19:20:07 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

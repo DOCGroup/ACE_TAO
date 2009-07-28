@@ -112,6 +112,7 @@ public:
     , PS_HomeDeclSeen           // Seen complete home declaration
     , PS_EventDeclSeen          // Seen complete eventtype declartion
     , PS_PorttypeDeclSeen       // Seen complete porttype declaration
+    , PS_ConnectorDeclSeen      // Seen complete connector declaration
     , PS_AttrDeclSeen           // Seen complete attribute declaration
     , PS_OpDeclSeen             // Seen complete operation declaration
     , PS_ProvidesDeclSeen       // Seen complete privides declaration

@@ -499,6 +499,16 @@ definition
 //      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
+        | connector_decl
+        {
+//      | connector_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorDeclSeen);
+        }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
         | error
         {
 //      | error
@@ -6571,6 +6581,82 @@ template_inst
         }
         ;
 
+connector_decl
+        : connector_header connector_body
+        ;
+
+connector_header
+        : IDL_CONNECTOR IDENTIFIER opt_template_params component_inheritance_spec
+        ;
+
+connector_body
+        : '{' at_least_one_connector_export '}'
+        ;
+
+at_least_one_connector_export
+        : connector_export connector_exports
+        ;
+
+connector_exports
+        : connector_exports connector_export
+        | /* EMPTY */
+        ;
+
+connector_export
+        : provides_decl
+        {
+// connector_export : provides_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | uses_decl
+        {
+//        | uses_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | attribute
+        {
+//      | attribute
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | template_extended_port_decl
+        {
+//      | template_extended_port_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+/*
+If this is also legal, there will be conflicts to be resolved
+        | extended_port_decl ';'
+*/
+        ;
+
+template_extended_port_decl
+        : IDL_PORT template_ref_decl
+        | IDL_MIRRORPORT template_ref_decl
+        ;
+
+template_ref_decl
+        : template_ref IDENTIFIER
+        ;
 
 %%
 /* programs */

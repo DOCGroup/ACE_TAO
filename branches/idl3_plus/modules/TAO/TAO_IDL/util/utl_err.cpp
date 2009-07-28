@@ -320,6 +320,8 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed event type declaration";
   case IDL_GlobalData::PS_PorttypeDeclSeen:
     return "Malformed port type declaration";
+  case IDL_GlobalData::PS_ConnectorDeclSeen:
+    return "Malformed connector declaration";
   case IDL_GlobalData::PS_ModuleDeclSeen:
     return "Malformed module declaration";
   case IDL_GlobalData::PS_AttrDeclSeen:
