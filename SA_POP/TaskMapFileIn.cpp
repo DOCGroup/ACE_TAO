@@ -40,6 +40,9 @@ void TaskMapFileIn::build_task_map (std::string filename, Builder *builder)
   if (!XML_Helper::XML_HELPER.is_initialized ())
     throw "SA_POP::TaskMapFileIn::build_task_map (): Could not initialize XML_Helper";
 
+  // Set path to XML schemas (XSD files).
+  XML_Helper::_path_resolver.add_path (SA_POP::ROOT_PATH_STR.c_str (), SA_POP::XSD_REL_PATH_STR.c_str ());
+
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****

@@ -46,6 +46,9 @@ Network *SANetFileIn::build_net (std::string filename)
   if (!XML_Helper::XML_HELPER.is_initialized ())
     return 0;
 
+  // Set path to XML schemas (XSD files).
+  XML_Helper::_path_resolver.add_path (SA_POP::ROOT_PATH_STR.c_str (), SA_POP::XSD_REL_PATH_STR.c_str ());
+
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =
 //*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
@@ -157,6 +160,9 @@ void SANetFileIn::build_net (std::string filename, SA_POP::Builder *builder)
 {
   if (!XML_Helper::XML_HELPER.is_initialized ())
     return;
+
+  // Set path to XML schemas (XSD files).
+  XML_Helper::_path_resolver.add_path (SA_POP::ROOT_PATH_STR.c_str (), SA_POP::XSD_REL_PATH_STR.c_str ());
 
   // Parse file with Xerces.
   XERCES_CPP_NAMESPACE::DOMDocument *dom =

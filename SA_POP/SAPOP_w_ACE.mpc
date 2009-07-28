@@ -2,15 +2,9 @@ project(SA_POP) : xerces, acelib, sapop_xml, sapop_out {
 
    sharedname   = SA_POP
 
-//   libout = $(SAPOP_ROOT)/lib
-
 //   libpaths += $(SAPOP_ROOT)/lib
 
-//   after += SAPOP_XML_Utils
-
-
    includes += $(SAPOP_ROOT)
-//               $(SAPOP_ROOT)/Standalone/XML_Utils
 
    macros = SA_POP_HAS_ACE
 
@@ -21,8 +15,6 @@ project(SA_POP) : xerces, acelib, sapop_xml, sapop_out {
                     SA_BUILDER_BUILD_DLL \
                     LOGSCREENOUT_BUILD_DLL \
 		    LOGGRAPHOUT_BUILD_DLL
-
-//   libs += SAPOP_XML_Utils
 
 
    Header_Files {
