@@ -1,3 +1,14 @@
+Tue Jul 28 18:22:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added semantic actions and inheritance checking for creation
+          of connector.
+
 Tue Jul 28 16:46:35 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_connector.h:

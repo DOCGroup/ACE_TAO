@@ -119,6 +119,7 @@ public:
     EIDL_EVENTTYPE_EXPECTED,    // We got something else..
     EIDL_TMPL_IFACE_EXPECTED,   // We got something else..
     EIDL_PORTTYPE_EXPECTED,     // We got something else..
+    EIDL_CONNECTOR_EXPECTED,    // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword

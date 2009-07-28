@@ -89,6 +89,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_home.h"
 #include "ast_template_interface.h"
 #include "ast_porttype.h"
+#include "ast_connector.h"
 #include "ast_uses.h"
 #include "ast_constant.h"
 #include "ast_union.h"
@@ -6594,11 +6595,92 @@ connector_decl
         ;
 
 connector_header
-        : IDL_CONNECTOR IDENTIFIER opt_template_params component_inheritance_spec
+        : IDL_CONNECTOR
+        {
+// connector_header : IDL_CONNECTOR 
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSeen);
+        }
+        IDENTIFIER
+        {
+//        IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorIDSeen);
+        }
+          opt_template_params
+        {
+//        opt_template_params
+        }
+        component_inheritance_spec
+        {
+//        component_inheritance_spec
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Connector *parent = 0;
+          bool so_far_so_good = true;
+
+          Identifier id ($3);
+          ACE::strdelete ($3);
+          $3 = 0;
+
+          UTL_ScopedName sn (&id, 0);
+
+          if ($7 != 0)
+            {
+              AST_Decl *d = s->lookup_by_name ($7, true);
+
+              if (d == 0)
+                {
+                  idl_global->err ()->lookup_error ($7);
+                  so_far_so_good = false;
+                }
+
+              parent =
+                AST_Connector::narrow_from_decl (d);
+
+              if (parent == 0)
+                {
+                  idl_global->err ()->error1 (UTL_Error::EIDL_CONNECTOR_EXPECTED,
+                                              d);
+                  so_far_so_good = false;
+                }
+
+              $7->destroy ();
+              delete $7;
+              $7 = 0;
+            }
+
+          if (so_far_so_good)
+            {
+              AST_Connector *c =
+                idl_global->gen ()->create_connector (&sn,
+                                                      parent,
+                                                      $5);
+
+              (void) s->fe_add_connector (c);
+ 
+              // Push it on the scopes stack.
+              idl_global->scopes ().push (c);
+           }
+        }
         ;
 
 connector_body
-        : '{' at_least_one_connector_export '}'
+        : '{'
+        {
+// connector_body " '{'
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSqSeen);
+        }
+        at_least_one_connector_export
+        {
+//        at_least_one_connector_export
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorBodySeen);
+        }
+        '}'
+        {
+//        '}
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorQsSeen);
+
+          // Done with this connector - pop it off the scope stack.
+          idl_global->scopes ().pop ();
+        }
         ;
 
 at_least_one_connector_export

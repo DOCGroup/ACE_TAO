@@ -169,6 +169,8 @@ error_string (UTL_Error::ErrorCode c)
       return "template interface expected: ";
     case UTL_Error::EIDL_PORTTYPE_EXPECTED:
       return "porttype expected: ";
+    case UTL_Error::EIDL_CONNECTOR_EXPECTED:
+      return "connector expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_INCOMPATIBLE_TYPE:
@@ -436,6 +438,16 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following home '}' closer";
   case IDL_GlobalData::PS_HomeBodySeen:
     return "Illegal syntax following home body statement(s)";
+  case IDL_GlobalData::PS_ConnectorSeen:
+    return "Missing connector identifier following CONNECTOR keyword";
+  case IDL_GlobalData::PS_ConnectorIDSeen:
+    return "Missing '{' or illegal syntax following connector identifier";
+  case IDL_GlobalData::PS_ConnectorSqSeen:
+    return "Illegal syntax following connector '{' opener";
+  case IDL_GlobalData::PS_ConnectorQsSeen:
+    return "Illegal syntax following connector '}' closer";
+  case IDL_GlobalData::PS_ConnectorBodySeen:
+    return "Illegal syntax following connector body statement(s)";
   case IDL_GlobalData::PS_StructForwardSeen:
     return "Missing ';' following forward struct declaration";
   case IDL_GlobalData::PS_UnionForwardSeen:
