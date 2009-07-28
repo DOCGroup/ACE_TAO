@@ -1,3 +1,10 @@
+Tue Jul 28 15:21:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp
+          Implement some more methods, just the basic ones that don't need
+          any conversion/wrapping
+
 Tue Jul 28 15:09:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp

@@ -105,8 +105,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::delete_contained_entities (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::delete_contained_entities");
-        throw CORBA::NO_IMPLEMENT ();
+        return this->pub_->delete_contained_entities ();
       }
 
       ::DDS::ReturnCode_t
@@ -141,29 +140,25 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::suspend_publications (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::suspend_publications");
-        throw CORBA::NO_IMPLEMENT ();
+        return this->pub_->suspend_publications ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::resume_publications (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::resume_publications");
-        throw CORBA::NO_IMPLEMENT ();
+        return this->pub_->resume_publications ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::begin_coherent_changes (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::begin_coherent_changes");
-        throw CORBA::NO_IMPLEMENT ();
+        return this->pub_->begin_coherent_changes ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::end_coherent_changes (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::end_coherent_changes");
-        throw CORBA::NO_IMPLEMENT ();
+        return this->pub_->end_coherent_changes ();
       }
 
       ::DDS::ReturnCode_t
@@ -205,8 +200,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::enable (void)
       {
-        CIAO_TRACE ("RTI_Publisher_i::enable");
-        throw CORBA::NO_IMPLEMENT ();
+        return this->pub_->enable ();
       }
 
       ::DDS::StatusCondition_ptr
