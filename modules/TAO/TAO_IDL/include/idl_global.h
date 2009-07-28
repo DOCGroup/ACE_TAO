@@ -169,6 +169,11 @@ public:
     , PS_HomeSqSeen             // '{' seen for home
     , PS_HomeQsSeen             // '}' seen for home
     , PS_HomeBodySeen           // Seen a home body
+    , PS_ConnectorSeen          // Seen an CONNECTOR keyword
+    , PS_ConnectorIDSeen        // Seen the connector ID
+    , PS_ConnectorSqSeen        // '{' seen for connector
+    , PS_ConnectorQsSeen        // '}' seen for connector
+    , PS_ConnectorBodySeen      // Seen a connector body
     , PS_SNListCommaSeen        // Seen ',' in list of scoped names
     , PS_ScopedNameSeen         // Seen a complete scoped name
     , PS_SN_IDSeen              // Seen an identifier as part of a scoped name
