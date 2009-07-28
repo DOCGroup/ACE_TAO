@@ -1,3 +1,10 @@
+Tue Jul 28 11:57:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnaming:
+          Fixed bug in this file. Thanks to John Fletcher
+          <john dot fletcher at rd dot bbc dot co dot uk> for reporting
+          this. This relates to bugzilla 3664
+
 Mon Jul 27 09:23:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/svn/config:
