@@ -31,7 +31,7 @@
 #include "Hello_Sender_Connector_exec.h"
 #include "ciao/CIAO_common.h"
 
-#include "dds4ccm/impl/ndds/ParticipantFactory.h"
+#include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 
 namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
 {

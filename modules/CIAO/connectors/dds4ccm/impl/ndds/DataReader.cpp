@@ -139,7 +139,7 @@ namespace CIAO
         ::DDS::SampleRejectedStatus & status)
       {
         throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        //return this->dr_->get_sample_rejected_status (status);
       }
 
       ::DDS::ReturnCode_t

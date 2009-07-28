@@ -6,6 +6,7 @@
 #include "DataReader.h"
 #include "DataReaderListener.h"
 #include "Utils.h"
+#include "StatusCondition.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -39,8 +40,9 @@ namespace CIAO
       ::DDS::StatusCondition_ptr
       RTI_Subscriber_i::get_statuscondition (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSStatusCondition* sc = this->sub_->get_statuscondition ();
+        ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
+        return retval._retn ();
       }
 
       ::DDS::StatusMask
@@ -135,8 +137,9 @@ namespace CIAO
       RTI_Subscriber_i::lookup_datareader (
         const char * topic_name)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSDataReader* dr = this->sub_->lookup_datareader (topic_name);
+        ::DDS::DataReader_var retval = new RTI_DataReader_i (dr);
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t
@@ -202,7 +205,8 @@ namespace CIAO
       RTI_Subscriber_i::get_listener (void)
       {
         DDSSubscriberListener* rti_sub_list = this->sub_->get_listener ();
-        return new RTI_SubscriberListener_i (rti_sub_list);
+        ::DDS::SubscriberListener_var retval = new RTI_SubscriberListener_i (rti_sub_list);
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t

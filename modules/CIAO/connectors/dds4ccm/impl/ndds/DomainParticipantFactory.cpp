@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ParticipantFactory.h"
-#include "Participant.h"
+#include "DomainParticipantFactory.h"
+#include "DomainParticipant.h"
 #include "Utils.h"
 
 #include "ciao/Logger/Log_Macros.h"

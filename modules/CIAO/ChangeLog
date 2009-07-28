@@ -1,3 +1,25 @@
+Tue Jul 28 15:00:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/Participant.cpp
+        * connectors/dds4ccm/impl/ndds/Participant.h
+        * connectors/dds4ccm/impl/ndds/ParticipantFactory.cpp
+        * connectors/dds4ccm/impl/ndds/ParticipantFactory.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/Topic.h
+          Added DataWriterListener and added Domain prefix to the participant
+          files
+
 Tue Jul 28 14:46:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp:
