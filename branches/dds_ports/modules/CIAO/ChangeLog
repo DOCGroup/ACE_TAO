@@ -1,3 +1,9 @@
+Tue Jul 28 15:30:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp
+          Again some more methods
+
 Tue Jul 28 15:21:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
