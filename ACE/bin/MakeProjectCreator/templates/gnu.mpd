@@ -167,16 +167,14 @@ VSHDIR = <%targetoutdir%>.shobj/
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-<%if(!dds && version)%>
+<%if(version)%>
 
 ifeq ($(versioned_so),1)
   SOVERSION = .<%version%>
 endif # versioned_so
 
 <%endif%>
-<%if(dds)%>
-include $(DDS_ROOT)/rules.dds.GNU
-<%endif%>
+<%marker(extension)%>
 <%if(ciao)%>
 include $(CIAO_ROOT)/rules.ciao.GNU
 <%endif%>
