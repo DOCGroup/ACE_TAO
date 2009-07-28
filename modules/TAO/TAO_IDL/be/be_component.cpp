@@ -35,6 +35,7 @@ be_component::be_component (void)
     AST_Interface (),
     AST_Component (),
     be_scope (),
+    be_decl (),
     be_type (),
     be_interface ()
 {
@@ -69,6 +70,8 @@ be_component::be_component (UTL_ScopedName *n,
                    supports_flat,
                    n_supports_flat),
     be_scope (AST_Decl::NT_component),
+    be_decl (AST_Decl::NT_component,
+             n),
     be_type (AST_Decl::NT_component,
              n),
     be_interface (n,

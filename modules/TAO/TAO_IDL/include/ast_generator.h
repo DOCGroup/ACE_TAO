@@ -84,6 +84,7 @@ class AST_Template_Interface;
 class AST_Instantiated_Interface;
 class AST_Extended_Port;
 class AST_Mirror_Port;
+class AST_Connector;
 class AST_Provides;
 class AST_Uses;
 class AST_Publishes;
@@ -402,6 +403,12 @@ public:
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
     AST_PortType::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Connector *create_connector (
+    UTL_ScopedName  *n,
+    AST_Connector *base_connector,
+    FE_Utils::T_PARAMLIST_INFO *template_params);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

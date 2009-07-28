@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_porttype.h"
+#include "ast_connector.h"
 #include "ast_home.h"
 #include "ast_constant.h"
 #include "ast_exception.h"
@@ -693,6 +694,51 @@ AST_Module::fe_add_component (AST_Component *t)
   this->add_to_referenced (t,
                            false,
                            t->local_name ());
+  return t;
+}
+
+AST_Connector *
+AST_Module::fe_add_connector (AST_Connector *t)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to local types.
+  this->add_to_local_types (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
   return t;
 }
 
