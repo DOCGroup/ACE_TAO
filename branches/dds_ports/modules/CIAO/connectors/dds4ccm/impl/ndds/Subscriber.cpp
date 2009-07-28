@@ -3,7 +3,8 @@
 #include "Subscriber.h"
 #include "SubscriberListener.h"
 #include "Topic.h"
-#include "DataWriter.h"
+#include "DataReader.h"
+#include "DataReaderListener.h"
 #include "Utils.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
@@ -62,16 +63,68 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
+        if (!topic)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
+                         "Error: Unable to cast provided topic to its servant.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          }
+        RTI_DataReaderListener_i * drl = dynamic_cast < RTI_DataReaderListener_i * > (a_listener);
+        if (!drl)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
+                         "Error: Unable to cast provided datareaderlistener to its servant.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          }
+        DDSTopic *rti_topic = topic->get_topic ();
+        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
+
+        DDSDataReader *rti_dr = this->sub_->create_datareader (rti_topic,
+                                                               DDS_DATAREADER_QOS_DEFAULT,
+                                                               rti_drl,
+                                                               mask);
+
+        if (!rti_dr)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
+                         "Error: RTI Topic returned a nil datareader.\n"));
+            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          }
+
+        ::DDS::DataReader_var retval = new RTI_DataReader_i (rti_dr);
+
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::delete_datareader (
         ::DDS::DataReader_ptr a_datareader)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        RTI_DataReader_i *top = dynamic_cast< RTI_DataReader_i *> (a_datareader);
+
+        if (!top)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
+                         "Unable to cast provided object reference to servant.\n"));
+            return ::DDS::RETCODE_BAD_PARAMETER;
+          }
+
+        CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_Subscriber_i::delete_datareader - "
+                     "Successfully casted provided object reference to servant.\n"));
+
+        DDS_ReturnCode_t retval = this->sub_->delete_datareader (top->get_datareader ());
+
+        if (retval != DDS_RETCODE_OK)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
+                         "Error: Returned non-ok error code %c\n",
+                         translate_retcode (retval)));
+          }
+        else CIAO_DEBUG ((LM_INFO, CLINFO "RTI_Subscriber_i::delete_datareader - "
+                          "Successfully deleted\n"));
+
+        return retval;
       }
 
       ::DDS::ReturnCode_t
@@ -136,14 +189,14 @@ namespace CIAO
         ::DDS::StatusMask mask)
       {
         RTI_SubscriberListener_i* rti_sub_list = dynamic_cast <RTI_SubscriberListener_i*>(a_listener);
-        
+
         if (!rti_sub_list)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::set_listener "
                          "Unable to cast provided subscriber listener to servant\n"));
             throw CORBA::INTERNAL ();
           }
-        
+
         return this->sub_->set_listener (rti_sub_list->get_subscriber_listener (), mask);
       }
 
