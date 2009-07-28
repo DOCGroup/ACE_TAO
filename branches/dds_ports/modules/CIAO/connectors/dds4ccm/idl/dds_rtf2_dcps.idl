@@ -20,8 +20,8 @@
 
 module DDS {
     typedef long DomainId_t;
-    typedef octet InstanceHandle_t[24];
-
+//    typedef octet InstanceHandle_t[24];
+    typedef long InstanceHandle_t;
     struct BuiltinTopicKey_t {
         long value[3];
     };
