@@ -113,7 +113,7 @@ namespace CIAO
           }
 
         CIAO_DEBUG ((LM_INFO, CLINFO "RTI_DomainParticipant_i::create_subscriber - "
-                     "Successfully created a DDSPublisher\n"));
+                     "Successfully created a DDSSubscriber\n"));
 
         ::DDS::Subscriber_var retval = new RTI_Subscriber_i (rti_sub);
 

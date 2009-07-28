@@ -13,6 +13,7 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, cc
     Topic.cpp
     Publisher.cpp
     Subscriber.cpp
+    SubscriberListener.cpp
     Utils.cpp
   }
 }

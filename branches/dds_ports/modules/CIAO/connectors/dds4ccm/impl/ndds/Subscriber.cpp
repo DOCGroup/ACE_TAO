@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Subscriber.h"
+#include "SubscriberListener.h"
 #include "Topic.h"
 #include "DataWriter.h"
 #include "Utils.h"
@@ -108,16 +109,25 @@ namespace CIAO
       RTI_Subscriber_i::set_qos (
         const ::DDS::SubscriberQos & qos)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDS_SubscriberQos rti_sub_qos;
+/*        rti_sub_qos.presentation = qos.presentation;
+        rti_sub_qos.partition = qos.partition;
+        rti_sub_qos.group_data = qos.group_data;
+        rti_sub_qos.entity_factory = qos.entity_factory;*/
+        return this->sub_->set_qos (rti_sub_qos);
       }
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::get_qos (
         ::DDS::SubscriberQos & qos)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDS_SubscriberQos rti_sub_qos;
+        DDS_ReturnCode_t const rti_retcode = this->sub_->get_qos (rti_sub_qos);
+        /*qos.presentation = rti_sub_qos.presentation;
+        qos.partition = rti_sub_qos.partition;
+        qos.group_data = rti_sub_qos.group_data;
+        qos.entity_factory = rti_sub_qos.entity_factory;*/
+        return rti_retcode;
       }
 
       ::DDS::ReturnCode_t
@@ -125,15 +135,23 @@ namespace CIAO
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        RTI_SubscriberListener_i* rti_sub_list = dynamic_cast <RTI_SubscriberListener_i*>(a_listener);
+        
+        if (!rti_sub_list)
+          {
+            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::set_listener "
+                         "Unable to cast provided subscriber listener to servant\n"));
+            throw CORBA::INTERNAL ();
+          }
+        
+        return this->sub_->set_listener (rti_sub_list->get_subscriber_listener (), mask);
       }
 
       ::DDS::SubscriberListener_ptr
       RTI_Subscriber_i::get_listener (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSSubscriberListener* rti_sub_list = this->sub_->get_listener ();
+        return new RTI_SubscriberListener_i (rti_sub_list);
       }
 
       ::DDS::ReturnCode_t
