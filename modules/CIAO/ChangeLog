@@ -1,3 +1,24 @@
+Tue Jul 28 12:01:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h:
+          Implement a few more methods. We need to convert each time between the RTI DDS
+          types and the CORBA types. This gets very ugly in the executor itself. This
+          all should be done in the impl/ndds directory which I now need to extend
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.h
+        * connectors/dds4ccm/impl/ndds/DataWriter.h
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/NDDS_Traits.h
+        * connectors/dds4ccm/impl/ndds/Participant.cpp
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/Subscriber.h
+          Added some more wrapper interfaces with just a few methods implemented
+
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.cpp:
+          Prefix increment
+
 Tue Jul 28 08:08:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
