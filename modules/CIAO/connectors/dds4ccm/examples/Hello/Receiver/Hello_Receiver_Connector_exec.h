@@ -53,10 +53,20 @@
 class HelloListener : public ::DDS::DataReaderListener
 { 
   public:
-    HelloListener ( ::CCM_DDS::string_RawListener_ptr listener);
-    void on_data_available( ::DDS::DataReader *reader);
+    HelloListener ( ::CCM_DDS::string_RawListener_ptr listener,
+                    ::CCM_DDS::PortStatusListener_ptr statuslistener);
+    virtual void on_data_available( ::DDS::DataReader *reader);
+    virtual void
+    on_requested_deadline_missed (
+      ::DDS::DataReader_ptr the_reader,
+      const ::DDS::RequestedDeadlineMissedStatus & status);
+    virtual void
+    on_sample_lost (
+      ::DDS::DataReader_ptr the_reader,
+      const ::DDS::SampleLostStatus & status);
   private:      
     ::CCM_DDS::string_RawListener_var listener_;        
+    ::CCM_DDS::PortStatusListener_var statuslistener_;
 };
 
 
