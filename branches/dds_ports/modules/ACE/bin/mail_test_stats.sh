@@ -6,7 +6,7 @@ cd $TREE_ROOT
 svn up
 cd $ACE_ROOT/bin
 rm *Tests.txt
-rm *TestsRev.txt
+rm *TestRev.txt
 ./diff-builds-and-group-fixed-tests-only.sh
 
 MAILTO="jwillemsen@remedy.nl"
