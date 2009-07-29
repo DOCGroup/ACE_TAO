@@ -2,6 +2,7 @@
 
 #include "DataReaderListener.h"
 #include "DataReader.h"
+#include "SampleLostStatus.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -76,7 +77,10 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_SampleLostStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS::SampleLostStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->drl_->on_sample_lost (dds_reader.in (), ddsstatus);
       }
 
       ::DDS::DataReaderListener_ptr

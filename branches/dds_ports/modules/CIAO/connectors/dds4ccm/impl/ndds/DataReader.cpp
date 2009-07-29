@@ -4,6 +4,7 @@
 #include "DataReaderListener.h"
 #include "StatusCondition.h"
 #include "ReadCondition.h"
+#include "SampleLostStatus.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -188,8 +189,10 @@ namespace CIAO
       RTI_DataReader_i::get_sample_lost_status (
         ::DDS::SampleLostStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDS_SampleLostStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->dr_->get_sample_lost_status (rtistatus);
+        rtistatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
