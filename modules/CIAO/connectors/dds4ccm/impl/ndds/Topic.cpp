@@ -41,7 +41,6 @@ namespace CIAO
       RTI_Topic_i::set_listener (::DDS::TopicListener_ptr a_listener,
                                  ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Topic_i::set_listener");
         throw CORBA::NO_IMPLEMENT ();
       }
 

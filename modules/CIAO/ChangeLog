@@ -1,3 +1,16 @@
+Wed Jul 29 12:58:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/Topic.cpp
+          The RTI_DDSDataReaderListener is now derived from the RTI base
+          class and is then passed to DDS. DDS then invokes back on this
+          RTI listener, this then delegates to the CORBA defined IDL
+          interface
+
 Tue Jul 28 19:16:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
