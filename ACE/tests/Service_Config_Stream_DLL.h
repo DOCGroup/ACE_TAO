@@ -40,4 +40,5 @@ public:
   virtual int init (int, ACE_TCHAR *[]);
 };
 
+#include /**/ "ace/post.h"
 #endif /* SERVICE_CONFIG_STREAM_DLL_H */
