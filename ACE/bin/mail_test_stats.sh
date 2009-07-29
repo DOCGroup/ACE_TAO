@@ -9,7 +9,7 @@ rm *Tests.txt
 rm *TestRev.txt
 ./diff-builds-and-group-fixed-tests-only.sh
 
-MAILTO="jwillemsen@remedy.nl"
+MAILTO="devo-group@list.isis.vanderbilt.edu"
 MAIL="/usr/bin/mail -S smtp=10.2.0.3"
 
 MAIL_ATTACHMENTS=
