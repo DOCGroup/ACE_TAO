@@ -40,12 +40,30 @@
  * received.
  */
 
-HelloListener::HelloListener ( ::CCM_DDS::string_RawListener_ptr listener) :
-  listener_ ( ::CCM_DDS::string_RawListener::_duplicate (listener))
+HelloListener::HelloListener ( ::CCM_DDS::string_RawListener_ptr listener, ::CCM_DDS::PortStatusListener_ptr statuslistener) :
+  listener_ ( ::CCM_DDS::string_RawListener::_duplicate (listener)),
+  statuslistener_ (::CCM_DDS::PortStatusListener::_duplicate (statuslistener))
 {
 }
 
-void HelloListener::on_data_available( ::DDS::DataReader *reader)
+void
+HelloListener::on_requested_deadline_missed (
+      ::DDS::DataReader_ptr the_reader,
+      const ::DDS::RequestedDeadlineMissedStatus & status)
+{
+  this->statuslistener_->on_requested_deadline_missed (the_reader, status);
+}
+      
+void
+HelloListener::on_sample_lost (
+      ::DDS::DataReader_ptr the_reader,
+      const ::DDS::SampleLostStatus & status)
+{
+  this->statuslistener_->on_sample_lost (the_reader, status);
+}
+
+void 
+HelloListener::on_data_available( ::DDS::DataReader *reader)
 {
     /* Perform a safe type-cast from a generic data reader into a
      * specific data reader for the type "DDS::String"
@@ -466,7 +484,11 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
         ::DDS::DataReaderQos drqos;
         ::CCM_DDS::string_RawListener_var rawlistener =
           this->context_->get_connection_receiver_listener ();
-        ::DDS::DataReaderListener_ptr temp = new HelloListener (rawlistener.in ());
+          
+        ::CCM_DDS::PortStatusListener_var portstatuslistener = 
+          this->context_->get_connection_receiver_status ();
+
+        ::DDS::DataReaderListener_ptr temp = new HelloListener (rawlistener.in (), portstatuslistener.in ());
         this->listener_ = temp;
         DDS::DataReader_var drv_tmp = sub_->create_datareader (t_.in (),
                                                                drqos,
