@@ -522,6 +522,7 @@ namespace SA_POP {
 
   virtual WorkingPlan*  get_working_plan(void){return this->working_plan_;};
 
+  virtual void set_backtrack_cmd_id(CommandID cmd){backtrack_cmd = cmd;};
 
   protected:
     /// Threshold for current probability of a condition to be satisfied.
@@ -560,6 +561,9 @@ namespace SA_POP {
     /// Notify all output adapters that plans have changed.
     virtual void notify_plan_changed (void);
 
+	CommandID backtrack_cmd;
+
+	CommandID not_backtracking;
   };
 
 };  /* SA_POP namespace */

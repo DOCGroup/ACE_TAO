@@ -142,8 +142,8 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   // If all open conditions have been satisfied, then return true for success.
   if (this->open_conds_.empty ())
 	  return this->planner_->full_sched();
-//)
-  if(!(this->planner_->get_working_plan()->get_all_insts().size() > 8)){
+//))!(this->planner_->get_working_plan()->get_all_insts().size() > 8)
+  if(true){
 	  // Increment step counter.
 	  this->cur_step_++;
 
@@ -155,9 +155,11 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
 	  CondSet preconds;
 
 	  // Choose an open condition to satisfy.
-	  Condition open_cond = this->cond_choice_->choose_cond (this->open_conds_);
-
-
+	  Condition open_cond = this->cond_choice_->choose_cond_suspension (this->open_conds_);
+	  SA_WorkingPlan* working_plan_tmp = (SA_WorkingPlan*)this->planner_->get_working_plan();
+	  if(working_plan_tmp->is_null_condition(open_cond)){
+			return false;
+	  }
 
 	  // Choose task to satisfy open condition (actually an ordered list of
 	  // tasks to try), passing command to planner to be executed next.
@@ -171,6 +173,8 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
 
 	  // Try tasks until one yields a complete plan or all have been tried.
 	  while (this->planner_->try_next (add_task_cmd->get_id ())) {
+
+       this->added_links = add_task_cmd->get_causal_insertions();
 
 		// Get current task and task instance.
 		this->cur_task_ = add_task_cmd->get_task ();
@@ -192,22 +196,22 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
 			  this->add_open_conds (preconds, this->cur_task_inst_);
   			}
 
-			if(this->store_map.should_continue(add_task_cmd->get_id(), add_task_cmd->get_condition(), 
-				stored_task, this->open_conds_, this->planner_->get_working_plan()->get_task_insts()))
+			//Do not execute if the condition has been noted before and not helped
+			std::pair<bool, CommandID> return_data = this->store_map.should_continue(add_task_cmd->get_id(), add_task_cmd->get_condition(), 
+				stored_task, this->open_conds_, this->planner_->get_working_plan()->get_task_insts());
+
+			if(return_data.first)
 			{
 				// Try to satisfy threats and continue recursive planning.
 				if (this->satisfy_everything())
 					return true;
-				this->store_map.undo_binding(add_task_cmd->get_id(), add_task_cmd->get_condition(), stored_task);
 
 			}else{
-				to_fail = true;
-				bool k = 0;
+				bool oops = true;
 			}
-			//	else{
-			//		this->planner_->undo_command (rmv_cond_cmd_id);
-			//		break;
-			//	}
+
+			this->store_map.undo_binding(add_task_cmd->get_id(), add_task_cmd->get_condition(), stored_task);
+
 
 
 			std::ostringstream debug_text;
@@ -224,9 +228,6 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
 		// Undo removal of open condition.
 		this->planner_->undo_command (rmv_cond_cmd_id);
 
-		if(to_fail){
-			break;
-		}
 	  }
 
 	  this->cur_task_inst_ = prev_cur_inst;
@@ -270,6 +271,9 @@ bool SA_PlanStrategy::satisfy_everything(){
 
 		assoc_impl_cmd->set_satisfied_insts(this->satisfied_insts);
 
+		assoc_impl_cmd->set_added_links(this->added_links);
+
+
 		this->cur_task_inst_ = assoc_impl_cmd->get_task_inst ();
 		
 		while (this->planner_->try_next (assoc_impl_cmd->get_id ())) 
@@ -285,6 +289,8 @@ bool SA_PlanStrategy::satisfy_everything(){
 
 			//Actually build the list of threats
 			this->planner_->generate_all_threats();
+
+
 
 			// Add causal link threats to open threats.
 			bool are_threats = !(this->planner_->get_all_threats().empty ());
@@ -421,10 +427,19 @@ RemoveOpenThreatsCmd *SA_PlanStrategy::get_RemoveOpenThreatsCmd (void)
 // Execute a command to add open conditions to planning.
 void SA_PlanStrategy::execute (SA_AddOpenCondsCmd *cmd)
 {
+  SA_WorkingPlan* working_plan_tmp = (SA_WorkingPlan*)this->planner_->get_working_plan();
+
   for (CondSet::iterator iter = cmd->conds_.begin ();
     iter != cmd->conds_.end (); iter++)
   {
     this->open_conds_.insert (std::make_pair (*iter, cmd->task_inst_));
+
+	CausalLink closest_on_path = working_plan_tmp->clink_on_path(*iter, cmd->task_inst_);
+	if(!working_plan_tmp->is_null_link(closest_on_path)){
+		working_plan_tmp->suspend_condition(*iter, cmd->task_inst_, closest_on_path);
+
+	}
+	cmd->link_suspended_on.insert(std::pair<Condition, CausalLink>(*iter, closest_on_path));
   }
 };
 
@@ -433,11 +448,18 @@ void SA_PlanStrategy::undo (SA_AddOpenCondsCmd *cmd)
 {
 	std::ostringstream debug_text;
 
+	SA_WorkingPlan* work_plan_tmp = (SA_WorkingPlan*)this->planner_->get_working_plan();
+
   // Remove open conditions mapped to the specified task instance.
 	debug_text<<"removing open conds mapped to "<<cmd->task_inst_<<std::endl;
 	for (CondSet::iterator cond_iter = cmd->conds_.begin ();
     cond_iter != cmd->conds_.end (); cond_iter++)
   {
+	CausalLink lnk = (cmd->link_suspended_on.find(*cond_iter))->second;
+	  if(!work_plan_tmp->is_null_link(lnk)){
+		  work_plan_tmp->resume_condition(*cond_iter, cmd->task_inst_, lnk);
+	  }
+
 	  debug_text<<"checking for "<<cond_iter->id<<std::endl;
 	  for (OpenCondMap::iterator open_iter =
       this->open_conds_.lower_bound (*cond_iter);
@@ -480,8 +502,13 @@ void SA_PlanStrategy::execute (SA_RemoveOpenCondsCmd *cmd)
   }
   */
 
+	SA_WorkingPlan* working_plan_tmp = (SA_WorkingPlan*)this->planner_->get_working_plan();
+
 	for(CondSet::iterator cond_it = cmd->conds_.begin(); cond_it != cmd->conds_.end();
 		cond_it++){
+
+
+
 			for(TaskInstSet::iterator task_it = cmd->tasks_.begin(); 
 			task_it != cmd->tasks_.end(); task_it++){
 
@@ -492,6 +519,9 @@ void SA_PlanStrategy::execute (SA_RemoveOpenCondsCmd *cmd)
 
 					OpenCondMap::iterator prev_iter = o_it;
 					o_it++;
+
+
+
 					cmd->removed_.insert (std::make_pair
 						(*cond_it, *task_it));
 					
@@ -499,7 +529,6 @@ void SA_PlanStrategy::execute (SA_RemoveOpenCondsCmd *cmd)
 				  }else{
 					  o_it++;
 				  }
-				  
 			  }
 		}
 	}

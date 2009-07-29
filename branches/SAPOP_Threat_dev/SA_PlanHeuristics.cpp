@@ -46,10 +46,41 @@ Condition SA_CondStrategy::choose_cond (const OpenCondMap &open_conds)
   {
     if (iter->first.kind == SA_POP::DATA)
       return iter->first;
-  }
+  }  
 
   // If no data conditions, just return first condition.
   return open_conds.front().first;
+};
+
+// Choose the next open condition to satisfy.
+Condition SA_CondStrategy::choose_cond_suspension (const OpenCondMap &open_conds)
+{
+  if (open_conds.empty ())
+    throw "SA_POP::SA_CondStrategy::choose_cond (): Empty condition list.";
+
+  // Return first data condition.
+  for (OpenCondMap::const_iterator iter = open_conds.begin ();
+    iter != open_conds.end (); iter++)
+  {
+    if (iter->first.kind == SA_POP::DATA)
+      return iter->first;
+  }
+
+  SA_WorkingPlan* working_plan = (SA_WorkingPlan*)this->planner_->get_working_plan();
+
+  for(OpenCondMap::const_iterator it = open_conds.begin(); it != open_conds.end(); it++){
+
+	  if(!working_plan->condition_in_suspended(it->first, it->second)){
+			return it->first;
+	  }else{
+		bool grah = true;
+	  }
+  }
+
+  return working_plan->get_no_condition();
+
+  // If no data conditions, just return first condition.
+//  return open_conds.front().first;
 };
 
 

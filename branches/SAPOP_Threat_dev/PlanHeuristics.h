@@ -48,6 +48,7 @@ namespace SA_POP {
      * @return  Next open condition to satisfy.
      */
     virtual Condition choose_cond (const OpenCondMap &open_conds) = 0;
+	virtual Condition choose_cond_suspension (const OpenCondMap &open_conds) = 0;
 
   protected:
     /// Pointer to Planner object.

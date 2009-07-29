@@ -14,10 +14,13 @@
 
 #include "SA_POP_Types.h"
 #include "SA_SchedStrategy.h"
+#include "SA_WorkingPlan.h"
 #include "Planner.h"
 #include <list>
 #include <set>
 #include <fstream>
+#include <algorithm>
+#include <vector>
 using namespace SA_POP;
 
 // Constructor.
@@ -83,6 +86,9 @@ CommandID SA_SchedStrategy::get_next_cmd_id (void)
 // satisfaction of open conditions by recursive call back to planning).
 bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 {
+
+
+
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
   //return this->planner_->recurse_plan ();
   // Adjust schedule.
@@ -91,10 +97,13 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
 	this->cur_seq_num_=1;
 
+
+
 	// Do the energy propogation for this task instance
 	// This function automatically does this for the task instances before and after it.
   
 
+	
   if(!this->energy_prop(task_inst))
   {
 
@@ -147,7 +156,7 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	  this->planner_->undo_through(cur_cmd_id);
 	  return false;
   }
-	
+
 
   if(!this->planner_->recurse_plan ()){
 	  this->planner_->undo_through(cur_cmd_id);
@@ -170,6 +179,124 @@ bool SA_SchedStrategy::satisfy_full_sched ()
 	  this->planner_->undo_through(cur_cmd_id);
 	  return false;
   }
+	
+  SA_WorkingPlan* working_plan_tmp = (SA_WorkingPlan*)this->planner_->get_working_plan();
+
+ // working_plan_tmp->get_precedence_graph()
+  PrecedenceSet befores = (working_plan_tmp->get_precedence_graph().find(BEFORE)->second);
+  PrecedenceSet afters = (working_plan_tmp->get_precedence_graph().find(AFTER)->second);
+  PrecedenceSet simuls = (working_plan_tmp->get_precedence_graph().find(SIMUL)->second);
+  PrecedenceSet unrankeds = (working_plan_tmp->get_precedence_graph().find(UNRANKED)->second);
+
+  //double current_execution_time = 0
+  //vector currently executing actions
+
+
+  std::vector<TaskInstEndTimeSet> executing_tasks;
+
+  double current_execution_time = 0;
+
+  int total_tasks = befores.size();
+  int completed_tasks = 0;
+
+  while(completed_tasks < total_tasks){
+
+	  for(PrecedenceSet::iterator it = befores.begin(); it != befores.end();){
+		
+		  PrecedenceSet::iterator prev_it = it++;
+		  if((befores.find(prev_it->first))->second.empty()){
+			
+			  TaskInstEndTimeSet new_execute;
+			  new_execute.inst = prev_it->first;
+			  new_execute.end_time = current_execution_time + this->planner_->get_impl(working_plan_tmp->get_impl_id(prev_it->first))
+				  ->get_duration();
+			  executing_tasks.push_back(new_execute);
+			  befores.erase(prev_it);
+		  }
+	  }
+
+	  std::sort(executing_tasks.begin(), executing_tasks.end());
+
+	  TaskInstEndTimeSet next_done = *executing_tasks.begin();
+	  current_execution_time = next_done.end_time;
+
+	  std::list<TaskInstEndTimeSet> to_remove;
+
+	  for(std::vector<TaskInstEndTimeSet>::iterator it3 = executing_tasks.begin(); 
+		  it3 != executing_tasks.end();){
+
+			if(it3->end_time != current_execution_time){	 
+			  break;
+			 }
+		  std::vector<TaskInstEndTimeSet>::iterator prev_it = it3++;
+
+		  std::cout<<"Task "<<prev_it->inst<<" finishes at time "<<prev_it->end_time<<std::endl;
+		  completed_tasks++;
+
+		  for(PrecedenceSet::iterator it2 = befores.begin(); it2 != befores.end(); it2++){
+			  it2->second.erase(prev_it->inst);
+		  }
+		  befores.erase(prev_it->inst);
+		  to_remove.push_front(*prev_it);
+	//	  executing_tasks.erase(prev_it);
+	  }
+
+	  for( std::list<TaskInstEndTimeSet>::iterator it3 = to_remove.begin(); it3 != to_remove.end(); it3++){
+		  std::vector<TaskInstEndTimeSet>::iterator it4;
+		  for(it4 = executing_tasks.begin(); it4 != executing_tasks.end(); it4++){
+			  if(it4->inst == it3->inst){
+				break;
+			  }
+		  }
+		  executing_tasks.erase(it4);
+	  }
+  }
+
+  //while #actions finished != total actions
+  //find all actions with no more befores
+  //add to currently executing actions sorted by current_time + their duration
+  //take action(s if there are multiple that end at the same time) off currently executing actions
+  //
+  //remove them from the befores of all other actions
+  //remove them from befores
+  //current execution time = when they finish
+
+  /*
+  std::list<TaskInstID> execute_this_time;
+
+  int time = 0;
+  while(!befores.empty()){
+
+	  execute_this_time.clear();
+
+	  for(PrecedenceSet::iterator it = befores.begin(); it != befores.end();){
+		
+		  PrecedenceSet::iterator prev_it = it++;
+
+		  if((befores.find(prev_it->first))->second.empty()){
+			
+			  execute_this_time.push_front(prev_it->first);
+
+			  befores.erase(prev_it);
+		  }
+	  }
+
+	
+	  for(std::list<TaskInstID>::iterator it = execute_this_time.begin(); it != execute_this_time.end(); it++){
+	
+		  std::cout<<"Task "<<(*it)<<" can execute at time "<<time<<std::endl;
+
+		  for(PrecedenceSet::iterator it2 = befores.begin(); it2 != befores.end(); it2++){
+				it2->second.erase(*it);
+		  }
+	  }
+	  time++;
+
+
+
+  }
+  */
+
   return true;
 };
 /// Calculate the min and max levels for the consumer of a task instance
@@ -733,23 +860,24 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
   const TaskInstSet *aft = this->planner_->get_prec_insts(task_inst,AFTER);
   const TaskInstSet *bef = this->planner_->get_prec_insts(task_inst,BEFORE);
 
-  for(TaskInstSet::const_iterator iter = aft->begin();iter!=aft->end();iter++)
-    {
-      if(!this->energy_prop_after(*iter))
-      {
-		this->planner_->undo_through(cur_cmd_id);
-		return false;
-      }
-    }
+	  for(TaskInstSet::const_iterator iter = aft->begin();iter!=aft->end();iter++)
+		{
+		  if(!this->energy_prop_after(*iter))
+		  {
+			this->planner_->undo_through(cur_cmd_id);
+			return false;
+		  }
+		}
 
-    for(TaskInstSet::const_iterator iter = bef->begin();iter!=bef->end();iter++)
-    {
-      if(!this->energy_prop_before(*iter))
-      {
-      this->planner_->undo_through(cur_cmd_id);
-      return false;
-      }
-    }
+		for(TaskInstSet::const_iterator iter = bef->begin();iter!=bef->end();iter++)
+		{
+		  if(!this->energy_prop_before(*iter))
+		  {
+		  this->planner_->undo_through(cur_cmd_id);
+		  return false;
+		  }
+		}
+	
   return true;
 }
 /// Do the uni directional energy precedence propogation in the after direction
@@ -810,19 +938,20 @@ bool SA_SchedStrategy::energy_prop_after (TaskInstID task_inst)
 		this->planner_->undo_through(cur_cmd_id);
 		return false;
     }
-  }
-	//TaskInstSet aft = this->planner_->after_orderings(task_inst);
-	//TaskInstSet bef = this->planner_->before_orderings(task_inst);
-  const TaskInstSet *aft = this->planner_->get_prec_insts(task_inst,AFTER);
+  
+		//TaskInstSet aft = this->planner_->after_orderings(task_inst);
+		//TaskInstSet bef = this->planner_->before_orderings(task_inst);
+	  const TaskInstSet *aft = this->planner_->get_prec_insts(task_inst,AFTER);
 
-  for(TaskInstSet::const_iterator iter = aft->begin();iter!=aft->end();iter++)
-    {
-      if(!this->energy_prop_after(*iter))
-      {
-		this->planner_->undo_through(cur_cmd_id);
-		return false;
-      }
-    }
+	  for(TaskInstSet::const_iterator iter = aft->begin();iter!=aft->end();iter++)
+		{
+		  if(!this->energy_prop_after(*iter))
+		  {
+			this->planner_->undo_through(cur_cmd_id);
+			return false;
+		  }
+		}
+	}
   return true;
 }
 /// Do the uni directional energy precedence propogation in the after direction
@@ -891,9 +1020,9 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
 		this->planner_->undo_through(cur_cmd_id);
 		return false;
     }
-  }
+
 	//TaskInstSet bef = this->planner_->before_orderings(task_inst);
-  const TaskInstSet *bef = this->planner_->get_prec_insts(task_inst,BEFORE);
+	const TaskInstSet *bef = this->planner_->get_prec_insts(task_inst,BEFORE);
 
     for(TaskInstSet::const_iterator iter = bef->begin();iter!=bef->end();iter++)
     {
@@ -903,5 +1032,7 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
       return false;
       }
     }
+	
+	}
   return true;
 }

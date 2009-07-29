@@ -52,6 +52,12 @@ cur_cmd_ (0)
 
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
   this->init_added = false;
+
+  this->not_backtracking.decision_pt = -1;
+  this->not_backtracking.seq_num = -1;
+  this->not_backtracking.step = -1;
+
+  this->backtrack_cmd = this->not_backtracking;
 };
 
 
@@ -120,6 +126,7 @@ bool Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
 
   // Set planning strategy goals and satisfy open conditions.
   this->plan_strat_->set_goals (goal.goal_conds);
+
   if (this->plan_strat_->satisfy_open_conds ()) {
     this->plan_ = this->working_plan_->get_plan ();
     this->notify_plan_changed ();
@@ -272,6 +279,14 @@ void Planner::add_command (PlanCommand *command)
 // On current command, undo last execution (if any) & execute next option.
 bool Planner::try_next (CommandID id)
 {
+	if(this->backtrack_cmd != this->not_backtracking){
+		if(id != this->backtrack_cmd){
+			return false;
+		}else{
+			this->backtrack_cmd = this->not_backtracking;
+		}
+	}
+
   if (this->cur_cmd_->get_id () != id) {
     char char_buf[35];
     sprintf(char_buf, "%d.%d.%d", id.step, id.decision_pt, id.seq_num); 
@@ -384,6 +399,9 @@ CondSet Planner::get_unsat_preconds (TaskID task_id)
 {
   CondSet temp = this->get_preconds (task_id);
 
+  //Note:  removed because when threats exist, it is wrong.  Uses initial condition
+  ///instead
+  /*
   // Remove satisfied preconditions.
   for (CondSet::iterator iter = temp.begin ();
     iter != temp.end (); )
@@ -400,6 +418,9 @@ CondSet Planner::get_unsat_preconds (TaskID task_id)
     if (cur_prob > this->cond_prob_thresh_)
       temp.erase (prev_iter);
   }
+  
+  */
+  
 
   return temp;
 }

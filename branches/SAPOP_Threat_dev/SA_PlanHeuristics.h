@@ -45,6 +45,8 @@ namespace SA_POP {
      * @return  Next open condition to satisfy.
      */
     virtual Condition choose_cond (const OpenCondMap &open_conds);
+
+	virtual Condition choose_cond_suspension (const OpenCondMap &open_conds);
   };
 
   /**

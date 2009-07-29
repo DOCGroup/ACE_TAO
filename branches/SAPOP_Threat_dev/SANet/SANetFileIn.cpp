@@ -184,6 +184,8 @@ void SANetFileIn::build_net (std::string filename, SA_POP::Builder *builder)
     
     builder->add_task (nodeID, priorProb, name);
   }
+  
+	builder->add_task(20, .5, "initact");
 
   // Get condition nodes.
   for (SANet::XML::Network::condNode_iterator iter = xml_net.begin_condNode ();
@@ -203,7 +205,11 @@ void SANetFileIn::build_net (std::string filename, SA_POP::Builder *builder)
 	if(cond_kind==cond_kind.ENVIRON) cond=::SA_POP::ENVIRON;
 	else if(cond_kind==cond_kind.SYSTEM) cond=::SA_POP::SYSTEM;
   else cond=::SA_POP::DATA;
-	builder->add_cond (nodeID, utility, probTrue, name, cond);
+	//Note: 0 here because of the initial action.  Changed from probTrue--Ben
+	builder->add_cond (nodeID, utility, 0, name, cond);
+
+	if((probTrue-.5)*2 > 0)
+		builder->set_effect(20, nodeID, "", (probTrue-.5)*2);
   }
 
   // Get precondition->task links.
