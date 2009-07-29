@@ -11,6 +11,7 @@ rm *TestRev.txt
 
 MAILTO="devo-group@list.isis.vanderbilt.edu"
 MAIL="/usr/bin/mail -S smtp=10.2.0.3"
+MAILFROM="jwillemsen@remedy.nl"
 
 MAIL_ATTACHMENTS=
 for fn in `ls *Tests.txt`; do
@@ -30,7 +31,7 @@ mailfile="/tmp/rsmailfile"
    cat *NoTestRev.txt
 } > $mailfile
 
-$MAIL -s "ACE/TAO/CIAO test statistics for $CURRENTDATE" $MAILTO < $mailfile
+$MAIL -r $MAILFROM -s "ACE/TAO/CIAO test statistics for $CURRENTDATE" $MAILTO < $mailfile
 
 rm -f $mailfile
 
