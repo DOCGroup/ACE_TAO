@@ -88,15 +88,13 @@ namespace CIAO
       char *
       RTI_Topic_i::get_type_name (void)
       {
-  //      return this->topic_->get_type_name ();
-  return 0;
+        return CORBA::string_dup (this->topic_->get_type_name ());
       }
 
       char *
       RTI_Topic_i::get_name (void)
       {
-//        return this->topic_->get_name ();
-return 0;
+        return CORBA::string_dup (this->topic_->get_name ());
       }
 
       ::DDS::DomainParticipant_ptr
