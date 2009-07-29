@@ -1,3 +1,7 @@
+Wed Jul 29 16:07:38 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Stream_Test.cpp: Fixed const-ness warning.
+
 Wed Jul 29 15:51:39 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * tests/Service_Config_Stream_DLL.h: Fixed fuzz warning on mismatched
