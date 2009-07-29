@@ -40,7 +40,7 @@ namespace CIAO
 
         RTI_Topic_i * topic = dynamic_cast < RTI_Topic_i * > (a_topic);
 
-        if (topic == 0)
+        if (!topic)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Publisher_i::create_datawriter - "
                          "Error: Unable to cast provided topic to its servant.\n"));

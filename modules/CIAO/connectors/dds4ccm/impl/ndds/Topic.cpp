@@ -14,26 +14,22 @@ namespace CIAO
       RTI_Topic_i::RTI_Topic_i (DDSTopic * top)
         : topic_ (top)
       {
-        CIAO_TRACE ("RTI_Topic_i::RTI_Topic_i");
       }
 
       // Implementation skeleton destructor
       RTI_Topic_i::~RTI_Topic_i (void)
       {
-        CIAO_TRACE ("RTI_Topic_i::~RTI_Topic_i");
       }
 
       ::DDS::ReturnCode_t
       RTI_Topic_i::set_qos (const ::DDS::TopicQos & qos)
       {
-        CIAO_TRACE ("RTI_Topic_i::set_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Topic_i::get_qos (::DDS::TopicQos & qos)
       {
-        CIAO_TRACE ("RTI_Topic_i::get_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
@@ -47,14 +43,12 @@ namespace CIAO
       ::DDS::TopicListener_ptr
       RTI_Topic_i::get_listener (void)
       {
-        CIAO_TRACE ("RTI_Topic_i::get_listener");
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Topic_i::get_inconsistent_topic_status (::DDS::InconsistentTopicStatus & a_status)
       {
-        CIAO_TRACE ("RTI_Topic_i::get_inconsistent_topic_status");
         throw CORBA::NO_IMPLEMENT ();
       }
 
