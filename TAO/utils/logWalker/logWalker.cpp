@@ -30,7 +30,7 @@ parse_filename (Session &session, char * buffer)
   Log log(session);
   if (ACE_OS::strchr(buffer,'=') == 0)
     {
-      log.init(buffer);
+      log.init(ACE_TEXT_CHAR_TO_TCHAR(buffer));
     }
   else
     {
