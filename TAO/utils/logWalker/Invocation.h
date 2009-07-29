@@ -79,8 +79,14 @@ public:
     bool sending_;
   };
 
+  enum Dump_Mode {
+    Dump_Proc,
+    Dump_Thread,
+    Dump_Both
+  };
+
   // initialize a new instance, with the initial request text line and offeset
-  Invocation (PeerProcess *peer, size_t req_id = 0);
+  Invocation (PeerProcess *peer, long handle, size_t req_id = 0);
   bool init ( const char * text, size_t offset, Thread *thr);
   ~Invocation (void);
 
@@ -105,13 +111,12 @@ public:
   GIOP_Buffer *octets (bool request);
   GIOP_Buffer *give_octets (bool request);
 
-  void dump_detail (ostream &strm, int indent);
+  bool contains (size_t line);
+  size_t req_line (void);
 
-  void add_child(Invocation *child);
-  void add_sibling(Invocation *sibling);
+  long handle (void) const;
 
-  Invocation *child(void);
-  Invocation *sibling(void);
+  void dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_handle);
 
 private:
   GIOP_Buffer *req_octets_;
@@ -120,11 +125,7 @@ private:
   PeerProcess *peer_;
   size_t req_id_;
   PeerObject *target_;
-
-  Invocation *child_;
-  Invocation *sibling_;
-
-  bool dumped_;
+  long handle_;
 };
 
 #endif // LOG_WALKER_INVOCATION_H

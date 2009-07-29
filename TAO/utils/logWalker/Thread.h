@@ -24,6 +24,8 @@ public:
   long id (void) const;
   const ACE_CString &alias (void) const;
   void incoming_from (PeerProcess *);
+  void add_invocation (Invocation *);
+
   PeerProcess *incoming (void) const;
   void enter_wait (PeerProcess *);
   void exit_wait (PeerProcess *, size_t linenum);
@@ -33,6 +35,9 @@ public:
   void dump_invocations (ostream &strm);
   PeerProcess *pending_peer (void) const;
   void pending_peer (PeerProcess *pp);
+
+  void active_handle (long handle);
+  long active_handle (void) const;
 
 private:
   long id_;
@@ -45,6 +50,7 @@ private:
   PeerProcess *new_connection_;
   Invocation::GIOP_Buffer *giop_target_;
   InvocationList invocations_;
+  long active_handle_;
 };
 
 #endif // LOG_WALKER_THREAD_H

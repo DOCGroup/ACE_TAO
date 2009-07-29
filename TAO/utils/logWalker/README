@@ -20,6 +20,10 @@ The command line options are:
   -o <filename>		 redirects the output to the named file rather than
      			 standard out.
 
+  -d <directory>         breaks the output into multiple files under the
+     			 named directory. The directory will be created if
+			 it does not exist. -o and -d are mutually exclusive.
+
   -p <name=value>	 allows the tagging of processes participating in
      			 a logged run, but for which no log file exists. The
 			 name in this case is some alias which will appear in
