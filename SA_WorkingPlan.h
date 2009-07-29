@@ -338,6 +338,28 @@ namespace SA_POP {
 
 	void print_precedence_graph(std::string source);
 
+	bool condition_in_suspended(Condition condition, TaskInstID required_by_);
+
+	CausalLink clink_on_path(Condition condition, TaskInstID required_by);
+
+	CausalLink clink_on_path_aux(Condition condition, TaskInstID required_by, 
+										std::set<TaskInstID> & expanded);
+
+	void unsuspend_listeners(CausalLink link, TaskInstID exception);
+	void unsuspend_listeners_aux(CausalLink link, TaskInstID exception);
+
+	void suspend_condition(Condition cond, TaskInstID required_by, CausalLink suspended_by);
+
+	void resume_condition(Condition cond, TaskInstID required_by, CausalLink suspended_by);
+
+	bool is_null_condition(Condition cond);
+
+	bool is_null_link(CausalLink link);
+
+	Condition get_no_condition();
+
+	PrecedenceGraph get_precedence_graph();
+
   protected:
     // ************************************************************************
     // State information.
@@ -362,9 +384,16 @@ namespace SA_POP {
     // Type of a map from conditions to causal links.
     typedef std::multimap <Condition, CausalLink> CondToCLinksMap;
 
+	typedef std::multimap <TaskInstID, CausalLink> TaskToCLinksMap;
+
     /// Causal links in plan (mapping from conditions to all causal links
     /// containing that condition).
     CondToCLinksMap causal_links_;
+	TaskToCLinksMap causal_links_by_first;
+	TaskToCLinksMap causal_links_by_second;
+
+	SuspendedConditionListenerMap suspended_listener_map;
+	SuspendedConditionSet suspended_conditions;
 
     /// Current plan (generated upon request).
     Plan plan_;
@@ -373,7 +402,8 @@ namespace SA_POP {
     virtual TaskInstID get_next_inst_id (void);
 
 
-
+	Condition no_condition;
+	CausalLink no_link;
 
 	/// PrecedenceGraph
 	PrecedenceGraph precedence_graph_;

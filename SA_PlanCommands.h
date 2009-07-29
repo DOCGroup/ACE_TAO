@@ -252,6 +252,8 @@ namespace SA_POP {
 
 	virtual Condition get_condition(void){return cond_;};
 
+	virtual CLSet get_causal_insertions(void){return added_links_;};
+
   protected:
     /// WorkingPlan object that this command works on.
     SA_WorkingPlan *working_plan_;
@@ -341,6 +343,8 @@ namespace SA_POP {
     virtual TaskInstID get_task_inst (void);
 
 	virtual void set_satisfied_insts(TaskInstSet set);
+	
+	virtual void set_added_links(CLSet links);
 
   protected:
     /// WorkingPlan object that this command works on.
@@ -371,6 +375,12 @@ namespace SA_POP {
 	std::set< std::pair<TaskInstID,TaskInstID> > simul_insertions;
 
 	TaskInstSet satisfied_insts;
+
+	CLSet added_links;
+
+	SuspendedConditionListenerMap saved_listener_map;
+	SuspendedConditionSet saved_suspended_set;
+
 /*
     std::map <TaskInstID, TaskInstSet> befores;
     std::map <TaskInstID, TaskInstSet> afters;
@@ -453,6 +463,10 @@ namespace SA_POP {
 
     /// Flag for whether this has been executed.
     bool has_executed_;
+
+	std::map<Condition, CausalLink> link_suspended_on;
+
+
   };
 
   /**

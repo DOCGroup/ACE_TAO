@@ -1,3 +1,41 @@
+Wed Jul 29 20:06:21 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * C2W/C2W_Demo.cpp:
+
+        * PlanCommands.h:
+        * PlanHeuristics.h:
+        * Planner.h:
+        * Planner.cpp:
+
+        * SANet/SANet.cpp:
+        * SANet/SANetFileIn.cpp:
+        * SANet/SANode.h:
+        * SANet/SANode.cpp:
+
+	Now adds an initial action with an effect of setting all true conditions true.  
+	So the loop in get unsat preconditions that eliminates preconditions true in the environment
+	is gone, since it could generate incorrect plans in environments with threats
+
+	SANet also sets the utility of this initial condition higher than all other actions, as it should
+	be the first try always
+
+        * SA_POP_Types.h:
+        * SA_PlanCommands.h:
+        * SA_PlanCommands.cpp:
+        * SA_PlanHeuristics.h:
+        * SA_PlanHeuristics.cpp:
+        * SA_PlanStrategy.h:
+        * SA_PlanStrategy.cpp:
+        * SA_SchedStrategy.cpp:
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+        * TaskMapFileIn.cpp:
+
+	Map from last commit has been fixed.
+	
+	Implements a suspended condition map for fixing looping
+	
+
 Thu Jul 16 06:13:54 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * PlanCommands.h:
@@ -11,7 +49,7 @@ Thu Jul 16 06:13:54 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SA_WorkingPlan.cpp:
         * WorkingPlan.h:
 
-	Added basic loop detection; has a map of open conditions at time of resolving open threat.
+        Added basic loop detection; has a map of open conditions at time of resolving open threat.
 
 Fri Jul 10 22:27:30 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 

@@ -265,6 +265,7 @@ namespace SA_POP {
     };
   };
 
+
   /// Type of a causal link.
   /// ("first" task instance achieves "cond" for "second" task instance.)
   struct CausalLink {
@@ -495,6 +496,15 @@ namespace SA_POP {
     bool operator< (const Goal &s) const { return this->goal_id < s.goal_id; };
   };
 
+  struct TaskInstEndTimeSet{
+	TaskInstID inst;
+	double end_time;
+
+	bool operator< (const TaskInstEndTimeSet & compare) const{
+		return end_time < compare.end_time;
+	};
+  };
+
   
   /// Type of particular Task Implementation mapped to a Task Implementation Set.
   /// This is a particular Precedence set. Like Before, After etc.
@@ -542,12 +552,23 @@ namespace SA_POP {
   struct StoredConditionKey{
 
 	CommandID satisfying_cmd;
+	CommandID free_pass_cmd;
+
 	StoredCondition satisfy_set;
+	bool free_pass_used;
+
+//	StoredConditionKey(){};
 
 	StoredConditionKey(Condition cond, TaskID task, CommandID cmd){
 		satisfying_cmd = cmd;
 		satisfy_set.satisfied_cond = cond;
 		satisfy_set.satisfying_task = task;
+
+		free_pass_cmd.decision_pt = 0;
+		free_pass_cmd.step = 0;
+		free_pass_cmd.seq_num = 0;
+
+		free_pass_used = false;
 	}
 
 	bool operator==(const StoredConditionKey & s)const{
@@ -570,10 +591,8 @@ namespace SA_POP {
   struct StoredConditionEvaluator{
 	  StoredConditionMap condition_map;
 	
-	  bool should_continue(CommandID cur_cmd, Condition satisfied_cond, 
+	  std::pair<bool, CommandID> should_continue(CommandID cur_cmd, Condition satisfied_cond, 
 		  TaskID satisfying_task, OpenCondMap & open_conds, InstToTaskMap & task_insts){
-
-
 
 			  StoredConditionKey stored_cond (satisfied_cond, satisfying_task, cur_cmd);
 
@@ -583,6 +602,13 @@ namespace SA_POP {
 				  = condition_map.equal_range(stored_cond);
 
 			  bool should_continue = true;
+			  CommandID return_to;
+			  return_to.decision_pt = 0;
+			  return_to.seq_num = 0;
+			  return_to.step = 0;
+
+
+			  bool using_free_pass = false;
 	
 			  if(range.first != range.second)
 			  {
@@ -592,22 +618,30 @@ namespace SA_POP {
 
 					StoredConditionSet old_open_conds = it->second;
 		
-					for(StoredConditionSet::iterator it = old_open_conds.begin();
-						it != old_open_conds.end(); it++)
+					for(StoredConditionSet::iterator it2 = old_open_conds.begin();
+						it2 != old_open_conds.end(); it2++)
 					{
-						if((*it).satisfying_task == -1) 
+						if((*it2).satisfying_task == -1) 
 							bool breakkk = 0;
 
 
 						std::pair<OpenCondMap::iterator, OpenCondMap::iterator>
-							cond_map_range = open_conds.equal_range((*it).satisfied_cond);
+							cond_map_range = open_conds.equal_range((*it2).satisfied_cond);
 
 						bool found_no_equiv_in_open = true;
 
-						for(OpenCondMap::iterator it2 = cond_map_range.first; it2 != cond_map_range.second; it2++){
-
-							if((*it).satisfying_task == task_insts.find((*it2).second)->second){
-								found_no_equiv_in_open = false;
+						for(OpenCondMap::iterator it3 = cond_map_range.first; it3 != cond_map_range.second; it3++){
+							if((*it2).satisfying_task == -1){
+								if((*it3).second == -1){
+									found_no_equiv_in_open = false;
+								}
+							}
+							else{
+								if((*it3).second == -1)
+								{}
+								else if((*it2).satisfying_task == task_insts.find((*it3).second)->second){
+									found_no_equiv_in_open = false;
+								}
 							}
 						}
 
@@ -618,15 +652,35 @@ namespace SA_POP {
 					}
 
 					if(all_pairs_in_open_conds){
-						should_continue = false;
-						break;
+
+			//			if(!(it->first.free_pass_used)){
+							
+			//				StoredConditionKey key2 = it->first;
+			//				StoredConditionSet set2 = it->second;
+
+			//				condition_map.erase(it);
+							
+			//				key2.free_pass_used = true;
+			//				key2.free_pass_cmd = cur_cmd;
+
+			//				condition_map.insert(std::pair<StoredConditionKey, StoredConditionSet>(key2, set2));
+			
+			//				using_free_pass = true;
+
+			//				break;
+			//			}else{
+							should_continue = false;
+				//			return_to = it->first.free_pass_cmd;
+							return_to = it->first.satisfying_cmd;
+							break;
+			//			}
 					}
 				}
 			}else{
 				should_continue = true;
 			}
 
-			if(should_continue)
+			if(should_continue && !using_free_pass)
 			{
 
 				StoredConditionSet current_open;
@@ -646,7 +700,7 @@ namespace SA_POP {
 					std::pair<StoredConditionKey, StoredConditionSet>(this_choice, current_open));
 			}
 
-			return should_continue;
+			return std::pair<bool, CommandID>(should_continue, return_to);
 		}
 
 	  void undo_binding(CommandID cur_cmd, Condition satisfied_cond, TaskID satisfying_task){
@@ -659,15 +713,36 @@ namespace SA_POP {
 
 		for(it = range.first; it != range.second; it++){
 			if(it->first.satisfying_cmd == cur_cmd){
-				break;
+
+		//		if(it->first.free_pass_used == true){
+		//			StoredConditionKey key2 = it->first;
+		//			StoredConditionSet set2 = it->second;
+
+		//			condition_map.erase(it);
+
+		//			key2.free_pass_used = false;
+
+		//			condition_map.insert(std::pair<StoredConditionKey, StoredConditionSet>(key2, set2));
+		//			break;
+		//		}else{				
+					condition_map.erase(it);
+					break;
+		//		}
 			}
 		}
 
-		condition_map.erase(it);
+
 
 	  }
   };
 
+  //Map from a causal link to the suspended conditions that are waiting for something to come
+  //between them and the orig. condition so they can be unsuspended
+ // typedef std::map<CLink, std::list<std::pair<Condition, TaskInstID>>> SuspendedConditionListenerMap;
+  typedef std::multimap<CausalLink, std::pair<Condition, TaskInstID>> SuspendedConditionListenerMap;
+
+  //List of all condition/task insts that are suspended
+  typedef std::set<std::pair<Condition, TaskInstID>> SuspendedConditionSet;
 
   inline std::string to_string(int x)
   {

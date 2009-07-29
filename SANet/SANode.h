@@ -156,6 +156,7 @@ namespace SANet {
     virtual void print_xml (std::basic_ostream<char, std::char_traits<char> >& strm) = 0;
 
 
+
   protected:
     /// Unique ID of node (for identification within network).
     NodeID ID_;
@@ -334,6 +335,11 @@ namespace SANet {
      * true, or negative of the probability task sets condition to false).
      */
     virtual void update_effect (CondID ID, CondNode *node, LinkWeight weight);
+
+	void set_pos_util(double util);
+
+	Utility_Info get_pos_util();
+
 
   protected:
     /// Unconditional prior probability of success.

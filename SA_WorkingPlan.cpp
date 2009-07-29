@@ -75,6 +75,11 @@ for(int i = 0; i < 2; i++){
 	this->init_end.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 }
 
+this->no_condition.id = -4;
+this->no_link.cond.id = -4;
+this->no_link.first = -4;
+this->no_link.second = -4;
+
 };
 
 // Destructor.
@@ -411,6 +416,10 @@ void SA_WorkingPlan::generate_all_threats(void)
     TaskInstID threat_possibility = iterator->first;
     TaskID threat_possibility_taskid = iterator->second;
     
+	if(iterator->first >= 858){
+		bool here = true;
+	}
+
 	debug_text <<"  Task (" <<threat_possibility_taskid << ")"<< ": Inst (" <<iterator->first << ")" << std::endl;
   }
   debug_text<<std::endl;
@@ -443,7 +452,6 @@ void SA_WorkingPlan::generate_all_threats(void)
 
             SANet::LinkWeight threat_effect = this->planner_->get_link(threat_possibility_taskid, condition.id);
             SANet::LinkWeight causal_effect = this->planner_->get_link(threatened_task, causal_threatened.cond.id);
-
            
             if((threat_effect > 0 && causal_effect < 0 )|| (threat_effect < 0 && causal_effect > 0)){
 
@@ -724,23 +732,23 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 			for (links_iter = this->causal_links_.lower_bound (cond);links_iter != this->causal_links_.upper_bound (cond);links_iter++)
 			if(links_iter->second == clink)
 				break;
-				// If causal link not found in working plan, add it to causal links and ordering links.
+				// If causal link not found in working plan, add it to causal links
 			if(links_iter==this->causal_links_.upper_bound(cond))
 			{
-				  std::ostringstream debug_text2;
-				  debug_text2 << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding causal link (" << clink.first << " -" << clink.cond.id << "-> " << clink.second << ")";
-				  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text2.str ());
+				std::ostringstream debug_text2;
+				debug_text2 << "SA_WorkingPlan::execute (SA_AddTaskCmd *cmd): Adding causal link (" << clink.first << " -" << clink.cond.id << "-> " << clink.second << ")";
+				SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text2.str ());
 
-				  this->causal_links_.insert (std::make_pair (cond, clink));
+				this->causal_links_.insert (std::make_pair (cond, clink));
+				this->causal_links_by_first.insert (std::make_pair (clink.first, clink));
+				this->causal_links_by_second.insert (std::make_pair (clink.second, clink));
+				
 
-				  /*
-				  if(clink.second != GOAL_TASK_INST_ID){
-						
-					this->ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.first, clink.second));
-					this->reverse_ordering_links.insert(std::pair<TaskInstID, TaskInstID>(clink.second, clink.first));
-					}
-					*/
-			cmd->added_links_.insert(clink);
+				std::cout<<"after unsuspend"<<std::endl;
+				 
+		//		this->suspended_listener_map.insert (std::make_pair (clink, true));
+
+				cmd->added_links_.insert(clink);
 			}
 		}
 
@@ -749,6 +757,111 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 	cmd->last_task_inst_ = task_inst;
 };
 
+bool SA_WorkingPlan::condition_in_suspended(Condition condition, TaskInstID required_by){
+	
+	if(!suspended_conditions.empty()){
+		bool k = true;
+	}
+
+	std::pair<Condition, TaskInstID> condition_pair(condition, required_by);
+
+	return (this->suspended_conditions.find(condition_pair) != this->suspended_conditions.end());
+}
+
+
+CausalLink SA_WorkingPlan::clink_on_path(Condition condition, TaskInstID required_by){
+	std::set<TaskInstID> expanded;
+	expanded.clear();
+
+	return clink_on_path_aux(condition, required_by, expanded);
+}
+
+CausalLink SA_WorkingPlan::clink_on_path_aux(Condition condition, TaskInstID required_by, 
+										std::set<TaskInstID> & expanded){
+
+	expanded.insert(required_by);
+
+	if(required_by == -1){
+		return this->no_link;
+	}
+
+	for(TaskToCLinksMap::iterator it = causal_links_by_first.lower_bound(required_by);
+		it != causal_links_by_first.upper_bound(required_by); it++){
+
+			if(expanded.find(it->second.second) != expanded.end()){
+				continue;
+			}
+
+			if(it->second.cond == condition){
+				return it->second;
+			}
+
+			CausalLink to_return = clink_on_path_aux(condition, it->second.second, expanded);
+
+			if(to_return != no_link){
+				return to_return;
+			}
+	}
+
+	return no_link;
+}
+
+void SA_WorkingPlan::unsuspend_listeners(CausalLink link, TaskInstID exception){
+	
+	for(TaskToCLinksMap::iterator it = this->causal_links_by_first.lower_bound(link.second); 
+		it != this->causal_links_by_first.upper_bound(link.second); it++){
+			
+		unsuspend_listeners_aux(it->second, exception);
+	}
+}
+
+void SA_WorkingPlan::unsuspend_listeners_aux(CausalLink link, TaskInstID exception){
+
+	for(SuspendedConditionListenerMap::iterator it = this->suspended_listener_map.lower_bound(link);
+		it != this->suspended_listener_map.upper_bound(link);){
+
+			SuspendedConditionListenerMap::iterator prev_it = it++;
+
+			if(exception != prev_it->second.second){
+				this->suspended_conditions.erase(prev_it->second);
+				suspended_listener_map.erase(prev_it);
+			}
+	}
+
+	
+
+	for(TaskToCLinksMap::iterator it = this->causal_links_by_first.lower_bound(link.second); 
+		it != this->causal_links_by_first.upper_bound(link.second); it++){
+		unsuspend_listeners_aux(it->second, exception);
+	}
+}
+
+void SA_WorkingPlan::suspend_condition(Condition cond, TaskInstID required_by, CausalLink suspended_by){
+
+	std::pair<Condition, TaskInstID> require_set (cond, required_by);
+	std::pair<CausalLink, std::pair<Condition, TaskInstID>> to_insert (suspended_by, require_set);
+	
+	this->suspended_listener_map.insert(to_insert);
+	this->suspended_conditions.insert(require_set);
+}
+
+void SA_WorkingPlan::resume_condition(Condition cond, TaskInstID required_by, CausalLink suspended_by){
+	std::pair<Condition, TaskInstID> require_set (cond, required_by);
+	std::pair<CausalLink, std::pair<Condition, TaskInstID>> to_insert (suspended_by, require_set);
+	
+	std::multimap<CausalLink, std::pair<Condition, TaskInstID>> ::iterator it;
+
+	for(it = suspended_listener_map.lower_bound(suspended_by);
+		it != suspended_listener_map.upper_bound(suspended_by); it++){
+			if(it->second == require_set){
+				break;
+			}
+	}
+
+	suspended_listener_map.erase(it);
+
+	this->suspended_conditions.erase(require_set);
+}
 
 void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 {
@@ -765,8 +878,7 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 	 }
 
 
-  for (SA_WorkingPlan::CondToCLinksMap::iterator cl_iter =
-    this->causal_links_.lower_bound (cmd->cond_);
+  for (SA_WorkingPlan::CondToCLinksMap::iterator cl_iter = this->causal_links_.lower_bound (cmd->cond_);
     cl_iter != this->causal_links_.upper_bound (cmd->cond_);)
   {
     SA_WorkingPlan::CondToCLinksMap::iterator prev_iter = cl_iter;
@@ -781,37 +893,72 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
           CausalLink clink = prev_iter->second;
           
           this->causal_links_.erase (prev_iter);
+		  
+   //       cmd->added_links_.erase(iter);
+          break;
+        }
+      }
+    }
+  }
+
+  for (SA_WorkingPlan::TaskToCLinksMap::iterator cl_iter = this->causal_links_by_first.lower_bound (cmd->last_task_choice_.task_inst_id);
+    cl_iter != this->causal_links_by_first.upper_bound (cmd->last_task_choice_.task_inst_id);)
+  {
+    SA_WorkingPlan::TaskToCLinksMap::iterator prev_iter = cl_iter;
+    cl_iter++;
+    if (cmd->task_insts_.find (prev_iter->second.second) != cmd->task_insts_.end ())
+    {
+      for(CLSet::iterator iter = cmd->added_links_.begin();iter!=cmd->added_links_.end();iter++)
+      {
+        if(prev_iter->second == *iter)  
+        {
+          
+          CausalLink clink = prev_iter->second;
+          
+          this->causal_links_by_first.erase (prev_iter);
+    //      cmd->added_links_.erase(iter);
+          break;
+        }
+      }
+    }
+  }
+  
+  TaskInstID to_find = *(cmd->get_satisfied_tasks().begin());
+
+  for (SA_WorkingPlan::TaskToCLinksMap::iterator cl_iter = this->causal_links_by_second.lower_bound (to_find);
+    cl_iter != this->causal_links_by_second.upper_bound (to_find);)
+  {
+    SA_WorkingPlan::TaskToCLinksMap::iterator prev_iter = cl_iter;
+    cl_iter++;
+    if (cmd->task_insts_.find (prev_iter->second.second) != cmd->task_insts_.end ())
+    {
+      for(CLSet::iterator iter = cmd->added_links_.begin();iter!=cmd->added_links_.end();iter++)
+      {
+        if(prev_iter->second == *iter)  
+        {
+          
+          CausalLink clink = prev_iter->second;
+          
+          this->causal_links_by_second.erase (prev_iter);
           cmd->added_links_.erase(iter);
-
-		 /*
-		  if(clink.second != GOAL_TASK_INST_ID){
-			  std::pair<SchedulingLinks::iterator, SchedulingLinks::iterator> ret =
-			  ordering_links.equal_range(clink.first);
-			  SchedulingLinks::iterator it;
-			  for(it = ret.first; it != ret.second; it++){
-				if(it->second == clink.second){
-				  break;
-				}
-			  }              
-
-			  this->ordering_links.erase(it);
-
-			  ret = reverse_ordering_links.equal_range(clink.second);
-			  for(it = ret.first; it != ret.second; it++){
-				if(it->second == clink.first){
-				  break;
-				}
-			  }
-			  this->reverse_ordering_links.erase(it);
-       
-		  }
-		  */
           break;
         }
       }
     }
   }
 };
+
+bool SA_WorkingPlan::is_null_link(CausalLink link){
+	return link == no_link;
+}
+
+bool SA_WorkingPlan::is_null_condition(Condition cond){
+	return cond == no_condition;
+}
+
+Condition SA_WorkingPlan::get_no_condition(){
+	return no_condition;
+}
 
 // Execute a command to associate an implementation with a
 // task instance in the plan.
@@ -847,17 +994,16 @@ bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
 	  }
   }
 
-  /*
-  if(is_cycle_in_ordering()){
-   // cmd->got_to_scheduling = false;
-    bool oops = true;
-  }
-*/
-
-
-
   cmd->got_to_scheduling = true;
-  
+
+
+  cmd->saved_listener_map = suspended_listener_map;
+  cmd->saved_suspended_set = suspended_conditions;
+
+  for(CLSet::iterator it = cmd->added_links.begin(); it != cmd->added_links.end(); it++){
+	  unsuspend_listeners(*it, it->first);
+  }
+
   bool toReturn	= this->init_prec_insert(cmd->task_inst_,cmd);
 
 //  cmd->befores_after_ex = *befores;
@@ -926,17 +1072,8 @@ void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
 	
 	
   if(cmd->got_to_scheduling){
-
-	  /*
-	  if(cmd->afters_after_ex != *afters ||
-		  cmd->befores_after_ex != *befores ||
-		  cmd->simuls_after_ex != *simuls ||
-		  cmd->unrankeds_after_ex != *unrankeds)
-		 {
-		bool hi = true;
-	  } 
-	  */
-
+	suspended_listener_map = cmd->saved_listener_map;
+	suspended_conditions = cmd->saved_suspended_set;
 
     this->undo(&cmd->max_adj_cmd);
     this->undo(&cmd->min_adj_cmd);
@@ -965,6 +1102,10 @@ void SA_WorkingPlan::undo (SA_AssocTaskImplCmd *cmd)
   */
 
 };
+
+PrecedenceGraph SA_WorkingPlan::get_precedence_graph(){
+	return this->precedence_graph_;
+}
 
 // Execute a command to resolve a causal link threat in the
 // plan (with promotion or demotion).

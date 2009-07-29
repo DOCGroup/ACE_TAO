@@ -84,6 +84,9 @@ namespace SA_POP {
      * @return  Log text for most recent execution of command.
      */
     virtual std::string get_log_text (void) = 0;
+
+
+
     int choices;
 
 
@@ -198,6 +201,8 @@ namespace SA_POP {
 	virtual TaskInstSet get_satisfied_tasks(void) = 0;
 
 	virtual Condition get_condition(void) = 0;
+
+	virtual CLSet get_causal_insertions(void) = 0;
   };
 
   /**
@@ -228,6 +233,8 @@ namespace SA_POP {
     virtual TaskInstID get_task_inst (void) = 0;
 
 	virtual void set_satisfied_insts(TaskInstSet set)=0;
+	
+	virtual void set_added_links(CLSet set) = 0;
   };
 
   /**

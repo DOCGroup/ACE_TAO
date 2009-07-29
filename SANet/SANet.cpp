@@ -426,6 +426,17 @@ void SANet::Network::update (int max_steps)
       }
     }
   }
+
+  double max_util = 0;
+  for(TaskNodeMap::iterator it = task_nodes_.begin(); it != task_nodes_.end(); it++){
+	  if(it->second->get_pos_util().utility > max_util){
+		  max_util = it->second->get_pos_util().utility;
+	  }
+	  
+  }
+
+  task_nodes_.find(20)->second->set_pos_util(max_util*2);
+
 };
 
 // Update a condition's current value (probability of being true).

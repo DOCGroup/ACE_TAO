@@ -252,7 +252,7 @@ int main (int argc, char* argv[])
     //planner->add_out_adapter (&s_out);
 	  planner->add_out_adapter (&screen_out);
 
-    planner->plan (100, goal);
+    planner->plan (15, goal);
   } catch (std::string e) {
     std::cerr << "ERROR while planning:" << std::endl;
     std::cerr << e;

@@ -225,6 +225,7 @@ namespace SA_POP {
 	///Holds info about which tasks an add task cmd has satisfied
 	TaskInstSet satisfied_insts;
 
+	CLSet added_links;
 
     // ************************************************************************
     // Decision point numbers.

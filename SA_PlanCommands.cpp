@@ -385,6 +385,10 @@ void SA_AssocTaskImplCmd::set_satisfied_insts(TaskInstSet set){
 	this->satisfied_insts = set;
 }
 
+void SA_AssocTaskImplCmd::set_added_links(CLSet set){
+	this->added_links = set;
+}
+
 
 // Constructor.
 SA_AddOpenCondsCmd::SA_AddOpenCondsCmd (SA_PlanStrategy *plan_strat)
