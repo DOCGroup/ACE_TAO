@@ -1,3 +1,9 @@
+Wed Jul 29 14:34:01 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_netdb.inl (gethostbyname_r): Replaced
+          ACE_SOCKCALL_RETURN with ACE_SOCKCALL.  Thanks to Paul Daugherty
+          for reporting this.
+
 Wed Jul 29 11:09:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/mail_test_stats.sh:
