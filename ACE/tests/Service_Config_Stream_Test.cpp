@@ -25,8 +25,9 @@ run_main (int, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Service_Config_Stream_Test"));
 
   ACE_TCHAR *_argv[3] = { argv[0],
-                          ACE_TEXT ("-f"),
-                          ACE_TEXT ("Service_Config_Stream_Test.conf") };
+                          const_cast<ACE_TCHAR*> (ACE_TEXT ("-f")),
+                          const_cast<ACE_TCHAR*>
+                            (ACE_TEXT ("Service_Config_Stream_Test.conf")) };
   int status;
   if ((status = ACE_Service_Config::open (3,
                                           _argv,
