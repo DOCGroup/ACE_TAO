@@ -72,15 +72,10 @@ namespace CIAO
                          "Error: Unable to cast provided topic to its servant.\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
           }
-        RTI_DataReaderListener_i * drl = dynamic_cast < RTI_DataReaderListener_i * > (a_listener);
-        if (!drl)
-          {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::create_datareader - "
-                         "Error: Unable to cast provided datareaderlistener to its servant.\n"));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
-          }
         DDSTopic *rti_topic = topic->get_topic ();
-        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
+//        DDSDataReaderListener *rti_drl = drl->get_datareaderlistener ();
+// todo leak
+        DDSDataReaderListener *rti_drl = new RTI_DataReaderListener_i (a_listener);
         DDSDataReader *rti_dr = this->sub_->create_datareader (rti_topic,
                                                                DDS_DATAREADER_QOS_DEFAULT,
                                                                rti_drl,

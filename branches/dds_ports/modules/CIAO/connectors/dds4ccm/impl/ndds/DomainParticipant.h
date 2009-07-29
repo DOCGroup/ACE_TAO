@@ -173,7 +173,6 @@ namespace CIAO
         virtual
           ::DDS::InstanceHandle_t get_instance_handle (void);
         
-        
         DDSDomainParticipant * get_participant (void);
         
       protected:

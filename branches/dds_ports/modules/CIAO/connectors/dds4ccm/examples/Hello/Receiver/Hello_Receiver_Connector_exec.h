@@ -50,7 +50,7 @@
 #include <ndds/ndds_cpp.h>
 
 /* The listener of events and data from the middleware */
-class HelloListener : public ::CIAO::DDS4CCM::RTI::RTI_DataReaderListener_i
+class HelloListener : public ::DDS::DataReaderListener
 { 
   public:
     HelloListener ( ::CCM_DDS::string_RawListener_ptr listener);
