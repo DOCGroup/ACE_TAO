@@ -147,17 +147,17 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub)
       ACE_CString outname = this->base_dir_;
       
       if (oldstream == 0)
-	{
-	  ACE_OS::mkdir(this->base_dir_.c_str());
-	}
+        {
+          ACE_OS::mkdir(this->base_dir_.c_str());
+        }
       delete oldstream;
       outname += ACE_DIRECTORY_SEPARATOR_CHAR;
       if (hp != 0)
-	{
-	  outname += hp->proc_name();
-	  ACE_OS::mkdir(outname.c_str());
-	  outname += ACE_DIRECTORY_SEPARATOR_CHAR;
-	}
+        {
+          outname += hp->proc_name();
+          ACE_OS::mkdir(outname.c_str());
+          outname += ACE_DIRECTORY_SEPARATOR_CHAR;
+        }
       outname += (sub == 0) ? "summary.txt" : sub;
       return new ofstream (outname.c_str());
     }
@@ -180,7 +180,7 @@ Session::dump ()
 
   if (single)
     *strm << "Session summary report: "
-	<< this->processes_.current_size() << " Processes detected." << endl;
+        << this->processes_.current_size() << " Processes detected." << endl;
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;

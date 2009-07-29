@@ -65,28 +65,28 @@ parse_manifest (Session &session, ACE_TCHAR *filename)
         {
           if (buffer[1] == 'o')
             {
-	      if (session.has_dir())
-		{
-		  ACE_ERROR ((LM_ERROR,
-			      "supply either output file "
-			      "or directory but not both\n"));
-		  ACE_OS::exit (0);
-		}
+              if (session.has_dir())
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "supply either output file "
+                              "or directory but not both\n"));
+                  ACE_OS::exit (0);
+                }
               session.outfile (buffer+3);
               continue;
             }
-	  if (buffer[1] == 'd')
-	    {
-	      if (session.has_outfile())
-		{
-		  ACE_ERROR ((LM_ERROR,
-			      "supply either output file "
-			      "or directory but not both\n"));
-		  ACE_OS::exit (0);
-		}
-	      session.make_dir (buffer+3);
-	      continue;
-	    }
+          if (buffer[1] == 'd')
+            {
+              if (session.has_outfile())
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "supply either output file "
+                              "or directory but not both\n"));
+                  ACE_OS::exit (0);
+                }
+              session.make_dir (buffer+3);
+              continue;
+            }
           if (buffer[1] == 't')
             {
               Session::set_tao_version (ACE_TEXT_CHAR_TO_TCHAR (buffer + 3));
@@ -113,7 +113,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   if (argc < 2)
     {
       ACE_ERROR ((LM_ERROR,
-		  " At least one log file must be specified\n"));
+                  " At least one log file must be specified\n"));
       return 0;
     }
   Session session;
@@ -121,22 +121,22 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
     {
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-o")) == 0)
         {
-	  if (session.has_dir())
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "supply either output file "
-			       "or directory but not both\n"), 0);
+          if (session.has_dir())
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "supply either output file "
+                               "or directory but not both\n"), 0);
           session.outfile(ACE_TEXT_ALWAYS_CHAR(argv[++i]));
           continue;
         }
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-d")) == 0)
-	{
-	  if (session.has_outfile())
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "supply either output file "
-			       "or directory but not both\n"), 0);
-	  session.make_dir (ACE_TEXT_ALWAYS_CHAR(argv[++i]));
-	  continue;
-	}
+        {
+          if (session.has_outfile())
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "supply either output file "
+                               "or directory but not both\n"), 0);
+          session.make_dir (ACE_TEXT_ALWAYS_CHAR(argv[++i]));
+          continue;
+        }
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-m")) == 0)
         {
           parse_manifest (session, argv[++i]);

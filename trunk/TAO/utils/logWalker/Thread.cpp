@@ -152,14 +152,14 @@ Thread::dump_invocations (ostream &strm)
       i.next(inv);
       int level = 0;
       while (!nested.empty())
-	{
-	  if (nested.top()->contains(inv->req_line()))
-	    {
-	      level = nested.size();
-	      break;
-	    }
-	  nested.pop();
-	}
+        {
+          if (nested.top()->contains(inv->req_line()))
+            {
+              level = nested.size();
+              break;
+            }
+          nested.pop();
+        }
       nested.push(inv);
 
       inv->dump_detail (strm, level, Invocation::Dump_Proc, false);

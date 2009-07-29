@@ -544,7 +544,7 @@ Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_ha
     {
       strm << " Request, line " << this->req_octets_->log_posn();
       if (mode == Dump_Thread || mode == Dump_Both)
-	strm << " " << this->req_octets_->thread()->alias();
+        strm << " " << this->req_octets_->thread()->alias();
     }
   else
     strm << " <no request found>";
