@@ -1,3 +1,8 @@
+Wed Jul 29 15:51:39 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Stream_DLL.h: Fixed fuzz warning on mismatched
+          pre.h/post.h.
+
 Wed Jul 29 14:34:01 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_netdb.inl (gethostbyname_r): Replaced
