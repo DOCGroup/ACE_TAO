@@ -1,6 +1,7 @@
 // $Id$
 
 #include "DataReader.h"
+#include "DataReaderListener.h"
 #include "StatusCondition.h"
 #include "ReadCondition.h"
 
@@ -78,8 +79,12 @@ namespace CIAO
       RTI_DataReader_i::delete_readcondition (
         ::DDS::ReadCondition_ptr a_condition)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        RTI_ReadCondition_i *rc = dynamic_cast< RTI_ReadCondition_i *> (a_condition);
+        if (!rc)
+          {
+            return ::DDS::RETCODE_BAD_PARAMETER;
+          }
+        return this->dr_->delete_readcondition (rc->get_readcondition ());
       }
 
       ::DDS::ReturnCode_t
@@ -109,8 +114,13 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
+        RTI_DataReaderListener_i *drl = dynamic_cast< RTI_DataReaderListener_i *> (a_listener);
+        if (!drl)
+          {
+            return ::DDS::RETCODE_BAD_PARAMETER;
+          }
         throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        //return this->dr_->set_listener (drl->get_datareaderlistener (), mask);
       }
 
       ::DDS::DataReaderListener_ptr

@@ -1,3 +1,14 @@
+Wed Jul 29 18:16:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+        * connectors/dds4ccm/impl/ndds/Topic.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h
+          Added TopicDescription
+
 Wed Jul 29 13:36:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:

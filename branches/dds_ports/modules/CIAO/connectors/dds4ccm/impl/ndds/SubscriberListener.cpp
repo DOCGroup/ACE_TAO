@@ -29,15 +29,10 @@ namespace CIAO
           ::DDS::Subscriber_ptr the_subscriber)
       {
         RTI_Subscriber_i* rti_sub = dynamic_cast <RTI_Subscriber_i*>(the_subscriber);
-
-        if (!rti_sub)
+        if (rti_sub)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_SubscriberListener_i::on_data_on_readers "
-                         "Unable to cast provided Subscriber to servant\n"));
-            throw CORBA::INTERNAL ();
+            this->sub_list_->on_data_on_readers (rti_sub->get_subscriber ());
           }
-
-        this->sub_list_->on_data_on_readers (rti_sub->get_subscriber ());
       }
 
       void

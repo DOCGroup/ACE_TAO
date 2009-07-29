@@ -97,7 +97,6 @@ namespace CIAO
         ::DDS::DataReader_ptr a_datareader)
       {
         RTI_DataReader_i *top = dynamic_cast< RTI_DataReader_i *> (a_datareader);
-
         if (!top)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::delete_datareader - "
