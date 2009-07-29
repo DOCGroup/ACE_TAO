@@ -410,12 +410,16 @@ ACE_OS::gethostbyname_r (const char *name,
 # else
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
-  ACE_UNUSED_ARG (h_errnop);
 
-  //FUZZ: disable check_for_lack_ACE_OS
+  // FUZZ: disable check_for_lack_ACE_OS
+  struct hostend *result2 = 0;
   ACE_SOCKCALL_RETURN (::gethostbyname (name),
                        struct hostent *,
-                       0);
+                       0,
+                       result2);
+  if (result2 == 0 && h_errnop)
+    *h_errnop = errno;
+  return result2;
   //FUZZ: enable check_for_lack_ACE_OS
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
