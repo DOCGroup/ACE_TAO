@@ -1,3 +1,9 @@
+Wed Jul 29 02:34:58 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_netdb.inl: Fixed gethostbyname_r() so that it sets
+          errno correctly on failure.  Thanks to Paul Daugherty <paul at
+          nextalk dot com> for reporting this.  This fixes bugid 3720.
+
 Tue Jul 28 18:13:22 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_Memory.h: Replace the ACE_throw_bad_alloc macro
