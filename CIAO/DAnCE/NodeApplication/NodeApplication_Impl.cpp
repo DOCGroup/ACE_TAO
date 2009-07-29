@@ -1567,7 +1567,7 @@ NodeApplication_Impl::create_config_values (const ::Deployment::Properties& /*pr
     }
 }
 
-Deployment::Connections*
+::Deployment::Connections*
 NodeApplication_Impl::getAllConnections()
 {
   DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - started\n")));
