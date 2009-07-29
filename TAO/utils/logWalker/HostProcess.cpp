@@ -95,7 +95,7 @@ HostProcess::find_peer (long h)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
-	return node->peer_;
+        return node->peer_;
     }
   return 0;
 }
@@ -164,10 +164,10 @@ HostProcess::remove_peer(long h)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
-	{
-	  this->by_handle_.remove(i.next());
-	  return;
-	}
+        {
+          this->by_handle_.remove(i.next());
+          return;
+        }
     }
 }
 
@@ -243,9 +243,9 @@ HostProcess::dump_thread_invocations (ostream &strm)
 
 void
 HostProcess::iterate_peers (int group,
-			    int operation,
-			    ostream *strm,
-			    Session *session)
+                            int operation,
+                            ostream *strm,
+                            Session *session)
 {
   bool first = true;
   for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); i++)
@@ -257,9 +257,9 @@ HostProcess::iterate_peers (int group,
       if (pp == 0)
         continue;
       if ((group != 3) &&
-	  ((pp->is_server() && group == 1)
-	   || (!pp->is_server() && group == 2)))
-	continue;
+          ((pp->is_server() && group == 1)
+           || (!pp->is_server() && group == 2)))
+        continue;
 
       switch (operation)
         {
@@ -300,9 +300,9 @@ HostProcess::dump_peer_detail (ostream &strm)
       if (pp == 0)
         break;
       if (pp->is_server())
-	++num_servers;
+        ++num_servers;
       else
-	++num_clients;
+        ++num_clients;
     }
   
   strm << " from " << num_clients << " clients" << endl;

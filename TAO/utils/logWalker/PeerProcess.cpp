@@ -125,7 +125,7 @@ PeerProcess::match_hosts (Session *session)
       Transport *t = 0;
       this->transports_.get(t,0);
       if (t != 0)
-	this->remote_ = session->find_host(t->client_endpoint_, false);
+        this->remote_ = session->find_host(t->client_endpoint_, false);
     }
 }
 
@@ -180,7 +180,7 @@ PeerProcess::find_invocation (size_t req_id, long handle)
     {
       i.next(inv);
       if (inv->request_id() == req_id &&
-	  inv->handle() == handle)
+          inv->handle() == handle)
         {
           return inv;
         }
@@ -248,7 +248,7 @@ PeerProcess::dump_summary (ostream &strm)
       strm << tran->client_endpoint_;
       strm << " created line " << tran->open_offset_;
       if (tran->close_offset_)
-	strm << " closed line " << tran->close_offset_;
+        strm << " closed line " << tran->close_offset_;
       strm << endl;
     }
 }
