@@ -336,15 +336,13 @@ Invocation::GIOP_Buffer::transfer_from (GIOP_Buffer *other)
 //----------------------------------------------------------------------------
 
 
-Invocation::Invocation (PeerProcess *peer, size_t rid)
+Invocation::Invocation (PeerProcess *peer, long handle, size_t rid)
   :req_octets_(0),
    repl_octets_(0),
    peer_(peer),
    req_id_(rid),
    target_(0),
-   child_(0),
-   sibling_(0),
-   dumped_(false)
+   handle_(handle)
 {
   if (size_leadin == 0)
     {
@@ -470,45 +468,33 @@ Invocation::expected_size (void) const
   return req_octets_->expected_size();
 }
 
-
-void
-Invocation::add_child(Invocation *child)
+long
+Invocation::handle (void) const
 {
-  if (this->child_ == 0)
-    this->child_ = child;
-  else
-    this->child_->add_sibling(child);
+  return this->handle_;
 }
 
-void
-Invocation::add_sibling(Invocation *sibling)
+bool
+Invocation::contains (size_t line)
 {
-  if (this->sibling_ == 0)
-    this->sibling_ = sibling;
-  else
-    this->sibling_->add_sibling(sibling);
+  if (this->req_octets_ == 0 || this->repl_octets_ == 0)
+    return false;
+  return 
+    line > this->req_octets_->log_posn() && 
+    line < this->repl_octets_->log_posn();
 }
 
-Invocation *
-Invocation::child(void)
+size_t
+Invocation::req_line (void)
 {
-  return this->child_;
+  return this->req_octets_ == 0 ? 0 : this->req_octets_->log_posn();
 }
 
-Invocation *
-Invocation::sibling(void)
-{
-  return this->sibling_;
-}
-  
 void 
-Invocation::dump_detail (ostream &strm, int indent)
+Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_handle)
 {
-  if (this->dumped_)
-    return;
-  this->dumped_ = true;
   const char *opname = "";
-  const char *dir_1 = " to ";
+  const char *dir_1 = "to ";
   const char *dir_2 = " in ";
   
   if (this->req_octets_ != 0)
@@ -516,24 +502,29 @@ Invocation::dump_detail (ostream &strm, int indent)
       opname = this->req_octets_->operation();
       if (this->req_octets_->sending())
         {
-          dir_1 = " for ";
+          dir_1 = "for ";
           dir_2 = " from ";
         }
     }
 
-  for (int ind = 0; ind < indent; ind++)
+  while (indent-- > 0)
     strm << "  ";
 
-  if (opname == 0)
+  if (opname == 0 || opname[0] == 0)
     opname = "<no operation>";
 
-  strm << " " << this->req_id_ << dir_1;
+  strm << dir_1;
   if (this->target_ == 0)
     strm << "<unknown object>" ;
   else
     strm << this->target_->name();
-  strm << dir_2 << this->peer_->id()
-       << " [" << opname << "]\t";
+  if (mode == Dump_Proc || mode == Dump_Both)
+    strm << dir_2 << this->peer_->id() << ",";
+  
+  strm << " req " << this->req_id_;
+  if (show_handle)
+    strm << "(h=" << this->handle_ << ")";
+  strm << " [" << opname << "]\t";
   time_t req_time = 0;
   time_t rep_time = 0;
   long delta = 0;
@@ -552,9 +543,8 @@ Invocation::dump_detail (ostream &strm, int indent)
   if (this->req_octets_ != 0)
     {
       strm << " Request, line " << this->req_octets_->log_posn();
-// #if defined (SHOW_THREAD_ID)
-      strm << " " << this->req_octets_->thread()->alias();
-// #endif
+      if (mode == Dump_Thread || mode == Dump_Both)
+	strm << " " << this->req_octets_->thread()->alias();
     }
   else
     strm << " <no request found>";
@@ -573,10 +563,6 @@ Invocation::dump_detail (ostream &strm, int indent)
         strm << " <no reply found>";
     }
   if (delta > 0)
-    strm << " log offset = " << delta;
+    strm << " log span = " << delta;
   strm << endl;
-  if (this->child_ != 0)
-    child_->dump_detail(strm, indent+1);
-  if (this->sibling_ != 0)
-    sibling_->dump_detail (strm, indent);
 }

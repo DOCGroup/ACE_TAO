@@ -6,7 +6,18 @@
 #include "ace/ACE.h"
 #include "Invocation.h"
 #include "HostProcess.h"
+#include "Thread.h"
 #include "Session.h"
+
+
+Transport::Transport (const char *addr, bool is_client, size_t offset)
+  : handle_ (0),
+    client_endpoint_ (addr),
+    local_is_client_ (is_client),
+    open_offset_ (offset),
+    close_offset_ (0)
+{
+}
 
 char *
 PeerProcess::nextIdent(void)
@@ -17,20 +28,12 @@ PeerProcess::nextIdent(void)
   return ident;
 }
 
-PeerProcess::PeerProcess (const char *text,
-                          size_t offset,
-                          bool as_client,
-                          const char *target,
-                          long handle)
+PeerProcess::PeerProcess (size_t offset, bool is_server)
   : owner_ (0),
     remote_ (0),
-    local_addr_(),
-    remote_addr_(target),
-    handle_(handle),
-    client_(as_client),
-    origin_(text),
+    server_addr_(),
+    server_(is_server),
     origin_offset_ (offset),
-    closed_offset_ (0),
     objects_ ()
 {
   this->ident_ = PeerProcess::nextIdent();
@@ -54,31 +57,76 @@ PeerProcess::~PeerProcess (void)
 }
 
 void
-PeerProcess::set_addr (const char *addr, bool local)
+PeerProcess::set_server_addr (const char *addr)
 {
-  if (local)
-    this->local_addr_ = addr;
-  else
-    this->remote_addr_ = addr;
+  this->server_addr_ = addr;
 }
+
+const ACE_CString&
+PeerProcess::server_addr (void) const
+{
+  return this->server_addr_;
+}
+
+const ACE_CString&
+PeerProcess::last_client_addr (void) const
+{
+  return this->last_transport_->client_endpoint_;
+}
+
+bool
+PeerProcess::is_server (void) const
+{
+  return this->server_;
+}
+
+void 
+PeerProcess::add_transport (Transport *t)
+{
+  this->last_transport_ = t;
+  this->transports_.insert_tail (t);
+}
+
+Transport *
+PeerProcess::last_transport (void)
+{
+  return this->last_transport_;
+}
+
+Transport *
+PeerProcess::find_transport (long handle)
+{
+  Transport *t = 0;
+  for (ACE_DLList_Reverse_Iterator<Transport> i(this->transports_);
+       !i.done();
+       i.advance())
+    {
+      i.next(t);
+      if (t->handle_ == handle)
+        {
+          return t;
+        }
+    }
+  return 0;
+}
+
 
 void
 PeerProcess::match_hosts (Session *session)
 {
-  if (this->remote_addr_.length () > 0)
-    this->remote_ = session->find_host(this->remote_addr_.c_str());
-}
-
-void
-PeerProcess::handle (long h)
-{
-  this->handle_ = h;
-}
-
-long
-PeerProcess::handle (void) const
-{
-  return this->handle_;
+  // This method wants to find the host process that listens
+  // on the server addr. But if the local side is the server
+  // then this wants to find the remote based on the Transport
+  // instance
+  if (this->server_)
+    this->remote_ = session->find_host(this->server_addr_, true);
+  else
+    {
+      Transport *t = 0;
+      this->transports_.get(t,0);
+      if (t != 0)
+	this->remote_ = session->find_host(t->client_endpoint_, false);
+    }
 }
 
 const char *
@@ -92,24 +140,6 @@ PeerProcess::id (void) const
     }
 
   return this->ident_;
-}
-
-void
-PeerProcess::close (size_t offset)
-{
-  this->closed_offset_ = offset;
-}
-
-bool
-PeerProcess::is_closed (void) const
-{
-  return this->closed_offset_ > 0;
-}
-
-bool
-PeerProcess::is_client (void) const
-{
-  return this->client_;
 }
 
 PeerObject *
@@ -130,17 +160,18 @@ PeerProcess::object_for (const char *oid, size_t len)
 }
 
 Invocation *
-PeerProcess::new_invocation (size_t req_id)
+PeerProcess::new_invocation (size_t req_id, Thread *thr)
 {
-  if (this->find_invocation (req_id) != 0)
+  if (this->find_invocation (req_id, thr->active_handle()) != 0)
     return 0;
-  Invocation *inv = new Invocation (this, req_id);
+  Invocation *inv = new Invocation (this, thr->active_handle(), req_id);
   this->invocations_.insert_tail(inv);
+  thr->add_invocation (inv);
   return inv;
 }
 
 Invocation *
-PeerProcess::find_invocation (size_t req_id)
+PeerProcess::find_invocation (size_t req_id, long handle)
 {
   Invocation *inv = 0;
   for (ACE_DLList_Reverse_Iterator<Invocation> i(this->invocations_);
@@ -148,11 +179,13 @@ PeerProcess::find_invocation (size_t req_id)
        i.advance())
     {
       i.next(inv);
-      if (inv->request_id() == req_id)
+      if (inv->request_id() == req_id &&
+	  inv->handle() == handle)
         {
           return inv;
         }
     }
+
   return 0;
 }
 
@@ -188,31 +221,48 @@ PeerProcess::owner (void)
 void
 PeerProcess::dump_summary (ostream &strm)
 {
-  strm << "    peer process " << this->ident_ << " handle["
-       << this->handle_ << "] as ";
-  if (this->client_)
-      strm << "client on "
-           << this->local_addr_;
-  else
-    strm << " server";
+  size_t num_transports = this->transports_.size();
+
   if (this->remote_)
-    {
-      strm << " to " << remote_->proc_name();
-    }
+    strm << "  " << remote_->proc_name();
   else
-    strm << " to peer at " << this->remote_addr_;
+    strm << "  peer process " << this->ident_;
+  strm << " is a ";
+  if (this->server_)
+    strm << "server at ";
+  else
+    strm << "client to ";
+  strm << this->server_addr_;
+  strm << " with " << num_transports << " connections, ";
   strm << " referenced " << this->objects_.current_size()
        << " objects in " << this->invocations_.size() << " invocations";
-  if (this->is_closed())
-    strm << " closed on line " << this->closed_offset_;
   strm << endl;
+  for (ACE_DLList_Iterator<Transport> i(this->transports_);
+       !i.done();
+       i.advance())
+    {
+      Transport *tran;
+      i.next(tran);
+      strm << "    connection[" << tran->handle_ << "] ";
+      strm << (tran->local_is_client_ ? "from " : "to ");
+      strm << tran->client_endpoint_;
+      strm << " created line " << tran->open_offset_;
+      if (tran->close_offset_)
+	strm << " closed line " << tran->close_offset_;
+      strm << endl;
+    }
 }
 
 void
 PeerProcess::dump_object_detail (ostream &strm)
 {
   strm << this->objects_.current_size()
-       << " Objects referenced in " << this->ident_ << ":" << endl;
+       << " Objects referenced in ";
+  if (this->remote_)
+    strm << remote_->proc_name();
+  else
+    strm << " peer process " << this->ident_;
+  strm << ":" << endl;
   size_t count_inv = 0;
   for (PeerObjectTable::ITERATOR i = this->objects_.begin();
        i != this->objects_.end();
@@ -230,14 +280,20 @@ PeerProcess::dump_object_detail (ostream &strm)
 void
 PeerProcess::dump_invocation_detail (ostream &strm)
 {
-  strm << "\n " << this->invocations_.size() << " Invocations with " << this->ident_ << ":" << endl;
+  strm << "\n " << this->invocations_.size() << " Invocations with ";
+  if (this->remote_)
+    strm << remote_->proc_name();
+  else
+    strm << "peer process " << this->ident_;
+  strm << ":" << endl;
   Invocation *inv = 0;
+  bool show_handle = this->transports_.size() > 1;
   for (ACE_DLList_Iterator<Invocation> i(this->invocations_);
        !i.done();
        i.advance())
     {
       i.next(inv);
-      inv->dump_detail(strm, 0);
+      inv->dump_detail(strm, 0, Invocation::Dump_Thread, show_handle);
     }
 
 }
