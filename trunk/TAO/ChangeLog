@@ -1,3 +1,26 @@
+Wed Jul 29 03:19:17 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Log.h:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/README:
+        * utils/logWalker/Session.h:
+        * utils/logWalker/Session.cpp:
+        * utils/logWalker/Thread.h:
+        * utils/logWalker/Thread.cpp:
+        * utils/logWalker/hello.mft:
+        * utils/logWalker/logWalker.cpp:
+
+          Incremental improvement to log parsing utility. Invocations are
+          now sorted by thread, indenting nested upcalls. The output can 
+          be split out to multiple files under a named directory. This is 
+          for useful for dealing with large collections of logfiles.
+        
 Fri Jul 24 21:48:40 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * tao/Invocation_Utils.h:
@@ -90,7 +113,7 @@ Thu Jul 23 17:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 23 02:11:02 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.7.2 released.
+        * TAO version 1.7.2 released.
 
 Wed Jul 22 14:26:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
