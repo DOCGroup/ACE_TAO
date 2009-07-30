@@ -66,6 +66,97 @@ static int testConcatenation() {
   return 0;
 }
 
+int testIterator()
+{
+  ACE_CString s1 ("Hello, World");
+
+  // Use the advance () method to count number of characters.
+  size_t count = 0;
+  for (ACE_CString::ITERATOR iter (s1); !iter.done (); iter.advance ())
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("advance () failed")),
+                       1);
+
+  // Use the prefix operator to count number of characters.
+  count = 0;
+  for (ACE_CString::ITERATOR iter (s1); !iter.done (); ++ iter)
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("++ operator failed")),
+                       1);
+
+  count = 0;
+  ACE_CString::iterator iter = s1.begin (), iter_end = s1.end ();
+
+  for (; iter != iter_end; iter ++)
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("end () failed")),
+                       1);
+
+  ACE_CString::iterator iter1 (s1);
+
+  if (*iter1 != s1[0])
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("dereference operator failed")),
+                       1);
+
+  return 0;
+}
+
+int testConstIterator()
+{
+  const ACE_CString s1 ("Hello, World");
+
+  // Use the advance () method to count number of characters.
+  size_t count = 0;
+  for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); iter.advance ())
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("advance () failed")),
+                       1);
+
+  // Use the prefix operator to count number of characters.
+  count = 0;
+  for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); ++ iter)
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("++ operator failed")),
+                       1);
+
+  count = 0;
+  ACE_CString::const_iterator iter = s1.begin (), iter_end = s1.end ();
+
+  for (; iter != iter_end; iter ++)
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("end () failed")),
+                       1);
+
+  ACE_CString::const_iterator iter1 (s1);
+
+  if (*iter1 != s1[0])
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("dereference operator failed")),
+                       1);
+
+  return 0;
+}
+
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -338,7 +429,9 @@ run_main (int, ACE_TCHAR *[])
     ACE_Allocator::instance ()->free (const_cast<char *> (tmp.rep ()));
   }
 
-  int err = testConcatenation();
+  int err = testConcatenation ();
+  err += testIterator ();
+  err += testConstIterator ();
 
   ACE_END_TEST;
   return err;
