@@ -1,3 +1,7 @@
+Thu Jul 30 10:40:36 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_netdb.inl (gethostbyname_r): Fixed typo.
+
 Thu Jul 30 10:29:29 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Mark Service_Config_Stream_Test !FIXED_BUGS_ONLY
