@@ -125,7 +125,7 @@ namespace CIAO
         virtual ::DDS::ReturnCode_t
         get_matched_publication_data (
           ::DDS::PublicationBuiltinTopicData & publication_data,
-          ::DDS::InstanceHandle_t publication_handle);
+          const ::DDS::InstanceHandle_t & publication_handle);
 
         DDSDataReader * get_datareader (void);
 

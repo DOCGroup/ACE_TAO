@@ -60,7 +60,7 @@ namespace CIAO
         return retval._retn ();
       }
 
-      ::DDS::Topic_ptr 
+      ::DDS::Topic_ptr
       RTI_DataWriter_i::get_topic (void)
       {
         DDSTopic* t = this->dw_->get_topic ();
@@ -132,7 +132,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & subscription_data,
-                                                       ::DDS::InstanceHandle_t subscription_handle)
+                                                       const ::DDS::InstanceHandle_t & subscription_handle)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_matched_subscription_data");
         throw CORBA::NO_IMPLEMENT ();

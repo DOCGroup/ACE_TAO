@@ -324,7 +324,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     virtual ::DDS::ReturnCode_t
     get_matched_publication_data (
       ::DDS::PublicationBuiltinTopicData & publication_data,
-      ::DDS::InstanceHandle_t publication_handle);
+      const ::DDS::InstanceHandle_t & publication_handle);
   private:
     ::DDS::DataReader_var dr_;
   };

@@ -1,3 +1,21 @@
+Thu Jul 30 11:05:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.h
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriter.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+          Changed InstanceHandle_t to a struct that contains in the case of
+          RTI DDS an octet[16] and an unsigned long. The DDS spec gives
+          long as example but it can be vendor dependent. The problem with long
+          is that it is passed by value, a struct is const&. In case a different
+          vendor has to be used, change the NativeInstanceHandle_t struct
+          to contain a long, than all interfaces stay const&
+
 Thu Jul 30 09:15:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp

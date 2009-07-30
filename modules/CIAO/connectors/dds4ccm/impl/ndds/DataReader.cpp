@@ -221,7 +221,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataReader_i::get_matched_publication_data (
         ::DDS::PublicationBuiltinTopicData & publication_data,
-        ::DDS::InstanceHandle_t publication_handle)
+        const ::DDS::InstanceHandle_t & publication_handle)
       {
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
