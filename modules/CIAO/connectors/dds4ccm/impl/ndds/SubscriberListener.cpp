@@ -2,6 +2,7 @@
 
 #include "SubscriberListener.h"
 #include "Subscriber.h"
+#include "SubscriptionMatchedStatus.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -84,8 +85,10 @@ namespace CIAO
         ::DDS::DataReader_ptr the_reader,
         const ::DDS::SubscriptionMatchedStatus & status)
       {
+        ::DDS_SubscriptionMatchedStatus ddsstatus;
+        status >>= ddsstatus;
+        //return this->dr_->get_subscription_matched_status (ddsstatus);
         throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
       }
 
       void
