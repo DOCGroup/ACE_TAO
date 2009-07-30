@@ -172,7 +172,7 @@ Stack_Trace_Test:
 SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !STATIC
-Service_Config_Stream_Test: !STATIC
+Service_Config_Stream_Test: !STATIC !FIXED_BUGS_ONLY
 Sigset_Ops_Test
 Simple_Message_Block_Test
 Singleton_Test
