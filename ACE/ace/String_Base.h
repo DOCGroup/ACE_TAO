@@ -70,7 +70,7 @@ public:
   using ACE_String_Base_Const::size_type;
 
   friend class ACE_String_Base_Iterator <CHAR>;
-  friend class ACE_String_Base_Const_Iterator <CHAR>;;
+  friend class ACE_String_Base_Const_Iterator <CHAR>;
 
   // ACE-style iterators
   typedef ACE_String_Base_Iterator <CHAR> ITERATOR;
