@@ -8,6 +8,7 @@
 #include "Duration_t.h"
 #include "SubscriptionMatchedStatus.h"
 #include "SampleRejectedStatus.h"
+#include "InstanceHandle_t.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -50,9 +51,10 @@ namespace CIAO
       ::DDS::InstanceHandle_t
       RTI_DataReader_i::get_instance_handle (void)
       {
-        //return this->dr_->get_instance_handle ();
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_InstanceHandle_t const rtihandle = this->dr_->get_instance_handle ();
+        ::DDS::InstanceHandle_t handle;
+        handle <<= rtihandle;
+        return handle; 
       }
 
       ::DDS::ReadCondition_ptr
