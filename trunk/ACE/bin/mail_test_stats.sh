@@ -25,10 +25,10 @@ mailfile="/tmp/rsmailfile"
 {
    echo "Sending test statistics for" $CURRENTDATE
    echo
-   cat *Tests.txt
-   echo
-   echo "Sending without revision number"
    cat *NoTestRev.txt
+   echo
+   echo "Sending with revision number"
+   cat *Tests.txt
 } > $mailfile
 
 $MAIL -r $MAILFROM -s "ACE/TAO/CIAO test statistics for $CURRENTDATE" $MAILTO < $mailfile
