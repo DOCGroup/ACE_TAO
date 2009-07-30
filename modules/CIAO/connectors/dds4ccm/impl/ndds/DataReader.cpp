@@ -77,7 +77,7 @@ namespace CIAO
         const char * query_expression,
         const ::DDS::StringSeq & query_parameters)
       {
-        DDSQueryCondition* qc; // @todo = this->dr_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
+        DDSQueryCondition* qc = 0; // @todo = this->dr_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
         ::DDS::QueryCondition_var retval = new RTI_QueryCondition_i (qc);
         return retval._retn ();
       }
