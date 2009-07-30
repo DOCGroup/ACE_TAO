@@ -52,15 +52,16 @@ namespace CIAO
           {
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
-        return this->dw_->set_listener (dwl->get_datawriterlistener (), mask);
+//        return this->dw_->set_listener (dwl->get_datawriterlistener (), mask);
+        throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::DataWriterListener_ptr
       RTI_DataWriter_i::get_listener (void)
       {
         DDSDataWriterListener* wr = this->dw_->get_listener ();
-        ::DDS::DataWriterListener_var retval = new RTI_DataWriterListener_i (wr);
-        return retval._retn ();
+        RTI_DataWriterListener_i *dwl = dynamic_cast< RTI_DataWriterListener_i *> (wr);
+        return dwl->get_datawriterlistener ();
       }
 
       ::DDS::Topic_ptr
@@ -90,9 +91,10 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_liveliness_lost_status (::DDS::LivelinessLostStatus & status)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_liveliness_lost_status");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_LivelinessLostStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->dw_->get_liveliness_lost_status (rtistatus);
+        // @todo
+        return retval;
       }
 
       ::DDS::ReturnCode_t

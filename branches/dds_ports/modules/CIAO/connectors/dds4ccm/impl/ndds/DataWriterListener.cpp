@@ -14,8 +14,8 @@ namespace CIAO
     namespace RTI
     {
       // Implementation skeleton constructor
-      RTI_DataWriterListener_i::RTI_DataWriterListener_i (DDSDataWriterListener *s)
-        : drl_ (s)
+      RTI_DataWriterListener_i::RTI_DataWriterListener_i (::DDS::DataWriterListener_ptr s)
+        : drl_ (::DDS::DataWriterListener::_duplicate (s))
       {
       }
 
@@ -26,40 +26,40 @@ namespace CIAO
 
       void
       RTI_DataWriterListener_i::on_offered_deadline_missed (
-        ::DDS::DataWriter_ptr the_writer,
-        const ::DDS::OfferedDeadlineMissedStatus & status)
+        ::DDSDataWriter *the_writer,
+        const ::DDS_OfferedDeadlineMissedStatus & status)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
 
       void
       RTI_DataWriterListener_i::on_offered_incompatible_qos (
-        ::DDS::DataWriter_ptr the_writer,
-        const ::DDS::OfferedIncompatibleQosStatus & status)
+        ::DDSDataWriter *the_writer,
+        const ::DDS_OfferedIncompatibleQosStatus & status)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
 
       void
       RTI_DataWriterListener_i::on_liveliness_lost (
-        ::DDS::DataWriter_ptr the_writer,
-        const ::DDS::LivelinessLostStatus & status)
+        ::DDSDataWriter *the_writer,
+        const ::DDS_LivelinessLostStatus & status)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
 
       void
       RTI_DataWriterListener_i::on_publication_matched (
-        ::DDS::DataWriter_ptr the_writer,
-        const ::DDS::PublicationMatchedStatus & status)
+        ::DDSDataWriter *the_writer,
+        const ::DDS_PublicationMatchedStatus & status)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
 
-      DDSDataWriterListener *
+      ::DDS::DataWriterListener_ptr
       RTI_DataWriterListener_i::get_datawriterlistener (void)
       {
-        return this;//->drl_;
+        return ::DDS::DataWriterListener::_duplicate (this->drl_.in ());
       }
     }
   }

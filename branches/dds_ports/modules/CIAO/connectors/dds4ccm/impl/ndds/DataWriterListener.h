@@ -27,39 +27,38 @@ namespace CIAO
     namespace RTI
     {
       class DDS4CCM_NDDS_IMPL_Export RTI_DataWriterListener_i :
-        public virtual ::DDS::CCM_DataWriterListener,
         public virtual ::DDSDataWriterListener
       {
       public:
-        // Constructor @todo zap default argument
-        RTI_DataWriterListener_i (DDSDataWriterListener *p = 0);
+        // Constructor
+        RTI_DataWriterListener_i (::DDS::DataWriterListener_ptr p);
 
         // Destructor
         virtual ~RTI_DataWriterListener_i (void);
 
         virtual void
         on_offered_deadline_missed (
-          ::DDS::DataWriter_ptr the_writer,
-          const ::DDS::OfferedDeadlineMissedStatus & status);
+          ::DDSDataWriter *the_writer,
+          const ::DDS_OfferedDeadlineMissedStatus & status);
 
         virtual void
         on_offered_incompatible_qos (
-          ::DDS::DataWriter_ptr the_writer,
-          const ::DDS::OfferedIncompatibleQosStatus & status);
+          ::DDSDataWriter *the_writer,
+          const ::DDS_OfferedIncompatibleQosStatus & status);
 
         virtual void
         on_liveliness_lost (
-          ::DDS::DataWriter_ptr the_writer,
-          const ::DDS::LivelinessLostStatus & status);
+          ::DDSDataWriter *the_writer,
+          const ::DDS_LivelinessLostStatus & status);
 
         virtual void
         on_publication_matched (
-          ::DDS::DataWriter_ptr the_writer,
-          const ::DDS::PublicationMatchedStatus & status);
+          ::DDSDataWriter *the_writer,
+          const ::DDS_PublicationMatchedStatus & status);
 
-        DDSDataWriterListener * get_datawriterlistener (void);
+        ::DDS::DataWriterListener_ptr get_datawriterlistener (void);
       private:
-        DDSDataWriterListener *drl_;
+        ::DDS::DataWriterListener_var drl_;
       };
     }
   }

@@ -1,3 +1,11 @@
+Thu Jul 30 13:54:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.h
+          Implement more listen methods
+
 Thu Jul 30 11:47:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp
