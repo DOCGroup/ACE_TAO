@@ -159,14 +159,14 @@ ACE_String_Base<CHAR>::begin (void) const
 template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::iterator
 ACE_String_Base<CHAR>::end (void)
 {
-  ACE_TRACE ("ACE_String_Base<CHAR>::begin");
+  ACE_TRACE ("ACE_String_Base<CHAR>::end");
   return iterator (*this, 1);
 }
 
 template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::const_iterator
 ACE_String_Base<CHAR>::end (void) const
 {
-  ACE_TRACE ("ACE_String_Base<CHAR>::begin");
+  ACE_TRACE ("ACE_String_Base<CHAR>::end");
   return const_iterator (*this, 1);
 }
 
