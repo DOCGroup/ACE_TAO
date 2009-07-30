@@ -4,6 +4,7 @@
 #include "DataReader.h"
 #include "SampleLostStatus.h"
 #include "SubscriptionMatchedStatus.h"
+#include "SampleRejectedStatus.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -47,6 +48,9 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_SampleRejectedStatus & status)
       {
+        ::DDS::SampleRejectedStatus ddsstatus;
+        status >>= ddsstatus;
+        //return this->dr_->get_subscription_matched_status (ddsstatus);
         throw CORBA::NO_IMPLEMENT ();
       }
 

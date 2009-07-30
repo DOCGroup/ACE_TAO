@@ -1,3 +1,11 @@
+Thu Jul 30 09:15:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/SampleRejectedStatus.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+          Added SampleRejectedStatus
+
 Thu Jul 30 09:03:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp
