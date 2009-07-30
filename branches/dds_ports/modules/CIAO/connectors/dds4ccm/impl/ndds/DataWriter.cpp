@@ -47,10 +47,12 @@ namespace CIAO
       RTI_DataWriter_i::set_listener (::DDS::DataWriterListener_ptr a_listener,
                                       ::DDS::StatusMask mask)
       {
-
-        CIAO_TRACE ("RTI_DataWriter_i::set_listener");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        RTI_DataWriterListener_i *dwl = dynamic_cast< RTI_DataWriterListener_i *> (a_listener);
+        if (!dwl)
+          {
+            return ::DDS::RETCODE_BAD_PARAMETER;
+          }
+        return this->dw_->set_listener (dwl->get_datawriterlistener (), mask);
       }
 
       ::DDS::DataWriterListener_ptr
