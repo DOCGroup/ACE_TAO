@@ -1,3 +1,13 @@
+Thu Jul 30 12:53:20 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * ace/String_Base.h:
+        * ace/String_Base.inl:
+
+          Fixed fuzz errors.
+
+          Fixed compilation errors related to an extra semi-colon (;)
+          at the end of a statement.
+
 Thu Jul 30 10:40:36 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_netdb.inl (gethostbyname_r): Fixed typo.
