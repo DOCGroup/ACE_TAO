@@ -6,7 +6,7 @@
 #include "ReadCondition.h"
 #include "SampleLostStatus.h"
 #include "Duration_t.h"
-
+#include "SubscriptionMatchedStatus.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -121,8 +121,8 @@ namespace CIAO
           {
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
-        throw CORBA::NO_IMPLEMENT ();
         //return this->dr_->set_listener (drl->get_datareaderlistener (), mask);
+        throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::DataReaderListener_ptr
@@ -182,8 +182,10 @@ namespace CIAO
       RTI_DataReader_i::get_subscription_matched_status (
         ::DDS::SubscriptionMatchedStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_SubscriptionMatchedStatus ddsstatus;
+        ::DDS::ReturnCode_t const retval = this->dr_->get_subscription_matched_status (ddsstatus);
+        ddsstatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
