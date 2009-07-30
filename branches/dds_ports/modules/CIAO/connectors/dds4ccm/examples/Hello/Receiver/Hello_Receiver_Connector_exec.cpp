@@ -361,7 +361,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   ::DDS::ReturnCode_t
   DataReader_exec_i::get_matched_publication_data (
     ::DDS::PublicationBuiltinTopicData & publication_data,
-    ::DDS::InstanceHandle_t publication_handle)
+    const ::DDS::InstanceHandle_t & publication_handle)
   {
     return this->dr_->get_matched_publication_data (publication_data, publication_handle);
   }

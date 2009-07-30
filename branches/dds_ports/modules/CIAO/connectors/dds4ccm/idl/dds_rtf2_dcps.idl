@@ -19,9 +19,12 @@
 #include <tao/StringSeq.pidl>
 
 module DDS {
+    struct NativeInstanceHandle_t {
+        octet value[16];
+        unsigned long length;
+    };
     typedef long DomainId_t;
-//    typedef octet InstanceHandle_t[24];
-    typedef long InstanceHandle_t;
+    typedef NativeInstanceHandle_t InstanceHandle_t;
     struct BuiltinTopicKey_t {
         long value[3];
     };
@@ -45,7 +48,7 @@ module DDS {
     // ----------------------------------------------------------------------
     // Pre-defined values
     // ----------------------------------------------------------------------
-    const InstanceHandle_t HANDLE_NIL = 0;
+    //const InstanceHandle_t HANDLE_NIL = 0;
 
     const long LENGTH_UNLIMITED = -1;
 

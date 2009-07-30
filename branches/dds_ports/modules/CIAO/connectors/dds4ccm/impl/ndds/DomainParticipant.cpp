@@ -327,7 +327,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::ignore_participant (::DDS::InstanceHandle_t handle)
+      RTI_DomainParticipant_i::ignore_participant (const ::DDS::InstanceHandle_t & handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::ignore_participant");
         throw CORBA::NO_IMPLEMENT ();
@@ -335,7 +335,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::ignore_topic (::DDS::InstanceHandle_t handle)
+      RTI_DomainParticipant_i::ignore_topic (const ::DDS::InstanceHandle_t & handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::ignore_topic");
         throw CORBA::NO_IMPLEMENT ();
@@ -343,7 +343,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::ignore_publication (::DDS::InstanceHandle_t handle)
+      RTI_DomainParticipant_i::ignore_publication (const ::DDS::InstanceHandle_t & handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::ignore_publication");
         throw CORBA::NO_IMPLEMENT ();
@@ -351,7 +351,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::ignore_subscription (::DDS::InstanceHandle_t handle)
+      RTI_DomainParticipant_i::ignore_subscription (const ::DDS::InstanceHandle_t & handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::ignore_subscription");
         throw CORBA::NO_IMPLEMENT ();
@@ -428,7 +428,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & participant_data,
-                                                                ::DDS::InstanceHandle_t participant_handle)
+                                                                const ::DDS::InstanceHandle_t & participant_handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
         throw CORBA::NO_IMPLEMENT ();
@@ -445,7 +445,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_topic_data (::DDS::TopicBuiltinTopicData & topic_data,
-                                                          ::DDS::InstanceHandle_t topic_handle)
+                                                          const ::DDS::InstanceHandle_t & topic_handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
         throw CORBA::NO_IMPLEMENT ();
@@ -453,7 +453,7 @@ namespace CIAO
       }
 
       ::CORBA::Boolean
-      RTI_DomainParticipant_i::contains_entity (::DDS::InstanceHandle_t a_handle)
+      RTI_DomainParticipant_i::contains_entity (const ::DDS::InstanceHandle_t & a_handle)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::contains_entity");
         throw CORBA::NO_IMPLEMENT ();

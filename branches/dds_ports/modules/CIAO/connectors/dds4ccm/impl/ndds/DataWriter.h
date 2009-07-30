@@ -77,7 +77,7 @@ namespace CIAO
 
         virtual
           ::DDS::ReturnCode_t get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & subscription_data,
-                                                             ::DDS::InstanceHandle_t subscription_handle);
+                                                             const ::DDS::InstanceHandle_t & subscription_handle);
 
         virtual
           ::DDS::ReturnCode_t enable (void);
