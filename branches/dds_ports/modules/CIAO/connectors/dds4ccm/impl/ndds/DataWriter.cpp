@@ -6,6 +6,7 @@
 #include "DataWriterListener.h"
 #include "Topic.h"
 #include "Duration_t.h"
+#include "InstanceHandle_t.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -162,9 +163,10 @@ namespace CIAO
       ::DDS::InstanceHandle_t
       RTI_DataWriter_i::get_instance_handle (void)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_instance_handle");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_InstanceHandle_t const rtihandle = this->dw_->get_instance_handle ();
+        ::DDS::InstanceHandle_t handle;
+        handle <<= rtihandle;
+        return handle; 
       }
 
       DDSDataWriter *

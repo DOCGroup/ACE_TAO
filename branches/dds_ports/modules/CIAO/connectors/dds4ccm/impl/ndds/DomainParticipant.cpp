@@ -6,6 +6,7 @@
 #include "Topic.h"
 #include "Utils.h"
 #include "StatusCondition.h"
+#include "InstanceHandle_t.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -494,9 +495,10 @@ namespace CIAO
       ::DDS::InstanceHandle_t
       RTI_DomainParticipant_i::get_instance_handle (void)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::get_instance_handle");
-        throw CORBA::NO_IMPLEMENT ();
-
+        ::DDS_InstanceHandle_t const rtihandle = this->participant_->get_instance_handle ();
+        ::DDS::InstanceHandle_t handle;
+        handle <<= rtihandle;
+        return handle; 
       }
 
       DDSDomainParticipant *

@@ -2,6 +2,7 @@
 
 #include "Topic.h"
 #include "StatusCondition.h"
+#include "InstanceHandle_t.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -75,8 +76,10 @@ namespace CIAO
       ::DDS::InstanceHandle_t
       RTI_Topic_i::get_instance_handle (void)
       {
-        CIAO_TRACE ("RTI_Topic_i::get_instance_handle");
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS_InstanceHandle_t const rtihandle = this->topic_->get_instance_handle ();
+        ::DDS::InstanceHandle_t handle;
+        handle <<= rtihandle;
+        return handle; 
       }
 
       char *
