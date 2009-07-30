@@ -7,6 +7,7 @@
 #include "SampleLostStatus.h"
 #include "Duration_t.h"
 #include "SubscriptionMatchedStatus.h"
+#include "SampleRejectedStatus.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -150,8 +151,10 @@ namespace CIAO
       RTI_DataReader_i::get_sample_rejected_status (
         ::DDS::SampleRejectedStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        //return this->dr_->get_sample_rejected_status (status);
+        DDS_SampleRejectedStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->dr_->get_sample_rejected_status (rtistatus);
+        rtistatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
