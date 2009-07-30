@@ -6,6 +6,7 @@
 #include "DataWriter.h"
 #include "StatusCondition.h"
 #include "Utils.h"
+#include "Duration_t.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -169,8 +170,7 @@ namespace CIAO
       RTI_Publisher_i::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
       {
         DDS_Duration_t rti_dds_duration;
-        rti_dds_duration.sec = max_wait.sec; 
-        rti_dds_duration.nanosec = max_wait.nanosec;
+        rti_dds_duration <<= max_wait;
         return this->pub_->wait_for_acknowledgments (rti_dds_duration);
       }
 
