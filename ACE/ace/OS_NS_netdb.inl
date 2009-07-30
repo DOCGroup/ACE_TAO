@@ -412,7 +412,7 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_UNUSED_ARG (buffer);
 
   // FUZZ: disable check_for_lack_ACE_OS
-  struct hostend *result2 = 0;
+  struct hostent *result2 = 0;
   ACE_SOCKCALL (::gethostbyname (name),
                 struct hostent *,
                 0,
