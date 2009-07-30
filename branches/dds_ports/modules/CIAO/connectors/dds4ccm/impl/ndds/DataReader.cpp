@@ -4,6 +4,7 @@
 #include "DataReaderListener.h"
 #include "StatusCondition.h"
 #include "ReadCondition.h"
+#include "QueryCondition.h"
 #include "SampleLostStatus.h"
 #include "Duration_t.h"
 #include "SubscriptionMatchedStatus.h"
@@ -76,8 +77,9 @@ namespace CIAO
         const char * query_expression,
         const ::DDS::StringSeq & query_parameters)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSQueryCondition* qc; // @todo = this->dr_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
+        ::DDS::QueryCondition_var retval = new RTI_QueryCondition_i (qc);
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t

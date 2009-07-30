@@ -20,6 +20,7 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, cc
     SubscriberListener.cpp
     StatusCondition.cpp
     ReadCondition.cpp
+    QueryCondition.cpp
     Utils.cpp
   }
 }
