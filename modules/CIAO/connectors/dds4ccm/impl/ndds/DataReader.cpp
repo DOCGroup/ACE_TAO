@@ -5,6 +5,7 @@
 #include "StatusCondition.h"
 #include "ReadCondition.h"
 #include "SampleLostStatus.h"
+#include "Duration_t.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -199,8 +200,9 @@ namespace CIAO
       RTI_DataReader_i::wait_for_historical_data (
         const ::DDS::Duration_t & max_wait)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+       ::DDS_Duration_t rtiduration;
+       rtiduration <<= max_wait;
+       return this->dr_->wait_for_historical_data (rtiduration);
       }
 
       ::DDS::ReturnCode_t

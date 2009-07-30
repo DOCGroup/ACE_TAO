@@ -5,6 +5,7 @@
 #include "Publisher.h"
 #include "DataWriterListener.h"
 #include "Topic.h"
+#include "Duration_t.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -78,9 +79,9 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::wait_for_acknowledgments (const ::DDS::Duration_t & max_wait)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::wait_for_acknowledgments");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+       ::DDS_Duration_t rtiduration;
+       rtiduration <<= max_wait;
+       return this->dw_->wait_for_acknowledgments (rtiduration);
       }
 
       ::DDS::ReturnCode_t
