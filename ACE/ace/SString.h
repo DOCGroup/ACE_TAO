@@ -39,6 +39,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Export ACE_String_Base<char>;
 template class ACE_Export ACE_String_Base<ACE_WSTRING_TYPE>;
+
+template class ACE_Export ACE_String_Base_Iterator<char>;
+template class ACE_Export ACE_String_Base_Iterator<ACE_WSTRING_TYPE>;
+
+template class ACE_Export ACE_String_Base_Const_Iterator<char>;
+template class ACE_Export ACE_String_Base_Const_Iterator<ACE_WSTRING_TYPE>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**

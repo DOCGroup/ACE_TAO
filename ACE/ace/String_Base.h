@@ -23,8 +23,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/String_Base_Const.h"
+#include <iterator>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward decl.
+template <class CHAR>
+class ACE_String_Base_Iterator;
+
+// Forward decl.
+template <class CHAR>
+class ACE_String_Base_Const_Iterator;
 
 /**
  * @class ACE_String_Base
@@ -58,8 +67,18 @@ template <class CHAR>
 class ACE_String_Base : public ACE_String_Base_Const
 {
 public:
-
   using ACE_String_Base_Const::size_type;
+
+  friend class ACE_String_Base_Iterator <CHAR>;
+  friend class ACE_String_Base_Const_Iterator <CHAR>;;
+
+  // ACE-style iterators
+  typedef ACE_String_Base_Iterator <CHAR> ITERATOR;
+  typedef ACE_String_Base_Const_Iterator <CHAR> CONST_ITERATOR;
+
+  // STL-style iterators
+  typedef ACE_String_Base_Iterator <CHAR> iterator;
+  typedef ACE_String_Base_Const_Iterator <CHAR> const_iterator;
 
    /**
     *  Default constructor.
@@ -516,7 +535,7 @@ public:
    *
    * fast_resize just adjusts the buffer if needed and sets the length,
    * it doesn't fill the buffer, so is much faster.
-   * 
+   *
    * @param len The number of CHARs to reserve
    * @param c The CHAR to use when filling the string.
    */
@@ -528,7 +547,13 @@ public:
    * @note This is non-throwing operation.
    */
   void swap (ACE_String_Base<CHAR> & str);
-  
+
+  iterator begin (void);
+  const_iterator begin (void) const;
+
+  iterator end (void);
+  const_iterator end (void) const;
+
   /**
    *  Declare the dynamic allocation hooks.
    */
@@ -565,6 +590,260 @@ protected:
    *  Represents the "NULL" string to simplify the internal logic.
    */
   static CHAR NULL_String_;
+};
+
+/**
+ * @class ACE_String_Base_Iterator
+ *
+ * @brief Iterator class for the ACE_String_Base class.
+ *
+ * This class is an implementation of an iterator that allows client
+ * applications it iterator over the contents of a string. Currently,
+ * now this iterator fall under the std::bidirectional_iterator_tag
+ * category. Future versions of the class will support the operations
+ * of std::random_access_iterator_tag.
+ */
+template <class CHAR>
+class ACE_String_Base_Iterator
+{
+public:
+  // = std::iterator_traits typedefs/traits.
+  typedef std::bidirectional_iterator_tag iterator_category;
+  typedef CHAR                            value_type;
+  typedef CHAR &                          reference;
+  typedef CHAR *                          pointer;
+  typedef ptrdiff_t                       difference_type;
+
+  /**
+   * Initializing constructor
+   *
+   * @param[in]       str         Target string for iterator.
+   */
+  ACE_String_Base_Iterator (ACE_String_Base <CHAR> & str, int end = 0);
+
+  /**
+   * Copy constructor
+   *
+   * @param[in]       iter        Iterator to copy.
+   */
+  ACE_String_Base_Iterator (const ACE_String_Base_Iterator <CHAR> & iter);
+
+  /// Destructor.
+  ~ACE_String_Base_Iterator (void);
+
+  /**
+   * Test if the iterator has seen all characters.
+   *
+   * @retval          0         Characters still remain.
+   * @retval          1         All characters have been seen.
+   */
+  int done (void) const;
+
+  /**
+   * Get the current character.
+   *
+   * @param[out]     ch         The current character.
+   * @retval         0          All characters have been seen.
+   * @retval         1          Items still remain to be seen.
+   */
+  int next (CHAR * & ch) const;
+
+  /**
+   * Move to the next character in the string.
+   *
+   * @retval         0          All characters have been seen.
+   * @retval         1          Items still remain to be seen.
+   */
+  int advance (void);
+
+  /**
+   * Assignment operator
+   *
+   * @param[in]       iter      Right-hand side of operator.
+   * @return          Reference to self.
+   */
+  const ACE_String_Base_Iterator <CHAR> & operator = (const ACE_String_Base_Iterator <CHAR> & iter);
+
+  /**
+   * Dereference operator
+   *
+   * @return          Reference to current character seen by iterator.
+   */
+  CHAR & operator * (void);
+
+  /**
+   * Prefix operator
+   */
+  ACE_String_Base_Iterator <CHAR> & operator ++ (void);
+
+  /**
+   * Postfix operator
+   */
+  ACE_String_Base_Iterator <CHAR> operator ++ (int);
+
+  /**
+   * Prefix operator
+   */
+  ACE_String_Base_Iterator <CHAR> & operator -- (void);
+
+  /**
+   * Postfix operator
+   */
+  ACE_String_Base_Iterator <CHAR> operator -- (int);
+
+  /**
+   * Eqaulity comparison operator
+   *
+   * @param[in]       rhs       Right-hand side of operator.
+   */
+  bool operator == (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+
+  /**
+   * Ineqaulity comparison operator
+   *
+   * @param[in]       rhs       Right-hand side of operator.
+   */
+  bool operator != (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+
+  bool operator < (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+  bool operator > (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+
+  bool operator <= (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+  bool operator >= (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+
+private:
+  /// Target string to iterate over.
+  ACE_String_Base <CHAR> * str_;
+
+  /// Current location in the string.
+  size_t index_;
+};
+
+/**
+ * @class ACE_String_Base_Const_Iterator
+ *
+ * @brief Const iterator class for the ACE_String_Base class.
+ *
+ * This class is an implementation of an iterator that allows client
+ * applications it iterator over the contents of a string. Currently,
+ * now this iterator fall under the std::bidirectional_iterator_tag
+ * category. Future versions of the class will support the operations
+ * of std::random_access_iterator_tag.
+ */
+template <class CHAR>
+class ACE_String_Base_Const_Iterator
+{
+public:
+  // = std::iterator_traits typedefs/traits.
+  typedef std::bidirectional_iterator_tag iterator_category;
+  typedef const CHAR                      value_type;
+  typedef const CHAR &                    reference;
+  typedef const CHAR *                    pointer;
+  typedef ptrdiff_t                       difference_type;
+
+  /**
+   * Initializing constructor
+   *
+   * @param[in]       str         Target string for iterator.
+   */
+  ACE_String_Base_Const_Iterator (const ACE_String_Base <CHAR> & str, int end = 0);
+
+  /**
+   * Copy constructor
+   *
+   * @param[in]       iter        Iterator to copy.
+   */
+  ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <CHAR> & iter);
+
+  /// Destructor.
+  ~ACE_String_Base_Const_Iterator (void);
+
+  /**
+   * Test if the iterator has seen all characters.
+   *
+   * @retval          0         Characters still remain.
+   * @retval          1         All characters have been seen.
+   */
+  int done (void) const;
+
+  /**
+   * Get the current character.
+   *
+   * @param[out]     ch         The current character.
+   * @retval         0          All characters have been seen.
+   * @retval         1          Items still remain to be seen.
+   */
+  int next (const CHAR * & ch) const;
+
+  /**
+   * Move to the next character in the string.
+   *
+   * @retval         0          All characters have been seen.
+   * @retval         1          Items still remain to be seen.
+   */
+  int advance (void);
+
+  /**
+   * Assignment operator
+   *
+   * @param[in]       iter      Right-hand side of operator.
+   * @return          Reference to self.
+   */
+  const ACE_String_Base_Const_Iterator <CHAR> & operator = (const ACE_String_Base_Const_Iterator <CHAR> & iter);
+
+  /**
+   * Dereference operator
+   *
+   * @return          Reference to current character seen by iterator.
+   */
+  const CHAR & operator * (void);
+
+  /**
+   * Prefix operator
+   */
+  ACE_String_Base_Const_Iterator <CHAR> & operator ++ (void);
+
+  /**
+   * Postfix operator
+   */
+  ACE_String_Base_Const_Iterator <CHAR> operator ++ (int);
+
+  /**
+   * Prefix operator
+   */
+  ACE_String_Base_Const_Iterator <CHAR> & operator -- (void);
+
+  /**
+   * Postfix operator
+   */
+  ACE_String_Base_Const_Iterator <CHAR> operator -- (int);
+
+  /**
+   * Eqaulity comparison operator
+   *
+   * @param[in]       rhs       Right-hand side of operator.
+   */
+  bool operator == (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+
+  /**
+   * Ineqaulity comparison operator
+   *
+   * @param[in]       rhs       Right-hand side of operator.
+   */
+  bool operator != (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+
+  bool operator < (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+  bool operator > (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+
+  bool operator <= (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+  bool operator >= (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+
+private:
+  /// Target string to iterate over.
+  const ACE_String_Base <CHAR> * str_;
+
+  /// Current location in the string.
+  size_t index_;
 };
 
 template < class CHAR >
