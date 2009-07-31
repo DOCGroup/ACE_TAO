@@ -187,14 +187,10 @@ namespace CIAO
         ::DDS::StatusMask mask)
       {
         RTI_SubscriberListener_i* rti_sub_list = dynamic_cast <RTI_SubscriberListener_i*>(a_listener);
-
         if (!rti_sub_list)
           {
-            CIAO_ERROR ((LM_ERROR, CLINFO "RTI_Subscriber_i::set_listener "
-                         "Unable to cast provided subscriber listener to servant\n"));
-            throw CORBA::INTERNAL ();
+            return ::DDS::RETCODE_BAD_PARAMETER;
           }
-
         return this->sub_->set_listener (rti_sub_list->get_subscriber_listener (), mask);
       }
 
@@ -221,8 +217,9 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_Subscriber_i::get_participant (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDSDomainParticipant* p = this->sub_->get_participant ();
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
+        return retval._retn ();
       }
 
       ::DDS::ReturnCode_t

@@ -97,8 +97,9 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_Topic_i::get_participant (void)
       {
-        CIAO_TRACE ("RTI_Topic_i::get_participant");
-        throw CORBA::NO_IMPLEMENT ();
+        DDSDomainParticipant* p = this->topic_->get_participant ();
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
+        return retval._retn ();
       }
 
       DDSTopic *

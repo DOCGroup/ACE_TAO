@@ -1,6 +1,7 @@
 // $Id$
 
 #include "TopicDescription.h"
+#include "DomainParticipant.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -38,7 +39,9 @@ namespace CIAO
       ::DDS::DomainParticipant_ptr
       RTI_TopicDescription_i::get_participant (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        DDSDomainParticipant* p = this->td_->get_participant ();
+        ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
+        return retval._retn ();
       }
 
       DDSTopicDescription *
