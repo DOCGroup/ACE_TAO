@@ -1,3 +1,21 @@
+Fri Jul 31 14:01:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Array_Sequence_T.h
+        * tao/Bounded_Basic_String_Sequence_T.h
+        * tao/Bounded_Object_Reference_Sequence_T.h
+        * tao/Bounded_Value_Sequence_T.h
+        * tao/Unbounded_Array_Sequence_T.h
+        * tao/Unbounded_Basic_String_Sequence_T.h
+        * tao/Unbounded_Object_Reference_Sequence_T.h
+        * tao/Unbounded_Octet_Sequence_T.h
+        * tao/Unbounded_Value_Sequence_T.h
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h
+        * tao/Valuetype/Unbounded_Valuetype_Sequence_T.h
+          Added trait size_type which is ::CORBA_ULong
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Reverted the change below, we now have size_type in the base sequences
+
 Fri Jul 31 13:35:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
