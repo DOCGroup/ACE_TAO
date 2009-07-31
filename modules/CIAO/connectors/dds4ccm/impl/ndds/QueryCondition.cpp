@@ -2,6 +2,7 @@
 
 #include "QueryCondition.h"
 #include "Subscriber.h"
+#include "DataReader.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -14,7 +15,7 @@ namespace CIAO
     namespace RTI
     {
       // Implementation skeleton constructor
-      RTI_QueryCondition_i::RTI_QueryCondition_i (DDSQueryCondition *sc)
+      RTI_QueryCondition_i::RTI_QueryCondition_i ( ::DDSQueryCondition *sc)
         : impl_ (sc)
       {
       }
@@ -51,13 +52,15 @@ namespace CIAO
       ::DDS::DataReader_ptr
       RTI_QueryCondition_i::get_datareader (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDSDataReader* reader = this->impl_->get_datareader ();
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (reader);
+        return dds_reader._retn ();
       }
 
       char *
       RTI_QueryCondition_i::get_query_expression (void)
       {
-        return CORBA::string_dup (this->impl_->get_query_expression ());
+        return ::CORBA::string_dup (this->impl_->get_query_expression ());
       }
 
       ::DDS::ReturnCode_t
