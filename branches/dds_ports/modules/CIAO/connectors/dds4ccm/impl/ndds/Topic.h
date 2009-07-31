@@ -13,6 +13,7 @@
 #include "DomainParticipant.h"
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
+#include "tao/LocalObject.h"
 
 namespace CIAO
 {
@@ -21,7 +22,8 @@ namespace CIAO
     namespace RTI
     {
       class DDS4CCM_NDDS_IMPL_Export RTI_Topic_i :
-        public virtual DDS::CCM_Topic
+        public virtual ::DDS::CCM_Topic,
+        public virtual ::CORBA::LocalObject
       {
       public:
         // Constructor 

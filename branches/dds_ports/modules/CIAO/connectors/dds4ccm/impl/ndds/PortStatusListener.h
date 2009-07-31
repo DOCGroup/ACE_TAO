@@ -16,8 +16,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  CCM_DDS_PortStatusListener_i
-  : public virtual POA_CCM_DDS::PortStatusListener
+class CCM_DDS_PortStatusListener_i
+  : public virtual ::POA_CCM_DDS::PortStatusListener
 {
 public:
   // Constructor 

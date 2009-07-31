@@ -18,6 +18,7 @@
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
 
 #include "ndds/ndds_cpp.h"
+#include "tao/LocalObject.h"
 
 namespace CIAO
 {
@@ -26,7 +27,8 @@ namespace CIAO
     namespace RTI
     {
       class DDS4CCM_NDDS_IMPL_Export RTI_ReadCondition_i :
-        public virtual ::DDS::CCM_ReadCondition
+        public virtual ::DDS::CCM_ReadCondition,
+        public virtual ::CORBA::LocalObject
       {
       public:
         // Constructor

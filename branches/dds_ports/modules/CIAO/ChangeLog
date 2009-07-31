@@ -1,4 +1,21 @@
-Thu Jul 31 08:57:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Jul 31 10:49:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h
+        * connectors/dds4ccm/impl/ndds/PortStatusListener.h
+        * connectors/dds4ccm/impl/ndds/Publisher.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h
+        * connectors/dds4ccm/impl/ndds/Topic.h
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h
+          Use localobject
+
+Fri Jul 31 08:57:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.h
         * connectors/dds4ccm/impl/ndds/DataReaderListener.h
@@ -27,7 +44,7 @@ Thu Jul 31 08:57:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
           Added defines to prevent redefinitions, added same file
           header
 
-Thu Jul 31 08:28:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Jul 31 08:28:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
         * connectors/dds4ccm/impl/ndds/Publisher.cpp
