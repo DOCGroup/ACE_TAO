@@ -1,12 +1,12 @@
 /**
- * @file Participant.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Johnny Willemsen <jwillemsen@remedy.nl>
  *
  * $Id$
  *
- * Simple abstraction for a RTI DDS participant
+ * Wrapper facade for NDDS.
  */
-
+ 
 #ifndef CIAO_NDDS_PARTICIPANT_H
 #define CIAO_NDDS_PARTICIPANT_H
 

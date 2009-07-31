@@ -1,12 +1,12 @@
 /**
- * @file Publisher.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Johnny Willemsen <jwillemsen@remedy.nl>
  *
  * $Id$
- * 
+ *
  * Wrapper facade for NDDS.
  */
-
+ 
 #ifndef CIAO_RTI_PUBLISHER_H
 #define CIAO_RTI_PUBLISHER_H
 

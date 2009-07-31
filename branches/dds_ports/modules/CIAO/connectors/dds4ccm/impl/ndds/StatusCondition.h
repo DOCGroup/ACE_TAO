@@ -1,5 +1,4 @@
 /**
- * @file StatusCondition.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * @author Johnny Willemsen <jwillemsen@remedy.nl>
  *
@@ -7,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
-
+ 
 #ifndef CIAO_RTI_STATUSCONDITION_H
 #define CIAO_RTI_STATUSCONDITION_H
 

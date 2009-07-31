@@ -1,11 +1,12 @@
 /**
- * @file DataWriter.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Johnny Willemsen <jwillemsen@remedy.nl>
  *
  * $Id$
  *
- * Simple IDL facade on top of NDDS.
+ * Wrapper facade for NDDS.
  */
+ 
 #ifndef CIAO_RTI_DATAWRITER_H
 #define CIAO_RTI_DATAWRITER_H
 

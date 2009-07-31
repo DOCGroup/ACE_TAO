@@ -1,3 +1,32 @@
+Thu Jul 31 08:57:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.h
+        * connectors/dds4ccm/impl/ndds/DataWriter.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h
+        * connectors/dds4ccm/impl/ndds/Duration_t.h
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/PortStatusListener.h
+        * connectors/dds4ccm/impl/ndds/Publisher.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h
+        * connectors/dds4ccm/impl/ndds/SampleLostStatus.h
+        * connectors/dds4ccm/impl/ndds/SampleRejectedStatus.h
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h
+        * connectors/dds4ccm/impl/ndds/SubscriptionMatchedStatus.h
+        * connectors/dds4ccm/impl/ndds/Time_t.h
+        * connectors/dds4ccm/impl/ndds/Topic.h
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h
+        * connectors/dds4ccm/impl/ndds/Writer.h
+          Added defines to prevent redefinitions, added same file
+          header
+
 Thu Jul 31 08:28:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp

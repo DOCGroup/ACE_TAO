@@ -1,4 +1,14 @@
-// $Id$
+/**
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Johnny Willemsen <jwillemsen@remedy.nl>
+ *
+ * $Id$
+ *
+ * Wrapper facade for NDDS.
+ */
+ 
+#ifndef CIAO_RTI_INSTANCEHANDLE_T_H
+#define CIAO_RTI_INSTANCEHANDLE_T_H
 
 inline void
 operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
@@ -28,3 +38,4 @@ operator>>= (const ::DDS::InstanceHandle_t &instancehandle, ::DDS_InstanceHandle
   ddsinstancehandle.keyHash.length = instancehandle.length;
 }
 
+#endif /* CIAO_RTI_INSTANCEHANDLE_T_H */
