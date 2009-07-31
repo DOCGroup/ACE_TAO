@@ -13,6 +13,7 @@
 #include "RequestedIncompatibleQosStatus.h"
 #include "Duration_t.h"
 #include "InstanceHandle_t.h"
+#include "InstanceHandleSeq.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -222,8 +223,10 @@ namespace CIAO
       RTI_DataReader_i::get_matched_publications (
         ::DDS::InstanceHandleSeq & publication_handles)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_InstanceHandleSeq rtiseq;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_matched_publications (rtiseq);
+        rtiseq >>= publication_handles;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
