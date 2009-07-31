@@ -1,3 +1,10 @@
+Fri Jul 31 11:26:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/QosPolicyCountSeq.h
+        * connectors/dds4ccm/impl/ndds/RequestedIncompatibleQosStatus.h
+          DataReaderListener is now fully implemented
+
 Fri Jul 31 11:13:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
