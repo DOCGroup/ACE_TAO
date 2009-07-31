@@ -2,10 +2,10 @@
 
 #include "DataWriterListener.h"
 #include "DataWriter.h"
-
-#include "dds4ccm/idl/dds4ccm_BaseC.h"
-
-#include "ciao/Logger/Log_Macros.h"
+#include "PublicationMatchedStatus.h"
+#include "LivelinessLostStatus.h"
+#include "OfferedIncompatibleQosStatus.h"
+#include "OfferedDeadlineMissedStatus.h"
 
 namespace CIAO
 {
@@ -29,7 +29,10 @@ namespace CIAO
         ::DDSDataWriter *the_writer,
         const ::DDS_OfferedDeadlineMissedStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS::OfferedDeadlineMissedStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (the_writer);
+        this->impl_->on_offered_deadline_missed (dds_writer.in (), ddsstatus);
       }
 
       void
@@ -37,7 +40,10 @@ namespace CIAO
         ::DDSDataWriter *the_writer,
         const ::DDS_OfferedIncompatibleQosStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS::OfferedIncompatibleQosStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (the_writer);
+        this->impl_->on_offered_incompatible_qos (dds_writer.in (), ddsstatus);
       }
 
       void
@@ -45,7 +51,10 @@ namespace CIAO
         ::DDSDataWriter *the_writer,
         const ::DDS_LivelinessLostStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS::LivelinessLostStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (the_writer);
+        this->impl_->on_liveliness_lost (dds_writer.in (), ddsstatus);
       }
 
       void
@@ -53,7 +62,10 @@ namespace CIAO
         ::DDSDataWriter *the_writer,
         const ::DDS_PublicationMatchedStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS::PublicationMatchedStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataWriter_var dds_writer = new RTI_DataWriter_i (the_writer);
+        this->impl_->on_publication_matched (dds_writer.in (), ddsstatus);
       }
 
       ::DDS::DataWriterListener_ptr

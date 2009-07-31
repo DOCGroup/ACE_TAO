@@ -1,3 +1,12 @@
+Fri Jul 31 11:41:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp
+        * connectors/dds4ccm/impl/ndds/LivelinessLostStatus.h
+        * connectors/dds4ccm/impl/ndds/OfferedDeadlineMissedStatus.h
+        * connectors/dds4ccm/impl/ndds/OfferedIncompatibleQosStatus.h
+        * connectors/dds4ccm/impl/ndds/PublicationMatchedStatus.h
+          DataWriterListener is now implemented
+
 Fri Jul 31 11:26:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
