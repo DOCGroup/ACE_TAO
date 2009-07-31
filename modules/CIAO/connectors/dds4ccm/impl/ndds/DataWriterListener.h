@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_DATAWRITERLISTENER_H
 #define CIAO_RTI_DATAWRITERLISTENER_H
 
@@ -57,7 +57,7 @@ namespace CIAO
 
         ::DDS::DataWriterListener_ptr get_datawriterlistener (void);
       private:
-        ::DDS::DataWriterListener_var drl_;
+        ::DDS::DataWriterListener_var impl_;
       };
     }
   }

@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
 namespace CIAO
@@ -19,16 +19,16 @@ namespace CIAO
       class Writer_T
       {
       public:
-        // Constructor 
+        // Constructor
         Writer_T (::DDS::DataWriter_ptr dw);
-        
-        // Destructor 
+
+        // Destructor
         virtual ~Writer_T (void);
-        
+
         virtual void write (typename NDDS_TYPE::value_type an_instance);
-        
+
       private:
-        typename NDDS_TYPE::data_writer *writer_;
+        typename NDDS_TYPE::data_writer *impl_;
       };
     }
   }

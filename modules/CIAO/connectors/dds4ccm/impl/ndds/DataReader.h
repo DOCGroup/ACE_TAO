@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_DATAREADER_H
 #define CIAO_RTI_DATAREADER_H
 
@@ -131,7 +131,7 @@ namespace CIAO
         DDSDataReader * get_datareader (void);
 
       private:
-        DDSDataReader * dr_;
+        DDSDataReader * impl_;
       };
     }
   }

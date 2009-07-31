@@ -1,3 +1,39 @@
+Fri Jul 31 11:05:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataReader.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.h
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriter.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp
+        * connectors/dds4ccm/impl/ndds/Publisher.h
+        * connectors/dds4ccm/impl/ndds/PublisherListener.cpp
+        * connectors/dds4ccm/impl/ndds/PublisherListener.h
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp
+        * connectors/dds4ccm/impl/ndds/QueryCondition.h
+        * connectors/dds4ccm/impl/ndds/ReadCondition.cpp
+        * connectors/dds4ccm/impl/ndds/ReadCondition.h
+        * connectors/dds4ccm/impl/ndds/StatusCondition.cpp
+        * connectors/dds4ccm/impl/ndds/StatusCondition.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/Subscriber.h
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h
+        * connectors/dds4ccm/impl/ndds/Topic.cpp
+        * connectors/dds4ccm/impl/ndds/Topic.h
+        * connectors/dds4ccm/impl/ndds/TopicDescription.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDescription.h
+        * connectors/dds4ccm/impl/ndds/Writer.h
+          Renamed the member to impl_, that way we can more easily copy
+          code from one wrapper to another
+
 Fri Jul 31 10:49:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener.h

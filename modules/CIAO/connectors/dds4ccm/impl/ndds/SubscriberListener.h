@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_SUBSCRIBERLISTENER_H
 #define CIAO_RTI_SUBSCRIBERLISTENER_H
 
@@ -77,7 +77,7 @@ namespace CIAO
 
         DDSSubscriberListener * get_subscriber_listener (void);
       private:
-        DDSSubscriberListener *sub_list_;
+        DDSSubscriberListener *impl_;
       };
     }
   }

@@ -15,7 +15,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_QueryCondition_i::RTI_QueryCondition_i (DDSQueryCondition *sc)
-        : qc_ (sc)
+        : impl_ (sc)
       {
       }
 
@@ -27,25 +27,25 @@ namespace CIAO
       ::CORBA::Boolean
       RTI_QueryCondition_i::get_trigger_value (void)
       {
-        return this->qc_->get_trigger_value ();
+        return this->impl_->get_trigger_value ();
       }
 
       ::DDS::SampleStateMask
       RTI_QueryCondition_i::get_sample_state_mask (void)
       {
-        return this->qc_->get_sample_state_mask ();
+        return this->impl_->get_sample_state_mask ();
       }
 
       ::DDS::ViewStateMask
       RTI_QueryCondition_i::get_view_state_mask (void)
       {
-        return this->qc_->get_view_state_mask ();
+        return this->impl_->get_view_state_mask ();
       }
 
       ::DDS::InstanceStateMask
       RTI_QueryCondition_i::get_instance_state_mask (void)
       {
-        return this->qc_->get_instance_state_mask ();
+        return this->impl_->get_instance_state_mask ();
       }
 
       ::DDS::DataReader_ptr
@@ -57,7 +57,7 @@ namespace CIAO
       char *
       RTI_QueryCondition_i::get_query_expression (void)
       {
-        return CORBA::string_dup (this->qc_->get_query_expression ());
+        return CORBA::string_dup (this->impl_->get_query_expression ());
       }
 
       ::DDS::ReturnCode_t
@@ -77,7 +77,7 @@ namespace CIAO
       DDSQueryCondition *
       RTI_QueryCondition_i::get_query_condition (void)
       {
-        return this->qc_;
+        return this->impl_;
       }
     }
   }

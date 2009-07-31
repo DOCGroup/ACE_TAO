@@ -18,7 +18,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_DataReaderListener_i::RTI_DataReaderListener_i (::DDS::DataReaderListener_ptr p)
-        : drl_ (::DDS::DataReaderListener::_duplicate (p))
+        : impl_ (::DDS::DataReaderListener::_duplicate (p))
       {
       }
 
@@ -34,7 +34,7 @@ namespace CIAO
       {
 // the cast doesn't work :-(
 //        RTI_DataReader_i *dr = dynamic_cast< RTI_DataReader_i *> (the_reader);
-        //this->drl_->on_requested_deadline_missed (dr, status);
+        //this->impl_->on_requested_deadline_missed (dr, status);
       }
 
       void
@@ -53,7 +53,7 @@ namespace CIAO
         ::DDS::SampleRejectedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
-        this->drl_->on_sample_rejected (dds_reader.in (), ddsstatus);
+        this->impl_->on_sample_rejected (dds_reader.in (), ddsstatus);
       }
 
       void
@@ -70,7 +70,7 @@ namespace CIAO
         //RTI_DataReader_i *dr = dynamic_cast< RTI_DataReader_i *> (reader);
         //if (!dr) printf ("cast failed %s\n", typeid (*reader).name ());
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (reader);
-        this->drl_->on_data_available (dds_reader.in ());
+        this->impl_->on_data_available (dds_reader.in ());
       }
 
       void
@@ -81,7 +81,7 @@ namespace CIAO
         ::DDS::SubscriptionMatchedStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
-        this->drl_->on_subscription_matched (dds_reader.in (), ddsstatus);
+        this->impl_->on_subscription_matched (dds_reader.in (), ddsstatus);
       }
 
       void
@@ -92,13 +92,13 @@ namespace CIAO
         ::DDS::SampleLostStatus ddsstatus;
         ddsstatus <<= status;
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
-        this->drl_->on_sample_lost (dds_reader.in (), ddsstatus);
+        this->impl_->on_sample_lost (dds_reader.in (), ddsstatus);
       }
 
       ::DDS::DataReaderListener_ptr
       RTI_DataReaderListener_i::get_datareaderlistener (void)
       {
-        return ::DDS::DataReaderListener::_duplicate (this->drl_.in ());
+        return ::DDS::DataReaderListener::_duplicate (this->impl_.in ());
       }
     }
   }

@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_NDDS_PARTICIPANT_H
 #define CIAO_NDDS_PARTICIPANT_H
 
@@ -29,7 +29,7 @@ namespace CIAO
     {
       class DDS4CCM_NDDS_IMPL_Export RTI_DomainParticipant_i :
         public virtual ::DDS::CCM_DomainParticipant,
-        public virtual ::CORBA::LocalObject        
+        public virtual ::CORBA::LocalObject
       {
       public:
         // Constructor
@@ -58,7 +58,7 @@ namespace CIAO
           ::DDS::Subscriber_ptr get_builtin_subscriber (void);
 
         virtual
-          ::DDS::Topic_ptr create_topic (const char * topic_name,
+          ::DDS::Topic_ptr create_topic (const char * impl_name,
                                          const char * type_name,
                                          const ::DDS::TopicQos & qos,
                                          ::DDS::TopicListener_ptr a_listener,
@@ -68,7 +68,7 @@ namespace CIAO
           ::DDS::ReturnCode_t delete_topic (::DDS::Topic_ptr a_topic);
 
         virtual
-          ::DDS::Topic_ptr find_topic (const char * topic_name,
+          ::DDS::Topic_ptr find_topic (const char * impl_name,
                                        const ::DDS::Duration_t & timeout);
 
         virtual
@@ -145,18 +145,18 @@ namespace CIAO
           ::DDS::ReturnCode_t get_default_topic_qos (::DDS::TopicQos & qos);
 
         virtual
-          ::DDS::ReturnCode_t get_discovered_participants (::DDS::InstanceHandleSeq & participant_handles);
+          ::DDS::ReturnCode_t get_discovered_participants (::DDS::InstanceHandleSeq & impl_handles);
 
         virtual
-          ::DDS::ReturnCode_t get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & participant_data,
-                                                               const ::DDS::InstanceHandle_t & participant_handle);
+          ::DDS::ReturnCode_t get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & impl_data,
+                                                               const ::DDS::InstanceHandle_t & impl_handle);
 
         virtual
-          ::DDS::ReturnCode_t get_discovered_topics (::DDS::InstanceHandleSeq & topic_handles);
+          ::DDS::ReturnCode_t get_discovered_topics (::DDS::InstanceHandleSeq & impl_handles);
 
         virtual
-          ::DDS::ReturnCode_t get_discovered_topic_data (::DDS::TopicBuiltinTopicData & topic_data,
-                                                         const ::DDS::InstanceHandle_t & topic_handle);
+          ::DDS::ReturnCode_t get_discovered_topic_data (::DDS::TopicBuiltinTopicData & impl_data,
+                                                         const ::DDS::InstanceHandle_t & impl_handle);
 
         virtual
           ::CORBA::Boolean contains_entity (const ::DDS::InstanceHandle_t & a_handle);
@@ -179,7 +179,7 @@ namespace CIAO
         DDSDomainParticipant * get_participant (void);
 
       protected:
-        DDSDomainParticipant *participant_;
+        DDSDomainParticipant *impl_;
       };
     }
   }

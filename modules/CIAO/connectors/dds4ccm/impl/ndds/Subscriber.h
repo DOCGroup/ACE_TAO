@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_SUBSCRIBER_H
 #define CIAO_RTI_SUBSCRIBER_H
 
@@ -66,7 +66,7 @@ namespace CIAO
 
         virtual ::DDS::DataReader_ptr
         lookup_datareader (
-          const char * topic_name);
+          const char * impl_name);
 
         virtual ::DDS::ReturnCode_t
         get_datareaders (
@@ -114,11 +114,11 @@ namespace CIAO
         virtual ::DDS::ReturnCode_t
         copy_from_topic_qos (
           ::DDS::DataReaderQos & a_datareader_qos,
-          const ::DDS::TopicQos & a_topic_qos);
+          const ::DDS::TopicQos & a_impl_qos);
 
         DDSSubscriber * get_subscriber (void);
       private:
-        DDSSubscriber *sub_;
+        DDSSubscriber *impl_;
       };
     }
   }

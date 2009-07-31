@@ -15,7 +15,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_PublisherListener_i::RTI_PublisherListener_i (DDSPublisherListener *p)
-        : pub_list_ (p)
+        : impl_ (p)
       {
       }
 
@@ -59,7 +59,7 @@ namespace CIAO
       DDSPublisherListener *
       RTI_PublisherListener_i::get_publisher_listener (void)
       {
-        return this->pub_list_;
+        return this->impl_;
       }
     }
   }

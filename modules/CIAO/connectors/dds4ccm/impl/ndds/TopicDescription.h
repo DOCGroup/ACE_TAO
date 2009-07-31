@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_TOPICDESCRIPTION_H
 #define CIAO_RTI_TOPICDESCRIPTION_H
 
@@ -48,7 +48,7 @@ namespace CIAO
 
         DDSTopicDescription * get_topicdescription (void);
       private:
-        DDSTopicDescription *td_;
+        DDSTopicDescription *impl_;
       };
     }
   }

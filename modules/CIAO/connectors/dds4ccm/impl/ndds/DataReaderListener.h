@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_DATAREADERLISTENER_H
 #define CIAO_RTI_DATAREADERLISTENER_H
 
@@ -27,7 +27,7 @@ namespace CIAO
         public virtual ::DDSDataReaderListener
       {
       public:
-        // Constructor 
+        // Constructor
         RTI_DataReaderListener_i (::DDS::DataReaderListener_ptr p);
 
         // Destructor
@@ -42,7 +42,7 @@ namespace CIAO
         virtual void on_requested_incompatible_qos(::DDSDataReader* reader,
           const ::DDS_RequestedIncompatibleQosStatus& status);
 
-        virtual void on_sample_rejected(::DDSDataReader* reader, 
+        virtual void on_sample_rejected(::DDSDataReader* reader,
           const ::DDS_SampleRejectedStatus& status);
 
         virtual void on_data_available(::DDSDataReader* reader);
@@ -55,7 +55,7 @@ namespace CIAO
 
         ::DDS::DataReaderListener_ptr get_datareaderlistener (void);
       private:
-        ::DDS::DataReaderListener_var drl_;
+        ::DDS::DataReaderListener_var impl_;
       };
     }
   }

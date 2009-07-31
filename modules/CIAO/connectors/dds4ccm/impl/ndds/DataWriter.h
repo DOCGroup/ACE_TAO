@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_DATAWRITER_H
 #define CIAO_RTI_DATAWRITER_H
 
@@ -95,7 +95,7 @@ namespace CIAO
         DDSDataWriter * get_datawriter (void);
 
       private:
-        DDSDataWriter * dw_;
+        DDSDataWriter * impl_;
       };
     }
   }

@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_QUERYCONDITION_H
 #define CIAO_RTI_QUERYCONDITION_H
 
@@ -65,7 +65,7 @@ namespace CIAO
 
         DDSQueryCondition * get_query_condition (void);
       private:
-        DDSQueryCondition *qc_;
+        DDSQueryCondition *impl_;
       };
     }
   }
