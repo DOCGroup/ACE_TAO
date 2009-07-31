@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_INSTANCEHANDLE_T_H
 #define CIAO_RTI_INSTANCEHANDLE_T_H
 

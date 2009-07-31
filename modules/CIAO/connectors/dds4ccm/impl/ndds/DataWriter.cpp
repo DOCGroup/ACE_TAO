@@ -11,6 +11,7 @@
 #include "LivelinessLostStatus.h"
 #include "OfferedIncompatibleQosStatus.h"
 #include "OfferedDeadlineMissedStatus.h"
+#include "InstanceHandleSeq.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -132,9 +133,10 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_matched_subscriptions (::DDS::InstanceHandleSeq & subscription_handles)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_matched_subscriptions");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_InstanceHandleSeq rtiseq;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_matched_subscriptions (rtiseq);
+        rtiseq >>= subscription_handles;
+        return retval;
       }
 
       ::DDS::ReturnCode_t

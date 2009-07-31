@@ -10,6 +10,7 @@
 #include "InstanceHandle_t.h"
 #include "Duration_t.h"
 #include "Time_t.h"
+#include "InstanceHandleSeq.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -428,9 +429,10 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_participants (::DDS::InstanceHandleSeq & impl_handles)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_participants");
-        throw CORBA::NO_IMPLEMENT ();
-
+        ::DDS_InstanceHandleSeq rtiseq;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_discovered_participants (rtiseq);
+        rtiseq >>= impl_handles;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
@@ -445,9 +447,10 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::get_discovered_topics (::DDS::InstanceHandleSeq & impl_handles)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_topics");
-        throw CORBA::NO_IMPLEMENT ();
-
+        ::DDS_InstanceHandleSeq rtiseq;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_discovered_topics (rtiseq);
+        rtiseq >>= impl_handles;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
