@@ -1,3 +1,10 @@
+Fri Jul 31 13:35:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Generate for each sequence typedef ::CORBA::ULong _size_type as
+          trait which is useful for template programming. Reported an issue
+          to the OMG to get this added to the C++ spec
+
 Fri Jul 24 17:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/StringSeqE.idl:
