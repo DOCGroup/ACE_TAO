@@ -2,12 +2,13 @@
 
 #include "SubscriberListener.h"
 #include "Subscriber.h"
+#include "DataReader.h"
+#include "SampleLostStatus.h"
 #include "SubscriptionMatchedStatus.h"
+#include "RequestedDeadlineMissedStatus.h"
 #include "SampleRejectedStatus.h"
-
-#include "dds4ccm/idl/dds4ccm_BaseC.h"
-
-#include "ciao/Logger/Log_Macros.h"
+#include "LivelinessChangedStatus.h"
+#include "RequestedIncompatibleQosStatus.h"
 
 namespace CIAO
 {
@@ -16,8 +17,8 @@ namespace CIAO
     namespace RTI
     {
       // Implementation skeleton constructor
-      RTI_SubscriberListener_i::RTI_SubscriberListener_i (DDSSubscriberListener *s)
-        : impl_ (s)
+      RTI_SubscriberListener_i::RTI_SubscriberListener_i (::DDS::SubscriberListener_ptr p)
+        : impl_ ( ::DDS::SubscriberListener::_duplicate (p))
       {
       }
 
@@ -28,85 +29,90 @@ namespace CIAO
 
       void
       RTI_SubscriberListener_i::on_data_on_readers (
-          ::DDS::Subscriber_ptr the_subscriber)
+          ::DDSSubscriber* the_subscriber)
       {
-        RTI_Subscriber_i* rti_sub = dynamic_cast <RTI_Subscriber_i*>(the_subscriber);
-        if (rti_sub)
-          {
-            this->impl_->on_data_on_readers (rti_sub->get_subscriber ());
-          }
+        ::DDS::Subscriber_var sub = new RTI_Subscriber_i (the_subscriber);
+        this->impl_->on_data_on_readers (sub.in ());
       }
 
       void
       RTI_SubscriberListener_i::on_requested_deadline_missed (
-        ::DDS::DataReader_ptr the_reader,
-        const ::DDS::RequestedDeadlineMissedStatus & status)
+        ::DDSDataReader* the_reader,
+        const ::DDS_RequestedDeadlineMissedStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS::RequestedDeadlineMissedStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->impl_->on_requested_deadline_missed (dds_reader.in (), ddsstatus);
       }
 
       void
       RTI_SubscriberListener_i::on_requested_incompatible_qos (
-        ::DDS::DataReader_ptr the_reader,
-        const ::DDS::RequestedIncompatibleQosStatus & status)
+        ::DDSDataReader* the_reader,
+        const ::DDS_RequestedIncompatibleQosStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS::RequestedIncompatibleQosStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->impl_->on_requested_incompatible_qos (dds_reader.in (), ddsstatus);
       }
 
       void
       RTI_SubscriberListener_i::on_sample_rejected (
-        ::DDS::DataReader_ptr the_reader,
-        const ::DDS::SampleRejectedStatus & status)
+        ::DDSDataReader* the_reader,
+        const ::DDS_SampleRejectedStatus & status)
       {
-        ::DDS_SampleRejectedStatus ddsstatus;
-        status >>= ddsstatus;
-        //return this->impl_->get_subscription_matched_status (ddsstatus);
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS::SampleRejectedStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->impl_->on_sample_rejected (dds_reader.in (), ddsstatus);
       }
 
       void
       RTI_SubscriberListener_i::on_liveliness_changed (
-        ::DDS::DataReader_ptr the_reader,
-        const ::DDS::LivelinessChangedStatus & status)
+        ::DDSDataReader* the_reader,
+        const ::DDS_LivelinessChangedStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS::LivelinessChangedStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->impl_->on_liveliness_changed (dds_reader.in (), ddsstatus);
       }
 
       void
       RTI_SubscriberListener_i::on_data_available (
-        ::DDS::DataReader_ptr the_reader)
+        ::DDSDataReader* the_reader)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->impl_->on_data_available (dds_reader.in ());
       }
 
       void
       RTI_SubscriberListener_i::on_subscription_matched (
-        ::DDS::DataReader_ptr the_reader,
-        const ::DDS::SubscriptionMatchedStatus & status)
+        ::DDSDataReader* the_reader,
+        const ::DDS_SubscriptionMatchedStatus & status)
       {
-        ::DDS_SubscriptionMatchedStatus ddsstatus;
-        status >>= ddsstatus;
-        //return this->impl_->get_subscription_matched_status (ddsstatus);
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS::SubscriptionMatchedStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->impl_->on_subscription_matched (dds_reader.in (), ddsstatus);
       }
 
       void
       RTI_SubscriberListener_i::on_sample_lost (
-        ::DDS::DataReader_ptr the_reader,
-        const ::DDS::SampleLostStatus & status)
+        ::DDSDataReader* the_reader,
+        const ::DDS_SampleLostStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS::SampleLostStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->impl_->on_sample_lost (dds_reader.in (), ddsstatus);
       }
 
-      DDSSubscriberListener *
+      ::DDS::SubscriberListener_ptr
       RTI_SubscriberListener_i::get_subscriber_listener (void)
       {
-        return this->impl_;
+        return ::DDS::SubscriberListener::_duplicate (this->impl_.in ());
       }
     }
   }

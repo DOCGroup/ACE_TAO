@@ -191,15 +191,17 @@ namespace CIAO
           {
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
-        return this->impl_->set_listener (rti_impl_list->get_subscriber_listener (), mask);
+//        return this->impl_->set_listener (rti_impl_list->get_subscriber_listener (), mask);
+        throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::SubscriberListener_ptr
       RTI_Subscriber_i::get_listener (void)
       {
-        DDSSubscriberListener* rti_impl_list = this->impl_->get_listener ();
-        ::DDS::SubscriberListener_var retval = new RTI_SubscriberListener_i (rti_impl_list);
-        return retval._retn ();
+//        DDSSubscriberListener* rti_impl_list = this->impl_->get_listener ();
+//        ::DDS::SubscriberListener_var retval = new RTI_SubscriberListener_i (rti_impl_list);
+//        return retval._retn ();
+        throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t

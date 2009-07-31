@@ -1,3 +1,13 @@
+Fri Jul 31 12:12:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.cpp
+        * connectors/dds4ccm/impl/ndds/SubscriberListener.h
+        * connectors/dds4ccm/impl/ndds/Writer.tpp
+          Fixed some small bugs, the example compiles again
+
 Fri Jul 31 11:41:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataWriterListener.cpp
