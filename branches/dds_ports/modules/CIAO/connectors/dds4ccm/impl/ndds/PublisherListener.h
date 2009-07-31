@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_PUBLISHERLISTENER_H
 #define CIAO_RTI_PUBLISHERLISTENER_H
 
@@ -59,7 +59,7 @@ namespace CIAO
 
         DDSPublisherListener * get_publisher_listener (void);
       private:
-        DDSPublisherListener *pub_list_;
+        DDSPublisherListener *impl_;
       };
     }
   }

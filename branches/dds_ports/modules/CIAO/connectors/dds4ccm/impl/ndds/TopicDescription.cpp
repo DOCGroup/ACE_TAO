@@ -15,7 +15,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_TopicDescription_i::RTI_TopicDescription_i (DDSTopicDescription *td)
-        : td_ (td)
+        : impl_ (td)
       {
       }
 
@@ -27,19 +27,19 @@ namespace CIAO
       char *
       RTI_TopicDescription_i::get_type_name (void)
       {
-        return CORBA::string_dup (this->td_->get_type_name ());
+        return CORBA::string_dup (this->impl_->get_type_name ());
       }
 
       char *
       RTI_TopicDescription_i::get_name (void)
       {
-        return CORBA::string_dup (this->td_->get_name ());
+        return CORBA::string_dup (this->impl_->get_name ());
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_TopicDescription_i::get_participant (void)
       {
-        DDSDomainParticipant* p = this->td_->get_participant ();
+        DDSDomainParticipant* p = this->impl_->get_participant ();
         ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
         return retval._retn ();
       }
@@ -47,7 +47,7 @@ namespace CIAO
       DDSTopicDescription *
       RTI_TopicDescription_i::get_topicdescription (void)
       {
-        return this->td_;
+        return this->impl_;
       }
     }
   }

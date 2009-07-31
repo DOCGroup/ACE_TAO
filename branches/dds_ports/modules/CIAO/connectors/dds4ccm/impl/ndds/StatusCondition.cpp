@@ -15,7 +15,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_StatusCondition_i::RTI_StatusCondition_i (DDSStatusCondition *sc)
-        : sc_ (sc)
+        : impl_ (sc)
       {
       }
 
@@ -27,20 +27,20 @@ namespace CIAO
       ::CORBA::Boolean
       RTI_StatusCondition_i::get_trigger_value (void)
       {
-        return this->sc_->get_trigger_value ();
+        return this->impl_->get_trigger_value ();
       }
 
       ::DDS::StatusMask
       RTI_StatusCondition_i::get_enabled_statuses (void)
       {
-        return this->sc_->get_enabled_statuses ();
+        return this->impl_->get_enabled_statuses ();
       }
 
       ::DDS::ReturnCode_t
       RTI_StatusCondition_i::set_enabled_statuses (
         ::DDS::StatusMask mask)
       {
-        return this->sc_->set_enabled_statuses (mask);
+        return this->impl_->set_enabled_statuses (mask);
       }
 
       ::DDS::Entity_ptr
@@ -52,7 +52,7 @@ namespace CIAO
       DDSStatusCondition *
       RTI_StatusCondition_i::get_status_condition (void)
       {
-        return this->sc_;
+        return this->impl_;
       }
     }
   }

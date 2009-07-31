@@ -13,7 +13,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_Topic_i::RTI_Topic_i (DDSTopic * top)
-        : topic_ (top)
+        : impl_ (top)
       {
       }
 
@@ -56,13 +56,13 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Topic_i::enable (void)
       {
-        return this->topic_->enable ();
+        return this->impl_->enable ();
       }
 
       ::DDS::StatusCondition_ptr
       RTI_Topic_i::get_statuscondition (void)
       {
-        DDSStatusCondition* sc = this->topic_->get_statuscondition ();
+        DDSStatusCondition* sc = this->impl_->get_statuscondition ();
         ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
         return retval._retn ();
       }
@@ -70,34 +70,34 @@ namespace CIAO
       ::DDS::StatusMask
       RTI_Topic_i::get_status_changes (void)
       {
-        return this->topic_->get_status_changes ();
+        return this->impl_->get_status_changes ();
       }
 
       ::DDS::InstanceHandle_t
       RTI_Topic_i::get_instance_handle (void)
       {
-        ::DDS_InstanceHandle_t const rtihandle = this->topic_->get_instance_handle ();
+        ::DDS_InstanceHandle_t const rtihandle = this->impl_->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
-        return handle; 
+        return handle;
       }
 
       char *
       RTI_Topic_i::get_type_name (void)
       {
-        return CORBA::string_dup (this->topic_->get_type_name ());
+        return CORBA::string_dup (this->impl_->get_type_name ());
       }
 
       char *
       RTI_Topic_i::get_name (void)
       {
-        return CORBA::string_dup (this->topic_->get_name ());
+        return CORBA::string_dup (this->impl_->get_name ());
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_Topic_i::get_participant (void)
       {
-        DDSDomainParticipant* p = this->topic_->get_participant ();
+        DDSDomainParticipant* p = this->impl_->get_participant ();
         ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
         return retval._retn ();
       }
@@ -105,7 +105,7 @@ namespace CIAO
       DDSTopic *
       RTI_Topic_i::get_topic (void)
       {
-        return topic_;
+        return impl_;
       }
     }
   }

@@ -20,7 +20,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_DataReader_i::RTI_DataReader_i (DDSDataReader * dr)
-        : dr_ (dr)
+        : impl_ (dr)
       {
       }
 
@@ -32,13 +32,13 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DataReader_i::enable (void)
       {
-        return this->dr_->enable ();
+        return this->impl_->enable ();
       }
 
       ::DDS::StatusCondition_ptr
       RTI_DataReader_i::get_statuscondition (void)
       {
-        DDSStatusCondition* sc = this->dr_->get_statuscondition ();
+        DDSStatusCondition* sc = this->impl_->get_statuscondition ();
         ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
         return retval._retn ();
       }
@@ -46,16 +46,16 @@ namespace CIAO
       ::DDS::StatusMask
       RTI_DataReader_i::get_status_changes (void)
       {
-        return this->dr_->get_status_changes ();
+        return this->impl_->get_status_changes ();
       }
 
       ::DDS::InstanceHandle_t
       RTI_DataReader_i::get_instance_handle (void)
       {
-        ::DDS_InstanceHandle_t const rtihandle = this->dr_->get_instance_handle ();
+        ::DDS_InstanceHandle_t const rtihandle = this->impl_->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
-        return handle; 
+        return handle;
       }
 
       ::DDS::ReadCondition_ptr
@@ -64,7 +64,7 @@ namespace CIAO
         ::DDS::ViewStateMask view_states,
         ::DDS::InstanceStateMask instance_states)
       {
-        DDSReadCondition* rc = this->dr_->create_readcondition (sample_states, view_states, instance_states);
+        DDSReadCondition* rc = this->impl_->create_readcondition (sample_states, view_states, instance_states);
         ::DDS::ReadCondition_var retval = new RTI_ReadCondition_i (rc);
         return retval._retn ();
       }
@@ -77,7 +77,7 @@ namespace CIAO
         const char * query_expression,
         const ::DDS::StringSeq & query_parameters)
       {
-        DDSQueryCondition* qc = 0; // @todo = this->dr_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
+        DDSQueryCondition* qc = 0; // @todo = this->impl_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
         ::DDS::QueryCondition_var retval = new RTI_QueryCondition_i (qc);
         return retval._retn ();
       }
@@ -91,13 +91,13 @@ namespace CIAO
           {
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
-        return this->dr_->delete_readcondition (rc->get_readcondition ());
+        return this->impl_->delete_readcondition (rc->get_readcondition ());
       }
 
       ::DDS::ReturnCode_t
       RTI_DataReader_i::delete_contained_entities (void)
       {
-        return this->dr_->delete_contained_entities ();
+        return this->impl_->delete_contained_entities ();
       }
 
       ::DDS::ReturnCode_t
@@ -126,7 +126,7 @@ namespace CIAO
           {
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
-        //return this->dr_->set_listener (drl->get_datareaderlistener (), mask);
+        //return this->impl_->set_listener (drl->get_datareaderlistener (), mask);
         throw CORBA::NO_IMPLEMENT ();
       }
 
@@ -156,7 +156,7 @@ namespace CIAO
         ::DDS::SampleRejectedStatus & status)
       {
         DDS_SampleRejectedStatus rtistatus;
-        ::DDS::ReturnCode_t const retval = this->dr_->get_sample_rejected_status (rtistatus);
+        ::DDS::ReturnCode_t const retval = this->impl_->get_sample_rejected_status (rtistatus);
         rtistatus >>= status;
         return retval;
       }
@@ -190,7 +190,7 @@ namespace CIAO
         ::DDS::SubscriptionMatchedStatus & status)
       {
         ::DDS_SubscriptionMatchedStatus ddsstatus;
-        ::DDS::ReturnCode_t const retval = this->dr_->get_subscription_matched_status (ddsstatus);
+        ::DDS::ReturnCode_t const retval = this->impl_->get_subscription_matched_status (ddsstatus);
         ddsstatus >>= status;
         return retval;
       }
@@ -200,7 +200,7 @@ namespace CIAO
         ::DDS::SampleLostStatus & status)
       {
         DDS_SampleLostStatus rtistatus;
-        ::DDS::ReturnCode_t const retval = this->dr_->get_sample_lost_status (rtistatus);
+        ::DDS::ReturnCode_t const retval = this->impl_->get_sample_lost_status (rtistatus);
         rtistatus >>= status;
         return retval;
       }
@@ -211,7 +211,7 @@ namespace CIAO
       {
        ::DDS_Duration_t rtiduration;
        rtiduration <<= max_wait;
-       return this->dr_->wait_for_historical_data (rtiduration);
+       return this->impl_->wait_for_historical_data (rtiduration);
       }
 
       ::DDS::ReturnCode_t
@@ -234,7 +234,7 @@ namespace CIAO
       DDSDataReader *
       RTI_DataReader_i::get_datareader (void)
       {
-        return this->dr_;
+        return this->impl_;
       }
     }
   }

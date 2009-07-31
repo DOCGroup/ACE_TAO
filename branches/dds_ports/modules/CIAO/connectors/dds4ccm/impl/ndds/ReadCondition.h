@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_READCONDITION_H
 #define CIAO_RTI_READCONDITION_H
 
@@ -54,7 +54,7 @@ namespace CIAO
 
         DDSReadCondition * get_readcondition (void);
       private:
-        DDSReadCondition *rc_;
+        DDSReadCondition *impl_;
       };
     }
   }

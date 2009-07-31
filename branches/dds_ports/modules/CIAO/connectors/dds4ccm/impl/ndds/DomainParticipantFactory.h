@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef DDS_RTI_PARTICIPANTFACTORY_H
 #define DDS_RTI_PARTICIPANTFACTORY_H
 
@@ -24,38 +24,38 @@ namespace CIAO
   {
     namespace RTI
     {
-      class DDS4CCM_NDDS_IMPL_Export RTI_DomainParticipantFactory_i : 
+      class DDS4CCM_NDDS_IMPL_Export RTI_DomainParticipantFactory_i :
         public virtual ::DDS::CCM_DomainParticipantFactory,
         public virtual ::CORBA::LocalObject
       {
       public:
-        // Constructor 
+        // Constructor
         RTI_DomainParticipantFactory_i (void);
-  
-        // Destructor 
+
+        // Destructor
         virtual ~RTI_DomainParticipantFactory_i (void);
-  
+
         virtual
           ::DDS::DomainParticipant_ptr create_participant (::DDS::DomainId_t domain_id,
                                                            const ::DDS::DomainParticipantQos & qos,
                                                            ::DDS::DomainParticipantListener_ptr a_listener,
                                                            ::DDS::StatusMask mask);
-  
+
         virtual
           ::DDS::ReturnCode_t delete_participant (::DDS::DomainParticipant_ptr a_participant);
-        
+
         virtual
           ::DDS::DomainParticipant_ptr lookup_participant (::DDS::DomainId_t domain_id);
-  
+
         virtual
-          ::DDS::ReturnCode_t set_default_participant_qos (const ::DDS::DomainParticipantQos & qos);
-  
+          ::DDS::ReturnCode_t set_default_impl_qos (const ::DDS::DomainParticipantQos & qos);
+
         virtual
-          ::DDS::ReturnCode_t get_default_participant_qos (::DDS::DomainParticipantQos & qos);
-  
+          ::DDS::ReturnCode_t get_default_impl_qos (::DDS::DomainParticipantQos & qos);
+
         virtual
           ::DDS::ReturnCode_t set_qos (const ::DDS::DomainParticipantFactoryQos & qos);
-  
+
         virtual
           ::DDS::ReturnCode_t get_qos (::DDS::DomainParticipantFactoryQos & qos);
       };

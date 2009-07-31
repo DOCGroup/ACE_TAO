@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_STATUSCONDITION_H
 #define CIAO_RTI_STATUSCONDITION_H
 
@@ -52,7 +52,7 @@ namespace CIAO
 
         DDSStatusCondition * get_status_condition (void);
       private:
-        DDSStatusCondition *sc_;
+        DDSStatusCondition *impl_;
       };
     }
   }

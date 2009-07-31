@@ -15,7 +15,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_DataWriterListener_i::RTI_DataWriterListener_i (::DDS::DataWriterListener_ptr s)
-        : drl_ (::DDS::DataWriterListener::_duplicate (s))
+        : impl_ (::DDS::DataWriterListener::_duplicate (s))
       {
       }
 
@@ -59,7 +59,7 @@ namespace CIAO
       ::DDS::DataWriterListener_ptr
       RTI_DataWriterListener_i::get_datawriterlistener (void)
       {
-        return ::DDS::DataWriterListener::_duplicate (this->drl_.in ());
+        return ::DDS::DataWriterListener::_duplicate (this->impl_.in ());
       }
     }
   }

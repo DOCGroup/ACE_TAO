@@ -17,7 +17,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_SubscriberListener_i::RTI_SubscriberListener_i (DDSSubscriberListener *s)
-        : sub_list_ (s)
+        : impl_ (s)
       {
       }
 
@@ -33,7 +33,7 @@ namespace CIAO
         RTI_Subscriber_i* rti_sub = dynamic_cast <RTI_Subscriber_i*>(the_subscriber);
         if (rti_sub)
           {
-            this->sub_list_->on_data_on_readers (rti_sub->get_subscriber ());
+            this->impl_->on_data_on_readers (rti_sub->get_subscriber ());
           }
       }
 
@@ -62,7 +62,7 @@ namespace CIAO
       {
         ::DDS_SampleRejectedStatus ddsstatus;
         status >>= ddsstatus;
-        //return this->dr_->get_subscription_matched_status (ddsstatus);
+        //return this->impl_->get_subscription_matched_status (ddsstatus);
         throw CORBA::NO_IMPLEMENT ();
       }
 
@@ -90,7 +90,7 @@ namespace CIAO
       {
         ::DDS_SubscriptionMatchedStatus ddsstatus;
         status >>= ddsstatus;
-        //return this->dr_->get_subscription_matched_status (ddsstatus);
+        //return this->impl_->get_subscription_matched_status (ddsstatus);
         throw CORBA::NO_IMPLEMENT ();
       }
 
@@ -106,7 +106,7 @@ namespace CIAO
       DDSSubscriberListener *
       RTI_SubscriberListener_i::get_subscriber_listener (void)
       {
-        return this->sub_list_;
+        return this->impl_;
       }
     }
   }

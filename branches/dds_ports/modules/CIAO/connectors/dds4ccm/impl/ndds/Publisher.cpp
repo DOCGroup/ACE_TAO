@@ -21,7 +21,7 @@ namespace CIAO
     {
       // Implementation skeleton constructor
       RTI_Publisher_i::RTI_Publisher_i (DDSPublisher *p)
-        : pub_ (p)
+        : impl_ (p)
       {
         CIAO_TRACE ("RTI_Publisher_i::RTI_Publisher_i");
       }
@@ -51,7 +51,7 @@ namespace CIAO
 
         DDSTopic *rti_topic = topic->get_topic ();
 
-        DDSDataWriter *rti_dw = this->pub_->create_datawriter (rti_topic,
+        DDSDataWriter *rti_dw = this->impl_->create_datawriter (rti_topic,
                                                                DDS_DATAWRITER_QOS_DEFAULT,
                                                                0,
                                                                mask);
@@ -85,7 +85,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_Publisher_i::delete_datawriter - "
                      "Successfully casted provided object reference to servant.\n"));
 
-        DDS_ReturnCode_t retval = this->pub_->delete_datawriter (top->get_datawriter ());
+        DDS_ReturnCode_t retval = this->impl_->delete_datawriter (top->get_datawriter ());
 
         if (retval != DDS_RETCODE_OK)
           {
@@ -100,9 +100,9 @@ namespace CIAO
       }
 
       ::DDS::DataWriter_ptr
-      RTI_Publisher_i::lookup_datawriter (const char * topic_name)
+      RTI_Publisher_i::lookup_datawriter (const char * impl_name)
       {
-        DDSDataWriter* dw = this->pub_->lookup_datawriter (topic_name);
+        DDSDataWriter* dw = this->impl_->lookup_datawriter (impl_name);
         ::DDS::DataWriter_var retval = new RTI_DataWriter_i (dw);
         return retval._retn ();
       }
@@ -110,7 +110,7 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::delete_contained_entities (void)
       {
-        return this->pub_->delete_contained_entities ();
+        return this->impl_->delete_contained_entities ();
       }
 
       ::DDS::ReturnCode_t
@@ -131,18 +131,18 @@ namespace CIAO
       RTI_Publisher_i::set_listener (::DDS::PublisherListener_ptr a_listener,
                                      ::DDS::StatusMask mask)
       {
-        RTI_PublisherListener_i* rti_pub_list = dynamic_cast <RTI_PublisherListener_i*>(a_listener);
-        if (!rti_pub_list)
+        RTI_PublisherListener_i* rti_impl_list = dynamic_cast <RTI_PublisherListener_i*>(a_listener);
+        if (!rti_impl_list)
           {
             return ::DDS::RETCODE_BAD_PARAMETER;
           }
-        return this->pub_->set_listener (rti_pub_list->get_publisher_listener (), mask);
+        return this->impl_->set_listener (rti_impl_list->get_publisher_listener (), mask);
       }
 
       ::DDS::PublisherListener_ptr
       RTI_Publisher_i::get_listener (void)
       {
-        DDSPublisherListener* pl = this->pub_->get_listener ();
+        DDSPublisherListener* pl = this->impl_->get_listener ();
         ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
         return retval._retn ();
       }
@@ -150,25 +150,25 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::suspend_publications (void)
       {
-        return this->pub_->suspend_publications ();
+        return this->impl_->suspend_publications ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::resume_publications (void)
       {
-        return this->pub_->resume_publications ();
+        return this->impl_->resume_publications ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::begin_coherent_changes (void)
       {
-        return this->pub_->begin_coherent_changes ();
+        return this->impl_->begin_coherent_changes ();
       }
 
       ::DDS::ReturnCode_t
       RTI_Publisher_i::end_coherent_changes (void)
       {
-        return this->pub_->end_coherent_changes ();
+        return this->impl_->end_coherent_changes ();
       }
 
       ::DDS::ReturnCode_t
@@ -176,13 +176,13 @@ namespace CIAO
       {
         DDS_Duration_t rti_dds_duration;
         rti_dds_duration <<= max_wait;
-        return this->pub_->wait_for_acknowledgments (rti_dds_duration);
+        return this->impl_->wait_for_acknowledgments (rti_dds_duration);
       }
 
       ::DDS::DomainParticipant_ptr
       RTI_Publisher_i::get_participant (void)
       {
-        DDSDomainParticipant* p = this->pub_->get_participant ();
+        DDSDomainParticipant* p = this->impl_->get_participant ();
         ::DDS::DomainParticipant_var retval = new RTI_DomainParticipant_i (p);
         return retval._retn ();
       }
@@ -202,8 +202,8 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & a_datawriter_qos,
-                                            const ::DDS::TopicQos & a_topic_qos)
+      RTI_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & a_dataimpl_qos,
+                                            const ::DDS::TopicQos & a_impl_qos)
       {
         CIAO_TRACE ("RTI_Publisher_i::copy_from_topic_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -212,13 +212,13 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Publisher_i::enable (void)
       {
-        return this->pub_->enable ();
+        return this->impl_->enable ();
       }
 
       ::DDS::StatusCondition_ptr
       RTI_Publisher_i::get_statuscondition (void)
       {
-        DDSStatusCondition* sc = this->pub_->get_statuscondition ();
+        DDSStatusCondition* sc = this->impl_->get_statuscondition ();
         ::DDS::StatusCondition_var retval = new RTI_StatusCondition_i (sc);
         return retval._retn ();
       }
@@ -226,22 +226,22 @@ namespace CIAO
       ::DDS::StatusMask
       RTI_Publisher_i::get_status_changes (void)
       {
-        return this->pub_->get_status_changes ();
+        return this->impl_->get_status_changes ();
       }
 
       ::DDS::InstanceHandle_t
       RTI_Publisher_i::get_instance_handle (void)
       {
-        ::DDS_InstanceHandle_t const rtihandle = this->pub_->get_instance_handle ();
+        ::DDS_InstanceHandle_t const rtihandle = this->impl_->get_instance_handle ();
         ::DDS::InstanceHandle_t handle;
         handle <<= rtihandle;
-        return handle; 
+        return handle;
       }
 
       DDSPublisher *
       RTI_Publisher_i::get_publisher (void)
       {
-        return this->pub_;
+        return this->impl_;
       }
     }
   }
