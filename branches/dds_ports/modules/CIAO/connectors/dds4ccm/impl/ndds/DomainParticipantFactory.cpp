@@ -92,17 +92,17 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipantFactory_i::set_default_impl_qos (const ::DDS::DomainParticipantQos & qos)
+      RTI_DomainParticipantFactory_i::set_default_participant_qos (const ::DDS::DomainParticipantQos & qos)
       {
-        CIAO_TRACE ("RTI_DomainParticipantFactory_i::set_default_impl_qos");
+        CIAO_TRACE ("RTI_DomainParticipantFactory_i::set_default_participant_qos");
 
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipantFactory_i::get_default_impl_qos (::DDS::DomainParticipantQos & qos)
+      RTI_DomainParticipantFactory_i::get_default_participant_qos (::DDS::DomainParticipantQos & qos)
       {
-        CIAO_TRACE ("RTI_DomainParticipantFactory_i::get_default_impl_qos");
+        CIAO_TRACE ("RTI_DomainParticipantFactory_i::get_default_participant_qos");
 
         throw CORBA::NO_IMPLEMENT ();
       }

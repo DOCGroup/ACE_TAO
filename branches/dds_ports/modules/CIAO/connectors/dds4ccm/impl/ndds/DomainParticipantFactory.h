@@ -48,10 +48,10 @@ namespace CIAO
           ::DDS::DomainParticipant_ptr lookup_participant (::DDS::DomainId_t domain_id);
 
         virtual
-          ::DDS::ReturnCode_t set_default_impl_qos (const ::DDS::DomainParticipantQos & qos);
+          ::DDS::ReturnCode_t set_default_participant_qos (const ::DDS::DomainParticipantQos & qos);
 
         virtual
-          ::DDS::ReturnCode_t get_default_impl_qos (::DDS::DomainParticipantQos & qos);
+          ::DDS::ReturnCode_t get_default_participant_qos (::DDS::DomainParticipantQos & qos);
 
         virtual
           ::DDS::ReturnCode_t set_qos (const ::DDS::DomainParticipantFactoryQos & qos);
