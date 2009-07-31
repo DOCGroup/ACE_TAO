@@ -7,6 +7,7 @@
 #include "RequestedDeadlineMissedStatus.h"
 #include "SampleRejectedStatus.h"
 #include "LivelinessChangedStatus.h"
+#include "RequestedIncompatibleQosStatus.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -45,7 +46,10 @@ namespace CIAO
         ::DDSDataReader* the_reader,
         const ::DDS_RequestedIncompatibleQosStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS::RequestedIncompatibleQosStatus ddsstatus;
+        ddsstatus <<= status;
+        ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (the_reader);
+        this->impl_->on_requested_incompatible_qos (dds_reader.in (), ddsstatus);
       }
 
       void
@@ -73,8 +77,6 @@ namespace CIAO
       void
       RTI_DataReaderListener_i::on_data_available(::DDSDataReader *reader)
       {
-        //RTI_DataReader_i *dr = dynamic_cast< RTI_DataReader_i *> (reader);
-        //if (!dr) printf ("cast failed %s\n", typeid (*reader).name ());
         ::DDS::DataReader_var dds_reader = new RTI_DataReader_i (reader);
         this->impl_->on_data_available (dds_reader.in ());
       }
