@@ -7,6 +7,10 @@
 #include "Topic.h"
 #include "Duration_t.h"
 #include "InstanceHandle_t.h"
+#include "PublicationMatchedStatus.h"
+#include "LivelinessLostStatus.h"
+#include "OfferedIncompatibleQosStatus.h"
+#include "OfferedDeadlineMissedStatus.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -47,13 +51,8 @@ namespace CIAO
       RTI_DataWriter_i::set_listener (::DDS::DataWriterListener_ptr a_listener,
                                       ::DDS::StatusMask mask)
       {
-        RTI_DataWriterListener_i *dwl = dynamic_cast< RTI_DataWriterListener_i *> (a_listener);
-        if (!dwl)
-          {
-            return ::DDS::RETCODE_BAD_PARAMETER;
-          }
-//        return this->impl_->set_listener (dwl->get_datawriterlistener (), mask);
-        throw CORBA::NO_IMPLEMENT ();
+        RTI_DataWriterListener_i* rti_impl_list = new RTI_DataWriterListener_i (a_listener);
+        return this->impl_->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::DataWriterListener_ptr
@@ -93,32 +92,35 @@ namespace CIAO
       {
         ::DDS_LivelinessLostStatus rtistatus;
         ::DDS::ReturnCode_t const retval = this->impl_->get_liveliness_lost_status (rtistatus);
-        // @todo
+        rtistatus >>= status;
         return retval;
       }
 
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_offered_deadline_missed_status (::DDS::OfferedDeadlineMissedStatus & status)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_offered_deadline_missed_status");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_OfferedDeadlineMissedStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_offered_deadline_missed_status (rtistatus);
+        rtistatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_offered_incompatible_qos_status (::DDS::OfferedIncompatibleQosStatus & status)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_offered_incompatible_qos_status");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_OfferedIncompatibleQosStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_offered_incompatible_qos_status (rtistatus);
+        rtistatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
       RTI_DataWriter_i::get_publication_matched_status (::DDS::PublicationMatchedStatus & status)
       {
-        CIAO_TRACE ("RTI_DataWriter_i::get_publication_matched_status");
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_PublicationMatchedStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_publication_matched_status (rtistatus);
+        rtistatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t

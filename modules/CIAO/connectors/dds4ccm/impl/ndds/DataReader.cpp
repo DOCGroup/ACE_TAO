@@ -6,9 +6,12 @@
 #include "ReadCondition.h"
 #include "QueryCondition.h"
 #include "SampleLostStatus.h"
-#include "Duration_t.h"
 #include "SubscriptionMatchedStatus.h"
+#include "RequestedDeadlineMissedStatus.h"
 #include "SampleRejectedStatus.h"
+#include "LivelinessChangedStatus.h"
+#include "RequestedIncompatibleQosStatus.h"
+#include "Duration_t.h"
 #include "InstanceHandle_t.h"
 #include "ciao/Logger/Log_Macros.h"
 
@@ -121,13 +124,8 @@ namespace CIAO
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        RTI_DataReaderListener_i *drl = dynamic_cast< RTI_DataReaderListener_i *> (a_listener);
-        if (!drl)
-          {
-            return ::DDS::RETCODE_BAD_PARAMETER;
-          }
-        //return this->impl_->set_listener (drl->get_datareaderlistener (), mask);
-        throw CORBA::NO_IMPLEMENT ();
+        RTI_DataReaderListener_i* rti_impl_list = new RTI_DataReaderListener_i (a_listener);
+        return this->impl_->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::DataReaderListener_ptr
@@ -165,24 +163,30 @@ namespace CIAO
       RTI_DataReader_i::get_liveliness_changed_status (
         ::DDS::LivelinessChangedStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDS_LivelinessChangedStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_liveliness_changed_status (rtistatus);
+        rtistatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
       RTI_DataReader_i::get_requested_deadline_missed_status (
         ::DDS::RequestedDeadlineMissedStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDS_RequestedDeadlineMissedStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_requested_deadline_missed_status (rtistatus);
+        rtistatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
       RTI_DataReader_i::get_requested_incompatible_qos_status (
         ::DDS::RequestedIncompatibleQosStatus & status)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        DDS_RequestedIncompatibleQosStatus rtistatus;
+        ::DDS::ReturnCode_t const retval = this->impl_->get_requested_incompatible_qos_status (rtistatus);
+        rtistatus >>= status;
+        return retval;
       }
 
       ::DDS::ReturnCode_t

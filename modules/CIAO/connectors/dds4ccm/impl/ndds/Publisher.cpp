@@ -131,20 +131,18 @@ namespace CIAO
       RTI_Publisher_i::set_listener (::DDS::PublisherListener_ptr a_listener,
                                      ::DDS::StatusMask mask)
       {
-        RTI_PublisherListener_i* rti_impl_list = dynamic_cast <RTI_PublisherListener_i*>(a_listener);
-        if (!rti_impl_list)
-          {
-            return ::DDS::RETCODE_BAD_PARAMETER;
-          }
-        return this->impl_->set_listener (rti_impl_list->get_publisher_listener (), mask);
+        RTI_PublisherListener_i* rti_impl_list = new RTI_PublisherListener_i (a_listener);
+        return this->impl_->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::PublisherListener_ptr
       RTI_Publisher_i::get_listener (void)
       {
         DDSPublisherListener* pl = this->impl_->get_listener ();
-        ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
-        return retval._retn ();
+//        ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
+        //return retval._retn ();
+        throw CORBA::NO_IMPLEMENT ();
+       
       }
 
       ::DDS::ReturnCode_t

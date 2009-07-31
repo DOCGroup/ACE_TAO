@@ -186,13 +186,8 @@ namespace CIAO
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
-        RTI_SubscriberListener_i* rti_impl_list = dynamic_cast <RTI_SubscriberListener_i*>(a_listener);
-        if (!rti_impl_list)
-          {
-            return ::DDS::RETCODE_BAD_PARAMETER;
-          }
-//        return this->impl_->set_listener (rti_impl_list->get_subscriber_listener (), mask);
-        throw CORBA::NO_IMPLEMENT ();
+        RTI_SubscriberListener_i* rti_impl_list = new RTI_SubscriberListener_i (a_listener);
+        return this->impl_->set_listener (rti_impl_list, mask);
       }
 
       ::DDS::SubscriberListener_ptr
