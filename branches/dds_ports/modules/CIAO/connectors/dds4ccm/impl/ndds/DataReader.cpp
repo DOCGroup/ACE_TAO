@@ -14,6 +14,8 @@
 #include "Duration_t.h"
 #include "InstanceHandle_t.h"
 #include "InstanceHandleSeq.h"
+#include "Subscriber.h"
+#include "TopicDescription.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -132,22 +134,26 @@ namespace CIAO
       ::DDS::DataReaderListener_ptr
       RTI_DataReader_i::get_listener (void)
       {
+        ::DDSDataReaderListener* reader = this->impl_->get_listener ();
+//        ::DDS::DataReaderListener_var dds_reader = new RTI_DataReaderListener_i (reader);
+        //return dds_reader._retn ();
         throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
       }
 
       ::DDS::TopicDescription_ptr
       RTI_DataReader_i::get_topicdescription (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDSTopicDescription* reader = this->impl_->get_topicdescription ();
+        ::DDS::TopicDescription_var dds_td = new RTI_TopicDescription_i (reader);
+        return dds_td._retn ();
       }
 
       ::DDS::Subscriber_ptr
       RTI_DataReader_i::get_subscriber (void)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDSSubscriber* subscriber = this->impl_->get_subscriber ();
+        ::DDS::Subscriber_var dds_td = new RTI_Subscriber_i (subscriber);
+        return dds_td._retn ();
       }
 
       ::DDS::ReturnCode_t

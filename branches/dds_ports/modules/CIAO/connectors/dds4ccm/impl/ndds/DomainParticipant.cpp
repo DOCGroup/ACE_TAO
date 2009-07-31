@@ -148,10 +148,6 @@ namespace CIAO
         DDSSubscriber* rti_sub = this->impl_->get_builtin_subscriber ();
         ::DDS::Subscriber_var retval = new RTI_Subscriber_i (rti_sub);
         return retval._retn ();
-
-        CIAO_TRACE ("DDS_DomainParticipant_i::get_builtin_subscriber");
-        throw CORBA::NO_IMPLEMENT ();
-
       }
 
       ::DDS::Topic_ptr
