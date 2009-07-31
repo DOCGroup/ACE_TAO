@@ -198,8 +198,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << "typedef " << node->local_name () << "_out _out_type;";
     }
 
-  *os << be_nl << "typedef ::CORBA::ULong _size_type;";
-
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet).
   be_predefined_type *predef = 0;
