@@ -25,7 +25,8 @@ namespace CIAO
     namespace RTI
     {
       class DDS4CCM_NDDS_IMPL_Export RTI_DomainParticipantFactory_i : 
-        public virtual DDS::CCM_DomainParticipantFactory
+        public virtual ::DDS::CCM_DomainParticipantFactory,
+        public virtual ::CORBA::LocalObject
       {
       public:
         // Constructor 
