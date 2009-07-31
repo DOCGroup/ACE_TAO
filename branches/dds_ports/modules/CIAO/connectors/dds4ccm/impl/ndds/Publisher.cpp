@@ -131,8 +131,12 @@ namespace CIAO
       RTI_Publisher_i::set_listener (::DDS::PublisherListener_ptr a_listener,
                                      ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("RTI_Publisher_i::set_listener");
-        throw CORBA::NO_IMPLEMENT ();
+        RTI_PublisherListener_i* rti_pub_list = dynamic_cast <RTI_PublisherListener_i*>(a_listener);
+        if (!rti_pub_list)
+          {
+            return ::DDS::RETCODE_BAD_PARAMETER;
+          }
+        return this->pub_->set_listener (rti_pub_list->get_publisher_listener (), mask);
       }
 
       ::DDS::PublisherListener_ptr

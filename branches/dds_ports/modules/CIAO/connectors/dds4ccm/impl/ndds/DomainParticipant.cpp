@@ -4,9 +4,12 @@
 #include "Subscriber.h"
 #include "Publisher.h"
 #include "Topic.h"
+#include "TopicDescription.h"
 #include "Utils.h"
 #include "StatusCondition.h"
 #include "InstanceHandle_t.h"
+#include "Duration_t.h"
+#include "Time_t.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -236,17 +239,19 @@ namespace CIAO
       RTI_DomainParticipant_i::find_topic (const char * topic_name,
                                            const ::DDS::Duration_t & timeout)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::find_topic");
-        throw CORBA::NO_IMPLEMENT ();
-
+        ::DDS_Duration_t ddstimeout;
+        ddstimeout <<= timeout;
+        ::DDSTopic* rti_topic = this->participant_->find_topic (topic_name, ddstimeout);
+        ::DDS::Topic_var retval = new RTI_Topic_i (rti_topic);
+        return retval._retn ();
       }
 
       ::DDS::TopicDescription_ptr
       RTI_DomainParticipant_i::lookup_topicdescription (const char * name)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::lookup_topicdescription");
-        throw CORBA::NO_IMPLEMENT ();
-
+        ::DDSTopicDescription* rti_topic = this->participant_->lookup_topicdescription (name);
+        ::DDS::TopicDescription_var retval = new RTI_TopicDescription_i (rti_topic);
+        return retval._retn ();
       }
 
       ::DDS::ContentFilteredTopic_ptr
@@ -330,33 +335,34 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::ignore_participant (const ::DDS::InstanceHandle_t & handle)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::ignore_participant");
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS_InstanceHandle_t rti_handle;
+        rti_handle <<= handle;
+        return this->participant_->ignore_participant (rti_handle);
 
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::ignore_topic (const ::DDS::InstanceHandle_t & handle)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::ignore_topic");
-        throw CORBA::NO_IMPLEMENT ();
-
+        ::DDS_InstanceHandle_t rti_handle;
+        rti_handle <<= handle;
+        return this->participant_->ignore_topic (rti_handle);
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::ignore_publication (const ::DDS::InstanceHandle_t & handle)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::ignore_publication");
-        throw CORBA::NO_IMPLEMENT ();
-
+        ::DDS_InstanceHandle_t rti_handle;
+        rti_handle <<= handle;
+        return this->participant_->ignore_publication (rti_handle);
       }
 
       ::DDS::ReturnCode_t
       RTI_DomainParticipant_i::ignore_subscription (const ::DDS::InstanceHandle_t & handle)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::ignore_subscription");
-        throw CORBA::NO_IMPLEMENT ();
-
+        ::DDS_InstanceHandle_t rti_handle;
+        rti_handle <<= handle;
+        return this->participant_->ignore_subscription (rti_handle);
       }
 
       ::DDS::DomainId_t
@@ -456,8 +462,9 @@ namespace CIAO
       ::CORBA::Boolean
       RTI_DomainParticipant_i::contains_entity (const ::DDS::InstanceHandle_t & a_handle)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::contains_entity");
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS_InstanceHandle_t rti_handle;
+        rti_handle <<= a_handle;
+        return this->participant_->contains_entity (rti_handle);
 
       }
 
@@ -466,8 +473,7 @@ namespace CIAO
       {
         DDS_Time_t rti_time;
         ::DDS::ReturnCode_t const retval = this->participant_->get_current_time (rti_time);
-        current_time.sec = rti_time.sec;
-        current_time.nanosec = rti_time.nanosec;
+        rti_time >>= current_time;
         return retval;
 
       }
