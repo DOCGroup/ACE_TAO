@@ -1,12 +1,12 @@
 /**
- * @file ParticipantFactory.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Johnny Willemsen <jwillemsen@remedy.nl>
  *
  * $Id$
  *
- * IDL-based facade for NDDS.
+ * Wrapper facade for NDDS.
  */
-
+ 
 #ifndef DDS_RTI_PARTICIPANTFACTORY_H
 #define DDS_RTI_PARTICIPANTFACTORY_H
 

@@ -1,12 +1,12 @@
 /**
- * @file Writer.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Johnny Willemsen <jwillemsen@remedy.nl>
  *
  * $Id$
  *
- * Writer template for RTI NDDS dds4ccm support.
+ * Wrapper facade for NDDS.
  */
-
+ 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
 namespace CIAO
