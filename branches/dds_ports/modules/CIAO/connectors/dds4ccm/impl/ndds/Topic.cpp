@@ -38,6 +38,8 @@ namespace CIAO
       RTI_Topic_i::set_listener (::DDS::TopicListener_ptr a_listener,
                                  ::DDS::StatusMask mask)
       {
+        //RTI_TopicListener_i* rti_impl_list = new RTI_TopicListener_i (a_listener);
+        //return this->impl_->set_listener (rti_impl_list, mask);
         throw CORBA::NO_IMPLEMENT ();
       }
 

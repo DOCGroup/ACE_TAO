@@ -27,39 +27,38 @@ namespace CIAO
     namespace RTI
     {
       class DDS4CCM_NDDS_IMPL_Export RTI_PublisherListener_i :
-        public virtual ::DDS::CCM_PublisherListener,
-        public virtual ::CORBA::LocalObject
+        public virtual ::DDSPublisherListener
       {
       public:
         // Constructor
-        RTI_PublisherListener_i (DDSPublisherListener *p);
+        RTI_PublisherListener_i (::DDS::PublisherListener_ptr p);
 
         // Destructor
         virtual ~RTI_PublisherListener_i (void);
 
         virtual void
         on_offered_deadline_missed (
-          ::DDS::DataWriter_ptr writer,
-          const ::DDS::OfferedDeadlineMissedStatus & status);
+          ::DDSDataWriter *writer,
+          const ::DDS_OfferedDeadlineMissedStatus & status);
 
         virtual void
         on_offered_incompatible_qos (
-          ::DDS::DataWriter_ptr writer,
-          const ::DDS::OfferedIncompatibleQosStatus & status);
+          ::DDSDataWriter *writer,
+          const ::DDS_OfferedIncompatibleQosStatus & status);
 
         virtual void
         on_liveliness_lost (
-          ::DDS::DataWriter_ptr writer,
-          const ::DDS::LivelinessLostStatus & status);
+          ::DDSDataWriter* writer,
+          const ::DDS_LivelinessLostStatus & status);
 
         virtual void
         on_publication_matched (
-          ::DDS::DataWriter_ptr writer,
-          const ::DDS::PublicationMatchedStatus & status);
+          ::DDSDataWriter *writer,
+          const ::DDS_PublicationMatchedStatus & status);
 
-        DDSPublisherListener * get_publisher_listener (void);
+        ::DDS::PublisherListener_ptr get_publisher_listener (void);
       private:
-        DDSPublisherListener *impl_;
+        ::DDS::PublisherListener_var impl_;
       };
     }
   }

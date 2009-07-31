@@ -319,9 +319,9 @@ namespace CIAO
       RTI_DomainParticipant_i::set_listener (::DDS::DomainParticipantListener_ptr a_listener,
                                              ::DDS::StatusMask mask)
       {
-        CIAO_TRACE ("DDS_DomainParticipant_i::set_listener");
+//        RTI_DomainParticipantListener_i* rti_impl_list = new RTI_DomainParticipantListener_i (a_listener);
+        //return this->impl_->set_listener (rti_impl_list, mask);
         throw CORBA::NO_IMPLEMENT ();
-
       }
 
       ::DDS::DomainParticipantListener_ptr
