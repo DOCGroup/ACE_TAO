@@ -1,3 +1,10 @@
+Fri Jul 31 11:13:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener.cpp
+        * connectors/dds4ccm/impl/ndds/LivelinessChangedStatus.h
+        * connectors/dds4ccm/impl/ndds/RequestedDeadlineMissedStatus.h
+          Added some more status conversions
+
 Fri Jul 31 11:05:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReader.cpp
