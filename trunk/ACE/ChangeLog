@@ -1,3 +1,92 @@
+Sat Aug  1 12:19:58 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * This completes the fixes for Buzilla #3715:
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_14_Test.cpp:
+          This test verifies that partial template specialization works.
+
+        * tests/Compiler_Features_11_Test.cpp:
+          Test for standard string streams
+
+        * tests/Compiler_Features_12_Test.cpp:
+          Test for template template parameters
+
+        * tests/Compiler_Features_13_Test.cpp:
+          Test for cast operators
+
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+          The usual accruements that go with the tests.
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_10_Test.cpp:
+          Add new test for exceptions.  Verify that <stdexcept> is there,
+          that we can raise exceptions, and that object destruction during
+          exceptions is sound.
+
+        * tests/Compiler_Features_07_Test.cpp:
+          Test for std::string
+
+        * tests/Compiler_Features_08_Test.cpp:
+          Test for std::wstring
+
+        * tests/Compiler_Features_09_Test.cpp:
+          Test for std::auto_ptr<>
+
+        * tests/Compiler_Features_06_Test.cpp:
+          Fixed typo in test name.
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+          Add the compilation / run paraphernalia.
+
+        * tests/Compiler_Features_04_Test.cpp:
+          Test for std::set<>
+
+        * tests/Compiler_Features_05_Test.cpp:
+          Test for std::queue<>, this is a different sort of test because
+          std::queue<> is an adaptor, not a collection.  The default
+          collection is a std::deque<>, so we are testing default template
+          parameters at the same time.
+
+        * tests/Compiler_Features_06_Test.cpp:
+          Test for std::set<> with a different order function.
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+          Add the compilation / run paraphernalia.
+
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_03_Test.cpp:
+          This time it is std::vector<>
+
+        * tests/run_test.lst:
+          I need to remember to add the tests to the list of automatically
+          executed ones.
+
+        * tests/tests.mpc:
+        * tests/Makefile.am:
+        * tests/Compiler_Features_02_Test.cpp:
+          Test if the std::map<> class works.
+
+        * tests/Compiler_Features_01_Test.cpp:
+          Make the tests more consistent by using typedefs.
+
+        * tests/tests.mpc:
+        * tests/Makefile.am:
+        * tests/Compiler_Features_01_Test.cpp:
+          Add first test for "modern" C++ compiler features.  In this
+          case, I test if the std::list<> class works.
+
 Thu Jul 30 12:53:20 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
 
         * ace/String_Base.h:
