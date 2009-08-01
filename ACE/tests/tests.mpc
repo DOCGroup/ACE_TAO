@@ -450,104 +450,6 @@ project(Collection Test) : acetest {
   }
 }
 
-project(Compiler_Features_01_Test) : acetest {
-  exename = Compiler_Features_01_Test
-  Source_Files {
-    Compiler_Features_01_Test.cpp
-  }
-}
-
-project(Compiler_Features_02_Test) : acetest {
-  exename = Compiler_Features_02_Test
-  Source_Files {
-    Compiler_Features_02_Test.cpp
-  }
-}
-
-project(Compiler_Features_03_Test) : acetest {
-  exename = Compiler_Features_03_Test
-  Source_Files {
-    Compiler_Features_03_Test.cpp
-  }
-}
-
-project(Compiler_Features_04_Test) : acetest {
-  exename = Compiler_Features_04_Test
-  Source_Files {
-    Compiler_Features_04_Test.cpp
-  }
-}
-
-project(Compiler_Features_05_Test) : acetest {
-  exename = Compiler_Features_05_Test
-  Source_Files {
-    Compiler_Features_05_Test.cpp
-  }
-}
-
-project(Compiler_Features_06_Test) : acetest {
-  exename = Compiler_Features_06_Test
-  Source_Files {
-    Compiler_Features_06_Test.cpp
-  }
-}
-
-project(Compiler_Features_07_Test) : acetest {
-  exename = Compiler_Features_07_Test
-  Source_Files {
-    Compiler_Features_07_Test.cpp
-  }
-}
-
-project(Compiler_Features_08_Test) : acetest {
-  exename = Compiler_Features_08_Test
-  Source_Files {
-    Compiler_Features_08_Test.cpp
-  }
-}
-
-project(Compiler_Features_09_Test) : acetest {
-  exename = Compiler_Features_09_Test
-  Source_Files {
-    Compiler_Features_09_Test.cpp
-  }
-}
-
-project(Compiler_Features_10_Test) : acetest {
-  exename = Compiler_Features_10_Test
-  Source_Files {
-    Compiler_Features_10_Test.cpp
-  }
-}
-
-project(Compiler_Features_11_Test) : acetest {
-  exename = Compiler_Features_11_Test
-  Source_Files {
-    Compiler_Features_11_Test.cpp
-  }
-}
-
-project(Compiler_Features_12_Test) : acetest {
-  exename = Compiler_Features_12_Test
-  Source_Files {
-    Compiler_Features_12_Test.cpp
-  }
-}
-
-project(Compiler_Features_13_Test) : acetest {
-  exename = Compiler_Features_13_Test
-  Source_Files {
-    Compiler_Features_13_Test.cpp
-  }
-}
-
-project(Compiler_Features_14_Test) : acetest {
-  exename = Compiler_Features_14_Test
-  Source_Files {
-    Compiler_Features_14_Test.cpp
-  }
-}
-
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test
@@ -1821,5 +1723,14 @@ project(Service Config Stream Test) : acetest {
   exename = Service_Config_Stream_Test
   Source_Files {
     Service_Config_Stream_Test.cpp
+  }
+}
+
+
+project(Service Config Stream SEGV) : acetest {
+  after  += Service_Config_Stream_DLL
+  exename = Service_Config_Stream_SEGV
+  Source_Files {
+    Service_Config_Stream_SEGV.cpp
   }
 }
