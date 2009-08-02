@@ -1,3 +1,15 @@
+Sun Aug  2 11:28:40 UTC 2009 Chad Beaulac <chad@objectivesolutions.com>
+        * Bug 3334  - Revisions 86318 86319 86320 86321
+        * tests/Bug_3334_Regression_Test.cpp
+          Renamed from Service_Config_Stream_SEGV.cpp
+        * Tests/Bug_3334_Regression_Test.cpp
+          Renamed from Service_Config_Stream_SEGV.conf
+        * tests/run_test.list
+          Added Bug_3334_Regression_Test
+          Put changes back in from Carlos's commit below
+        * tests/tests.mpc
+          Added Bug_3334_Regression_Test
+          Put changes back in from Carlos's commit below
 Sat Aug  1 12:19:58 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * This completes the fixes for Buzilla #3715:
