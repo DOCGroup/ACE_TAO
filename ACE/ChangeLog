@@ -1,5 +1,5 @@
 Sun Aug  2 11:28:40 UTC 2009 Chad Beaulac <chad@objectivesolutions.com>
-        * Bug 3334  - Revisions 86318 86319 86320 86321 86322 86323
+        * Bug 3334  - Revisions 86318 86319 86320 86321 86322 86323 
         * tests/Bug_3334_Regression_Test.cpp
           Renamed from Service_Config_Stream_SEGV.cpp
         * Tests/Bug_3334_Regression_Test.cpp
