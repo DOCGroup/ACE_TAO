@@ -16,4 +16,4 @@
 # Baz_Test only runs on Win32 configurations but not on Borland
 # configurations.
 
-Bug_3334_Regression_Test: !STATIC
+Bug_3334_Regression_Test: !STATIC 
