@@ -1727,10 +1727,10 @@ project(Service Config Stream Test) : acetest {
 }
 
 
-project(Service Config Stream SEGV) : acetest {
+project(Bug_3334_Regression_Test) : acetest {
   after  += Service_Config_Stream_DLL
-  exename = Service_Config_Stream_SEGV
+  exename = Bug_3334_Regression_Test
   Source_Files {
-    Service_Config_Stream_SEGV.cpp
+    Bug_3334_Regression_Test.cpp
   }
 }

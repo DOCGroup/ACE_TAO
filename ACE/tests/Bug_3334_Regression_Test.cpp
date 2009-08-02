@@ -19,12 +19,12 @@
 #include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
 
-ACE_RCSID(tests, Service_Config_Stream_SEGV, "$Id$")
+ACE_RCSID(tests, Bug_3334_Regression_Test, "$Id$")
 
 int
 run_main (int, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Service_Config_Stream_SEGV"));
+  ACE_START_TEST (ACE_TEXT ("Bug_3334_Regression_Test"));
 
   ACE_TCHAR *_argv[3] = { argv[0],
                           const_cast<ACE_TCHAR*> (ACE_TEXT ("-f")),
