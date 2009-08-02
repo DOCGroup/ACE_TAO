@@ -29,7 +29,7 @@ run_main (int, ACE_TCHAR *argv[])
   ACE_TCHAR *_argv[3] = { argv[0],
                           const_cast<ACE_TCHAR*> (ACE_TEXT ("-f")),
                           const_cast<ACE_TCHAR*>
-                            (ACE_TEXT ("Service_Config_Stream_SEGV.conf")) };
+                            (ACE_TEXT ("Bug_3334_Regression_Test.conf")) };
   int status;
   if ((status = ACE_Service_Config::open (3,
                                           _argv,
