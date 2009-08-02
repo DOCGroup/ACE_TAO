@@ -1,6 +1,6 @@
 //$Id$
 
-project(CompilerElements): cidlc {
+project(CompilerElements): ccf_common {
   sharedname =
   staticname = CompilerElements
   libout = ..

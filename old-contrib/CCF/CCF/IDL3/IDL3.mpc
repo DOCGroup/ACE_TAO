@@ -1,15 +1,14 @@
 //$Id$
 
-project(IDL3): cidlc {
+project(IDL3): ccf_common {
   sharedname =
   staticname = IDL3
-  libout = ..
+  libout     = ..
 
   Source_Files {
-        .
-	./SemanticGraph
-	./Traversal
-        ./SemanticAction/Impl
-
+    .
+    ./SemanticGraph
+    ./Traversal
+    ./SemanticAction/Impl
   }
 }

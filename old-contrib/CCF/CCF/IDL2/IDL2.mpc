@@ -1,6 +1,6 @@
 //$Id$
 
-project(IDL2): cidlc {
+project(IDL2): ccf_common {
   sharedname =
   staticname = IDL2
   libout = ..
@@ -11,6 +11,5 @@ project(IDL2): cidlc {
     ./Traversal
     ./SemanticAction
     ./SemanticAction/Impl
-
   }
 }

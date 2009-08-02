@@ -1,0 +1,14 @@
+Sun Aug  2 18:27:35 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * CCF/CIDL/CIDL.mpc:
+        * CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+        * CCF/CompilerElements/CompilerElements.mpc:
+        * CCF/IDL2/IDL2.mpc:
+        * CCF/IDL3/IDL3.mpc:
+        * MPC:
+        * MPC/config:
+        * MPC/config/ccf_common.mpb:
+
+          Switched the 'cidlc' base project to 'ccm_common' since CIDLC
+          is disfunct and CCF is being used for more general purpose
+          projects.

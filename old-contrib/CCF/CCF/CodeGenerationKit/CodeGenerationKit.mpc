@@ -1,6 +1,6 @@
 //$Id$
 
-project(CodeGenerationKit): cidlc {
+project (CodeGenerationKit): ccf_common {
   sharedname =
   staticname = CodeGenerationKit
   libout = ..
