@@ -1,11 +1,18 @@
+Mon Aug  3 22:57:03 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Disabled ForwardOnceUponException test from single thread 
+          build.
+          
 Mon Aug  3 18:01:46 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * NEWS:
         * docs/Options.html:
 
-          Documented the ORB options for request forward once upon 
+          Documented the ORB options for request forward once upon
           specified exceptions.
-          
+
 Mon Aug  3 12:09:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
