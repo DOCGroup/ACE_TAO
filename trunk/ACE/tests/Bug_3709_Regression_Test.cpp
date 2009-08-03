@@ -18,7 +18,7 @@ ACE_RCSID (tests,
            Bug_3709_Regression_Test,
            "$Id$")
 
-template<template<typename DT, typename = std::allocator<DT> > class container, typename DT>
+template<template<typename U, typename = std::allocator<U> > class container, typename DT>
 container<DT> initializer(const DT &d)
 {
   container<DT> t ;

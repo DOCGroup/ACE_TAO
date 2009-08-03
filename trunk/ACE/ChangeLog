@@ -1,3 +1,9 @@
+Mon Aug  3 08:30:58 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Bug_3709_Regression_Test.cpp:
+          This should fix the warnings on HP-UX and other compilers that
+          correctly detect overuse of 'DT' in the template parameter list.
+
 Mon Aug  3 20:42:57 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Compiler_Features_12_Test.cpp:
