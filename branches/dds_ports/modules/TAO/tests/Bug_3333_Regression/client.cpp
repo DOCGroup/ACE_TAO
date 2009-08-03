@@ -92,6 +92,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           try
             {
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - loop_forever narrow\n"));
+
               // This should LOCATION_FORWARD loop until the timeout
               hello = Test::Hello::_narrow(tmp.in ());
 
@@ -141,5 +143,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - Test SUCCESSFULL!\n"));
   return 0;
 }
