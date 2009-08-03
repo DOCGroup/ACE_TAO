@@ -115,7 +115,7 @@ HelloListener::on_data_available( ::DDS::DataReader *reader)
     }
 
     /* Loop until there are messages available in the queue */
-    char                  sample[MAX_STRING_SIZE];
+    char sample[MAX_STRING_SIZE];
     char *ptr_sample = &sample[0];
     for(;;) {
         DDS_SampleInfo        info;
@@ -143,7 +143,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   // Facet Executor Implementation Class: string_Reader_exec_i
   //============================================================
 
-  string_Reader_exec_i::string_Reader_exec_i (void)
+  string_Reader_exec_i::string_Reader_exec_i (DDSStringDataReader *reader)
+    : reader_ (reader)
   {
   }
 
@@ -158,6 +159,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     ::CCM_DDS::string_Reader::stringSeq_out /* instances */,
     ::CCM_DDS::ReadInfoSeq_out /* infos */)
   {
+    //this->reader_->read
     /* Your code here. */
   }
 
@@ -171,10 +173,26 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 
   void
   string_Reader_exec_i::read_one (
-    char *& /* an_instance */,
-    ::CCM_DDS::ReadInfo_out /* info */)
+    char *& an_instance,
+    ::CCM_DDS::ReadInfo_out info)
   {
-    /* Your code here. */
+    DDS_StringSeq data;
+    DDS_SampleInfoSeq sample_info;
+    DDS_ReturnCode_t const retval = 
+      this->reader_->read (data, 
+                           sample_info, 
+                           1, 
+                           DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE , 
+                           DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE, 
+                           DDS_ALIVE_INSTANCE_STATE);
+    if (retval == DDS_RETCODE_OK)
+      {
+//        info.timestamp = sample_info[0].reception_timestamp ();
+      }
+    else
+      { 
+        throw ::CCM_DDS::InternalError (retval, 0);
+      }
   }
 
   void
@@ -430,7 +448,9 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   Hello_receiver_Connector_exec_i::get_receiver_data (void)
   {
     this->configure_dds ();
-    return new string_Reader_exec_i ();
+    ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd = dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(this->dr_.in ());
+    DDSStringDataReader * string_reader = DDSStringDataReader::narrow(rd->get_datareader ());
+    return new string_Reader_exec_i (string_reader);
   }
 
   ::CCM_DDS::CCM_ListenerControl_ptr

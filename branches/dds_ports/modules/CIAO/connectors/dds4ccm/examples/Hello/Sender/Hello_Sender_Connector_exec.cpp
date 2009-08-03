@@ -52,6 +52,10 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   string_Writer_exec_i::write (const char *an_instance)
   {
     writer_.write (an_instance);
+    /*::DDS_StringSeq myseq (1);
+    myseq.length (1);
+    myseq[0] = DDS_String_dup("Multi writer");
+    writer_.write (myseq, true);*/
   }
 
   //============================================================

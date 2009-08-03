@@ -40,7 +40,7 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::~Writer_T (void)
 
 template <typename NDDS_TYPE, typename BASE >
 void
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::value_type an_instance)
+CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
 
@@ -62,6 +62,42 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::
                    "Write unsuccessful, received error code %C\n",
                    translate_retcode (retval)));
       throw CCM_DDS::InternalError (retval, 0);
+    }
+
+  CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
+               "Write successful\n"));
+}
+
+template <typename NDDS_TYPE, typename BASE >
+void
+CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::seq_type& instances, bool coherent_write)
+{
+  CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
+
+  if (coherent_write)
+    {
+      this->impl_->get_publisher()->begin_coherent_changes ();
+    }
+
+  CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
+               "Preparing to write to DDS\n"));
+  for (::DDS_Long index = 0; index < instances.length(); index++)
+    {
+      DDS_ReturnCode_t retval = this->impl_->write (instances[index],
+                                     DDS_HANDLE_NIL);
+
+      if (retval != DDS_RETCODE_OK)
+        {
+         CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
+                       "Write unsuccessful, received error code %C\n",
+                       translate_retcode (retval)));
+          throw CCM_DDS::InternalError (retval, index);
+        }
+    }
+
+  if (coherent_write)
+    {
+      this->impl_->get_publisher()->end_coherent_changes ();
     }
 
   CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "

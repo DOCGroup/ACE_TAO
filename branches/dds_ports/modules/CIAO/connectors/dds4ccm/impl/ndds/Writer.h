@@ -25,8 +25,9 @@ namespace CIAO
         // Destructor
         virtual ~Writer_T (void);
 
-        virtual void write (typename NDDS_TYPE::value_type an_instance);
+        virtual void write (typename const NDDS_TYPE::value_type& an_instance);
 
+        virtual void write (typename const NDDS_TYPE::seq_type& instances, bool coherent_write);
       private:
         typename NDDS_TYPE::data_writer *impl_;
       };
