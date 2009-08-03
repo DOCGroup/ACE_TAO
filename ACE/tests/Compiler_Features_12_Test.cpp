@@ -17,14 +17,14 @@
 ACE_RCSID(tests, Compiler_Features_12_Test, "$Id$")
 
 template<typename T>
-struct pair
+struct Pair
 {
   T x1;
   T x2;
 };
 
 template<typename T>
-struct triple
+struct Triple
 {
   T t1;
   T t2;
@@ -46,14 +46,12 @@ run_main (int, ACE_TCHAR *[])
   // failure
   int status = 0;
 
-  Array<int, pair> pairs;
+  Array<int, Pair> pairs;
   pairs.array[0].x1 = 0;
 
-  Array<int, triple> triples;
+  Array<int, Triple> triples;
   triples.array[1].t3 = 0;
 
   ACE_END_TEST;
   return status;
 }
-
-
