@@ -36,14 +36,50 @@
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DataReader.h"
 
+/* The listener of events and data from the middleware */
+class HelloListener : public ::DDS::DataReaderListener
+{ 
+  public:
+    HelloListener ( ::CCM_DDS::string_RawListener_ptr listener,
+                    ::CCM_DDS::PortStatusListener_ptr statuslistener);
+    virtual void on_data_available( ::DDS::DataReader *reader);
+    virtual void
+    on_requested_deadline_missed (
+      ::DDS::DataReader_ptr the_reader,
+      const ::DDS::RequestedDeadlineMissedStatus & status);
+    virtual void
+    on_sample_lost (
+      ::DDS::DataReader_ptr the_reader,
+      const ::DDS::SampleLostStatus & status);
+    bool enabled () const;
+    void enabled (bool enable);
+  private:      
+    ACE_Atomic_Op <ACE_SYNCH_MUTEX, bool> enabled_;
+    ::CCM_DDS::string_RawListener_var listener_;        
+    ::CCM_DDS::PortStatusListener_var statuslistener_;
+};
+
 /* This method gets called back by DDS when one or more data samples have been
  * received.
  */
 
 HelloListener::HelloListener ( ::CCM_DDS::string_RawListener_ptr listener, ::CCM_DDS::PortStatusListener_ptr statuslistener) :
+  enabled_ (true), // @todo should be false later on
   listener_ ( ::CCM_DDS::string_RawListener::_duplicate (listener)),
   statuslistener_ (::CCM_DDS::PortStatusListener::_duplicate (statuslistener))
 {
+}
+
+bool 
+HelloListener::enabled () const
+{
+  return this->enabled_.value ();
+}
+
+void 
+HelloListener::enabled (bool enable)
+{
+  this->enabled_ = enable;
 }
 
 void
@@ -65,6 +101,8 @@ HelloListener::on_sample_lost (
 void 
 HelloListener::on_data_available( ::DDS::DataReader *reader)
 {
+  if (this->enabled_.value ())
+    {
     /* Perform a safe type-cast from a generic data reader into a
      * specific data reader for the type "DDS::String"
      */
@@ -95,6 +133,7 @@ HelloListener::on_data_available( ::DDS::DataReader *reader)
             ::CCM_DDS::ReadInfo empty;
             listener_->on_data (sample, empty);
     }
+  }
   }
 }
 
