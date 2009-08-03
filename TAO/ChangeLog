@@ -1,3 +1,11 @@
+Mon Aug  3 18:01:46 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * NEWS:
+        * docs/Options.html:
+
+          Documented the ORB options for request forward once upon 
+          specified exceptions.
+          
 Mon Aug  3 12:09:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
@@ -71,6 +79,13 @@ Fri Jul 24 21:48:40 UTC 2009  Yan Dai  <dai_y@ociweb.com>
              -ORBForwardOnceOnCommFailure [0|1]
              -ORBForwardOnceOnTransient [0|1]
              -ORBForwardOnceOnInvObjref [0|1]
+
+          The -ORBForwardOnceOnObjectNotExist ORB option is added
+          to avoid side effect from -ORBForwardInvocationOnObjectNotExist
+          that could cause the request fall into forward loop in some
+          use cases (e.g. client sends request while servant is deactivated).
+          The other options are added for the same purpose to avoid
+          possible forward loop upon specified exceptions.
 
           - Currently only four exception forwarding are supported.
           - The stub was changed to remember if forwarding already happened.
