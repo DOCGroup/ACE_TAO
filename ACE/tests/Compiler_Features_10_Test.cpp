@@ -32,17 +32,17 @@ namespace
   bool had_failure = false;
 
   void check_constructor_count(int expected,
-			       char const * filename,
-			       int lineno);
+                               char const * filename,
+                               int lineno);
   void check_destructor_count(int expected,
-			      char const * filename,
-			      int lineno);
+                              char const * filename,
+                              int lineno);
   void check_alloc_count(int expected,
-			 char const * filename,
-			 int lineno);
+                         char const * filename,
+                         int lineno);
   void reset_counts();
   void never_reached(char const * filename,
-		     int lineno);
+                     int lineno);
   int status();
 
   /**
@@ -91,9 +91,9 @@ namespace
       : Base()
     {
       if (do_raise)
-	{
-	  throw std::runtime_error("requested exception");
-	}
+        {
+          throw std::runtime_error("requested exception");
+        }
       // ... if an exception is raised this object is never
       // initialized and no constructor / destructor calls should take
       // place ...
@@ -203,8 +203,8 @@ namespace
 
 void
 check_constructor_count(int expected,
-			char const * filename,
-			int lineno)
+                        char const * filename,
+                        int lineno)
 {
   if (constructors == expected)
     {
@@ -212,14 +212,14 @@ check_constructor_count(int expected,
     }
   had_failure = true;
   ACE_ERROR ((LM_ERROR,
-	      ACE_TEXT("Expected %d constructor calls, had %d -- (%s:%d)\n"),
-	      expected, constructors, filename, lineno));
+              ACE_TEXT("Expected %d constructor calls, had %d -- (%s:%d)\n"),
+              expected, constructors, filename, lineno));
 }
 
 void
 check_destructor_count(int expected,
-		       char const * filename,
-		       int lineno)
+                       char const * filename,
+                       int lineno)
 {
   if (destructors == expected)
     {
@@ -227,14 +227,14 @@ check_destructor_count(int expected,
     }
   had_failure = true;
   ACE_ERROR ((LM_ERROR,
-	      ACE_TEXT("Expected %d destructor calls, had %d -- (%s:%d)\n"),
-	      expected, destructors, filename, lineno));
+              ACE_TEXT("Expected %d destructor calls, had %d -- (%s:%d)\n"),
+              expected, destructors, filename, lineno));
 }
 
 void
 check_alloc_count(int expected,
-		  char const * filename,
-		  int lineno)
+                  char const * filename,
+                  int lineno)
 {
   if (allocs == expected && deallocs == expected)
     {
@@ -244,25 +244,25 @@ check_alloc_count(int expected,
   if (allocs != expected)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT("Expected %d alloc calls, had %d -- (%s:%d)\n"),
-		  expected, allocs, filename, lineno));
+                  ACE_TEXT("Expected %d alloc calls, had %d -- (%s:%d)\n"),
+                  expected, allocs, filename, lineno));
     }
   if (deallocs != expected)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT("Expected %d dealloc calls, had %d -- (%s:%d)\n"),
-		  expected, deallocs, filename, lineno));
+                  ACE_TEXT("Expected %d dealloc calls, had %d -- (%s:%d)\n"),
+                  expected, deallocs, filename, lineno));
     }
 }
 
 void
 never_reached(char const * filename,
-	      int lineno)
+              int lineno)
 {
   had_failure = true;
   ACE_ERROR ((LM_ERROR,
-	      ACE_TEXT("Code should not have reached (%s:%d)\n"),
-	      filename, lineno));
+              ACE_TEXT("Code should not have reached (%s:%d)\n"),
+              filename, lineno));
 }
 
 void
