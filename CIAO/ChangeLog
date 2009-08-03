@@ -1,3 +1,9 @@
+Mon Aug  3 22:54:37 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl:
+
+          Set DANCE_ROOT environment variable. 
+
 Wed Jul 29 11:40:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
