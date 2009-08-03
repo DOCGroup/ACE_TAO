@@ -80,8 +80,8 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("Destructor count off, expected 1, found %d\n"),
-		 Base::destructors));
+                 ACE_TEXT("Destructor count off, expected 1, found %d\n"),
+                 Base::destructors));
     }
 
   std::auto_ptr<Base> z;
@@ -90,15 +90,15 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("Destructor count off, expected 1, found %d\n"),
-		 Base::destructors));
+                 ACE_TEXT("Destructor count off, expected 1, found %d\n"),
+                 Base::destructors));
     }
   if (x.get())
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("x contents should have been transferred\n")
-		 ));
+                 ACE_TEXT("x contents should have been transferred\n")
+                 ));
     }
 
   ACE_END_TEST;

@@ -41,7 +41,7 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected %s got %s\n"),
-		  expected.c_str(), os.str().c_str()));
+                  expected.c_str(), os.str().c_str()));
     }
 
   // ... create an input stream from the result ...
@@ -56,7 +56,7 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected %d got %d\n"),
-		  12345, v));
+                  12345, v));
     }
 
   ACE_END_TEST;

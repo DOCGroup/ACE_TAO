@@ -67,11 +67,11 @@ run_main (int, ACE_TCHAR *[])
 
     if (x != 3)
       {
-	status = 1;
-	ACE_ERROR((LM_ERROR,
-		   ACE_TEXT("Wrong value after const_cast,"
-			    " expected %d, got %d\n"),
-		   3, x));
+        status = 1;
+        ACE_ERROR((LM_ERROR,
+                   ACE_TEXT("Wrong value after const_cast,")
+                   ACE_TEXT(" expected %d, got %d\n"),
+                   3, x));
       }
   }
 
@@ -84,14 +84,14 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("dynamic_cast returns null, expected value\n")));
+                 ACE_TEXT("dynamic_cast returns null, expected value\n")));
     }
   d1->value = 42;
   if (d.value != 42)
     {
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("Wrong value after dynamic_cast, expected %d, got %d\n"),
-		 42, d.value));
+                 ACE_TEXT("Wrong value after dynamic_cast, expected %d, got %d\n"),
+                 42, d.value));
     }
   
   // Make sure dynamic cast detects invalid casts
@@ -102,7 +102,7 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("dynamic_cast should return null\n")));
+                 ACE_TEXT("dynamic_cast should return null\n")));
     }
 
   // Make sure dynamic cast raises an exception
@@ -113,7 +113,7 @@ run_main (int, ACE_TCHAR *[])
 
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("dynamic_cast should have raised exception\n")));
+                 ACE_TEXT("dynamic_cast should have raised exception\n")));
     }
   catch(std::exception const &)
     {
@@ -122,7 +122,7 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("dynamic_cast should have raised std::exception\n")));
+                 ACE_TEXT("dynamic_cast should have raised std::exception\n")));
     }
 
   {
@@ -133,9 +133,9 @@ run_main (int, ACE_TCHAR *[])
 
     if (z == 0)
       {
-	ACE_ERROR((LM_ERROR,
-		   ACE_TEXT("My hack to make sure the code is not "
-			    "optimized away backfired!\n")));
+        ACE_ERROR((LM_ERROR,
+                   ACE_TEXT("My hack to make sure the code is not ")
+                   ACE_TEXT("optimized away backfired!\n")));
       }
   }
 

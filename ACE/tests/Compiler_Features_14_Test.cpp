@@ -90,21 +90,21 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("int should not be a pointer\n")));
+                 ACE_TEXT("int should not be a pointer\n")));
     }
 
   if (! test::is_pointer<int*>())
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("int* should be a pointer\n")));
+                 ACE_TEXT("int* should be a pointer\n")));
     }
 
   if (test::is_pointer<int&>())
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("int& should not be a pointer\n")));
+                 ACE_TEXT("int& should not be a pointer\n")));
     }
 
   ACE_END_TEST;
