@@ -7,6 +7,8 @@ svn up
 cd $ACE_ROOT/bin
 rm *Tests.txt
 rm *TestRev.txt
+rm *Ignore.txt
+rm *Builds.txt
 ./diff-builds-and-group-fixed-tests-only.sh
 
 MAILTO="devo-group@list.isis.vanderbilt.edu"
@@ -29,6 +31,9 @@ mailfile="/tmp/rsmailfile"
    echo
    echo "Sending with revision number"
    cat *Tests.txt
+   echo
+   echo "Sending results per build"
+   cat *Builds.txt
 } > $mailfile
 
 $MAIL -r $MAILFROM -s "ACE/TAO/CIAO test statistics for $CURRENTDATE" $MAILTO < $mailfile
