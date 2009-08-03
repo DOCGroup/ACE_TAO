@@ -49,29 +49,6 @@
 
 #include <ndds/ndds_cpp.h>
 
-/* The listener of events and data from the middleware */
-class HelloListener : public ::DDS::DataReaderListener
-{ 
-  public:
-    HelloListener ( ::CCM_DDS::string_RawListener_ptr listener,
-                    ::CCM_DDS::PortStatusListener_ptr statuslistener);
-    virtual void on_data_available( ::DDS::DataReader *reader);
-    virtual void
-    on_requested_deadline_missed (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::RequestedDeadlineMissedStatus & status);
-    virtual void
-    on_sample_lost (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::SampleLostStatus & status);
-  private:      
-    ::CCM_DDS::string_RawListener_var listener_;        
-    ::CCM_DDS::PortStatusListener_var statuslistener_;
-};
-
-
-
-
 namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 {
   class HELLO_RECEIVER_CONNECTOR_EXEC_Export string_Reader_exec_i
