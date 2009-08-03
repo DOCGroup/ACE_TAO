@@ -1,3 +1,14 @@
+Mon Aug  3 14:00:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp
+        * connectors/dds4ccm/impl/ndds/Writer.h
+        * connectors/dds4ccm/impl/ndds/Writer.tpp
+          Added write with a set for the MultiWriter
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h
+          Start with the reader implementation
+
 Mon Aug  3 12:46:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:

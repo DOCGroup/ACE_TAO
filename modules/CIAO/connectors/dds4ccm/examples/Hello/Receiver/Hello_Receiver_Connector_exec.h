@@ -56,7 +56,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    string_Reader_exec_i (void);
+    string_Reader_exec_i (DDSStringDataReader *reader);
     virtual ~string_Reader_exec_i (void);
 
     // Operations and attributes from ::CCM_DDS::string_Reader
@@ -106,6 +106,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     virtual void
     filter (
       const ::CCM_DDS::QueryFilter & filter);
+    private:
+      DDSStringDataReader *reader_;
   };
 
   class HELLO_RECEIVER_CONNECTOR_EXEC_Export ListenerControl_exec_i
