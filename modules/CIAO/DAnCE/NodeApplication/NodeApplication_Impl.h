@@ -45,19 +45,19 @@ namespace DAnCE
   public:
     NodeApplication_Impl (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa,
-                          const Deployment::DeploymentPlan& plan,
+                          const ::Deployment::DeploymentPlan& plan,
 //                          RedirectionService & redirection,
                           const ACE_CString& node_name,
                           const PROPERTY_MAP &properties);
 
     virtual ~NodeApplication_Impl();
 
-    virtual void finishLaunch (const Deployment::Connections & providedReference,
+    virtual void finishLaunch (const ::Deployment::Connections & providedReference,
                                ::CORBA::Boolean start);
 
     virtual void start ();
 
-    Deployment::Connections * getAllConnections();
+    ::Deployment::Connections * getAllConnections();
 
     //TODO Exception specification should be customized
     void init_components();
@@ -130,7 +130,7 @@ namespace DAnCE
     {
       INSTANCES homes;
       INSTANCES components;
-      Deployment::Properties properties;
+      ::Deployment::Properties properties;
       Components::Deployment::Container_var ref;
     };
 
@@ -139,19 +139,19 @@ namespace DAnCE
     struct ComponentServer
     {
       CONTAINERS containers;
-      Deployment::Properties properties;
+      ::Deployment::Properties properties;
       Components::Deployment::ComponentServer_var ref;
     };
 
     typedef ACE_Array<ComponentServer> COMPONENTSERVERS;
 
-    EInstanceType get_instance_type (const Deployment::Properties& prop) const;
+    EInstanceType get_instance_type (const ::Deployment::Properties& prop) const;
 
-    void create_config_values (const Deployment::Properties& prop,
+    void create_config_values (const ::Deployment::Properties& prop,
                                const ERequestType request,
                                Components::ConfigValues& cfg) const;
 
-    void create_config_values(const Deployment::Properties& prop,
+    void create_config_values(const ::Deployment::Properties& prop,
                             Components::ConfigValues& cfg) const;
 
     void create_component_server (size_t index);
@@ -190,7 +190,7 @@ namespace DAnCE
 
     PortableServer::POA_var poa_;
 
-    const Deployment::DeploymentPlan& plan_;
+    const ::Deployment::DeploymentPlan& plan_;
 
     //ComponentInstallation_Impl* installation_;
     auto_ptr<CIAO::Deployment::CIAO_ServerActivator_i>  activator_;
