@@ -1,3 +1,19 @@
+Mon Aug  3 02:17:38 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Compiler_Features_01_Test.cpp:
+        * tests/Compiler_Features_02_Test.cpp:
+        * tests/Compiler_Features_03_Test.cpp:
+        * tests/Compiler_Features_04_Test.cpp:
+        * tests/Compiler_Features_05_Test.cpp:
+        * tests/Compiler_Features_06_Test.cpp:
+        * tests/Compiler_Features_09_Test.cpp:
+        * tests/Compiler_Features_10_Test.cpp:
+        * tests/Compiler_Features_11_Test.cpp:
+        * tests/Compiler_Features_13_Test.cpp:
+        * tests/Compiler_Features_14_Test.cpp:
+          Fixed all kinds of tab vs. spaces problems.
+          I think I also fixed mis-used ACE_TEXT() concatenation.
+
 Mon Aug  3 12:00:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/mail_test_stats.sh:

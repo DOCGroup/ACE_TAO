@@ -81,7 +81,7 @@ run_main (int, ACE_TCHAR *[])
     {
       status = 1;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected %d got %d\n"),
-		  expected, sum));
+                  expected, sum));
     }
 
   ACE_END_TEST;
