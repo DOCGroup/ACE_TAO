@@ -1,9 +1,22 @@
+Mon Aug  3 12:09:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_3701_Regression/*:
+          Added test for bugzilla 3701
+
+        * tests/Timed_Buffered_Oneways/run_test.pl:
+        * tests/Single_Read/run_test.pl:
+        * tests/Server_Leaks/run_test.pl:
+        * tests/POA/Persistent_ID/run_test.pl:
+        * tests/Crash_On_Write/run_test.pl:
+          Check return value of spawn
+
 Wed Jul 29 20:18:21 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/logWalker.cpp:
 
           wchar build fix.
-          
+
 Wed Jul 29 03:43:38 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/HostProcess.h:
