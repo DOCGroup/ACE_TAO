@@ -56,6 +56,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , ior_info_ (0)
   , forwarded_ior_info_ (0)
   , collocation_opt_ (orb_core->optimize_collocation_objects ())
+  , forwarded_on_exception_ (false)
 {
   if (this->orb_core_.get() == 0)
     {

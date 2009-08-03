@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_sys_stat.h"
 
 long
 Session::tao_version_ = 160;
@@ -48,6 +49,10 @@ Session::add_process (HostProcess *proc)
     ACE_ERROR ((LM_ERROR,
                 "Session::add_process could not bind pid %d\n",
                 proc->pid()));
+  if (procs_by_name_.bind(proc->proc_name(), proc) != 0)
+    ACE_ERROR ((LM_ERROR,
+                "Session::add_process could not bind procname %s\n",
+                proc->proc_name().c_str()));
 }
 
 void
@@ -74,8 +79,9 @@ Session::default_service (const char *addrspec)
   --next_def_pid;
   HostProcess *hp = new HostProcess ("defaulted",next_def_pid);
   hp->proc_name(name);
-  hp->add_endpoint (endpoint);
+  hp->add_listen_endpoint (endpoint);
   this->processes_.bind(next_def_pid,hp);
+  this->procs_by_name_.bind(name,hp);
 }
 
 HostProcess *
@@ -89,73 +95,157 @@ Session::find_process (long pid)
 }
 
 HostProcess *
-Session::find_host (const char *endpoint)
+Session::find_host (ACE_CString &endpoint, bool server)
 {
   ACE_CString test(endpoint);
   ACE_CString alternate;
-  if (this->alt_addrs_.find(test,alternate) == 0)
-    test = alternate;
-  for (Processes::CONST_ITERATOR i (this->processes_); !i.done(); i.advance())
+  size_t sep = test.find(':');
+  if (this->alt_addrs_.find(test.substring (0,sep),alternate) == 0)
+    {
+      test = alternate + test.substring(sep);
+    }
+  for (Processes::ITERATOR i (this->processes_); !i.done(); i.advance())
     {
       Processes::ENTRY *entry;
       if (i.next(entry) == 0)
         break;
-      if (entry->item()->has_endpoint(test))
+      if (entry->item()->has_endpoint(test, server))
         return entry->item();
     }
   return 0;
 }
 
-void 
-Session::dump (ostream &strm) const
+void
+Session::make_dir (const char *dirname)
 {
+  this->base_dir_ = dirname;
+}
+
+void
+Session::outfile (const char *o)
+{
+  this->outfile_ = o;
+}
+
+bool
+Session::has_dir (void)
+{
+  return this->base_dir_.length() > 0;
+}
+
+bool
+Session::has_outfile (void)
+{
+  return this->outfile_.length() > 0;
+}
+
+ostream *
+Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub)
+{
+  if (this->has_dir())
+    {
+      ACE_CString outname = this->base_dir_;
+      
+      if (oldstream == 0)
+        {
+          ACE_OS::mkdir(this->base_dir_.c_str());
+        }
+      delete oldstream;
+      outname += ACE_DIRECTORY_SEPARATOR_CHAR;
+      if (hp != 0)
+        {
+          outname += hp->proc_name();
+          ACE_OS::mkdir(outname.c_str());
+          outname += ACE_DIRECTORY_SEPARATOR_CHAR;
+        }
+      outname += (sub == 0) ? "summary.txt" : sub;
+      return new ofstream (outname.c_str());
+    }
+
+  if (oldstream != 0)
+    return oldstream;
+  if (this->has_outfile())
+    return new ofstream(this->outfile_.c_str());
+  else
+    return &cout;
+}
+
+void 
+Session::dump ()
+{
+  bool single = !this->has_dir();
+  ostream *strm = this->stream_for(0);
+  
   // report session metrics 
 
-  strm << "Session summary report: "
-       << this->processes_.current_size() << " Processes detected." << endl;
-  for (Processes::CONST_ITERATOR i (this->processes_); !i.done(); i.advance())
+  if (single)
+    *strm << "Session summary report: "
+        << this->processes_.current_size() << " Processes detected." << endl;
+  for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
-      Processes::ENTRY *entry;
+      Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      entry->item()->dump_summary (strm);
+      entry->item()->dump_summary (*strm);
     }
 
-  strm << "\n\n\nSession detail threads report: " << endl;
-  for (Processes::CONST_ITERATOR i (this->processes_); !i.done(); i.advance())
+  if (single)
+    *strm << "\n\n\nSession detail threads report: " << endl;
+  for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
-      Processes::ENTRY *entry;
+      Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      entry->item()->dump_thread_detail (strm);
+      strm = stream_for (strm,entry->item(),"threads.txt");
+      entry->item()->dump_thread_detail (*strm);
     }
 
-  strm << "\n\n\nSession detail peer process report: " << endl;
-  for (Processes::CONST_ITERATOR i (this->processes_); !i.done(); i.advance())
+  if (single)
+    *strm << "\n\n\nSession detail peer process report: " << endl;
+  for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
-      Processes::ENTRY *entry;
+      Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      entry->item()->dump_peer_detail (strm);
+      strm = stream_for (strm,entry->item(),"peer_processes.txt");
+      entry->item()->dump_peer_detail (*strm);
     }
 
-  strm << "\n\n\nSession detail object report: " << endl;
-  for (Processes::CONST_ITERATOR i (this->processes_); !i.done(); i.advance())
+  if (single)
+    *strm << "\n\n\nSession detail object report: " << endl;
+  for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
-      Processes::ENTRY *entry;
+      Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      entry->item()->dump_object_detail (strm);
+      strm = stream_for (strm,entry->item(),"objects.txt");
+      entry->item()->dump_object_detail (*strm);
     }
 
-  strm << "\n\n\nSession detail invocation report: " << endl;
-  for (Processes::CONST_ITERATOR i (this->processes_); !i.done(); i.advance())
+  if (single)
+    *strm << "\n\n\nSession detail invocation by peer process report: " << endl;
+  for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
-      Processes::ENTRY *entry;
+      Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      entry->item()->dump_invocation_detail (strm);
+      strm = stream_for (strm,entry->item(),"invocation_by_peer.txt");
+      entry->item()->dump_invocation_detail (*strm);
     }
+
+  if (single)
+    *strm << "\n\n\nSession detail invocation by thread report: " << endl;
+  for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
+    {
+      Procs_By_Name::ENTRY *entry;
+      if (i.next(entry) == 0)
+        continue;
+      strm = stream_for (strm,entry->item(),"invocation_by_thread.txt");
+//       entry->item()->dump_invocation_detail (*strm);
+       entry->item()->dump_thread_invocations (*strm);
+    }
+
+  delete strm;
 }
 
 
@@ -164,7 +254,7 @@ Session::dump (ostream &strm) const
 void
 Session::reconcile (void)
 {
-  for (Processes::CONST_ITERATOR i (this->processes_); !i.done(); i.advance())
+  for (Processes::ITERATOR i (this->processes_); !i.done(); i.advance())
     {
       Processes::ENTRY *entry;
       if (i.next(entry) == 0)

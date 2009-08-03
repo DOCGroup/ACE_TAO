@@ -164,6 +164,7 @@ TAO/tests/Bug_3674_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_3676_Regression/run_test.pl: !NO_MESSAGING
 TAO/tests/Bug_3683_Regression/run_test.pl:
 TAO/tests/Bug_3695_Regression/run_test.pl:
+TAO/tests/Bug_3701_Regression/run_test.pl:
 TAO/tests/DIOP/run_test.pl: !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/DIOP/run_test_ipv6.pl: IPV6 !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
@@ -407,6 +408,7 @@ TAO/tests/Compression/run_test.pl
 TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/ZIOP/run_test.pl: ZIOP ZLIB
 TAO/tests/ForwardUponObjectNotExist/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/ForwardOnceUponException/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/DevGuideExamples/BiDirectionalGIOP/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/GettingStarted/run_test.pl: !LabVIEW_RT !WinCE !FUZZ !VxWorks !VxWorks_RTP
 TAO/DevGuideExamples/LocalObjects/Messenger/run_test.pl: !LabVIEW_RT !WinCE !FUZZ
@@ -426,3 +428,4 @@ TAO/DevGuideExamples/ValueTypes/Messenger/run_test.pl: !MINIMUM !LabVIEW_RT !Win
 TAO/DevGuideExamples/ValueTypes/Bank/run_test.pl: !MINIMUM !LabVIEW_RT !WinCE !FUZZ !CORBA_E_MICRO !VxWorks !VxWorks_RTP
 TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/DevGuideExamples/AMH_AMI/run_test.pl: !NO_MESSAGING !LabVIEW_RT !WinCE !FUZZ !CORBA_E_MICRO !VxWorks !VxWorks_RTP
+

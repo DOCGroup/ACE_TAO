@@ -335,6 +335,19 @@ TAO_Stub::transport_queueing_strategy (void)
   return 0;
 }
 
+ACE_INLINE
+void TAO_Stub::forwarded_on_exception (bool forwarded)
+{
+  forwarded_on_exception_ = forwarded;
+}
+
+ACE_INLINE
+bool TAO_Stub::forwarded_on_exception () const
+{
+  return forwarded_on_exception_.value ();
+}
+
+
 // ---------------------------------------------------------------
 
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
@@ -412,5 +425,6 @@ TAO_Stub_Auto_Ptr::operator *() const
   // @@ Potential problem if this->p_ is zero!
   return *this->get ();
 }
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
