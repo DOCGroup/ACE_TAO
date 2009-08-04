@@ -1355,21 +1355,98 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
 
                 case 'M': // Print the name of the priority of the message.
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
-                  if (can_check)
-                    this_len = ACE_OS::snprintf
-                      (bp, bspace, format,
-                       ACE_Log_Record::priority_name (log_priority));
+                
+                    // Look at the format precision specifier. .1 is interpreted
+                    // as a single character printout, otherwise we print the name of
+                    // the priority.
+                   
+                  // So, did we find a .1 specifier? Do we need to override it?
+                  if (format[1] == ACE_TEXT('.') &&
+                      format[2] == ACE_TEXT('1'))
+                  {
+                      // Yup.
+                      // Print a single character signifying the severity of the message                    
+                      fp = format;
+                      fp++;
+# if defined (ACE_USES_WCHAR)                      
+                      ACE_OS::strcpy (fp, ACE_TEXT ("c"));
+# else /* ACE_USES_WCHAR */
+                      ACE_OS::strcpy (fp, ACE_TEXT ("C"));
+# endif /* ACE_USES_WCHAR */                  
+                      // Below is an optimized (binary search based)
+                      // version of the following simple piece of code:
+                      // 
+                      // log_priority == LM_SHUTDOWN  ? 'S' :   // Shutdown
+                      // log_priority == LM_TRACE     ? 'T' :   // Trace
+                      // log_priority == LM_DEBUG     ? 'D' :   // Debug
+                      // log_priority == LM_INFO      ? 'I' :   // Info
+                      // log_priority == LM_NOTICE    ? 'N' :   // Notice
+                      // log_priority == LM_WARNING   ? 'W' :   // Warning
+                      // log_priority == LM_STARTUP   ? 'U' :   // Startup
+                      // log_priority == LM_ERROR     ? 'E' :   // Error
+                      // log_priority == LM_CRITICAL  ? 'C' :   // Critical
+                      // log_priority == LM_ALERT     ? 'A' :   // Alert
+                      // log_priority == LM_EMERGENCY ? '!' :   // Emergency
+                      //                                '?'      // Unknown
+
+                      if (can_check)
+                        this_len = ACE_OS::snprintf
+                          (bp, bspace, format, 
+                           (log_priority <= LM_WARNING) ? 
+                           (log_priority <= LM_DEBUG) ? 
+                           (log_priority <= LM_TRACE) ? 
+                           (log_priority == LM_SHUTDOWN) ?
+                           ACE_TEXT('S') : ACE_TEXT('T') : ACE_TEXT('D') : 
+                           (log_priority <= LM_NOTICE) ?
+                           (log_priority == LM_INFO) ?
+                           ACE_TEXT('I') : ACE_TEXT('N') : ACE_TEXT('W') :                       
+                           (log_priority <= LM_CRITICAL) ?      
+                           (log_priority <= LM_ERROR) ?     
+                           (log_priority == LM_STARTUP) ?        
+                           ACE_TEXT('U') : ACE_TEXT('E') : ACE_TEXT('C') :
+                           (log_priority <= LM_EMERGENCY) ?
+                           (log_priority == LM_ALERT) ?
+                           ACE_TEXT('A') : ACE_TEXT('!') : ACE_TEXT('?'));
+                      else
+                        this_len = ACE_OS::sprintf
+                          (bp, format, 
+                           (log_priority <= LM_WARNING) ? 
+                           (log_priority <= LM_DEBUG) ? 
+                           (log_priority <= LM_TRACE) ? 
+                           (log_priority == LM_SHUTDOWN) ?
+                           ACE_TEXT('S') : ACE_TEXT('T') : ACE_TEXT('D') : 
+                           (log_priority <= LM_NOTICE) ?
+                           (log_priority == LM_INFO) ?
+                           ACE_TEXT('I') : ACE_TEXT('N') : ACE_TEXT('W') :                       
+                           (log_priority <= LM_CRITICAL) ?      
+                           (log_priority <= LM_ERROR) ?     
+                           (log_priority == LM_STARTUP) ?        
+                           ACE_TEXT('U') : ACE_TEXT('E') : ACE_TEXT('C') :
+                           (log_priority <= LM_EMERGENCY) ?
+                           (log_priority == LM_ALERT) ?
+                           ACE_TEXT('A') : ACE_TEXT('!') : ACE_TEXT('?'));
+                      ACE_UPDATE_COUNT (bspace, this_len);
+                  }
                   else
-                    this_len = ACE_OS::sprintf
-                      (bp, format,
-                       ACE_Log_Record::priority_name (log_priority));
-                  ACE_UPDATE_COUNT (bspace, this_len);
-                  break;
+                  {
+                      // Nope, print out standard priority_name() string
+                  
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                      ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
+#else
+                      ACE_OS::strcpy (fp, ACE_TEXT ("s"));
+#endif
+                      if (can_check)
+                        this_len = ACE_OS::snprintf
+                          (bp, bspace, format,
+                           ACE_Log_Record::priority_name (log_priority));
+                      else
+                        this_len = ACE_OS::sprintf
+                          (bp, format,
+                           ACE_Log_Record::priority_name (log_priority));
+                      ACE_UPDATE_COUNT (bspace, this_len);
+                  }
+                  break;                  
 
                 case 'm': // Format the string assocated with the errno value.
                   {
