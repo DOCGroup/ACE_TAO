@@ -142,7 +142,7 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   // If all open conditions have been satisfied, then return true for success.
   if (this->open_conds_.empty ())
 	  return this->planner_->full_sched();
-//))!(this->planner_->get_working_plan()->get_all_insts().size() > 8)
+//))//!(this->planner_->get_working_plan()->get_all_insts().size() > 8))
   if(true){
 	  // Increment step counter.
 	  this->cur_step_++;
@@ -634,8 +634,10 @@ AddTaskCmd *SA_PlanStrategy::satisfy_cond (Condition open_cond)
   for (OpenCondMap::iterator iter = this->open_conds_.lower_bound (open_cond);
     iter != this->open_conds_.upper_bound (open_cond); iter++)
   {
-    inst_set.insert (iter->second);
-	break;
+	  if(iter->first.value == open_cond.value){
+		inst_set.insert (iter->second);
+		break;
+	  }
   }
   add_task_cmd->set_causal_info (open_cond, inst_set);
 

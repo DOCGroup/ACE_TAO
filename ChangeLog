@@ -1,3 +1,16 @@
+Tue Aug  4 22:14:56 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SANet/SANetFileIn.cpp:
+
+        * SA_POP_Types.h:
+        * SA_PlanHeuristics.h:
+        * SA_PlanHeuristics.cpp:
+        * SA_PlanStrategy.cpp:
+		
+		Various fixes that make SAPOP correctly handle situations with negative preconditions
+		/goals.  Changed Condition equality to handle value, changed SANetFileIn to give conditions
+		correct initial values, and initial action effects all conditions now
+
 Wed Jul 29 20:06:21 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * C2W/C2W_Demo.cpp:
@@ -12,12 +25,12 @@ Wed Jul 29 20:06:21 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SANet/SANode.h:
         * SANet/SANode.cpp:
 
-	Now adds an initial action with an effect of setting all true conditions true.  
-	So the loop in get unsat preconditions that eliminates preconditions true in the environment
-	is gone, since it could generate incorrect plans in environments with threats
+        Now adds an initial action with an effect of setting all true conditions true.
+        So the loop in get unsat preconditions that eliminates preconditions true in the environment
+        is gone, since it could generate incorrect plans in environments with threats
 
-	SANet also sets the utility of this initial condition higher than all other actions, as it should
-	be the first try always
+        SANet also sets the utility of this initial condition higher than all other actions, as it should
+        be the first try always
 
         * SA_POP_Types.h:
         * SA_PlanCommands.h:
@@ -31,10 +44,10 @@ Wed Jul 29 20:06:21 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SA_WorkingPlan.cpp:
         * TaskMapFileIn.cpp:
 
-	Map from last commit has been fixed.
-	
-	Implements a suspended condition map for fixing looping
-	
+        Map from last commit has been fixed.
+
+        Implements a suspended condition map for fixing looping
+
 
 Thu Jul 16 06:13:54 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
