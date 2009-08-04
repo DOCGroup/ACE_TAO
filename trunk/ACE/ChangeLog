@@ -1,3 +1,10 @@
+Mon Aug  3 09:44:11 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Makefile.am:
+          Evidently Automake does not like an empty line after a
+          backslash, so the traditional style of keeping file lists ready
+          to receive more elements fails... Sigh.
+
 Mon Aug  3 08:30:58 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Bug_3709_Regression_Test.cpp:
