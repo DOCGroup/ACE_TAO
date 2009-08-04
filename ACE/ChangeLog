@@ -1,3 +1,12 @@
+Tue Aug  4 12:06:28 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified the prebuild and postbuild rules to obey the 'requires'
+          and 'avoids' MPC settings since the gnuace projects have the    
+          additional requirement of gnu make macros that match the    
+          requirements and avoids settings.                       
+
 Mon Aug  3 20:08:22 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Compiler_Features_06_Test.cpp:
