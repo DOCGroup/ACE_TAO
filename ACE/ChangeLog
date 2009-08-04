@@ -1,3 +1,12 @@
+Mon Aug  3 20:08:22 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Compiler_Features_06_Test.cpp:
+          I think I have fixed the compilation problem on OpenVMS, using
+          some classes and functors in the STL requires including
+          "functional", but most compilers do not enforce this
+          requirement.  Apparently OpenVMS does, I think this is a good
+          feature of said compiler.
+
 Tue Aug  4 10:30:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ace_unicode.mpb:
