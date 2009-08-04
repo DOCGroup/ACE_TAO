@@ -10,6 +10,13 @@ Tue Aug  4 14:32:24 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * NEWS: Noted the behavior change on open().
 
+Tue Jul 28 18:13:22 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_Memory.h: Replace the ACE_throw_bad_alloc macro
+          definition with return (void*) 0 if exceptions=0 is enabled.
+          Thanks to John Lindal <lindalj at yahoo-inc dot com> for this
+          fix.
+
 Mon Jun 22 09:33:40 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ACE version 5.7 released.
