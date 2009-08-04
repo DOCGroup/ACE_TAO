@@ -1,3 +1,27 @@
+Tue Aug  4 15:04:21 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
+        
+          Add command line parameter to automatically shut down after a given 
+          number of samples.
+        
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        
+          Added configuration attributes for number of samples and message.
+        
+        * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+        
+          Added plan/test script to deploy only a Sender component and receive 
+          messages using the raw DDS_Receiver. 
+        
+        * connectors/dds4ccm/impl/ndds/SampleRejectedStatus.h:
+        * connectors/dds4ccm/impl/ndds/Writer.h:
+
+          Compile fixes. 
+        
 Tue Aug  4 12:27:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp

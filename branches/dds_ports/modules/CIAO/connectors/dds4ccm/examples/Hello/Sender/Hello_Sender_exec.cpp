@@ -39,6 +39,8 @@ namespace CIAO_Hello_DDS_Sender_Impl
   //============================================================
 
   Sender_exec_i::Sender_exec_i (void)
+    : iters_ (10),
+      msg_ ("Hi Johnny, I'm a CCM component sending DDS messages!")
   {
   }
 
@@ -49,6 +51,31 @@ namespace CIAO_Hello_DDS_Sender_Impl
   // Supported operations and attributes.
 
   // Component attributes.
+  
+  char *
+  Sender_exec_i::message (void)
+  {
+    return CORBA::string_dup (this->msg_.c_str ());
+  }
+  
+  void
+  Sender_exec_i::message (const char *msg)
+  {
+    this->msg_ = msg;
+  }
+
+  
+  ::CORBA::ULong 
+  Sender_exec_i::iterations (void)
+  {
+    return this->iters_;
+  }
+  
+  void
+  Sender_exec_i::iterations (CORBA::ULong iters)
+  {
+    this->iters_ = iters;
+  }
 
   // Port operations.
 
@@ -78,11 +105,14 @@ namespace CIAO_Hello_DDS_Sender_Impl
   {
     ::CCM_DDS::string_Writer_var writer =
       this->context_->get_connection_push_data_data ();
-
-    for (size_t i = 0; i < 10; ++i)
+    
+    // Allowing some time for discovery to happen
+    ACE_OS::sleep (2);
+    
+    for (size_t i = 0; i < this->iters_; ++i)
       {
         ACE_OS::sleep (2);
-        writer->write ("Hi Johnny! I'm a CCM Component talking over DDS!\n");
+        writer->write (this->msg_.c_str ());
         ACE_DEBUG ((LM_DEBUG, "Sender has send string\n"));
       }
   }

@@ -17,7 +17,7 @@ operator<<= (::DDS::SampleRejectedStatus &ddsstatus, const ::DDS_SampleRejectedS
 {
   ddsstatus.total_count = status.total_count;
   ddsstatus.total_count_change = status.total_count_change;
-  ddsstatus.last_reason = static_cast <::DDS::SampleRejectedStatusKind> (status.last_reason);
+  ddsstatus.last_reason = static_cast < ::DDS::SampleRejectedStatusKind> (status.last_reason);
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
@@ -26,7 +26,7 @@ operator<<= (::DDS_SampleRejectedStatus &ddsstatus, const ::DDS::SampleRejectedS
 {
   ddsstatus.total_count = status.total_count;
   ddsstatus.total_count_change = status.total_count_change;
-  ddsstatus.last_reason = static_cast <::DDS_SampleRejectedStatusKind> (status.last_reason);
+  ddsstatus.last_reason = static_cast < ::DDS_SampleRejectedStatusKind> (status.last_reason);
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
@@ -35,7 +35,7 @@ operator>>= (const ::DDS_SampleRejectedStatus &status, ::DDS::SampleRejectedStat
 {
   ddsstatus.total_count = status.total_count;
   ddsstatus.total_count_change = status.total_count_change;
-  ddsstatus.last_reason = static_cast <::DDS::SampleRejectedStatusKind> (status.last_reason);
+  ddsstatus.last_reason = static_cast < ::DDS::SampleRejectedStatusKind> (status.last_reason);
   ddsstatus.last_instance_handle <<= status.last_instance_handle;
 }
 
@@ -44,7 +44,7 @@ operator>>= (const ::DDS::SampleRejectedStatus &status, ::DDS_SampleRejectedStat
 {
   ddsstatus.total_count = status.total_count;
   ddsstatus.total_count_change = status.total_count_change;
-  ddsstatus.last_reason = static_cast <::DDS_SampleRejectedStatusKind> (status.last_reason);
+  ddsstatus.last_reason = static_cast < ::DDS_SampleRejectedStatusKind> (status.last_reason);
   ddsstatus.last_instance_handle <<= status.last_instance_handle; 
 }
 

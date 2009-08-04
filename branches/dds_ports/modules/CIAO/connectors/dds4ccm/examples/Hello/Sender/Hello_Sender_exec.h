@@ -56,6 +56,14 @@ namespace CIAO_Hello_DDS_Sender_Impl
     
     // Component attributes.
     
+    virtual ::CORBA::ULong iterations (void);
+    
+    virtual void iterations (CORBA::ULong iterations);
+
+    virtual char * message (void);
+    
+    virtual void message (const char *message);
+    
     // Port operations.
     
     // Operations from Components::SessionComponent.
@@ -72,6 +80,9 @@ namespace CIAO_Hello_DDS_Sender_Impl
   
   private:
     ::Hello_DDS::CCM_Sender_Context_var context_;
+    
+    CORBA::ULong iters_;
+    ACE_CString msg_;
   };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
