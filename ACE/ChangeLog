@@ -1,3 +1,9 @@
+Tue Aug  4 03:32:21 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * tests/SString_Test.cpp:
+
+          Fixed compiler warnings on vc71.
+
 Mon Aug  3 09:44:11 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Makefile.am:
