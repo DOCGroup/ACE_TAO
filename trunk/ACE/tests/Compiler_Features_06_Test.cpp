@@ -19,6 +19,10 @@
 // does not compile the platform is just too broken.
 #include <set>
 
+// We are going to use std::greater<>, the spec requires us to include this
+// header.  Only a few platforms enforce this though...
+#include <functional>
+
 ACE_RCSID(tests, Compiler_Features_06_Test, "$Id$")
 
 int
