@@ -1,3 +1,12 @@
+Tue Aug  4 14:32:24 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration.h:
+        * ace/Configuration.cpp (ACE_Configuration_Heap::open): Make multiple
+          open() calls an error (return -1, EBUSY) rather than leaking
+          an allocator and whatever it had allocated.
+
+        * tests/Config_Test.cpp: Add test case for multiple open() calls.
+
 Tue Aug  4 13:09:25 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Log_Msg.cpp: Added support for the %.1M format.  Thanks to
