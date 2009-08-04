@@ -1,3 +1,13 @@
+Tue Aug  4 13:09:25 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Msg.cpp: Added support for the %.1M format.  Thanks to
+          Alon Diamant <diamant at alon at gmail dot com> for contributing
+          this.  This fixes bugid 3716.
+  
+        * tests/Log_Msg.cpp: Added a test for the %.1M format.  Thanks to
+          Alon Diamant <diamant at alon at gmail dot com> for contributing
+          this.
+
 Tue Aug  4 12:07:09 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/mpc.pl:
