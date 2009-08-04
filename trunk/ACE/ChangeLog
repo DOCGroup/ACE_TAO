@@ -4,8 +4,11 @@ Tue Aug  4 14:32:24 UTC 2009  Steve Huston  <shuston@riverace.com>
         * ace/Configuration.cpp (ACE_Configuration_Heap::open): Make multiple
           open() calls an error (return -1, EBUSY) rather than leaking
           an allocator and whatever it had allocated.
+          Fixes Bugzilla 1324.
 
         * tests/Config_Test.cpp: Add test case for multiple open() calls.
+
+        * NEWS: Noted the behavior change on open().
 
 Tue Aug  4 13:09:25 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
