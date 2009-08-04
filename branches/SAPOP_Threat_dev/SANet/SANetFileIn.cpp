@@ -206,9 +206,9 @@ void SANetFileIn::build_net (std::string filename, SA_POP::Builder *builder)
 	else if(cond_kind==cond_kind.SYSTEM) cond=::SA_POP::SYSTEM;
   else cond=::SA_POP::DATA;
 	//Note: 0 here because of the initial action.  Changed from probTrue--Ben
-	builder->add_cond (nodeID, utility, 0, name, cond);
+	builder->add_cond (nodeID, utility, probTrue, name, cond);
 
-	if((probTrue-.5)*2 > 0)
+//	if((probTrue-.5)*2 > 0)
 		builder->set_effect(20, nodeID, "", (probTrue-.5)*2);
   }
 

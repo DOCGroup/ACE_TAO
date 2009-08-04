@@ -83,6 +83,53 @@ Condition SA_CondStrategy::choose_cond_suspension (const OpenCondMap &open_conds
 //  return open_conds.front().first;
 };
 
+// Choose the next open condition to satisfy.
+Condition SA_CondStrategy::choose_cond_suspension_most_constrained (const OpenCondMap &open_conds)
+{
+
+  if (open_conds.empty ())
+    throw "SA_POP::SA_CondStrategy::choose_cond (): Empty condition list.";
+
+  // Return first data condition.
+  for (OpenCondMap::const_iterator iter = open_conds.begin ();
+    iter != open_conds.end (); iter++)
+  {
+    if (iter->first.kind == SA_POP::DATA)
+      return iter->first;
+  }
+
+	std::map<int, std::pair<Condition, TaskInstID>> by_num_satisfying;
+
+	for(OpenCondMap::const_iterator iter = open_conds.begin();
+		iter != open_conds.end(); iter++){
+
+		int num_sat = this->planner_->get_satisfying_tasks(iter->first).size();
+			
+
+		by_num_satisfying.insert(std::pair<int, std::pair<Condition, TaskInstID>>(num_sat, *iter));
+	}
+
+  SA_WorkingPlan* working_plan = (SA_WorkingPlan*)this->planner_->get_working_plan();
+
+  for(std::map<int, std::pair<Condition, TaskInstID>>::iterator it = by_num_satisfying.begin(); it != by_num_satisfying.end(); it++){
+	  
+
+	if(!working_plan->condition_in_suspended(it->second.first, it->second.second)){
+
+			Condition cond = it->second.first;
+
+			return cond;
+	  }else{
+		bool grah = true;
+	  }
+  }
+
+  return working_plan->get_no_condition();
+
+  // If no data conditions, just return first condition.
+//  return open_conds.front().first;
+};
+
 
 
 // Constructor.

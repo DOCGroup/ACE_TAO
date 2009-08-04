@@ -47,6 +47,8 @@ namespace SA_POP {
     virtual Condition choose_cond (const OpenCondMap &open_conds);
 
 	virtual Condition choose_cond_suspension (const OpenCondMap &open_conds);
+  
+	virtual Condition choose_cond_suspension_most_constrained (const OpenCondMap &open_conds);
   };
 
   /**

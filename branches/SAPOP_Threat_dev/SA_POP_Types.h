@@ -72,7 +72,7 @@ namespace SA_POP {
     CondID id;
     CondValue value;
     CondKind kind;
-    bool operator== (const Condition &s) const { return this->id == s.id; };
+	bool operator== (const Condition &s) const { return this->id == s.id && this->value == s.value; };
     bool operator!= (const Condition &s) const { return !(*this == s); };
     bool operator< (const Condition &s) const { return this->id < s.id; };
   };
@@ -529,17 +529,20 @@ namespace SA_POP {
 	
 	Condition satisfied_cond;
 	TaskID satisfying_task;
+	bool satisfied_to;
 
 	StoredCondition(){};
 
 	StoredCondition(Condition cond, TaskID task){
 		this->satisfied_cond = cond;
+		this->satisfied_to = cond.value;
 		this->satisfying_task = task;
 	}
 
 	bool operator==(const StoredCondition & s)const{
 		return (satisfied_cond == s.satisfied_cond &&
-			satisfying_task == s.satisfying_task);
+			satisfying_task == s.satisfying_task &&
+			satisfied_to == s.satisfied_to);
 	};
 
 	bool operator<(const StoredCondition & s) const{
@@ -621,8 +624,6 @@ namespace SA_POP {
 					for(StoredConditionSet::iterator it2 = old_open_conds.begin();
 						it2 != old_open_conds.end(); it2++)
 					{
-						if((*it2).satisfying_task == -1) 
-							bool breakkk = 0;
 
 
 						std::pair<OpenCondMap::iterator, OpenCondMap::iterator>
@@ -639,7 +640,8 @@ namespace SA_POP {
 							else{
 								if((*it3).second == -1)
 								{}
-								else if((*it2).satisfying_task == task_insts.find((*it3).second)->second){
+								else if((*it2).satisfying_task == task_insts.find((*it3).second)->second &&
+									(*it2).satisfied_to == ((*it3).first).value){
 									found_no_equiv_in_open = false;
 								}
 							}
