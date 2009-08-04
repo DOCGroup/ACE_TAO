@@ -24,6 +24,12 @@ Thu Jul 23 16:40:55 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           bounds.  Thanks to Aleksandar Vukajlovic <aleksandar dot
           vukajlovic at finsoft dot rs> for reporting this.
 
+Fri Jul 17 18:32:45 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_time.cpp (mktime): Set t_sys.wMilliseconds to 0 so
+          it's initialized properly.  Thanks to Ryan Carmichael
+          <RCarmichael at drs-tem dot com> for this fix.
+
 Mon Jun 22 09:33:40 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ACE version 5.7 released.
