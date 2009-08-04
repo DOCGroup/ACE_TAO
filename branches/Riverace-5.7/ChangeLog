@@ -30,6 +30,13 @@ Fri Jul 17 18:32:45 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           it's initialized properly.  Thanks to Ryan Carmichael
           <RCarmichael at drs-tem dot com> for this fix.
 
+Mon Jul  6 20:33:00 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_unistd.cpp:
+
+          Fixed a bug where the number of bytes passed to ACE_OS::malloc is
+          incorrect for ACE_USES_WCHAR (each character can be > 1 byte).
+
 Mon Jun 22 09:33:40 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ACE version 5.7 released.
