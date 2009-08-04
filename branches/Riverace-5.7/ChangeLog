@@ -1,3 +1,15 @@
+Tue Aug  4 14:32:24 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration.h:
+        * ace/Configuration.cpp (ACE_Configuration_Heap::open): Make multiple
+          open() calls an error (return -1, EBUSY) rather than leaking
+          an allocator and whatever it had allocated.
+          Fixes Bugzilla 1324.
+
+        * tests/Config_Test.cpp: Add test case for multiple open() calls.
+
+        * NEWS: Noted the behavior change on open().
+
 Mon Jun 22 09:33:40 CDT 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ACE version 5.7 released.
