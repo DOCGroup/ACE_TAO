@@ -1,3 +1,10 @@
+Tue Aug  4 07:51:13 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Compiler_Features_09_Test.cpp:
+          Workaround compiler/library bugs in Solaris Sun C++ 5.10.
+          Amazing that anybody can charge money for such a piece of
+          software.
+
 Tue Aug  4 17:09:00 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.lib.GNU:
