@@ -72,12 +72,6 @@
 #  rwho             Build with rwho, this results in building apps/drwho
 #  pipes            Build with pipe support, resulting in adding -pipe to the
 #                   compiler options.
-#  split            Build the library by first splitting up the ACE source
-#                   to several files, with one object code entity for each
-#                   source file. This allows an application that is linked
-#                   with ACE to extract _exactly_ what it needs from the
-#                   library, resulting in a smaller executable.
-#                   Setting this to 1 overrides debug to 0.
 #  sctp             Build support for TAO SCIOP and for ACE SCTP
 #                   wrapper-facades. The sctp macro should be set to a string
 #                   value representing a particular SCTP implementation.
@@ -466,19 +460,6 @@ ifneq ($(optimize),)
   CFLAGS  += $(OCFLAGS)
   CCFLAGS += $(OCCFLAGS)
 endif # optimize
-
-split ?= 0
-ifeq ($(split),0)
-  override split =
-endif # split
-
-ifneq ($(split),)
-  override split_target = SPLIT
-  override debug = 0
-  CPPFLAGS += -DACE_IS_SPLITTING
-else
-  override split_target =
-endif # split
 
 ifeq ($(debug),0)
   override debug =
