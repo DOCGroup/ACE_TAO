@@ -91,10 +91,12 @@ int testIterator()
                        1);
 
   count = 0;
-  ACE_CString::iterator iter = s1.begin (), iter_end = s1.end ();
 
-  for (; iter != iter_end; iter ++)
+  for (ACE_CString::iterator iter = s1.begin (), iter_end = s1.end ();
+       iter != iter_end; iter ++)
+  {
     ++ count;
+  }
 
   if (count != s1.length ())
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -136,10 +138,12 @@ int testConstIterator()
                        1);
 
   count = 0;
-  ACE_CString::const_iterator iter = s1.begin (), iter_end = s1.end ();
 
-  for (; iter != iter_end; iter ++)
+  for (ACE_CString::const_iterator iter = s1.begin (), iter_end = s1.end ();
+       iter != iter_end; iter ++)
+  {
     ++ count;
+  }
 
   if (count != s1.length ())
     ACE_ERROR_RETURN ((LM_ERROR,
