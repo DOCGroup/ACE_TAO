@@ -115,9 +115,9 @@ HelloListener::on_data_available( ::DDS::DataReader *reader)
     }
 
     /* Loop until there are messages available in the queue */
-    char sample[MAX_STRING_SIZE];
-    char *ptr_sample = &sample[0];
     for(;;) {
+        char sample[MAX_STRING_SIZE];
+        char *ptr_sample  = &sample[0];
         DDS_SampleInfo        info;
         DDS_ReturnCode_t retcode = string_reader->take_next_sample(
                             ptr_sample,
@@ -187,7 +187,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
                            DDS_ALIVE_INSTANCE_STATE);
     if (retval == DDS_RETCODE_OK)
       {
-//        info.timestamp = sample_info[0].reception_timestamp ();
+        an_instance = data[0];
+        //info.timestamp = sample_info[0].reception_timestamp;
       }
     else
       { 
@@ -207,14 +208,30 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   ::CCM_DDS::QueryFilter *
   string_Reader_exec_i::filter (void)
   {
+    DDSQueryCondition* cond = 0;//;this->reader_->get
+    ::CCM_DDS::QueryFilter *qf = new ::CCM_DDS::QueryFilter;
+    qf->query = cond->get_query_expression();
+    
     /* Your code here. */
     return 0;
   }
 
   void
   string_Reader_exec_i::filter (
-    const ::CCM_DDS::QueryFilter & /* filter */)
-  {
+    const ::CCM_DDS::QueryFilter &filter)
+  { 
+    DDS_StringSeq params;
+    DDSQueryCondition* cond = this->reader_->create_querycondition (
+      DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE , 
+      DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE, 
+      DDS_ALIVE_INSTANCE_STATE,
+      filter.query, 
+      params);
+    if (!cond)
+      {
+        throw ::CCM_DDS::BadParameter ();
+      }  
+
     /* Your code here. */
   }
   //============================================================
