@@ -1,3 +1,9 @@
+Tue Aug  4 12:27:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h
+          Started with the QueryFilter support
+
 Tue Aug  4 12:05:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:

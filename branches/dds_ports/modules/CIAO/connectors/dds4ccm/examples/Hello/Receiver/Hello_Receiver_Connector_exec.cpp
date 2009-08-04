@@ -144,7 +144,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   //============================================================
 
   string_Reader_exec_i::string_Reader_exec_i (DDSStringDataReader *reader)
-    : reader_ (reader)
+    : reader_ (reader),
+      condition_ (0)
   {
   }
 
@@ -178,13 +179,20 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   {
     DDS_StringSeq data;
     DDS_SampleInfoSeq sample_info;
-    DDS_ReturnCode_t const retval = 
-      this->reader_->read (data, 
+    DDS_ReturnCode_t retval;
+    if (this->condition_)
+      {
+        retval = this->reader_->read_w_condition (data, sample_info, 1, this->condition_);
+      }
+    else
+      {
+        retval = this->reader_->read (data, 
                            sample_info, 
                            1, 
                            DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE , 
                            DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE, 
                            DDS_ALIVE_INSTANCE_STATE);
+       }                      
     if (retval == DDS_RETCODE_OK)
       {
         an_instance = data[0];
@@ -208,9 +216,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   ::CCM_DDS::QueryFilter *
   string_Reader_exec_i::filter (void)
   {
-    DDSQueryCondition* cond = 0;//;this->reader_->get
     ::CCM_DDS::QueryFilter *qf = new ::CCM_DDS::QueryFilter;
-    qf->query = cond->get_query_expression();
+    qf->query = CORBA::string_dup (this->condition_->get_query_expression());
     
     /* Your code here. */
     return 0;
@@ -220,14 +227,18 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   string_Reader_exec_i::filter (
     const ::CCM_DDS::QueryFilter &filter)
   { 
+    if (this->condition_)
+      {
+        DDS_ReturnCode_t const retval = this->reader_->delete_readcondition (this->condition_);
+      }
     DDS_StringSeq params;
-    DDSQueryCondition* cond = this->reader_->create_querycondition (
+    this->condition_ = this->reader_->create_querycondition (
       DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE , 
       DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE, 
       DDS_ALIVE_INSTANCE_STATE,
       filter.query, 
       params);
-    if (!cond)
+    if (!this->condition_)
       {
         throw ::CCM_DDS::BadParameter ();
       }  

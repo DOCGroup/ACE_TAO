@@ -108,6 +108,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       const ::CCM_DDS::QueryFilter & filter);
     private:
       DDSStringDataReader *reader_;
+      DDSQueryCondition* condition_;
   };
 
   class HELLO_RECEIVER_CONNECTOR_EXEC_Export ListenerControl_exec_i
