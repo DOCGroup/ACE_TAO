@@ -1,3 +1,15 @@
+Tue Aug  4 10:30:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_unicode.mpb:
+          Changed this to a feature, when uses_wchar is set we then
+          just set unicode to 1
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Derive from ace_unicode. That way when we generate with uses_wchar=1
+          the define ACE_USES_WCHAR is generated into the project and also the
+          CharacterSet is correctly set in the msvc project file.
+          This fixes bugzilla 3702
+
 Tue Aug  4 03:32:21 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
 
         * tests/SString_Test.cpp:
