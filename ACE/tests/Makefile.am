@@ -655,7 +655,7 @@ Compiler_Features_01_Test_CPPFLAGS = \
 
 Compiler_Features_01_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_01_Test.cpp \
+  Compiler_Features_01_Test.cpp
 
 Compiler_Features_01_Test_LDADD = \
   libTest_Output.la \
@@ -675,7 +675,7 @@ Compiler_Features_02_Test_CPPFLAGS = \
 
 Compiler_Features_02_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_02_Test.cpp \
+  Compiler_Features_02_Test.cpp
 
 Compiler_Features_02_Test_LDADD = \
   libTest_Output.la \
@@ -695,7 +695,7 @@ Compiler_Features_03_Test_CPPFLAGS = \
 
 Compiler_Features_03_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_03_Test.cpp \
+  Compiler_Features_03_Test.cpp
 
 Compiler_Features_03_Test_LDADD = \
   libTest_Output.la \
@@ -715,7 +715,7 @@ Compiler_Features_04_Test_CPPFLAGS = \
 
 Compiler_Features_04_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_04_Test.cpp \
+  Compiler_Features_04_Test.cpp
 
 Compiler_Features_04_Test_LDADD = \
   libTest_Output.la \
@@ -735,7 +735,7 @@ Compiler_Features_05_Test_CPPFLAGS = \
 
 Compiler_Features_05_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_05_Test.cpp \
+  Compiler_Features_05_Test.cpp
 
 Compiler_Features_05_Test_LDADD = \
   libTest_Output.la \
@@ -755,7 +755,7 @@ Compiler_Features_06_Test_CPPFLAGS = \
 
 Compiler_Features_06_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_06_Test.cpp \
+  Compiler_Features_06_Test.cpp
 
 Compiler_Features_06_Test_LDADD = \
   libTest_Output.la \
@@ -775,7 +775,7 @@ Compiler_Features_07_Test_CPPFLAGS = \
 
 Compiler_Features_07_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_07_Test.cpp \
+  Compiler_Features_07_Test.cpp
 
 Compiler_Features_07_Test_LDADD = \
   libTest_Output.la \
@@ -795,7 +795,7 @@ Compiler_Features_08_Test_CPPFLAGS = \
 
 Compiler_Features_08_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_08_Test.cpp \
+  Compiler_Features_08_Test.cpp
 
 Compiler_Features_08_Test_LDADD = \
   libTest_Output.la \
@@ -815,7 +815,7 @@ Compiler_Features_09_Test_CPPFLAGS = \
 
 Compiler_Features_09_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_09_Test.cpp \
+  Compiler_Features_09_Test.cpp
 
 Compiler_Features_09_Test_LDADD = \
   libTest_Output.la \
@@ -835,7 +835,7 @@ Compiler_Features_10_Test_CPPFLAGS = \
 
 Compiler_Features_10_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_10_Test.cpp \
+  Compiler_Features_10_Test.cpp
 
 Compiler_Features_10_Test_LDADD = \
   libTest_Output.la \
@@ -855,7 +855,7 @@ Compiler_Features_11_Test_CPPFLAGS = \
 
 Compiler_Features_11_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_11_Test.cpp \
+  Compiler_Features_11_Test.cpp
 
 Compiler_Features_11_Test_LDADD = \
   libTest_Output.la \
@@ -875,7 +875,7 @@ Compiler_Features_12_Test_CPPFLAGS = \
 
 Compiler_Features_12_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_12_Test.cpp \
+  Compiler_Features_12_Test.cpp
 
 Compiler_Features_12_Test_LDADD = \
   libTest_Output.la \
@@ -895,7 +895,7 @@ Compiler_Features_13_Test_CPPFLAGS = \
 
 Compiler_Features_13_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_13_Test.cpp \
+  Compiler_Features_13_Test.cpp
 
 Compiler_Features_13_Test_LDADD = \
   libTest_Output.la \
@@ -915,7 +915,7 @@ Compiler_Features_14_Test_CPPFLAGS = \
 
 Compiler_Features_14_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  Compiler_Features_14_Test.cpp \
+  Compiler_Features_14_Test.cpp
 
 Compiler_Features_14_Test_LDADD = \
   libTest_Output.la \
