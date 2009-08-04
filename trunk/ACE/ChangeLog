@@ -1,11 +1,19 @@
+Tue Aug  4 12:07:09 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Use the new MPC Driver constant to determine which type of input
+          will be dealt with (workspaces or projects).
+
 Tue Aug  4 12:06:28 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
 
           Modified the prebuild and postbuild rules to obey the 'requires'
-          and 'avoids' MPC settings since the gnuace projects have the    
-          additional requirement of gnu make macros that match the    
-          requirements and avoids settings.                       
+          and 'avoids' MPC settings since the gnuace projects have the
+          additional requirement of gnu make macros that match the
+          requirements and avoids settings.
 
 Mon Aug  3 20:08:22 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 

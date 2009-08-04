@@ -64,5 +64,5 @@ sub getBasePath {
 # Main Section
 # ************************************************************
 
-my($driver) = new Driver($basePath, basename($0));
+my($driver) = new Driver($basePath, Driver::projects());
 exit($driver->run(@ARGV));
