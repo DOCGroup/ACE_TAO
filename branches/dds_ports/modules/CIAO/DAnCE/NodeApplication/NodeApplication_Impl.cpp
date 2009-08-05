@@ -1028,7 +1028,7 @@ NodeApplication_Impl::store_instance_ior (Instance &inst)
                           name))
     {
       DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::store_instance_ior - ")
-                    ACE_TEXT("Storing instance '%C' object reference in Naming Service as %C"),
+                    ACE_TEXT("Storing instance '%C' object reference in Naming Service as %C\n"),
                     this->plan_.instance[inst.idd_idx].name.in (),
                     name));
 
