@@ -40,6 +40,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     ::DDS::ReturnCode_t retcode;
+    ::DDS::StringDataWriter *string_writer = 0;
+    ::DDS::Topic *topic = 0;
+    ::DDS::DataWriter *data_writer = 0
     int              main_result = 1; /* error by default */
 
     if (parse_args (argc, argv) != 0)
@@ -58,7 +61,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     }
 
     /* Create the topic "Hello, World" for the String type */
-    ::DDS::Topic *topic = participant->create_topic(
+    topic = participant->create_topic(
                         "Hello, World",                        /* Topic name*/
                         ::DDS::StringTypeSupport::get_type_name(), /* Type name */
                         DDS_TOPIC_QOS_DEFAULT,                 /* Topic QoS */
@@ -70,7 +73,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     }
 
     /* Create the data writer using the default publisher */
-    ::DDS::DataWriter *data_writer = participant->create_datawriter(
+    data_writer = participant->create_datawriter(
                                 topic,
                                 DDS_DATAWRITER_QOS_DEFAULT,     /* QoS */
                                 0,                           /* Listener */
@@ -83,7 +86,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     /* Perform a safe type-cast from a generic data writer into a
      * specific data writer for the type "DDS::String"
      */
-    ::DDS::StringDataWriter *string_writer = ::DDS::StringDataWriter::narrow(data_writer);
+    string_writer = ::DDS::StringDataWriter::narrow(data_writer);
     if (!string_writer) {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("DDS_StringDataWriter_narrow failed.\n")));
         /* In this specific case, this will never fail */
