@@ -77,10 +77,10 @@ namespace CIAO
 
       ::DDS::QueryCondition_ptr
       RTI_DataReader_i::create_querycondition (
-        ::DDS::SampleStateMask sample_states,
-        ::DDS::ViewStateMask view_states,
-        ::DDS::InstanceStateMask instance_states,
-        const char * query_expression,
+        ::DDS::SampleStateMask /*sample_states*/,
+        ::DDS::ViewStateMask /*view_states*/,
+        ::DDS::InstanceStateMask /*instance_states*/,
+        const char * /*query_expression*/,
         const ::DDS::StringSeq & /*query_parameters*/)
       {
         DDSQueryCondition* qc = 0; // @todo = this->impl_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
@@ -108,7 +108,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_DataReader_i::set_qos (
-        const ::DDS::DataReaderQos & qos)
+        const ::DDS::DataReaderQos & /*qos*/)
       {
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
@@ -116,7 +116,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_DataReader_i::get_qos (
-        ::DDS::DataReaderQos & qos)
+        ::DDS::DataReaderQos & /*qos*/)
       {
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
@@ -134,7 +134,7 @@ namespace CIAO
       ::DDS::DataReaderListener_ptr
       RTI_DataReader_i::get_listener (void)
       {
-        ::DDSDataReaderListener* reader = this->impl_->get_listener ();
+        //::DDSDataReaderListener* reader = this->impl_->get_listener ();
 //        ::DDS::DataReaderListener_var dds_reader = new RTI_DataReaderListener_i (reader);
         //return dds_reader._retn ();
         throw CORBA::NO_IMPLEMENT ();
@@ -237,8 +237,8 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_DataReader_i::get_matched_publication_data (
-        ::DDS::PublicationBuiltinTopicData & publication_data,
-        const ::DDS::InstanceHandle_t & publication_handle)
+        ::DDS::PublicationBuiltinTopicData & /*publication_data*/,
+        const ::DDS::InstanceHandle_t & /*publication_handle*/)
       {
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here

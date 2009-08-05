@@ -92,7 +92,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipantFactory_i::set_default_participant_qos (const ::DDS::DomainParticipantQos & qos)
+      RTI_DomainParticipantFactory_i::set_default_participant_qos (const ::DDS::DomainParticipantQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::set_default_participant_qos");
 
@@ -100,7 +100,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipantFactory_i::get_default_participant_qos (::DDS::DomainParticipantQos & qos)
+      RTI_DomainParticipantFactory_i::get_default_participant_qos (::DDS::DomainParticipantQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::get_default_participant_qos");
 
@@ -108,7 +108,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipantFactory_i::set_qos (const ::DDS::DomainParticipantFactoryQos & qos)
+      RTI_DomainParticipantFactory_i::set_qos (const ::DDS::DomainParticipantFactoryQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::set_qos");
 
@@ -116,7 +116,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipantFactory_i::get_qos (::DDS::DomainParticipantFactoryQos & qos)
+      RTI_DomainParticipantFactory_i::get_qos (::DDS::DomainParticipantFactoryQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::get_qos");
 
