@@ -1,3 +1,10 @@
+Wed Aug  5 23:28:43 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Parse_Node.cpp: When applying the modules in a dynamic
+          stream, note that they were link()ed in reverse order from what
+          the order is from the svc.conf file. So reverse the order when
+          pushing them on the stream. Fixes Bugzilla #3721.
+
 Tue Aug  4 14:32:24 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Configuration.h:
