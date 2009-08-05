@@ -1,9 +1,16 @@
+Wed Aug  5 14:39:36 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.cpp:
+
+          Changed severity of logging for replacement of already present
+          artifact info. 
+        
 Wed Aug  5 14:38:22 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Servant_Activator.cpp:
 
-          Fixed bug whereby the port activator for a servant would never be found. 
-        
+          Fixed bug whereby the port activator for a servant would never be found.
+
 Wed Aug  5 14:25:09 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:

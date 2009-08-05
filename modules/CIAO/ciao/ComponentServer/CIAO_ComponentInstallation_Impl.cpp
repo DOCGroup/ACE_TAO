@@ -34,7 +34,7 @@ namespace CIAO
         }
       else
         {
-          CIAO_ERROR ((LM_WARNING, CLINFO "ComponentInstallation_Impl::install - Location for artifact %C "
+          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::install - Location for artifact %C "
                        "already present, replacing.\n",
                        implUUID));
           this->locations_.rebind (implUUID, location);
