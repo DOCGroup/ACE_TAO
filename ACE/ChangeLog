@@ -1,3 +1,8 @@
+Wed Aug  5 07:12:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Control/Monitor_Control.mpc:
+          Use prop:microsoft
+
 Tue Aug  4 07:51:13 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Compiler_Features_09_Test.cpp:
