@@ -33,7 +33,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DataWriter_i::set_qos (const ::DDS::DataWriterQos & qos)
+      RTI_DataWriter_i::set_qos (const ::DDS::DataWriterQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_DataWriter_i::set_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -41,7 +41,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DataWriter_i::get_qos (::DDS::DataWriterQos & qos)
+      RTI_DataWriter_i::get_qos (::DDS::DataWriterQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -140,8 +140,8 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DataWriter_i::get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & subscription_data,
-                                                       const ::DDS::InstanceHandle_t & subscription_handle)
+      RTI_DataWriter_i::get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & /*subscription_data*/,
+                                                       const ::DDS::InstanceHandle_t & /*subscription_handle*/)
       {
         CIAO_TRACE ("RTI_DataWriter_i::get_matched_subscription_data");
         throw CORBA::NO_IMPLEMENT ();

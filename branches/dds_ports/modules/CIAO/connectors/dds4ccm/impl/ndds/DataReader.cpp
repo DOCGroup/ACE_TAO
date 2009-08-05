@@ -81,7 +81,7 @@ namespace CIAO
         ::DDS::ViewStateMask view_states,
         ::DDS::InstanceStateMask instance_states,
         const char * query_expression,
-        const ::DDS::StringSeq & query_parameters)
+        const ::DDS::StringSeq & /*query_parameters*/)
       {
         DDSQueryCondition* qc = 0; // @todo = this->impl_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
         ::DDS::QueryCondition_var retval = new RTI_QueryCondition_i (qc);
