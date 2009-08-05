@@ -25,8 +25,8 @@ namespace CIAO
 
       ::DDS::DomainParticipant_ptr
       RTI_DomainParticipantFactory_i::create_participant (::DDS::DomainId_t domain_id,
-                                                          const ::DDS::DomainParticipantQos & qos,
-                                                          ::DDS::DomainParticipantListener_ptr a_listener,
+                                                          const ::DDS::DomainParticipantQos & /*qos*/,
+                                                          ::DDS::DomainParticipantListener_ptr /*a_listener*/,
                                                           ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_DomainParticipantFactory_i::create_participant");

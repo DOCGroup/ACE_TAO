@@ -170,7 +170,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::get_qos (
-        ::DDS::SubscriberQos & qos)
+        ::DDS::SubscriberQos & /*qos*/)
       {
         DDS_SubscriberQos rti_impl_qos;
         DDS_ReturnCode_t const rti_retcode = this->impl_->get_qos (rti_impl_qos);
@@ -221,7 +221,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::set_default_datareader_qos (
-        const ::DDS::DataReaderQos & qos)
+        const ::DDS::DataReaderQos & /*qos*/)
       {
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
@@ -229,7 +229,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::get_default_datareader_qos (
-        ::DDS::DataReaderQos & qos)
+        ::DDS::DataReaderQos & /*qos*/)
       {
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
@@ -237,8 +237,8 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::copy_from_topic_qos (
-        ::DDS::DataReaderQos & a_datareader_qos,
-        const ::DDS::TopicQos & a_impl_qos)
+        ::DDS::DataReaderQos & /*a_datareader_qos*/,
+        const ::DDS::TopicQos & /*a_impl_qos*/)
       {
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
