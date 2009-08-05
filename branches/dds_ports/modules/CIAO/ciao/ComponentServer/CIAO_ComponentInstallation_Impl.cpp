@@ -19,13 +19,13 @@ namespace CIAO
     }
 
     void
-    ComponentInstallation_Impl::install (const char * implUUID,    const char * component_loc)
+    ComponentInstallation_Impl::install (const char * implUUID, const char * component_loc)
     {
       CIAO_TRACE ("ComponentInstallation_Impl::install");
 
       CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::install - "
-                   "implUUID %s, component_loc %s\n", implUUID, component_loc));
-  
+                   "implUUID %C, component_loc %C\n", implUUID, component_loc));
+
       ACE_CString location = component_loc;
 
       if (0 == this->locations_.find (implUUID))
@@ -34,7 +34,7 @@ namespace CIAO
         }
       else
         {
-          CIAO_ERROR ((LM_WARNING, CLINFO "ComponentInstallation_Impl::install - Location for artifact %s "
+          CIAO_ERROR ((LM_WARNING, CLINFO "ComponentInstallation_Impl::install - Location for artifact %C "
                        "already present, replacing.\n",
                        implUUID));
           this->locations_.rebind (implUUID, location);
@@ -43,10 +43,10 @@ namespace CIAO
 
 
     void
-    ComponentInstallation_Impl::replace (const char *uuid , const char *loc)
+    ComponentInstallation_Impl::replace (const char *uuid, const char *loc)
     {
       CIAO_TRACE ("ComponentInstallation_Impl::replace");
-  
+
       this->locations_.rebind (uuid, loc);
     }
 
@@ -66,7 +66,7 @@ namespace CIAO
       if (0 == this->locations_.find (implUUID, s))
         {
           CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::get_implementation - "
-                       "ComponentInstallation_Impl::get_implementation for UUID %s, location %s\n", 
+                       "ComponentInstallation_Impl::get_implementation for UUID %C, location %C\n",
                        implUUID, s.c_str()));
 
           return CORBA::string_dup (s.c_str());
@@ -74,7 +74,7 @@ namespace CIAO
       else
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "ComponentInstallation_Impl::get_implementation - "
-                       "cannot find location for specified implementation UUID\n"));
+                       "cannot find location for specified implementation UUID %C\n", implUUID));
           throw ::Components::Deployment::UnknownImplId();
           return 0;
         }
@@ -86,19 +86,19 @@ namespace CIAO
                                                                const char * repid)
     {
       CIAO_TRACE ("ComponentInstallation_Impl::get_valuetypefactory_location");
-  
+
       ACE_CString key = ComponentInstallation_Impl::valuefactory_key (implUUID, repid);
       ACE_CString s;
       if (0 == this->locations_.find (implUUID, s))
         {
           CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::get_valuetypefactory_location - "
-                       "UUID:\"%s\" repid:\"%s\" -> location:\"%s\"\n", implUUID, repid, s.c_str()));
+                       "UUID:\"%C\" repid:\"%C\" -> location:\"%C\"\n", implUUID, repid, s.c_str()));
           return CORBA::string_dup (s.c_str());
         }
       else
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "ComponentInstallation_Impl::get_valuetypefactory_location - "
-                       "cannot find location for specified implementation UUID and repid.\n"));
+                       "cannot find location for implementation UUID %C and repid %C.\n", implUUID, repid));
           throw ::Components::Deployment::InstallationFailure();
           return 0;
         }
