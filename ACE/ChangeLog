@@ -1,3 +1,20 @@
+Wed Aug  5 23:28:43 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Parse_Node.cpp: When applying the modules in a dynamic
+          stream, note that they were link()ed in reverse order from what
+          the order is from the svc.conf file. So reverse the order when
+          pushing them on the stream. Fixes Bugzilla #3721.
+
+        * tests/Service_Config_Stream_Test.cpp:
+        * tests/Service_Config_Stream_Test.conf: Added, and commented out, a
+          test case for inserting a static module in the dynamic stream. It
+          doesn't work, but it probably should. I'm not sure why it doesn't,
+          and don't have more time to chase this right now. It's not part of
+          Bugzilla 3721 or my customer's case, and this feature has probably
+          never been tested and may have never worked, even pre-Gestalt, per
+          Doug's recollection that Service Config was not intended to be
+          used in this way. If someone has time to work this, please go ahead.
+
 Wed Aug  5 09:40:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-7.h:
