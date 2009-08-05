@@ -153,8 +153,8 @@ namespace CIAO
       ::DDS::Topic_ptr
       RTI_DomainParticipant_i::create_topic (const char * impl_name,
                                              const char * type_name,
-                                             const ::DDS::TopicQos & qos,
-                                             ::DDS::TopicListener_ptr a_listener,
+                                             const ::DDS::TopicQos & /*qos*/,
+                                             ::DDS::TopicListener_ptr /*a_listener*/,
                                              ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_topic");
@@ -271,10 +271,10 @@ namespace CIAO
       }
 
       ::DDS::MultiTopic_ptr
-      RTI_DomainParticipant_i::create_multitopic (const char * name,
-                                                  const char * type_name,
-                                                  const char * subscription_expression,
-                                                  const ::DDS::StringSeq & expression_parameters)
+      RTI_DomainParticipant_i::create_multitopic (const char * /*name*/,
+                                                  const char * /*type_name*/,
+                                                  const char * /*subscription_expression*/,
+                                                  const ::DDS::StringSeq & /*expression_parameters*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_multitopic");
         throw CORBA::NO_IMPLEMENT ();
@@ -314,8 +314,8 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::set_listener (::DDS::DomainParticipantListener_ptr a_listener,
-                                             ::DDS::StatusMask mask)
+      RTI_DomainParticipant_i::set_listener (::DDS::DomainParticipantListener_ptr /*a_listener*/,
+                                             ::DDS::StatusMask /*mask*/)
       {
 //        RTI_DomainParticipantListener_i* rti_impl_list = new RTI_DomainParticipantListener_i (a_listener);
         //return this->impl_->set_listener (rti_impl_list, mask);
@@ -376,7 +376,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::set_default_publisher_qos (const ::DDS::PublisherQos & qos)
+      RTI_DomainParticipant_i::set_default_publisher_qos (const ::DDS::PublisherQos & /*qos*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_default_publisher_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -384,7 +384,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::get_default_publisher_qos (::DDS::PublisherQos & qos)
+      RTI_DomainParticipant_i::get_default_publisher_qos (::DDS::PublisherQos & /*qos*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -392,7 +392,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::set_default_subscriber_qos (const ::DDS::SubscriberQos & qos)
+      RTI_DomainParticipant_i::set_default_subscriber_qos (const ::DDS::SubscriberQos & /*qos*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_default_subscriber_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -400,7 +400,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::get_default_subscriber_qos (::DDS::SubscriberQos & qos)
+      RTI_DomainParticipant_i::get_default_subscriber_qos (::DDS::SubscriberQos & /*qos*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -408,7 +408,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::set_default_topic_qos (const ::DDS::TopicQos & qos)
+      RTI_DomainParticipant_i::set_default_topic_qos (const ::DDS::TopicQos & /*qos*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_default_topic_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -416,7 +416,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::get_default_topic_qos (::DDS::TopicQos & qos)
+      RTI_DomainParticipant_i::get_default_topic_qos (::DDS::TopicQos & /*qos*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -433,8 +433,8 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & impl_data,
-                                                                const ::DDS::InstanceHandle_t & impl_handle)
+      RTI_DomainParticipant_i::get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & /*impl_data*/,
+                                                                const ::DDS::InstanceHandle_t & /*impl_handle*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
         throw CORBA::NO_IMPLEMENT ();
@@ -451,8 +451,8 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::get_discovered_topic_data (::DDS::TopicBuiltinTopicData & impl_data,
-                                                          const ::DDS::InstanceHandle_t & impl_handle)
+      RTI_DomainParticipant_i::get_discovered_topic_data (::DDS::TopicBuiltinTopicData & /*impl_data*/,
+                                                          const ::DDS::InstanceHandle_t & /*impl_handle*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
         throw CORBA::NO_IMPLEMENT ();
