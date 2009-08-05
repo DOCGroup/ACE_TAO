@@ -5,6 +5,18 @@ Tue Aug  4 07:51:13 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
           Amazing that anybody can charge money for such a piece of
           software.
 
+Tue Aug  4 17:43:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.h
+        * ace/config-win32-msvc-7.h
+        * ace/config-win32-msvc-8.h
+        * ace/config-win32-msvc-9.h
+        * ace/config-win32-msvc-10.h
+          Use _fileno instead of fileno with msvc 71/8/9/10
+
+        * ace/OS_NS_stdio.inl:
+          Const changes
+
 Tue Aug  4 17:09:00 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.lib.GNU:
@@ -30,7 +42,7 @@ Tue Aug  4 13:09:25 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * ace/Log_Msg.cpp: Added support for the %.1M format.  Thanks to
           Alon Diamant <diamant at alon at gmail dot com> for contributing
           this.  This fixes bugid 3716.
-  
+
         * tests/Log_Msg.cpp: Added a test for the %.1M format.  Thanks to
           Alon Diamant <diamant at alon at gmail dot com> for contributing
           this.
