@@ -3,6 +3,7 @@
 #include "Topic.h"
 #include "StatusCondition.h"
 #include "InstanceHandle_t.h"
+#include "InconsistentTopicStatus.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -23,20 +24,20 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_Topic_i::set_qos (const ::DDS::TopicQos & qos)
+      RTI_Topic_i::set_qos (const ::DDS::TopicQos & /*qos*/)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
-      RTI_Topic_i::get_qos (::DDS::TopicQos & qos)
+      RTI_Topic_i::get_qos (::DDS::TopicQos & /*qos*/)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
-      RTI_Topic_i::set_listener (::DDS::TopicListener_ptr a_listener,
-                                 ::DDS::StatusMask mask)
+      RTI_Topic_i::set_listener (::DDS::TopicListener_ptr /*a_listener*/,
+                                 ::DDS::StatusMask /*mask*/)
       {
         //RTI_TopicListener_i* rti_impl_list = new RTI_TopicListener_i (a_listener);
         //return this->impl_->set_listener (rti_impl_list, mask);
@@ -52,7 +53,9 @@ namespace CIAO
       ::DDS::ReturnCode_t
       RTI_Topic_i::get_inconsistent_topic_status (::DDS::InconsistentTopicStatus & a_status)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        DDS_InconsistentTopicStatus ddsstatus;
+        ddsstatus <<= a_status;
+        return this->impl_->get_inconsistent_topic_status (ddsstatus);
       }
 
       ::DDS::ReturnCode_t

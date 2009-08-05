@@ -36,8 +36,8 @@ namespace CIAO
       }
 
       ::DDS::Publisher_ptr
-      RTI_DomainParticipant_i::create_publisher (const ::DDS::PublisherQos & qos,
-                                                 ::DDS::PublisherListener_ptr a_listener,
+      RTI_DomainParticipant_i::create_publisher (const ::DDS::PublisherQos & /*qos*/,
+                                                 ::DDS::PublisherListener_ptr /*a_listener*/,
                                                  ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_publisher");
@@ -47,8 +47,8 @@ namespace CIAO
 
         DDSPublisher * rti_pub =
           this->impl_->create_publisher (DDS_PUBLISHER_QOS_DEFAULT,
-                                                0,
-                                                mask);
+                                         0,
+                                         mask);
 
         if (!rti_pub)
           {
@@ -95,8 +95,8 @@ namespace CIAO
       }
 
       ::DDS::Subscriber_ptr
-      RTI_DomainParticipant_i::create_subscriber (const ::DDS::SubscriberQos & qos,
-                                                  ::DDS::SubscriberListener_ptr a_listener,
+      RTI_DomainParticipant_i::create_subscriber (const ::DDS::SubscriberQos & /*qos*/,
+                                                  ::DDS::SubscriberListener_ptr /*a_listener*/,
                                                   ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_subscriber");
@@ -252,10 +252,10 @@ namespace CIAO
       }
 
       ::DDS::ContentFilteredTopic_ptr
-      RTI_DomainParticipant_i::create_contentfilteredtopic (const char * name,
-                                                            ::DDS::Topic_ptr related_topic,
-                                                            const char * filter_expression,
-                                                            const ::DDS::StringSeq & expression_parameters)
+      RTI_DomainParticipant_i::create_contentfilteredtopic (const char * /*name*/,
+                                                            ::DDS::Topic_ptr /*related_topic*/,
+                                                            const char * /*filter_expression*/,
+                                                            const ::DDS::StringSeq & /*expression_parameters*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_contentfilteredtopic");
         throw CORBA::NO_IMPLEMENT ();
@@ -263,7 +263,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::delete_contentfilteredtopic (::DDS::ContentFilteredTopic_ptr a_contentfilteredtopic)
+      RTI_DomainParticipant_i::delete_contentfilteredtopic (::DDS::ContentFilteredTopic_ptr /*a_contentfilteredtopic*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::delete_contentfilteredtopic");
         throw CORBA::NO_IMPLEMENT ();
@@ -282,8 +282,9 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::delete_multitopic (::DDS::MultiTopic_ptr a_multitopic)
+      RTI_DomainParticipant_i::delete_multitopic (::DDS::MultiTopic_ptr /*a_multitopic*/)
       {
+        //this->impl_->delete_multitopic (
         CIAO_TRACE ("DDS_DomainParticipant_i::delete_multitopic");
         throw CORBA::NO_IMPLEMENT ();
 
@@ -297,7 +298,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::set_qos (const ::DDS::DomainParticipantQos & qos)
+      RTI_DomainParticipant_i::set_qos (const ::DDS::DomainParticipantQos & /*qos*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::set_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -305,7 +306,7 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_DomainParticipant_i::get_qos (::DDS::DomainParticipantQos & qos)
+      RTI_DomainParticipant_i::get_qos (::DDS::DomainParticipantQos & /*qos*/)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::get_qos");
         throw CORBA::NO_IMPLEMENT ();
