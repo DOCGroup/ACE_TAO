@@ -146,14 +146,14 @@ namespace CIAO
             continue;
           }
 
-        if (tmp == 0)
+        if (pa.in () == 0)
           {
             CIAO_ERROR ((LM_WARNING, CLINFO
               "Servant_Activator_i::etherealize - Port Activator is NULL\n"));
             continue;
           }
 
-        if (ACE_OS::strcmp (tmp->oid (),
+        if (ACE_OS::strcmp (pa->oid (),
                             str.in ()) == 0)
           {
             CIAO_DEBUG ((LM_INFO, CLINFO
