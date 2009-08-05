@@ -34,8 +34,8 @@ namespace CIAO
 
       ::DDS::DataWriter_ptr
       RTI_Publisher_i::create_datawriter (::DDS::Topic_ptr a_topic,
-                                          const ::DDS::DataWriterQos & qos,
-                                          ::DDS::DataWriterListener_ptr a_listener,
+                                          const ::DDS::DataWriterQos & /*qos*/,
+                                          ::DDS::DataWriterListener_ptr /*a_listener*/,
                                           ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_Publisher_i::create_datawriter");
@@ -114,14 +114,14 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_Publisher_i::set_qos (const ::DDS::PublisherQos & qos)
+      RTI_Publisher_i::set_qos (const ::DDS::PublisherQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_Publisher_i::set_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
-      RTI_Publisher_i::get_qos (::DDS::PublisherQos & qos)
+      RTI_Publisher_i::get_qos (::DDS::PublisherQos & /* qos*/)
       {
         CIAO_TRACE ("RTI_Publisher_i::get_qos");
         throw CORBA::NO_IMPLEMENT ();
@@ -138,11 +138,11 @@ namespace CIAO
       ::DDS::PublisherListener_ptr
       RTI_Publisher_i::get_listener (void)
       {
-        DDSPublisherListener* pl = this->impl_->get_listener ();
+  //      DDSPublisherListener* pl = this->impl_->get_listener ();
 //        ::DDS::PublisherListener_var retval = new RTI_PublisherListener_i (pl);
         //return retval._retn ();
         throw CORBA::NO_IMPLEMENT ();
-       
+
       }
 
       ::DDS::ReturnCode_t
@@ -186,22 +186,22 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_Publisher_i::set_default_datawriter_qos (const ::DDS::DataWriterQos & qos)
+      RTI_Publisher_i::set_default_datawriter_qos (const ::DDS::DataWriterQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_Publisher_i::set_default_datawriter_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
-      RTI_Publisher_i::get_default_datawriter_qos (::DDS::DataWriterQos & qos)
+      RTI_Publisher_i::get_default_datawriter_qos (::DDS::DataWriterQos & /*qos*/)
       {
         CIAO_TRACE ("RTI_Publisher_i::get_default_datawriter_qos");
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
-      RTI_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & a_dataimpl_qos,
-                                            const ::DDS::TopicQos & a_impl_qos)
+      RTI_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & /*a_dataimpl_qos*/,
+                                            const ::DDS::TopicQos & /*a_impl_qos*/)
       {
         CIAO_TRACE ("RTI_Publisher_i::copy_from_topic_qos");
         throw CORBA::NO_IMPLEMENT ();
