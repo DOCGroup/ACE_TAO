@@ -42,7 +42,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     ::DDS::ReturnCode_t retcode;
     ::DDS::StringDataWriter *string_writer = 0;
     ::DDS::Topic *topic = 0;
-    ::DDS::DataWriter *data_writer = 0
+    ::DDS::DataWriter *data_writer = 0;
     int              main_result = 1; /* error by default */
 
     if (parse_args (argc, argv) != 0)
