@@ -11,23 +11,23 @@
 #define CIAO_RTI_QOSPOLICYCOUNTSEQ_H
 
 inline void
-operator<<= (::DDS::QosPolicyCountSeq &ddsstatus, const ::DDS_QosPolicyCountSeq & status)
+operator<<= (::DDS::QosPolicyCountSeq &/*ddsstatus*/, const ::DDS_QosPolicyCountSeq & /*status*/)
 {
   // todo
 }
 
 inline void
-operator<<= (::DDS_QosPolicyCountSeq &ddsstatus, const ::DDS::QosPolicyCountSeq & status)
+operator<<= (::DDS_QosPolicyCountSeq &/*ddsstatus*/, const ::DDS::QosPolicyCountSeq & /*status*/)
 {
 }
 
 inline void
-operator>>= (const ::DDS_QosPolicyCountSeq &status, ::DDS::QosPolicyCountSeq & ddsstatus)
+operator>>= (const ::DDS_QosPolicyCountSeq &/*status*/, ::DDS::QosPolicyCountSeq & /*ddsstatus*/)
 {
 }
 
 inline void
-operator>>= (const ::DDS::QosPolicyCountSeq &status, ::DDS_QosPolicyCountSeq & ddsstatus)
+operator>>= (const ::DDS::QosPolicyCountSeq &/*status*/, ::DDS_QosPolicyCountSeq & /*ddsstatus*/)
 {
 }
 
