@@ -196,7 +196,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     if (retval == DDS_RETCODE_OK)
       {
         an_instance = data[0];
-        //info.timestamp = sample_info[0].reception_timestamp;
+        info.timestamp.sec = sample_info[0].reception_timestamp.sec;
+        info.timestamp.nanosec = sample_info[0].reception_timestamp.nanosec;
       }
     else
       { 
@@ -218,9 +219,18 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   {
     ::CCM_DDS::QueryFilter *qf = new ::CCM_DDS::QueryFilter;
     qf->query = CORBA::string_dup (this->condition_->get_query_expression());
+    ::DDS_StringSeq seq;
+    ::DDS_ReturnCode_t const retval = this->condition_->get_query_parameters (seq);
+    if (retval == DDS_RETCODE_OK)
+      {
+        qf->query_parameters.length (seq.length ());
+        for (::DDS_Long index = 0; index < seq.length (); index++)
+          {
+            qf->query_parameters[index] = CORBA::string_dup (seq[index]);
+          }
+      }
     
-    /* Your code here. */
-    return 0;
+    return qf;
   }
 
   void
@@ -232,6 +242,10 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
         DDS_ReturnCode_t const retval = this->reader_->delete_readcondition (this->condition_);
       }
     DDS_StringSeq params;
+    for (::DDS::StringSeq::size_type index = 0; index < filter.query_parameters.length (); index++)
+      {
+        //params[index] = filter.query_parameters[index].in ();
+      }
     this->condition_ = this->reader_->create_querycondition (
       DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE , 
       DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE, 
@@ -242,8 +256,6 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       {
         throw ::CCM_DDS::BadParameter ();
       }  
-
-    /* Your code here. */
   }
   //============================================================
   // Facet Executor Implementation Class: ListenerControl_exec_i

@@ -8,17 +8,15 @@
 
 #include "dds_rtf2_dcps.idl"
 
-#include <tao/ULongSeq.pidl>
-#include <tao/StringSeq.pidl>
-
 module CCM_DDS
 {
+  typedef sequence<unsigned long> InstanceNumberSeq;
   exception AlreadyCreated {
-    CORBA::ULongSeq indexes;  // of the erroneous
+    InstanceNumberSeq indexes;  // of the erroneous
   };
 
   exception NonExistent{
-    CORBA::ULongSeq indexes;    // of the erroneous
+    InstanceNumberSeq indexes;    // of the erroneous
   };
 
   exception InternalError{
@@ -49,8 +47,8 @@ module CCM_DDS
   typedef sequence<ReadInfo> ReadInfoSeq;
 
   struct QueryFilter {
-    string 			query;
-    CORBA::StringSeq  query_parameters;
+    string            query;
+    ::DDS::StringSeq  query_parameters;
   };
 
 };

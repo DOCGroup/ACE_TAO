@@ -12,14 +12,19 @@
 
 #include "InstanceHandle_t.h"
 
+template <typename corbaseq, typename ddsseq>
+void convert_dds_to_corba_sequence(corbaseq & target, const ddsseq& source) {
+  target.length (source.length ());
+  for (::DDS_Long index = 0; index < source.length (); index++)
+    {
+      target[index] <<= source[index];
+    }
+}
+
 inline void
 operator<<= (::DDS::InstanceHandleSeq &ddsinstancehandleseqseq, const ::DDS_InstanceHandleSeq & instancehandleseq)
 {
-  ddsinstancehandleseqseq.length (instancehandleseq.length ());
-  for (::DDS_Long index = 0; index < instancehandleseq.length (); index++)
-    {
-      ddsinstancehandleseqseq[index] <<= instancehandleseq[index];
-    }
+  convert_dds_to_corba_sequence (ddsinstancehandleseqseq, instancehandleseq);
 }
 
 inline void
