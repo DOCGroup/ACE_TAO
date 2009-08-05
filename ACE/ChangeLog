@@ -1,3 +1,11 @@
+Wed Aug  5 09:40:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-7.h:
+          Just use fileno with msvc71
+
+        * ace/Get_Opt.h:
+          Zap inline from header file
+
 Wed Aug  5 09:00:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ace_unicode.mpb:
