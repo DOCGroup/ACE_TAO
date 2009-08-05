@@ -1,3 +1,8 @@
+Wed Aug  5 08:18:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+          Use "" instead of ''
+
 Wed Aug  5 08:13:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
