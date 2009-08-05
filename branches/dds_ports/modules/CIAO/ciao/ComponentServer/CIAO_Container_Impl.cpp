@@ -178,15 +178,47 @@ namespace CIAO
                        "Unable to bind componnet into component map\n"));
         }
 
-
       return comp._retn ();
     }
 
     void
-    CIAO_Container_i::remove_component (::Components::CCMObject_ptr /*cref*/)
+    CIAO_Container_i::remove_component (::Components::CCMObject_ptr cref)
     {
       CIAO_TRACE("CIAO_Container_i::remove_component");
-      throw CORBA::NO_IMPLEMENT ();
+
+      Component_Iterator i = this->component_map_.begin ();
+      while (!i.done ())
+        {
+          if (i->item ()->_is_equivalent (cref))
+            {
+              CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_component - "
+                           "Successfully found matching component\n"));
+              break;
+            }
+          i.advance ();
+        }
+
+      if (i.done ())
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::remove_component - "
+                       "Unable to find matching component managed by this container, throwing RemoveFailure\n"));
+          throw Components::RemoveFailure ();
+        }
+
+      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_component - "
+                   "Invoking remove on the container impl for component %C.\n",
+                   i->key ().c_str ()));
+      this->container_->uninstall_component (cref);
+      CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::remove_component - "
+                   "Successfully removed component %C\n",
+                   i->key ().c_str ()));
+
+      if (this->component_map_.unbind (i->key ()) != 0)
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::remove_component - "
+                       "Unable to unbind removed component with id %C from component map\n",
+                       i->key ().c_str ()));
+        }
     }
 
     ::Components::CCMObjectSeq *

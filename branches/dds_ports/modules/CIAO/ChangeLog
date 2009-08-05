@@ -1,3 +1,13 @@
+Wed Aug  5 14:00:06 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+
+          Fixed a couple bugs whereby homed and unhomed components didn't
+          have their end of lifecycle events (passivate/remove) invoked
+          during teardown.
+
 Wed Aug  5 08:18:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:

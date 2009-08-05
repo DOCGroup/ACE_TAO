@@ -131,14 +131,9 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
         CORBA::Boolean standalone (false);
 
         val >>= CORBA::Any::to_boolean (standalone);
-        if (standalone)
-          {
-            DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
-                          ACE_TEXT("Acting as a standalone NM, passivating and removing installed components\n")));
 
-            this->application_->passivate_components ();
-            this->application_->remove_components ();
-          }
+        this->application_->passivate_components ();
+        this->application_->remove_components ();
       }
 
 
