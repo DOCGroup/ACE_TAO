@@ -492,6 +492,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>message</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hi, I'm sender One!</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderConnectorComponentInstanceOne">
@@ -572,6 +583,17 @@
         </type>
         <value>
           <string>SenderTwo</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>message</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hi, I'm sender Two!</string>
         </value>
       </value>
     </configProperty>
@@ -658,6 +680,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>message</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hi, I'm sender Three!</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderConnectorComponentInstanceThree">
@@ -738,6 +771,17 @@
         </type>
         <value>
           <string>SenderFour</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>message</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hi, I'm sender Four!</string>
         </value>
       </value>
     </configProperty>
@@ -824,6 +868,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>message</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hi, I'm sender Five!</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderConnectorComponentInstanceFive">
@@ -868,7 +923,7 @@
   </instance>
 
   <connection>
-    <name>string_writer_connection</name>
+    <name>string_writer_connection1</name>
     <internalEndpoint>
       <portName>push_data_data</portName>
       <provider>false</provider>
@@ -884,7 +939,7 @@
   </connection>
 
   <connection>
-    <name>dds_data_writer_connection</name>
+    <name>dds_data_writer_connection1</name>
     <internalEndpoint>
       <portName>push_data_dds_entity</portName>
       <provider>false</provider>
@@ -900,7 +955,7 @@
   </connection>
 
   <connection>
-    <name>string_writer_connection</name>
+    <name>string_writer_connection2</name>
     <internalEndpoint>
       <portName>push_data_data</portName>
       <provider>false</provider>
@@ -916,7 +971,7 @@
   </connection>
 
   <connection>
-    <name>dds_data_writer_connection</name>
+    <name>dds_data_writer_connection2</name>
     <internalEndpoint>
       <portName>push_data_dds_entity</portName>
       <provider>false</provider>
@@ -932,7 +987,7 @@
   </connection>
 
   <connection>
-    <name>string_writer_connection</name>
+    <name>string_writer_connection3</name>
     <internalEndpoint>
       <portName>push_data_data</portName>
       <provider>false</provider>
@@ -948,7 +1003,7 @@
   </connection>
 
   <connection>
-    <name>dds_data_writer_connection</name>
+    <name>dds_data_writer_connection3</name>
     <internalEndpoint>
       <portName>push_data_dds_entity</portName>
       <provider>false</provider>
@@ -964,7 +1019,7 @@
   </connection>
 
   <connection>
-    <name>string_writer_connection</name>
+    <name>string_writer_connection4</name>
     <internalEndpoint>
       <portName>push_data_data</portName>
       <provider>false</provider>
@@ -980,7 +1035,7 @@
   </connection>
 
   <connection>
-    <name>dds_data_writer_connection</name>
+    <name>dds_data_writer_connection4</name>
     <internalEndpoint>
       <portName>push_data_dds_entity</portName>
       <provider>false</provider>
@@ -996,7 +1051,7 @@
   </connection>
 
   <connection>
-    <name>string_writer_connection</name>
+    <name>string_writer_connection5</name>
     <internalEndpoint>
       <portName>push_data_data</portName>
       <provider>false</provider>
@@ -1012,7 +1067,7 @@
   </connection>
 
   <connection>
-    <name>dds_data_writer_connection</name>
+    <name>dds_data_writer_connection5</name>
     <internalEndpoint>
       <portName>push_data_dds_entity</portName>
       <provider>false</provider>
