@@ -64,7 +64,7 @@ namespace CIAO
       ::DDS::DataReader_ptr
       RTI_Subscriber_i::create_datareader (
         ::DDS::TopicDescription_ptr a_topic,
-        const ::DDS::DataReaderQos & qos,
+        const ::DDS::DataReaderQos & /*qos*/,
         ::DDS::DataReaderListener_ptr a_listener,
         ::DDS::StatusMask mask)
       {
@@ -141,10 +141,10 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::get_datareaders (
-        ::DDS::DataReaderSeq & readers,
-        ::DDS::SampleStateMask sample_states,
-        ::DDS::ViewStateMask view_states,
-        ::DDS::InstanceStateMask instance_states)
+        ::DDS::DataReaderSeq & /*readers*/,
+        ::DDS::SampleStateMask /*sample_states*/,
+        ::DDS::ViewStateMask /*view_states*/,
+        ::DDS::InstanceStateMask /*instance_states*/)
       {
         throw CORBA::NO_IMPLEMENT ();
         // Add your implementation here
@@ -158,7 +158,7 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_Subscriber_i::set_qos (
-        const ::DDS::SubscriberQos & qos)
+        const ::DDS::SubscriberQos & /*qos*/)
       {
         DDS_SubscriberQos rti_impl_qos;
 /*        rti_impl_qos.presentation = qos.presentation;
