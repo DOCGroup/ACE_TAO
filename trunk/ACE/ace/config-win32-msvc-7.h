@@ -45,7 +45,6 @@
 #define ACE_STRCASECMP_EQUIVALENT ::_stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
-#define ACE_FILENO_EQUIVALENT ::_fileno
 
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_EXCEPTIONS)
 #define ACE_HAS_EXCEPTIONS
