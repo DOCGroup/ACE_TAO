@@ -65,14 +65,14 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_QueryCondition_i::get_query_parameters (
-        ::DDS::StringSeq & query_parameters)
+        ::DDS::StringSeq & /*query_parameters*/)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
 
       ::DDS::ReturnCode_t
       RTI_QueryCondition_i::set_query_parameters (
-        const ::DDS::StringSeq & query_parameters)
+        const ::DDS::StringSeq & /*query_parameters*/)
       {
         throw CORBA::NO_IMPLEMENT ();
       }
