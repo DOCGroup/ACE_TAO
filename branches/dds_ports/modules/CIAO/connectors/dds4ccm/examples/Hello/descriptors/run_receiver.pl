@@ -167,9 +167,9 @@ if (PerlACE::waitforfile_timed ("Receiver.ior",
     exit 1;
 }
 
-print "Invoking the non-CCM DDS Sender (../DDS_Sender/DDS_Sender -s 'Message from RTI DDS Sender' -i 10)";
+print "Invoking the non-CCM DDS Sender (../DDS_Sender/DDS_Sender -s \"Message from RTI DDS Sender\" -i 10)\n";
 
-$receiver = new PerlACE::Process ("../DDS_Sender/DDS_Sender", "-s 'Message from RTI DDS Sender' -i 10");
+$receiver = new PerlACE::Process ("../DDS_Sender/DDS_Sender", "-s \"Message from RTI DDS Sender\" -i 10");
 
 $result = $receiver->Spawn ();
 
@@ -179,7 +179,7 @@ if ($result != 0) {
     exit 1;
 }
 
-print "Sleeping 30 seconds to receive all messages";
+print "Sleeping 30 seconds to receive all messages\n";
 sleep (30);
 
 # print "Invoking the controller ($controller_exec -k file://Receiver.ior)\n";
