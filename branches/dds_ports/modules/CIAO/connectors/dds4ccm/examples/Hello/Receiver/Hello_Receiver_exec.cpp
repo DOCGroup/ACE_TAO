@@ -31,13 +31,16 @@
 #include "Hello_Receiver_exec.h"
 #include "ciao/CIAO_common.h"
 
+#include "ace/Atomic_Op.h"
+
 namespace CIAO_Hello_DDS_Receiver_Impl
 {
   //============================================================
   // Facet Executor Implementation Class: string_RawListener_exec_i
   //============================================================
 
-  string_RawListener_exec_i::string_RawListener_exec_i (void)
+  string_RawListener_exec_i::string_RawListener_exec_i (Atomic_ULong &received)
+    : received_ (received)
   {
   }
 
@@ -52,6 +55,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     const char * an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
+    ++received_;
     printf ("string raw listener received %s\n", an_instance);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Receiver received: %C\n"), an_instance));
   }
@@ -59,7 +63,8 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
 
-  PortStatusListener_exec_i::PortStatusListener_exec_i (void)
+  PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_ULong &lost)
+    : lost_ (lost)
   {
   }
 
@@ -82,6 +87,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::SampleLostStatus & /* status */)
   {
+    ++lost_;
     printf ("port status listener::on_sample_lost\n");
   }
 
@@ -90,6 +96,10 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
+    : context_ (0),
+      expected_ (10),
+      received_ (0),
+      lost_ (0)
   {
   }
 
@@ -101,18 +111,31 @@ namespace CIAO_Hello_DDS_Receiver_Impl
 
   // Component attributes.
 
+  ::CORBA::ULong 
+  Receiver_exec_i::expected_samples (void)
+  {
+    return this->expected_;
+  }
+
+  void 
+  Receiver_exec_i::expected_samples (::CORBA::ULong expected_samples)
+  {
+    this->expected_ = expected_samples;
+  }
+  
+
   // Port operations.
 
   ::CCM_DDS::CCM_string_RawListener_ptr
   Receiver_exec_i::get_read_message_listener (void)
   {
-    return new string_RawListener_exec_i ();
+    return new string_RawListener_exec_i (this->received_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_read_message_status (void)
   {
-    return new PortStatusListener_exec_i ();
+    return new PortStatusListener_exec_i (this->lost_);
   }
 
   // Operations from Components::SessionComponent.
@@ -151,7 +174,15 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    /* Your code here. */
+    CIAO_DEBUG ((LM_INFO, "Receiver_exec_i received %u messages and lost %u messages\n",
+                 this->received_.value (),
+                 this->lost_.value ()));
+    
+    if (this->received_ != this->expected_)
+      {
+        CIAO_ERROR ((LM_EMERGENCY, "Receiver_exec_i: ERROR: Expected to receive %u messages, actually got %u\n",
+                     this->expected_, this->received_.value ()));
+      }
   }
 
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
