@@ -1,11 +1,17 @@
+Wed Aug  5 18:58:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+          Improved debug messages
+
 Wed Aug  5 18:05:29 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
         * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
 
           Plan modifications/test script for many to one communication.
-          This appears to expose another bug in CIAO, investigating. 
-        
+          This appears to expose another bug in CIAO, investigating.
+
 Wed Aug  5 17:44:03 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
