@@ -1000,7 +1000,7 @@ CORBA::DefaultValueRefCountBase::_tao_refcount_value (void)
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm,
-            CORBA::ValueBase *_tao_valuetype)
+            const CORBA::ValueBase *_tao_valuetype)
 {
   return CORBA::ValueBase::_tao_marshal (
              strm,
