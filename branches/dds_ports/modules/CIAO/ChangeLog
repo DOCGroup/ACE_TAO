@@ -1,9 +1,17 @@
+Wed Aug  5 18:05:29 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
+
+          Plan modifications/test script for many to one communication.
+          This appears to expose another bug in CIAO, investigating. 
+        
 Wed Aug  5 17:44:03 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
-        
-          Log message tweak. 
-        
+
+          Log message tweak.
+
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
 
@@ -12,14 +20,14 @@ Wed Aug  5 17:44:03 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
         * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
-        
+
           Added a sleep between deployment/teardown to accomodate
-          new sender behavior. 
-        
+          new sender behavior.
+
         * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
 
-          Plan that deploys 5 to 1 communication. 
-        
+          Plan that deploys 5 to 1 communication.
+
 Wed Aug  5 14:39:36 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.cpp:
