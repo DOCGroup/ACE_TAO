@@ -789,8 +789,28 @@ namespace CIAO
   Session_Container::uninstall_component (Components::CCMObject_ptr homeref)
   {
     CIAO_TRACE ("Session_Container::uninstall_component");
-
-    this->uninstall (homeref, Container_Types::COMPONENT_t);
+    
+    PortableServer::Servant svnt = this->component_poa_->reference_to_servant (homeref);
+    
+    if (svnt == 0)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::uninstall_component - "
+                     "Unable to convert provided CCMObject reference to Servant."));
+        throw ::Components::RemoveFailure ();
+      }
+    
+    CIAO::Servant_Impl_Base * svt = dynamic_cast < CIAO::Servant_Impl_Base * > (svnt);
+    
+    if (svt == 0)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::uninstall_component - "
+                     "Unable to convert provided servant reference to servant implementation."));
+        throw ::Components::RemoveFailure ();
+      }
+    
+    svt->remove ();
+    
+    //this->uninstall (homeref, Container_Types::COMPONENT_t);
   }
 
   void
