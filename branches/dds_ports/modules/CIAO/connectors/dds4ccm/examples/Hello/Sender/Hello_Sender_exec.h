@@ -44,6 +44,8 @@
 
 namespace CIAO_Hello_DDS_Sender_Impl
 {
+  class Sending_Task;
+  
   class HELLO_SENDER_EXEC_Export Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
@@ -83,6 +85,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     
     CORBA::ULong iters_;
     ACE_CString msg_;
+    Sending_Task *task_;
   };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -180,7 +180,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     
     if (this->received_ != this->expected_)
       {
-        CIAO_ERROR ((LM_EMERGENCY, "Receiver_exec_i: ERROR: Expected to receive %u messages, actually got %u\n",
+        CIAO_ERROR ((LM_EMERGENCY, "Receiver_exec_i: Warning: Expected to receive %u messages, actually got %u\n",
                      this->expected_, this->received_.value ()));
       }
   }

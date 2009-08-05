@@ -31,21 +31,59 @@
 #include "Hello_Sender_exec.h"
 #include "ciao/CIAO_common.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Task.h"
 
 namespace CIAO_Hello_DDS_Sender_Impl
 {
+  class Sending_Task : public virtual ACE_Task_Base
+  {
+  public:
+    Sending_Task (const ACE_CString &msg,
+                  CORBA::ULong iters,
+                  ::CCM_DDS::string_Writer_ptr writer) 
+      : msg_ (msg),
+        iters_ (iters),
+        writer_ (::CCM_DDS::string_Writer::_duplicate (writer))
+    {
+    }
+      
+    virtual int svc (void)
+    {
+      // Allowing some time for discovery to happen
+      ACE_OS::sleep (2);
+        
+      for (size_t i = 0; i < this->iters_; ++i)
+        {
+          ACE_OS::sleep (2);
+          this->writer_->write (this->msg_.c_str ());
+          ACE_DEBUG ((LM_DEBUG, "Sender has sent string\n"));
+        } 
+      
+      return 0;
+    }
+      
+  private:
+    const ACE_CString &msg_;
+    CORBA::ULong iters_;
+    ::CCM_DDS::string_Writer_var writer_;
+  };
+    
+  
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
 
   Sender_exec_i::Sender_exec_i (void)
     : iters_ (10),
-      msg_ ("Hi Johnny, I'm a CCM component sending DDS messages!")
+      msg_ ("Hi Johnny, I'm a CCM component sending DDS messages!"),
+      task_ (0)
   {
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    if (task_)
+      delete task_;
   }
 
   // Supported operations and attributes.
@@ -83,7 +121,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
 
   void
   Sender_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
+                                      ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::Hello_DDS::CCM_Sender_Context::_narrow (ctx);
@@ -106,15 +144,12 @@ namespace CIAO_Hello_DDS_Sender_Impl
     ::CCM_DDS::string_Writer_var writer =
       this->context_->get_connection_push_data_data ();
     
-    // Allowing some time for discovery to happen
-    ACE_OS::sleep (2);
+    this->task_ = new Sending_Task (this->msg_,
+                                    this->iters_,
+                                    writer);
     
-    for (size_t i = 0; i < this->iters_; ++i)
-      {
-        ACE_OS::sleep (2);
-        writer->write (this->msg_.c_str ());
-        ACE_DEBUG ((LM_DEBUG, "Sender has send string\n"));
-      }
+    this->task_->activate (THR_NEW_LWP | THR_JOINABLE,
+                           1);
   }
 
   void
@@ -136,9 +171,9 @@ namespace CIAO_Hello_DDS_Sender_Impl
       ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_RETURN (
-      retval,
-      Sender_exec_i,
-      ::Components::EnterpriseComponent::_nil ());
+                    retval,
+                    Sender_exec_i,
+                    ::Components::EnterpriseComponent::_nil ());
 
     return retval;
   }
@@ -173,9 +208,9 @@ namespace CIAO_Hello_DDS_Sender_Impl
       ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_THROW_EX (
-      retval,
-      Sender_exec_i,
-      ::CORBA::NO_MEMORY ());
+                      retval,
+                      Sender_exec_i,
+                      ::CORBA::NO_MEMORY ());
 
     return retval;
   }
@@ -187,9 +222,9 @@ namespace CIAO_Hello_DDS_Sender_Impl
       ::Components::HomeExecutorBase::_nil ();
 
     ACE_NEW_RETURN (
-      retval,
-      SenderHome_exec_i,
-      ::Components::HomeExecutorBase::_nil ());
+                    retval,
+                    SenderHome_exec_i,
+                    ::Components::HomeExecutorBase::_nil ());
 
     return retval;
   }
