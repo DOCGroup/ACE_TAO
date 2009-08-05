@@ -1,11 +1,23 @@
+Wed Aug  5 08:13:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
+          Implemented more methods
+
+        * connectors/dds4ccm/idl/dds4ccm_Base.idl3:
+          Use DDS sequences
+
+        * connectors/dds4ccm/impl/ndds/InstanceHandleSeq.h:
+          Use a template for the conversion, we need to factor out conversion of all
+          sequences
+
 Tue Aug  4 16:00:02 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp:
         * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
 
           Added plan/test script to deploy only a receiver component and
-          send messages using the RTI DDS sender. 
-        
+          send messages using the RTI DDS sender.
+
 Tue Aug  4 15:04:21 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
