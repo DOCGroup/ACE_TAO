@@ -44,90 +44,103 @@
 
 namespace CIAO_Hello_DDS_Receiver_Impl
 {
+  typedef ACE_Atomic_Op <ACE_Thread_Mutex, CORBA::ULong > Atomic_ULong;
+  
   class HELLO_RECEIVER_EXEC_Export string_RawListener_exec_i
     : public virtual ::CCM_DDS::CCM_string_RawListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    string_RawListener_exec_i (void);
+    string_RawListener_exec_i (Atomic_ULong &);
     virtual ~string_RawListener_exec_i (void);
-    
-    // Operations and attributes from ::CCM_DDS::string_RawListener
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void
-    on_data (
-      const char * an_instance,
-      const ::CCM_DDS::ReadInfo & info);
-  };
   
-  class HELLO_RECEIVER_EXEC_Export PortStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_PortStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    PortStatusListener_exec_i (void);
-    virtual ~PortStatusListener_exec_i (void);
+  // Operations and attributes from ::CCM_DDS::string_RawListener
     
-    // Operations and attributes from ::CCM_DDS::PortStatusListener
+  // TAO_IDL - Generated from
+  // be/be_visitor_operation/operation_ch.cpp:46
     
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+  virtual void
+  on_data (
+           const char * an_instance,
+           const ::CCM_DDS::ReadInfo & info);
     
-    virtual void
+private:
+  Atomic_ULong &received_;
+};
+  
+class HELLO_RECEIVER_EXEC_Export PortStatusListener_exec_i
+  : public virtual ::CCM_DDS::CCM_PortStatusListener,
+    public virtual ::CORBA::LocalObject
+{
+ public:
+  PortStatusListener_exec_i (Atomic_ULong &);
+  virtual ~PortStatusListener_exec_i (void);
+    
+  // Operations and attributes from ::CCM_DDS::PortStatusListener
+    
+  // TAO_IDL - Generated from
+  // be/be_visitor_operation/operation_ch.cpp:46
+    
+  virtual void
     on_requested_deadline_missed (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::RequestedDeadlineMissedStatus & status);
+                                  ::DDS::DataReader_ptr the_reader,
+                                  const ::DDS::RequestedDeadlineMissedStatus & status);
     
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+  // TAO_IDL - Generated from
+  // be/be_visitor_operation/operation_ch.cpp:46
     
-    virtual void
+  virtual void
     on_sample_lost (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::SampleLostStatus & status);
-  };
+                    ::DDS::DataReader_ptr the_reader,
+                    const ::DDS::SampleLostStatus & status);
+ private:
+  Atomic_ULong &lost_;
+};
   
-  class HELLO_RECEIVER_EXEC_Export Receiver_exec_i
-    : public virtual Receiver_Exec,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    Receiver_exec_i (void);
-    virtual ~Receiver_exec_i (void);
+class HELLO_RECEIVER_EXEC_Export Receiver_exec_i
+  : public virtual Receiver_Exec,
+    public virtual ::CORBA::LocalObject
+{
+ public:
+  Receiver_exec_i (void);
+  virtual ~Receiver_exec_i (void);
     
-    // Supported operations and attributes.
+  // Supported operations and attributes.
     
-    // Component attributes.
+  // Component attributes.
+  virtual ::CORBA::ULong expected_samples (void);
     
-    // Port operations.
+  virtual void expected_samples (::CORBA::ULong expected_samples);
+
+  // Port operations.
     
-    virtual ::CCM_DDS::CCM_string_RawListener_ptr
+  virtual ::CCM_DDS::CCM_string_RawListener_ptr
     get_read_message_listener (void);
     
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+  virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_read_message_status (void);
     
-    // Operations from Components::SessionComponent.
+  // Operations from Components::SessionComponent.
     
-    virtual void
+  virtual void
     set_session_context (
-      ::Components::SessionContext_ptr ctx);
+                         ::Components::SessionContext_ptr ctx);
     
-    virtual void configuration_complete (void);
+  virtual void configuration_complete (void);
     
-    virtual void ccm_activate (void);
-    virtual void ccm_passivate (void);
-    virtual void ccm_remove (void);
+  virtual void ccm_activate (void);
+  virtual void ccm_passivate (void);
+  virtual void ccm_remove (void);
   
-  private:
-    ::Hello_DDS::CCM_Receiver_Context_var context_;
-  };
+ private:
+  ::Hello_DDS::CCM_Receiver_Context_var context_;
+  CORBA::ULong expected_;
+  Atomic_ULong received_;
+  Atomic_ULong lost_;
+};
   
-  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Hello_DDS_Receiver_Impl (void);
+extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
+create_Hello_DDS_Receiver_Impl (void);
 }
 
 namespace CIAO_Hello_DDS_Receiver_Impl
@@ -150,7 +163,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     // Implicit operations.
     
     virtual ::Components::EnterpriseComponent_ptr
-    create (void);
+      create (void);
   };
   
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr

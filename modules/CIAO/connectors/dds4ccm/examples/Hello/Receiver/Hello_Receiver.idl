@@ -16,6 +16,8 @@ module Hello_DDS
     provides CCM_DDS::string_RawListener read_message_listener;
     uses DDS::DataReader read_message_dds_entity;
     provides CCM_DDS::PortStatusListener read_message_status;
+    
+    attribute unsigned long expected_samples;
   };
 
   home ReceiverHome manages Receiver

@@ -1,3 +1,12 @@
+Wed Aug  5 14:25:09 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+
+          Added some configuration attributes to provide a hint to the receiver as to
+          how many samples it should be receiving.
+
 Wed Aug  5 14:00:06 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
