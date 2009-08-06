@@ -12,6 +12,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
     Bug_2583_Regression.idl
     Bug_2616_Regression.idl
     Bug_2619_Regression.idl
+    Bug_3243_Regression.idl
     enum_in_struct.idl
     full.idl
     fwd.idl
@@ -94,6 +95,10 @@ project(*Main): taoserver, messaging, gen_ostream {
     Bug_2616_RegressionS.cpp
     Bug_2619_RegressionC.cpp
     Bug_2619_RegressionS.cpp
+    Bug_3243_RegressionC.cpp
+    Bug_3243_RegressionS.cpp
+    Bug_3243_RegressionC.cpp
+    Bug_3243_RegressionS.cpp
     constantsA.cpp
     constantsC.cpp
     constantsS.cpp
