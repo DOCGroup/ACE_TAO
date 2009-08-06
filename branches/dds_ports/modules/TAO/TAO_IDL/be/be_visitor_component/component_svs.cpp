@@ -287,7 +287,7 @@ be_visitor_component_svs::gen_servant_class (void)
       << be_nl << be_nl
       << "/// Set the instance id of the component on the context."
       << be_nl
-      << "this->context_->_ciao_instance_id (this->ins_name_);";
+      << "this->context_->_ciao_instance_id (this->ins_name_.c_str ());";
 
   if (be_global->gen_ciao_valuefactory_reg ())
     {
