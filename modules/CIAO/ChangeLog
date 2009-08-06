@@ -1,23 +1,34 @@
+Thu Aug  6 15:32:19 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+
+          Second part of fix for
+          Thu Aug  6 01:46:32 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>,
+          now bug 3725.  Homes how keep an increasing serial counter of the home
+          instances they create, and append this number to the instance ID passed
+          to the component servant when it is instantiated.  
+        
 Thu Aug  6 13:46:11 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Servant_Activator.cpp:
         * ciao/Servants/Home_Servant_Impl_T.h:
         * ciao/Servants/Home_Servant_Impl_T.cpp:
-        
-          Various logging improvements, as well as a *partial* fix for 
+
+          Various logging improvements, as well as a *partial* fix for
           Thu Aug  6 01:46:32 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>,
           allowing multiple homes of the *same type* to deploy/manage a single component
           each.  Part of the problem was memory corruption in the home/component instance
           name, which has been resolved by using ACE_CString instead of naked char *s to
-          store these. 
-        
+          store these.
+
           Homes which host multiple components are still broken, as the facet ObjectID,
-          while no longer garbage, is the same for all instances managed by that home.  
-        
+          while no longer garbage, is the same for all instances managed by that home.
+
         * ciao/Containers/Session/Session_Container.cpp:
 
-          Newline on log message. 
-        
+          Newline on log message.
+
 Thu Aug  6 13:39:16 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
