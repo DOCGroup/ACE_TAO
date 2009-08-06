@@ -1,3 +1,9 @@
+Thu Aug  6 13:45:29 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_Memory.h (ACE_throw_bad_alloc): Changed return (void *) 0
+          to simply return 0.  Thanks to Johnny Willemsen for reporting
+          this.
+
 Thu Aug  6 06:45:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
