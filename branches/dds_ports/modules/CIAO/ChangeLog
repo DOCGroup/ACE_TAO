@@ -1,3 +1,15 @@
+Thu Aug  6 01:46:32 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/TwoComponentsOneHome.cdp:
+
+          Added test plan that exhibits a problem when the same home is used
+          to deploy two components that provide facets.  The problem is that
+          the servant activator/port activator only really tracks a SINGLE
+          facet instance PER HOME.  This would produce runtime side effects
+          for components with stateful facet executors, but especially causes
+          a problem during teardown, when the container attempts to 
+          repeatedly deactivate the single facet servant.  
+        
 Wed Aug  5 18:58:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
