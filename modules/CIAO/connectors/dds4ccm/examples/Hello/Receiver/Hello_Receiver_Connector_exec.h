@@ -354,8 +354,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     ::DDS::DomainParticipant_var dp_;
     ::DDS::Topic_var t_;
     ::DDS::Subscriber_var sub_;
-    ::DDS::DataReader_var dr_;
     ::DDS::DataReaderListener_var listener_;
+    ::DDS::DataReader_var dr_;
   };
 
   extern "C" HELLO_RECEIVER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
