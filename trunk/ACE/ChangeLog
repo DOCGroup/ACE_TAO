@@ -1,3 +1,8 @@
+Thu Aug  6 06:45:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Removed fixed only from Service_Config_Stream_Test
+
 Wed Aug  5 23:28:43 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Parse_Node.cpp: When applying the modules in a dynamic
