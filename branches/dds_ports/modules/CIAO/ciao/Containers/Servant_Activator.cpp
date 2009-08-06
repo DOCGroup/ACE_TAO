@@ -134,7 +134,6 @@ namespace CIAO
       PortableServer::ObjectId_to_string (oid);
 
     size_t const sz = this->slot_index_;
-    Port_Activator *tmp = 0;
 
     for (size_t t = 0; t != sz; ++t)
       {
@@ -186,7 +185,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_INFO, CLINFO
                     "Servant_Activator_i::"
                     "register_port_activator"
-        " with port name [%C],"
+                    " with port name [%C],"
                     " the slot_index_ is [%d]\n",
                     pa->name (),
                     this->slot_index_));

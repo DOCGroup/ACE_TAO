@@ -38,7 +38,7 @@
 
 /* The listener of events and data from the middleware */
 class HelloListener : public ::DDS::DataReaderListener
-{ 
+{
   public:
     HelloListener ( ::CCM_DDS::string_RawListener_ptr listener,
                     ::CCM_DDS::PortStatusListener_ptr statuslistener);
@@ -53,9 +53,9 @@ class HelloListener : public ::DDS::DataReaderListener
       const ::DDS::SampleLostStatus & status);
     bool enabled () const;
     void enabled (bool enable);
-  private:      
+  private:
     ACE_Atomic_Op <ACE_SYNCH_MUTEX, bool> enabled_;
-    ::CCM_DDS::string_RawListener_var listener_;        
+    ::CCM_DDS::string_RawListener_var listener_;
     ::CCM_DDS::PortStatusListener_var statuslistener_;
 };
 
@@ -70,13 +70,13 @@ HelloListener::HelloListener ( ::CCM_DDS::string_RawListener_ptr listener, ::CCM
 {
 }
 
-bool 
+bool
 HelloListener::enabled () const
 {
   return this->enabled_.value ();
 }
 
-void 
+void
 HelloListener::enabled (bool enable)
 {
   this->enabled_ = enable;
@@ -89,7 +89,7 @@ HelloListener::on_requested_deadline_missed (
 {
   this->statuslistener_->on_requested_deadline_missed (the_reader, status);
 }
-      
+
 void
 HelloListener::on_sample_lost (
       ::DDS::DataReader_ptr the_reader,
@@ -98,7 +98,7 @@ HelloListener::on_sample_lost (
   this->statuslistener_->on_sample_lost (the_reader, status);
 }
 
-void 
+void
 HelloListener::on_data_available( ::DDS::DataReader *reader)
 {
   if (this->enabled_.value ())
@@ -186,13 +186,13 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       }
     else
       {
-        retval = this->reader_->read (data, 
-                           sample_info, 
-                           1, 
-                           DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE , 
-                           DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE, 
+        retval = this->reader_->read (data,
+                           sample_info,
+                           1,
+                           DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+                           DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                            DDS_ALIVE_INSTANCE_STATE);
-       }                      
+       }
     if (retval == DDS_RETCODE_OK)
       {
         an_instance = data[0];
@@ -200,7 +200,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
         info.timestamp.nanosec = sample_info[0].reception_timestamp.nanosec;
       }
     else
-      { 
+      {
         throw ::CCM_DDS::InternalError (retval, 0);
       }
   }
@@ -229,17 +229,18 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
             qf->query_parameters[index] = CORBA::string_dup (seq[index]);
           }
       }
-    
+
     return qf;
   }
 
   void
   string_Reader_exec_i::filter (
     const ::CCM_DDS::QueryFilter &filter)
-  { 
+  {
     if (this->condition_)
       {
         DDS_ReturnCode_t const retval = this->reader_->delete_readcondition (this->condition_);
+        ACE_UNUSED_ARG (retval);
       }
     DDS_StringSeq params;
     for (::DDS::StringSeq::size_type index = 0; index < filter.query_parameters.length (); index++)
@@ -247,15 +248,15 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
         //params[index] = filter.query_parameters[index].in ();
       }
     this->condition_ = this->reader_->create_querycondition (
-      DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE , 
-      DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE, 
+      DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+      DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
       DDS_ALIVE_INSTANCE_STATE,
-      filter.query, 
+      filter.query,
       params);
     if (!this->condition_)
       {
         throw ::CCM_DDS::BadParameter ();
-      }  
+      }
   }
   //============================================================
   // Facet Executor Implementation Class: ListenerControl_exec_i
@@ -468,9 +469,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   //============================================================
 
   Hello_receiver_Connector_exec_i::Hello_receiver_Connector_exec_i (void)
-    : dds_configured_ (false),
-      listener_ (0),
-      dr_ (0)
+    : dds_configured_ (false)
   {
   }
 
@@ -583,8 +582,8 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
         ::DDS::DataReaderQos drqos;
         ::CCM_DDS::string_RawListener_var rawlistener =
           this->context_->get_connection_receiver_listener ();
-          
-        ::CCM_DDS::PortStatusListener_var portstatuslistener = 
+
+        ::CCM_DDS::PortStatusListener_var portstatuslistener =
           this->context_->get_connection_receiver_status ();
 
         ::DDS::DataReaderListener_ptr temp = new HelloListener (rawlistener.in (), portstatuslistener.in ());
