@@ -841,11 +841,12 @@ namespace CIAO
         PortableServer::ObjectId_var tmp_id;
         tmp_id = tmp->servant_to_id (svnt);
         tmp->deactivate_object (tmp_id);
-        svnt->_remove_ref ();
 
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::uninstall_servant - "
                      "Servant successfully removed, reference count is %u\n",
-                     svnt->_refcount_value ()));
+                     svnt->_refcount_value () - 1));
+
+        svnt->_remove_ref ();
 
         oid = tmp_id._retn ();
       }
