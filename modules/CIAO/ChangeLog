@@ -1,3 +1,12 @@
+Thu Aug  6 13:39:16 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
+
+          Updated to use separate homes for each sender/connector to workaround
+          the bug checked in with:
+        
+        Thu Aug  6 01:46:32 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+        
 Thu Aug  6 11:29:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_Container_Impl.cpp

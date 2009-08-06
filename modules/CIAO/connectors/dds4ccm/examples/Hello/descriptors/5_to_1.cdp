@@ -392,8 +392,98 @@
     </configProperty>
   </instance>
 
-  <instance xmi:id="Hello_SenderHomeInstance">
-    <name>Hello_SenderHome</name>
+  <instance xmi:id="Hello_SenderHomeInstance1">
+    <name>Hello_SenderHome1</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_SenderHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome1.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Hello_SenderHomeInstance2">
+    <name>Hello_SenderHome2</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_SenderHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome2.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Hello_SenderHomeInstance3">
+    <name>Hello_SenderHome3</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_SenderHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome3.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Hello_SenderHomeInstance4">
+    <name>Hello_SenderHome4</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
@@ -416,15 +506,44 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SenderHome</string>
+          <string>SenderHome4</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
+  <instance xmi:id="Hello_SenderHomeInstance5">
+    <name>Hello_SenderHome5</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_SenderHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderHome5</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
 
-  <instance xmi:id="Hello_SenderConnectorHomeInstance">
-    <name>Hello_SenderConnectorHome</name>
+  <instance xmi:id="Hello_SenderConnectorHomeInstance1">
+    <name>Hello_SenderConnectorHome1</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
@@ -436,7 +555,124 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SenderConnectorHome.ior</string>
+          <string>SenderConnectorHome1.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderConnectorHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Hello_SenderConnectorHomeInstance2">
+    <name>Hello_SenderConnectorHome2</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderConnectorHome2.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderConnectorHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="Hello_SenderConnectorHomeInstance3">
+    <name>Hello_SenderConnectorHome3</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderConnectorHome3.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderConnectorHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="Hello_SenderConnectorHomeInstance4">
+    <name>Hello_SenderConnectorHome4</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderConnectorHome4.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderConnectorHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="Hello_SenderConnectorHomeInstance5">
+    <name>Hello_SenderConnectorHome5</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SenderConnectorHome5.ior</string>
         </value>
       </value>
     </configProperty>
@@ -466,7 +702,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderHome</string>
+          <string>Hello_SenderHome1</string>
         </value>
       </value>
     </configProperty>
@@ -518,7 +754,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderConnectorHome</string>
+          <string>Hello_SenderConnectorHome1</string>
         </value>
       </value>
     </configProperty>
@@ -560,7 +796,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderHome</string>
+          <string>Hello_SenderHome2</string>
         </value>
       </value>
     </configProperty>
@@ -612,7 +848,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderConnectorHome</string>
+          <string>Hello_SenderConnectorHome2</string>
         </value>
       </value>
     </configProperty>
@@ -654,7 +890,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderHome</string>
+          <string>Hello_SenderHome3</string>
         </value>
       </value>
     </configProperty>
@@ -706,7 +942,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderConnectorHome</string>
+          <string>Hello_SenderConnectorHome3</string>
         </value>
       </value>
     </configProperty>
@@ -748,7 +984,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderHome</string>
+          <string>Hello_SenderHome4</string>
         </value>
       </value>
     </configProperty>
@@ -800,7 +1036,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderConnectorHome</string>
+          <string>Hello_SenderConnectorHome4</string>
         </value>
       </value>
     </configProperty>
@@ -842,7 +1078,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderHome</string>
+          <string>Hello_SenderHome5</string>
         </value>
       </value>
     </configProperty>
@@ -894,7 +1130,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderConnectorHome</string>
+          <string>Hello_SenderConnectorHome5</string>
         </value>
       </value>
     </configProperty>
