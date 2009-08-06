@@ -26,6 +26,9 @@ namespace CIAO
       ins_name_ (ins_name),
       executor_ (EXEC::_duplicate (exe))
   {
+    CIAO_DEBUG ((LM_TRACE, CLINFO "Home_Servant_Impl<>::Home_Servant_Impl - "
+                 "Creating servant for home with ID %C\n",
+                 ins_name));
   }
 
   template <typename BASE_SKEL,
@@ -172,7 +175,7 @@ namespace CIAO
     ACE_NEW_THROW_EX (svt,
                       COMP_SVNT (exe,
                                  home.in (),
-                                 this->ins_name_,
+                                 this->ins_name_.c_str (),
                                  this,
                                  this->container_),
                       CORBA::NO_MEMORY ());

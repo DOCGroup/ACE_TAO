@@ -733,7 +733,7 @@ namespace CIAO
           throw CIAO::InvalidComponent  ();
 
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::passivate_component - "
-                     "Invoking CCM activate on provided component object reference."));
+                     "Invoking CCM activate on provided component object reference.\n"));
         sess->passivate_component ();
       }
     catch (const CIAO::InvalidComponent &)

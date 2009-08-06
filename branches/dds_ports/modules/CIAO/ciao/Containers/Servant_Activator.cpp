@@ -132,7 +132,11 @@ namespace CIAO
   {
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
-
+    
+    CIAO_DEBUG ((LM_TRACE, CLINFO "Servant_Activator_i::etherealize - "
+                 "Attempting to etherealize servant with object ID %C\n",
+                 str.in ()));
+    
     size_t const sz = this->slot_index_;
 
     for (size_t t = 0; t != sz; ++t)
