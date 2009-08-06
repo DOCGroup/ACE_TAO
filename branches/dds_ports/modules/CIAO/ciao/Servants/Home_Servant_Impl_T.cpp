@@ -24,7 +24,8 @@ namespace CIAO
     )
     : Home_Servant_Impl_Base (c),
       ins_name_ (ins_name),
-      executor_ (EXEC::_duplicate (exe))
+      executor_ (EXEC::_duplicate (exe)),
+      serial_number_ (0)
   {
     CIAO_DEBUG ((LM_TRACE, CLINFO "Home_Servant_Impl<>::Home_Servant_Impl - "
                  "Creating servant for home with ID %C\n",
@@ -169,13 +170,19 @@ namespace CIAO
 
     Components::CCMHome_var home =
       Components::CCMHome::_narrow (hobj.in ());
-
+    
+    char buffer[256];
+    unsigned long serial = this->serial_number_++;
+    ACE_OS::sprintf (buffer,
+                     "%ld",
+                     serial);
+    
     typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
     ACE_NEW_THROW_EX (svt,
                       COMP_SVNT (exe,
                                  home.in (),
-                                 this->ins_name_.c_str (),
+                                 (this->ins_name_ + buffer).c_str (),
                                  this,
                                  this->container_),
                       CORBA::NO_MEMORY ());

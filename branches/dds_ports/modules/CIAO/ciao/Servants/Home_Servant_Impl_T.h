@@ -94,6 +94,8 @@ namespace CIAO
     typedef OBJREF_MAP::iterator OBJ_ITERATOR;
 
     OBJREF_MAP objref_map_;
+    
+    ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
   };
 }
 
