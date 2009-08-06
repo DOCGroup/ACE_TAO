@@ -46,6 +46,7 @@ Bug_2820_Regression_Test
 Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !WCHAR
 Bug_3102_Regression_Test
 Bug_3319_Regression_Test
+Bug_3334_Regression_Test: !STATIC !FIXED_BUGS_ONLY
 Bug_3432_Regression_Test
 Bug_3500_Regression_Test
 Bug_3532_Regression_Test
@@ -185,8 +186,7 @@ Stack_Trace_Test:
 SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !STATIC
-Service_Config_Stream_Test: !STATIC !FIXED_BUGS_ONLY
-Bug_3334_Regression_Test: !STATIC !FIXED_BUGS_ONLY
+Service_Config_Stream_Test: !STATIC
 Sigset_Ops_Test
 Simple_Message_Block_Test
 Singleton_Test
