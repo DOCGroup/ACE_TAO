@@ -1,3 +1,11 @@
+Thu Aug  6 13:42:25 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+          Managed instance name strings with ACE_CString to avoid
+          memory corruption. 
+        
 Fri Jul 31 14:01:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Array_Sequence_T.h
