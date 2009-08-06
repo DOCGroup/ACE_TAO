@@ -1,3 +1,10 @@
+Thu Aug  6 11:29:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp
+        * ciao/Containers/Session/Session_Container.cpp
+        * ciao/Servants/Servant_Impl_Base.cpp
+          More defensive programming against nil object references
+
 Thu Aug  6 08:43:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Servant_Activator.cpp

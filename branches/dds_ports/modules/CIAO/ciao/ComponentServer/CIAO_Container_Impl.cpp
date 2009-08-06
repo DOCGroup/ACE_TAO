@@ -205,13 +205,16 @@ namespace CIAO
           throw Components::RemoveFailure ();
         }
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_component - "
-                   "Invoking remove on the container impl for component %C.\n",
-                   i->key ().c_str ()));
-      this->container_->uninstall_component (cref);
-      CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::remove_component - "
-                   "Successfully removed component %C\n",
-                   i->key ().c_str ()));
+      if (!CORBA::is_nil (this->container_.in ()))
+        {
+          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_Container_i::remove_component - "
+                       "Invoking remove on the container impl for component %C.\n",
+                       i->key ().c_str ()));
+          this->container_->uninstall_component (cref);
+          CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::remove_component - "
+                       "Successfully removed component %C\n",
+                       i->key ().c_str ()));
+        }
 
       if (this->component_map_.unbind (i->key ()) != 0)
         {

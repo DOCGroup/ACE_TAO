@@ -85,9 +85,12 @@ namespace CIAO
           this->container_->the_port_POA ()->reference_to_id (
             consumers[j]->consumer ());
 
-        CIAO::Servant_Activator *sa =
+        CIAO::Servant_Activator_var sa =
           this->container_->ports_servant_activator ();
-        sa->update_port_activator (cons_id.in ());
+        if (!CORBA::is_nil (sa.in ())) 
+          {
+            sa->update_port_activator (cons_id.in ());
+          }
 
         this->container_->the_port_POA ()->deactivate_object (
           cons_id);
