@@ -1,3 +1,8 @@
+Fri Aug  7 11:11:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Some more defensive programming and pluged a memory leak
+
 Thu Aug  6 15:32:19 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * ciao/Servants/Home_Servant_Impl_T.h:
@@ -7,8 +12,8 @@ Thu Aug  6 15:32:19 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
           Thu Aug  6 01:46:32 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>,
           now bug 3725.  Homes how keep an increasing serial counter of the home
           instances they create, and append this number to the instance ID passed
-          to the component servant when it is instantiated.  
-        
+          to the component servant when it is instantiated.
+
 Thu Aug  6 13:46:11 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Servant_Activator.cpp:
