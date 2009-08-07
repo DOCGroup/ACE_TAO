@@ -562,20 +562,17 @@ be_visitor_component_svs::gen_provides (AST_Type *obj,
       os_ << "this->activate_component ();" << be_nl << be_nl;
     }
 
-  os_ << "if (! ::CORBA::is_nil (this->provide_"
+  os_ << "if ( ::CORBA::is_nil (this->provide_"
       << port_name << "_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << "return" << be_idt_nl
-      <<  "::" << obj_name << "::_duplicate (this->provide_"
-      << port_name << "_.in ());" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "::CORBA::Object_var obj =" << be_idt_nl
       << "this->provide_" << port_name << "_i ();"
       << be_uidt_nl << be_nl
       << "::" << obj_name << "_var fo =" << be_idt_nl
       << "::" << obj_name << "::_narrow (obj.in ());"
       << be_uidt_nl << be_nl
-      << "this->provide_" << port_name << "_ = fo;" << be_nl
+      << "this->provide_" << port_name << "_ = fo;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "return" << be_idt_nl
       <<  "::" << obj_name << "::_duplicate (this->provide_"
       << port_name << "_.in ());" << be_uidt << be_uidt_nl
