@@ -1,3 +1,12 @@
+Fri Aug  7 13:51:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp
+          Change the generation of the entry point functions, just
+          have one exit point in the function
+
 Fri Aug  7 12:57:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_exs.cpp:

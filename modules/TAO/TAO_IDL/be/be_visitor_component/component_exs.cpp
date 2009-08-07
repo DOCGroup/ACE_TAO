@@ -462,10 +462,9 @@ be_visitor_component_exs::gen_entrypoint (void)
       << be_idt_nl
       << "::Components::EnterpriseComponent::_nil ();"
       << be_uidt_nl << be_nl
-      << "ACE_NEW_RETURN (" << be_idt_nl
+      << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
-      << node_->local_name () << "_exec_i," << be_nl
-      << "::Components::EnterpriseComponent::_nil ());"
+      << node_->local_name () << "_exec_i);"
       << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
