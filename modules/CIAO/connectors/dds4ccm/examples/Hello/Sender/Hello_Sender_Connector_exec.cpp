@@ -54,11 +54,11 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
     writer_.write (an_instance);
     /*-----------------7-8-2009 14:13-------------------
      * Code to call a multi writer
-     * --------------------------------------------------*/
     ::DDS_StringSeq myseq (1);
     myseq.length (1);
     myseq[0] = DDS_String_dup("Multi writer");
-    writer_.write (myseq, true);*/
+    writer_.write (myseq, true);
+     * --------------------------------------------------*/
   }
 
   //============================================================

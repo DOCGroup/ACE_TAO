@@ -191,10 +191,9 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
-    ACE_NEW_RETURN (
+    ACE_NEW_NORETURN (
       retval,
-      Receiver_exec_i,
-      ::Components::EnterpriseComponent::_nil ());
+      Receiver_exec_i);
 
     return retval;
   }
