@@ -2469,23 +2469,21 @@ be_visitor_component_svs::gen_entrypoint (void)
       << "::CIAO::Container_ptr c," << be_nl
       << "const char * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
+      << "::PortableServer::Servant retval = 0;" << be_nl
       << global << sname << "::CCM_" << lname
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "ACE_NEW_NORETURN (retval," << be_nl
+      << "                  " << lname << "_Servant (" << be_idt_nl
+      << "                  x.in ()," << be_nl
+      << "                  ::Components::CCMHome::_nil ()," << be_nl
+      << "                  ins_name," << be_nl
+      << "                  0," << be_nl
+      << "                  c));" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::PortableServer::Servant retval = 0;" << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                " << lname << "_Servant (" << be_idt_nl
-      << "                x.in ()," << be_nl
-      << "                ::Components::CCMHome::_nil ()," << be_nl
-      << "                ins_name," << be_nl
-      << "                0," << be_nl
-      << "                c)," << be_uidt_nl
-      << "                0);" << be_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
 }
