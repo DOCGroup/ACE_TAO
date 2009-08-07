@@ -27,6 +27,7 @@ unlink $iorfile1;
 unlink $iorfile2;
 
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
+$DANCE_ROOT=$ENV{'DANCE_ROOT'};
 
 $SV1 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
                              "-ORBEndpoint iiop://localhost:30000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -d 1000");
