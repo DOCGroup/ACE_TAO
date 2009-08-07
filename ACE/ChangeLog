@@ -1,3 +1,12 @@
+Fri Aug  7 11:51:43 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_08_Test.cpp:
+          Removed.  It seems that we have too many compilers that lack
+          support for wchar_t and wstring.
+
 Fri Aug  7 11:41:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
