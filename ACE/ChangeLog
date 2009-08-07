@@ -1,3 +1,9 @@
+Fri Aug  7 06:26:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Only C++ Builder 2009 will work, all other versions of C++ Builder are
+          deprecated and there are no plans to get possible newer versions supported
+
 Thu Aug  6 13:45:29 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_Memory.h (ACE_throw_bad_alloc): Changed return (void *) 0
