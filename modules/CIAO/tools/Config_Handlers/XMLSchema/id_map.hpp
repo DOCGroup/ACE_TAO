@@ -39,6 +39,9 @@
  */
   class ID_Map
   {
+    typedef std::map<XMLSchema::ID<ACE_TCHAR>, XSCRT::Type*> ID_MAP;
+    typedef std::multimap<XMLSchema::NCName<ACE_TCHAR>, XSCRT::Type*> IDREF_MAP;
+
     public:
 
     //Trait to allow for ease of thread specific storage.
@@ -86,7 +89,7 @@
       if (obj_ref)
       {
         //this->idref_map_[idref] = obj_ref;
-        this->idref_map_.insert(std::pair<XMLSchema::NCName<ACE_TCHAR>, XSCRT::Type*>(idref, obj_ref));
+        this->idref_map_.insert(IDREF_MAP::value_type (idref, obj_ref));
       }
       else
       {
@@ -127,8 +130,8 @@
     //         ID attribute
     //idref_map_: multimap that maps the IDREF string to the
     //            element with the IDREF attribute
-    std::map<XMLSchema::ID<ACE_TCHAR>, XSCRT::Type*> id_map_;
-    std::multimap<XMLSchema::NCName<ACE_TCHAR>, XSCRT::Type*> idref_map_;
+    ID_MAP id_map_;
+    IDREF_MAP idref_map_;
   };
 
 #endif /* _ID_MAP_HPP */
