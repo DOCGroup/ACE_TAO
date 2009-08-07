@@ -1,28 +1,39 @@
+Fri Aug  7 14:21:34 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+
+          5_to_5 behavior.  This deploys the senders/receivers as part of 
+          separate plans.  It seems that the delayed servant activation may be
+          causing problems with discovery, leaving the receivers recieving less
+          than 50 messages each.  
+        
 Fri Aug  7 14:00:45 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
-        
-          Added name attribute to identify receivers. 
-        
+
+          Added name attribute to identify receivers.
+
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
 
           Increased wait time before starting sending task to allow
           more time for discovery.
-        
+
         * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
         * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
-        
-          Test for 1 to 5 communication. 
-        
+
+          Test for 1 to 5 communication.
+
         * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
         * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
         * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
         * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
 
-          Increased timeouts. 
-        
+          Increased timeouts.
+
 Fri Aug  7 13:50:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
