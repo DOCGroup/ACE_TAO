@@ -236,15 +236,11 @@ $(VSHLIB): $(VSHOBJS)
           #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $^ $(LDFLAGS) $(ACE_NUL_STDERR)
           endif # ace_lib_prelink
-          ifeq ($(split),1)
-	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-          else # ! split
-            ifneq ($(SOLINK.cc.override),)
+          ifneq ($(SOLINK.cc.override),)
 	$(SOLINK.cc.override)
-            else
+          else
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-            endif #override
-          endif  # split
+          endif #override
       endif  # ibmcxx_build
     endif  # SHLIBBUILD
   endif  # aix_build

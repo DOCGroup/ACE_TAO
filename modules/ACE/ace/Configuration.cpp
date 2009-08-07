@@ -1259,6 +1259,12 @@ ACE_Configuration_Heap::~ACE_Configuration_Heap (void)
 int
 ACE_Configuration_Heap::open (size_t default_map_size)
 {
+  if (this->allocator_ != 0)
+    {
+      errno = EBUSY;
+      return -1;
+    }
+
   default_map_size_ = default_map_size;
   // Create the allocator with the appropriate options.
   // The name used for  the lock is the same as one used
@@ -1275,6 +1281,12 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
                               void* base_address,
                               size_t default_map_size)
 {
+  if (this->allocator_ != 0)
+    {
+      errno = EBUSY;
+      return -1;
+    }
+
   default_map_size_ = default_map_size;
 
   // Make sure that the file name is of the legal length.

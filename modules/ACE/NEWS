@@ -9,6 +9,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.1 and ACE-5.7.2
 
 . Added support for SuSE Enterprise 10
 
+. ACE_Configuration_Heap::open() now returns -1 with errno EBUSY if it is
+  called multiple times. Previous versions would allow multiple calls to
+  open() but leak resources.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.0 and ACE-5.7.1
 ====================================================
 

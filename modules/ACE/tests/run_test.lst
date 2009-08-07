@@ -1,3 +1,4 @@
+
 # $Id$
 #
 # This is the list of tests that need to be run by run_test.pl.
@@ -45,12 +46,15 @@ Bug_2820_Regression_Test
 Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !WCHAR
 Bug_3102_Regression_Test
 Bug_3319_Regression_Test
+Bug_3334_Regression_Test: !STATIC !FIXED_BUGS_ONLY
 Bug_3432_Regression_Test
 Bug_3500_Regression_Test
 Bug_3532_Regression_Test
 Bug_3541_Regression_Test
 Bug_3505_Regression_Test
 Bug_3673_Regression_Test
+Bug_3709_Regression_Test
+Bug_3710_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
@@ -61,6 +65,18 @@ Cached_Conn_Test: !ACE_FOR_TAO !LabVIEW_RT
 Capabilities_Test: !ACE_FOR_TAO
 Codecs_Test: !NO_CODECS !ACE_FOR_TAO
 Collection_Test
+Compiler_Features_01_Test
+Compiler_Features_02_Test
+Compiler_Features_03_Test
+Compiler_Features_04_Test
+Compiler_Features_05_Test
+Compiler_Features_06_Test
+Compiler_Features_07_Test
+Compiler_Features_09_Test
+Compiler_Features_11_Test
+Compiler_Features_12_Test
+Compiler_Features_13_Test
+Compiler_Features_14_Test
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
 DLL_Test: !Unicos !STATIC !KCC_Linux
@@ -169,6 +185,7 @@ Stack_Trace_Test:
 SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !STATIC
+Service_Config_Stream_Test: !STATIC !FIXED_BUGS_ONLY
 Sigset_Ops_Test
 Simple_Message_Block_Test
 Singleton_Test

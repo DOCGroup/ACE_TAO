@@ -573,8 +573,25 @@ run_tests (void)
   // Test Heap version
   ACE_Configuration_Heap heap_config;
 
-  if (heap_config.open ())
-    return 0;
+  if (heap_config.open () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open %p\n"),
+                       ACE_TEXT ("local-heap config")),
+                      -1);
+  if (heap_config.open () == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open heap allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open heap expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, errno),
+                        -1);
+    }
   {
     int result = test_subkey_path (&heap_config);
     if (result)
@@ -600,8 +617,37 @@ run_tests (void)
 
   if (pers_config.open (ACE_TEXT ("test.reg")))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open test.reg\n")),
+                       ACE_TEXT ("Cannot open %p\n"),
+                       ACE_TEXT ("test.reg")),
                       -1);
+  if (pers_config.open (ACE_TEXT ("test.reg")) == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(mmap) allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(mmap) expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, errno),
+                        -1);
+    }
+  if (pers_config.open () == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(new) allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(new) expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, errno),
+                        -1);
+    }
 
   {
     int result = test (&pers_config);
