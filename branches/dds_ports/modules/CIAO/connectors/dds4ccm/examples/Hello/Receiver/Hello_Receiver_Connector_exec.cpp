@@ -347,13 +347,15 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   Hello_receiver_Connector_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
+    ::Hello_DDS::CCM_Hello_receiver_Connector_Context_var lctx =
       ::Hello_DDS::CCM_Hello_receiver_Connector_Context::_narrow (ctx);
 
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (lctx.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
+      
+    this->context_ = lctx;
   }
 
   void
