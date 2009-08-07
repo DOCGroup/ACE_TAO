@@ -62,6 +62,9 @@ namespace CIAO
           this->container_->the_port_POA ()->reference_to_id (
             facets[i]->facet_ref ());
 
+        this->container_->the_port_POA ()->deactivate_object (
+          facet_id);
+
         CIAO::Servant_Activator_var sa =
           this->container_->ports_servant_activator ();
 
@@ -69,9 +72,6 @@ namespace CIAO
           {
             sa->update_port_activator (facet_id.in ());
           }
-
-        this->container_->the_port_POA ()->deactivate_object (
-          facet_id);
       }
 
       // Removed Facets
@@ -88,15 +88,16 @@ namespace CIAO
           this->container_->the_port_POA ()->reference_to_id (
             consumers[j]->consumer ());
 
+        this->container_->the_port_POA ()->deactivate_object (
+          cons_id);
+
         CIAO::Servant_Activator_var sa =
           this->container_->ports_servant_activator ();
+
         if (!CORBA::is_nil (sa.in ())) 
           {
             sa->update_port_activator (cons_id.in ());
           }
-
-        this->container_->the_port_POA ()->deactivate_object (
-          cons_id);
       }
 
       Components::SessionComponent_var temp = this->get_executor ();
