@@ -673,17 +673,35 @@ endif
 <%endif%>
 
 __prebuild__:
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
 <%if(prebuild)%>
 	@<%eval(prebuild)%>
 <%else%>
 	@-:
 <%endif%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
 
 <%if(postbuild)%>
 all: __postbuild__
 
 __postbuild__:
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
 	@<%eval(postbuild)%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
 
 <%endif%>
 <%marker(bottom)%>

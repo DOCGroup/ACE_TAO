@@ -1,3 +1,540 @@
+Fri Aug  7 11:51:43 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_08_Test.cpp:
+          Removed.  It seems that we have too many compilers that lack
+          support for wchar_t and wstring.
+
+Fri Aug  7 11:41:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Added fixed only to Service_Config_Stream_Test, still crashes
+          at shutdown
+
+Fri Aug  7 06:26:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Only C++ Builder 2009 will work, all other versions of C++ Builder are
+          deprecated and there are no plans to get possible newer versions supported
+
+Thu Aug  6 13:45:29 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_Memory.h (ACE_throw_bad_alloc): Changed return (void *) 0
+          to simply return 0.  Thanks to Johnny Willemsen for reporting
+          this.
+
+Thu Aug  6 06:45:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Removed fixed only from Service_Config_Stream_Test
+
+Wed Aug  5 23:28:43 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Parse_Node.cpp: When applying the modules in a dynamic
+          stream, note that they were link()ed in reverse order from what
+          the order is from the svc.conf file. So reverse the order when
+          pushing them on the stream. Fixes Bugzilla #3721.
+
+        * tests/Service_Config_Stream_Test.cpp:
+        * tests/Service_Config_Stream_Test.conf: Added, and commented out, a
+          test case for inserting a static module in the dynamic stream. It
+          doesn't work, but it probably should. I'm not sure why it doesn't,
+          and don't have more time to chase this right now. It's not part of
+          Bugzilla 3721 or my customer's case, and this feature has probably
+          never been tested and may have never worked, even pre-Gestalt, per
+          Doug's recollection that Service Config was not intended to be
+          used in this way. If someone has time to work this, please go ahead.
+
+Wed Aug  5 09:40:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-7.h:
+          Just use fileno with msvc71
+
+        * ace/Get_Opt.h:
+          Zap inline from header file
+
+Wed Aug  5 09:00:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_unicode.mpb:
+          Just define ACE_USES_WCHAR, not to 1
+
+Wed Aug  5 07:19:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debianbuild/*:
+          Renamed to match the current version number
+
+Wed Aug  5 07:12:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Control/Monitor_Control.mpc:
+          Use prop:microsoft
+
+Tue Aug  4 07:51:13 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Compiler_Features_09_Test.cpp:
+          Workaround compiler/library bugs in Solaris Sun C++ 5.10.
+          Amazing that anybody can charge money for such a piece of
+          software.
+
+Tue Aug  4 17:43:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.h
+        * ace/config-win32-msvc-7.h
+        * ace/config-win32-msvc-8.h
+        * ace/config-win32-msvc-9.h
+        * ace/config-win32-msvc-10.h
+          Use _fileno instead of fileno with msvc 71/8/9/10
+
+        * ace/OS_NS_stdio.inl:
+          Const changes
+
+Tue Aug  4 17:09:00 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Removed the remnants of the 'split' macro.  This fixes Bug 1181.
+
+Tue Aug  4 14:32:24 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration.h:
+        * ace/Configuration.cpp (ACE_Configuration_Heap::open): Make multiple
+          open() calls an error (return -1, EBUSY) rather than leaking
+          an allocator and whatever it had allocated.
+          Fixes Bugzilla 1324.
+
+        * tests/Config_Test.cpp: Add test case for multiple open() calls.
+
+        * NEWS: Noted the behavior change on open().
+
+Tue Aug  4 13:09:25 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Msg.cpp: Added support for the %.1M format.  Thanks to
+          Alon Diamant <diamant at alon at gmail dot com> for contributing
+          this.  This fixes bugid 3716.
+
+        * tests/Log_Msg.cpp: Added a test for the %.1M format.  Thanks to
+          Alon Diamant <diamant at alon at gmail dot com> for contributing
+          this.
+
+Tue Aug  4 12:07:09 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Use the new MPC Driver constant to determine which type of input
+          will be dealt with (workspaces or projects).
+
+Tue Aug  4 12:06:28 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified the prebuild and postbuild rules to obey the 'requires'
+          and 'avoids' MPC settings since the gnuace projects have the
+          additional requirement of gnu make macros that match the
+          requirements and avoids settings.
+
+Mon Aug  3 20:08:22 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Compiler_Features_06_Test.cpp:
+          I think I have fixed the compilation problem on OpenVMS, using
+          some classes and functors in the STL requires including
+          "functional", but most compilers do not enforce this
+          requirement.  Apparently OpenVMS does, I think this is a good
+          feature of said compiler.
+
+Tue Aug  4 10:30:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_unicode.mpb:
+          Changed this to a feature, when uses_wchar is set we then
+          just set unicode to 1
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Derive from ace_unicode. That way when we generate with uses_wchar=1
+          the define ACE_USES_WCHAR is generated into the project and also the
+          CharacterSet is correctly set in the msvc project file.
+          This fixes bugzilla 3702
+
+Tue Aug  4 03:32:21 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * tests/SString_Test.cpp:
+
+          Fixed compiler warnings on vc71.
+
+Mon Aug  3 09:44:11 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Makefile.am:
+          Evidently Automake does not like an empty line after a
+          backslash, so the traditional style of keeping file lists ready
+          to receive more elements fails... Sigh.
+
+Mon Aug  3 08:30:58 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Bug_3709_Regression_Test.cpp:
+          This should fix the warnings on HP-UX and other compilers that
+          correctly detect overuse of 'DT' in the template parameter list.
+
+Mon Aug  3 20:42:57 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Compiler_Features_12_Test.cpp:
+          Fixed compile error on LynxOS 4.0.
+
+Mon Aug  3 02:17:38 UTC 2009  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Compiler_Features_01_Test.cpp:
+        * tests/Compiler_Features_02_Test.cpp:
+        * tests/Compiler_Features_03_Test.cpp:
+        * tests/Compiler_Features_04_Test.cpp:
+        * tests/Compiler_Features_05_Test.cpp:
+        * tests/Compiler_Features_06_Test.cpp:
+        * tests/Compiler_Features_09_Test.cpp:
+        * tests/Compiler_Features_10_Test.cpp:
+        * tests/Compiler_Features_11_Test.cpp:
+        * tests/Compiler_Features_13_Test.cpp:
+        * tests/Compiler_Features_14_Test.cpp:
+          Fixed all kinds of tab vs. spaces problems.
+          I think I also fixed mis-used ACE_TEXT() concatenation.
+
+Mon Aug  3 12:00:40 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mail_test_stats.sh:
+          Also mail the results per build
+
+Sun Aug  2 11:28:40 UTC 2009 Chad Beaulac <chad@objectivesolutions.com>
+
+        * Bug 3334  - Revisions 86318 86319 86320 86321 86322 86323
+
+        * tests/Bug_3334_Regression_Test.cpp
+          Renamed from Service_Config_Stream_SEGV.cpp
+
+        * Tests/Bug_3334_Regression_Test.cpp
+          Renamed from Service_Config_Stream_SEGV.conf
+
+        * tests/run_test.list
+          Added Bug_3334_Regression_Test
+          Put changes back in from Carlos's commit below
+
+        * tests/tests.mpc
+          Added Bug_3334_Regression_Test
+          Put changes back in from Carlos's commit below
+
+Sat Aug  1 12:19:58 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * This completes the fixes for Buzilla #3715:
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_14_Test.cpp:
+          This test verifies that partial template specialization works.
+
+        * tests/Compiler_Features_11_Test.cpp:
+          Test for standard string streams
+
+        * tests/Compiler_Features_12_Test.cpp:
+          Test for template template parameters
+
+        * tests/Compiler_Features_13_Test.cpp:
+          Test for cast operators
+
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+          The usual accruements that go with the tests.
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_10_Test.cpp:
+          Add new test for exceptions.  Verify that <stdexcept> is there,
+          that we can raise exceptions, and that object destruction during
+          exceptions is sound.
+
+        * tests/Compiler_Features_07_Test.cpp:
+          Test for std::string
+
+        * tests/Compiler_Features_08_Test.cpp:
+          Test for std::wstring
+
+        * tests/Compiler_Features_09_Test.cpp:
+          Test for std::auto_ptr<>
+
+        * tests/Compiler_Features_06_Test.cpp:
+          Fixed typo in test name.
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+          Add the compilation / run paraphernalia.
+
+        * tests/Compiler_Features_04_Test.cpp:
+          Test for std::set<>
+
+        * tests/Compiler_Features_05_Test.cpp:
+          Test for std::queue<>, this is a different sort of test because
+          std::queue<> is an adaptor, not a collection.  The default
+          collection is a std::deque<>, so we are testing default template
+          parameters at the same time.
+
+        * tests/Compiler_Features_06_Test.cpp:
+          Test for std::set<> with a different order function.
+
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+          Add the compilation / run paraphernalia.
+
+        * tests/Makefile.am:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_03_Test.cpp:
+          This time it is std::vector<>
+
+        * tests/run_test.lst:
+          I need to remember to add the tests to the list of automatically
+          executed ones.
+
+        * tests/tests.mpc:
+        * tests/Makefile.am:
+        * tests/Compiler_Features_02_Test.cpp:
+          Test if the std::map<> class works.
+
+        * tests/Compiler_Features_01_Test.cpp:
+          Make the tests more consistent by using typedefs.
+
+        * tests/tests.mpc:
+        * tests/Makefile.am:
+        * tests/Compiler_Features_01_Test.cpp:
+          Add first test for "modern" C++ compiler features.  In this
+          case, I test if the std::list<> class works.
+
+Thu Jul 30 12:53:20 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * ace/String_Base.h:
+        * ace/String_Base.inl:
+
+          Fixed fuzz errors.
+
+          Fixed compilation errors related to an extra semi-colon (;)
+          at the end of a statement.
+
+Thu Jul 30 10:40:36 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_netdb.inl (gethostbyname_r): Fixed typo.
+
+Thu Jul 30 10:29:29 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Mark Service_Config_Stream_Test !FIXED_BUGS_ONLY
+
+Thu Jul 30 03:33:13 UTC 2009  James H. Hill  <hillj@dre.vanderbilt.edu>
+
+        * ace/SString.h:
+        * ace/String_Base.h:
+        * ace/String_Base.inl:
+        * ace/String_Base.cpp:
+
+          Added STL iterator support to the ACE_String_Base class. Right
+          now the iterator is bidirectional. The next version will make
+          the iterator random access.
+
+        * tests/SString_Test.cpp:
+
+          Updated the test to test the iterator support.
+
+Wed Jul 29 16:07:38 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Stream_Test.cpp: Fixed const-ness warning.
+
+Wed Jul 29 15:51:39 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Stream_DLL.h: Fixed fuzz warning on mismatched
+          pre.h/post.h.
+
+Wed Jul 29 14:34:01 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_netdb.inl (gethostbyname_r): Replaced
+          ACE_SOCKCALL_RETURN with ACE_SOCKCALL.  Thanks to Paul Daugherty
+          for reporting this.
+
+Wed Jul 29 11:09:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mail_test_stats.sh:
+          Script used to send out daily test statistics to devo
+
+Wed Jul 29 02:34:58 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_netdb.inl: Fixed gethostbyname_r() so that it sets
+          errno correctly on failure.  Thanks to Paul Daugherty <paul at
+          nextalk dot com> for reporting this.  This fixes bugid 3720.
+
+Tue Jul 28 18:13:22 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_Memory.h: Replace the ACE_throw_bad_alloc macro
+          definition with return (void*) 0 if exceptions=0 is enabled.
+          Thanks to John Lindal <lindalj at yahoo-inc dot com> for this
+          fix.
+
+Tue Jul 28 21:29:35 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Stream_Test.cpp:
+        * tests/Service_Config_Stream_Test.conf:
+        * tests/Service_Config_Stream_DLL.h:
+        * tests/Service_Config_Stream_DLL_Export.h:
+        * tests/Service_Config_Stream_DLL.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          New test Service_Config_Stream_Test to exercise service-config'd
+          stream behavior. Bugzilla #3721 is reported using this as a
+          initial test case. More behavioral testing can be added to this
+          test program in the future.
+
+Tue Jul 28 20:02:59 UTC 2009  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Refactored the way gnuace interacts with DDS.
+
+Tue Jul 28 11:57:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnaming:
+          Fixed bug in this file. Thanks to John Fletcher
+          <john dot fletcher at rd dot bbc dot co dot uk> for reporting
+          this. This relates to bugzilla 3664
+
+Mon Jul 27 09:23:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          Added idl3 and idl3p
+
+Fri Jul 24 18:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosconcurrency:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosevent:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnaming:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnotification:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-costrading:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-rtevent:
+          Fixed location of the config files. Thanks to John Fletcher
+          <john dot fletcher at rd dot bbc dot co dot uk> for reporting
+          this. This fixes bugzilla 3664
+
+Fri Jul 24 09:33:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set ndds to 0 by default
+
+Fri Jul 24 08:51:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Corrected gperf library name again
+
+Fri Jul 24 08:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Only use the std98 flag for 3.80 and 3.85
+
+Fri Jul 24 08:25:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * ace/config-lynxos.h:
+
+          #define ACE_HAS_GETIFADDRS
+
+Fri Jul 24 07:18:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Added patches from Adam to update the latest tags in the
+          repository
+
+Fri Jul 24 07:14:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Corrected gperf library name
+
+Thu Jul 23 18:40:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3710_Regression_Test.cpp:
+          Fixed fuzz error
+
+Thu Jul 23 18:26:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Added compiler flag to enable std98 support. Result of bugzilla 3709
+
+Thu Jul 23 18:12:49 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/make_release.py:
+
+          Fix small bug with specfile generation.
+
+Thu Jul 23 16:40:55 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_string.cpp: Added some additional error checking to
+          ACE_OS::strerror() to avoid problems when errnum is out of
+          bounds.  Thanks to Aleksandar Vukajlovic <aleksandar dot
+          vukajlovic at finsoft dot rs> for reporting this.
+
+Thu Jul 23 18:10:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Removed invalid space
+
+Thu Jul 23 17:57:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Updated for x.7.2
+
+Thu Jul 23 17:47:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Thu Jul 23 17:46:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * etc/index.html:
+        * docs/Download.html:
+          Updated for the new release
+
+        * bin/sets-manager.py:
+          Fixed a typo
+
+        * rpmbuild/ace-tao-ciao.spec:
+          Fixed a wrong replacement by the release script
+
+        * tests/Bug_3709_Regression_Test.cpp:
+          New test to see which compilers can handle template template arguments
+
+        * tests/Bug_3710_Regression_Test.cpp:
+          New test for bugzilla 3710 which is already fixed
+
+        * tests/Config_Test.cpp:
+          Use prefix increment
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Add 3709 and 3710
+
+        * bin/make_release.py:
+          DANCE_ROOT now also has to be set when generating all project files
+
+Thu Jul 23 02:11:02 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 5.7.2 released.
+
+Thu Jul 23 06:58:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Corrected bug in updating spec file
+
+Wed Jul 22 08:44:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds.pl:
+          Don't use the page with the builds run today, but use the page that
+          lists the builds on the specified date.
+
 Tue Jul 21 11:44:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, it was triggered by template problems in TAO_IDL
@@ -325,7 +862,6 @@ Tue Jul 14 11:12:20 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
            * contrib/utility:
 
              Removed these files.
-
 
 Tue Jul 14 02:44:58 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 

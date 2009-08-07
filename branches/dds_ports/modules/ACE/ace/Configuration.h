@@ -791,12 +791,37 @@ public:
   /// Destructor
   virtual ~ACE_Configuration_Heap (void);
 
-  /// Opens a configuration based on a file name
+  /**
+   * Opens a configuration that allocates its memory from a memory-mapped file.
+   * This makes it possible to persist a configuration to permanent storage.
+   * This is not the same as exporting the configuration to a file; the
+   * memory-mapped file is not likely to be very readable by humans.
+   *
+   * @param file_name    Name of the file to map into memory.
+   *
+   * @param base_address Address to map the base of @a file_name to.
+   *
+   * @param default_map_size Starting size for the internal hash tables that
+   *                     contain configuration information.
+   *
+   * @retval 0 for success.
+   * @retval -1 for error, with errno set to indicate the cause. If open()
+   *            is called multiple times, errno will be @c EBUSY.
+   */
   int open (const ACE_TCHAR* file_name,
             void* base_address = ACE_DEFAULT_BASE_ADDR,
             size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
-  /// Opens a heap based configuration
+  /**
+   * Opens a configuration that allocates memory from the heap.
+   *
+   * @param default_map_size Starting size for the internal hash tables that
+   *                     contain configuration information.
+   *
+   * @retval 0 for success.
+   * @retval -1 for error, with errno set to indicate the cause. If open()
+   *            is called multiple times, errno will be @c EBUSY.
+   */
   int open (size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
   virtual int open_section (const ACE_Configuration_Section_Key& base,

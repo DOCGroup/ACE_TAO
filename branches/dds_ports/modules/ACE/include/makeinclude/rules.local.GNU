@@ -53,7 +53,7 @@ makefile_name.local:
 	@echo
 endif
 
-all.local: makefile_name.local $(split_target) build.objdirs build.local install.local
+all.local: makefile_name.local build.objdirs build.local install.local
 
 #----------------------------------------------------------------------------
 #       C/C++ compilation targets
@@ -170,18 +170,9 @@ $(VSHDIR)%.$(OBJEXT): %.cc
 	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
-  ifeq ($(split), 1)
-$(VSHDIR)%.$(OBJEXT): %.cpp
-	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) SPLIT/`echo $< | sed "s/.cpp/_S\*/"`
-	mv *.$(OBJEXT) $(VSHDIR)
-  else # ! split
-
 $(VSHDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
-
-  endif # split
 
 $(VSHDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
@@ -527,14 +518,6 @@ else
 $(CLEANUP_DIRS):
 	@test -d $@ || $(MKDIR) $@ $(ACE_NUL_STDERR)
 endif
-
-#---------------------------------------------------------------------------
-#       Source file splitting
-#---------------------------------------------------------------------------
-SPLIT:
-	@echo "Splitting source files..."
-	@$(ACE_ROOT)/bin/split-cpp -s Svc_Conf_l.cpp -s Svc_Conf_y.cpp $(LSRC)
-	@echo "done."
 
 svnignore.local:
 	if [ "n$(ARCH_BIN)" != "n" ]; then \

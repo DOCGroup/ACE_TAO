@@ -53,6 +53,7 @@
 #define ACE_STRCASECMP_EQUIVALENT ::_stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
+#define ACE_FILENO_EQUIVALENT ::_fileno
 
 #ifndef ACE_HAS_EXCEPTIONS
 # define ACE_HAS_EXCEPTIONS
@@ -70,8 +71,8 @@
 #define ACE_LACKS_STRPTIME
 
 #if !defined (ACE_HAS_WINCE)
-#  define ACE_HAS_INTRIN_H
-#  define ACE_HAS_INTRINSIC_INTERLOCKED
+# define ACE_HAS_INTRIN_H
+# define ACE_HAS_INTRINSIC_INTERLOCKED
 #endif
 
 #if !defined (_WIN32_WCE) || (_WIN32_WCE >= 0x501)

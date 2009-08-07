@@ -643,6 +643,266 @@ Collection_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+## Makefile.Compiler_Features_01_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_01_Test
+
+Compiler_Features_01_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_01_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_01_Test.cpp
+
+Compiler_Features_01_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_02_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_02_Test
+
+Compiler_Features_02_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_02_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_02_Test.cpp
+
+Compiler_Features_02_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_03_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_03_Test
+
+Compiler_Features_03_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_03_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_03_Test.cpp
+
+Compiler_Features_03_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_04_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_04_Test
+
+Compiler_Features_04_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_04_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_04_Test.cpp
+
+Compiler_Features_04_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_05_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_05_Test
+
+Compiler_Features_05_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_05_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_05_Test.cpp
+
+Compiler_Features_05_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_06_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_06_Test
+
+Compiler_Features_06_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_06_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_06_Test.cpp
+
+Compiler_Features_06_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_07_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_07_Test
+
+Compiler_Features_07_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_07_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_07_Test.cpp
+
+Compiler_Features_07_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_09_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_09_Test
+
+Compiler_Features_09_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_09_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_09_Test.cpp
+
+Compiler_Features_09_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_10_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_10_Test
+
+Compiler_Features_10_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_10_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_10_Test.cpp
+
+Compiler_Features_10_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_11_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_11_Test
+
+Compiler_Features_11_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_11_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_11_Test.cpp
+
+Compiler_Features_11_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_12_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_12_Test
+
+Compiler_Features_12_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_12_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_12_Test.cpp
+
+Compiler_Features_12_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_13_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_13_Test
+
+Compiler_Features_13_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_13_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_13_Test.cpp
+
+Compiler_Features_13_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Compiler_Features_14_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Compiler_Features_14_Test
+
+Compiler_Features_14_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Compiler_Features_14_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Compiler_Features_14_Test.cpp
+
+Compiler_Features_14_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.Config_Test.am
 
 if !BUILD_ACE_FOR_TAO
