@@ -119,7 +119,6 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
       {
         //NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
         //                                                          NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
-
         dpf_ = new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
         ::DDS::DomainParticipantQos qos;
         dp_ = dpf_->create_participant (0, qos, 0, 0);
@@ -169,6 +168,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   Hello_sender_Connector_exec_i::configuration_complete (void)
   {
     /* Your code here. */
+    this->configure_dds ();
   }
 
   void

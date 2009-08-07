@@ -239,6 +239,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>expected_samples</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>50</ulong>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceOne">
@@ -330,6 +341,17 @@
         </type>
         <value>
           <string>ReceiverTwo</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>expected_samples</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>50</ulong>
         </value>
       </value>
     </configProperty>
@@ -427,6 +449,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>expected_samples</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>50</ulong>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceThree">
@@ -521,6 +554,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>expected_samples</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>50</ulong>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceFour">
@@ -612,6 +656,17 @@
         </type>
         <value>
           <string>ReceiverFive</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>expected_samples</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>50</ulong>
         </value>
       </value>
     </configProperty>

@@ -348,6 +348,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>expected_samples</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>50</ulong>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
