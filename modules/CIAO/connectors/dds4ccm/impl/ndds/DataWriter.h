@@ -31,7 +31,7 @@ namespace CIAO
       {
       public:
         // Constructor
-        RTI_DataWriter_i (DDSDataWriter *dw);
+        RTI_DataWriter_i (::DDSDataWriter *dw);
 
         // Destructor
         virtual ~RTI_DataWriter_i (void);
