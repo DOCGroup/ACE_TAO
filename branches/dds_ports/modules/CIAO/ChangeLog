@@ -1,14 +1,20 @@
+Fri Aug  7 19:15:30 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/XMLSchema/id_map.hpp:
+
+          Compile fixes for sun studio 12.
+        
 Fri Aug  7 14:21:34 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp:
         * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp:
         * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
 
-          5_to_5 behavior.  This deploys the senders/receivers as part of 
+          5_to_5 behavior.  This deploys the senders/receivers as part of
           separate plans.  It seems that the delayed servant activation may be
           causing problems with discovery, leaving the receivers recieving less
-          than 50 messages each.  
-        
+          than 50 messages each.
+
 Fri Aug  7 14:00:45 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
