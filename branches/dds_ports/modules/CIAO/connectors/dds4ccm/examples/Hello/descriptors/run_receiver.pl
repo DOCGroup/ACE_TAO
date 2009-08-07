@@ -179,8 +179,8 @@ if ($result != 0) {
     exit 1;
 }
 
-print "Sleeping 30 seconds to receive all messages\n";
-sleep (30);
+print "Sleeping 60 seconds to receive all messages\n";
+sleep (60);
 
 # print "Invoking the controller ($controller_exec -k file://Receiver.ior)\n";
 # $controller = new PerlACE::Process ("$controller_exec", "-k file://Receiver.ior");

@@ -176,8 +176,8 @@ if (PerlACE::waitforfile_timed ("SenderOne.ior",
     exit 1;
 }
 
-print "Sleeping 30 seconds to allow task to complete";
-sleep (30);
+print "Sleeping 60 seconds to allow task to complete";
+sleep (60);
 
 # print "Invoking the controller ($controller_exec -k file://Sender.ior)\n";
 # $controller = new PerlACE::Process ("$controller_exec", "-k file://Sender.ior");

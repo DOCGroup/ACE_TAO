@@ -39,8 +39,10 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   // Facet Executor Implementation Class: string_RawListener_exec_i
   //============================================================
 
-  string_RawListener_exec_i::string_RawListener_exec_i (Atomic_ULong &received)
-    : received_ (received)
+  string_RawListener_exec_i::string_RawListener_exec_i (Atomic_ULong &received,
+                                                        const ACE_CString &name)
+    : received_ (received),
+      name_ (name)
   {
   }
 
@@ -56,8 +58,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ++received_;
-    printf ("string raw listener received %s\n", an_instance);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Receiver received: %C\n"), an_instance));
+    printf ("%s string_RawListener::on_data received %s\n", this->name_.c_str (), an_instance);
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
@@ -123,13 +124,24 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     this->expected_ = expected_samples;
   }
   
+  char *
+  Receiver_exec_i::name (void)
+  {
+    return CORBA::string_dup (this->name_.c_str ());
+  }
+
+  void 
+  Receiver_exec_i::name (const char *name)
+  {
+    this->name_ = name;
+  }
 
   // Port operations.
 
   ::CCM_DDS::CCM_string_RawListener_ptr
   Receiver_exec_i::get_read_message_listener (void)
   {
-    return new string_RawListener_exec_i (this->received_);
+    return new string_RawListener_exec_i (this->received_, this->name_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr

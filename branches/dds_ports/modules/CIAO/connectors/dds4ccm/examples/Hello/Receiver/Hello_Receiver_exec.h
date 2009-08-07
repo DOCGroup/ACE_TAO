@@ -51,7 +51,8 @@ namespace CIAO_Hello_DDS_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    string_RawListener_exec_i (Atomic_ULong &);
+    string_RawListener_exec_i (Atomic_ULong &,
+                               const ACE_CString &);
     virtual ~string_RawListener_exec_i (void);
   
   // Operations and attributes from ::CCM_DDS::string_RawListener
@@ -60,12 +61,12 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   // be/be_visitor_operation/operation_ch.cpp:46
     
   virtual void
-  on_data (
-           const char * an_instance,
+  on_data (const char * an_instance,
            const ::CCM_DDS::ReadInfo & info);
     
 private:
   Atomic_ULong &received_;
+  const ACE_CString &name_;
 };
   
 class HELLO_RECEIVER_EXEC_Export PortStatusListener_exec_i
@@ -82,16 +83,14 @@ class HELLO_RECEIVER_EXEC_Export PortStatusListener_exec_i
   // be/be_visitor_operation/operation_ch.cpp:46
     
   virtual void
-    on_requested_deadline_missed (
-                                  ::DDS::DataReader_ptr the_reader,
+    on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
                                   const ::DDS::RequestedDeadlineMissedStatus & status);
     
   // TAO_IDL - Generated from
   // be/be_visitor_operation/operation_ch.cpp:46
     
   virtual void
-    on_sample_lost (
-                    ::DDS::DataReader_ptr the_reader,
+    on_sample_lost (::DDS::DataReader_ptr the_reader,
                     const ::DDS::SampleLostStatus & status);
  private:
   Atomic_ULong &lost_;
@@ -111,6 +110,10 @@ class HELLO_RECEIVER_EXEC_Export Receiver_exec_i
   virtual ::CORBA::ULong expected_samples (void);
     
   virtual void expected_samples (::CORBA::ULong expected_samples);
+
+  virtual char * name (void);
+    
+  virtual void name (const char *name);
 
   // Port operations.
     
@@ -137,6 +140,7 @@ class HELLO_RECEIVER_EXEC_Export Receiver_exec_i
   CORBA::ULong expected_;
   Atomic_ULong received_;
   Atomic_ULong lost_;
+  ACE_CString name_;
 };
   
 extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
