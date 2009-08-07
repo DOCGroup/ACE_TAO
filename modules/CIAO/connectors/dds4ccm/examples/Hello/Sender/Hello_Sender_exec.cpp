@@ -50,7 +50,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     virtual int svc (void)
     {
       // Allowing some time for discovery to happen
-      ACE_OS::sleep (2);
+      ACE_OS::sleep (10);
         
       for (size_t i = 0; i < this->iters_; ++i)
         {

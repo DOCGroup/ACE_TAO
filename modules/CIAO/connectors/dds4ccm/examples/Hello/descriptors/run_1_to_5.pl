@@ -23,7 +23,7 @@ $daemons = 2;
 
 $status = 0;
 $dat_file = "NodeManagerMap.dat";
-$cdp_file = "DeploymentPlan.cdp";
+$cdp_file = "1_to_5.cdp";
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 
@@ -154,15 +154,15 @@ $em_running = 1;
 # Invoke executor - start the application -.
 print "Invoking executor - start the application -\n";
 
-print "Start dance_plan_launcher.exe with -x DeploymentPlan.cdp -k file://EM.ior\n";
+print "Start dance_plan_launcher.exe with -x $cdp_file -k file://EM.ior\n";
 $E =
   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
-                        "-x DeploymentPlan.cdp -k file://EM.ior");
+                        "-x $cdp_file -k file://EM.ior");
 
 $E->SpawnWaitKill (50);
 
 if (PerlACE::waitforfile_timed (
-      "Receiver.ior",
+      "ReceiverOne.ior",
       $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: The ior file of receiver could not be found\n";
     kill_open_processes ();
@@ -190,11 +190,11 @@ sleep (60);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
-print "by running dance_plan_launcher.exe with -k file://EM.ior -x DeploymentPlan.cdp -q\n";
+print "by running dance_plan_launcher.exe with -k file://EM.ior -x $cdp_file -q\n";
 
 $E =
   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
-                        "-k file://EM.ior -x DeploymentPlan.cdp -q");
+                        "-k file://EM.ior -x $cdp_file -q");
 $E->SpawnWaitKill (30);
 
 print "Executor returned.\n";
