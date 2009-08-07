@@ -1,3 +1,12 @@
+Fri Aug  7 11:44:30 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * ciao/Containers/Servant_Activator.h:
+        * ciao/Containers/Servant_Activator.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+
+          Re-implemented the servant activator to address a crash at
+          teardown.
+        
 Fri Aug  7 11:11:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
