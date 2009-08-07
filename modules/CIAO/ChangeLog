@@ -1,3 +1,24 @@
+Fri Aug  7 19:46:43 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+
+          Added dds4ccm tests. 
+        
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+        
+          Added 2 second delay after initialization and before sending. 
+        
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
+
+          Configure dds during configuration_complete, to ensure delayed initialization
+          doesn't mees up our receiver counts. 
+        
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
+          
+          initialize expected_samples attribute to correctly account for the
+          expected number of senders. 
+
 Fri Aug  7 19:15:30 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XMLSchema/id_map.hpp:

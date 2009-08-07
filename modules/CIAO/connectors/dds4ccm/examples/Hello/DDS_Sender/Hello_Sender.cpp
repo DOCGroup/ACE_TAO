@@ -92,9 +92,12 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
         /* In this specific case, this will never fail */
         goto clean_exit;
     }
-
+    
+    // Sleep a couple seconds to allow discovery to happen
+    ACE_OS::sleep (2);
+    
     /* --- Write Data ----------------------------------------------------- */
-
+    
     for (int i = 0; i < number_of_iterations; i++)
       {
         retcode = string_writer->write(
