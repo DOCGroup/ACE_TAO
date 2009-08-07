@@ -882,7 +882,48 @@ This option is only meaningful on OS platforms that support daemonization.</td>
       <tr>
         <td><code>-ORBForwardInvocationOnObjectNotExist</code> <em>boolean (0|1)</em></td>
         <td>If this option is 1, the ORB forwards the request to next available profile when 
-        receiving OBJECT_NOT_EXIST exception reply. The default is <CODE>0</CODE>(disabled).  
+        receiving OBJECT_NOT_EXIST exception reply. The default value is <CODE>0</CODE>  
+        which means the request is not forwarded upon OBJECT_NOT_EXIST exception.  
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnceOnObjectNotExist</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request if it 
+        receives OBJECT_NOT_EXIST exception reply. If it receives one of the exceptions
+       (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
+        the request is not forwarded again and exception is propagated to the client 
+        code. The default value is <CODE>0</CODE> which means the request 
+        is not forwarded upon OBJECT_NOT_EXIST exception.  
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnceOnCommFailure</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request if it 
+        receives COMM_FAILURE exception reply. If it receives one of the exceptions
+        (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
+        the request is not forwarded again and exception is propagated to the client
+        code. The default value is <CODE>0</CODE> which means the request is not forwarded upon 
+        COMM_FAILURE exception.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnceOnTransient</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request if it 
+        receives TRANSIENT exception reply. If it receives one of the exceptions
+       (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
+        the request is not forwarded again and exception is propagated to the client 
+        code. The default value is <CODE>0</CODE> which means the request 
+        is not forwarded upon TRANSIENT exception.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnceOnInvObjref</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request if it 
+        receives INV_OBJREF exception reply. If it receives one of the exceptions
+       (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
+        the request is not forwarded again and exception is propagated to the client 
+        code. The default value is <CODE>0</CODE> which means the request 
+        is not forwarded upon INV_OBJREF exception.
         </td>
       </tr>
     </tbody>
