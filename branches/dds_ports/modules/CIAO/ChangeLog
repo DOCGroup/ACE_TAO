@@ -1,3 +1,21 @@
+Fri Aug  7 12:57:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+          Fixed typo in debug statements
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Improved debug statements
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h:
+          Use CCM_DDS::DataReader directly, saves an indirection step
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
+          Added some comments
+
+        * connectors/dds4ccm/impl/ndds/DataWriter.h:
+          Get the DDSDataWriter from the global scope
+
 Fri Aug  7 11:44:30 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Servant_Activator.h:
@@ -6,7 +24,7 @@ Fri Aug  7 11:44:30 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
           Re-implemented the servant activator to address a crash at
           teardown.
-        
+
 Fri Aug  7 11:11:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:

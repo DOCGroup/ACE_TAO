@@ -256,7 +256,7 @@ namespace CIAO
               }
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_home -"
+                        "Session_Container::install_home - "
                         "ERROR: %C\n",
                         exception.c_str ()));
 
@@ -274,7 +274,7 @@ namespace CIAO
             error += primary_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_home -"
+                        "Session_Container::install_home - "
                         "ERROR in opening the executor DLL [%C]\n",
                         primary_artifact));
 
@@ -293,7 +293,7 @@ namespace CIAO
             error += servant_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_home -"
+                        "Session_Container::install_home - "
                         "ERROR in opening the servant DLL [%C]\n",
                         servant_artifact));
 
@@ -311,7 +311,7 @@ namespace CIAO
             if (entry_point == 0)
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_home -"
+                            "Session_Container::install_home - "
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%C]\n",
                             primary_artifact));
@@ -320,7 +320,7 @@ namespace CIAO
             else
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_home -"
+                            "Session_Container::install_home - "
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%C]\n",
                             servant_artifact));
@@ -385,8 +385,8 @@ namespace CIAO
           }
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-          "Session_Container::install_home - Error:%C\n",
-                    error.c_str ()));
+                         "Session_Container::install_home - Error: %C\n",
+                         error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
@@ -398,7 +398,7 @@ namespace CIAO
     if (CORBA::is_nil (home_executor.in ()))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO
-                    "Session_Container::install_hoe - "
+                    "Session_Container::install_home - "
                     "Home executor factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
@@ -495,7 +495,7 @@ namespace CIAO
             error += primary_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_component -"
+                        "Session_Container::install_component - "
                         "ERROR in opening the executor DLL [%C]\n",
                         primary_artifact));
 
@@ -513,7 +513,7 @@ namespace CIAO
             error += servant_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_component -"
+                        "Session_Container::install_component - "
                         "ERROR in opening the servant DLL [%C]\n",
                         servant_artifact));
 
@@ -530,7 +530,7 @@ namespace CIAO
             if (entry_point == 0)
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_component -"
+                            "Session_Container::install_component - "
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%C]\n",
                             primary_artifact));
@@ -539,7 +539,7 @@ namespace CIAO
             else
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_component -"
+                            "Session_Container::install_component - "
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%C]\n",
                             servant_artifact));
@@ -605,7 +605,7 @@ namespace CIAO
           }
 
         CIAO_ERROR ((LM_ERROR, CLINFO
-        "Session_Container::install_component - Error:%C\n",
+        "Session_Container::install_component - Error: %C\n",
                     error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();

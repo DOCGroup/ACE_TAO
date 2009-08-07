@@ -124,7 +124,7 @@ namespace CIAO
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_Container_i::install_component - "
-                       "Error:  No Servant entrypoint porovided, aborting installation\n"));
+                       "Error:  No Servant entrypoint provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
         }
 
@@ -140,7 +140,7 @@ namespace CIAO
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_Container_i::install_component - "
-                       "Error:  No Servant artifact porovided, aborting installation\n"));
+                       "Error:  No Servant artifact provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
         }
 
@@ -157,7 +157,7 @@ namespace CIAO
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_Container_i::install_component - "
-                       "Error:  No Executor artifact porovided, aborting installation\n"));
+                       "Error:  No Executor artifact provided, aborting installation\n"));
         }
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
@@ -305,7 +305,7 @@ namespace CIAO
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_Container_i::install_home - "
-                       "Error:  No Servant entrypoint porovided, aborting installation\n"));
+                       "Error: No Servant entrypoint provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
         }
 
@@ -321,7 +321,7 @@ namespace CIAO
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_Container_i::install_home - "
-                       "Error:  No Servant artifact porovided, aborting installation\n"));
+                       "Error:  No Servant artifact provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
         }
 
@@ -338,7 +338,7 @@ namespace CIAO
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_Container_i::install_home - "
-                       "Error:  No Executor artifact porovided, aborting installation\n"));
+                       "Error:  No Executor artifact provided, aborting installation\n"));
         }
 
       CIAO_DEBUG ((LM_TRACE, CLINFO

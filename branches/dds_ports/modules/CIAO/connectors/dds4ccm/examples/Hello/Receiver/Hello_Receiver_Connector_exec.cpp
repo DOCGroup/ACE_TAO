@@ -275,6 +275,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   ::CORBA::Boolean
   ListenerControl_exec_i::enabled (void)
   {
+    // Need to control the data listener
     /* Your code here. */
     return false;
   }
@@ -291,178 +292,6 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   //============================================================
   // Facet Executor Implementation Class: DataReader_exec_i
   //============================================================
-
-  DataReader_exec_i::DataReader_exec_i (::DDS::DataReader_ptr dr) :
-    dr_ ( ::DDS::DataReader::_duplicate (dr))
-  {
-  }
-
-  DataReader_exec_i::~DataReader_exec_i (void)
-  {
-  }
-
-  // Operations from ::DDS::DataReader
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::enable (void)
-  {
-    return this->dr_->enable ();
-  }
-
-  ::DDS::StatusCondition_ptr
-  DataReader_exec_i::get_statuscondition (void)
-  {
-    return this->dr_->get_statuscondition ();
-  }
-
-  ::DDS::StatusMask
-  DataReader_exec_i::get_status_changes (void)
-  {
-    return this->dr_->get_status_changes ();
-  }
-
-  ::DDS::InstanceHandle_t
-  DataReader_exec_i::get_instance_handle (void)
-  {
-    return this->dr_->get_instance_handle ();
-  }
-
-  ::DDS::ReadCondition_ptr
-  DataReader_exec_i::create_readcondition (
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states)
-  {
-    return this->dr_->create_readcondition (sample_states, view_states, instance_states);
-  }
-
-  ::DDS::QueryCondition_ptr
-  DataReader_exec_i::create_querycondition (
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states,
-    const char * query_expression,
-    const ::DDS::StringSeq & query_parameters)
-  {
-    return this->dr_->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::delete_readcondition (
-    ::DDS::ReadCondition_ptr a_condition)
-  {
-    return this->dr_->delete_readcondition (a_condition);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::delete_contained_entities (void)
-  {
-    return this->dr_->delete_contained_entities ();
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::set_qos (
-    const ::DDS::DataReaderQos & qos)
-  {
-    return this->dr_->set_qos (qos);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_qos (
-    ::DDS::DataReaderQos & qos)
-  {
-    return this->dr_->get_qos (qos);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::set_listener (
-    ::DDS::DataReaderListener_ptr a_listener,
-    ::DDS::StatusMask mask)
-  {
-    return this->dr_->set_listener (a_listener, mask);
-  }
-
-  ::DDS::DataReaderListener_ptr
-  DataReader_exec_i::get_listener (void)
-  {
-    return this->dr_->get_listener ();
-  }
-
-  ::DDS::TopicDescription_ptr
-  DataReader_exec_i::get_topicdescription (void)
-  {
-    return this->dr_->get_topicdescription ();
-  }
-
-  ::DDS::Subscriber_ptr
-  DataReader_exec_i::get_subscriber (void)
-  {
-    return this->dr_->get_subscriber ();
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_sample_rejected_status (
-    ::DDS::SampleRejectedStatus & status)
-  {
-    return this->dr_->get_sample_rejected_status (status);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_liveliness_changed_status (
-    ::DDS::LivelinessChangedStatus & status)
-  {
-    return this->dr_->get_liveliness_changed_status (status);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_requested_deadline_missed_status (
-    ::DDS::RequestedDeadlineMissedStatus & status)
-  {
-    return this->dr_->get_requested_deadline_missed_status (status);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_requested_incompatible_qos_status (
-    ::DDS::RequestedIncompatibleQosStatus & status)
-  {
-    return this->dr_->get_requested_incompatible_qos_status (status);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_subscription_matched_status (
-    ::DDS::SubscriptionMatchedStatus & status)
-  {
-    return this->dr_->get_subscription_matched_status (status);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_sample_lost_status (
-    ::DDS::SampleLostStatus & status)
-  {
-    return this->dr_->get_sample_lost_status (status);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::wait_for_historical_data (
-    const ::DDS::Duration_t & max_wait)
-  {
-    return this->dr_->wait_for_historical_data (max_wait);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_matched_publications (
-    ::DDS::InstanceHandleSeq & publication_handles)
-  {
-    return this->dr_->get_matched_publications (publication_handles);
-  }
-
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_matched_publication_data (
-    ::DDS::PublicationBuiltinTopicData & publication_data,
-    const ::DDS::InstanceHandle_t & publication_handle)
-  {
-    return this->dr_->get_matched_publication_data (publication_data, publication_handle);
-  }
 
   //============================================================
   // Component Executor Implementation Class: Hello_receiver_Connector_exec_i
@@ -509,7 +338,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     this->configure_dds ();
     /* Your code here. */
     // @todo
-    return new DataReader_exec_i (this->dr_);
+    return ::DDS::CCM_DataReader::_duplicate (this->dr_.in ());
   }
 
   // Operations from Components::SessionComponent.

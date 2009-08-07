@@ -52,7 +52,10 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   string_Writer_exec_i::write (const char *an_instance)
   {
     writer_.write (an_instance);
-    /*::DDS_StringSeq myseq (1);
+    /*-----------------7-8-2009 14:13-------------------
+     * Code to call a multi writer
+     * --------------------------------------------------*/
+    ::DDS_StringSeq myseq (1);
     myseq.length (1);
     myseq[0] = DDS_String_dup("Multi writer");
     writer_.write (myseq, true);*/
@@ -117,13 +120,13 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
         //NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
         //                                                          NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
 
-        dpf_ = new CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
+        dpf_ = new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
         ::DDS::DomainParticipantQos qos;
         dp_ = dpf_->create_participant (0, qos, 0, 0);
 
         ::DDS::TopicQos tqos;
         t_ = dp_->create_topic ("Hello, World",
-                                CIAO::DDS4CCM::RTI::String_Traits::type_support::get_type_name (),
+                                ::CIAO::DDS4CCM::RTI::String_Traits::type_support::get_type_name (),
                                 tqos,
                                 0,
                                 0);
@@ -134,10 +137,10 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
                                       0);
 
         ::DDS::DataWriterQos dwqos;
-        DDS::DataWriter_var dwv_tmp = pub_->create_datawriter (t_.in (),
-                                                               dwqos,
-                                                               0,
-                                                               0);
+        ::DDS::DataWriter_var dwv_tmp = pub_->create_datawriter (t_.in (),
+                                                                 dwqos,
+                                                                 0,
+                                                                 0);
 
         dw_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
 
