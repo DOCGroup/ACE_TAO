@@ -1,3 +1,9 @@
+Fri Aug  7 11:41:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Added fixed only to Service_Config_Stream_Test, still crashes
+          at shutdown
+
 Fri Aug  7 06:26:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
