@@ -44,7 +44,9 @@ LIBS += -lcoredll -lmingw32 -lmingwex -lws2 -lsupc++ -liphlpapi
 no_hidden_visibility ?= 1
 qos ?= 1
 
-HOST_EXE_EXT = .exe
+ifdef COMSPEC
+  HOST_EXE_EXT = .exe
+endif
 
 ifneq (,$(HOST_ROOT))
 TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
