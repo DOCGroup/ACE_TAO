@@ -1,3 +1,12 @@
+Sun Aug  9 18:55:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cegcc.GNU
+        * include/makeinclude/platform_rtems.x_g++.GNU
+        * include/makeinclude/platform_vxworks5.5.x.GNU
+        * include/makeinclude/platform_vxworks6.2.GNU
+        * include/makeinclude/platform_vxworks6.3.GNU
+          Updated location of idl3_to_idl2 when HOST_ROOT is set
+
 Sun Aug  9 18:53:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU
