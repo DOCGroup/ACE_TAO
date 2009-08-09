@@ -20,11 +20,6 @@ pipes ?= 1
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 
-ifeq (SUSE, $(findstring SUSE,$(LSB_RELEASE_ID)))
-  ifeq (4.1.2, $(findstring 4.1.2,$(CXX_VERSION)))
-    gcc_template_instantiation_visibility ?= 1
-  endif
-endif
 ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
   ifeq (7.10, $(findstring 7.10,$(LSB_RELEASE_RELEASE)))
     no_hidden_visibility ?= 1
