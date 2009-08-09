@@ -26,6 +26,9 @@
 #include "tao/LocalObject.h"
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
 
+#include <map>
+#include <string>
+
 namespace CIAO
 {
   class Port_Activator;
@@ -79,10 +82,8 @@ namespace CIAO
     /// Pointer to our ORB
     CORBA::ORB_var orb_;
 
-    /// @@ This should be changed at some point of time so that we
-    /// don't land up with a linear algorithm
-    typedef ACE_Array_Base<Port_Activator_var> Port_Activators;
-
+    typedef std::map <std::string, Port_Activator_var> Port_Activators;
+    
     /// Array of port activators
     Port_Activators pa_;
 

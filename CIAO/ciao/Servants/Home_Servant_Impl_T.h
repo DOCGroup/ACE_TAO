@@ -81,7 +81,7 @@ namespace CIAO
     _ciao_passivate_component (typename COMP_SVNT::_stub_ptr_type comp);
 
   protected:
-    const char *ins_name_;
+    ACE_CString ins_name_;
     typename EXEC::_var_type executor_;
 
     typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
@@ -94,6 +94,8 @@ namespace CIAO
     typedef OBJREF_MAP::iterator OBJ_ITERATOR;
 
     OBJREF_MAP objref_map_;
+    
+    ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
   };
 }
 
