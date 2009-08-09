@@ -179,7 +179,7 @@ namespace CIAO
             {
               CIAO_DEBUG ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
                            "Failed to narrow callback IOR\n"));
-              throw Error ("Faled to narrow callback IOR");
+              throw Error ("Failed to narrow callback IOR");
             }
 
           Components::ConfigValues_var config;

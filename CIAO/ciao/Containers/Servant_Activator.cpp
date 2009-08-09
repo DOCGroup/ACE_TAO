@@ -11,8 +11,6 @@ namespace CIAO
 {
   Servant_Activator_i::Servant_Activator_i (CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o)),
-      // @@ TODO, avoid this magic number
-      pa_ (64),
       slot_index_ (0)
   {
   }
@@ -20,22 +18,6 @@ namespace CIAO
   Servant_Activator_i::~Servant_Activator_i (void)
   {
     CIAO_TRACE ("Servant_Activator_i::~Servant_Activator_i");
-    /* _var should take care of this now.
-    {
-      ACE_GUARD (TAO_SYNCH_MUTEX,
-                 guard,
-                 this->mutex_);
-
-      size_t const sz =  this->slot_index_;
-
-      for (size_t t = 0; t != sz; ++t)
-        {
-          Port_Activator *&tmp = this->pa_[t];
-
-          delete tmp;
-        }
-    }
-    */
   }
 
   bool
@@ -51,17 +33,14 @@ namespace CIAO
                           guard,
                           this->mutex_,
                           CORBA::NO_RESOURCES ());
-      size_t const sz = this->slot_index_;
 
-      for (size_t t = 0; t != sz; ++t)
+      Port_Activators::iterator pa_iter = this->pa_.find (str.in ());
+      
+      if (pa_iter != this->pa_.end ())
         {
-          Port_Activator_var tmp = this->pa_[t];
-
-          if (ACE_OS::strcmp (tmp->oid (), str.in ()) == 0)
-            {
-              tmp->oid ("dummy");
-            }
+          this->pa_.erase (pa_iter);
         }
+      else return false;
     }
 
     return true;
@@ -80,47 +59,39 @@ namespace CIAO
                 "Servant_Activator_i::incarnate, "
                 "Attempting to activate port name [%C]\n",
                 str.in ()));
-
+    
+    Port_Activators::iterator pa_iter;
+    
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                           guard,
                           this->mutex_,
                           CORBA::NO_RESOURCES ());
-
-      size_t const sz = this->slot_index_;
-      Port_Activator_var tmp;
-
-      for (size_t t = 0; t != sz; ++t)
-        {
-          if (this->pa_.get (tmp, t) == -1)
-            {
-              throw CORBA::OBJECT_NOT_EXIST ();
-            }
-
-          if (tmp == 0)
-            {
-                CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Servant_Activator_i::incarnate (),"
-                            " value from the array is null\n"));
-              continue;
-            }
-
-          if (ACE_OS::strcmp (tmp->oid (),
-                              str.in ()) == 0)
-            {
-              // We should try avoiding making outbound calls with the
-              // lock held. Oh well, let us get some sense of sanity in
-              // CIAO to do think about these.
-              CIAO_DEBUG ((LM_INFO, CLINFO
-                      "Servant_Activator_i::incarnate - Activating Port %C\n",
-                      str.in ()));
-
-              return this->pa_[t]->activate (oid);
-            }
-        }
+      
+      pa_iter = this->pa_.find (str.in ());
     }
-
-    throw CORBA::OBJECT_NOT_EXIST ();
+    
+    if (pa_iter == this->pa_.end ())
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::incarnate - "
+                     "Unable to find sutible port activator for ObjectID %C\n",
+                     str.in ()));
+        throw CORBA::OBJECT_NOT_EXIST ();
+      }
+    
+    if (CORBA::is_nil (pa_iter->second))
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::incarnate - "
+                     "Port Activator for ObjectId %C was nil!\n",
+                     str.in ()));
+        throw CORBA::OBJECT_NOT_EXIST ();
+      }
+    
+    CIAO_DEBUG ((LM_INFO, CLINFO
+                 "Servant_Activator_i::incarnate - Activating Port %C\n",
+                 str.in ()));
+    
+    return pa_iter->second->activate (oid);
   }
 
   void
@@ -132,68 +103,65 @@ namespace CIAO
   {
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
-
-    size_t const sz = this->slot_index_;
-    Port_Activator *tmp = 0;
-
-    for (size_t t = 0; t != sz; ++t)
+    
+    CIAO_DEBUG ((LM_TRACE, CLINFO "Servant_Activator_i::etherealize - "
+                 "Attempting to etherealize servant with object ID %C\n",
+                 str.in ()));
+    
+    Port_Activators::iterator pa_iter;
+    
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->mutex_,
+                          CORBA::NO_RESOURCES ());
+      
+      pa_iter = this->pa_.find (str.in ());
+    }
+    
+    if (pa_iter == this->pa_.end ())
       {
-        Port_Activator_var pa;
-        if (this->pa_.get (pa, t) == -1)
-          {
-            CIAO_ERROR ((LM_WARNING, CLINFO
-              "Servant_Activator_i::etherealize - Could not get Port Activator\n"));
-            continue;
-          }
-
-        if (tmp == 0)
-          {
-            CIAO_ERROR ((LM_WARNING, CLINFO
-              "Servant_Activator_i::etherealize - Port Activator is NULL\n"));
-            continue;
-          }
-
-        if (ACE_OS::strcmp (tmp->oid (),
-                            str.in ()) == 0)
-          {
-            CIAO_DEBUG ((LM_INFO, CLINFO
-                        "Servant_Activator_i::etherealize - Deactivating Port %C\n",
-                        str.in ()));
-            this->pa_[t]->deactivate (servant);
-          }
+        CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::etherealize - "
+                     "Unable to find sutible port activator for ObjectID %C\n",
+                     str.in ()));
+        throw CORBA::OBJECT_NOT_EXIST ();
       }
+    
+    if (CORBA::is_nil (pa_iter->second))
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::etherealize - "
+                     "Port Activator for ObjectId %C was nil!\n",
+                     str.in ()));
+        throw CORBA::OBJECT_NOT_EXIST ();
+      }
+    
+    pa_iter->second->deactivate (servant);
   }
-
+  
   bool
-  Servant_Activator_i::register_port_activator (Port_Activator *pa)
+  Servant_Activator_i::register_port_activator (Port_Activator_ptr pa)
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
                       this->mutex_,
                       false);
+    
+    CIAO_DEBUG ((LM_INFO, CLINFO "Servant_Activator_i::register_port_activator - "
+                 "Registering a port activator for port [%C] with ObjectID [%C]\n",
+                 pa->name (), pa->oid ()));
 
-    // @@ TODO, need to implement a better algorithm here.
-    //
-    if (this->slot_index_ >= this->pa_.size ())
+    try
       {
-        this->pa_.size ((this->slot_index_ + 1));
+        this->pa_ [pa->oid ()] = Port_Activator::_duplicate (pa);
       }
-
-    if (this->pa_.set (pa, this->slot_index_) == 0)
+    catch (...)
       {
-        ++this->slot_index_;
-
-        CIAO_DEBUG ((LM_INFO, CLINFO
-                    "Servant_Activator_i::"
-                    "register_port_activator"
-        " with port name [%C],"
-                    " the slot_index_ is [%d]\n",
-                    pa->name (),
-                    this->slot_index_));
-
-        return true;
+        CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Activator_i::register_port_activator - "
+                     "Unable to register a port activator for port [%C] with ObjectID [%C]\n",
+                     pa->name (), pa->oid ()));
+        return false;
       }
-
-    return false;
+    
+    return true;
   }
 }

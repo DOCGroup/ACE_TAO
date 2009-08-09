@@ -76,10 +76,12 @@ DomainApplicationManager_Impl::startLaunch (const Deployment::Properties & confi
   PortableServer::ObjectId_var id = this->poa_->activate_object (app);
   this->running_app_.push_back(app);
 
-  DANCE_DEBUG ((LM_TRACE, "DomainApplicationManager_Impl::startLaunch - "
-                "Successfully created DomainApplication\n"));
-  DANCE_DEBUG ((LM_TRACE, "DomainApplicationManager_Impl::startLaunch - "
-                "Created %u provided references\n",
+  DANCE_DEBUG ((LM_TRACE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::startLaunch - ")
+                ACE_TEXT("Successfully created DomainApplication\n")));
+  DANCE_DEBUG ((LM_TRACE, DLINFO
+                ACE_TEXT("DomainApplicationManager_Impl::startLaunch - ")
+                ACE_TEXT("Created %u provided references\n"),
                 providedReference->length ()));
 
   CORBA::Object_var ref = this->poa_->id_to_reference (id);
@@ -101,10 +103,12 @@ DomainApplicationManager_Impl::destroyApplication (Deployment::Application_ptr a
           if (application->_is_equivalent (app.in()))
             {
               PortableServer::ObjectId_var id = this->poa_->reference_to_id (application);
-              DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+              DANCE_DEBUG((LM_TRACE, DLINFO
+                           ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
                            ACE_TEXT("deactivating application object\n")));
               this->poa_->deactivate_object (id);
-              DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+              DANCE_DEBUG((LM_TRACE, DLINFO
+                           ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
                            ACE_TEXT("deleting application object\n")));
               delete p;
               for (size_t j = i + 1; j < this->running_app_.size(); ++j)
