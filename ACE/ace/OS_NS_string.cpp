@@ -152,7 +152,7 @@ ACE_OS::strerror (int errnum)
 char *
 ACE_OS::strerror_emulation (int)
 {
-  return "Unknown Error";
+  return const_cast <char*> ("Unknown Error");
 }
 #endif /* ACE_LACKS_STRERROR */
 
