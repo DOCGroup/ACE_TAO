@@ -26,6 +26,7 @@ workspace {
   ccm
   ciao
   DAnCE
+  connectors
   tools
   tests
   examples

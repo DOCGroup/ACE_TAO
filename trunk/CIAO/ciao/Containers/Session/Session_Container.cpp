@@ -256,7 +256,7 @@ namespace CIAO
               }
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_home -"
+                        "Session_Container::install_home - "
                         "ERROR: %C\n",
                         exception.c_str ()));
 
@@ -274,7 +274,7 @@ namespace CIAO
             error += primary_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_home -"
+                        "Session_Container::install_home - "
                         "ERROR in opening the executor DLL [%C]\n",
                         primary_artifact));
 
@@ -293,7 +293,7 @@ namespace CIAO
             error += servant_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_home -"
+                        "Session_Container::install_home - "
                         "ERROR in opening the servant DLL [%C]\n",
                         servant_artifact));
 
@@ -311,7 +311,7 @@ namespace CIAO
             if (entry_point == 0)
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_home -"
+                            "Session_Container::install_home - "
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%C]\n",
                             primary_artifact));
@@ -320,7 +320,7 @@ namespace CIAO
             else
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_home -"
+                            "Session_Container::install_home - "
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%C]\n",
                             servant_artifact));
@@ -385,8 +385,8 @@ namespace CIAO
           }
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-          "Session_Container::install_home - Error:%C\n",
-                    error.c_str ()));
+                         "Session_Container::install_home - Error: %C\n",
+                         error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
@@ -398,7 +398,7 @@ namespace CIAO
     if (CORBA::is_nil (home_executor.in ()))
       {
         CIAO_ERROR ((LM_ERROR, CLINFO
-                    "Session_Container::install_hoe - "
+                    "Session_Container::install_home - "
                     "Home executor factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
@@ -495,7 +495,7 @@ namespace CIAO
             error += primary_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_component -"
+                        "Session_Container::install_component - "
                         "ERROR in opening the executor DLL [%C]\n",
                         primary_artifact));
 
@@ -513,7 +513,7 @@ namespace CIAO
             error += servant_artifact;
 
             CIAO_ERROR ((LM_ERROR, CLINFO
-                        "Session_Container::install_component -"
+                        "Session_Container::install_component - "
                         "ERROR in opening the servant DLL [%C]\n",
                         servant_artifact));
 
@@ -530,7 +530,7 @@ namespace CIAO
             if (entry_point == 0)
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_component -"
+                            "Session_Container::install_component - "
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%C]\n",
                             primary_artifact));
@@ -539,7 +539,7 @@ namespace CIAO
             else
               {
                 CIAO_ERROR ((LM_ERROR, CLINFO
-                            "Session_Container::install_component -"
+                            "Session_Container::install_component - "
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%C]\n",
                             servant_artifact));
@@ -605,7 +605,7 @@ namespace CIAO
           }
 
         CIAO_ERROR ((LM_ERROR, CLINFO
-        "Session_Container::install_component - Error:%C\n",
+        "Session_Container::install_component - Error: %C\n",
                     error.c_str ()));
 
         throw Components::Deployment::ImplEntryPointNotFound ();
@@ -733,7 +733,7 @@ namespace CIAO
           throw CIAO::InvalidComponent  ();
 
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::passivate_component - "
-                     "Invoking CCM activate on provided component object reference."));
+                     "Invoking CCM activate on provided component object reference.\n"));
         sess->passivate_component ();
       }
     catch (const CIAO::InvalidComponent &)
@@ -789,8 +789,28 @@ namespace CIAO
   Session_Container::uninstall_component (Components::CCMObject_ptr homeref)
   {
     CIAO_TRACE ("Session_Container::uninstall_component");
-
-    this->uninstall (homeref, Container_Types::COMPONENT_t);
+    
+    PortableServer::Servant svnt = this->component_poa_->reference_to_servant (homeref);
+    
+    if (svnt == 0)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::uninstall_component - "
+                     "Unable to convert provided CCMObject reference to Servant."));
+        throw ::Components::RemoveFailure ();
+      }
+    
+    CIAO::Servant_Impl_Base * svt = dynamic_cast < CIAO::Servant_Impl_Base * > (svnt);
+    
+    if (svt == 0)
+      {
+        CIAO_ERROR ((LM_ERROR, CLINFO "Session_Container::uninstall_component - "
+                     "Unable to convert provided servant reference to servant implementation."));
+        throw ::Components::RemoveFailure ();
+      }
+    
+    svt->remove ();
+    
+    //this->uninstall (homeref, Container_Types::COMPONENT_t);
   }
 
   void
@@ -821,11 +841,12 @@ namespace CIAO
         PortableServer::ObjectId_var tmp_id;
         tmp_id = tmp->servant_to_id (svnt);
         tmp->deactivate_object (tmp_id);
-        svnt->_remove_ref ();
 
         CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::uninstall_servant - "
                      "Servant successfully removed, reference count is %u\n",
-                     svnt->_refcount_value ()));
+                     svnt->_refcount_value () - 1));
+
+        svnt->_remove_ref ();
 
         oid = tmp_id._retn ();
       }

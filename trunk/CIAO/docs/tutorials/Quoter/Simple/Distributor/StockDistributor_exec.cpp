@@ -241,8 +241,8 @@ namespace CIAO_Stock_StockDistributor_Impl
   void
   StockDistributor_exec_i::push_notify_out ()
   {
-    this->msft_++;
-    this->ibm_++;
+    ++this->msft_;
+    ++this->ibm_;
 
     Stock::StockName_var ev_msft = new OBV_Stock::StockName;
     ev_msft->name (CORBA::string_dup ("MSFT"));

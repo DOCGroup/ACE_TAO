@@ -1,0 +1,10 @@
+// $Id$
+
+project(*sender) : nddslib, acelib {
+  exename = DDS_Sender
+
+  Source_Files {
+    Hello_Sender.cpp
+  }
+}
+
