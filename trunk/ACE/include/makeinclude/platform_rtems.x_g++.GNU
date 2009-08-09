@@ -17,10 +17,8 @@ rwho = 0
 ifneq (,$(HOST_ROOT))
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl
   TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
-  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc
   TAO_IDL_DEP = $(TAO_IDL)
   TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
-  CIDLC_DEP = $(CIDLC)
 endif
 
 ifeq (,$(RTEMS_MAKEFILE_PATH))
