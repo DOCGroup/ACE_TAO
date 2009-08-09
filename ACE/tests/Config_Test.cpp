@@ -589,7 +589,7 @@ run_tests (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Re-open heap expected EBUSY (%d), ")
                          ACE_TEXT ("got %d: bugzilla 3724\n"),
-                         EBUSY, errno),
+                         EBUSY, ACE_ERRNO_GET),
                         -1);
     }
   {
@@ -631,7 +631,7 @@ run_tests (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Re-open(mmap) expected EBUSY (%d), ")
                          ACE_TEXT ("got %d: bugzilla 3724\n"),
-                         EBUSY, errno),
+                         EBUSY, ACE_ERRNO_GET),
                         -1);
     }
   if (pers_config.open () == 0)
@@ -645,7 +645,7 @@ run_tests (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Re-open(new) expected EBUSY (%d), ")
                          ACE_TEXT ("got %d: bugzilla 3724\n"),
-                         EBUSY, errno),
+                         EBUSY, ACE_ERRNO_GET),
                         -1);
     }
 
