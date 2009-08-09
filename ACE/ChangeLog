@@ -1,3 +1,15 @@
+Sun Aug  9 18:53:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU
+          Removed workaround for SLE10
+
+        * include/makeinclude/platform_cegcc.GNU
+        * include/makeinclude/platform_rtems.x_g++.GNU
+        * include/makeinclude/platform_vxworks5.5.x.GNU
+        * include/makeinclude/platform_vxworks6.2.GNU
+        * include/makeinclude/platform_vxworks6.3.GNU
+          Removed references to CIDLC
+
 Sun Aug  9 05:01:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Config_Test.cpp:
