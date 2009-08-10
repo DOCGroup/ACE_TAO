@@ -76,7 +76,7 @@ namespace DAnCE
           {
             if ((i + 1) < argc && *argv[i + 1] != '-')
               {
-                this->filename_ = ACE_TEXT_ALWAYS_CHAR (argv[i+1]);
+                this->filename_ = argv[i+1];
               }
           }
       }

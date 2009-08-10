@@ -12,15 +12,15 @@ namespace DAnCE
   class DAnCE_Logger_Export LoggerError
     {
     public:
-      LoggerError (const char * msg)
+      LoggerError (const ACE_TCHAR * msg)
           : errmsg_ (msg) {};
-      ACE_CString errmsg_;
+      ACE_TString errmsg_;
     };
 
   class DAnCE_Logger_Export File_Logger_Backend : public ACE_Log_Msg_Backend
     {
     public:
-      File_Logger_Backend (const char * fname)
+      File_Logger_Backend (const ACE_TCHAR * fname)
           : fh_ (0), filename_ (fname) {}
 
       virtual ~File_Logger_Backend (void)
@@ -42,7 +42,7 @@ namespace DAnCE
 
     private:
       FILE * fh_;
-      ACE_CString filename_;
+      ACE_TString filename_;
     };
 
 } // DAnCE
