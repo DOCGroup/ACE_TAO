@@ -58,7 +58,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ++received_;
-    printf ("%s string_RawListener::on_data received %s\n", this->name_.c_str (), an_instance);
+    printf ("<%s> string_RawListener::on_data received <%s>\n", this->name_.c_str (), an_instance);
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
@@ -112,25 +112,25 @@ namespace CIAO_Hello_DDS_Receiver_Impl
 
   // Component attributes.
 
-  ::CORBA::ULong 
+  ::CORBA::ULong
   Receiver_exec_i::expected_samples (void)
   {
     return this->expected_;
   }
 
-  void 
+  void
   Receiver_exec_i::expected_samples (::CORBA::ULong expected_samples)
   {
     this->expected_ = expected_samples;
   }
-  
+
   char *
   Receiver_exec_i::name (void)
   {
     return CORBA::string_dup (this->name_.c_str ());
   }
 
-  void 
+  void
   Receiver_exec_i::name (const char *name)
   {
     this->name_ = name;
@@ -189,7 +189,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     CIAO_DEBUG ((LM_INFO, "Receiver_exec_i received %u messages and lost %u messages\n",
                  this->received_.value (),
                  this->lost_.value ()));
-    
+
     if (this->received_ != this->expected_)
       {
         CIAO_ERROR ((LM_EMERGENCY, "Receiver_exec_i: Warning: Expected to receive %u messages, actually got %u\n",
