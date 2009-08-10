@@ -195,8 +195,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       *os << be_nl << be_nl
           << "typedef " << node->local_name () << "_var _var_type;"
           << be_nl
-          << "typedef " << node->local_name () << "_out _out_type;"
-          << be_nl << be_nl;
+          << "typedef " << node->local_name () << "_out _out_type;";
     }
 
   // TAO provides extensions for octet sequences, first find out if
@@ -225,14 +224,15 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
       && node->unbounded ())
     {
-      *os << "\n\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
-                << node->local_name () << " (" << be_idt << be_idt_nl
-                << "::CORBA::ULong length," << be_nl
-                << "const ACE_Message_Block* mb" << be_uidt_nl
-                << ")" << be_uidt_nl
-                << "  : TAO::unbounded_value_sequence< ::CORBA::Octet>"
-                << " (length, mb) {}" << "\n"
-                << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
+      *os << be_nl << be_nl
+          << "\n\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
+          << node->local_name () << " (" << be_idt << be_idt_nl
+          << "::CORBA::ULong length," << be_nl
+          << "const ACE_Message_Block* mb" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "  : TAO::unbounded_value_sequence< ::CORBA::Octet>"
+          << " (length, mb) {}" << "\n"
+          << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
     }
 
   *os << be_uidt_nl
