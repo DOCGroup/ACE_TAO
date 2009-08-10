@@ -30,7 +30,7 @@ namespace CIAO
     public:
       XStr() : _wstr(0L) { };
 
-      XStr (const char* str);
+      XStr (const ACE_TCHAR* str);
 
       XStr (XMLCh* wstr);
 

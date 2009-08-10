@@ -96,14 +96,14 @@ ACE_RCSID (Config_Handlers,
         if (xsc_dp.label_p ())
           {
             this->idl_dp_->label =
-              CORBA::string_dup (xsc_dp.label ().c_str ());
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (xsc_dp.label ().c_str ()));
           }
 
         // Read in the UUID, if present
         if (xsc_dp.UUID_p ())
           {
             this->idl_dp_->UUID =
-              CORBA::string_dup (xsc_dp.UUID ().c_str ());
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR  (xsc_dp.UUID ().c_str ()));
           }
 
         // Similar thing for dependsOn
@@ -184,14 +184,14 @@ ACE_RCSID (Config_Handlers,
         // Read in the label, if present, since minoccurs = 0
         if (plan.label != 0)
           {
-            XMLSchema::string< char > i((plan.label));
+            XMLSchema::string< ACE_TCHAR > i(ACE_TEXT_CHAR_TO_TCHAR (plan.label));
             this->xsc_dp_->label(i);
           }
 
         // Read in the UUID, if present
         if (plan.UUID != 0)
           {
-            XMLSchema::string< char > j((plan.UUID));
+            XMLSchema::string< ACE_TCHAR > j(ACE_TEXT_CHAR_TO_TCHAR(plan.UUID));
             this->xsc_dp_->UUID(j);
           }
 

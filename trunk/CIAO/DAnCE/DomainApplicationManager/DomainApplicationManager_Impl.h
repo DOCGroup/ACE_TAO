@@ -30,7 +30,7 @@ namespace DAnCE
         : public virtual POA_Deployment::DomainApplicationManager
     {
     private:
-      typedef ACE_Map_Manager<ACE_CString, Deployment::DeploymentPlan, ACE_Null_Mutex> TNodePlans;
+      typedef ACE_Map_Manager<ACE_TString, Deployment::DeploymentPlan, ACE_Null_Mutex> TNodePlans;
 
     public:
       DomainApplicationManager_Impl (CORBA::ORB_ptr orb,

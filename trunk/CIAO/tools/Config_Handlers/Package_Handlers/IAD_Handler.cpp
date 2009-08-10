@@ -37,10 +37,10 @@ namespace CIAO
 
 
         if (iad->label_p ())
-          toconfig.label = iad->label ().c_str ();
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR ( iad->label ().c_str ());
 
         if (iad->UUID_p ())
-          toconfig.UUID = iad->UUID ().c_str ();
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (iad->UUID ().c_str ());
 
         toconfig.location.length (iad->count_location ());
         std::for_each (iad->begin_location (),
@@ -77,8 +77,8 @@ namespace CIAO
         CIAO_TRACE ("IAD_Handler::impl_artifact_descr - reverse");
         ImplementationArtifactDescription retval;
 
-        retval.label (src.label.in ());
-        retval.UUID (src.UUID.in ());
+        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
+        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
 #if 0
         for (CORBA::ULong i = 0; i < src.location.length (); ++i)
           retval.add_location (src.location[i].in ());
@@ -101,21 +101,21 @@ namespace CIAO
         return retval;
       }
 
-      ImplementationArtifactDescription *  IAD_Handler::resolve_iad (const char *uri)
+      ImplementationArtifactDescription *  IAD_Handler::resolve_iad (const ACE_TCHAR *uri)
       {
         CIAO_TRACE ("IAD_Handler::resolve_iad");
 
         xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
-          throw Parse_Error ("Unable to create DOM for IAD");
+          throw Parse_Error (ACE_TEXT ("Unable to create DOM for IAD"));
 
         try {
           return new ImplementationArtifactDescription
             (reader::implementationArtifactDescription (dom));
         }
         catch (...) {
-          throw Parse_Error ("Unable to create XSC structure for IAD");
+          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for IAD"));
         }
       }
 

@@ -46,7 +46,7 @@ namespace CIAO
 
 
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == "domain")
+        if (e.name () == ACE_TEXT("domain"))
         {
           ::CIAO::Config_Handlers::Domain r (e);
 
@@ -73,7 +73,7 @@ namespace CIAO
 
 
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == "DeploymentPlan")
+        if (e.name () == ACE_TEXT("DeploymentPlan"))
         {
           ::CIAO::Config_Handlers::deploymentPlan r (e);
 
@@ -100,7 +100,7 @@ namespace CIAO
 
 
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == "implementationArtifactDescription")
+        if (e.name () == ACE_TEXT("implementationArtifactDescription"))
         {
           ::CIAO::Config_Handlers::ImplementationArtifactDescription r (e);
 
@@ -127,7 +127,7 @@ namespace CIAO
 
 
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == "componentInterfaceDescription")
+        if (e.name () == ACE_TEXT("componentInterfaceDescription"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription r (e);
 
@@ -154,7 +154,7 @@ namespace CIAO
 
 
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == "componentImplementationDescription")
+        if (e.name () == ACE_TEXT("componentImplementationDescription"))
         {
           ::CIAO::Config_Handlers::ComponentImplementationDescription r (e);
 
@@ -181,7 +181,7 @@ namespace CIAO
 
 
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == "componentPackageDescription")
+        if (e.name () == ACE_TEXT("componentPackageDescription"))
         {
           ::CIAO::Config_Handlers::ComponentPackageDescription r (e);
 
@@ -208,7 +208,7 @@ namespace CIAO
 
 
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == "packageConfiguration")
+        if (e.name () == ACE_TEXT("packageConfiguration"))
         {
           ::CIAO::Config_Handlers::PackageConfiguration r (e);
 
@@ -235,7 +235,7 @@ namespace CIAO
 
 
         ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-        if (e.name () == "topLevelPackageDescription")
+        if (e.name () == ACE_TEXT("topLevelPackageDescription"))
         {
           ::CIAO::Config_Handlers::TopLevelPackageDescription r (e);
 

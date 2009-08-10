@@ -27,8 +27,8 @@ namespace DAnCE
           DANCE_DEBUG ((LM_TRACE, DLINFO "Admin::install_package - "
                         "Installing package with URI: %C, name: %C\n",
                         uri, name));
-          this->rm_->installPackage (name,
-                                     uri,
+          this->rm_->installPackage (ACE_TEXT_ALWAYS_CHAR (name),
+                                     ACE_TEXT_ALWAYS_CHAR (uri),
                                      replace);
           DANCE_DEBUG ((LM_TRACE, DLINFO "Admin::install_package - "
                         "Package installed successfully\n"));
@@ -90,7 +90,7 @@ namespace DAnCE
           DANCE_DEBUG ((LM_TRACE, DLINFO "Admin::uninstall_package - "
                         "Attempting to uninstall package %s\n",
                         uuid));
-          this->rm_->deletePackage (uuid);
+          this->rm_->deletePackage (ACE_TEXT_ALWAYS_CHAR (uuid));
           DANCE_DEBUG ((LM_INFO, DLINFO "Admin::uninstall_package - "
                         "Successfully uninstalled package %s\n",
                         uuid));
@@ -192,7 +192,7 @@ namespace DAnCE
 
       try
         {
-          ::CORBA::StringSeq_var types = this->rm_->findNamesByType (type);
+          ::CORBA::StringSeq_var types = this->rm_->findNamesByType (ACE_TEXT_ALWAYS_CHAR (type));
           types._retn ();
         }
       catch (CORBA::Exception &ex)

@@ -488,13 +488,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "referencedArtifact")
+        else if (n == ACE_TEXT("referencedArtifact"))
         {
           referencedArtifact_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ImplementationArtifactDescription > (new ::CIAO::Config_Handlers::ImplementationArtifactDescription (e));
           referencedArtifact_->container (this);
@@ -521,49 +521,49 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "location")
+        else if (n == ACE_TEXT("location"))
         {
           ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_location (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT("dependsOn"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::NamedImplementationArtifact (e));
           add_dependsOn (t);
         }
 
-        else if (n == "execParameter")
+        else if (n == ACE_TEXT("execParameter"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_execParameter (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
-        else if (n == "deployRequirement")
+        else if (n == ACE_TEXT("deployRequirement"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_deployRequirement (t);
         }
 
-        else if (n == "contentLocation")
+        else if (n == ACE_TEXT("contentLocation"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           contentLocation (t);
@@ -578,7 +578,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "href")
+        if (n == ACE_TEXT ("href"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);

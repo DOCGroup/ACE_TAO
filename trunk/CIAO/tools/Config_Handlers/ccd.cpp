@@ -498,61 +498,61 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "specificType")
+        else if (n == ACE_TEXT("specificType"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           specificType (t);
         }
 
-        else if (n == "supportedType")
+        else if (n == ACE_TEXT("supportedType"))
         {
           ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_supportedType (t);
         }
 
-        else if (n == "idlFile")
+        else if (n == ACE_TEXT("idlFile"))
         {
           ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_idlFile (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "port")
+        else if (n == ACE_TEXT("port"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentPortDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ComponentPortDescription (e));
           add_port (t);
         }
 
-        else if (n == "property")
+        else if (n == ACE_TEXT("property"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentPropertyDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ComponentPropertyDescription (e));
           add_property (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
-        else if (n == "contentLocation")
+        else if (n == ACE_TEXT("contentLocation"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           contentLocation (t);
@@ -567,7 +567,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "href")
+        if (n == ACE_TEXT ("href"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);

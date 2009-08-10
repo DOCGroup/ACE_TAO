@@ -85,10 +85,10 @@ namespace CIAO
             }
           catch (DynamicAny::DynAny::InvalidValue)
             {
-              ACE_ERROR ((LM_ERROR, "Invalid value provided in XML when trying to "
-                          "populate %ith element of a sequence\n",
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
+                          ACE_TEXT ("populate %ith element of a sequence\n"),
                           pos));
-              throw Config_Error ("", "Invalid value whilst populating the sequence.");
+              throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the sequence."));
             }
           
         case TCKind::tk_char_l:
@@ -114,8 +114,8 @@ namespace CIAO
         case TCKind::tk_event_l:
           // Special case where element association in datavalue contains another datavalue.
           
-          ACE_ERROR ((LM_ERROR, "Type not supported\n"));
-          throw Config_Error ("", "Type not supported");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
       
       return retval._retn ();
@@ -125,7 +125,7 @@ namespace CIAO
     DynSequence_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, "Extracting Sequences not yet supported\n"));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Extracting Sequences not yet supported\n")));
     }
     
     CORBA::TypeCode_ptr 
@@ -133,8 +133,8 @@ namespace CIAO
     {
       if (!type.sequence_p ())
         {
-          ACE_ERROR ((LM_ERROR, "ERROR: Sequence type descriptioin required"));
-          throw Config_Error ("", "Expected <sequence> element, incorrect tc_kind.");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sequence type descriptioin required")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
         }
       
       CORBA::TypeCode_ptr etc = 

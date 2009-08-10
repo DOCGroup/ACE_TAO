@@ -722,13 +722,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "propertyName")
+        if (n == ACE_TEXT("propertyName"))
         {
           propertyName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           propertyName_->container (this);
         }
 
-        else if (n == "instance")
+        else if (n == ACE_TEXT("instance"))
         {
           instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceDeploymentDescription > (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (e));
           instance_->container (this);
@@ -755,25 +755,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "source")
+        else if (n == ACE_TEXT("source"))
         {
           ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_source (t);
         }
 
-        else if (n == "externalName")
+        else if (n == ACE_TEXT("externalName"))
         {
           externalName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           externalName_->container (this);
         }
 
-        else if (n == "delegatesTo")
+        else if (n == ACE_TEXT("delegatesTo"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanSubcomponentPropertyReference (e));
           add_delegatesTo (t);
@@ -800,67 +800,67 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "realizes")
+        else if (n == ACE_TEXT("realizes"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           realizes (t);
         }
 
-        else if (n == "implementation")
+        else if (n == ACE_TEXT("implementation"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::MonolithicDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (e));
           add_implementation (t);
         }
 
-        else if (n == "instance")
+        else if (n == ACE_TEXT("instance"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::InstanceDeploymentDescription (e));
           add_instance (t);
         }
 
-        else if (n == "connection")
+        else if (n == ACE_TEXT("connection"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanConnectionDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanConnectionDescription (e));
           add_connection (t);
         }
 
-        else if (n == "externalProperty")
+        else if (n == ACE_TEXT("externalProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanPropertyMapping, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanPropertyMapping (e));
           add_externalProperty (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT("dependsOn"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
-        else if (n == "artifact")
+        else if (n == ACE_TEXT("artifact"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ArtifactDeploymentDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ArtifactDeploymentDescription (e));
           add_artifact (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
         }
 
-        else if (n == "localityConstraint")
+        else if (n == ACE_TEXT("localityConstraint"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanLocality, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::PlanLocality (e));
           add_localityConstraint (t);

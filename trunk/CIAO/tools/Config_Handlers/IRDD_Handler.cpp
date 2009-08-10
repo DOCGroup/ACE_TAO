@@ -51,13 +51,13 @@ namespace CIAO
 
         default:
           throw Config_Error (desc.requirementName (),
-                              "Unknown ResourceUsageKind.");
+                              ACE_TEXT ("Unknown ResourceUsageKind."));
           break;
         }
 
-      toconfig.requirementName = desc.requirementName ().c_str ();
+      toconfig.requirementName = ACE_TEXT_ALWAYS_CHAR ( desc.requirementName ().c_str ());
 
-      toconfig.resourceName= desc.resourceName ().c_str ();
+      toconfig.resourceName= ACE_TEXT_ALWAYS_CHAR ( desc.resourceName ().c_str ());
 
       toconfig.property.length (desc.count_property ());
       std::for_each (desc.begin_property (),
@@ -70,8 +70,8 @@ namespace CIAO
     {
       CIAO_TRACE("IRDD_Handler::instance_resource_deployment_descr - reverse");
 
-      XMLSchema::string< char > reqname ((src.requirementName));
-      XMLSchema::string< char > resname ((src.resourceName));
+      XMLSchema::string< ACE_TCHAR > reqname (ACE_TEXT_CHAR_TO_TCHAR (src.requirementName));
+      XMLSchema::string< ACE_TCHAR > resname (ACE_TEXT_CHAR_TO_TCHAR (src.resourceName));
 
       InstanceResourceDeploymentDescription irdd (ResourceUsageKind::None,
                                                   reqname,
@@ -100,8 +100,8 @@ namespace CIAO
           break;
 
         default:
-          throw Config_Error (src.resourceName.in (),
-                              "Unknown ResourceUsageKind.");
+          throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (src.resourceName.in ()),
+                              ACE_TEXT ("Unknown ResourceUsageKind."));
           break;
         }
 

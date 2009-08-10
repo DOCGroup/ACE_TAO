@@ -34,7 +34,7 @@ namespace CIAO
     {
       CIAO_TRACE ("Capability_Handler::get_capability");
 
-      toconfig.name = desc.name ().c_str ();
+      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
 
       toconfig.resourceType.length (desc.count_resourceType ());
       std::for_each (desc.begin_resourceType (),
@@ -51,7 +51,7 @@ namespace CIAO
     {
       CIAO_TRACE ("Capability_Handler::get_capability - reverse");
 
-      Capability retval (src.name.in ());
+      Capability retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 #if 0
       for (CORBA::ULong i = 0; i < src.resourceType.length (); ++i)
         retval.add_resourceType (src.resourceType[i].in ());
@@ -101,19 +101,19 @@ namespace CIAO
 
         default:
           throw Config_Error (desc.name (),
-                      "Unknown ResourceUsageKind.");
+                              ACE_TEXT ("Unknown ResourceUsageKind."));
           break;
         }
         }
 
       if (desc.resourcePort_p ())
-        toconfig.resourcePort = desc.resourcePort ().c_str ();
+        toconfig.resourcePort = ACE_TEXT_ALWAYS_CHAR ( desc.resourcePort ().c_str ());
 
       if (desc.componentPort_p  ())
-        toconfig.componentPort = desc.componentPort ().c_str ();
+        toconfig.componentPort = ACE_TEXT_ALWAYS_CHAR ( desc.componentPort ().c_str ());
 
-      toconfig.resourceType = desc.resourceType ().c_str ();
-      toconfig.name = desc.name ().c_str ();
+      toconfig.resourceType = ACE_TEXT_ALWAYS_CHAR ( desc.resourceType ().c_str ());
+      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
 
       std::for_each (desc.begin_property (),
              desc.end_property (),
@@ -125,8 +125,8 @@ namespace CIAO
     {
       CIAO_TRACE ("IR_Handler::get_ir - reverse");
 
-      ImplementationRequirement retval (src.resourceType.in (),
-                        src.name.in ());
+      ImplementationRequirement retval (ACE_TEXT_CHAR_TO_TCHAR (src.resourceType.in ()),
+                                        ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 
       if (src.resourceUsage.length () == 1)
         switch (src.resourceUsage[0])
@@ -152,14 +152,14 @@ namespace CIAO
         break;
 
           default:
-        throw Config_Error (src.name.in (),
-                    "Unknown ResourceUsageKind.");
+            throw Config_Error (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+                            ACE_TEXT ("Unknown ResourceUsageKind."));
         break;
           }
 
-      retval.resourcePort (src.resourcePort.in ());
+      retval.resourcePort (ACE_TEXT_CHAR_TO_TCHAR (src.resourcePort.in ()));
 
-      retval.componentPort (src.componentPort.in ());
+      retval.componentPort (ACE_TEXT_CHAR_TO_TCHAR (src.componentPort.in ()));
 #if 0
       for (CORBA::ULong i = 0; i < src.property.length (); ++i)
         retval.add_property (Property_Handler::get_property (src.property[i]));
@@ -256,17 +256,17 @@ namespace CIAO
 
         if (desc.href_p ())
           {
-            xsc_cid.reset (CID_Handler::resolve_cid (desc.href ().c_str ()));
+            xsc_cid.reset (CID_Handler::resolve_cid ((desc.href ().c_str ())));
             cid = xsc_cid.get ();
           }
         else
           cid = &desc;
 
         if (cid->label_p ())
-          toconfig.label = cid->label ().c_str ();
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR ( cid->label ().c_str ());
 
         if (cid->UUID_p ())
-          toconfig.UUID = cid->UUID ().c_str ();
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR ( cid->UUID ().c_str ());
 
         if (cid->implements_p ())
           { // MAJO: We should be able to assume this exists, fix broken interpeters..
@@ -287,7 +287,7 @@ namespace CIAO
                      toconfig.monolithicImpl[0]);
           }
         else
-          throw Plan_Error ("ComponentImplementationDescription must have either assemblyImpl or monolithicImpl");
+          throw Plan_Error (ACE_TEXT ("ComponentImplementationDescription must have either assemblyImpl or monolithicImpl"));
 
         // configProperty
         toconfig.configProperty.length (cid->count_configProperty ());
@@ -310,7 +310,7 @@ namespace CIAO
         for (ComponentImplementationDescription::dependsOn_const_iterator i = cid->begin_dependsOn ();
              i != cid->end_dependsOn ();
              ++i)
-          toconfig.dependsOn[pos++].requiredType = (*i)->requiredType ().c_str ();
+          toconfig.dependsOn[pos++].requiredType = ACE_TEXT_ALWAYS_CHAR ( (*i)->requiredType ().c_str ());
 
         // infoProperty
         toconfig.infoProperty.length (cid->count_infoProperty ());
@@ -327,8 +327,8 @@ namespace CIAO
 
         ComponentImplementationDescription retval;
 
-        retval.label (src.label.in ());
-        retval.UUID (src.UUID.in ());
+        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
+        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
 
         {
           retval.implements (Comp_Intf_Descr_Handler::comp_intf_descr (src.implements));
@@ -367,21 +367,21 @@ namespace CIAO
       }
 
       ComponentImplementationDescription *
-      CID_Handler::resolve_cid (const char *uri)
+      CID_Handler::resolve_cid (const ACE_TCHAR *uri)
       {
         CIAO_TRACE ("CID_Handler::resolve_cid");
 
         xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
-          throw Parse_Error ("Unable to create DOM for CID");
+          throw Parse_Error (ACE_TEXT ("Unable to create DOM for CID"));
 
         try {
           return new ComponentImplementationDescription
             (reader::componentImplementationDescription (dom));
         }
         catch (...) {
-          throw Parse_Error ("Unable to create XSC structure for CID");
+          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for CID"));
         }
       }
     }

@@ -28,8 +28,8 @@ namespace CIAO
 
       if (CORBA::is_nil (daf_.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Unable to narrow Dynamic Any factory\n"));
-          throw Config_Error ("", "Unable to narrow DynAny factory");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Unable to narrow DynAny factory"));
         }
     }
 
@@ -64,7 +64,7 @@ namespace CIAO
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
-          ACE_ERROR ((LM_WARNING, "I don't know how to handle null or void types\n"));
+          ACE_ERROR ((LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
               
         case TCKind::tk_short_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_short);
@@ -113,7 +113,7 @@ namespace CIAO
 
         case TCKind::tk_string_l:
           if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_string);
-          retval->insert_string ((*value.begin_string ())->c_str ());
+          retval->insert_string (ACE_TEXT_ALWAYS_CHAR ((*value.begin_string ())->c_str ()));
           break;
 
         case TCKind::tk_longlong_l:
@@ -161,8 +161,8 @@ namespace CIAO
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
-          ACE_ERROR ((LM_ERROR, "Type not supported\n"));
-          throw Config_Error ("", "Type not supported");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
       return retval._retn ();
@@ -240,8 +240,8 @@ namespace CIAO
         case CORBA::tk_TypeCode:
         case ::CORBA::tk_null:
         default:
-          ACE_ERROR ((LM_ERROR, "DynAny_Handler: I have no idea how to perform a referse mapping.\n"));
-          throw Config_Error ("", "reverse mapping for this type not supported");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynAny_Handler: I have no idea how to perform a referse mapping.\n")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("reverse mapping for this type not supported"));
         }
 #endif
       Any retval (TCKind::tk_char, val);
@@ -257,8 +257,8 @@ namespace CIAO
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
-          ACE_ERROR ((LM_WARNING, "I don't know how to handle null or void types\n"));
-          throw Config_Error ("", "Null or void types not supported");
+          ACE_ERROR ((LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Null or void types not supported"));
           break;
 
         case TCKind::tk_short_l:
@@ -347,15 +347,15 @@ namespace CIAO
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
-          ACE_ERROR ((LM_ERROR, "Type not supported\n"));
-          throw Config_Error ("", "Type not supported");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
       
       return 0;
     }
     
     void 
-    DynAny_Handler::register_typecode (const std::string typeID,
+    DynAny_Handler::register_typecode (const std::basic_string<ACE_TCHAR> typeID,
                                        CORBA::TypeCode_ptr tc)
     {
       this->typecode_map_[typeID] = tc;
@@ -363,7 +363,7 @@ namespace CIAO
     
     
     CORBA::TypeCode_ptr
-    DynAny_Handler::get_typecode (const std::string typeID)
+    DynAny_Handler::get_typecode (const std::basic_string<ACE_TCHAR> typeID)
     {
       try
         {

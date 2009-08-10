@@ -181,7 +181,7 @@ namespace CIAO
 
           this->parser_->setEntityResolver (&resolver_);
 
-          this->parser_->parse (url);
+          this->parser_->parse (ACE_TEXT_ALWAYS_CHAR (url));
           
           if (e_handler_.getErrors ())
             return 0;
@@ -256,7 +256,7 @@ namespace CIAO
           if (ser_config->canSetParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true))
             ser_config->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
           
-          XMLFormatTarget *format_target = new XERCES_CPP_NAMESPACE::LocalFileFormatTarget (file);
+          XMLFormatTarget *format_target = new XERCES_CPP_NAMESPACE::LocalFileFormatTarget (ACE_TEXT_ALWAYS_CHAR (file));
           
           output->setByteStream (format_target);
           

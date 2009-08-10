@@ -25,9 +25,9 @@ namespace CIAO
     {
       CIAO_TRACE("SPE_Handler::get_spe");
 
-      toconfig.portName = desc.portName ().c_str ();
+      toconfig.portName = ACE_TEXT_ALWAYS_CHAR ( desc.portName ().c_str ());
 
-      ACE_CString str (desc.instance ().idref ().id ().c_str ());
+      ACE_TString str (desc.instance ().idref ().id ().c_str ());
       CORBA::ULong pos (0);
 
       SID_Handler::IDREF.find_ref (str, pos);
@@ -38,13 +38,13 @@ namespace CIAO
     get_spe (const ::Deployment::SubcomponentPortEndpoint &src)
     {
       CIAO_TRACE("SPE_Handler::get_spe - reverse");
-      ACE_CString str;
+      ACE_TString str;
       SID_Handler::IDREF.find_ref (src.instanceRef, str);
       
       IdRef xid;
       xid.idref (str.c_str ());
 
-      return SubcomponentPortEndpoint (src.portName.in (),
+      return SubcomponentPortEndpoint (ACE_TEXT_CHAR_TO_TCHAR (src.portName.in ()),
                                        xid);
     }
       };
@@ -61,7 +61,7 @@ namespace CIAO
     {
       CIAO_TRACE("ACD_Handler::get_acd");
 
-      toconfig.name = desc.name ().c_str ();
+      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
 
       toconfig.deployRequirement.length (desc.count_deployRequirement ());
       std::for_each (desc.begin_deployRequirement (),
@@ -93,7 +93,7 @@ namespace CIAO
     {
       CIAO_TRACE("ACD_Handler::get_acd - reverse");
 
-      AssemblyConnectionDescription retval (src.name.in ());
+      AssemblyConnectionDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 #if 0
       for (CORBA::ULong i = 0; i < src.deployRequirement.length (); ++i)
         retval.add_deployRequirement (Req_Handler::get_requirement (src.deployRequirement[i]));
@@ -127,9 +127,9 @@ namespace CIAO
     {
       CIAO_TRACE("SPR_Handler::get_spr");
 
-      toconfig.propertyName = desc.propertyName ().c_str ();
+      toconfig.propertyName = ACE_TEXT_ALWAYS_CHAR ( desc.propertyName ().c_str ());
 
-      ACE_CString str (desc.instance ().idref ().id ().c_str ());
+      ACE_TString str (desc.instance ().idref ().id ().c_str ());
       CORBA::ULong pos (0);
 
       SID_Handler::IDREF.find_ref (str, pos);
@@ -141,12 +141,12 @@ namespace CIAO
     get_spr (const ::Deployment::SubcomponentPropertyReference &src)
     {
       CIAO_TRACE("SPR_HAndler::get_spr - reverse");
-      ACE_CString str;
+      ACE_TString str;
       SID_Handler::IDREF.find_ref (src.instanceRef, str);
       
       IdRef xid;
       xid.idref (str.c_str ());
-      return SubcomponentPropertyReference (src.propertyName.in (),
+      return SubcomponentPropertyReference (ACE_TEXT_CHAR_TO_TCHAR (src.propertyName.in ()),
                                             xid);
     }
 
@@ -164,8 +164,8 @@ namespace CIAO
     {
       CIAO_TRACE("APM_Handler::get_apm");
 
-      toconfig.name = desc.name ().c_str ();
-      toconfig.externalName = desc.externalName ().c_str ();
+      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
+      toconfig.externalName = ACE_TEXT_ALWAYS_CHAR ( desc.externalName ().c_str ());
 
       toconfig.delegatesTo.length (desc.count_delegatesTo ());
       SEQ_HAND_GCC_BUG_WORKAROUND (SPR_Handler::handle_spr,
@@ -181,8 +181,8 @@ namespace CIAO
     {
       CIAO_TRACE("APM_Handler::get_apm - reverse");
 
-      AssemblyPropertyMapping retval (src.name.in (),
-                      src.externalName.in ());
+      AssemblyPropertyMapping retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+                                      ACE_TEXT_CHAR_TO_TCHAR (src.externalName.in ()));
 #if 0
       for (CORBA::ULong i = 0; i < src.delegatesTo.length (); ++i)
         retval.add_delegatesTo (SPR_Handler::get_spr (src.delegatesTo[i]));

@@ -58,7 +58,7 @@ namespace CIAO
         static PackageConfiguration package_config (const Deployment::PackageConfiguration& src);
 
       private:
-         static PackageConfiguration *resolve_package_config (const char *uri);
+         static PackageConfiguration *resolve_package_config (const ACE_TCHAR *uri);
       };
     }
 

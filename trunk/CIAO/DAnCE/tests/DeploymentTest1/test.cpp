@@ -15,8 +15,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   try
     {
       CIAO::Config_Handlers::XML_File_Intf file (argv[1]);
-      file.add_search_path ("CIAO_ROOT", "/docs/schema/");
-      file.add_search_path ("TAO_ROOT", "/docs/schema/");
+      file.add_search_path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT ("/docs/schema/"));
+      file.add_search_path (ACE_TEXT ("TAO_ROOT"), ACE_TEXT ("/docs/schema/"));
       auto_ptr<Deployment::DeploymentPlan> pplan (file.release_plan());
 
       DANCE_DEBUG((LM_DEBUG, "[%M] Test starts.\n"));
@@ -35,9 +35,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         {
           throw 0;
         }
-      DANCE_DEBUG((LM_DEBUG, "[%M] preparePlan\n"));
+      DANCE_DEBUG((LM_DEBUG, ACE_TEXT ("[%M] preparePlan\n")));
       Deployment::DomainApplicationManager_var dam = em->preparePlan (*pplan, Deployment::ResourceCommitmentManager::_nil());
-      DANCE_DEBUG((LM_DEBUG, "[%M] startLaunch\n"));
+      DANCE_DEBUG((LM_DEBUG, ACE_TEXT ("[%M] startLaunch\n")));
       //call startLaunch
       Deployment::Properties dp;
       Deployment::Connections_var dc;
@@ -45,17 +45,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       Deployment::DomainApplication_var da = Deployment::DomainApplication::_narrow (na);
       if (CORBA::is_nil (da.in ()))
         {
-          DANCE_DEBUG((LM_DEBUG, "[%M] narrow fails\n"));
+          DANCE_DEBUG((LM_DEBUG, ACE_TEXT ("[%M] narrow fails\n")));
         }
-      DANCE_DEBUG((LM_DEBUG, "[%M] finishLaunch\n"));
+      DANCE_DEBUG((LM_DEBUG, ACE_TEXT ("[%M] finishLaunch\n")));
       da->finishLaunch (dc.in(), true);
-      DANCE_DEBUG((LM_DEBUG, "[%M] Test succeded!\n"));
+      DANCE_DEBUG((LM_DEBUG, ACE_TEXT ("[%M] Test succeded!\n")));
 
     }
   catch (const CORBA::Exception &e)
     {
       e._tao_print_exception ("DeploymentTest1::main\t\n");
-      DANCE_ERROR((LM_ERROR, "[%M] Uncaught CORBA exception\n"));
+      DANCE_ERROR((LM_ERROR, ACE_TEXT ("[%M] Uncaught CORBA exception\n")));
       return 1;
     }
   catch (...)

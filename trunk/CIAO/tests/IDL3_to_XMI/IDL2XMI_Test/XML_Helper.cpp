@@ -77,7 +77,7 @@ namespace Test
 
           this->parser_->setErrorHandler (&e_handler_);
 
-          this->parser_->parse (url);
+          this->parser_->parse (ACE_TEXT_ALWAYS_CHAR (url));
 
           if (e_handler_.getErrors ())
             return 1;
