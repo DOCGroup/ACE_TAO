@@ -1,14 +1,15 @@
+// $Id$
 
 class  CCM_DDS_string_RawListener_i
   : public virtual POA_CCM_DDS::string_RawListener
 {
 public:
-  // Constructor 
+  // Constructor
   CCM_DDS_string_RawListener_i (void);
-  
-  // Destructor 
+
+  // Destructor
   virtual ~CCM_DDS_string_RawListener_i (void);
-  
+
   virtual
   void on_data (
     const char * an_instance,
