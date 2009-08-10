@@ -108,7 +108,12 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
       os << "this->activate_component ();" << be_nl;
     }
 
-  bool vrt = node->void_return_type ();
+  os << "if ( ::CORBA::is_nil (this->executor_.in ()))" << be_idt_nl
+     << "{"<< be_idt_nl
+     << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+     << "}" << be_uidt_nl << be_nl;
+
+  bool const vrt = node->void_return_type ();
 
   if (!vrt)
     {
