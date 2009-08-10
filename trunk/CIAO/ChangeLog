@@ -1,3 +1,8 @@
+Mon Aug 10 09:00:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/Components/ProcessColocation_exec.cpp:
+          Unicode fixes
+
 Mon Aug 10 08:53:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl
