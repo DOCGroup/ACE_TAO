@@ -72,7 +72,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     }
   catch (const CORBA::Exception & e)
     {
-      DANCE_ERROR((LM_ERROR, "[%M] A CORBA exception \"%s\" (%s) was thrown. The test failed."
+      DANCE_ERROR((LM_ERROR, "[%M] A CORBA exception \"%C\" (%C) was thrown. The test failed."
                    , e._name(), e._info().c_str()));
       return 1;
     }
