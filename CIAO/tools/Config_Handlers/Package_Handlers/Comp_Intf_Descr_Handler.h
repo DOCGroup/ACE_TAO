@@ -43,7 +43,7 @@ namespace CIAO
         comp_intf_descr (const ::Deployment::ComponentInterfaceDescription &src);
 
       private:
-        static ComponentInterfaceDescription *resolve_cid (const char *uri);
+        static ComponentInterfaceDescription *resolve_cid (const ACE_TCHAR *uri);
       };
     }
   }

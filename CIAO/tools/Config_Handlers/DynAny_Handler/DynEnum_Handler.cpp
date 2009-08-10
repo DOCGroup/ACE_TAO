@@ -35,21 +35,21 @@ namespace CIAO
             DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
           DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
 
-          retval->set_as_string ((*value.begin_enum ())->c_str ());
+          retval->set_as_string (ACE_TEXT_ALWAYS_CHAR ((*value.begin_enum ())->c_str ()));
 
           return retval._retn ();
         }
       catch (DynamicAny::DynAny::InvalidValue)
         {
-          ACE_ERROR ((LM_ERROR, "Invalid value provided in XML when trying to "
-                      "initialize an instance of enumerated type %s\n",
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
+                      ACE_TEXT ("initialize an instance of enumerated type %s\n"),
                       type.enum_ ().typeId ().c_str ()));
           throw Config_Error (type.enum_ ().typeId (),
-                              "Invalid value provided in XML");
+                              ACE_TEXT ("Invalid value provided in XML"));
         }
       catch (Config_Error &ex)
         {
-          ACE_ERROR ((LM_ERROR, "DynEnum_Handler caught Config_Error\n"));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
           if (type.enum_p ())
             ex.add_name (type.enum_ ().typeId ());
 
@@ -57,9 +57,9 @@ namespace CIAO
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, "DynEnum_Handler caught unknown exception\n"));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
           throw Config_Error (type.enum_ ().typeId (),
-                              "Unknown exception");
+                              ACE_TEXT ("Unknown exception"));
         }
     }
 
@@ -67,7 +67,7 @@ namespace CIAO
     DynEnum_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, "Extracting Enums not yet supported\n"));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
     
     CORBA::TypeCode_ptr
@@ -75,8 +75,8 @@ namespace CIAO
     {
       if (!type.enum_p ())
         {
-          ACE_ERROR ((LM_ERROR, "ERROR: Enum type descriptioin required"));
-          throw Config_Error ("", "Did not find expected enum type description, tk_kind may be wrong.");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Enum type descriptioin required")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Did not find expected enum type description, tk_kind may be wrong."));
         }
 
       // Construct TypeCode for the enum
@@ -88,16 +88,16 @@ namespace CIAO
            i != type.enum_ ().end_member ();
            ++i)
         {
-          members[index++] = CORBA::string_dup ((*i)->c_str ());
+          members[index++] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ((*i)->c_str ()));
         }
 
       // @@ Leak this guy onto the heap to avoid a compile problem.
       CORBA::TypeCode_ptr tc =
-        DYNANY_HANDLER->orb ()->create_enum_tc (type.enum_ ().typeId ().c_str (),
-                                     type.enum_ ().name ().c_str (),
-                                     members);
+        DYNANY_HANDLER->orb ()->create_enum_tc (ACE_TEXT_ALWAYS_CHAR (type.enum_ ().typeId ().c_str ()),
+                                                ACE_TEXT_ALWAYS_CHAR (type.enum_ ().name ().c_str ()),
+                                                members);
       
-      DYNANY_HANDLER->register_typecode (type.enum_ ().typeId (),
+      DYNANY_HANDLER->register_typecode ((type.enum_ ().typeId ()),
                                          tc);
       
       return tc;

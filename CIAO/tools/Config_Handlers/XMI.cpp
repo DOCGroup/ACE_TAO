@@ -24,15 +24,15 @@ namespace XMI
 
   Extension::
   Extension ()
-    : ::XSCRT::Type (),
-      regulator__ ()
+  : 
+  regulator__ ()
   {
   }
 
   Extension::
   Extension (Extension const& s)
-    : ::XSCRT::Type (),
-      id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
+  :
+  id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
   label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
   uuid_ (s.uuid_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.uuid_) : 0),
   href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
@@ -246,7 +246,8 @@ namespace XMI
   ::XSCRT::Type* Extension::
   idref_ptr ()
   {
-    return this->get_idref();
+      std::basic_string<ACE_TCHAR> temp (idref().id());
+    return this->get_idref(temp.c_str());
   }
 
 
@@ -387,51 +388,56 @@ namespace XMI
     {
       ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
       ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-      if (n == "id")
+      if (n == ACE_TEXT ("id"))
       {
         ::XMLSchema::ID< ACE_TCHAR > t (a);
         id (t);
-        (*ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance())->add_id(*id_, dynamic_cast<XSCRT::Type*> (this));
+        std::basic_string<ACE_TCHAR> temp ((*id_).c_str());
+        (*ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance())->
+        add_id(temp, dynamic_cast<XSCRT::Type*> (this));
       }
 
-      else if (n == "label")
+      else if (n == ACE_TEXT ("label"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         label (t);
       }
 
-      else if (n == "uuid")
+      else if (n == ACE_TEXT ("uuid"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         uuid (t);
       }
 
-      else if (n == "href")
+      else if (n == ACE_TEXT ("href"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         href (t);
       }
 
-      else if (n == "idref")
+      else if (n == ACE_TEXT ("idref"))
       {
         ::XMLSchema::IDREF< ACE_TCHAR > t (a);
         idref (t);
-        (*ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance())->add_idref((*idref_).id(), dynamic_cast<XSCRT::Type*> (this));
+        std::basic_string<ACE_TCHAR> temp ((*idref_).id().c_str());
+
+        (*ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance())->
+        add_idref(temp, dynamic_cast<XSCRT::Type*> (this));
       }
 
-      else if (n == "version")
+      else if (n == ACE_TEXT ("version"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         version (t);
       }
 
-      else if (n == "extender")
+      else if (n == ACE_TEXT ("extender"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         extender (t);
       }
 
-      else if (n == "extenderID")
+      else if (n == ACE_TEXT ("extenderID"))
       {
         ::XMLSchema::string< ACE_TCHAR > t (a);
         extenderID (t);
@@ -457,7 +463,7 @@ namespace XMI
 
 
       ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
-      if (e.name () == "extension")
+      if (e.name () == ACE_TEXT("extension"))
       {
         ::XMI::Extension r (e);
 

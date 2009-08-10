@@ -469,7 +469,7 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "location")
+        if (n == ACE_TEXT("location"))
         {
           ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_location (t);
@@ -496,55 +496,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "basePackage")
+        else if (n == ACE_TEXT("basePackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
           basePackage (t);
         }
 
-        else if (n == "specializedConfig")
+        else if (n == ACE_TEXT("specializedConfig"))
         {
           ::CIAO::Config_Handlers::PackageConfiguration t (e);
           specializedConfig (t);
         }
 
-        else if (n == "importedPackage")
+        else if (n == ACE_TEXT("importedPackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageImport t (e);
           importedPackage (t);
         }
 
-        else if (n == "referencedPackage")
+        else if (n == ACE_TEXT("referencedPackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageReference t (e);
           referencedPackage (t);
         }
 
-        else if (n == "selectRequirement")
+        else if (n == ACE_TEXT("selectRequirement"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_selectRequirement (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "contentLocation")
+        else if (n == ACE_TEXT("contentLocation"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           contentLocation (t);

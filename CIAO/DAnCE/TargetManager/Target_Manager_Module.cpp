@@ -231,7 +231,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
         repository_manager_oid = "TargetManager";
       else
         {
-          repository_manager_oid = this->options_.name_;
+          repository_manager_oid = ACE_TEXT_ALWAYS_CHAR (this->options_.name_);
           repository_manager_oid += ".TargetManager";
         }
 
@@ -253,7 +253,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
           ACE_CString ns_name;
           if (this->options_.name_ == 0)
             ns_name = "TargetManager";
-          else ns_name = this->options_.name_;
+          else ns_name = ACE_TEXT_ALWAYS_CHAR (this->options_.name_);
 
           DANCE_DEBUG((LM_TRACE, DLINFO "DAnCE_TargetManager_Module::create_object - "
                        "Registering NM in NC as \"%C\".\n", ns_name.c_str ()));

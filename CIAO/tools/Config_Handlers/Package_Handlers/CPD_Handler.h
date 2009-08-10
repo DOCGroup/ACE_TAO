@@ -56,7 +56,7 @@ namespace CIAO
         static ComponentPackageDescription
       component_package_descr (const Deployment::ComponentPackageDescription& src);
       private:
-        static ComponentPackageDescription * resolve_cpd (const char *uri);
+        static ComponentPackageDescription * resolve_cpd (const ACE_TCHAR *uri);
 
       };
 

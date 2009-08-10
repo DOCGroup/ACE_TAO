@@ -31,12 +31,14 @@ namespace CIAO
 }
 
 #include <memory>
+#include <string>
 #include <list>
 #include "XMLSchema/Types.hpp"
 #include "XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
 #include "ace/TSS_T.h"
+#include "ace/ace_wchar.h"
 #include "ace/Singleton.h"
 
 #include "Basic_Deployment_Data.hpp"
@@ -64,6 +66,7 @@ namespace CIAO
       location_const_iterator begin_location () const;
       location_const_iterator end_location () const;
       void add_location ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* location_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_location (void) const;
 
       protected:
@@ -160,6 +163,7 @@ namespace CIAO
       selectRequirement_const_iterator begin_selectRequirement () const;
       selectRequirement_const_iterator end_selectRequirement () const;
       void add_selectRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
+      XSCRT::Type* selectRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_selectRequirement (void) const;
 
       protected:
@@ -175,6 +179,7 @@ namespace CIAO
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
       void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* configProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_configProperty (void) const;
 
       protected:

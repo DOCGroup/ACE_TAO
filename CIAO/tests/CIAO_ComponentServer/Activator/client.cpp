@@ -7,7 +7,7 @@
 #include "ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h"
 #include "ciao/Valuetype_Factories/ConfigValue.h"
 
-const char *cs_path = "ciao_componentserver";
+const ACE_TCHAR *cs_path = ACE_TEXT ("ciao_componentserver");
 CORBA::ULong spawn_delay = 30;
 
 int
@@ -73,7 +73,7 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
       PortableServer::ServantBase_var safe_servant = tmp_ci;
 
       CIAO_ServerActivator_i *sa_tmp = new CIAO_ServerActivator_i (spawn_delay,
-                                                                   cs_path,
+                                                                   ACE_TEXT_ALWAYS_CHAR (cs_path),
                                                                    0,
                                                                    false,
                                                                    tmp_ci->_this (),

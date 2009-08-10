@@ -111,7 +111,7 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
   void create_nm_properties (DAnCE::PROPERTY_MAP &props);
 
   /// Here we store the servants.
-  typedef ACE_Map_Manager < ACE_CString,
+  typedef ACE_Map_Manager < ACE_TString,
                             DAnCE::NodeManager_Impl *,
                             ACE_Null_Mutex > Servant_Map;
   Servant_Map nm_map_;

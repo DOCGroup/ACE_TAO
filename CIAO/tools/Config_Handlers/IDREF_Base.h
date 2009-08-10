@@ -46,27 +46,27 @@ IDREF_Base (T start_point)
 }
 
 /// Bind an IDREF to an index
- void bind_ref (ACE_CString& id, T value);
+ void bind_ref (ACE_TString& id, T value);
 
-void bind_next_available (ACE_CString &id);
+void bind_next_available (ACE_TString &id);
 
 /// Get the index associated with an IDREF
- void find_ref (const ACE_CString& id, T& value);
+ void find_ref (const ACE_TString& id, T& value);
 
 /// get the IDREF associated with an index
- void find_ref (const T &value, ACE_CString& id);
+ void find_ref (const T &value, ACE_TString& id);
 
 /// Unbind all IDREFS
 bool
 unbind_refs (void);
 
-typedef ACE_Hash_Map_Manager<ACE_CString,
+typedef ACE_Hash_Map_Manager<ACE_TString,
 T,
 ACE_Null_Mutex> IDREF_MAP;
 
 
 typedef ACE_Hash_Map_Manager<T,
-ACE_CString,
+ACE_TString,
 ACE_Null_Mutex> POS_MAP;
 protected:
 /// The map used to store and look up the indexes of elements

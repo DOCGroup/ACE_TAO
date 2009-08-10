@@ -325,8 +325,8 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
       for (size_t i = 0; i < this->options_.node_managers_.size(); ++i)
         {
           size_t pos = this->options_.node_managers_[i].find ('=');
-          ACE_CString node_name = this->options_.node_managers_[i];
-          ACE_CString nm_ior;
+          ACE_TString node_name = this->options_.node_managers_[i];
+          ACE_TString nm_ior;
 
           if (ACE_CString::npos == pos)
             {

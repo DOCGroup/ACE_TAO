@@ -31,12 +31,14 @@ namespace CIAO
 }
 
 #include <memory>
+#include <string>
 #include <list>
 #include "XMLSchema/Types.hpp"
 #include "XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
 #include "ace/TSS_T.h"
+#include "ace/ace_wchar.h"
 #include "ace/Singleton.h"
 
 #include "Basic_Deployment_Data.hpp"
@@ -122,6 +124,7 @@ namespace CIAO
       location_const_iterator begin_location () const;
       location_const_iterator end_location () const;
       void add_location ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* location_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_location (void) const;
 
       protected:
@@ -137,6 +140,7 @@ namespace CIAO
       dependsOn_const_iterator begin_dependsOn () const;
       dependsOn_const_iterator end_dependsOn () const;
       void add_dependsOn ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > const& );
+      XSCRT::Type* dependsOn_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_dependsOn (void) const;
 
       protected:
@@ -152,6 +156,7 @@ namespace CIAO
       execParameter_const_iterator begin_execParameter () const;
       execParameter_const_iterator end_execParameter () const;
       void add_execParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* execParameter_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_execParameter (void) const;
 
       protected:
@@ -167,6 +172,7 @@ namespace CIAO
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
       void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* infoProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_infoProperty (void) const;
 
       protected:
@@ -182,6 +188,7 @@ namespace CIAO
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
       void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployRequirement (void) const;
 
       protected:

@@ -255,7 +255,7 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
   // Create empty sub-plans
   for (CORBA::ULong i = 0; i < plan.instance.length(); ++i)
     {
-      ACE_CString node = plan.instance[i].node.in();
+      ACE_TString node = ACE_TEXT_CHAR_TO_TCHAR (plan.instance[i].node.in());
       if (0 == sub_plans.find (node)) continue;
 
       ::Deployment::DeploymentPlan tmp_plan;
@@ -312,7 +312,7 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
       // Get the child plan.
       ::Deployment::DeploymentPlan child_plan;
 
-      if (0 != sub_plans.find (ACE_CString (my_instance.node.in()), child_plan))
+      if (0 != sub_plans.find (ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (my_instance.node.in())), child_plan))
         {
           DANCE_ERROR ((LM_ERROR, DLINFO
                         ACE_TEXT("DomainApplicationManager_Impl::split_plan - ")
@@ -419,7 +419,7 @@ DomainApplicationManager_Impl::split_plan (const Deployment::DeploymentPlan & pl
                 }
             }
         }
-      sub_plans.rebind (ACE_CString (my_instance.node.in()), child_plan);
+      sub_plans.rebind (ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (my_instance.node.in())), child_plan);
     }
 
   //Debug
@@ -460,7 +460,8 @@ DomainApplicationManager_Impl::preparePlan()
               DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                             ACE_TEXT("Deployment::StartError exception. NodeManager %C cannot be found\n"),
                             (*iter_plans).ext_id_.c_str()));
-              throw Deployment::StartError ( (*iter_plans).ext_id_.c_str(), "NodeManager not found");
+              throw Deployment::StartError ( ACE_TEXT_ALWAYS_CHAR ((*iter_plans).ext_id_.c_str()), 
+                                             "NodeManager not found");
             }
 
           // Calling preparePlan for node, specified in current sub plan

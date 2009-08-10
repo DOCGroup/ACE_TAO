@@ -19,7 +19,7 @@ namespace Plan_Launcher
 {
 
 ::Deployment::DeploymentPlan *
-Plan_Launcher_Impl::load_xml_plan(const char *deployment_plan_uri)
+Plan_Launcher_Impl::load_xml_plan(const ACE_TCHAR *deployment_plan_uri)
 {
   DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Impl::load_xml_plan - ")
                 ACE_TEXT("Parsing plan \"%C\"...\n"), deployment_plan_uri));
@@ -40,11 +40,11 @@ Plan_Launcher_Impl::load_xml_plan(const char *deployment_plan_uri)
     }
   catch (...)
     {
-      ACE_CString s = "failed to parse deployment plan \"";
+      ACE_TString s = ACE_TEXT ("failed to parse deployment plan \"");
       s += deployment_plan_uri;
-      s += "\"";
-      DANCE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Impl::load_xml_plan - %C\n"), s.c_str()));
-      throw Deployment_Failure (s.c_str());
+      s += ACE_TEXT ("\"");
+      DANCE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Impl::load_xml_plan - %s\n"), s.c_str()));
+      throw Deployment_Failure (ACE_TEXT_ALWAYS_CHAR (s.c_str()));
     }
 
   DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Impl::load_xml_plan - Parsing complete....\n")));
@@ -63,7 +63,7 @@ void Plan_Launcher_Impl::execute()
           DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Impl::execute - ")
                         ACE_TEXT("launching plan \"%C\"...\n"), this->xml_plan_urls_[i].c_str()));
           ::Deployment::DeploymentPlan_var plan = 
-              this->load_xml_plan(this->xml_plan_urls_[i].c_str());
+              this->load_xml_plan(ACE_TEXT_CHAR_TO_TCHAR (this->xml_plan_urls_[i].c_str()));
           try
           {
             CORBA::String_var uuid = this->launch_plan (plan.in());
@@ -90,7 +90,7 @@ void Plan_Launcher_Impl::execute()
 
   if (this->mode_ & MODE_WRITE_CDR)
     {
-      ::Deployment::DeploymentPlan_var plan = this->load_xml_plan(this->xml_plan_urls_[0].c_str());
+      ::Deployment::DeploymentPlan_var plan = this->load_xml_plan(ACE_TEXT_CHAR_TO_TCHAR (this->xml_plan_urls_[0].c_str()));
       this->write_cdr_plan_file(this->cdr_dest_url_.c_str(), plan);
     }
 }
@@ -105,7 +105,7 @@ void Plan_Launcher_Impl::stop_plan()
         {
           DANCE_DEBUG((LM_TRACE, DLINFO ACE_TEXT("Plan_Launcher_Impl::stop_plan - ")
                        ACE_TEXT("Stopping plan by plan file: %C\n"), this->xml_plan_urls_[i].c_str()));
-          ::Deployment::DeploymentPlan_var plan = this->load_xml_plan(this->xml_plan_urls_[i].c_str());
+          ::Deployment::DeploymentPlan_var plan = this->load_xml_plan(ACE_TEXT_CHAR_TO_TCHAR (this->xml_plan_urls_[i].c_str()));
           if (!this->teardown_plan(plan->UUID.in()))
             {
               DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Plan_Launcher_Impl::stop_plan - ")

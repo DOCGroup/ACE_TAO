@@ -25,8 +25,8 @@ namespace CIAO
 
       //Map the basic string types to their Deployment::Req
       //counterparts.
-      toconfig.name = desc.name ().c_str ();
-      toconfig.resourceType = desc.resourceType ().c_str ();
+      toconfig.name = ACE_TEXT_ALWAYS_CHAR ( desc.name ().c_str ());
+      toconfig.resourceType = ACE_TEXT_ALWAYS_CHAR ( desc.resourceType ().c_str ());
 
       toconfig.property.length (desc.count_property ());
       std::for_each (desc.begin_property (),
@@ -40,8 +40,8 @@ namespace CIAO
       CIAO_TRACE("Req_Handler::get_requirement - reverse");
 
       //Get the values for name and res
-      XMLSchema::string< char > name ((src.name));
-      XMLSchema::string< char > res ((src.resourceType));
+      XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
+      XMLSchema::string< ACE_TCHAR > res (ACE_TEXT_CHAR_TO_TCHAR (src.resourceType));
 
       //Instantiate the Requirement
       Requirement req (name,res);

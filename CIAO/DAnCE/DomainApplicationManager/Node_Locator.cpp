@@ -52,21 +52,21 @@ namespace DAnCE
 
     ACE_Read_Buffer reader (inf, true);
 
-    char* string = 0;
+    ACE_TCHAR * string = 0;
     // Read from the file line by line
-    while ((string = reader.read ('\n')) != 0)
+    while ((string = ACE_TEXT_CHAR_TO_TCHAR (reader.read ('\n'))) != 0)
       {
         if (ACE_OS::strlen (string) == 0) continue;
 
         // Search from the right to the first space
-        const char* ior_start = ACE_OS::strrchr (string, ' ');
+        const ACE_TCHAR* ior_start = ACE_OS::strrchr (string, ' ');
         // Search from the left to the first space
-        const char* dest_end = ACE_OS::strchr (string, ' ');
+        const ACE_TCHAR* dest_end = ACE_OS::strchr (string, ' ');
 
         // The destination is first followed by some spaces
-        ACE_CString destination (string, dest_end - string);
+        ACE_TString destination (string, dest_end - string);
         // And then the IOR
-        ACE_CString ior (ior_start + 1,  ACE_OS::strlen (ior_start + 1));
+        ACE_TString ior (ior_start + 1,  ACE_OS::strlen (ior_start + 1));
         reader.alloc ()->free (string);
 
         DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("Node_Locator::process_node_map - ")
@@ -137,7 +137,7 @@ namespace DAnCE
         CosNaming::Name name;
         name.length (1);
 
-        name[0].id = nodename;
+        name[0].id = ACE_TEXT_ALWAYS_CHAR (nodename);
         name[0].kind = "NodeManager";
 
         CORBA::Object_var obj = this->nc_->resolve (name);

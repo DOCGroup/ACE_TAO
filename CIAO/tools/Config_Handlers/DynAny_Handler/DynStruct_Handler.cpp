@@ -19,7 +19,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     void create_type_map (const DataType &type,
-                          std::map <std::string, DataType const *> &dt_map)
+                          std::map <std::basic_string<ACE_TCHAR>, DataType const *> &dt_map)
     {
       for (StructType::member_const_iterator i = type.struct_ ().begin_member ();
            i != type.struct_ ().end_member (); ++i)
@@ -42,7 +42,7 @@ namespace CIAO
           else
             tc = DynStruct_Handler::create_typecode (type);
 
-          std::map <std::string, DataType const*> dt_map;
+          std::map <std::basic_string<ACE_TCHAR>, DataType const*> dt_map;
           create_type_map (type, dt_map);
           
           // Make the actual DynStruct
@@ -57,7 +57,7 @@ namespace CIAO
           for (DataValue::member_const_iterator i = value.begin_member ();
                i != value.end_member (); ++i)
             {
-              values[pos].id = (*i)->name ().c_str ();
+              values[pos].id = ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
               values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[(*i)->name ()],
                                                                        (*i)->value ());
               pos++;
@@ -76,7 +76,7 @@ namespace CIAO
       catch (...)
         {
           throw Config_Error (type.struct_ ().typeId (),
-                              "Unknown exception");
+                              ACE_TEXT ("Unknown exception"));
         }
     }
     
@@ -85,7 +85,7 @@ namespace CIAO
     DynStruct_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, "Extracting Structs not yet supported\n"));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Extracting Structs not yet supported\n")));
     }
     
     CORBA::TypeCode_ptr 
@@ -93,12 +93,12 @@ namespace CIAO
     {
       if (!type.struct_p ())
         {
-          ACE_ERROR ((LM_ERROR, "ERROR: Struct type descriptioin required"));
-          throw Config_Error ("", "Expected struct type information, tc_kind may be incorrect\n");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Struct type descriptioin required")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected struct type information, tc_kind may be incorrect\n"));
         }
       
-      std::string rid (type.struct_ ().typeId ());
-      std::string name (type.struct_ ().name ());
+      std::basic_string<ACE_TCHAR> rid (type.struct_ ().typeId ());
+      std::basic_string<ACE_TCHAR> name (type.struct_ ().name ());
       
       CORBA::StructMemberSeq members;
       members.length (type.struct_ ().count_member ());
@@ -107,15 +107,15 @@ namespace CIAO
       for (StructType::member_const_iterator i = type.struct_ ().begin_member ();
            i != type.struct_ ().end_member (); ++i)
         {
-          members[pos].name = (*i)->name ().c_str ();
+          members[pos].name = ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
           members[pos].type = DYNANY_HANDLER->create_typecode ((*i)->type ());
           ++pos;
         }
 
       // @@ Leak this guy onto the heap to avoid a compile problem.
       CORBA::TypeCode_ptr tc =
-        DYNANY_HANDLER->orb ()->create_struct_tc (rid.c_str (),
-                                                  name.c_str (),
+        DYNANY_HANDLER->orb ()->create_struct_tc (ACE_TEXT_ALWAYS_CHAR (rid.c_str ()),
+                                                  ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
                                                   members);
       
       DYNANY_HANDLER->register_typecode (type.struct_ ().typeId (),

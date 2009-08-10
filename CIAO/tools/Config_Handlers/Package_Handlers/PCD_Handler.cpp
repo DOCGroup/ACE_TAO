@@ -30,14 +30,14 @@ namespace CIAO
 
         if (dom == 0)
           {
-            std::string error ("Unable to open file: ");
+            std::basic_string<ACE_TCHAR> error (ACE_TEXT ("Unable to open file: "));
             error += uri;
             throw Parse_Error (error);
           }
 
         XStr root = dom->getDocumentElement ()->getTagName ();
 
-        if (root == XStr ("Deployment:topLevelPackageDescription"))
+        if (root == XStr (ACE_TEXT ("Deployment:topLevelPackageDescription")))
           {
             TopLevelPackageDescription tpd;
         
@@ -46,7 +46,7 @@ namespace CIAO
             PCD_Handler::package_config (*(*tpd.begin_package ()),
                                          toconfig);
           }
-        else if (root == XStr ("Deployment:packageConfiguration"))
+        else if (root == XStr (ACE_TEXT ("Deployment:packageConfiguration")))
           {
             PackageConfiguration pcd;
             pcd = reader::packageConfiguration (dom);
@@ -62,7 +62,7 @@ namespace CIAO
 
             delete [] croot;
 
-            throw Plan_Error ("Invalid file passed to package_config, had base");
+            throw Plan_Error (ACE_TEXT ("Invalid file passed to package_config, had base"));
           }
       }
 
@@ -78,7 +78,7 @@ namespace CIAO
         if (desc.contentLocation_p ())
           {
             // Take ownership of the resolved pcd
-            xsc_pcd.reset (PCD_Handler:: resolve_package_config (desc.contentLocation ().c_str ()));
+            xsc_pcd.reset (PCD_Handler::resolve_package_config (desc.contentLocation ().c_str ()));
             pcd = xsc_pcd.get ();
           }
         else
@@ -86,11 +86,11 @@ namespace CIAO
 
         if (pcd->label_p ())
           toconfig.label =
-            pcd->label ().c_str ();
+            ACE_TEXT_ALWAYS_CHAR (pcd->label ().c_str ());
 
         if (pcd->UUID_p ())
           toconfig.UUID =
-            pcd->UUID ().c_str ();
+            ACE_TEXT_ALWAYS_CHAR (pcd->UUID ().c_str ());
 
         if (pcd->basePackage_p ())
           {
@@ -120,10 +120,10 @@ namespace CIAO
         PackageConfiguration pcd = PackageConfiguration ();
 
         if (src.label.in () != 0)
-          pcd.label (src.label.in ());
+          pcd.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
 
         if (src.UUID.in () != 0)
-          pcd.UUID (src.UUID.in ());
+          pcd.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
 
         if (src.basePackage.length () > 0)
           {
@@ -142,19 +142,19 @@ namespace CIAO
 
       }
 
-      PackageConfiguration * PCD_Handler::resolve_package_config (const char *uri)
+      PackageConfiguration * PCD_Handler::resolve_package_config (const ACE_TCHAR *uri)
       {
         xercesc::DOMDocument* dom =
           XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
-          throw Parse_Error ("Unable to create DOM for PackageConfiguration");
+          throw Parse_Error (ACE_TEXT ("Unable to create DOM for PackageConfiguration"));
 
         try {
           return new PackageConfiguration (reader::packageConfiguration (dom));
         }
         catch (...) {
-          throw Parse_Error ("Unable to create XSC structure for PackageConfiguration");
+          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for PackageConfiguration"));
         }
 
       }

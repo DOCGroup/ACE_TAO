@@ -24,7 +24,7 @@ namespace CIAO
                                          ::Deployment::SubcomponentInstantiationDescription &toconfig)
       {
         CIAO_TRACE ("SID_Handler::sub_comp_inst_descr");
-        toconfig.name = desc.name ().c_str ();
+        toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
         if (desc.basePackage_p ())
           {
@@ -53,11 +53,11 @@ namespace CIAO
 
             if (desc.referencedPackage ().requiredUUID_p ())
               toconfig.referencedPackage[0].requiredUUID =
-                desc.referencedPackage ().requiredUUID ().c_str ();
+                ACE_TEXT_ALWAYS_CHAR (desc.referencedPackage ().requiredUUID ().c_str ());
 
             if (desc.referencedPackage ().requiredName_p ())
               toconfig.referencedPackage[0].requiredName =
-                desc.referencedPackage ().requiredName ().c_str ();
+                ACE_TEXT_ALWAYS_CHAR (desc.referencedPackage ().requiredName ().c_str ());
             
             Comp_Intf_Descr_Handler::comp_intf_descr (desc.referencedPackage ().requiredType (),
                                                       toconfig.referencedPackage[0].requiredType);
@@ -76,11 +76,11 @@ namespace CIAO
 
         if (desc.id_p ())
           {
-            ACE_CString str (desc.id ().c_str ());
+            ACE_TString str (desc.id ().c_str ());
             SID_Handler::IDREF.bind_next_available (str);
           }
         else
-          ACE_ERROR ((LM_ERROR, "Warning: SID With Name %s has no ID\n",
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Warning: SID With Name %s has no ID\n"),
                       desc.name ().c_str ()));
 
       }
@@ -89,7 +89,7 @@ namespace CIAO
       SID_Handler::sub_comp_inst_descr (const Deployment::SubcomponentInstantiationDescription &src)
       {
         CIAO_TRACE ("SID_Handler::sub_comp_inst_descr - reverse");
-        SubcomponentInstantiationDescription retval (src.name.in ());
+        SubcomponentInstantiationDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 
         if (src.basePackage.length () == 1)
           retval.basePackage
@@ -109,8 +109,8 @@ namespace CIAO
         else if (src.referencedPackage.length () == 1)
           {
             ComponentPackageReference cpr (Comp_Intf_Descr_Handler::comp_intf_descr (src.referencedPackage[0].requiredType));
-            cpr.requiredUUID (src.referencedPackage[0].requiredUUID.in ());
-            cpr.requiredName (src.referencedPackage[0].requiredName.in ());
+            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredUUID.in ()));
+            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredName.in ()));
 
             retval.referencedPackage (cpr);
           }
@@ -126,7 +126,7 @@ namespace CIAO
         // @@MAJO This is not a good way of binding reverse IDREFS.
         std::auto_ptr <ACE_Utils::UUID> safe_uuid (
           ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
-        ACE_CString uuid ( safe_uuid->to_string ()->c_str ());
+        ACE_TString uuid ( ACE_TEXT_CHAR_TO_TCHAR (safe_uuid->to_string ()->c_str ()));
 
         //        ACE_ERROR ((LM_ERROR, "*** Binding to %s\n",
         //           uuid.c_str ()));

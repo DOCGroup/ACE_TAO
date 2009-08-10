@@ -11,10 +11,10 @@ namespace CIAO
   namespace XML
   {
 
-    XStr::XStr (const char* str)
+    XStr::XStr (const ACE_TCHAR* str)
       : _wstr(0)
     {
-      _wstr = XMLString::transcode(str);
+      _wstr = XMLString::transcode(ACE_TEXT_ALWAYS_CHAR (str));
     }
 
     XStr::XStr (XMLCh *wstr)

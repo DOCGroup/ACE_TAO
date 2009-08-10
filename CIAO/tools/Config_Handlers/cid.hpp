@@ -39,12 +39,14 @@ namespace CIAO
 }
 
 #include <memory>
+#include <string>
 #include <list>
 #include "XMLSchema/Types.hpp"
 #include "XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
 #include "ace/TSS_T.h"
+#include "ace/ace_wchar.h"
 #include "ace/Singleton.h"
 
 #include "Basic_Deployment_Data.hpp"
@@ -155,6 +157,7 @@ namespace CIAO
       selectRequirement_const_iterator begin_selectRequirement () const;
       selectRequirement_const_iterator end_selectRequirement () const;
       void add_selectRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
+      XSCRT::Type* selectRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_selectRequirement (void) const;
 
       protected:
@@ -170,6 +173,7 @@ namespace CIAO
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
       void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* configProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_configProperty (void) const;
 
       protected:
@@ -295,6 +299,7 @@ namespace CIAO
       delegatesTo_const_iterator begin_delegatesTo () const;
       delegatesTo_const_iterator end_delegatesTo () const;
       void add_delegatesTo ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex > const& );
+      XSCRT::Type* delegatesTo_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_delegatesTo (void) const;
 
       protected:
@@ -411,6 +416,7 @@ namespace CIAO
       instance_const_iterator begin_instance () const;
       instance_const_iterator end_instance () const;
       void add_instance ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex > const& );
+      XSCRT::Type* instance_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_instance (void) const;
 
       protected:
@@ -426,6 +432,7 @@ namespace CIAO
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
       void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex > const& );
+      XSCRT::Type* connection_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connection (void) const;
 
       protected:
@@ -441,6 +448,7 @@ namespace CIAO
       externalProperty_const_iterator begin_externalProperty () const;
       externalProperty_const_iterator end_externalProperty () const;
       void add_externalProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex > const& );
+      XSCRT::Type* externalProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_externalProperty (void) const;
 
       protected:
@@ -456,6 +464,7 @@ namespace CIAO
       locality_const_iterator begin_locality () const;
       locality_const_iterator end_locality () const;
       void add_locality ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex > const& );
+      XSCRT::Type* locality_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_locality (void) const;
 
       protected:
@@ -492,6 +501,7 @@ namespace CIAO
       nodeExecParameter_const_iterator begin_nodeExecParameter () const;
       nodeExecParameter_const_iterator end_nodeExecParameter () const;
       void add_nodeExecParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* nodeExecParameter_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_nodeExecParameter (void) const;
 
       protected:
@@ -507,6 +517,7 @@ namespace CIAO
       componentExecParameter_const_iterator begin_componentExecParameter () const;
       componentExecParameter_const_iterator end_componentExecParameter () const;
       void add_componentExecParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* componentExecParameter_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_componentExecParameter (void) const;
 
       protected:
@@ -522,6 +533,7 @@ namespace CIAO
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
       void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployRequirement (void) const;
 
       protected:
@@ -537,6 +549,7 @@ namespace CIAO
       primaryArtifact_const_iterator begin_primaryArtifact () const;
       primaryArtifact_const_iterator end_primaryArtifact () const;
       void add_primaryArtifact ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex > const& );
+      XSCRT::Type* primaryArtifact_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_primaryArtifact (void) const;
 
       protected:
@@ -623,6 +636,7 @@ namespace CIAO
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
       void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* configProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_configProperty (void) const;
 
       protected:
@@ -638,6 +652,7 @@ namespace CIAO
       capability_const_iterator begin_capability () const;
       capability_const_iterator end_capability () const;
       void add_capability ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > const& );
+      XSCRT::Type* capability_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_capability (void) const;
 
       protected:
@@ -653,6 +668,7 @@ namespace CIAO
       dependsOn_const_iterator begin_dependsOn () const;
       dependsOn_const_iterator end_dependsOn () const;
       void add_dependsOn ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > const& );
+      XSCRT::Type* dependsOn_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_dependsOn (void) const;
 
       protected:
@@ -668,6 +684,7 @@ namespace CIAO
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
       void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* infoProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_infoProperty (void) const;
 
       protected:
@@ -765,6 +782,7 @@ namespace CIAO
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
       void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* configProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_configProperty (void) const;
 
       protected:
@@ -780,6 +798,7 @@ namespace CIAO
       capability_const_iterator begin_capability () const;
       capability_const_iterator end_capability () const;
       void add_capability ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex > const& );
+      XSCRT::Type* capability_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_capability (void) const;
 
       protected:
@@ -795,6 +814,7 @@ namespace CIAO
       dependsOn_const_iterator begin_dependsOn () const;
       dependsOn_const_iterator end_dependsOn () const;
       void add_dependsOn ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex > const& );
+      XSCRT::Type* dependsOn_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_dependsOn (void) const;
 
       protected:
@@ -810,6 +830,7 @@ namespace CIAO
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
       void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* infoProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_infoProperty (void) const;
 
       protected:

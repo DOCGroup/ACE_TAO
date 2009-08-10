@@ -75,7 +75,7 @@ class DAnCE_TargetManager_Module_Export DAnCE_TargetManager_Module
                                            int argc,
                                            ACE_TCHAR *argv []);
 
-  virtual const ACE_TCHAR * usage (void);
+  virtual const char * usage (void);
 
   virtual bool parse_args (int argc, ACE_TCHAR *argv []);
 

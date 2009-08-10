@@ -137,15 +137,15 @@ namespace CIAO
         }
       catch (DynamicAny::DynAny::InvalidValue)
         {
-          ACE_ERROR ((LM_ERROR, "Invalid value provided in XML when trying to "
-                      "initialize an instance of enumerated type %s\n",
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
+                      ACE_TEXT ("initialize an instance of enumerated type %s\n"),
                       type.alias ().typeId ().c_str ()));
           throw Config_Error (type.alias ().typeId (),
-                              "Invalid value provided in XML");
+                              ACE_TEXT ("Invalid value provided in XML"));
         }
       catch (Config_Error &ex)
         {
-          ACE_ERROR ((LM_ERROR, "DynAlias_Handler caught Config_Error\n"));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynAlias_Handler caught Config_Error\n")));
           if (type.alias_p ())
             ex.add_name (type.alias ().typeId ());
 
@@ -153,9 +153,9 @@ namespace CIAO
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, "DynAlias_Handler caught unknown exception\n"));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynAlias_Handler caught unknown exception\n")));
           throw Config_Error (type.alias ().typeId (),
-                              "Unknown exception");
+                              ACE_TEXT ("Unknown exception"));
         }
     }
 
@@ -163,7 +163,7 @@ namespace CIAO
     DynAlias_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, "Extracting Enums not yet supported\n"));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
     
     CORBA::TypeCode_ptr
@@ -171,16 +171,16 @@ namespace CIAO
     {
       if (!type.alias_p ())
         {
-          ACE_ERROR ((LM_ERROR, "ERROR: Alias type descriptioin required"));
-          throw Config_Error ("", "Did not find expected alias type description, tk_kind may be wrong.");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Alias type description required")));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Did not find expected alias type description, tk_kind may be wrong."));
         }
 
 
       // @@ Leak this guy onto the heap to avoid a compile problem.
       CORBA::TypeCode_ptr tc =
         DYNANY_HANDLER->orb ()->create_alias_tc 
-        (type.alias ().typeId ().c_str (),
-         type.alias ().name ().c_str (),
+        (ACE_TEXT_ALWAYS_CHAR (type.alias ().typeId ().c_str ()),
+         ACE_TEXT_ALWAYS_CHAR (type.alias ().name ().c_str ()),
          DYNANY_HANDLER->create_typecode (type.alias ().elementType ()));
       
       DYNANY_HANDLER->register_typecode (type.alias ().typeId (),
