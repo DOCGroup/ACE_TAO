@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleNilFacetUser"
 
-project(SimpleCommon_SimpleNilFacetUser_idl_gen) : componentidldefaults {
+project(SimpleCommon_SNFU_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLENILFACETUSER_STUB_Export \
               -Wb,stub_export_include=SimpleNilFacetUser_stub_export.h \
@@ -16,8 +16,8 @@ project(SimpleCommon_SimpleNilFacetUser_idl_gen) : componentidldefaults {
   }
 }
 
-project(SimpleCommon_SimpleNilFacetUser_lem_gen) : ciaoidldefaults {
-  after += SimpleCommon_SimpleNilFacetUser_idl_gen
+project(SimpleCommon_SNFU_lem_gen) : ciaoidldefaults {
+  after += SimpleCommon_SNFU_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro=SIMPLENILFACETUSER_EXEC_Export \
               -Wb,export_include=SimpleNilFacetUser_exec_export.h \
@@ -28,8 +28,8 @@ project(SimpleCommon_SimpleNilFacetUser_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(SimpleCommon_SimpleNilFacetUser_stub) : ccm_stub {
-  after += SimpleCommon_SimpleNilFacetUser_idl_gen SimpleCommon_stub
+project(SimpleCommon_SNFU_stub) : ccm_stub {
+  after += SimpleCommon_SNFU_idl_gen SimpleCommon_stub
   libs  += SimpleCommon_stub
 
   sharedname = SimpleNilFacetUser_stub
@@ -52,8 +52,8 @@ project(SimpleCommon_SimpleNilFacetUser_stub) : ccm_stub {
   }
 }
 
-project(SimpleCommon_SimpleNilFacetUser_exec) : ciao_executor {
-  after   += SimpleCommon_SimpleNilFacetUser_lem_gen SimpleCommon_SimpleNilFacetUser_stub
+project(SimpleCommon_SNFU_exec) : ciao_executor {
+  after   += SimpleCommon_SNFU_lem_gen SimpleCommon_SNFU_stub
   sharedname = SimpleNilFacetUser_exec
   libs += SimpleNilFacetUser_stub SimpleCommon_stub
 
@@ -79,8 +79,8 @@ project(SimpleCommon_SimpleNilFacetUser_exec) : ciao_executor {
 }
 
 
-project(SimpleCommon_SimpleNilFacetUser_svnt) : ciao_servant {
-  after      += SimpleCommon_skel SimpleCommon_SimpleNilFacetUser_exec
+project(SimpleCommon_SNFU_svnt) : ciao_servant {
+  after      += SimpleCommon_skel SimpleCommon_SNFU_exec
   sharedname  = SimpleNilFacetUser_svnt
   libs       += SimpleNilFacetUser_exec \
                 SimpleNilFacetUser_stub \
