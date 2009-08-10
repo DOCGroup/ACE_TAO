@@ -1,3 +1,9 @@
+Mon Aug 10 11:39:58 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * apps/JAWS/server/HTTP_Response.cpp:
+
+          Unicode fix. 
+        
 Mon Aug 10 06:32:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-cegcc.h:

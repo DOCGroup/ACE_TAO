@@ -270,9 +270,9 @@ HTTP_Response::cgi_response (void)
 
   if (this->request_.cgi_env ())
     for (size_t i = 0; this->request_.cgi_env ()[i]; i += 2)
-      cgi_options.setenv (this->request_.cgi_env ()[i],
+      cgi_options.setenv (ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i]),
                           ACE_TEXT ("%s"),
-                          this->request_.cgi_env ()[i+1]);
+                          ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i+1]));
 
   ACE_TCHAR buf[BUFSIZ];
   ACE_TCHAR *p = 0, *q = 0;
