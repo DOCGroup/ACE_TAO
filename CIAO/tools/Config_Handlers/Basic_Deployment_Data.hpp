@@ -68,12 +68,14 @@ namespace CIAO
 }
 
 #include <memory>
+#include <string>
 #include <list>
 #include "XMLSchema/Types.hpp"
 #include "XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
 #include "ace/TSS_T.h"
+#include "ace/ace_wchar.h"
 #include "ace/Singleton.h"
 
 #include "XMI.hpp"
@@ -305,6 +307,7 @@ namespace CIAO
       short_const_iterator begin_short () const;
       short_const_iterator end_short () const;
       void add_short ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::short_, ACE_Null_Mutex > const& );
+      XSCRT::Type* short_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_short (void) const;
 
       protected:
@@ -320,6 +323,7 @@ namespace CIAO
       long_const_iterator begin_long () const;
       long_const_iterator end_long () const;
       void add_long ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::int_, ACE_Null_Mutex > const& );
+      XSCRT::Type* long_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_long (void) const;
 
       protected:
@@ -335,6 +339,7 @@ namespace CIAO
       ushort_const_iterator begin_ushort () const;
       ushort_const_iterator end_ushort () const;
       void add_ushort ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedShort, ACE_Null_Mutex > const& );
+      XSCRT::Type* ushort_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_ushort (void) const;
 
       protected:
@@ -350,6 +355,7 @@ namespace CIAO
       ulong_const_iterator begin_ulong () const;
       ulong_const_iterator end_ulong () const;
       void add_ulong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > const& );
+      XSCRT::Type* ulong_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_ulong (void) const;
 
       protected:
@@ -365,6 +371,7 @@ namespace CIAO
       float_const_iterator begin_float () const;
       float_const_iterator end_float () const;
       void add_float ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::float_, ACE_Null_Mutex > const& );
+      XSCRT::Type* float_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_float (void) const;
 
       protected:
@@ -380,6 +387,7 @@ namespace CIAO
       double_const_iterator begin_double () const;
       double_const_iterator end_double () const;
       void add_double ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > const& );
+      XSCRT::Type* double_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_double (void) const;
 
       protected:
@@ -395,6 +403,7 @@ namespace CIAO
       boolean_const_iterator begin_boolean () const;
       boolean_const_iterator end_boolean () const;
       void add_boolean ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::boolean, ACE_Null_Mutex > const& );
+      XSCRT::Type* boolean_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_boolean (void) const;
 
       protected:
@@ -410,6 +419,7 @@ namespace CIAO
       octet_const_iterator begin_octet () const;
       octet_const_iterator end_octet () const;
       void add_octet ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedByte, ACE_Null_Mutex > const& );
+      XSCRT::Type* octet_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_octet (void) const;
 
       protected:
@@ -425,6 +435,7 @@ namespace CIAO
       enum_const_iterator begin_enum () const;
       enum_const_iterator end_enum () const;
       void add_enum ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* enum_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_enum (void) const;
 
       protected:
@@ -440,6 +451,7 @@ namespace CIAO
       string_const_iterator begin_string () const;
       string_const_iterator end_string () const;
       void add_string ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* string_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_string (void) const;
 
       protected:
@@ -455,6 +467,7 @@ namespace CIAO
       longlong_const_iterator begin_longlong () const;
       longlong_const_iterator end_longlong () const;
       void add_longlong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::long_, ACE_Null_Mutex > const& );
+      XSCRT::Type* longlong_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_longlong (void) const;
 
       protected:
@@ -470,6 +483,7 @@ namespace CIAO
       ulonglong_const_iterator begin_ulonglong () const;
       ulonglong_const_iterator end_ulonglong () const;
       void add_ulonglong ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedLong, ACE_Null_Mutex > const& );
+      XSCRT::Type* ulonglong_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_ulonglong (void) const;
 
       protected:
@@ -485,6 +499,7 @@ namespace CIAO
       longdouble_const_iterator begin_longdouble () const;
       longdouble_const_iterator end_longdouble () const;
       void add_longdouble ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::double_, ACE_Null_Mutex > const& );
+      XSCRT::Type* longdouble_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_longdouble (void) const;
 
       protected:
@@ -500,6 +515,7 @@ namespace CIAO
       element_const_iterator begin_element () const;
       element_const_iterator end_element () const;
       void add_element ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::DataValue, ACE_Null_Mutex > const& );
+      XSCRT::Type* element_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_element (void) const;
 
       protected:
@@ -515,6 +531,7 @@ namespace CIAO
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
       void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedValue, ACE_Null_Mutex > const& );
+      XSCRT::Type* member_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_member (void) const;
 
       protected:
@@ -619,6 +636,7 @@ namespace CIAO
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
       void add_member ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* member_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_member (void) const;
 
       protected:
@@ -675,6 +693,7 @@ namespace CIAO
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
       void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::StructMemberType, ACE_Null_Mutex > const& );
+      XSCRT::Type* member_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_member (void) const;
 
       protected:
@@ -788,6 +807,7 @@ namespace CIAO
       member_const_iterator begin_member () const;
       member_const_iterator end_member () const;
       void add_member ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ValueMemberType, ACE_Null_Mutex > const& );
+      XSCRT::Type* member_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_member (void) const;
 
       protected:
@@ -1145,6 +1165,7 @@ namespace CIAO
       resourceType_const_iterator begin_resourceType () const;
       resourceType_const_iterator end_resourceType () const;
       void add_resourceType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* resourceType_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_resourceType (void) const;
 
       protected:
@@ -1160,6 +1181,7 @@ namespace CIAO
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
       void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > const& );
+      XSCRT::Type* property_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_property (void) const;
 
       protected:
@@ -1215,6 +1237,7 @@ namespace CIAO
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
       void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* property_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_property (void) const;
 
       protected:
@@ -1270,6 +1293,7 @@ namespace CIAO
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
       void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* property_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_property (void) const;
 
       protected:
@@ -1316,6 +1340,7 @@ namespace CIAO
       source_const_iterator begin_source () const;
       source_const_iterator end_source () const;
       void add_source ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* source_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_source (void) const;
 
       protected:
@@ -1340,6 +1365,7 @@ namespace CIAO
       location_const_iterator begin_location () const;
       location_const_iterator end_location () const;
       void add_location ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* location_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_location (void) const;
 
       protected:
@@ -1355,6 +1381,7 @@ namespace CIAO
       execParameter_const_iterator begin_execParameter () const;
       execParameter_const_iterator end_execParameter () const;
       void add_execParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* execParameter_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_execParameter (void) const;
 
       protected:
@@ -1370,6 +1397,7 @@ namespace CIAO
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
       void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployRequirement (void) const;
 
       protected:
@@ -1385,6 +1413,7 @@ namespace CIAO
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
       void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ResourceDeploymentDescription, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployedResource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployedResource (void) const;
 
       protected:
@@ -1442,6 +1471,7 @@ namespace CIAO
       source_const_iterator begin_source () const;
       source_const_iterator end_source () const;
       void add_source ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* source_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_source (void) const;
 
       protected:
@@ -1457,6 +1487,7 @@ namespace CIAO
       artifact_const_iterator begin_artifact () const;
       artifact_const_iterator end_artifact () const;
       void add_artifact ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > const& );
+      XSCRT::Type* artifact_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_artifact (void) const;
 
       protected:
@@ -1472,6 +1503,7 @@ namespace CIAO
       execParameter_const_iterator begin_execParameter () const;
       execParameter_const_iterator end_execParameter () const;
       void add_execParameter ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* execParameter_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_execParameter (void) const;
 
       protected:
@@ -1487,6 +1519,7 @@ namespace CIAO
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
       void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployRequirement (void) const;
 
       protected:
@@ -1599,6 +1632,7 @@ namespace CIAO
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
       void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* property_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_property (void) const;
 
       protected:
@@ -1673,6 +1707,7 @@ namespace CIAO
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
       void add_configProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* configProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_configProperty (void) const;
 
       protected:
@@ -1688,6 +1723,7 @@ namespace CIAO
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
       void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployedResource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployedResource (void) const;
 
       protected:
@@ -1808,6 +1844,7 @@ namespace CIAO
       supportedType_const_iterator begin_supportedType () const;
       supportedType_const_iterator end_supportedType () const;
       void add_supportedType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* supportedType_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_supportedType (void) const;
 
       protected:
@@ -1868,6 +1905,7 @@ namespace CIAO
       templateParam_const_iterator begin_templateParam () const;
       templateParam_const_iterator end_templateParam () const;
       void add_templateParam ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* templateParam_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_templateParam (void) const;
 
       protected:
@@ -2067,6 +2105,7 @@ namespace CIAO
       supportedType_const_iterator begin_supportedType () const;
       supportedType_const_iterator end_supportedType () const;
       void add_supportedType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* supportedType_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_supportedType (void) const;
 
       protected:
@@ -2131,6 +2170,7 @@ namespace CIAO
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
       void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* property_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_property (void) const;
 
       protected:
@@ -2188,6 +2228,7 @@ namespace CIAO
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
       void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployRequirement (void) const;
 
       protected:
@@ -2203,6 +2244,7 @@ namespace CIAO
       externalEndpoint_const_iterator begin_externalEndpoint () const;
       externalEndpoint_const_iterator end_externalEndpoint () const;
       void add_externalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > const& );
+      XSCRT::Type* externalEndpoint_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_externalEndpoint (void) const;
 
       protected:
@@ -2218,6 +2260,7 @@ namespace CIAO
       internalEndpoint_const_iterator begin_internalEndpoint () const;
       internalEndpoint_const_iterator end_internalEndpoint () const;
       void add_internalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint, ACE_Null_Mutex > const& );
+      XSCRT::Type* internalEndpoint_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_internalEndpoint (void) const;
 
       protected:
@@ -2233,6 +2276,7 @@ namespace CIAO
       externalReference_const_iterator begin_externalReference () const;
       externalReference_const_iterator end_externalReference () const;
       void add_externalReference ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > const& );
+      XSCRT::Type* externalReference_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_externalReference (void) const;
 
       protected:
@@ -2248,6 +2292,7 @@ namespace CIAO
       deployedResource_const_iterator begin_deployedResource () const;
       deployedResource_const_iterator end_deployedResource () const;
       void add_deployedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployedResource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployedResource (void) const;
 
       protected:
@@ -2323,6 +2368,7 @@ namespace CIAO
       resourceType_const_iterator begin_resourceType () const;
       resourceType_const_iterator end_resourceType () const;
       void add_resourceType ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex > const& );
+      XSCRT::Type* resourceType_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_resourceType (void) const;
 
       protected:
@@ -2338,6 +2384,7 @@ namespace CIAO
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
       void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SatisfierProperty, ACE_Null_Mutex > const& );
+      XSCRT::Type* property_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_property (void) const;
 
       protected:
@@ -2422,6 +2469,7 @@ namespace CIAO
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
       void add_property ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* property_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_property (void) const;
 
       protected:
@@ -2508,6 +2556,7 @@ namespace CIAO
       deployRequirement_const_iterator begin_deployRequirement () const;
       deployRequirement_const_iterator end_deployRequirement () const;
       void add_deployRequirement ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex > const& );
+      XSCRT::Type* deployRequirement_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_deployRequirement (void) const;
 
       protected:
@@ -2523,6 +2572,7 @@ namespace CIAO
       internalEndpoint_const_iterator begin_internalEndpoint () const;
       internalEndpoint_const_iterator end_internalEndpoint () const;
       void add_internalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPortEndpoint, ACE_Null_Mutex > const& );
+      XSCRT::Type* internalEndpoint_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_internalEndpoint (void) const;
 
       protected:
@@ -2538,6 +2588,7 @@ namespace CIAO
       externalEndpoint_const_iterator begin_externalEndpoint () const;
       externalEndpoint_const_iterator end_externalEndpoint () const;
       void add_externalEndpoint ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ComponentExternalPortEndpoint, ACE_Null_Mutex > const& );
+      XSCRT::Type* externalEndpoint_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_externalEndpoint (void) const;
 
       protected:
@@ -2553,6 +2604,7 @@ namespace CIAO
       externalReference_const_iterator begin_externalReference () const;
       externalReference_const_iterator end_externalReference () const;
       void add_externalReference ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ExternalReferenceEndpoint, ACE_Null_Mutex > const& );
+      XSCRT::Type* externalReference_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_externalReference (void) const;
 
       protected:
@@ -2634,6 +2686,7 @@ namespace CIAO
       constrainedInstance_const_iterator begin_constrainedInstance () const;
       constrainedInstance_const_iterator end_constrainedInstance () const;
       void add_constrainedInstance ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::IdRef, ACE_Null_Mutex > const& );
+      XSCRT::Type* constrainedInstance_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_constrainedInstance (void) const;
 
       protected:

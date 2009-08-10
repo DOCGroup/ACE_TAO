@@ -34,7 +34,7 @@ namespace CIAO
     class Config_Handlers_Export XML_File_Intf
     {
     public:
-      XML_File_Intf (const char *file);
+      XML_File_Intf (const ACE_TCHAR *file);
 
       ::Deployment::DeploymentPlan const *get_plan (void);
       ::Deployment::DeploymentPlan *release_plan (void);
@@ -44,10 +44,10 @@ namespace CIAO
       
     protected:
 
-      bool read_process_file (const char *file);
+      bool read_process_file (const ACE_TCHAR *file);
 
     private:
-      std::string file_;
+      std::basic_string <ACE_TCHAR> file_;
       ACE_Auto_Ptr< ::Deployment::DeploymentPlan> idl_dp_;
     };
   }

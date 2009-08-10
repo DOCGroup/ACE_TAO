@@ -44,7 +44,7 @@ namespace CIAO
         }
       catch (...)
         {
-          throw Config_Error ("", "Caught error whilst parsing XML into Any\n");
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Caught error whilst parsing XML into Any\n"));
         }
     }
 

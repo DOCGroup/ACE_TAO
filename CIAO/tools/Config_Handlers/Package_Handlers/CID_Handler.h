@@ -57,7 +57,7 @@ namespace CIAO
 
       private:
 
-        static ComponentImplementationDescription * resolve_cid (const char *uri);
+        static ComponentImplementationDescription * resolve_cid (const ACE_TCHAR *uri);
       };
     }
   }

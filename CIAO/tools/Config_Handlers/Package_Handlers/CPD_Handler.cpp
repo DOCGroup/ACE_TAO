@@ -21,7 +21,7 @@ namespace CIAO
                 ::Deployment::PackagedComponentImplementation &toconfig)
     {
       CIAO_TRACE ("PCI_Handler::get_pci");
-      toconfig.name = desc.name ().c_str ();
+      toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
       CID_Handler::component_impl_descr (desc.referencedImplementation (),
                          toconfig.referencedImplementation);
@@ -31,7 +31,7 @@ namespace CIAO
     get_pci (const ::Deployment::PackagedComponentImplementation &src)
     {
       CIAO_TRACE ("PCI_Handler::get_pci - reverse");
-      return PackagedComponentImplementation (src.name.in (),
+      return PackagedComponentImplementation (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
                           CID_Handler::component_impl_descr (src.referencedImplementation));
     }
       };
@@ -60,10 +60,10 @@ namespace CIAO
           cpd = &desc;
 
         if (cpd->label_p ())
-          toconfig.label = cpd->label ().c_str ();
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cpd->label ().c_str ());
 
         if (cpd->UUID_p ())
-          toconfig.UUID = cpd->UUID ().c_str ();
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR  (cpd->UUID ().c_str ());
 
         // CID
         if (cpd->realizes_p ())
@@ -102,10 +102,10 @@ namespace CIAO
         ComponentPackageDescription toconfig;
 
         if (src.label.in () != 0)
-          toconfig.label (src.label.in ());
+          toconfig.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
 
         if (src.UUID.in () != 0)
-          toconfig.UUID (src.UUID.in ());
+          toconfig.UUID (ACE_TEXT_CHAR_TO_TCHAR (src.UUID.in ()));
 
         {
           toconfig.realizes
@@ -133,7 +133,7 @@ namespace CIAO
         return toconfig;
       }
 
-      ComponentPackageDescription * CPD_Handler::resolve_cpd (const char *uri)
+      ComponentPackageDescription * CPD_Handler::resolve_cpd (const ACE_TCHAR *uri)
       {
         CIAO_TRACE ("CPD_Handler::resolve_cpd");
         if (!XML_Helper::XML_HELPER.is_initialized ())
@@ -143,14 +143,14 @@ namespace CIAO
           XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
-          throw Parse_Error ("Unable to create DOM for component package description");
+          throw Parse_Error (ACE_TEXT ("Unable to create DOM for component package description"));
 
         try {
           //ACE_ERROR ((LM_ERROR, "Creating new CPD XSC Object\n"));
           return new ComponentPackageDescription (reader::componentPackageDescription (dom));
         }
         catch (...) {
-          throw Parse_Error ("Unable to create XSC structure for CID");
+          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for CID"));
         }
       }
     }

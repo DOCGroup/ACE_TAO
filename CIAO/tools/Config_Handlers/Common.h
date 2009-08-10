@@ -20,23 +20,23 @@ namespace CIAO
     class Config_Error
     {
     public:
-      Config_Error (const std::string &name,
-                    const std::string &error) :
+      Config_Error (const std::basic_string<ACE_TCHAR> &name,
+                    const std::basic_string<ACE_TCHAR> &error) :
         name_ (name),
         error_ (error)
       {};
       
-      void add_name (const std::string &name)
+      void add_name (const std::basic_string<ACE_TCHAR> &name)
       {
-        name_ = name + ':' + name_;
+        name_ = name + ACE_TEXT (":") + name_;
       }
 
       /// Some identifying information about the element that
       /// caused the error
-      std::string name_;
+      std::basic_string<ACE_TCHAR> name_;
 
       /// A human readable error message
-      std::string error_;
+      std::basic_string<ACE_TCHAR> error_;
 
     };
   }

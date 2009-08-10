@@ -266,7 +266,7 @@ namespace CIAO
         ACE_DLL executor_dll;
         ACE_DLL servant_dll;
 
-        if (executor_dll.open (primary_artifact,
+        if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
                                ACE_DEFAULT_SHLIB_MODE,
                                0) != 0)
           {
@@ -285,7 +285,7 @@ namespace CIAO
                     "Session_Container::install_home - "
                     "Executor DLL successfully opened\n"));
 
-        if (servant_dll.open (servant_artifact,
+        if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
                               ACE_DEFAULT_SHLIB_MODE,
                               0) != 0)
           {
@@ -333,11 +333,11 @@ namespace CIAO
         // We have to do this casting in two steps because the C++
         // standard forbids casting a pointer-to-object (including
         // void*) directly to a pointer-to-function.
-        void *void_ptr = executor_dll.symbol (entry_point);
+        void *void_ptr = executor_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (entry_point));
         ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
         hcreator = reinterpret_cast<HomeFactory> (tmp_ptr);
 
-        void_ptr = servant_dll.symbol (servant_entrypoint);
+        void_ptr = servant_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (servant_entrypoint));
         tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
         screator = reinterpret_cast<HomeServantFactory> (tmp_ptr);
       }
@@ -487,7 +487,7 @@ namespace CIAO
             throw Components::Deployment::UnknownImplId ();
           }
 
-        if (executor_dll.open (primary_artifact,
+        if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
                                ACE_DEFAULT_SHLIB_MODE,
                                0) != 0)
           {
@@ -505,7 +505,7 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO
                     "Session_Container::install_component - Executor DLL successfully opened\n"));
 
-        if (servant_dll.open (servant_artifact,
+        if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
                               ACE_DEFAULT_SHLIB_MODE,
                               0) != 0)
           {
@@ -552,11 +552,11 @@ namespace CIAO
         // We have to do this casting in two steps because the C++
         // standard forbids casting a pointer-to-object (including
         // void*) directly to a pointer-to-function.
-        void *void_ptr = executor_dll.symbol (entry_point);
+        void *void_ptr = executor_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (entry_point));
         ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
         ccreator = reinterpret_cast<ComponentFactory> (tmp_ptr);
 
-        void_ptr = servant_dll.symbol (servant_entrypoint);
+        void_ptr = servant_dll.symbol (ACE_TEXT_CHAR_TO_TCHAR (servant_entrypoint));
         tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
         screator = reinterpret_cast<ComponentServantFactory> (tmp_ptr);
       }

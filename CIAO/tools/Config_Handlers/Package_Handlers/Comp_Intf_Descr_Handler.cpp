@@ -23,7 +23,7 @@ namespace CIAO
           {
             CIAO_TRACE ("Comp_Prop_Handler::get_cpd");
 
-            toconfig.name = desc.name ().c_str ();
+            toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
             DataType_Handler::data_type (desc.type (),
                                          toconfig.type);
           }
@@ -33,7 +33,7 @@ namespace CIAO
           {
             CIAO_TRACE ("Comp_Prop_Handler::get_cpd - reverse");
 
-            return ComponentPropertyDescription (src.name.in (),
+            return ComponentPropertyDescription (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
                                                  DataType_Handler::data_type (src.type));
           }
 
@@ -64,14 +64,14 @@ namespace CIAO
           cid = &desc;
 
         if (cid->label_p ())
-          toconfig.label = cid->label ().c_str ();
+          toconfig.label = ACE_TEXT_ALWAYS_CHAR (cid->label ().c_str ());
 
         if (cid->UUID_p ())
-          toconfig.UUID = cid->UUID ().c_str ();
+          toconfig.UUID = ACE_TEXT_ALWAYS_CHAR (cid->UUID ().c_str ());
 
         // MAJO: SpecificType should be required.
         if (cid->specificType_p ())
-          toconfig.specificType = cid->specificType ().c_str ();
+          toconfig.specificType = ACE_TEXT_ALWAYS_CHAR (cid->specificType ().c_str ());
 
         toconfig.supportedType.length (cid->count_supportedType ());
         std::for_each (cid->begin_supportedType (),
@@ -115,9 +115,9 @@ namespace CIAO
         CIAO_TRACE ("Comp_Intf_Descr_Handler::comp_intf_descr - reverse");
         ComponentInterfaceDescription retval;
 
-        retval.label (src.label.in ());
-        retval.UUID (src.UUID.in ());
-        retval.specificType (src.specificType.in ());
+        retval.label (ACE_TEXT_CHAR_TO_TCHAR (src.label.in ()));
+        retval.UUID (ACE_TEXT_CHAR_TO_TCHAR  (src.UUID.in ()));
+        retval.specificType (ACE_TEXT_CHAR_TO_TCHAR  (src.specificType.in ()));
 #if 0
         for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
           retval.add_supportedType (src.supportedType[i].in ());
@@ -144,21 +144,21 @@ namespace CIAO
       }
 
       ComponentInterfaceDescription *
-      Comp_Intf_Descr_Handler::resolve_cid (const char *uri)
+      Comp_Intf_Descr_Handler::resolve_cid (const ACE_TCHAR *uri)
       {
         CIAO_TRACE ("Comp_Intf_Descr_Handler::resolve_cid");
 
         xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
-          throw Parse_Error ("Unable to create DOM for Component Interface Description.");
+          throw Parse_Error (ACE_TEXT ("Unable to create DOM for Component Interface Description."));
 
         try {
           return new ComponentInterfaceDescription
             (reader::componentInterfaceDescription (dom));
         }
         catch (...) {
-          throw Parse_Error ("Unable to create XSC structure for Component Interface Description");
+          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for Component Interface Description"));
         }
       }
     }

@@ -13,14 +13,14 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    XML_File_Intf::XML_File_Intf (const char *file)
+    XML_File_Intf::XML_File_Intf (const ACE_TCHAR *file)
       : file_ (file),
         idl_dp_ (0)
     {
     }
 
     bool
-    XML_File_Intf::read_process_file (const char *file)
+    XML_File_Intf::read_process_file (const ACE_TCHAR *file)
     {
       CIAO_TRACE("XML_File_Intf::read_process_file");
 
@@ -33,7 +33,7 @@ namespace CIAO
                        "Constructing DOM\n"));
           XERCES_CPP_NAMESPACE::DOMDocument *dom = 0;
           dom =
-            XML_Helper::XML_HELPER.create_dom (file);
+            XML_Helper::XML_HELPER.create_dom ((file));
 
           if (dom == 0)
             {

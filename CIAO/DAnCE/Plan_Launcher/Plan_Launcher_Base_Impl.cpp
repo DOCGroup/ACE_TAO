@@ -762,7 +762,7 @@ Plan_Launcher_Base_Impl::check_mode_consistentness()
 ACE_CString
 Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
   {
-    ACE_CString src(s);
+    ACE_CString src(ACE_TEXT_ALWAYS_CHAR (s));
     ACE_CString res;
     size_t pos_done = 0;
     while (pos_done < (size_t) src.length())
@@ -800,8 +800,8 @@ Plan_Launcher_Base_Impl::expand_env_vars (const ACE_TCHAR * s)
 
             if (pos_end - pos_start > 1)
               {
-                ACE_Env_Value<const char*> val (src.substring (pos_start + 1, pos_end - pos_start - 1).c_str(), 0);
-                res += val;
+                ACE_Env_Value<const ACE_TCHAR*> val (ACE_TEXT_CHAR_TO_TCHAR (src.substring (pos_start + 1, pos_end - pos_start - 1).c_str()), 0);
+                res += ACE_TEXT_ALWAYS_CHAR (val);
                 pos_done = pos_end;
               }
             else

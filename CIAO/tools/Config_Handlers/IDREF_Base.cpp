@@ -18,7 +18,7 @@ namespace CIAO
     {
       template <typename T>
       void
-      IDREF_Base<T>::bind_ref (ACE_CString& id, T value)
+      IDREF_Base<T>::bind_ref (ACE_TString& id, T value)
       {
         CIAO_TRACE("IDREF_Base<T>::bind_ref");
 
@@ -29,12 +29,12 @@ namespace CIAO
 
         if (retval < 0)
           throw Config_Error (id.c_str (),
-                              "Failed to bind an IDRef.  This likely indicates a name clash.");
+                              ACE_TEXT ("Failed to bind an IDRef.  This likely indicates a name clash."));
       }
 
       template <typename T>
       void
-      IDREF_Base<T>::bind_next_available (ACE_CString &id)
+      IDREF_Base<T>::bind_next_available (ACE_TString &id)
       {
         // Note:  For this function to compile and work properly,
         // T must have the postincrement operator defined.
@@ -51,13 +51,13 @@ namespace CIAO
 
         if (retval < 0 || pos_retval < 0)
           throw Config_Error (id.c_str (),
-                              "Failed to bind an IDRef.  This likely indicates a name clash");
+                              ACE_TEXT ("Failed to bind an IDRef.  This likely indicates a name clash"));
 
       }
 
       template <typename T>
       void
-      IDREF_Base<T>::find_ref (const ACE_CString& id, T& val)
+      IDREF_Base<T>::find_ref (const ACE_TString& id, T& val)
       {
         CIAO_TRACE("IDREF_Base<T>::find_ref(C_String, T)");
 
@@ -66,12 +66,12 @@ namespace CIAO
 
         if (retval < 0)
           throw Config_Error (id.c_str (),
-                              "Unable to look up an IDRef.");
+                              ACE_TEXT ("Unable to look up an IDRef."));
       }
 
       template <typename T>
       void
-      IDREF_Base<T>::find_ref (const T& value, ACE_CString& id)
+      IDREF_Base<T>::find_ref (const T& value, ACE_TString& id)
       {
         CIAO_TRACE("IDREF_Base<T>::find_ref (T, CString)");
 
@@ -82,7 +82,7 @@ namespace CIAO
         //            value));
 
         if (retval < 0)
-          throw Config_Error ("No location information for reverse IDREF lookup",
+          throw Config_Error (ACE_TEXT ("No location information for reverse IDREF lookup"),
                               id.c_str ());
       }
 

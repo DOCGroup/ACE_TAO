@@ -1941,19 +1941,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "requiredUUID")
+        if (n == ACE_TEXT("requiredUUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           requiredUUID (t);
         }
 
-        else if (n == "requiredName")
+        else if (n == ACE_TEXT("requiredName"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           requiredName (t);
         }
 
-        else if (n == "requiredType")
+        else if (n == ACE_TEXT("requiredType"))
         {
           requiredType_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
           requiredType_->container (this);
@@ -1980,43 +1980,43 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "basePackage")
+        else if (n == ACE_TEXT("basePackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
           basePackage (t);
         }
 
-        else if (n == "specializedConfig")
+        else if (n == ACE_TEXT("specializedConfig"))
         {
           ::CIAO::Config_Handlers::PackageConfiguration t (e);
           specializedConfig (t);
         }
 
-        else if (n == "selectRequirement")
+        else if (n == ACE_TEXT("selectRequirement"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Requirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Requirement (e));
           add_selectRequirement (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "referencedPackage")
+        else if (n == ACE_TEXT("referencedPackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageReference t (e);
           referencedPackage (t);
         }
 
-        else if (n == "importedPackage")
+        else if (n == ACE_TEXT("importedPackage"))
         {
           ::CIAO::Config_Handlers::ComponentPackageImport t (e);
           importedPackage (t);
@@ -2031,11 +2031,13 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "id")
+        if (n == ACE_TEXT ("id"))
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
-          (*ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance())->add_id(*id_, dynamic_cast<XSCRT::Type*> (this));
+          std::basic_string<ACE_TCHAR> temp ((*id_).c_str());
+          (*ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance())->
+          add_id(temp, dynamic_cast<XSCRT::Type*> (this));
         }
 
         else 
@@ -2059,13 +2061,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "propertyName")
+        if (n == ACE_TEXT("propertyName"))
         {
           propertyName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           propertyName_->container (this);
         }
 
-        else if (n == "instance")
+        else if (n == ACE_TEXT("instance"))
         {
           instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
           instance_->container (this);
@@ -2092,19 +2094,19 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "name")
+        if (n == ACE_TEXT("name"))
         {
           name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           name_->container (this);
         }
 
-        else if (n == "externalName")
+        else if (n == ACE_TEXT("externalName"))
         {
           externalName_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           externalName_->container (this);
         }
 
-        else if (n == "delegatesTo")
+        else if (n == ACE_TEXT("delegatesTo"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentPropertyReference, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (e));
           add_delegatesTo (t);
@@ -2125,12 +2127,12 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (e.value ());
 
-      if (v == "SameNodeAnyProcess") v_ = SameNodeAnyProcess_l;
-      else if (v == "SameNodeSameProcess") v_ = SameNodeSameProcess_l;
-      else if (v == "SameNodeDifferentProcess") v_ = SameNodeDifferentProcess_l;
-      else if (v == "DifferentNode") v_ = DifferentNode_l;
-      else if (v == "DifferentProcess") v_ = DifferentProcess_l;
-      else if (v == "NoConstraint") v_ = NoConstraint_l;
+      if (v == ACE_TEXT ("SameNodeAnyProcess")) v_ = SameNodeAnyProcess_l;
+      else if (v == ACE_TEXT ("SameNodeSameProcess")) v_ = SameNodeSameProcess_l;
+      else if (v == ACE_TEXT ("SameNodeDifferentProcess")) v_ = SameNodeDifferentProcess_l;
+      else if (v == ACE_TEXT ("DifferentNode")) v_ = DifferentNode_l;
+      else if (v == ACE_TEXT ("DifferentProcess")) v_ = DifferentProcess_l;
+      else if (v == ACE_TEXT ("NoConstraint")) v_ = NoConstraint_l;
       else 
       {
       }
@@ -2142,12 +2144,12 @@ namespace CIAO
     {
       ::std::basic_string< ACE_TCHAR > v (a.value ());
 
-      if (v == "SameNodeAnyProcess") v_ = SameNodeAnyProcess_l;
-      else if (v == "SameNodeSameProcess") v_ = SameNodeSameProcess_l;
-      else if (v == "SameNodeDifferentProcess") v_ = SameNodeDifferentProcess_l;
-      else if (v == "DifferentNode") v_ = DifferentNode_l;
-      else if (v == "DifferentProcess") v_ = DifferentProcess_l;
-      else if (v == "NoConstraint") v_ = NoConstraint_l;
+      if (v == ACE_TEXT ("SameNodeAnyProcess")) v_ = SameNodeAnyProcess_l;
+      else if (v == ACE_TEXT ("SameNodeSameProcess")) v_ = SameNodeSameProcess_l;
+      else if (v == ACE_TEXT ("SameNodeDifferentProcess")) v_ = SameNodeDifferentProcess_l;
+      else if (v == ACE_TEXT ("DifferentNode")) v_ = DifferentNode_l;
+      else if (v == ACE_TEXT ("DifferentProcess")) v_ = DifferentProcess_l;
+      else if (v == ACE_TEXT ("NoConstraint")) v_ = NoConstraint_l;
       else 
       {
       }
@@ -2175,13 +2177,13 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "constraint")
+        if (n == ACE_TEXT("constraint"))
         {
           constraint_ = ::std::auto_ptr< ::CIAO::Config_Handlers::LocalityKind > (new ::CIAO::Config_Handlers::LocalityKind (e));
           constraint_->container (this);
         }
 
-        else if (n == "constrainedInstance")
+        else if (n == ACE_TEXT("constrainedInstance"))
         {
           constrainedInstance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::IdRef > (new ::CIAO::Config_Handlers::IdRef (e));
           constrainedInstance_->container (this);
@@ -2208,25 +2210,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "instance")
+        if (n == ACE_TEXT("instance"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SubcomponentInstantiationDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (e));
           add_instance (t);
         }
 
-        else if (n == "connection")
+        else if (n == ACE_TEXT("connection"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyConnectionDescription, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::AssemblyConnectionDescription (e));
           add_connection (t);
         }
 
-        else if (n == "externalProperty")
+        else if (n == ACE_TEXT("externalProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::AssemblyPropertyMapping, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::AssemblyPropertyMapping (e));
           add_externalProperty (t);
         }
 
-        else if (n == "locality")
+        else if (n == ACE_TEXT("locality"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Locality, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Locality (e));
           add_locality (t);
@@ -2253,25 +2255,25 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "nodeExecParameter")
+        if (n == ACE_TEXT("nodeExecParameter"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_nodeExecParameter (t);
         }
 
-        else if (n == "componentExecParameter")
+        else if (n == ACE_TEXT("componentExecParameter"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_componentExecParameter (t);
         }
 
-        else if (n == "deployRequirement")
+        else if (n == ACE_TEXT("deployRequirement"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationRequirement, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationRequirement (e));
           add_deployRequirement (t);
         }
 
-        else if (n == "primaryArtifact")
+        else if (n == ACE_TEXT("primaryArtifact"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::NamedImplementationArtifact, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::NamedImplementationArtifact (e));
           add_primaryArtifact (t);
@@ -2298,55 +2300,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "implements")
+        else if (n == ACE_TEXT("implements"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           implements (t);
         }
 
-        else if (n == "assemblyImpl")
+        else if (n == ACE_TEXT("assemblyImpl"))
         {
           ::CIAO::Config_Handlers::ComponentAssemblyDescription t (e);
           assemblyImpl (t);
         }
 
-        else if (n == "monolithicImpl")
+        else if (n == ACE_TEXT("monolithicImpl"))
         {
           ::CIAO::Config_Handlers::MonolithicImplementationDescription t (e);
           monolithicImpl (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "capability")
+        else if (n == ACE_TEXT("capability"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Capability (e));
           add_capability (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT("dependsOn"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
@@ -2361,7 +2363,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "href")
+        if (n == ACE_TEXT ("href"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);
@@ -2388,55 +2390,55 @@ namespace CIAO
         ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == "label")
+        if (n == ACE_TEXT("label"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           label (t);
         }
 
-        else if (n == "UUID")
+        else if (n == ACE_TEXT("UUID"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
           UUID (t);
         }
 
-        else if (n == "implements")
+        else if (n == ACE_TEXT("implements"))
         {
           ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
           implements (t);
         }
 
-        else if (n == "assemblyImpl")
+        else if (n == ACE_TEXT("assemblyImpl"))
         {
           ::CIAO::Config_Handlers::ComponentAssemblyDescription t (e);
           assemblyImpl (t);
         }
 
-        else if (n == "monolithicImpl")
+        else if (n == ACE_TEXT("monolithicImpl"))
         {
           ::CIAO::Config_Handlers::MonolithicImplementationDescription t (e);
           monolithicImpl (t);
         }
 
-        else if (n == "configProperty")
+        else if (n == ACE_TEXT("configProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_configProperty (t);
         }
 
-        else if (n == "capability")
+        else if (n == ACE_TEXT("capability"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Capability, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Capability (e));
           add_capability (t);
         }
 
-        else if (n == "dependsOn")
+        else if (n == ACE_TEXT("dependsOn"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::ImplementationDependency, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::ImplementationDependency (e));
           add_dependsOn (t);
         }
 
-        else if (n == "infoProperty")
+        else if (n == ACE_TEXT("infoProperty"))
         {
           ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex >  t (new ::CIAO::Config_Handlers::Property (e));
           add_infoProperty (t);
@@ -2451,7 +2453,7 @@ namespace CIAO
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == "href")
+        if (n == ACE_TEXT ("href"))
         {
           ::XMLSchema::string< ACE_TCHAR > t (a);
           href (t);
@@ -5489,12 +5491,12 @@ namespace CIAO
       {
         ::std::basic_string< ACE_TCHAR > s;
 
-        if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeAnyProcess) s = "SameNodeAnyProcess";
-        else if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeSameProcess) s = "SameNodeSameProcess";
-        else if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeDifferentProcess) s = "SameNodeDifferentProcess";
-        else if (o == ::CIAO::Config_Handlers::LocalityKind::DifferentNode) s = "DifferentNode";
-        else if (o == ::CIAO::Config_Handlers::LocalityKind::DifferentProcess) s = "DifferentProcess";
-        else if (o == ::CIAO::Config_Handlers::LocalityKind::NoConstraint) s = "NoConstraint";
+        if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeAnyProcess) s = ACE_TEXT ("SameNodeAnyProcess");
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeSameProcess) s = ACE_TEXT ("SameNodeSameProcess");
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::SameNodeDifferentProcess) s = ACE_TEXT ("SameNodeDifferentProcess");
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::DifferentNode) s = ACE_TEXT ("DifferentNode");
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::DifferentProcess) s = ACE_TEXT ("DifferentProcess");
+        else if (o == ::CIAO::Config_Handlers::LocalityKind::NoConstraint) s = ACE_TEXT ("NoConstraint");
         else 
         {
         }

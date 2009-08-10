@@ -407,7 +407,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
           else if (this->options_.process_ns_)
             {
               const int argc_ns = 1;
-              char* argv_ns[argc_ns];
+              ACE_TCHAR* argv_ns[argc_ns];
               argv_ns[0] = argv[0];
               naming_obj = orb->resolve_initial_references ("NameService");
               if (0 != this->options_.process_ns_file_)
@@ -467,8 +467,8 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                     this->options_.node_managers_[0].c_str()));
 
       // Parsing Node name and node manager ior file name
-      ACE_CString node_name = this->options_.node_managers_[0].c_str ();
-      ACE_CString node_file;
+      ACE_TString node_name = this->options_.node_managers_[0].c_str ();
+      ACE_TString node_file;
       size_t npos = node_name.find ('=');
       if (ACE_CString::npos != npos)
         {
@@ -477,7 +477,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
         }
 
       DANCE_DEBUG ((LM_INFO, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                    "Creating node named '%C' and outputting ior to file '%C'\n",
+                    "Creating node named '%s' and outputting ior to file '%s'\n",
                     node_name.c_str (),
                     node_file.c_str ()));
 
@@ -494,7 +494,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
           ACE_NEW_RETURN (nm,
                           DAnCE::NodeManager_Impl (orb,
                                                    this->root_poa_.in (),
-                                                   node_name.c_str(),
+                                                   ACE_TEXT_ALWAYS_CHAR (node_name.c_str()),
 //                                                   *this->redirection_,
                                                    properties),
                           CORBA::Object::_nil ());
@@ -503,7 +503,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
           this->nm_map_.bind (node_name, nm);
         }
 
-      ACE_CString node_manager_oid = node_name + ".NodeManager";
+      ACE_CString node_manager_oid = ACE_TEXT_ALWAYS_CHAR ((node_name + ACE_TEXT (".NodeManager")).c_str ());
 
       // Registering servant in poa
       PortableServer::ObjectId_var oid =
@@ -524,7 +524,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                        "Registering NM in NC as \"%C.NodeManager\".\n", node_name.c_str ()));
           CosNaming::Name name (1);
           name.length (1);
-          name[0].id = CORBA::string_dup (node_name.c_str ());
+          name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (node_name.c_str ()));
           name[0].kind = CORBA::string_dup ("NodeManager");
           this->domain_nc_->rebind (name, nm_obj.in ());
         }
@@ -618,7 +618,7 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   }
   {
     CORBA::Any val;
-    val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.cs_path_),0);
+    val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.cs_path_)),0);
     props.bind (CIAO::Deployment::SERVER_EXECUTABLE, val);
   }
   {
@@ -628,19 +628,19 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   }
   {
     CORBA::Any val;
-    val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.server_args_),0);
+    val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.server_args_)),0);
     props.bind (CIAO::Deployment::SERVER_ARGUMENTS, val);
   }
   if (this->options_.instance_nc_)
     {
       CORBA::Any val;
-      val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.instance_nc_), 0);
+      val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.instance_nc_)), 0);
       props.bind (DAnCE::INSTANCE_NC, val);
     }
   if (this->options_.domain_nc_)
     {
       CORBA::Any val;
-      val <<= CORBA::Any::from_string (CORBA::string_dup (this->options_.domain_nc_), 0);
+      val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.domain_nc_)), 0);
       props.bind (DAnCE::DOMAIN_NC, val);
     }
 }

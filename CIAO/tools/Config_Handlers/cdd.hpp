@@ -34,12 +34,14 @@ namespace CIAO
 }
 
 #include <memory>
+#include <string>
 #include <list>
 #include "XMLSchema/Types.hpp"
 #include "XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
 #include "ace/TSS_T.h"
+#include "ace/ace_wchar.h"
 #include "ace/Singleton.h"
 
 #include "Basic_Deployment_Data.hpp"
@@ -85,6 +87,7 @@ namespace CIAO
       node_const_iterator begin_node () const;
       node_const_iterator end_node () const;
       void add_node ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > const& );
+      XSCRT::Type* node_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_node (void) const;
 
       protected:
@@ -100,6 +103,7 @@ namespace CIAO
       interconnect_const_iterator begin_interconnect () const;
       interconnect_const_iterator end_interconnect () const;
       void add_interconnect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
+      XSCRT::Type* interconnect_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_interconnect (void) const;
 
       protected:
@@ -115,6 +119,7 @@ namespace CIAO
       bridge_const_iterator begin_bridge () const;
       bridge_const_iterator end_bridge () const;
       void add_bridge ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > const& );
+      XSCRT::Type* bridge_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_bridge (void) const;
 
       protected:
@@ -130,6 +135,7 @@ namespace CIAO
       sharedResource_const_iterator begin_sharedResource () const;
       sharedResource_const_iterator end_sharedResource () const;
       void add_sharedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > const& );
+      XSCRT::Type* sharedResource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_sharedResource (void) const;
 
       protected:
@@ -145,6 +151,7 @@ namespace CIAO
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
       void add_infoProperty ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Property, ACE_Null_Mutex > const& );
+      XSCRT::Type* infoProperty_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_infoProperty (void) const;
 
       protected:
@@ -200,6 +207,7 @@ namespace CIAO
       connect_const_iterator begin_connect () const;
       connect_const_iterator end_connect () const;
       void add_connect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
+      XSCRT::Type* connect_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connect (void) const;
 
       protected:
@@ -215,6 +223,7 @@ namespace CIAO
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
       void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
+      XSCRT::Type* resource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_resource (void) const;
 
       protected:
@@ -271,6 +280,7 @@ namespace CIAO
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
       void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Bridge, ACE_Null_Mutex > const& );
+      XSCRT::Type* connection_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connection (void) const;
 
       protected:
@@ -286,6 +296,7 @@ namespace CIAO
       connect_const_iterator begin_connect () const;
       connect_const_iterator end_connect () const;
       void add_connect ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Node, ACE_Null_Mutex > const& );
+      XSCRT::Type* connect_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connect (void) const;
 
       protected:
@@ -301,6 +312,7 @@ namespace CIAO
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
       void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
+      XSCRT::Type* resource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_resource (void) const;
 
       protected:
@@ -357,6 +369,7 @@ namespace CIAO
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
       void add_connection ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Interconnect, ACE_Null_Mutex > const& );
+      XSCRT::Type* connection_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_connection (void) const;
 
       protected:
@@ -372,6 +385,7 @@ namespace CIAO
       sharedResource_const_iterator begin_sharedResource () const;
       sharedResource_const_iterator end_sharedResource () const;
       void add_sharedResource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::SharedResource, ACE_Null_Mutex > const& );
+      XSCRT::Type* sharedResource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_sharedResource (void) const;
 
       protected:
@@ -387,6 +401,7 @@ namespace CIAO
       resource_const_iterator begin_resource () const;
       resource_const_iterator end_resource () const;
       void add_resource ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::Resource, ACE_Null_Mutex > const& );
+      XSCRT::Type* resource_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_resource (void) const;
 
       protected:

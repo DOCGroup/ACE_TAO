@@ -1040,7 +1040,8 @@ NodeApplication_Impl::store_instance_ior (Instance &inst)
                           name))
     {
       CORBA::String_var ior = this->orb_->object_to_string (inst.ref.in ());
-      Name_Utilities::write_ior (name, ior.in ());
+      Name_Utilities::write_ior (ACE_TEXT_CHAR_TO_TCHAR (name),
+                                 (ior.in ()));
     }
 }
 

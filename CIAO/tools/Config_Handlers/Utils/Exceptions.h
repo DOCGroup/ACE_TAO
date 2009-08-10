@@ -13,22 +13,22 @@ namespace CIAO
   {
     struct Parse_Error
     {
-      Parse_Error (const std::string &reason)
+      Parse_Error (const std::basic_string<ACE_TCHAR> &reason)
         : reason_ (reason)
       {
       }
 
-      std::string reason_;
+      std::basic_string<ACE_TCHAR> reason_;
     };
 
     struct Plan_Error
     {
-      Plan_Error (const std::string &reason)
+      Plan_Error (const std::basic_string<ACE_TCHAR> &reason)
         : reason_ (reason)
       {
       }
 
-      std::string reason_;
+      std::basic_string<ACE_TCHAR> reason_;
     };
 
   }

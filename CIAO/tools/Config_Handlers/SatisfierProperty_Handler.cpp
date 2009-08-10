@@ -26,7 +26,7 @@ namespace CIAO
     {
       CIAO_TRACE("SatisfierProperty_Handler::get_sat_property");
       
-      toconfig.name = desc.name ().c_str ();
+      toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
       switch (desc.kind ().integral ())
         {
@@ -55,8 +55,8 @@ namespace CIAO
           break;
           
         default:
-          ACE_ERROR ((LM_ERROR, "Unknown SatisfierPropertyKind\n"));
-          throw Config_Error (desc.name (), "Unknown SatisfierPropertyKind");
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
+          throw Config_Error (desc.name (), ACE_TEXT ("Unknown SatisfierPropertyKind"));
           
         }
 
@@ -80,7 +80,7 @@ namespace CIAO
     {
       CIAO_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
 
-      ::XMLSchema::string< ACE_TCHAR > name ((src.name));
+      ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR ((src.name)));
       SatisfierPropertyKind::Value kind;
 
       const SatisfierPropertyKind *spk = 0;
@@ -112,7 +112,7 @@ namespace CIAO
           break;
 
         default:
-          throw Plan_Error ("Invalid SatisfierPropertyKind");
+          throw Plan_Error (ACE_TEXT ("Invalid SatisfierPropertyKind"));
         }
 
       bool dynamic = src.dynamic;

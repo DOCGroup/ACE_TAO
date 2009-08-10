@@ -46,29 +46,28 @@ namespace CIAO
       CIAO_TRACE("IDD_Handler::instance_deployment_descr");
       try
         {
-          dest.name = src.name ().c_str ();
-          dest.node = src.node ().c_str ();
+          dest.name = ACE_TEXT_ALWAYS_CHAR ( src.name ().c_str ());
+          dest.node = ACE_TEXT_ALWAYS_CHAR ( src.node ().c_str ());
 
           if (src.id_p ())
             {
-              ACE_CString cstr (src.id ().c_str ());
+              ACE_TString cstr (src.id ().c_str ());
               IDD_Handler::IDREF.bind_ref (cstr, pos);
             }
           else
             {
               ACE_DEBUG((LM_ERROR,
                          "(%P|%t) Warning:  IDD %s has no idref\n",
-                         src.name ().c_str ()));
+ ACE_TEXT_ALWAYS_CHAR (                         src.name ().c_str ())));
             }
 
           // We know there should be only one element
           dest.source.length (1);
           dest.source [0] =
-            src.source ().c_str ();
+            ACE_TEXT_ALWAYS_CHAR (src.source ().c_str ());
 
           CORBA::ULong tmp = 0;
-          MDD_Handler::IDREF.find_ref
-            (ACE_CString (src.implementation ().idref ().id ().c_str ()), tmp);
+          MDD_Handler::IDREF.find_ref (ACE_TString (src.implementation ().idref ().id ().c_str ()), tmp);
 
           dest.implementationRef = tmp;
 
@@ -92,14 +91,14 @@ namespace CIAO
         }
       catch (Config_Error &ex)
         {
-          ex.name_ = src.name ()  + ":" + ex.name_;
+          ex.name_ = src.name ()  + ACE_TEXT (":") + ex.name_;
           throw ex;
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, "Unknown exception at IDD:%s",
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unknown exception at IDD:%s"),
                       src.name ().c_str ()));
-          throw Config_Error (src.name (), "Unknown exception");
+          throw Config_Error (src.name (), ACE_TEXT ("Unknown exception"));
         }
 
       // Done!
@@ -111,15 +110,15 @@ namespace CIAO
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descr - reverse");
       //Get all the string/IDREFs
-      XMLSchema::string < ACE_TCHAR > name ((src.name));
-      XMLSchema::string < ACE_TCHAR > node ((src.node));
-      XMLSchema::string < ACE_TCHAR > source ("");
+      XMLSchema::string < ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
+      XMLSchema::string < ACE_TCHAR > node (ACE_TEXT_CHAR_TO_TCHAR (src.node));
+      XMLSchema::string < ACE_TCHAR > source (ACE_TEXT (""));
       if (src.source.length () > 0)
         {
-          XMLSchema::string < ACE_TCHAR > source_detail (src.source[0]);
+          XMLSchema::string < ACE_TCHAR > source_detail (ACE_TEXT_CHAR_TO_TCHAR (src.source[0]));
           source = source_detail;
         }
-      ACE_CString temp;
+      ACE_TString temp;
       MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
       XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
 
@@ -149,8 +148,8 @@ namespace CIAO
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid;
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
-      ACE_CString idd_id ("_");
-      idd_id += *uuid.to_string ();
+      ACE_TString idd_id (ACE_TEXT ("_"));
+      idd_id += ACE_TEXT_CHAR_TO_TCHAR (uuid.to_string ()->c_str ());
 
       XMLSchema::ID< ACE_TCHAR > xml_id (idd_id.c_str ());
 

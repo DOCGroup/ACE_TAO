@@ -30,12 +30,14 @@ namespace CIAO
 }
 
 #include <memory>
+#include <string>
 #include <list>
 #include "XMLSchema/Types.hpp"
 #include "XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
 #include "ace/TSS_T.h"
+#include "ace/ace_wchar.h"
 #include "ace/Singleton.h"
 
 #include "pcd.hpp"
@@ -61,6 +63,7 @@ namespace CIAO
       package_const_iterator begin_package () const;
       package_const_iterator end_package () const;
       void add_package ( ACE_Refcounted_Auto_Ptr < ::CIAO::Config_Handlers::PackageConfiguration, ACE_Null_Mutex > const& );
+      XSCRT::Type* package_ptr ( std::basic_string<ACE_TCHAR> idref );
       size_t count_package (void) const;
 
       protected:
