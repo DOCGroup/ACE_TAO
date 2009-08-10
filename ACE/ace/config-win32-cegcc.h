@@ -87,6 +87,7 @@
 #define ACE_LACKS_PDHMSG_H
 #define ACE_HAS_NONCONST_WCSDUP
 #define ACE_HAS_WINSOCK2_GQOS
+#define ACE_LACKS_CORRECT_ISWPRINT_TAB
 
 //Changes to compile on CE gcc.
 #undef ACE_HAS_TYPES_H
