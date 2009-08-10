@@ -49,16 +49,16 @@ be_visitor_component_exs::visit_component (be_component *node)
     {
       return 0;
     }
-    
+
   node_ = node;
-  
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
       << "namespace CIAO_" << node_->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
-    
+
   if (this->gen_facets () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -67,7 +67,7 @@ be_visitor_component_exs::visit_component (be_component *node)
                          ACE_TEXT ("gen_facets() failed\n")),
                         -1);
     }
- 
+
   if (this->gen_exec_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -76,12 +76,12 @@ be_visitor_component_exs::visit_component (be_component *node)
                          ACE_TEXT ("gen_servant_class() failed\n")),
                         -1);
     }
-    
+
   this->gen_entrypoint ();
 
   os_ << be_uidt_nl
       << "}";
-     
+
   return 0;
 }
 
@@ -105,40 +105,40 @@ int
 be_visitor_component_exs::gen_facets (void)
 {
   AST_Component::port_description *pd = 0;
-  
+
   for (AST_Component::PORTS::ITERATOR i = node_->provides ().begin ();
        !i.done ();
        i.advance ())
     {
       i.next (pd);
-      
+
       be_interface *intf =
         be_interface::narrow_from_decl (pd->impl);
-        
-      // We don't want any '_cxx_' prefix here.  
+
+      // We don't want any '_cxx_' prefix here.
       const char *lname =
         intf->original_local_name ()->get_string ();
-      
+
       os_ << be_nl
           << comment_border_ << be_nl
           << "// Facet Executor Implementation Class: "
           << lname << "_exec_i" << be_nl
           << comment_border_;
-          
+
       os_ << be_nl << be_nl
           << lname << "_exec_i::" << lname
           << "_exec_i (void)" << be_nl
           << "{" << be_nl
           << "}";
-          
+
       os_ << be_nl << be_nl
           << lname << "_exec_i::~" << lname
           << "_exec_i (void)" << be_nl
           << "{" << be_nl
           << "}";
-          
+
       op_scope_ = intf;
-          
+
       if (this->gen_facet_ops_attrs (intf) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -156,21 +156,21 @@ be_visitor_component_exs::gen_facet_ops_attrs (be_interface *node)
 {
   os_ << be_nl << be_nl
       << "// Operations from ::" << node->full_name ();
-      
+
   /// The overload of traverse_inheritance_graph() used here
-  /// doesn't automatically prime the queues. 
+  /// doesn't automatically prime the queues.
   node->get_insert_queue ().reset ();
   node->get_del_queue ().reset ();
   node->get_insert_queue ().enqueue_tail (node);
-      
+
   Component_Exec_Op_Attr_Generator op_attr_gen (this);
-  
+
   int status =
     node->traverse_inheritance_graph (op_attr_gen,
                                       &os_,
                                       false,
                                       false);
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -188,48 +188,48 @@ int
 be_visitor_component_exs::gen_exec_class (void)
 {
   const char *lname = node_->local_name ();
-  
+
   // In the interest of pretty formatting....
   if (node_->provides ().size () > 0)
     {
       os_ << be_nl;
     }
-  
+
   os_ << be_nl
       << comment_border_ << be_nl
       << "// Component Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
       << comment_border_;
-    
+
   os_ << be_nl << be_nl
       << lname << "_exec_i::" << lname << "_exec_i (void)" << be_nl
       << "{" << be_nl
       << "}";
-     
+
   os_ << be_nl << be_nl
       << lname << "_exec_i::~" << lname << "_exec_i (void)" << be_nl
       << "{" << be_nl
       << "}";
-  
+
   os_ << be_nl << be_nl
       << "// Supported operations and attributes.";
-      
+
   op_scope_ = node_;
-      
+
   /// The overload of traverse_inheritance_graph() used here
-  /// doesn't automatically prime the queues. 
+  /// doesn't automatically prime the queues.
   node_->get_insert_queue ().reset ();
   node_->get_del_queue ().reset ();
   node_->get_insert_queue ().enqueue_tail (node_);
-      
+
   Component_Exec_Op_Attr_Generator op_attr_gen (this);
-  
+
   int status =
     node_->traverse_inheritance_graph (op_attr_gen,
                                        &os_,
                                        false,
                                        false);
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -238,12 +238,12 @@ be_visitor_component_exs::gen_exec_class (void)
                          ACE_TEXT ("traverse_inheritance_graph() failed\n")),
                         -1);
     }
-    
+
   os_ << be_nl << be_nl
       << "// Component attributes.";
-    
+
   status = this->gen_component_attrs_r (node_);
-    
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -252,15 +252,15 @@ be_visitor_component_exs::gen_exec_class (void)
                          ACE_TEXT ("gen_component_attrs_r() failed\n")),
                         -1);
     }
-    
+
   os_ << be_nl << be_nl
       << "// Port operations.";
-    
+
   this->gen_provides_r (node_);
   this->gen_consumes_r (node_);
-    
+
   this->gen_non_type_specific ();
-  
+
   return 0;
 }
 
@@ -271,7 +271,7 @@ be_visitor_component_exs::gen_component_attrs_r (AST_Component *node)
     {
       return 0;
     }
-    
+
   /// Traverse the scope and ignore everything but attributes.
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -279,7 +279,7 @@ be_visitor_component_exs::gen_component_attrs_r (AST_Component *node)
     {
       AST_Decl *d = si.item ();
       be_attribute *attr = be_attribute::narrow_from_decl (d);
-      
+
       if (attr == 0)
         {
           continue;
@@ -294,7 +294,7 @@ be_visitor_component_exs::gen_component_attrs_r (AST_Component *node)
                             -1);
         }
     }
-    
+
  node = node->base_component ();
  return this->gen_component_attrs_r (node);
 }
@@ -306,17 +306,17 @@ be_visitor_component_exs::gen_provides_r (AST_Component *node)
     {
       return;
     }
-    
+
   AST_Component::port_description *pd = 0;
-    
+
   for (AST_Component::PORTS::ITERATOR i = node->provides ().begin ();
        !i.done ();
        i.advance ())
     {
       i.next (pd);
       this->gen_provides (pd->impl, pd->id);
-    }  
-  
+    }
+
   node = node->base_component ();
   this->gen_provides_r (node);
 }
@@ -328,14 +328,14 @@ be_visitor_component_exs::gen_provides (AST_Type *obj,
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  
+
   // No '_cxx_' prefix.
   const char *lname = obj->original_local_name ()->get_string ();
-  
+
   const char *global = (sname_str == "" ? "" : "::");
-  
+
   const char *port_name = port_id->get_string ();
-  
+
   os_ << be_nl << be_nl
       << global << sname << "::CCM_" << lname
       << "_ptr" << be_nl
@@ -355,9 +355,9 @@ be_visitor_component_exs::gen_consumes_r (AST_Component *node)
     {
       return;
     }
-    
+
   AST_Component::port_description *pd = 0;
-    
+
   for (AST_Component::PORTS::ITERATOR i = node->consumes ().begin ();
        !i.done ();
        i.advance ())
@@ -365,7 +365,7 @@ be_visitor_component_exs::gen_consumes_r (AST_Component *node)
       i.next (pd);
       this->gen_consumes (pd->impl, pd->id);
     }
-  
+
   node = node->base_component ();
   this->gen_consumes_r (node);
 }
@@ -375,7 +375,7 @@ be_visitor_component_exs::gen_consumes (AST_Type *obj,
                                         Identifier *port_id)
 {
   const char *port_name = port_id->get_string ();
-  
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->original_local_name () << "_exec_i::push_"
@@ -392,28 +392,30 @@ be_visitor_component_exs::gen_non_type_specific (void)
 {
   os_ << be_nl << be_nl
       << "// Operations from Components::SessionComponent.";
-      
+
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
   const char *lname = node_->local_name ();
   const char *global = (sname_str == "" ? "" : "::");
-  
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name ()
       << "_exec_i::set_session_context (" << be_idt_nl
       << "::Components::SessionContext_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "this->context_ =" << be_idt_nl
+      << global << sname << "::CCM_" << lname
+      << "_Context_var lctx = " << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (this->context_.in ()))" << be_idt_nl
+      << "if ( ::CORBA::is_nil (lctx.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "this->context_ = lctx;" << be_uidt_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name ()
@@ -421,7 +423,7 @@ be_visitor_component_exs::gen_non_type_specific (void)
       << "{" << be_idt_nl
       << your_code_here_ << be_uidt_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name ()
@@ -429,7 +431,7 @@ be_visitor_component_exs::gen_non_type_specific (void)
       << "{" << be_idt_nl
       << your_code_here_ << be_uidt_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name ()
@@ -437,7 +439,7 @@ be_visitor_component_exs::gen_non_type_specific (void)
       << "{" << be_idt_nl
       << your_code_here_ << be_uidt_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name ()
@@ -460,10 +462,9 @@ be_visitor_component_exs::gen_entrypoint (void)
       << be_idt_nl
       << "::Components::EnterpriseComponent::_nil ();"
       << be_uidt_nl << be_nl
-      << "ACE_NEW_RETURN (" << be_idt_nl
+      << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
-      << node_->local_name () << "_exec_i," << be_nl
-      << "::Components::EnterpriseComponent::_nil ());"
+      << node_->local_name () << "_exec_i);"
       << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";

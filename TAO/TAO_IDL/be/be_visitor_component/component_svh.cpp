@@ -860,7 +860,7 @@ be_visitor_component_svh::gen_non_type_specific (void)
       
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
-      << "const char * ins_name_;";
+      << "ACE_CString ins_name_;";
 }
 
 void

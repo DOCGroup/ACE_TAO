@@ -55,16 +55,16 @@ be_visitor_home_svs::visit_home (be_home *node)
     {
       return 0;
     }
-    
+
   node_ = node;
   comp_ = node_->managed_component ();
-  
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
-   
+
   if (this->gen_servant_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -73,12 +73,12 @@ be_visitor_home_svs::visit_home (be_home *node)
                          ACE_TEXT ("gen_servant_class() failed\n")),
                         -1);
     }
-    
+
   this->gen_entrypoint ();
 
   os_ << be_uidt_nl
       << "}";
-     
+
   return 0;
 }
 
@@ -102,12 +102,12 @@ int
 be_visitor_home_svs::visit_argument (be_argument *node)
 {
   os_ << node->local_name ();
-  
+
   if (! this->last_node (node))
     {
       os_ << "," << be_nl;
     }
-    
+
   return 0;
 }
 
@@ -117,14 +117,14 @@ be_visitor_home_svs::gen_servant_class (void)
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-  
+
   // Avoid '_cxx_' prefix.
   const char *lname =
     node_->original_local_name ()->get_string ();
-    
+
   const char *clname = comp_->local_name ()->get_string ();
   const char *global = (sname_str == "" ? "" : "::");
-  
+
   os_ << be_nl
       << lname << "_Servant::"
       << lname << "_Servant (" << be_idt << be_idt_nl
@@ -140,25 +140,25 @@ be_visitor_home_svs::gen_servant_class (void)
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "}";
-      
+
   os_ << be_nl << be_nl
       << lname << "_Servant::~" << lname << "_Servant (void)"
       << be_nl
       << "{" << be_nl
       << "}";
-      
+
   this->gen_ops_attrs ();
-  
+
   os_ << be_nl << be_nl
       << "/// Factory operations.";
-  
+
   this->gen_factories_r (node_);
 
   os_ << be_nl << be_nl
       << "/// Finder operations.";
-  
+
   this->gen_finders_r (node_);
-      
+
   return 0;
 }
 
@@ -167,19 +167,19 @@ be_visitor_home_svs::gen_ops_attrs (void)
 {
   os_ << be_nl << be_nl
       << "/// All home operations and attributes.";
-      
+
   node_->get_insert_queue ().reset ();
   node_->get_del_queue ().reset ();
   node_->get_insert_queue ().enqueue_tail (node_);
-  
+
   Home_Op_Attr_Generator op_attr_gen (this);
-      
+
   int status =
     node_->traverse_inheritance_graph (op_attr_gen,
                                        &os_,
                                        false,
                                        false);
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -189,7 +189,7 @@ be_visitor_home_svs::gen_ops_attrs (void)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -206,7 +206,7 @@ be_visitor_home_svs::gen_factories_r (AST_Home *node)
     {
       return 0;
     }
-    
+
   if (this->gen_init_ops (node->factories (), false) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -215,9 +215,9 @@ be_visitor_home_svs::gen_factories_r (AST_Home *node)
                          ACE_TEXT ("gen_init_ops_i() failed\n")),
                         -1);
     }
-    
+
   AST_Home *base = node->base_home ();
-  
+
   return this->gen_factories_r (base);
 }
 
@@ -226,7 +226,7 @@ be_visitor_home_svs::gen_finders (void)
 {
   os_ << be_nl << be_nl
       << "// Finder operations.";
-  
+
   return this->gen_finders_r (node_);
 }
 
@@ -237,7 +237,7 @@ be_visitor_home_svs::gen_finders_r (AST_Home *node)
     {
       return 0;
     }
-    
+
   if (this->gen_init_ops (node->finders (), true) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -246,9 +246,9 @@ be_visitor_home_svs::gen_finders_r (AST_Home *node)
                          ACE_TEXT ("gen_init_ops_i() failed\n")),
                         -1);
     }
-    
+
   AST_Home *base = node->base_home ();
-  
+
   return this->gen_finders_r (base);
 }
 
@@ -262,14 +262,14 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
   const char *comp_sname = comp_sname_str.c_str ();
   const char *comp_lname = comp_->local_name ()->get_string ();
   const char *global = (comp_sname_str == "" ? "" : "::");
-  
+
   for (AST_Home::INIT_LIST::ITERATOR i = list.begin ();
        !i.done ();
        i.advance ())
     {
       i.next (op);
       be_operation *bop = be_operation::narrow_from_decl (*op);
-      
+
       // Retrieve the operation return type.
       be_type *bt = be_type::narrow_from_decl (bop->return_type ());
 
@@ -281,7 +281,7 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
                              "Bad return type\n"),
                             -1);
         }
-        
+
       os_ << be_nl << be_nl;
 
       be_visitor_operation_rettype rt_visitor (this->ctx_);
@@ -294,13 +294,13 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
                              "codegen for return type failed\n"),
                             -1);
         }
-        
+
       os_ << be_nl
           << node_->original_local_name ()->get_string ()
           << "_Servant::" << bop->local_name ();
 
       be_visitor_operation_arglist al_visitor (this->ctx_);
-      
+
       // Finder operations are as yet unimplemented in CIAO, so
       // any args will be unused and should be commented out.
       al_visitor.unused (finder_list);
@@ -313,24 +313,24 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
                              "codegen for argument list failed\n"),
                             -1);
         }
-        
+
       os_ << be_nl
           << "{" << be_idt_nl;
-      
+
       if (finder_list)
         {
           os_ << "throw ::CORBA::NO_IMPLEMENT ();";
         }
       else
-        {    
+        {
           os_ << "::Components::EnterpriseComponent_var _ciao_ec ="
               << be_idt_nl
               << "this->executor_->" << bop->local_name () << " (";
-              
+
           if (bop->argument_count () != 0)
             {
               os_ << be_idt_nl;
-              
+
               if (this->visit_scope (bop) == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -339,10 +339,10 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
                                      ACE_TEXT ("visit_scope() failed\n")),
                                     -1);
                 }
-                
+
               os_ << be_uidt;
             }
-            
+
           os_ << ");" << be_uidt_nl << be_nl
               << global << comp_sname << "::CCM_" << comp_lname
               << "_var _ciao_comp =" << be_idt_nl
@@ -351,11 +351,11 @@ be_visitor_home_svs::gen_init_ops (AST_Home::INIT_LIST & list,
               << "return this->_ciao_activate_component "
               << "(_ciao_comp.in ());";
         }
-          
+
       os_ << be_uidt_nl
           << "}";
     }
-    
+
   return 0;
 }
 
@@ -365,11 +365,11 @@ be_visitor_home_svs::gen_entrypoint (void)
   ACE_CString sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
   const char *sname = sname_str.c_str ();
-  
+
   // Avoid _cxx_ prefix.
   const char *lname =
     node_->original_local_name ()->get_string ();
-    
+
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl << be_nl
@@ -381,21 +381,19 @@ be_visitor_home_svs::gen_entrypoint (void)
       << "::CIAO::Container_ptr c," << be_nl
       << "const char * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
+      << "::PortableServer::Servant retval = 0;" << be_nl
       << global << sname << "::CCM_" << lname
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "ACE_NEW_NORETURN (retval," << be_nl
+      << "                  " << lname << "_Servant (" << be_idt_nl
+      << "                  x.in ()," << be_nl
+      << "                  ins_name," << be_nl
+      << "                  c));" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::PortableServer::Servant retval = 0;" << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                " << lname << "_Servant (" << be_idt_nl
-      << "                x.in ()," << be_nl
-      << "                ins_name," << be_nl
-      << "                c)," << be_uidt_nl
-      << "                0);" << be_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
 }

@@ -1,3 +1,89 @@
+Mon Aug 10 11:25:37 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * .:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/contrib:
+        * tao/Bounded_Array_Sequence_T.h:
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+        * tao/Bounded_Value_Sequence_T.h:
+        * tao/StringSeqE.idl:
+        * tao/StringSeqEC.h:
+        * tao/Unbounded_Array_Sequence_T.h:
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+        * tao/Unbounded_Object_Reference_Sequence_T.h:
+        * tao/Unbounded_Octet_Sequence_T.h:
+        * tao/Unbounded_Value_Sequence_T.h:
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * tao/Valuetype/Unbounded_Valuetype_Sequence_T.h:
+        * tests/Bug_3647_Regression/Backend_Impl.h:
+        * tests/Bug_3647_Regression/Middle_Impl.h:
+
+          Merging in from branch dds_ports. Changelog entries:
+
+   Fri Aug  7 14:14:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+             Generate a cleaner provide method
+
+   Fri Aug  7 13:51:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * TAO_IDL/be/be_visitor_component/component_exs.cpp
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp
+           * TAO_IDL/be/be_visitor_home/home_exs.cpp
+           * TAO_IDL/be/be_visitor_home/home_svs.cpp
+             Change the generation of the entry point functions, just
+             have one exit point in the function
+
+   Fri Aug  7 12:57:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+             Generate a safer set_session_context
+
+   Thu Aug  6 13:42:25 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+           * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+           * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+             Managed instance name strings with ACE_CString to avoid
+             memory corruption.
+
+   Fri Jul 31 14:01:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * tao/Bounded_Array_Sequence_T.h
+           * tao/Bounded_Basic_String_Sequence_T.h
+           * tao/Bounded_Object_Reference_Sequence_T.h
+           * tao/Bounded_Value_Sequence_T.h
+           * tao/Unbounded_Array_Sequence_T.h
+           * tao/Unbounded_Basic_String_Sequence_T.h
+           * tao/Unbounded_Object_Reference_Sequence_T.h
+           * tao/Unbounded_Octet_Sequence_T.h
+           * tao/Unbounded_Value_Sequence_T.h
+           * tao/Valuetype/Bounded_Valuetype_Sequence_T.h
+           * tao/Valuetype/Unbounded_Valuetype_Sequence_T.h
+             Added trait size_type which is ::CORBA_ULong
+
+           * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+             Reverted the change below, we now have size_type in the base sequences
+
+   Fri Jul 31 13:35:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+             Generate for each sequence typedef ::CORBA::ULong _size_type as
+             trait which is useful for template programming. Reported an issue
+             to the OMG to get this added to the C++ spec
+
+   Fri Jul 24 17:48:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+           * tao/StringSeqE.idl:
+           * tao/StringSeqEC.h:
+              Temporarily added to get DDS4CCM compiling
+        
 Mon Aug 10 10:54:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/operation_svs.cpp (gen_op_body):

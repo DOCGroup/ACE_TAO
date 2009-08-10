@@ -28,6 +28,7 @@ public:
   typedef T_slice_ptr * const_value_type;
   typedef value_type & subscript_type;
   typedef value_type const & const_subscript_type;
+  typedef ::CORBA::ULong size_type;
 
   typedef details::bounded_array_allocation_traits<value_type,MAX,true> allocation_traits;
   typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;

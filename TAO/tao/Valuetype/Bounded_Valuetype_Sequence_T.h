@@ -28,6 +28,7 @@ public:
   typedef object_type * value_type;
   typedef value_type const const_value_type;
   typedef object_t_var object_type_var;
+  typedef ::CORBA::ULong size_type;
 
   typedef details::valuetype_traits<object_type,object_type_var,true> element_traits;
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;

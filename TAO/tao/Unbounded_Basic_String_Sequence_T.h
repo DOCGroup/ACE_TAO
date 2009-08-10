@@ -27,6 +27,7 @@ public:
   typedef charT character_type;
   typedef character_type * value_type;
   typedef character_type const * const_value_type;
+  typedef ::CORBA::ULong size_type;
 
   typedef details::string_traits<character_type,true> element_traits;
   typedef details::unbounded_reference_allocation_traits<value_type,element_traits,true> allocation_traits;

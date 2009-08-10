@@ -287,7 +287,7 @@ be_visitor_component_svs::gen_servant_class (void)
       << be_nl << be_nl
       << "/// Set the instance id of the component on the context."
       << be_nl
-      << "this->context_->_ciao_instance_id (this->ins_name_);";
+      << "this->context_->_ciao_instance_id (this->ins_name_.c_str ());";
 
   if (be_global->gen_ciao_valuefactory_reg ())
     {
@@ -562,20 +562,17 @@ be_visitor_component_svs::gen_provides (AST_Type *obj,
       os_ << "this->activate_component ();" << be_nl << be_nl;
     }
 
-  os_ << "if (! ::CORBA::is_nil (this->provide_"
+  os_ << "if ( ::CORBA::is_nil (this->provide_"
       << port_name << "_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << "return" << be_idt_nl
-      <<  "::" << obj_name << "::_duplicate (this->provide_"
-      << port_name << "_.in ());" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "::CORBA::Object_var obj =" << be_idt_nl
       << "this->provide_" << port_name << "_i ();"
       << be_uidt_nl << be_nl
       << "::" << obj_name << "_var fo =" << be_idt_nl
       << "::" << obj_name << "::_narrow (obj.in ());"
       << be_uidt_nl << be_nl
-      << "this->provide_" << port_name << "_ = fo;" << be_nl
+      << "this->provide_" << port_name << "_ = fo;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "return" << be_idt_nl
       <<  "::" << obj_name << "::_duplicate (this->provide_"
       << port_name << "_.in ());" << be_uidt << be_uidt_nl
@@ -2469,23 +2466,21 @@ be_visitor_component_svs::gen_entrypoint (void)
       << "::CIAO::Container_ptr c," << be_nl
       << "const char * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
+      << "::PortableServer::Servant retval = 0;" << be_nl
       << global << sname << "::CCM_" << lname
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "ACE_NEW_NORETURN (retval," << be_nl
+      << "                  " << lname << "_Servant (" << be_idt_nl
+      << "                  x.in ()," << be_nl
+      << "                  ::Components::CCMHome::_nil ()," << be_nl
+      << "                  ins_name," << be_nl
+      << "                  0," << be_nl
+      << "                  c));" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::PortableServer::Servant retval = 0;" << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                " << lname << "_Servant (" << be_idt_nl
-      << "                x.in ()," << be_nl
-      << "                ::Components::CCMHome::_nil ()," << be_nl
-      << "                ins_name," << be_nl
-      << "                0," << be_nl
-      << "                c)," << be_uidt_nl
-      << "                0);" << be_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
 }
