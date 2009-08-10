@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_TIME_T_H
 #define CIAO_RTI_TIME_T_H
 
@@ -32,3 +32,4 @@ operator>>= (const ::DDS_Time_t &status, ::DDS::Time_t & ddsstatus)
 }
 
 #endif /* CIAO_RTI_TIME_T_H */
+

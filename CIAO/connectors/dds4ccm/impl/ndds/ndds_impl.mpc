@@ -1,3 +1,5 @@
+// $Id$
+
 project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, ccm_stub {
 
   after += DDS4CCM_lem_stub
