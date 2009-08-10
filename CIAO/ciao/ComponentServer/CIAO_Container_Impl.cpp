@@ -162,7 +162,7 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                   "CIAO_Container_i::install_component - "
-                  "Extraction resulted in map of [%u] values", cm.current_size ()));
+                  "Extraction resulted in map of [%u] values\n", cm.current_size ()));
 
       comp = this->container_->install_component (exec_art,
                                                   entrypt,
@@ -446,8 +446,6 @@ namespace CIAO
                        this->home_map_.current_size (),
                        this->component_map_.current_size ()));
         }
-
-      //this->container_->_remove_ref ();
     }
 
     void

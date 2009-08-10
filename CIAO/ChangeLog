@@ -1,10 +1,15 @@
+Mon Aug 10 14:12:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+          Fixed layout of debug message
+
 Mon Aug 10 12:59:21 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/File_Logger_Backend.h:
         * DAnCE/Logger/Logger_Service.cpp:
 
-          Unicoe fixes. 
-        
+          Unicoe fixes.
+
 Mon Aug 10 10:53:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.idl
