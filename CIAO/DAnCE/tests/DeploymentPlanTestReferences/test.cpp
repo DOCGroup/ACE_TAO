@@ -20,23 +20,23 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       auto_ptr<Deployment::DeploymentPlan>  plan (file.release_plan());
 
       //check instance references to corresponding implementations
-      for (unsigned int i = 0; i < plan->instance.length(); i++)
+      for ( ::CORBA::ULong i = 0; i < plan->instance.length(); i++)
         {
           if (plan->instance[i].implementationRef > plan->implementation.length() - 1)
             {
-              DANCE_ERROR((LM_ERROR, "[%M] incorrect implementationRef in instance %s.\n", plan->instance[i].name.in()));
+              DANCE_ERROR((LM_ERROR, "[%M] incorrect implementationRef in instance %C.\n", plan->instance[i].name.in()));
               return 1;
             }
         }
 
       //check artifact reference for implementations of Home objects
-      for (unsigned int i = 0; i < plan->implementation.length(); i++)
+      for ( ::CORBA::ULong i = 0; i < plan->implementation.length(); i++)
         {
           if (plan->implementation[i].artifactRef.length() > 0)
             {
               if (plan->implementation[i].artifactRef[0] > plan->artifact.length() - 1)
                 {
-                  DANCE_ERROR((LM_ERROR, "[%M] incorrect artifactRef in the implementation %s.\n", plan->implementation[i].name.in()));
+                  DANCE_ERROR((LM_ERROR, "[%M] incorrect artifactRef in the implementation %C.\n", plan->implementation[i].name.in()));
                   return 1;
                 }
             }

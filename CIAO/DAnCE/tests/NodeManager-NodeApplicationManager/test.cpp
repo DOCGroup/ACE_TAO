@@ -22,7 +22,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         }
 
       Deployment::DeploymentPlan plan;
-      Deployment::NodeApplicationManager_ptr nam_ptr = nm->preparePlan (plan, Deployment::ResourceCommitmentManager::_nil());
+      Deployment::NodeApplicationManager_ptr nam_ptr =
+        nm->preparePlan (plan, Deployment::ResourceCommitmentManager::_nil());
       DANCE_DEBUG((LM_DEBUG, "[%M] Plan prepared\n"));
 
       nm->destroyManager (nam_ptr);

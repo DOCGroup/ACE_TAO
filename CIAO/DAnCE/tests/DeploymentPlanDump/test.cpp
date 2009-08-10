@@ -9,7 +9,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     {
       if (argc < 1)
         {
-          DANCE_ERROR((LM_ERROR, "[%M] Incorrect count of arguments. Path to deployment plan has not been specified.\n"));
+          DANCE_ERROR((LM_ERROR,
+                       "[%M] Incorrect count of arguments. "
+                       "Path to deployment plan has not been specified.\n"));
           return 1;
         }
       CIAO::Config_Handlers::XML_File_Intf file (argv[1]);

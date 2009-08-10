@@ -1,3 +1,40 @@
+Mon Aug 10 10:53:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.idl
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.mpc
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider_exec.h
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetUser.idl
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetUser.mpc
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetUser_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetUser_exec.h
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NilFacet.cdp
+          Added a new test for the case where the component that
+          provides return a nil object reference. The caller should
+          then get an INV_OBJREF exception, not a crash.
+
+          The CCM spec says in 6.4.2:
+          In general, a component instance shall be prepared to return object
+          references for facets throughout the instance's life
+          cycle. A component implementation may, as part of its advertised
+          behavior, return a nil object reference as the result of
+          a provide_<name> operation
+
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.cpp
+          Catch as const
+
+        * DAnCE/tests/DeploymentPlanDump/test.cpp:
+          Layout change
+
+        * DAnCE/tests/DeploymentPlanTestReferences/test.cpp:
+          Type, unicode changes
+
+        * DAnCE/tests/NameServiceTest/clt_main.cpp:
+          Unicode fix
+
+        * DAnCE/tests/NodeManager-NodeApplicationManager/test.cpp:
+          Layout change
+
 Mon Aug 10 09:00:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/CIAO/Components/ProcessColocation_exec.cpp:
@@ -234,22 +271,22 @@ Sun Aug  9 20:20:39 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
             * bin/ciao_tests.lst:
 
-              Added dds4ccm tests. 
+              Added dds4ccm tests.
 
             * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
 
-              Added 2 second delay after initialization and before sending. 
+              Added 2 second delay after initialization and before sending.
 
             * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp:
 
               Configure dds during configuration_complete, to ensure delayed initialization
-              doesn't mees up our receiver counts. 
+              doesn't mees up our receiver counts.
 
             * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp:
             * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
 
               initialize expected_samples attribute to correctly account for the
-              expected number of senders. 
+              expected number of senders.
 
     Fri Aug  7 19:15:30 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
@@ -1469,7 +1506,7 @@ Sun Aug  9 20:20:39 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
             * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p:
 
               DDS4CCM IDL.
-        
+
 
 Mon Aug  3 22:54:37 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
