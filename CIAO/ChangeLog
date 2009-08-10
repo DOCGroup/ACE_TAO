@@ -1,3 +1,9 @@
+Mon Aug 10 08:53:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl
+        * connectors/dds4ccm/impl/ndds/RawListener.h
+          Fixed fuzz errors
+
 Mon Aug 10 07:44:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp

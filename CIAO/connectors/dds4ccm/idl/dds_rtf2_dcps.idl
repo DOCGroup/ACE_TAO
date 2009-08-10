@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef DDS_RFT2_DCPS_IDL
 #define DDS_RFT2_DCPS_IDL
 
@@ -16,7 +18,7 @@
 #define DATAWRITER_QOS_USE_TOPIC_QOS
 #define DATAREADER_QOS_USE_TOPIC_QOS
 
-#include <tao/StringSeq.pidl>
+#include "tao/StringSeq.pidl"
 
 module DDS {
     struct NativeInstanceHandle_t {
