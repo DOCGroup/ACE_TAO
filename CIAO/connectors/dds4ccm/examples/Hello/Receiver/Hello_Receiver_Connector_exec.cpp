@@ -54,7 +54,7 @@ class HelloListener : public ::DDS::DataReaderListener
     bool enabled () const;
     void enabled (bool enable);
   private:
-    ACE_Atomic_Op <ACE_SYNCH_MUTEX, bool> enabled_;
+    ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> enabled_;
     ::CCM_DDS::string_RawListener_var listener_;
     ::CCM_DDS::PortStatusListener_var statuslistener_;
 };

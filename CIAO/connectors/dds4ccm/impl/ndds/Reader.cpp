@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Reader.h"
 
 // Implementation skeleton constructor

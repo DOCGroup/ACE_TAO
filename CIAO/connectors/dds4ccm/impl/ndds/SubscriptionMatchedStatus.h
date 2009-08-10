@@ -6,7 +6,7 @@
  *
  * Wrapper facade for NDDS.
  */
- 
+
 #ifndef CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H
 #define CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H
 
@@ -39,7 +39,7 @@ operator>>= (const ::DDS_SubscriptionMatchedStatus &status, ::DDS::SubscriptionM
   ddsstatus.total_count_change = status.total_count_change;
   ddsstatus.current_count = status.current_count;
   ddsstatus.current_count_change = status.current_count_change;
-  ddsstatus.last_publication_handle <<= status.last_publication_handle; 
+  ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
 
 inline void
@@ -49,7 +49,8 @@ operator>>= (const ::DDS::SubscriptionMatchedStatus &status, ::DDS_SubscriptionM
   ddsstatus.total_count_change = status.total_count_change;
   ddsstatus.current_count = status.current_count;
   ddsstatus.current_count_change = status.current_count_change;
-  ddsstatus.last_publication_handle <<= status.last_publication_handle; 
+  ddsstatus.last_publication_handle <<= status.last_publication_handle;
 }
 
 #endif /* CIAO_RTI_SUBSCRIPTIONMATCHEDSTATUS_H */
+

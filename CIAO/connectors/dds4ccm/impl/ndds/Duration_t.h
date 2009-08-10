@@ -32,3 +32,4 @@ operator>>= (const ::DDS_Duration_t &status, ::DDS::Duration_t & ddsstatus)
 }
 
 #endif /* CIAO_RTI_DURATION_T_H */
+
