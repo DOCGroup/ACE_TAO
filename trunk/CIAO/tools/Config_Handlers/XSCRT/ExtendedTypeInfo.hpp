@@ -36,7 +36,7 @@ namespace XSCRT
     friend std::ostream&
     operator << (std::ostream& os, TypeId const& t);
     */
-
+    
   public:
     char const*
     name () const
@@ -162,8 +162,9 @@ namespace XSCRT
   {
     ExtendedTypeInfoMap::const_iterator i (
       extended_type_info_map ().find (tid));
-
-    if (i == extended_type_info_map ().end ()) throw NotAvailable ();
+    
+    if (i == extended_type_info_map ().end ()) 
+      throw NotAvailable ();
 
     return i->second;
   }
