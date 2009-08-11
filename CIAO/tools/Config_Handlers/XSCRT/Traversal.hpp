@@ -9,7 +9,11 @@
 #include <set>
 #include <vector>
 
-#include "XSCRT/ExtendedTypeInfo.hpp"
+// #include <iostream>
+// using std::wcerr;
+// using std::endl;
+
+#include <XSCRT/ExtendedTypeInfo.hpp>
 
 namespace XSCRT
 {
@@ -32,6 +36,11 @@ namespace XSCRT
 
       virtual void
       trampoline (B const& n) = 0;
+
+      /*@@ VC6
+      template <typename X>
+      friend class DispatcherBase;
+      */
     };
 
 
@@ -55,7 +64,7 @@ namespace XSCRT
       map (TypeId id, TraverserBase<B>& t)
       {
         //wcerr << "map for " << id.name () << " to " << &t
-    //      << " in " << &traversal_map_ << endl;
+	//      << " in " << &traversal_map_ << endl;
 
         //@@ VC6
         Traversers& traversers = traversal_map_[id];
