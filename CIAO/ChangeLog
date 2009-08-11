@@ -1,3 +1,8 @@
+Tue Aug 11 08:55:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+          Improved error debug statements
+
 Mon Aug 10 17:46:12 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
@@ -99,7 +104,7 @@ Mon Aug 10 17:46:12 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
         * tools/XML/XercesString.cpp:
 
           Unicode compile fixes.
-        
+
 Mon Aug 10 14:23:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dds4ccm/examples/Hello/descriptors/run_1_to_5.pl
