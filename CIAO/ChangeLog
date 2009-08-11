@@ -1,3 +1,30 @@
+Tue Aug 11 17:48:10 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/XMI.cpp:
+
+          Fix warnings. 
+        
+        * tools/Config_Handlers/XMLSchema/Traversal.hpp:
+        * tools/Config_Handlers/XMLSchema/Traversal.ipp:
+        * tools/Config_Handlers/XMLSchema/Traversal.tpp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.ipp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.tpp:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+        * tools/Config_Handlers/XMLSchema/Types.ipp:
+        * tools/Config_Handlers/XMLSchema/Types.tpp:
+        * tools/Config_Handlers/XMLSchema/Writer.hpp:
+        * tools/Config_Handlers/XMLSchema/id_map.hpp:
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp:
+        * tools/Config_Handlers/XSCRT/Parser.hpp:
+        * tools/Config_Handlers/XSCRT/Traversal.hpp:
+        * tools/Config_Handlers/XSCRT/Traversal.tpp:
+        * tools/Config_Handlers/XSCRT/Writer.hpp:
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+
+          Pull in new version of XMLSchema and XSCRT. 
+        
 Tue Aug 11 11:51:29 UTC 2009  ChangeLog  <William R. Otte>
 
         * DAnCE/MPC/config/dance_deployment_svnt.mpb:
@@ -6,8 +33,8 @@ Tue Aug 11 11:51:29 UTC 2009  ChangeLog  <William R. Otte>
         * MPC/config/ccm_componentserver_svnt.mpb:
         * MPC/config/ciao_cs_client.mpb:
 
-          Link fixes for an ARM cross compile. 
-        
+          Link fixes for an ARM cross compile.
+
 Tue Aug 11 08:55:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/XML_File_Intf.cpp:

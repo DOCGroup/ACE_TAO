@@ -3,5 +3,5 @@
 // cvs-id    : $Id$
 
 namespace XMLSchema
-{
+{ 
 }

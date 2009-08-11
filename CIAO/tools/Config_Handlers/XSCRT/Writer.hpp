@@ -8,7 +8,7 @@
 #include <stack>
 #include <string>
 
-#include "XSCRT/XML.hpp"
+#include <XSCRT/XML.hpp>
 
 namespace XSCRT
 {
