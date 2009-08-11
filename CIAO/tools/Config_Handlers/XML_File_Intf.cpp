@@ -31,14 +31,13 @@ namespace CIAO
 
           CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
                        "Constructing DOM\n"));
-          XERCES_CPP_NAMESPACE::DOMDocument *dom = 0;
-          dom =
+          XERCES_CPP_NAMESPACE::DOMDocument *dom =
             XML_Helper::XML_HELPER.create_dom ((file));
 
           if (dom == 0)
             {
               CIAO_DEBUG ((LM_TRACE, CLINFO "XML_File_Intf::read_process_file - "
-                           "Failed to open file %C\n", file));
+                           "Failed to open file %s\n", file));
               return false;
             }
 
@@ -60,14 +59,15 @@ namespace CIAO
           if (this->idl_dp_.get ())
             return true;
         }
-      catch (Config_Error &ex)
+      catch (const Config_Error &ex)
         {
-          ACE_ERROR ((LM_ERROR, "error at %C: %C\n",
+          CIAO_ERROR ((LM_ERROR, CLINFO "XML_File_Intf::error at %C: %C\n",
                       ex.name_.c_str (), ex.error_.c_str ()));
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, "caught unexpected exception whilst parsing XML into IDL."));
+          CIAO_ERROR ((LM_ERROR, CLINFO "XML_File_Intf::caught - "
+                                        "Unexpected exception whilst parsing XML into IDL.\n"));
         }
 
       return false;
