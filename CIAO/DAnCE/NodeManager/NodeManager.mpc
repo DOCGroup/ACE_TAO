@@ -11,7 +11,7 @@ project(Node_Manager_Module) : dance_lib, naming_serv, dance_nodeapplicationmana
   }
 }
 
-project(Node_Manager_Exec) : utils, dance_exe, dance_nodemanager, naming_serv, avoids_ace_for_tao {
+project(Node_Manager_Exec) : utils, dance_exe, dance_nodemanager, naming_serv, avoids_ace_for_tao, ccm_componentserver_svnt {
   exename = dance_node_manager
   after += Node_Manager_Module
   libs += DAnCE_NodeManager
