@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="824.42">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times}
+  </style>
+</head>
+<body>
+<h1>PDDL4J beta API Specification.</h1>
+<p>PDDL4J is an open source library under licence CECILL (<a href=
+"http://www.cecill.info/licences/Licence_CeCILL_V2-en.html">http://www.cecill.info/</a>). 
+The purpose of the PDDL4J is to facilitate the  java implementation of planners 
+based on the PDDL (Planning Description Language). The library contains a 
+parser on the last version of PDDL 3.0 and all the classes need to manipulate its 
+concepts. The parser can be configured to accept only specified requirements of 
+PDDL langage. The list of requirements accepted are as follow:
+
+<ul>
+<li>:strips - Basic STRIPS-style.</li>
+<li>:typing - Allows type names in declaration of variables</li>
+<li>:negative-preconditions - Allows not in goal and preconditions descriptions.</li>
+<li>:disjunctive-preconditions - Allows or in goal and preconditions descriptions.</li>
+<li>:equality - Supports = as built-in predicate.</li>
+<li>:existential-preconditions - Allows exists in goal and preconditions descriptions.</li>
+<li>:universal-preconditions - Allows forall in goal and preconditions descriptions.</li>
+<li>:quantified-preconditions - Is equivalent to :existential-preconditions + 
+	:universal-preconditions.</li>
+<li>:conditional-effects - Allows when clause in actionCtx effects.
+<li>:fluents - Allows function definitions and use of effects using assignement 
+	operators and numeric preconditions.</li>
+<li>:adl - Is equivalent to :strips + :typing + :negative-preconditions + 
+	:disjunctive-preconditions + :equality + :quantified-preconditions + 
+	:conditional-effects.</li>
+<li>:durative-actions - Allows durative actions. Note that this does note imply 
+	:fluents.</li>
+<li>:derived-predicate - Allows predicates whose truth value is defined by a formula.
+<li>:time-initial-literals - Allows the initial state to specify literals that will
+	 become true at a specified time point implies durative-actions.</li>
+<li>:preferences - Allows use of preferences in actionCtx preconditions and goals.
+<li>:constraints - Allows use of constraints fields in domain and problem description.
+	 These may contain modal operator supporting trajectory constraints.</li>
+</ul>
+</p>
+
+<p>PDDL was originally developed by Drew McDermott and the 1998 planning competition
+committee. It was inspired by the need to encourage the empirical comparison of 
+planning systems and the exchange of planning benchmarks within the community. 
+Its development improved the communication of research results and triggered an
+ explosion in performance, expressivity and robustness of planning systems.</p>
+
+<p>PDDL has now been used in all 3 planning competitions, undergoing various 
+revisions for each. In the most recent competition PDDL was extended by Maria Fox,
+Derek Long and the 2002 committee to handle time and duration (PDDL2.1). Further 
+enrichments to the modelling of hybrid and real-time systems (PDDL+) were proposed,
+ while another committee is currently investigating extensions to probabilistic 
+planning.</p>
+
+<p>PDDL has become a de facto standard language for describing planning domains, 
+not only for the competition but more widely, as it offers an opportunity to carry 
+out empirical evaluation of planning systems on a growing collection of generally 
+adopted standard benchmark domains. The emergence of a language standard will have
+ an impact on the entire field, influencing what is seen as central and what 
+peripheral in the development of planning systems. </p>
+
+</body>
+</html>

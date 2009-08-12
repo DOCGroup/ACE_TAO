@@ -1,3 +1,199 @@
+Wed Aug 12 17:49:43 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * utils:
+
+        * utils/PDDLtoSANetTranslator:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/README:
+        * utils/PDDLtoSANetTranslator/PDDLParser/build.xml:
+        * utils/PDDLtoSANetTranslator/PDDLParser/commons-collections-3.2.1.jar:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/PDDLtoSAN.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/ActionData.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/PDDL_Translator.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/SAN_Data:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/SAN_Data/CondNode.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/SAN_Data/EffectLink.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/SAN_Data/PrecondLink.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/SAN_Data/TaskNode.java:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/TM_Data:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/TM_Data/ImplToResource.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/TM_Data/Resource.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/TM_Data/TaskImpl.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/TM_Data/TaskToImpl.java:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/Domain.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/ErrorManager.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/EvaluationException.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/InvalidExpException.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/PDDLObject.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/Parser.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/ParserException.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/Problem.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/RequireKey.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/Source.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/AbstractExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/AndExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/AtomicFormula.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/DerivedPredicate.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/ExistsExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/Exp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/ExpID.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/ForallExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/ImplyExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/InitEl.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/ListExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/Literal.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/NotAtomicFormula.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/NotExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/OrExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/PrefExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/ProbExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/QuantifiedExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/WhenExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/action:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/action/AbstractActionDef.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/action/Action.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/action/ActionDef.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/action/ActionID.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/action/DurativeAction.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/action/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign/Assign.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign/AssignOp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign/AssignOpExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign/Decrease.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign/Increase.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign/ScaleDown.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign/ScaleUp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/assign/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/AlwaysExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/AlwaysWithinExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/AtMostOnceExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/BinaryCondExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/CondExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/Condition.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/HoldAfterExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/HoldDuringExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/SometimeAfterExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/SometimeBeforeExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/SometimeExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/UnaryCondExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/WithinExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/cond/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp/Comp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp/EqualComp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp/FCompExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp/GEqualComp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp/GreaterComp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp/LEqualComp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp/LessComp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fcomp/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/BinaryAdd.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/BinaryDivide.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/BinaryMultiply.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/BinaryOp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/BinarySubstract.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/FExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/FHead.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/NArityAdd.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/NArityMultiply.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/NArityOp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/Number.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/Op.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/OpExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/fexp/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/metric:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/metric/MaximizeExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/metric/MetricExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/metric/MinimizeExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/metric/Optimization.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/metric/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/package.html:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term/AbstractTerm.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term/BindingException.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term/Constant.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term/Substitution.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term/Term.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term/TermID.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term/Variable.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/term/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/AtEndTimedExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/AtStartTimedExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/AtTimedExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/Interval.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/OverAllTimedExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/OverTimedExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/TimeSpecifier.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/TimedExp.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/TimedExpID.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/TimedLiteral.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/time/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/type:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/type/Type.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/type/TypeSet.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/type/TypingException.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/exp/type/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/JJTLexerState.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/Lexer.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/LexerConstants.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/LexerTokenManager.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/LexerTreeConstants.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/Node.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/ParseException.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/SimpleCharStream.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/SimpleNode.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/Token.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/TokenMgrError.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/package.html:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/overview.html:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/package.html:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/tests:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/tests/Test.java:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/tests/TestCNF.java:
+
+		The PDDL to SANet translator.  Also includes the library PDDL4J which does the inital pddl parsing.  I've made some
+		bug fixes to this library, so the source needs to be here.
+		
 Tue Aug  4 22:14:56 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SANet/SANetFileIn.cpp:
@@ -6,10 +202,10 @@ Tue Aug  4 22:14:56 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SA_PlanHeuristics.h:
         * SA_PlanHeuristics.cpp:
         * SA_PlanStrategy.cpp:
-		
-		Various fixes that make SAPOP correctly handle situations with negative preconditions
-		/goals.  Changed Condition equality to handle value, changed SANetFileIn to give conditions
-		correct initial values, and initial action effects all conditions now
+
+                Various fixes that make SAPOP correctly handle situations with negative preconditions
+                /goals.  Changed Condition equality to handle value, changed SANetFileIn to give conditions
+                correct initial values, and initial action effects all conditions now
 
 Wed Jul 29 20:06:21 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
