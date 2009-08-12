@@ -1,3 +1,8 @@
+Wed Aug 12 18:01:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+          use prop:windows
+
 Mon Aug 10 11:25:37 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * .:
@@ -83,7 +88,7 @@ Mon Aug 10 11:25:37 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
            * tao/StringSeqE.idl:
            * tao/StringSeqEC.h:
               Temporarily added to get DDS4CCM compiling
-        
+
 Mon Aug 10 10:54:12 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/operation_svs.cpp (gen_op_body):
