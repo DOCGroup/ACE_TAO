@@ -2,6 +2,6 @@
 // $Id$
 
 project : ciao_connector_base {
-  after += DDS4CCM_stub
+  after += DDS4CCM_stub DDS4CCM_lem_gen
   libs += DDS4CCM_stub
 }
