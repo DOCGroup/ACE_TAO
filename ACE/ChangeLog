@@ -1,3 +1,9 @@
+Wed Aug 12 06:47:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Readded compiler test 08, but with dummy_label to show that
+          this test is there but not compiled
+
 Wed Aug 12 06:26:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/tests.mpc:
