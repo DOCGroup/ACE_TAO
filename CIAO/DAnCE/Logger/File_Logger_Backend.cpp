@@ -15,9 +15,9 @@ namespace DAnCE
     this->fh_ = ACE_OS::fopen (this->filename_.c_str(), "a+");
     if (0 == this->fh_)
       {
-        ACE_CString s = "Failed to open log file \"";
+        ACE_TString s = ACE_TEXT("Failed to open log file \"");
         s += this->filename_;
-        s += "\"\n";
+        s += ACE_TEXT("\"\n");
         throw LoggerError (s.c_str());
       }
     return 0;
