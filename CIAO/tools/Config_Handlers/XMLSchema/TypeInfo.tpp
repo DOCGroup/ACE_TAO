@@ -12,7 +12,6 @@ namespace XMLSchema
   {
     using XSCRT::TypeId;
     using XSCRT::ExtendedTypeInfo;
-    using std::make_pair;
 
     TypeId id (typeid (T));
     ExtendedTypeInfo info (id);
@@ -21,7 +20,7 @@ namespace XMLSchema
                    false,
                    typeid (XSCRT::Type));
 
-    map.insert (make_pair (id, info));
+    map.insert (std::make_pair (id, info));
   }
 
 
@@ -32,13 +31,12 @@ namespace XMLSchema
   {
     using XSCRT::TypeId;
     using XSCRT::ExtendedTypeInfo;
-    using std::make_pair;
 
     // XSCRT::Type
     //
     {
       TypeId id (typeid (XSCRT::Type));
-      map.insert (make_pair (id, ExtendedTypeInfo (id)));
+      map.insert (std::make_pair (id, ExtendedTypeInfo (id)));
     }
 
     //@@ VC6
@@ -67,10 +65,9 @@ namespace XMLSchema
     add_info<NMTOKEN<C> > (map, 0);
     add_info<Name<C> > (map, 0);
     add_info<NCName<C> > (map, 0);
-
+    add_info<QName<C> > (map, 0);
+    
     add_info<ID<C> > (map, 0);
-
-    add_info<anyURI<C> > (map, 0);
 
     // IDREF_Base
     //
@@ -82,7 +79,7 @@ namespace XMLSchema
                      false,
                      typeid (XSCRT::Type));
 
-      map.insert (make_pair (id, info));
+      map.insert (std::make_pair (id, info));
     }
 
     // IDREF
@@ -95,7 +92,7 @@ namespace XMLSchema
                      false,
                      typeid (IDREF_Base));
 
-      map.insert (make_pair (id, info));
+      map.insert (std::make_pair (id, info));
     }
   }
 }

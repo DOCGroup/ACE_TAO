@@ -1,3 +1,25 @@
+Wed Aug 12 13:30:50 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/XMLSchema/Traversal.hpp:
+        * tools/Config_Handlers/XMLSchema/Traversal.ipp:
+        * tools/Config_Handlers/XMLSchema/Traversal.tpp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.ipp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.tpp:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+        * tools/Config_Handlers/XMLSchema/Types.ipp:
+        * tools/Config_Handlers/XMLSchema/Types.tpp:
+        * tools/Config_Handlers/XMLSchema/Writer.hpp:
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp:
+        * tools/Config_Handlers/XSCRT/Parser.hpp:
+        * tools/Config_Handlers/XSCRT/Traversal.hpp:
+        * tools/Config_Handlers/XSCRT/Traversal.tpp:
+        * tools/Config_Handlers/XSCRT/Writer.hpp:
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+
+          Rolled back the XSC update, it didn't include a number of fixes
+          necessary for Borland and Xerces2/3.
+        
 Wed Aug 12 10:21:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.ppt:
