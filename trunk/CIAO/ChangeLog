@@ -1,3 +1,8 @@
+Wed Aug 12 07:27:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_base.mpb:
+          Added after of DDS4CCM_lem_gen
+
 Wed Aug 12 07:06:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Logger/File_Logger_Backend.cpp:
