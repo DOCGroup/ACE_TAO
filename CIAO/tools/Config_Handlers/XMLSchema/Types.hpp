@@ -343,6 +343,10 @@ namespace XMLSchema
     {
     }
 
+    virtual ~IdentityProvider (void)
+    {
+    }
+
     virtual bool
     before (XSCRT::IdentityProvider const& y) const
     {
@@ -485,6 +489,7 @@ namespace XMLSchema
   class IDREF : public IDREF_Base
   {
   public:
+    typedef C CDR_Type__;
     IDREF ()
         : id_provider_ (id_)
     {
@@ -605,6 +610,57 @@ namespace XMLSchema
   private:
     NCName<C> id_;
     IdentityProvider<C> id_provider_;
+  };
+
+  template <typename C>
+  class anyURI : public XSCRT::Type, public basic_string <C>
+  {
+  protected:
+    typedef basic_string <C> Base__ ;
+
+  public:
+    // Trait for marshaling string
+    typedef C CDR_Type__;
+    
+    //@@ VC6 does not inject XSCRT::Type into the scope so I have
+    //   to qualify it all the time.
+    //
+
+    anyURI (void)
+    {
+    }
+
+    anyURI (XSCRT::XML::Element<C> const& e)
+        : Base__ (e.value ())
+    {
+    }
+
+    anyURI (XSCRT::XML::Attribute<C> const& a)
+        : Base__ (a.value ())
+    {
+    }
+
+    anyURI (Base__ const& x)
+        : Base__ (x)
+    {
+    }
+
+    anyURI (C const * x)
+        : Base__ (x)
+    {
+    }
+
+    anyURI (const anyURI& s)
+      : Base__ (s)
+    {
+
+    }
+
+    anyURI & operator= (Base__ const& x)
+    {
+      static_cast <Base__ &> (*this) = x;
+      return *this;
+    }
   };
 }
 
