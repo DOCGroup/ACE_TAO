@@ -369,6 +369,9 @@ project(Bug_3673_Regression_Test) : acetest {
 
 project(Bug_3709_Regression_Test) : acetest {
   exename = Bug_3709_Regression_Test
+  specific (vc71) {
+    requires += dummy_label
+  }
   Source_Files {
     Bug_3709_Regression_Test.cpp
   }
@@ -538,6 +541,13 @@ project(Compiler_Features_14_Test) : acetest {
   exename = Compiler_Features_14_Test
   Source_Files {
     Compiler_Features_14_Test.cpp
+  }
+}
+
+project(Compiler_Features_15_Test) : acetest {
+  exename = Compiler_Features_15_Test
+  Source_Files {
+    Compiler_Features_15_Test.cpp
   }
 }
 
