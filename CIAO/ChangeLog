@@ -1,10 +1,18 @@
+Wed Aug 12 18:26:09 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * MPC/config/ciao_cs_client.mpb:
+
+          try to fix link problems introduced by
+        Tue Aug 11 11:51:29 UTC 2009  ChangeLog  <William R. Otte>
+        
 Wed Aug 12 18:00:56 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XMLSchema/Traversal.hpp:
         * tools/Config_Handlers/XMLSchema/Types.hpp:
 
-          Integrated more cleanly the changes from XSC XSCRT/XMLSchema. 
-        
+          Integrated more cleanly the changes from XSC XSCRT/XMLSchema.
+
 Wed Aug 12 13:30:50 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XMLSchema/Traversal.hpp:
