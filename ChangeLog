@@ -1,3 +1,12 @@
+Wed Aug 12 18:49:43 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/ferry-example.pddl:
+        * utils/PDDLtoSANetTranslator/PDDLParser/ferry-problem-example.pddl:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/PDDLtoSAN.java:
+
+		Domain files
+		
 Wed Aug 12 17:49:43 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * utils:
@@ -191,9 +200,9 @@ Wed Aug 12 17:49:43 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/tests/Test.java:
         * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/tests/TestCNF.java:
 
-		The PDDL to SANet translator.  Also includes the library PDDL4J which does the inital pddl parsing.  I've made some
-		bug fixes to this library, so the source needs to be here.
-		
+                The PDDL to SANet translator.  Also includes the library PDDL4J which does the inital pddl parsing.  I've made some
+                bug fixes to this library, so the source needs to be here.
+
 Tue Aug  4 22:14:56 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SANet/SANetFileIn.cpp:

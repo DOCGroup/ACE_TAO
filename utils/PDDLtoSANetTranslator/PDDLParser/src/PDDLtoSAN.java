@@ -31,8 +31,8 @@ public class PDDLtoSAN {
 		int cond_combine = new Integer(args[3]);
 		String output_name = args[4];
 		
-//		String domain_path = "travel.pddl";
-//		String problem_path = "pb1.pddl";
+//		String domain_path = "ferry.pddl";
+//		String problem_path = "pb1ferry.pddl";
 //		boolean include_init = false;
 //		int cond_combine = 3;
 //		String output_name = "ferry";
