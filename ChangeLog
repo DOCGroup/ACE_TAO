@@ -1,9 +1,17 @@
+Wed Aug 12 19:15:30 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * utils/PDDLtoSANetTranslator:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser:
+		
+		Cleanup
+
 Wed Aug 12 19:02:39 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/Lexer.jj:
         * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/Lexer.jjt:
-		
-		Lexer files
+
+                Lexer files
 
 Wed Aug 12 18:49:43 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
