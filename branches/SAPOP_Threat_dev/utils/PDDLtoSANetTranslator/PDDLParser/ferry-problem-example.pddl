@@ -1,0 +1,11 @@
+(define (problem ferry1) 
+	(:domain ferry)
+	(:requirements :strips :equality :typing)
+	(:objects a b  - place 
+		c1 c2 - auto)
+    (:init (at c1 a)
+	   (at c2 a)
+	   (at-ferry a)
+	   (empty-ferry))  
+  (:goal (and (at c1 b) (at c2 b)))
+)
