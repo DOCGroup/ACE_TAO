@@ -1,3 +1,8 @@
+Wed Aug 12 19:57:02 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+          Define ACE_HAS_GETIFADDRS only for glibc 2.3 and newer.
+
 Wed Aug 12 19:55:03 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-freebsd.h:
