@@ -6,31 +6,31 @@
 #define XMLSCHEMA_TYPES_HPP
 
 #include <string>
-#include <XSCRT/Elements.hpp>
+#include "XSCRT/Elements.hpp"
 
+#include "ace/Basic_Types.h"
+/**
+ * @@ HACK: VC7
+ *
+ * Disabled the warning about using this in the base member initialization section.
+ * Our use in this file is fine.
+ */
+#ifdef _MSC_VER
+# pragma warning ( disable: 4355 )
+#endif
 namespace XMLSchema
 {
-  typedef XSCRT::FundamentalType<signed char> byte;
-  typedef XSCRT::FundamentalType<unsigned char> unsignedByte;
+  typedef XSCRT::FundamentalType<ACE_INT8> byte;
+  typedef XSCRT::FundamentalType<ACE_UINT8> unsignedByte;
 
-  typedef XSCRT::FundamentalType<short> short_;
-  typedef XSCRT::FundamentalType<unsigned short> unsignedShort;
+  typedef XSCRT::FundamentalType<ACE_INT16> short_;
+  typedef XSCRT::FundamentalType<ACE_UINT16> unsignedShort;
 
-  typedef XSCRT::FundamentalType<int> int_;
-  typedef XSCRT::FundamentalType<unsigned int> unsignedInt;
+  typedef XSCRT::FundamentalType<ACE_INT32> int_;
+  typedef XSCRT::FundamentalType<ACE_UINT32> unsignedInt;
 
-  //@@ VC6
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-
-  typedef XSCRT::FundamentalType<__int64> long_;
-  typedef XSCRT::FundamentalType<unsigned __int64> unsignedLong;
-
-#else
-
-  typedef XSCRT::FundamentalType<long long> long_;
-  typedef XSCRT::FundamentalType<unsigned long long> unsignedLong;
-
-#endif
+  typedef XSCRT::FundamentalType<ACE_INT64> long_;
+  typedef XSCRT::FundamentalType<ACE_UINT64> unsignedLong;
 
   //@@ It would be nice to use some arbitrary-length integer class.
   //
@@ -51,17 +51,16 @@ namespace XMLSchema
   //
   using std::basic_string;
 
+
   template <typename C>
   class string : public XSCRT::Type, public basic_string<C>
   {
   protected:
     typedef basic_string<C> Base__ ;
-
+    
   public:
-    // Trait for marshaling string
-    typedef C CDR_Type__;
-    typedef ACE_Refcounted_Auto_Ptr < string, ACE_Null_Mutex > _ptr;
-
+    //    typedef ACE_Refcounted_Auto_Ptr < string, ACE_Null_Mutex > _ptr;
+    
     //@@ VC6 does not inject XSCRT::Type into the scope so I have
     //   to qualify it all the time.
     //
@@ -298,16 +297,50 @@ namespace XMLSchema
   };
 
   template <typename C>
+  class QName: public Name<C>
+  {
+  protected:
+    typedef typename Name<C>::Base__ Base__;
+
+  public:
+    QName()
+    {
+    }
+
+    QName(XSCRT::XML::Element<C> const& e)
+        : Name<C> (e)
+    {
+    }
+
+    QName(XSCRT::XML::Attribute<C> const& a)
+        : Name<C> (a)
+    {
+    }
+
+    QName(Base__ const& x)
+        : Name<C> (x)
+    {
+    }
+
+    QName (C const* x)
+        : Name<C> (x)
+    {
+    }
+
+    QName&
+    operator= (Base__ const& x)
+    {
+      static_cast<Base__&> (*this) = x;
+      return *this;
+    }
+  };
+
+  template <typename C>
   struct IdentityProvider : XSCRT::IdentityProvider
   {
     IdentityProvider (NCName<C> const& id)
         : id_ (id)
     {
-    }
-
-    virtual ~IdentityProvider (void)
-    {
-
     }
 
     virtual bool
@@ -334,7 +367,7 @@ namespace XMLSchema
     typedef typename NCName<C>::Base__ Base__;
 
   public:
-    virtual ~ID()
+    ~ID()
     {
       unregister_id ();
     }
@@ -413,24 +446,25 @@ namespace XMLSchema
     void
     register_id ()
     {
-      if (container () != this && !empty ())
+      if (NCName<C>::container () != this && !empty ())
       {
         //std::wcerr << "registering " << container ()
         //           << " as '" << *this
         //           << "' on " << container () << std::endl;
-        container ()->register_id (id_provider_, container ());
+        NCName<C>::container ()->register_id (id_provider_,
+                                              NCName<C>::container ());
       }
     }
 
     void
     unregister_id ()
     {
-      if (container () != this && !empty ())
+      if (NCName<C>::container () != this && !empty ())
       {
         //std::wcerr << "un-registering " << container ()
         //           << " as '" << *this
         //           << "' on " << container () << std::endl;
-        container ()->unregister_id (id_provider_);
+        NCName<C>::container ()->unregister_id (id_provider_);
       }
     }
 
@@ -451,8 +485,6 @@ namespace XMLSchema
   class IDREF : public IDREF_Base
   {
   public:
-    // Trait for marshaling IDREF
-    typedef C CDR_Type__;
     IDREF ()
         : id_provider_ (id_)
     {
@@ -469,7 +501,8 @@ namespace XMLSchema
     }
 
     IDREF (IDREF const& x)
-        : id_ (x.id_), id_provider_ (id_)
+      : XMLSchema::IDREF_Base (),
+        id_ (x.id_), id_provider_ (id_)
     {
     }
 
@@ -573,60 +606,9 @@ namespace XMLSchema
     NCName<C> id_;
     IdentityProvider<C> id_provider_;
   };
-
-  template <typename C>
-  class anyURI : public XSCRT::Type, public basic_string <C>
-  {
-  protected:
-    typedef basic_string <C> Base__ ;
-
-  public:
-    // Trait for marshaling string
-    typedef C CDR_Type__;
-    
-    //@@ VC6 does not inject XSCRT::Type into the scope so I have
-    //   to qualify it all the time.
-    //
-
-    anyURI (void)
-    {
-    }
-
-    anyURI (XSCRT::XML::Element<C> const& e)
-        : Base__ (e.value ())
-    {
-    }
-
-    anyURI (XSCRT::XML::Attribute<C> const& a)
-        : Base__ (a.value ())
-    {
-    }
-
-    anyURI (Base__ const& x)
-        : Base__ (x)
-    {
-    }
-
-    anyURI (C const * x)
-        : Base__ (x)
-    {
-    }
-
-    anyURI (const anyURI& s)
-      : Base__ (s)
-    {
-
-    }
-
-    anyURI & operator= (Base__ const& x)
-    {
-      static_cast <Base__ &> (*this) = x;
-      return *this;
-    }
-  };
 }
 
-#include <XMLSchema/Types.ipp>
-#include <XMLSchema/Types.tpp>
+#include "XMLSchema/Types.ipp"
+#include "XMLSchema/Types.tpp"
 
 #endif  // XMLSCHEMA_TYPES_HPP

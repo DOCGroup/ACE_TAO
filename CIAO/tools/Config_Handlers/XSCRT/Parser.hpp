@@ -7,9 +7,7 @@
 
 #include <string>
 
-#include <XSCRT/XML.hpp>
-#include <typeinfo>
-#include <iostream>
+#include "XSCRT/XML.hpp"
 
 namespace XSCRT
 {
@@ -32,10 +30,7 @@ namespace XSCRT
     XML::Element<C>
     next_element ()
     {
-      xercesc::DOMNode * node = e_->item (ei_++);
-
-      return XML::Element<C> (
-        dynamic_cast<xercesc::DOMElement*> (node));
+      return XML::Element<C> (XML::dom_cast <xercesc::DOMElement*> (e_->item (ei_++)));
     }
 
     bool
@@ -48,7 +43,7 @@ namespace XSCRT
     next_attribute ()
     {
       return XML::Attribute<C> (
-        dynamic_cast<xercesc::DOMAttr*> (a_->item (ai_++)));
+        XML::dom_cast <xercesc::DOMAttr*> (a_->item (ai_++)));
     }
 
   private:
@@ -66,7 +61,7 @@ namespace XSCRT
   };
 }
 
-#include <XSCRT/Parser.ipp>
-#include <XSCRT/Parser.tpp>
+#include "XSCRT/Parser.ipp"
+#include "XSCRT/Parser.tpp"
 
 #endif  // XSCRT_PARSER_HPP
