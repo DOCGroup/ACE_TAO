@@ -275,6 +275,10 @@ enum schedparam_policy {
 # define ACE_HAS_LKSCTP
 #endif
 
+#if (__FreeBSD_version < 700038)
+#  define ACE_HAS_VOID_UNSETENV
+#endif
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_H */

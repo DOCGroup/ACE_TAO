@@ -1,3 +1,8 @@
+Wed Aug 12 19:55:03 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-freebsd.h:
+          Fix for older FreeBSD versions.
+
 Wed Aug 12 17:57:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc_warnings.mpb:
