@@ -1,3 +1,10 @@
+Wed Aug 12 18:00:56 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/XMLSchema/Traversal.hpp:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+
+          Integrated more cleanly the changes from XSC XSCRT/XMLSchema. 
+        
 Wed Aug 12 13:30:50 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XMLSchema/Traversal.hpp:
@@ -19,7 +26,7 @@ Wed Aug 12 13:30:50 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
           Rolled back the XSC update, it didn't include a number of fixes
           necessary for Borland and Xerces2/3.
-        
+
 Wed Aug 12 10:21:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.ppt:
