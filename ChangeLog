@@ -1,3 +1,10 @@
+Wed Aug 12 19:02:39 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/Lexer.jj:
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/lexer/Lexer.jjt:
+		
+		Lexer files
+
 Wed Aug 12 18:49:43 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * utils/PDDLtoSANetTranslator/PDDLParser/ferry-example.pddl:
@@ -5,8 +12,8 @@ Wed Aug 12 18:49:43 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * utils/PDDLtoSANetTranslator/PDDLParser/src/PDDLtoSAN.java:
 
-		Domain files
-		
+                Domain files
+
 Wed Aug 12 17:49:43 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * utils:
