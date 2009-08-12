@@ -1,10 +1,15 @@
+Wed Aug 12 07:06:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Logger/File_Logger_Backend.cpp:
+          Unicode compile error fix
+
 Tue Aug 11 17:48:10 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Basic_Deployment_Data.cpp:
         * tools/Config_Handlers/XMI.cpp:
 
-          Fix warnings. 
-        
+          Fix warnings.
+
         * tools/Config_Handlers/XMLSchema/Traversal.hpp:
         * tools/Config_Handlers/XMLSchema/Traversal.ipp:
         * tools/Config_Handlers/XMLSchema/Traversal.tpp:
@@ -23,8 +28,8 @@ Tue Aug 11 17:48:10 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/XSCRT/Writer.hpp:
         * tools/Config_Handlers/XSCRT/XML.hpp:
 
-          Pull in new version of XMLSchema and XSCRT. 
-        
+          Pull in new version of XMLSchema and XSCRT.
+
 Tue Aug 11 11:51:29 UTC 2009  ChangeLog  <William R. Otte>
 
         * DAnCE/MPC/config/dance_deployment_svnt.mpb:
