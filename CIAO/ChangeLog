@@ -1,3 +1,8 @@
+Thu Aug 13 18:07:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
+          Some more code in read_one_history
+
 Thu Aug 13 12:58:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
