@@ -214,7 +214,16 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   {
     ::DDS_InstanceHandle_t instance_handle = this->reader_->lookup_instance (an_instance);
     if (!DDS_InstanceHandle_equals (&instance_handle, & ::DDS_HANDLE_NIL))
-      {
+      {/*
+        DDS_StringSeq data;
+        DDS_SampleInfoSeq sample_info;
+        DDS_ReturnCode_t retval;
+        retval = this->reader_->read_instance (data, sample_info, DDS_LENGTH_UNLIMITED, instance_handle);
+        if (retval == DDS_RETCODE_OK)
+          {
+            // todo
+          }
+        */
       }
     else
       {
