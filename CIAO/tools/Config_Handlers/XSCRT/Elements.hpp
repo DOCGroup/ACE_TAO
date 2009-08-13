@@ -318,9 +318,9 @@ namespace XSCRT
     X x_;
   };
 
-#if (!defined (_MSC_VER) || (_MSC_VER >= 1300)) && \
-    (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 2)))
-
+#if !((defined (__GNUC__) && (__GNUC__ == 3 && (__GNUC_MINOR__ < 3))) || \
+ (defined (__BORLANDC__) && (__BORLANDC__ < 0x620)) || \
+ (defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x5100)))
 
   // Stuff for normal compilers.
   //
