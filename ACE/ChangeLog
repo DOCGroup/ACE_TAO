@@ -1,3 +1,8 @@
+Thu Aug 13 19:08:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SV_Semaphore_Simple.h:
+          Fixed gcc warning
+
 Thu Aug 13 09:10:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.pl:
