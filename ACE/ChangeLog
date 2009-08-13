@@ -1,3 +1,18 @@
+Thu Aug 13 07:14:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-cegcc.h:
+          Set the correct export defines
+
+        * ace/DLL_Manager.cpp:
+          Improved debug statement so that we can easily see that we have
+          an empty string
+
+        * ace/OS_NS_stdio.cpp:
+          Added support for ACE_LACKS_FOPEN and simplified some methods
+
+        * ace/OS_NS_stdio.inl:
+          Const change
+
 Thu Aug 13 03:23:33 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACE.mwc:
