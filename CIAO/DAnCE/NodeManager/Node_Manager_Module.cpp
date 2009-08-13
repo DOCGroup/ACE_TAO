@@ -549,7 +549,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                     ACE_TEXT ("DAnCE_NodeManager is running...\n")));
 
       DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
-                    ACE_TEXT ("NodeManager IOR: %s\n", ior.in ())));
+                    ACE_TEXT ("NodeManager IOR: %s\n"), ior.in ()));
 
       return nm_obj._retn ();
     }

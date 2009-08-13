@@ -1,3 +1,8 @@
+Thu Aug 13 08:57:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+          Fixed compile error
+
 Thu Aug 13 07:56:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/XSCRT/Elements.hpp:
