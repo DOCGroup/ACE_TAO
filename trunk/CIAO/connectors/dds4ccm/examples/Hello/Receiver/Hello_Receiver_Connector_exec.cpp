@@ -201,6 +201,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       }
     else
       {
+        //printf ("failed %d", retval);
         throw ::CCM_DDS::InternalError (retval, 0);
       }
   }
@@ -318,7 +319,10 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     this->configure_dds ();
     ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd = dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(this->dr_.in ());
     DDSStringDataReader * string_reader = DDSStringDataReader::narrow(rd->get_datareader ());
-    return new string_Reader_exec_i (string_reader);
+    if (string_reader)
+      return new string_Reader_exec_i (string_reader);
+      
+    throw ::CORBA::INTERNAL ();
   }
 
   ::CCM_DDS::CCM_ListenerControl_ptr
@@ -369,6 +373,13 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
   Hello_receiver_Connector_exec_i::ccm_activate (void)
   {
     /* Your code here. */
+    /* Test code to test the reader interface
+    ::CCM_DDS::CCM_string_Reader_var reader = this->get_receiver_data ();
+    CORBA::String_var string;
+    CCM_DDS::ReadInfo_var ri;
+    reader->read_one (string.out (),  ri.out ());
+    printf ("read <%s>\n", string.in ());
+    */
   }
 
   void
