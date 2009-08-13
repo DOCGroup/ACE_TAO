@@ -479,9 +479,9 @@ extern char *   save_string( const char * text);
 extern FILEINFO *   get_file( const char * name, const char * src_dir
         , const char * fullname, size_t bufsize, int include_opt);
                 /* New FILEINFO initialization  */
-extern char *   (xmalloc)( size_t size);
+//extern char *   (ACE_OS::malloc)( size_t size);
                 /* Get memory or die            */
-extern char *   (xrealloc)( char * ptr, size_t size);
+//extern char *   (ACE_OS::realloc)( char * ptr, size_t size);
                 /* Reallocate memory or die     */
 extern LINE_COL *   get_src_location( LINE_COL * p_line_col);
                 /* Get location on source file  */

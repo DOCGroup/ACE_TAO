@@ -1418,7 +1418,7 @@ DEFBUF *    install_macro(
     s_parmnames = 0;
   s_repl = ACE_OS::strlen( repl) + 1;
   dp = (DEFBUF *)
-    xmalloc( sizeof (DEFBUF) + s_name + s_parmnames + s_repl);
+    ACE_OS::malloc( sizeof (DEFBUF) + s_name + s_parmnames + s_repl);
   if (cmp || (standard && (*prevp)->push)) {  /* New definition   */
     dp->link = defp;                /* Insert to linked list    */
     *prevp = dp;

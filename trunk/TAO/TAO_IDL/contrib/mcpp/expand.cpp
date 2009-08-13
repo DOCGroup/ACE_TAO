@@ -300,10 +300,10 @@ static char *   expand_std(
     && ! in_directive;
   if (trace_macro) {
     max_mac_num = INIT_MAC_INF;
-    mac_inf = (MACRO_INF *) xmalloc( sizeof (MACRO_INF) * max_mac_num);
+    mac_inf = (MACRO_INF *) ACE_OS::malloc( sizeof (MACRO_INF) * max_mac_num);
     ACE_OS::memset( mac_inf, 0, sizeof (MACRO_INF) * max_mac_num);
     max_in_src_num = INIT_IN_SRC_NUM;
-    in_src = (LOCATION *) xmalloc( sizeof (LOCATION) * max_in_src_num);
+    in_src = (LOCATION *) ACE_OS::malloc( sizeof (LOCATION) * max_in_src_num);
     ACE_OS::memset( in_src, 0, sizeof (LOCATION) * max_in_src_num);
     mac_num = in_src_num = 0;           /* Initialize           */
   }
@@ -686,7 +686,7 @@ static char *   replace(
     } else if (mac_num >= max_mac_num - 1) {
       size_t  len = sizeof (MACRO_INF) * max_mac_num;
       /* Enlarge the array    */
-      mac_inf = (MACRO_INF *) xrealloc( (char *) mac_inf, len * 2);
+      mac_inf = (MACRO_INF *) ACE_OS::realloc( (char *) mac_inf, len * 2);
       ACE_OS::memset( mac_inf + max_mac_num, 0, len);
       /* Clear the latter half    */
       max_mac_num *= 2;
@@ -743,8 +743,8 @@ static char *   replace(
   } else if (nargs >= 0) {                /* Function-like macro  */
     squeeze_ws( 0, 0, 0);      /* Skip to '('          */
     /* Magic sequences are already read over by is_macro_call() */
-    arglist = (char **) xmalloc( (nargs + 1) * sizeof (char *));
-    arglist[ 0] = xmalloc( (size_t) (NMACWORK + IDMAX * 2));
+    arglist = (char **) ACE_OS::malloc( (nargs + 1) * sizeof (char *));
+    arglist[ 0] = (char *)ACE_OS::malloc( (size_t) (NMACWORK + IDMAX * 2));
     /* Note: arglist[ n] may be reallocated */
     /*   and re-written by collect_args()   */
     if ((num_args = collect_args( defp, arglist, m_num)) == ARG_ERROR) {
@@ -770,7 +770,7 @@ static char *   replace(
     }
   }
 
-  catbuf = xmalloc( (size_t) (NMACWORK + IDMAX));
+  catbuf =(char *) ACE_OS::malloc( (size_t) (NMACWORK + IDMAX));
   if (mcpp_debug & EXPAND) {
     mcpp_fprintf( DBG, "(%s)", defp->name);
     dump_string( "prescan entry", defp->repl);
@@ -788,7 +788,7 @@ static char *   replace(
     ACE_OS::free( catbuf);
     return  0;
   }
-  catbuf = xrealloc( catbuf, ACE_OS::strlen( catbuf) + 1);
+  catbuf = (char *) ACE_OS::realloc( catbuf, ACE_OS::strlen( catbuf) + 1);
   /* Use memory sparingly */
   if (mcpp_debug & EXPAND) {
     mcpp_fprintf( DBG, "(%s)", defp->name);
@@ -796,7 +796,7 @@ static char *   replace(
   }
 
   if (nargs > 0) {    /* Function-like macro with any argument    */
-    expbuf = xmalloc( (size_t) (NMACWORK + IDMAX));
+    expbuf = (char *)ACE_OS::malloc( (size_t) (NMACWORK + IDMAX));
     if (mcpp_debug & EXPAND) {
       mcpp_fprintf( DBG, "(%s)", defp->name);
       dump_string( "substitute entry", catbuf);
@@ -807,7 +807,7 @@ static char *   replace(
       ACE_OS::free( arglist[ 0]);
     ACE_OS::free( arglist);
     ACE_OS::free( catbuf);
-    expbuf = xrealloc( expbuf, ACE_OS::strlen( expbuf) + 1);
+    expbuf = (char *) ACE_OS::realloc( expbuf, ACE_OS::strlen( expbuf) + 1);
     /* Use memory sparingly */
     if (mcpp_debug & EXPAND) {
       mcpp_fprintf( DBG, "(%s)", defp->name);
@@ -1266,15 +1266,15 @@ static const char *     remove_magics(
   int     c;
   FILEINFO *  file;
 
-  mac_id = (char (*)[ MAC_S_LEN]) xmalloc( MAC_S_LEN * INIT_MAGICS);
-  arg_id = (char (*)[ ARG_S_LEN]) xmalloc( ARG_S_LEN * INIT_MAGICS * 2);
-  mac_loc = (char **) xmalloc( sizeof (char *) * INIT_MAGICS);
-  arg_loc = (char **) xmalloc( sizeof (char *) * INIT_MAGICS * 2);
-  mgc_index = xmalloc( INIT_MAGICS * 3);
+  mac_id = (char (*)[ MAC_S_LEN]) ACE_OS::malloc( MAC_S_LEN * INIT_MAGICS);
+  arg_id = (char (*)[ ARG_S_LEN]) ACE_OS::malloc( ARG_S_LEN * INIT_MAGICS * 2);
+  mac_loc = (char **) ACE_OS::malloc( sizeof (char *) * INIT_MAGICS);
+  arg_loc = (char **) ACE_OS::malloc( sizeof (char *) * INIT_MAGICS * 2);
+  mgc_index = (char *)ACE_OS::malloc( INIT_MAGICS * 3);
   max_magics = INIT_MAGICS;
 
   mac_n = arg_n = ind = 0;
-  ap = arg_p = xmalloc( ACE_OS::strlen( argp) + 1);
+  ap = arg_p =(char *) ACE_OS::malloc( ACE_OS::strlen( argp) + 1);
   ACE_OS::strcpy( arg_p, argp);
   ep = arg_p + ACE_OS::strlen( arg_p);
   if (*(ep - 1) == RT_END) {
@@ -1292,11 +1292,11 @@ static const char *     remove_magics(
       if (mac_n >= max_magics || 
           arg_n >= max_magics * 2) {
         max_magics *= 2;
-        mac_id = (char (*)[ MAC_S_LEN]) xrealloc( reinterpret_cast<char *> (mac_id), MAC_S_LEN * max_magics);
-        arg_id = (char (*)[ ARG_S_LEN]) xrealloc( reinterpret_cast<char *> (arg_id), ARG_S_LEN * max_magics * 2);
-        mac_loc = (char **) xrealloc( reinterpret_cast <char *> (mac_loc), sizeof (char *) * max_magics);
-        arg_loc = (char **) xrealloc( reinterpret_cast <char *> (arg_loc), sizeof (char *) * max_magics * 2);
-        mgc_index = xrealloc( mgc_index, max_magics * 3);
+        mac_id = (char (*)[ MAC_S_LEN]) ACE_OS::realloc( reinterpret_cast<char *> (mac_id), MAC_S_LEN * max_magics);
+        arg_id = (char (*)[ ARG_S_LEN]) ACE_OS::realloc( reinterpret_cast<char *> (arg_id), ARG_S_LEN * max_magics * 2);
+        mac_loc = (char **) ACE_OS::realloc( reinterpret_cast <char *> (mac_loc), sizeof (char *) * max_magics);
+        arg_loc = (char **) ACE_OS::realloc( reinterpret_cast <char *> (arg_loc), sizeof (char *) * max_magics * 2);
+        mgc_index = (char *) ACE_OS::realloc( mgc_index, max_magics * 3);
       }
       *ap++ = c = get_ch();
       switch (c) {
@@ -2106,7 +2106,7 @@ static char *   substitute(
     size_t  bptr_offset = infile->bptr - infile->buffer;
 
     if (infile->fp == 0) {               /* Not source file      */
-      infile->buffer = xrealloc( infile->buffer
+      infile->buffer = (char *) ACE_OS::realloc( infile->buffer
                                  , ACE_OS::strlen( infile->buffer) + len + 1);
       infile->bptr = infile->buffer + bptr_offset;
     }
@@ -2308,7 +2308,7 @@ static char *   substitute(
           diag_macro( CWARN, only_name, defp->name, 0L, 0, defp, 0);
         return  FALSE;
       } else {
-        arglist_pre[ 0] = xmalloc( (size_t) (NMACWORK + IDMAX * 2));
+        arglist_pre[ 0] = (char *) ACE_OS::malloc( (size_t) (NMACWORK + IDMAX * 2));
         arg_len = collect_args( defp, arglist_pre, 0);
         /* Collect arguments    */
         if (arg_len == ARG_ERROR) {     /* End of input         */
@@ -2367,7 +2367,7 @@ static char *   substitute(
     }
 
     *out_p = EOS;
-    file->buffer = xrealloc( file->buffer, ACE_OS::strlen( file->buffer) + 1);
+    file->buffer = (char *) ACE_OS::realloc( file->buffer, ACE_OS::strlen( file->buffer) + 1);
     file->bptr = file->buffer;              /* Truncate buffer      */
     if (mcpp_debug & EXPAND)
       dump_string( "substitute_pre macroline", file->buffer);
@@ -2442,7 +2442,7 @@ static char *   substitute(
       if (trace_macro && m_num) {
         /* #pragma MCPP debug macro_call, and the macro is on source    */
         mac_inf[ m_num].loc_args = loc = locs
-          = (LOCATION *) xmalloc( (sizeof (LOCATION)) * UCHARMAX);
+          = (LOCATION *) ACE_OS::malloc( (sizeof (LOCATION)) * UCHARMAX);
         ACE_OS::memset( loc, 0, (sizeof (LOCATION)) * UCHARMAX);
         /* 0-clear for default values, including empty argument */
       }
@@ -2552,13 +2552,13 @@ static char *   substitute(
         argp++;                     /* Ensure positive length   */
     }
     arglist[ 0] = argp
-      = xrealloc( arglist[ 0], (size_t) (argp - arglist[ 0]));
+      = (char *) ACE_OS::realloc( arglist[ 0], (size_t) (argp - arglist[ 0]));
     /* Use memory sparingly     */
     for (c = 1; c < args; c++)
       arglist[ c] = argp += ACE_OS::strlen( argp) + 1;
     if (trace_macro && m_num)
       mac_inf[ m_num].loc_args        /* Truncate excess memory   */
-        = (LOCATION *) xrealloc( (char *) locs
+        = (LOCATION *) ACE_OS::realloc( (char *) locs
                                  , (loc - locs) * sizeof (LOCATION));
 
     if (mcpp_debug & EXPAND) {
@@ -2722,7 +2722,7 @@ static char *   substitute(
               size_t  old_len;
               old_len = sizeof (LOCATION) * max_in_src_num;
               /* Enlarge the array    */
-              in_src = (LOCATION *) xrealloc( (char *) in_src
+              in_src = (LOCATION *) ACE_OS::realloc( (char *) in_src
                                               , old_len * 2);
               /* Have to initialize the enlarged area     */
               ACE_OS::memset( in_src + max_in_src_num, 0, old_len);
