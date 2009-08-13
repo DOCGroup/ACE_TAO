@@ -208,11 +208,19 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
 
   void
   string_Reader_exec_i::read_one_history (
-    const char * /* an_instance */,
+    const char * an_instance,
     ::CCM_DDS::string_Reader::stringSeq_out /* instances */,
     ::CCM_DDS::ReadInfoSeq_out /* infos */)
   {
-    /* Your code here. */
+    ::DDS_InstanceHandle_t instance_handle = this->reader_->lookup_instance (an_instance);
+    if (!DDS_InstanceHandle_equals (&instance_handle, & ::DDS_HANDLE_NIL))
+      {
+      }
+    else
+      {
+        ::CCM_DDS::InstanceNumberSeq seq;
+        throw ::CCM_DDS::NonExistent (seq);
+      }
   }
 
   ::CCM_DDS::QueryFilter *
