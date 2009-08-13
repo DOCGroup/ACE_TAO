@@ -30,7 +30,6 @@
 #if (__GNUC__ < 3)
 # define ACE_LACKS_MEMBER_TEMPLATES
 # define ACE_LACKS_NUMERIC_LIMITS
-# define ACE_LACKS_ISCTYPE
 #endif /* __GNUC__ < 3 */
 
 // __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
