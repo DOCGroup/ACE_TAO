@@ -1,3 +1,17 @@
+Thu Aug 13 03:23:33 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACE.mwc:
+
+          Fixed a comment.
+
+        * bin/MakeProjectCreator/config/crosscompile.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/wb26.features:
+
+          Added the cross_compile feature that is disabled by default.  It
+          is enabled within the wb26.features.  The 'crosscompile' base
+          project "avoids" the cross_compile feature.  This fixes bug 3318.
+
 Wed Aug 12 19:57:02 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
