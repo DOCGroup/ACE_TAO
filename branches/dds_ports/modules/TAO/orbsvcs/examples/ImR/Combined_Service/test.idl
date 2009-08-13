@@ -1,0 +1,4 @@
+// $Id$
+interface test {
+  long get();
+};
