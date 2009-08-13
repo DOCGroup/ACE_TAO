@@ -1,3 +1,17 @@
+Thu Aug 13 16:57:22 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Bugfixes. 
+        
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+
+          Enabled support for MCPP.  
+        
 Wed Aug 12 18:27:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/tao_vc8warnings.mpb:

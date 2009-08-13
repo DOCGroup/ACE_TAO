@@ -58,9 +58,9 @@
  * save_string() Saves a string in malloc() memory.
  * get_file()   Initializes a new FILEINFO structure, called when #include
  *              opens a new file, or from unget_string().
- * xmalloc()    Gets a specified number of bytes from heap memory.
+ * ACE_OS::malloc()    Gets a specified number of bytes from heap memory.
  *              If malloc() returns NULL, exits with a message.
- * xrealloc()   realloc().  If it fails, exits with a message.
+ * ACE_OS::realloc()   realloc().  If it fails, exits with a message.
  * get_src_location()   Trace back line-column datum into pre-line-splicing
  *              phase.  A function for -K option.
  * cfatal(), cerror(), cwarn()
@@ -198,12 +198,12 @@ static char *   append_to_buffer(
     if (mem_buf_p->buffer == 0) {            /* 1st append   */
       mem_buf_p->size = size;
       mem_buf_p->bytes_avail = size;
-      mem_buf_p->buffer = xmalloc( mem_buf_p->size);
+      mem_buf_p->buffer = (char *) ACE_OS::malloc( mem_buf_p->size);
       mem_buf_p->entry_pt = mem_buf_p->buffer;
     } else {
       mem_buf_p->size += size;
       mem_buf_p->bytes_avail += size;
-      mem_buf_p->buffer = xrealloc( mem_buf_p->buffer, mem_buf_p->size);
+      mem_buf_p->buffer = (char *) ACE_OS::realloc( mem_buf_p->buffer, mem_buf_p->size);
       mem_buf_p->entry_pt = mem_buf_p->buffer + mem_buf_p->size
         - mem_buf_p->bytes_avail;
     }
@@ -763,7 +763,7 @@ char *  scan_quote(
           if (warn_level & 1) {
             char *  buf;
             size_t  chlen;
-            buf = xmalloc( chlen = infile->bptr - bptr + 2);
+            buf = (char *) ACE_OS::malloc( chlen = infile->bptr - bptr + 2);
             ACE_OS::memcpy( buf, bptr, chlen - 1);
             buf[ chlen - 1] = EOS;
             cwarn(
@@ -1601,13 +1601,14 @@ int     get_ch( void)
     ACE_OS::fclose( file->fp);                  /* Close finished file  */
     /* Do not free file->real_fname and file->full_fname        */
     cur_fullname = const_cast <char *> (infile->full_fname);
-    cur_fname = infile->real_fname;     /* Restore current fname*/
+    cur_fname = infile->full_fname;     /* Restore current fname*/
+    
     if (infile->pos != 0L) {            /* Includer was closed  */
       infile->fp = ACE_OS::fopen( cur_fullname, "r");
       ACE_OS::fseek( infile->fp, infile->pos, SEEK_SET);
     }   /* Re-open the includer and restore the file-position   */
     len = (int) (infile->bptr - infile->buffer);
-    infile->buffer = xrealloc( infile->buffer, NBUFF);
+    infile->buffer = (char *) ACE_OS::realloc( infile->buffer, NBUFF);
     /* Restore full size buffer to get the next line        */
     infile->bptr = infile->buffer + len;
     src_line = infile->line;            /* Reset line number    */
@@ -1667,7 +1668,7 @@ static char *   parse_line( void)
       infile->bptr = sp;
     return  infile->bptr;               /* Don't tokenize       */
   }
-  tp = temp = xmalloc( (size_t) NBUFF);
+  tp = temp = (char *) ACE_OS::malloc( (size_t) NBUFF);
   limit = temp + NBUFF - 2;
 
   while (char_type[ c = *sp++ & UCHARMAX] & HSP) {
@@ -2263,7 +2264,7 @@ char *  save_string(
   size_t      size;
 
   size = ACE_OS::strlen( text) + 1;
-  result = xmalloc( size);
+  result = (char *) ACE_OS::malloc( size);
   ACE_OS::memcpy( result, text, size);
   return  result;
 }
@@ -2281,8 +2282,8 @@ FILEINFO *  get_file(
 {
   FILEINFO *  file;
 
-  file = (FILEINFO *) xmalloc( sizeof (FILEINFO));
-  file->buffer = xmalloc( bufsize);
+  file = (FILEINFO *) ACE_OS::malloc( sizeof (FILEINFO));
+  file->buffer = (char *) ACE_OS::malloc( bufsize);
   file->bptr = file->buffer;              /* Initialize line ptr  */
   file->buffer[ 0] = EOS;                 /* Force first read     */
   file->line = 0L;                        /* (Not used just yet)  */
@@ -2295,13 +2296,13 @@ FILEINFO *  get_file(
   file->real_fname = name;                /* Save file/macro name */
   file->full_fname = fullname;            /* Full path list       */
   if (name) {
-    file->filename = xmalloc( ACE_OS::strlen( name) + 1);
+    file->filename = (char *) ACE_OS::malloc( ACE_OS::strlen( name) + 1);
     ACE_OS::strcpy( file->filename, name);      /* Copy for #line       */
   } else {
     file->filename = 0;
   }
   if (src_dir) {
-    file->src_dir = xmalloc( ACE_OS::strlen( src_dir) + 1);
+    file->src_dir = (char *) ACE_OS::malloc( ACE_OS::strlen( src_dir) + 1);
     ACE_OS::strcpy( const_cast <char *> (file->src_dir), src_dir);
   } else {
     file->src_dir = 0;
@@ -2327,43 +2328,43 @@ FILEINFO *  get_file(
 static const char * const   out_of_memory
 = "Out of memory (required size is %.0s0x%lx bytes)";   /* _F_  */
 
-char *
-(xmalloc)(
-          size_t      size
-          )
-/*
- * Get a block of free memory.
- */
-{
-  char *      result;
+// char *
+// malloc(
+//           size_t      size
+//           )
+// /*
+//  * Get a block of free memory.
+//  */
+// {
+//   char *      result;
 
-  if ((result = (char *) ACE_OS::malloc( size)) == 0) {
-    if (mcpp_debug & MEMORY)
-      print_heap();
-    cfatal( out_of_memory, 0, (long) size, 0);
-  }
-  return  result;
-}
+//   if ((result = (char *) ACE_OS::malloc( size)) == 0) {
+//     if (mcpp_debug & MEMORY)
+//       print_heap();
+//     cfatal( out_of_memory, 0, (long) size, 0);
+//   }
+//   return  result;
+// }
 
-char *  (xrealloc)(
-                   char *      ptr,
-                   size_t      size
-                   )
-/*
- * Reallocate ACE_OS::malloc()ed memory.
- */
-{
-  char *      result;
+// char *  (ACE_OS::realloc)(
+//                    char *      ptr,
+//                    size_t      size
+//                    )
+// /*
+//  * Reallocate ACE_OS::malloc()ed memory.
+//  */
+// {
+//   char *      result;
 
-  if ((result = (char *) ACE_OS::realloc( ptr, size)) == 0 && size != 0) {
-    /* 'size != 0' is necessary to cope with some               */
-    /*   implementation of realloc( ptr, 0) which returns 0. */
-    if (mcpp_debug & MEMORY)
-      print_heap();
-    cfatal( out_of_memory, 0, (long) size, 0);
-  }
-  return  result;
-}
+//   if ((result = (char *) ACE_OS::realloc( ptr, size)) == 0 && size != 0) {
+//     /* 'size != 0' is necessary to cope with some               */
+//     /*   implementation of realloc( ptr, 0) which returns 0. */
+//     if (mcpp_debug & MEMORY)
+//       print_heap();
+//     cfatal( out_of_memory, 0, (long) size, 0);
+//   }
+//   return  result;
+// }
 
 LINE_COL *  get_src_location(
                              LINE_COL *  p_line_col          /* Line and column on phase 4   */
@@ -2461,7 +2462,7 @@ static void do_msg(
     else
       slen = 1;
     tp = arg_t[ i] = (char *) ACE_OS::malloc( slen);
-    /* Don't use xmalloc() so as not to cause infinite recursion    */
+    /* Don't use ACE_OS::malloc() so as not to cause infinite recursion    */
     if (sp == 0 || *sp == EOS) {
       *tp = EOS;
       continue;
