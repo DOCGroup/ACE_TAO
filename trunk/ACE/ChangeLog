@@ -1,3 +1,12 @@
+Thu Aug 13 20:40:16 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-g++-common.h:
+          Removed definition of ACE_LACKS_ISCTYPE. Availibility of isctype()
+          doesn't depend on g++ version, it is libc stuff.
+
+        * ace/config-linux-common.h:
+          Define ACE_LACKS_ISCTYPE for glibc 2.2 and older
+
 Thu Aug 13 19:35:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_T.h:
