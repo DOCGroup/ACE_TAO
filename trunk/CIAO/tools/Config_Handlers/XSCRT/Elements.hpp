@@ -14,49 +14,6 @@
 #include <XSCRT/Parser.hpp>
 #include "ace/Refcounted_Auto_Ptr.h"
 
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-
-// Stuff for broken VC6. Don't like what you see - use better compiler!
-//
-
-inline
-std::wistream&
-operator>> (std::wistream& is, __int64& v)
-{
-  long t;
-  is >> t;
-  v = t;
-  return is;
-}
-
-inline
-std::wistream&
-operator>> (std::wistream& is, unsigned __int64& v)
-{
-  unsigned long t;
-  is >> t;
-  v = t;
-  return is;
-}
-
-inline
-std::wostream&
-operator<< (std::wostream& os, __int64 const& v)
-{
-  os << long (v);
-  return os;
-}
-
-inline
-std::wostream&
-operator<< (std::wostream& os, unsigned __int64 const& v)
-{
-  os << unsigned long (v);
-  return os;
-}
-
-#endif
-
 namespace XSCRT
 {
   struct IdentityProvider
@@ -246,7 +203,7 @@ namespace XSCRT
     Type* get_idref (const char* name)
     {
       std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_CHAR_TO_TCHAR(name));
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i = 
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i =
           this->idref_map_.find(name_string);
       if (i != idref_map_.end())
       {
@@ -261,7 +218,7 @@ namespace XSCRT
     Type* get_idref (const wchar_t *name)
     {
       std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_WCHAR_TO_TCHAR(name));
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i = 
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i =
           this->idref_map_.find(name_string);
       if (i != idref_map_.end())
       {
@@ -569,8 +526,6 @@ namespace XSCRT
   //
   //
 
-#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
-
   template<>
   template<>
   inline
@@ -606,57 +561,6 @@ namespace XSCRT
   {
     x_ = (a.value () == L"true") || (a.value () == L"1");
   }
-
-#else
-
-  template <>
-  class FundamentalType<bool> : public Type
-  {
-  public:
-    FundamentalType ()
-    {
-    }
-
-    template<typename C>
-    FundamentalType (XML::Element<C> const& e)
-    {
-      x_ = (e.value ()[0] == 't') || (e.value ()[0] == '1');
-    }
-
-    template<typename C>
-    FundamentalType (XML::Attribute<C> const& a)
-    {
-      x_ = (a.value ()[0] == 't') || (a.value ()[0] == '1');
-    }
-
-    FundamentalType (bool const& x)
-        : x_ (x)
-    {
-    }
-
-    FundamentalType&
-    operator= (bool const& x)
-    {
-      x_ = x;
-      return *this;
-    }
-
-  public:
-    operator bool const& () const
-    {
-      return x_;
-    }
-
-    operator bool& ()
-    {
-      return x_;
-    }
-
-  protected:
-    bool x_;
-  };
-
-#endif
 
 }
 

@@ -1,9 +1,14 @@
+Thu Aug 13 07:56:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+          Removed code for vc6
+
 Thu Aug 13 01:23:29 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
 
-          Unicode compile errors. 
-        
+          Unicode compile errors.
+
 Wed Aug 12 18:26:09 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication.mpc:
