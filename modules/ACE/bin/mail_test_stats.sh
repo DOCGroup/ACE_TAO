@@ -7,10 +7,13 @@ svn up
 cd $ACE_ROOT/bin
 rm *Tests.txt
 rm *TestRev.txt
+rm *Ignore.txt
+rm *Builds.txt
 ./diff-builds-and-group-fixed-tests-only.sh
 
-MAILTO="jwillemsen@remedy.nl"
+MAILTO="devo-group@list.isis.vanderbilt.edu"
 MAIL="/usr/bin/mail -S smtp=10.2.0.3"
+MAILFROM="jwillemsen@remedy.nl"
 
 MAIL_ATTACHMENTS=
 for fn in `ls *Tests.txt`; do
@@ -24,13 +27,16 @@ mailfile="/tmp/rsmailfile"
 {
    echo "Sending test statistics for" $CURRENTDATE
    echo
+   cat *NoTestRev.txt
+   echo
+   echo "Sending with revision number"
    cat *Tests.txt
    echo
-   echo "Sending without revision number"
-   cat *NoTestRev.txt
+   echo "Sending results per build"
+   cat *Builds.txt
 } > $mailfile
 
-$MAIL -s "ACE/TAO/CIAO test statistics for $CURRENTDATE" $MAILTO < $mailfile
+$MAIL -r $MAILFROM -s "ACE/TAO/CIAO test statistics for $CURRENTDATE" $MAILTO < $mailfile
 
 rm -f $mailfile
 

@@ -99,7 +99,7 @@
 
 // Take advantage of G++ (>= 4.x) visibility attributes to generate
 // improved shared library binaries.
-#if (__GNUC__ >= 4) && !defined (__MINGW32__)
+#if (__GNUC__ >= 4) && !defined (__MINGW32__) && !defined (ACE_HAS_CEGCC)
 
 # if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
 #  undef ACE_HAS_CUSTOM_EXPORT_MACROS

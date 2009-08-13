@@ -27,7 +27,7 @@ TAO_COSNAMING_MULTICAST=""
 ## ServiceRestart: tao-cosnaming
 #
 # Enable debug logging, set to "-ORBDebugLevel 10" to enable.
-TAO_COSNAMING_DEBUG = ""
+TAO_COSNAMING_DEBUG=""
 
 ## Type            string
 ## Default:        "-ORBLogFile /var/log/tao/tao-cosnaming.log"

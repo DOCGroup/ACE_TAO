@@ -129,6 +129,11 @@ ACE_OS::fopen (const char *filename,
                const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
+#if defined (ACE_LACKS_FOPEN)
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (0);
+#else
   int hmode = _O_TEXT;
 
   // Let the chips fall where they may if the user passes in a NULL
@@ -169,6 +174,7 @@ ACE_OS::fopen (const char *filename,
       ACE_OS::close (handle);
     }
   return 0;
+#endif
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -191,6 +197,11 @@ ACE_OS::fopen (const wchar_t *filename,
                const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
+#if defined (ACE_LACKS_FOPEN)
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (0);
+#else
   int hmode = _O_TEXT;
 
   for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
@@ -224,6 +235,7 @@ ACE_OS::fopen (const wchar_t *filename,
       ACE_OS::close (handle);
     }
   return 0;
+#endif
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -236,10 +248,9 @@ int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::fprintf");
-  int result = 0;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vfprintf (fp, format, ap);
+  int const result = ACE_OS::vfprintf (fp, format, ap);
   va_end (ap);
   return result;
 }
@@ -249,10 +260,9 @@ int
 ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::fprintf");
-  int result = 0;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vfprintf (fp, format, ap);
+  int const result = ACE_OS::vfprintf (fp, format, ap);
   va_end (ap);
   return result;
 }
@@ -262,10 +272,9 @@ int
 ACE_OS::asprintf (char **bufp, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::asprintf");
-  int result;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vasprintf (bufp, format, ap);
+  int const result = ACE_OS::vasprintf (bufp, format, ap);
   va_end (ap);
   return result;
 }
@@ -275,10 +284,9 @@ int
 ACE_OS::asprintf (wchar_t **bufp, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::asprintf");
-  int result;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vasprintf (bufp, format, ap);
+  int const result = ACE_OS::vasprintf (bufp, format, ap);
   va_end (ap);
   return result;
 }
@@ -288,10 +296,9 @@ int
 ACE_OS::printf (const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::printf");
-  int result;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vprintf (format, ap);
+  int const result = ACE_OS::vprintf (format, ap);
   va_end (ap);
   return result;
 }
@@ -301,10 +308,9 @@ int
 ACE_OS::printf (const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::printf");
-  int result;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vprintf (format, ap);
+  int const result = ACE_OS::vprintf (format, ap);
   va_end (ap);
   return result;
 }
@@ -316,7 +322,7 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
   // ACE_OS_TRACE ("ACE_OS::snprintf");
   va_list ap;
   va_start (ap, format);
-  int result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
+  int const result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
   va_end (ap);
   return result;
 }
@@ -328,7 +334,7 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   // ACE_OS_TRACE ("ACE_OS::snprintf");
   va_list ap;
   va_start (ap, format);
-  int result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
+  int const result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
   va_end (ap);
   return result;
 }
@@ -340,7 +346,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   // ACE_OS_TRACE ("ACE_OS::sprintf");
   va_list ap;
   va_start (ap, format);
-  int result = ACE_OS::vsprintf (buf, format, ap);
+  int const result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
 }
@@ -352,7 +358,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   // ACE_OS_TRACE ("ACE_OS::sprintf");
   va_list ap;
   va_start (ap, format);
-  int result = ACE_OS::vsprintf (buf, format, ap);
+  int const result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
 }

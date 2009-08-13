@@ -10,8 +10,7 @@
 
 #include "ace/config-lite.h"
 
-#if defined (ACE_GPERF_AS_STATIC_LIBS)
-
+#if defined (ACE_AS_STATIC_LIBS)
 # if !defined (ACE_GPERF_HAS_DLL)
 #   define ACE_GPERF_HAS_DLL 0
 # endif /* ! ACE_GPERF_HAS_DLL */
@@ -19,7 +18,7 @@
 # if !defined (ACE_GPERF_HAS_DLL)
 #   define ACE_GPERF_HAS_DLL 1
 # endif /* ! ACE_GPERF_HAS_DLL */
-#endif /* ACE_GPERF_AS_STATIC_LIB */
+#endif /* ACE_AS_STATIC_LIB */
 
 #if defined (ACE_GPERF_HAS_DLL)
 #  if (ACE_GPERF_HAS_DLL == 1)

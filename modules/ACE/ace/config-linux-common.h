@@ -409,7 +409,9 @@
 # include "ace/config-posix-nonetworking.h"
 #else
 # define ACE_HAS_NETLINK
-# define ACE_HAS_GETIFADDRS
+# if (__GLIBC__  > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 2)
+#   define ACE_HAS_GETIFADDRS
+# endif
 #endif
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)

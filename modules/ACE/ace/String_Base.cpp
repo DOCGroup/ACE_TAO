@@ -476,6 +476,106 @@ ACE_String_Base<CHAR>::swap (ACE_String_Base<CHAR> & str)
 
 // ----------------------------------------------
 
+template <class CHAR>
+int ACE_String_Base_Iterator <CHAR>::next (CHAR * & ch) const
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::next");
+
+  if (0 == this->done ())
+  {
+    ch = &this->str_->rep_[this->index_];
+    return 1;
+  }
+  else
+  {
+    ch = 0;
+    return 0;
+  }
+}
+
+template <class CHAR>
+int ACE_String_Base_Iterator <CHAR>::advance (void)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::advance");
+
+  if (this->index_ < this->str_->length ())
+  {
+    ++ this->index_;
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+template <class CHAR>
+const ACE_String_Base_Iterator <CHAR> &
+ACE_String_Base_Iterator <CHAR>::
+operator = (const ACE_String_Base_Iterator <CHAR> & rhs)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::operator =");
+
+  if (this == &rhs)
+    return *this;
+
+  this->str_ = rhs.str_;
+  this->index_ = rhs.index_;
+  return *this;
+}
+
+// ----------------------------------------------
+
+template <class CHAR>
+int ACE_String_Base_Const_Iterator <CHAR>::next (const CHAR * & ch) const
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::next");
+
+  if (0 == this->done ())
+  {
+    ch = &this->str_->rep_[this->index_];
+    return 1;
+  }
+  else
+  {
+    ch = 0;
+    return 0;
+  }
+}
+
+template <class CHAR>
+int ACE_String_Base_Const_Iterator <CHAR>::advance (void)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::advance");
+
+  if (this->index_ < this->str_->length ())
+  {
+    ++ this->index_;
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+template <class CHAR>
+const ACE_String_Base_Const_Iterator <CHAR> &
+ACE_String_Base_Const_Iterator <CHAR>::
+operator = (const ACE_String_Base_Const_Iterator <CHAR> & rhs)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::operator =");
+
+  if (this == &rhs)
+    return *this;
+
+  this->str_ = rhs.str_;
+  this->index_ = rhs.index_;
+  return *this;
+}
+
+// ----------------------------------------------
+
 template <class CHAR> ACE_String_Base<CHAR>
 operator+ (const ACE_String_Base<CHAR> &s, const ACE_String_Base<CHAR> &t)
 {

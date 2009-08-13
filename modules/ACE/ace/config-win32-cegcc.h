@@ -87,6 +87,7 @@
 #define ACE_LACKS_PDHMSG_H
 #define ACE_HAS_NONCONST_WCSDUP
 #define ACE_HAS_WINSOCK2_GQOS
+#define ACE_LACKS_CORRECT_ISWPRINT_TAB
 
 //Changes to compile on CE gcc.
 #undef ACE_HAS_TYPES_H
@@ -102,7 +103,12 @@
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
 #define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
 
-#undef ACE_HAS_CUSTOM_EXPORT_MACROS
+#define ACE_Proper_Export_Flag __declspec (dllexport)
+#define ACE_Proper_Import_Flag __declspec (dllimport)
+#define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
+#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
+#define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
+#define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
 
 #define ACE_DLL_PREFIX ACE_TEXT ("lib")
 

@@ -151,7 +151,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                 ACE_ERROR ((LM_ERROR,
                             ACE_TEXT ("ACE (%P|%t) DLL_Handle::open ")
                             ACE_TEXT ("(\'%s\') failed, errno=")
-                            ACE_TEXT ("%d: %s\n"),
+                            ACE_TEXT ("%d: <%s>\n"),
                             name->c_str (),
                             ACE_ERRNO_GET,
                             this->error ()->c_str ()));

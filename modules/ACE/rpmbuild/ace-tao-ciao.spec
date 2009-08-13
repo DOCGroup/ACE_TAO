@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.7.1
-%define TAOVER  1.7.1
-%define CIAOVER 0.7.1
+%define ACEVER  5.7.2
+%define TAOVER  1.7.2
+%define CIAOVER 0.7.2
 
 # Conditional build
 # Default values are
@@ -498,7 +498,7 @@ Summary:      Make Project Creator
 Version:      %{ACEVER}
 Group:        Development/Tools/Building
 %if !0%{?suse_version}
-Provides:     perl(Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter) perl (WIXProjectCreator)
+Provides:     perl(Driver) perl(MakeProjectBase) perl(ObjectGenerator) perl(ProjectCreator) perl(WorkspaceCreator) perl(WorkspaceHelper) perl(DependencyWriter) perl(WIXProjectCreator)
 %endif
 
 %description -n mpc
@@ -2043,7 +2043,7 @@ fi
 %files -n ace-gperf
 %defattr(-,root,root,-)
 %{_bindir}/ace_gperf
-%{_libdir}/ACE_gperfd_lib.so.%{ACEVERSO}
+%{_libdir}/libACE_gperf_lib.so.%{ACEVERSO}
 %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
 %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
@@ -2664,6 +2664,9 @@ fi
 # ================================================================
 
 %changelog
+* Thu Jul 23 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.7.2-0
+- New micro release
+
 * Mon Jul 13 2009 Phil Mesnier <mesnier_p@ociweb.com> - 5.7.1-0
 - New micro release
 

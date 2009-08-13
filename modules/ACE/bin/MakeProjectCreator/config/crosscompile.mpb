@@ -1,7 +1,10 @@
+
 // -*- MPC -*-
 // $Id$
 
 project {
+  avoids += cross_compile
+
   specific(prop:microsoft) {
     nocross = 1
   }
