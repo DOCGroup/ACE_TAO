@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  $(ACE_ROOT)/ace/ace.mpc
+  $(ACE_ROOT)/apps/gperf/src
+  tao_idl.mpc
+}

@@ -1,0 +1,56 @@
+// -*- MPC -*-
+// $Id$
+
+project(*supplier): messaging, rteventexe, rtevent_serv, naming {
+  after  += ECMcastTests_lib
+  libs     += ECMcastTests
+  libpaths += ../Common
+
+  specific (automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
+  exename   = supplier
+
+  Source_Files {
+    supplier.cpp
+  }
+}
+
+project(*consumer): messaging, rteventexe, rtevent_serv, naming {
+  after  += ECMcastTests_lib
+  libs     += ECMcastTests
+  libpaths += ../Common
+
+  specific (automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
+  exename   = consumer
+
+  Source_Files {
+    consumer.cpp
+  }
+}
+
+project(*gateway-ec): messaging, rteventexe, rtevent_serv, naming {
+  after  += ECMcastTests_lib
+  libs     += ECMcastTests
+  libpaths += ../Common
+
+  specific (automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
+  exename   = gateway-ec
+
+  Source_Files {
+    gateway-ec.cpp
+  }
+}
