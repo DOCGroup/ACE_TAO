@@ -370,7 +370,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
-  BOOL result = GetUserNameA (user, (u_long *) &maxlen);
+  BOOL const result = GetUserNameA (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
   else
@@ -461,7 +461,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_WIN32)
-  BOOL result = GetUserNameW (user, (u_long *) &maxlen);
+  BOOL const result = GetUserNameW (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
   else
