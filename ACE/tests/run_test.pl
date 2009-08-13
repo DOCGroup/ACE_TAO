@@ -136,7 +136,7 @@ sub run_program ($@)
     }
 
     my $start_time = time();
-    $status = $P->SpawnWaitKill (200 + $target->ProcessStartWaitInterval());
+    $status = $P->SpawnWaitKill (300 + $target->ProcessStartWaitInterval());
     my $time = time() - $start_time;
 
     ### Check for problems
