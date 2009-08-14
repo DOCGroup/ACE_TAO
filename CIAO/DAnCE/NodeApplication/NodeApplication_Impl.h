@@ -25,7 +25,6 @@
 #include "tao/Object.h"
 #include "ccm/CCM_KeylessCCMHomeC.h"
 #include "ccm/ComponentsC.h"
-//#include "RedirectionService/RedirectionService.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 

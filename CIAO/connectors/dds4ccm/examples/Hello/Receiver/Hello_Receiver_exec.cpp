@@ -174,6 +174,12 @@ namespace CIAO_Hello_DDS_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
+  /* Code to use the reader
+    ::CCM_DDS::string_Reader_var reader = this->context_->get_connection_read_message_data ();
+    ::CCM_DDS::ReadInfo_var readinfo;
+    ::CORBA::String_var string;
+    reader->read_one (string.out (), readinfo.out ());
+  /*
     /* Your code here. */
   }
 
