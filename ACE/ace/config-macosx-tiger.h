@@ -212,6 +212,9 @@
 // gperf seems to need this
 //#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
+#define ACE_LACKS_UNSETENV
+#define ACE_LACKS_ISCTYPE
+
 #if defined(__APPLE_CC__) && (__APPLE_CC__ < 1173)
 #error "Compiler must be upgraded, see http://developer.apple.com"
 #endif /* __APPLE_CC__ */
