@@ -1,3 +1,8 @@
+Fri Aug 14 12:43:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/tao_vc8warnings.mpb:
+          Use DisableSpecificWarnings
+
 Thu Aug 13 16:57:22 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/directive.cpp:
@@ -6,12 +11,12 @@ Thu Aug 13 16:57:22 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/support.cpp:
         * TAO_IDL/contrib/mcpp/system.cpp:
 
-          Bugfixes. 
-        
+          Bugfixes.
+
         * orbsvcs/IFR_Service/IFR_Service.mpc:
 
-          Enabled support for MCPP.  
-        
+          Enabled support for MCPP.
+
 Wed Aug 12 18:27:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/tao_vc8warnings.mpb:
