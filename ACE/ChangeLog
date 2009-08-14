@@ -1,3 +1,11 @@
+Fri Aug 14 13:31:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-tiger.h:
+          Fixed some compile problems
+
+        * ace/OS_QoS.cpp:
+          Use const cast instead of c style cast
+
 Fri Aug 14 12:54:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc:
