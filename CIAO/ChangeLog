@@ -1,3 +1,8 @@
+Fri Aug 14 10:12:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+          Disabled some code for CB2009
+
 Fri Aug 14 09:28:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
