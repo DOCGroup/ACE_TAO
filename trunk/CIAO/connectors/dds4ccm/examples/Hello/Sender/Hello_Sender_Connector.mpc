@@ -104,7 +104,7 @@ project(DDS_Hello_Sender_Connector_exec) : ciao_executor , ciao_example_output, 
 
 
 project(Hello_Sender_Connector_svnt) : ciao_servant , ciao_example_output, dds4ccm_skel  {
-  after      +=  DDS_Hello_Sender_Base_stub DDS_Hello_Sender_Base_skel DDS4CCM_lem_stub DDS_Hello_Sender_Connector_lem_stub
+  after      +=  DDS_Hello_Sender_Base_stub DDS_Hello_Sender_Base_skel DDS4CCM_lem_stub DDS_Hello_Sender_Connector_lem_stub DDS4CCM_lem_stub
   sharedname  = DDS_Hello_Sender_Connector_svnt
   libs       += DDS_Hello_Sender_Connector_stub DDS_Hello_Sender_Connector_lem_stub  DDS_Hello_Sender_Base_stub DDS_Hello_Sender_Base_skel
   libs += DDS4CCM_lem_stub
