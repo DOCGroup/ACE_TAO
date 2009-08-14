@@ -179,7 +179,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     ::CCM_DDS::ReadInfo_var readinfo;
     ::CORBA::String_var string;
     reader->read_one (string.out (), readinfo.out ());
-  /*
+  */
 
   }
 
