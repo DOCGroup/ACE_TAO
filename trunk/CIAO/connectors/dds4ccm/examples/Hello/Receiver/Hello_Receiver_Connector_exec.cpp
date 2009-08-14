@@ -35,6 +35,7 @@
 
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DataReader.h"
+#include "dds4ccm/impl/ndds/Time_t.h"
 
 /* The listener of events and data from the middleware */
 class HelloListener : public ::DDS::DataReaderListener
@@ -160,7 +161,6 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     ::CCM_DDS::string_Reader::stringSeq_out /* instances */,
     ::CCM_DDS::ReadInfoSeq_out /* infos */)
   {
-    //this->reader_->read
     /* Your code here. */
   }
 
@@ -169,7 +169,10 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     ::CCM_DDS::string_Reader::stringSeq_out /* instances */,
     ::CCM_DDS::ReadInfoSeq_out /* infos */)
   {
-    /* Your code here. */
+    /*     DDS_StringSeq data;
+    DDS_SampleInfoSeq sample_info;
+    DDS_ReturnCode_t retval = this->reader_->read (data, sample_info);
+ */
   }
 
   void
@@ -177,6 +180,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     char *& an_instance,
     ::CCM_DDS::ReadInfo_out info)
   {
+    // This has to be reworked using a reader template and traits. 
     DDS_StringSeq data;
     DDS_SampleInfoSeq sample_info;
     DDS_ReturnCode_t retval;
@@ -196,8 +200,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     if (retval == DDS_RETCODE_OK)
       {
         an_instance = data[0];
-        info.timestamp.sec = sample_info[0].reception_timestamp.sec;
-        info.timestamp.nanosec = sample_info[0].reception_timestamp.nanosec;
+        info.timestamp <<= sample_info[0].reception_timestamp;
       }
     else
       {

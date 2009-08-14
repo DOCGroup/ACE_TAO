@@ -1,9 +1,20 @@
+Fri Aug 14 09:28:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Use global scope explicitly
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
+          Use <<= for DDS_Time
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+          Removed commented out include
+
 Fri Aug 14 02:25:41 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_cs_client.mpb:
 
-          Static linking fix. 
-        
+          Static linking fix.
+
 Thu Aug 13 18:07:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp:
