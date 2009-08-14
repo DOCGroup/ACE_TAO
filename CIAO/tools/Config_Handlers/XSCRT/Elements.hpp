@@ -269,7 +269,9 @@ namespace XSCRT
   public:
     // Trait for marshaling a FundamentalType X
     typedef X CDR_Type__;
+#if !defined (__BORLANDC__) || (__BORLANDC__ >= 0x620)
     typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
+#endif /* !__BORLANDC__ */
 
     FundamentalType ()
     {
