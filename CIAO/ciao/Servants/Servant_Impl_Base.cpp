@@ -35,7 +35,7 @@ namespace CIAO
   Servant_Impl_Base::get_component_def (void)
   {
     CIAO_TRACE("Servant_Impl_Base::get_component_def");
-    throw CORBA::NO_IMPLEMENT ();
+    throw ::CORBA::NO_IMPLEMENT ();
   }
 
   void
@@ -68,7 +68,7 @@ namespace CIAO
         CIAO::Servant_Activator_var sa =
           this->container_->ports_servant_activator ();
 
-        if (!CORBA::is_nil (sa.in ())) 
+        if (!CORBA::is_nil (sa.in ()))
           {
             sa->update_port_activator (facet_id.in ());
           }
@@ -94,7 +94,7 @@ namespace CIAO
         CIAO::Servant_Activator_var sa =
           this->container_->ports_servant_activator ();
 
-        if (!CORBA::is_nil (sa.in ())) 
+        if (!CORBA::is_nil (sa.in ()))
           {
             sa->update_port_activator (cons_id.in ());
           }
@@ -164,7 +164,7 @@ namespace CIAO
     return retv._retn ();
   }
 
-  CORBA::Object_ptr
+  ::CORBA::Object_ptr
   Servant_Impl_Base::provide_facet (const char *name)
   {
     CIAO_TRACE("Servant_Impl_Base::provide_facet (const char *name)");
@@ -175,7 +175,7 @@ namespace CIAO
 
     CORBA::Object_ptr retval = this->lookup_facet (name);
 
-    if (CORBA::is_nil (retval))
+    if ( ::CORBA::is_nil (retval))
       {
         throw Components::InvalidName ();
       }
@@ -381,7 +381,6 @@ namespace CIAO
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
         throw ::CORBA::BAD_PARAM ();
-        return;
       }
 
     ::Components::FacetDescription *fd = 0;
