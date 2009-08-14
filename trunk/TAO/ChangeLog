@@ -1,3 +1,19 @@
+Fri Aug 14 13:30:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/AMI/client.cpp
+        * docs/tutorials/Quoter/On_Demand_Activation/client.cpp
+        * docs/tutorials/Quoter/Simple/Client/client.cpp
+        * docs/tutorials/Quoter/Simple/Impl-Repo/client.cpp
+        * docs/tutorials/Quoter/Simple/Persistent/client.cpp
+        * examples/Buffered_AMI/client.cpp
+        * examples/Buffered_Oneways/client.cpp
+        * performance-tests/Protocols/distributor.cpp
+        * performance-tests/Protocols/sender.cpp
+          Removed not needed unicode conversions
+
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+          Added missing ACE_TEXT
+
 Fri Aug 14 12:43:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/tao_vc8warnings.mpb:
