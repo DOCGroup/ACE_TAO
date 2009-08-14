@@ -190,12 +190,12 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     TSS_Adapter.cpp
 
     // Dev_Poll_Reactor isn't available on Windows.
-    conditional(automake,make,gnuace) {
+    conditional(!prop:windows) {
       Dev_Poll_Reactor.cpp
     }
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
-    conditional(vc6,vc71,vc8,vc9,vc10,nmake,bmake) {
+    conditional(prop:windows) {
       NT_Service.cpp // Required by ace_for_tao sponsors
       Semaphore.cpp
       Process_Mutex.cpp

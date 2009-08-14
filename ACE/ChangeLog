@@ -1,3 +1,8 @@
+Fri Aug 14 12:54:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Use prop:windows
+
 Fri Aug 14 12:44:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc_warnings.mpb:
