@@ -1,3 +1,8 @@
+Fri Aug 14 12:44:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc_warnings.mpb:
+          Use DisableSpecificWarnings
+
 Thu Aug 13 20:40:16 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-g++-common.h:
