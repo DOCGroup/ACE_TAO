@@ -217,7 +217,7 @@ TAO_ArrayDef_i::destroy_element_type (
 
   u_int kind = 0;
   this->repo_->config ()->get_integer_value (element_key,
-                                             "def_kind",
+                                             ACE_TEXT("def_kind"),
                                              kind);
 
   CORBA::DefinitionKind def_kind =

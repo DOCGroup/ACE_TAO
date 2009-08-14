@@ -255,7 +255,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (base.in ());
 
       // Get an object reference from the argument string.
-      base = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
+      base = orb->string_to_object (IOR);
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
