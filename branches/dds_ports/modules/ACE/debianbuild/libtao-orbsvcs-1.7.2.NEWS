@@ -1,0 +1,6 @@
+ace (5.4.7-11) unstable; urgency=low
+
+  The libtao-orbsvcs1.4.7c2a package was split into smaller packages.
+  Please install the tao-* packages that suit your needs.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 23 Sep 2006 09:47:01 +0200
