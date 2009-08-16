@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ccm_stub, ciao_componentserver_stub, ciao_lib {
-   after += CIAO_Basic_Configurator
-   libs += CIAO_Basic_Configurator
-}

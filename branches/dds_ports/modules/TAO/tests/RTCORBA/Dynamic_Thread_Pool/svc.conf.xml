@@ -1,5 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <static RT_ORB_Loader "-RTORBDynamicThreadIdleTimeout 100000">
-</ACE_Svc_Conf>
