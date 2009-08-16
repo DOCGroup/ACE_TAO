@@ -1,0 +1,64 @@
+// $Id$
+
+Event Notification Service
+
+
+File: DevGuideExamples/NotifyService/Filtering/README
+
+
+This example extends the NotifyService/Messenger example by
+demonstrating how filtering can be incorporated into the utilization 
+of the Notification channel.  Supplier-side, and consumer-side
+filtering can be implemented, but only consumer_side filtering is 
+demonstrated in this example.
+
+Filters are configured to guarantee that only certain events are 
+passed to the consumer. The criteria is specified by imposing constraints 
+on the appropriate fields of a structured event.
+
+
+The Client code is stored in:
+
+DevGuideExamples/NotifyService/Filtering/MessengerClient.cpp
+
+The Server code is stored in:
+
+DevGuideExamples/NotifyService/Filtering/MessengerServer.cpp
+
+The Consumer code is stored in:
+
+DevGuideExamples/NotifyService/Filtering/MessengerConsumer.cpp
+
+
+How to Run
+----------
+
+To start the Naming Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+
+To start the Notification Service:
+---------------------------------
+$TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -ORBInitRef NameService=file://ns.ior&
+
+To start the server/supplier
+----------------------------
+./MessengerServer -ORBInitRef NameService=file://ns.ior
+
+To start the consumer
+---------------------
+./MessengerConsumer -ORBInitRef NameService=file://ns.ior
+
+To start the client
+-------------------
+./MessengerClient -ORBInitRef NameService=file://ns.ior
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl

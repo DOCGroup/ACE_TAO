@@ -1,0 +1,1932 @@
+Tue Jan 23 17:06:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Don't run examples that require threads if the ST configuration is
+          supplied.
+
+Tue Jan 23 17:00:34 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH/MessengerClient.cpp:
+        * AMH/MessengerServer.cpp:
+        * AMH_AMI/client.cpp:
+        * AMH_AMI/inner_cb.cpp:
+        * AMH_AMI/inner_server.cpp:
+        * AMH_AMI/middle_server.cpp:
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/server.cpp:
+        * CIAO/Messenger/Administrator_Client.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * GettingStarted/MessengerClient.cpp:
+        * GettingStarted/MessengerServer.cpp:
+        * ImplRepo/Basic/MessengerClient.cpp:
+        * ImplRepo/Basic/MessengerServer.cpp:
+        * ImplRepo/IORTable/MessengerClient.cpp:
+        * ImplRepo/IORTable/MessengerServer.cpp:
+        * ImplRepo/MessengerClient.cpp:
+        * ImplRepo/MessengerServer.cpp:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * LocalObjects/Messenger/MessengerServer.cpp:
+        * LocalObjects/ServantLocator/MessengerClient.cpp:
+        * LocalObjects/ServantLocator/MessengerServer.cpp:
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/MessengerServer.cpp:
+        * Messaging/RelativeRoundtripTimeout/MessengerClient.cpp:
+        * Messaging/RelativeRoundtripTimeout/MessengerServer.cpp:
+        * Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * Multithreading/Reactive/MessengerClient.cpp:
+        * Multithreading/Reactive/MessengerServer.cpp:
+        * Multithreading/ThreadPerConnection/MessengerClient.cpp:
+        * Multithreading/ThreadPerConnection/MessengerServer.cpp:
+        * Multithreading/ThreadPool/MessengerClient.cpp:
+        * Multithreading/ThreadPool/MessengerServer.cpp:
+        * NamingService/Messenger/MessengerClient.cpp:
+        * NamingService/Messenger/MessengerServer.cpp:
+        * NamingService/Naming_Client/MessengerClient.cpp:
+        * NamingService/Naming_Client/MessengerServer.cpp:
+        * NamingService/Naming_Context_Ext/MessengerClient.cpp:
+        * NamingService/Naming_Context_Ext/MessengerServer.cpp:
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NamingService/corbaloc_Messenger/MessengerClient.cpp:
+        * NamingService/corbaloc_Messenger/MessengerServer.cpp:
+        * NamingService/corbaname_Messenger/MessengerClient.cpp:
+        * NamingService/corbaname_Messenger/MessengerServer.cpp:
+        * NotifyService/EventSequence/MessengerClient.cpp:
+        * NotifyService/EventSequence/MessengerConsumer.cpp:
+        * NotifyService/EventSequence/MessengerServer.cpp:
+        * NotifyService/Filtering/MessengerClient.cpp:
+        * NotifyService/Filtering/MessengerConsumer.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/Filtering/Messenger_i.cpp:
+        * NotifyService/Messenger/MessengerClient.cpp:
+        * NotifyService/Messenger/MessengerConsumer.cpp:
+        * NotifyService/Messenger/MessengerServer.cpp:
+        * NotifyService/OfferSubscriptions/MessengerClient.cpp:
+        * NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * NotifyService/OfferSubscriptions/MessengerServer.cpp:
+        * NotifyService/QoSProperties/MessengerClient.cpp:
+        * NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * NotifyService/QoSProperties/MessengerServer.cpp:
+        * NotifyService/RTNotify/MessengerClient.cpp:
+        * NotifyService/RTNotify/MessengerConsumer.cpp:
+        * NotifyService/RTNotify/MessengerServer.cpp:
+        * NotifyService/SupplierSideNC/MessengerClient.cpp:
+        * NotifyService/SupplierSideNC/MessengerConsumer.cpp:
+        * NotifyService/SupplierSideNC/MessengerServer.cpp:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+        * PortableInterceptors/Auth/ClientInitializer.cpp:
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/Auth/MessengerServer.cpp:
+        * PortableInterceptors/IOR/MessengerClient.cpp:
+        * PortableInterceptors/IOR/MessengerServer.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * RTCORBA/MessengerClient.cpp:
+        * RTCORBA/MessengerServer.cpp:
+        * Security/ParticipatingApp/MessengerClient.cpp:
+        * Security/ParticipatingApp/MessengerServer.cpp:
+        * Security/PolicyControllingApp/MessengerClient.cpp:
+        * Security/PolicyControllingApp/MessengerServer.cpp:
+        * Security/SecurityUnawareApp/MessengerClient.cpp:
+        * Security/SecurityUnawareApp/MessengerServer.cpp:
+        * SmartProxies/LoggerServer.cpp:
+        * SmartProxies/MessengerClient.cpp:
+        * SmartProxies/MessengerServer.cpp:
+        * ValueTypes/Bank/client.cpp:
+        * ValueTypes/Messenger/MessengerClient.cpp:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Catch exceptions as const.
+
+Tue Jan 23 13:16:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.h:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.h:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/run_test.pl:
+
+          Moved the disconnect_push_supplier() call to happen before the ORB
+          is shut down.  There should be no communication related calls on
+          servants after shutdown() is called on the ORB.
+
+        * devguide_examples.lst:
+
+          Re-enabled the Security/ParticipatingApp example.  It was
+          temporarily disabled in March of 2005, but runs properly now.
+
+        * devguide_client.mpb:
+        * devguide_example.mpb:
+        * devguide_server.mpb:
+
+          Removed these files.  They were not used by any of the examples.
+
+Sat Dec 23 18:42:18 UTC 2006  Steve Totten  <totten_s@ociweb.com>
+
+        * DevGuideExamples/NamingService/Naming_Server/Naming_Server.mpc:
+          Added "requires += threads" as this server
+          specifically calls activate on an ACE_Task.  Thanks
+          to Rich Seibel <seibel_r@ociweb.com> for pointing
+          this out.
+
+Thu Aug  3 16:56:13 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+
+          Removed an unused parameter warning.
+
+Tue Aug  1 15:52:53 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+
+          The host name part was being set incorrectly.
+
+Fri Jul 14 12:11:13 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+
+          Added an implementation for get_ip_address() which was added in
+          the commit to TAO 1.4a on Wed Jul 12 21:56:32 UTC 2006.
+
+        * EventServices/RTEC_MCast_Federated/run_test.pl:
+
+          If the TAO_ROOT environment variable isn't set, create it from
+          $ACE_ROOT/TAO.
+
+Fri Apr 21 16:16:46 2006  Ciju John  <john_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+        Restored the RTEC_MCast_Federated to the nightly list.
+
+Fri Apr 21 16:00:01 2006  Ciju John  <john_c@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated :
+
+          Restored the DevGuideExample deleted in entry
+          Fri Apr  7 15:30:11 2006  Ciju John  <john_c@ociweb.com>
+
+Fri Apr  7 15:30:11 2006  Ciju John  <john_c@ociweb.com>
+
+        * devguide_examples.lst
+
+        Commented out RTEC_MCast_Federated example.
+
+        * EventServices/RTEC_MCast_Federated
+
+        Remove DevGuide example.
+
+Tue Mar  7 13:11:30 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/OMG_Basic/OMG_Basic.mpc:
+        * EventServices/OMG_SupplierSideEC/OMG_SupplierSideEC.mpc:
+        * EventServices/OMG_TypedEC/OMG_TypedEC.mpc:
+        * NamingService/Messenger/Messenger.mpc:
+        * NamingService/Naming_Client/Naming_Client.mpc:
+        * NamingService/Naming_Context_Ext/Naming_Context_Ext.mpc:
+        * NamingService/Naming_Server/Naming_Server.mpc:
+        * NamingService/corbaloc_Messenger/corbaloc_Messenger.mpc:
+        * NamingService/corbaname_Messenger/corbaname_Messenger.mpc:
+
+          Empty parent project names are no longer accepted (and ignored) by
+          MPC.
+
+Thu Feb  2 13:41:47 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Added the !NO_EXCEPTIONS to the RTCORBA example.
+
+Mon Jan 23 13:14:49 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NotifyService/RTNotify/run_test.pl:
+
+          Increased the timeout for the messenger server for slower loading
+          machines.
+
+Mon Jan 23 06:28:43 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Modified to not run the InterfaceRepo test on a minimum corba
+          build.
+
+Fri Jan 20 06:39:59 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Modified the settings for
+          PortableInterceptors/PICurrent/run_test.pl by adding !MINIMUM as
+          is done for all of the other PortableInterceptors tests.
+
+          I also added !DISABLE_INTERCEPTORS to all the Security tests as
+          both the TAO_Security library and TAO_SSLIOP library require
+          interceptors.
+
+Tue Jan 17 09:00:33 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * InterfaceRepo/IFRBrowser.cpp:
+        * LocalObjects/Messenger/Messenger_i.h:
+        * PortableInterceptors/Auth/ClientInitializer.h:
+        * PortableInterceptors/Auth/ClientInterceptor.h:
+        * PortableInterceptors/IOR/ClientInitializer.h:
+        * PortableInterceptors/IOR/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent/ClientInitializer.h:
+        * PortableInterceptors/PICurrent/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.h:
+        * PortableInterceptors/SimpleCodec/ClientInitializer.h:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.h:
+        * ValueTypes/Messenger/MessengerClient.cpp:
+
+          Modified these files to use correct reference counting which
+          cleans up a few memory leaks.
+
+Fri Nov 18 14:56:08 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * DevGuideExamples/ValueTypes/Notify/supplier.cpp:
+        * DevGuideExamples/ValueTypes/Notify/run_test.pl:
+        * DevGuideExamples/ValueTypes/Notify/consumer.cpp:
+
+          Made the test create event channel instead of getting from
+          EventChannelFactory since current Notify_Service implementation
+          does not create a default event channel when -NoNameSvc is
+          specified.
+
+Wed Nov 9 14:54:08 2005  Don Busch <busch_d@ociweb.com>
+
+        * CIAO/Messenger/Administrator_Client.cpp
+        * CIAO/Messenger/Administrator_Client_IDL2.cpp
+        * CIAO/Messenger/Administrator_Client_IDL3.cpp
+        * CIAO/Messenger/Administrator_Client_IDL2.mpc
+        * CIAO/Messenger/Administrator_Client_IDL3.mpc
+
+          Fixed both of these clients so they build properly
+          without conflicting with each other.  The
+          Administrator_Client_IDL2.mpc client is a good example
+          of how to build an IDL3-to-IDL2 client.
+
+Fri Sep 23 14:54:08 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * AMH_AMI/middle_i.h:
+        * AMH_AMI/middle_i.cpp:
+
+          Changed a couple of passing parameter names to match the dev guide.
+
+Fri Sep 23 14:24:34 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * Multithreading/ThreadPerConnection/server.conf:
+
+          Corrected a typo.
+
+Fri Sep 23 14:17:29 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * InterfaceRepo/IFRBrowser.cpp:
+
+          Changed two variable types from unsigned int to CORBA::ULong.
+
+Fri Sep 23 14:08:19 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * NamingService/Naming_Server/NamingTask.h:
+
+          Changed the NamingTask to inherit from ACE_Task<ACE_MT_SYNCH>
+          since it is a two-threaded application.
+
+Fri Sep 23 13:58:13 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * NamingService/Messenger/MessengerClient.cpp:
+        * NamingService/Messenger/MessengerServer.cpp:
+
+          Changed to use more meaningful variable name and added
+          more comments to match the dev guide.
+
+Fri Sep 23 13:35:05 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+
+          Explicitly set the disjunction group be 1 to match
+          the dev guide.
+
+        * EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+
+          Fixed a typo in a comment.
+
+Fri Sep 23 13:05:32 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * InterfaceRepo/IFRBrowser.cpp:
+
+          Added a default case to a switch statment
+          to match the dev guide.
+
+Fri Sep 23 12:42:31 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * ImplRepo/Basic/MessengerServer.cpp:
+
+          Changed the way of creating policy list to match the
+          dev guide.
+
+Fri Sep 23 10:33:04 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * AMH_AMI/inner_server.cpp:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+
+          Fixed a few instance where the script I used to convert from
+          <ace/streams.h> to <iostream> left out a newline after the
+          changed line.  This should fix compile problems on the
+          scoreboard.
+
+Fri Sep 23 02:22:38 2005  Steve Totten  <totten_s@ociweb.com>
+
+        * ValueTypes/Messenger/MessengerClient.cpp:
+        * ImplRepo/IORTable/MessengerClient.cpp:
+        * ImplRepo/Basic/MessengerClient.cpp:
+
+          Added "CORBA::" to "is_nil()".
+
+Thu Sep 22 14:54:20 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+          I think it would have been easier to list the files that didn't
+          change...
+
+        * AMH/AMH.mpc:
+        * AMH_AMI/AMH_AMI.mpc:
+        * BiDirectionalGIOP/BiDirectionalGIOP.mpc:
+        * CIAO/Messenger/Administrator.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL2.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL3.mpc:
+        * CIAO/Messenger/Messenger.mpc:
+        * CIAO/Messenger/Receiver.mpc:
+        * EventServices/OMG_Basic/OMG_Basic.mpc:
+        * EventServices/OMG_SupplierSideEC/OMG_SupplierSideEC.mpc:
+        * EventServices/OMG_TypedEC/OMG_TypedEC.mpc:
+        * EventServices/RTEC_Basic/RTEC_Basic.mpc:
+        * EventServices/RTEC_Federated/RTEC_Federated.mpc:
+        * EventServices/RTEC_Filter/RTEC_Filter.mpc:
+        * EventServices/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * GettingStarted/GettingStarted.mpc:
+        * ImplRepo/Basic/ImplRepo_Basic.mpc:
+        * ImplRepo/IORTable/ImplRepo_IORTable.mpc:
+        * ImplRepo/ImplRepo.mpc:
+        * InterfaceRepo/InterfaceRepo.mpc:
+        * LocalObjects/Messenger/Messenger.mpc:
+        * LocalObjects/ServantLocator/ServantLocator.mpc:
+        * Messaging/AMIcallback/AMIcallback.mpc:
+        * Messaging/RelativeRoundtripTimeout/RelativeRoundtripTimeout.mpc:
+        * Multithreading/GracefulShutdown/GracefulShutdown.mpc:
+        * Multithreading/Reactive/Reactive.mpc:
+        * Multithreading/ThreadPerConnection/ThreadPerConnection.mpc:
+        * Multithreading/ThreadPool/ThreadPool.mpc:
+        * NamingService/Messenger/Messenger.mpc:
+        * NamingService/Naming_Client/Naming_Client.mpc:
+        * NamingService/Naming_Context_Ext/Naming_Context_Ext.mpc:
+        * NamingService/Naming_Server/Naming_Server.mpc:
+        * NamingService/corbaloc_Messenger/corbaloc_Messenger.mpc:
+        * NamingService/corbaname_Messenger/corbaname_Messenger.mpc:
+        * NotifyService/EventSequence/EventSequence.mpc:
+        * NotifyService/Filtering/Filtering.mpc:
+        * NotifyService/Messenger/Messenger.mpc:
+        * NotifyService/OfferSubscriptions/OfferSubscriptions.mpc:
+        * NotifyService/QoSProperties/QoSProperties.mpc:
+        * NotifyService/RTNotify/RTNotify.mpc:
+        * NotifyService/SupplierSideNC/SupplierSideNC.mpc:
+        * PortableInterceptors/Auth/Auth.mpc:
+        * PortableInterceptors/IOR/IOR.mpc:
+        * PortableInterceptors/PICurrent/PICurrent.mpc:
+        * PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:
+        * PortableInterceptors/SimpleCodec/SimpleCode.mpc:
+        * RTCORBA/RTCORBA.mpc:
+        * Security/ParticipatingApp/ParticipatingApp.mpc:
+        * Security/PolicyControllingApp/PolicyControllingApp.mpc:
+        * Security/SecurityUnawareApp/SecurityUnawareApp.mpc:
+        * SmartProxies/SmartProxies.mpc:
+        * ValueTypes/Bank/bank.mpc:
+        * ValueTypes/Messenger/ValueTypes.mpc:
+        * ValueTypes/Notify/Notify.mpc:
+
+          Removed reference to the devguide_server and devguide_client
+          base projects.  Since one of the goals for our dev guide
+          examples is to provide hallmark examples of how to write code
+          and projects, and we document the mpc files in the book itself,
+          it didn't seem correct to use base projects that the user
+          herself would not end up using.
+
+          Note that if we decide, at some point, to add an example of
+          creating your own base project to the MPC chapter, we could then
+          re-introduce devguide-specific base projects.
+
+        * AMH/AMH_Messenger_i.cpp:
+        * AMH/MessengerClient.cpp:
+        * AMH/MessengerServer.cpp:
+        * AMH/Messenger_i.cpp:
+
+        * AMH_AMI/client.cpp:
+        * AMH_AMI/inner_cb.cpp:
+        * AMH_AMI/inner_server.cpp:
+        * AMH_AMI/middle_i.cpp:
+        * AMH_AMI/middle_server.cpp:
+
+        * BiDirectionalGIOP/server.cpp:
+
+        * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_Basic/EchoEventSupplierMain.cpp:
+
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventSupplierMain.cpp:
+
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Messenger_i.cpp:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+
+        * EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplierMain.cpp:
+
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+
+        * GettingStarted/MessengerClient.cpp:
+        * GettingStarted/MessengerServer.cpp:
+        * GettingStarted/Messenger_i.cpp:
+
+        * ImplRepo/Basic/MessengerClient.cpp:
+        * ImplRepo/Basic/MessengerServer.cpp:
+        * ImplRepo/Basic/Messenger_i.cpp:
+
+        * ImplRepo/IORTable/MessengerClient.cpp:
+        * ImplRepo/IORTable/MessengerServer.cpp:
+        * ImplRepo/IORTable/Messenger_i.cpp:
+
+        * ImplRepo/MessengerClient.cpp:
+        * ImplRepo/MessengerServer.cpp:
+        * ImplRepo/Messenger_i.cpp:
+
+
+        * LocalObjects/Messenger/MessengerServer.cpp:
+
+        * LocalObjects/ServantLocator/MessengerClient.cpp:
+        * LocalObjects/ServantLocator/MessengerServer.cpp:
+        * LocalObjects/ServantLocator/Messenger_i.cpp:
+
+        * Messaging/AMIcallback/Messenger.idl:
+        * Messaging/AMIcallback/MessengerHandler.h:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/MessengerServer.cpp:
+        * Messaging/AMIcallback/Messenger_i.h:
+        * Messaging/AMIcallback/Messenger_i.cpp:
+
+        * Messaging/RelativeRoundtripTimeout/MessengerClient.cpp:
+        * Messaging/RelativeRoundtripTimeout/MessengerServer.cpp:
+
+        * Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * Multithreading/GracefulShutdown/Messenger_i.cpp:
+
+        * Multithreading/Reactive/MessengerClient.cpp:
+        * Multithreading/Reactive/MessengerServer.cpp:
+        * Multithreading/Reactive/Messenger_i.cpp:
+
+        * Multithreading/ThreadPerConnection/MessengerClient.cpp:
+        * Multithreading/ThreadPerConnection/MessengerServer.cpp:
+        * Multithreading/ThreadPerConnection/Messenger_i.cpp:
+
+        * Multithreading/ThreadPool/MessengerClient.cpp:
+        * Multithreading/ThreadPool/MessengerServer.cpp:
+        * Multithreading/ThreadPool/Messenger_i.cpp:
+
+        * NamingService/Messenger/MessengerClient.cpp:
+        * NamingService/Messenger/MessengerServer.cpp:
+        * NamingService/Messenger/Messenger_i.cpp:
+
+        * NamingService/Naming_Client/MessengerClient.cpp:
+        * NamingService/Naming_Client/MessengerServer.cpp:
+        * NamingService/Naming_Client/Messenger_i.cpp:
+
+        * NamingService/Naming_Context_Ext/MessengerClient.cpp:
+        * NamingService/Naming_Context_Ext/MessengerServer.cpp:
+        * NamingService/Naming_Context_Ext/Messenger_i.cpp:
+
+        * NamingService/Naming_Server/Messenger_i.cpp:
+
+        * NamingService/corbaloc_Messenger/MessengerClient.cpp:
+        * NamingService/corbaloc_Messenger/MessengerServer.cpp:
+        * NamingService/corbaloc_Messenger/Messenger_i.cpp:
+
+        * NamingService/corbaname_Messenger/MessengerClient.cpp:
+        * NamingService/corbaname_Messenger/MessengerServer.cpp:
+        * NamingService/corbaname_Messenger/Messenger_i.cpp:
+
+        * NotifyService/EventSequence/MessengerClient.cpp:
+        * NotifyService/EventSequence/MessengerServer.cpp:
+
+        * NotifyService/Filtering/MessengerClient.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+
+        * NotifyService/Messenger/MessengerClient.cpp:
+        * NotifyService/Messenger/MessengerServer.cpp:
+
+        * NotifyService/OfferSubscriptions/MessengerClient.cpp:
+        * NotifyService/OfferSubscriptions/MessengerServer.cpp:
+
+        * NotifyService/QoSProperties/MessengerClient.cpp:
+        * NotifyService/QoSProperties/MessengerServer.cpp:
+
+        * NotifyService/RTNotify/MessengerClient.cpp:
+        * NotifyService/RTNotify/MessengerServer.cpp:
+
+        * NotifyService/SupplierSideNC/MessengerClient.cpp:
+        * NotifyService/SupplierSideNC/MessengerServer.cpp:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/Auth/MessengerServer.cpp:
+
+        * PortableInterceptors/IOR/MessengerClient.cpp:
+        * PortableInterceptors/IOR/MessengerServer.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/IOR/ServerIORInterceptor.cpp:
+
+        * PortableInterceptors/PICurrent/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent/run_test.pl:
+
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+
+        * PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+
+        * RTCORBA/MessengerClient.cpp:
+        * RTCORBA/MessengerServer.cpp:
+        * RTCORBA/Messenger_i.cpp:
+
+        * Security/ParticipatingApp/MessengerServer.cpp:
+        * Security/ParticipatingApp/Messenger_i.cpp:
+
+        * Security/PolicyControllingApp/MessengerClient.cpp:
+        * Security/PolicyControllingApp/MessengerServer.cpp:
+        * Security/PolicyControllingApp/Messenger_i.cpp:
+
+        * Security/SecurityUnawareApp/MessengerClient.cpp:
+        * Security/SecurityUnawareApp/MessengerServer.cpp:
+        * Security/SecurityUnawareApp/Messenger_i.cpp:
+
+        * SmartProxies/LoggerServer.cpp:
+        * SmartProxies/MessengerClient.cpp:
+        * SmartProxies/MessengerServer.cpp:
+        * SmartProxies/Messenger_i.cpp:
+
+        * ValueTypes/Bank/client.cpp:
+        * ValueTypes/Bank/server.cpp:
+
+        * ValueTypes/Messenger/Message_i.cpp:
+        * ValueTypes/Messenger/MessengerClient.cpp:
+        * ValueTypes/Messenger/MessengerServer.cpp:
+        * ValueTypes/Messenger/Messenger_i.h:
+        * ValueTypes/Messenger/Messenger_i.cpp:
+
+        * ValueTypes/Notify/Event_i.h:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          General synchronization of actual source code with code
+          published in the book.  Sometimes the book's expresion of
+          the idea won, while sometimes others won.  In places where
+          the code remains different, it's because the differences
+          didn't lend substantially to the educational value of the
+          example in the book, but lent significantly to the efficacy
+          of the actual code.
+
+          Now that the world seems to have caught up to standards, I
+          replaced ACE_ASSERT() usage with throwing exceptions defined
+          the C++ standard, and changed usage of ACE's streams to use
+          the actual standard streams.
+
+          Removed "using namespace..." shorthand syntax, as this also
+          conflicts with the idea that the code should be consistent
+          between the book and the actual code.
+
+Wed Sep 14 08:46:46 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Missing ':' between test and config options.
+
+Tue Sep 13 10:31:23 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Prevent the tests from running for exceptions=0 builds.
+
+Wed Aug 31 17:12:59 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * Security/ParticipatingApp/MessengerServer.cpp:
+        * Security/ParticipatingApp/Messenger_i.h:
+        * Security/ParticipatingApp/Messenger_i.cpp:
+
+          Removed references to now-obsolete SecurityLevel1 and
+          SecurityLevel2 "Current" objects.
+
+        * Security/ParticipatingApp/ParticipatingApp.mpc:
+        * Security/PolicyControllingApp/PolicyControllingApp.mpc:
+
+          Updated to use the ssliop base project.
+
+Wed Aug 31 12:03:40 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * BiDirectionalGIOP/bidir_giop_pch.cpp:
+
+          Added a pch cpp file since vc8 requires it in order to use
+          precompiled headers.
+
+Wed Aug 31 11:30:49 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * SmartProxies/SmartProxies.mpc:
+
+          One of the projects was incorrectly compiling IDL, which caused
+          a problem on nmake builds. Other platforms worked due to the
+          random order in which projects are built.
+
+Wed Aug 24 16:46:13 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * CIAO/Messenger/Administrator_Client_IDL3.mpc:
+
+          Changed the project to derive from ciao_client. This simplifies the mpc, and
+        prevents the project from being built when ciao is disabled.
+
+Wed Aug 24 12:52:02 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * CIAO/Messenger/descriptors/run_test.pl:
+
+          Delete one redundant line for creating CIAO_ROOT variable.
+
+Wed Aug 24 12:22:56 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * CIAO/Messenger/Administrator_Client.cpp:
+        * CIAO/Messenger/Administrator_Client_IDL2.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL3.mpc:
+
+          This is to test the tao_idl3_to_idl2 compiler. Don Busch provided
+          the three files. I made some changes to Administrator_Client_IDL2.mpc
+          to let it work within CIAO.
+
+        * CIAO/Messenger/Administrator_exec_i.cpp:
+
+          Added an EXIT option to the interactive user interface.
+
+        * CIAO/Messenger/descriptors/ApplicationNodeMap.dat:
+
+          Changed port number. There was a confliction of use of port number
+          10000 in my system. Now I changed it to 11000 (22000,33000,44000).
+
+        * CIAO/Messenger/descriptors/admin.dat:
+
+          This file contains the input data for I/O redirection.
+
+        * CIAO/Messenger/descriptors/run_test.pl:
+
+          Add this perl script to automatically test this example.
+
+          For more information, please refer to [RT 5889].
+
+Wed Aug 17 14:18:54 2005  Steve Totten  <totten_s@ociweb.com>
+
+        * readme.txt:
+          Added instructions for generating solution/project files for vc71.
+
+Tue Aug  2 07:48:22 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ValueTypes/Bank/bank.mpc:
+        * ValueTypes/Bank/server.cpp:
+
+          Fixed build errors due to incorrect 'after' usage and missing
+          throw specs.
+
+Mon Aug  1 16:40:04 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ValueTypes/Bank/README:
+        * ValueTypes/Bank/_pch.h:
+        * ValueTypes/Bank/_pch.cpp:
+        * ValueTypes/Bank/bank.idl:
+        * ValueTypes/Bank/bank.mpc:
+        * ValueTypes/Bank/client.cpp:
+        * ValueTypes/Bank/run_test.pl:
+        * ValueTypes/Bank/server.cpp:
+
+          A new example that's simpler than the Messenger example
+        in some ways.
+
+        * ValueTypes/Messenger/Message_i.h:
+        * ValueTypes/Messenger/Message_i.cpp:
+        * ValueTypes/Messenger/Messenger.idl:
+        * ValueTypes/Messenger/MessengerClient.cpp:
+        * ValueTypes/Messenger/MessengerServer.cpp:
+
+          Removed use of factory, as this functionality is now
+        demonstrated with the Bank example.
+
+        * ValueTypes/Notify/Event.idl:
+        * ValueTypes/Notify/Event_i.h:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Removed some exception macros.
+          Use ACE_DEBUG instead of cout for better multithreading/multiprocess
+        behavior.
+
+        * devguide_examples.lst:
+
+          Added the Bank example.
+
+Mon Aug  1 15:45:11 2005  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Enable the EventServices/OMG_TypedEC/run_test.pl
+
+Wed Jul 27 12:50:45 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Add the new example to the list.
+
+Wed Jul 27 12:38:01 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ValueTypes/Notify/Event.idl:
+        * ValueTypes/Notify/Event_i.h:
+        * ValueTypes/Notify/Notify.mpc:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/notify.conf:
+        * ValueTypes/Notify/readme.txt:
+        * ValueTypes/Notify/run_test.pl:
+        * ValueTypes/Notify/supplier.cpp:
+
+          A new example, showing how to use valuetypes with the
+        notification service.
+
+Mon Jul 25 09:21:31 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH/AMH_Messenger_i.cpp:
+
+          Use the inout() method on the String_var.
+
+Mon Jul 18 12:01:17 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * SmartProxies/MessengerClient.cpp:
+
+          Added a catch for ... since a constructor can throw an integer
+          exception.
+
+        * SmartProxies/SmartProxies.mpc:
+
+          Updated to remove smart_proxies from the LoggerServer project and
+          ensure that the client is built after the server and the logger.
+
+Wed Jul  6 10:40:42 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/OMG_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_TypedEC/Consumer_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * ImplRepo/IORTable/MessengerServer.cpp:
+        * ImplRepo/MessengerServer.cpp:
+        * LocalObjects/ServantLocator/MessengerLocator_i.h:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.cpp:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.cpp:
+        * NotifyService/Filtering/StructuredEventConsumer_i.cpp:
+        * NotifyService/Filtering/StructuredEventSupplier_i.cpp:
+        * NotifyService/Messenger/StructuredEventConsumer_i.cpp:
+        * NotifyService/Messenger/StructuredEventSupplier_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.cpp:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.cpp:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.cpp:
+
+          Modifications to go along with the skeleton refactoring merge.
+
+Tue May 31 15:19:38 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * Security/ParticipatingApp/MessengerClient.cpp:
+
+          Added line continuation characters into the strings in the
+          sample service configuration files.  Without them, some
+          preprocessors were getting confused.
+
+        * Security/ParticipatingApp/run_test.pl:
+
+          Increased the time to wait for the IOR file to show up.
+
+Tue May 10 10:15:40 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ImplRepo/IORTable/MessengerServer.cpp:
+
+          Missing .in() on String_vars causes warnings on some compilers.
+
+Fri May  6 09:21:37 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * CIAO/CIAO.mwc:
+        * CIAO/Messenger/Messenger.mwc:
+
+          Removed unwanted vcproj, sln, and mwc files.
+          Added a new ciao feature to allow disabling all CIAO mpc generation.
+
+Fri Apr 29 10:20:17 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+
+          Add a separate ORB thread to this test to avoid deadlocks between
+          the two supplier processes.
+
+Thu Apr 28 10:30:17 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+
+          Remove separate ORB thread as it is no longer needed.
+
+        * EventServices/RTEC_MCast_Federated/run_test.pl:
+
+          Modify test to remove redirection as it was causing the EchoEventSuppliers
+          to not be killed.  Also changed the ports to random ports to avoid collisions.
+
+Wed Apr 27 15:20:58 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+
+          Clean up this file for the new devguide.
+
+Mon Apr 25 15:24:51 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/README:
+        * EventServices/RTEC_MCast_Federated/run_test.pl:
+
+          Improve the timing of this test.  It was previously based on sleep()
+          calls in the perl script and supplier code.
+
+Mon Apr 25 14:04:35 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/RTEC_Federated/run_test.pl:
+        * EventServices/RTEC_Federated/supplier.conf:
+
+          Try to alleviate some deadlocking issues with IIOP Gateway on
+          some platforms.
+
+Fri Apr 22 11:56:42 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+
+          Another compiler warning removed.
+
+Fri Apr 22 11:51:20 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/OMG_TypedEC/Consumer_i.cpp:
+
+          Get rid of unused parameter warning.
+
+Fri Apr 22 09:55:58 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Federated/README:
+        * EventServices/RTEC_Federated/run_test.pl:
+
+          Fix this example so that it actually federates event channels.
+
+Thu Apr 21 21:28:42 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+
+        * EventServices/OMG_Basic/ExceptionUtil.h:
+        * EventServices/OMG_SupplierSideEC/ExceptionUtil.h:
+        * EventServices/RTEC_Basic/ExceptionUtil.h:
+        * EventServices/RTEC_Federated/ExceptionUtil.h:
+        * EventServices/RTEC_Filter/ExceptionUtil.h:
+        * EventServices/RTEC_MCast_Federated/ExceptionUtil.h:
+
+          Removed these unused files.
+
+Thu Apr 21 21:17:48 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Consumer_i.h:
+        * EventServices/OMG_TypedEC/Consumer_i.cpp:
+        * EventServices/OMG_TypedEC/Messenger.idl:
+        * EventServices/OMG_TypedEC/Messenger_i.h:
+        * EventServices/OMG_TypedEC/Messenger_i.cpp:
+        * EventServices/OMG_TypedEC/README:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+
+          Cosmetic updates for DevGuide.
+
+Thu Apr 21 15:37:43 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/OMG_TypedEC/README:
+
+          Convert commands to use *IOR environment variables.
+
+Thu Apr 21 14:56:15 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/OMG_TypedEC/README:
+
+          Add a README for this example.
+
+Thu Apr 21 13:43:58 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Consumer_i.h:
+        * EventServices/OMG_TypedEC/Consumer_i.cpp:
+        * EventServices/OMG_TypedEC/Messenger.idl:
+        * EventServices/OMG_TypedEC/Messenger_i.h:
+        * EventServices/OMG_TypedEC/Messenger_i.cpp:
+        * EventServices/OMG_TypedEC/OMG_TypedEC.mpc:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+        * EventServices/OMG_TypedEC/run_test.pl:
+
+          Add a new example using typed event channels.
+
+Wed Apr 20 15:22:14 2005  Don Busch  <busch_d@ociweb.com>
+
+        * Messaging/AMIcallback/MessengerServer.cpp:
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+
+          Added std:: prefix to cout, cerr, endl.
+          Changed message.inout() to message.in() in client.
+          Changed exception handlling to use try/catch and orb->shutdown() in
+          MessengerHandler to correct error.
+
+        * Messaging/RelativeRoundtripTimeout/MessengerClient.cpp:
+
+          Changed SET/ADD_OVERRIDE usage to match DevGuide
+
+Fri Apr 15 12:30:02 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+
+          Rename naming_client variables for readability.
+
+Tue Apr  5 06:48:00 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ImplRepo/Basic/Messenger_i.h:
+        * ImplRepo/Basic/Messenger_i.cpp:
+        * ImplRepo/IORTable/Messenger_i.h:
+        * ImplRepo/IORTable/Messenger_i.cpp:
+
+          Added throw specs to match the base class.
+
+Mon Apr  4 15:54:56 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ImplRepo/Activator/run_test.pl:
+        * ImplRepo/Basic/ImplRepo_Basic.mpc:
+        * ImplRepo/Basic/Messenger.idl:
+        * ImplRepo/Basic/MessengerClient.cpp:
+        * ImplRepo/Basic/MessengerServer.cpp:
+        * ImplRepo/Basic/Messenger_i.h:
+        * ImplRepo/Basic/Messenger_i.cpp:
+        * ImplRepo/Basic/run_test.pl:
+        * ImplRepo/IORTable/ImplRepo_IORTable.mpc:
+        * ImplRepo/IORTable/Messenger.idl:
+        * ImplRepo/IORTable/MessengerClient.cpp:
+        * ImplRepo/IORTable/MessengerServer.cpp:
+        * ImplRepo/IORTable/Messenger_i.h:
+        * ImplRepo/IORTable/Messenger_i.cpp:
+        * ImplRepo/IORTable/run_test.pl:
+
+          Add samples corresponding to the new devguide ImR chapter.
+
+Fri Apr  1 08:55:43 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Added a !NO_IFR configuration to the IFR related test.
+          The IFR_Service will not run on MacOS X unless TAO is built
+          statically due to gcc's in ability to deal with template
+          instantiated singletons correctly.
+
+Thu Mar 31 13:18:21 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * NotifyService/RTNotify/Messenger.idl:
+        * NotifyService/RTNotify/MessengerClient.cpp:
+        * NotifyService/RTNotify/MessengerConsumer.cpp:
+        * NotifyService/RTNotify/MessengerServer.cpp:
+        * NotifyService/RTNotify/Messenger_i.h:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * NotifyService/RTNotify/Priorities.h:
+        * NotifyService/RTNotify/README:
+        * NotifyService/RTNotify/RTNotify.mpc:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.h:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.cpp:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.h:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.cpp:
+        * NotifyService/RTNotify/notify.conf:
+        * NotifyService/RTNotify/nsclient.conf:
+        * NotifyService/RTNotify/run_test.pl:
+        * devguide_examples.lst:
+
+          Add a a new DevGuide example for RT Notification.
+
+Wed Mar 30 07:59:23 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ValueTypes/Messenger/run_test.pl:
+
+          Increase the timeout for slower machines.
+
+Wed Mar 30 11:04:12 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ImplRepo/MessengerServer.cpp:
+
+          Update all examples to use _tao_poa_downcast() instead of
+        RTTI, because I think it's slightly easier to read. Note: The files
+        still have to include tao/PortableServer/POA.h.
+
+Tue Mar 29 17:07:14 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ImplRepo/MessengerServer.cpp:
+        * ImplRepo/run_test.pl:
+
+          Many fixes and some minor new features in the ImR.
+          Eliminates most of the known bugs and design flaws.
+          PER_CLIENT activation now works correctly.
+          Added a new version of id_to_reference() to TAO_POA that takes
+          an additional parameter to allow specifying direct or indirect
+          binding.
+
+Tue Mar 29 10:28:24 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+
+          Clone the endpoint before passing it to the
+          TAO_ECG_UDP_{Sender,Receiver}::init() method.
+
+Mon Mar 28 09:18:54 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/Administrator.mpc:
+        * CIAO/Messenger/Messenger.mpc:
+        * CIAO/Messenger/Receiver.mpc:
+
+          Added the *_svnt libraries to the *_exec projects.
+
+Mon Mar 28 08:44:59 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+
+          The static initialization trick doesn't work with static builds
+          either.
+
+Mon Mar 28 08:22:09 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Temporarily disable the ParticipatingApp Security example until it
+          is re-written.
+
+Mon Mar 28 07:49:32 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          The RTCORBA example does not run in static builds.
+
+Mon Mar 28 07:46:13 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+
+          Added an include of the CosNotification library initializer header
+          to work around static construction issues on SunOS and MacOS X.
+
+        * NotifyService/SupplierSideNC/run_test.pl:
+
+          Removed a Kill() call on a non-existent Process Object.
+
+Mon Mar 28 07:29:00 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NamingService/Naming_Context_Ext/run_test.pl:
+        * NamingService/corbaname_Messenger/run_test.pl:
+
+          Wait for the ns ior file to avoid timing issues.
+
+        * Security/ParticipatingApp/run_test.pl:
+
+          Use the right Process object when killing the server.
+
+Fri Mar 25 08:45:55 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ImplRepo/run_test.pl:
+
+          Increased the timeout for the implrepo.ior.
+
+Fri Mar 25 08:16:15 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Added a list that can be used with auto_run_tests.pl.
+          We can maintain this separately from the other test lists and
+          bring it forward to new releases of TAO.
+
+Fri Mar 25 06:15:27 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * Security/ParticipatingApp/Messenger_i.cpp:
+
+          Added #include of ace/OS_NS_string.h to get ACE_OS::memcpy.
+
+Fri Mar 18 10:43:38 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * NotifyService/EventSequence/run_test.pl:
+        * NotifyService/Filtering/MessengerConsumer.cpp:
+        * NotifyService/Filtering/run_test.pl:
+        * NotifyService/Messenger/MessengerServer.cpp:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/Messenger/StructuredEventConsumer_i.h:
+        * NotifyService/Messenger/StructuredEventSupplier_i.h:
+        * NotifyService/Messenger/run_test.pl:
+        * NotifyService/OfferSubscriptions/MessengerServer.cpp:
+        * NotifyService/OfferSubscriptions/run_test.pl:
+        * NotifyService/QoSProperties/run_test.pl:
+        * NotifyService/SupplierSideNC/MessengerConsumer.cpp:
+        * NotifyService/SupplierSideNC/MessengerServer.cpp:
+        * NotifyService/SupplierSideNC/run_test.pl:
+
+          Clean up the examples including:
+            - Fix problems with the run_test.pl scripts
+            - Enforce some consistency across these examples
+            - Make some changes to more directly reflect the code in the DevGuide
+            - Fix some spelling errors
+            - Remove some unneeded code
+
+Thu Mar 17 09:02:18 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/Messenger_exec_i.cpp:
+
+          Reordered the initialization list to avoid build warnings from
+          gcc.
+
+Mon Mar  7 07:26:00 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * Messaging/AMIcallback/AMIcallback.mpc:
+
+          Work around the internal compiler error on Linux Itanium with g++
+          2.96.
+
+Fri Mar  4 06:22:14 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/Receiver_exec_i.cpp:
+
+          Added a missing n to make a \n.
+
+Thu Mar  3 06:34:44 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/History_exec_i.h:
+
+          Added a space between < and :: to avoid build problems with gcc
+          3.4.2, again.
+
+Tue Mar  1 06:19:43 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/Receiver.mpc:
+
+          Made this project require 'cidl'.
+
+Mon Feb 28 11:05:34 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/History_exec.h:
+
+          Added a space between < and :: to avoid build problems with gcc
+          3.4.2.
+
+Mon Feb 28 08:35:04 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/Administrator.mpc:
+        * CIAO/Messenger/Messenger.mpc:
+        * CIAO/Messenger/Receiver.mpc:
+
+          Made these projects require 'cidl'.
+
+Mon Feb 28 06:21:01 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/Messenger.mwc:
+
+          Removed this file.  It is not a valid mwc file and does not
+          provide the necessary include paths even if it were valid.
+
+Fri Feb 18 11:51:44 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH_AMI/AMH_AMI.mpc:
+
+          Added a 'verbatim' section to set the VDIR for the gnuace project
+          type.  This will alleviate link errors due to implicit template
+          instantiation deficiencies.
+
+Tue Feb 15 07:01:41 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH_AMI/AMH_AMI.mpc:
+
+          Corrected build ordering and added an empty IDL_Files section for
+          the client.
+
+        * AMH_AMI/middle_i.cpp:
+
+          Removed build warnings from gcc.
+
+Tue Feb 15 06:22:53 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH_AMI/AMH_AMI.mpc:
+        * AMH_AMI/amh_ami_pch.h:
+        * AMH_AMI/inner_cb.cpp:
+
+          Fixed precompiled header compile problems.
+
+Mon Feb 14 16:47:12 2005  Steve Totten  <totten_s@ociweb.com>
+
+        * AMH_AMI/AMH_AMI.mpc:
+        * NamingService/corbaname_Messenger/corbaname_Messenger.mpc:
+          Fixed clash between duplicate case-insensitive project names
+          "client" in these two project files because they appear in
+          the same workspace (DevGuideExamples.mwc).  Used the
+          wildcard "*" in all the project names to make sure they are
+          unique.
+
+Mon Feb 14 13:21:51 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * AMH_AMI/*:
+
+          A new example for the AMH chapter of the devguide. This is a
+          duplicate log entry for the TAO/OCIChangeLog tag:
+          Mon Feb 14 11:25:15 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+
+Mon Feb 14 11:25:15 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * AMH_AMI/*:
+
+          This is a new example used to reinforce concepts in the new AMH
+          chapter of the dev guide.
+
+Fri Feb  4 08:47:10 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/Messenger_i.cpp:
+
+          Changed OS_NS_time.h to OS_NS_sys_time.h.
+
+Thu Feb  3 07:42:31 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * LocalObjects/ServantLocator/MessengerLocator_i.cpp:
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/Messenger_i.cpp:
+        * Messaging/RelativeRoundtripTimeout/Messenger_i.cpp:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+
+          Added various ACE includes for non-debug windows builds.
+
+Wed Feb  2 13:35:36 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH/amh_pch.h:
+        * BiDirectionalGIOP/bidir_giop_pch.h:
+        * GettingStarted/started_pch.h:
+        * ValueTypes/Messenger/_pch.h:
+
+          Removed tao/Invocation.h from these precompiled header files.
+
+Fri Jan 21 07:00:42 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH/AMH.mpc:
+
+          The client project doesn't really require AMH, but since the
+          server and client are in the same directory and share the
+          generated idl code it has to inherit from amh.
+
+Wed Jan 19 15:46:42 MST 2005  Trevor Fields  <fields_t@ociweb.com>
+
+        * BiDirectionalGIOP/callback_i.cpp:
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/simple_i.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.cpp:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * LocalObjects/Messenger/Messenger_i.cpp:
+        * LocalObjects/ServantLocator/MessengerLocator_i.cpp:
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/MessengerServer.cpp:
+        * Messaging/RelativeRoundtripTimeout/Messenger_i.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.h:
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.cpp:
+        * NotifyService/EventSequence/MessengerConsumer.cpp:
+        * NotifyService/EventSequence/Messenger_i.cpp:
+        * NotifyService/Filtering/MessengerConsumer.cpp:
+        * NotifyService/Filtering/Messenger_i.cpp:
+        * NotifyService/Filtering/StructuredEventConsumer_i.cpp:
+        * NotifyService/Messenger/MessengerConsumer.cpp:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/Messenger/StructuredEventConsumer_i.cpp:
+        * NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.cpp:
+        * NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * NotifyService/QoSProperties/MessengerServer.cpp:
+        * NotifyService/QoSProperties/Messenger_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.cpp:
+        * NotifyService/SupplierSideNC/MessengerConsumer.cpp:
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.cpp:
+        * PortableInterceptors/Auth/ClientInitializer.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/Messenger_i.cpp:
+        * PortableInterceptors/Auth/ServerInitializer.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/ClientInitializer.cpp:
+        * PortableInterceptors/IOR/ClientInterceptor.cpp:
+        * PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * SmartProxies/Logger_i.cpp:
+        * SmartProxies/Smart_Messenger_Proxy.cpp:
+          Added missing std:: prefix on the iostreams.
+
+Tue Jan 11 10:05:36 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * AMH/*:
+
+          Added new example directory for code related to new AMH chapter
+          of TAO 1.4a book.
+
+Mon Jan 10 07:51:16 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+
+          Put back the registration with the reactor which was accidentally
+          removed.
+
+        * EventServices/RTEC_MCast_Federated/run_test.pl:
+
+          Increased the timeout for the first supplier.
+
+Mon Jan 10 07:14:37 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * BiDirectionalGIOP/BiDirectionalGIOP.mpc:
+        * BiDirectionalGIOP/README:
+        * BiDirectionalGIOP/bidir_giop_pch.h:
+        * BiDirectionalGIOP/callback.idl:
+        * BiDirectionalGIOP/callback_i.h:
+        * BiDirectionalGIOP/callback_i.cpp:
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/run_test.pl:
+        * BiDirectionalGIOP/server.cpp:
+        * BiDirectionalGIOP/simple.idl:
+        * BiDirectionalGIOP/simple_i.h:
+        * BiDirectionalGIOP/simple_i.cpp:
+        * DevGuideExamples.mwc:
+        * EventServices/OMG_Basic/.cvsignore:
+        * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.h:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_Basic/ExceptionUtil.h:
+        * EventServices/OMG_Basic/OMG_Basic.mpc:
+        * EventServices/OMG_Basic/README:
+        * EventServices/OMG_Basic/run_test.pl:
+        * EventServices/OMG_SupplierSideEC/.cvsignore:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.h:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_SupplierSideEC/ExceptionUtil.h:
+        * EventServices/OMG_SupplierSideEC/OMG_SupplierSideEC.mpc:
+        * EventServices/OMG_SupplierSideEC/README:
+        * EventServices/OMG_SupplierSideEC/run_test.pl:
+        * EventServices/RTEC_Basic/.cvsignore:
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Basic/ExceptionUtil.h:
+        * EventServices/RTEC_Basic/README:
+        * EventServices/RTEC_Basic/RTEC_Basic.mpc:
+        * EventServices/RTEC_Basic/run_test.pl:
+        * EventServices/RTEC_Federated/.cvsignore:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Federated/ExceptionUtil.h:
+        * EventServices/RTEC_Federated/README:
+        * EventServices/RTEC_Federated/RTEC_Federated.mpc:
+        * EventServices/RTEC_Federated/run_test.pl:
+        * EventServices/RTEC_Federated/supplier.conf:
+        * EventServices/RTEC_Filter/.cvsignore:
+        * EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Filter/ExceptionUtil.h:
+        * EventServices/RTEC_Filter/README:
+        * EventServices/RTEC_Filter/RTEC_Filter.mpc:
+        * EventServices/RTEC_Filter/ec.conf:
+        * EventServices/RTEC_Filter/run_test.pl:
+        * EventServices/RTEC_MCast_Federated/.cvsignore:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_MCast_Federated/ExceptionUtil.h:
+        * EventServices/RTEC_MCast_Federated/README:
+        * EventServices/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * EventServices/RTEC_MCast_Federated/run_test.pl:
+        * EventServices/RTEC_MCast_Federated/supplier.conf:
+        * GettingStarted/GettingStarted.mpc:
+        * GettingStarted/Messenger.idl:
+        * GettingStarted/MessengerClient.cpp:
+        * GettingStarted/MessengerServer.cpp:
+        * GettingStarted/Messenger_i.h:
+        * GettingStarted/Messenger_i.cpp:
+        * GettingStarted/README:
+        * GettingStarted/run_test.pl:
+        * GettingStarted/started_pch.h:
+        * GettingStarted/started_pch.cpp:
+        * ImplRepo/ImplRepo.mpc:
+        * ImplRepo/Messenger.idl:
+        * ImplRepo/MessengerClient.cpp:
+        * ImplRepo/MessengerServer.cpp:
+        * ImplRepo/Messenger_i.h:
+        * ImplRepo/Messenger_i.cpp:
+        * ImplRepo/README:
+        * ImplRepo/run_test.pl:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * InterfaceRepo/InterfaceRepo.mpc:
+        * InterfaceRepo/run_test.pl:
+        * InterfaceRepo/test.idl:
+        * LocalObjects/Messenger/Messenger.idl:
+        * LocalObjects/Messenger/Messenger.mpc:
+        * LocalObjects/Messenger/MessengerServer.cpp:
+        * LocalObjects/Messenger/Messenger_i.h:
+        * LocalObjects/Messenger/Messenger_i.cpp:
+        * LocalObjects/Messenger/run_test.pl:
+        * LocalObjects/ServantLocator/Messenger.idl:
+        * LocalObjects/ServantLocator/MessengerClient.cpp:
+        * LocalObjects/ServantLocator/MessengerLocator_i.h:
+        * LocalObjects/ServantLocator/MessengerLocator_i.cpp:
+        * LocalObjects/ServantLocator/MessengerServer.cpp:
+        * LocalObjects/ServantLocator/Messenger_i.h:
+        * LocalObjects/ServantLocator/Messenger_i.cpp:
+        * LocalObjects/ServantLocator/ServantLocator.mpc:
+        * LocalObjects/ServantLocator/run_test.pl:
+        * Messaging/AMIcallback/AMIcallback.mpc:
+        * Messaging/AMIcallback/Messenger.idl:
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/MessengerHandler.h:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/MessengerServer.cpp:
+        * Messaging/AMIcallback/Messenger_i.h:
+        * Messaging/AMIcallback/Messenger_i.cpp:
+        * Messaging/AMIcallback/README:
+        * Messaging/AMIcallback/run_test.pl:
+        * Messaging/RelativeRoundtripTimeout/Messenger.idl:
+        * Messaging/RelativeRoundtripTimeout/MessengerClient.cpp:
+        * Messaging/RelativeRoundtripTimeout/MessengerServer.cpp:
+        * Messaging/RelativeRoundtripTimeout/Messenger_i.h:
+        * Messaging/RelativeRoundtripTimeout/Messenger_i.cpp:
+        * Messaging/RelativeRoundtripTimeout/README:
+        * Messaging/RelativeRoundtripTimeout/RelativeRoundtripTimeout.mpc:
+        * Messaging/RelativeRoundtripTimeout/run_test.pl:
+        * Multithreading/GracefulShutdown/GracefulShutdown.mpc:
+        * Multithreading/GracefulShutdown/Messenger.idl:
+        * Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.h:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * Multithreading/GracefulShutdown/MessengerShutdownTimer.h:
+        * Multithreading/GracefulShutdown/MessengerShutdownTimer.cpp:
+        * Multithreading/GracefulShutdown/Messenger_i.h:
+        * Multithreading/GracefulShutdown/Messenger_i.cpp:
+        * Multithreading/GracefulShutdown/README:
+        * Multithreading/GracefulShutdown/run_test.pl:
+        * Multithreading/README:
+        * Multithreading/Reactive/Messenger.idl:
+        * Multithreading/Reactive/MessengerClient.cpp:
+        * Multithreading/Reactive/MessengerServer.cpp:
+        * Multithreading/Reactive/Messenger_i.h:
+        * Multithreading/Reactive/Messenger_i.cpp:
+        * Multithreading/Reactive/README:
+        * Multithreading/Reactive/Reactive.mpc:
+        * Multithreading/Reactive/run_test.pl:
+        * Multithreading/Reactive/svc.conf:
+        * Multithreading/ThreadPerConnection/Messenger.idl:
+        * Multithreading/ThreadPerConnection/MessengerClient.cpp:
+        * Multithreading/ThreadPerConnection/MessengerServer.cpp:
+        * Multithreading/ThreadPerConnection/Messenger_i.h:
+        * Multithreading/ThreadPerConnection/Messenger_i.cpp:
+        * Multithreading/ThreadPerConnection/README:
+        * Multithreading/ThreadPerConnection/ThreadPerConnection.mpc:
+        * Multithreading/ThreadPerConnection/run_test.pl:
+        * Multithreading/ThreadPerConnection/server.conf:
+        * Multithreading/ThreadPool/Messenger.idl:
+        * Multithreading/ThreadPool/MessengerClient.cpp:
+        * Multithreading/ThreadPool/MessengerServer.cpp:
+        * Multithreading/ThreadPool/Messenger_i.h:
+        * Multithreading/ThreadPool/Messenger_i.cpp:
+        * Multithreading/ThreadPool/README:
+        * Multithreading/ThreadPool/ThreadPool.mpc:
+        * Multithreading/ThreadPool/run_test.pl:
+        * NamingService/Messenger/Messenger.idl:
+        * NamingService/Messenger/Messenger.mpc:
+        * NamingService/Messenger/MessengerClient.cpp:
+        * NamingService/Messenger/MessengerServer.cpp:
+        * NamingService/Messenger/Messenger_i.h:
+        * NamingService/Messenger/Messenger_i.cpp:
+        * NamingService/Messenger/README:
+        * NamingService/Messenger/run_test.pl:
+        * NamingService/Naming_Client/.cvsignore:
+        * NamingService/Naming_Client/Messenger.idl:
+        * NamingService/Naming_Client/MessengerClient.cpp:
+        * NamingService/Naming_Client/MessengerServer.cpp:
+        * NamingService/Naming_Client/Messenger_i.h:
+        * NamingService/Naming_Client/Messenger_i.cpp:
+        * NamingService/Naming_Client/Naming_Client.mpc:
+        * NamingService/Naming_Client/README:
+        * NamingService/Naming_Client/run_test.pl:
+        * NamingService/Naming_Context_Ext/Messenger.idl:
+        * NamingService/Naming_Context_Ext/MessengerClient.cpp:
+        * NamingService/Naming_Context_Ext/MessengerServer.cpp:
+        * NamingService/Naming_Context_Ext/Messenger_i.h:
+        * NamingService/Naming_Context_Ext/Messenger_i.cpp:
+        * NamingService/Naming_Context_Ext/Naming_Context_Ext.mpc:
+        * NamingService/Naming_Context_Ext/README:
+        * NamingService/Naming_Context_Ext/run_test.pl:
+        * NamingService/Naming_Server/Messenger.idl:
+        * NamingService/Naming_Server/MessengerTask.h:
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * NamingService/Naming_Server/Messenger_i.h:
+        * NamingService/Naming_Server/Messenger_i.cpp:
+        * NamingService/Naming_Server/NamingMessenger.cpp:
+        * NamingService/Naming_Server/NamingTask.h:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NamingService/Naming_Server/Naming_Server.mpc:
+        * NamingService/Naming_Server/README:
+        * NamingService/Naming_Server/run_test.pl:
+        * NamingService/corbaloc_Messenger/Messenger.idl:
+        * NamingService/corbaloc_Messenger/MessengerClient.cpp:
+        * NamingService/corbaloc_Messenger/MessengerServer.cpp:
+        * NamingService/corbaloc_Messenger/Messenger_i.h:
+        * NamingService/corbaloc_Messenger/Messenger_i.cpp:
+        * NamingService/corbaloc_Messenger/README:
+        * NamingService/corbaloc_Messenger/corbaloc_Messenger.mpc:
+        * NamingService/corbaloc_Messenger/run_test.pl:
+        * NamingService/corbaname_Messenger/Messenger.idl:
+        * NamingService/corbaname_Messenger/MessengerClient.cpp:
+        * NamingService/corbaname_Messenger/MessengerServer.cpp:
+        * NamingService/corbaname_Messenger/Messenger_i.h:
+        * NamingService/corbaname_Messenger/Messenger_i.cpp:
+        * NamingService/corbaname_Messenger/README:
+        * NamingService/corbaname_Messenger/corbaname_Messenger.mpc:
+        * NamingService/corbaname_Messenger/run_test.pl:
+        * NotifyService/EventSequence/EventSequence.mpc:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.h:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.cpp:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.h:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.cpp:
+        * NotifyService/EventSequence/Messenger.idl:
+        * NotifyService/EventSequence/MessengerClient.cpp:
+        * NotifyService/EventSequence/MessengerConsumer.cpp:
+        * NotifyService/EventSequence/MessengerServer.cpp:
+        * NotifyService/EventSequence/Messenger_i.h:
+        * NotifyService/EventSequence/Messenger_i.cpp:
+        * NotifyService/EventSequence/README:
+        * NotifyService/EventSequence/run_test.pl:
+        * NotifyService/Filtering/Filtering.mpc:
+        * NotifyService/Filtering/Messenger.idl:
+        * NotifyService/Filtering/MessengerClient.cpp:
+        * NotifyService/Filtering/MessengerConsumer.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/Filtering/Messenger_i.h:
+        * NotifyService/Filtering/Messenger_i.cpp:
+        * NotifyService/Filtering/README:
+        * NotifyService/Filtering/StructuredEventConsumer_i.h:
+        * NotifyService/Filtering/StructuredEventConsumer_i.cpp:
+        * NotifyService/Filtering/StructuredEventSupplier_i.h:
+        * NotifyService/Filtering/StructuredEventSupplier_i.cpp:
+        * NotifyService/Filtering/run_test.pl:
+        * NotifyService/Messenger/Messenger.idl:
+        * NotifyService/Messenger/Messenger.mpc:
+        * NotifyService/Messenger/MessengerClient.cpp:
+        * NotifyService/Messenger/MessengerConsumer.cpp:
+        * NotifyService/Messenger/MessengerServer.cpp:
+        * NotifyService/Messenger/Messenger_i.h:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/Messenger/README:
+        * NotifyService/Messenger/StructuredEventConsumer_i.h:
+        * NotifyService/Messenger/StructuredEventConsumer_i.cpp:
+        * NotifyService/Messenger/StructuredEventSupplier_i.h:
+        * NotifyService/Messenger/StructuredEventSupplier_i.cpp:
+        * NotifyService/Messenger/run_test.pl:
+        * NotifyService/OfferSubscriptions/Messenger.idl:
+        * NotifyService/OfferSubscriptions/MessengerClient.cpp:
+        * NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * NotifyService/OfferSubscriptions/MessengerServer.cpp:
+        * NotifyService/OfferSubscriptions/Messenger_i.h:
+        * NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * NotifyService/OfferSubscriptions/OfferSubscriptions.mpc:
+        * NotifyService/OfferSubscriptions/README:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.h:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.h:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.cpp:
+        * NotifyService/OfferSubscriptions/run_test.pl:
+        * NotifyService/QoSProperties/Messenger.idl:
+        * NotifyService/QoSProperties/MessengerClient.cpp:
+        * NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * NotifyService/QoSProperties/MessengerServer.cpp:
+        * NotifyService/QoSProperties/Messenger_i.h:
+        * NotifyService/QoSProperties/Messenger_i.cpp:
+        * NotifyService/QoSProperties/QoSProperties.mpc:
+        * NotifyService/QoSProperties/README:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.h:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.h:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.cpp:
+        * NotifyService/QoSProperties/run_test.pl:
+        * NotifyService/SupplierSideNC/Messenger.idl:
+        * NotifyService/SupplierSideNC/MessengerClient.cpp:
+        * NotifyService/SupplierSideNC/MessengerConsumer.cpp:
+        * NotifyService/SupplierSideNC/MessengerServer.cpp:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+        * NotifyService/SupplierSideNC/Messenger_i.h:
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+        * NotifyService/SupplierSideNC/README:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.h:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.h:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.cpp:
+        * NotifyService/SupplierSideNC/SupplierSideNC.mpc:
+        * NotifyService/SupplierSideNC/run_test.pl:
+        * PortableInterceptors/Auth/Auth.mpc:
+        * PortableInterceptors/Auth/ClientInitializer.h:
+        * PortableInterceptors/Auth/ClientInitializer.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.h:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/Messenger.idl:
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/Auth/MessengerServer.cpp:
+        * PortableInterceptors/Auth/Messenger_i.h:
+        * PortableInterceptors/Auth/Messenger_i.cpp:
+        * PortableInterceptors/Auth/README:
+        * PortableInterceptors/Auth/ServerInitializer.h:
+        * PortableInterceptors/Auth/ServerInitializer.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.h:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/Auth/run_test.pl:
+        * PortableInterceptors/IOR/ClientInitializer.h:
+        * PortableInterceptors/IOR/ClientInitializer.cpp:
+        * PortableInterceptors/IOR/ClientInterceptor.h:
+        * PortableInterceptors/IOR/ClientInterceptor.cpp:
+        * PortableInterceptors/IOR/IOR.mpc:
+        * PortableInterceptors/IOR/Messenger.idl:
+        * PortableInterceptors/IOR/MessengerClient.cpp:
+        * PortableInterceptors/IOR/MessengerServer.cpp:
+        * PortableInterceptors/IOR/Messenger_i.h:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/IOR/README:
+        * PortableInterceptors/IOR/ServerIORInterceptor.h:
+        * PortableInterceptors/IOR/ServerIORInterceptor.cpp:
+        * PortableInterceptors/IOR/ServerInitializer.h:
+        * PortableInterceptors/IOR/ServerInitializer.cpp:
+        * PortableInterceptors/IOR/ServerInterceptor.h:
+        * PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/run_test.pl:
+        * PortableInterceptors/PICurrent/ClientInitializer.h:
+        * PortableInterceptors/PICurrent/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent/Messenger.idl:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent/Messenger_i.h:
+        * PortableInterceptors/PICurrent/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent/PICurrent.mpc:
+        * PortableInterceptors/PICurrent/README:
+        * PortableInterceptors/PICurrent/ServerInitializer.h:
+        * PortableInterceptors/PICurrent/ServerInitializer.cpp:
+        * PortableInterceptors/PICurrent/ServerInterceptor.h:
+        * PortableInterceptors/PICurrent/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent/run_test.pl:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/Messenger.idl:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/Messenger_i.h:
+        * PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:
+        * PortableInterceptors/PICurrent_NameService/README:
+        * PortableInterceptors/PICurrent_NameService/ServerInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ServerInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/run_test.pl:
+        * PortableInterceptors/SimpleCodec/ClientInitializer.h:
+        * PortableInterceptors/SimpleCodec/ClientInitializer.cpp:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.h:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger.idl:
+        * PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.h:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/README:
+        * PortableInterceptors/SimpleCodec/ServerInitializer.h:
+        * PortableInterceptors/SimpleCodec/ServerInitializer.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.h:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/SimpleCode.mpc:
+        * PortableInterceptors/SimpleCodec/run_test.pl:
+        * RTCORBA/Messenger.idl:
+        * RTCORBA/MessengerClient.cpp:
+        * RTCORBA/MessengerServer.cpp:
+        * RTCORBA/Messenger_i.h:
+        * RTCORBA/Messenger_i.cpp:
+        * RTCORBA/README:
+        * RTCORBA/RTCORBA.mpc:
+        * RTCORBA/common.h:
+        * RTCORBA/common.cpp:
+        * RTCORBA/run_test.pl:
+        * RTCORBA/svc.conf:
+        * Security/ParticipatingApp/Messenger.idl:
+        * Security/ParticipatingApp/MessengerClient.cpp:
+        * Security/ParticipatingApp/MessengerServer.cpp:
+        * Security/ParticipatingApp/Messenger_i.h:
+        * Security/ParticipatingApp/Messenger_i.cpp:
+        * Security/ParticipatingApp/ParticipatingApp.mpc:
+        * Security/ParticipatingApp/README:
+        * Security/ParticipatingApp/cacert.pem:
+        * Security/ParticipatingApp/client.conf:
+        * Security/ParticipatingApp/clientcert.pem:
+        * Security/ParticipatingApp/clientkey.pem:
+        * Security/ParticipatingApp/run_test.pl:
+        * Security/ParticipatingApp/server.conf:
+        * Security/ParticipatingApp/servercert.pem:
+        * Security/ParticipatingApp/serverkey.pem:
+        * Security/PolicyControllingApp/Messenger.idl:
+        * Security/PolicyControllingApp/MessengerClient.cpp:
+        * Security/PolicyControllingApp/MessengerServer.cpp:
+        * Security/PolicyControllingApp/Messenger_i.h:
+        * Security/PolicyControllingApp/Messenger_i.cpp:
+        * Security/PolicyControllingApp/PolicyControllingApp.mpc:
+        * Security/PolicyControllingApp/README:
+        * Security/PolicyControllingApp/cacert.pem:
+        * Security/PolicyControllingApp/client.conf:
+        * Security/PolicyControllingApp/client1.conf:
+        * Security/PolicyControllingApp/clientcert.pem:
+        * Security/PolicyControllingApp/clientkey.pem:
+        * Security/PolicyControllingApp/run_test.pl:
+        * Security/PolicyControllingApp/server.conf:
+        * Security/PolicyControllingApp/server1.conf:
+        * Security/PolicyControllingApp/servercert.pem:
+        * Security/PolicyControllingApp/serverkey.pem:
+        * Security/SecurityUnawareApp/Messenger.idl:
+        * Security/SecurityUnawareApp/MessengerClient.cpp:
+        * Security/SecurityUnawareApp/MessengerI.cpp:
+        * Security/SecurityUnawareApp/MessengerServer.cpp:
+        * Security/SecurityUnawareApp/Messenger_i.h:
+        * Security/SecurityUnawareApp/Messenger_i.cpp:
+        * Security/SecurityUnawareApp/README:
+        * Security/SecurityUnawareApp/SecurityUnawareApp.mpc:
+        * Security/SecurityUnawareApp/cacert.pem:
+        * Security/SecurityUnawareApp/client.conf:
+        * Security/SecurityUnawareApp/client1.conf:
+        * Security/SecurityUnawareApp/clientcert.pem:
+        * Security/SecurityUnawareApp/clientkey.pem:
+        * Security/SecurityUnawareApp/run_test.pl:
+        * Security/SecurityUnawareApp/server.conf:
+        * Security/SecurityUnawareApp/servercert.pem:
+        * Security/SecurityUnawareApp/serverkey.pem:
+        * SmartProxies/Logger.idl:
+        * SmartProxies/LoggerServer.cpp:
+        * SmartProxies/Logger_i.h:
+        * SmartProxies/Logger_i.cpp:
+        * SmartProxies/Messenger.idl:
+        * SmartProxies/MessengerClient.cpp:
+        * SmartProxies/MessengerServer.cpp:
+        * SmartProxies/Messenger_i.h:
+        * SmartProxies/Messenger_i.cpp:
+        * SmartProxies/README:
+        * SmartProxies/SmartProxies.mpc:
+        * SmartProxies/Smart_Messenger_Proxy.h:
+        * SmartProxies/Smart_Messenger_Proxy.cpp:
+        * SmartProxies/run_test.pl:
+        * ValueTypes/Messenger/Message_i.h:
+        * ValueTypes/Messenger/Message_i.cpp:
+        * ValueTypes/Messenger/Messenger.idl:
+        * ValueTypes/Messenger/MessengerClient.cpp:
+        * ValueTypes/Messenger/MessengerServer.cpp:
+        * ValueTypes/Messenger/Messenger_i.h:
+        * ValueTypes/Messenger/Messenger_i.cpp:
+        * ValueTypes/Messenger/README:
+        * ValueTypes/Messenger/ValueTypes.mpc:
+        * ValueTypes/Messenger/_pch.h:
+        * ValueTypes/Messenger/_pch.cpp:
+        * ValueTypes/Messenger/run_test.pl:
+        * devguide_client.mpb:
+        * devguide_example.mpb:
+        * devguide_server.mpb:
+        * readme.txt:
+
+          Brought over the TAO 1.3a DevGuideExamples and updated them for
+          TAO 1.4a.
