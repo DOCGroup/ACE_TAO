@@ -1,3 +1,40 @@
+Fri Aug 14 13:31:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-tiger.h:
+          Fixed some compile problems
+
+        * ace/OS_QoS.cpp:
+          Use const cast instead of c style cast
+
+Fri Aug 14 12:54:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Use prop:windows
+
+Fri Aug 14 12:44:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc_warnings.mpb:
+          Use DisableSpecificWarnings
+
+Thu Aug 13 20:40:16 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-g++-common.h:
+          Removed definition of ACE_LACKS_ISCTYPE. Availibility of isctype()
+          doesn't depend on g++ version, it is libc stuff.
+
+        * ace/config-linux-common.h:
+          Define ACE_LACKS_ISCTYPE for glibc 2.2 and older
+
+Thu Aug 13 19:35:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_T.h:
+          Doxygen change
+
+Thu Aug 13 19:08:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SV_Semaphore_Simple.h:
+          Fixed gcc warning
+
 Thu Aug 13 09:10:43 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.pl:

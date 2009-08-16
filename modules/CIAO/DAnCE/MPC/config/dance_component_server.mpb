@@ -1,5 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_client_dnc {
-   after += DAnCE_ComponentServer_IDL

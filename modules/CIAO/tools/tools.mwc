@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-workspace {
-        Config_Handlers
-        IDL3_to_IDL2
-}
