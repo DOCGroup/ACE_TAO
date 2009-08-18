@@ -2,7 +2,7 @@
 
 #include "ace/Monitor_Control/FreeBSD_Network_Interface_Monitor.h"
 
-#if defined (__FreeBSD__)
+#if defined (__FreeBSD__) || defined (__Lynx__)
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
@@ -121,5 +121,4 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (__FreeBSD__) */
-
+#endif /* defined (__FreeBSD__) || defined (__Lynx__) */

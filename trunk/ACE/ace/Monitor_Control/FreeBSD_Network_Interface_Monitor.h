@@ -23,7 +23,7 @@
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
 
-#if defined (__FreeBSD__)
+#if defined (__FreeBSD__) || defined (__Lynx__)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,9 +63,8 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (__FreeBSD__) */
+#endif /* defined (__FreeBSD__) || defined (__Lynx__) */
 
 #include /**/ "ace/post.h"
 
 #endif // FREEBSD_NETWORK_INTERFACE_MONITOR_H
-
