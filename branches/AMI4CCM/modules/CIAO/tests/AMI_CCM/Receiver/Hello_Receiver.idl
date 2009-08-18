@@ -11,8 +11,8 @@ module Hello_AMI
 {
   component Receiver
   {
-    provides CCM_AMI::AMI_foo asynch_foo;
-    uses CCM_AMI::AMI_foo callback_foo;
+    provides CCM_AMI::AMI_foo perform_asynch_foo;
+    //uses CCM_AMI::AMI_foo callback_foo;
   };
 
   home ReceiverHome manages Receiver

@@ -31,44 +31,45 @@
 #include "Hello_Sender_exec.h"
 #include "ciao/CIAO_common.h"
 
+
+
+
 namespace CIAO_Hello_AMI_Sender_Impl
 {
-  //============================================================
-  // Facet Executor Implementation Class: AMI_foo_exec_i
-  //============================================================
-  
-  AMI_foo_exec_i::AMI_foo_exec_i (void)
-  {
-  }
-  
-  AMI_foo_exec_i::~AMI_foo_exec_i (void)
-  {
-  }
-  
-  // Operations from ::CCM_AMI::AMI_foo
-  
-  ::CORBA::Long
-  AMI_foo_exec_i::asynch_foo (
-    const char * /* in_str */,
-    ::CORBA::String_out /* answer */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  void
-  AMI_foo_exec_i::foo_callback (
-    ::CORBA::Long /* result */,
-    const char * /* answer */)
-  {
-    /* Your code here. */
-  }
-  
+
+pulse_generator::pulse_generator (::CCM_AMI::AMI_foo_ptr foo_receiver)
+          : foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver))
+{
+  printf ("pulse_generator::pulse_generator\n");
+}
+
+pulse_generator::~pulse_generator ()
+{
+}
+
+int pulse_generator::svc ()
+{
+    printf ("pulse_generator::svc");
+    ACE_OS::sleep (10);
+    while (1)
+      {
+        if (CORBA::is_nil (foo_receiver_))
+          printf ("foo_receiver is NIL !!!\n");
+        foo_receiver_->asynch_foo ("@#$%~!@$&%$^&*#$%@!# Do something funny %^*&%^$%^#%#@!$%");
+        printf ("asynch_foo called\n");
+        ACE_OS::sleep (2);
+      }
+  return 0;
+}
+      
+
+
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   
   Sender_exec_i::Sender_exec_i (void)
+      :pulser_(0)
   {
   }
   
@@ -81,13 +82,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
   // Component attributes.
   
   // Port operations.
-  
-  ::CCM_AMI::CCM_AMI_foo_ptr
-  Sender_exec_i::get_callback_foo (void)
-  {
-    /* Your code here. */
-    return ::CCM_AMI::CCM_AMI_foo::_nil ();
-  }
   
   // Operations from Components::SessionComponent.
   
@@ -103,18 +97,23 @@ namespace CIAO_Hello_AMI_Sender_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Sender_exec_i::configuration_complete (void)
   {
-    /* Your code here. */
   }
   
   void
   Sender_exec_i::ccm_activate (void)
   {
-    /* Your code here. */
-    
+    printf ("\n\nCCM active\n");
+    ::CCM_AMI::AMI_foo_var foo =
+      this->context_->get_connection_run_asynch_foo ();
+  
+    this->pulser_= new pulse_generator (foo);
+ 
+    this->pulser_->activate (THR_NEW_LWP | THR_JOINABLE,
+                           1);
   }
   
   void

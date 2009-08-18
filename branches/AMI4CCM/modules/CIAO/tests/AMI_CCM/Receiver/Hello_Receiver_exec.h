@@ -58,8 +58,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     
     virtual ::CORBA::Long
     asynch_foo (
-      const char * in_str,
-      ::CORBA::String_out answer);
+      const char * in_str);
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
@@ -85,7 +84,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     // Port operations.
     
     virtual ::CCM_AMI::CCM_AMI_foo_ptr
-    get_asynch_foo (void);
+    get_perform_asynch_foo (void);
     
     // Operations from Components::SessionComponent.
     

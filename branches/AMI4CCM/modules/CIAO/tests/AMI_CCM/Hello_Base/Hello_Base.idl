@@ -9,7 +9,7 @@ module CCM_AMI
 
   interface AMI_foo
     {
-      long asynch_foo (in string in_str, out string answer)
+      long asynch_foo (in string in_str)
         raises (InternalError);
       void foo_callback (in long result, in string answer);
     };

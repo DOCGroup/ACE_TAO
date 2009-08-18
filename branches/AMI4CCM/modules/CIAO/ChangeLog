@@ -1,3 +1,17 @@
+Tue Aug 18 09:59:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender.idl:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Baseline for AMI implementation. Sender and Receiver
+          components are deployable and runable.
+
 Fri Jul 24 11:54:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:
@@ -7,7 +21,7 @@ Fri Jul 24 11:54:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * tests/AMI_CCM/Sender/Hello_Sender.mpc:
         * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
         * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
-          Rerun example. 
+          Rerun example.
 
         * tests/AMI_CCM/descriptors/Plan.cdp:
           Added connectors. Now both components

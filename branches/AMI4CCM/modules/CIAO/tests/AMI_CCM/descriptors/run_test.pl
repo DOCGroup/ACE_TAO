@@ -189,15 +189,15 @@ if (PerlACE::waitforfile_timed ("Sender.ior",
 print "Invoking executor - stop the application -\n";
 print "by running dance_plan_launcher.exe with -k file://EM.ior -x $cdp_file -q\n";
 
-$E =
-  new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
-                        "-k file://EM.ior -x $cdp_file -q");
-$E->SpawnWaitKill (30);
+# $E =
+#   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
+#                        "-k file://EM.ior -x $cdp_file -q");
+# $E->SpawnWaitKill (30);
 
-print "Executor returned.\n";
-print "Shutting down rest of the processes.\n";
+# print "Executor returned.\n";
+# print "Shutting down rest of the processes.\n";
 
-delete_ior_files ();
-kill_open_processes ();
+# delete_ior_files ();
+# kill_open_processes ();
 
 exit $status;

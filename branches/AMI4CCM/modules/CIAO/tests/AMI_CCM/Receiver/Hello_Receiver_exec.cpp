@@ -49,11 +49,11 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   
   ::CORBA::Long
   AMI_foo_exec_i::asynch_foo (
-    const char * /* in_str */,
-    ::CORBA::String_out /* answer */)
+    const char *  in_str )
   {
     /* Your code here. */
-    return 0;
+    printf ("\n\n\n\n\nReceived string <%s>!!!!\n", in_str);
+    return 15;
   }
   
   void
@@ -83,10 +83,11 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   // Port operations.
   
   ::CCM_AMI::CCM_AMI_foo_ptr
-  Receiver_exec_i::get_asynch_foo (void)
+  Receiver_exec_i::get_perform_asynch_foo (void)
   {
     /* Your code here. */
-    return ::CCM_AMI::CCM_AMI_foo::_nil ();
+    return new AMI_foo_exec_i ();
+    //return ::CCM_AMI::CCM_AMI_foo::_nil ();
   }
   
   // Operations from Components::SessionComponent.

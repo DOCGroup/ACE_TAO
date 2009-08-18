@@ -144,20 +144,20 @@
   <connection>
     <name>asynch_foo_connection</name>
     <internalEndpoint>
-      <portName>asynch_foo</portName>
+      <portName>perform_asynch_foo</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>asynch_foo</portName>
+      <portName>run_asynch_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
   </connection>
 
-  <connection>
+  <!--connection>
     <name>callback_foo_connection</name>
     <internalEndpoint>
       <portName>callback_foo</portName>
@@ -171,7 +171,7 @@
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
-  </connection>
+  </connection-->
   
   <!--connection>
     <name>Hello.ComponentImplementations.HelloImplementation.Hello.Receiver:read_quoter-Hello.ComponentImplementations.HelloImplementation.Hello.Sender:push_quoter</name>

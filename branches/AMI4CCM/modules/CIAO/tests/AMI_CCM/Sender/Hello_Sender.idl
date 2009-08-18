@@ -11,8 +11,8 @@ module Hello_AMI
 {
   component Sender
   {
-    uses CCM_AMI::AMI_foo asynch_foo;
-    provides CCM_AMI::AMI_foo callback_foo;
+    uses CCM_AMI::AMI_foo run_asynch_foo;
+    //provides CCM_AMI::AMI_foo callback_foo;
   };
 
   home SenderHome manages Sender
