@@ -1,3 +1,8 @@
+Tue Aug 18 19:09:40 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-macros.h: In ACE_NOTREACHED, aC++ 03.* needs to have the
+          unreachable line removed as well.
+
 Wed Aug  5 23:28:43 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Parse_Node.cpp: When applying the modules in a dynamic
