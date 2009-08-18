@@ -1,3 +1,28 @@
+Tue Aug 18 12:25:01 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Monitor_Control/Auto_Update_Starter.cpp:
+        * ace/Monitor_Control/Bytes_Received_Monitor.h:
+        * ace/Monitor_Control/Bytes_Received_Monitor.cpp:
+        * ace/Monitor_Control/Bytes_Sent_Monitor.h:
+        * ace/Monitor_Control/Bytes_Sent_Monitor.cpp:
+        * ace/Monitor_Control/CPU_Load_Monitor.cpp:
+        * ace/Monitor_Control/Constraint_Interpreter.cpp:
+        * ace/Monitor_Control/Constraint_Visitor.h:
+        * ace/Monitor_Control/Constraint_Visitor.cpp:
+        * ace/Monitor_Control/FreeBSD_Network_Interface_Monitor.h:
+        * ace/Monitor_Control/FreeBSD_Network_Interface_Monitor.cpp:
+        * ace/Monitor_Control/Memory_Usage_Monitor.cpp:
+        * ace/Monitor_Control/Monitor_Group.cpp:
+        * ace/Monitor_Control/Monitor_Query.cpp:
+        * ace/Monitor_Control/Num_Threads_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Received_Monitor.h:
+        * ace/Monitor_Control/Packets_Received_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Sent_Monitor.h:
+        * ace/Monitor_Control/Packets_Sent_Monitor.cpp:
+          Added monitoring support for LynxOS. LynxOS's network statck
+          is based on FreeBSD's network stack so we can reuse FreeBSD
+          implementation.
+
 Fri Aug 14 13:31:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macosx-tiger.h:

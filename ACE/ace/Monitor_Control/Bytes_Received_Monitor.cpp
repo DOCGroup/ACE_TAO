@@ -26,7 +26,7 @@ namespace ACE
       , Solaris_Network_Interface_Monitor (ACE_TEXT ("rbytes"))
 #elif defined (__NetBSD__) || defined (__OpenBSD__)
       , BSD_Network_Interface_Monitor (ACE_TEXT ("ibytes"))
-#elif defined (__FreeBSD__)
+#elif defined (__FreeBSD__) || defined (__Lynx__)
       , FreeBSD_Network_Interface_Monitor (ACE_TEXT ("ibytes"))
 #endif
     {}
@@ -58,4 +58,3 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
-

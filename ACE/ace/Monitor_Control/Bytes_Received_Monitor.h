@@ -29,7 +29,7 @@
 #include "ace/Monitor_Control/Linux_Network_Interface_Monitor.h"
 #elif defined (ACE_HAS_KSTAT)
 #include "ace/Monitor_Control/Solaris_Network_Interface_Monitor.h"
-#elif defined (__FreeBSD__)
+#elif defined (__FreeBSD__) || defined (__Lynx__)
 #include "ace/Monitor_Control/FreeBSD_Network_Interface_Monitor.h"
 #elif defined (__NetBSD__) || defined (__OpenBSD__) 
 #include "ace/Monitor_Control/BSD_Network_Interface_Monitor.h"
@@ -60,7 +60,7 @@ namespace ACE
       , public Solaris_Network_Interface_Monitor
 #elif defined (__NetBSD__) || defined (__OpenBSD__)
       , public BSD_Network_Interface_Monitor
-#elif defined (__FreeBSD__)
+#elif defined (__FreeBSD__) || defined (__Lynx__)
       , public FreeBSD_Network_Interface_Monitor
 #else
       , public Null_Network_Interface_Monitor
