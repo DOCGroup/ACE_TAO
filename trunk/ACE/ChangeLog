@@ -1,3 +1,8 @@
+Tue Aug 18 19:09:40 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-macros.h: In ACE_NOTREACHED, aC++ 03.* needs to have the
+          unreachable line removed as well.
+
 Tue Aug 18 12:25:01 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/Monitor_Control/Auto_Update_Starter.cpp:
