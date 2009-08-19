@@ -1,7 +1,37 @@
+Wed Aug 19 20:54:41 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_tmpl_mirror_port.cpp:
+        * TAO_IDL/ast/ast_tmpl_port.cpp:
+        * TAO_IDL/include/ast_tmpl_port.h:
+        * TAO_IDL/include/ast_tmpl_mirror_port.h:
+        * TAO_IDL/be/be_tmpl_mirror_port.cpp:
+        * TAO_IDL/be/be_tmpl_port.cpp:
+        * TAO_IDL/be_include/be_tmpl_port.h:
+        * TAO_IDL/be_include/be_tmpl_mirror_port.h:
+
+          New files, containing node types that describe
+          a parameterized port or mirrorport found in the
+          body of a parameterized connector.
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Intergration of the new node types above into
+          the IDL compiler.
+          
 Wed Aug 19 16:38:17 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
-        
+
           Fixed some comments.
 
 Tue Jul 28 18:46:17 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>

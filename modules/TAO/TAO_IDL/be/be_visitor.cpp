@@ -187,6 +187,18 @@ be_visitor::visit_connector (be_connector *)
 }
 
 int
+be_visitor::visit_tmpl_port (be_tmpl_port *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_tmpl_mirror_port (be_tmpl_mirror_port *)
+{
+  return 0;
+}
+
+int
 be_visitor::visit_home (be_home *)
 {
   return 0;

@@ -45,6 +45,9 @@ public:
   // Called by extended port instantiations.
   T_ARGLIST *match_arg_names (UTL_NameList *arg_names);
   
+  // Called by porttype references in connectors.
+  bool match_params (UTL_StrList *param_names);
+  
 protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);
 

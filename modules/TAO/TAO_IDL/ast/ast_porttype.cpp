@@ -11,6 +11,8 @@
 
 #include "utl_identifier.h"
 #include "utl_namelist.h"
+#include "utl_strlist.h"
+#include "utl_string.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
 #include "global_extern.h"
@@ -116,6 +118,40 @@ AST_PortType::match_arg_names (UTL_NameList *arg_names)
     }
     
   return retval;
+}
+
+bool
+AST_PortType::match_params (UTL_StrList *param_names)
+{
+  size_t names_len = static_cast<size_t> (param_names->length ());
+  
+  if (names_len != this->template_params_->size ())
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_T_ARG_LENGTH,
+                                  this);
+      return false;
+    }
+    
+  size_t slot = 0UL;
+
+  for (UTL_StrlistActiveIterator i (param_names);
+       !i.is_done ();
+       i.next (), ++slot)
+    { 
+      UTL_String *s = i.item ();
+      
+      FE_Utils::T_Param_Info *param = 0;
+      (void) this->template_params_->get (param, slot);
+      
+      if (param->name_ != s->get_string ())
+        {
+          idl_global->err ()->mismatched_template_param (this->name ());
+        
+          return false;
+        }
+    }
+    
+  return true;
 }
 
 AST_Provides *

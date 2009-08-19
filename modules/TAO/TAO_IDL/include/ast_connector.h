@@ -23,7 +23,7 @@ public:
 
   // Cleanup function.
   virtual void destroy (void);
-
+  
   // Narrowing.
 
   DEF_NARROW_FROM_DECL (AST_Connector);

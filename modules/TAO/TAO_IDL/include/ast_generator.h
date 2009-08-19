@@ -85,6 +85,8 @@ class AST_Instantiated_Interface;
 class AST_Extended_Port;
 class AST_Mirror_Port;
 class AST_Connector;
+class AST_Tmpl_Port;
+class AST_Tmpl_Mirror_Port;
 class AST_Provides;
 class AST_Uses;
 class AST_Publishes;
@@ -409,6 +411,16 @@ public:
     UTL_ScopedName  *n,
     AST_Connector *base_connector,
     FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Tmpl_Port *create_tmpl_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref);
+    
+  virtual
+  AST_Tmpl_Mirror_Port *create_tmpl_mirror_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH
