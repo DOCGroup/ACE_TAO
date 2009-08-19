@@ -1,11 +1,17 @@
+Wed Aug 19 16:38:17 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        
+          Fixed some comments.
+
 Tue Jul 28 18:46:17 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:
-        
+
           Cosmetic changes.
 
         * TAO_IDL/narrow/narrow.cpp:
-        
+
           Added missing cases for AST_Connector.
 
 Tue Jul 28 18:22:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>

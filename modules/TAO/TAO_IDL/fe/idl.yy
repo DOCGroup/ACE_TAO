@@ -6459,7 +6459,7 @@ template_port_decl
 non_template_port_decl
         : IDL_PORT scoped_name IDENTIFIER
         {
-// extended_port_decl : IDL_PORT scoped_name IDENTIFIER
+// non_template_port_decl : IDL_PORT scoped_name IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ($2, true);
@@ -6725,7 +6725,7 @@ connector_export
         }
         | non_template_port_decl
         {
-//      | template_extended_port_decl
+//      | non_template_port_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
         }
           ';'
