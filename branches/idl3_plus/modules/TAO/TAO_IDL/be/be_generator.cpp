@@ -86,6 +86,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_porttype.h"
 #include "be_mirror_port.h"
 #include "be_connector.h"
+#include "be_tmpl_port.h"
+#include "be_tmpl_mirror_port.h"
 #include "be_provides.h"
 #include "be_uses.h"
 #include "be_publishes.h"
@@ -1087,4 +1089,31 @@ be_generator::create_connector (
                   
   return retval;
 }
+
+AST_Tmpl_Port *
+be_generator::create_tmpl_port (UTL_ScopedName *n,
+                                AST_PortType *porttype_ref)
+{
+  be_tmpl_port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_tmpl_port (n,
+                                porttype_ref),
+                  0);
+                  
+  return retval;
+}
+
+AST_Tmpl_Mirror_Port *
+be_generator::create_tmpl_mirror_port (UTL_ScopedName *n,
+                                       AST_PortType *porttype_ref)
+{
+  be_tmpl_mirror_port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_tmpl_mirror_port (n,
+                                       porttype_ref),
+                  0);
+                  
+  return retval;
+}
+
 

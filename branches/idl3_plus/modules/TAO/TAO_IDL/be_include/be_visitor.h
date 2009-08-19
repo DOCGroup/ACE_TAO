@@ -50,6 +50,8 @@ class be_consumes;
 class be_extended_port;
 class be_mirror_port;
 class be_connector;
+class be_tmpl_port;
+class be_tmpl_mirror_port;
 class be_home;
 class be_factory;
 class be_structure;
@@ -119,6 +121,8 @@ public:
   virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_mirror_port (be_mirror_port *node);
   virtual int visit_connector (be_connector *node);
+  virtual int visit_tmpl_port (be_tmpl_port *node);
+  virtual int visit_tmpl_mirror_port (be_tmpl_mirror_port *node);
   virtual int visit_home (be_home *node);
   virtual int visit_factory (be_factory *node);
   virtual int visit_structure (be_structure *node);
