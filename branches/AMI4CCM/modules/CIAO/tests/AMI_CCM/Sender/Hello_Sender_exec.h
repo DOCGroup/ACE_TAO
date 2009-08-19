@@ -45,6 +45,22 @@
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {
+  class pulse_generator : public virtual ACE_Task_Base
+  {
+  public:
+    pulse_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami);
+
+    ~pulse_generator ();
+
+    virtual int svc (void);
+
+  private:
+    /// Maintains a handle that actually process the event
+    ::CCM_AMI::AMI_ami_foo_var foo_ami_;
+
+  };
+
+
   class  AMI_foo_callback_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_foo_callback,
       public virtual ::CORBA::LocalObject
@@ -102,6 +118,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   
   private:
     ::Hello_AMI::CCM_Sender_Context_var context_;
+     pulse_generator* pulser_;
   };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

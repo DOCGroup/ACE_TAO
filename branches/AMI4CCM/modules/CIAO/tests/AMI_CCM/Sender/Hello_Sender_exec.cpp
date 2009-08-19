@@ -33,6 +33,35 @@
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {
+pulse_generator::pulse_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami)
+          : foo_ami_ (::CCM_AMI::AMI_ami_foo::_duplicate (foo_ami))
+{
+  printf ("pulse_generator::pulse_generator\n");
+}
+
+pulse_generator::~pulse_generator ()
+{
+}
+
+int pulse_generator::svc ()
+{
+    printf ("pulse_generator::svc");
+    ACE_OS::sleep (10);
+    for (int i = 0; i < 5; ++i)
+      {
+        if (CORBA::is_nil (foo_ami_))
+          printf ("foo_receiver is NIL !!!\n");
+        else
+          {
+            foo_ami_->sendc_asynch_foo ("@#$%~!@$&%$^&*#$%@!# Do something funny %^*&%^$%^#%#@!$%",
+                          0);
+            printf ("asynch_foo called\n");
+          }
+        ACE_OS::sleep (2);
+      }
+  return 0;
+}
+
   //============================================================
   // Facet Executor Implementation Class: AMI_foo_callback_exec_i
   //============================================================
@@ -111,7 +140,14 @@ namespace CIAO_Hello_AMI_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    /* Your code here. */
+    printf ("\n\nCCM active\n");
+    ::CCM_AMI::AMI_ami_foo_var foo =
+      this->context_->get_connection_run_asynch_foo ();
+
+    this->pulser_= new pulse_generator (foo);
+ 
+    this->pulser_->activate (THR_NEW_LWP | THR_JOINABLE,
+                           1);
   }
   
   void

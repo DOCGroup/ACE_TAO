@@ -48,7 +48,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_ami_foo_exec_i (void);
+    AMI_ami_foo_exec_i (::CCM_AMI::AMI_foo_ptr foo_receiver);
     virtual ~AMI_ami_foo_exec_i (void);
     
     // Operations and attributes from ::CCM_AMI::AMI_ami_foo
@@ -60,6 +60,8 @@ namespace CIAO_Hello_AMI_AMI_Impl
     sendc_asynch_foo (
       const char * in_str,
       ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
+  private:
+    ::CCM_AMI::AMI_foo_var foo_receiver_;
   };
   
   class  AMI_exec_i

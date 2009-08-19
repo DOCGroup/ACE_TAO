@@ -37,8 +37,10 @@ namespace CIAO_Hello_AMI_AMI_Impl
   // Facet Executor Implementation Class: AMI_ami_foo_exec_i
   //============================================================
   
-  AMI_ami_foo_exec_i::AMI_ami_foo_exec_i (void)
+  AMI_ami_foo_exec_i::AMI_ami_foo_exec_i (::CCM_AMI::AMI_foo_ptr foo_receiver) :
+      foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver))
   {
+    
   }
   
   AMI_ami_foo_exec_i::~AMI_ami_foo_exec_i (void)
@@ -49,10 +51,14 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   void
   AMI_ami_foo_exec_i::sendc_asynch_foo (
-    const char * /* in_str */,
+    const char * in_str,
     ::CCM_AMI::AMI_foo_callback_ptr /* foo_callback */)
   {
-    /* Your code here. */
+    printf ("\n\n\n\n\nAMI: Received string <%s>!!!!\n", in_str);
+    printf ("AMI: Try to pass it on to the Receiver component\n");
+    char* out_str;
+    CORBA::Long   result;
+    result = foo_receiver_->asynch_foo (CORBA::string_dup (in_str), out_str);
   }
   
   //============================================================
@@ -76,8 +82,10 @@ namespace CIAO_Hello_AMI_AMI_Impl
   ::CCM_AMI::CCM_AMI_ami_foo_ptr
   AMI_exec_i::get_perform_asynch_foo (void)
   {
-    /* Your code here. */
-    return ::CCM_AMI::CCM_AMI_ami_foo::_nil ();
+    ::CCM_AMI::AMI_foo_var receiver_foo =
+      this->context_->get_connection_receiver_foo ();
+    
+    return new AMI_ami_foo_exec_i (receiver_foo);
   }
   
   // Operations from Components::SessionComponent.

@@ -1,3 +1,13 @@
+Wed Aug 19 09:07:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/AMI/AMI_exec.h:
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          The Sender component is now able to pass a string through the
+          AMI component to the Receiver component.
+
 Wed Aug 19 07:58:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/AMI:
