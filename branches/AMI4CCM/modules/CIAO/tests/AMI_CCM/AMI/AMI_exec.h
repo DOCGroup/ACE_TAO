@@ -28,12 +28,12 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1217
 
-#ifndef CIAO_HELLO_RECEIVER_EXEC_H_
-#define CIAO_HELLO_RECEIVER_EXEC_H_
+#ifndef CIAO_AMI_EXEC_H_
+#define CIAO_AMI_EXEC_H_
 
 
-#include "Hello_ReceiverEC.h"
-#include "Hello_Receiver_exec_export.h"
+#include "AMIEC.h"
+#include "AMI_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,34 +41,34 @@
 
 #include "tao/LocalObject.h"
 
-namespace CIAO_Hello_AMI_Receiver_Impl
+namespace CIAO_Hello_AMI_AMI_Impl
 {
-  class  AMI_foo_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_foo,
+  class  AMI_ami_foo_exec_i
+    : public virtual ::CCM_AMI::CCM_AMI_ami_foo,
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_foo_exec_i (void);
-    virtual ~AMI_foo_exec_i (void);
+    AMI_ami_foo_exec_i (void);
+    virtual ~AMI_ami_foo_exec_i (void);
     
-    // Operations and attributes from ::CCM_AMI::AMI_foo
+    // Operations and attributes from ::CCM_AMI::AMI_ami_foo
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
-    virtual ::CORBA::Long
-    asynch_foo (
+    virtual void
+    sendc_asynch_foo (
       const char * in_str,
-      ::CORBA::String_out answer);
+      ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
   };
   
-  class  Receiver_exec_i
-    : public virtual Receiver_Exec,
+  class  AMI_exec_i
+    : public virtual AMI_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Receiver_exec_i (void);
-    virtual ~Receiver_exec_i (void);
+    AMI_exec_i (void);
+    virtual ~AMI_exec_i (void);
     
     // Supported operations and attributes.
     
@@ -76,8 +76,8 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     
     // Port operations.
     
-    virtual ::CCM_AMI::CCM_AMI_foo_ptr
-    get_do_asynch_foo (void);
+    virtual ::CCM_AMI::CCM_AMI_ami_foo_ptr
+    get_perform_asynch_foo (void);
     
     // Operations from Components::SessionComponent.
     
@@ -92,23 +92,23 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual void ccm_remove (void);
   
   private:
-    ::Hello_AMI::CCM_Receiver_Context_var context_;
+    ::Hello_AMI::CCM_AMI_Context_var context_;
   };
   
-  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_Receiver_Impl (void);
+  extern "C" AMI_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Hello_AMI_AMI_Impl (void);
 }
 
-namespace CIAO_Hello_AMI_Receiver_Impl
+namespace CIAO_Hello_AMI_AMI_Impl
 {
-  class  ReceiverHome_exec_i
-    : public virtual ReceiverHome_Exec,
+  class  AMIHome_exec_i
+    : public virtual AMIHome_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ReceiverHome_exec_i (void);
+    AMIHome_exec_i (void);
     
-    virtual ~ReceiverHome_exec_i (void);
+    virtual ~AMIHome_exec_i (void);
     
     // All operations and attributes.
     
@@ -122,8 +122,8 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     create (void);
   };
   
-  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
-  create_Hello_AMI_ReceiverHome_Impl (void);
+  extern "C" AMI_EXEC_Export ::Components::HomeExecutorBase_ptr
+  create_Hello_AMI_AMIHome_Impl (void);
 }
 
 #endif /* ifndef */

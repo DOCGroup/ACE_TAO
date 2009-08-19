@@ -1,3 +1,24 @@
+Wed Aug 19 07:58:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/AMI:
+        * tests/AMI_CCM/AMI/AMI.idl:
+        * tests/AMI_CCM/AMI/AMI.mpc:
+        * tests/AMI_CCM/AMI/AMI_exec.h:
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender.idl:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+          Changed to deploy the third component (AMI). None of the
+          executors are implemented yet. Deploymentplan and IDL files
+          are prepared to deploy the AMI component.
+
 Tue Aug 18 09:59:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/Hello_Base/Hello_Base.idl:

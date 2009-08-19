@@ -1,0 +1,29 @@
+// $Id$
+
+#ifndef AMI_IDL
+#define AMI_IDL
+
+#include <Components.idl>
+
+#include "../Hello_Base/Hello_Base.idl"
+
+module Hello_AMI
+{
+  component AMI
+  {
+    //provides the interface for Sender
+    provides CCM_AMI::AMI_ami_foo   perform_asynch_foo;
+
+    //uses the interface of the Receiver ('server')
+    uses CCM_AMI::AMI_foo           receiver_foo;
+
+    //uses the callback interface of the sender
+    uses CCM_AMI::AMI_foo_callback  callback_foo;
+  };
+
+  home AMIHome manages AMI
+  {
+  };
+};
+
+#endif

@@ -7,10 +7,24 @@ module CCM_AMI
       string error;
   };
 
+  // Sender/Receiver interface
   interface AMI_foo
     {
-      long asynch_foo (in string in_str)
+      long asynch_foo (in string in_str, out string answer)
         raises (InternalError);
-      void foo_callback (in long result, in string answer);
+    };
+
+  // callback interface from AMI-component to Sender component
+  interface AMI_foo_callback
+    {
+      void foo_callback_handler (in long result, in string answer);
+      void foo_callback_excep (in string callback_exception);
+    };
+
+  // AMI component. Sender calls AMI-component and AMI-component calls Receiver
+  // using the AMI_foo interface.
+  interface AMI_ami_foo
+    {
+      void sendc_asynch_foo (in string in_str, in AMI_foo_callback foo_callback);
     };
 };

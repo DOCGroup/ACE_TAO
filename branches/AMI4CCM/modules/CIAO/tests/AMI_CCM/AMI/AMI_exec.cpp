@@ -28,49 +28,42 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1278
 
-#include "Hello_Sender_exec.h"
+#include "AMI_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIAO_Hello_AMI_Sender_Impl
+namespace CIAO_Hello_AMI_AMI_Impl
 {
   //============================================================
-  // Facet Executor Implementation Class: AMI_foo_callback_exec_i
+  // Facet Executor Implementation Class: AMI_ami_foo_exec_i
   //============================================================
   
-  AMI_foo_callback_exec_i::AMI_foo_callback_exec_i (void)
+  AMI_ami_foo_exec_i::AMI_ami_foo_exec_i (void)
   {
   }
   
-  AMI_foo_callback_exec_i::~AMI_foo_callback_exec_i (void)
+  AMI_ami_foo_exec_i::~AMI_ami_foo_exec_i (void)
   {
   }
   
-  // Operations from ::CCM_AMI::AMI_foo_callback
+  // Operations from ::CCM_AMI::AMI_ami_foo
   
   void
-  AMI_foo_callback_exec_i::foo_callback_handler (
-    ::CORBA::Long /* result */,
-    const char * /* answer */)
-  {
-    /* Your code here. */
-  }
-  
-  void
-  AMI_foo_callback_exec_i::foo_callback_excep (
-    const char * /* callback_exception */)
+  AMI_ami_foo_exec_i::sendc_asynch_foo (
+    const char * /* in_str */,
+    ::CCM_AMI::AMI_foo_callback_ptr /* foo_callback */)
   {
     /* Your code here. */
   }
   
   //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
+  // Component Executor Implementation Class: AMI_exec_i
   //============================================================
   
-  Sender_exec_i::Sender_exec_i (void)
+  AMI_exec_i::AMI_exec_i (void)
   {
   }
   
-  Sender_exec_i::~Sender_exec_i (void)
+  AMI_exec_i::~AMI_exec_i (void)
   {
   }
   
@@ -80,21 +73,21 @@ namespace CIAO_Hello_AMI_Sender_Impl
   
   // Port operations.
   
-  ::CCM_AMI::CCM_AMI_foo_callback_ptr
-  Sender_exec_i::get_the_foo_callback (void)
+  ::CCM_AMI::CCM_AMI_ami_foo_ptr
+  AMI_exec_i::get_perform_asynch_foo (void)
   {
     /* Your code here. */
-    return ::CCM_AMI::CCM_AMI_foo_callback::_nil ();
+    return ::CCM_AMI::CCM_AMI_ami_foo::_nil ();
   }
   
   // Operations from Components::SessionComponent.
   
   void
-  Sender_exec_i::set_session_context (
+  AMI_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Hello_AMI::CCM_Sender_Context::_narrow (ctx);
+      ::Hello_AMI::CCM_AMI_Context::_narrow (ctx);
     
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
@@ -103,55 +96,55 @@ namespace CIAO_Hello_AMI_Sender_Impl
   }
   
   void
-  Sender_exec_i::configuration_complete (void)
+  AMI_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
   
   void
-  Sender_exec_i::ccm_activate (void)
+  AMI_exec_i::ccm_activate (void)
   {
     /* Your code here. */
   }
   
   void
-  Sender_exec_i::ccm_passivate (void)
+  AMI_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
   
   void
-  Sender_exec_i::ccm_remove (void)
+  AMI_exec_i::ccm_remove (void)
   {
     /* Your code here. */
   }
   
   extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_Sender_Impl (void)
+  create_Hello_AMI_AMI_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
     
     ACE_NEW_RETURN (
       retval,
-      Sender_exec_i,
+      AMI_exec_i,
       ::Components::EnterpriseComponent::_nil ());
     
     return retval;
   }
 }
 
-namespace CIAO_Hello_AMI_Sender_Impl
+namespace CIAO_Hello_AMI_AMI_Impl
 {
   //============================================================
-  // Home Executor Implementation Class: SenderHome_exec_i
+  // Home Executor Implementation Class: AMIHome_exec_i
   //============================================================
   
-  SenderHome_exec_i::SenderHome_exec_i (void)
+  AMIHome_exec_i::AMIHome_exec_i (void)
   {
   }
   
-  SenderHome_exec_i::~SenderHome_exec_i (void)
+  AMIHome_exec_i::~AMIHome_exec_i (void)
   {
   }
   
@@ -164,28 +157,28 @@ namespace CIAO_Hello_AMI_Sender_Impl
   // Implicit operations.
   
   ::Components::EnterpriseComponent_ptr
-  SenderHome_exec_i::create (void)
+  AMIHome_exec_i::create (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
     
     ACE_NEW_THROW_EX (
       retval,
-      Sender_exec_i,
+      AMI_exec_i,
       ::CORBA::NO_MEMORY ());
     
     return retval;
   }
   
   extern "C"  ::Components::HomeExecutorBase_ptr
-  create_Hello_AMI_SenderHome_Impl (void)
+  create_Hello_AMI_AMIHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
     
     ACE_NEW_RETURN (
       retval,
-      SenderHome_exec_i,
+      AMIHome_exec_i,
       ::Components::HomeExecutorBase::_nil ());
     
     return retval;

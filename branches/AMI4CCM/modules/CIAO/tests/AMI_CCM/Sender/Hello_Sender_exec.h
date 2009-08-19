@@ -45,32 +45,51 @@
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {
-  class Sender_exec_i;
-
-  class pulse_generator : public virtual ACE_Task_Base
+  class  AMI_foo_callback_exec_i
+    : public virtual ::CCM_AMI::CCM_AMI_foo_callback,
+      public virtual ::CORBA::LocalObject
   {
   public:
-    pulse_generator (::CCM_AMI::AMI_foo_ptr foo_receiver);
-
-    ~pulse_generator ();
-
-    virtual int svc (void);
-
-  private:
-    /// Maintains a handle that actually process the event
-    ::CCM_AMI::AMI_foo_var foo_receiver_;
-
+    AMI_foo_callback_exec_i (void);
+    virtual ~AMI_foo_callback_exec_i (void);
+    
+    // Operations and attributes from ::CCM_AMI::AMI_foo_callback
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    foo_callback_handler (
+      ::CORBA::Long result,
+      const char * answer);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    foo_callback_excep (
+      const char * callback_exception);
   };
-
+  
   class  Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
     Sender_exec_i (void);
-
     virtual ~Sender_exec_i (void);
-
+    
+    // Supported operations and attributes.
+    
+    // Component attributes.
+    
+    // Port operations.
+    
+    virtual ::CCM_AMI::CCM_AMI_foo_callback_ptr
+    get_the_foo_callback (void);
+    
+    // Operations from Components::SessionComponent.
+    
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -83,8 +102,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   
   private:
     ::Hello_AMI::CCM_Sender_Context_var context_;
-     pulse_generator* pulser_;
- };
+  };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_AMI_Sender_Impl (void);
