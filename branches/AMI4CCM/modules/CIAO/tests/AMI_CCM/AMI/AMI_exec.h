@@ -40,15 +40,39 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
+#include "ace/Task.h"
 
 namespace CIAO_Hello_AMI_AMI_Impl
 {
-  class  AMI_ami_foo_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_ami_foo,
-      public virtual ::CORBA::LocalObject
+
+  class ami_handler : public virtual ACE_Task_Base
   {
   public:
-    AMI_ami_foo_exec_i (::CCM_AMI::AMI_foo_ptr foo_receiver);
+    ami_handler (
+      ::CCM_AMI::Cookie ck,
+      const  char * in_str,
+      ::CCM_AMI::AMI_foo_ptr foo_receiver,
+      ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
+    ~ami_handler ();
+
+    virtual int svc (void);
+
+  private:
+    long ck_;
+    const char * in_str_;
+    ::CCM_AMI::AMI_foo_ptr          foo_receiver_;
+    ::CCM_AMI::AMI_foo_callback_ptr foo_callback_;
+  };
+
+  class  AMI_ami_foo_exec_i
+    : public virtual ::CCM_AMI::CCM_AMI_ami_foo,
+      public virtual ::CORBA::LocalObject,
+      public virtual ACE_Task_Base
+  {
+  public:
+    AMI_ami_foo_exec_i (
+      ::CCM_AMI::AMI_foo_ptr foo_receiver,
+      ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
     virtual ~AMI_ami_foo_exec_i (void);
     
     // Operations and attributes from ::CCM_AMI::AMI_ami_foo
@@ -56,12 +80,13 @@ namespace CIAO_Hello_AMI_AMI_Impl
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
-    virtual void
+    virtual ::CCM_AMI::Cookie
     sendc_asynch_foo (
-      const char * in_str,
-      ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
+      const char * in_str);
   private:
-    ::CCM_AMI::AMI_foo_var foo_receiver_;
+    ::CCM_AMI::AMI_foo_var          foo_receiver_;
+    ::CCM_AMI::AMI_foo_callback_var foo_callback_;
+    long cookie_;
   };
   
   class  AMI_exec_i

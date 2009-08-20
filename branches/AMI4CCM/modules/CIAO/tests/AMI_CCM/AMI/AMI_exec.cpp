@@ -33,32 +33,67 @@
 
 namespace CIAO_Hello_AMI_AMI_Impl
 {
+  ami_handler::ami_handler (
+    ::CCM_AMI::Cookie ck,
+    const char * in_str,
+    ::CCM_AMI::AMI_foo_ptr foo_receiver,
+    ::CCM_AMI::AMI_foo_callback_ptr foo_callback) :
+      ck_ (ck),
+      in_str_ (in_str),
+      foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver)),
+      foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback))
+  {
+  }
+
+  ami_handler::~ami_handler ()
+  {
+    printf ("ami_handler::~ami_handler\n");
+  }
+
+  int ami_handler::svc ()
+  {
+    char* out_str;
+    CORBA::Long   result;
+    printf ("Thread started for cookie <%d>\n", ck_);
+    result = foo_receiver_->asynch_foo (CORBA::string_dup (in_str_), out_str);
+    printf ("Cookie <%ld> received : result <%ld> answer <%s>\n",
+            ck_, result, out_str);
+    foo_callback_->foo_callback_handler (ck_, result, CORBA::string_dup (out_str));
+
+    return 0;
+  }
+
   //============================================================
   // Facet Executor Implementation Class: AMI_ami_foo_exec_i
   //============================================================
   
-  AMI_ami_foo_exec_i::AMI_ami_foo_exec_i (::CCM_AMI::AMI_foo_ptr foo_receiver) :
-      foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver))
+  AMI_ami_foo_exec_i::AMI_ami_foo_exec_i (
+    ::CCM_AMI::AMI_foo_ptr foo_receiver,
+    ::CCM_AMI::AMI_foo_callback_ptr foo_callback) :
+      foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver)),
+      foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback)),
+      cookie_ (0)
   {
-    
   }
   
   AMI_ami_foo_exec_i::~AMI_ami_foo_exec_i (void)
   {
+    printf ("AMI_ami_foo_exec_i::~AMI_ami_foo_exec_i\n");
   }
   
   // Operations from ::CCM_AMI::AMI_ami_foo
   
-  void
+  ::CCM_AMI::Cookie
   AMI_ami_foo_exec_i::sendc_asynch_foo (
-    const char * in_str,
-    ::CCM_AMI::AMI_foo_callback_ptr /* foo_callback */)
+    const char * in_str)
   {
-    printf ("\n\n\n\n\nAMI: Received string <%s>!!!!\n", in_str);
-    printf ("AMI: Try to pass it on to the Receiver component\n");
-    char* out_str;
-    CORBA::Long   result;
-    result = foo_receiver_->asynch_foo (CORBA::string_dup (in_str), out_str);
+    printf ("\n\nReceived string <%s>\n", in_str);
+    printf ("Try to pass it on to the Receiver component\n");
+    ::CCM_AMI::Cookie ck = ++cookie_;
+    printf ("Starting AMI handler to handle asych request <%ld>\n", ck);
+    ami_handler* ah = new ami_handler (ck, in_str, foo_receiver_, foo_callback_);
+    ah->activate ();
+    return ck;
   }
   
   //============================================================
@@ -84,8 +119,11 @@ namespace CIAO_Hello_AMI_AMI_Impl
   {
     ::CCM_AMI::AMI_foo_var receiver_foo =
       this->context_->get_connection_receiver_foo ();
-    
-    return new AMI_ami_foo_exec_i (receiver_foo);
+
+    ::CCM_AMI::AMI_foo_callback_var foo_callback =
+      this->context_->get_connection_callback_foo ();
+
+    return new AMI_ami_foo_exec_i (receiver_foo, foo_callback);
   }
   
   // Operations from Components::SessionComponent.

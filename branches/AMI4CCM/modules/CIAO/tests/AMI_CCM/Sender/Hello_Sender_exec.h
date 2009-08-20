@@ -57,7 +57,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
   private:
     /// Maintains a handle that actually process the event
     ::CCM_AMI::AMI_ami_foo_var foo_ami_;
-
   };
 
 
@@ -76,6 +75,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual void
     foo_callback_handler (
+      ::CCM_AMI::Cookie ck,
       ::CORBA::Long result,
       const char * answer);
     
@@ -84,6 +84,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual void
     foo_callback_excep (
+      ::CCM_AMI::Cookie ck,
       const char * callback_exception);
   };
   

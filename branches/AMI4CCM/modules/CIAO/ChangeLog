@@ -1,3 +1,16 @@
+Thu Aug 20 08:54:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/AMI/AMI_exec.h:
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          The basic version of AMI seems to work. The AMI component
+          determines a cookie and spawns a thread per request.
+          The thread handles the request and calls the callback
+          function of the sender.
+
 Wed Aug 19 09:07:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/AMI/AMI_exec.h:

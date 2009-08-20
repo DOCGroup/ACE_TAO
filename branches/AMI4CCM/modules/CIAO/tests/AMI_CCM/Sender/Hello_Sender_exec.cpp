@@ -45,7 +45,7 @@ pulse_generator::~pulse_generator ()
 
 int pulse_generator::svc ()
 {
-    printf ("pulse_generator::svc");
+    printf ("pulse_generator::svc\n");
     ACE_OS::sleep (10);
     for (int i = 0; i < 5; ++i)
       {
@@ -53,11 +53,10 @@ int pulse_generator::svc ()
           printf ("foo_receiver is NIL !!!\n");
         else
           {
-            foo_ami_->sendc_asynch_foo ("@#$%~!@$&%$^&*#$%@!# Do something funny %^*&%^$%^#%#@!$%",
-                          0);
-            printf ("asynch_foo called\n");
+            foo_ami_->sendc_asynch_foo ("Do something funny");
+            printf ("asynch_foo has been called\n");
           }
-        ACE_OS::sleep (2);
+        ACE_OS::sleep (ACE_OS::rand () % 2);
       }
   return 0;
 }
@@ -78,14 +77,16 @@ int pulse_generator::svc ()
   
   void
   AMI_foo_callback_exec_i::foo_callback_handler (
-    ::CORBA::Long /* result */,
-    const char * /* answer */)
+    ::CCM_AMI::Cookie ck,
+    ::CORBA::Long result,
+    const char * answer)
   {
-    /* Your code here. */
+    printf ("Callback from AMI : cookie <%d> result <%d> answer <%s>\n", ck, result, answer);
   }
   
   void
   AMI_foo_callback_exec_i::foo_callback_excep (
+    ::CCM_AMI::Cookie /*ck*/,
     const char * /* callback_exception */)
   {
     /* Your code here. */
@@ -110,10 +111,9 @@ int pulse_generator::svc ()
   // Port operations.
   
   ::CCM_AMI::CCM_AMI_foo_callback_ptr
-  Sender_exec_i::get_the_foo_callback (void)
+  Sender_exec_i::get_the_foo_callback ()
   {
-    /* Your code here. */
-    return ::CCM_AMI::CCM_AMI_foo_callback::_nil ();
+    return new AMI_foo_callback_exec_i ();
   }
   
   // Operations from Components::SessionComponent.

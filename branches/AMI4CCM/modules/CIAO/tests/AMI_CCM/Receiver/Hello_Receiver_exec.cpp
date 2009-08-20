@@ -52,9 +52,10 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     const char * in_str,
     ::CORBA::String_out answer)
   {
-    printf ("\n\n\n\n\nReceived string <%s>!!!!\n", in_str);
-    answer = CORBA::string_dup ("This is my answer : Bla\n");
-    return 15;
+    printf ("\n\n\n\n\nReceived string <%s>\n", in_str);
+    ACE_OS::sleep (ACE_OS::rand () % 5);
+    answer = CORBA::string_dup ("This is my answer : Hi");
+    return ACE_OS::rand () % 100;
   }
   
   //============================================================
