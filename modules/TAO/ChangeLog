@@ -1,3 +1,11 @@
+Thu Aug 20 17:27:16 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added missing semicolon, regenerated and recompiled.
+
 Thu Aug 20 17:09:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_connector.cpp:
@@ -7,7 +15,7 @@ Thu Aug 20 17:09:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/fe_utils.h:
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Added methods to add AST_Tmpl_Port and AST_Tmpl_Mirror_Port
           nodes to a connector's scope. Also added semantic actions
           to create these nodes, check their validity, and call the

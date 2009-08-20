@@ -255,6 +255,7 @@ typedef union TAO_YYSTYPE
   FE_Utils::T_Ref_Info          *trval;         /* Template interface info */
   FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
   FE_Utils::T_Inst_Info         *tival;         /* Template instantiation */
+  FE_Utils::T_Port_Info         *ptval;         /* Porttype reference */
 }
 /* Line 1489 of yacc.c.  */
 
