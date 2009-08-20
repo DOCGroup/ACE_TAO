@@ -1,3 +1,55 @@
+Thu Aug 20 09:56:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors:
+        * connectors/AMI_CCM:
+        * connectors/AMI_CCM/AMI:
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender:
+        * connectors/AMI_CCM/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender.mpc:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * connectors/AMI_CCM/descriptors:
+        * connectors/AMI_CCM/descriptors/Plan.cdp:
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Moved this example from tests to this location. Just to
+          be consistent with dds4ccm.
+
+        * tests/AMI_CCM:
+        * tests/AMI_CCM/AMI:
+        * tests/AMI_CCM/AMI/AMI.idl:
+        * tests/AMI_CCM/AMI/AMI.mpc:
+        * tests/AMI_CCM/AMI/AMI_exec.h:
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Hello_Base:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * tests/AMI_CCM/Receiver:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender:
+        * tests/AMI_CCM/Sender/Hello_Sender.idl:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Removed these files.
+
 Thu Aug 20 09:24:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/AMI/AMI_exec.cpp:

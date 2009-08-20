@@ -185,7 +185,7 @@ if (PerlACE::waitforfile_timed ("AMI.ior",
 }
 
 print "Sleeping 60 seconds to allow task to complete\n";
-sleep (60);
+sleep (30);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
