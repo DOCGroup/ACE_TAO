@@ -11,6 +11,7 @@ class UTL_StrList;
 class UTL_IdList;
 typedef UTL_IdList UTL_ScopedName;
 class UTL_NameList;
+class AST_PortType;
 
 struct TAO_IDL_FE_Export FE_Utils
 {
@@ -34,6 +35,14 @@ struct TAO_IDL_FE_Export FE_Utils
   };
 
   typedef ACE_Unbounded_Queue<T_Ref_Info> T_REFLIST_INFO;
+  
+  struct T_Port_Info
+  {
+    ACE_CString name_;
+    AST_PortType *type_;
+    
+    T_Port_Info (const char *name, AST_PortType *type);
+  };
 
   struct T_Inst_Info
   {

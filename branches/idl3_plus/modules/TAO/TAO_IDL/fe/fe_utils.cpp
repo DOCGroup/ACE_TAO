@@ -38,6 +38,13 @@ FE_Utils::T_Ref_Info::destroy (void)
     }
 }
 
+FE_Utils::T_Port_Info::T_Port_Info (const char *name,
+                                    AST_PortType *type)
+  : name_ (name),
+    type_ (type)
+{
+}
+
 FE_Utils::T_Inst_Info::T_Inst_Info (UTL_ScopedName *n,
                                     UTL_NameList *args)
   : name_ (n),

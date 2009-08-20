@@ -1,3 +1,18 @@
+Thu Aug 20 17:09:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Added methods to add AST_Tmpl_Port and AST_Tmpl_Mirror_Port
+          nodes to a connector's scope. Also added semantic actions
+          to create these nodes, check their validity, and call the
+          scope adding methods.
+
 Wed Aug 19 20:54:41 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_tmpl_mirror_port.cpp:
@@ -27,7 +42,7 @@ Wed Aug 19 20:54:41 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
           Intergration of the new node types above into
           the IDL compiler.
-          
+
 Wed Aug 19 16:38:17 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
