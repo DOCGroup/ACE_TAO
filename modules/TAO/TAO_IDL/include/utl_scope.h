@@ -128,6 +128,8 @@ class AST_Consumes;
 class AST_Extended_Port;
 class AST_Mirror_Port;
 class AST_Connector;
+class AST_Tmpl_Port;
+class AST_Tmpl_Mirror_Port;
 class UTL_StrList;
 class UTL_NameList;
 
@@ -462,6 +464,11 @@ private:
   virtual AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *ep);
 
   virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
+  
+  virtual AST_Tmpl_Port *fe_add_tmpl_port (AST_Tmpl_Port *p);
+  
+  virtual AST_Tmpl_Mirror_Port *fe_add_tmpl_mirror_port (
+    AST_Tmpl_Mirror_Port *p);
 };
 
 // Active iterator for a UTL_Scope node

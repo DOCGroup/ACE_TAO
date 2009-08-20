@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ast_connector.h"
+#include "ast_tmpl_mirror_port.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
@@ -84,6 +85,82 @@ int
 AST_Connector::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_connector (this);
+}
+
+AST_Tmpl_Port *
+AST_Connector::fe_add_tmpl_port (AST_Tmpl_Port *p)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (p, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, p->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (p);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (p,
+                           false,
+                           p->local_name ());
+
+  return p;
+}
+
+AST_Tmpl_Mirror_Port *
+AST_Connector::fe_add_tmpl_mirror_port (AST_Tmpl_Mirror_Port *p)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (p, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, p->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (p);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (p,
+                           false,
+                           p->local_name ());
+
+  return p;
 }
 
 IMPL_NARROW_FROM_DECL (AST_Connector)

@@ -181,6 +181,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   FE_Utils::T_Ref_Info          *trval;         /* Template interface info */
   FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
   FE_Utils::T_Inst_Info         *tival;         /* Template instantiation */
+  FE_Utils::T_Port_Info         *ptval          /* Porttype reference */
 }
 
 /*
@@ -357,6 +358,8 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <thval>   template_interface_header
 
 %type <tival>   template_inst
+
+%type <ptval>   template_ref_decl
 %%
 
 /*
@@ -6751,11 +6754,87 @@ If this is also legal, there will be conflicts to be resolved
 
 template_extended_port_decl
         : IDL_PORT template_ref_decl
+        {
+// template_extended_port_decl : IDL_PORT template_ref_decl
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          if ($2 != 0)
+            {
+              Identifier id ($2->name_.c_str ());
+              UTL_ScopedName sn (&id, 0);
+
+              AST_Tmpl_Port *pt =
+                idl_global->gen ()->create_tmpl_port (
+                  &sn,
+                  $2->type_);
+                                                      
+              (void) s->fe_add_tmpl_port (pt);
+              
+              delete $2;
+              $2 = 0;
+            }
+        }
         | IDL_MIRRORPORT template_ref_decl
+        {
+//      | IDL_MIRRORPORT template_ref_decl
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          if ($2 != 0)
+            {
+              Identifier id ($2->name_.c_str ());
+              UTL_ScopedName sn (&id, 0);
+
+              AST_Tmpl_Mirror_Port *pt =
+                idl_global->gen ()->create_tmpl_mirror_port (
+                  &sn,
+                  $2->type_);
+                                                      
+              (void) s->fe_add_tmpl__mirror_port (pt);
+              
+              delete $2;
+              $2 = 0;
+            }
+        }
         ;
 
 template_ref_decl
         : template_ref IDENTIFIER
+        {
+// template_ref_decl : template_ref IDENTIFIER
+          $$ = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($1->name_,
+                                           true);
+          
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($1->name_);
+            }
+          else
+            {
+              AST_PortType *pt = AST_PortType::narrow_from_decl (d);
+              
+              if (pt == 0)
+                {
+                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                              d);
+                }
+              else
+                {
+                  ACE_NEW_RETURN ($$,
+                                  FE_Utils::T_Port_Info ($2,
+                                                         pt),
+                                  1);
+                }
+            }
+            
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
+
+          ACE::strdelete ($2);
+          $2 = 0;
+        }
         ;
 
 %%

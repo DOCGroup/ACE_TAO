@@ -1287,6 +1287,18 @@ UTL_Scope::fe_add_connector (AST_Connector *)
   return 0;
 }
 
+AST_Tmpl_Port *
+UTL_Scope::fe_add_tmpl_port (AST_Tmpl_Port *)
+{
+  return 0;
+}
+
+AST_Tmpl_Mirror_Port *
+UTL_Scope::fe_add_tmpl_mirror_port (AST_Tmpl_Mirror_Port *)
+{
+  return 0;
+}
+
 // This is the second pass of the front end
 // It calls the public add protocol on everything in scope.
 // It calls the add_xx functions of the most derived AST_Node.

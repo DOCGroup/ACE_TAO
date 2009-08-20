@@ -7,6 +7,9 @@
 #include "ast_component.h"
 #include "fe_utils.h"
 
+class AST_Tmpl_Port;
+class AST_Tmpl_Mirror_Port;
+
 class TAO_IDL_FE_Export AST_Connector
   : public virtual AST_Component
 {
@@ -34,6 +37,11 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+  
+protected:
+  virtual AST_Tmpl_Port *fe_add_tmpl_port (AST_Tmpl_Port *p);
+  virtual AST_Tmpl_Mirror_Port *fe_add_tmpl_mirror_port (
+    AST_Tmpl_Mirror_Port *p);
   
 private:
   FE_Utils::T_PARAMLIST_INFO *template_params_;
