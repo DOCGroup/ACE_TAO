@@ -47,16 +47,16 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
   ami_handler::~ami_handler ()
   {
-    printf ("ami_handler::~ami_handler\n");
+    printf ("AMI :\tami_handler::~ami_handler\n");
   }
 
   int ami_handler::svc ()
   {
     char* out_str;
     CORBA::Long   result;
-    printf ("Thread started for cookie <%d>\n", ck_);
+    printf ("AMI :\tThread started for cookie <%d>\n", ck_);
     result = foo_receiver_->asynch_foo (CORBA::string_dup (in_str_), out_str);
-    printf ("Cookie <%ld> received : result <%ld> answer <%s>\n",
+    printf ("AMI :\tCookie <%ld> received : result <%ld> answer <%s>\n",
             ck_, result, out_str);
     foo_callback_->foo_callback_handler (ck_, result, CORBA::string_dup (out_str));
 
@@ -78,7 +78,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   AMI_ami_foo_exec_i::~AMI_ami_foo_exec_i (void)
   {
-    printf ("AMI_ami_foo_exec_i::~AMI_ami_foo_exec_i\n");
+    printf ("AMI :\tAMI_ami_foo_exec_i::~AMI_ami_foo_exec_i\n");
   }
   
   // Operations from ::CCM_AMI::AMI_ami_foo
@@ -87,10 +87,10 @@ namespace CIAO_Hello_AMI_AMI_Impl
   AMI_ami_foo_exec_i::sendc_asynch_foo (
     const char * in_str)
   {
-    printf ("\n\nReceived string <%s>\n", in_str);
-    printf ("Try to pass it on to the Receiver component\n");
+    printf ("AMI :\tReceived string <%s>\n", in_str);
+    printf ("AMI :\tTry to pass it on to the Receiver component\n");
     ::CCM_AMI::Cookie ck = ++cookie_;
-    printf ("Starting AMI handler to handle asych request <%ld>\n", ck);
+    printf ("AMI :\tStarting AMI handler to handle asych request <%ld>\n", ck);
     ami_handler* ah = new ami_handler (ck, in_str, foo_receiver_, foo_callback_);
     ah->activate ();
     return ck;

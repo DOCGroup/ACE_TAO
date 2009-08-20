@@ -1,3 +1,13 @@
+Thu Aug 20 09:24:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Improved log messages.
+
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Changed to meet the latest version.
+
 Thu Aug 20 08:54:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI_CCM/AMI/AMI_exec.h:

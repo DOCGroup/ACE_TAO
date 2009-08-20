@@ -36,7 +36,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
 pulse_generator::pulse_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami)
           : foo_ami_ (::CCM_AMI::AMI_ami_foo::_duplicate (foo_ami))
 {
-  printf ("pulse_generator::pulse_generator\n");
+  printf ("Sender :\tpulse_generator::pulse_generator\n");
 }
 
 pulse_generator::~pulse_generator ()
@@ -45,16 +45,16 @@ pulse_generator::~pulse_generator ()
 
 int pulse_generator::svc ()
 {
-    printf ("pulse_generator::svc\n");
+    printf ("Sender :\tpulse_generator::svc\n");
     ACE_OS::sleep (10);
     for (int i = 0; i < 5; ++i)
       {
         if (CORBA::is_nil (foo_ami_))
-          printf ("foo_receiver is NIL !!!\n");
+          printf ("Sender :\tfoo_receiver is NIL !!!\n");
         else
           {
             foo_ami_->sendc_asynch_foo ("Do something funny");
-            printf ("asynch_foo has been called\n");
+            printf ("Sender :\tasynch_foo has been called\n");
           }
         ACE_OS::sleep (ACE_OS::rand () % 2);
       }
@@ -81,7 +81,7 @@ int pulse_generator::svc ()
     ::CORBA::Long result,
     const char * answer)
   {
-    printf ("Callback from AMI : cookie <%d> result <%d> answer <%s>\n", ck, result, answer);
+    printf ("Sender :\tCallback from AMI : cookie <%d> result <%d> answer <%s>\n", ck, result, answer);
   }
   
   void
@@ -140,7 +140,6 @@ int pulse_generator::svc ()
   void
   Sender_exec_i::ccm_activate (void)
   {
-    printf ("\n\nCCM active\n");
     ::CCM_AMI::AMI_ami_foo_var foo =
       this->context_->get_connection_run_asynch_foo ();
 

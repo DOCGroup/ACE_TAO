@@ -16,18 +16,19 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$daemons = 2;
-@ports = ( 60001, 60002 );
-@iorfiles = ( "Sender.ior", "Receiver.ior" );
-@nodenames = ( "Sender", "Receiver" );
+$daemons = 3;
+@ports = ( 60000, 60001, 60002 );
+@iorfiles = ( "AMI.ior", "Sender.ior", "Receiver.ior" );
+@nodenames = ( "AMI", "Sender", "Receiver" );
 
 $status = 0;
-$dat_file = "NodeManagerMap.dat";
 $cdp_file = "Plan.cdp";
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 
 PerlACE::add_lib_path ('../lib');
+$ENV{"DANCE_TRACE_ENABLE"} = 0;
+$ENV{"CIAO_TRACE_ENABLE"} = 0;
 
 unlink $nsior;
 
@@ -42,7 +43,7 @@ sub delete_ior_files {
     unlink PerlACE::LocalFile ("EM.ior");
     unlink PerlACE::LocalFile ("Receiver.ior");
     unlink PerlACE::LocalFile ("Sender.ior");
-    unlink PerlACE::LocalFile ("DAM.ior");
+    unlink PerlACE::LocalFile ("AMI.ior");
     unlink PerlACE::LocalFile ("ns.ior");
 }
 
@@ -176,28 +177,29 @@ if (PerlACE::waitforfile_timed ("Sender.ior",
     exit 1;
 }
 
-# print "Invoking the controller ($controller_exec -k file://Sender.ior)\n";
-# $controller = new PerlACE::Process ("$controller_exec", "-k file://Sender.ior");
-# $result = $controller->SpawnWaitKill (30);
+if (PerlACE::waitforfile_timed ("AMI.ior",
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: The ior file of AMI could not be found\n";
+    kill_open_processes ();
+    exit 1;
+}
 
-# if ($result != 0) {
-#     print STDERR "ERROR: The controller returned $result\n";
-#     $status = 1;
-# }
+print "Sleeping 60 seconds to allow task to complete\n";
+sleep (60);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
 print "by running dance_plan_launcher.exe with -k file://EM.ior -x $cdp_file -q\n";
 
-# $E =
-#   new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
-#                        "-k file://EM.ior -x $cdp_file -q");
-# $E->SpawnWaitKill (30);
+$E =
+  new PerlACE::Process ("$DAnCE/bin/dance_plan_launcher",
+                        "-k file://EM.ior -x $cdp_file -q");
+$E->SpawnWaitKill (30);
 
-# print "Executor returned.\n";
-# print "Shutting down rest of the processes.\n";
+print "Executor returned.\n";
+print "Shutting down rest of the processes.\n";
 
-# delete_ior_files ();
-# kill_open_processes ();
+delete_ior_files ();
+kill_open_processes ();
 
 exit $status;
