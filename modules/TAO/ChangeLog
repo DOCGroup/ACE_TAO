@@ -1,3 +1,11 @@
+Fri Aug 21 16:47:57 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_instantiated_connector.cpp:
+        * TAO_IDL/be_include/be_instantiated_connector.h:
+        
+          Added be_type to the inheritance so typedef narrowing
+          works properly.
+
 Fri Aug 21 16:29:35 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

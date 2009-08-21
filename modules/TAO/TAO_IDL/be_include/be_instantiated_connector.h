@@ -6,10 +6,12 @@
 
 #include "ast_instantiated_connector.h"
 
+#include "be_type.h"
 #include "be_scope.h"
 
 class be_instantiated_connector
   : public virtual AST_Instantiated_Connector,
+    public virtual be_type,
     public virtual be_scope
 {
 public:

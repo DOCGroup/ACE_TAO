@@ -19,6 +19,8 @@ be_instantiated_connector::be_instantiated_connector (
     AST_Instantiated_Connector (n,
                                 connector_type,
                                 template_args),
+    be_type (AST_Decl::NT_connector,
+             n),
     be_scope (AST_Decl::NT_connector)
 {
 }
@@ -31,6 +33,7 @@ void
 be_instantiated_connector::destroy (void)
 {
   this->AST_Instantiated_Connector::destroy ();
+  this->be_type::destroy ();
   this->be_scope::destroy ();
 }
 
