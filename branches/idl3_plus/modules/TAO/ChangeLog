@@ -1,7 +1,14 @@
+Fri Aug 21 16:16:32 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Regenerated and recompiled.
+
 Fri Aug 21 16:07:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
-        
+
           Added code to set the member of the big parsing union with
           the pointer to an instantiated connector, once it's created.
 
