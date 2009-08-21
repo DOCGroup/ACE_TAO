@@ -55,8 +55,8 @@ AST_Instantiated_Interface::dump (ACE_OSTREAM_TYPE &o)
 
   this->local_name ()->dump (o);
   this->dump_i (o, "<");
-  unsigned long index = 0UL;
-  
+//  unsigned long index = 0UL;
+
   // TODO - template args
 
   this->dump_i (o, " {\n");
