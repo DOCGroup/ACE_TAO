@@ -90,6 +90,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_template_interface.h"
 #include "ast_porttype.h"
 #include "ast_connector.h"
+#include "ast_instantiated_connector.h"
 #include "ast_uses.h"
 #include "ast_constant.h"
 #include "ast_union.h"

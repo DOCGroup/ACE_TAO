@@ -1,3 +1,12 @@
+Fri Aug 21 16:29:35 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added file include for instantiated connector, regenerated and
+          recompiled.
+
 Fri Aug 21 16:16:32 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
