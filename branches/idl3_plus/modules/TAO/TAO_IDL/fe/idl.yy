@@ -286,7 +286,7 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <dcval>   template_type_spec sequence_type_spec string_type_spec
 %type <dcval>   struct_type enum_type switch_type_spec union_type
 %type <dcval>   array_declarator op_type_spec seq_head wstring_type_spec
-%type <dcval>   param_type_spec
+%type <dcval>   param_type_spec connector_inst_spec
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
 %type <idlist>  home_inheritance_spec primary_key_spec
@@ -6845,6 +6845,7 @@ connector_inst_spec
         {
 // connector_inst_spec : template_inst
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          $$ = 0;
 
           AST_Decl *d =
             s->lookup_by_name ($1->name_, true);  
@@ -6873,13 +6874,11 @@ connector_inst_spec
                       Identifier id ("connector");
                       UTL_ScopedName sn (&id, 0);
 
-                      AST_Instantiated_Connector *ic =
+                      $$ =
                         idl_global->gen ()->create_instantiated_connector (
                           &sn,
                           c,
                           args);
-
-                      (void) s->fe_add_instantiated_connector (ic);
                     }
                 }
             }

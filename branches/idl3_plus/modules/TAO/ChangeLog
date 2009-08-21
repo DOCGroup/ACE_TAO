@@ -1,3 +1,10 @@
+Fri Aug 21 16:07:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        
+          Added code to set the member of the big parsing union with
+          the pointer to an instantiated connector, once it's created.
+
 Fri Aug 21 13:51:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_instantiated_connector.cpp:
