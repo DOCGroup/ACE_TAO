@@ -1,3 +1,12 @@
+Fri Aug 21 21:24:44 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * bin/PerlACE/ProcessLVRT.pm: Don't be so aggressive with the reboots.
+
+        * bin/TestTarget_LVRT.pm: React correctly to only one name being
+          passed to GetFile - if there's only one (usually the case w/ TAO
+          tests) LocalFile-ify it for the remote and use as-is for local.
+          This gets most of the TAO tests to properly retrieve the IOR file.
+
 Tue Aug 18 19:09:40 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/config-macros.h: In ACE_NOTREACHED, aC++ 03.* needs to have the
