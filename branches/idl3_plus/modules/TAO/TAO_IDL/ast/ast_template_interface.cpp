@@ -35,7 +35,9 @@ AST_Template_Interface::AST_Template_Interface (
                    nih_flat,
                    false,
                    false),
-    AST_Template_Common (template_params)
+    AST_Template_Common (AST_Decl::NT_interface,
+                         n,
+                         template_params)
 {
 }
 

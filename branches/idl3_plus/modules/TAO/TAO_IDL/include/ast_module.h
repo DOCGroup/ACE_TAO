@@ -137,53 +137,81 @@ private:
 
   // Scope Management Protocol
 
-  virtual AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t);
+  virtual
+  AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t);
 
-  virtual AST_Module *fe_add_module (AST_Module *m);
+  virtual
+  AST_Module *fe_add_module (AST_Module *m);
 
-  virtual AST_Interface *fe_add_interface (AST_Interface *i);
+  virtual
+  AST_Interface *fe_add_interface (AST_Interface *i);
 
-  virtual AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
+  virtual
+  AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
 
-  virtual AST_ValueType *fe_add_valuetype (AST_ValueType *i);
+  virtual
+  AST_ValueType *fe_add_valuetype (AST_ValueType *i);
 
-  virtual AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
+  virtual
+  AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
 
-  virtual AST_EventType *fe_add_eventtype (AST_EventType *i);
+  virtual
+  AST_EventType *fe_add_eventtype (AST_EventType *i);
 
-  virtual AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i);
+  virtual
+  AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i);
 
-  virtual AST_Component *fe_add_component (AST_Component *i);
+  virtual
+  AST_Component *fe_add_component (AST_Component *i);
 
-  virtual AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
+  virtual
+  AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
 
-  virtual AST_Connector *fe_add_connector (AST_Connector *i);
+  virtual
+  AST_Connector *fe_add_connector (AST_Connector *i);
 
-  virtual AST_Home *fe_add_home (AST_Home *i);
+  virtual
+  AST_Home *fe_add_home (AST_Home *i);
 
-  virtual AST_Constant *fe_add_constant (AST_Constant *c);
+  virtual
+  AST_Constant *fe_add_constant (AST_Constant *c);
 
-  virtual AST_Exception *fe_add_exception (AST_Exception *e);
+  virtual
+  AST_Exception *fe_add_exception (AST_Exception *e);
 
-  virtual AST_Union *fe_add_union (AST_Union *u);
+  virtual
+  AST_Union *fe_add_union (AST_Union *u);
 
-  virtual AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+  virtual
+  AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
 
-  virtual AST_Structure *fe_add_structure (AST_Structure *s);
+  virtual
+  AST_Structure *fe_add_structure (AST_Structure *s);
 
-  virtual AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
+  virtual
+  AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
 
-  virtual AST_Enum *fe_add_enum (AST_Enum *e);
+  virtual
+  AST_Enum *fe_add_enum (AST_Enum *e);
 
-  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  virtual
+  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
-  virtual AST_Typedef *fe_add_typedef (AST_Typedef *t);
+  virtual
+  AST_Typedef *fe_add_typedef (AST_Typedef *t);
 
-  virtual AST_Native *fe_add_native (AST_Native *n);
+  virtual
+  AST_Native *fe_add_native (AST_Native *n);
 
-  virtual AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
+  virtual
+  AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
 
-  virtual AST_PortType *fe_add_porttype (AST_PortType *pt);
+  virtual
+  AST_PortType *fe_add_porttype (AST_PortType *pt);
+  
+  virtual
+  AST_Instantiated_Connector *fe_add_instantiated_connector (
+    AST_Instantiated_Connector *ic);
 
   bool pd_has_nested_valuetype;
 

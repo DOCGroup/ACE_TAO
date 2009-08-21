@@ -83,6 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_instantiated_interface.h"
 #include "ast_mirror_port.h"
 #include "ast_connector.h"
+#include "ast_instantiated_connector.h"
 #include "ast_tmpl_mirror_port.h"
 #include "ast_provides.h"
 #include "ast_uses.h"
@@ -957,7 +958,7 @@ AST_Instantiated_Interface *
 AST_Generator::create_instantiated_interface (
   UTL_ScopedName *n,
   AST_Template_Interface *template_ref,
-  UTL_NameList *template_args)
+  AST_Template_Common::T_ARGLIST *template_args)
 {
   AST_Instantiated_Interface *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1118,6 +1119,22 @@ AST_Generator::create_tmpl_mirror_port (UTL_ScopedName *n,
   ACE_NEW_RETURN (retval,
                   AST_Tmpl_Mirror_Port (n,
                                         porttype_ref),
+                  0);
+                  
+  return retval;
+}
+
+AST_Instantiated_Connector *
+AST_Generator::create_instantiated_connector (
+  UTL_ScopedName *n,
+  AST_Connector *connector_type,
+  AST_Template_Common::T_ARGLIST *template_args)
+{
+  AST_Instantiated_Connector *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Instantiated_Connector (n,
+                                              connector_type,
+                                              template_args),
                   0);
                   
   return retval;

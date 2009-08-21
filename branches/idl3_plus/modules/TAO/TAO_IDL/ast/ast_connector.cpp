@@ -36,7 +36,9 @@ AST_Connector::AST_Connector (
                    0,
                    0,
                    0),
-    template_params_ (template_params)
+    AST_Template_Common (AST_Decl::NT_connector,
+                         n,
+                         template_params)
 {
 }
 

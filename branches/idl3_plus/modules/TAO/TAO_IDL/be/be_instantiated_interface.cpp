@@ -10,7 +10,7 @@ ACE_RCSID (be,
 be_instantiated_interface::be_instantiated_interface (
       UTL_ScopedName *n,
       AST_Template_Interface *template_ref,
-      UTL_NameList *template_args)
+      AST_Template_Common::T_ARGLIST *template_args)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_interface,

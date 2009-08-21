@@ -187,6 +187,13 @@ be_visitor::visit_connector (be_connector *)
 }
 
 int
+be_visitor::visit_instantiated_connector (
+  be_instantiated_connector *)
+{
+  return 0;
+}
+
+int
 be_visitor::visit_tmpl_port (be_tmpl_port *)
 {
   return 0;

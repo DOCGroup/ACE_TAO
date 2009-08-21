@@ -13,7 +13,7 @@ public:
   AST_Mirror_Port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args);
+    AST_Template_Common::T_ARGLIST *template_args);
 
   virtual ~AST_Mirror_Port (void);
   

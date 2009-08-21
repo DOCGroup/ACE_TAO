@@ -40,14 +40,6 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
   
-  typedef ACE_Unbounded_Queue<AST_Decl *> T_ARGLIST;
-  
-  // Called by extended port instantiations.
-  T_ARGLIST *match_arg_names (UTL_NameList *arg_names);
-  
-  // Called by porttype references in connectors.
-  bool match_params (UTL_StrList *param_names);
-  
 protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);
 
@@ -58,10 +50,6 @@ protected:
   virtual AST_Emits *fe_add_emits (AST_Emits *p);
 
   virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
-  
-private:
-  bool match_param_type (AST_Decl::NodeType my_type,
-                         AST_Decl *d);
 };
 
 #endif           // AST_PORTTYPE_H

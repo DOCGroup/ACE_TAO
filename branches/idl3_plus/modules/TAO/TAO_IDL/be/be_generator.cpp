@@ -86,6 +86,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_porttype.h"
 #include "be_mirror_port.h"
 #include "be_connector.h"
+#include "be_instantiated_connector.h"
 #include "be_tmpl_port.h"
 #include "be_tmpl_mirror_port.h"
 #include "be_provides.h"
@@ -950,7 +951,7 @@ AST_Instantiated_Interface *
 be_generator::create_instantiated_interface (
   UTL_ScopedName *n,
   AST_Template_Interface *template_ref,
-  UTL_NameList *template_args)
+  AST_Template_Common::T_ARGLIST *template_args)
 {
   be_instantiated_interface *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -1111,6 +1112,22 @@ be_generator::create_tmpl_mirror_port (UTL_ScopedName *n,
   ACE_NEW_RETURN (retval,
                   be_tmpl_mirror_port (n,
                                        porttype_ref),
+                  0);
+                  
+  return retval;
+}
+
+AST_Instantiated_Connector *
+be_generator::create_instantiated_connector (
+  UTL_ScopedName *n,
+  AST_Connector *connector_type,
+  AST_Template_Common::T_ARGLIST *template_args)
+{
+  be_instantiated_connector *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_instantiated_connector (n,
+                                             connector_type,
+                                             template_args),
                   0);
                   
   return retval;

@@ -14,7 +14,7 @@ ACE_RCSID (ast,
 AST_Extended_Port::AST_Extended_Port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref,
-    AST_PortType::T_ARGLIST *template_args)
+    AST_Template_Common::T_ARGLIST *template_args)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_ext_port,
@@ -36,7 +36,7 @@ AST_Extended_Port::port_type (void) const
   return AST_PortType::narrow_from_decl (this->field_type ());
 }
 
-AST_PortType::T_ARGLIST *
+AST_Template_Common::T_ARGLIST *
 AST_Extended_Port::template_args (void) const
 {
   return this->template_args_;

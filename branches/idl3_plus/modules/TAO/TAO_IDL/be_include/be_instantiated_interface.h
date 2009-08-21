@@ -15,7 +15,7 @@ public:
   be_instantiated_interface (
     UTL_ScopedName *n,
     AST_Template_Interface *template_ref,
-    UTL_NameList *template_args);
+    AST_Template_Common::T_ARGLIST *template_args);
 
   virtual ~be_instantiated_interface (void);
 
