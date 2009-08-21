@@ -2172,6 +2172,7 @@ template_type_spec
         : sequence_type_spec
         | string_type_spec
         | wstring_type_spec
+        | connector_inst_spec
         ;
 
 constructed_type_spec
@@ -6640,8 +6641,10 @@ connector_header
 
               if (parent == 0)
                 {
-                  idl_global->err ()->error1 (UTL_Error::EIDL_CONNECTOR_EXPECTED,
-                                              d);
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_CONNECTOR_EXPECTED,
+                    d);
+                    
                   so_far_so_good = false;
                 }
 
@@ -6835,6 +6838,56 @@ template_ref_decl
           ACE::strdelete ($2);
           $2 = 0;
         }
+        ;
+        
+connector_inst_spec
+        : template_inst
+        {
+// connector_inst_spec : template_inst
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          
+          AST_Decl *d =
+            s->lookup_by_name ($1->name_, true);  
+                  
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($1->name_);
+            }
+          else
+            {
+              AST_Connector *c = AST_Connector::narrow_from_decl (d);
+
+              if (c == 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_CONNECTOR_EXPECTED,
+                    d);
+                }
+              else
+                {
+                  AST_Template_Common::T_ARGLIST *args =
+                    c->match_arg_names ($1->args_);
+                    
+                  if (args != 0)
+                    {
+                      Identifier id ("connector");
+                      UTL_ScopedName sn (&id, 0);
+                      
+                      AST_Instantiated_Connector *ic =
+                        idl_global->gen ()->create_instantiated_connector (
+                          &sn,
+                          c,
+                          args);
+                    }
+                      
+                  (void) s->fe_add_instantiated_connector (ic);
+                }
+            }
+
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
+        } 
         ;
 
 %%

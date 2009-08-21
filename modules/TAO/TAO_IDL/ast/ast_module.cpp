@@ -79,6 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component_fwd.h"
 #include "ast_porttype.h"
 #include "ast_connector.h"
+#include "ast_instantiated_connector.h"
 #include "ast_home.h"
 #include "ast_constant.h"
 #include "ast_exception.h"
@@ -1766,6 +1767,45 @@ AST_Module::fe_add_porttype (AST_PortType *pt)
                            pt->local_name ());
 
   return pt;
+}
+
+AST_Instantiated_Connector *
+AST_Module::fe_add_instantiated_connector (
+  AST_Instantiated_Connector *ic)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (ic, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      ic,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, ic->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      ic,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (ic);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (ic,
+                           false,
+                           ic->local_name ());
+
+  return ic;
 }
 
 // Dump this AST_Module node to the ostream o.

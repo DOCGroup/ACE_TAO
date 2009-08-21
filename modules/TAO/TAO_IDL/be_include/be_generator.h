@@ -278,7 +278,7 @@ public:
   AST_Instantiated_Interface *create_instantiated_interface (
     UTL_ScopedName *n,
     AST_Template_Interface *template_ref,
-    UTL_NameList *template_args);  
+    AST_Template_Common::T_ARGLIST *template_args);  
 
   virtual
   AST_PortType *create_porttype (
@@ -332,6 +332,12 @@ public:
   AST_Tmpl_Mirror_Port *create_tmpl_mirror_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
+    
+  virtual
+  AST_Instantiated_Connector *create_instantiated_connector (
+    UTL_ScopedName *n,
+    AST_Connector *connector_type,
+    AST_Template_Common::T_ARGLIST *template_args);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

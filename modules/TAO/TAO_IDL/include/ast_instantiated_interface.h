@@ -5,6 +5,7 @@
 #define AST_INSTANTIATED_INTERFACE_H
 
 #include "ast_interface.h"
+#include "ast_template_common.h"
 
 class AST_Template_Interface;
 
@@ -15,7 +16,7 @@ public:
   AST_Instantiated_Interface (
     UTL_ScopedName *n,
     AST_Template_Interface *template_ref,
-    UTL_NameList *template_args);
+    AST_Template_Common::T_ARGLIST *template_args);
 
   virtual ~AST_Instantiated_Interface (void);
 
@@ -35,7 +36,7 @@ public:
 
 protected:
   AST_Template_Interface *template_ref_;
-  UTL_NameList *template_args_;
+  AST_Template_Common::T_ARGLIST *template_args_;
 };
 
 #endif /* AST_INSTANTIATED_INTERFACE_H */

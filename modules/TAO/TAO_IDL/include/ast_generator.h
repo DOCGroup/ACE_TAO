@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
 #include "ast_porttype.h"
+#include "ast_template_common.h"
 
 #include "fe_utils.h"
 
@@ -85,6 +86,7 @@ class AST_Instantiated_Interface;
 class AST_Extended_Port;
 class AST_Mirror_Port;
 class AST_Connector;
+class AST_Instantiated_Connector;
 class AST_Tmpl_Port;
 class AST_Tmpl_Mirror_Port;
 class AST_Provides;
@@ -366,7 +368,7 @@ public:
   AST_Instantiated_Interface *create_instantiated_interface (
     UTL_ScopedName *n,
     AST_Template_Interface *template_ref,
-    UTL_NameList *template_args);  
+    AST_Template_Common::T_ARGLIST *template_args);  
 
   virtual
   AST_PortType *create_porttype (
@@ -421,6 +423,12 @@ public:
   AST_Tmpl_Mirror_Port *create_tmpl_mirror_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
+    
+  virtual
+  AST_Instantiated_Connector *create_instantiated_connector (
+    UTL_ScopedName *n,
+    AST_Connector *connector_type,
+    AST_Template_Common::T_ARGLIST *template_args);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

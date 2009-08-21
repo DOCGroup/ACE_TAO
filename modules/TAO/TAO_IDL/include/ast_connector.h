@@ -5,13 +5,15 @@
 #define AST_CONNECTOR_H
 
 #include "ast_component.h"
+#include "ast_template_common.h"
 #include "fe_utils.h"
 
 class AST_Tmpl_Port;
 class AST_Tmpl_Mirror_Port;
 
 class TAO_IDL_FE_Export AST_Connector
-  : public virtual AST_Component
+  : public virtual AST_Component,
+    public virtual AST_Template_Common
 {
 public:
   AST_Connector (void);
@@ -42,9 +44,6 @@ protected:
   virtual AST_Tmpl_Port *fe_add_tmpl_port (AST_Tmpl_Port *p);
   virtual AST_Tmpl_Mirror_Port *fe_add_tmpl_mirror_port (
     AST_Tmpl_Mirror_Port *p);
-  
-private:
-  FE_Utils::T_PARAMLIST_INFO *template_params_;
 };
 
 #endif // AST_CONNECTOR_H
