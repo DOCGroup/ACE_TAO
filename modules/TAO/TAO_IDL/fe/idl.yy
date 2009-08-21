@@ -6839,16 +6839,16 @@ template_ref_decl
           $2 = 0;
         }
         ;
-        
+
 connector_inst_spec
         : template_inst
         {
 // connector_inst_spec : template_inst
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          
+
           AST_Decl *d =
             s->lookup_by_name ($1->name_, true);  
-                  
+
           if (d == 0)
             {
               idl_global->err ()->lookup_error ($1->name_);
@@ -6867,20 +6867,20 @@ connector_inst_spec
                 {
                   AST_Template_Common::T_ARGLIST *args =
                     c->match_arg_names ($1->args_);
-                    
+
                   if (args != 0)
                     {
                       Identifier id ("connector");
                       UTL_ScopedName sn (&id, 0);
-                      
+
                       AST_Instantiated_Connector *ic =
                         idl_global->gen ()->create_instantiated_connector (
                           &sn,
                           c,
                           args);
+
+                      (void) s->fe_add_instantiated_connector (ic);
                     }
-                      
-                  (void) s->fe_add_instantiated_connector (ic);
                 }
             }
 

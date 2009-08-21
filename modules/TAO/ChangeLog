@@ -1,14 +1,27 @@
+Fri Aug 21 13:51:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_instantiated_connector.cpp:
+        * TAO_IDL/ast/ast_instantiated_interface.cpp:
+
+          Commented out unused variables in partially implemented
+          dump() methods.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Regenerated and recompiled.
+
 Fri Aug 21 13:27:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_instantiated_interface.cpp:
         * TAO_IDL/include/ast_instantiated_connector.h:
         * TAO_IDL/be/be_instantiated_connector.cpp:
         * TAO_IDL/be_include/be_instantiated_connector.h:
-        
+
           New files, defining a node type for the template
           instantiation of a connector type, which is part
           of a typedef construct.
-        
+
         * TAO_IDL/ast/ast_connector.cpp:
         * TAO_IDL/ast/ast_extended_port.cpp:
         * TAO_IDL/ast/ast_generator.cpp:
@@ -39,7 +52,7 @@ Fri Aug 21 13:27:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_visitor.h:
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Changes associated with the new node types above and
           with the semantic action that creates an instantiated
           connector.
