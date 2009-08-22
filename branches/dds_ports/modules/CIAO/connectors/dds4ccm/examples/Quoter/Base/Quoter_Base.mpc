@@ -1,0 +1,97 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -o ../lib -n Quoter_Base"
+
+project(Quoter_Base_idl_gen) : componentidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=QUOTER_BASE_STUB_Export \
+              -Wb,stub_export_include=Quoter_Base_stub_export.h \
+              -Wb,skel_export_macro=QUOTER_BASE_SKEL_Export \
+              -Wb,skel_export_include=Quoter_Base_skel_export.h \
+              -Wb,exec_export_macro=QUOTER_BASE_EXEC_Export \
+              -Wb,exec_export_include=Quoter_Base_exec_export.h
+
+  IDL_Files {
+    Quoter_Base.idl
+  }
+}
+
+project(Quoter_Base_ndds_ts_gen) : ndds_ts_defaults   {
+  custom_only = 1
+
+  NDDSTypeSupport_Files {
+    Quoter_Base.idl
+  }
+}
+
+project(Quoter_Base_NDDS_TS) : nddslib {
+  after += Quoter_Base_ndds_ts_gen
+
+  libout = ../lib
+  sharedname = Quoter_Base_NDDS_TS
+  
+  Source_Files {
+    Quoter_Base.cxx
+    Quoter_BasePlugin.cxx
+    Quoter_BaseSupport.cxx
+  }
+
+  Header_Files {
+    Quoter_Base.h
+    Quoter_BasePlugin.h
+    Quoter_BaseSupport.h
+  }
+}
+
+project(Quoter_Base_stub) : ccm_stub   {
+  after += Quoter_Base_idl_gen 
+  libs  += 
+  
+  libout = ../lib
+  sharedname = Quoter_Base_stub
+  dynamicflags   = QUOTER_BASE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Quoter_BaseC.cpp
+  }
+
+  Header_Files {
+    Quoter_BaseC.h
+    Quoter_Base_stub_export.h
+  }
+
+  Inline_Files {
+    Quoter_BaseC.inl
+  }
+}
+
+
+project(Quoter_Base_skel) : ciao_executor   {
+  after      +=  Quoter_Base_stub Quoter_Base_lem_stub
+  sharedname  = Quoter_Base_skel
+  libs       += Quoter_Base_stub
+ 
+  
+  libout = ../lib
+  dynamicflags = QUOTER_BASE_SKEL_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    Quoter_BaseS.cpp
+  }
+
+  Header_Files {
+    Quoter_BaseS.h
+    Quoter_Base_skel_export.h
+  }
+
+  Inline_Files {
+    Quoter_BaseS.inl
+  }
+}
+
+
