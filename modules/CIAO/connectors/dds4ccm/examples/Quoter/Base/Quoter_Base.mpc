@@ -1,7 +1,7 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -o ../lib -n Quoter_Base"
+// This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n Quoter_Base"
 
-project(Quoter_Base_idl_gen) : componentidldefaults   {
+project(DDS_Quoter_Base_idl_gen) : componentidldefaults   {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=QUOTER_BASE_STUB_Export \
               -Wb,stub_export_include=Quoter_Base_stub_export.h \
@@ -15,7 +15,7 @@ project(Quoter_Base_idl_gen) : componentidldefaults   {
   }
 }
 
-project(Quoter_Base_ndds_ts_gen) : ndds_ts_defaults   {
+project(DDS_Quoter_Base_ndds_ts_gen) : ndds_ts_defaults   {
   custom_only = 1
 
   NDDSTypeSupport_Files {
@@ -23,11 +23,11 @@ project(Quoter_Base_ndds_ts_gen) : ndds_ts_defaults   {
   }
 }
 
-project(Quoter_Base_NDDS_TS) : nddslib {
-  after += Quoter_Base_ndds_ts_gen
+project(DDS_Quoter_Base_NDDS_TS) : nddslib {
+  after += DDS_Quoter_Base_ndds_ts_gen
 
   libout = ../lib
-  sharedname = Quoter_Base_NDDS_TS
+  sharedname = DDS_Quoter_Base_NDDS_TS
   
   Source_Files {
     Quoter_Base.cxx
@@ -42,12 +42,13 @@ project(Quoter_Base_NDDS_TS) : nddslib {
   }
 }
 
-project(Quoter_Base_stub) : ccm_stub   {
-  after += Quoter_Base_idl_gen 
+
+project(DDS_Quoter_Base_stub) : ccm_stub   {
+  after += DDS_Quoter_Base_idl_gen 
   libs  += 
   
   libout = ../lib
-  sharedname = Quoter_Base_stub
+  sharedname = DDS_Quoter_Base_stub
   dynamicflags   = QUOTER_BASE_STUB_BUILD_DLL
 
   IDL_Files {
@@ -68,10 +69,10 @@ project(Quoter_Base_stub) : ccm_stub   {
 }
 
 
-project(Quoter_Base_skel) : ciao_executor   {
-  after      +=  Quoter_Base_stub Quoter_Base_lem_stub
-  sharedname  = Quoter_Base_skel
-  libs       += Quoter_Base_stub
+project(DDS_Quoter_Base_skel) : ciao_executor   {
+  after      +=  DDS_Quoter_Base_stub DDS_Quoter_Base_lem_stub
+  sharedname  = DDS_Quoter_Base_skel
+  libs       += DDS_Quoter_Base_stub
  
   
   libout = ../lib
