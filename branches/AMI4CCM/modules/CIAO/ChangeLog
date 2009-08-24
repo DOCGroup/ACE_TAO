@@ -1,3 +1,9 @@
+Mon Aug 24 12:21:50 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+          Removed file since this wasn't needed.
+
 Mon Aug 24 11:34:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI_exec.cpp:

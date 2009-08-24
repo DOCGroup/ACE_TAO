@@ -30,7 +30,6 @@
 
 #include "AMI_exec.h"
 #include "AMI_perform_work.h"
-#include "AMI_CORBA_handler.h"
 #include "ciao/CIAO_common.h"
 
 
@@ -176,7 +175,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
       foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback)),
       cookie_ (0)
   {
-    //initilize AMI client
+    //initialize AMI client
     int argc = 2;
     ACE_TCHAR **argv = new ACE_TCHAR *[argc];
     argv[0] = ACE::strnew (ACE_TEXT (""));
@@ -232,7 +231,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
     ah->activate ();
 #else
     //AMI CORBA implementation.
-    printf ("Start the AMI CORBA reply handler\n");
+    printf ("Start the AMI CORBA handler thread\n");
     //start handler as a trhead.
     AMI_CORBA_handler *amt = new AMI_CORBA_handler (
         ck,
