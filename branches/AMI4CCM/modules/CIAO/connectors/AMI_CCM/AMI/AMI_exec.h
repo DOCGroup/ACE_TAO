@@ -41,10 +41,14 @@
 
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
+#include "AMI_server.h"
 
 namespace CIAO_Hello_AMI_AMI_Impl
 {
 
+  /////////////////////////////
+  //AMI thread implemenatation
+  /////////////////////////////
   class ami_handler : public virtual ACE_Task_Base
   {
   public:
@@ -53,16 +57,15 @@ namespace CIAO_Hello_AMI_AMI_Impl
       const  char * in_str,
       ::CCM_AMI::AMI_foo_ptr foo_receiver,
       ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
-    ~ami_handler ();
-
     virtual int svc (void);
-
   private:
     long ck_;
     const char * in_str_;
     ::CCM_AMI::AMI_foo_ptr          foo_receiver_;
     ::CCM_AMI::AMI_foo_callback_ptr foo_callback_;
   };
+
+
 
   class  AMI_ami_foo_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_ami_foo,
@@ -87,6 +90,12 @@ namespace CIAO_Hello_AMI_AMI_Impl
     ::CCM_AMI::AMI_foo_var          foo_receiver_;
     ::CCM_AMI::AMI_foo_callback_var foo_callback_;
     long cookie_;
+
+    CORBA::ORB_var orb_;
+
+    /// Variable to handle CORBA AMI
+    INTERNAL_CCM_AMI::AMI_AMI_fooHandler_var the_handler_var_;
+    INTERNAL_CCM_AMI::AMI_foo_var ami_foo_var_;
   };
   
   class  AMI_exec_i

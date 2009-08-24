@@ -17,7 +17,7 @@
 //       http://doc.ece.uci.edu/
 // and
 //       Institute for Software Integrated Systems
-//       Vanderbilt University
+//       Vanderbilt Universityaaa
 //       Nashville, TN
 //       USA
 //       http://www.isis.vanderbilt.edu/
@@ -29,10 +29,16 @@
 // be/be_codegen.cpp:1278
 
 #include "AMI_exec.h"
+#include "AMI_perform_work.h"
+#include "AMI_CORBA_handler.h"
 #include "ciao/CIAO_common.h"
 
 namespace CIAO_Hello_AMI_AMI_Impl
 {
+  //============================================================
+  // Implementation of the basic form of AMI: a thread to handle
+  // asynchronous invocations.
+  //============================================================
   ami_handler::ami_handler (
     ::CCM_AMI::Cookie ck,
     const char * in_str,
@@ -43,11 +49,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
       foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver)),
       foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback))
   {
-  }
-
-  ami_handler::~ami_handler ()
-  {
-    printf ("AMI :\tami_handler::~ami_handler\n");
   }
 
   int ami_handler::svc ()
@@ -64,9 +65,55 @@ namespace CIAO_Hello_AMI_AMI_Impl
   }
 
   //============================================================
+  // Implementation of the AMI CORBA reply handler
+  //============================================================
+  class AMI_CORBA_handler : public POA_INTERNAL_CCM_AMI::AMI_AMI_fooHandler
+  {
+  public:
+    AMI_CORBA_handler (void)
+      : foo_callback_ (0)
+    {
+    };
+
+    void set_callback (::CCM_AMI::AMI_foo_callback_ptr foo_callback)
+      {
+        foo_callback_ = ::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback);
+      };
+
+    void asynch_foo (CORBA::Long result,
+              const char * out_str)
+      {
+        printf ("AMI CORBA :\tHandler::asynch_foo\n");
+        foo_callback_->foo_callback_handler (1, result, CORBA::string_dup (out_str));
+      };
+
+    void asynch_foo_excep (::Messaging::ExceptionHolder * excep_holder)
+      {
+        printf ("AMI CORBA :\tHandler::foo_excep\n");
+
+        try
+          {
+            excep_holder->raise_exception ();
+          }
+        catch (const CORBA::Exception& ex)
+          {
+            ex._tao_print_exception ("Caught exception:");
+          }
+      };
+
+    ~AMI_CORBA_handler (void)
+    {
+    };
+  private:
+    ::CCM_AMI::AMI_foo_callback_var foo_callback_;
+  };
+
+  // ReplyHandler.
+  AMI_CORBA_handler handler;
+
+  //============================================================
   // Facet Executor Implementation Class: AMI_ami_foo_exec_i
   //============================================================
-  
   AMI_ami_foo_exec_i::AMI_ami_foo_exec_i (
     ::CCM_AMI::AMI_foo_ptr foo_receiver,
     ::CCM_AMI::AMI_foo_callback_ptr foo_callback) :
@@ -74,23 +121,65 @@ namespace CIAO_Hello_AMI_AMI_Impl
       foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback)),
       cookie_ (0)
   {
+    //initilize AMI client
+    ACE_TCHAR* argv[2];
+    argv[0] = ACE_TEXT ("");
+    argv[1] = ACE_TEXT ("");
+    int argc = 2;
+    orb_ = CORBA::ORB_init (argc, argv);
+
+    CORBA::Object_var object =
+      orb_->string_to_object ("file://server.ior");
+    ami_foo_var_ = INTERNAL_CCM_AMI::AMI_foo::_narrow (object.in ());
+
+    if (CORBA::is_nil (ami_foo_var_.in ()))
+      {
+        printf ("Server is NIL\n");
+      }
+
+    // Activate POA to handle the call back.
+    CORBA::Object_var poa_object =
+      orb_->resolve_initial_references("RootPOA");
+
+    if (CORBA::is_nil (poa_object.in ()))
+      printf ("POA is NIL!\n");
+
+    PortableServer::POA_var root_poa =
+      PortableServer::POA::_narrow (poa_object.in ());
+
+    PortableServer::POAManager_var poa_manager =
+      root_poa->the_POAManager ();
+
+    poa_manager->activate ();
+
+    printf ("Start the AMI CORBA handler\n");
+    handler.set_callback (foo_callback);
+    the_handler_var_ = handler._this (/* */);
   }
-  
+
   AMI_ami_foo_exec_i::~AMI_ami_foo_exec_i (void)
   {
-    printf ("AMI :\tAMI_ami_foo_exec_i::~AMI_ami_foo_exec_i\n");
   }
-  
+
   // Operations from ::CCM_AMI::AMI_ami_foo
-  
+
   ::CCM_AMI::Cookie
   AMI_ami_foo_exec_i::sendc_asynch_foo (
     const char * in_str)
   {
+    printf ("AMI :\tsendc_asynch_foo <%s>\n", in_str);
     ::CCM_AMI::Cookie ck = ++cookie_;
+    //AMI CORBA implementation.
+    printf ("AMI :\tSending string <%s> for cookie <%ld> to AMI CORBA server\n", in_str, ck);
+    ami_foo_var_->sendc_asynch_foo (the_handler_var_.in (), in_str);
+
+
+/*
+    //single thread to perform asynchronous actions
     printf ("AMI :\tReceived string <%s> for <%d>\n", in_str, ck);
     ami_handler* ah = new ami_handler (ck, in_str, foo_receiver_, foo_callback_);
     ah->activate ();
+*/
     return ck;
   }
   
@@ -148,7 +237,21 @@ namespace CIAO_Hello_AMI_AMI_Impl
   void
   AMI_exec_i::ccm_activate (void)
   {
-    /* Your code here. */
+    ::CCM_AMI::AMI_foo_var receiver_foo =
+      this->context_->get_connection_receiver_foo ();
+
+    printf ("AMI :\tCCM_ACTIVATE\n");
+    ACE_TCHAR* argv[2];
+    argv[0] = ACE_TEXT ("");
+    argv[1] = ACE_TEXT ("");
+    int argc = 2;
+    CORBA::ORB_var orb =
+      CORBA::ORB_init (argc, argv);
+    AMI_server *srv = new AMI_server (orb.in (), receiver_foo);
+    AMI_perform_work *pw = new AMI_perform_work (orb.in ());
+    printf ("AMI :\tStarting server and CORBA thread.\n");
+    srv->activate ();
+    pw->activate ();
   }
   
   void

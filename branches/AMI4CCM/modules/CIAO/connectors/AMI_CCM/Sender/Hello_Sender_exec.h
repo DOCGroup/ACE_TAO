@@ -50,12 +50,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
   public:
     pulse_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami);
 
-    ~pulse_generator ();
-
     virtual int svc (void);
 
   private:
-    /// Maintains a handle that actually process the event
     ::CCM_AMI::AMI_ami_foo_var foo_ami_;
   };
 

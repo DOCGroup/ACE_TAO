@@ -36,17 +36,12 @@ namespace CIAO_Hello_AMI_Sender_Impl
 pulse_generator::pulse_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami)
           : foo_ami_ (::CCM_AMI::AMI_ami_foo::_duplicate (foo_ami))
 {
-  printf ("Sender :\tpulse_generator::pulse_generator\n");
-}
-
-pulse_generator::~pulse_generator ()
-{
 }
 
 int pulse_generator::svc ()
 {
     printf ("Sender :\tpulse_generator::svc\n");
-    ACE_OS::sleep (10);
+    ACE_OS::sleep (7);
     for (int i = 0; i < 5; ++i)
       {
         if (CORBA::is_nil (foo_ami_))

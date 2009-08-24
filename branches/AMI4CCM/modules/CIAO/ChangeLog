@@ -1,3 +1,20 @@
+Mon Aug 24 07:10:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.h:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.h:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+          First step to use CORBA AMI in the AMI component.
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Minor changes.
+
 Thu Aug 20 09:56:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors:
