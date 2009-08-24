@@ -99,9 +99,25 @@ namespace CIAO_Hello_AMI_AMI_Impl
           {
             excep_holder->raise_exception ();
           }
+        catch (const INTERNAL_CCM_AMI::InternalError& ex)
+          {
+            printf ("AMI CORBA :\tCaught the correct exception type (INTERNAL_CCM_AMI::InternalError) <%d> <%s>\n",
+                    ex.id, ex.error_string.in ());
+
+            foo_callback_->foo_callback_excep (ck_, ex.error_string);
+
+            if (ex.id != 42)
+              {
+                printf ("ERROR :\tReceived unexpected ID received in exception handler");
+              }
+            if (ACE_OS::strcmp (ex.error_string.in (), "Hello world") != 0)
+              {
+                printf ("ERROR :\tReceived unexpected error string received in exception handler");
+              }
+          }
         catch (const CORBA::Exception& ex)
           {
-            ex._tao_print_exception ("Caught exception:");
+            ex._tao_print_exception ("Caught the WRONG exception:");
           }
       };
 
@@ -286,6 +302,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   void
   AMI_exec_i::ccm_activate (void)
   {
+#if defined (AMI_CORBA_IMPLEMENTATION)
     ::CCM_AMI::AMI_foo_var receiver_foo =
       this->context_->get_connection_receiver_foo ();
 
@@ -299,6 +316,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
     AMI_server *srv = new AMI_server (orb.in (), receiver_foo);
     printf ("AMI :\tStarting server thread.\n");
     srv->activate ();
+#endif /* AMI_CORBA_IMPLEMENTATION */
   }
   
   void

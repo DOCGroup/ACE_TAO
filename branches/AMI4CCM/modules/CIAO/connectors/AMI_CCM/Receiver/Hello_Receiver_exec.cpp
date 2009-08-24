@@ -52,10 +52,17 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     const char * in_str,
     ::CORBA::String_out answer)
   {
-    printf ("Receiver :\tReceived string <%s>\n", in_str);
-    ACE_OS::sleep (ACE_OS::rand () % 5);
-    answer = CORBA::string_dup ("This is my answer : Hi");
-    return ACE_OS::rand () % 100;
+    if (ACE_OS::strlen (in_str) == 0)
+      {
+        throw CCM_AMI::InternalError (42, "Hello world");
+      }
+    else
+      {
+        printf ("Receiver :\tReceived string <%s>\n", in_str);
+        ACE_OS::sleep (ACE_OS::rand () % 5);
+        answer = CORBA::string_dup ("This is my answer : Hi");
+        return ACE_OS::rand () % 100;
+      }
   }
   
   //============================================================

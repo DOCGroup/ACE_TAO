@@ -52,6 +52,7 @@ int pulse_generator::svc ()
             printf ("Sender :\tasynch_foo has been called. <%ld> received as cookie.\n", cookie);
           }
       }
+    foo_ami_->sendc_asynch_foo ("");
   return 0;
 }
 
@@ -80,10 +81,10 @@ int pulse_generator::svc ()
   
   void
   AMI_foo_callback_exec_i::foo_callback_excep (
-    ::CCM_AMI::Cookie /*ck*/,
-    const char * /* callback_exception */)
+    ::CCM_AMI::Cookie ck,
+    const char * callback_exception)
   {
-    /* Your code here. */
+    printf ("Sender :\tCallback EXCEPTION from AMI : cookie <%d> error <%s>\n", ck, callback_exception);
   }
   
   //============================================================

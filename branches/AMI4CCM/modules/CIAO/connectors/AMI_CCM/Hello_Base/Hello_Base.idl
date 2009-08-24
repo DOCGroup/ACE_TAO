@@ -6,7 +6,7 @@ module CCM_AMI
 
   exception InternalError {
       long id;
-      string error;
+      string error_string;
   };
 
   // Sender/Receiver interface
