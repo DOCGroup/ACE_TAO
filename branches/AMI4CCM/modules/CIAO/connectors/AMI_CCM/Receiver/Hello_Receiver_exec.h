@@ -57,9 +57,9 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::Long
-    asynch_foo (
-      const char * in_str,
-      ::CORBA::String_out answer);
+      foo (
+        const char * in_str,
+        ::CORBA::String_out answer);
   };
   
   class  Receiver_exec_i

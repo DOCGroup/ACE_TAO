@@ -48,7 +48,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   // Operations from ::CCM_AMI::AMI_foo
   
   ::CORBA::Long
-  AMI_foo_exec_i::asynch_foo (
+  AMI_foo_exec_i::foo (
     const char * in_str,
     ::CORBA::String_out answer)
   {

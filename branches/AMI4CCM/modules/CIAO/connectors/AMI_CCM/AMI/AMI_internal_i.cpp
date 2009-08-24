@@ -1,3 +1,4 @@
+// $Id$
 
 #include "AMI_internal_i.h"
 
@@ -14,7 +15,7 @@ AMI_internal_i::asynch_foo (const char * in_str,
   try
     {
       printf ("AMI CORBA :\tReceived string <%s>. Try passing it to the Receiver component\n", in_str);
-      CORBA::Long result = foo_receiver_->asynch_foo (CORBA::string_dup (in_str), out_str);
+      CORBA::Long result = foo_receiver_->foo (CORBA::string_dup (in_str), out_str);
       return result;
     }
   catch (CCM_AMI::InternalError& ex)

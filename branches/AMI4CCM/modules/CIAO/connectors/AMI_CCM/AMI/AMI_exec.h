@@ -108,7 +108,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
     // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CCM_AMI::Cookie
-    sendc_asynch_foo (
+    sendc_foo (
       const char * in_str);
   private:
 #if !defined (AMI_CORBA_IMPLEMENTATION)

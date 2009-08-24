@@ -1,3 +1,5 @@
+// $Id$
+
 #include "AMI_server.h"
 
 AMI_server::AMI_server (CORBA::ORB_ptr orb, ::CCM_AMI::AMI_foo_ptr foo_receiver)

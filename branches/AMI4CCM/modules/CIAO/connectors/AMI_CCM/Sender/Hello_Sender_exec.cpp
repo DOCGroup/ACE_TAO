@@ -33,28 +33,65 @@
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {
-pulse_generator::pulse_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami)
-          : foo_ami_ (::CCM_AMI::AMI_ami_foo::_duplicate (foo_ami))
-{
-}
 
-int pulse_generator::svc ()
-{
-    printf ("Sender :\tpulse_generator::svc\n");
+  //============================================================
+  // Worker thread for asynchronous invocations
+  //============================================================
+  asynch_generator::asynch_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami)
+            : foo_ami_ (::CCM_AMI::AMI_ami_foo::_duplicate (foo_ami))
+  {
+  }
+
+  int asynch_generator::svc ()
+  {
+      ACE_OS::sleep (5);
+      long cookie;
+      for (int i = 0; i < 5; ++i)
+        {
+          if (CORBA::is_nil (foo_ami_))
+            printf ("Sender :\tfoo_receiver is NIL !!!\n");
+          else
+            {
+              cookie = foo_ami_->sendc_foo ("Do something asynchronous");
+        printf ("Sender :\tInvoked Asynchronous call. cookie <%ld>\n", cookie);
+            }
+        }
+
+    printf ("Sender :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
+    cookie = foo_ami_->sendc_foo ("");
+        printf ("Sender :\tInvoked Asynchronous call. cookie <%ld>\n", cookie);
+    return 0;
+  }
+
+  //============================================================
+  // Worker thread for synchronous invocations
+  //============================================================
+  synch_generator::synch_generator (::CCM_AMI::AMI_foo_ptr foo_ami)
+            : foo_ami_ (::CCM_AMI::AMI_foo::_duplicate (foo_ami))
+  {
+  }
+
+  int synch_generator::svc ()
+  {
     ACE_OS::sleep (5);
+    //run synch calls
+    char * out_str;
     for (int i = 0; i < 5; ++i)
       {
-        if (CORBA::is_nil (foo_ami_))
-          printf ("Sender :\tfoo_receiver is NIL !!!\n");
-        else
-          {
-            long cookie = foo_ami_->sendc_asynch_foo ("Do something funny");
-            printf ("Sender :\tasynch_foo has been called. <%ld> received as cookie.\n", cookie);
-          }
+        CORBA::Long result = foo_ami_->foo ("Do something synchronous", out_str);
+        printf ("Sender :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
       }
-    foo_ami_->sendc_asynch_foo ("");
-  return 0;
-}
+    try
+      {
+        CORBA::Long result = foo_ami_->foo ("", out_str);
+        printf ("Sender :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
+      }
+    catch (CCM_AMI::InternalError& ex)
+      {
+        printf ("Expected Exception caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+      }
+    return 0;
+  }
 
   //============================================================
   // Facet Executor Implementation Class: AMI_foo_callback_exec_i
@@ -135,13 +172,16 @@ int pulse_generator::svc ()
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::CCM_AMI::AMI_ami_foo_var foo =
+    ::CCM_AMI::AMI_ami_foo_var asynch_foo =
       this->context_->get_connection_run_asynch_foo ();
+    ::CCM_AMI::AMI_foo_var synch_foo =
+      this->context_->get_connection_run_foo ();
 
-    this->pulser_= new pulse_generator (foo);
- 
-    this->pulser_->activate (THR_NEW_LWP | THR_JOINABLE,
-                           1);
+    asynch_generator* asynch = new asynch_generator (asynch_foo);
+    asynch->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+
+    synch_generator* synch = new synch_generator (synch_foo);
+    synch->activate (THR_NEW_LWP | THR_JOINABLE, 1);
   }
   
   void

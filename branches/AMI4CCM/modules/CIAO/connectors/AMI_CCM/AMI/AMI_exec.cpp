@@ -215,7 +215,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   // Operations from ::CCM_AMI::AMI_ami_foo
 
   ::CCM_AMI::Cookie
-  AMI_ami_foo_exec_i::sendc_asynch_foo (
+  AMI_ami_foo_exec_i::sendc_foo (
     const char * in_str)
   {
     printf ("AMI :\tsendc_asynch_foo <%s>\n", in_str);

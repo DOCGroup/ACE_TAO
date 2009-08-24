@@ -258,6 +258,22 @@
     </internalEndpoint>
   </connection>
 
+  <connection>
+    <name>synch_foo_connection</name>
+    <internalEndpoint>
+      <portName>do_asynch_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+  </connection>
+
   <artifact xmi:id="Hello_AMI_SvntArtifact">
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>

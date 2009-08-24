@@ -12,7 +12,7 @@ module CCM_AMI
   // Sender/Receiver interface
   interface AMI_foo
     {
-      long asynch_foo (in string in_str, out string answer)
+      long foo (in string in_str, out string answer)
         raises (InternalError);
     };
 
@@ -27,6 +27,6 @@ module CCM_AMI
   // using the AMI_foo interface.
   interface AMI_ami_foo
     {
-      Cookie sendc_asynch_foo (in string in_str);
+      Cookie sendc_foo (in string in_str);
     };
 };

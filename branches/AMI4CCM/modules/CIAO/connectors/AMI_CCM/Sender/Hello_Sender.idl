@@ -11,8 +11,11 @@ module Hello_AMI
 {
   component Sender
   {
-    //uses the ami component.
+    // for asynch invocation.
     uses CCM_AMI::AMI_ami_foo          run_asynch_foo;
+
+    // for synchronous invocation
+    uses CCM_AMI::AMI_foo              run_foo;
 
     //provides the callback function/exception for the AMI component.
     provides CCM_AMI::AMI_foo_callback the_foo_callback;

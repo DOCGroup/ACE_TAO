@@ -1,3 +1,4 @@
+// $Id$
 
 #ifndef AMI_INTERNAL_I_H
 #define AMI_INTERNAL_I_H

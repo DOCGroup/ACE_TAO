@@ -45,15 +45,28 @@
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {
-  class pulse_generator : public virtual ACE_Task_Base
+  // Worker thread for asynchronous invocations
+  class asynch_generator : public virtual ACE_Task_Base
   {
   public:
-    pulse_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami);
+    asynch_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami);
 
     virtual int svc (void);
 
   private:
     ::CCM_AMI::AMI_ami_foo_var foo_ami_;
+  };
+
+  // Worker thread for synchronous invocations
+  class synch_generator : public virtual ACE_Task_Base
+  {
+  public:
+    synch_generator (::CCM_AMI::AMI_foo_ptr foo_ami);
+
+    virtual int svc (void);
+
+  private:
+    ::CCM_AMI::AMI_foo_var foo_ami_;
   };
 
 
@@ -116,7 +129,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
   
   private:
     ::Hello_AMI::CCM_Sender_Context_var context_;
-     pulse_generator* pulser_;
   };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
