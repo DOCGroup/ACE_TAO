@@ -68,8 +68,8 @@ module Quoter
     readonly attribute string qos_provile;
     
     // @from DDS_Write for Stock_Info
-    uses CCM_DDS::Stock_Info_Writer info_in_data;
-    uses DDS::DataWriter info_in_dds_entity;
+    provides CCM_DDS::Stock_Info_Writer info_in_data;
+    provides DDS::DataWriter info_in_dds_entity;
     
     // @from DDS_RawListen for Stock_Info
     provides CCM_DDS::Stock_Info_Reader info_out_data;

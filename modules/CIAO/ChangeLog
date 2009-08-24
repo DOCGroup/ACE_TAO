@@ -1,10 +1,16 @@
+Mon Aug 24 13:29:00 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+
+          xfering workspace. 
+        
 Mon Aug 24 02:08:18 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
 
-          Compile fixes. 
-        
+          Compile fixes.
+
 Sun Aug 23 04:24:04 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
