@@ -1,9 +1,16 @@
+Mon Aug 24 02:08:18 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
+
+          Compile fixes. 
+        
 Sun Aug 23 04:24:04 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
-        
-          Base project fixes. 
-        
+
+          Base project fixes.
+
         * connectors/dds4ccm/examples/Quoter/Connector:
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3p:
@@ -11,12 +18,12 @@ Sun Aug 23 04:24:04 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
 
-          Connector IDL and skeleton exec impl. 
-        
+          Connector IDL and skeleton exec impl.
+
         * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p:
 
-          Fixed includes. 
-        
+          Fixed includes.
+
 Sat Aug 22 18:33:49 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
 

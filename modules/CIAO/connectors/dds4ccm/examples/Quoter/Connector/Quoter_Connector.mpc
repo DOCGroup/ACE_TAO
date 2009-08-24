@@ -35,7 +35,7 @@ project(DDS_Quoter_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = Quoter_Connector_lem_stub
+  sharedname = DDS_Quoter_Connector_lem_stub
   dynamicflags   = QUOTER_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
@@ -61,7 +61,7 @@ project(DDS_Quoter_Connector_stub) : ccm_stub, dds4ccm_base   {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = Quoter_Connector_stub
+  sharedname = DDS_Quoter_Connector_stub
   dynamicflags   = QUOTER_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
@@ -83,8 +83,8 @@ project(DDS_Quoter_Connector_stub) : ccm_stub, dds4ccm_base   {
 
 project(DDS_Quoter_Connector_exec) : ciao_executor, dds4ccm_base   {
   after   += DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub
-  sharedname = Quoter_Connector_exec
-  libs += Quoter_Connector_stub Quoter_Connector_lem_stub DDS_Quoter_Base_stub
+  sharedname = DDS_Quoter_Connector_exec
+  libs += DDS_Quoter_Connector_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -109,8 +109,8 @@ project(DDS_Quoter_Connector_exec) : ciao_executor, dds4ccm_base   {
 
 project(DDS_Quoter_Connector_svnt) : ciao_servant, dds4ccm_skel   {
   after      += DDS_Quoter_Base_skel  DDS_Quoter_Connector_lem_stub
-  sharedname  = Quoter_Connector_svnt
-  libs       += Quoter_Connector_stub Quoter_Connector_lem_stub  \
+  sharedname  = DDS_Quoter_Connector_svnt
+  libs       += DDS_Quoter_Connector_stub DDS_Quoter_Connector_lem_stub  \
                 DDS_Quoter_Base_skel \
                 DDS_Quoter_Base_stub
   libpaths += ../lib
