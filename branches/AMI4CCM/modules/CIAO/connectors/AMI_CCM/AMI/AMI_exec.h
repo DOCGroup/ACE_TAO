@@ -43,9 +43,11 @@
 #include "ace/Task.h"
 #include "AMI_server.h"
 
+#define AMI_CORBA_IMPLEMENTATION
+
 namespace CIAO_Hello_AMI_AMI_Impl
 {
-
+#if !defined (AMI_CORBA_IMPLEMENTATION)
   /////////////////////////////
   //AMI thread implemenatation
   /////////////////////////////
@@ -64,18 +66,22 @@ namespace CIAO_Hello_AMI_AMI_Impl
     ::CCM_AMI::AMI_foo_ptr          foo_receiver_;
     ::CCM_AMI::AMI_foo_callback_ptr foo_callback_;
   };
-
-
+#endif /* AMI_CORBA_IMPLEMENTATION */
 
   class  AMI_ami_foo_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_ami_foo,
-      public virtual ::CORBA::LocalObject,
-      public virtual ACE_Task_Base
+      public virtual ::CORBA::LocalObject
   {
   public:
+#if !defined (AMI_CORBA_IMPLEMENTATION)
     AMI_ami_foo_exec_i (
       ::CCM_AMI::AMI_foo_ptr foo_receiver,
       ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
+#else
+    AMI_ami_foo_exec_i (
+      ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
+#endif /* AMI_CORBA_IMPLEMENTATION */
+
     virtual ~AMI_ami_foo_exec_i (void);
     
     // Operations and attributes from ::CCM_AMI::AMI_ami_foo
@@ -87,15 +93,18 @@ namespace CIAO_Hello_AMI_AMI_Impl
     sendc_asynch_foo (
       const char * in_str);
   private:
+#if !defined (AMI_CORBA_IMPLEMENTATION)
     ::CCM_AMI::AMI_foo_var          foo_receiver_;
+#endif /* AMI_CORBA_IMPLEMENTATION */
     ::CCM_AMI::AMI_foo_callback_var foo_callback_;
     long cookie_;
 
+#if defined (AMI_CORBA_IMPLEMENTATION)
     CORBA::ORB_var orb_;
-
-    /// Variable to handle CORBA AMI
     INTERNAL_CCM_AMI::AMI_AMI_fooHandler_var the_handler_var_;
     INTERNAL_CCM_AMI::AMI_foo_var ami_foo_var_;
+#endif /* AMI_CORBA_IMPLEMENTATION */
+
   };
   
   class  AMI_exec_i

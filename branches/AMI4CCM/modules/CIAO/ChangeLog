@@ -1,3 +1,10 @@
+Mon Aug 24 07:34:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+          Implemented a define to switch between implementations.
+          Resolved some compiler warnings.
+
 Mon Aug 24 07:10:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI.mpc:
