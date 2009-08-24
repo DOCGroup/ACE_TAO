@@ -283,39 +283,43 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire_single (
     ACE_Command_Base & pre_dispatch_command)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::expire_single");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
-
-  if (this->is_empty ())
-    return 0;
-
-  // Get the current time
-  ACE_Time_Value cur_time (this->gettimeofday_static () +
-                           this->timer_skew ());
-
-  // Look for a node in the timer queue whose timer <= the present
-  // time.
   ACE_Timer_Node_Dispatch_Info_T<TYPE> info;
-  if (this->dispatch_info_i (cur_time, info))
-    {
-      const void *upcall_act = 0;
+  ACE_Time_Value cur_time;
+  {
+    // Create a scope for the lock ...
+    ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
-      // Preinvoke (handles refcount if needed, etc.)
-      this->preinvoke (info, cur_time, upcall_act);
+    if (this->is_empty ())
+      return 0;
 
-      // Release the token before expiration upcall.
-      pre_dispatch_command.execute();
+    // Get the current time
+    cur_time = this->gettimeofday_static () + this->timer_skew ();
 
-      // call the functor
-      this->upcall (info, cur_time);
+    // Look for a node in the timer queue whose timer <= the present
+    // time.
+    if (!this->dispatch_info_i (cur_time, info))
+      {
+	return 0;
+      }
+  }
+  // We do not need the lock anymore, all these operations take place
+  // with local variables.
+  const void *upcall_act = 0;
 
-      // Postinvoke (undo refcount if needed, etc.)
-      this->postinvoke (info, cur_time, upcall_act);
+  // Preinvoke (handles refcount if needed, etc.)
+  this->preinvoke (info, cur_time, upcall_act);
 
-      // We have dispatched a timer
-      return 1;
-    }
+  // Release the token before expiration upcall.
+  pre_dispatch_command.execute();
 
-  return 0;
+  // call the functor
+  this->upcall (info, cur_time);
+
+  // Postinvoke (undo refcount if needed, etc.)
+  this->postinvoke (info, cur_time, upcall_act);
+
+  // We have dispatched a timer
+  return 1;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
