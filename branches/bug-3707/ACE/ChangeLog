@@ -1,3 +1,10 @@
+Mon Aug 24 02:27:36 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+        * ace/Timer_Queue_T.cpp:
+          Need to release the internal timer queue lock before dispatching
+          calls in expire_single(), otherwise we get nasty deadlocks in
+          the TP_Reactor implementation.
+
 Thu Jul  2 02:55:09 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
 
         * ace/Abstract_Timer_Queue.h:
