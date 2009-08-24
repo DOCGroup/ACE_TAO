@@ -48,13 +48,11 @@
 namespace CIAO_Hello_AMI_AMI_Impl
 {
 #if !defined (AMI_CORBA_IMPLEMENTATION)
-  /////////////////////////////
   //AMI thread implemenatation
-  /////////////////////////////
-  class ami_handler : public virtual ACE_Task_Base
+  class AMI_thread_handler : public virtual ACE_Task_Base
   {
   public:
-    ami_handler (
+    AMI_thread_handler (
       ::CCM_AMI::Cookie ck,
       const  char * in_str,
       ::CCM_AMI::AMI_foo_ptr foo_receiver,
@@ -63,8 +61,28 @@ namespace CIAO_Hello_AMI_AMI_Impl
   private:
     long ck_;
     const char * in_str_;
-    ::CCM_AMI::AMI_foo_ptr          foo_receiver_;
-    ::CCM_AMI::AMI_foo_callback_ptr foo_callback_;
+    ::CCM_AMI::AMI_foo_var          foo_receiver_;
+    ::CCM_AMI::AMI_foo_callback_var foo_callback_;
+  };
+#else
+  //AMI CORBA implemenatation
+  class AMI_CORBA_handler : public virtual ACE_Task_Base
+  {
+  public:
+    AMI_CORBA_handler (
+      ::CCM_AMI::Cookie ck,
+      const char * in_str,
+      CORBA::ORB_ptr orb,
+      ::CCM_AMI::AMI_foo_callback_ptr foo_callback,
+      INTERNAL_CCM_AMI::AMI_foo_ptr ami_foo);
+    virtual int svc (void);
+  private:
+    long ck_;
+    const char * in_str_;
+    CORBA::ORB_var orb_;
+    INTERNAL_CCM_AMI::AMI_AMI_fooHandler_var the_handler_var_;
+    ::CCM_AMI::AMI_foo_callback_var foo_callback_;
+    INTERNAL_CCM_AMI::AMI_foo_var ami_foo_var_;
   };
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
@@ -100,8 +118,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
     long cookie_;
 
 #if defined (AMI_CORBA_IMPLEMENTATION)
-    CORBA::ORB_var orb_;
-    INTERNAL_CCM_AMI::AMI_AMI_fooHandler_var the_handler_var_;
+    CORBA::ORB_var    orb_;
     INTERNAL_CCM_AMI::AMI_foo_var ami_foo_var_;
 #endif /* AMI_CORBA_IMPLEMENTATION */
 

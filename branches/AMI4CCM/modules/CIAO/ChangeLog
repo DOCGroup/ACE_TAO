@@ -1,3 +1,19 @@
+Mon Aug 24 09:25:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.cpp:
+          CORBA callback in seperate thread. Refactored to
+          one reply handler per request.
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Optimized logging. Removed sleep between calls.
+          Wait 5 sec. (in stead of 10) before start.
+
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Minor changes.
+
 Mon Aug 24 07:34:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI_exec.h:

@@ -17,7 +17,7 @@ int AMI_perform_work::svc ()
             {
               orb_->perform_work();
             }
-          ACE_OS::sleep (1);
+          ACE_OS::sleep (0.01);
         }
     }
   catch (const CORBA::Exception& ex)

@@ -41,17 +41,16 @@ pulse_generator::pulse_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami)
 int pulse_generator::svc ()
 {
     printf ("Sender :\tpulse_generator::svc\n");
-    ACE_OS::sleep (7);
+    ACE_OS::sleep (5);
     for (int i = 0; i < 5; ++i)
       {
         if (CORBA::is_nil (foo_ami_))
           printf ("Sender :\tfoo_receiver is NIL !!!\n");
         else
           {
-            foo_ami_->sendc_asynch_foo ("Do something funny");
-            printf ("Sender :\tasynch_foo has been called\n");
+            long cookie = foo_ami_->sendc_asynch_foo ("Do something funny");
+            printf ("Sender :\tasynch_foo has been called. <%ld> received as cookie.\n", cookie);
           }
-        ACE_OS::sleep (ACE_OS::rand () % 2);
       }
   return 0;
 }

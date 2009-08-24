@@ -11,11 +11,6 @@ CORBA::Long
 AMI_internal_i::asynch_foo (const char * in_str,
                  CORBA::String_out out_str)
 {
-    //printf ("CORBA internal :\tReceived string <%s>\n", in_str);
-    //ACE_OS::sleep (ACE_OS::rand () % 5);
-    //out_str = CORBA::string_dup ("This is my answer : Hi");
-    //return ACE_OS::rand () % 100;
-
   printf ("AMI CORBA :\tReceived string <%s>. Try passing it to the Receiver component\n", in_str);
   CORBA::Long result = foo_receiver_->asynch_foo (CORBA::string_dup (in_str), out_str);
   return result;
