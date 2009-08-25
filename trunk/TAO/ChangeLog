@@ -1,3 +1,8 @@
+Tue Aug 25 21:03:23 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_3567_Regression/run_test.pl: Interpret ior file path
+          correctly when client and server are different places.
+
 Fri Aug 14 13:30:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/AMI/client.cpp
