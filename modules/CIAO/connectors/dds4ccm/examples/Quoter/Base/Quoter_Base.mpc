@@ -72,8 +72,7 @@ project(DDS_Quoter_Base_skel) : ciao_executor   {
   after      +=  DDS_Quoter_Base_stub DDS_Quoter_Base_lem_stub
   sharedname  = DDS_Quoter_Base_skel
   libs       += DDS_Quoter_Base_stub
- 
-  
+  libpaths += ../lib
   libout = ../lib
   dynamicflags = QUOTER_BASE_SKEL_BUILD_DLL
   

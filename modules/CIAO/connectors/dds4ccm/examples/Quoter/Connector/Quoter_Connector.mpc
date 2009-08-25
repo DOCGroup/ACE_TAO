@@ -31,7 +31,7 @@ project(DDS_Quoter_Connector_lem_gen) : ciaoidldefaults {
 
 project(DDS_Quoter_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
   after += DDS_Quoter_Connector_lem_gen DDS_Quoter_Connector_stub DDS_Quoter_Base_stub
-  libs  += DDS_Quoter_Base_stub Quoter_Connector_stub
+  libs  += DDS_Quoter_Base_stub DDS_Quoter_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -108,10 +108,10 @@ project(DDS_Quoter_Connector_exec) : ciao_executor, dds4ccm_base   {
 
 
 project(DDS_Quoter_Connector_svnt) : ciao_servant, dds4ccm_skel   {
-  after      += DDS_Quoter_Base_skel  DDS_Quoter_Connector_lem_stub
+  after      += DDS_Quoter_Connector_lem_stub
   sharedname  = DDS_Quoter_Connector_svnt
-  libs       += DDS_Quoter_Connector_stub DDS_Quoter_Connector_lem_stub  \
-                DDS_Quoter_Base_skel \
+  libs       += DDS_Quoter_Connector_stub \
+                DDS_Quoter_Connector_lem_stub  \
                 DDS_Quoter_Base_stub
   libpaths += ../lib
   libout = ../lib

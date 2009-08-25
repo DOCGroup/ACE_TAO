@@ -1,9 +1,27 @@
+Tue Aug 25 17:14:13 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
+        
+          Added 'libpaths += ../lib' to skel project.
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
+        
+          Removed DDS_Quoter_Base_skel from servant lib list - Quoter_Base.idl
+          contains only a struct, and does not generate a skel lib since there
+          is no exported code on the skel side.
+        
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        
+          Regenerated these files, they were missing a couple of port
+          operations.
+
 Mon Aug 24 13:29:00 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
 
-          xfering workspace. 
-        
+          xfering workspace.
+
 Mon Aug 24 02:08:18 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
