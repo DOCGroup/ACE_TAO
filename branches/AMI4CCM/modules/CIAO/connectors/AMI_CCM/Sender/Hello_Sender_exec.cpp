@@ -45,7 +45,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   int asynch_generator::svc ()
   {
-      ACE_OS::sleep (5);
+      ACE_OS::sleep (2);
       long cookie;
       for (int i = 0; i < 5; ++i)
         {
@@ -74,7 +74,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   int synch_generator::svc ()
   {
-    ACE_OS::sleep (5);
+    ACE_OS::sleep (2);
     //run synch calls
     char * out_str;
     for (int i = 0; i < 5; ++i)
@@ -89,7 +89,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
       }
     catch (CCM_AMI::InternalError& ex)
       {
-        printf ("Expected Exception caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+        printf ("Expected Exception caught : <%d> <%s>\n", ex.ex.id, ex.ex.error_string.in ());
       }
     return 0;
   }
@@ -120,9 +120,11 @@ namespace CIAO_Hello_AMI_Sender_Impl
   void
   AMI_foo_callback_exec_i::foo_callback_excep (
     ::CCM_AMI::Cookie ck,
-    const char * callback_exception)
+      const ::CCM_AMI::InternalException & exception_holder)
   {
-    printf ("Sender :\tCallback EXCEPTION from AMI : cookie <%d> error <%s>\n", ck, callback_exception);
+    //printf ("Sender :\tCallback EXCEPTION from AMI : cookie <%d> error <%s>\n", ck, exception_holder.error_string);
+    printf ("Sender :\tCallback EXCEPTION from AMI : cookie <%d> exception id : <%d> exception error : <%s>\n",
+      ck, exception_holder.id, exception_holder.error_string.in ());
   }
   
   //============================================================

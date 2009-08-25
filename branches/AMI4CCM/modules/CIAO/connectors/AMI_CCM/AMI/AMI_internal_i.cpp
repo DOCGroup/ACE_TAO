@@ -21,12 +21,18 @@ AMI_internal_i::foo (const char * in_str,
   catch (CCM_AMI::InternalError& ex)
     {
       printf ("AMI CORBA :\tCORRECT EXCEPTION -> re-throwing\n");
-      throw CCM_AMI::InternalError (ex.id, CORBA::string_dup  (ex.error_string));
+      CCM_AMI::InternalException excep;
+      excep.id = ex.ex.id;
+      excep.error_string = CORBA::string_dup (ex.ex.error_string);
+      throw CCM_AMI::InternalError (excep);
     }
   catch (...)
    {
-     printf ("AMI CORBA :\t!!!!!UNKNOWN EXCEPTION!!!!!\n");
-      throw CCM_AMI::InternalError (43, "UNKNOWN");
+      printf ("AMI CORBA :\t!!!!!UNKNOWN EXCEPTION!!!!!\n");
+      CCM_AMI::InternalException excep;
+      excep.id = 43;
+      excep.error_string = CORBA::string_dup ("UNKNOWN");
+      throw CCM_AMI::InternalError (excep);
    }
 }
 

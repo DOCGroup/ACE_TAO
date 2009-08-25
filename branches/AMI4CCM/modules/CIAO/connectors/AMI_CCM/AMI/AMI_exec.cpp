@@ -61,7 +61,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
     printf ("AMI :\tCookie <%ld> received : result <%ld> answer <%s>\n",
             ck_, result, out_str);
     foo_callback_->foo_callback_handler (ck_, result, CORBA::string_dup (out_str));
-
     return 0;
   }
 #else
@@ -100,18 +99,20 @@ namespace CIAO_Hello_AMI_AMI_Impl
           }
         catch (const CCM_AMI::InternalError& ex)
           {
-            printf ("AMI CORBA :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
-                    ex.id, ex.error_string.in ());
+            printf ("AMI CORBA :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s> for cookie <%ld>\n",
+                    ex.ex.id, ex.ex.error_string.in (), ck_);
 
-            foo_callback_->foo_callback_excep (ck_, ex.error_string);
+            foo_callback_->foo_callback_excep (ck_, ex.ex);
 
-            if (ex.id != 42)
+            if (ex.ex.id != 42)
               {
-                printf ("ERROR :\tReceived unexpected ID received in exception handler");
+                printf ("ERROR :\tReceived unexpected ID received in exception handler for cookie <%ld>\n",
+                  ck_);
               }
-            if (ACE_OS::strcmp (ex.error_string.in (), "Hello world") != 0)
+            if (ACE_OS::strcmp (ex.ex.error_string.in (), "Hello world") != 0)
               {
-                printf ("ERROR :\tReceived unexpected error string received in exception handler");
+                printf ("ERROR :\tReceived unexpected error string received in exception handler for cookie <%ld>\n",
+                  ck_);
               }
           }
         catch (const CORBA::Exception& ex)
@@ -176,7 +177,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
       cookie_ (0)
   {
     //initialize AMI client
-
     int argc = 2;
     ACE_TCHAR **argv = new ACE_TCHAR *[argc];
     argv[0] = ACE::strnew (ACE_TEXT (""));
@@ -220,7 +220,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
   AMI_ami_foo_exec_i::sendc_foo (
     const char * in_str)
   {
-
     printf ("AMI :\tsendc_asynch_foo <%s>\n", in_str);
     ::CCM_AMI::Cookie ck = ++cookie_;
 #if !defined (AMI_CORBA_IMPLEMENTATION)
@@ -235,7 +234,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 #else
     //AMI CORBA implementation.
     printf ("Start the AMI CORBA handler thread\n");
-    //start handler as a trhead.
+    //start handler as a thread.
     AMI_CORBA_handler *amt = new AMI_CORBA_handler (
         ck,
         in_str,

@@ -55,12 +55,15 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   {
     if (ACE_OS::strlen (in_str) == 0)
       {
-        throw CCM_AMI::InternalError (42, "Hello world");
+        CCM_AMI::InternalException ex;
+        ex.id = 42;
+        ex.error_string = "Hello world";
+        throw CCM_AMI::InternalError (ex);
       }
     else
       {
         printf ("Receiver :\tReceived string <%s>\n", in_str);
-        ACE_OS::sleep (ACE_OS::rand () % 5);
+        ACE_OS::sleep (ACE_OS::rand () % 2);
         answer = CORBA::string_dup ("This is my answer : Hi");
         return ACE_OS::rand () % 100;
       }

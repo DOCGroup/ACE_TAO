@@ -4,10 +4,16 @@ module CCM_AMI
 {
   typedef long Cookie;
 
-  exception InternalError {
+  struct InternalException
+    {
       long id;
       string error_string;
-  };
+    };
+
+  exception InternalError
+    {
+      InternalException ex;
+    };
 
   // Sender/Receiver interface
   interface AMI_foo
@@ -20,7 +26,7 @@ module CCM_AMI
   interface AMI_foo_callback
     {
       void foo_callback_handler (in Cookie ck, in long result, in string answer);
-      void foo_callback_excep (in Cookie ck, in string callback_exception);
+      void foo_callback_excep   (in Cookie ck, in InternalException exception_holder);
     };
 
   // AMI component. Sender calls AMI-component and AMI-component calls Receiver

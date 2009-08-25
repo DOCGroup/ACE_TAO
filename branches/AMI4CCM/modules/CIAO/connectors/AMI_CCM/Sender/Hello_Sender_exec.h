@@ -95,7 +95,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     virtual void
     foo_callback_excep (
       ::CCM_AMI::Cookie ck,
-      const char * callback_exception);
+      const ::CCM_AMI::InternalException & exception_holder);
   };
   
   class  Sender_exec_i

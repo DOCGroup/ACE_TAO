@@ -1,3 +1,19 @@
+Tue Aug 25 09:35:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Refactored exception handling a bit. An exception struct
+          is now passed to the exception callback.
+          Also shortened the time stamps.
+
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Shortened the sleep time.
+
 Tue Aug 25 07:19:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI.mpc:
