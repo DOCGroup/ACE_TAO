@@ -9,7 +9,7 @@ AMI_internal_i::AMI_internal_i (CORBA::ORB_ptr orb, ::CCM_AMI::AMI_foo_ptr foo_r
 }
 
 CORBA::Long
-AMI_internal_i::asynch_foo (const char * in_str,
+AMI_internal_i::foo (const char * in_str,
                  CORBA::String_out out_str)
 {
   try
@@ -20,12 +20,12 @@ AMI_internal_i::asynch_foo (const char * in_str,
     }
   catch (CCM_AMI::InternalError& ex)
     {
-      printf ("!!!!! INTERNAL EXCEPTION -> re-throwing\n");
-      throw INTERNAL_CCM_AMI::InternalError (ex.id, CORBA::string_dup  (ex.error_string));
+      printf ("AMI CORBA :\tCORRECT EXCEPTION -> re-throwing\n");
+      throw CCM_AMI::InternalError (ex.id, CORBA::string_dup  (ex.error_string));
     }
   catch (...)
    {
-     printf ("!!!!! UNKNOWN EXCEPTION\n");
+     printf ("AMI CORBA :\t!!!!!UNKNOWN EXCEPTION!!!!!\n");
       throw CCM_AMI::InternalError (43, "UNKNOWN");
    }
 }

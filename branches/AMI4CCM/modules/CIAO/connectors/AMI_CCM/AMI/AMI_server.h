@@ -5,7 +5,6 @@
 
 #include "ace/Task.h"
 #include "AMI_internal_i.h"
-#include "AMIEC.h"
 
 class AMI_server : public ACE_Task_Base
 {

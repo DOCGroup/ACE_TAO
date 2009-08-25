@@ -33,8 +33,8 @@ int AMI_server::svc ()
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
-      INTERNAL_CCM_AMI::AMI_foo_var ami_foo_var =
-        INTERNAL_CCM_AMI::AMI_foo::_narrow (object.in ());
+      CCM_AMI::AMI_foo_var ami_foo_var =
+        CCM_AMI::AMI_foo::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb_->object_to_string (ami_foo_var.in ());
@@ -54,7 +54,6 @@ int AMI_server::svc ()
       poa_manager->activate ();
 
       orb_->run ();
-
     }
   catch (const CORBA::Exception& ex)
     {

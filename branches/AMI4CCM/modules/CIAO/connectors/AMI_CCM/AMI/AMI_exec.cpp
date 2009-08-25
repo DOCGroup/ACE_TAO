@@ -68,7 +68,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   //============================================================
   // Implementation of the AMI CORBA reply handler
   //============================================================
-  class AMI_reply_handler : public POA_INTERNAL_CCM_AMI::AMI_AMI_fooHandler
+  class AMI_reply_handler : public POA_CCM_AMI::AMI_AMI_fooHandler
   {
   public:
     AMI_reply_handler (void)
@@ -83,14 +83,14 @@ namespace CIAO_Hello_AMI_AMI_Impl
         ck_ = ck;
       };
 
-    void asynch_foo (CORBA::Long result,
+    void foo (CORBA::Long result,
               const char * out_str)
       {
         printf ("AMI CORBA :\tHandler::asynch_foo\n");
         foo_callback_->foo_callback_handler (ck_, result, CORBA::string_dup (out_str));
       };
 
-    void asynch_foo_excep (::Messaging::ExceptionHolder * excep_holder)
+    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
       {
         printf ("AMI CORBA :\tHandler::foo_excep\n");
 
@@ -98,9 +98,9 @@ namespace CIAO_Hello_AMI_AMI_Impl
           {
             excep_holder->raise_exception ();
           }
-        catch (const INTERNAL_CCM_AMI::InternalError& ex)
+        catch (const CCM_AMI::InternalError& ex)
           {
-            printf ("AMI CORBA :\tCaught the correct exception type (INTERNAL_CCM_AMI::InternalError) <%d> <%s>\n",
+            printf ("AMI CORBA :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
                     ex.id, ex.error_string.in ());
 
             foo_callback_->foo_callback_excep (ck_, ex.error_string);
@@ -134,11 +134,11 @@ namespace CIAO_Hello_AMI_AMI_Impl
     const char * in_str,
     CORBA::ORB_ptr orb,
     ::CCM_AMI::AMI_foo_callback_ptr foo_callback,
-    INTERNAL_CCM_AMI::AMI_foo_ptr ami_foo)
+    CCM_AMI::AMI_foo_ptr ami_foo)
     : ck_ (ck),
       in_str_ (in_str),
       orb_ (CORBA::ORB::_duplicate (orb)),
-      ami_foo_var_ (INTERNAL_CCM_AMI::AMI_foo::_duplicate (ami_foo))
+      ami_foo_var_ (CCM_AMI::AMI_foo::_duplicate (ami_foo))
   {
     AMI_reply_handler* handler = new AMI_reply_handler ();
 
@@ -149,7 +149,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   int AMI_CORBA_handler::svc ()
   {
     printf ("AMI :\tSending string <%s> for cookie <%ld> to AMI CORBA server\n", in_str_, ck_);
-    ami_foo_var_->sendc_asynch_foo (the_handler_var_.in (), in_str_);
+    ami_foo_var_->sendc_foo (the_handler_var_.in (), in_str_);
     AMI_perform_work *pw = new AMI_perform_work (orb_);
     pw->activate ();
     return 0;
@@ -176,6 +176,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
       cookie_ (0)
   {
     //initialize AMI client
+
     int argc = 2;
     ACE_TCHAR **argv = new ACE_TCHAR *[argc];
     argv[0] = ACE::strnew (ACE_TEXT (""));
@@ -184,7 +185,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
     CORBA::Object_var object =
       orb_->string_to_object ("file://server.ior");
-    ami_foo_var_ = INTERNAL_CCM_AMI::AMI_foo::_narrow (object.in ());
+    ami_foo_var_ = CCM_AMI::AMI_foo::_narrow (object.in ());
 
     if (CORBA::is_nil (ami_foo_var_.in ()))
       {
@@ -205,6 +206,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
       root_poa->the_POAManager ();
 
     poa_manager->activate ();
+
   }
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
@@ -218,6 +220,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   AMI_ami_foo_exec_i::sendc_foo (
     const char * in_str)
   {
+
     printf ("AMI :\tsendc_asynch_foo <%s>\n", in_str);
     ::CCM_AMI::Cookie ck = ++cookie_;
 #if !defined (AMI_CORBA_IMPLEMENTATION)
@@ -241,7 +244,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
         ami_foo_var_.in ());
     amt->activate ();
 #endif /* AMI_CORBA_IMPLEMENTATION */
-    return ck;
+  return ck;
   }
   
   //============================================================

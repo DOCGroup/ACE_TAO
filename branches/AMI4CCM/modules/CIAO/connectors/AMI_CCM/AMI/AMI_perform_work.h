@@ -3,7 +3,7 @@
 #define AMI_PERFORM_WORK_H
 
 #include "ace/Task.h"
-#include "AMI_internalC.h"
+#include "AMIC.h"
 
 class AMI_perform_work : public ACE_Task_Base
 {

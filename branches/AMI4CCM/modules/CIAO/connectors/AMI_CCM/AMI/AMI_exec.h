@@ -74,15 +74,15 @@ namespace CIAO_Hello_AMI_AMI_Impl
       const char * in_str,
       CORBA::ORB_ptr orb,
       ::CCM_AMI::AMI_foo_callback_ptr foo_callback,
-      INTERNAL_CCM_AMI::AMI_foo_ptr ami_foo);
+      CCM_AMI::AMI_foo_ptr ami_foo);
     virtual int svc (void);
   private:
     long ck_;
     const char * in_str_;
     CORBA::ORB_var orb_;
-    INTERNAL_CCM_AMI::AMI_AMI_fooHandler_var the_handler_var_;
+    CCM_AMI::AMI_AMI_fooHandler_var the_handler_var_;
     ::CCM_AMI::AMI_foo_callback_var foo_callback_;
-    INTERNAL_CCM_AMI::AMI_foo_var ami_foo_var_;
+    CCM_AMI::AMI_foo_var ami_foo_var_;
   };
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
@@ -119,7 +119,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
 #if defined (AMI_CORBA_IMPLEMENTATION)
     CORBA::ORB_var    orb_;
-    INTERNAL_CCM_AMI::AMI_foo_var ami_foo_var_;
+    CCM_AMI::AMI_foo_var ami_foo_var_;
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
   };

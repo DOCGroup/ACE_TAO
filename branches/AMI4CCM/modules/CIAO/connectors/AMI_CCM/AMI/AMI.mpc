@@ -1,13 +1,6 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Hello_Base AMI"
 
-project(*idl): taoidldefaults, ami {
-  IDL_Files {
-    AMI_internal.idl
-  }
-  custom_only = 1
-}
-
 project(Hello_Base_AMI_idl_gen) : componentidldefaults   {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=AMI_STUB_Export \
@@ -87,7 +80,7 @@ project(Hello_Base_AMI_stub) : ccm_stub   {
 project(Hello_Base_AMI_exec) : ciao_executor   {
   after   += Hello_Base_AMI_lem_stub Hello_Base_AMI_stub
   sharedname = AMI_exec
-  libs += AMI_stub AMI_lem_stub Hello_Base_stub
+  libs += AMI_stub AMI_lem_stub Hello_Base_stub Hello_Base_AMI_
   libpaths += ../lib
   libout = ../lib
   dynamicflags   = AMI_EXEC_BUILD_DLL
@@ -100,8 +93,6 @@ project(Hello_Base_AMI_exec) : ciao_executor   {
     AMI_server.cpp
     AMI_perform_work.cpp
     AMI_internal_i.cpp
-    AMI_internalC.cpp
-    AMI_internalS.cpp
   }
 
   Header_Files {
@@ -110,13 +101,9 @@ project(Hello_Base_AMI_exec) : ciao_executor   {
     AMI_perform_work.h
     AMI_internal_i.h
     AMI_exec_export.h
-    AMI_internalS.h
-    AMI_internalC.h
   }
 
   Inline_Files {
-    AMI_internalS.inl
-    AMI_internalC.inl
   }
 }
 

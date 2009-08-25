@@ -1,3 +1,18 @@
+Tue Aug 25 05:44:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.h:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.h:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+          Removed internal IDL and use Hello base foo interface
+
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+          foo interface uses AMI.
+
 Mon Aug 24 13:31:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI_exec.h:
