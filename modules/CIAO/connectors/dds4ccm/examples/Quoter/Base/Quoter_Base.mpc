@@ -1,14 +1,12 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n Quoter_Base"
 
-project(DDS_Quoter_Base_idl_gen) : componentidldefaults   {
+project(DDS_Quoter_Base_idl_gen) : taoidldefaults {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=QUOTER_BASE_STUB_Export \
-              -Wb,stub_export_include=Quoter_Base_stub_export.h \
-              -Wb,skel_export_macro=QUOTER_BASE_SKEL_Export \
-              -Wb,skel_export_include=Quoter_Base_skel_export.h \
-              -Wb,exec_export_macro=QUOTER_BASE_EXEC_Export \
-              -Wb,exec_export_include=Quoter_Base_exec_export.h
+  idlflags -= -St -Sa
+  idlflags += -SS -Gxhst \
+              -Wb,stub_export_macro=QUOTER_BASE_STUB_Export \
+              -Wb,stub_export_include=Quoter_Base_stub_export.h
 
   IDL_Files {
     Quoter_Base.idl
@@ -66,31 +64,4 @@ project(DDS_Quoter_Base_stub) : ccm_stub {
     Quoter_BaseC.inl
   }
 }
-
-
-project(DDS_Quoter_Base_skel) : ciao_executor   {
-  after      +=  DDS_Quoter_Base_stub DDS_Quoter_Base_lem_stub
-  sharedname  = DDS_Quoter_Base_skel
-  libs       += DDS_Quoter_Base_stub
-  libpaths += ../lib
-  libout = ../lib
-  dynamicflags = QUOTER_BASE_SKEL_BUILD_DLL
-  
-  IDL_Files {
-  }
-
-  Source_Files {
-    Quoter_BaseS.cpp
-  }
-
-  Header_Files {
-    Quoter_BaseS.h
-    Quoter_Base_skel_export.h
-  }
-
-  Inline_Files {
-    Quoter_BaseS.inl
-  }
-}
-
 

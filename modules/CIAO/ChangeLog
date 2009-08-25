@@ -1,3 +1,12 @@
+Tue Aug 25 17:50:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
+        
+          - Removed unnecessary dependencies and code generation in
+            project DDS_Quoter_Base_idl_gen.
+            
+          - Removed unnecessary project DDS_Quoter_Base_skel.
+
 Tue Aug 25 17:14:13 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
