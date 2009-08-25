@@ -2,9 +2,8 @@
 
 #include "AMI_server.h"
 
-AMI_server::AMI_server (CORBA::ORB_ptr orb, ::CCM_AMI::AMI_foo_ptr foo_receiver)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver))
+AMI_server::AMI_server (::CCM_AMI::AMI_foo_ptr foo_receiver)
+  : foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver))
 {
 }
 
@@ -12,8 +11,15 @@ int AMI_server::svc ()
 {
   try
     {
+      int argc = 2;
+      ACE_TCHAR **argv = new ACE_TCHAR *[argc];
+      argv[0] = ACE::strnew (ACE_TEXT (""));
+      argv[1] = ACE::strnew (ACE_TEXT (""));
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, ACE_TEXT ("AMI_server"));
+
       CORBA::Object_var poa_object =
-        orb_->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         {
@@ -26,7 +32,7 @@ int AMI_server::svc ()
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      AMI_internal_i ami_internal_i (orb_.in (), foo_receiver_);
+      AMI_internal_i ami_internal_i (orb.in (), foo_receiver_);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (&ami_internal_i);
@@ -37,7 +43,7 @@ int AMI_server::svc ()
         CCM_AMI::AMI_foo::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb_->object_to_string (ami_foo_var.in ());
+        orb->object_to_string (ami_foo_var.in ());
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen ("server.ior", "w");
@@ -53,7 +59,7 @@ int AMI_server::svc ()
 
       printf ("AMI CORBA :\tServer is activated\n");
 
-      orb_->run ();
+      orb->run ();
     }
   catch (const CORBA::Exception& ex)
     {

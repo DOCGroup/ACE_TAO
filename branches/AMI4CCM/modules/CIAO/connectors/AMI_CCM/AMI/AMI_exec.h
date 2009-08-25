@@ -41,7 +41,6 @@
 
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
-#include "AMI_server.h"
 
 #define AMI_CORBA_IMPLEMENTATION
 
@@ -53,7 +52,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   {
   public:
     AMI_thread_handler (
-      ::CCM_AMI::Cookie ck,
+      long ck,
       const  char * in_str,
       ::CCM_AMI::AMI_foo_ptr foo_receiver,
       ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
@@ -98,7 +97,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
     long cookie_;
 
 #if defined (AMI_CORBA_IMPLEMENTATION)
-    CORBA::ORB_var    orb_;
     CCM_AMI::AMI_foo_var ami_foo_var_;
 #endif /* AMI_CORBA_IMPLEMENTATION */
 

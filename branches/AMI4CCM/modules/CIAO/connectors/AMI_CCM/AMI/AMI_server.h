@@ -11,12 +11,10 @@ class AMI_server : public ACE_Task_Base
 public:
   /// ctor
   AMI_server (
-    CORBA::ORB_ptr orb,
     ::CCM_AMI::AMI_foo_ptr foo_receiver);
   virtual int svc (void);
 
 private:
-  CORBA::ORB_var orb_;
   ::CCM_AMI::AMI_foo_var foo_receiver_;
 };
 

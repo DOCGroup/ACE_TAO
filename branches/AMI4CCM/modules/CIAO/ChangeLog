@@ -1,3 +1,11 @@
+Tue Aug 25 13:30:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+          Removed unnecessary class variables.
+
 Tue Aug 25 13:03:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI_exec.h:

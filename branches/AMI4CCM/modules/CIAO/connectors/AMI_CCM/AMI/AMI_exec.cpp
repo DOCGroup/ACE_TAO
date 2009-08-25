@@ -31,7 +31,7 @@
 #include "AMI_exec.h"
 #include "AMI_perform_work.h"
 #include "ciao/CIAO_common.h"
-
+#include "AMI_server.h"
 
 namespace CIAO_Hello_AMI_AMI_Impl
 {
@@ -41,7 +41,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   // asynchronous invocations.
   //============================================================
   AMI_thread_handler::AMI_thread_handler (
-    ::CCM_AMI::Cookie ck,
+    long ck,
     const char * in_str,
     ::CCM_AMI::AMI_foo_ptr foo_receiver,
     ::CCM_AMI::AMI_foo_callback_ptr foo_callback)
@@ -146,16 +146,15 @@ namespace CIAO_Hello_AMI_AMI_Impl
       cookie_ (0)
   {
     //initialize AMI client
-    int argc = 4;
+    int argc = 2;
     ACE_TCHAR **argv = new ACE_TCHAR *[argc];
     argv[0] = ACE::strnew (ACE_TEXT ("-ORBAMICollocation"));
     argv[1] = ACE::strnew (ACE_TEXT ("0"));
-    argv[2] = ACE::strnew (ACE_TEXT ("-ORBDebugLevel"));
-    argv[3] = ACE::strnew (ACE_TEXT ("5"));
-    orb_ = CORBA::ORB_init (argc, argv, ACE_TEXT ("AMI client"));
+    CORBA::ORB_var orb =
+      CORBA::ORB_init (argc, argv, ACE_TEXT ("AMI client"));
 
     CORBA::Object_var object =
-      orb_->string_to_object ("file://server.ior");
+      orb->string_to_object ("file://server.ior");
     ami_foo_var_ = CCM_AMI::AMI_foo::_narrow (object.in ());
 
     if (CORBA::is_nil (ami_foo_var_.in ()))
@@ -164,7 +163,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
       }
     // Activate POA to handle the call back.
     CORBA::Object_var poa_object =
-      orb_->resolve_initial_references("RootPOA");
+      orb->resolve_initial_references("RootPOA");
 
     if (CORBA::is_nil (poa_object.in ()))
       printf ("POA is NIL!\n");
@@ -176,7 +175,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
       root_poa->the_POAManager ();
 
     poa_manager->activate ();
-    AMI_perform_work *pw = new AMI_perform_work (orb_.in ());
+    AMI_perform_work *pw = new AMI_perform_work (orb.in ());
     pw->activate ();
   }
 #endif /* AMI_CORBA_IMPLEMENTATION */
@@ -192,27 +191,25 @@ namespace CIAO_Hello_AMI_AMI_Impl
     const char * in_str)
   {
     printf ("AMI :\tsendc_foo <%s>\n", in_str);
-    ::CCM_AMI::Cookie ck = ++cookie_;
+    ++cookie_;
 #if !defined (AMI_CORBA_IMPLEMENTATION)
     //single thread to perform asynchronous actions
-    printf ("AMI :\tReceived string <%s> for <%d>\n", in_str, ck);
+    printf ("AMI :\tReceived string <%s> for <%d>\n", in_str, cookie_);
     AMI_thread_handler* ah = new AMI_thread_handler (
-        ck,
+        cookie_,
         in_str,
         foo_receiver_.in ()),
         foo_callback_.in ());
     ah->activate ();
 #else
     //AMI CORBA implementation.
-    printf ("Start the AMI CORBA handler thread\n");
-    //start handler as a thread.
-    AMI_reply_handler* handler = new AMI_reply_handler (foo_callback_.in (), ck);
+    AMI_reply_handler* handler = new AMI_reply_handler (foo_callback_.in (), cookie_);
     CCM_AMI::AMI_AMI_fooHandler_var the_handler_var = handler->_this ();
-    printf ("AMI :\tSending string <%s> for cookie <%ld> to AMI CORBA server\n", in_str, ck);
+    printf ("AMI :\tSending string <%s> for cookie <%ld> to AMI CORBA server\n", in_str, cookie_);
     ami_foo_var_->sendc_foo (the_handler_var.in (), in_str);
-    printf ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    printf ("AMI : \tInvoked sendc_foo\n");
 #endif /* AMI_CORBA_IMPLEMENTATION */
-  return ck;
+  return cookie_;
   }
   
   //============================================================
@@ -275,13 +272,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 #if defined (AMI_CORBA_IMPLEMENTATION)
     ::CCM_AMI::AMI_foo_var receiver_foo =
       this->context_->get_connection_receiver_foo ();
-    int argc = 2;
-    ACE_TCHAR **argv = new ACE_TCHAR *[argc];
-    argv[0] = ACE::strnew (ACE_TEXT (""));
-    argv[1] = ACE::strnew (ACE_TEXT (""));
-    CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv, ACE_TEXT ("AMI_server"));
-    AMI_server *srv = new AMI_server (orb.in (), receiver_foo);
+    AMI_server* srv = new AMI_server (receiver_foo.in ());
     printf ("AMI :\tStarting server thread.\n");
     srv->activate ();
 #endif /* AMI_CORBA_IMPLEMENTATION */
