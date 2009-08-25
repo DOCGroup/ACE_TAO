@@ -1,3 +1,10 @@
+Tue Aug 25 04:11:22 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/global.features:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Enable mcpp by default. 
+        
 Fri Aug 21 21:24:44 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * bin/PerlACE/ProcessLVRT.pm: Don't be so aggressive with the reboots.

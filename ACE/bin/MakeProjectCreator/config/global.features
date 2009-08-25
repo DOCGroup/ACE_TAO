@@ -59,6 +59,8 @@ xerces2       = 0
 xerces3       = 0
 ofccm         = 0
 ndds          = 0
+mcpp          = 1
+
 // Features for various GUI libraries
 
 // Some of features are switched on because they are also controlled
