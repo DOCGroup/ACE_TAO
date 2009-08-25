@@ -30,6 +30,7 @@
 
 #include "Hello_Sender_exec.h"
 #include "ciao/CIAO_common.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {

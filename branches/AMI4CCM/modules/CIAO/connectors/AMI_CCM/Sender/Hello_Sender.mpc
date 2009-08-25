@@ -27,7 +27,7 @@ project(Hello_Base_Hello_Sender_lem_gen) : ciaoidldefaults   {
   }
 }
 
-project(Hello_Base_Hello_Sender_lem_stub) : ccm_svnt   {
+project(Hello_Base_Hello_Sender_lem_stub) : ccm_svnt, ami   {
   after += Hello_Base_Hello_Sender_lem_gen Hello_Base_Hello_Sender_stub Hello_Base_stub
   libs  += Hello_Base_stub Hello_Sender_stub
   libpaths += ../lib
@@ -52,7 +52,7 @@ project(Hello_Base_Hello_Sender_lem_stub) : ccm_svnt   {
   }
 }
 
-project(Hello_Base_Hello_Sender_stub) : ccm_stub   {
+project(Hello_Base_Hello_Sender_stub) : ccm_stub, ami   {
   after += Hello_Base_Hello_Sender_idl_gen Hello_Base_stub
   libs  += Hello_Base_stub
   libpaths += ../lib
@@ -77,7 +77,7 @@ project(Hello_Base_Hello_Sender_stub) : ccm_stub   {
   }
 }
 
-project(Hello_Base_Hello_Sender_exec) : ciao_executor   {
+project(Hello_Base_Hello_Sender_exec) : ciao_executor, ami  {
   after   += Hello_Base_Hello_Sender_lem_stub Hello_Base_Hello_Sender_stub
   sharedname = Hello_Sender_exec
   libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_Base_stub
@@ -102,7 +102,7 @@ project(Hello_Base_Hello_Sender_exec) : ciao_executor   {
 }
 
 
-project(Hello_Base_Hello_Sender_svnt) : ciao_servant   {
+project(Hello_Base_Hello_Sender_svnt) : ciao_servant, ami   {
   after      += Hello_Base_skel  Hello_Base_Hello_Sender_lem_stub
   sharedname  = Hello_Sender_svnt
   libs       += Hello_Sender_stub Hello_Sender_lem_stub  \

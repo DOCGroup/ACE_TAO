@@ -1,4 +1,7 @@
+// $Id$
+
 #include "AMI_perform_work.h"
+#include "ace/OS_NS_unistd.h"
 
 AMI_perform_work::AMI_perform_work (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb))
@@ -17,7 +20,8 @@ int AMI_perform_work::svc ()
             {
               orb_->perform_work();
             }
-          ACE_OS::sleep (0.01);
+		  ACE_Time_Value tv (0, 1000);	
+          ACE_OS::sleep (tv);
         }
     }
   catch (const CORBA::Exception& ex)

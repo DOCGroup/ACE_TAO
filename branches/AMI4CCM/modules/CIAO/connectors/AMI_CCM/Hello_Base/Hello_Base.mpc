@@ -15,7 +15,7 @@ project(Hello_Base_idl_gen) : componentidldefaults, ami   {
   }
 }
 
-project(Hello_Base_stub) : ccm_stub   {
+project(Hello_Base_stub) : ccm_stub, ami   {
   after += Hello_Base_idl_gen 
   libs  +=
   libout = ../lib
@@ -43,7 +43,7 @@ project(Hello_Base_stub) : ccm_stub   {
 }
 
 
-project(Hello_Base_skel) : ciao_executor   {
+project(Hello_Base_skel) : ciao_executor, ami   {
   after      +=  Hello_Base_stub Hello_Base_lem_stub
   sharedname  = Hello_Base_skel
   libs       += Hello_Base_stub

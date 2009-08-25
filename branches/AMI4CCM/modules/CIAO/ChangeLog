@@ -1,3 +1,15 @@
+Tue Aug 25 07:19:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender.mpc:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Resolved compiler errors on windows.
+          Resolved linker errors related to previous login.
+
 Tue Aug 25 05:44:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI.mpc:
