@@ -45,22 +45,22 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   int asynch_generator::svc ()
   {
-      ACE_OS::sleep (2);
-      long cookie;
-      for (int i = 0; i < 5; ++i)
-        {
-          if (CORBA::is_nil (foo_ami_))
-            printf ("Sender :\tfoo_receiver is NIL !!!\n");
-          else
-            {
-              cookie = foo_ami_->sendc_foo ("Do something asynchronous");
-        printf ("Sender :\tInvoked Asynchronous call. cookie <%ld>\n", cookie);
-            }
-        }
+    ACE_OS::sleep (2);
+    long cookie;
+    for (int i = 0; i < 5; ++i)
+      {
+        if (CORBA::is_nil (foo_ami_))
+          printf ("Sender (SYNCH) :\tfoo_receiver is NIL !!!\n");
+        else
+          {
+            cookie = foo_ami_->sendc_foo ("Do something asynchronous");
+      printf ("Sender (SYNCH) :\tInvoked Asynchronous call. cookie <%ld>\n", cookie);
+          }
+      }
 
-    printf ("Sender :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
+    printf ("Sender (SYNCH) :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
     cookie = foo_ami_->sendc_foo ("");
-        printf ("Sender :\tInvoked Asynchronous call. cookie <%ld>\n", cookie);
+    printf ("Sender (SYNCH) :\tInvoked Asynchronous call. cookie <%ld>\n", cookie);
     return 0;
   }
 
@@ -80,16 +80,16 @@ namespace CIAO_Hello_AMI_Sender_Impl
     for (int i = 0; i < 5; ++i)
       {
         CORBA::Long result = foo_ami_->foo ("Do something synchronous", out_str);
-        printf ("Sender :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
+        printf ("Sender (SYNCH):\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
       }
     try
       {
         CORBA::Long result = foo_ami_->foo ("", out_str);
-        printf ("Sender :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
+        printf ("Sender (SYNCH) :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
       }
     catch (CCM_AMI::InternalError& ex)
       {
-        printf ("Expected Exception caught : <%d> <%s>\n", ex.ex.id, ex.ex.error_string.in ());
+        printf ("Sender (SYNCH) :\tExpected Exception caught : <%d> <%s>\n", ex.ex.id, ex.ex.error_string.in ());
       }
     return 0;
   }
@@ -159,7 +159,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
   {
     this->context_ =
       ::Hello_AMI::CCM_Sender_Context::_narrow (ctx);
-    
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();

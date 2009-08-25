@@ -43,6 +43,7 @@ sub delete_ior_files {
     unlink PerlACE::LocalFile ("EM.ior");
     unlink PerlACE::LocalFile ("Receiver.ior");
     unlink PerlACE::LocalFile ("Sender.ior");
+    unlink PerlACE::LocalFile ("Server.ior");
     unlink PerlACE::LocalFile ("AMI.ior");
     unlink PerlACE::LocalFile ("ns.ior");
 }

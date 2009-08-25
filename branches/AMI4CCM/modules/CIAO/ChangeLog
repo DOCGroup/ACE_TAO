@@ -1,3 +1,17 @@
+Tue Aug 25 13:03:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+          AMI collacation set to 0 since AMI CORBA client and
+          AMI CORBA server are running in the same process.
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Improved logging.
+
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Automatically remove AMI CORBA ior file.
+
 Tue Aug 25 09:35:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI.idl:

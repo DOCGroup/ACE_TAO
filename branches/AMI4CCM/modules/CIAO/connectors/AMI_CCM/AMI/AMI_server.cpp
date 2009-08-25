@@ -39,8 +39,6 @@ int AMI_server::svc ()
       CORBA::String_var ior =
         orb_->object_to_string (ami_foo_var.in ());
 
-      printf ("Server :\tActivated as <%s>\n", ior.in ());
-
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen ("server.ior", "w");
       if (output_file == 0)
@@ -52,6 +50,8 @@ int AMI_server::svc ()
       ACE_OS::fclose (output_file);
 
       poa_manager->activate ();
+
+      printf ("AMI CORBA :\tServer is activated\n");
 
       orb_->run ();
     }
