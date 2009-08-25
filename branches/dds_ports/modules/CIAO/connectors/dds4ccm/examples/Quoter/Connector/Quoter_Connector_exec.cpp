@@ -28,13 +28,184 @@
  **/
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1278
+// .\be\be_codegen.cpp:1278
 
 #include "Quoter_Connector_exec.h"
 #include "ciao/CIAO_common.h"
 
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
+  //============================================================
+  // Facet Executor Implementation Class: Stock_Info_Writer_exec_i
+  //============================================================
+  
+  Stock_Info_Writer_exec_i::Stock_Info_Writer_exec_i (void)
+  {
+  }
+  
+  Stock_Info_Writer_exec_i::~Stock_Info_Writer_exec_i (void)
+  {
+  }
+  
+  // Operations from ::CCM_DDS::Stock_Info_Writer
+  
+  void
+  Stock_Info_Writer_exec_i::write (
+    const ::Quoter::Stock_Info & /* an_instance */)
+  {
+    /* Your code here. */
+  }
+  //============================================================
+  // Facet Executor Implementation Class: DataWriter_exec_i
+  //============================================================
+  
+  DataWriter_exec_i::DataWriter_exec_i (void)
+  {
+  }
+  
+  DataWriter_exec_i::~DataWriter_exec_i (void)
+  {
+  }
+  
+  // Operations from ::DDS::DataWriter
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::enable (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::StatusCondition_ptr
+  DataWriter_exec_i::get_statuscondition (void)
+  {
+    /* Your code here. */
+    return ::DDS::StatusCondition::_nil ();
+  }
+  
+  ::DDS::StatusMask
+  DataWriter_exec_i::get_status_changes (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::InstanceHandle_t
+  DataWriter_exec_i::get_instance_handle (void)
+  {
+    /* Your code here. */
+    return ::DDS::NativeInstanceHandle_t ();
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::set_qos (
+    const ::DDS::DataWriterQos & /* qos */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::get_qos (
+    ::DDS::DataWriterQos & /* qos */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::set_listener (
+    ::DDS::DataWriterListener_ptr /* a_listener */,
+    ::DDS::StatusMask /* mask */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::DataWriterListener_ptr
+  DataWriter_exec_i::get_listener (void)
+  {
+    /* Your code here. */
+    return ::DDS::DataWriterListener::_nil ();
+  }
+  
+  ::DDS::Topic_ptr
+  DataWriter_exec_i::get_topic (void)
+  {
+    /* Your code here. */
+    return ::DDS::Topic::_nil ();
+  }
+  
+  ::DDS::Publisher_ptr
+  DataWriter_exec_i::get_publisher (void)
+  {
+    /* Your code here. */
+    return ::DDS::Publisher::_nil ();
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::wait_for_acknowledgments (
+    const ::DDS::Duration_t & /* max_wait */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::get_liveliness_lost_status (
+    ::DDS::LivelinessLostStatus & /* status */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::get_offered_deadline_missed_status (
+    ::DDS::OfferedDeadlineMissedStatus & /* status */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::get_offered_incompatible_qos_status (
+    ::DDS::OfferedIncompatibleQosStatus & /* status */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::get_publication_matched_status (
+    ::DDS::PublicationMatchedStatus & /* status */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::assert_liveliness (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::get_matched_subscriptions (
+    ::DDS::InstanceHandleSeq & /* subscription_handles */)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  ::DDS::ReturnCode_t
+  DataWriter_exec_i::get_matched_subscription_data (
+    ::DDS::SubscriptionBuiltinTopicData & /* subscription_data */,
+    const ::DDS::InstanceHandle_t & /* subscription_handle */)
+  {
+    /* Your code here. */
+    return 0;
+  }
   //============================================================
   // Facet Executor Implementation Class: Stock_Info_Reader_exec_i
   //============================================================
@@ -365,6 +536,20 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   }
   
   // Port operations.
+  
+  ::CCM_DDS::CCM_Stock_Info_Writer_ptr
+  Quoter_Connector_exec_i::get_info_in_data (void)
+  {
+    /* Your code here. */
+    return ::CCM_DDS::CCM_Stock_Info_Writer::_nil ();
+  }
+  
+  ::DDS::CCM_DataWriter_ptr
+  Quoter_Connector_exec_i::get_info_in_dds_entity (void)
+  {
+    /* Your code here. */
+    return ::DDS::CCM_DataWriter::_nil ();
+  }
   
   ::CCM_DDS::CCM_Stock_Info_Reader_ptr
   Quoter_Connector_exec_i::get_info_out_data (void)
