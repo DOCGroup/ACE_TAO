@@ -33,33 +33,33 @@
 
 
 #include "Hello_ReceiverEC.h"
-#include "Hello_Receiver_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
+#include "Hello_Receiver_exec_export.h"
 
 namespace CIAO_Hello_AMI_Receiver_Impl
 {
-  class  AMI_foo_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_foo,
+  class  MyFoo_exec_i
+    : public virtual ::CCM_AMI::CCM_MyFoo,
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_foo_exec_i (void);
-    virtual ~AMI_foo_exec_i (void);
+    MyFoo_exec_i (void);
+    virtual ~MyFoo_exec_i (void);
     
-    // Operations and attributes from ::CCM_AMI::AMI_foo
+    // Operations and attributes from ::CCM_AMI::MyFoo
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::Long
-      foo (
-        const char * in_str,
-        ::CORBA::String_out answer);
+    foo (
+      const char * in_str,
+      ::CORBA::String_out answer);
   };
   
   class  Receiver_exec_i
@@ -76,7 +76,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     
     // Port operations.
     
-    virtual ::CCM_AMI::CCM_AMI_foo_ptr
+    virtual ::CCM_AMI::CCM_MyFoo_ptr
     get_do_asynch_foo (void);
     
     // Operations from Components::SessionComponent.

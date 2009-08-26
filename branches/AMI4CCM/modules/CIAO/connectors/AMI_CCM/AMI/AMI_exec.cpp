@@ -44,11 +44,11 @@ namespace CIAO_Hello_AMI_AMI_Impl
     long ck,
     const char * in_str,
     ::CCM_AMI::AMI_foo_ptr foo_receiver,
-    ::CCM_AMI::AMI_foo_callback_ptr foo_callback)
+    ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback)
     : ck_ (ck),
       in_str_ (in_str),
-      foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver)),
-      foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback))
+      foo_receiver_ (::CCM_AMI::MyFoo::_duplicate (foo_receiver)),
+      foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback))
   {
   }
 
@@ -67,11 +67,11 @@ namespace CIAO_Hello_AMI_AMI_Impl
   //============================================================
   // Implementation of the AMI CORBA reply handler
   //============================================================
-  class AMI_reply_handler : public POA_CCM_AMI::AMI_AMI_fooHandler
+  class AMI_reply_handler : public POA_CCM_AMI::AMI_MyFooHandler
   {
   public:
-    AMI_reply_handler (::CCM_AMI::AMI_foo_callback_ptr foo_callback, long ck)
-      : foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback)),
+    AMI_reply_handler (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback, long ck)
+      : foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback)),
         ck_ (ck)
     {
     };
@@ -121,28 +121,28 @@ namespace CIAO_Hello_AMI_AMI_Impl
     {
     };
   private:
-    ::CCM_AMI::AMI_foo_callback_var foo_callback_;
+    ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
     long ck_;
   };
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
   //============================================================
-  // Facet Executor Implementation Class: AMI_ami_foo_exec_i
+  // Facet Executor Implementation Class: AMI_MyFoo_exec_i
   //============================================================
 
 #if !defined (AMI_CORBA_IMPLEMENTATION)
-  AMI_ami_foo_exec_i::AMI_ami_foo_exec_i (
-    ::CCM_AMI::AMI_foo_ptr foo_receiver,
-    ::CCM_AMI::AMI_foo_callback_ptr foo_callback) :
-      foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver)),
-      foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback)),
+  AMI_MyFoo_exec_i::AMI_MyFoo_exec_i (
+    ::CCM_AMI::AMI_MyFoo_ptr foo_receiver,
+    ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback) :
+      foo_receiver_ (::CCM_AMI::MyFoo::_duplicate (foo_receiver)),
+      foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback)),
       cookie_ (0)
   {
   }
 #else
-  AMI_ami_foo_exec_i::AMI_ami_foo_exec_i (
-    ::CCM_AMI::AMI_foo_callback_ptr foo_callback) :
-      foo_callback_ (::CCM_AMI::AMI_foo_callback::_duplicate (foo_callback)),
+  AMI_MyFoo_exec_i::AMI_MyFoo_exec_i (
+    ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback) :
+      foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback)),
       cookie_ (0)
   {
     //initialize AMI client
@@ -155,7 +155,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
     CORBA::Object_var object =
       orb->string_to_object ("file://server.ior");
-    ami_foo_var_ = CCM_AMI::AMI_foo::_narrow (object.in ());
+    ami_foo_var_ = CCM_AMI::MyFoo::_narrow (object.in ());
 
     if (CORBA::is_nil (ami_foo_var_.in ()))
       {
@@ -180,20 +180,21 @@ namespace CIAO_Hello_AMI_AMI_Impl
   }
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
-  AMI_ami_foo_exec_i::~AMI_ami_foo_exec_i (void)
+  AMI_MyFoo_exec_i::~AMI_MyFoo_exec_i (void)
   {
   }
 
   // Operations from ::CCM_AMI::AMI_ami_foo
 
   ::CCM_AMI::Cookie
-  AMI_ami_foo_exec_i::sendc_foo (
+  AMI_MyFoo_exec_i::sendc_foo (
     const char * in_str)
   {
     printf ("AMI :\tsendc_foo <%s>\n", in_str);
     ++cookie_;
 #if !defined (AMI_CORBA_IMPLEMENTATION)
-    //single thread to perform asynchronous actions
+    // Single thread to perform asynchronous actions.
+    // No exception handling implemented.
     printf ("AMI :\tReceived string <%s> for <%d>\n", in_str, cookie_);
     AMI_thread_handler* ah = new AMI_thread_handler (
         cookie_,
@@ -204,7 +205,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 #else
     //AMI CORBA implementation.
     AMI_reply_handler* handler = new AMI_reply_handler (foo_callback_.in (), cookie_);
-    CCM_AMI::AMI_AMI_fooHandler_var the_handler_var = handler->_this ();
+    CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     printf ("AMI :\tSending string <%s> for cookie <%ld> to AMI CORBA server\n", in_str, cookie_);
     ami_foo_var_->sendc_foo (the_handler_var.in (), in_str);
     printf ("AMI : \tInvoked sendc_foo\n");
@@ -230,18 +231,18 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   // Port operations.
   
-  ::CCM_AMI::CCM_AMI_ami_foo_ptr
+  ::CCM_AMI::CCM_AMI_MyFoo_ptr
   AMI_exec_i::get_perform_asynch_foo (void)
   {
-    ::CCM_AMI::AMI_foo_callback_var foo_callback =
+    ::CCM_AMI::AMI_MyFoo_callback_var foo_callback =
       this->context_->get_connection_callback_foo ();
 
 #if !defined (AMI_CORBA_IMPLEMENTATION)
     ::CCM_AMI::AMI_foo_var receiver_foo =
       this->context_->get_connection_receiver_foo ();
-    return new AMI_ami_foo_exec_i (receiver_foo, foo_callback);
+    return new AMI_MyFoo_exec_i (receiver_foo, foo_callback);
 #else
-    return new AMI_ami_foo_exec_i (foo_callback);
+    return new AMI_MyFoo_exec_i (foo_callback);
 #endif /* AMI_CORBA_IMPLEMENTATION */
   }
   
@@ -270,7 +271,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   AMI_exec_i::ccm_activate (void)
   {
 #if defined (AMI_CORBA_IMPLEMENTATION)
-    ::CCM_AMI::AMI_foo_var receiver_foo =
+    ::CCM_AMI::MyFoo_var receiver_foo =
       this->context_->get_connection_receiver_foo ();
     AMI_server* srv = new AMI_server (receiver_foo.in ());
     printf ("AMI :\tStarting server thread.\n");

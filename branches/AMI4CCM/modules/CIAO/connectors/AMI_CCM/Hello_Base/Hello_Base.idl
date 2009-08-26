@@ -1,38 +1,22 @@
 // $Id$
 
+#include "Hello.idl"
+
 module CCM_AMI
 {
   typedef long Cookie;
 
-  struct InternalException
+  // AMI component. Sender calls AMI-component and AMI-component calls Receiver
+  // using the AMI_foo interface.
+  interface AMI_MyFoo
     {
-      long id;
-      string error_string;
-    };
-
-  exception InternalError
-    {
-      InternalException ex;
-    };
-
-  // Sender/Receiver interface
-  interface AMI_foo
-    {
-      long foo (in string in_str, out string answer)
-        raises (InternalError);
+      Cookie sendc_foo (in string in_str);
     };
 
   // callback interface from AMI-component to Sender component
-  interface AMI_foo_callback
+  interface AMI_MyFoo_callback
     {
       void foo_callback_handler (in Cookie ck, in long result, in string answer);
-      void foo_callback_excep   (in Cookie ck, in InternalException exception_holder);
-    };
-
-  // AMI component. Sender calls AMI-component and AMI-component calls Receiver
-  // using the AMI_foo interface.
-  interface AMI_ami_foo
-    {
-      Cookie sendc_foo (in string in_str);
+      void foo_callback_excep   (in Cookie ck, in CCM_AMI::InternalException exception_holder);
     };
 };

@@ -12,15 +12,14 @@ int AMI_perform_work::svc ()
 {
   try
     {
+      printf ("AMI :\tPerform work started\n");
       while (1)
         {
-          CORBA::Boolean pending = orb_->work_pending();
-
-          if (pending)
+          if (orb_->work_pending())
             {
               orb_->perform_work();
             }
-		  ACE_Time_Value tv (0, 1000);	
+          ACE_Time_Value tv (0, 1000);
           ACE_OS::sleep (tv);
         }
     }

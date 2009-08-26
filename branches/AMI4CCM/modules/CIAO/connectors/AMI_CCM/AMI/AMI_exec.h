@@ -65,21 +65,21 @@ namespace CIAO_Hello_AMI_AMI_Impl
   };
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
-  class  AMI_ami_foo_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_ami_foo,
+  class  AMI_MyFoo_exec_i
+    : public virtual ::CCM_AMI::CCM_AMI_MyFoo,
       public virtual ::CORBA::LocalObject
   {
   public:
 #if !defined (AMI_CORBA_IMPLEMENTATION)
-    AMI_ami_foo_exec_i (
+    AMI_MyFoo_exec_i (
       ::CCM_AMI::AMI_foo_ptr foo_receiver,
       ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
 #else
-    AMI_ami_foo_exec_i (
-      ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
+    AMI_MyFoo_exec_i (
+      ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback);
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
-    virtual ~AMI_ami_foo_exec_i (void);
+    virtual ~AMI_MyFoo_exec_i (void);
     
     // Operations and attributes from ::CCM_AMI::AMI_ami_foo
     
@@ -93,11 +93,11 @@ namespace CIAO_Hello_AMI_AMI_Impl
 #if !defined (AMI_CORBA_IMPLEMENTATION)
     ::CCM_AMI::AMI_foo_var          foo_receiver_;
 #endif /* AMI_CORBA_IMPLEMENTATION */
-    ::CCM_AMI::AMI_foo_callback_var foo_callback_;
+    ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
     long cookie_;
 
 #if defined (AMI_CORBA_IMPLEMENTATION)
-    CCM_AMI::AMI_foo_var ami_foo_var_;
+    CCM_AMI::MyFoo_var ami_foo_var_;
 #endif /* AMI_CORBA_IMPLEMENTATION */
 
   };
@@ -116,7 +116,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
     
     // Port operations.
     
-    virtual ::CCM_AMI::CCM_AMI_ami_foo_ptr
+    virtual ::CCM_AMI::CCM_AMI_MyFoo_ptr
     get_perform_asynch_foo (void);
     
     // Operations from Components::SessionComponent.

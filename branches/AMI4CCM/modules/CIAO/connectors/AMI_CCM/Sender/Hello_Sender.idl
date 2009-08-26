@@ -12,13 +12,13 @@ module Hello_AMI
   component Sender
   {
     // for asynch invocation.
-    uses CCM_AMI::AMI_ami_foo          run_asynch_foo;
+    uses CCM_AMI::AMI_MyFoo run_asynch_foo;
 
     // for synchronous invocation
-    uses CCM_AMI::AMI_foo              run_foo;
+    uses CCM_AMI::MyFoo     run_foo;
 
     //provides the callback function/exception for the AMI component.
-    provides CCM_AMI::AMI_foo_callback the_foo_callback;
+    provides CCM_AMI::AMI_MyFoo_callback the_foo_callback;
   };
 
   home SenderHome manages Sender

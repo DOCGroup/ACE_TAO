@@ -2,8 +2,8 @@
 
 #include "AMI_server.h"
 
-AMI_server::AMI_server (::CCM_AMI::AMI_foo_ptr foo_receiver)
-  : foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver))
+AMI_server::AMI_server (::CCM_AMI::MyFoo_ptr foo_receiver)
+  : foo_receiver_ (::CCM_AMI::MyFoo::_duplicate (foo_receiver))
 {
 }
 
@@ -39,8 +39,8 @@ int AMI_server::svc ()
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
-      CCM_AMI::AMI_foo_var ami_foo_var =
-        CCM_AMI::AMI_foo::_narrow (object.in ());
+      CCM_AMI::MyFoo_var ami_foo_var =
+        CCM_AMI::MyFoo::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (ami_foo_var.in ());

@@ -49,36 +49,36 @@ namespace CIAO_Hello_AMI_Sender_Impl
   class asynch_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami);
+    asynch_generator (::CCM_AMI::AMI_MyFoo_ptr foo_ami);
 
     virtual int svc (void);
 
   private:
-    ::CCM_AMI::AMI_ami_foo_var foo_ami_;
+    ::CCM_AMI::AMI_MyFoo_var foo_ami_;
   };
 
   // Worker thread for synchronous invocations
   class synch_generator : public virtual ACE_Task_Base
   {
   public:
-    synch_generator (::CCM_AMI::AMI_foo_ptr foo_ami);
+    synch_generator (::CCM_AMI::MyFoo_ptr foo_ami);
 
     virtual int svc (void);
 
   private:
-    ::CCM_AMI::AMI_foo_var foo_ami_;
+    ::CCM_AMI::MyFoo_var foo_ami_;
   };
 
 
-  class  AMI_foo_callback_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_foo_callback,
+  class  MyFoo_callback_exec_i
+    : public virtual ::CCM_AMI::CCM_AMI_MyFoo_callback,
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_foo_callback_exec_i (void);
-    virtual ~AMI_foo_callback_exec_i (void);
+    MyFoo_callback_exec_i (void);
+    virtual ~MyFoo_callback_exec_i (void);
     
-    // Operations and attributes from ::CCM_AMI::AMI_foo_callback
+    // Operations and attributes from ::CCM_AMI::MyFoo_callback
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
@@ -112,7 +112,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     // Port operations.
     
-    virtual ::CCM_AMI::CCM_AMI_foo_callback_ptr
+    virtual ::CCM_AMI::CCM_AMI_MyFoo_callback_ptr
     get_the_foo_callback (void);
     
     // Operations from Components::SessionComponent.

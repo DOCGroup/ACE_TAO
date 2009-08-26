@@ -2,9 +2,9 @@
 
 #include "AMI_internal_i.h"
 
-AMI_internal_i::AMI_internal_i (CORBA::ORB_ptr orb, ::CCM_AMI::AMI_foo_ptr foo_receiver)
+AMI_internal_i::AMI_internal_i (CORBA::ORB_ptr orb, ::CCM_AMI::MyFoo_ptr foo_receiver)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    foo_receiver_ (::CCM_AMI::AMI_foo::_duplicate (foo_receiver))
+    foo_receiver_ (::CCM_AMI::MyFoo::_duplicate (foo_receiver))
 {
 }
 

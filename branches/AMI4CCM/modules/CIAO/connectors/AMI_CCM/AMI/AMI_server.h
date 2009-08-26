@@ -9,13 +9,12 @@
 class AMI_server : public ACE_Task_Base
 {
 public:
-  /// ctor
   AMI_server (
-    ::CCM_AMI::AMI_foo_ptr foo_receiver);
+    ::CCM_AMI::MyFoo_ptr foo_receiver);
   virtual int svc (void);
 
 private:
-  ::CCM_AMI::AMI_foo_var foo_receiver_;
+  ::CCM_AMI::MyFoo_var foo_receiver_;
 };
 
 #endif /* AMI_SERVER_H */

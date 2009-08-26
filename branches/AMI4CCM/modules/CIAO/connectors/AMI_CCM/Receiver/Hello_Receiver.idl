@@ -12,12 +12,11 @@ module Hello_AMI
   component Receiver
   {
     //provides 
-    provides CCM_AMI::AMI_foo do_asynch_foo;
+    provides CCM_AMI::MyFoo do_asynch_foo;
   };
 
   home ReceiverHome manages Receiver
   {
   };
 };
-
 #endif

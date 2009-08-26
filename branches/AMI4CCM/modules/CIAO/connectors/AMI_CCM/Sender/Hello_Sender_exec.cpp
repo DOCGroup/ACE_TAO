@@ -38,8 +38,8 @@ namespace CIAO_Hello_AMI_Sender_Impl
   //============================================================
   // Worker thread for asynchronous invocations
   //============================================================
-  asynch_generator::asynch_generator (::CCM_AMI::AMI_ami_foo_ptr foo_ami)
-            : foo_ami_ (::CCM_AMI::AMI_ami_foo::_duplicate (foo_ami))
+  asynch_generator::asynch_generator (::CCM_AMI::AMI_MyFoo_ptr foo_ami)
+            : foo_ami_ (::CCM_AMI::AMI_MyFoo::_duplicate (foo_ami))
   {
   }
 
@@ -67,8 +67,8 @@ namespace CIAO_Hello_AMI_Sender_Impl
   //============================================================
   // Worker thread for synchronous invocations
   //============================================================
-  synch_generator::synch_generator (::CCM_AMI::AMI_foo_ptr foo_ami)
-            : foo_ami_ (::CCM_AMI::AMI_foo::_duplicate (foo_ami))
+  synch_generator::synch_generator (::CCM_AMI::MyFoo_ptr foo_ami)
+            : foo_ami_ (::CCM_AMI::MyFoo::_duplicate (foo_ami))
   {
   }
 
@@ -95,21 +95,21 @@ namespace CIAO_Hello_AMI_Sender_Impl
   }
 
   //============================================================
-  // Facet Executor Implementation Class: AMI_foo_callback_exec_i
+  // Facet Executor Implementation Class: MyFoo_callback_exec_i
   //============================================================
   
-  AMI_foo_callback_exec_i::AMI_foo_callback_exec_i (void)
+  MyFoo_callback_exec_i::MyFoo_callback_exec_i (void)
   {
   }
   
-  AMI_foo_callback_exec_i::~AMI_foo_callback_exec_i (void)
+  MyFoo_callback_exec_i::~MyFoo_callback_exec_i (void)
   {
   }
   
-  // Operations from ::CCM_AMI::AMI_foo_callback
+  // Operations from ::CCM_AMI::MyFoo_callback
   
   void
-  AMI_foo_callback_exec_i::foo_callback_handler (
+  MyFoo_callback_exec_i::foo_callback_handler (
     ::CCM_AMI::Cookie ck,
     ::CORBA::Long result,
     const char * answer)
@@ -118,7 +118,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   }
   
   void
-  AMI_foo_callback_exec_i::foo_callback_excep (
+  MyFoo_callback_exec_i::foo_callback_excep (
     ::CCM_AMI::Cookie ck,
       const ::CCM_AMI::InternalException & exception_holder)
   {
@@ -145,10 +145,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
   
   // Port operations.
   
-  ::CCM_AMI::CCM_AMI_foo_callback_ptr
+  ::CCM_AMI::CCM_AMI_MyFoo_callback_ptr
   Sender_exec_i::get_the_foo_callback ()
   {
-    return new AMI_foo_callback_exec_i ();
+    return new MyFoo_callback_exec_i ();
   }
   
   // Operations from Components::SessionComponent.
@@ -174,9 +174,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::CCM_AMI::AMI_ami_foo_var asynch_foo =
+    ::CCM_AMI::AMI_MyFoo_var asynch_foo =
       this->context_->get_connection_run_asynch_foo ();
-    ::CCM_AMI::AMI_foo_var synch_foo =
+    ::CCM_AMI::MyFoo_var synch_foo =
       this->context_->get_connection_run_foo ();
 
     asynch_generator* asynch = new asynch_generator (asynch_foo);

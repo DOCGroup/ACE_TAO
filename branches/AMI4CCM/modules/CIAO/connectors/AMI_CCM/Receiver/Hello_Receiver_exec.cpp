@@ -30,26 +30,25 @@
 
 #include "Hello_Receiver_exec.h"
 #include "ciao/CIAO_common.h"
-#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Hello_AMI_Receiver_Impl
 {
   //============================================================
-  // Facet Executor Implementation Class: AMI_foo_exec_i
+  // Facet Executor Implementation Class: MyFoo_exec_i
   //============================================================
   
-  AMI_foo_exec_i::AMI_foo_exec_i (void)
+  MyFoo_exec_i::MyFoo_exec_i (void)
   {
   }
   
-  AMI_foo_exec_i::~AMI_foo_exec_i (void)
+  MyFoo_exec_i::~MyFoo_exec_i (void)
   {
   }
   
-  // Operations from ::CCM_AMI::AMI_foo
+  // Operations from ::CCM_AMI::MyFoo
   
   ::CORBA::Long
-  AMI_foo_exec_i::foo (
+  MyFoo_exec_i::foo (
     const char * in_str,
     ::CORBA::String_out answer)
   {
@@ -87,10 +86,11 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   
   // Port operations.
   
-  ::CCM_AMI::CCM_AMI_foo_ptr
+  ::CCM_AMI::CCM_MyFoo_ptr
   Receiver_exec_i::get_do_asynch_foo (void)
   {
-    return new AMI_foo_exec_i ();
+    /* Your code here. */
+    return new MyFoo_exec_i ();//)::CCM_AMI::CCM_MyFoo::_nil ();
   }
   
   // Operations from Components::SessionComponent.
