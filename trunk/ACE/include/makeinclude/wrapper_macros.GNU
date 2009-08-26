@@ -350,7 +350,7 @@ use_dep_libs ?= 1
 threads ?= 1
 symlinks ?= relative
 link_groups ?= 0
-mcpp ?= 1
+mcpp ?= 0
 
 SOVERSION ?=
 SONAME ?=
