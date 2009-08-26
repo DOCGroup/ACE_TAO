@@ -199,6 +199,44 @@ checking_visitor::visit_consumes (AST_Consumes *)
 }
 
 int
+checking_visitor::visit_extended_port (AST_Extended_Port *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_mirror_port (AST_Mirror_Port *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_connector (AST_Connector *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_instantiated_connector (
+  AST_Instantiated_Connector *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_tmpl_port (AST_Tmpl_Port *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_tmpl_mirror_port (
+  AST_Tmpl_Mirror_Port *)
+{
+  return 0;
+}
+
+int
 checking_visitor::visit_eventtype (AST_EventType *node)
 {
   this->is_idl3_ = true;
