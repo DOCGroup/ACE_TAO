@@ -1,3 +1,24 @@
+Wed Aug 26 17:33:01 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_instantiated_interface.h:
+        * TAO_IDL/be/be_instantiated_interface.cpp:
+        * TAO_IDL/ast/ast_instantiated_interface.cpp:
+        * TAO_IDL/be_include/be_instantiated_interface.h:
+
+          Removed these files, their function will be
+          handled in the backend.
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_generator.h:
+
+          Removed references to removed nodes from visitors
+          and factories.
+
 Fri Aug 21 16:47:57 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_instantiated_connector.cpp:

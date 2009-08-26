@@ -30,7 +30,6 @@ class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
 class AST_Template_Interface;
-class AST_Instantiated_Interface;
 class AST_ValueBox;
 class AST_ValueType;
 class AST_ValueTypeFwd;
@@ -100,8 +99,6 @@ public:
   virtual int visit_interface_fwd (AST_InterfaceFwd *node) = 0;
   virtual int visit_template_interface (
     AST_Template_Interface *node) = 0;
-  virtual int visit_instantiated_interface (
-    AST_Instantiated_Interface *node) = 0;
   virtual int visit_valuetype (AST_ValueType *node) = 0;
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node) = 0;
   virtual int visit_component (AST_Component *node) = 0;
