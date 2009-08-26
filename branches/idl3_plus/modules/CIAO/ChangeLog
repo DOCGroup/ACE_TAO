@@ -1,3 +1,15 @@
+Wed Aug 26 18:29:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+
+          Updated visitors to include the new visit methods,
+          and commented out the existing methods that use
+          port descriptions, which have been eliminated.
+
 Fri Jul 17 19:07:47 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.h:

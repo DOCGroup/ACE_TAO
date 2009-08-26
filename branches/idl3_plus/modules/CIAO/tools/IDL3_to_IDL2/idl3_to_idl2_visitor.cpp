@@ -186,6 +186,44 @@ idl3_to_idl2_visitor::visit_component_fwd (AST_ComponentFwd *node)
 }
 
 int
+idl3_to_idl2_visitor::visit_extended_port (AST_Extended_Port *)
+{
+  return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_mirror_port (AST_Mirror_Port *)
+{
+  return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_connector (AST_Connector *)
+{
+  return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_instantiated_connector (
+  AST_Instantiated_Connector *)
+{
+  return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_tmpl_port (AST_Tmpl_Port *)
+{
+  return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_tmpl_mirror_port (
+  AST_Tmpl_Mirror_Port *)
+{
+  return 0;
+}
+
+int
 idl3_to_idl2_visitor::visit_eventtype (AST_EventType *node)
 {
   if (node->imported ())
@@ -453,8 +491,9 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
 }
 
 void
-idl3_to_idl2_visitor::gen_provides (AST_Component *node)
+idl3_to_idl2_visitor::gen_provides (AST_Component *)
 {
+/*
   ACE_Unbounded_Queue<AST_Component::port_description> &s =
     node->provides ();
   AST_Component::port_description *pd = 0;
@@ -475,11 +514,13 @@ idl3_to_idl2_visitor::gen_provides (AST_Component *node)
       delete orig_id;
       orig_id = 0;
     }
+    */
 }
 
 void
-idl3_to_idl2_visitor::gen_uses (AST_Component *node)
+idl3_to_idl2_visitor::gen_uses (AST_Component *)
 {
+/*
   ACE_Unbounded_Queue<AST_Component::port_description> &s =
     node->uses ();
   AST_Component::port_description *pd = 0;
@@ -538,11 +579,13 @@ idl3_to_idl2_visitor::gen_uses (AST_Component *node)
       delete orig_id;
       orig_id = 0;
     }
+    */
 }
 
 void
-idl3_to_idl2_visitor::gen_publishes (AST_Component *node)
+idl3_to_idl2_visitor::gen_publishes (AST_Component *)
 {
+/*
   ACE_Unbounded_Queue<AST_Component::port_description> &s =
     node->publishes ();
   AST_Component::port_description *pd = 0;
@@ -572,11 +615,13 @@ idl3_to_idl2_visitor::gen_publishes (AST_Component *node)
       delete orig_id;
       orig_id = 0;
    }
+   */
 }
 
 void
-idl3_to_idl2_visitor::gen_emits (AST_Component *node)
+idl3_to_idl2_visitor::gen_emits (AST_Component *)
 {
+/*
   ACE_Unbounded_Queue<AST_Component::port_description> &s =
     node->emits ();
   AST_Component::port_description *pd = 0;
@@ -605,11 +650,13 @@ idl3_to_idl2_visitor::gen_emits (AST_Component *node)
       delete orig_id;
       orig_id = 0;
     }
+    */
 }
 
 void
-idl3_to_idl2_visitor::gen_consumes (AST_Component *node)
+idl3_to_idl2_visitor::gen_consumes (AST_Component *)
 {
+/*
   ACE_Unbounded_Queue<AST_Component::port_description> &s =
     node->consumes ();
   AST_Component::port_description *pd = 0;
@@ -631,6 +678,7 @@ idl3_to_idl2_visitor::gen_consumes (AST_Component *node)
       delete orig_id;
       orig_id = 0;
     }
+    */
 }
 
 UTL_ScopedName *

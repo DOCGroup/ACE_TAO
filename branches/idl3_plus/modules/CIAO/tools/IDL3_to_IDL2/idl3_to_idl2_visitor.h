@@ -48,6 +48,14 @@ public:
   virtual int visit_interface (AST_Interface *node);
   virtual int visit_component (AST_Component *node);
   virtual int visit_component_fwd (AST_ComponentFwd *node);
+  virtual int visit_extended_port (AST_Extended_Port *node);
+  virtual int visit_mirror_port (AST_Mirror_Port *node);
+  virtual int visit_connector (AST_Connector *node);
+  virtual int visit_instantiated_connector (
+    AST_Instantiated_Connector *node);
+  virtual int visit_tmpl_port (AST_Tmpl_Port *node);
+  virtual int visit_tmpl_mirror_port (
+    AST_Tmpl_Mirror_Port *node);
   virtual int visit_eventtype (AST_EventType *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
