@@ -1,3 +1,13 @@
+Wed Aug 26 18:25:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        
+          Updated visitors to include the new visit methods,
+          and commented out the existing methods that use
+          port descriptions, which have been eliminated.
+
 Wed Aug 26 17:33:01 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_instantiated_interface.h:

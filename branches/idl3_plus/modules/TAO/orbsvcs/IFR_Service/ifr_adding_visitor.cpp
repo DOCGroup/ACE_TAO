@@ -3862,9 +3862,10 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
 }
 
 void
-ifr_adding_visitor::visit_all_provides (AST_Component *node,
-                                        CORBA::ComponentIR::ComponentDef_ptr c)
+ifr_adding_visitor::visit_all_provides (AST_Component *,
+                                        CORBA::ComponentIR::ComponentDef_ptr)
 {
+/*
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
   CORBA::InterfaceDef_var interface_type;
@@ -3890,12 +3891,14 @@ ifr_adding_visitor::visit_all_provides (AST_Component *node,
                                     tmp->impl->version (),
                                     interface_type.in ());
     }
+    */
 }
 
 void
-ifr_adding_visitor::visit_all_uses (AST_Component *node,
-                                    CORBA::ComponentIR::ComponentDef_ptr c)
+ifr_adding_visitor::visit_all_uses (AST_Component *,
+                                    CORBA::ComponentIR::ComponentDef_ptr)
 {
+/*
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
   CORBA::InterfaceDef_var interface_type;
@@ -3922,12 +3925,14 @@ ifr_adding_visitor::visit_all_uses (AST_Component *node,
                                 interface_type.in (),
                                 static_cast<CORBA::Boolean> (tmp->is_multiple));
     }
+    */
 }
 
 void
-ifr_adding_visitor::visit_all_emits (AST_Component *node,
-                                     CORBA::ComponentIR::ComponentDef_ptr c)
+ifr_adding_visitor::visit_all_emits (AST_Component *,
+                                     CORBA::ComponentIR::ComponentDef_ptr)
 {
+/*
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
   CORBA::ComponentIR::EventDef_var event_type;
@@ -3954,12 +3959,14 @@ ifr_adding_visitor::visit_all_emits (AST_Component *node,
                                  tmp->impl->version (),
                                  event_type.in ());
     }
+    */
 }
 
 void
-ifr_adding_visitor::visit_all_publishes (AST_Component *node,
-                                         CORBA::ComponentIR::ComponentDef_ptr c)
+ifr_adding_visitor::visit_all_publishes (AST_Component *,
+                                         CORBA::ComponentIR::ComponentDef_ptr)
 {
+/*
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
   CORBA::ComponentIR::EventDef_var event_type;
@@ -3986,12 +3993,14 @@ ifr_adding_visitor::visit_all_publishes (AST_Component *node,
                                      tmp->impl->version (),
                                      event_type.in ());
     }
+    */
 }
 
 void
-ifr_adding_visitor::visit_all_consumes (AST_Component *node,
-                                        CORBA::ComponentIR::ComponentDef_ptr c)
+ifr_adding_visitor::visit_all_consumes (AST_Component *,
+                                        CORBA::ComponentIR::ComponentDef_ptr)
 {
+/*
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
   CORBA::ComponentIR::EventDef_var event_type;
@@ -4018,6 +4027,7 @@ ifr_adding_visitor::visit_all_consumes (AST_Component *node,
                                     tmp->impl->version (),
                                     event_type.in ());
     }
+    */
 }
 
 void
