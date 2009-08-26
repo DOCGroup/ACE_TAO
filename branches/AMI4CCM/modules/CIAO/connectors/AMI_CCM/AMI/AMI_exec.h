@@ -42,42 +42,14 @@
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
 
-#define AMI_CORBA_IMPLEMENTATION
-
 namespace CIAO_Hello_AMI_AMI_Impl
 {
-#if !defined (AMI_CORBA_IMPLEMENTATION)
-  //AMI thread implemenatation
-  class AMI_thread_handler : public virtual ACE_Task_Base
-  {
-  public:
-    AMI_thread_handler (
-      long ck,
-      const  char * in_str,
-      ::CCM_AMI::AMI_foo_ptr foo_receiver,
-      ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
-    virtual int svc (void);
-  private:
-    long ck_;
-    const char * in_str_;
-    ::CCM_AMI::AMI_foo_var          foo_receiver_;
-    ::CCM_AMI::AMI_foo_callback_var foo_callback_;
-  };
-#endif /* AMI_CORBA_IMPLEMENTATION */
-
   class  AMI_MyFoo_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_MyFoo,
       public virtual ::CORBA::LocalObject
   {
   public:
-#if !defined (AMI_CORBA_IMPLEMENTATION)
-    AMI_MyFoo_exec_i (
-      ::CCM_AMI::AMI_foo_ptr foo_receiver,
-      ::CCM_AMI::AMI_foo_callback_ptr foo_callback);
-#else
-    AMI_MyFoo_exec_i (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback);
-#endif /* AMI_CORBA_IMPLEMENTATION */
+    AMI_MyFoo_exec_i (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback);
 
     virtual ~AMI_MyFoo_exec_i (void);
     
@@ -86,20 +58,12 @@ namespace CIAO_Hello_AMI_AMI_Impl
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
-    virtual ::CCM_AMI::Cookie
+    virtual void
     sendc_foo (
       const char * in_str);
   private:
-#if !defined (AMI_CORBA_IMPLEMENTATION)
-    ::CCM_AMI::AMI_foo_var          foo_receiver_;
-#endif /* AMI_CORBA_IMPLEMENTATION */
-    ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
-    long cookie_;
-
-#if defined (AMI_CORBA_IMPLEMENTATION)
     CCM_AMI::MyFoo_var ami_foo_var_;
-#endif /* AMI_CORBA_IMPLEMENTATION */
-
+    ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
   };
   
   class  AMI_exec_i
@@ -132,7 +96,8 @@ namespace CIAO_Hello_AMI_AMI_Impl
     virtual void ccm_remove (void);
   
   private:
-    ::Hello_AMI::CCM_AMI_Context_var context_;
+    ::Hello_AMI::CCM_AMI_Context_var  context_;
+    ::CCM_AMI::AMI_MyFoo_callback_var callback_foo_;
   };
   
   extern "C" AMI_EXEC_Export ::Components::EnterpriseComponent_ptr

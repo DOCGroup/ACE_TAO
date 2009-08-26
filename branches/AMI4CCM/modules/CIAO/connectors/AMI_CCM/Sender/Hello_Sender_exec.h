@@ -85,7 +85,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual void
     foo_callback_handler (
-      ::CCM_AMI::Cookie ck,
       ::CORBA::Long result,
       const char * answer);
     
@@ -94,7 +93,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual void
     foo_callback_excep (
-      ::CCM_AMI::Cookie ck,
       const ::CCM_AMI::InternalException & exception_holder);
   };
   
@@ -114,7 +112,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual ::CCM_AMI::CCM_AMI_MyFoo_callback_ptr
     get_the_foo_callback (void);
-    
+
     // Operations from Components::SessionComponent.
     
     virtual void

@@ -35,44 +35,14 @@
 
 namespace CIAO_Hello_AMI_AMI_Impl
 {
-#if !defined (AMI_CORBA_IMPLEMENTATION)
-  //============================================================
-  // Implementation of the basic form of AMI: a thread to handle
-  // asynchronous invocations.
-  //============================================================
-  AMI_thread_handler::AMI_thread_handler (
-    long ck,
-    const char * in_str,
-    ::CCM_AMI::AMI_foo_ptr foo_receiver,
-    ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback)
-    : ck_ (ck),
-      in_str_ (in_str),
-      foo_receiver_ (::CCM_AMI::MyFoo::_duplicate (foo_receiver)),
-      foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback))
-  {
-  }
-
-  int AMI_thread_handler::svc ()
-  {
-    char* out_str;
-    long  result;
-    printf ("AMI :\tThread started for cookie <%ld> sending string <%s>\n", ck_, in_str_);
-    result = foo_receiver_->asynch_foo (CORBA::string_dup (in_str_), out_str);
-    printf ("AMI :\tCookie <%ld> received : result <%ld> answer <%s>\n",
-            ck_, result, out_str);
-    foo_callback_->foo_callback_handler (ck_, result, CORBA::string_dup (out_str));
-    return 0;
-  }
-#else
   //============================================================
   // Implementation of the AMI CORBA reply handler
   //============================================================
   class AMI_reply_handler : public POA_CCM_AMI::AMI_MyFooHandler
   {
   public:
-    AMI_reply_handler (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback, long ck)
-      : foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback)),
-        ck_ (ck)
+    AMI_reply_handler (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback)
+      : foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback))
     {
     };
 
@@ -80,7 +50,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
               const char * out_str)
       {
         printf ("AMI CORBA :\tHandler::asynch_foo\n");
-        foo_callback_->foo_callback_handler (ck_, result, CORBA::string_dup (out_str));
+        foo_callback_->foo_callback_handler (result, CORBA::string_dup (out_str));
         this->_remove_ref ();
       };
 
@@ -94,20 +64,18 @@ namespace CIAO_Hello_AMI_AMI_Impl
           }
         catch (const CCM_AMI::InternalError& ex)
           {
-            printf ("AMI CORBA :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s> for cookie <%ld>\n",
-                    ex.ex.id, ex.ex.error_string.in (), ck_);
+            printf ("AMI CORBA :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
+                    ex.ex.id, ex.ex.error_string.in ());
 
-            foo_callback_->foo_callback_excep (ck_, ex.ex);
+            foo_callback_->foo_callback_excep (ex.ex);
 
             if (ex.ex.id != 42)
               {
-                printf ("ERROR :\tReceived unexpected ID received in exception handler for cookie <%ld>\n",
-                  ck_);
+                printf ("ERROR :\tReceived unexpected ID received in exception handler\n");
               }
             if (ACE_OS::strcmp (ex.ex.error_string.in (), "Hello world") != 0)
               {
-                printf ("ERROR :\tReceived unexpected error string received in exception handler for cookie <%ld>\n",
-                  ck_);
+                printf ("ERROR :\tReceived unexpected error string received in exception handler\n");
               }
           }
         catch (const CORBA::Exception& ex)
@@ -122,28 +90,15 @@ namespace CIAO_Hello_AMI_AMI_Impl
     };
   private:
     ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
-    long ck_;
   };
-#endif /* AMI_CORBA_IMPLEMENTATION */
 
   //============================================================
   // Facet Executor Implementation Class: AMI_MyFoo_exec_i
   //============================================================
 
-#if !defined (AMI_CORBA_IMPLEMENTATION)
   AMI_MyFoo_exec_i::AMI_MyFoo_exec_i (
-    ::CCM_AMI::AMI_MyFoo_ptr foo_receiver,
-    ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback) :
-      foo_receiver_ (::CCM_AMI::MyFoo::_duplicate (foo_receiver)),
-      foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback)),
-      cookie_ (0)
-  {
-  }
-#else
-  AMI_MyFoo_exec_i::AMI_MyFoo_exec_i (
-    ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback) :
-      foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback)),
-      cookie_ (0)
+    ::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback)
+  : foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback))
   {
     //initialize AMI client
     int argc = 2;
@@ -178,7 +133,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
     AMI_perform_work *pw = new AMI_perform_work (orb.in ());
     pw->activate ();
   }
-#endif /* AMI_CORBA_IMPLEMENTATION */
 
   AMI_MyFoo_exec_i::~AMI_MyFoo_exec_i (void)
   {
@@ -186,31 +140,16 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
   // Operations from ::CCM_AMI::AMI_ami_foo
 
-  ::CCM_AMI::Cookie
+  void
   AMI_MyFoo_exec_i::sendc_foo (
     const char * in_str)
   {
     printf ("AMI :\tsendc_foo <%s>\n", in_str);
-    ++cookie_;
-#if !defined (AMI_CORBA_IMPLEMENTATION)
-    // Single thread to perform asynchronous actions.
-    // No exception handling implemented.
-    printf ("AMI :\tReceived string <%s> for <%d>\n", in_str, cookie_);
-    AMI_thread_handler* ah = new AMI_thread_handler (
-        cookie_,
-        in_str,
-        foo_receiver_.in ()),
-        foo_callback_.in ());
-    ah->activate ();
-#else
-    //AMI CORBA implementation.
-    AMI_reply_handler* handler = new AMI_reply_handler (foo_callback_.in (), cookie_);
+    AMI_reply_handler*  handler = new AMI_reply_handler (foo_callback_);
     CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
-    printf ("AMI :\tSending string <%s> for cookie <%ld> to AMI CORBA server\n", in_str, cookie_);
+    printf ("AMI :\tSending string <%s> to AMI CORBA server\n", in_str);
     ami_foo_var_->sendc_foo (the_handler_var.in (), in_str);
     printf ("AMI : \tInvoked sendc_foo\n");
-#endif /* AMI_CORBA_IMPLEMENTATION */
-  return cookie_;
   }
   
   //============================================================
@@ -236,14 +175,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   {
     ::CCM_AMI::AMI_MyFoo_callback_var foo_callback =
       this->context_->get_connection_callback_foo ();
-
-#if !defined (AMI_CORBA_IMPLEMENTATION)
-    ::CCM_AMI::AMI_foo_var receiver_foo =
-      this->context_->get_connection_receiver_foo ();
-    return new AMI_MyFoo_exec_i (receiver_foo, foo_callback);
-#else
-    return new AMI_MyFoo_exec_i (foo_callback);
-#endif /* AMI_CORBA_IMPLEMENTATION */
+    return new AMI_MyFoo_exec_i (foo_callback.in ());
   }
   
   // Operations from Components::SessionComponent.
@@ -270,13 +202,11 @@ namespace CIAO_Hello_AMI_AMI_Impl
   void
   AMI_exec_i::ccm_activate (void)
   {
-#if defined (AMI_CORBA_IMPLEMENTATION)
     ::CCM_AMI::MyFoo_var receiver_foo =
       this->context_->get_connection_receiver_foo ();
     AMI_server* srv = new AMI_server (receiver_foo.in ());
     printf ("AMI :\tStarting server thread.\n");
     srv->activate ();
-#endif /* AMI_CORBA_IMPLEMENTATION */
   }
   
   void

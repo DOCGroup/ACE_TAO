@@ -4,19 +4,17 @@
 
 module CCM_AMI
 {
-  typedef long Cookie;
-
+  // callback interface from AMI-component to Sender component
+  interface AMI_MyFoo_callback
+    {
+      void foo_callback_handler (in long result, in string answer);
+      void foo_callback_excep   (in CCM_AMI::InternalException exception_holder);
+    };
+  
   // AMI component. Sender calls AMI-component and AMI-component calls Receiver
   // using the AMI_foo interface.
   interface AMI_MyFoo
     {
-      Cookie sendc_foo (in string in_str);
-    };
-
-  // callback interface from AMI-component to Sender component
-  interface AMI_MyFoo_callback
-    {
-      void foo_callback_handler (in Cookie ck, in long result, in string answer);
-      void foo_callback_excep   (in Cookie ck, in CCM_AMI::InternalException exception_holder);
+      void sendc_foo (in string in_str);
     };
 };
