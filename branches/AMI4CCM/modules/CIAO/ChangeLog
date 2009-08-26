@@ -1,3 +1,20 @@
+Wed Aug 26 18:42:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * connectors/AMI_CCM/descriptors/Plan.cdp:
+          Set up (empty) framework in order to test one reply handler
+          per request. 
+
 Wed Aug 26 13:04:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI_exec.h:

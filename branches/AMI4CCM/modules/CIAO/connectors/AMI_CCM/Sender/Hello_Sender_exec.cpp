@@ -64,7 +64,27 @@ namespace CIAO_Hello_AMI_Sender_Impl
     printf ("Sender :\tCallback EXCEPTION from AMI : exception id : <%d> exception error : <%s>\n",
       exception_holder.id, exception_holder.error_string.in ());
   }
+
+  MyInterface_callback_exec_i::MyInterface_callback_exec_i ()
+  {
+  }
+
+  MyInterface_callback_exec_i::~MyInterface_callback_exec_i ()
+  {
+  }
+
+  void
+  MyInterface_callback_exec_i::do_something_with_something_callback_handler (
+    ::CORBA::Float result)
+  {
+  }
   
+  void
+  MyInterface_callback_exec_i::do_something_with_something_callback_excep (
+    const ::CCM_AMI::InternalException & exception_holder)
+  {
+  }
+
   //============================================================
   // Worker thread for asynchronous invocations
   //============================================================
@@ -152,11 +172,17 @@ namespace CIAO_Hello_AMI_Sender_Impl
   // Port operations.
   
   ::CCM_AMI::CCM_AMI_MyFoo_callback_ptr
-  Sender_exec_i::get_the_foo_callback ()
+  Sender_exec_i::get_the_my_foo_callback ()
   {
     return  new MyFoo_callback_exec_i ();
   }
   
+  ::CCM_AMI::CCM_AMI_MyInterface_callback_ptr
+  Sender_exec_i::get_the_my_interface_callback ()
+  {
+    return  new MyInterface_callback_exec_i ();
+  }
+
   // Operations from Components::SessionComponent.
   
   void
@@ -181,9 +207,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     ::CCM_AMI::AMI_MyFoo_var asynch_foo =
-      this->context_->get_connection_run_asynch_foo ();
+        this->context_->get_connection_run_asynch_my_foo();
     ::CCM_AMI::MyFoo_var synch_foo =
-      this->context_->get_connection_run_foo ();
+        this->context_->get_connection_run_my_foo ();
 
     asynch_generator* asynch = new asynch_generator (asynch_foo);
     asynch->activate (THR_NEW_LWP | THR_JOINABLE, 1);

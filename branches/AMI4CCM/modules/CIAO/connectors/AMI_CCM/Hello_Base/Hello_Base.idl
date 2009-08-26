@@ -4,6 +4,13 @@
 
 module CCM_AMI
 {
+  // AMI component. Sender calls AMI-component and AMI-component calls Receiver
+  // using the AMI_foo interface.
+  interface AMI_MyFoo
+  {
+    void sendc_foo (in string in_str);
+  };
+  
   // callback interface from AMI-component to Sender component
   interface AMI_MyFoo_callback
     {
@@ -11,10 +18,15 @@ module CCM_AMI
       void foo_callback_excep   (in CCM_AMI::InternalException exception_holder);
     };
   
-  // AMI component. Sender calls AMI-component and AMI-component calls Receiver
-  // using the AMI_foo interface.
-  interface AMI_MyFoo
+    interface AMI_MyInterface
     {
-      void sendc_foo (in string in_str);
+       void sendc_do_something_with_something (in short something);
+    };
+  
+  // callback interface from AMI-component to Sender component
+  interface AMI_MyInterface_callback
+    {
+      void do_something_with_something_callback_handler (in float result);
+      void do_something_with_something_callback_excep   (in CCM_AMI::InternalException exception_holder);
     };
 };

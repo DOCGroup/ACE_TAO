@@ -69,6 +69,39 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   }
   
   //============================================================
+  // Facet Executor Implementation Class: MyInterface_exec_i
+  //============================================================
+  
+  MyInterface_exec_i::MyInterface_exec_i (void)
+  {
+  }
+  
+  MyInterface_exec_i::~MyInterface_exec_i (void)
+  {
+  }
+  
+  // Operations from ::CCM_AMI::MyInterface
+  
+  CORBA::Float
+  MyInterface_exec_i::do_something_with_something (
+  CORBA::Short something)
+  {
+    if (something == 0)
+    {
+      CCM_AMI::InternalException ex;
+      ex.id = 42;
+      ex.error_string = "Hello world";
+      throw CCM_AMI::InternalError (ex);
+    }
+    else
+    {
+      printf ("Receiver :\tReceived short <%d>\n", something);
+      ACE_OS::sleep (ACE_OS::rand () % 2);
+      return something / 6.54321;
+    }
+  }
+  
+  //============================================================
   // Component Executor Implementation Class: Receiver_exec_i
   //============================================================
   
@@ -87,10 +120,15 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   // Port operations.
   
   ::CCM_AMI::CCM_MyFoo_ptr
-  Receiver_exec_i::get_do_asynch_foo (void)
+  Receiver_exec_i::get_do_my_foo (void)
   {
-    /* Your code here. */
-    return new MyFoo_exec_i ();//)::CCM_AMI::CCM_MyFoo::_nil ();
+    return new MyFoo_exec_i ();
+  }
+  
+  ::CCM_AMI::CCM_MyInterface_ptr
+  Receiver_exec_i::get_do_my_interface (void)
+  {
+    return new MyInterface_exec_i ();
   }
   
   // Operations from Components::SessionComponent.

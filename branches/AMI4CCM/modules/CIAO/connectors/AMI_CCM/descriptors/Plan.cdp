@@ -213,13 +213,13 @@
   <connection>
     <name>run_asynch_foo_connection</name>
     <internalEndpoint>
-      <portName>perform_asynch_foo</portName>
+      <portName>perform_asynch_my_foo</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>run_asynch_foo</portName>
+      <portName>run_asynch_my_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
@@ -229,13 +229,13 @@
   <connection>
     <name>foo_callback_connection</name>
     <internalEndpoint>
-      <portName>the_foo_callback</portName>
+      <portName>the_my_foo_callback</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>callback_foo</portName>
+      <portName>callback_my_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
@@ -245,13 +245,13 @@
   <connection>
     <name>do_foo_connection</name>
     <internalEndpoint>
-      <portName>do_asynch_foo</portName>
+      <portName>do_my_foo</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>receiver_foo</portName>
+      <portName>my_foo_receiver</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
@@ -261,13 +261,77 @@
   <connection>
     <name>synch_foo_connection</name>
     <internalEndpoint>
-      <portName>do_asynch_foo</portName>
+      <portName>do_my_foo</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>run_foo</portName>
+      <portName>run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>run_asynch_interface_connection</name>
+    <internalEndpoint>
+      <portName>perform_asynch_my_interface</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_asynch_my_interface</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>interface_callback_connection</name>
+    <internalEndpoint>
+      <portName>the_my_interface_callback</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>callback_my_interface</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>do_interface_connection</name>
+    <internalEndpoint>
+      <portName>do_my_interface</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>my_interface_receiver</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>synch_interface_connection</name>
+    <internalEndpoint>
+      <portName>do_my_interface</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_interface</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />

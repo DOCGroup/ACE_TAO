@@ -36,12 +36,12 @@
 namespace CIAO_Hello_AMI_AMI_Impl
 {
   //============================================================
-  // Implementation of the AMI CORBA reply handler
+  // Implementation of the AMI CORBA FOO reply handler
   //============================================================
-  class AMI_reply_handler : public POA_CCM_AMI::AMI_MyFooHandler
+  class AMI_MyFoo_reply_handler : public POA_CCM_AMI::AMI_MyFooHandler
   {
   public:
-    AMI_reply_handler (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback)
+    AMI_MyFoo_reply_handler (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback)
       : foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback))
     {
     };
@@ -49,14 +49,14 @@ namespace CIAO_Hello_AMI_AMI_Impl
     void foo (CORBA::Long result,
               const char * out_str)
       {
-        printf ("AMI CORBA :\tHandler::asynch_foo\n");
+        printf ("AMI CORBA (FOO) :\tMyFoo Reply Handler::foo\n");
         foo_callback_->foo_callback_handler (result, CORBA::string_dup (out_str));
         this->_remove_ref ();
       };
 
     void foo_excep (::Messaging::ExceptionHolder * excep_holder)
       {
-        printf ("AMI CORBA :\tHandler::foo_excep\n");
+        printf ("AMI CORBA (FOO) :\tMyFoo Reply Handler::foo_excep\n");
 
         try
           {
@@ -64,32 +64,89 @@ namespace CIAO_Hello_AMI_AMI_Impl
           }
         catch (const CCM_AMI::InternalError& ex)
           {
-            printf ("AMI CORBA :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
+            printf ("AMI CORBA (FOO) :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
                     ex.ex.id, ex.ex.error_string.in ());
 
             foo_callback_->foo_callback_excep (ex.ex);
 
             if (ex.ex.id != 42)
               {
-                printf ("ERROR :\tReceived unexpected ID received in exception handler\n");
+                printf ("ERROR (FOO):\tReceived unexpected ID received in exception handler\n");
               }
             if (ACE_OS::strcmp (ex.ex.error_string.in (), "Hello world") != 0)
               {
-                printf ("ERROR :\tReceived unexpected error string received in exception handler\n");
+                printf ("ERROR (FOO):\tReceived unexpected error string received in exception handler\n");
               }
           }
         catch (const CORBA::Exception& ex)
           {
-            ex._tao_print_exception ("Caught the WRONG exception:");
+            ex._tao_print_exception ("ERROR (FOO) :\tCaught the WRONG exception:");
           }
         this->_remove_ref ();
       };
 
-    ~AMI_reply_handler (void)
+    ~AMI_MyFoo_reply_handler (void)
     {
     };
   private:
     ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
+  };
+
+  
+  //============================================================
+  // Implementation of the AMI CORBA INTERFACE reply handler
+  //============================================================
+  class AMI_MyInterface_reply_handler : public POA_CCM_AMI::AMI_MyInterfaceHandler
+  {
+    public:
+      AMI_MyInterface_reply_handler (::CCM_AMI::AMI_MyInterface_callback_ptr interface_callback)
+      : interface_callback_ (::CCM_AMI::AMI_MyInterface_callback::_duplicate (interface_callback))
+      {
+      };
+
+      void do_something_with_something (CORBA::Float /*result*/)
+      {
+        printf ("AMI CORBA :\tMyInterface Reply Handler::do_something_with_something\n");
+        //foo_callback_->foo_callback_handler (result, CORBA::string_dup (out_str));
+        this->_remove_ref ();
+      };
+
+      void do_something_with_something_excep (::Messaging::ExceptionHolder * excep_holder)
+      {
+        printf ("AMI CORBA :\tMyInterface Reply Handler::do_something_with_something_excep\n");
+
+        try
+        {
+          excep_holder->raise_exception ();
+        }
+        catch (const CCM_AMI::InternalError& ex)
+        {
+          printf ("AMI CORBA (INTERFACE) :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
+                  ex.ex.id, ex.ex.error_string.in ());
+
+          //foo_callback_->foo_callback_excep (ex.ex);
+
+          if (ex.ex.id != 42)
+          {
+            printf ("ERROR (INTERFACE) :\tReceived unexpected ID received in exception handler\n");
+          }
+          if (ACE_OS::strcmp (ex.ex.error_string.in (), "Hello world") != 0)
+          {
+            printf ("ERROR (INTERFACE) :\tReceived unexpected error string received in exception handler\n");
+          }
+        }
+        catch (const CORBA::Exception& ex)
+        {
+          ex._tao_print_exception ("ERROR (FOO) :\tCaught the WRONG exception:");
+        }
+        this->_remove_ref ();
+      };
+
+      ~AMI_MyInterface_reply_handler (void)
+      {
+      };
+    private:
+      ::CCM_AMI::AMI_MyInterface_callback_var interface_callback_;
   };
 
   //============================================================
@@ -145,13 +202,35 @@ namespace CIAO_Hello_AMI_AMI_Impl
     const char * in_str)
   {
     printf ("AMI :\tsendc_foo <%s>\n", in_str);
-    AMI_reply_handler*  handler = new AMI_reply_handler (foo_callback_);
+    AMI_MyFoo_reply_handler*  handler = new AMI_MyFoo_reply_handler (foo_callback_);
     CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     printf ("AMI :\tSending string <%s> to AMI CORBA server\n", in_str);
     ami_foo_var_->sendc_foo (the_handler_var.in (), in_str);
     printf ("AMI : \tInvoked sendc_foo\n");
   }
   
+  //============================================================
+  // Facet Executor Implementation Class: AMI_MyFoo_exec_i
+  //============================================================
+
+  AMI_MyInterface_exec_i::AMI_MyInterface_exec_i (
+  ::CCM_AMI::AMI_MyInterface_callback_ptr interface_callback)
+  : interface_callback_ (::CCM_AMI::AMI_MyInterface_callback::_duplicate (interface_callback))
+  {
+  }
+
+  AMI_MyInterface_exec_i::~AMI_MyInterface_exec_i (void)
+  {
+  }
+
+  // Operations from ::CCM_AMI::AMI_ami_foo
+
+  void
+  AMI_MyInterface_exec_i::sendc_do_something_with_something (
+      CORBA::Short /*something*/)
+  {
+  }
+
   //============================================================
   // Component Executor Implementation Class: AMI_exec_i
   //============================================================
@@ -171,13 +250,21 @@ namespace CIAO_Hello_AMI_AMI_Impl
   // Port operations.
   
   ::CCM_AMI::CCM_AMI_MyFoo_ptr
-  AMI_exec_i::get_perform_asynch_foo (void)
+  AMI_exec_i::get_perform_asynch_my_foo (void)
   {
     ::CCM_AMI::AMI_MyFoo_callback_var foo_callback =
-      this->context_->get_connection_callback_foo ();
+      this->context_->get_connection_callback_my_foo ();
     return new AMI_MyFoo_exec_i (foo_callback.in ());
   }
-  
+
+  ::CCM_AMI::CCM_AMI_MyInterface_ptr
+  AMI_exec_i::get_perform_asynch_my_interface ()
+  {
+    ::CCM_AMI::AMI_MyInterface_callback_var interface_callback =
+        this->context_->get_connection_callback_my_interface ();
+    return new AMI_MyInterface_exec_i (interface_callback.in ());
+  }
+
   // Operations from Components::SessionComponent.
   
   void
@@ -203,7 +290,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   AMI_exec_i::ccm_activate (void)
   {
     ::CCM_AMI::MyFoo_var receiver_foo =
-      this->context_->get_connection_receiver_foo ();
+        this->context_->get_connection_my_foo_receiver ();
     AMI_server* srv = new AMI_server (receiver_foo.in ());
     printf ("AMI :\tStarting server thread.\n");
     srv->activate ();

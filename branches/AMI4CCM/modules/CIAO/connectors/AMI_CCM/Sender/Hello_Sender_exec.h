@@ -69,6 +69,31 @@ namespace CIAO_Hello_AMI_Sender_Impl
     ::CCM_AMI::MyFoo_var foo_ami_;
   };
 
+  class  MyInterface_callback_exec_i
+    : public virtual ::CCM_AMI::CCM_AMI_MyInterface_callback,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    MyInterface_callback_exec_i (void);
+    virtual ~MyInterface_callback_exec_i (void);
+    
+    // Operations and attributes from ::CCM_AMI::MyFoo_callback
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    do_something_with_something_callback_handler (
+      ::CORBA::Float result);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    do_something_with_something_callback_excep (
+      const ::CCM_AMI::InternalException & exception_holder);
+  };
+
 
   class  MyFoo_callback_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_MyFoo_callback,
@@ -111,7 +136,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
     // Port operations.
     
     virtual ::CCM_AMI::CCM_AMI_MyFoo_callback_ptr
-    get_the_foo_callback (void);
+    get_the_my_foo_callback (void);
+
+    virtual ::CCM_AMI::CCM_AMI_MyInterface_callback_ptr
+    get_the_my_interface_callback (void);
 
     // Operations from Components::SessionComponent.
     

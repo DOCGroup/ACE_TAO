@@ -19,4 +19,10 @@ module CCM_AMI
       long foo (in string in_str, out string answer)
         raises (InternalError);
     };
+
+  interface MyInterface
+    {
+      float do_something_with_something (in short something)
+          raises (InternalError);
+    };
 };

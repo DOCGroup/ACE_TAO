@@ -66,6 +66,28 @@ namespace CIAO_Hello_AMI_AMI_Impl
     ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
   };
   
+  class  AMI_MyInterface_exec_i
+    : public virtual ::CCM_AMI::CCM_AMI_MyInterface,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    AMI_MyInterface_exec_i (::CCM_AMI::AMI_MyInterface_callback_ptr foo_callback);
+
+    virtual ~AMI_MyInterface_exec_i (void);
+    
+    // Operations and attributes from ::CCM_AMI::AMI_ami_foo
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    sendc_do_something_with_something (
+      CORBA::Short something);
+  private:
+    CCM_AMI::MyFoo_var ami_foo_var_;
+    ::CCM_AMI::AMI_MyInterface_callback_var interface_callback_;
+  };
+
   class  AMI_exec_i
     : public virtual AMI_Exec,
       public virtual ::CORBA::LocalObject
@@ -81,7 +103,10 @@ namespace CIAO_Hello_AMI_AMI_Impl
     // Port operations.
     
     virtual ::CCM_AMI::CCM_AMI_MyFoo_ptr
-    get_perform_asynch_foo (void);
+    get_perform_asynch_my_foo (void);
+
+    virtual ::CCM_AMI::CCM_AMI_MyInterface_ptr
+    get_perform_asynch_my_interface (void);
     
     // Operations from Components::SessionComponent.
     
