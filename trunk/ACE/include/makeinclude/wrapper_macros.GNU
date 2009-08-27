@@ -186,112 +186,6 @@
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
-# User-written makefiles that are not MPC-generated often use LIB to specify
-# what to build. This is in contrast to MPC-generated files that use
-# LIB_CHECKED for this purpose. LIB causes conflicts on Windows with gmake
-# and Visual Studio which uses the LIB environment variable as a search path
-# for libraries to link. So, to allow non-MPC makefiles to keep working, set
-# LIB_CHECKED based on LIB if the former is not set and the latter is.
-ifndef COMSPEC
-  LIB_CHECKED ?= $(LIB)
-endif # ! COMPSPEC (and, therefore, assumed !Windows
-
-# default to not using an architecture specific output directory
-ARCH        ?=
-ARCH_BIN     = $(BIN)
-ARCH_BIN2    = $(BIN2)
-ARCH_LIB     = $(LIB_CHECKED)
-ARCH_LIB2    = $(LIB2)
-ARCH_SHLIB   = $(SHLIB)
-ARCH_SHLIB2  = $(SHLIB2)
-ARCH_SHLIBA  = $(SHLIBA)
-ARCH_SHLIBA2 = $(SHLIBA2)
-
-ifdef ARCH
-ifdef BIN
-  ARCH_BIN = $(ARCH)/$(BIN)
-endif
-ifdef BIN2
-  ARCH_BIN2 = $(ARCH)/$(BIN2)
-endif
-ifdef LIB_CHECKED
-  ARCH_LIB = $(ARCH)/$(LIB_CHECKED)
-endif
-ifdef LIB2
-  ARCH_LIB2 = $(ARCH)/$(LIB2)
-endif
-ifdef SHLIB
-  ARCH_SHLIB = $(ARCH)/$(SHLIB)
-endif
-ifdef SHLIB2
-  ARCH_SHLIB2 = $(ARCH)/$(SHLIB2)
-endif
-ifdef SHLIBA
-  ARCH_SHLIBA = $(ARCH)/$(SHLIBA)
-endif
-ifdef SHLIBA2
-  ARCH_HLIBA2 = $(ARCH)/$(SHLIBA2)
-endif
-endif
-
-# Set the cleanup targets.  These targets are used by realclean even if
-# the component isn't being built, i.e., the decision to build it was based
-# on components built in another makefile and written a file (that might no
-# longer be available) and accessed by $(ACE_ROOT)/bin/ace_components.
-#
-# If a component should always be built, just use the normal BIN, LIB, or
-# SHLIB variables.  If it's dependent on a component, use the BIN2 or
-# BIN_UNCHECKED variety, then assign that to BIN if the required component
-# is available.
-
-BIN_UNCHECKED ?=
-CLEANUP_BIN ?=
-ifdef BIN
-  CLEANUP_BIN = $(ARCH_BIN)
-endif # !BIN
-ifdef BIN2
-  CLEANUP_BIN += $(ARCH_BIN2)
-endif # !BIN2
-ifneq ($(BIN_UNCHECKED),)
-  CLEANUP_BIN += $(BIN_UNCHECKED)
-endif # !BIN_UNCHECKED
-
-LIB_UNCHECKED ?=
-CLEANUP_LIB ?=
-ifdef LIB_CHECKED
-  CLEANUP_LIB = $(ARCH_LIB)
-endif # !LIB_CHECKED
-ifdef LIB2
-  CLEANUP_LIB += $(ARCH_LIB2)
-endif # !LIB2
-ifneq ($(LIB_UNCHECKED),)
-  CLEANUP_LIB = $(LIB_UNCHECKED)
-endif # !LIB_UNCHECKED
-
-SHLIB_UNCHECKED ?=
-CLEANUP_SHLIB ?=
-ifdef SHLIB
-  CLEANUP_SHLIB = $(ARCH_SHLIB)
-endif # !SHLIB
-ifdef SHLIB2
-  CLEANUP_SHLIB += $(ARCH_SHLIB2)
-endif # SHLIB2
-ifneq ($(SHLIB_UNCHECKED),)
-  CLEANUP_SHLIB += $(SHLIB_UNCHECKED)
-endif # ! SHLIB_UNCHECKED
-
-SHLIBA_UNCHECKED ?=
-CLEANUP_SHLIBA ?=
-ifdef SHLIBA
-  CLEANUP_SHLIBA = $(ARCH_SHLIBA)
-endif # SHLIBA
-ifdef SHLIBA2
-  CLEANUP_SHLIBA = $(ARCH_SHLIBA2)
-endif # SHLIB2A
-ifneq ($(SHLIBA_UNCHECKED),)
-  CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
-endif # SHLIBA_UNCHECKED
-
 #### Default to building shared libraries only.  Set it here to give the
 #### platform a chance to override.
 ifndef shared_libs
@@ -372,6 +266,10 @@ endif
 INCLDIRS ?=
 DEFFLAGS ?=
 
+ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
+  INCLDIRS        += -I$(ACE_ROOT)
+endif
+
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
 
 # Define default extensions for IDL-generated files
@@ -384,16 +282,6 @@ IDL_SERVER_SRC_EXT ?= S.cpp
 IDL_SERVER_THDR_EXT ?= S_T.h
 IDL_SERVER_TINL_EXT ?= S_T.inl
 IDL_SERVER_TSRC_EXT ?= S_T.cpp
-
-ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
-  INCLDIRS        += -I$(ACE_ROOT)
-endif
-INSINC          ?= $(ACE_ROOT)/ace
-INSLIB          ?= $(ACE_ROOT)/lib
-INSMAN          ?= $(ACE_ROOT)/man
-ifeq (,$(findstring -L$(INSLIB),$(LDFLAGS)))
-  LDFLAGS         += -L$(INSLIB)
-endif
 
 ifeq (default,$(origin LEX))
 LEX = flex
@@ -420,6 +308,126 @@ ACE_NUL_STDERR = 2>$(ACE_NUL) || true
 PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
 PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
 VAR             =
+
+# User-written makefiles that are not MPC-generated often use LIB to specify
+# what to build. This is in contrast to MPC-generated files that use
+# LIB_CHECKED for this purpose. LIB causes conflicts on Windows with gmake
+# and Visual Studio which uses the LIB environment variable as a search path
+# for libraries to link. So, to allow non-MPC makefiles to keep working, set
+# LIB_CHECKED based on LIB if the former is not set and the latter is.
+ifndef COMSPEC
+  LIB_CHECKED ?= $(LIB)
+endif # ! COMPSPEC (and, therefore, assumed !Windows
+
+# default to not using an architecture specific output directory
+ARCH        ?=
+ARCH_BIN     = $(BIN)
+ARCH_BIN2    = $(BIN2)
+ARCH_LIB     = $(LIB_CHECKED)
+ARCH_LIB2    = $(LIB2)
+ARCH_SHLIB   = $(SHLIB)
+ARCH_SHLIB2  = $(SHLIB2)
+ARCH_SHLIBA  = $(SHLIBA)
+ARCH_SHLIBA2 = $(SHLIBA2)
+
+INSINC      ?= $(ACE_ROOT)/ace
+INSLIB      ?= $(ACE_ROOT)/lib
+INSMAN      ?= $(ACE_ROOT)/man
+
+ifdef ARCH
+  INSLIB := $(INSLIB:%=%/$(ARCH))
+ifdef BIN
+  ARCH_BIN = $(ARCH)/$(BIN)
+endif
+ifdef BIN2
+  ARCH_BIN2 = $(ARCH)/$(BIN2)
+endif
+ifdef LIB_CHECKED
+  ARCH_LIB = $(ARCH)/$(LIB_CHECKED)
+endif
+ifdef LIB2
+  ARCH_LIB2 = $(ARCH)/$(LIB2)
+endif
+ifdef SHLIB
+  ARCH_SHLIB = $(ARCH)/$(SHLIB)
+endif
+ifdef SHLIB2
+  ARCH_SHLIB2 = $(ARCH)/$(SHLIB2)
+endif
+ifdef SHLIBA
+  ARCH_SHLIBA = $(ARCH)/$(SHLIBA)
+endif
+ifdef SHLIBA2
+  ARCH_SHLIBA2 = $(ARCH)/$(SHLIBA2)
+endif
+endif
+
+ifeq (,$(findstring -L$(INSLIB),$(LDFLAGS)))
+  LDFLAGS         += -L$(INSLIB)
+endif
+
+#ifdef ARCH
+#  LDFLAGS_ARCH := $(LDFLAGS:-L%=-L%/$(ARCH))
+#  LDFLAGS += $(LDFLAGS_ARCH)
+#endif
+
+# Set the cleanup targets.  These targets are used by realclean even if
+# the component isn't being built, i.e., the decision to build it was based
+# on components built in another makefile and written a file (that might no
+# longer be available) and accessed by $(ACE_ROOT)/bin/ace_components.
+#
+# If a component should always be built, just use the normal BIN, LIB, or
+# SHLIB variables.  If it's dependent on a component, use the BIN2 or
+# BIN_UNCHECKED variety, then assign that to BIN if the required component
+# is available.
+
+BIN_UNCHECKED ?=
+CLEANUP_BIN ?=
+ifdef BIN
+  CLEANUP_BIN = $(ARCH_BIN)
+endif # !BIN
+ifdef BIN2
+  CLEANUP_BIN += $(ARCH_BIN2)
+endif # !BIN2
+ifneq ($(BIN_UNCHECKED),)
+  CLEANUP_BIN += $(BIN_UNCHECKED)
+endif # !BIN_UNCHECKED
+
+LIB_UNCHECKED ?=
+CLEANUP_LIB ?=
+ifdef LIB_CHECKED
+  CLEANUP_LIB = $(ARCH_LIB)
+endif # !LIB_CHECKED
+ifdef LIB2
+  CLEANUP_LIB += $(ARCH_LIB2)
+endif # !LIB2
+ifneq ($(LIB_UNCHECKED),)
+  CLEANUP_LIB = $(LIB_UNCHECKED)
+endif # !LIB_UNCHECKED
+
+SHLIB_UNCHECKED ?=
+CLEANUP_SHLIB ?=
+ifdef SHLIB
+  CLEANUP_SHLIB = $(ARCH_SHLIB)
+endif # !SHLIB
+ifdef SHLIB2
+  CLEANUP_SHLIB += $(ARCH_SHLIB2)
+endif # SHLIB2
+ifneq ($(SHLIB_UNCHECKED),)
+  CLEANUP_SHLIB += $(SHLIB_UNCHECKED)
+endif # ! SHLIB_UNCHECKED
+
+SHLIBA_UNCHECKED ?=
+CLEANUP_SHLIBA ?=
+ifdef SHLIBA
+  CLEANUP_SHLIBA = $(ARCH_SHLIBA)
+endif # SHLIBA
+ifdef SHLIBA2
+  CLEANUP_SHLIBA = $(ARCH_SHLIBA2)
+endif # SHLIB2A
+ifneq ($(SHLIBA_UNCHECKED),)
+  CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
+endif # SHLIBA_UNCHECKED
 
 # Let users override the default VDIR directories
 ifdef ARCH
