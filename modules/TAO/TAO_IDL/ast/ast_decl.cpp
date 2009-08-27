@@ -155,7 +155,8 @@ AST_Decl::AST_Decl (void)
     anonymous_ (false),
     typeid_set_ (false),
     last_referenced_as_ (0),
-    prefix_scope_ (0)
+    prefix_scope_ (0),
+    concat_prefix_ (0)
 {
 }
 
@@ -183,7 +184,8 @@ AST_Decl::AST_Decl (NodeType nt,
     anonymous_ (anonymous),
     typeid_set_ (false),
     last_referenced_as_ (0),
-    prefix_scope_ (0)
+    prefix_scope_ (0),
+    concat_prefix_ (0)
 {
   // If this is the root node, the filename won't have been set yet.
   UTL_String *fn = idl_global->filename ();
@@ -720,7 +722,7 @@ AST_Decl::compute_flat_name (void)
                   second = true;
                 }
             }
-          
+
           tmp->destroy ();
           delete tmp;
           tmp = 0;
@@ -946,6 +948,9 @@ AST_Decl::destroy (void)
 
   delete [] this->flat_name_;
   this->flat_name_ = 0;
+
+  ACE::strdelete (this->concat_prefix_);
+  this->concat_prefix_ = 0;
 }
 
 // Data accessors.
@@ -1555,6 +1560,19 @@ void
 AST_Decl::contains_wstring (int val)
 {
   this->contains_wstring_ = val;
+}
+
+const char *
+AST_Decl::concat_prefix (void) const
+{
+  return this->concat_prefix_;
+}
+
+void
+AST_Decl::concat_prefix (char *prefix)
+{
+  ACE::strdelete (this->concat_prefix_);
+  this->concat_prefix_ = prefix;
 }
 
 //Narrowing methods for AST_Decl.

@@ -1,9 +1,22 @@
+Thu Aug 27 16:23:53 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added support for a typedef inside a template interface where the
+          identifier has a template parameter prefixed to it.
+
 Wed Aug 26 18:25:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_visitor.h:
         * orbsvcs/IFR_Service/ifr_visitor.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-        
+
           Updated visitors to include the new visit methods,
           and commented out the existing methods that use
           port descriptions, which have been eliminated.
@@ -33,7 +46,7 @@ Fri Aug 21 16:47:57 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_instantiated_connector.cpp:
         * TAO_IDL/be_include/be_instantiated_connector.h:
-        
+
           Added be_type to the inheritance so typedef narrowing
           works properly.
 

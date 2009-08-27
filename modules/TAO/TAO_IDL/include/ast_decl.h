@@ -290,13 +290,17 @@ public:
   UTL_ScopedName *last_referenced_as (void) const;
   void last_referenced_as (UTL_ScopedName *n);
 
-  // Accessors for the prefix_socpe_ member.
+  // Accessors for the prefix_scope_ member.
   UTL_Scope *prefix_scope (void);
   void prefix_scope (UTL_Scope *s);
 
   // Useful for GIOP to know if a wstring is being marshaled.
   virtual int contains_wstring (void);
   void contains_wstring (int val);
+
+  // Accessors for concat_prefix_ member.
+  const char *concat_prefix (void) const;
+  void concat_prefix (char *prefix);
 
 protected:
   // These are not private because they're used by
@@ -326,7 +330,7 @@ protected:
 
   const char *node_type_to_string (NodeType nt);
   // Convert a NodeType to a string for dumping.
-  
+
 private:
   // Data
 
@@ -380,6 +384,9 @@ private:
 
   // The scope in which our prefix, if any, was assigned.
   UTL_Scope *prefix_scope_;
+
+  // Possible template parameter prefix to our local name,
+  char *concat_prefix_;
 
 private:
   void compute_full_name (UTL_ScopedName *n);
