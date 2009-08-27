@@ -171,6 +171,8 @@ error_string (UTL_Error::ErrorCode c)
       return "porttype expected: ";
     case UTL_Error::EIDL_CONNECTOR_EXPECTED:
       return "connector expected: ";
+    case UTL_Error::EIDL_TYPEDEF_EXPECTED:
+      return "typedef expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_INCOMPATIBLE_TYPE:
