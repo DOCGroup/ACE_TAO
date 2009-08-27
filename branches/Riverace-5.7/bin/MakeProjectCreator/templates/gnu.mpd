@@ -225,7 +225,7 @@ else
   ifeq ($(findstring k, $(MAKEFLAGS)),k)
     LIBCHECK = 1
   else
-    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> <%endfor%>/usr/lib /usr/lib64 $(INSLIB),$(wildcard $(libpath)/$(LIB_PREFIX)$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
+    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> <%libpath%>/$(ARCH) <%endfor%>/usr/lib /usr/lib64 $(INSLIB),$(wildcard $(libpath)/$(LIB_PREFIX)$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
     ifeq ($(LIBCHECK),)
       LIBCHECK = 1
     endif
@@ -444,7 +444,7 @@ endif
 ifeq ($(VXWORKSLINK),1)
 LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 else
-LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
+LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%> -L<%libpath%>/$(ARCH)<%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 endif
 <%endif%>
 <%if(includes)%>
