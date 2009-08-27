@@ -3156,6 +3156,22 @@ Task_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+## Makefile.Thread_Attrs_Test.am
+
+noinst_PROGRAMS += Thread_Attrs_Test
+
+Thread_Attrs_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Thread_Attrs_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Thread_Attrs_Test.cpp
+
+Thread_Attrs_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
 ## Makefile.Thread_Manager_Test.am
 
 noinst_PROGRAMS += Thread_Manager_Test

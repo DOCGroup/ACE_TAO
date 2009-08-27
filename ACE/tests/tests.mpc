@@ -1340,6 +1340,13 @@ project(Thread Manager Test) : acetest {
   }
 }
 
+project(Thread Attrs Test) : acetest {
+  exename = Thread_Attrs_Test
+  Source_Files {
+    Thread_Attrs_Test.cpp
+  }
+}
+
 project(Thread Mutex Test) : acetest {
   exename = Thread_Mutex_Test
   Source_Files {

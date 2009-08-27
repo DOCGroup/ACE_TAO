@@ -1,3 +1,15 @@
+Thu Aug 27 20:53:18 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Thread_Attrs_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/Makefile.am:
+          New test to verify that spawning a thread with a particular stack
+          size actually gives the desired stack size to the new thread. This
+          test only does anything real on Linux at this point. It could be
+          extended to other platforms and could be extended to test
+          other attributes of the spawned thread as well.
+
 Thu Aug 27 20:27:52 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd: When building requirement-
