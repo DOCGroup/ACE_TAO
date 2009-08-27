@@ -195,6 +195,7 @@ TSS_Test
 TSS_Static_Test
 Task_Test
 Task_Ex_Test
+Thread_Attrs_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test
 Thread_Pool_Reactor_Resume_Test: !NO_OTHER !ST
