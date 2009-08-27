@@ -46,25 +46,28 @@ namespace CIAO_Hello_AMI_Sender_Impl
   {
   }
   
+  //============================================================
   // Operations from ::CCM_AMI::MyFoo_callback
-  
+  //============================================================
   void
   MyFoo_callback_exec_i::foo_callback_handler (
     ::CORBA::Long result,
     const char * answer)
   {
-    printf ("Sender :\tCallback from AMI : result <%d> answer <%s>\n", result, answer);
+    printf ("Sender (FOO) :\tCallback from AMI : result <%d> answer <%s>\n", result, answer);
   }
   
   void
   MyFoo_callback_exec_i::foo_callback_excep (
       const ::CCM_AMI::InternalException & exception_holder)
   {
-    //printf ("Sender :\tCallback EXCEPTION from AMI : cookie <%d> error <%s>\n", ck, exception_holder.error_string);
-    printf ("Sender :\tCallback EXCEPTION from AMI : exception id : <%d> exception error : <%s>\n",
+    printf ("Sender (FOO) :\tCallback EXCEPTION from AMI : exception id : <%d> exception error : <%s>\n",
       exception_holder.id, exception_holder.error_string.in ());
   }
-
+  
+  //============================================================
+  // Operations from ::CCM_AMI::MyInterface_callback
+  //============================================================
   MyInterface_callback_exec_i::MyInterface_callback_exec_i ()
   {
   }
@@ -77,87 +80,115 @@ namespace CIAO_Hello_AMI_Sender_Impl
   MyInterface_callback_exec_i::do_something_with_something_callback_handler (
     ::CORBA::Float result)
   {
+    printf ("Sender (INTERFACE) :\tCallback from AMI : result <%f>\n", result);
   }
   
   void
   MyInterface_callback_exec_i::do_something_with_something_callback_excep (
     const ::CCM_AMI::InternalException & exception_holder)
   {
+    printf ("Sender (INTERFACE) :\tCallback EXCEPTION from AMI : exception id : <%d> exception error : <%s>\n",
+            exception_holder.id, exception_holder.error_string.in ());
   }
 
   //============================================================
-  // Worker thread for asynchronous invocations
+  // Worker thread for asynchronous invocations for MyFoo
   //============================================================
-  asynch_generator::asynch_generator (::CCM_AMI::AMI_MyFoo_ptr foo_ami)
-  : foo_ami_ (::CCM_AMI::AMI_MyFoo::_duplicate (foo_ami))
+  asynch_foo_generator::asynch_foo_generator (::CCM_AMI::AMI_MyFoo_ptr my_foo_ami)
+  : my_foo_ami_ (::CCM_AMI::AMI_MyFoo::_duplicate (my_foo_ami))
   {
   }
 
-  int asynch_generator::svc ()
+  int asynch_foo_generator::svc ()
   {
     ACE_OS::sleep (3);
     for (int i = 0; i < 5; ++i)
       {
-        if (CORBA::is_nil (foo_ami_))
+        if (CORBA::is_nil (my_foo_ami_))
           {
-            printf ("Sender (SYNCH) :\tfoo_receiver is NIL !!!\n");
+            printf ("Sender (ASYNCH) :\tfoo_ami is NIL !!!\n");
             return 1;
           }
         else
           {
-            foo_ami_->sendc_foo ("Do something asynchronous");
-            printf ("Sender (SYNCH) :\tInvoked Asynchronous call\n");
+            my_foo_ami_->sendc_foo (0, "Do something asynchronous");
+            printf ("Sender (ASYNCH) :\tInvoked Asynchronous call\n");
           }
       }
-      /*
-    printf ("GLOBAL REPLY HANDLER\n");
-    for (int i = 0; i < 5; ++i)
-      {
-        foo_ami_->sendc_foo (0, "Do something asynchronous");
-        printf ("Sender (SYNCH) :\tInvoked Asynchronous call\n");
-      }
-*/
-    printf ("Sender (SYNCH) :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
-    foo_ami_->sendc_foo ("");
-    printf ("Sender (SYNCH) :\tInvoked Asynchronous call.\n");
+    printf ("Sender (ASYNCH) :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
+    my_foo_ami_->sendc_foo (0, "");
+    printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
     return 0;
   }
   
   //============================================================
-  // Worker thread for synchronous invocations
+  // Worker thread for synchronous invocations for MyFoo
   //============================================================
-  synch_generator::synch_generator (::CCM_AMI::MyFoo_ptr foo_ami)
-  : foo_ami_ (::CCM_AMI::MyFoo::_duplicate (foo_ami))
+  synch_foo_generator::synch_foo_generator (::CCM_AMI::MyFoo_ptr my_foo_ami)
+  : my_foo_ami_ (::CCM_AMI::MyFoo::_duplicate (my_foo_ami))
   {
   }
 
-  int synch_generator::svc ()
+  int synch_foo_generator::svc ()
   {
     ACE_OS::sleep (3);
     //run synch calls
     char * out_str;
     for (int i = 0; i < 5; ++i)
-    {
-      CORBA::Long result = foo_ami_->foo ("Do something synchronous", out_str);
-      printf ("Sender (SYNCH):\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
-    }
+      {
+        CORBA::Long result = my_foo_ami_->foo ("Do something synchronous", out_str);
+        printf ("Sender (SYNCH):\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
+      }
     try
-    {
-      CORBA::Long result = foo_ami_->foo ("", out_str);
-      printf ("Sender (SYNCH) :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
-    }
+      {
+        CORBA::Long result = my_foo_ami_->foo ("", out_str);
+        printf ("Sender (SYNCH) :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
+      }
     catch (CCM_AMI::InternalError& ex)
-    {
-      printf ("Sender (SYNCH) :\tExpected Exception caught : <%d> <%s>\n", ex.ex.id, ex.ex.error_string.in ());
-    }
+      {
+        printf ("Sender (SYNCH) :\tExpected Exception caught : <%d> <%s>\n", ex.ex.id, ex.ex.error_string.in ());
+      }
     return 0;
   }
 
   //============================================================
+  // Worker thread for asynchronous invocations for MyInterface
+  //============================================================
+  asynch_interface_generator::asynch_interface_generator (::CCM_AMI::AMI_MyInterface_ptr my_interface_ami)
+  : my_interface_ami_ (::CCM_AMI::AMI_MyInterface::_duplicate (my_interface_ami))
+  {
+  }
+
+  int asynch_interface_generator::svc ()
+  {
+    ACE_OS::sleep (3);
+    for (int i = 1; i < 15; ++i)
+    {
+      if (CORBA::is_nil (my_interface_ami_))
+      {
+        printf ("Sender (INTERFACE) :\tinterface_ami is NIL !!!\n");
+        return 1;
+      }
+      else
+      {
+        printf ("Sender (INTERFACE) :\tInvoke Asynchronous call\n");
+        //MyInterface_callback_exec_i* cb = new MyInterface_callback_exec_i ();
+        my_interface_ami_->sendc_do_something_with_something (0, i);
+        printf ("Sender (INTERFACE) :\tInvoked Asynchronous call\n");
+      }
+    }
+    printf ("Sender (INTERFACE) :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
+    my_interface_ami_->sendc_do_something_with_something (0, 0);
+    printf ("Sender (INTERFACE) :\tInvoked Asynchronous call.\n");
+    return 0;
+  }
+  
+  //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
-  
   Sender_exec_i::Sender_exec_i (void)
+  : global_foo_callback_ (0),
+    global_interface_callback_ (0)
   {
   }
   
@@ -174,13 +205,23 @@ namespace CIAO_Hello_AMI_Sender_Impl
   ::CCM_AMI::CCM_AMI_MyFoo_callback_ptr
   Sender_exec_i::get_the_my_foo_callback ()
   {
-    return  new MyFoo_callback_exec_i ();
+    if (CORBA::is_nil (global_foo_callback_))
+    {
+      global_foo_callback_ = new MyFoo_callback_exec_i ();
+    }
+
+    return  global_foo_callback_;
   }
   
   ::CCM_AMI::CCM_AMI_MyInterface_callback_ptr
   Sender_exec_i::get_the_my_interface_callback ()
   {
-    return  new MyInterface_callback_exec_i ();
+    if (CORBA::is_nil (global_foo_callback_))
+    {
+      global_interface_callback_ = new MyInterface_callback_exec_i ();
+    }
+
+    return  global_interface_callback_;
   }
 
   // Operations from Components::SessionComponent.
@@ -206,16 +247,25 @@ namespace CIAO_Hello_AMI_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
+
     ::CCM_AMI::AMI_MyFoo_var asynch_foo =
-        this->context_->get_connection_run_asynch_my_foo();
+      this->context_->get_connection_run_asynch_my_foo();
+    asynch_foo_generator* asynch_foo_gen =
+        new asynch_foo_generator (asynch_foo);
+    asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+
     ::CCM_AMI::MyFoo_var synch_foo =
         this->context_->get_connection_run_my_foo ();
+    synch_foo_generator* synch_foo_gen =
+      new synch_foo_generator (synch_foo);
+    synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-    asynch_generator* asynch = new asynch_generator (asynch_foo);
-    asynch->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-
-    synch_generator* synch = new synch_generator (synch_foo);
-    synch->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+  ::CCM_AMI::AMI_MyInterface_var asynch_interface =
+      this->context_->get_connection_run_asynch_my_interface();
+  asynch_interface_generator* asynch_interface_gen =
+    new asynch_interface_generator (asynch_interface);
+  asynch_interface_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+  
   }
   
   void

@@ -46,27 +46,39 @@
 namespace CIAO_Hello_AMI_Sender_Impl
 {
   // Worker thread for asynchronous invocations
-  class asynch_generator : public virtual ACE_Task_Base
+  class asynch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_generator (::CCM_AMI::AMI_MyFoo_ptr foo_ami);
+    asynch_foo_generator (::CCM_AMI::AMI_MyFoo_ptr my_foo_ami);
 
     virtual int svc (void);
 
   private:
-    ::CCM_AMI::AMI_MyFoo_var foo_ami_;
+    ::CCM_AMI::AMI_MyFoo_var my_foo_ami_;
   };
 
   // Worker thread for synchronous invocations
-  class synch_generator : public virtual ACE_Task_Base
+  class synch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    synch_generator (::CCM_AMI::MyFoo_ptr foo_ami);
+    synch_foo_generator (::CCM_AMI::MyFoo_ptr my_foo_ami);
 
     virtual int svc (void);
 
   private:
-    ::CCM_AMI::MyFoo_var foo_ami_;
+    ::CCM_AMI::MyFoo_var my_foo_ami_;
+  };
+
+  // Worker thread for synchronous invocations
+  class asynch_interface_generator : public virtual ACE_Task_Base
+  {
+  public:
+    asynch_interface_generator (::CCM_AMI::AMI_MyInterface_ptr my_interface_ami);
+
+    virtual int svc (void);
+
+  private:
+    ::CCM_AMI::AMI_MyInterface_ptr my_interface_ami_;
   };
 
   class  MyInterface_callback_exec_i
@@ -93,7 +105,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     do_something_with_something_callback_excep (
       const ::CCM_AMI::InternalException & exception_holder);
   };
-
 
   class  MyFoo_callback_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_MyFoo_callback,
@@ -155,6 +166,8 @@ namespace CIAO_Hello_AMI_Sender_Impl
   
   private:
     ::Hello_AMI::CCM_Sender_Context_var context_;
+    MyFoo_callback_exec_i* global_foo_callback_;
+    MyInterface_callback_exec_i* global_interface_callback_;
   };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

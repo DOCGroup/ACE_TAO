@@ -43,7 +43,7 @@ sub delete_ior_files {
     unlink PerlACE::LocalFile ("EM.ior");
     unlink PerlACE::LocalFile ("Receiver.ior");
     unlink PerlACE::LocalFile ("Sender.ior");
-    unlink PerlACE::LocalFile ("Server.ior");
+    unlink PerlACE::LocalFile ("foo.ior");
     unlink PerlACE::LocalFile ("AMI.ior");
     unlink PerlACE::LocalFile ("ns.ior");
 }
@@ -185,8 +185,8 @@ if (PerlACE::waitforfile_timed ("AMI.ior",
     exit 1;
 }
 
-print "Sleeping 20 seconds to allow task to complete\n";
-sleep (20);
+print "Sleeping 30 seconds to allow task to complete\n";
+sleep (30);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";

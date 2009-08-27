@@ -44,6 +44,16 @@
 
 namespace CIAO_Hello_AMI_AMI_Impl
 {
+  class AMI_perform_work : public ACE_Task_Base
+  {
+    public:
+      AMI_perform_work (CORBA::ORB_ptr orb);
+      virtual int svc (void);
+
+    private:
+      CORBA::ORB_var orb_;
+  };
+
   class  AMI_MyFoo_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_MyFoo,
       public virtual ::CORBA::LocalObject
@@ -52,17 +62,13 @@ namespace CIAO_Hello_AMI_AMI_Impl
     AMI_MyFoo_exec_i (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback);
 
     virtual ~AMI_MyFoo_exec_i (void);
-    
-    // Operations and attributes from ::CCM_AMI::AMI_ami_foo
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
     virtual void
     sendc_foo (
+      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler,
       const char * in_str);
+
   private:
-    CCM_AMI::MyFoo_var ami_foo_var_;
+    CCM_AMI::MyFoo_var ami_foo_server_;
     ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
   };
   
@@ -74,17 +80,14 @@ namespace CIAO_Hello_AMI_AMI_Impl
     AMI_MyInterface_exec_i (::CCM_AMI::AMI_MyInterface_callback_ptr foo_callback);
 
     virtual ~AMI_MyInterface_exec_i (void);
-    
-    // Operations and attributes from ::CCM_AMI::AMI_ami_foo
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void
     sendc_do_something_with_something (
+      ::CCM_AMI::AMI_MyInterface_callback_ptr cb_handler,
       CORBA::Short something);
+
   private:
-    CCM_AMI::MyFoo_var ami_foo_var_;
+    CCM_AMI::MyInterface_var ami_interface_server_;
     ::CCM_AMI::AMI_MyInterface_callback_var interface_callback_;
   };
 

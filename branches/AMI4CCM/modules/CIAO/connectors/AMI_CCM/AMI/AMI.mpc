@@ -90,16 +90,14 @@ project(Hello_Base_AMI_exec) : ciao_executor, ami   {
 
   Source_Files {
     AMI_exec.cpp
-    AMI_server.cpp
-    AMI_perform_work.cpp
-    AMI_internal_i.cpp
+    AMI_MyFoo_i.cpp
+    AMI_MyInterface_i.cpp
   }
 
   Header_Files {
     AMI_exec.h
-    AMI_server.h
-    AMI_perform_work.h
-    AMI_internal_i.h
+    AMI_MyFoo_i.h
+    AMI_MyInterface_i.h
     AMI_exec_export.h
   }
 
