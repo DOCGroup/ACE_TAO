@@ -1,3 +1,16 @@
+Thu Aug 27 20:27:52 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd: When building requirement-
+          checking and LDFLAGS for building binaries, take ARCH builds into
+          account to properly locate libs.
+
+        * include/makeinclude/wrapper_macros.GNU: Don't do the ARCH adjusting
+          until after including platform_macros.GNU where ARCH would be
+          defined.
+
+        * include/makeinclude/rules.lib.GNU: Fix building, installing, and
+          cleaning up libs built in an ARCH build.
+
 Tue Aug 18 19:09:40 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/config-macros.h: In ACE_NOTREACHED, aC++ 03.* needs to have the

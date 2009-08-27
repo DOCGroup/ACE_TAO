@@ -44,11 +44,18 @@ ifdef static_libs
 endif
 
 SHLIB ?=
-# Setup shared library variables, including versions.
-VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
-CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
+# If SHLIB cleared, ensure it doesn't get built.
+ifeq ($(SHLIB),)
+  VSHLIB_NO_VER=
+  CLEANUP_VSHLIB_NO_VER=
+else
+  # Setup shared library variables, including versions.
+  VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
+  CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
+endif
 VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
 CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
+SHLIB_WITH_VER = $(SHLIB:%=%$(SOVERSION))
 
 SHLIBA ?=
 VSHLIBA = $(ARCH_SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
@@ -89,18 +96,27 @@ ifneq ($(IDL_SRC),)
   $(VLOBJS) $(VSHOBJS): $(IDL_SRC)
 endif
 
+# Since INSLIB already has the ARCH dir appended, if appropriate, ARCH
+# needs to be stripped from V[SH]LIB on the way over to INSLIB. To avoid
+# an extra '/' which confuses the relative link calculation, ensure the
+# '/' after ARCH is stripped if it's an ARCH build.
+ARCHDIR ?=
+ifdef ARCH
+  ARCHDIR = $(ARCH)/
+endif
+
 ifdef static_libs
-  LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
+  LIB_INSTALL += $(VLIB:$(ARCHDIR)%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VLIB:$(ARCHDIR)%=$(INSLIB)/%)
 endif # static_libs
 
 ifdef shared_libs
-  LIB_INSTALL += $(VSHLIB:%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VSHLIB:%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:%=$(INSLIB)/%*)
+  LIB_INSTALL += $(VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:$(ARCHDIR)%=$(INSLIB)/%*)
   ifdef SHLIBA
-    LIB_INSTALL += $(VSHLIBA:%=$(INSLIB)/%)
-    CLEANUP_INSTALL += $(CLEANUP_SHLIBA:%=$(INSLIB)/%)
+    LIB_INSTALL += $(VSHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
+    CLEANUP_INSTALL += $(CLEANUP_SHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
   endif
 endif # shared_libs
 
@@ -250,7 +266,11 @@ $(VSHLIB): $(VSHOBJS)
   endif  # aix_build
 endif # VXWORKSLINK
 ifneq ($(SOVERSION),)
+# This carefully works with both ARCH (where VSHLIB_* refer to the ARCH
+# subdir, but SHLIB does not) and non-ARCH builds (where VSHLIB_* and SHLIB
+# refer to the same place). SHLIB_WITH_VER should be the same as $@ but
+# without the ARCH subdir.
 	-$(RM) $(VSHLIB_NO_VER)
-	-$(LN_S) $@ $(VSHLIB_NO_VER)
+	-$(LN_S) $(SHLIB_WITH_VER) $(VSHLIB_NO_VER)
 endif
 	-chmod a+rx $@
