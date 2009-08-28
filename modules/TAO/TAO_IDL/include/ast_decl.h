@@ -298,10 +298,6 @@ public:
   virtual int contains_wstring (void);
   void contains_wstring (int val);
 
-  // Accessors for concat_prefix_ member.
-  const char *concat_prefix (void) const;
-  void concat_prefix (char *prefix);
-
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called
@@ -384,9 +380,6 @@ private:
 
   // The scope in which our prefix, if any, was assigned.
   UTL_Scope *prefix_scope_;
-
-  // Possible template parameter prefix to our local name,
-  char *concat_prefix_;
 
 private:
   void compute_full_name (UTL_ScopedName *n);
