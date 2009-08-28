@@ -6950,16 +6950,48 @@ tao_yyreduce:
 //      | scoped_name
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = 0;
+          UTL_ScopedName *n = (tao_yyvsp[(1) - (1)].idlist);
 
           if (s != 0)
             {
-              d = s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist),
-                                     true);
+              d = s->lookup_by_name (n, true);
             }
 
           if (d == 0)
             {
-              idl_global->err ()->lookup_error ((tao_yyvsp[(1) - (1)].idlist));
+              bool so_far_so_good = false;
+              
+              // We're looking for a template parameter ref, so
+              // the scoped name would just be a simple identifier.
+              if (n->length () == 1)
+                {  
+                  AST_Template_Interface *ti =
+                    AST_Template_Interface::narrow_from_scope (
+                      ScopeAsDecl (s)->defined_in ());
+                      
+                  if (ti != 0)
+                    {
+                      so_far_so_good =
+                        ti->find_param (n->head ()->get_string ());
+                    
+                      if (so_far_so_good)
+                        {
+                          d =
+                            idl_global->gen ()->create_placeholder (n);
+                          s->add_to_scope (d);
+                        }
+                    }
+                }
+                 
+              if (!so_far_so_good)
+                {    
+                  idl_global->err ()->lookup_error (n);
+                  (tao_yyvsp[(1) - (1)].idlist)->destroy ();
+                  (tao_yyvsp[(1) - (1)].idlist) = 0;
+
+                  /* If we don't return here, we'll crash later.*/
+                  return 1;
+                }
             }
           else
             {

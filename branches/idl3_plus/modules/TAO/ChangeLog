@@ -1,11 +1,29 @@
+Fri Aug 28 20:30:52 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_argument.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_template_common.h:
+        
+          Added semantic action for an operation parameter type
+          that is a reference to one of its containing template
+          interface's template parameters.
+
 Fri Aug 28 16:03:30 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
-
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
-
         * TAO_IDL/include/ast_decl.h:
+        
+          Reverted changes to these files in the entry below.
 
 Thu Aug 27 16:23:53 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 

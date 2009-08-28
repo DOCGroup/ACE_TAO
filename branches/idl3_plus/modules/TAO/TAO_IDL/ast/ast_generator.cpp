@@ -1123,3 +1123,14 @@ AST_Generator::create_instantiated_connector (
   return retval;
 }
 
+AST_Type *
+AST_Generator::create_placeholder (UTL_ScopedName *n)
+{
+  AST_Type *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Type (AST_Decl::NT_type, n),
+                  0);
+                  
+  return retval;
+}
+

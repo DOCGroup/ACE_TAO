@@ -422,6 +422,9 @@ public:
     UTL_ScopedName *n,
     AST_Connector *connector_type,
     AST_Template_Common::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Type *create_placeholder (UTL_ScopedName *n);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH
