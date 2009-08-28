@@ -1116,4 +1116,15 @@ be_generator::create_instantiated_connector (
   return retval;
 }
 
+AST_Type *
+be_generator::create_placeholder (UTL_ScopedName *n)
+{
+  be_type *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_type (AST_Decl::NT_type, n),
+                  0);
+                  
+  return retval;
+}
+
 

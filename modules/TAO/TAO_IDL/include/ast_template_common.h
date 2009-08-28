@@ -26,6 +26,9 @@ public:
   // Called by porttype references in connectors.
   bool match_params (UTL_StrList *param_names);
   
+  // Called when parsing a template interface operation.
+  bool find_param (const char *name);
+  
 protected:
   AST_Template_Common (AST_Decl::NodeType nt,
                        UTL_ScopedName *n,

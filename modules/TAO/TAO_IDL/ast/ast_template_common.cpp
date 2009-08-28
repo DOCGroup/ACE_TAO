@@ -141,6 +141,25 @@ AST_Template_Common::match_params (UTL_StrList *param_names)
 }
 
 bool
+AST_Template_Common::find_param (const char *name)
+{
+  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*this->template_params_);
+       !i.done ();
+       i.advance ())
+    {
+      FE_Utils::T_Param_Info *item = 0;
+      i.next (item);
+      
+      if (item->name_ == name)
+        {
+          return true;
+        }
+    }
+    
+  return false;
+}
+
+bool
 AST_Template_Common::match_param_type (AST_Decl::NodeType my_type,
                                        AST_Decl *d)
 {

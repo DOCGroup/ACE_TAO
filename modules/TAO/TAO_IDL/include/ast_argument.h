@@ -113,10 +113,8 @@ public:
   virtual void destroy (void);
 
 private:
-  // Data.
-
   const Direction pd_direction;
-  // Argument direction
+  // Argument direction.
 };
 
 #endif           // _AST_ARGUMENT_AST_ARGUMENT_HH

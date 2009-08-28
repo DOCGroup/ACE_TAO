@@ -186,7 +186,7 @@ AST_Field::field_type (void) const
 }
 
 AST_Field::Visibility
-AST_Field::visibility (void)
+AST_Field::visibility (void) const
 {
   return this->visibility_;
 }
