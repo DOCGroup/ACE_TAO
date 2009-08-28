@@ -77,7 +77,7 @@ Stack_Size_Check::svc (void)
   pthread_attr_t my_attrs;
   pthread_getattr_np (pthread_self (), &my_attrs);
   pthread_attr_getstacksize (&my_attrs, &my_size);
-  pthread_attr_destroy (my_attrs);
+  pthread_attr_destroy (&my_attrs);
 #else
   // No known way to do this yet... feel free to fill this in.
   my_size = this->stack_size_;
