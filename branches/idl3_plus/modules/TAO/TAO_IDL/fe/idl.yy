@@ -106,7 +106,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
 #include "fe_template_interface_header.h"
-#include "fe_instantiated_interface_header.h"
 #include "fe_obv_header.h"
 #include "fe_event_header.h"
 #include "fe_component_header.h"
@@ -1992,9 +1991,7 @@ type_dcl
         type_declarator
         {
 //      type_declarator
-          // Added for 'typedef foo$bar' support, does not work for comma-separated
-          // list of declarators.
-          $$ = $3;
+          $$ = 0;
         }
         | struct_type
         {
@@ -2106,10 +2103,6 @@ type_declarator :
                     }
 
                   (void) s->fe_add_typedef (t);
-
-                  // Added for 'typedef foo$bar' support, so far works only
-                  // for a single declarator, not a comma-separated list.
-                  $<dcval>$ = t;
                 }
 
               // This FE_Declarator class isn't destroyed with the AST.
@@ -5898,9 +5891,10 @@ template_interface_def
 //      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSqSeen);
         }
-        tmpl_iface_exports
+        exports
         {
-//      tmpl_iface_exports
+//      exports
+//        TODO - concatenated identifiers, if they remain in the IDL3+ spec.
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
         }
         '}'
@@ -5912,52 +5906,6 @@ template_interface_def
            * Done with this interface - pop it off the scopes stack
            */
           idl_global->scopes ().pop ();
-        }
-        ;
-
-tmpl_iface_exports
-        : tmpl_iface_exports tmpl_iface_export
-        | /* EMPTY */
-        ;
-
-tmpl_iface_export
-        : export
-        | type_dcl IDL_CONCAT IDENTIFIER
-        {
-// tmpl_iface_export : type_dcl IDL_CONCAT IDENTIFIER
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName *n = $1->name ();
-          AST_Decl *d = s->lookup_by_name (n, true);
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error (n);
-            }
-          else
-            {
-              AST_Typedef *t = AST_Typedef::narrow_from_decl (d);
-
-              if (t == 0)
-                {
-                   idl_global->err ()->error1 (UTL_Error::EIDL_TYPEDEF_EXPECTED,
-                                               d);
-                }
-              else
-                {
-                  ACE_CString concat_id ($3);
-                  concat_id += n->last_component ()->get_string ();
-                  n->last_component ()->replace_string (concat_id.c_str ());
-                  t->concat_prefix (ACE::strnew ($3));
-                }
-            }
-
-          ACE::strdelete ($3);
-          $3 = 0;
-        }
-          ';'
-        {
-//      ';'
-          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         ;
 

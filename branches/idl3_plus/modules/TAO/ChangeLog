@@ -1,3 +1,12 @@
+Fri Aug 28 16:03:30 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+        * TAO_IDL/include/ast_decl.h:
+
 Thu Aug 27 16:23:53 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
