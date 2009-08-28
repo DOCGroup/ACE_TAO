@@ -27,6 +27,14 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       foo_excep (
         ::Messaging::ExceptionHolder * excep_holder);
 
+      void
+      hello (
+        CORBA::Long answer);
+
+      void
+      hello_excep (
+        ::Messaging::ExceptionHolder * excep_holder);
+
     private:
       ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
   };
@@ -40,8 +48,15 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       ::CCM_AMI::MyFoo_ptr foo_receiver);
 
     // The AMI methods.
-    CORBA::Long foo (const char * in_str,
-                  CORBA::String_out out_str);
+    CORBA::Long
+    foo (
+      const char * in_str,
+      CORBA::String_out out_str);
+
+    void
+    hello (
+      CORBA::Long_out answer);
+
   private:
     CORBA::ORB_var orb_;
     ::CCM_AMI::MyFoo_var foo_receiver_;

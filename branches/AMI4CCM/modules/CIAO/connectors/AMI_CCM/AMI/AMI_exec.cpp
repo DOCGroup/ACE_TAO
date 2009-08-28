@@ -119,11 +119,26 @@ namespace CIAO_Hello_AMI_AMI_Impl
     const char * in_str)
   {
     printf ("AMI (FOO) :\tsendc_foo <%s>\n", in_str);
+
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
         new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
     CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     printf ("AMI (FOO) :\tSending string <%s> to AMI CORBA server\n", in_str);
     ami_foo_server_->sendc_foo (the_handler_var.in (), in_str);
+    printf ("AMI (FOO) : \tInvoked sendc_foo\n");
+  }
+  
+  void
+  AMI_MyFoo_exec_i::sendc_hello (
+    ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler */)
+  {
+    printf ("AMI (FOO) :\tsendc_hello\n");
+
+    ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+    CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
+    printf ("AMI (FOO) :\tCalling AMI CORBA server\n");
+    ami_foo_server_->sendc_hello (the_handler_var.in ());
     printf ("AMI (FOO) : \tInvoked sendc_foo\n");
   }
   

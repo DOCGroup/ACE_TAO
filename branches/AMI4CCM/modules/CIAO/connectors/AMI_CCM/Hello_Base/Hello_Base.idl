@@ -10,6 +10,9 @@ module CCM_AMI
     {
       void foo_callback_handler (in long result, in string answer);
       void foo_callback_excep   (in CCM_AMI::InternalException exception_holder);
+
+      void hello_callback_handler (in long answer);
+      void hello_callback_excep   (in CCM_AMI::InternalException exception_holder);
     };
   
   // AMI component. Sender calls AMI-component and AMI-component calls Receiver
@@ -17,6 +20,7 @@ module CCM_AMI
   interface AMI_MyFoo
     {
       void sendc_foo (in AMI_MyFoo_callback cb_handler, in string in_str);
+      void sendc_hello (in AMI_MyFoo_callback cb_handler);
     };
     
   // callback interface from AMI-component to Sender component

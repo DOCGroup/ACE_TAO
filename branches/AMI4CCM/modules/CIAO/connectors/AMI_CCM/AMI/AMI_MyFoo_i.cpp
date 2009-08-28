@@ -16,21 +16,22 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   {
   }
 
+  // FOO methods
   void
   AMI_MyFoo_reply_handler::foo (
     CORBA::Long result,
     const char * out_str)
   {
-    printf ("AMI CORBA (FOO) :\tMyFoo Reply Handler::foo\n");
+    printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo\n");
     foo_callback_->foo_callback_handler (result, CORBA::string_dup (out_str));
-    //this->_remove_ref ();
+    this->_remove_ref ();
   }
 
   void
   AMI_MyFoo_reply_handler::foo_excep (
     ::Messaging::ExceptionHolder * excep_holder)
   {
-    printf ("AMI CORBA (FOO) :\tMyFoo Reply Handler::foo_excep\n");
+    printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo_excep\n");
 
     try
     {
@@ -56,8 +57,51 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     {
       ex._tao_print_exception ("ERROR (FOO) :\tCaught the WRONG exception:");
     }
-    //this->_remove_ref ();
-  };
+    this->_remove_ref ();
+  }
+  
+  // HELLO methods
+  void
+  AMI_MyFoo_reply_handler::hello (
+    CORBA::Long answer)
+  {
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::foo\n");
+    foo_callback_->hello_callback_handler (answer);
+    this->_remove_ref ();
+  }
+
+  void
+  AMI_MyFoo_reply_handler::hello_excep (
+    ::Messaging::ExceptionHolder * excep_holder)
+  {
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::foo_excep\n");
+
+    try
+      {
+        excep_holder->raise_exception ();
+      }
+    catch (const CCM_AMI::InternalError& ex)
+      {
+        printf ("AMI CORBA (FOO) :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
+                ex.ex.id, ex.ex.error_string.in ());
+
+        foo_callback_->hello_callback_excep (ex.ex);
+
+        if (ex.ex.id != 42)
+          {
+            printf ("ERROR (FOO):\tReceived unexpected ID received in exception handler\n");
+          }
+        if (ACE_OS::strcmp (ex.ex.error_string.in (), "Hello world") != 0)
+          {
+            printf ("ERROR (FOO):\tReceived unexpected error string received in exception handler\n");
+          }
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR (FOO) :\tCaught the WRONG exception:");
+      }
+    this->_remove_ref ();
+  }
 
   //============================================================
   // Implementation of the AMI CORBA FOO interface
@@ -77,6 +121,32 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
         printf ("AMI CORBA (FOO) :\tReceived string <%s>. Try passing it to the Receiver component\n", in_str);
         CORBA::Long result = foo_receiver_->foo (CORBA::string_dup (in_str), out_str);
         return result;
+      }
+    catch (CCM_AMI::InternalError& ex)
+      {
+        printf ("AMI CORBA (FOO) :\tCORRECT EXCEPTION -> re-throwing\n");
+        CCM_AMI::InternalException excep;
+        excep.id = ex.ex.id;
+        excep.error_string = CORBA::string_dup (ex.ex.error_string);
+        throw CCM_AMI::InternalError (excep);
+      }
+    catch (...)
+    {
+        printf ("AMI CORBA (FOO) :\t!!!!!UNKNOWN EXCEPTION!!!!!\n");
+        CCM_AMI::InternalException excep;
+        excep.id = 43;
+        excep.error_string = CORBA::string_dup ("UNKNOWN");
+        throw CCM_AMI::InternalError (excep);
+    }
+  }
+
+  void
+  AMI_MyFoo_i::hello (CORBA::Long_out answer)
+  {
+    try
+      {
+        printf ("AMI CORBA (FOO) :\tHello. Try calling the Receiver component\n", answer);
+        foo_receiver_->hello (answer);
       }
     catch (CCM_AMI::InternalError& ex)
       {

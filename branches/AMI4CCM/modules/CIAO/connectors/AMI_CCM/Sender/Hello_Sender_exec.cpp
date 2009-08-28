@@ -49,6 +49,8 @@ namespace CIAO_Hello_AMI_Sender_Impl
   //============================================================
   // Operations from ::CCM_AMI::MyFoo_callback
   //============================================================
+  
+  // FOO methods
   void
   MyFoo_callback_exec_i::foo_callback_handler (
     ::CORBA::Long result,
@@ -65,6 +67,22 @@ namespace CIAO_Hello_AMI_Sender_Impl
       exception_holder.id, exception_holder.error_string.in ());
   }
   
+  // HELLO methods
+  void
+  MyFoo_callback_exec_i::hello_callback_handler (
+    ::CORBA::Long answer)
+  {
+    printf ("Sender (FOO) :\tCallback from AMI (HELLO) : answer <%ld>\n", answer);
+  }
+  
+  void
+  MyFoo_callback_exec_i::hello_callback_excep (
+      const ::CCM_AMI::InternalException & exception_holder)
+  {
+    printf ("Sender (FOO) :\tCallback EXCEPTION from AMI (HELLO) : exception id : <%d> exception error : <%s>\n",
+      exception_holder.id, exception_holder.error_string.in ());
+  }
+
   //============================================================
   // Operations from ::CCM_AMI::MyInterface_callback
   //============================================================
@@ -112,6 +130,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
         else
           {
             my_foo_ami_->sendc_foo (0, "Do something asynchronous");
+            my_foo_ami_->sendc_hello (0);
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous call\n");
           }
       }
@@ -137,7 +156,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
     for (int i = 0; i < 5; ++i)
       {
         CORBA::Long result = my_foo_ami_->foo ("Do something synchronous", out_str);
-        printf ("Sender (SYNCH):\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
+        printf ("Sender (SYNCH):\tInvoked synchronous call (FOO) result <%d> answer <%s>\n", result, out_str);
+        CORBA::Long answer;
+        my_foo_ami_->hello (answer);
+        printf ("Sender (SYNCH):\tInvoked synchronous call (HELLO) answer <%ld>\n", answer);
       }
     try
       {

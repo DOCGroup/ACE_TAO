@@ -60,6 +60,10 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     foo (
       const char * in_str,
       ::CORBA::String_out answer);
+
+    virtual void
+    hello (
+      CORBA::Long_out answer);
   };
   
   class  MyInterface_exec_i

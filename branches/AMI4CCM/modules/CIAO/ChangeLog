@@ -1,3 +1,19 @@
+Fri Aug 28 07:29:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.h:
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_MyInterface_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Extende the MyFoo interface with a new method. Just
+          to gain more inside info.
+
 Thu Aug 27 16:47:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI.mpc:

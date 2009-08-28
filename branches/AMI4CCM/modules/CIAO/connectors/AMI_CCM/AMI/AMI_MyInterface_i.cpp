@@ -23,7 +23,7 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
   {
     printf ("AMI CORBA :\tMyInterface Reply Handler::do_something_with_something\n");
     interface_callback_->do_something_with_something_callback_handler (result);
-    //this->_remove_ref ();
+    this->_remove_ref ();
   }
 
   void
@@ -56,7 +56,7 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
     {
       ex._tao_print_exception ("ERROR (FOO) :\tCaught the WRONG exception:");
     }
-    //this->_remove_ref ();
+    this->_remove_ref ();
   }
   
   //============================================================

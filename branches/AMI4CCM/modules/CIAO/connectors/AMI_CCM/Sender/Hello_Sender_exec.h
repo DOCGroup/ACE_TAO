@@ -108,6 +108,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   class  MyFoo_callback_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_MyFoo_callback,
+      public virtual ::POA_CCM_AMI::AMI_MyFooHandler,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -124,12 +125,21 @@ namespace CIAO_Hello_AMI_Sender_Impl
       ::CORBA::Long result,
       const char * answer);
     
+    virtual void
+    hello_callback_handler (
+      ::CORBA::Long answer);
+    
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     foo_callback_excep (
       const ::CCM_AMI::InternalException & exception_holder);
+    
+    virtual void
+    hello_callback_excep (
+      const ::CCM_AMI::InternalException & exception_holder);
+  
   };
   
   class  Sender_exec_i

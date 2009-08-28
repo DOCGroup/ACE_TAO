@@ -67,8 +67,17 @@ namespace CIAO_Hello_AMI_Receiver_Impl
         return ACE_OS::rand () % 100;
       }
   }
+
+  void
+  MyFoo_exec_i::hello (
+    CORBA::Long_out answer)
+  {
+    printf ("Receiver (HELLO) :\tReceived request\n");
+    ACE_OS::sleep (ACE_OS::rand () % 2);
+    answer = ACE_OS::rand () % 100;
+  }
   
-  //============================================================
+//============================================================
   // Facet Executor Implementation Class: MyInterface_exec_i
   //============================================================
   
