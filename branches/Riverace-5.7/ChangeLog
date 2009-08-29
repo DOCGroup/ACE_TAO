@@ -1,3 +1,8 @@
+Sat Aug 29 22:41:33 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Event_Handler.h: Edited doc for resume_handler() to note that
+          it also works with ACE_Dev_Poll_Reactor.
+
 Thu Aug 27 20:27:52 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd: When building requirement-
