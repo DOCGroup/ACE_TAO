@@ -153,9 +153,8 @@ public:
    * return a value more than zero and decide to resume the handler
    * themseleves.
    *
-   * @note This method is only useful for the ACE_TP_Reactor. Sad
-   * that we have to have this method in a class that is supposed to
-   * be used across different components in ACE.
+   * @note This method has an affect only when used with the
+   * ACE_Dev_Poll_Reactor (and then, only on Linux) or the ACE_TP_Reactor.
    */
   virtual int resume_handler (void);
 
