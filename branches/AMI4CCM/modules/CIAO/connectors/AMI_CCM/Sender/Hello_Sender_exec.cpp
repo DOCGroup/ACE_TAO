@@ -72,7 +72,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   MyFoo_callback_exec_i::hello_callback_handler (
     ::CORBA::Long answer)
   {
-    printf ("Sender (FOO) :\tCallback from AMI (HELLO) : answer <%ld>\n", answer);
+    printf ("Sender (FOO) :\tCallback from AMI (HELLO) : answer <%d>\n", answer);
   }
   
   void
@@ -129,6 +129,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
           }
         else
           {
+            printf ("Sender (ASYNCH) :\tInvoke Asynchronous call\n");
             my_foo_ami_->sendc_foo (0, "Do something asynchronous");
             my_foo_ami_->sendc_hello (0);
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous call\n");
@@ -159,7 +160,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
         printf ("Sender (SYNCH):\tInvoked synchronous call (FOO) result <%d> answer <%s>\n", result, out_str);
         CORBA::Long answer;
         my_foo_ami_->hello (answer);
-        printf ("Sender (SYNCH):\tInvoked synchronous call (HELLO) answer <%ld>\n", answer);
+        printf ("Sender (SYNCH):\tInvoked synchronous call (HELLO) answer <%d>\n", answer);
       }
     try
       {
@@ -287,7 +288,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   asynch_interface_generator* asynch_interface_gen =
     new asynch_interface_generator (asynch_interface);
   asynch_interface_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-  
+
   }
   
   void

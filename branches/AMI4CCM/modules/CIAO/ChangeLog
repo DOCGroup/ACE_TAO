@@ -1,3 +1,9 @@
+Mon Aug 31 10:39:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Resolved some compiler errors/warnings.
+
 Fri Aug 28 07:29:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/AMI/AMI_MyFoo_i.h:

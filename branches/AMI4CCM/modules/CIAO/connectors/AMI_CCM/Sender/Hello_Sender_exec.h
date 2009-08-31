@@ -108,7 +108,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   class  MyFoo_callback_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_MyFoo_callback,
-      public virtual ::POA_CCM_AMI::AMI_MyFooHandler,
       public virtual ::CORBA::LocalObject
   {
   public:
