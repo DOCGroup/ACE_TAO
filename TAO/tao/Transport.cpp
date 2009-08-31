@@ -225,7 +225,7 @@ TAO_Transport::~TAO_Transport (void)
 
   // The following assert is needed for the test "Bug_2494_Regression".
   // See the bugzilla bug #2494 for details.
-  ACE_ASSERT (this->head_ == 0);
+  ACE_ASSERT (this->queue_is_empty_i ());
   ACE_ASSERT (this->cache_map_entry_ == 0);
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
@@ -877,7 +877,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
   if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - TAO_Transport[%d]::handle_timeout, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_timeout, ")
          ACE_TEXT ("timer expired\n"),
          this->id ()));
     }
@@ -1010,7 +1010,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
       ACE_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
          ACE_TEXT ("byte_count = %d, head_is_empty = %d\n"),
-         this->id(), byte_count, (this->head_ == 0)));
+         this->id(), byte_count, this->queue_is_empty_i ()));
     }
 
   return DR_QUEUE_EMPTY;
@@ -1113,7 +1113,7 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
         }
     }
 
-  if (this->head_ == 0)
+  if (this->queue_is_empty_i ())
     {
       if (this->flush_timer_pending ())
         {
@@ -1144,7 +1144,7 @@ TAO_Transport::cleanup_queue_i ()
   int msg_count = 0;
 
   // Cleanup all messages
-  while (this->head_ != 0)
+  while (!this->queue_is_empty_i ())
     {
       TAO_Queued_Message *i = this->head_;
 
@@ -1175,7 +1175,7 @@ TAO_Transport::cleanup_queue_i ()
 void
 TAO_Transport::cleanup_queue (size_t byte_count)
 {
-  while (this->head_ != 0 && byte_count > 0)
+  while (!this->queue_is_empty_i () && byte_count > 0)
     {
       TAO_Queued_Message *i = this->head_;
 
@@ -1355,7 +1355,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
   // to send first:
   bool try_sending_first = true;
 
-  bool const queue_empty = (this->head_ == 0);
+  bool const queue_empty = this->queue_is_empty_i ();
 
   TAO::Transport_Queueing_Strategy *queue_strategy =
     stub->transport_queueing_strategy ();
