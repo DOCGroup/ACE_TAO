@@ -870,10 +870,6 @@ public:
   /// Choose to be not a default ORB when there is more than one ORB.
   void not_default (const char * orb_id);
 
-  /// This strategy is the default, no explicit queueing and no explicit
-  /// flush
-  TAO::Transport_Queueing_Strategy *default_transport_queueing_strategy (void);
-
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.
   CORBA::Boolean is_permanent_forward_condition
@@ -1184,9 +1180,6 @@ protected:
   TAO::Transport_Queueing_Strategy *flush_transport_queueing_strategy_;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  /// This strategy will not queue by default and not flush
-  TAO::Transport_Queueing_Strategy *default_transport_queueing_strategy_;
 
   /// Number of outstanding references to this object.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;

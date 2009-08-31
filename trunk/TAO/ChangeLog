@@ -1,3 +1,16 @@
+Mon Aug 31 09:43:14 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:
+        * tao/ORB_Core.h:
+
+          Removed not used members.
+
+        * tao/Transport.cpp:
+
+          Changed direct comparisons examining the queue state to
+          TAO_Transport::queue_is_empty_i().
+
 Tue Aug 25 21:03:23 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_3567_Regression/run_test.pl: Interpret ior file path

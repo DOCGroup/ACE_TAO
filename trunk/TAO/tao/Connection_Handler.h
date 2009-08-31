@@ -210,10 +210,6 @@ private:
   /// Transport object reference
   TAO_Transport* transport_;
 
-  /// Internal state lock, needs to be separate from the reference
-  /// count / pending upcalls lock because they interleave.
-  ACE_Lock * lock_;
-
   /// Stores the connection pending state
   bool connection_pending_;
 
