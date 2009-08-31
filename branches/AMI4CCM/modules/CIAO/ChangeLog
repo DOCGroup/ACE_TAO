@@ -1,3 +1,12 @@
+Mon Aug 31 11:09:40 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI4CCM-explanation.odt:
+        * connectors/AMI_CCM/AMI4CCM-spec.odt:
+          Added.
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Resolved bug regarding the MyInterface interface.
+
 Mon Aug 31 10:39:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:

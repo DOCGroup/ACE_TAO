@@ -239,7 +239,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   ::CCM_AMI::CCM_AMI_MyInterface_callback_ptr
   Sender_exec_i::get_the_my_interface_callback ()
   {
-    if (CORBA::is_nil (global_foo_callback_))
+    if (CORBA::is_nil (global_interface_callback_))
     {
       global_interface_callback_ = new MyInterface_callback_exec_i ();
     }
