@@ -30,11 +30,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
     connection_pending_ (false),
     is_closed_ (false)
 {
-  // @todo: We need to have a distinct option/ method in the resource
-  // factory for this and TAO_Transport.
-  this->lock_ =
-    this->orb_core_->resource_factory ()->create_cached_connection_lock ();
-
   // Put ourselves in the connection wait state as soon as we get
   // created
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT,
@@ -43,9 +38,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
 
 TAO_Connection_Handler::~TAO_Connection_Handler (void)
 {
-  // @@ TODO Use auto_ptr<>
-  delete this->lock_;
-
   //@@ CONNECTION_HANDLER_DESTRUCTOR_ADD_HOOK
 }
 
