@@ -1,3 +1,13 @@
+Tue Sep  1 21:38:48 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * bin/tao_orb_tests.lst: Bug_2702_Regression can't run on separate
+          client/servers - the ior file refers to localhost.
+
+        * tests/AMI/run_test.pl:
+        * tests/AMI_Timeouts/run_test.pl:
+        * tests/AMH_Oneway/run_test.pl:
+          Transfer ior file from server to client.
+
 Tue Sep  1 16:16:41 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
 
         * MPC/config/catiorlib.mpb:
