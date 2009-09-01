@@ -1,3 +1,11 @@
+Tue Sep  1 17:39:01 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * ace/config-sunos5.5.h:
+
+          Corrected _POSIX_PTHREAD_SEMANTICS behavior on SunOS hosts. This
+          was causing a failure in ACE_OS::sched_params when a non-zero
+          quantum is specified on Solaris 9. Fixes Bugzilla #3718.
+
 Sat Aug 29 22:41:33 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Event_Handler.h: Edited doc for resume_handler() to note that
@@ -33,8 +41,8 @@ Wed Aug 26 21:58:14 UTC 2009  William R. Otte  <Wotte@dre.vanderbilt.edu>
         * bin/MakeProjectCreator/config/global.features:
         * include/makeinclude/wrapper_macros.GNU:
 
-          Reverting for now until I can make some fixes. 
-        
+          Reverting for now until I can make some fixes.
+
 Tue Aug 25 04:11:22 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/global.features:
