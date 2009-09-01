@@ -440,6 +440,16 @@ my $svc_conf_file = $target->LocalFile ("Service_Config_Test.conf");
 if ($target->PutFile ("Service_Config_Test.conf", $svc_conf_file) == -1) {
     print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
 }
+# Config_Test needs config ini file.
+my $conf_ini_file = $target->LocalFile ("Config_Test_Import_1.ini");
+if ($target->PutFile ("Config_Test_Import_1.ini", $conf_ini_file) == -1) {
+    print STDERR "WARNING: Cannot send $conf_ini_file to target\n";
+}
+# Service_Config_Stream_Test needs service config file.
+$svc_conf_file = $target->LocalFile ("Service_Config_Stream_Test.conf");
+if ($target->PutFile ("Service_Config_Stream_Test.conf", $svc_conf_file) == -1) {
+    print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
+}
 
 foreach $test (@tests) {
   if (defined $opt_d) {
