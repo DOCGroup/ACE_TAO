@@ -1,6 +1,24 @@
 // $Id$
 
-project : namingexe, rtcorba, install, messaging, ziop {
-  exename   = tao_catior
-  install   = $(ACE_ROOT)/bin
+project(*lib): tao_output, rtcorba, install, messaging, ziop {
+  sharedname = TAO_Catior
+  dynamicflags += CATIOR_BUILD_DLL
+
+  Source_Files {
+    Catior_i.cpp
+  }
+}
+
+project: namingexe, rtcorba, install, messaging, ziop {
+  exename = tao_catior
+  install = $(ACE_ROOT)/bin
+  after  += *lib
+  libs   += TAO_Catior
+
+  Source_Files {
+    catior.cpp
+  }
+
+  Header_Files {
+  }
 }
