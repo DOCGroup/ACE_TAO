@@ -36,6 +36,16 @@ if ($server->WaitForFileTimed ($iorbase,
     $sv->Kill (); $sv->TimedWait (1);
     exit 1;
 }
+if ($server->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot get file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
 # Run the client.
 $client_status = $CL->Spawn ();
