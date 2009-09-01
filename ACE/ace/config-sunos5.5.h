@@ -29,7 +29,7 @@
 // including <sys/feature_tests.h>.
 #if defined (_POSIX_PTHREAD_SEMANTICS)
 # define ACE_HAS_POSIX_PTHREAD_SEMANTICS
-#endif /* POSIX_PTHREAD_SEMANTICS */
+#endif /* _POSIX_PTHREAD_SEMANTICS */
 
 // Before we do anything, we should include <sys/feature_tests.h> to
 // ensure that things are set up properly.
