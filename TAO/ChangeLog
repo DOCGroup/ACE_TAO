@@ -1,3 +1,19 @@
+Tue Sep  1 16:16:41 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/catiorlib.mpb:
+        * utils/catior/Catior_i.h:
+        * utils/catior/Catior_i.cpp:
+        * utils/catior/Makefile.am:
+        * utils/catior/catior.cpp:
+        * utils/catior/catior.mpc:
+        * utils/catior/catior_export.h:
+
+          Split the IOR decoding functionality out into a separate library.
+
+        * MPC/modules/IDLHelper.pm:
+
+          Removed an unused variable.
+
 Mon Aug 31 09:43:14 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/Connection_Handler.h:

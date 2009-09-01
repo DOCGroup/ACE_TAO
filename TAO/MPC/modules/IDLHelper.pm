@@ -6,7 +6,6 @@ our @ISA = qw(CommandHelper);
 
 sub get_output {
   my($self, $file, $flags) = @_;
-  my $tsidl = $file;
   my @out;
 
   if ($flags =~ /-Gxhex/ && $flags =~ /-Wb,exec_export_include=(\S*)/) {
