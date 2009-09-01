@@ -1,3 +1,11 @@
+Tue Sep  1 21:23:37 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_3500_Regression_Test.cpp: Don't try the ACE_OS::mmap() if
+          ACE_LACKS_MMAP. Also cleaned up the format a bit.
+
+        * tests/run_test.lst: Bug_3709_Regression_Test (C++ compiler stuff)
+          doesn't work on VC 7.1, so black out LabVIEW_RT.
+
 Tue Sep  1 18:46:31 UTC 2009  Steven Stallion  <stallions@ociweb.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
