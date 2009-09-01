@@ -222,15 +222,6 @@ ifeq ($(distrib),0)
   LDFLAGS       += -R $(ACE_ROOT)/lib -R./
 endif
 
-### CC 5.10 enables annotation support by default; allow user to override
-### new behavior. This also provides a work around for 64-bit linker crashes,
-### see: http://defect.opensolaris.org/bz/show_bug.cgi?id=9720
-ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
-  ifeq ($(no_annotations),1)
-    LDFLAGS += -xannotate=no
-  endif
-endif
-
 # Get common Solaris settings
 include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
 
@@ -241,6 +232,15 @@ LIBS            += -lsocket -lrt -laio -ldl -lnsl -lgen -lposix4 -ladm
 stlport ?= 0
 ifeq ($(stlport),0)
   LIBS          += -lCrun -lCstd
+endif
+
+### CC 5.10 enables annotation support by default; allow user to override
+### new behavior. This also provides a work around for 64-bit linker crashes,
+### see: http://defect.opensolaris.org/bz/show_bug.cgi?id=9720
+ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
+  ifeq ($(no_annotations),1)
+    LDFLAGS += -xannotate=no
+  endif
 endif
 
 LDFLAGS         += -xildoff
