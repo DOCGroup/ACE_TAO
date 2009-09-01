@@ -1,3 +1,11 @@
+Tue Sep  1 18:46:31 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Added new flag to control annotation support for Sun CC 5.10. By
+          default, annotation support will be disabled (consistent with
+          previous Sun CC releases). Fixes Bugzilla #3733.
+
 Tue Sep  1 17:39:01 UTC 2009  Steven Stallion  <stallions@ociweb.com>
 
         * ace/config-sunos5.5.h:

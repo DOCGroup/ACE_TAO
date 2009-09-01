@@ -48,6 +48,7 @@ threads ?= 1
 versioned_so ?= 1
 tk_reactor ?= 0
 ace_with_x11 ?= 0
+no_annotations ?= 1
 no_hidden_visibility ?= 1
 templates ?= automatic
 
@@ -219,6 +220,15 @@ endif # shared_libs
 LD              = $(CXX)
 ifeq ($(distrib),0)
   LDFLAGS       += -R $(ACE_ROOT)/lib -R./
+endif
+
+### CC 5.10 enables annotation support by default; allow user to override
+### new behavior. This also provides a work around for 64-bit linker crashes,
+### see: http://defect.opensolaris.org/bz/show_bug.cgi?id=9720
+ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
+  ifeq ($(no_annotations),1)
+    LDFLAGS += -xannotate=no
+  endif
 endif
 
 # Get common Solaris settings
