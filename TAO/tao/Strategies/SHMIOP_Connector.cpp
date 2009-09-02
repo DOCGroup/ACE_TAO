@@ -160,14 +160,6 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                               remote_address,
                                               synch_options);
 
-  // This call creates the service handler and bumps the #REFCOUNT# up
-  // one extra.  There are two possibilities: (a) connection succeeds
-  // immediately - in this case, the #REFCOUNT# on the handler is two;
-  // (b) connection fails immediately - in this case, the #REFCOUNT#
-  // on the handler is one since close() gets called on the handler.
-  // We always use a blocking connection so the connection is never
-  // pending.
-
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
@@ -261,6 +253,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       return 0;
     }
 
+  svc_handler_auto_ptr.release ();
   return transport;
 }
 

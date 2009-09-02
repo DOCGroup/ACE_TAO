@@ -1,3 +1,21 @@
+Wed Sep  2 14:53:54 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Connector_Impl.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+
+          Removed extra reference count added during
+          make_svc_handler() and simplified
+          TAO_Connection_Handler::close_handler(). This fixes
+          bug#3732.
+
 Wed Sep  2 09:21:56 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * orbsvcs/tests/Security/BiDirectional/client.cpp:
