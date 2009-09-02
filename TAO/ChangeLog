@@ -1,3 +1,16 @@
+Wed Sep  2 09:21:56 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/tests/Security/BiDirectional/client.cpp:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/ca.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-key.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-key.pem:
+
+          Updated certificates and changed client to dynamically
+          create servant so that it doens't SIGSEGV when certificates
+          get outdated.
+
 Tue Sep  1 21:38:48 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * bin/tao_orb_tests.lst: Bug_2702_Regression can't run on separate
