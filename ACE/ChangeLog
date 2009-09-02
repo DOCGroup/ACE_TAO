@@ -1,3 +1,10 @@
+Wed Sep  2 14:45:27 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * ace/Connector.cpp:
+
+          Added add/remove reference for the svc_handler owned by
+          ACE_NonBlocking_Connect_Handler. This fixes bug#3731.
+
 Tue Sep  1 21:23:37 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_3500_Regression_Test.cpp: Don't try the ACE_OS::mmap() if
