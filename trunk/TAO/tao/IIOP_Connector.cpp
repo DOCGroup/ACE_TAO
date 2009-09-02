@@ -194,15 +194,12 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   int const result =
     this->begin_connection (svc_handler, r, iiop_endpoint, timeout);
 
+  // Make sure that we always do a remove_reference
+  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
+
   if (result == -1 && errno != EWOULDBLOCK)
     {
-      // connect completed unsuccessfully
-      if (svc_handler)
-        {
-          svc_handler->remove_reference();
-        }
-
-       // Give users a clue to the problem.
+      // Give users a clue to the problem.
       if (TAO_debug_level > 1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -220,14 +217,33 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_LF_Multi_Event mev;
   mev.add_event (svc_handler);
 
-  return this->complete_connection (result,
-                                    desc,
-                                    sh_ptr,
-                                    ep_ptr,
-                                    1U,
-                                    r,
-                                    &mev,
-                                    timeout);
+  TAO_Transport *transport =
+    this->complete_connection (result,
+                               desc,
+                               sh_ptr,
+                               ep_ptr,
+                               1U,
+                               r,
+                               &mev,
+                               timeout);
+
+  // If complete_connection was unsuccessful then remove
+  // the last reference that we have to the svc_handler.
+  if (transport == 0)
+    {
+      if (TAO_debug_level > 1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
+                      ACE_TEXT ("connection to <%C:%d> completed unsuccessfully\n"),
+                      iiop_endpoint->host (),
+                      iiop_endpoint->port ()));
+        }
+      return 0;
+    }
+
+  svc_handler_auto_ptr.release ();
+  return transport;
 }
 
 TAO_Transport *
@@ -305,13 +321,24 @@ TAO_IIOP_Connector::make_parallel_connection (
 
   TAO_Transport *winner = 0;
   if (count > 0) // only complete if at least one pending or success
-    winner = this->complete_connection (result,
-                                        desc,
-                                        shlist,
-                                        eplist,
-                                        count,r,
-                                        &mev,
-                                        timeout);
+    {
+      // Make sure that we always do a remove_reference for every member
+      // of the list
+      TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (shlist, count);
+
+      winner = this->complete_connection (result,
+                                          desc,
+                                          shlist,
+                                          eplist,
+                                          count,r,
+                                          &mev,
+                                          timeout);
+
+      // We add here an extra reference so that when svc_handler_auto_ptr
+      // will go out of scope the winner will be still alive.
+      if (winner)
+        winner->add_reference ();
+    }
 
   delete [] shlist; // reference reductions should have been done already
   delete [] eplist;
@@ -365,24 +392,6 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
                                    synch_options,
                                    local_addr);
 
-  // The connect() method creates the service handler and bumps the
-  // #REFCOUNT# up one extra.  There are four possibilities from
-  // calling connect(): (a) connection succeeds immediately - in this
-  // case, the #REFCOUNT# on the handler is two; (b) connection
-  // completion is pending - in this case, the #REFCOUNT# on the
-  // handler is also two; (c) connection fails immediately - in this
-  // case, the #REFCOUNT# on the handler is one since close() gets
-  // called on the handler; (d) the connect immediately returns when we
-  // have specified that it shouldn't block.
-  //
-  // The extra reference count in
-  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
-  // the case when connection completion is pending and we are going
-  // to wait on a variable in the handler to changes, signifying
-  // success or failure.  Note, that this increment cannot be done
-  // once the connect() returns since this might be too late if
-  // another thread pick up the completion and potentially deletes the
-  // handler before we get a chance to increment the reference count.
   return result;
 }
 
@@ -428,9 +437,6 @@ TAO_IIOP_Connector::complete_connection (int result,
                                          TAO_LF_Multi_Event *mev,
                                          ACE_Time_Value *timeout)
 {
-  // Make sure that we always do a remove_reference for every member
-  // of the list
-  TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (sh_list,count);
   TList_Holder tlist(count);
 
   TAO_Transport *transport  = 0;

@@ -169,23 +169,6 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                    remote_address,
                                    synch_options);
 
-  // This call creates the service handler and bumps the #REFCOUNT# up
-  // one extra.  There are three possibilities: (a) connection
-  // succeeds immediately - in this case, the #REFCOUNT# on the
-  // handler is two; (b) connection completion is pending - in this
-  // case, the #REFCOUNT# on the handler is also two; (c) connection
-  // fails immediately - in this case, the #REFCOUNT# on the handler
-  // is one since close() gets called on the handler.
-  //
-  // The extra reference count in
-  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
-  // the case when connection completion is pending and we are going
-  // to wait on a variable in the handler to changes, signifying
-  // success or failure.  Note, that this increment cannot be done
-  // once the connect() returns since this might be too late if
-  // another thread pick up the completion and potentially deletes the
-  // handler before we get a chance to increment the reference count.
-
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
@@ -301,6 +284,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
+  svc_handler_auto_ptr.release ();
   return transport;
 }
 
