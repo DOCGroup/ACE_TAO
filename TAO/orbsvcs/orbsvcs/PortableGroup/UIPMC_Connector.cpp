@@ -127,6 +127,9 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                   TAO_UIPMC_Connection_Handler (this->orb_core ()),
                   0);
 
+  // Make sure that we always do a remove_reference
+  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
+
   u_short port = 0;
   const ACE_UINT32 ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr(port, ia_any);
@@ -145,7 +148,6 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // Failure to open a connection.
   if (retval != 0)
     {
-      // Close the handler (this will also delete svc_handler).
       svc_handler->close ();
 
       if (TAO_debug_level > 0)
@@ -170,7 +172,6 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // In case of errors transport is zero
   if (transport == 0)
     {
-      // Close the handler (this will also delete svc_handler).
       svc_handler->close ();
 
       // Give users a clue to the problem.
@@ -193,7 +194,6 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // Failure in adding to cache.
   if (retval == -1)
     {
-      // Close the handler (this will also delete svc_handler).
       svc_handler->close ();
 
       if (TAO_debug_level > 0)
@@ -206,6 +206,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       return 0;
     }
 
+  svc_handler_auto_ptr.release ();
   return transport;
 }
 
