@@ -1,3 +1,11 @@
+Wed Sep  2 16:06:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        
+          Replaced commented-out gen_* methods with
+          corresponding visit_* methods for component ports.
+
 Wed Aug 26 18:29:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/checking_visitor.h:
