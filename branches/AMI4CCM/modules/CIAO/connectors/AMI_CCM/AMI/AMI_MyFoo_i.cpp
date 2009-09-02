@@ -145,7 +145,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   {
     try
       {
-        printf ("AMI CORBA (FOO) :\tHello. Try calling the Receiver component\n", answer);
+        printf ("AMI CORBA (FOO) :\tHello. Try calling the Receiver component\n");
         foo_receiver_->hello (answer);
       }
     catch (CCM_AMI::InternalError& ex)

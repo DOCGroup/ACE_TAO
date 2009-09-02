@@ -17,13 +17,15 @@ module CCM_AMI
   
   // AMI component. Sender calls AMI-component and AMI-component calls Receiver
   // using the AMI_foo interface.
+  // Example of a global reply handler
   interface AMI_MyFoo
     {
-      void sendc_foo (in AMI_MyFoo_callback cb_handler, in string in_str);
-      void sendc_hello (in AMI_MyFoo_callback cb_handler);
+      void sendc_foo (in string in_str);
+      void sendc_hello ();
     };
     
   // callback interface from AMI-component to Sender component
+  // Example of a reply handler per request.
   interface AMI_MyInterface_callback
     {
       void do_something_with_something_callback_handler (in float result);

@@ -64,12 +64,10 @@ namespace CIAO_Hello_AMI_AMI_Impl
     virtual ~AMI_MyFoo_exec_i (void);
     virtual void
     sendc_foo (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler,
       const char * in_str);
 
     virtual void
-    sendc_hello (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler);
+    sendc_hello ();
 
   private:
     CCM_AMI::MyFoo_var ami_foo_server_;

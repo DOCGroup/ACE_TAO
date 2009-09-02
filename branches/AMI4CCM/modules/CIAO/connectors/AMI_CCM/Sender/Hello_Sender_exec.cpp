@@ -130,13 +130,13 @@ namespace CIAO_Hello_AMI_Sender_Impl
         else
           {
             printf ("Sender (ASYNCH) :\tInvoke Asynchronous call\n");
-            my_foo_ami_->sendc_foo (0, "Do something asynchronous");
-            my_foo_ami_->sendc_hello (0);
+            my_foo_ami_->sendc_foo ("Do something asynchronous");
+            my_foo_ami_->sendc_hello ();
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous call\n");
           }
       }
     printf ("Sender (ASYNCH) :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
-    my_foo_ami_->sendc_foo (0, "");
+    my_foo_ami_->sendc_foo ("");
     printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
     return 0;
   }
