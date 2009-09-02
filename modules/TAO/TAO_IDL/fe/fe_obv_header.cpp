@@ -120,8 +120,6 @@ FE_OBVHeader::truncatable (void) const
 void
 FE_OBVHeader::destroy (void)
 {
-  delete [] this->supports_;
-  
   this->FE_InterfaceHeader::destroy ();
 }
 
