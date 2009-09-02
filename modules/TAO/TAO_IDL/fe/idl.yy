@@ -1151,18 +1151,20 @@ value_element
         ;
 
 state_member
-        : IDL_PUBLIC member_i
+        : IDL_PUBLIC
         {
 // state_member : IDL_PUBLIC
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_PUBLIC;
         }
-        | IDL_PRIVATE member_i
+        member_i
+        | IDL_PRIVATE
         {
 //      IDL_PRIVATE
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_PRIVATE;
         }
+        member_i
         ;
 
 exports
