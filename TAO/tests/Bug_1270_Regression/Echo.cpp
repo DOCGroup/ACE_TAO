@@ -29,13 +29,8 @@ Echo::echo_payload(Test::Payload const &)
       // Sleep for 15 seconds, forcing a flow control of some kind.
       ACE_OS::sleep(15);
 
-      // Run the ORB for a while, to generate a short-lived release of
-      // the flow control.
-      ACE_Time_Value tv(0, 10000);
-      this->orb_->perform_work(tv);
-
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
       // Kill the app
-      ACE_OS::abort();
+      ACE::terminate_process (ACE_OS::getpid ());
     }
 }

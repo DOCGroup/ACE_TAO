@@ -90,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Echo_Caller_var server =
         Test::Echo_Caller::_narrow(tmp.in ());
 
-      if (CORBA::is_nil (echo.in ()))
+      if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Echo_Caller reference <%s>\n",
@@ -113,7 +113,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception ("Exception caught in client:");
       return 1;
     }
 

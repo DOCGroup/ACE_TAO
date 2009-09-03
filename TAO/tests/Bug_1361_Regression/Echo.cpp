@@ -29,13 +29,12 @@ Echo::echo_payload(Test::Payload const &)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
       // Kill the app
-      ACE_OS::raise(SIGABRT);
+      ACE::terminate_process (ACE_OS::getpid ());
     }
 }
 
 void
-Echo::echo_payload_out (
-                        Test::Payload_out data)
+Echo::echo_payload_out (Test::Payload_out data)
 {
   int j = ACE_OS::rand() % 40000;
   data = new Test::Payload(j);
@@ -48,7 +47,7 @@ Echo::echo_payload_out (
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload_out, aborting\n"));
       // Kill the app
-      ACE_OS::raise(SIGABRT);
+      ACE::terminate_process (ACE_OS::getpid ());
     }
 
 }
