@@ -48,7 +48,9 @@ private:
   static void parse_dump_msg (Log *this_, char *line, size_t offset);
   static void parse_HEXDUMP (Log *this_, char *line, size_t offset);
   static void parse_open_listener (Log *this_, char *line, size_t offset);
+  static void parse_got_existing (Log *this_, char *line, size_t offset);
   static void parse_muxed_tms (Log *this_, char *line, size_t offset);
+  static void parse_exclusive_tms (Log *this_, char *line, size_t offset);
   static void parse_process_parsed_msgs (Log *this_, char *line, size_t offset);
   static void parse_wait_for_event (Log *this_, char *line, size_t offset);
   static void parse_cleanup_queue (Log *this_, char *line, size_t offset);

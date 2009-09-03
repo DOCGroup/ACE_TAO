@@ -139,7 +139,7 @@ void
 Log::handle_msg_dump (char *line, size_t offset)
 {
   int pos = this->dump_target_->add_octets(line);
-  if (pos == 1) // need to validate target
+  if (pos > 0) // need to validate target
     {
       if (!this->dump_target_->validate())
         {
@@ -197,12 +197,7 @@ Log::handle_msg_dump (char *line, size_t offset)
 void
 Log::parse_HEXDUMP (Log *this_, char *line, size_t offset)
 {
-  long pid = 0;
-  long tid = 0;
-  this_->get_pid_tid(pid,tid,line);
-
-  HostProcess *hp = this_->get_host(pid);
-  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+  Thread *thr = 0;
 
   char *pos = ACE_OS::strstr (line,"HEXDUMP");
   pos += 8;
@@ -216,6 +211,7 @@ Log::parse_HEXDUMP (Log *this_, char *line, size_t offset)
       if (target == 0 || target->expected_size() != len || target->size() > 0)
         continue;
       this_->dump_target_ = target;
+      t_iter.remove();
       break;
     }
   if (this_->dump_target_ == 0)
@@ -244,9 +240,12 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
   PeerProcess *pp = thr->incoming();
   if (pp == 0)
     {
-      ACE_ERROR((LM_ERROR,"dump_msg, could not find pp for incoming\n"));
+      ACE_ERROR((LM_ERROR,"dump_msg, could not find pp for incoming, offset = %d, text = %s\n", offset, line));
       return;
     }
+  if (offset == 1367040)
+    ACE_DEBUG ((LM_DEBUG,"break here\n"));
+
   if (mode < 2)
     thr->enter_wait(pp);
   Invocation::GIOP_Buffer *target = 0;
@@ -323,6 +322,31 @@ Log::parse_open_listener (Log *this_, char *line, size_t )
 }
 
 void
+Log::parse_got_existing (Log *this_, char *line, size_t offset)
+{
+  long pid = 0;
+  long tid = 0;
+  this_->get_pid_tid(pid,tid,line);
+
+  HostProcess *hp = this_->get_host(pid);
+  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+
+  char *hpos = ACE_OS::strchr(line,'[');
+  long handle = ACE_OS::strtol(hpos+1,0,10);
+
+  PeerProcess *pp = hp->find_peer(handle);
+  if (pp == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error parsing %C, line %d, can't find peer "
+                  "for handle %d, text = %s\n",
+                  this_->origin_.c_str(), offset, handle, line));
+      return;
+    }
+  thr->active_handle (handle);
+}
+
+void
 Log::parse_muxed_tms (Log *this_, char *line, size_t offset)
 {
   long pid = 0;
@@ -346,6 +370,36 @@ Log::parse_muxed_tms (Log *this_, char *line, size_t offset)
       return;
     }
   thr->active_handle (handle);
+
+  Invocation *inv = pp->new_invocation(req_id, thr);
+  if (inv == 0)
+    ACE_DEBUG ((LM_DEBUG,"peer %s already has invocation id %d\n",
+                pp->id(), req_id));
+  thr->incoming_from (pp);
+}
+
+void
+Log::parse_exclusive_tms (Log *this_, char *line, size_t offset)
+{
+  long pid = 0;
+  long tid = 0;
+  this_->get_pid_tid(pid,tid,line);
+
+  HostProcess *hp = this_->get_host(pid);
+  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+
+  long handle = thr->active_handle();
+  PeerProcess *pp = hp->find_peer(handle);
+  if (pp == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error parsing %C, line %d, can't find peer "
+                  "for handle %d, text = %s\n",
+                  this_->origin_.c_str(), offset, handle, line));
+      return;
+    }
+  char *rpos = ACE_OS::strchr(line, '<');
+  long req_id = ACE_OS::strtol(rpos+1,0,10);
 
   Invocation *inv = pp->new_invocation(req_id, thr);
   if (inv == 0)
@@ -411,8 +465,29 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
   char *hpos = ACE_OS::strchr(line,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
   PeerProcess *pp = hp->find_peer(handle);
-  Invocation::GIOP_Buffer *target = thr->giop_target();
-  thr->set_giop_target(0);
+
+  Thread *original_thr = thr;
+  Invocation::GIOP_Buffer *target = original_thr->giop_target();
+  if (target == 0 || target->owner() != 0)
+    {
+      original_thr = hp->find_thread_for_handle (handle);
+      if (original_thr != thr)
+        {
+          ACE_DEBUG ((LM_DEBUG,"cleanup queue tid = %d,  called on different thread, %d, for handle %d, offset = %d\n",
+                      tid, original_thr->id(), handle, offset));
+        }
+      
+      if (original_thr == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,"cleanup queue, no original thread found, handle %d, offset = %d\n",
+                      handle, offset));
+          return;
+        }
+      target = original_thr->giop_target();
+    }
+  original_thr->set_giop_target(0);
+  original_thr->active_handle (0);
+
   if (target != 0 && target->owner() == 0)
     {
       size_t rid = target->actual_req_id();
@@ -433,7 +508,7 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
                           rid));
               return;
             }
-          thr->exit_wait(pp, offset);
+          original_thr->exit_wait(pp, offset);
           mtype = target->expected_type();
         }
       inv->set_octets (mtype == 0, target);
@@ -441,6 +516,13 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
       const char *oid = target->target_oid(len);
       if (mtype == 0 && len > 0)
         inv->set_target (oid, len);
+    }
+  else
+    {
+      if (target == 0)
+        ACE_DEBUG ((LM_DEBUG,"Cleanup queue: target is null, offset = %d\n", offset));
+      else
+        ACE_DEBUG ((LM_DEBUG,"Cleanup queue: target has an owner, offset = %d\n", offset));
     }
 
 }
@@ -598,6 +680,7 @@ Log::parse_line (char *line, size_t offset)
       { "GIOP message - HEXDUMP", parse_HEXDUMP },
       { "open_i, listening on:", parse_open_listener },
       { "Muxed_TMS[", parse_muxed_tms },
+      { "Exclusive_TMS::request_id", parse_exclusive_tms },
       { "process_parsed_messages", parse_process_parsed_msgs },
       { "wait_for_event", parse_wait_for_event },
       { "::cleanup_queue, byte_count", parse_cleanup_queue },
@@ -605,6 +688,7 @@ Log::parse_line (char *line, size_t offset)
       { "IIOP_Connector::begin_connection, to ", parse_begin_connection },
       { "IIOP_Connection_Handler::open, The local addr is", parse_local_addr },
       { "opened as TAO_SERVER_ROLE", parse_open_as_server },
+      { "Transport_Connector::connect, got an existing connected", parse_got_existing },
       { 0,0 }
     };
 

@@ -11,6 +11,7 @@
 class PeerProcess;
 class PeerObject;
 class Thread;
+class ACE_InputCDR;
 
 // Invocation holds the buffer contents for a request/response pair.
 // This could be originating in this process, or in the peer process.
@@ -44,7 +45,10 @@ public:
     char type (void) const;
     char expected_type (void) const;
     bool sending (void) const;
-    bool is_oneway (void) const;
+    char minor_version (void) const;
+    char reply_status (void) const;
+    size_t num_contexts (void) const;
+    bool is_oneway (void);
     bool is_full (void) const;
     size_t log_posn (void) const;
     const Thread *thread (void) const;
@@ -52,18 +56,21 @@ public:
 
     const ACE_CString &preamble(void) const;
     size_t expected_req_id(void) const;    
-    size_t actual_req_id(void) const;    
+    size_t actual_req_id(void);
     size_t expected_size (void) const;
     size_t size (void) const;
     size_t cur_size(void) const;
-    const char * target_oid (size_t &len) const;
-    const char * operation (void) const;
-    bool validate (void) const;
+    const char * target_oid (size_t &len);
+    const char * operation (void);
+    bool validate (void);
     bool matches (GIOP_Buffer *other) const;
     void reset (void);
     void transfer_from (GIOP_Buffer *other);
-    
+
   private:
+    bool parse_svc_contexts (ACE_InputCDR& cdr);
+    bool parse_header (void);
+    
     ACE_CString preamble_;
     size_t log_offset_;
     Thread *thr_;
@@ -77,6 +84,15 @@ public:
     Invocation *owner_;
     bool buffer_lost_;
     bool sending_;
+    char * oid_;
+    size_t oid_len_;
+    char * opname_;
+    size_t req_id_;
+    char   resp_exp_;
+    size_t reply_status_;
+    char   ver_minor_;
+    size_t  num_contexts_;
+    bool header_parsed_;
   };
 
   enum Dump_Mode {

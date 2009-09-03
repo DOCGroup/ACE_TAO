@@ -12,8 +12,12 @@
 #include "ace/Log_Msg.h"
 #include <stdio.h>
 
-static const char *size_leadin_1_5 = "GIOP v1.2 msg, ";
-static const char *size_leadin_1_6 = "GIOP message v1.2, ";
+static const char *size_leadin_1_5 = "GIOP v1."; //"x msg, ";
+static size_t leadin_len_1_5 = 15; 
+static const char *size_leadin_1_6 = "GIOP message v1."; //2, ";
+static size_t leadin_len_1_6 = 19;
+
+
 static const char *size_leadin = 0;
 static size_t leadin_len = 0;
 static const size_t giop_header_len = 12;
@@ -33,7 +37,65 @@ static const size_t giop_header_len = 12;
 // target: <4 len, + len> [0-3 pad]
 // opname: <4 len, + len> 
 
-static const size_t target_offset = giop_header_len + 12;
+// GIOP 1.0 header: 12 bytes
+// Magic: 4
+// ver:   2
+// byte_order: 1
+// type:  1 // req/repl/lf/excp
+// len:   4
+//
+// Request 1.0 header: 
+/*
+struct RequestHeader_1_0 { // Renamed from RequestHeader
+    IOP::ServiceContextList      service_context;
+    unsigned long                request_id;
+    boolean                      response_expected;
+    sequence <octet>             object_key;
+    string                       operation;
+    CORBA::OctetSeq              requesting_principal;
+};
+*/
+// service_context: 4(count)+contexts.
+//   context id: 4
+//   content blob: 4(len) + len octets + (0-3)pad
+// request_id: 4
+// respexp:  1
+// RESVD:  3
+// Address disposition: 4
+// target: <4 len, + len> [0-3 pad]
+// opname: <4 len, + len> 
+
+/*
+struct ReplyHeader_1_0 { // Renamed from ReplyHeader
+         IOP::ServiceContextList      service_context;
+         unsigned long                request_id;
+         ReplyStatusType_1_0          reply_status;
+    };
+    // GIOP 1.1
+    typedef ReplyHeader_1_0 ReplyHeader_1_1;
+    // Same Header contents for 1.0 and 1.1
+#else
+    // GIOP 1.2, 1.3
+    enum ReplyStatusType_1_2 {
+         NO_EXCEPTION,
+         USER_EXCEPTION,
+         SYSTEM_EXCEPTION,
+         LOCATION_FORWARD,
+         LOCATION_FORWARD_PERM,// new value for 1.2
+         NEEDS_ADDRESSING_MODE // new value for 1.2
+    };
+    struct ReplyHeader_1_2 {
+         unsigned long                request_id;
+         ReplyStatusType_1_2          reply_status;
+         IOP::ServiceContextList      service_context;
+    };
+
+ */
+
+
+
+static const size_t target_offset_12 = giop_header_len + 12;
+
 // 12 = req_id + flags + RESVD + addr disp.
 
 Invocation::GIOP_Buffer::GIOP_Buffer(const char *text, 
@@ -52,7 +114,17 @@ Invocation::GIOP_Buffer::GIOP_Buffer(const char *text,
     octets_ (0),
     owner_ (owner),
     buffer_lost_ (false),
-    sending_(false)
+    sending_(false),
+    oid_ (0),
+    oid_len_ (0),
+    opname_ (0),
+    req_id_ (0),
+    resp_exp_ (0),
+    reply_status_ (0),
+    ver_minor_ (0),
+    num_contexts_ (0),
+    header_parsed_ (false)
+
 {
   const char *size_str = ACE_OS::strstr(text, size_leadin) + leadin_len;
   const char *id = size_str == 0 ? 0 : ACE_OS::strchr(size_str, '[') + 1;
@@ -134,7 +206,16 @@ Invocation::GIOP_Buffer::add_octets(const char *text)
       c = err+1;
     }
   size_t cs = this->cur_size();
-  return cs == this->size_ ? -1 : int(cs) / 16;
+  if (cs == this->size_)
+    return -1;
+  else
+    if (!this->header_parsed_)
+      {
+        this->header_parsed_ = this->parse_header();
+        if (this->header_parsed_ )
+          return 1;
+      }
+  return 0;
 }
 
 bool
@@ -163,18 +244,36 @@ Invocation::GIOP_Buffer::expected_type (void) const
   return this->expected_type_;
 }
 
+char
+Invocation::GIOP_Buffer::minor_version (void) const
+{
+  return this->ver_minor_;
+}
+
+char
+Invocation::GIOP_Buffer::reply_status (void) const
+{
+  return this->reply_status_;
+}
+
+size_t
+Invocation::GIOP_Buffer::num_contexts (void) const
+{
+  return this->num_contexts_;
+}
+
 bool
-Invocation::GIOP_Buffer::is_oneway(void) const
+Invocation::GIOP_Buffer::is_oneway(void)
 {
   if (this->octets_ == 0)
     {
       return false;
     }
-  char mtype = this->octets_[7];
-  if (mtype != 0) //GIOP_REQUEST
-    return false;
-  char flag = this->octets_[16]; // GIOP 1.2 request_header.response_flags
-  return (flag & 1) == 0;
+
+  if (!this->header_parsed_)
+    this->header_parsed_ = this->parse_header();
+
+  return (resp_exp_ &1) == 0;
 }
     
 size_t
@@ -220,20 +319,15 @@ Invocation::GIOP_Buffer::expected_req_id(void) const
 }
 
 size_t
-Invocation::GIOP_Buffer::actual_req_id(void) const
+Invocation::GIOP_Buffer::actual_req_id(void)
 {
   if (this->octets_ == 0)
     return 0;
-  char vmaj = this->octets_[4];
-  char vmin = this->octets_[5];
-  char bo = this->octets_[6];
-  
-  ACE_InputCDR cdr(this->octets_+giop_header_len, 
-                   this->cur_size() - giop_header_len,
-                   bo, vmaj, vmin);
-  ACE_CDR::ULong rid;
-  cdr >> rid;
-  return static_cast<size_t>(rid);
+
+  if (!this->header_parsed_)
+    this->header_parsed_ = this->parse_header();
+
+  return this->req_id_;
 }
 
 size_t
@@ -242,64 +336,128 @@ Invocation::GIOP_Buffer::cur_size(void) const
   return this->wr_pos_ - this->octets_;
 }
 
+bool
+Invocation::GIOP_Buffer::parse_svc_contexts (ACE_InputCDR &cdr)
+{
+  ACE_CDR::ULong temp;
+  ACE_CDR::ULong num_svc_cont;
+  if ( !(cdr >> num_svc_cont))
+    return false;
+  this->num_contexts_ = static_cast<size_t>(num_svc_cont);
+  while (num_svc_cont > 0)
+    {
+      if (!(cdr >> temp))  // tag really
+        return false;
+      if (!(cdr >> temp))
+        return false;
+      if (!cdr.skip_bytes(temp))
+        return false;
+      --num_svc_cont;
+    }
+  return true;
+}
+
+bool
+Invocation::GIOP_Buffer::parse_header (void)
+{
+  if (this->octets_ == 0)
+    {
+      return false;
+    }
+
+  char vmaj = this->octets_[4];
+  this->ver_minor_ = this->octets_[5];
+  char bo = this->octets_[6];
+
+  char mtype = this->octets_[7];
+  if (mtype > 1) // not a request or reply
+    return false;
+
+  ACE_InputCDR cdr(this->octets_ + giop_header_len,
+                   this->cur_size() - giop_header_len,
+                   bo, vmaj, this->ver_minor_);
+
+  ACE_CDR::ULong len_ulong;
+
+  if (this->ver_minor_ < 2)
+    {
+      if (!this->parse_svc_contexts(cdr))
+        return false;
+    }
+
+  if (!(cdr >> len_ulong))
+    return false;
+  this->req_id_ = static_cast<size_t>(len_ulong);
+
+  switch (mtype) {
+  case 0: //Request
+    if (!(cdr >> this->resp_exp_))
+      return false;
+    if (this->ver_minor_ > 1 &&
+        !(cdr >> len_ulong)) // address disposition
+      return false;
+    if (!(cdr >> len_ulong))
+      return false;
+    this->oid_len_ = static_cast<size_t>(len_ulong);
+    this->oid_ = cdr.rd_ptr();
+    if (!cdr.skip_bytes(len_ulong))
+      return false;
+
+    if (!(cdr >> len_ulong))
+      return false;
+    this->opname_ = cdr.rd_ptr();
+    if (!cdr.skip_bytes(len_ulong))
+      return false;
+    break;
+  case 1: //Reply
+    if (!(cdr >> len_ulong))
+      return false;
+    this->reply_status_ = static_cast<size_t>(len_ulong);
+    break;
+  default:
+    return false;
+  }
+  if (this->ver_minor_ > 1)
+    {
+      if (!this->parse_svc_contexts(cdr))
+        return false;
+    }
+
+  return true;
+}
+
 const char *
-Invocation::GIOP_Buffer::target_oid(size_t &len) const
+Invocation::GIOP_Buffer::target_oid(size_t &len)
 {
   if (this->octets_ == 0)
     {
       return 0;
     }
-  char mtype = this->octets_[7];
-  if (mtype != 0) //GIOP_REQUEST
+
+  if (!this->header_parsed_)
+    this->header_parsed_ = this->parse_header();
+
+  if (this->oid_ == 0)
     return 0;
 
-  char vmaj = this->octets_[4];
-  char vmin = this->octets_[5];
-  char bo = this->octets_[6];
-  ACE_InputCDR cdr(this->octets_ + target_offset,
-                   this->cur_size() - target_offset,
-                   bo, vmaj, vmin);
-  ACE_CDR::ULong len_ulong;
-  cdr >> len_ulong;
-  len = static_cast<size_t>(len_ulong);
-  if (target_offset + len > this->cur_size())
-    {
-      len = 0;
-      return 0;
-    }
-  return this->octets_ + target_offset + 4;
+  len = this->oid_len_;
+  return this->oid_;
 }
  
 const char *
-Invocation::GIOP_Buffer::operation(void) const
+Invocation::GIOP_Buffer::operation(void)
 {
   if (octets_ == 0)
     return 0;
 
-  char mtype = this->octets_[7];
-  if (mtype != 0) //GIOP_REQUEST
-    return 0;
+  if (!this->header_parsed_)
+    this->header_parsed_ = this->parse_header();
 
-  char vmaj = this->octets_[4];
-  char vmin = this->octets_[5];
-  char bo = this->octets_[6];
-  ACE_InputCDR cdr(this->octets_ + target_offset,
-                   this->cur_size() - target_offset,
-                   bo, vmaj, vmin);
-  ACE_CDR::Long tgt_size;
-  cdr.read_long(tgt_size);
-  if (target_offset + tgt_size > this->cur_size())
-    return 0;
-  cdr.skip_bytes(tgt_size);
-  cdr.read_long(tgt_size);
-  size_t offset = cdr.rd_ptr() - this->octets_;
-  if (offset + tgt_size > this->cur_size())
-    return 0;
-  return this->octets_ + offset;
+  return this->opname_;
 }
 
 bool
-Invocation::GIOP_Buffer::validate (void) const
+Invocation::GIOP_Buffer::validate (void)
 {
   return this->expected_req_id_ == this->actual_req_id() &&
     this->expected_type_ == this->type();
@@ -346,9 +504,16 @@ Invocation::Invocation (PeerProcess *peer, long handle, size_t rid)
 {
   if (size_leadin == 0)
     {
-      size_leadin = Session::tao_version() == 150 ?
-        size_leadin_1_5 : size_leadin_1_6;
-      leadin_len = ACE_OS::strlen(size_leadin);
+      if (Session::tao_version() == 150)
+        {
+          size_leadin = size_leadin_1_5;
+          leadin_len = leadin_len_1_5;
+        } 
+      else
+        {
+          size_leadin = size_leadin_1_6;
+          leadin_len = leadin_len_1_6;
+        }
     }
 }
 
@@ -542,7 +707,10 @@ Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_ha
 
   if (this->req_octets_ != 0)
     {
-      strm << " Request, line " << this->req_octets_->log_posn();
+      strm << " Request, ";
+      if (this->req_octets_->num_contexts() > 0)
+        strm << "with " << this->req_octets_->num_contexts() << " contexts, ";
+      strm << "line " << this->req_octets_->log_posn();
       if (mode == Dump_Thread || mode == Dump_Both)
         strm << " " << this->req_octets_->thread()->alias();
     }
@@ -554,10 +722,30 @@ Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_ha
     {
       if (this->repl_octets_ != 0)
         {
-          strm << " Reply, line " << this->repl_octets_->log_posn();
+          strm << " Reply, ";
+          if (this->repl_octets_->num_contexts() > 0)
+            strm << "with " << this->repl_octets_->num_contexts() << " contexts, ";
+          strm << "line " << this->repl_octets_->log_posn();
 #if defined (SHOW_THREAD_ID)
           strm << " " << this->repl_octets_->thread()->alias();
 #endif
+          char rstat = this->repl_octets_->reply_status();
+          switch (rstat) 
+            {
+            case 0:
+              break;
+            case 1: 
+              strm << " User Exception";
+              break;
+            case 2:
+              strm << " System Exception";
+              break;
+            case 3:
+              strm << " Location Forward";
+              break;
+            default:
+              strm << " status = " << static_cast<short>(rstat);
+            }
         }
       else
         strm << " <no reply found>";
