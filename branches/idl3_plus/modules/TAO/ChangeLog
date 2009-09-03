@@ -1,3 +1,11 @@
+Thu Sep  3 18:01:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        
+          Fixed bug in component attribute visitation that left the
+          visitor state incorrect for further processing of the
+          component's scope.
+
 Thu Sep  3 16:28:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.h:
