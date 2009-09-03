@@ -107,7 +107,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     {
       printf ("Receiver :\tReceived short <%d>\n", something);
       ACE_OS::sleep (ACE_OS::rand () % 2);
-      return something / 6.54321;
+      return static_cast<CORBA::Float>(something / 6.54321);
     }
   }
   

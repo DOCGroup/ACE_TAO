@@ -32,6 +32,7 @@
 #include "ciao/CIAO_common.h"
 #include "AMI_MyFoo_i.h"
 #include "AMI_MyInterface_i.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Hello_AMI_AMI_Impl
 {

@@ -1,3 +1,10 @@
+Thu Sep  3 13:17:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+          Resolved compiler errors on Windows.
+
 Thu Sep  3 12:05:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.cpp:
