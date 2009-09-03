@@ -244,8 +244,8 @@ Session::dump ()
 //       entry->item()->dump_invocation_detail (*strm);
        entry->item()->dump_thread_invocations (*strm);
     }
-
-  delete strm;
+  if (this->has_outfile() || this->has_dir())
+    delete strm;
 }
 
 

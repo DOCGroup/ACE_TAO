@@ -57,6 +57,10 @@ public:
   // as needed.
   Thread * find_thread (long tid);
 
+  // Returns a thread that had previously worked with handle h. May return
+  // a null pointer. 
+  Thread * find_thread_for_handle (long h);
+
   // Returns the process id.
   long pid (void) const;
 
