@@ -37,9 +37,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent");
-
       if (parse_args (argc, argv) != 0)
         return 1;
 

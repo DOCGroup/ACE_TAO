@@ -1,3 +1,54 @@
+Thu Sep  3 09:01:53 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Crash_On_Write/Crash_Task.cpp:
+
+          Used terminate_process() instead of abort(). The later works
+          differently on Solaris.
+
+        * tests/Bug_1476_Test/test.ior:
+
+          An attempt to fix this test on platforms where connect to
+          localhost on non-blocking socket returns with ECONNREFUSED
+          while it's expected to return with errno=EINPROGRESS.
+          These are Solaris and other Unices. I changed the remote host
+          in IOR from localhost to something really remote (google.com).
+
+        * tests/Big_AMI/client.cpp:
+        * tests/Bug_1361_Regression/Echo_Caller.cpp:
+        * tests/Bug_1361_Regression/server.cpp:
+        * tests/Bug_1361_Regression/Server_Timer.cpp:
+        * tests/Bug_1361_Regression/Server_Timer.h:
+        * tests/Bug_1361_Regression/client.cpp:
+        * tests/Bug_1361_Regression/Echo.cpp:
+        * tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
+        * tests/Portable_Interceptors/AMI/client.cpp:
+        * tests/Bug_1270_Regression/client.cpp:
+        * tests/Bug_1270_Regression/Echo.cpp:
+        * tests/Bug_1270_Regression/Echo_Caller.cpp:
+        * tests/Bug_1270_Regression/server.cpp:
+        * tests/Bug_1270_Regression/Server_Timer.cpp:
+        * tests/Bug_1270_Regression/Server_Timer.h:
+        * tests/Bug_1270_Regression/run_test.pl:
+
+          Fixed tests after the change for Bug#3682 and Bug#3697. In
+          some of these tests it was assumed that nothing could be
+          received from server until we run orb explicitly. The later
+          is not true with synch scope policy SYNC_WITH_TRANSPORT. Cleaned
+          up the code of the tests.
+
+        * tao/ORB_Core.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/ORB_Core.h:
+
+          This fixes Bug#3682. SYNC_WITH_TRANSPORT is now really
+          default synch scope policy in TAO. This must fix Single_Read
+          and AMH_Oneway tests on Solaris.
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+
+          Changed the code to poll the reactor instead of running
+          it indefinitely. This fixes bug#3697.
+
 Wed Sep  2 14:53:54 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:

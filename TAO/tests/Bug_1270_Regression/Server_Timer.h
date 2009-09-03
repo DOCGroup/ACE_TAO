@@ -28,13 +28,10 @@ public:
 
   /// Thread entry point
   int handle_timeout(ACE_Time_Value const & tv, void const *);
-  int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
 private:
   /// Reference to the test interface
   Test::Echo_var echo_;
-
-  int refcnt_;
 };
 
 #include /**/ "ace/post.h"
