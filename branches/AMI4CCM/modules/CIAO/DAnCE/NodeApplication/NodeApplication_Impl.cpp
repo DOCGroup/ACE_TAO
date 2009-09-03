@@ -2,7 +2,7 @@
 #include "NodeApplication_Impl.h"
 
 #include "ace/OS_Memory.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/streams.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Object.h"

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Domain_Application_Impl.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/streams.h"
 #include "DAnCE/Logger/Log_Macros.h"
 

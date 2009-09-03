@@ -118,7 +118,7 @@ DomainApplicationManager_Impl::destroyApplication (Deployment::Application_ptr a
     }
   catch (const Deployment::StopError &e)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO
+      DANCE_ERROR ((LM_ERROR, DLINFO
                   ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
                   ACE_TEXT("Propagating a received StopError exception\n")));
       throw e;
@@ -131,7 +131,7 @@ DomainApplicationManager_Impl::destroyApplication (Deployment::Application_ptr a
       throw Deployment::StopError();
     }
 
-  ACE_ERROR ((LM_ERROR, DLINFO
+  DANCE_ERROR ((LM_ERROR, DLINFO
               ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
               ACE_TEXT("Provided application reference unknown\n")));
   throw Deployment::StopError();

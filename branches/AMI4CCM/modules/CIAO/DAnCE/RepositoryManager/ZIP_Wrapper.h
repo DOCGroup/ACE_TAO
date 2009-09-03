@@ -23,7 +23,7 @@
 #include "ace/Containers_T.h"     //for ACE_Double_Linked_List
 #include "ace/Message_Block.h"    //for ACE_Message_Block
 #include "ace/SString.h"          //for ACE_CString
-#include "ace/Log_Msg.h"
+
 #include "ace/Synch.h"
 #include "ace/OS_NS_fcntl.h"      //for open
 #include "ace/OS_NS_sys_stat.h"   //for filesize and mkdir
