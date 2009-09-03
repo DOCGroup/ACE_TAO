@@ -1,3 +1,10 @@
+Thu Sep  3 10:34:43 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+
+          Fixed reference counting for HTIOP connection handler.
+          This is required for Bug#3732.
+
 Thu Sep  3 09:01:53 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Crash_On_Write/Crash_Task.cpp:
