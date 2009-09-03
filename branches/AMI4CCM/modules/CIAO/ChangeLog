@@ -1,3 +1,11 @@
+Thu Sep  3 08:19:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp:
+          Log message inserted.
+
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+          Resolved compiler error on Windows.
+
 Thu Sep  3 07:48:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:

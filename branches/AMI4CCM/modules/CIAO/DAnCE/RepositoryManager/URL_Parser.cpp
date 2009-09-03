@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "URL_Parser.h"
+#include "ace/ACE.h"
 
 #include "DAnCE/Logger/Log_Macros.h"
 
