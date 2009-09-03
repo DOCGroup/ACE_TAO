@@ -1,3 +1,8 @@
+Thu Sep  3 10:20:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+          Resolved compiler error on windows.
+
 Thu Sep  3 08:19:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Node_Locator.cpp:
