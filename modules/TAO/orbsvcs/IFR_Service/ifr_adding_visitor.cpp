@@ -1917,9 +1917,15 @@ ifr_adding_visitor::visit_field (AST_Field *node)
 int
 ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 {
+  ::CORBA::IDLType_var holder;
+
   try
     {
       AST_Type *type = node->field_type ();
+      
+      // Save to be replaced later.
+      holder =
+        ::CORBA::IDLType::_duplicate (this->ir_current_.in ());
 
       // Updates ir_current_.
       this->get_referenced_type (type);
@@ -1995,6 +2001,10 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 
       return -1;
     }
+    
+  // Restore entry of component or interface.
+  this->ir_current_ =
+    ::CORBA::IDLType::_duplicate (holder.in ());
 
   return 0;
 }
