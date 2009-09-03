@@ -75,6 +75,21 @@ HostProcess::find_thread (long tid)
   return thr;
 }
 
+Thread *
+HostProcess::find_thread_for_handle (long h)
+{
+  Thread *thr = 0;
+  for (ACE_DLList_Iterator<Thread> i(threads_);
+       !i.done();
+       i.advance())
+    {
+      i.next(thr);
+      if (thr->active_handle() == h && thr->giop_target() != 0)
+        return thr;
+    }
+  return thr;
+}
+
 PeerProcess *
 HostProcess::find_peer (const ACE_CString &addr)
 {
