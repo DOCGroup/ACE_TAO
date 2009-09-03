@@ -6,6 +6,11 @@
 #include "ast_attribute.h"
 #include "ast_component.h"
 #include "ast_component_fwd.h"
+#include "ast_provides.h"
+#include "ast_uses.h"
+#include "ast_publishes.h"
+#include "ast_emits.h"
+#include "ast_consumes.h"
 #include "ast_constant.h"
 #include "ast_enum.h"
 #include "ast_eventtype.h"
@@ -938,21 +943,6 @@ ifr_adding_visitor::visit_component (AST_Component *node)
 
               extant_def->base_component (base_component.in ());
 
-              this->visit_all_provides (node,
-                                        extant_def.in ());
-
-              this->visit_all_uses (node,
-                                    extant_def.in ());
-
-              this->visit_all_emits (node,
-                                     extant_def.in ());
-
-              this->visit_all_publishes (node,
-                                         extant_def.in ());
-
-              this->visit_all_consumes (node,
-                                        extant_def.in ());
-
               node->ifr_added (true);
 
               // Push the new IR object onto the scope stack before visiting
@@ -969,6 +959,14 @@ ifr_adding_visitor::visit_component (AST_Component *node)
                   );
                 }
 
+              // This spot in the AST doesn't necessarily have to be the
+              // interface definition - it could be any reference to it.
+              // The front end will already have fully defined it, so all
+              // the info is available anywhere. So it's a good idea to
+              // update the current IR object holder now.
+              this->ir_current_ =
+                CORBA::IDLType::_duplicate (extant_def.in ());
+
               // Visit the members, if any.
               if (this->visit_scope (node) == -1)
                 {
@@ -981,14 +979,6 @@ ifr_adding_visitor::visit_component (AST_Component *node)
                     -1
                   );
                 }
-
-              // This spot in the AST doesn't necessarily have to be the
-              // interface definition - it could be any reference to it.
-              // The front end will already have fully defined it, so all
-              // the info is available anywhere. So it's a good idea to
-              // update the current IR object holder now.
-              this->ir_current_ =
-                CORBA::IDLType::_duplicate (extant_def.in ());
 
               CORBA::Container_ptr used_scope =
                 CORBA::Container::_nil ();
@@ -1085,31 +1075,6 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
                                base_component.in (),
                                supported_interfaces
                              );
-
-              // Might as well go ahead and complete the repository
-              // entry now, if we can - we're halfway there already.
-              if (node->is_defined ())
-                {
-                  CORBA::ComponentIR::ComponentDef_var new_def =
-                    CORBA::ComponentIR::ComponentDef::_narrow (
-                        this->ir_current_.in ()
-                      );
-
-                  this->visit_all_provides (c,
-                                            new_def.in ());
-
-                  this->visit_all_uses (c,
-                                        new_def.in ());
-
-                  this->visit_all_emits (c,
-                                         new_def.in ());
-
-                  this->visit_all_publishes (c,
-                                             new_def.in ());
-
-                  this->visit_all_consumes (c,
-                                            new_def.in ());
-                }
             }
           else
             {
@@ -1133,6 +1098,142 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
 
       return -1;
     }
+
+  return 0;
+}
+
+int
+ifr_adding_visitor::visit_provides (AST_Provides *node)
+{
+  ::CORBA::Contained_var contained =
+    be_global->repository ()->lookup_id (
+      node->provides_type ()->repoID ());
+
+  ::CORBA::InterfaceDef_var interface_type =
+    ::CORBA::InterfaceDef::_narrow (contained.in ());
+
+  ::CORBA::ComponentIR::ComponentDef_var c =
+    ::CORBA::ComponentIR::ComponentDef::_narrow (
+      this->ir_current_.in ());
+      
+  ACE_CString comp_str (c->_interface_repository_id ());
+  char *local_name = node->local_name ()->get_string ();
+  this->expand_id (comp_str, local_name);
+  
+  ::CORBA::ComponentIR::ProvidesDef_var new_def =
+    c->create_provides (comp_str.fast_rep (),
+                        local_name,
+                        node->provides_type ()->version (),
+                        interface_type.in ());
+
+  return 0;
+}
+
+int
+ifr_adding_visitor::visit_uses (AST_Uses *node)
+{
+  ::CORBA::Contained_var contained =
+    be_global->repository ()->lookup_id (
+      node->uses_type ()->repoID ());
+
+  ::CORBA::InterfaceDef_var interface_type =
+    ::CORBA::InterfaceDef::_narrow (contained.in ());
+    
+  ::CORBA::ComponentIR::ComponentDef_var c =
+    ::CORBA::ComponentIR::ComponentDef::_narrow (
+      this->ir_current_.in ());
+
+  ACE_CString comp_str (c->_interface_repository_id ());
+  char *local_name = node->local_name ()->get_string ();
+  this->expand_id (comp_str, local_name);
+  
+  ::CORBA::ComponentIR::UsesDef_var new_def =
+    c->create_uses (comp_str.fast_rep (),
+                    local_name,
+                    node->uses_type ()->version (),
+                    interface_type.in (),
+                    static_cast<CORBA::Boolean> (node->is_multiple ()));
+
+  return 0;
+}
+
+int
+ifr_adding_visitor::visit_publishes (AST_Publishes *node)
+{
+  ::CORBA::Contained_var contained =
+    be_global->repository ()->lookup_id (
+      node->publishes_type ()->repoID ());
+
+  ::CORBA::ComponentIR::EventDef_var event_type =
+    ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
+    
+  ::CORBA::ComponentIR::ComponentDef_var c =
+    ::CORBA::ComponentIR::ComponentDef::_narrow (
+      this->ir_current_.in ());
+
+  ACE_CString comp_str (c->_interface_repository_id ());
+  char *local_name = node->local_name ()->get_string ();
+  this->expand_id (comp_str, local_name);
+  
+  ::CORBA::ComponentIR::PublishesDef_var new_def =
+    c->create_publishes (comp_str.fast_rep (),
+                         local_name,
+                         node->publishes_type ()->version (),
+                         event_type.in ());
+
+  return 0;
+}
+
+int
+ifr_adding_visitor::visit_emits (AST_Emits *node)
+{
+  ::CORBA::Contained_var contained =
+    be_global->repository ()->lookup_id (
+      node->emits_type ()->repoID ());
+
+  ::CORBA::ComponentIR::EventDef_var event_type =
+    ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
+    
+  ::CORBA::ComponentIR::ComponentDef_var c =
+    ::CORBA::ComponentIR::ComponentDef::_narrow (
+      this->ir_current_.in ());
+
+  ACE_CString comp_str (c->_interface_repository_id ());
+  char *local_name = node->local_name ()->get_string ();
+  this->expand_id (comp_str, local_name);
+  
+  ::CORBA::ComponentIR::EmitsDef_var new_def =
+    c->create_emits (comp_str.fast_rep (),
+                     local_name,
+                     node->emits_type ()->version (),
+                     event_type.in ());
+
+  return 0;
+}
+
+int
+ifr_adding_visitor::visit_consumes (AST_Consumes *node)
+{
+  ::CORBA::Contained_var contained =
+    be_global->repository ()->lookup_id (
+      node->consumes_type ()->repoID ());
+
+  ::CORBA::ComponentIR::EventDef_var event_type =
+    ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
+    
+  ::CORBA::ComponentIR::ComponentDef_var c =
+    ::CORBA::ComponentIR::ComponentDef::_narrow (
+      this->ir_current_.in ());
+
+  ACE_CString comp_str (c->_interface_repository_id ());
+  char *local_name = node->local_name ()->get_string ();
+  this->expand_id (comp_str, local_name);
+  
+  ::CORBA::ComponentIR::ConsumesDef_var new_def =
+    c->create_consumes (comp_str.fast_rep (),
+                        local_name,
+                        node->consumes_type ()->version (),
+                        event_type.in ());
 
   return 0;
 }
@@ -2990,6 +3091,15 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
           );
         }
 
+      // This spot in the AST doesn't necessarily have to be the
+      // interface definition - it could be any reference to it.
+      // The front end will already have fully defined it, so all
+      // the info is available anywhere. So it's a good idea to
+      // update the current IR object holder now. This will
+      // consume the objref pointer.
+      this->ir_current_ =
+        CORBA::IDLType::_duplicate (new_def.in ());
+
       // Visit the members, if any.
       if (this->visit_scope (node) == -1)
         {
@@ -3002,30 +3112,6 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
             -1
           );
         }
-
-      this->visit_all_provides (node,
-                                new_def.in ());
-
-      this->visit_all_uses (node,
-                            new_def.in ());
-
-      this->visit_all_emits (node,
-                             new_def.in ());
-
-      this->visit_all_publishes (node,
-                                 new_def.in ());
-
-      this->visit_all_consumes (node,
-                                new_def.in ());
-
-      // This spot in the AST doesn't necessarily have to be the
-      // interface definition - it could be any reference to it.
-      // The front end will already have fully defined it, so all
-      // the info is available anywhere. So it's a good idea to
-      // update the current IR object holder now. This will
-      // consume the objref pointer.
-      this->ir_current_ =
-        CORBA::IDLType::_duplicate (new_def.in ());
 
       CORBA::Container_ptr used_scope =
         CORBA::Container::_nil ();
@@ -3859,175 +3945,6 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
 
       result[index].mode = CORBA::PARAM_IN;
     }
-}
-
-void
-ifr_adding_visitor::visit_all_provides (AST_Component *,
-                                        CORBA::ComponentIR::ComponentDef_ptr)
-{
-/*
-  AST_Component::port_description *tmp = 0;
-  CORBA::Contained_var contained;
-  CORBA::InterfaceDef_var interface_type;
-  CORBA::ComponentIR::ProvidesDef_var new_def;
-  char *local_name = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> i (
-           node->provides ()
-         );
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
-
-      interface_type = CORBA::InterfaceDef::_narrow (contained.in ());
-
-      ACE_CString str (node->repoID ());
-      local_name = tmp->id->get_string ();
-      this->expand_id (str, local_name);
-      new_def = c->create_provides (str.fast_rep (),
-                                    local_name,
-                                    tmp->impl->version (),
-                                    interface_type.in ());
-    }
-    */
-}
-
-void
-ifr_adding_visitor::visit_all_uses (AST_Component *,
-                                    CORBA::ComponentIR::ComponentDef_ptr)
-{
-/*
-  AST_Component::port_description *tmp = 0;
-  CORBA::Contained_var contained;
-  CORBA::InterfaceDef_var interface_type;
-  CORBA::ComponentIR::UsesDef_var new_def;
-  char *local_name = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> i (
-           node->uses ()
-         );
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
-
-      interface_type = CORBA::InterfaceDef::_narrow (contained.in ());
-
-      ACE_CString str (node->repoID ());
-      local_name = tmp->id->get_string ();
-      this->expand_id (str, local_name);
-      new_def = c->create_uses (str.fast_rep (),
-                                local_name,
-                                tmp->impl->version (),
-                                interface_type.in (),
-                                static_cast<CORBA::Boolean> (tmp->is_multiple));
-    }
-    */
-}
-
-void
-ifr_adding_visitor::visit_all_emits (AST_Component *,
-                                     CORBA::ComponentIR::ComponentDef_ptr)
-{
-/*
-  AST_Component::port_description *tmp = 0;
-  CORBA::Contained_var contained;
-  CORBA::ComponentIR::EventDef_var event_type;
-  CORBA::ComponentIR::EmitsDef_var new_def;
-  char *local_name = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> i (
-           node->emits ()
-         );
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
-
-      event_type =
-        CORBA::ComponentIR::EventDef::_narrow (contained.in ());
-
-      ACE_CString str (node->repoID ());
-      local_name = tmp->id->get_string ();
-      this->expand_id (str, local_name);
-      new_def = c->create_emits (str.fast_rep (),
-                                 local_name,
-                                 tmp->impl->version (),
-                                 event_type.in ());
-    }
-    */
-}
-
-void
-ifr_adding_visitor::visit_all_publishes (AST_Component *,
-                                         CORBA::ComponentIR::ComponentDef_ptr)
-{
-/*
-  AST_Component::port_description *tmp = 0;
-  CORBA::Contained_var contained;
-  CORBA::ComponentIR::EventDef_var event_type;
-  CORBA::ComponentIR::PublishesDef_var new_def;
-  char *local_name = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> i (
-           node->publishes ()
-         );
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
-
-      event_type =
-        CORBA::ComponentIR::EventDef::_narrow (contained.in ());
-
-      ACE_CString str (node->repoID ());
-      local_name = tmp->id->get_string ();
-      this->expand_id (str, local_name);
-      new_def = c->create_publishes (str.fast_rep (),
-                                     local_name,
-                                     tmp->impl->version (),
-                                     event_type.in ());
-    }
-    */
-}
-
-void
-ifr_adding_visitor::visit_all_consumes (AST_Component *,
-                                        CORBA::ComponentIR::ComponentDef_ptr)
-{
-/*
-  AST_Component::port_description *tmp = 0;
-  CORBA::Contained_var contained;
-  CORBA::ComponentIR::EventDef_var event_type;
-  CORBA::ComponentIR::ConsumesDef_var new_def;
-  char *local_name = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> i (
-           node->consumes ()
-         );
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
-
-      event_type =
-        CORBA::ComponentIR::EventDef::_narrow (contained.in ());
-
-      ACE_CString str (node->repoID ());
-      local_name = tmp->id->get_string ();
-      this->expand_id (str, local_name);
-      new_def = c->create_consumes (str.fast_rep (),
-                                    local_name,
-                                    tmp->impl->version (),
-                                    event_type.in ());
-    }
-    */
 }
 
 void
