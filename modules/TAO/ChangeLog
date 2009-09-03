@@ -1,3 +1,11 @@
+Thu Sep  3 16:28:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        
+          Updated visitor to use component port nodes instead of the
+          old port lists.
+
 Wed Sep  2 19:24:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_obv_header.cpp:
