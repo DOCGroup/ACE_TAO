@@ -486,7 +486,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       if (this->nm_map_.find (node_name, nm) == -1)
         {
           DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                        "Allocating new NodeManger servant instance for NodeManager\n"));
+                        "Allocating new NodeManager servant instance for NodeManager\n"));
           int size = 64;
           DAnCE::PROPERTY_MAP properties (size);
           this->create_nm_properties (properties);
@@ -499,7 +499,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                                                    properties),
                           CORBA::Object::_nil ());
           DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                        "New NodeManger servant instance for NodeManager allocated.\n"));
+                        "New NodeManager servant instance for NodeManager allocated.\n"));
           this->nm_map_.bind (node_name, nm);
         }
 
@@ -546,7 +546,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
 
       // Finishing Deployment part
       DANCE_DEBUG ((LM_NOTICE, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                    "DAnCE_NodeManager is running...\n"));
+                    "DAnCE_NodeManager for %C is running...\n", CORBA::string_dup (node_name.c_str ())));
 
       DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE_NodeManager_Module::create_object - "
                     "NodeManager IOR: %s\n", ior.in ()));
