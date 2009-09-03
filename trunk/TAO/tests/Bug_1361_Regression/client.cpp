@@ -25,6 +25,8 @@ public:
   Client_Timer (ACE_Reactor * reactor)
     : ACE_Event_Handler (reactor)
   {
+    this->reference_counting_policy ().value (
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   }
 
   void activate (void)
@@ -36,17 +38,11 @@ public:
   /// Thread entry point
   int handle_timeout (ACE_Time_Value const & , void const *)
   {
-    // kill the application
-    ACE_OS::raise (SIGABRT);
     this->reactor ()->cancel_timer (this);
+    // kill the application
+    ACE::terminate_process (ACE_OS::getpid ());
     return 0;
   }
-  int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
-  {
-    delete this;
-    return 0;
-  }
-
 };
 
 int
@@ -151,6 +147,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Timer * task = new Client_Timer (orb->orb_core()->reactor());
       task->activate ();
+      task->remove_reference ();
 
       orb->run ();
 

@@ -23,10 +23,12 @@ Echo_Caller::start_task(Test::Echo_ptr client)
   Server_Timer * task =
     new Server_Timer(client, orb_->orb_core()->reactor());
   task->activate();
+  task->remove_reference ();
 
   task =
     new Server_Timer(client, orb_->orb_core()->reactor());
   task->activate();
+  task->remove_reference ();
 }
 
 void

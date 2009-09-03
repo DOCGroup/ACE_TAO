@@ -294,6 +294,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
   ACE_NEW (this->request_dispatcher_,
            TAO_Request_Dispatcher);
 
+  this->set_sync_scope_hook (TAO_ORB_Core::default_sync_scope_hook);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -2959,6 +2960,16 @@ TAO_ORB_Core::implrepo_service (void)
     }
 
   return CORBA::Object::_duplicate (this->implrepo_service_);
+}
+
+void
+TAO_ORB_Core::default_sync_scope_hook (TAO_ORB_Core *,
+                                       TAO_Stub *,
+                                       bool &has_synchronization,
+                                       Messaging::SyncScope &scope)
+{
+  has_synchronization = true;
+  scope = Messaging::SYNC_WITH_TRANSPORT;
 }
 
 void

@@ -62,7 +62,7 @@ Thread_Pool::shutdown (void)
 int
 Thread_Pool::put (Test::Echo_ptr echoptr)
 {
-  char * charData = (char *)echoptr;
+  char * charData = (char *) Test::Echo::_duplicate (echoptr);
 
   ACE_Message_Block *mb;
   ACE_NEW_RETURN(mb, ACE_Message_Block(charData), -1);
