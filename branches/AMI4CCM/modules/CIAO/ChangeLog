@@ -1,3 +1,12 @@
+Thu Sep  3 12:05:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.cpp:
+          rebind (in stead of bind) is always called.
+          This results in an unnecessary warning.
+
+        * ciao/Containers/Servant_Activator.cpp:
+          tmp was initialized but never used.
+
 Thu Sep  3 10:20:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:

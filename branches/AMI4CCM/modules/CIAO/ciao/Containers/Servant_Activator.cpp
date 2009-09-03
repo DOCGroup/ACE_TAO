@@ -134,7 +134,6 @@ namespace CIAO
       PortableServer::ObjectId_to_string (oid);
 
     size_t const sz = this->slot_index_;
-    Port_Activator *tmp = 0;
 
     for (size_t t = 0; t != sz; ++t)
       {
@@ -146,14 +145,14 @@ namespace CIAO
             continue;
           }
 
-        if (tmp == 0)
+        if (pa == 0)
           {
             CIAO_ERROR ((LM_WARNING, CLINFO
               "Servant_Activator_i::etherealize - Port Activator is NULL\n"));
             continue;
           }
 
-        if (ACE_OS::strcmp (tmp->oid (),
+        if (ACE_OS::strcmp (pa->oid (),
                             str.in ()) == 0)
           {
             CIAO_DEBUG ((LM_INFO, CLINFO

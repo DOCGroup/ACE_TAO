@@ -25,19 +25,17 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentInstallation_Impl::install - "
                    "implUUID %s, component_loc %s\n", implUUID, component_loc));
-  
-      ACE_CString location = component_loc;
 
-      if (0 == this->locations_.find (implUUID))
+      if (-1 == this->locations_.find (implUUID))
         {
-          this->locations_.bind (implUUID, location);
+          this->locations_.bind (implUUID, component_loc);
         }
       else
         {
-          CIAO_ERROR ((LM_WARNING, CLINFO "ComponentInstallation_Impl::install - Location for artifact %s "
-                       "already present, replacing.\n",
-                       implUUID));
-          this->locations_.rebind (implUUID, location);
+          CIAO_ERROR ((LM_WARNING, CLINFO "ComponentInstallation_Impl::install - Location for artifact %s, component_loc %s"
+                       " already present, replacing.\n",
+                       implUUID, component_loc));
+          this->locations_.rebind (implUUID, component_loc);
         }
     }
 
