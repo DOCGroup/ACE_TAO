@@ -517,13 +517,6 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
       if (mtype == 0 && len > 0)
         inv->set_target (oid, len);
     }
-  else
-    {
-      if (target == 0)
-        ACE_DEBUG ((LM_DEBUG,"Cleanup queue: target is null, offset = %d\n", offset));
-      else
-        ACE_DEBUG ((LM_DEBUG,"Cleanup queue: target has an owner, offset = %d\n", offset));
-    }
 
 }
 

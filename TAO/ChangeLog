@@ -1,3 +1,9 @@
+Fri Sep  4 02:34:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/Log.cpp:
+
+          Removed verbose diagnostic debug statements.  
+
 Thu Sep  3 17:40:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/HostProcess.h:
@@ -7,7 +13,7 @@ Thu Sep  3 17:40:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * utils/logWalker/Log.h:
         * utils/logWalker/Log.cpp:
         * utils/logWalker/Session.cpp:
-        
+
           General improvements to the tool. It is now able to handle log
           files generated with Exclusive TMS, GIOP 1.0 messages, and cases
           of cross-thread queue flushing. Also capture details about
