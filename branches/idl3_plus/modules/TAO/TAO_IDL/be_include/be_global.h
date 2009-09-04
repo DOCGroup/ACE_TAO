@@ -716,6 +716,9 @@ public:
 
   bool gen_exec_export_hdr_file (void) const;
   void gen_exec_export_hdr_file (bool val);
+  
+  bool gen_lem_force_all (void) const;
+  void gen_lem_force_all (bool val);
 
   ACE_CString spawn_options (void);
   // Command line passed to ACE_Process::spawn. Different
@@ -1010,6 +1013,11 @@ private:
   bool gen_skel_export_hdr_file_;
   bool gen_svnt_export_hdr_file_;
   bool gen_exec_export_hdr_file_;
+  // Flags toggling export header file generation.
+  
+  bool gen_lem_force_all_;
+  // Toggles generation of exec IDL for facets with imported
+  // interface types (not in main IDL file).
 };
 
 #endif /* _BE_GLOBAL_H */

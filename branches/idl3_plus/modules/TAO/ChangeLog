@@ -1,3 +1,17 @@
+Fri Sep  4 17:12:34 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        
+          - New option '-Glfa', explained below
+          
+          - New behavior for generating executor IDL for facets.
+            Default behavior is now to generate the local interface
+            only if the facet interface is in the main file. With
+            the option above, the local interface is generated
+            for all facets.
+
 Thu Sep  3 18:01:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:

@@ -210,6 +210,13 @@ be_visitor_component_ex_idl::gen_facets (void)
         {
           continue;
         }
+        
+      // Without the '-Glfa' option, generate facet executor IDL
+      // only for facets whose interface type is in the main file.  
+      if (impl->imported () && !be_global->gen_lem_force_all ())
+        {
+          continue;
+        }
       
       this->gen_nesting_open (impl);
       
