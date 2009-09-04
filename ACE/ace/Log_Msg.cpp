@@ -1368,11 +1368,26 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       // Print a single character signifying the severity of the message                    
                       fp = format;
                       fp++;
-# if defined (ACE_USES_WCHAR)                      
-                      ACE_OS::strcpy (fp, ACE_TEXT ("c"));
+
+# if defined (ACE_USES_WCHAR)
+
+#     if defined (ACE_WIN32) // Windows uses 'c' for a wide character
+                    ACE_OS::strcpy (fp, ACE_TEXT ("c"));
+#     else // Other platforms behave differently
+#         if defined (HPUX) // HP-Unix compatible
+                  ACE_OS::strcpy (fp, ACE_TEXT ("C"));
+#         else // Other
+                  ACE_OS::strcpy (fp, ACE_TEXT ("lc"));
+#         endif /* HPUX */
+#     endif
+                      
 # else /* ACE_USES_WCHAR */
-                      ACE_OS::strcpy (fp, ACE_TEXT ("C"));
+
+                      // Non-unicode builds simply use a standard character format specifier
+                      ACE_OS::strcpy (fp, ACE_TEXT ("c"));
+                      
 # endif /* ACE_USES_WCHAR */                  
+
                       // Below is an optimized (binary search based)
                       // version of the following simple piece of code:
                       // 
@@ -1390,8 +1405,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       //                                '?'      // Unknown
 
                       if (can_check)
+                      {
                         this_len = ACE_OS::snprintf
                           (bp, bspace, format, 
+#if !defined (ACE_USES_WCHAR) || defined (ACE_WIN32)
+                           (int)
+#else
+                           (wint_t)
+#endif                          
                            (log_priority <= LM_WARNING) ? 
                            (log_priority <= LM_DEBUG) ? 
                            (log_priority <= LM_TRACE) ? 
@@ -1407,9 +1428,16 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                            (log_priority <= LM_EMERGENCY) ?
                            (log_priority == LM_ALERT) ?
                            ACE_TEXT('A') : ACE_TEXT('!') : ACE_TEXT('?'));
+                      }
                       else
+                      {
                         this_len = ACE_OS::sprintf
                           (bp, format, 
+#if !defined (ACE_USES_WCHAR) || defined (ACE_WIN32)
+                           (int)
+#else
+                           (wint_t)
+#endif                                                    
                            (log_priority <= LM_WARNING) ? 
                            (log_priority <= LM_DEBUG) ? 
                            (log_priority <= LM_TRACE) ? 
@@ -1425,6 +1453,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                            (log_priority <= LM_EMERGENCY) ?
                            (log_priority == LM_ALERT) ?
                            ACE_TEXT('A') : ACE_TEXT('!') : ACE_TEXT('?'));
+                      }
+                                                 
                       ACE_UPDATE_COUNT (bspace, this_len);
                   }
                   else
