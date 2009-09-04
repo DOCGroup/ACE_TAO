@@ -1,3 +1,9 @@
+Fri Sep  4 06:09:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Patch applied provided by Alon Diamont. This'll
+          fix some test errors on VxWorks.
+
 Wed Sep  2 14:45:27 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * ace/Connector.cpp:
