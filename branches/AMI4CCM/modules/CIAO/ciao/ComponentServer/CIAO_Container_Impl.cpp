@@ -97,7 +97,7 @@ namespace CIAO
         }
 
       CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_component - "
-                   "Attempting to install home with id [%C]\n",
+                   "Attempting to install component with id [%C]\n",
                    id));
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
@@ -162,7 +162,7 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                   "CIAO_Container_i::install_component - "
-                  "Extraction resulted in map of [%u] values", cm.current_size ()));
+                  "Extraction resulted in map of [%u] values\n", cm.current_size ()));
 
       comp = this->container_->install_component (exec_art,
                                                   entrypt,
@@ -245,7 +245,7 @@ namespace CIAO
         }
 
       CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_home - "
-      "Attempting to install home with id [%C]\n", id));
+                  "Attempting to install home with id [%C]\n", id));
 
       CIAO_DEBUG ((LM_TRACE, CLINFO
                   "CIAO_Container_i::install_home - "
@@ -270,7 +270,7 @@ namespace CIAO
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_Container_i::install_home - "
-                       "Error:  No Servant entrypoint porovided, aborting installation\n"));
+                       "Error:  No Servant entrypoint provided, aborting installation\n"));
           throw Components::InvalidConfiguration ();
         }
 

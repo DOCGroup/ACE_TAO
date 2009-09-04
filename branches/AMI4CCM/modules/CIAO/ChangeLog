@@ -1,3 +1,8 @@
+Fri Sep  4 11:00:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+          Improved logging.
+
 Thu Sep  3 14:10:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
