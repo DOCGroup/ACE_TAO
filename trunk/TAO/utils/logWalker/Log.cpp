@@ -154,10 +154,11 @@ Log::handle_msg_dump (char *line, size_t offset)
                 continue;
               if (new_target->matches (this->dump_target_))
                 {
+                  Thread *tmp_thr = this->dump_target_->thread();
                   new_target->transfer_from (this->dump_target_);
                   this->dump_target_ = new_target;
-                  th->exit_wait(th->incoming(), offset);
                   t_iter.remove();
+                  this->giop_waiters_.insert_tail (tmp_thr); 
                   break;
                 }
             }
@@ -217,8 +218,8 @@ Log::parse_HEXDUMP (Log *this_, char *line, size_t offset)
   if (this_->dump_target_ == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Could not find a giop waiter for size %d, offset = %d\n",
-                  len, offset));
+                  "%d: Could not find a giop waiter for size %d\n",
+                  offset, len));
     }
   else
     this_->dump_target_->init_buf (line);
@@ -240,14 +241,14 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
   PeerProcess *pp = thr->incoming();
   if (pp == 0)
     {
-      ACE_ERROR((LM_ERROR,"dump_msg, could not find pp for incoming, offset = %d, text = %s\n", offset, line));
+      ACE_ERROR((LM_ERROR,
+                 "%d: dump_msg, could not find pp for incoming, text = %s\n", 
+                 offset, line));
       return;
     }
-  if (offset == 1367040)
-    ACE_DEBUG ((LM_DEBUG,"break here\n"));
 
-  if (mode < 2)
-    thr->enter_wait(pp);
+//   if (mode < 2)
+//     thr->enter_wait(pp);
   Invocation::GIOP_Buffer *target = 0;
   switch (mode) 
     {
@@ -256,9 +257,8 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
       if (inv == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "process %s already has invocation "
-                      "%d, at line %d\n",
-                      pp->id(), rid, offset));
+                      "%d: process %s already has invocation %d\n",
+                      offset, pp->id(), rid));
           break;
         }
       inv->init (line, offset, thr);
@@ -270,14 +270,15 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
       Invocation *inv = pp->find_invocation(rid, thr->active_handle());
       if (inv == 0)
         {
-          ACE_ERROR ((LM_ERROR,"line %d, could not find existing invocation for req_id %d\n",
+          ACE_ERROR ((LM_ERROR,
+                      "%d: could not find existing invocation for req_id %d\n",
                       offset, rid));
           inv = pp->new_invocation (rid,thr);
         }
       inv->init (line, offset, thr);
       target = inv->octets(mode == 0);
-      if (mode == 3)
-        thr->exit_wait(pp, offset);
+//       if (mode == 3)
+//         thr->exit_wait(pp, offset);
       break;
     }
     case 2: { // sending reply
@@ -298,10 +299,6 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
         {
           if (prev_size == 0)
             prev_size =  target->expected_size();
-          else
-            if (target->expected_size() == prev_size)
-              ACE_DEBUG ((LM_DEBUG, "%d: Potential conflict, giop_waiters size = %d msg size = %d\n",
-                          offset, this_->giop_waiters_.size(), prev_size));
         }
     }
 }
@@ -338,9 +335,9 @@ Log::parse_got_existing (Log *this_, char *line, size_t offset)
   if (pp == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Error parsing %C, line %d, can't find peer "
+                  "%d: Error parsing %C, can't find peer "
                   "for handle %d, text = %s\n",
-                  this_->origin_.c_str(), offset, handle, line));
+                  offset, this_->origin_.c_str(), handle, line));
       return;
     }
   thr->active_handle (handle);
@@ -364,17 +361,17 @@ Log::parse_muxed_tms (Log *this_, char *line, size_t offset)
   if (pp == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Error parsing %C, line %d, can't find peer "
+                  "%d: Error parsing %C, can't find peer "
                   "for handle %d, text = %s\n",
-                  this_->origin_.c_str(), offset, handle, line));
+                  offset, this_->origin_.c_str(), handle, line));
       return;
     }
   thr->active_handle (handle);
 
   Invocation *inv = pp->new_invocation(req_id, thr);
   if (inv == 0)
-    ACE_DEBUG ((LM_DEBUG,"peer %s already has invocation id %d\n",
-                pp->id(), req_id));
+    ACE_DEBUG ((LM_DEBUG,"%d: peer %s already has invocation id %d\n",
+                offset, pp->id(), req_id));
   thr->incoming_from (pp);
 }
 
@@ -393,9 +390,9 @@ Log::parse_exclusive_tms (Log *this_, char *line, size_t offset)
   if (pp == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Error parsing %C, line %d, can't find peer "
+                  "%d: Error parsing %C, can't find peer "
                   "for handle %d, text = %s\n",
-                  this_->origin_.c_str(), offset, handle, line));
+                  offset, this_->origin_.c_str(), handle, line));
       return;
     }
   char *rpos = ACE_OS::strchr(line, '<');
@@ -403,8 +400,8 @@ Log::parse_exclusive_tms (Log *this_, char *line, size_t offset)
 
   Invocation *inv = pp->new_invocation(req_id, thr);
   if (inv == 0)
-    ACE_DEBUG ((LM_DEBUG,"peer %s already has invocation id %d\n",
-                pp->id(), req_id));
+    ACE_DEBUG ((LM_DEBUG,"%d: peer %s already has invocation id %d\n",
+                offset, pp->id(), req_id));
   thr->incoming_from (pp);
 }
 
@@ -425,9 +422,9 @@ Log::parse_process_parsed_msgs (Log *this_, char *line, size_t offset)
   if (pp == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Error parsing %C, line %d, can't find peer "
+                  "%d: Error parsing %C, can't find peer "
                   "for handle %d, text = %s\n",
-                  this_->origin_.c_str(), offset, handle, line));
+                  offset, this_->origin_.c_str(), handle, line));
       pp = new PeerProcess (offset,true);
       Transport *t = new Transport ("<unknown>",false, offset);
       t->handle_ = handle;
@@ -440,16 +437,33 @@ Log::parse_process_parsed_msgs (Log *this_, char *line, size_t offset)
 }
 
 void
-Log::parse_wait_for_event (Log *this_, char *line, size_t )
+Log::parse_wait_for_event (Log *this_, char *line, size_t offset)
 {
   long pid = 0;
   long tid = 0;
   this_->get_pid_tid(pid,tid,line);
 
-  //HostProcess *hp = this_->get_host(pid);
-  //  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+  HostProcess *hp = this_->get_host(pid);
+  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+//   char *pos = ACE_OS::strchr (line,'[');
+//   long rid = ACE_OS::strtol(pos+1, 0, 10);
+  PeerProcess *pp = thr->incoming();
+  if (pp == 0)
+    {
+      ACE_ERROR((LM_ERROR,
+                 "%d: wait_for_event, could not find pp for incoming, text = %s\n", 
+                 offset, line));
+      return;
+    }
 
-  // thr->exit_wait() ?
+  bool done = (ACE_OS::strstr (line,"done (follower)") != 0) || 
+    (ACE_OS::strstr(line,"(leader) exit") != 0);
+
+
+  if (done)
+    thr->exit_wait(pp, offset);
+  else
+    thr->enter_wait(pp);
 }
 
 void
@@ -471,16 +485,12 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
   if (target == 0 || target->owner() != 0)
     {
       original_thr = hp->find_thread_for_handle (handle);
-      if (original_thr != thr)
-        {
-          ACE_DEBUG ((LM_DEBUG,"cleanup queue tid = %d,  called on different thread, %d, for handle %d, offset = %d\n",
-                      tid, original_thr->id(), handle, offset));
-        }
-      
       if (original_thr == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,"cleanup queue, no original thread found, handle %d, offset = %d\n",
-                      handle, offset));
+          ACE_ERROR ((LM_ERROR,
+                      "%d: cleanup queue, no original "
+                      "thread found, handle %d\n",
+                      offset, handle));
           return;
         }
       target = original_thr->giop_target();
@@ -496,7 +506,7 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
       if (inv == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Cleanup queue detected at line %d, "
+                      "%d: Cleanup queue detected, "
                       "could not find invocation for rid = %d\n", 
                       offset, rid));
           rid = target->expected_req_id();
@@ -504,8 +514,8 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
           if (inv == 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "Cleanup queue still failed to find rid %d\n",
-                          rid));
+                          "%d, Cleanup queue still failed to find rid %d\n",
+                          offset, rid));
               return;
             }
           original_thr->exit_wait(pp, offset);
@@ -560,8 +570,8 @@ Log::parse_handler_open (Log *this_, char *line, size_t offset)
   PeerProcess *pp = thr->pending_peer();
   if (pp == 0)
     {
-      ACE_ERROR ((LM_ERROR,"no pending peer for file %s, line %d\n",
-                  this_->origin_.c_str(), offset));
+      ACE_ERROR ((LM_ERROR,"%d: no pending peer for file %s\n",
+                  offset, this_->origin_.c_str()));
      return;
     }
 
@@ -572,9 +582,9 @@ Log::parse_handler_open (Log *this_, char *line, size_t offset)
       if (trans == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Pending peer exists, but no last transport "
-                      "set, file %s, line %d\n",
-                      this_->origin_.c_str(), offset));
+                      "%d: Pending peer exists, but no last transport "
+                      "set, file %s\n",
+                      offset, this_->origin_.c_str()));
           return;
         }
       //      trans->client_endpoint_ = addr;
@@ -624,8 +634,8 @@ Log::parse_local_addr (Log *this_, char *line, size_t offset)
   PeerProcess *peer = thr->pending_peer();
   if (peer == 0)
     {
-      ACE_ERROR((LM_ERROR, "file %s, line %d, no pending client or server\n",
-                 this_->origin_.c_str(), offset));
+      ACE_ERROR((LM_ERROR, "%d: file %s, no pending client or server\n",
+                 offset, this_->origin_.c_str()));
       return;
     }      
   
