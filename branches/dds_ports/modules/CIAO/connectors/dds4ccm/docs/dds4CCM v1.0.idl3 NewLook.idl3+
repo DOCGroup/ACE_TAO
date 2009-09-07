@@ -306,7 +306,7 @@ module CCM_DDS {
     provides PortStatusListener status;
     };
 
-  porttype DDS_MultiListen <typename T, typename TSeq> {
+  porttype DDS_MultiListen_T <typename T, typename TSeq> {
     uses Reader<T,TSeq>         data;
     uses DataListenerControl  data_control;
     provides MultiListener    data_listener;
