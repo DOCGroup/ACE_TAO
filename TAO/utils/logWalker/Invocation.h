@@ -1,28 +1,28 @@
 // -*- C++ -*-
 
 // $Id$
-// 
+//
 
 #ifndef LOG_WALKER_INVOCATION_H
 #define LOG_WALKER_INVOCATION_H
 
 #include "ace/SString.h"
+#include "ace/CDR_Stream.h"
 
 class PeerProcess;
 class PeerObject;
 class Thread;
-class ACE_InputCDR;
 
 // Invocation holds the buffer contents for a request/response pair.
 // This could be originating in this process, or in the peer process.
 //
 // The trigger for finding a new outgoing invocation is "Muxed_TMS[%d]"
 // following that the process/thread will perform a dump_msg.
-// 
-// The trigger for finding a new incoming invocation is 
+//
+// The trigger for finding a new incoming invocation is
 // "Transport[%d]::process_parsed_messages, entering (missing data == 0)"
 // which could indicate a new request or reply, depending on the context
-// in which the peer connection is made. 
+// in which the peer connection is made.
 //
 // It is possible that two or more threads may call dump_msg
 // concurrently and thus have the preamble and body printed out of
@@ -55,7 +55,7 @@ public:
     time_t time (void) const;
 
     const ACE_CString &preamble(void) const;
-    size_t expected_req_id(void) const;    
+    size_t expected_req_id(void) const;
     size_t actual_req_id(void);
     size_t expected_size (void) const;
     size_t size (void) const;
@@ -70,7 +70,7 @@ public:
   private:
     bool parse_svc_contexts (ACE_InputCDR& cdr);
     bool parse_header (void);
-    
+
     ACE_CString preamble_;
     size_t log_offset_;
     Thread *thr_;
