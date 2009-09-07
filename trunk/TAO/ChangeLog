@@ -1,3 +1,8 @@
+Mon Sep  7 06:05:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+          Removed support for mcpp again, mcpp has not been enabled
+
 Mon Sep  7 06:00:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/logWalker/Invocation.cpp
