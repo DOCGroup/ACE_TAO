@@ -281,8 +281,8 @@ Invocation::GIOP_Buffer::log_posn (void) const
   return this->log_offset_;
 }
 
-const Thread *
-Invocation::GIOP_Buffer::thread (void) const
+Thread *
+Invocation::GIOP_Buffer::thread (void)
 {
   return this->thr_;
 }
