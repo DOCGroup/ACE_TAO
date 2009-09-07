@@ -1,3 +1,12 @@
+Mon Sep  7 21:31:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Log.cpp:
+
+          More clean up of debug messages, improve the detection of entry
+          and exit from request waits.
+        
 Mon Sep  7 06:05:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:

@@ -51,7 +51,7 @@ public:
     bool is_oneway (void);
     bool is_full (void) const;
     size_t log_posn (void) const;
-    const Thread *thread (void) const;
+    Thread *thread (void);
     time_t time (void) const;
 
     const ACE_CString &preamble(void) const;
