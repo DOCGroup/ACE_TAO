@@ -42,7 +42,7 @@ project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, crosscompile, av
 }
 
 
-project(TAO_IFR_EXE) : aceexe, install, ifr_client, mcpp, tao_idl_mcpp, crosscompile, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(TAO_IFR_EXE) : aceexe, install, ifr_client, crosscompile, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after          += TAO_IFR_BE TAO_IDL_FE
   exename         = tao_ifr
   libs           += TAO_IFR_BE TAO TAO_IDL_FE
@@ -70,7 +70,7 @@ project(TAO_IFR_EXE) : aceexe, install, ifr_client, mcpp, tao_idl_mcpp, crosscom
 
   Source_Files {
     drv_args.cpp
-//    drv_preproc.cpp
+    drv_preproc.cpp
     tao_idl.cpp
   }
 
