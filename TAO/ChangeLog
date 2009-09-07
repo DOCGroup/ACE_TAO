@@ -1,8 +1,14 @@
+Mon Sep  7 06:00:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/logWalker/Invocation.cpp
+        * utils/logWalker/Invocation.h
+          Fixed problems with versioned namespace build
+
 Fri Sep  4 02:34:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/Log.cpp:
 
-          Removed verbose diagnostic debug statements.  
+          Removed verbose diagnostic debug statements.
 
 Thu Sep  3 17:40:13 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
