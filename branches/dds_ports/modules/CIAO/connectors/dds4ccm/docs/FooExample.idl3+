@@ -1,0 +1,27 @@
+#include "CCM_DDS"
+
+struct Foo {
+	// ...
+	};
+typedef sequence<Foo> FooSeq;
+
+moduledef CCM_DDS::Typed<Foo, FooSeq> Foo_CCM_DDS;
+
+Component C1 {
+	port Foo_CCM_DDS::DDS_Write	o;
+  };
+Component C2 {
+	port Foo_CCM_DDS::DDS_Get	i;
+	};
+Component C3 {
+  port CCM_DDS::DDS_Read_T<Foo,FooSeq> o;
+  };
+// In the deployment plan, there will be a connector of type Foo_CCM_DDS::DDS_Event
+// with the following attributes:
+//	- domain_id
+//	- qos_profile
+//	- topic_name
+// 	- key_fields
+// and the following connections:
+//	- supplier <-> C1.o
+//	- pull_consumer <-> C2.i
