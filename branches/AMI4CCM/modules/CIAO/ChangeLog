@@ -1,3 +1,10 @@
+Mon Sep  7 09:41:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+          Resolved merge conflicts to head.
+
 Mon Sep  7 08:28:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/AMI_CCM/docs:

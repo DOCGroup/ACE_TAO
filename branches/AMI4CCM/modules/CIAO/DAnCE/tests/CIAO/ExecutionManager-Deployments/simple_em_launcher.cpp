@@ -45,69 +45,69 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: parsing XML\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: parsing XML\n")));
       // Parse plan
       CIAO::Config_Handlers::XML_File_Intf xml (argv[2]);
-      xml.add_search_path ("CIAO_ROOT", "/docs/schema/");
+      xml.add_search_path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT ("/docs/schema/"));
 
       auto_ptr< ::Deployment::DeploymentPlan> plan (xml.release_plan ());
 
       if (plan.get () == 0)
         {
-          DANCE_ERROR ((LM_ERROR, "*** error parsing XML document\n"));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("*** error parsing XML document\n")));
           throw 1;
         }
 
 
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: resoling execution manager reference.\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: resoling execution manager reference.\n")));
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
       Deployment::ExecutionManager_var em = Deployment::ExecutionManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (em.in ()))
         {
-          DANCE_ERROR ((LM_ERROR, "*** simple_em_launcher: ExecutionManager reference is nil."));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("*** simple_em_launcher: ExecutionManager reference is nil.")));
           throw 1;
         }
 
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling prepareplan.\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: calling prepareplan.\n")));
       Deployment::DomainApplicationManager_var dam = em->preparePlan (*plan,
                                                                     Deployment::ResourceCommitmentManager::_nil ());
 
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling startLaunch\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: calling startLaunch\n")));
       Deployment::Connections_var conns;
       Deployment::Properties props;
       Deployment::Application_var app = dam->startLaunch (props, conns.out ());
       Deployment::DomainApplication_var da = Deployment::DomainApplication::_narrow (app.in ());
 
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling finishLaunch\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: calling finishLaunch\n")));
       da->finishLaunch (conns.in (), false);
 
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling start\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: calling start\n")));
       da->start ();
 
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: start finished, sleeping 5 seconds.\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: start finished, sleeping 5 seconds.\n")));
       ACE_OS::sleep (5);
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: waking up from sleep, calling destroyApplication\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: waking up from sleep, calling destroyApplication\n")));
 
       dam->destroyApplication (da.in ());
 
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: calling destroyManager\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: calling destroyManager\n")));
 
       em->destroyManager (dam.in ());
 
-      DANCE_DEBUG ((LM_INFO, "*** simple_em_launcher: destroyManager completed.\n"));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("*** simple_em_launcher: destroyManager completed.\n")));
 
       orb->destroy ();
     }
   catch (const Deployment::StopError &ex)
     {
-      DANCE_ERROR ((LM_ERROR, "*** Caught StopError exception with name %C and reason %C\n",
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("*** Caught StopError exception with name %C and reason %C\n"),
                   ex.name.in (), ex.reason.in ()));
       return -1;
     }
   catch (const Deployment::StartError &ex)
     {
-      DANCE_ERROR ((LM_ERROR, "*** Caught StartError exception with name %C and reason %C\n",
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("*** Caught StartError exception with name %C and reason %C\n"),
                   ex.name.in (), ex.reason.in ()));
       return -1;
     }
