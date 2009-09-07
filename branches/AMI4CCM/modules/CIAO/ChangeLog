@@ -1,3 +1,49 @@
+Mon Sep  7 08:28:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/docs:
+        * connectors/AMI_CCM/docs/AMI4CCM-explanation.odt:
+        * connectors/AMI_CCM/docs/AMI4CCM-spec.odt:
+          Created a subdirectory called 'docs'. Moved the
+          existing documents to this directory.
+
+        * connectors/AMI_CCM/examples:
+        * connectors/AMI_CCM/examples/AMI:
+        * connectors/AMI_CCM/examples/Hello_Base:
+        * connectors/AMI_CCM/examples/Receiver:
+        * connectors/AMI_CCM/examples/Sender:
+        * connectors/AMI_CCM/examples/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/examples/descriptors:
+        * connectors/AMI_CCM/AMI:
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.h:
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_MyInterface_i.h:
+        * connectors/AMI_CCM/AMI/AMI_MyInterface_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI4CCM-explanation.odt:
+        * connectors/AMI_CCM/AMI4CCM-spec.odt:
+        * connectors/AMI_CCM/Hello_Base:
+        * connectors/AMI_CCM/Hello_Base/Hello.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender:
+        * connectors/AMI_CCM/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender.mpc:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * connectors/AMI_CCM/descriptors:
+        * connectors/AMI_CCM/descriptors/Plan.cdp:
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Created a subdirectory called 'examples'. Moved
+          all files to this directory.
+
 Fri Sep  4 11:00:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/ComponentServer/CIAO_Container_Impl.cpp:
