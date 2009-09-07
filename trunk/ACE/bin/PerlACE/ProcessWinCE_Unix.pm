@@ -417,6 +417,7 @@ sub handle_vxtest_file
       my @tokens = split(/;/, $self->{TARGET}->SystemLibs());
       foreach my $token (@tokens) {
         push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/" . $token . " .";
+        unshift @$unld_ref, "del " . $token;
       }
     }
   if (!$PerlACE::Static) {
