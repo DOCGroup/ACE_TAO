@@ -8,12 +8,11 @@
 #include "Thread.h"
 
 #include "ace/OS_NS_string.h"
-#include "ace/CDR_Stream.h"
 #include "ace/Log_Msg.h"
 #include <stdio.h>
 
 static const char *size_leadin_1_5 = "GIOP v1."; //"x msg, ";
-static size_t leadin_len_1_5 = 15; 
+static size_t leadin_len_1_5 = 15;
 static const char *size_leadin_1_6 = "GIOP message v1."; //2, ";
 static size_t leadin_len_1_6 = 19;
 
@@ -29,13 +28,13 @@ static const size_t giop_header_len = 12;
 // type:  1 // req/repl/lf/excp
 // len:   4
 //
-// Request 1.2 header: 
+// Request 1.2 header:
 // req_id: 4
 // flags:  1
 // RESVD:  3
 // Address disposition: 4
 // target: <4 len, + len> [0-3 pad]
-// opname: <4 len, + len> 
+// opname: <4 len, + len>
 
 // GIOP 1.0 header: 12 bytes
 // Magic: 4
@@ -44,7 +43,7 @@ static const size_t giop_header_len = 12;
 // type:  1 // req/repl/lf/excp
 // len:   4
 //
-// Request 1.0 header: 
+// Request 1.0 header:
 /*
 struct RequestHeader_1_0 { // Renamed from RequestHeader
     IOP::ServiceContextList      service_context;
@@ -63,7 +62,7 @@ struct RequestHeader_1_0 { // Renamed from RequestHeader
 // RESVD:  3
 // Address disposition: 4
 // target: <4 len, + len> [0-3 pad]
-// opname: <4 len, + len> 
+// opname: <4 len, + len>
 
 /*
 struct ReplyHeader_1_0 { // Renamed from ReplyHeader
@@ -98,7 +97,7 @@ static const size_t target_offset_12 = giop_header_len + 12;
 
 // 12 = req_id + flags + RESVD + addr disp.
 
-Invocation::GIOP_Buffer::GIOP_Buffer(const char *text, 
+Invocation::GIOP_Buffer::GIOP_Buffer(const char *text,
                                      size_t offset,
                                      Thread *thread,
                                      Invocation *owner)
@@ -194,7 +193,7 @@ Invocation::GIOP_Buffer::add_octets(const char *text)
     }
 
   const char *c = text;
-  char *err;  
+  char *err;
   for (int count = 0; count < 16 && this->cur_size() < this->size_; count++)
     {
       if (count == 8)
@@ -202,7 +201,7 @@ Invocation::GIOP_Buffer::add_octets(const char *text)
       int o = ::strtol(c, &err, 16);
       if (err == c || *err == 0)
         return -1;
-      *this->wr_pos_++ = o;      
+      *this->wr_pos_++ = o;
       c = err+1;
     }
   size_t cs = this->cur_size();
@@ -226,7 +225,7 @@ Invocation::GIOP_Buffer::sending (void) const
 
 bool
 Invocation::GIOP_Buffer::is_full(void) const
-{  
+{
   return this->size_ > 0 && this->cur_size() == this->size_;
 }
 
@@ -275,7 +274,7 @@ Invocation::GIOP_Buffer::is_oneway(void)
 
   return (resp_exp_ &1) == 0;
 }
-    
+
 size_t
 Invocation::GIOP_Buffer::log_posn (void) const
 {
@@ -443,7 +442,7 @@ Invocation::GIOP_Buffer::target_oid(size_t &len)
   len = this->oid_len_;
   return this->oid_;
 }
- 
+
 const char *
 Invocation::GIOP_Buffer::operation(void)
 {
@@ -508,7 +507,7 @@ Invocation::Invocation (PeerProcess *peer, long handle, size_t rid)
         {
           size_leadin = size_leadin_1_5;
           leadin_len = leadin_len_1_5;
-        } 
+        }
       else
         {
           size_leadin = size_leadin_1_6;
@@ -526,7 +525,7 @@ Invocation::~Invocation (void)
 bool
 Invocation::init (const char * text, size_t offset, Thread *thread)
 {
-  const char *size_str = ACE_OS::strstr(text, size_leadin); 
+  const char *size_str = ACE_OS::strstr(text, size_leadin);
   const char *id = size_str == 0 ? 0 : ACE_OS::strchr(size_str, '[');
   if (size_str == 0 || id == 0)
     {
@@ -550,7 +549,7 @@ Invocation::is_oneway(void) const
   return this->req_octets_ == 0 ? false : this->req_octets_->is_oneway();
 }
 
-void 
+void
 Invocation::set_target (const char *oid, size_t oid_len)
 {
   PeerObject *tgt = this->peer_->object_for (oid, oid_len);
@@ -575,8 +574,8 @@ Invocation::message_complete (void)
   else
     if (this->repl_octets_ == 0 || !this->repl_octets_->is_full())
       return false;
-  
-  return true;  
+
+  return true;
 }
 
 Invocation::GIOP_Buffer *
@@ -619,13 +618,13 @@ Invocation::set_octets (bool request, GIOP_Buffer *octets)
   octets->owner(this);
 }
 
-size_t 
+size_t
 Invocation::request_id (void) const
 {
   return this->req_octets_ == 0 ? this->req_id_ : this->req_octets_->expected_req_id();
 }
 
-size_t 
+size_t
 Invocation::expected_size (void) const
 {
   if (repl_octets_ != 0)
@@ -644,8 +643,8 @@ Invocation::contains (size_t line)
 {
   if (this->req_octets_ == 0 || this->repl_octets_ == 0)
     return false;
-  return 
-    line > this->req_octets_->log_posn() && 
+  return
+    line > this->req_octets_->log_posn() &&
     line < this->repl_octets_->log_posn();
 }
 
@@ -655,13 +654,13 @@ Invocation::req_line (void)
   return this->req_octets_ == 0 ? 0 : this->req_octets_->log_posn();
 }
 
-void 
+void
 Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_handle)
 {
   const char *opname = "";
   const char *dir_1 = "to ";
   const char *dir_2 = " in ";
-  
+
   if (this->req_octets_ != 0)
     {
       opname = this->req_octets_->operation();
@@ -685,7 +684,7 @@ Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_ha
     strm << this->target_->name();
   if (mode == Dump_Proc || mode == Dump_Both)
     strm << dir_2 << this->peer_->id() << ",";
-  
+
   strm << " req " << this->req_id_;
   if (show_handle)
     strm << "(h=" << this->handle_ << ")";
