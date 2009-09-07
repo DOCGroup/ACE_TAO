@@ -1,3 +1,8 @@
+Mon Sep  7 06:12:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessWinCE_Unix.pm:
+          Corrected cleanup command
+
 Fri Sep  4 06:09:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Log_Msg.cpp:
