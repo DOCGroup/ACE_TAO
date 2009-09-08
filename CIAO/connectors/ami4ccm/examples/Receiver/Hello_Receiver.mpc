@@ -27,7 +27,7 @@ project(AMI_Hello_Base_Hello_Receiver_lem_gen) : ciaoidldefaults   {
   }
 }
 
-project(AMI_Hello_Base_Hello_Receiver_lem_stub) : ccm_svnt, ami   {
+project(AMI_Hello_Base_Hello_Receiver_l_stub) : ccm_svnt, ami   {
   after += AMI_Hello_Base_Hello_Receiver_lem_gen AMI_Hello_Base_Hello_Receiver_stub Hello_Base_stub
   libs  += Hello_Base_stub Hello_Receiver_stub
   libpaths += ../lib
@@ -78,7 +78,7 @@ project(AMI_Hello_Base_Hello_Receiver_stub) : ccm_stub, ami   {
 }
 
 project(AMI_Hello_Base_Hello_Receiver_exec) : ciao_executor, ami   {
-  after   += AMI_Hello_Base_Hello_Receiver_lem_stub AMI_Hello_Base_Hello_Receiver_stub
+  after   += AMI_Hello_Base_Hello_Receiver_l_stub AMI_Hello_Base_Hello_Receiver_stub
   sharedname = Hello_Receiver_exec
   libs += Hello_Receiver_stub Hello_Receiver_lem_stub Hello_Base_stub
   libpaths += ../lib
@@ -103,7 +103,7 @@ project(AMI_Hello_Base_Hello_Receiver_exec) : ciao_executor, ami   {
 
 
 project(AMI_Hello_Base_Hello_Receiver_svnt) : ciao_servant, ami   {
-  after      += AMI_Hello_Base_skel  AMI_Hello_Base_Hello_Receiver_lem_stub
+  after      += AMI_Hello_Base_skel  AMI_Hello_Base_Hello_Receiver_l_stub
   sharedname  = Hello_Receiver_svnt
   libs       += Hello_Receiver_stub Hello_Receiver_lem_stub  \
                 Hello_Base_skel \
@@ -111,7 +111,7 @@ project(AMI_Hello_Base_Hello_Receiver_svnt) : ciao_servant, ami   {
   libpaths += ../lib
   libout = ../lib
   dynamicflags = HELLO_RECEIVER_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 
