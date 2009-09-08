@@ -92,7 +92,7 @@ Stack_Size_Check::svc (void)
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%t: My stack size attr %b; correct.\n"),
+                ACE_TEXT ("%t: My stack size attr %B; correct.\n"),
                 my_size));
   return 0;
 }
@@ -126,7 +126,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Thread_Attrs_Test"));
 
 #if defined (ACE_HAS_THREADS)
-  Stack_Size_Check size_checker (20*1024);
+  Stack_Size_Check size_checker (42*1024);
   int status = size_checker.open(0);
   if (status == 0)
     {

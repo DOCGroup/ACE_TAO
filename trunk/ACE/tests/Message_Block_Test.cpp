@@ -208,11 +208,11 @@ Worker_Task::svc (void)
             }
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, length = %d, prio = %d, text = \"%*s\"\n"),
+                      ACE_TEXT ("(%t) in iteration %d, length = %B, prio = %d, text = \"%*s\"\n"),
                       count,
                       length,
                       mb->msg_priority (),
-                      length - 2, // remove the trailing "\n\0"
+                      (int)(length - 2), // remove the trailing "\n\0"
                       mb->rd_ptr ()));
         }
 
@@ -223,7 +223,7 @@ Worker_Task::svc (void)
         {
           //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, got NULL message, exiting\n"),
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, got NULL message, exiting\n"),
                       count, this->msg_queue ()->message_count ()));
           //FUZZ: enable check_for_NULL
           break;
