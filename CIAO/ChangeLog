@@ -1,3 +1,8 @@
+Tue Sep  8 10:17:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/Hello
+          Moved example to the new Hello subdirectory
+
 Tue Sep  8 10:08:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
