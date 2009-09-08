@@ -1,3 +1,9 @@
+Tue Sep  8 20:27:14 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.local.GNU: Strip CLEANUP_INSTALL before
+          checking for blank to be sure it doesn't inadvertantly try to RM
+          a string of spaces.
+
 Sat Aug 29 22:41:33 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Event_Handler.h: Edited doc for resume_handler() to note that

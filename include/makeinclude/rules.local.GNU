@@ -238,7 +238,7 @@ install.local: $(INSTALL)
 
 deinstall.local:
 ifdef CLEANUP_INSTALL
-  ifneq ($(CLEANUP_INSTALL),)
+  ifneq ($(strip $(CLEANUP_INSTALL)),)
 	$(RM) $(CLEANUP_INSTALL)
   endif # CLEANUP_INSTALL
 endif # CLEANUP_INSTALL
