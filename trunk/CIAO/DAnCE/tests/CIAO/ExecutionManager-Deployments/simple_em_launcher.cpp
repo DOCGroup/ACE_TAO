@@ -10,6 +10,8 @@
 #include "tao/ORB.h"
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/Logger/Log_Macros.h"
+#include "DAnCE/Logger/Logger_Service.h"
+#include "DAnCE/Logger/Log_Macros.h"
 #include "Deployment/Deployment_DomainApplicationC.h"
 #include "Deployment/Deployment_ExecutionManagerC.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
