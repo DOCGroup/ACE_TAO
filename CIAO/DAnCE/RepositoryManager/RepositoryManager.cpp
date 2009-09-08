@@ -186,13 +186,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Worker worker (orb.in ());
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                          CIAO::RepositoryManager::nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate worker threads\n"),
                            1);
 
     worker.thr_mgr ()->wait ();
 
-    ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+    DANCE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
     // done
     return 0;
@@ -238,7 +238,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             CIAO::RepositoryManager::nthreads = ACE_OS::atoi (get_opts.opt_arg ());
             break;
           case '?':  // display help for use of the server.
-            ACE_DEBUG ((LM_INFO,
+            DANCE_DEBUG ((LM_INFO,
                         "usage:  %s\n"
                         "-o <using ior file>\n"
                         "-v <name of naming service>\n"

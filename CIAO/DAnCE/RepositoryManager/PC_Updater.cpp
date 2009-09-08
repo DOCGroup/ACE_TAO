@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Log_Msg.h"
+#include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "PC_Updater.h"
 #include "PC_Updater_T.h"
@@ -200,7 +200,7 @@ void PC_Updater::clear_list ()
       iter++;
     }
 
-    ACE_ERROR ((LM_ERROR,
+    DANCE_ERROR ((LM_ERROR,
                "[PC_Updater::update] Unable to update: %s!\n",
                location));
 
