@@ -133,7 +133,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
   
 /*  if ( this->deployment_config_.init ("NodeDetails.dat") == -1 )
     {
-      ACE_ERROR ((LM_ERROR,
+      DANCE_ERROR ((LM_ERROR,
                   "TargetM (%P|%t) DomainDataManager.cpp -"
                   "DAnCE::DomainDataManager::call_all_node_managers -"
                   "ERROR while trying to initialize after reading "
@@ -156,7 +156,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
         }
       catch (CORBA::Exception&)
         {
-          ACE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
+          DANCE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error trying to contact NodeManager %s\n",
                       initial_domain_.node[i].name.in ()));
           continue;
@@ -184,7 +184,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
             }
           catch (CORBA::Exception& ex)
             {
-              ACE_ERROR ((LM_ERROR , "TM::Error in calling Join Domain==\n"));
+              DANCE_ERROR ((LM_ERROR , "TM::Error in calling Join Domain==\n"));
               ex._tao_print_exception (
                 "Exception caught in ""DomainDataManager::joinDomain");
             }
@@ -362,12 +362,12 @@ void DAnCE::DomainDataManager::commit_release_resource (
       CORBA::Long required_d;
 
       if ((deployed.value >>= required_d) == false)
-        ACE_ERROR ((LM_ERROR, "Failed to extract required amount\n"));
+        DANCE_ERROR ((LM_ERROR, "Failed to extract required amount\n"));
 
       CORBA::Long available_d;
 
       if ((available.value >>= available_d) == false)
-        ACE_ERROR ((LM_ERROR, "failed to extract available amount\n"));
+        DANCE_ERROR ((LM_ERROR, "failed to extract available amount\n"));
 
       if (available_d >= required_d)
         {
@@ -422,7 +422,7 @@ void DAnCE::DomainDataManager::stop_monitors ()
         }
       catch (const CORBA::Exception&)
         {
-          ACE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
+          DANCE_ERROR ((LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error in get Node Manager from Deployment Config %s\n",
                       initial_domain_.node[i].name.in ()));
           continue;
@@ -436,7 +436,7 @@ void DAnCE::DomainDataManager::stop_monitors ()
             }
           catch (CORBA::Exception& ex)
             {
-              ACE_ERROR ((LM_ERROR , "TM::Error in calling Leave Domain\n"));
+              DANCE_ERROR ((LM_ERROR , "TM::Error in calling Leave Domain\n"));
               ex._tao_print_exception (
                 "Exception caught in ""DomainDataManager::leaveDomain");
             }
@@ -646,7 +646,7 @@ int DAnCE::DomainDataManager::commit_release_RA (const ::Deployment::ResourceAll
     catch (::Deployment::ResourceCommitmentFailure& ex)
     {
       // catch the exception and add parameters
-      ACE_ERROR ((LM_ERROR, "Caught the Exception in releaseResourceAllocation\n"));
+      DANCE_ERROR ((LM_ERROR, "Caught the Exception in releaseResourceAllocation\n"));
       ex.index = i;
       throw ex;
     }
