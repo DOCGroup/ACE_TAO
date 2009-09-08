@@ -9,6 +9,8 @@
 #include "PCVisitor.h"
 #include "PCVisitorBase.h"
 
+#include "DAnCE/Logger/Log_Macros.h"
+
 namespace CIAO
 {
   namespace Plan_Generator
@@ -61,7 +63,7 @@ namespace CIAO
 
       if (CORBA::is_nil (this->rm_.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
+          DANCE_ERROR ((LM_ERROR,
                       "(%P|%t) Plan_Generator_i: nil Repository "
                       "Manager reference, narrow failed\n"));
           return false;
@@ -77,7 +79,7 @@ namespace CIAO
     {
       if (CORBA::is_nil (rm_.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
+          DANCE_ERROR ((LM_ERROR,
                       "(%P|%t) Plan_Generator_i: nil Execution\n"));
           return false;
         }
@@ -128,7 +130,7 @@ namespace CIAO
     {
       if (CORBA::is_nil (rm_.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
+          DANCE_ERROR ((LM_ERROR,
                       "(%P|%t) Plan_Generator_i: nil Execution\n"));
           return false;
         }
