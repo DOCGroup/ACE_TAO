@@ -1,3 +1,8 @@
+Tue Sep  8 10:44:22 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_openbsd.GNU:
+          Added compiler flags for X11 and Tcl/Tk. 
+
 Mon Sep  7 07:02:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessWinCE_Unix.pm:

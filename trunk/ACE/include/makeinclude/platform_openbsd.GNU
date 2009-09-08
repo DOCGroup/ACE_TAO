@@ -35,6 +35,18 @@ LDFLAGS         += -pthread
 CFLAGS          += -D_THREAD_SAFE -DACE_HAS_THREADS
 endif # threads
 
+PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
+PLATFORM_X11_LIBS=-lX11
+PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
+
+PLATFORM_TK_CPPFLAGS=$(shell . /usr/local/lib/tk*/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS) $(PLATFORM_X11_CPPFLAGS)
+PLATFORM_TK_LIBS=$(shell . /usr/local/lib/tk*/tkConfig.sh && echo -n $$TK_LIB_FLAG) $(PLATFORM_X11_LIBS)
+PLATFORM_TK_LDFLAGS=$(PLATFORM_X11_LDFLAGS)
+
+PLATFORM_TCL_CPPFLAGS=$(shell . /usr/local/lib/tcl*/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
+PLATFORM_TCL_LIBS=$(shell . /usr/local/lib/tcl*/tclConfig.sh && echo -n $$TCL_LIB_FLAG)
+PLATFORM_TCL_LDFLAGS=
+
 # Setting the internal name and version of shared libraries isn't supported
 # by OpenBSD.  In fact, the -h option gives an error and interestingly
 # enough, the -soname option doesn't but just ignores its parameter.
