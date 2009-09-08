@@ -1,3 +1,9 @@
+Tue Sep  8 10:46:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+          set the correct header length for the next fragment. This
+          fixes bugzilla 3275, thanks to Simon Massey for pointing this out
+
 Mon Sep  7 21:31:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/Invocation.h:
@@ -6,7 +12,7 @@ Mon Sep  7 21:31:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
           More clean up of debug messages, improve the detection of entry
           and exit from request waits.
-        
+
 Mon Sep  7 06:05:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
