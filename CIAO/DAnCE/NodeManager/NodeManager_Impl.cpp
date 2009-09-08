@@ -2,7 +2,7 @@
 
 #include "NodeManager_Impl.h"
 
-#include "ace/Log_Msg.h"
+
 #include "ace/streams.h"
 
 #include "DAnCE/Logger/Log_Macros.h"
@@ -77,7 +77,7 @@ namespace DAnCE
                                 ::CORBA::Long /*updateInterval*/)
   {
     DANCE_TRACE ( "NodeManager_Impl::joinDomain");
-    ACE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::joinDomain - ")
+    DANCE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::joinDomain - ")
                 ACE_TEXT("joinDomain not implemented\n")));
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -86,7 +86,7 @@ namespace DAnCE
   NodeManager_Impl::leaveDomain ()
   {
     DANCE_TRACE ( "NodeManager_Impl::leaveDomain");
-    ACE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::leaveDomain - ")
+    DANCE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::leaveDomain - ")
                 ACE_TEXT("leave not implemented\n")));
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -121,7 +121,7 @@ namespace DAnCE
                       plan.UUID.in ()));
         throw ::Deployment::PlanError();
       }
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** size of properties_:%u\n"), properties_.current_size ()));
+    DANCE_DEBUG ((LM_DEBUG, ACE_TEXT("*** size of properties_:%u\n"), properties_.current_size ()));
     DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - creating NodeApplicationManager...\n")));
     NodeApplicationManager_Impl* manager = 0;
     ACE_NEW_THROW_EX (manager,
@@ -175,7 +175,7 @@ namespace DAnCE
   NodeManager_Impl::getDynamicResources ()
   {
     DANCE_TRACE ( "NodeManager_Impl::getDynamicResources ()");
-    ACE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::getDynamicResources - ")
+    DANCE_DEBUG ((LM_ERROR, DLINFO ACE_TEXT("NodeManager_Impl::getDynamicResources - ")
                 ACE_TEXT("getDynamicResources not implemented\n")));
       throw CORBA::NO_IMPLEMENT ();
     return 0;

@@ -161,6 +161,9 @@ namespace DAnCE
       }
     catch (...)
       {
+        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
+                      ACE_TEXT("Caught unexpected exception while looking up name %s\n"),
+                      nodename));
       }
 
     return ::Deployment::NodeManager::_nil ();
