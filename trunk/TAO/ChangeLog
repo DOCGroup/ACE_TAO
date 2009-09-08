@@ -1,3 +1,10 @@
+Tue Sep  8 16:16:17 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+
+          Additional fix for bug#3697. It must fix Bug_1551_Regression
+          which got broken by the original fix.
+
 Tue Sep  8 10:46:28 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
