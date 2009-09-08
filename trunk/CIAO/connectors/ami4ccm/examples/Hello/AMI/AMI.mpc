@@ -78,7 +78,7 @@ project(Hello_Base_AMI_stub) : ccm_stub, ami   {
 }
 
 project(Hello_Base_AMI_exec) : ciao_executor, ami   {
-  after   += Hello_Base_AMI_lem_stub AMI_Hello_Base_AMI_stub
+  after   += Hello_Base_AMI_lem_stub AMI_Hello_Base_AMI_stub AMI_Hello_Base_skel
   sharedname = AMI_exec
   libs += AMI_stub AMI_lem_stub Hello_Base_stub Hello_Base_skel
   libpaths += ../lib
@@ -115,7 +115,7 @@ project(Hello_Base_AMI_svnt) : ciao_servant, ami   {
   libpaths += ../lib
   libout = ../lib
   dynamicflags = AMI_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 
