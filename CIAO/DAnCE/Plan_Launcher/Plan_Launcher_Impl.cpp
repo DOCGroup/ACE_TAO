@@ -3,9 +3,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "tools/Config_Handlers/XML_File_Intf.h"
 #include "tools/Config_Handlers/DnC_Dump.h"
-//#include "tao/RTCORBA/RTCORBA.h"
-//#include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
 #include "ccm/CCM_ObjectC.h"
 
