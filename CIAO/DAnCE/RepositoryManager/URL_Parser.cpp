@@ -3,9 +3,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "URL_Parser.h"
-
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
+
+#include "DAnCE/Logger/Log_Macros.h"
 
 bool
 URL_Parser::parse_args (int argc, ACE_TCHAR *argv[])
@@ -91,7 +91,7 @@ bool URL_Parser::parseURL (ACE_TCHAR* url)
 
 void URL_Parser::Error (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "./http_client -u http://hostname:port/filename [-d]\n"));
+  DANCE_DEBUG ((LM_DEBUG, "./http_client -u http://hostname:port/filename [-d]\n"));
 }
 
 URL_Parser::~URL_Parser()

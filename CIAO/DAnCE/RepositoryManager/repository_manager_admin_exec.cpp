@@ -44,7 +44,7 @@ struct Options
         path_ = tmp.substring (begin, pos - begin);
       else
         {
-          ACE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
+          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
                       "Installation directive missing name and replace parameters, "
                       "must have form path,name,replace\n"));
           return false;
@@ -58,7 +58,7 @@ struct Options
         name_ = tmp.substring (begin, pos - begin);
       else 
         {
-          ACE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
+          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
                       "Installation directive mssing replace parameter, "
                       "must have form path,name,replace\n"));
           return false;
@@ -70,7 +70,7 @@ struct Options
       else if (tmp[begin] == '1') replace_ = true;
       else
         {
-          ACE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
+          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Installation::init - "
                       "Replace directive muse be 1 or 0.\n"));
           return false;
         }
@@ -106,7 +106,7 @@ struct Options
         path_ = tmp.substring (begin, pos - begin);
       else
         {
-          ACE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
+          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
                       "Creation directive missing name, base location,  and replace parameters, "
                       "must have form path,name,base,replace\n"));
           return false;
@@ -120,7 +120,7 @@ struct Options
         name_ = tmp.substring (begin, pos - begin);
       else 
         {
-          ACE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
+          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
                       "Creation directive mssing base location and replace parameter, "
                       "must have form path,name,base,replace\n"));
           return false;
@@ -133,7 +133,7 @@ struct Options
         base_location_ = tmp.substring (begin, pos - begin);
       else 
         {
-          ACE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
+          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
                       "Creation directive mssing replace parameter, "
                       "must have form path,name,base,replace\n"));
           return false;
@@ -145,7 +145,7 @@ struct Options
       else if (tmp[begin] == '1') replace_ = true;
       else
         {
-          ACE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
+          DANCE_ERROR ((LM_ERROR, DLINFO "Options::Creation::init - "
                       "Replace directive muse be 1 or 0.\n"));
           return false;
         }
@@ -174,7 +174,7 @@ struct Options
   
   void usage (void) 
   {
-    ACE_ERROR ((LM_EMERGENCY, "usage:\n"
+    DANCE_ERROR ((LM_EMERGENCY, "usage:\n"
                 "\t-h,--help\t\t\tThis message.\n"
                 "\t-r,--rm-ior <ior>\t\tIOR where the RM instance may be found\n"
                 "\t-i,--install <path>,<name>,<1|0>\tInstall package found at <path> into the RM, with <name>,\n"
