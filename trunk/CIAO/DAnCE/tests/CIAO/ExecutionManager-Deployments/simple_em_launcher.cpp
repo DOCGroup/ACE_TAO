@@ -5,7 +5,7 @@
  * Launches then immediately tears down a plan.
  */
 
-#include "ace/Log_Msg.h"
+
 #include "ace/OS_NS_unistd.h"
 #include "tao/ORB.h"
 #include "ciao/Logger/Logger_Service.h"
@@ -17,7 +17,7 @@
 
 int usage ()
 {
-  ACE_ERROR ((LM_ERROR, "simple_nm_launcher <nm_url> <plan>\n"));
+  DANCE_ERROR ((LM_ERROR, "simple_nm_launcher <nm_url> <plan>\n"));
   return -1;
 }
 
@@ -113,7 +113,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception &ex)
     {
-      ACE_ERROR ((LM_ERROR, "*** Caught CORBA exception: %C\n",
+      DANCE_ERROR ((LM_ERROR, "*** Caught CORBA exception: %C\n",
                   ex._info ().c_str ()));
       return -1;
 
@@ -121,7 +121,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (...)
     {
       orb->destroy ();
-      ACE_ERROR ((LM_ERROR, "*** Caugn unknown exception\n"));
+      DANCE_ERROR ((LM_ERROR, "*** Caugn unknown exception\n"));
       return -1;
     }
   return 0;
