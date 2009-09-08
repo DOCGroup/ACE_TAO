@@ -1,3 +1,572 @@
+Tue Sep  8 08:38:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Integrated AMI4CCM branch which shows a prototype how AMI would
+        look like at the CCM level
+
+        Mon Sep  7 09:41:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+          Resolved merge conflicts to head.
+
+        Mon Sep  7 08:28:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/docs:
+        * connectors/AMI_CCM/docs/AMI4CCM-explanation.odt:
+        * connectors/AMI_CCM/docs/AMI4CCM-spec.odt:
+          Created a subdirectory called 'docs'. Moved the
+          existing documents to this directory.
+
+        * connectors/AMI_CCM/examples:
+        * connectors/AMI_CCM/examples/AMI:
+        * connectors/AMI_CCM/examples/Hello_Base:
+        * connectors/AMI_CCM/examples/Receiver:
+        * connectors/AMI_CCM/examples/Sender:
+        * connectors/AMI_CCM/examples/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/examples/descriptors:
+        * connectors/AMI_CCM/AMI:
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.h:
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_MyInterface_i.h:
+        * connectors/AMI_CCM/AMI/AMI_MyInterface_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI4CCM-explanation.odt:
+        * connectors/AMI_CCM/AMI4CCM-spec.odt:
+        * connectors/AMI_CCM/Hello_Base:
+        * connectors/AMI_CCM/Hello_Base/Hello.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender:
+        * connectors/AMI_CCM/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender.mpc:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * connectors/AMI_CCM/descriptors:
+        * connectors/AMI_CCM/descriptors/Plan.cdp:
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Created a subdirectory called 'examples'. Moved
+          all files to this directory.
+
+        Fri Sep  4 11:00:39 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+          Improved logging.
+
+        Thu Sep  3 14:10:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+          Improved logging.
+
+        Thu Sep  3 13:17:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+          Resolved compiler errors on Windows.
+
+        Thu Sep  3 12:05:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.cpp:
+          rebind (in stead of bind) is always called.
+          This results in an unnecessary warning.
+
+        * ciao/Containers/Servant_Activator.cpp:
+          tmp was initialized but never used.
+
+        Thu Sep  3 10:20:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+          Resolved compiler error on windows.
+
+        Thu Sep  3 08:19:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp:
+          Log message inserted.
+
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+          Resolved compiler error on Windows.
+
+        Thu Sep  3 07:48:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/Plan_Generator/PCVisitor.cpp:
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+        * DAnCE/RepositoryManager/RM_Helper.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/URL_Parser.h:
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.h:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+          Replaced all ACE_ERROR-s, ACE_ERROR_RETURN-s and ACE_DEBUG-s with th
+          DANCE variant.
+
+        Wed Sep  2 12:09:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Changed to meet the spec.
+
+        Wed Sep  2 07:33:20 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI4CCM-explanation.odt:
+        * connectors/AMI_CCM/AMI4CCM-spec.odt:
+          When the rh in the sendc is nil, AMI treats
+          this as an oneway request.
+          When a rh per request is used, the 'global' rh
+          code should not be generated.
+
+        Mon Aug 31 11:09:40 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI4CCM-explanation.odt:
+        * connectors/AMI_CCM/AMI4CCM-spec.odt:
+          Added.
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Resolved bug regarding the MyInterface interface.
+
+        Mon Aug 31 10:39:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Resolved some compiler errors/warnings.
+
+        Fri Aug 28 07:29:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.h:
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_MyInterface_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Extende the MyFoo interface with a new method. Just
+          to gain more inside info.
+
+        Thu Aug 27 16:47:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.h:
+        * connectors/AMI_CCM/AMI/AMI_MyFoo_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_MyInterface_i.h:
+        * connectors/AMI_CCM/AMI/AMI_MyInterface_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Refactored code. Also expanded this
+          example with another interface.
+
+        * connectors/AMI_CCM/AMI/AMI_internal_i.h:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.h:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+
+          Removed these files.
+
+        Wed Aug 26 18:42:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * connectors/AMI_CCM/descriptors/Plan.cdp:
+          Set up (empty) framework in order to test one reply handler
+          per request.
+
+        Wed Aug 26 13:04:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Removed cookie from IDL interfaces.
+
+        Wed Aug 26 08:59:26 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.h:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Added Hello.idl to seperate AMI interfaces from
+          "normal" interfaces. Besides this changed naming
+          convention to make a distinction between AMI interfaces
+          and "normal" interfaces.
+
+        Tue Aug 25 13:30:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+          Removed unnecessary class variables.
+
+        Tue Aug 25 13:03:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+          AMI collacation set to 0 since AMI CORBA client and
+          AMI CORBA server are running in the same process.
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Improved logging.
+
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Automatically remove AMI CORBA ior file.
+
+        Tue Aug 25 09:35:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Refactored exception handling a bit. An exception struct
+          is now passed to the exception callback.
+          Also shortened the time stamps.
+
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Shortened the sleep time.
+
+        Tue Aug 25 07:19:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender.mpc:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Resolved compiler errors on windows.
+          Resolved linker errors related to previous login.
+
+        Tue Aug 25 05:44:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.h:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.h:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+          Removed internal IDL and use Hello base foo interface
+
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+          foo interface uses AMI.
+
+        Mon Aug 24 13:31:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.h:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * connectors/AMI_CCM/descriptors/Plan.cdp:
+          Implemented synchronous calls from Sender to Receiver. Renamed some
+          interfaces to match the CORBA specs regarding AMI.
+
+        Mon Aug 24 12:21:50 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+          Removed file since this wasn't needed.
+
+        Mon Aug 24 11:34:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Implemented exception handling.
+
+        Mon Aug 24 09:25:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.cpp:
+          CORBA callback in seperate thread. Refactored to
+          one reply handler per request.
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Optimized logging. Removed sleep between calls.
+          Wait 5 sec. (in stead of 10) before start.
+
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Minor changes.
+
+        Mon Aug 24 07:34:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+          Implemented a define to switch between implementations.
+          Resolved some compiler warnings.
+
+        Mon Aug 24 07:10:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.h:
+        * connectors/AMI_CCM/AMI/AMI_internal_i.cpp:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.h:
+        * connectors/AMI_CCM/AMI/AMI_perform_work.cpp:
+        * connectors/AMI_CCM/AMI/AMI_server.h:
+        * connectors/AMI_CCM/AMI/AMI_server.cpp:
+          First step to use CORBA AMI in the AMI component.
+
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Minor changes.
+
+        Thu Aug 20 09:56:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors:
+        * connectors/AMI_CCM:
+        * connectors/AMI_CCM/AMI:
+        * connectors/AMI_CCM/AMI/AMI.idl:
+        * connectors/AMI_CCM/AMI/AMI.mpc:
+        * connectors/AMI_CCM/AMI/AMI_exec.h:
+        * connectors/AMI_CCM/AMI/AMI_exec.cpp:
+        * connectors/AMI_CCM/Hello_Base:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * connectors/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * connectors/AMI_CCM/Receiver:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * connectors/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/AMI_CCM/Sender:
+        * connectors/AMI_CCM/Sender/Hello_Sender.idl:
+        * connectors/AMI_CCM/Sender/Hello_Sender.mpc:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * connectors/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * connectors/AMI_CCM/descriptors:
+        * connectors/AMI_CCM/descriptors/Plan.cdp:
+        * connectors/AMI_CCM/descriptors/run_test.pl:
+          Moved this example from tests to this location. Just to
+          be consistent with dds4ccm.
+
+        * tests/AMI_CCM:
+        * tests/AMI_CCM/AMI:
+        * tests/AMI_CCM/AMI/AMI.idl:
+        * tests/AMI_CCM/AMI/AMI.mpc:
+        * tests/AMI_CCM/AMI/AMI_exec.h:
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Hello_Base:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * tests/AMI_CCM/Receiver:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender:
+        * tests/AMI_CCM/Sender/Hello_Sender.idl:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Removed these files.
+
+        Thu Aug 20 09:24:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Improved log messages.
+
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Changed to meet the latest version.
+
+        Thu Aug 20 08:54:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/AMI/AMI_exec.h:
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          The basic version of AMI seems to work. The AMI component
+          determines a cookie and spawns a thread per request.
+          The thread handles the request and calls the callback
+          function of the sender.
+
+        Wed Aug 19 09:07:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/AMI/AMI_exec.h:
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          The Sender component is now able to pass a string through the
+          AMI component to the Receiver component.
+
+        Wed Aug 19 07:58:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/AMI:
+        * tests/AMI_CCM/AMI/AMI.idl:
+        * tests/AMI_CCM/AMI/AMI.mpc:
+        * tests/AMI_CCM/AMI/AMI_exec.h:
+        * tests/AMI_CCM/AMI/AMI_exec.cpp:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender.idl:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+          Changed to deploy the third component (AMI). None of the
+          executors are implemented yet. Deploymentplan and IDL files
+          are prepared to deploy the AMI component.
+
+        Tue Aug 18 09:59:07 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender.idl:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Baseline for AMI implementation. Sender and Receiver
+          components are deployable and runable.
+
+        Fri Jul 24 11:54:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+          Rerun example.
+
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+          Added connectors. Now both components
+          can be deployed.
+
+        Fri Jul 24 07:34:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+          Changed naming convention regarding entry points
+
+        Thu Jul 23 18:53:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Few minor changes regarding names of IOR and
+          dll's.
+
+        Thu Jul 23 15:31:09 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+          Added library paths.
+
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+          Renaming.
+
+        Thu Jul 23 14:20:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI_CCM:
+        * tests/AMI_CCM/Hello_Base:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.idl:
+        * tests/AMI_CCM/Hello_Base/Hello_Base.mpc:
+        * tests/AMI_CCM/Receiver:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.idl:
+        * tests/AMI_CCM/Receiver/Hello_Receiver.mpc:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.h:
+        * tests/AMI_CCM/Receiver/Hello_Receiver_exec.cpp:
+        * tests/AMI_CCM/Sender:
+        * tests/AMI_CCM/Sender/Hello_Sender.idl:
+        * tests/AMI_CCM/Sender/Hello_Sender.mpc:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.h:
+        * tests/AMI_CCM/Sender/Hello_Sender_exec.cpp:
+        * tests/AMI_CCM/descriptors:
+        * tests/AMI_CCM/descriptors/Plan.cdp:
+        * tests/AMI_CCM/descriptors/run_test.pl:
+          Added as a starter for ami4ccm
+
 Fri Aug 14 13:27:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ciao_vcwarnings.mpb:
