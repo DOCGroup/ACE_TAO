@@ -121,7 +121,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (...)
     {
       orb->destroy ();
-      DANCE_ERROR ((LM_ERROR, "*** Caugn unknown exception\n"));
+      DANCE_ERROR ((LM_ERROR, "*** Caught unknown exception\n"));
       return -1;
     }
   return 0;
