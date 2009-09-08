@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 #include "ace/streams.h"
 #include "DAnCE/Deployment/DAnCE_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
