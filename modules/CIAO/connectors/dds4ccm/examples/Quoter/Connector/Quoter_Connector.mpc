@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_Quoter_Base -l .. -o ../lib -u DDS Quoter_Connector"
 
-project(DDS_Quoter_Connector_idl_gen) : connectoridldefaults  {
+project(DDS_Quoter_Connector_idl_gen) : connectoridldefaults, componentidldefaults  {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=QUOTER_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Quoter_Connector_stub_export.h \
@@ -10,7 +10,8 @@ project(DDS_Quoter_Connector_idl_gen) : connectoridldefaults  {
               -Wb,exec_export_macro=QUOTER_CONNECTOR_EXEC_Export \
               -Wb,exec_export_include=Quoter_Connector_exec_export.h \
               -I ..
-
+              
+  idlflags -= -Glem
   IDL_Files {
     Quoter_Connector.idl3
   }
@@ -22,7 +23,7 @@ project(DDS_Quoter_Connector_lem_gen) : ciaoidldefaults {
   idlflags += -Wb,stub_export_macro=QUOTER_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=Quoter_Connector_lem_stub_export.h \
               -SS -Gxhst \
-              -I .. -I $(CIAO_ROOT)/connectors
+              -I .. -I $(CIAO_ROOT)/connectors -I$(CIAO_ROOT)/connectors/dds4ccm/idl
 
   IDL_Files {
     Quoter_ConnectorE.idl
@@ -34,7 +35,7 @@ project(DDS_Quoter_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
   libs  += DDS_Quoter_Base_stub DDS_Quoter_Connector_stub
   libpaths += ../lib
   libout = ../lib
-  includes += ..
+  includes += .. 
   sharedname = DDS_Quoter_Connector_lem_stub
   dynamicflags   = QUOTER_CONNECTOR_LEM_STUB_BUILD_DLL
 
@@ -81,7 +82,7 @@ project(DDS_Quoter_Connector_stub) : ccm_stub, dds4ccm_base   {
   }
 }
 
-project(DDS_Quoter_Connector_exec) : ciao_executor, dds4ccm_base   {
+project(DDS_Quoter_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib   {
   after   += DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub
   sharedname = DDS_Quoter_Connector_exec
   libs += DDS_Quoter_Connector_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Base_stub

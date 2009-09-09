@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : componentidldefaults {
+project : ciaoidldefaults {
    idlflags += -I$(CIAO_ROOT)/connectors
 }
