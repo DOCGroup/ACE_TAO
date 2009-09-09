@@ -269,12 +269,12 @@ module CCM_DDS {
     };
 
   porttype DDS_Update_T <typename T> {
-    uses Updater<T>        data;
+    uses Updater<T>         data;
     uses DDS::DataWriter    dds_entity;
     };
 
   porttype DDS_MultiUpdate_T <typename TSeq> {
-    uses MultiUpdater<TSeq>     data;
+    uses MultiUpdater<TSeq> data;
     uses DDS::DataWriter    dds_entity;
     };
 
@@ -307,38 +307,38 @@ module CCM_DDS {
     };
 
   porttype DDS_MultiListen_T <typename T, typename TSeq> {
-    uses Reader<T,TSeq>         data;
+    uses Reader<T,TSeq>       data;
     uses DataListenerControl  data_control;
-    provides MultiListener    data_listener;
-    uses DDS::DataReader    dds_entity;
+    provides MultiListener      data_listener;
+    uses DDS::DataReader        dds_entity;
     provides PortStatusListener status;
     };
 
-
 	// ---------- Typed sub-part ------------------------------------------------------------------
 
-	module Typed<typename T, sequence<T> TSeq> {
+  module Typed<typename T, typename TSeq> {
 	// Gathers all the constructs that are dependent on the data type (T), either directly -- interfaces
 	// making use of T or TSeq, or indirectly -- porttypes using or providing those intefaces.
 	// TSeq is passed as a second parameter to avoid creating a new sequence type.
-    typename DDS_Write_T<T> DDS_Write;
-    typename DDS_MultiWrite_T<T, TSeq> DDS_MultiWrite;
-    typename DDS_Update_T<T> DDS_Update;
-    typename DDS_MultiUpdate_T<TSeq> DDS_MultiUpdate;
-    typename DDS_Read_T<T,TSeq> DDS_Read;
-    typename DDS_Get_T<T,TSeq> DDS_Get;
-    typename DDS_RawListen_T<T, TSeq> DDS_RawListen;
-    typename DDS_StateListen_T<T, TSeq> DDS_StateListen;
-    typename DDS_MultiListen_T<T, TSeq> DDS_MulitListen;
+    porttypedef DDS_Write_T<T> DDS_Write;
+    porttypedef DDS_MultiWrite_T<T, TSeq> DDS_MultiWrite;
+    porttypedef DDS_Update_T<T> DDS_Update;
+    porttypedef DDS_MultiUpdate_T<TSeq> DDS_MultiUpdate;
+    porttypedef DDS_Read_T<T,TSeq> DDS_Read;
+    porttypedef DDS_Get_T<T,TSeq> DDS_Get;
+    porttypedef DDS_RawListen_T<T, TSeq> DDS_RawListen;
+    porttypedef DDS_StateListen_T<T, TSeq> DDS_StateListen;
+    porttypedef DDS_MultiListen_T<T, TSeq> DDS_MultiListen;
+
+    // Also interfaces, just example for other use cases
+    interfacedef MultiListener <TSeq> DDD;
+
 		// -------------------------------------
 		// Interfaces to be 'used' or 'provided'
 		// -------------------------------------
 
 		// Data access - publishing side
 		// -----------------------------
-
-
-
 
 		// ---------
 		// DDS Ports
