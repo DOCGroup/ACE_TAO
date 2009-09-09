@@ -58,6 +58,6 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
     private:
     ::CCM_AMI::MyInterface_var interface_receiver_;
   };
-};
+}
 #endif /* AMI_MyInterface_i_H */
 
