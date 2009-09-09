@@ -65,6 +65,12 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.2 and CIAO-0.7.3
 =======================================================
 
+. Added a first prototype of DDS4CCM
+
+. Added a first prototype of AMI4CCM
+
+. Made CIAO compiling with unicode enabled
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.1 and CIAO-0.7.2
 =======================================================
 
