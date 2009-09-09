@@ -47,26 +47,9 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
     {
       TAO_ORB_Core * const orb_core = transport->orb_core ();
 
-      while (!transport->queue_is_empty () &&
-             orb_core->reactor ()->work_pending ())
+      while (!transport->queue_is_empty ())
         {
-          // In case max_wait_time==0 we cannot simply run the orb because
-          // in multi-threaded applications it can easily happen that
-          // the other thread will run the orb and drain the queue in the
-          // transport we're coping with here and this thread will block.
-          // Instead we do run for a small amount of time and then recheck
-          // the queue.
-          // Also we have to check the work_pending status for the reason
-          // stated in bugzilla 3697.
-          if (max_wait_time == 0)
-            {
-              ACE_Errno_Guard eguard (errno);
-
-              // Poll the reactor's queue.
-              ACE_Time_Value tv = ACE_Time_Value::zero;
-              orb_core->run (&tv, 1);
-            }
-          else if (orb_core->run (max_wait_time, 1) == -1)
+          if (orb_core->run (max_wait_time, 1) == -1)
             return -1;
 
           if (max_wait_time != 0) {
