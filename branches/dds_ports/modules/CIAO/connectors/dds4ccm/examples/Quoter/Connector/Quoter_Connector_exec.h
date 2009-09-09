@@ -28,7 +28,7 @@
  **/
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:1217
+// be/be_codegen.cpp:1217
 
 #ifndef CIAO_QUOTER_CONNECTOR_EXEC_H_
 #define CIAO_QUOTER_CONNECTOR_EXEC_H_
@@ -44,6 +44,11 @@
 #include /**/ "Quoter_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
+#include "dds4ccm/impl/ndds/NDDS_Traits.h"
+#include "dds4ccm/impl/ndds/DataWriter.h"
+#include "dds4ccm/impl/ndds/Writer.h"
+#include "Base/Quoter_BaseSupport.h"
+
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
   class QUOTER_CONNECTOR_EXEC_Export Stock_Info_Writer_exec_i
@@ -57,7 +62,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     // Operations and attributes from ::CCM_DDS::Stock_Info_Writer
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     write (
@@ -75,45 +80,45 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     // Operations and attributes from ::DDS::DataWriter
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     enable (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::StatusCondition_ptr
     get_statuscondition (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::StatusMask
     get_status_changes (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::InstanceHandle_t
     get_instance_handle (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     set_qos (
       const ::DDS::DataWriterQos & qos);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_qos (
       ::DDS::DataWriterQos & qos);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     set_listener (
@@ -121,73 +126,73 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       ::DDS::StatusMask mask);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::DataWriterListener_ptr
     get_listener (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::Topic_ptr
     get_topic (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::Publisher_ptr
     get_publisher (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     wait_for_acknowledgments (
       const ::DDS::Duration_t & max_wait);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_liveliness_lost_status (
       ::DDS::LivelinessLostStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_offered_deadline_missed_status (
       ::DDS::OfferedDeadlineMissedStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_offered_incompatible_qos_status (
       ::DDS::OfferedIncompatibleQosStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_publication_matched_status (
       ::DDS::PublicationMatchedStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     assert_liveliness (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_matched_subscriptions (
       ::DDS::InstanceHandleSeq & subscription_handles);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_matched_subscription_data (
@@ -206,7 +211,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     // Operations and attributes from ::CCM_DDS::Stock_Info_Reader
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     read_all (
@@ -214,7 +219,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       ::CCM_DDS::ReadInfoSeq_out infos);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     read_all_history (
@@ -222,7 +227,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       ::CCM_DDS::ReadInfoSeq_out infos);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     read_one (
@@ -230,7 +235,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       ::CCM_DDS::ReadInfo_out info);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     read_one_history (
@@ -239,13 +244,13 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       ::CCM_DDS::ReadInfoSeq_out infos);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CCM_DDS::QueryFilter *
     filter (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     filter (
@@ -263,13 +268,13 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     // Operations and attributes from ::CCM_DDS::ListenerControl
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::Boolean
     enabled (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     enabled (
@@ -287,31 +292,31 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     // Operations and attributes from ::DDS::DataReader
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     enable (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::StatusCondition_ptr
     get_statuscondition (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::StatusMask
     get_status_changes (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::InstanceHandle_t
     get_instance_handle (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReadCondition_ptr
     create_readcondition (
@@ -320,7 +325,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       ::DDS::InstanceStateMask instance_states);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::QueryCondition_ptr
     create_querycondition (
@@ -331,34 +336,34 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       const ::DDS::StringSeq & query_parameters);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     delete_readcondition (
       ::DDS::ReadCondition_ptr a_condition);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     delete_contained_entities (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     set_qos (
       const ::DDS::DataReaderQos & qos);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_qos (
       ::DDS::DataReaderQos & qos);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     set_listener (
@@ -366,81 +371,81 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       ::DDS::StatusMask mask);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::DataReaderListener_ptr
     get_listener (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::TopicDescription_ptr
     get_topicdescription (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::Subscriber_ptr
     get_subscriber (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_sample_rejected_status (
       ::DDS::SampleRejectedStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_liveliness_changed_status (
       ::DDS::LivelinessChangedStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_requested_deadline_missed_status (
       ::DDS::RequestedDeadlineMissedStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_requested_incompatible_qos_status (
       ::DDS::RequestedIncompatibleQosStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_subscription_matched_status (
       ::DDS::SubscriptionMatchedStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_sample_lost_status (
       ::DDS::SampleLostStatus & status);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     wait_for_historical_data (
       const ::DDS::Duration_t & max_wait);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_matched_publications (
       ::DDS::InstanceHandleSeq & publication_handles);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::ReturnCode_t
     get_matched_publication_data (
@@ -461,28 +466,56 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     // Component attributes.
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual char *
     topic_name (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    topic_name (
+      const char * topic_name);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::StringSeq *
     key_fields (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    key_fields (
+      const ::DDS::StringSeq & key_fields);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DDS::DomainId_t
     domain_id (void);
     
     // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    domain_id (
+      ::DDS::DomainId_t domain_id);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual char *
-    qos_provile (void);
+    qos_profile (void);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    qos_profile (
+      const char * qos_profile);
     
     // Port operations.
     
@@ -515,6 +548,48 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   
   private:
     ::Quoter::CCM_Quoter_Connector_Context_var context_;
+
+    // @from use of Stock_Info as a parameter
+    typedef CIAO::DDS4CCM::RTI::Type_Traits < ::Quoter::Stock_Info,
+      ::Quoter::Stock_InfoSeq,
+      ::Quoter::Stock_InfoTypeSupport,
+      ::Quoter::Stock_InfoDataWriter,
+      ::Quoter::Stock_InfoDataReader > Stock_Info_Traits;
+
+    // Default stuff
+    void configure_default_domain_ (void);
+    bool default_domain_configured_;
+    ::DDS::DomainParticipantFactory_var domain_factory_;
+    ::DDS::DomainParticipant_var domain_;
+
+    // @from DDS_Base
+    CCM_DDS::ConnectorStatusListener_var error_listener_;
+    DDS::DomainId_t domain_id_;
+    CORBA::String_var qos_profile_;
+    
+    
+    // @from DDS_TopicBase
+    void configure_default_topic_ (void);
+    bool default_topic_configured_;
+    ::DDS::Topic_var topic_;
+    CORBA::String_var topic_name_;
+    DDS::StringSeq key_fields_;
+    
+    // @from DDS_Write for Stock_Info
+    void configure_port_info_in_ (void);
+    bool __info_in_configured_;
+    ::DDS::Publisher_var __info_in_publisher_;
+    ::DDS::CCM_DataWriter_var __info_in_datawriter_;
+    ::CCM_DDS::CCM_Stock_Info_Writer_var __info_in_writer_;
+
+    // @from DDS_RawListen
+    void configure_port_info_out_ (void);
+    bool __info_out_configured_;
+    CCM_DDS::Stock_Info_RawListener_var __info_out_rawlistener_;
+    CCM_DDS::PortStatusListener_var __info_out_portstatus_;
+    ::DDS::Subscriber_var __info_out_subscriber_;
+    ::DDS::DataReaderListener_var __info_out_listener_;
+    ::DDS::CCM_DataReader_var __info_out_datareader;;
   };
   
   extern "C" QUOTER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

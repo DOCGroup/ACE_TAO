@@ -1,27 +1,49 @@
+Wed Sep  9 11:50:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/connectoridldefaults.mpb:
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
+        * connectors/dds4ccm/examples/Quoter/Broker:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3p:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_ConnectorE.idl:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+        * connectors/dds4ccm/impl/ndds/NDDS_Traits.h:
+        * connectors/dds4ccm/impl/ndds/Writer.h:
+        * connectors/dds4ccm/impl/ndds/Writer.tpp:
+
+          Additional connector implementation. 
+        
+        * connectors/dds4ccm/examples/Quoter/Quoter:
+
+          Removed this file.
+
 Tue Aug 25 17:50:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
-        
+
           - Removed unnecessary dependencies and code generation in
             project DDS_Quoter_Base_idl_gen.
-            
+
           - Removed unnecessary project DDS_Quoter_Base_skel.
 
 Tue Aug 25 17:14:13 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc:
-        
+
           Added 'libpaths += ../lib' to skel project.
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
-        
+
           Removed DDS_Quoter_Base_skel from servant lib list - Quoter_Base.idl
           contains only a struct, and does not generate a skel lib since there
           is no exported code on the skel side.
-        
+
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
-        
+
           Regenerated these files, they were missing a couple of port
           operations.
 

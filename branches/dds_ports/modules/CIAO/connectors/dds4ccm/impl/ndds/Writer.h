@@ -16,7 +16,9 @@ namespace CIAO
     namespace RTI
     {
       template <typename NDDS_TYPE, typename BASE>
-      class Writer_T
+      class Writer_T : 
+        public virtual BASE,
+        public virtual ::CORBA::LocalObject
       {
       public:
         // Constructor

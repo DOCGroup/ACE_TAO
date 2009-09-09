@@ -28,10 +28,13 @@
  **/
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:1278
+// be/be_codegen.cpp:1278
 
 #include "Quoter_Connector_exec.h"
 #include "ciao/CIAO_common.h"
+
+#include "dds4ccm/impl/ndds/NDDS_Traits.h"
+#include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
@@ -510,45 +513,177 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   char *
   Quoter_Connector_exec_i::topic_name (void)
   {
-    /* Your code here. */
-    return 0;
+    // @from DDS_TopicBase
+    return CORBA::string_dup (this->topic_name_.in ());
+  }
+  
+  void
+  Quoter_Connector_exec_i::topic_name (
+    const char * topic_name)
+  {
+    // @from DDS_TopicBase
+    this->topic_name_ = topic_name;
   }
   
   ::DDS::StringSeq *
   Quoter_Connector_exec_i::key_fields (void)
   {
-    /* Your code here. */
-    return 0;
+    // @from DDS_TopicBase
+    ::DDS::StringSeq *retval = 
+      new ::DDS::StringSeq (this->key_fields_.length ());
+    
+    for (CORBA::ULong i = 0; i < this->key_fields_.length (); ++i)
+      (*retval)[i] = CORBA::string_dup (this->key_fields_[i]);
+    
+    return retval;
+  }
+  
+  void
+  Quoter_Connector_exec_i::key_fields (
+    const ::DDS::StringSeq & key_fields)
+  {
+    // @from DDS_TopicBase
+    this->key_fields_.length (key_fields.length ());
+    
+    for (CORBA::ULong i = 0; i < this->key_fields_.length (); ++i)
+      this->key_fields_[i] = CORBA::string_dup (key_fields[i]);
   }
   
   ::DDS::DomainId_t
   Quoter_Connector_exec_i::domain_id (void)
   {
-    /* Your code here. */
-    return 0;
+    // @from DDS_Base
+    return this->domain_id_;
+  }
+  
+  void
+  Quoter_Connector_exec_i::domain_id (
+    ::DDS::DomainId_t domain_id)
+  {
+    // @from DDS_Base
+    this->domain_id_ = domain_id;
   }
   
   char *
-  Quoter_Connector_exec_i::qos_provile (void)
+  Quoter_Connector_exec_i::qos_profile (void)
   {
-    /* Your code here. */
-    return 0;
+    // @from DDS_Base
+    return CORBA::string_dup (this->qos_profile_.in ());
+  }
+  
+  void
+  Quoter_Connector_exec_i::qos_profile (
+    const char * qos_profile)
+  {
+    // @from DDS_Base
+    this->qos_profile_ = qos_profile;
   }
   
   // Port operations.
+
+  void
+  Quoter_Connector_exec_i::configure_default_domain_ (void)
+  {
+    if (this->default_domain_configured_) return;
+
+    try
+      {
+        // Generic code
+        this->domain_factory_ = new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
+        
+        ::DDS::DomainParticipantQos qos;
+        this->domain_ = 
+          this->domain_factory_->create_participant (this->domain_id_,
+                                                     qos,
+                                                     0,
+                                                     0);
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, "Caught unknown C++ exception whilst configuring default domain\n"));
+        throw CORBA::INTERNAL ();
+      }
+  }
+
+  void 
+  ::configure_default_topic_ (void)
+  {
+    if (this->default_topic_configured_) return;
+    
+    this->configure_default_domain_ ();
+    
+    try
+      {
+        if (CORBA::is_nil (this->topic_))
+          {
+            ::DDS::TopicQos tqos;
+            this->topic_ = 
+              this->domain_->create_topic (this->topic_name_.in (),
+                                           Stock_Info_Traits::type_support::get_type_name (),
+                                           tqos,
+                                           0,
+                                           0);
+          }
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, "Caught unknown error while configuring default topic\n"));
+        throw CORBA::INTERNAL ();
+      }
+  } 
   
+  void 
+  Quoter_Connector_exec_i::configure_port_info_in_ (void)
+  {
+    if (this->__info_in_configured_)
+      return;
+    
+    this->configure_default_topic_ (void);
+    
+    try
+      {
+        if (CORBA::is_nil (this->__info_in_publisher_.in ()))
+          {
+            ::DDS::PublisherQos pqos;
+            this->__info_in_publisher_ = this->domain_->create_publisher (pqos,
+                                                                          0,
+                                                                          0);
+          }
+        
+        if (CORBA::is_nil  (this->__info_in_datawriter_.in ()))
+          {
+            ::DDS::DataWriterQos dwqos;
+            ::DDS::DataWriter_var dwv_tmp = this->__info_in_publisher_->create_datawriter (this->topic_.in (),
+                                                                                           dwqos,
+                                                                                           0,
+                                                                                           0);
+            this->__info_in_datawriter_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
+          }    
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, "Caught unknown C++ exception while configuring port info_in_\n"));
+        throw CORBA::INTERNAL ();
+      }
+  }
+  
+    
+
   ::CCM_DDS::CCM_Stock_Info_Writer_ptr
   Quoter_Connector_exec_i::get_info_in_data (void)
   {
-    /* Your code here. */
-    return ::CCM_DDS::CCM_Stock_Info_Writer::_nil ();
+    this->configure_port_info_in_ ();
+    
+    return new CIAO::DDS4CCM::RTI::Writer_T<Stock_Info_Traits,
+      ::CCM_DDS::CCM_Stock_Info_Writer> (this->__info_in_datawriter_.in ());
   }
   
   ::DDS::CCM_DataWriter_ptr
   Quoter_Connector_exec_i::get_info_in_dds_entity (void)
   {
-    /* Your code here. */
-    return ::DDS::CCM_DataWriter::_nil ();
+    this->configure_port_info_in_ ();
+    
+    return this->__info_in_datawriter_.in ();
   }
   
   ::CCM_DDS::CCM_Stock_Info_Reader_ptr
@@ -592,7 +727,6 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   void
   Quoter_Connector_exec_i::configuration_complete (void)
   {
-    /* Your code here. */
   }
   
   void

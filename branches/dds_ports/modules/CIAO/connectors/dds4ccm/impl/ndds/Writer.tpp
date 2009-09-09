@@ -43,18 +43,20 @@ void
 CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
-
-  if (an_instance == 0)
+  
+  /*
+  if (CORBA::is_nil (an_instance))
     {
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
                    "Write was provided a null instance to write\n"));
       return;
     }
+  */
 
   CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
                "Preparing to write to DDS\n"));
   DDS_ReturnCode_t retval = this->impl_->write (an_instance,
-                                 DDS_HANDLE_NIL);
+                                                DDS_HANDLE_NIL);
 
   if (retval != DDS_RETCODE_OK)
     {

@@ -6,7 +6,7 @@ project(DDS_Quoter_Base_idl_gen) : taoidldefaults {
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
               -Wb,stub_export_macro=QUOTER_BASE_STUB_Export \
-              -Wb,stub_export_include=Quoter_Base_stub_export.h
+              -Wb,stub_export_include=Quoter_Base_stub_export.h -GT
 
   IDL_Files {
     Quoter_Base.idl
@@ -15,15 +15,17 @@ project(DDS_Quoter_Base_idl_gen) : taoidldefaults {
 
 project(DDS_Quoter_Base_ndds_ts_gen) : ndds_ts_defaults   {
   custom_only = 1
+  after += DDS_Quoter_Base_idl_gen
+  ndds_ts_flags += -corba Quoter_BaseC.h -orb ACE_TAO1.7
 
   NDDSTypeSupport_Files {
     Quoter_Base.idl
   }
 }
 
-project(DDS_Quoter_Base_NDDS_TS) : nddslib {
-  after += DDS_Quoter_Base_ndds_ts_gen
-
+project(DDS_Quoter_Base_NDDS_TS) : nddslib, taolib {
+  after += DDS_Quoter_Base_ndds_ts_gen DDS_Quoter_Base_stub
+  libs += DDS_Quoter_Base_stub
   libout = ../lib
   sharedname = DDS_Quoter_Base_NDDS_TS
   

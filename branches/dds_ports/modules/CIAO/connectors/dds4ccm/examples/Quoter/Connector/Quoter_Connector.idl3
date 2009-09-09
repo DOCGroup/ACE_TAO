@@ -59,13 +59,13 @@ module Quoter
   component Quoter_Connector //: CCM_DDS::DDS_TopicBase
   {
     // @from DDS_TopicBase
-    readonly attribute string topic_name;
-    readonly attribute DDS::StringSeq key_fields;
+    attribute string topic_name;
+    attribute DDS::StringSeq key_fields;
     
     // @from DDS_TopicBase : DDS_Base
     uses CCM_DDS::ConnectorStatusListener error_listener;
-    readonly attribute DDS::DomainId_t domain_id;
-    readonly attribute string qos_provile;
+    attribute DDS::DomainId_t domain_id;
+    attribute string qos_profile;
     
     // @from DDS_Write for Stock_Info
     provides CCM_DDS::Stock_Info_Writer info_in_data;
