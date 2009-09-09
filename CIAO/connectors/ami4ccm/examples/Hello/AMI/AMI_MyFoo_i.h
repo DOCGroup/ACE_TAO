@@ -73,6 +73,6 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     private:
     ::CCM_AMI::MyFoo_var foo_receiver_;
   };
-};
+}
 #endif /* AMI_MyFoo_i_H */
 
