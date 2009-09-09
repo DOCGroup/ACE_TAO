@@ -1,3 +1,9 @@
+Wed Sep  9 09:50:00 UTC 2009  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Stop running test that occationaly locksup the LynsOS kernal.
+
 Tue Sep  8 16:16:17 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/Leader_Follower_Flushing_Strategy.cpp:
