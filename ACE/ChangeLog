@@ -1,3 +1,10 @@
+Thu Sep 10 07:14:01 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * NEWS:
+          
+          Added entry for a fix in TAO_IDL to generate dds code with 
+          correct wstring size.
+          
 Tue Sep  8 20:27:14 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.local.GNU: Strip CLEANUP_INSTALL before
