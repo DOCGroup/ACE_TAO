@@ -1,23 +1,26 @@
 USER VISIBLE CHANGES BETWEEN TAO-1.7.2 and TAO-1.7.3
 ====================================================
 
-. Merged in changes from OCI's distribution which 
-  originate from OCI request ticket [RT 12994]. Added 
+. Merged in changes from OCI's distribution which
+  originate from OCI request ticket [RT 12994]. Added
   following ORB options.
-  
+
     -ORBForwardOnceOnObjectNotExist [0|1]
     -ORBForwardOnceOnCommFailure [0|1]
     -ORBForwardOnceOnTransient [0|1]
     -ORBForwardOnceOnInvObjref [0|1]
-  
+
   The -ORBForwardOnceOnObjectNotExist ORB option is added
   to avoid side effect from
-  -ORBForwardInvocationOnObjectNotExist that could cause 
-  the request fall into forward loop in some use cases 
-  (e.g. client sends request while servant is deactivated). 
-  The other options are added for the same purpose to avoid 
+  -ORBForwardInvocationOnObjectNotExist that could cause
+  the request fall into forward loop in some use cases
+  (e.g. client sends request while servant is deactivated).
+  The other options are added for the same purpose to avoid
   possible forward loop upon specified exceptions.
-  
+
+. Corrected TAO_IDL dds code generation to count WChar size for wstring
+  marshal size.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.7.1 and TAO-1.7.2
 ====================================================
 
