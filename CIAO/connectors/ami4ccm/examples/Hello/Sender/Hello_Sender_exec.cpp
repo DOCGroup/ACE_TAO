@@ -37,19 +37,19 @@ namespace CIAO_Hello_AMI_Sender_Impl
   //============================================================
   // Facet Executor Implementation Class: MyFoo_callback_exec_i
   //============================================================
-  
+
   MyFoo_callback_exec_i::MyFoo_callback_exec_i (void)
   {
   }
-  
+
   MyFoo_callback_exec_i::~MyFoo_callback_exec_i (void)
   {
   }
-  
+
   //============================================================
   // Operations from ::CCM_AMI::MyFoo_callback
   //============================================================
-  
+
   // FOO methods
   void
   MyFoo_callback_exec_i::foo_callback_handler (
@@ -58,15 +58,15 @@ namespace CIAO_Hello_AMI_Sender_Impl
   {
     printf ("Sender (FOO) :\tCallback from AMI : result <%d> answer <%s>\n", result, answer);
   }
-  
+
   void
   MyFoo_callback_exec_i::foo_callback_excep (
       const ::CCM_AMI::InternalException & exception_holder)
   {
-    printf ("Sender (FOO) :\tCallback EXCEPTION from AMI : exception id : <%d> exception error : <%s>\n",
+    printf ("Sender (FOO) :\tCallback except from AMI : exception id : <%d> except string : <%s>\n",
       exception_holder.id, exception_holder.error_string.in ());
   }
-  
+
   // HELLO methods
   void
   MyFoo_callback_exec_i::hello_callback_handler (
@@ -74,12 +74,12 @@ namespace CIAO_Hello_AMI_Sender_Impl
   {
     printf ("Sender (FOO) :\tCallback from AMI (HELLO) : answer <%d>\n", answer);
   }
-  
+
   void
   MyFoo_callback_exec_i::hello_callback_excep (
       const ::CCM_AMI::InternalException & exception_holder)
   {
-    printf ("Sender (FOO) :\tCallback EXCEPTION from AMI (HELLO) : exception id : <%d> exception error : <%s>\n",
+    printf ("Sender (FOO) :\tCallback except from AMI (HELLO) : exception id : <%d> except string : <%s>\n",
       exception_holder.id, exception_holder.error_string.in ());
   }
 
@@ -100,12 +100,12 @@ namespace CIAO_Hello_AMI_Sender_Impl
   {
     printf ("Sender (INTERFACE) :\tCallback from AMI : result <%f>\n", result);
   }
-  
+
   void
   MyInterface_callback_exec_i::do_something_with_something_callback_excep (
     const ::CCM_AMI::InternalException & exception_holder)
   {
-    printf ("Sender (INTERFACE) :\tCallback EXCEPTION from AMI : exception id : <%d> exception error : <%s>\n",
+    printf ("Sender (INTERFACE) :\tCallback except from AMI : exception id : <%d> except string : <%s>\n",
             exception_holder.id, exception_holder.error_string.in ());
   }
 
@@ -135,12 +135,12 @@ namespace CIAO_Hello_AMI_Sender_Impl
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous call\n");
           }
       }
-    printf ("Sender (ASYNCH) :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
+    printf ("Sender (ASYNCH) :\tInvoke Asynchronous call to test except handling\n");
     my_foo_ami_->sendc_foo ("");
     printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
     return 0;
   }
-  
+
   //============================================================
   // Worker thread for synchronous invocations for MyFoo
   //============================================================
@@ -200,12 +200,12 @@ namespace CIAO_Hello_AMI_Sender_Impl
         printf ("Sender (INTERFACE) :\tInvoked Asynchronous call\n");
       }
     }
-    printf ("Sender (INTERFACE) :\tInvoke Asynchronous call to test EXCEPTION HANDLING\n");
+    printf ("Sender (INTERFACE) :\tInvoke Asynchronous call to test except handling\n");
     my_interface_ami_->sendc_do_something_with_something (0, 0);
     printf ("Sender (INTERFACE) :\tInvoked Asynchronous call.\n");
     return 0;
   }
-  
+
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
@@ -214,17 +214,17 @@ namespace CIAO_Hello_AMI_Sender_Impl
     global_interface_callback_ (0)
   {
   }
-  
+
   Sender_exec_i::~Sender_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes.
-  
+
   // Port operations.
-  
+
   ::CCM_AMI::CCM_AMI_MyFoo_callback_ptr
   Sender_exec_i::get_the_my_foo_callback ()
   {
@@ -235,7 +235,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
     return  global_foo_callback_;
   }
-  
+
   ::CCM_AMI::CCM_AMI_MyInterface_callback_ptr
   Sender_exec_i::get_the_my_interface_callback ()
   {
@@ -248,7 +248,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   }
 
   // Operations from Components::SessionComponent.
-  
+
   void
   Sender_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -260,13 +260,13 @@ namespace CIAO_Hello_AMI_Sender_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Sender_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Sender_exec_i::ccm_activate (void)
   {
@@ -290,30 +290,30 @@ namespace CIAO_Hello_AMI_Sender_Impl
   asynch_interface_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
   }
-  
+
   void
   Sender_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Sender_exec_i::ccm_remove (void)
   {
     /* Your code here. */
   }
-  
+
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Hello_AMI_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_RETURN (
       retval,
       Sender_exec_i,
       ::Components::EnterpriseComponent::_nil ());
-    
+
     return retval;
   }
 }
@@ -323,48 +323,48 @@ namespace CIAO_Hello_AMI_Sender_Impl
   //============================================================
   // Home Executor Implementation Class: SenderHome_exec_i
   //============================================================
-  
+
   SenderHome_exec_i::SenderHome_exec_i (void)
   {
   }
-  
+
   SenderHome_exec_i::~SenderHome_exec_i (void)
   {
   }
-  
+
   // All operations and attributes.
-  
+
   // Factory operations.
-  
+
   // Finder operations.
-  
+
   // Implicit operations.
-  
+
   ::Components::EnterpriseComponent_ptr
   SenderHome_exec_i::create (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_THROW_EX (
       retval,
       Sender_exec_i,
       ::CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
-  
+
   extern "C"  ::Components::HomeExecutorBase_ptr
   create_Hello_AMI_SenderHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-    
+
     ACE_NEW_RETURN (
       retval,
       SenderHome_exec_i,
       ::Components::HomeExecutorBase::_nil ());
-    
+
     return retval;
   }
 }
