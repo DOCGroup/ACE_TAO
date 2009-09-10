@@ -12,9 +12,6 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.2 and ACE-5.7.3
 . HP-UX PARISC aCC < 3.80 are deprecated and can't be used anymore. Upgrade
   to aCC 3.80 or newer
 
-. Corrected TAO_IDL dds code generation to count WChar size for wstring 
-  marshal size. 
-          
 USER VISIBLE CHANGES BETWEEN ACE-5.7.1 and ACE-5.7.2
 ====================================================
 
