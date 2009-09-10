@@ -780,9 +780,20 @@ be_visitor_field_serializer_op_cs::visit_string (be_string *node)
       *os << "_dcps_max_marshaled_size_ulong () + " << buff;
       break;
     case TAO_CodeGen::TAO_FIND_SIZE:
-      *os << "_dcps_max_marshaled_size_ulong() + "
-          << "ACE_OS::strlen(_tao_aggregate."
-          << f->local_name () << ".in ())";
+      if (node->node_type() == AST_Decl::NT_wstring)
+      {
+        *os << "_dcps_max_marshaled_size_ulong() + "
+          << "(_tao_aggregate." << f->local_name () << ".in () ? " 
+            << "ACE_OS::strlen(_tao_aggregate."
+            << f->local_name () << ".in ()) * sizeof (CORBA::WChar) : 0)";
+      }
+      else
+      {
+        *os << "_dcps_max_marshaled_size_ulong() + "
+            << "(_tao_aggregate." << f->local_name () << ".in () ? "
+            << "ACE_OS::strlen(_tao_aggregate."
+            << f->local_name () << ".in ()) : 0)";
+      }
       break;
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
