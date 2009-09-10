@@ -994,9 +994,13 @@ switch (this->ctx_->sub_state ())
 
           break;
         case AST_Decl::NT_string:
-        case AST_Decl::NT_wstring:
           *os << "the_length += _dcps_max_marshaled_size_ulong () " << be_nl
             << "+ (_tao_sequence[i] == 0 ? 0 : ACE_OS::strlen (_tao_sequence[i]));" 
+            << be_uidt_nl;
+          break;
+        case AST_Decl::NT_wstring:
+          *os << "the_length += _dcps_max_marshaled_size_ulong () " << be_nl
+            << "+ (_tao_sequence[i] == 0 ? 0 : ACE_OS::strlen (_tao_sequence[i]) * sizeof (CORBA::WChar));" 
             << be_uidt_nl;
           break;
         case AST_Decl::NT_interface:
