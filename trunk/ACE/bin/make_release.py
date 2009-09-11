@@ -471,15 +471,15 @@ def tag ():
                      opts.repo_root + "/Middleware/tags/" + branch)
 
     # Update latest tag
-    if opts.release_type == "major":
-        update_latest_tag ("Major", branch)
-    elif opts.release_type == "minor":
-        update_latest_tag ("Minor", branch)
-    elif opts.release_type == "beta":
-        update_latest_tag ("Beta", branch)
-        update_latest_tag ("Micro", branch)
-        if comp_versions["ACE_beta"] == 1:
-                update_latest_tag ("BFO", branch)
+#    if opts.release_type == "major":
+#        update_latest_tag ("Major", branch)
+#    elif opts.release_type == "minor":
+#        update_latest_tag ("Minor", branch)
+#    elif opts.release_type == "beta":
+#        update_latest_tag ("Beta", branch)
+#        update_latest_tag ("Micro", branch)
+#        if comp_versions["ACE_beta"] == 1:
+#                update_latest_tag ("BFO", branch)
 
     # Tag MPC
     svn_client.copy (opts.repo_root + "/MPC/trunk",
