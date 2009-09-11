@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/tests/Event/Basic/svc.complex.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <static id="EC_Factory" params="-ECProxyPushConsumerCollection mt:delayed:list -ECProxyPushSupplierCollection mt:delayed:list -ECdispatching reactive -ECfiltering prefix -ECproxyconsumerlock thread -ECproxysupplierlock thread -ECsupplierfiltering per-supplier"/>
+</ACE_Svc_Conf>

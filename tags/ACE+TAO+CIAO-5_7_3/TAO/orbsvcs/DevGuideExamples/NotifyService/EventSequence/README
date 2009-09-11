@@ -1,0 +1,65 @@
+// $Id$
+
+Event Notification Service
+
+
+File: examples/NotifyService/EventSequence/README
+
+This directory contains an example which transmits an EventBatch using the Notification Service.
+
+This example extends the Messenger example in GettingStarted directory 
+to illustrate how the Notification channel can be used to push event batches 
+from the supplier to the consumer. The example uses the push/push model.
+
+The MessengerServer in this example plays the role of a server for
+the MessengerClient and the role of a supplier for the MessengerConsumer. 
+The flow of messages is shown below:
+
+MessengerClient->MessengerSupplier->NotificationChannel->MessengerConsumer.
+
+
+The Client code is stored in:
+
+examples/NotifyService/EventSequence/MessengerClient.cpp
+
+The Server code is stored in:
+
+examples/NotifyService/EventSequence/MessengerServer.cpp
+
+The Consumer code is stored in:
+
+examples/NotifyService/EventSequence/MessengerConsumer.cpp
+
+
+How to Run
+----------
+
+To start the Naming Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+
+To start the Notification Service:
+---------------------------------
+$TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -ORBInitRef NameService=file://ns.ior&
+
+To start the server/supplier
+----------------------------
+./MessengerServer -ORBInitRef NameService=file://ns.ior
+
+To start the consumer
+---------------------
+./MessengerConsumer -ORBInitRef NameService=file://ns.ior
+
+To start the client
+-------------------
+./MessengerClient -ORBInitRef NameService=file://ns.ior
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl

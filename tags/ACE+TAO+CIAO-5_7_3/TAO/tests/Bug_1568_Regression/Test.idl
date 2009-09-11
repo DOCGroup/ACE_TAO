@@ -1,0 +1,32 @@
+/**
+ * @file Test.idl
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@atdesk.com>
+ */
+module Foo
+{
+  module Bar
+  {
+    interface A
+    {
+      void op1();
+      void op2();
+    };
+
+    interface B
+    {
+      void op3();
+    };
+  };
+};
+
+module Baz
+{
+  interface C : Foo::Bar::A, Foo::Bar::B
+  {
+    void op4();
+    oneway void shutdown ();
+  };
+};
