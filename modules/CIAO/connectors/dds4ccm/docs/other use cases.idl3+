@@ -1,0 +1,58 @@
+module X1 {
+  interface Y <typename S> {
+      void send (S event);
+  };
+  interfacedef Y<string> string_sender;
+  interfacedef Y<float> float_sender;
+};
+
+module X2 {
+  interface Y <typename T> {
+      void receiver (T event);
+  };
+  interfacedef Y<string> string_receiver;
+  interfacedef Y<float> float_receiver;
+};
+
+
+module X3 {
+  porttype myGateway {
+    uses X1::string_sender send;
+    provides X2::string_receiver receive;
+  };
+};
+
+module X4 {
+  interfacedef X1::Y<T> sender;
+  interfacedef X2::Y<T> receiver;
+  porttype myGateway {
+    uses sender;
+    provides receiver;
+  };
+  porttype myGateway2 {
+    uses sender;
+    provides receiver;
+  };
+};
+
+module X5 {
+  modules Typed <typename T> {
+    interfacedef X1::Y<T> sender;
+    interfacedef X2::Y<T> receiver;
+    porttype Z {
+      uses sender;
+      provides receiver;
+    }
+  }
+};
+
+moduledef X5::Typed<string> stringport;
+
+Component C2 {
+  port stringport::Z i;
+  };
+Component C2 {
+  port X4::myGateway i;
+  };
+
+
