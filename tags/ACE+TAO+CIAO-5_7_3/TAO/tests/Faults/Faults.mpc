@@ -1,0 +1,89 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+    ping.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Middle): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = middle
+  after += *idl
+
+  Source_Files {
+    test_i.cpp
+    middle.cpp
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = client
+  after += *idl
+
+  Source_Files {
+    test_i.cpp
+    client.cpp
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Ping): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = ping
+  after += *idl
+
+  Source_Files {
+    ping_i.cpp
+    ping.cpp
+  }
+  Source_Files {
+    pingC.cpp
+    pingS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Pong): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = pong
+  after += *idl
+
+  Source_Files {
+    ping_i.cpp
+    pong.cpp
+  }
+  Source_Files {
+    pingC.cpp
+    pingS.cpp
+  }
+  IDL_Files {
+  }
+}
