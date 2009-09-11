@@ -1,7 +1,3 @@
-Fri Sep 11 02:28:22 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-	* CIAO version 0.7.3 released.
-
 Thu Sep 10 07:05:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
