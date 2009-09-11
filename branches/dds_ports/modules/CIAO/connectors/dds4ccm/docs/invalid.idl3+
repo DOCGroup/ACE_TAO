@@ -1,0 +1,381 @@
+#include "dds_rtf2_dcps.idl"
+
+module CCM_DDS {
+
+	// ---------- Untyped part ----------------------------------------------------------------
+	// Here are placed all the constructs that are not dependent on the data type
+
+	// ---------------------------
+	// Enums, structs and Typedefs
+	// ---------------------------
+	typedef unsigned long 				InstanceNumber_t;
+	typedef sequencs<InstanceNumber_t>	InstanceNumberSeq;
+
+	enum AccessStatus {
+		FRESH_INFO,
+		ALREADY_SEEN
+		};
+
+	enum InstanceStatus {
+		INSTANCE_CREATED,
+		INSTANCE_UPDATED,
+		INSTANCE_DELETED
+		};
+
+	struct ReadInfo {
+		AccessStatus		access_status;
+		InstanceStatus		instance_status;
+		DDS::Time_t			timestamp;
+		InstanceNumber_t	instance_rank;
+    DDS::SampleInfo  sample_info
+		};
+	typedef sequence<ReadInfo> ReadInfoSeq;
+
+	struct QueryFilter {
+		string 				query;
+		DDS::StringSeq		query_parameters;
+		};
+
+	enum GroupingMode {
+		INSTANCE_HISTORY,
+		LAST_SAMPLE_ALL_INSTANCES,
+		ALL_SAMPLES_ALL_INSTANCES
+		};
+
+	// ----------
+	// Exceptions
+	// ----------
+	exception AlreadyCreated {
+		InstanceNumberSeq indexes;	// of the erroneous
+		};
+
+	exception NonExistent{
+		InstanceNumberSeq indexes;	// of the erroneous
+		};
+
+	exception InternalError{
+		unsigned long error_code;	// DDS codes that are relevant:
+									// ERROR (1); UNSUPPORTED (2); OUT_OF_RESOURCE (5)
+		InstanceNumber_t index;		// of the erroneous
+		};
+
+	exception BadParameter {};
+
+	// ----------
+	// Interfaces
+	// ----------
+
+	// Data Listener control
+	// ---------------------
+	interface DataListenerControl {
+		attribute boolean enabled;			// set to FALSE at init time
+		};
+
+	// Status Access
+	// -------------
+	interface PortStatusListener {	// status that are relevant to the component
+		void on_requested_deadline_missed(
+			in DDS::DataReader						the_reader,
+			in DDS::RequestedDeadlineMissedStatus	status);
+		void on_sample_lost(
+			in DDS::DataReader						the_reader,
+			in DDS::SampleLostStatus				status);
+		};
+
+	interface ConnectorStatusListener { // status that are relevant system-wide
+		void on_inconsistent_topic(
+			in DDS::Topic							the_topic,
+			in DDS::InconsistentTopicStatus			status);
+		void on_requested_incompatible_qos(
+			in DDS::DataReader 						the_reader,
+			in DDS::RequestedIncompatibleQosStatus	status);
+		void on_sample_rejected(
+			in DDS::DataReader 						the_reader,
+			in DDS::SampleRejectedStatus 			status);
+		void on_offered_deadline_missed(
+			in DDS::DataWriter 						the_writer,
+			in DDS::OfferedDeadlineMissedStatus 	status);
+		void on_offered_incompatible_qos(
+			in DDS::DataWriter 						the_writer,
+			in DDS::OfferedIncompatibleQosStatus 	status);
+		void on_unexpected_status (
+			in DDS::Entity 							the_entity,
+			in DDS::StatusKind						status_kind);
+		};
+
+  interface MultiWriter <typename TSeq> {
+    InstanceNumber_t write(in TSeq instances) // returns number of written instances
+        raises (InternalError);
+    attribute boolean is_coherent_write;
+    // behaviour:
+    // - attempt to write is stopped at the first error
+    // - if is_coherent_write, write orders are placed betwen begin/end
+    //   coherent updates (even if an error occurs)
+    };
+
+  interface Updater <typename T> {
+    void create (in T an_instance)
+      raises (AlreadyCreated,
+        InternalError);
+    void update (in T an_instance)
+      raises (NonExistent,
+        InternalError);
+    void delete (in T an_instance)
+      raises (NonExistent,
+        InternalError);
+    readonly attribute boolean is_lifecycle_checked;
+    // behaviour:
+    // - exceptions AlreadyCreated or NonExistent are raised only if
+    //   is_lifecycle_checked
+    // - note: this check requires to previously attempt to read (not free)
+    // - note: this check is not 100% guarantee as a creation or a deletion may
+    //  occur between the check and the actual write od dispose order
+    };
+
+  interface MultiUpdater <typename TSeq> {
+    InstanceNumber_t create (in TSeq instances)  // returns number of created instances
+      raises (AlreadyCreated,
+        InternalError
+    InstanceNumber_t update (in TSeq instances)  // returns number of updated instances
+      raises (NonExistent,
+        InternalError);
+    InstanceNumber_t delete (in TSeq instances)  // returns number of deleted instances
+      raises (NonExistent,
+        InternalError);
+    readonly attribute boolean is_lifecycle_checked;
+    attribute boolean is_coherent_write;
+    // behaviour:
+    // - exceptions AlreadyCreated or NonExistent are raised only if
+    //   is_lifecycle_checked
+    // - global check is performed before actual write or dispose
+    //   (in case of error, all the erroneous instances are reported
+    //   in the exception)
+    // - attempt to write or dispose is stopped at the first error
+    // - if is_coherent_write, write orders are placed betwen begin/end
+    //   coherent updates (even if an error occurs)
+    };
+
+  // Data access - subscribing side
+  // ------------------------------
+  //  read => no wait
+  //  get  => wait
+
+  interface Reader <typename T, typename TSeq> {
+    void read_all (out TSeq instances, out ReadInfoSeq infos)
+      raises (InternalError);
+    void read_all_history (out TSeq instances, out ReadInfoSeq infos)
+      raises (InternalError);
+    void read_one (inout T an_instance, out ReadInfo info)
+      raises (NonExistent,
+        InternalError);
+    void read_one_history (in T an_instance,
+             out TSeq instances, out ReadInfoSeq infos)
+      raises (NonExistent,
+        InternalError);
+    attribute QueryFilter filter
+      setraises (BadParameter);
+    // behaviour
+    // - read operations are performed with the following parameters
+    //  - READ or NO_READ
+    //  - NEW or NOT_NEW
+    //  - ALIVE
+    //  - through the query as specified in the filter ("" means no query)
+    // - data returned:
+    //  - read_all returns for each living instance, its last sample
+    //    ordered by instance first and then by sample
+    //  - read_all_history returns all the samples of all instances
+    //    ordered by instance first and then by sample
+    //  - read_one returns the last sample of the given instance
+    //  - read_one_history returns all the samples for the given instance
+    };
+
+  interface Getter <typename T, typename TSeq> {
+    boolean get_all (out TSeq instances, out ReadInfoSeq infos)
+      raises (InternalError);
+    boolean get_all_history (out TSeq instances, out ReadInfoSeq infos)
+      raises (InternalError);
+    boolean get_one (inout T an_instance, out ReadInfo info)
+      raises (NonExistent,
+        InternalError);
+    boolean get_one_history (in T an_instance,
+             out TSeq instances, out ReadInfoSeq infos)
+      raises (NonExistent,
+        InternalError);
+    boolean get_next (out T an_instance, out ReadInfo info)
+      raises (InternalError);
+    attribute QueryFilter   filter
+      setraises (BadParameter);
+    attribute DDS::Duration_t time_out;
+    // behaviour
+    // - get operations are performed with the following parameters
+    //  - NO_READ
+    //  - NEW or NOT_NEW
+    //  - ALIVE or NOT_ALIVE
+    //  - through the query as specified in the filter ("" means no query)
+    //  - within the time limit specified in time_out
+    // - all operations returns TRUE if data are provided,
+    //  FALSE if time-out occurred
+    // - data returned:
+    //  - get_all returns for all the instances their last sample
+    //  - get_all_history returns all the samples of all instances
+    //  - get_one returns the last sample of the given instance
+    //  - get_one_history returns all the samples for the given instance
+    //  - get_next returns each read sample one by one
+    };
+
+  interface RawListener <typename T> {
+    void on_data (in T an_instance, in ReadInfo info);
+    // behaviour
+    // - similar to a get_next, except that in push mode instead of pull mode
+    // - triggered only if enabled is the associated ListenerControl
+    // - query filter (if any) in the associated Reader
+    };
+
+  interface StateListener <typename T> {
+    void on_creation (in T an_instance, in DDS::Time_t timestamp);
+    void on_update (in T an_instance, in DDS::Time_t timestamp);
+    void on_deletion (in T an_instance, in DDS::Time_t timestamp);
+    // behaviour
+    // - similar to a get_next, except that different operations are called
+    //  depending on the instance state
+    // - triggered only if enabled is the associated ListenerControl
+    // - query filter (if any) in the associated Reader
+    };
+
+  interface MultiListener <typename TSeq> {
+    void on_data (in TSeq instances, in ReadInfoSeq infos);
+    attribute GroupingMode grouping_mode;
+    // behaviour
+    // - depending on grouping_mode similar to get_one_history(any new instance),
+    // get_all or get_all_history, except that in push mode instead of
+    // pull mode
+    // - triggered only if enabled is the associated ListenerControl
+    // - query filter (if any) in the associated Reader
+    };
+
+  porttype DDS_MultiWrite_T <typename TSeq> {
+    uses MultiWriter<TSeq>  data;
+    uses DDS::DataWriter    dds_entity;
+    };
+
+  porttype DDS_Update_T <typename T> {
+    uses Updater<T>        data;
+    uses DDS::DataWriter    dds_entity;
+    };
+
+  porttype DDS_MultiUpdate_T <typename TSeq> {
+    uses MultiUpdater<TSeq>     data;
+    uses DDS::DataWriter    dds_entity;
+    };
+
+  porttype DDS_Read_T <typename T, typename TSeq> {
+    uses Reader <T,TSeq>    data;
+    uses DDS::DataReader    dds_entity;
+    provides PortStatusListener status;
+    };
+
+  porttype DDS_Get_T <typename T, typename TSeq> {
+    uses Getter<T,TSeq>         data;
+    uses DDS::DataReader    dds_entity;
+    provides PortStatusListener status;
+    };
+
+  porttype DDS_RawListen_T <typename T, typename TSeq> {
+    uses Reader<T, TSeq>      data;
+    uses DataListenerControl  data_control;
+    provides RawListener    data_listener;
+    uses DDS::DataReader    dds_entity;
+    provides PortStatusListener status;
+    };
+
+  porttype DDS_StateListen_T <typename T, typename TSeq>{
+    uses Reader<T,TSeq>         data;
+    uses DataListenerControl  data_control;
+    provides StateListener    data_listener;
+    uses DDS::DataReader    dds_entity;
+    provides PortStatusListener status;
+    };
+
+  porttype DDS_MultiListen_T <typename T, typename TSeq> {
+    uses Reader<T,TSeq>         data;
+    uses DataListenerControl  data_control;
+    provides MultiListener    data_listener;
+    uses DDS::DataReader    dds_entity;
+    provides PortStatusListener status;
+    };
+
+
+	// ---------- Typed sub-part ------------------------------------------------------------------
+
+	module Typed<typename T, sequence<T> TSeq> {
+	// Gathers all the constructs that are dependent on the data type (T), either directly -- interfaces
+	// making use of T or TSeq, or indirectly -- porttypes using or providing those intefaces.
+	// TSeq is passed as a second parameter to avoid creating a new sequence type.
+    interface Writer <typename A> {
+      void write (in A an_instance)
+        raises (InternalError);
+      };
+
+    porttype DDS_Write_T <typename X> {
+      uses Writer<X>          data;
+      uses DDS::DataWriter    dds_entity;
+      };
+
+    typename CCM_DDS::DDS_Write_T<T> DDS_Write;
+    typename CCM_DDS::DDS_MultiWrite_T<T, TSeq> DDS_MultiWrite;
+    typename CCM_DDS::DDS_Update_T<T> DDS_Update;
+    typename CCM_DDS::DDS_MultiUpdate_T<TSeq> DDS_MultiUpdate;
+    typename CCM_DDS::DDS_Read_T<T,TSeq> DDS_Read;
+    typename CCM_DDS::DDS_Get_T<T,TSeq> DDS_Get;
+    typename CCM_DDS::DDS_RawListen_T<T, TSeq> DDS_RawListen;
+    typename CCM_DDS::DDS_StateListen_T<T, TSeq> DDS_StateListen;
+    typename CCM_DDS::DDS_MultiListen_T<T, TSeq> DDS_MulitListen;
+		// -------------------------------------
+		// Interfaces to be 'used' or 'provided'
+		// -------------------------------------
+
+		// Data access - publishing side
+		// -----------------------------
+
+
+
+
+		// ---------
+		// DDS Ports
+		// ---------
+
+		// ----------------------------
+		// Connectors
+		// (Correspond to DDS patterns)
+		// ----------------------------
+
+		connector DDS_Base {
+			uses ConnectorStatusListener		error_listener;
+			readonly attribute DDS::DomainId_t	domain_id;
+			readonly attribute string			qos_profile;// File URL or XML string
+			};
+
+		connector DDS_TopicBase : DDS_Base {
+			readonly attribute string			topic_name;
+			readonly attribute DDS::StringSeq	key_fields;
+			};
+
+		connector DDS_State: DDS_TopicBase {
+			mirrorport DDS_Update	 		observable;
+			mirrorport DDS_Read				passive_observer;
+			mirrorport DDS_Get				pull_observer;
+			mirrorport DDS_StateListen		push_observer;
+			};
+
+		connector DDS_Event : DDS_TopicBase {
+			mirrorport DDS_Write	 		supplier;
+			mirrorport DDS_Get				pull_consumer;
+			mirrorport DDS_RawListen		push_consumer;
+			};
+		};
+	};
+};
+
+
+
+
