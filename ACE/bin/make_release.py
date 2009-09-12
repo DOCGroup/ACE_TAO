@@ -67,7 +67,7 @@ def svn_login_callback (realm, username, may_save):
 def svn_log_message_callback ():
     """ Callback used by the svn library to generate log messages
     for operations such as copy """
-    return (True, "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid))
+    return (True, "ChangeLogTag: %s  %s  <%s>" % (release_date, signature, mailid))
 
 svn_client = pysvn.Client ()
 svn_client.callback_get_login = svn_login_callback
@@ -470,6 +470,10 @@ def tag ():
     svn_client.copy (opts.repo_root + "/Middleware/trunk",
                      opts.repo_root + "/Middleware/tags/" + branch)
 
+    # Tag MPC
+    svn_client.copy (opts.repo_root + "/MPC/trunk",
+                     opts.repo_root + "/MPC/tags/" + branch)
+
     # Update latest tag
 #    if opts.release_type == "major":
 #        update_latest_tag ("Major", branch)
@@ -480,10 +484,6 @@ def tag ():
 #        update_latest_tag ("Micro", branch)
 #        if comp_versions["ACE_beta"] == 1:
 #                update_latest_tag ("BFO", branch)
-
-    # Tag MPC
-    svn_client.copy (opts.repo_root + "/MPC/trunk",
-                     opts.repo_root + "/MPC/tags/" + branch)
 
 ##################################################
 #### Packaging methods
