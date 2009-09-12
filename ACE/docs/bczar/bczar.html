@@ -349,7 +349,7 @@
         <li>
           Move contents of the temporary directory's html to this directory -<br><code>mv ../tmp/html .</code></li>
         <li>
-          Now back our of this directory and remove the already existing soflink to the "Micro" directory -<br><code>cd ..<br>rm Micro</code></li>
+          Now back our of this directory and remove the already existing softlink to the "Micro" directory -<br><code>cd ..<br>rm Micro</code></li>
         <li>
           Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 5.6.7/html 
           Micro</code></li>
@@ -369,6 +369,10 @@
             Modify <b><code>/export/anduriltmp/bczar/copy_script.sh</code></b>
           to use the correct ACE version X.Y.Z and run it.
         </ul><br>
+      <li>
+        Validate the packages on the webserver whether they are really containing the new release. Make at least
+        one build where you run the TAO Hello world test and check if the libraries are having the
+        correct version number.</li>
       <li>
         Mail the approved release announcement out to, at minimum the following: <tt>ciao-users@list.isis.vanderbilt.edu</tt>,
         <tt>tao-users@list.isis.vanderbilt.edu</tt>, <tt>tao-announce@list.isis.vanderbilt.edu</tt>,
@@ -390,10 +394,6 @@
         <li>bin/diff-builds-and-group-fixed-tests-only.sh to give the correct default old_date for this release.</li></ul>
       <li>
         Update the NEWS, TAO/NEWS, and TAO/CIAO/NEWS files to have a new section for the next release.</li>
-      <li>
-        Validate the packages on the webserver whether they are really containing the new release. Make at least
-        one builid where you run the TAO Hello world test and check if the libraries are having the
-        correct version number.</li>
       </ol>
     </p>
     <hr>
