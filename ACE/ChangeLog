@@ -1,3 +1,10 @@
+Sun Sep 13 15:57:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Functor.h:
+        * ace/Functor_String.h:
+        * ace/Process.h:
+          Doxygen changes
+
 Sat Sep 12 05:41:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
