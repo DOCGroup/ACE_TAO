@@ -495,14 +495,14 @@ public:
    */
   virtual void child (pid_t parent);
 
-  /// Called by a <Process_Manager> that is removing this Process from
+  /// Called by a Process_Manager that is removing this Process from
   /// its table of managed Processes.  Default is to do nothing.
   virtual void unmanage (void);
 
   /**
-   * Wait for the process we've created to exit.  If <status> != 0, it
+   * Wait for the process we've created to exit.  If @a status != 0, it
    * points to an integer where the function store the exit status of
-   * child process to.  If <wait_options> == <WNOHANG> then return 0
+   * child process to.  If @a wait_options == @c WNOHANG then return 0
    * and don't block if the child process hasn't exited yet.  A return
    * value of -1 represents the <wait> operation failed, otherwise,
    * the child process id is returned.
@@ -514,7 +514,7 @@ public:
    * Timed wait for the process we've created to exit.  A return value
    * of -1 indicates that the something failed; 0 indicates that a
    * timeout occurred.  Otherwise, the child's process id is returned.
-   * If <status> != 0, it points to an integer where the function
+   * If @a status != 0, it points to an integer where the function
    * stores the child's exit status.
    *
    * @note On UNIX platforms this function uses <ualarm>, i.e., it
@@ -531,7 +531,7 @@ public:
   int kill (int signum = SIGINT);
 
   /**
-   * Terminate the process abruptly using <ACE::terminate_process>.
+   * Terminate the process abruptly using ACE::terminate_process().
    * This call doesn't give the process a chance to cleanup, so use it
    * with caution...
    */
@@ -591,6 +591,7 @@ protected:
 
   /// Set of handles that were passed to the child process.
   ACE_Handle_Set handles_passed_;
+
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
 
@@ -601,7 +602,6 @@ private:
   wchar_t* convert_env_buffer (const char* env) const;
 #endif
 };
-
 
 /**
  * @class ACE_Managed_Process
