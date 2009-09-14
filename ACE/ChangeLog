@@ -1,3 +1,8 @@
+Mon Sep 14 08:54:18 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Make sure $PATH is exported properly.
+
 Mon Sep 14 08:01:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Malloc_Test.cpp:
