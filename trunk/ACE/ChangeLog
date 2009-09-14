@@ -1,3 +1,10 @@
+Mon Sep 14 06:47:31 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+          Fine tuned compiler flags for X11 and Tcl/Tk.
+          Removed legacy linker settings
+
 Sun Sep 13 15:57:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Functor.h:
@@ -17,7 +24,7 @@ Sat Sep 12 05:41:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Sep 11 02:39:39 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.7.3 released.
+        * ACE version 5.7.3 released.
 
 Thu Sep 10 07:14:01 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
