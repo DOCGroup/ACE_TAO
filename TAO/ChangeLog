@@ -1,3 +1,8 @@
+Mon Sep 14 06:39:39 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Fixed_Array_Argument_T.cpp:
+          Layout changes
+
 Fri Sep 11 02:39:39 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO version 1.7.3 released.
@@ -7,9 +12,9 @@ Thu Sep 10 07:07:01 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
         * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
 
-          Corrected code generation to count WChar size for wstring 
-          marshal size. 
-          
+          Corrected code generation to count WChar size for wstring
+          marshal size.
+
 Wed Sep  9 12:43:42 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
 
         * MPC/config/catiorlib.mpb:
