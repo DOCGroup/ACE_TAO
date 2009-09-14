@@ -46,6 +46,9 @@ PLATFORM_TCL_CPPFLAGS=$(shell . /usr/local/lib/tcl*/tclConfig.sh && echo -n $$TC
 PLATFORM_TCL_LIBS=$(shell . /usr/local/lib/tcl*/tclConfig.sh && echo -n $$TCL_LIB_FLAG)
 PLATFORM_TCL_LDFLAGS=
 
+CPPFLAGS+=-I/usr/local/include
+LDFLAGS+=-L/usr/local/lib
+
 # Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 #
