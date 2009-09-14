@@ -1,3 +1,9 @@
+Mon Sep 14 06:54:30 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * include/makeinclude/platform_linux_suncc.GNU:
+          Fixes for Sun Studio for Linux.
+
 Mon Sep 14 06:47:31 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_g++_common.GNU:
