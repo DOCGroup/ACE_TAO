@@ -63,7 +63,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   MyFoo_callback_exec_i::foo_callback_excep (
       const ::CCM_AMI::InternalException & exception_holder)
   {
-    printf ("Sender (FOO) :\tCallback except from AMI : exception id : <%d> except string : <%s>\n",
+    printf ("Sender (FOO) :\tCallback except from AMI : excepti id : <%d> except string : <%s>\n",
       exception_holder.id, exception_holder.error_string.in ());
   }
 
@@ -79,7 +79,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   MyFoo_callback_exec_i::hello_callback_excep (
       const ::CCM_AMI::InternalException & exception_holder)
   {
-    printf ("Sender (FOO) :\tCallback except from AMI (HELLO) : exception id : <%d> except string : <%s>\n",
+    printf ("Sender (FOO) :\tCallback except from AMI (HELLO) : except id : <%d> except string : <%s>\n",
       exception_holder.id, exception_holder.error_string.in ());
   }
 
@@ -105,7 +105,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   MyInterface_callback_exec_i::do_something_with_something_callback_excep (
     const ::CCM_AMI::InternalException & exception_holder)
   {
-    printf ("Sender (INTERFACE) :\tCallback except from AMI : exception id : <%d> except string : <%s>\n",
+    printf ("Sender (INTERFACE) :\tCallback except from AMI : except id : <%d> except string : <%s>\n",
             exception_holder.id, exception_holder.error_string.in ());
   }
 
@@ -169,7 +169,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
       }
     catch (CCM_AMI::InternalError& ex)
       {
-        printf ("Sender (SYNCH) :\tExpected Exception caught : <%d> <%s>\n", ex.ex.id, ex.ex.error_string.in ());
+        printf ("Sender (SYNCH) :\tExpected Except caught : <%d> <%s>\n", ex.ex.id, ex.ex.error_string.in ());
       }
     return 0;
   }
