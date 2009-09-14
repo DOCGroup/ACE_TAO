@@ -150,7 +150,8 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos_iverrun = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos = (cp_pos_overrun < okd) ? cp_pos_overrun : 0; // but before object key
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
   bool ipv6_in_host = false;
@@ -163,7 +164,8 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos_a = ACE_OS::strchr(ior, ']');
+      const char *cp_pos_a_overrun = ACE_OS::strchr(ior, ']');
+      const char *cp_pos_a = (cp_pos_a_overrun < okd) ? cp_pos_a_overrun : 0; // before object key
       if (cp_pos_a == 0)
         {
           // No valid IPv6 address specified.
