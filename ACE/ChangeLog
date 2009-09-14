@@ -1,3 +1,9 @@
+Mon Sep 14 09:03:30 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_openbsd.GNU:
+          Added CPPFLAGS+=-I/usr/local/include and
+          LDFLAGS+=-L/usr/local/lib
+
 Mon Sep 14 08:54:18 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_g++_common.GNU:
