@@ -28,7 +28,7 @@ endif
 templates ?= automatic
 
 # The correct flags to pass to the linker for ELF dynamic shared library
-# versioning. None of this works on OpenBSD's ld.
+# versioning.
 # If the platform file didn't already set versioned_so, default to 1.
 versioned_so ?= 1
 with_ld ?=
@@ -36,13 +36,10 @@ ifeq ($(versioned_so),1)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
-    ifeq ($(with_ld),openbsd)
+    ifeq ($(with_ld),aix)
+    # What to do here???
     else
-      ifeq ($(with_ld),aix)
-      # What to do here???
-      else
-        SOFLAGS += -Wl,-h -Wl,$(SONAME)
-      endif
+      SOFLAGS += -Wl,-h -Wl,$(SONAME)
     endif
   endif
 endif
