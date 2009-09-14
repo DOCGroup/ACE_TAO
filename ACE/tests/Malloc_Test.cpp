@@ -236,7 +236,7 @@ print (const char *process_name,
   for (Test_Data *t = data; t != 0; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
+                  ACE_TEXT ("<<<< (%P) %C\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
                   process_name,
                   t->i1_,
                   t->i2_,

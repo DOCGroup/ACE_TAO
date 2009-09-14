@@ -1,3 +1,8 @@
+Mon Sep 14 08:01:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Malloc_Test.cpp:
+          Unicode fix
+
 Mon Sep 14 07:50:37 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_freebsd.GNU:
