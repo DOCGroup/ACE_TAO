@@ -10,11 +10,11 @@ else
   CXX_FOR_VERSION_TEST ?= $(CXX)
 endif
 
-CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
+CXX_VERSION = $(shell PATH=$(PATH) $(CXX_FOR_VERSION_TEST) -dumpversion)
 ifeq (cmd,$(findstring cmd,$(SHELL)))
-CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e "s/[^0-9\.]//g" | sed -e "s/\..*$$//")
+CXX_MAJOR_VERSION := $(shell PATH=$(PATH) $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e "s/[^0-9\.]//g" | sed -e "s/\..*$$//")
 else
-CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+CXX_MAJOR_VERSION := $(shell PATH=$(PATH) $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
 endif
 ifeq ($(findstring $(CXX_MAJOR_VERSION),1 2 3),$(CXX_MAJOR_VERSION))
 GXX_4_OR_BETTER := 0
