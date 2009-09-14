@@ -2685,8 +2685,8 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
   if (this->orb_params ()->add_endpoints (lane, endpoints) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t)\n")
-                  ACE_TEXT ("Invalid endpoint(s) specified:\n%C\n"),
+                  ACE_TEXT ("(%P|%t) ")
+                  ACE_TEXT ("Invalid endpoint(s) specified: <%C>.\n"),
                   endpoints.c_str ()));
       throw ::CORBA::BAD_PARAM (
         CORBA::SystemException::_tao_minor_code (

@@ -1,4 +1,9 @@
-Mon Sep 14 06:39:39 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Sep 14 08:02:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Improved debug message
+
+Mon Sep 14 06:39:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Fixed_Array_Argument_T.cpp:
           Layout changes
