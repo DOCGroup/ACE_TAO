@@ -712,6 +712,15 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 int
 TAO_Naming_Server::fini (void)
 {
+  // First get rid of the multi cast handler
+  if (this->ior_multicast_)
+    {
+      orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
+         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+      delete this->ior_multicast_;
+      this->ior_multicast_ = 0;
+    }
+
   // Destroy the child POA ns_poa that is created when initializing
   // the Naming Service
   try
@@ -747,13 +756,6 @@ TAO_Naming_Server::fini (void)
   ns_poa_ = PortableServer::POA::_nil ();
   root_poa_ = PortableServer::POA::_nil ();
   orb_ = CORBA::ORB::_nil ();
-
-  if (this->ior_multicast_ != 0)
-    {
-      orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
-         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
-      delete this->ior_multicast_;
-    }
 
 #if !defined (CORBA_E_MICRO)
   delete this->context_index_;
