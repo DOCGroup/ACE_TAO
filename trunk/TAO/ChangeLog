@@ -1,3 +1,8 @@
+Tue Sep 15 12:37:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          Fixed possible crash at shutdown
+
 Tue Sep 15 07:55:00 UTC 2009  Simon Massey  <sma@prismtech.com>
 
         * tao/IIOP_Profile.cpp:
