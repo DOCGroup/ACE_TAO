@@ -46,9 +46,6 @@
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
-//Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
-#define ACE_HAS_SIG_MACROS
-
 //#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T

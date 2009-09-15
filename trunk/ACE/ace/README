@@ -558,9 +558,6 @@ ACE_HAS_SIGINFO_T                       Platform supports SVR4
 ACE_HAS_SIGSUSPEND                      Platform supports sigsuspend()
 ACE_HAS_SIGISMEMBER_BUG                 Platform has bug with
                                         sigismember() (HP/UX 11).
-ACE_HAS_SIG_MACROS                      Platform/compiler has macros
-                                        for sig{empty,fill,add,del}set
-                                        (e.g., SCO and FreeBSD)
 ACE_HAS_SIGNAL_OBJECT_AND_WAIT          Platform supports the Win32
                                         SignalObjectAndWait() function
                                         (WinNT 4.0 and beyond).

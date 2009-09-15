@@ -62,14 +62,6 @@ extern "C"
   typedef u_int sigset_t;
 #endif /* ACE_LACKS_SIGSET */
 
-#if defined (ACE_HAS_SIG_MACROS)
-#  undef sigemptyset
-#  undef sigfillset
-#  undef sigaddset
-#  undef sigdelset
-#  undef sigismember
-#endif /* ACE_HAS_SIG_MACROS */
-
 #if !defined (ACE_HAS_SIG_ATOMIC_T)
    typedef int sig_atomic_t;
 #endif /* !ACE_HAS_SIG_ATOMIC_T */

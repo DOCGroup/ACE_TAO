@@ -86,8 +86,6 @@
 // has man pages, but links with missing symbols and I can't find lib yet
 /* #define ACE_HAS_REGEX */
 
-#define ACE_HAS_SIG_MACROS
-
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 #if _UNICOS > 9

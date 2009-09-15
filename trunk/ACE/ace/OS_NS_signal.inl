@@ -129,7 +129,7 @@ sigemptyset (sigset_t *s)
   *s = 0 ;
   return 0;
 #else
-  ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
+  return ace_sigemptyset_helper (s);
 #endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
@@ -145,7 +145,7 @@ sigfillset (sigset_t *s)
   *s = ~(sigset_t) 0;
   return 0 ;
 #else
-  ACE_OSCALL_RETURN (::sigfillset (s), int, -1);
+  return ace_sigfillset_helper (s);
 #endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 

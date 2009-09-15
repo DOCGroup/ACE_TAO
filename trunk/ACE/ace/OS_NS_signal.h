@@ -33,6 +33,36 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+
+/*
+ * We inline and undef some functions that may be implemented
+ * as macros on some platforms. This way macro definitions will
+ * be usable later as there is no way to save the macro definition
+ * using the pre-processor.
+ *
+ */
+
+inline int ace_sigemptyset_helper (sigset_t *s)
+{
+#if defined (sigemptyset)
+  return sigemptyset (s);
+#undef sigemptyset
+#else
+  return ACE_STD_NAMESPACE::sigemptyset (s);
+#endif /* defined (sigemptyset) */
+}
+
+inline int ace_sigfillset_helper (sigset_t *s)
+{
+#if defined (sigfillset)
+  return sigfillset (s);
+#undef sigfillset
+#else
+  return ACE_STD_NAMESPACE::sigfillset (s);
+#endif /* defined (sigfillset) */
+}
+
+
 # if !defined (SIG_BLOCK)
 #   define SIG_BLOCK   1
 # endif /* SIG_BLOCK   */
