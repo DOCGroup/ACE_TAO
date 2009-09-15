@@ -1,3 +1,26 @@
+Tue Sep 15 20:33:47 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_signal.h:
+        * ace/OS_NS_signal.inl:
+        * ace/README:
+        * ace/config-cray.h:
+        * ace/config-macosx-leopard.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-openbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-sco-5.0.0.h:
+        * ace/os_include/os_signal.h:
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed use of ACE_HAS_SIG_MACROS macro. If platform defines
+          sigXXXset macros, use inline functions to save definition
+          before undefining it.
+
 Mon Sep 14 09:03:30 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_openbsd.GNU:

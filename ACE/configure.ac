@@ -6032,33 +6032,6 @@ ACE_CACHE_CHECK([for reentrant function macros],
      ])
   ], [AC_DEFINE([ACE_HAS_BROKEN_R_ROUTINES])],)
 
-dnl Check if platform defines sig{empty,fill,add,del}set as macros
-ACE_CACHE_CHECK([for sig{empty fill add del}set macros],
-  [ace_cv_feature_have_sig_macros],
-  [
-   AC_EGREP_CPP([ACE_SIG_MACROS],
-     [
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <signal.h>
-
-#if defined (sigemptyset) || \
-    defined (sigfillset) || \
-    defined (sigaddset) || \
-    defined (sigdelset) || \
-    defined (sigismember)
-  ACE_SIG_MACROS
-#endif
-     ],
-     [
-      ace_cv_feature_have_sig_macros=yes
-     ],
-     [
-      ace_cv_feature_have_sig_macros=no
-     ])
-  ], [AC_DEFINE([ACE_HAS_SIG_MACROS])],)
-
 dnl Check for open() mode masks
 ACE_CACHE_CHECK([for open() mode masks],
   [ace_cv_feature_have_open_mode_masks],[
