@@ -150,7 +150,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos_iverrun = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos_overrun = ACE_OS::strchr (ior, ':');  // Look for a port
   const char *cp_pos = (cp_pos_overrun < okd) ? cp_pos_overrun : 0; // but before object key
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
