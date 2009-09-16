@@ -1,3 +1,11 @@
+Wed Sep 16 10:54:39 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_signal.inl:
+        * ace/config-win32-cegcc.h:
+        * ace/config-win32-mingw.h:
+          Removed use of ACE_LACKS_SIGSET_DEFINITIONS macro. It seems that
+          this macro was left over from the past.
+
 Wed Sep 16 07:25:26 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_signal.h:
