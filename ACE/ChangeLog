@@ -1,3 +1,8 @@
+Wed Sep 16 06:27:45 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+          Fixed typo in PLATFORM_TCL_LIBS.
+
 Tue Sep 15 20:33:47 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_signal.h:
