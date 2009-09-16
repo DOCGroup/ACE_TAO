@@ -42,25 +42,27 @@
  *
  */
 
+#if !defined (ACE_LACKS_SIGSET)
 inline int ace_sigemptyset_helper (sigset_t *s)
 {
-#if defined (sigemptyset)
+#  if defined (sigemptyset)
   return sigemptyset (s);
-#undef sigemptyset
-#else
+#  undef sigemptyset
+#  else
   return ACE_STD_NAMESPACE::sigemptyset (s);
-#endif /* defined (sigemptyset) */
+#  endif /* defined (sigemptyset) */
 }
 
 inline int ace_sigfillset_helper (sigset_t *s)
 {
-#if defined (sigfillset)
+#  if defined (sigfillset)
   return sigfillset (s);
-#undef sigfillset
-#else
+#  undef sigfillset
+#  else
   return ACE_STD_NAMESPACE::sigfillset (s);
-#endif /* defined (sigfillset) */
+#  endif /* defined (sigfillset) */
 }
+#endif /* !defined (ACE_LACKS_SIGSET) */
 
 
 # if !defined (SIG_BLOCK)
