@@ -93,7 +93,7 @@ PLATFORM_TK_LIBS=$(shell . /usr/local/lib/tk8.*/tkConfig.sh && echo -n $$TK_LIB_
 PLATFORM_TK_LDFLAGS=
 
 PLATFORM_TCL_CPPFLAGS=$(shell . /usr/local/lib/tcl8.*/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC)
-PLATFORM_TCL_LIBS=$(shell . /usr/local/lib/tcl8.*/tkConfig.sh && echo -n $$TCL_LIB_FLAG)
+PLATFORM_TCL_LIBS=$(shell . /usr/local/lib/tcl8.*/tclConfig.sh && echo -n $$TCL_LIB_FLAG)
 PLATFORM_TCL_LDFLAGS=
 
 CPPFLAGS+=-I/usr/local/include
