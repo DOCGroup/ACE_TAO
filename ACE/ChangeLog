@@ -1,3 +1,22 @@
+Wed Sep 16 18:44:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/bmake.features:
+        * bin/MakeProjectCreator/config/em3.features:
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/gnuace.features:
+        * bin/MakeProjectCreator/config/nmake.features:
+        * bin/MakeProjectCreator/config/vc71.features:
+        * bin/MakeProjectCreator/config/vc8.features:
+        * bin/MakeProjectCreator/config/vc9.features:
+          Removed cidl, that feature has been removed with 1.7.2
+
+        * bin/MakeProjectCreator/config/vc10.features:
+          New file for vc10
+
+        * bin/MakeProjectCreator/config/gnuace.features:
+          Set ndds=1 by default, at the end enabling ndds
+          is then controlled through the platform_macros.GNU File
+
 Wed Sep 16 10:54:39 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_signal.inl:

@@ -42,7 +42,6 @@ rpc           = 0
 sctp 	      = 0
 boost         = 0
 dummy_label   = 0
-cidl          = 0
 wince         = 0
 uses_wchar    = 0  // i.e. unicode
 gen_ostream   = 0
