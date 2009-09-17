@@ -1,3 +1,9 @@
+Thu Sep 17 14:17:10 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-win32-mingw.h:
+        * ace/os_include/os_signal.h:
+          Fix sigset related compile error on MinGW.
+
 Thu Sep 17 12:23:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process_Semaphore.h
