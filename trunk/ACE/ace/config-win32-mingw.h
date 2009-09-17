@@ -55,7 +55,6 @@
 # undef ACE_LACKS_USECONDS_T
 #endif
 
-#undef ACE_LACKS_SIGSET
 #undef ACE_HAS_WTOF
 
 #define ACE_LACKS_SYS_SHM_H
