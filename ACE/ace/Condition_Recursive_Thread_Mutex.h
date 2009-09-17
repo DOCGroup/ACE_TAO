@@ -32,8 +32,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class ACE_LOCK> class ACE_Condition;
 
 /**
- * @class ACE_Condition<ACE_Recursive_Thread_Mutex>
- *
  * @brief ACE_Condition template specialization written using
  *  @a ACE_Recursive_Thread_Mutex.  This allows threads to block until
  *  shared data changes state using recursive mutexes.
