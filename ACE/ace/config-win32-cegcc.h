@@ -91,7 +91,6 @@
 //Changes to compile on CE gcc.
 #undef ACE_HAS_TYPES_H
 #define ACE_LACKS_ERRNO_H
-#undef ACE_LACKS_SIGSET
 #undef ACE_LACKS_DEV_T
 #define ACE_LACKS_ISCTYPE
 #define ACE_HAS_NONCONST_WFDOPEN
