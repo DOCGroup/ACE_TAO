@@ -210,17 +210,17 @@ sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 }
 
 ACE_INLINE int
-sigsuspend (const sigset_t *sigset)
+sigsuspend (const sigset_t *s)
 {
 #if defined (ACE_HAS_SIGSUSPEND)
-  sigset_t s;
+  sigset_t sigset;
 
-  if (sigset == 0)
+  if (s == 0)
     {
-      sigset = &s;
-      ACE_OS::sigemptyset (&s);
+      ACE_OS::sigemptyset (&sigset);
+      s = &sigset;
     }
-  ACE_OSCALL_RETURN (::sigsuspend (sigset), int, -1);
+  return ace_sigsuspend_helper (s);
 #else
   ACE_UNUSED_ARG (sigset);
   ACE_NOTSUP_RETURN (-1);
