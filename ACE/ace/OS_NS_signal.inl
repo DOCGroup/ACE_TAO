@@ -222,7 +222,7 @@ sigsuspend (const sigset_t *s)
     }
   return ace_sigsuspend_helper (s);
 #else
-  ACE_UNUSED_ARG (sigset);
+  ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SIGSUSPEND */
 }
