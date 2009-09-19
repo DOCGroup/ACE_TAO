@@ -1,3 +1,9 @@
+Sat Sep 19 13:17:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/PeerProcess.cpp:
+          Explicitly initialize pointers to 0
+
 Tue Sep 15 12:37:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:

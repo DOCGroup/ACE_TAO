@@ -59,7 +59,7 @@ HostProcess::proc_name (void) const
 Thread *
 HostProcess::find_thread (long tid)
 {
-  Thread *thr;
+  Thread *thr = 0;
   for (ACE_DLList_Iterator<Thread> i(threads_);
        !i.done();
        i.advance())
@@ -104,8 +104,8 @@ HostProcess::find_peer (long h)
 {
   if (this->by_handle_.size() == 0)
     return 0;
-  for (PeerArray::ITERATOR i(this->by_handle_); 
-       !i.done(); 
+  for (PeerArray::ITERATOR i(this->by_handle_);
+       !i.done();
        i++)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
@@ -125,7 +125,7 @@ HostProcess::pid (void) const
 bool
 HostProcess::has_endpoint (ACE_CString& addr, bool listen)
 {
-  ACE_CString *a;
+  ACE_CString *a = 0;
   AddrList &list = listen ? this->listen_endpoints_ : this->client_endpoints_;
   for (ACE_DLList_Iterator<ACE_CString> i(list);
        !i.done();
@@ -152,7 +152,7 @@ HostProcess::add_listen_endpoint(ACE_CString &addr)
 
 void
 HostProcess::add_peer(long handle, PeerProcess *peer)
-{  
+{
   peer->set_owner (this);
   PeerProcess *existing = this->find_peer(handle);
   if (existing != 0)
@@ -173,8 +173,8 @@ HostProcess::remove_peer(long h)
 {
   if (this->by_handle_.size() == 0)
     return;
-  for (PeerArray::ITERATOR i(this->by_handle_); 
-       !i.done(); 
+  for (PeerArray::ITERATOR i(this->by_handle_);
+       !i.done();
        i++)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
@@ -186,7 +186,7 @@ HostProcess::remove_peer(long h)
     }
 }
 
-void 
+void
 HostProcess::dump_summary (ostream &strm)
 {
   strm << "Host process " << this->proc_name_ << " pid(" << this->pid_ << ") from logfile " << this->logfile_name_ <<  endl;
@@ -199,7 +199,7 @@ HostProcess::dump_summary (ostream &strm)
            !t_iter.done();
            t_iter.advance())
         {
-          ACE_CString *ep;
+          ACE_CString *ep = 0;
           t_iter.next(ep);
           strm << ep->c_str();
           if (++count < num)
@@ -207,7 +207,7 @@ HostProcess::dump_summary (ostream &strm)
         }
       strm << endl;
     }
-  
+
   strm << "  " << threads_.size() << " threads";
 #if 0
   if (clients_.current_size() > 0)
@@ -235,7 +235,7 @@ HostProcess::dump_thread_detail (ostream &strm)
        !t_iter.done();
        t_iter.advance())
     {
-      Thread *thr;
+      Thread *thr = 0;
       t_iter.next(thr);
       thr->dump_detail (strm);
     }
@@ -249,7 +249,7 @@ HostProcess::dump_thread_invocations (ostream &strm)
        !t_iter.done();
        t_iter.advance())
     {
-      Thread *thr;
+      Thread *thr = 0;
       t_iter.next(thr);
       thr->dump_invocations (strm);
       strm << endl;
@@ -319,13 +319,13 @@ HostProcess::dump_peer_detail (ostream &strm)
       else
         ++num_clients;
     }
-  
+
   strm << " from " << num_clients << " clients" << endl;
   this->iterate_peers (1, 0, &strm);
   strm << " to " << num_servers << " servers" << endl;
   this->iterate_peers (2, 0, &strm);
 }
-  
+
 void
 HostProcess::dump_object_detail (ostream &strm)
 {
@@ -340,7 +340,7 @@ HostProcess::dump_invocation_detail(ostream &strm)
   this->iterate_peers (3, 2, &strm);
   this->dump_ident (strm, " end invocation report");
 }
-  
+
 void
 HostProcess::reconcile_peers (Session *session)
 {
