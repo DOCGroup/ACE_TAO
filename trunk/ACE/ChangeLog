@@ -1,3 +1,9 @@
+Sat Sep 19 12:12:23 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_signal.h:
+        * ace/OS_NS_signal.inl:
+          Fix for platforms which implement sigsuspend as macro.
+
 Fri Sep 18 18:36:16 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-cegcc.h:
