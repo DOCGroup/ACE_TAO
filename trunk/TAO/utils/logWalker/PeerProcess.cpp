@@ -80,7 +80,7 @@ PeerProcess::is_server (void) const
   return this->server_;
 }
 
-void 
+void
 PeerProcess::add_transport (Transport *t)
 {
   this->last_transport_ = t;
@@ -241,7 +241,7 @@ PeerProcess::dump_summary (ostream &strm)
        !i.done();
        i.advance())
     {
-      Transport *tran;
+      Transport *tran = 0;
       i.next(tran);
       strm << "    connection[" << tran->handle_ << "] ";
       strm << (tran->local_is_client_ ? "from " : "to ");
