@@ -64,6 +64,18 @@ inline int ace_sigfillset_helper (sigset_t *s)
 }
 #endif /* !defined (ACE_LACKS_SIGSET) */
 
+#if defined (ACE_HAS_SIGSUSPEND)
+inline int ace_sigsuspend_helper (const sigset_t *s)
+{
+#  if defined (sigsuspend)
+  return sigsuspend (s);
+#  undef sigsuspend
+#  else
+  return ACE_STD_NAMESPACE::sigsuspend (s);
+#  endif /* defined (sigsuspen) */
+}
+#endif /* ACE_HAS_SIGSUSPEND */
+
 
 # if !defined (SIG_BLOCK)
 #   define SIG_BLOCK   1
@@ -165,7 +177,7 @@ namespace ACE_OS {
                    sigset_t *osp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sigsuspend (const sigset_t *set);
+  int sigsuspend (const sigset_t *s);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int raise (const int signum);
