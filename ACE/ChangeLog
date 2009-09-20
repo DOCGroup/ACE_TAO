@@ -1,3 +1,8 @@
+Sun Sep 20 18:02:57 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Added ACE_HAS_SIGSUSPEND.
+
 Sun Sep 20 17:46:31 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-macosx-leopard.h:
