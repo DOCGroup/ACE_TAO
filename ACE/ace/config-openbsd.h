@@ -90,9 +90,6 @@
 // Use of <malloc.h> is deprecated.
 #define ACE_LACKS_MALLOC_H
 
-// NetBSD appears to have a sigset_t type.
-// #define ACE_LACKS_SIGSET
-
 // Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_UALARM

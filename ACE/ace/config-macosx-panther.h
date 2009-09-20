@@ -55,9 +55,6 @@
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
-//?
-#define ACE_LACKS_SIGSET
-
 #define ACE_NEEDS_SCHED_H
 
 // Use of <malloc.h> is deprecated.
