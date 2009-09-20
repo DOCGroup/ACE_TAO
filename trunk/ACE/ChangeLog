@@ -1,3 +1,12 @@
+Sun Sep 20 17:46:31 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-macosx-leopard.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-openbsd.h:
+          Removed ACE_LACKS_SIGSET.
+
 Sat Sep 19 21:23:03 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_signal.inl:
