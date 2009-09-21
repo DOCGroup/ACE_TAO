@@ -21,10 +21,10 @@ AST_Uses::~AST_Uses (void)
 {
 }
 
-AST_Interface *
+AST_Type *
 AST_Uses::uses_type (void) const
 {
-  return AST_Interface::narrow_from_decl (this->field_type ());
+  return this->field_type ();
 }
 
 bool

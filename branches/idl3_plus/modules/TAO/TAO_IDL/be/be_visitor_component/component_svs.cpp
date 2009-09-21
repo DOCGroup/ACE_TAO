@@ -642,7 +642,7 @@ be_visitor_component_svs::gen_provides_r (AST_Component *node)
       return;
     }
     
-  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
     {
@@ -2030,7 +2030,7 @@ be_visitor_component_svs::gen_consumes_r (AST_Component *node)
       return;
     }
     
-  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
     {

@@ -1,11 +1,29 @@
+Mon Sep 21 19:38:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_provides.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Fixes to various bugs uncovered while running CIAO/tests.
+
 Fri Sep  4 17:12:34 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_global.h:
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
-        
+
           - New option '-Glfa', explained below
-          
+
           - New behavior for generating executor IDL for facets.
             Default behavior is now to generate the local interface
             only if the facet interface is in the main file. With
@@ -15,7 +33,7 @@ Fri Sep  4 17:12:34 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Sep  3 18:01:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-        
+
           Fixed bug in component attribute visitation that left the
           visitor state incorrect for further processing of the
           component's scope.
@@ -24,14 +42,14 @@ Thu Sep  3 16:28:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.h:
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-        
+
           Updated visitor to use component port nodes instead of the
           old port lists.
 
 Wed Sep  2 19:24:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_obv_header.cpp:
-        
+
           Fixed double deletion of valuetype supports list.
 
 Wed Sep  2 19:13:18 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>

@@ -1851,8 +1851,6 @@ TAO_CodeGen::gen_export_files (void)
 
   if (be_global->gen_skel_export_hdr_file ())
     {
-  ACE_DEBUG ((LM_DEBUG, "skel\n"));
-
       this->gen_export_file (
         be_global->skel_export_include (),
         be_global->skel_export_macro (),
@@ -1861,8 +1859,6 @@ TAO_CodeGen::gen_export_files (void)
 
   if (be_global->gen_svnt_export_hdr_file ())
     {
-  ACE_DEBUG ((LM_DEBUG, "svnt\n"));
-
       this->gen_export_file (
         be_global->svnt_export_include (),
         be_global->svnt_export_macro (),

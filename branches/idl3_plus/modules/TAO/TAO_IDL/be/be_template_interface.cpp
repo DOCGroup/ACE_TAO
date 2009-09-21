@@ -61,3 +61,5 @@ be_template_interface::accept(be_visitor *visitor)
   return visitor->visit_template_interface (this);
 }
 
+IMPL_NARROW_FROM_DECL (be_template_interface)
+

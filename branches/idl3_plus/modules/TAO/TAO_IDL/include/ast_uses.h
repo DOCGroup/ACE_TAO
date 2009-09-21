@@ -19,7 +19,7 @@ public:
   virtual ~AST_Uses (void);
   
   // Data Accessors.
-  AST_Interface *uses_type (void) const;
+  AST_Type *uses_type (void) const;
   bool is_multiple (void) const;
 
   // Narrowing.

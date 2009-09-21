@@ -18,7 +18,7 @@ public:
   virtual ~AST_Provides (void);
 
   // Data Accessor.
-  AST_Interface *provides_type (void) const;
+  AST_Type *provides_type (void) const;
 
   // Narrowing.
   DEF_NARROW_FROM_DECL(AST_Provides);
