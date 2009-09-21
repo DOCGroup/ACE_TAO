@@ -1,3 +1,8 @@
+Mon Sep 21 07:31:25 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+          Integrated patch from Bugzilla Bug #3424.
+
 Sun Sep 20 18:02:57 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
