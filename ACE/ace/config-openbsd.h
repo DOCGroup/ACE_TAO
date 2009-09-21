@@ -196,6 +196,7 @@
 #endif /* ACE_HAS_THREADS */
 
 #define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGSUSPEND
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
