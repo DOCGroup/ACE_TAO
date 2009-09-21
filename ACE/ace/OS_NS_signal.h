@@ -62,6 +62,36 @@ inline int ace_sigfillset_helper (sigset_t *s)
   return ACE_STD_NAMESPACE::sigfillset (s);
 #  endif /* defined (sigfillset) */
 }
+
+inline int ace_sigaddset_helper (sigset_t *s, int signum)
+{
+#  if defined (sigaddset)
+  return sigaddset (s, signum);
+#  undef sigaddset
+#  else
+  return ACE_STD_NAMESPACE::sigaddset (s, signum);
+#  endif /* defined (sigaddset) */
+}
+
+inline int ace_sigdelset_helper (sigset_t *s, int signum)
+{
+#  if defined (sigdelset)
+  return sigdelset (s, signum);
+#  undef sigdelset
+#  else
+  return ACE_STD_NAMESPACE::sigdelset (s, signum);
+#  endif /* defined (sigdelset) */
+}
+
+inline int ace_sigismember_helper (sigset_t *s, int signum)
+{
+#  if defined (sigismember)
+  return sigismember (s, signum);
+#  undef sigismember
+#  else
+  return ACE_STD_NAMESPACE::sigismember (s, signum);
+#  endif /* defined (sigismember) */
+}
 #endif /* !defined (ACE_LACKS_SIGSET) */
 
 #if defined (ACE_HAS_SIGSUSPEND)
