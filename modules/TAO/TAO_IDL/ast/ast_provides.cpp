@@ -19,10 +19,10 @@ AST_Provides::~AST_Provides (void)
 {
 }
 
-AST_Interface *
+AST_Type *
 AST_Provides::provides_type (void) const
 {
-  return AST_Interface::narrow_from_decl (this->field_type ());
+  return this->field_type ();
 }
 
 void

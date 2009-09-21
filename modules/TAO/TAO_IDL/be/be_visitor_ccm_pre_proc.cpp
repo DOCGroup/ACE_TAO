@@ -9,6 +9,7 @@
 
 #include "be_visitor_ccm_pre_proc.h"
 #include "be_visitor_context.h"
+#include "be_visitor_iface_inst.h"
 #include "be_root.h"
 #include "be_operation.h"
 #include "be_argument.h"
@@ -25,6 +26,9 @@
 #include "be_publishes.h"
 #include "be_emits.h"
 #include "be_consumes.h"
+#include "be_extended_port.h"
+#include "be_porttype.h"
+#include "be_template_interface.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
@@ -75,7 +79,9 @@ be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (be_visitor_context *ctx)
     unknown_key_value_ (0),
     duplicate_key_value_ (0),
     comp_ (0),
-    home_ (0)
+    home_ (0),
+    porttype_args_ (0),
+    port_interface_ (0)
 {
 }
 
@@ -151,6 +157,15 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
 int
 be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
 {
+  if (this->store_port_interface (node->provides_type ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_ccm_pre_proc::"
+                         "visit_provides - "
+                         "store_port_interface failed\n"),
+                        -1);
+    }
+    
   AST_Operation *provides_op = 0;
   UTL_ScopedName *op_name =
     this->create_scoped_name ("provide_",
@@ -184,6 +199,15 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
 int
 be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
 {
+  if (this->store_port_interface (node->uses_type ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_ccm_pre_proc::"
+                         "visit_uses - "
+                         "store_port_interface failed\n"),
+                        -1);
+    }
+    
   if (node->is_multiple ())
     {
       if (this->gen_connect_multiple (node) == -1)
@@ -306,6 +330,28 @@ be_visitor_ccm_pre_proc::visit_consumes (be_consumes *node)
                         -1);
     }
 
+  return 0;
+}
+
+int
+be_visitor_ccm_pre_proc::visit_extended_port (be_extended_port *node)
+{
+  be_porttype *pt =
+    be_porttype::narrow_from_decl (node->port_type ());
+    
+  // Set the working args to match with the porttype's
+  // template args and allow generation of concrete stuff.  
+  this->porttype_args_ = node->template_args ();
+  
+  if (this->gen_extended_port (pt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_ccm_pre_proc::"
+                         "visit_extended_port - "
+                         "gen_extended_port failed\n"),
+                        -1);
+    }
+    
   return 0;
 }
 
@@ -1289,6 +1335,21 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
 }
 
 int
+be_visitor_ccm_pre_proc::gen_extended_port (be_porttype *pt)
+{
+  if (this->visit_scope (pt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_ccm_pre_proc::"
+                         "gen_extended_port - "
+                         "visit_scope for porttype failed\n"),
+                        -1);
+    }
+    
+  return 0;
+}
+
+int
 be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
 {
   if (this->cookie_ == 0)
@@ -1403,14 +1464,14 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   UTL_ScopedName parent_local_name (&parent_id,
                                     0);
   UTL_ScopedName parent_full_name (&this->module_id_,
-                                    &parent_local_name);
+                                   &parent_local_name);
   UTL_NameList parent_list (&parent_full_name,
                             0);
   FE_InterfaceHeader header (consumer_name,
-                              &parent_list,
-                              false,
-                              false,
-                              true);
+                             &parent_list,
+                             false,
+                             false,
+                             true);
   ACE_NEW_RETURN (event_consumer,
                   be_interface (header.name (),
                                 header.inherits (),
@@ -1759,4 +1820,102 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
     }
 
   return retval;
+}
+
+int
+be_visitor_ccm_pre_proc::store_port_interface (AST_Type *i)
+{
+  be_template_interface *ti =
+    be_template_interface::narrow_from_decl (i);
+    
+  if (ti == 0)
+    {
+      this->port_interface_ = i;
+    }
+  else
+    {
+      ACE_CString inst_name = this->create_inst_name (ti);
+      Identifier inst_id (inst_name.c_str ());
+      AST_Decl *d =
+        this->comp_->lookup_by_name_local (&inst_id, 0);
+      
+      if (d != 0)
+        {
+          // Already instantiated.
+          this->port_interface_ =
+            AST_Interface::narrow_from_decl (d);
+            
+          inst_id.destroy ();
+            
+          return 0;
+        }
+      else
+        {
+          return this->create_inst_interface (ti, inst_name);
+        }
+    }
+    
+  return 0;
+}
+
+ACE_CString
+be_visitor_ccm_pre_proc::create_inst_name (
+  AST_Template_Interface *ti)
+{
+  ACE_CString retval (ti->flat_name ());
+  AST_Decl **item = 0;
+  
+  for (AST_Template_Common::T_ARGLIST::ITERATOR i =
+         this->porttype_args_->begin ();
+       !i.done ();
+       i.advance ())
+    {
+      retval += '_';
+      
+      i.next (item);
+      
+      retval += (*item)->flat_name ();
+    }
+    
+  return retval;
+}
+
+int
+be_visitor_ccm_pre_proc::create_inst_interface (
+  be_template_interface *ti,
+  ACE_CString &inst_name)
+{
+  // We're at global scope here so we need to fool the scope stack
+  // for a minute so the correct repo id can be calculated at
+  // interface construction time.
+  idl_global->scopes ().push (this->comp_);
+
+  be_interface *inst = 0;
+  ACE_NEW_RETURN (inst,
+                  be_interface (0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                false,
+                                false),
+                  -1);
+                  
+  UTL_ScopedName *n =
+    this->create_scoped_name (0,
+                              inst_name.c_str (),
+                              0,
+                              this->comp_);
+                              
+  inst->set_defined_in (this->comp_);
+  inst->set_name (n);
+  this->comp_->add_to_scope (inst);
+  
+  idl_global->scopes ().pop ();
+  
+  be_visitor_iface_inst v (this->ctx_,
+                           inst,
+                           this->porttype_args_);
+  
+  return v.visit_scope (ti);
 }

@@ -27,11 +27,13 @@
 
 #include "be_visitor_scope.h"
 #include "ast_component.h"
+#include "ast_template_common.h"
 #include "utl_identifier.h"
 
 class be_valuetype;
 class be_exception;
 class UTL_ExceptList;
+class AST_Template_Interface;
 
 class be_visitor_ccm_pre_proc : public be_visitor_scope
 {
@@ -48,25 +50,16 @@ public:
   virtual ~be_visitor_ccm_pre_proc (void);
 
   virtual int visit_root (be_root *node);
-
   virtual int visit_module (be_module *node);
-
   virtual int visit_component (be_component *node);
-  
   virtual int visit_provides (be_provides *node);
-
   virtual int visit_uses (be_uses *node);
-
   virtual int visit_publishes (be_publishes *node);
-
   virtual int visit_emits (be_emits *node);
-
   virtual int visit_consumes (be_consumes *node);
-
+  virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_home (be_home *node);
-
   virtual int visit_eventtype (be_eventtype *node);
-
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   
 private:
@@ -100,6 +93,7 @@ private:
                   AST_Interface *implicit);
   int gen_get_primary_key (be_home *node,
                            AST_Interface *implicit);
+  int gen_extended_port (be_porttype *port_type);
 
   // Utility functions to create and destroy the various things
   // needed by operations generated from CCM-related declarations.
@@ -122,6 +116,17 @@ private:
                                       const char *suffix,
                                       AST_Decl *parent);
   UTL_NameList *compute_inheritance (be_home *node);
+  
+  // For provides and uses ports generated code -  may
+  // involve creation of instantiated template interface.
+  int store_port_interface (AST_Type *i);
+  
+  // Use template interface and template arg flat names.
+  ACE_CString create_inst_name (AST_Template_Interface *ti);
+  
+  // Instantiate a template interface.
+  int create_inst_interface (be_template_interface *ti,
+                             ACE_CString &inst_name);
 
 private:
   // These are created for operations implied by 'uses multiple' declarations.
@@ -143,6 +148,14 @@ private:
   // Working nodes.
   be_component *comp_;
   be_home *home_;
+  
+  // Working arglist for visit_porttype().
+  AST_Template_Common::T_ARGLIST *porttype_args_;
+  
+  // Working type for provides or uses ports.
+  // If the port refers to a template interface, an
+  // instantiation will be created.
+  AST_Type *port_interface_;
 };
 
 

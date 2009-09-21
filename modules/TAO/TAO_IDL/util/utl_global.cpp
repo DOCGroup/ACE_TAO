@@ -1674,7 +1674,7 @@ IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
                                          0,
                                          0);
 
-  ACE_CString seq_string (struct_name);
+  ACE_CString seq_string (u->local_name ()->get_string ());
   seq_string += "Connections";
   Identifier seq_id (seq_string.c_str ());
   UTL_ScopedName seq_name (&seq_id,
