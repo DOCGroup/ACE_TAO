@@ -8,7 +8,7 @@ project(Messenger_Receiver_idl_gen) : componentidldefaults {
               -Wb,skel_export_macro=RECEIVER_SVNT_Export \
               -Wb,skel_export_include=Receiver_svnt_export.h \
               -Wb,exec_export_macro=RECEIVER_EXEC_Export \
-              -Wb,exec_export_include=Receiver_svnt_export.h
+              -Wb,exec_export_include=Receiver_exec_export.h
 
   IDL_Files {
     Receiver.idl

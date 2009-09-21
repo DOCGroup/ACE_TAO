@@ -13,8 +13,6 @@
 #include "ace/Get_Opt.h"
 #include <iostream>
 
-#include "MessengerC.h"
-
 const ACE_TCHAR* ior = ACE_TEXT ("file://Messenger.ior");
 
 int

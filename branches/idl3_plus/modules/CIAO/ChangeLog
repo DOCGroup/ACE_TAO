@@ -1,25 +1,46 @@
+Mon Sep 21 22:01:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * examples/DevGuideExamples/Messenger/Administrator_Client.cpp:
+        * examples/DevGuideExamples/Messenger/Receiver.mpc:
+        * examples/DevGuideExamples/Messenger/Receiver_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_svnt_export.h:
+        
+          Fixed config bugs.
+          
+        * examples/DevGuideExamples/Messenger/Messenger_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_stub_export.h:
+        * examples/DevGuideExamples/Messenger/Messenger_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_stub_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Messenger_stub_export.h:
+        
+          Removed these files from the repository, since they are now generated.
+
 Mon Sep 21 21:58:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Fixed bug in implied IDL generation for ports.
 
 Mon Sep 21 19:42:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_DeploymentPlan.idl:
-        
+
           Fixed name clash with 'port' identifier.
 
         * tests/IDL3/Components/ComplexComponent/EventSink/EventSink.idl:
         * tests/IDL3/Components/ComplexComponent/EventSource/EventSource.idl:
         * tests/IDL3/Components/ComplexComponent/Facets/Facets.idl:
         * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.idl:
-        
+
           Fixed name clashes.
-        
+
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
-        
+
           Fixed bug in processing of valuetypes.
 
         * DAnCE/TargetManager/TargetManager.mpc:
@@ -108,7 +129,7 @@ Mon Sep 21 19:42:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * tests/Minimum/Sender/Sender_exec_export.h:
         * tests/Minimum/Sender/Sender_stub_export.h:
         * tests/Minimum/Sender/Sender_svnt_export.h:
-        
+
           Added configuration changes corresponding to IDL3+ changes
           to IDL compiler.
 
