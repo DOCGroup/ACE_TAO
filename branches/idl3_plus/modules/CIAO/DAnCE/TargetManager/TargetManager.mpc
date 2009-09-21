@@ -2,7 +2,8 @@
 
 project(CIAO_TargetManager_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
+  idlflags += -Glfa \
+              -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
               -Wb,stub_export_include=TargetManager_stub_export.h \
               -Wb,skel_export_macro=TARGETMANAGER_SVNT_Export \
               -Wb,skel_export_include=TargetManager_svnt_export.h \
@@ -17,8 +18,9 @@ project(CIAO_TargetManager_idl_gen) : componentidldefaults {
 project(CIAO_TargetManager_idle_gen) : ciaoidldefaults {
   custom_only = 1
   after += CIAO_TargetManager_idl_gen
-  idlflags += -Wb,export_macro=TARGETMANAGER_EXEC_Export \
-              -Wb,export_include=TargetManager_exec_export.h -SS
+  idlflags += -SS \
+              -Wb,export_macro=TARGETMANAGER_EXEC_Export \
+              -Wb,export_include=TargetManager_exec_export.h
 
   IDL_Files {
     TargetManagerE.idl

@@ -81,7 +81,6 @@ project(Display_NavDisplay_exec) : ciao_executor {
   }
 }
 
-
 project(Display_NavDisplay_svnt) : ciao_servant {
   after      += Display_Base_skel Display_NavDisplay_exec
   sharedname  = NavDisplay_svnt

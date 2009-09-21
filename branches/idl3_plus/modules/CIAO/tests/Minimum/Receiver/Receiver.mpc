@@ -17,6 +17,7 @@ project(Minimum_Base_Receiver_idl_gen) : componentidldefaults {
 
 project(Minimum_Base_Receiver_idle_gen) : ciaoidldefaults {
   custom_only = 1
+  after += Minimum_Base_Receiver_idl_gen
 
   idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
               -Wb,export_include=Receiver_exec_export.h
@@ -93,7 +94,6 @@ project(Minimum_Base_Receiver_svnt) : ciao_servant {
   }
 
   Source_Files {
-    ReceiverEC.cpp
     ReceiverS.cpp
     Receiver_svnt.cpp
   }

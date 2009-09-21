@@ -18,7 +18,6 @@
 #include "BMDevice_exec_export.h"
 #include "BMDeviceEC.h"
 #include "tao/LocalObject.h"
-#include "BasicSP_exec.h"
 
 namespace MyImpl
 {

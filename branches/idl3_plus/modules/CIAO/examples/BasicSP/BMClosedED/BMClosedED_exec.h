@@ -14,7 +14,6 @@
 #include "BMClosedEDEC.h"
 #include "tao/LocalObject.h"
 #include "BMClosedED_exec_export.h"
-#include "BasicSP_exec.h"
 
 // The namespace name for the actual implementation classes doesn't
 // really matter.  Since there may be several different

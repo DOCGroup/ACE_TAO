@@ -38,7 +38,6 @@ project(Display_Base_stub) : ccm_stub {
   }
 }
 
-
 project(Display_Base_skel) : ciao_executor {
   after      +=  Display_Base_stub
   sharedname  = Display_Base_skel

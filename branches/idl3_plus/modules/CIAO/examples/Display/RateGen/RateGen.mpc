@@ -81,7 +81,6 @@ project(Display_RateGen_exec) : ciao_executor {
   }
 }
 
-
 project(Display_RateGen_svnt) : ciao_servant {
   libout = ../lib
   libpaths += ../lib

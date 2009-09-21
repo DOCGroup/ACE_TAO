@@ -16,7 +16,7 @@ module ImpliedEventSink
   
   component Foo
     {
-      consumes foo_event foo;
+      consumes foo_event c_foo;
     };
   /*
   interface test

@@ -12,9 +12,9 @@ project(Basic_CodeGen_idl_gen) : componentidldefaults {
               -Wb,stub_export_include=CodeGen_stub_export.h \
               -Wb,skel_export_macro=CODEGEN_SVNT_Export \
               -Wb,skel_export_include=CodeGen_svnt_export.h \
-              -Wb,export_macro=CODEGEN_EXEC_Export \
-              -Wb,export_include=CodeGen_exec_export.h \
-              -Gex
+              -Wb,exec_export_macro=CODEGEN_EXEC_Export \
+              -Wb,exec_export_include=CodeGen_exec_export.h \
+              -Gex -Glfa
 
   IDL_Files {
     CodeGen.idl
