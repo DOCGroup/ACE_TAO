@@ -92,7 +92,7 @@ sigaddset (sigset_t *s, int signum)
   *s |= (1 << (signum - 1)) ;
   return 0 ;
 #else
-  ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
+  return ace_sigaddset_helper (s, signum);
 #endif /* ACE_LACKS_SIGSET */
 }
 
@@ -113,7 +113,7 @@ sigdelset (sigset_t *s, int signum)
   *s &= ~(1 << (signum - 1)) ;
   return 0;
 #else
-  ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
+  return ace_sigdelset_helper (s, signum);
 #endif /* ACE_LACKS_SIGSET */
 }
 
@@ -172,7 +172,7 @@ sigismember (sigset_t *s, int signum)
       return -1;                 // Invalid signum, return error
     }
 #  endif /* ACE_HAS_SIGISMEMBER_BUG */
-  ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
+  return ace_sigismember_helper (s, signum);
 #endif /* ACE_LACKS_SIGSET */
 }
 
