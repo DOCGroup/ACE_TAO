@@ -1,3 +1,9 @@
+Mon Sep 21 10:53:16 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_signal.h:
+        * ace/OS_NS_signal.inl:
+          Another set of sigset related fixes.
+
 Mon Sep 21 07:31:25 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:
