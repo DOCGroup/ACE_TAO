@@ -1,3 +1,10 @@
+Mon Sep 21 21:58:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Fixed bug in implied IDL generation for ports.
+
 Mon Sep 21 19:42:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_DeploymentPlan.idl:

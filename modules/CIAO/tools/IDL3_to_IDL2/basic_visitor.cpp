@@ -63,13 +63,17 @@ basic_visitor::visit_scope (UTL_Scope *node)
         {
           continue;
         }
+        
+      AST_Decl::NodeType nt = d->node_type ();
 
       // Want to skip the uses_xxxConnection structs added by uses
       // multiple ports.
       // @@@ (JP) This will go away when the visitor is finished, since
       // those uses_xxxConnection structs will not be added to the AST.
       if (ScopeAsDecl (node)->node_type () == AST_Decl::NT_component
-          && d->node_type () != AST_Decl::NT_attr)
+          && (nt == AST_Decl::NT_struct
+              || nt == AST_Decl::NT_sequence
+              || nt == AST_Decl::NT_typedef))
         {
           continue;
         }

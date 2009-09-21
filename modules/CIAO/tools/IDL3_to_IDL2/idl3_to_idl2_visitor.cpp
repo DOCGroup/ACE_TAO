@@ -191,11 +191,11 @@ idl3_to_idl2_visitor::visit_provides (AST_Provides *node)
     IdentifierHelper::original_local_name (node->local_name ());
     
   UTL_ScopedName *n = node->provides_type ()->name ();
-  const char *impl_name =
-    IdentifierHelper::orig_sn (n).c_str ();
+  ACE_CString impl_name =
+    IdentifierHelper::orig_sn (n);
 
   *os << be_nl << be_nl
-      << impl_name << " provide_" << orig_id << " ();";
+      << impl_name.c_str () << " provide_" << orig_id << " ();";
       
   orig_id->destroy ();
   delete orig_id;
@@ -213,24 +213,24 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
     IdentifierHelper::original_local_name (node->local_name ());
 
   UTL_ScopedName *n = node->uses_type ()->name ();
-  const char *impl_name =
-    IdentifierHelper::orig_sn (n).c_str ();
+  ACE_CString impl_name =
+    IdentifierHelper::orig_sn (n);
 
   if (node->is_multiple ())
     {
       *os << "struct " << orig_id << "Connection" << be_nl
           << "{" << be_idt_nl
-          << impl_name << " objref;" << be_nl
+          << impl_name.c_str () << " objref;" << be_nl
           << "Components::Cookie ck;" << be_uidt_nl
           << "};" << be_nl << be_nl
           << "typedef sequence<" << orig_id << "Connection> "
           << orig_id << "Connections;"
           << be_nl << be_nl
           << "Components::Cookie connect_" << orig_id << " (in "
-          << impl_name << " connection)" << be_idt_nl
+          << impl_name.c_str () << " connection)" << be_idt_nl
           << "raises (Components::ExceededConnectionLimit, "
           << "Components::InvalidConnection);" << be_uidt_nl << be_nl
-          << impl_name << " disconnect_" << orig_id
+          << impl_name.c_str () << " disconnect_" << orig_id
           << " (in Components::Cookie ck)" << be_idt_nl
           << "raises (Components::InvalidConnection);"
           << be_uidt_nl << be_nl
@@ -240,13 +240,13 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
   else
     {
       *os << "void connect_" << orig_id << " (in "
-          << impl_name << " conxn)" << be_idt_nl
+          << impl_name.c_str () << " conxn)" << be_idt_nl
           << "raises (Components::AlreadyConnected, "
           << "Components::InvalidConnection);" << be_uidt_nl << be_nl
-          << impl_name << " disconnect_" << orig_id
+          << impl_name.c_str () << " disconnect_" << orig_id
           << " ()" << be_idt_nl
           << "raises (Components::NoConnection);" << be_uidt_nl << be_nl
-          << impl_name << " get_connection_" << orig_id
+          << impl_name.c_str () << " get_connection_" << orig_id
           << " ();";
     }
     
@@ -264,17 +264,17 @@ idl3_to_idl2_visitor::visit_publishes (AST_Publishes *node)
     IdentifierHelper::original_local_name (node->local_name ());
 
   UTL_ScopedName *n = node->publishes_type ()->name ();
-  const char *impl_name =
-    IdentifierHelper::orig_sn (n, true).c_str ();
+  ACE_CString impl_name =
+    IdentifierHelper::orig_sn (n, true);
 
   *os << be_nl << be_nl
       << "Components::Cookie subscribe_" << orig_id
       << " (in "
-      << impl_name << "Consumer consumer)"
+      << impl_name.c_str () << "Consumer consumer)"
       << be_idt_nl
       << "raises (Components::ExceededConnectionLimit);"
       << be_uidt_nl << be_nl
-      << impl_name << "Consumer unsubscribe_" << orig_id
+      << impl_name.c_str () << "Consumer unsubscribe_" << orig_id
       << " (in Components::Cookie ck)" << be_idt_nl
       << "raises (Components::InvalidConnection);" << be_uidt;
      
@@ -292,16 +292,16 @@ idl3_to_idl2_visitor::visit_emits (AST_Emits *node)
     IdentifierHelper::original_local_name (node->local_name ());
 
   UTL_ScopedName *n = node->emits_type ()->name ();
-  const char *impl_name =
-    IdentifierHelper::orig_sn (n, true).c_str ();
+  ACE_CString impl_name =
+    IdentifierHelper::orig_sn (n, true);
 
   *os << be_nl << be_nl
       << "void connect_" << orig_id
       << " (in "
-      << impl_name << "Consumer consumer)" << be_idt_nl
+      << impl_name.c_str () << "Consumer consumer)" << be_idt_nl
       << "raises (Components::AlreadyConnected);"
       << be_uidt_nl << be_nl
-      << impl_name << "Consumer disconnect_" << orig_id
+      << impl_name.c_str () << "Consumer disconnect_" << orig_id
       << " ()" << be_idt_nl
       << "raises (Components::NoConnection);" << be_uidt;
      
@@ -319,11 +319,11 @@ idl3_to_idl2_visitor::visit_consumes (AST_Consumes *node)
     IdentifierHelper::original_local_name (node->local_name ());
 
   UTL_ScopedName *n = node->consumes_type ()->name ();
-  const char *impl_name =
-    IdentifierHelper::orig_sn (n, true).c_str ();
+  ACE_CString impl_name =
+    IdentifierHelper::orig_sn (n, true);
 
   *os << be_nl << be_nl
-      << impl_name << "Consumer get_consumer_" << orig_id
+      << impl_name.c_str () << "Consumer get_consumer_" << orig_id
       << " ();";
      
   orig_id->destroy ();
