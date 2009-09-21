@@ -3,7 +3,8 @@
 
 project(Swapping_Hello_Sender_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
+  idlflags += -Glfa \
+              -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
               -Wb,skel_export_macro=SENDER_SVNT_Export \
               -Wb,skel_export_include=Sender_svnt_export.h \

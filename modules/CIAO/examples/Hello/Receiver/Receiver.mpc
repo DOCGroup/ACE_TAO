@@ -84,11 +84,38 @@ project(Hello_Receiver_exec) : ciao_executor {
   }
 }
 
+project(Hello_Receiver_skel) : ccm_svnt {
+  after     += Hello_Base_skel Hello_Receiver_stub
+  sharedname = Hello_Receiver_skel
+  libs      += Hello_Receiver_stub \
+               Hello_Base_skel \
+               Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+  dynamicflags = RECEIVER_SKEL_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverS.cpp
+  }
+
+  Header_Files {
+    ReceiverS.h
+    Receiver_skel_export.h
+  }
+
+  Inline_Files {
+    ReceiverS.inl
+  }
+}
 
 project(Hello_Receiver_svnt) : ciao_servant {
-  after      += Hello_Base_skel Hello_Receiver_exec
+  after      += Hello_Receiver_skel Hello_Receiver_exec
   sharedname  = Hello_Receiver_svnt
   libs       += Hello_Receiver_exec \
+                Hello_Receiver_skel \
                 Hello_Receiver_stub \
                 Hello_Base_skel \
                 Hello_Base_stub
@@ -101,18 +128,15 @@ project(Hello_Receiver_svnt) : ciao_servant {
   }
 
   Source_Files {
-    ReceiverS.cpp
     Receiver_svnt.cpp
   }
 
   Header_Files {
-    ReceiverS.h
     Receiver_svnt.h
     Receiver_svnt_export.h
   }
 
   Inline_Files {
-    ReceiverS.inl
   }
 }
 

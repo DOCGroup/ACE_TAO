@@ -7,11 +7,11 @@ project(Hello_Sender_idl_gen) : componentidldefaults {
               -Wb,stub_export_include=Sender_stub_export.h \
               -Wb,skel_export_macro=SENDER_SKEL_Export \
               -Wb,skel_export_include=Sender_skel_export.h \
-              -Wb,svnt_export_macro=SENDER_svnt_Export \
+              -Wb,svnt_export_macro=SENDER_SVNT_Export \
               -Wb,svnt_export_include=Sender_svnt_export.h \
               -Wb,exec_export_macro=SENDER_EXEC_Export \
               -Wb,exec_export_include=Sender_exec_export.h \
-              -Gxhst -Gxhsk -Gxhsv -Gxhex
+              -Glfa -Gxhst -Gxhsk -Gxhsv -Gxhex
 
   IDL_Files {
     Sender.idl
@@ -84,12 +84,41 @@ project(Hello_Sender_exec) : ciao_executor {
   }
 }
 
+project(Hello_Sender_skel) : ccm_svnt {
+  after      += Hello_Base_skel Hello_Sender_stub
+  sharedname  = Hello_Sender_skel
+  libs       += Hello_Base_stub \
+                Hello_Base_skel \
+                Hello_Sender_stub
+  libout = ../lib
+  libpaths += ../lib
+  dynamicflags = SENDER_SKEL_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderS.cpp
+  }
+
+  Header_Files {
+    SenderS.h
+    Sender_skel_export.h
+  }
+
+  Inline_Files {
+    SenderS.inl
+  }
+}
 
 project(Hello_Sender_svnt) : ciao_servant {
-  after      += Hello_Base_skel Hello_Sender_exec
+  after      += Hello_Base_skel \
+                Hello_Sender_exec \
+                Hello_Sender_skel
   sharedname  = Hello_Sender_svnt
   libs       += Hello_Sender_exec \
                 Hello_Sender_stub \
+                Hello_Sender_skel \
                 Hello_Base_skel \
                 Hello_Base_stub
   libout = ../lib
@@ -101,18 +130,15 @@ project(Hello_Sender_svnt) : ciao_servant {
   }
 
   Source_Files {
-    SenderS.cpp
     Sender_svnt.cpp
   }
 
   Header_Files {
-    SenderS.h
     Sender_svnt.h
     Sender_svnt_export.h
   }
 
   Inline_Files {
-    SenderS.inl
   }
 }
 

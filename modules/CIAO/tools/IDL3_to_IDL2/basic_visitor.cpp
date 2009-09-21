@@ -223,8 +223,15 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
         {
           *os << ", ";
         }
+        
+      if (i == 0 && node->supports_concrete () != 0)
+        {
+          supports[i] = node->supports_concrete ();
+        }
 
-      *os << IdentifierHelper::orig_sn (supports[i]->name ()).c_str ();
+      AST_Interface *supported = supports[i];
+          
+      *os << IdentifierHelper::orig_sn (supported->name ()).c_str ();
     }
 
   *os << be_nl
