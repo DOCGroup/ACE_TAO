@@ -58,12 +58,10 @@ project(BMDevice_stub): ccm_stub {
 
 project(BMDevice_exec) : ciao_executor {
   after      += BMDevice_stub BMDevice_idle_gen
-
   sharedname = BMDevice_exec
-  libs       += BMDevice_stub BMDevice_idle_gen BasicSP_stub
+  libs       += BMDevice_stub BasicSP_stub
   libout = ../lib
   libpaths += ../lib
-
   includes += $(CIAO_ROOT)/examples/BasicSP
 
   dynamicflags   = BMDEVICE_EXEC_BUILD_DLL
