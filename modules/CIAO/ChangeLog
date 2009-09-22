@@ -1,3 +1,42 @@
+Tue Sep 22 22:17:57 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleCommon_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_stub_export.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec_export.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleNull_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleCommon_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleNull_stub_export.h:
+
+          Removed these files, now generated.
+
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
+
+          MPC project changes.
+
 Tue Sep 22 21:45:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec_export.h:
