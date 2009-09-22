@@ -1,3 +1,64 @@
+Tue Sep 22 21:00:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Hello/Hello_Base/Hello_Base_stub_export.h:
+        * examples/Hello/Hello_Base/Hello_Base_skel_export.h:
+        * examples/BasicSP/BasicSP_exec_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+        * examples/BasicSP/EC/EC_exec_export.h:
+        * examples/BasicSP/EC/EC_svnt_export.h:
+        * examples/BasicSP/EC/EC_stub_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+        * examples/BasicSP/BasicSP_exec.cpp:
+        * examples/BasicSP/BMDevice/BMDevice_svnt_export.h:
+        * examples/BasicSP/BMDevice/BMDevice_stub_export.h:
+        * examples/BasicSP/BMDevice/BMDevice_exec_export.h:
+        * examples/BasicSP/BasicSP_exec.h:
+        * examples/Display/Display_Base/Display_Base_stub_export.h:
+        * examples/Display/Display_Base/Display_Base_skel_export.h:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec_export.h:
+        * examples/Display/RateGen/RateGen_exec_export.h:
+        * examples/Display/RateGen/RateGen_svnt_export.h:
+        * examples/Display/RateGen/RateGen_stub_export.h:
+        * examples/Display/GPS/GPS_exec_export.h:
+        * examples/Display/GPS/GPS_svnt_export.h:
+        * examples/Display/GPS/GPS_stub_export.h:
+        * examples/Display/NavDisplay/NavDisplay_exec_export.h:
+        * examples/Display/NavDisplay/NavDisplay_svnt_export.h:
+        * examples/Display/NavDisplay/NavDisplay_stub_export.h:
+        * examples/Swapping/Sender/Sender_svnt_export.h:
+        * examples/Swapping/Sender/Sender_stub_export.h:
+        * examples/Swapping/Sender/Sender_exec_1_export.h:
+        * examples/Swapping/Sender/Sender_exec_export.h:
+        * examples/Swapping/Sender/Sender_exec_2_export.h:
+        * examples/Swapping/Receiver/Receiver_exec_export.h:
+        * examples/Swapping/Receiver/Receiver_svnt_export.h:
+        * examples/Swapping/Receiver/Receiver_stub_export.h:
+        * examples/Swapping/Hello_Base/Hello_Base_stub_export.h:
+        * examples/Swapping/Hello_Base/Hello_Base_skel_export.h:
+        * examples/Null_Component/Null_Component_stub_export.h:
+        * examples/Null_Component/Null_Component_exec_export.h:
+        * examples/Null_Component/Null_Component_svnt_export.h:
+        * examples/Null_Component/Null_Interface_skel_export.h:
+        * examples/Null_Component/Null_Interface_stub_export.h:
+
+          Removed these export header files, since they're now
+          generated. Also removed BasicSP_exec.*, and moved the
+          code to BMClosedED_exec.* and BMDevice_exec.*.
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc:
+
+          MPC changes, and code moved from BasicSP_exec.*.
+
 Mon Sep 21 22:01:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * examples/DevGuideExamples/Messenger/Administrator_Client.cpp:
