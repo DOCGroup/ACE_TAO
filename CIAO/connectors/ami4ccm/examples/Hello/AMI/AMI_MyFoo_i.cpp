@@ -32,31 +32,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo_excep\n");
-
-    try
-    {
-      excep_holder->raise_exception ();
-    }
-    catch (const CCM_AMI::InternalError& ex)
-    {
-      printf ("AMI CORBA (FOO) :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
-              ex.ex.id, ex.ex.error_string.in ());
-
-      foo_callback_->foo_callback_excep (ex.ex);
-
-      if (ex.ex.id != 42)
-      {
-        printf ("ERROR (FOO):\tReceived unexpected ID received in exception handler\n");
-      }
-      if (ACE_OS::strcmp (ex.ex.error_string.in (), "Hello world") != 0)
-      {
-        printf ("ERROR (FOO):\tReceived unexpected error string received in exception handler\n");
-      }
-    }
-    catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("ERROR (FOO) :\tCaught the WRONG exception:");
-    }
+    foo_callback_->foo_callback_excep (excep_holder);
     this->_remove_ref ();
   }
   
@@ -74,32 +50,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   AMI_MyFoo_reply_handler::hello_excep (
     ::Messaging::ExceptionHolder * excep_holder)
   {
-    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::foo_excep\n");
-
-    try
-      {
-        excep_holder->raise_exception ();
-      }
-    catch (const CCM_AMI::InternalError& ex)
-      {
-        printf ("AMI CORBA (FOO) :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
-                ex.ex.id, ex.ex.error_string.in ());
-
-        foo_callback_->hello_callback_excep (ex.ex);
-
-        if (ex.ex.id != 42)
-          {
-            printf ("ERROR (FOO):\tReceived unexpected ID received in exception handler\n");
-          }
-        if (ACE_OS::strcmp (ex.ex.error_string.in (), "Hello world") != 0)
-          {
-            printf ("ERROR (FOO):\tReceived unexpected error string received in exception handler\n");
-          }
-      }
-    catch (const CORBA::Exception& ex)
-      {
-        ex._tao_print_exception ("ERROR (FOO) :\tCaught the WRONG exception:");
-      }
+    foo_callback_->hello_callback_excep (excep_holder);
     this->_remove_ref ();
   }
 
@@ -124,19 +75,16 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       }
     catch (CCM_AMI::InternalError& ex)
       {
-        printf ("AMI CORBA (FOO) :\tCORRECT EXCEPTION -> re-throwing\n");
-        CCM_AMI::InternalException excep;
-        excep.id = ex.ex.id;
-        excep.error_string = CORBA::string_dup (ex.ex.error_string);
-        throw CCM_AMI::InternalError (excep);
+        printf ("AMI CORBA (FOO) :\tCORRECT EXCEPT -> re-throwing\n");
+        throw ex;
       }
     catch (...)
     {
-        printf ("AMI CORBA (FOO) :\t!!!!!UNKNOWN EXCEPTION!!!!!\n");
-        CCM_AMI::InternalException excep;
+        printf ("AMI CORBA (FOO) :\t!!!!!UNKNOWN EXCEPT!!!!!\n");
+        CCM_AMI::InternalError excep;
         excep.id = 43;
         excep.error_string = CORBA::string_dup ("UNKNOWN");
-        throw CCM_AMI::InternalError (excep);
+        throw excep;
     }
   }
 
@@ -150,16 +98,13 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       }
     catch (CCM_AMI::InternalError& ex)
       {
-        printf ("AMI CORBA (FOO) :\tCORRECT EXCEPTION -> re-throwing\n");
-        CCM_AMI::InternalException excep;
-        excep.id = ex.ex.id;
-        excep.error_string = CORBA::string_dup (ex.ex.error_string);
-        throw CCM_AMI::InternalError (excep);
+        printf ("AMI CORBA (FOO) :\tCORRECT EXCEPT -> re-throwing\n");
+        throw ex;
       }
     catch (...)
     {
-        printf ("AMI CORBA (FOO) :\t!!!!!UNKNOWN EXCEPTION!!!!!\n");
-        CCM_AMI::InternalException excep;
+        printf ("AMI CORBA (FOO) :\t!!!!!UNKNOWN EXCEPT!!!!!\n");
+        CCM_AMI::InternalError excep;
         excep.id = 43;
         excep.error_string = CORBA::string_dup ("UNKNOWN");
         throw CCM_AMI::InternalError (excep);
@@ -230,7 +175,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     }
     catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught exception:");
+      ex._tao_print_exception ("Caught except:");
       return 1;
     }
 

@@ -116,10 +116,10 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_foo (
+    ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/,
     const char * in_str)
   {
     printf ("AMI (FOO) :\tsendc_foo <%s>\n", in_str);
-
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
         new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
     CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
@@ -129,7 +129,8 @@ namespace CIAO_Hello_AMI_AMI_Impl
   }
   
   void
-  AMI_MyFoo_exec_i::sendc_hello ()
+  AMI_MyFoo_exec_i::sendc_hello (
+    ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/)
   {
     printf ("AMI (FOO) :\tsendc_hello\n");
 

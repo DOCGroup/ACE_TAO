@@ -34,10 +34,53 @@
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {
+  void HandleException (
+      long id,
+      const char* error_string,
+      const char* func)
+    {
+      printf ("Sender (%s) :\tCallback except from AMI\n",
+                  func);
+      if (id != 42)
+      {
+        printf ("ERROR (%s) :\tReceived unexpected ID received in except handler\n",
+              func);
+        return;
+      }
+      if (ACE_OS::strcmp (error_string, "Hello world") != 0)
+      {
+        printf ("ERROR (%s) :\tReceived unexpected error string received in except handler\n",
+              func);
+        return;
+      }
+      printf ("Sender (%s) :\tReceived the correct except parameters.\n", func);
+    }
+
+  void HandleException (
+      ::Messaging::ExceptionHolder * excep_holder,
+      const char* func)
+    {
+      printf ("Sender (%s) :\tHandle except AMI\n",
+                  func);
+      try
+        {
+          excep_holder->raise_exception ();
+        }
+      catch (const CCM_AMI::InternalError& ex)
+        {
+          printf ("AMI CORBA (FOO) :\tCaught the correct except type (CCM_AMI::InternalError) <%d> <%s>\n",
+                  ex.id, ex.error_string.in ());
+          HandleException (ex.id, ex.error_string.in (), func);
+        }
+      catch (const CORBA::Exception& ex)
+        {
+          ex._tao_print_exception ("Caught unexpected except:");
+        }
+    }
+
   //============================================================
   // Facet Executor Implementation Class: MyFoo_callback_exec_i
   //============================================================
-
   MyFoo_callback_exec_i::MyFoo_callback_exec_i (void)
   {
   }
@@ -61,10 +104,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   void
   MyFoo_callback_exec_i::foo_callback_excep (
-      const ::CCM_AMI::InternalException & exception_holder)
+      ::Messaging::ExceptionHolder * excep_holder)
   {
-    printf ("Sender (FOO) :\tCallback except from AMI : excepti id : <%d> except string : <%s>\n",
-      exception_holder.id, exception_holder.error_string.in ());
+    HandleException (excep_holder, "FOO");
   }
 
   // HELLO methods
@@ -77,10 +119,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   void
   MyFoo_callback_exec_i::hello_callback_excep (
-      const ::CCM_AMI::InternalException & exception_holder)
+      ::Messaging::ExceptionHolder * excep_holder)
   {
-    printf ("Sender (FOO) :\tCallback except from AMI (HELLO) : except id : <%d> except string : <%s>\n",
-      exception_holder.id, exception_holder.error_string.in ());
+    HandleException (excep_holder, "HELLO");
   }
 
   //============================================================
@@ -103,10 +144,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   void
   MyInterface_callback_exec_i::do_something_with_something_callback_excep (
-    const ::CCM_AMI::InternalException & exception_holder)
+      ::Messaging::ExceptionHolder * excep_holder)
   {
-    printf ("Sender (INTERFACE) :\tCallback except from AMI : except id : <%d> except string : <%s>\n",
-            exception_holder.id, exception_holder.error_string.in ());
+    HandleException (excep_holder, "HELLO");
   }
 
   //============================================================
@@ -130,13 +170,13 @@ namespace CIAO_Hello_AMI_Sender_Impl
         else
           {
             printf ("Sender (ASYNCH) :\tInvoke Asynchronous call\n");
-            my_foo_ami_->sendc_foo ("Do something asynchronous");
-            my_foo_ami_->sendc_hello ();
+            my_foo_ami_->sendc_foo (0, "Do something asynchronous");
+            my_foo_ami_->sendc_hello (0);
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous call\n");
           }
       }
     printf ("Sender (ASYNCH) :\tInvoke Asynchronous call to test except handling\n");
-    my_foo_ami_->sendc_foo ("");
+    my_foo_ami_->sendc_foo (0, "");
     printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
     return 0;
   }
@@ -169,7 +209,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
       }
     catch (CCM_AMI::InternalError& ex)
       {
-        printf ("Sender (SYNCH) :\tExpected Except caught : <%d> <%s>\n", ex.ex.id, ex.ex.error_string.in ());
+        printf ("Sender (SYNCH) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
       }
     return 0;
   }
@@ -270,7 +310,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-
     ::CCM_AMI::AMI_MyFoo_var asynch_foo =
       this->context_->get_connection_run_asynch_my_foo();
     asynch_foo_generator* asynch_foo_gen =
