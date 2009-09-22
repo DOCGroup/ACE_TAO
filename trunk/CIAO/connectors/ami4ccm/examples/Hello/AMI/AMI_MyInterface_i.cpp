@@ -30,32 +30,8 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
   AMI_MyInterface_reply_handler::do_something_with_something_excep (
     ::Messaging::ExceptionHolder * excep_holder)
   {
-    printf ("AMI CORBA :\tMyInterface Reply Handler::do_something_with_something_excep\n");
-
-    try
-    {
-      excep_holder->raise_exception ();
-    }
-    catch (const CCM_AMI::InternalError& ex)
-    {
-      printf ("AMI CORBA (INTERFACE) :\tCaught the correct exception type (CCM_AMI::InternalError) <%d> <%s>\n",
-              ex.ex.id, ex.ex.error_string.in ());
-
-      interface_callback_->do_something_with_something_callback_excep (ex.ex);
-
-      if (ex.ex.id != 42)
-      {
-        printf ("ERROR (INTERFACE) :\tReceived unexpected ID received in exception handler\n");
-      }
-      if (ACE_OS::strcmp (ex.ex.error_string.in (), "Hello world") != 0)
-      {
-        printf ("ERROR (INTERFACE) :\tReceived unexpected error string received in exception handler\n");
-      }
-    }
-    catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("ERROR (FOO) :\tCaught the WRONG exception:");
-    }
+    printf ("AMI CORBA (INTERFACE) :\tMyInterface Reply Handler::do_something_with_something_excep\n");
+    interface_callback_->do_something_with_something_callback_excep (excep_holder);
     this->_remove_ref ();
   }
   
@@ -79,16 +55,13 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
       }
     catch (CCM_AMI::InternalError& ex)
       {
-        printf ("AMI CORBA (INTERFACE) :\tCORRECT EXCEPTION -> re-throwing\n");
-        CCM_AMI::InternalException excep;
-        excep.id = ex.ex.id;
-        excep.error_string = CORBA::string_dup (ex.ex.error_string);
-        throw CCM_AMI::InternalError (excep);
+        printf ("AMI CORBA (INTERFACE) :\tCORRECT EXCEPT -> re-throwing\n");
+        throw CCM_AMI::InternalError (ex);
       }
     catch (...)
     {
-        printf ("AMI CORBA (INTERFACE) :\t!!!!!UNKNOWN EXCEPTION!!!!!\n");
-        CCM_AMI::InternalException excep;
+        printf ("AMI CORBA (INTERFACE) :\t!!!!!UNKNOWN EXCEPT!!!!!\n");
+        CCM_AMI::InternalError excep;
         excep.id = 43;
         excep.error_string = CORBA::string_dup ("UNKNOWN");
         throw CCM_AMI::InternalError (excep);
@@ -159,7 +132,7 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
     }
     catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught exception:");
+      ex._tao_print_exception ("Caught except:");
       return 1;
     }
 

@@ -1,3 +1,25 @@
+Tue Sep 22 07:16:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
+          Replaced ACE_xxx macros with DANCE_xxx macros.
+
+        * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
+          Every sendc method should have it's own reply handler.
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.cpp:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyInterface_i.cpp:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello.idl:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Every sendc method has it's own reply handler.
+          Also the implementation of the exception handling has changed.
+          Now an exception holder is used.
+
 Mon Sep 14 09:19:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
@@ -5,7 +27,7 @@ Mon Sep 14 09:19:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Sep 11 02:39:39 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.7.3 released.
+        * CIAO version 0.7.3 released.
 
 Thu Sep 10 07:05:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 

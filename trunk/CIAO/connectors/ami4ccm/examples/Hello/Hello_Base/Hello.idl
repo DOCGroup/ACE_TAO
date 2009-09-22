@@ -2,15 +2,10 @@
 
 module CCM_AMI
 {
-  struct InternalException
+  exception InternalError
     {
       long id;
       string error_string;
-    };
-
-  exception InternalError
-    {
-      InternalException ex;
     };
 
   // Sender/Receiver interface
