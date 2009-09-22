@@ -148,7 +148,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::open_i
 
   this->free_list_->resize (prealloc + this->spoke_count_);
 
-  this->wheel_time_.msec (1 << (this->res_bits_ + this->spoke_bits_));
+  this->wheel_time_.msec (1 << (this->res_bits_));
 
   ACE_NEW (this->spokes_, ACE_Timer_Node_T<TYPE>* [this->spoke_count_]);
 
