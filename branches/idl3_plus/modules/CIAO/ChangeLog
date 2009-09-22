@@ -45,7 +45,7 @@ Tue Sep 22 21:00:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/Null_Component/Null_Interface_skel_export.h:
         * examples/Null_Component/Null_Interface_stub_export.h:
 
-          Removed these export header files, since they're now
+          Removed these export header files since they're now
           generated. Also removed BasicSP_exec.*, and moved the
           code to BMClosedED_exec.* and BMDevice_exec.*.
 
