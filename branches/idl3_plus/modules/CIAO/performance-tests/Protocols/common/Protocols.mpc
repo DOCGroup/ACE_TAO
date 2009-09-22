@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Protocols"
 
-project(Protocols_idl_gen) : ciaoidldefaults, anytypecode {
+project(Protocols_idl_gen) : componentidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PROTOCOLS_STUB_Export \
               -Wb,stub_export_include=Protocols_stub_export.h \

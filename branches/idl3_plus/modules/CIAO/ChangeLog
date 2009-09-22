@@ -1,3 +1,23 @@
+Tue Sep 22 21:22:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Protocols/Sender/Sender_svnt_export.h:
+        * performance-tests/Protocols/Sender/Sender_stub_export.h:
+        * performance-tests/Protocols/Sender/Sender_exec_export.h:
+        * performance-tests/Protocols/Receiver/Receiver_exec_export.h:
+        * performance-tests/Protocols/Receiver/Receiver_svnt_export.h:
+        * performance-tests/Protocols/Receiver/Receiver_stub_export.h:
+        * performance-tests/Protocols/common/Protocols_stub_export.h:
+        * performance-tests/Protocols/common/Protocols_skel_export.h:
+        
+          Removed these files, now generated.
+
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * performance-tests/Protocols/Receiver/Receiver.mpc:
+        * performance-tests/Protocols/common/Protocols.mpc:
+        
+          Addition of -Glfa IDL compiler option where necessary.
+
 Tue Sep 22 21:00:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Hello_Base/Hello_Base_stub_export.h:
