@@ -1,3 +1,17 @@
+Tue Sep 22 17:05:56 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timer_Wheel_T.cpp (open_i): Changed
+  
+          this->wheel_time_.msec (1 << (this->res_bits_ + this->spoke_bits_));  
+  
+          to
+        
+          this->wheel_time_.msec (1 << (this->res_bits_));
+
+          so recalc_earliest selects the right spoke as earliest_spoke_.
+          Thanks to Koh Onishi <k_onishi at mtj dot biglobe dot ne dot jp>
+          for reporting this.
+
 Mon Sep 21 20:27:06 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-freebsd.h:
