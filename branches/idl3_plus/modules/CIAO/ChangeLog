@@ -1,3 +1,21 @@
+Tue Sep 22 21:45:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec_export.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_svnt_export.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_svnt_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec_export.h:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_skel_export.h:
+
+          Removed these files, now generated.
+
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+
+          Config updates.
+
 Tue Sep 22 21:22:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Protocols/Sender/Sender_svnt_export.h:
