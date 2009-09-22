@@ -1,0 +1,33 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01-change_tao_sonames.dpatch by Thomas Girard <thomas.g.girard@free.fr>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: propagate TAO_VERSION_NAME in all TAO Makefile.am files.
+
+@DPATCH@
+--- ACE_wrappers.orig/TAO/configure.ac
++++ ACE_wrappers/TAO/configure.ac
+@@ -149,10 +149,12 @@
+ TAO_MAJOR=$2
+ TAO_MINOR=$3
+ TAO_BETA=$4
++TAO_VERSION_NAME=TAO_VERSION
+ 
+ AC_SUBST([TAO_MAJOR])
+ AC_SUBST([TAO_MINOR])
+ AC_SUBST([TAO_BETA])
++AC_SUBST([TAO_VERSION_NAME])
+ 
+ dnl We should have --with/--enable flags for these options.
+ dnl Until we do, set them to reasonable defaults.
+--- ACE_wrappers.orig/TAO/MPC/config/taodefaults.mpb
++++ ACE_wrappers/TAO/MPC/config/taodefaults.mpb
+@@ -7,7 +7,7 @@
+   libpaths    += $(ACE_ROOT)/lib
+ 
+   specific(automake) {
+-    am_version = @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
++    am_release = @TAO_VERSION_NAME@
+     includes += $(TAO_BUILDDIR)
+     libpaths -= $(ACE_ROOT)/lib
+   }

@@ -1,0 +1,6 @@
+// $Id$
+
+ssl=0
+qos=1
+rwho=0
+sctp=0
