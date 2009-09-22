@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl SimpleCommon"
 
-project(SimpleCommon_idl_gen) : ciaoidldefaults, anytypecode {
+project(SimpleCommon_idl_gen) : componentidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SIMPLECOMMON_STUB_Export \
               -Wb,stub_export_include=SimpleCommon_stub_export.h \
