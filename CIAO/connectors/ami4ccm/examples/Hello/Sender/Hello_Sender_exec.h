@@ -45,6 +45,16 @@
 
 namespace CIAO_Hello_AMI_Sender_Impl
 {
+  //common excepti handlers
+  void HandleException (
+      long id,
+      const char* error_string,
+      const char* func);
+
+  void HandleException (
+      ::Messaging::ExceptionHolder * excep_holder,
+      const char* func);
+
   // Worker thread for asynchronous invocations
   class asynch_foo_generator : public virtual ACE_Task_Base
   {
@@ -103,7 +113,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual void
     do_something_with_something_callback_excep (
-      const ::CCM_AMI::InternalException & exception_holder);
+        ::Messaging::ExceptionHolder * excep_holder);
   };
 
   class  MyFoo_callback_exec_i
@@ -133,12 +143,11 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual void
     foo_callback_excep (
-      const ::CCM_AMI::InternalException & exception_holder);
-    
+        ::Messaging::ExceptionHolder * excep_holder);
+
     virtual void
     hello_callback_excep (
-      const ::CCM_AMI::InternalException & exception_holder);
-  
+        ::Messaging::ExceptionHolder * excep_holder);
   };
   
   class  Sender_exec_i

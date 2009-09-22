@@ -55,10 +55,10 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   {
     if (ACE_OS::strlen (in_str) == 0)
       {
-        CCM_AMI::InternalException ex;
+        CCM_AMI::InternalError ex;
         ex.id = 42;
         ex.error_string = "Hello world";
-        throw CCM_AMI::InternalError (ex);
+        throw ex;
       }
     else
       {
@@ -98,10 +98,10 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   {
     if (something == 0)
     {
-      CCM_AMI::InternalException ex;
+      CCM_AMI::InternalError ex;
       ex.id = 42;
       ex.error_string = "Hello world";
-      throw CCM_AMI::InternalError (ex);
+      throw ex;
     }
     else
     {
