@@ -1,3 +1,9 @@
+Wed Sep 23 10:50:59 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+          Fixed XMI generation in case of module reopening.
+
 Tue Sep 22 07:16:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
