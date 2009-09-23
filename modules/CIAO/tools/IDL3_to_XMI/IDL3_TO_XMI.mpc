@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, crosscompile, ciao_xml_utils, xerces {
+project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, crosscompile, ciao_xml_utils {
   after       += TAO_IDL_FE
   sharedname   = CIAO_IDL3_TO_XMI_BE
   libs        += TAO_IDL_FE

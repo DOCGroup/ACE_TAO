@@ -1,3 +1,16 @@
+Wed Sep 23 19:37:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+        
+          Removed unnecessary base project.
+          
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+        
+          Updated visitors to reflect IDL3+ changes.
+
 Tue Sep 22 22:17:57 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleNull_exec_export.h:
