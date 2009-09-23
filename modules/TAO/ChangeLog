@@ -1,3 +1,10 @@
+Wed Sep 23 19:44:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_iface_inst.h:
+        * TAO_IDL/be/be_visitor_iface_inst.cpp:
+        
+          New files, overlooked in previous checkin.
+
 Mon Sep 21 19:38:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_provides.cpp:
