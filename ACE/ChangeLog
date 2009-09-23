@@ -1,11 +1,17 @@
+Wed Sep 23 14:15:58 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * configure.ac:
+          Changed ACE_CHECK_HAS_FUNCS(snprintf) to 
+          ACE_CHECK_LACKS_FUNCS(vsnprintf)
+
 Tue Sep 22 17:05:56 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Timer_Wheel_T.cpp (open_i): Changed
-  
-          this->wheel_time_.msec (1 << (this->res_bits_ + this->spoke_bits_));  
-  
+
+          this->wheel_time_.msec (1 << (this->res_bits_ + this->spoke_bits_));
+
           to
-        
+
           this->wheel_time_.msec (1 << (this->res_bits_));
 
           so recalc_earliest selects the right spoke as earliest_spoke_.
