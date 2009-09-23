@@ -1,3 +1,22 @@
+Wed Sep 23 21:50:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        
+          Removed unused arg.
+          
+        * performance-tests/Protocols/Sender/Sender.mpc:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Swapping/Sender/Sender.mpc:
+        * examples/Swapping/Hello_Base/Hello_Base.mpc:
+        * examples/Null_Component/Null_Interface.mpc:
+        
+          Fixed missing export header file generation and missing
+          dependency of *E.idl processing on *.idl processing.
+
 Wed Sep 23 21:23:19 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/CIDL/CodeGen/Basic.mpc:

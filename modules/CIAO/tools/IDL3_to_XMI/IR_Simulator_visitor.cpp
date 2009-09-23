@@ -1012,7 +1012,7 @@ namespace CIAO
     }
 
     int
-    ir_simulator_visitor::visit_enum_val (AST_EnumVal *node)
+    ir_simulator_visitor::visit_enum_val (AST_EnumVal *)
     {
       XMI_TRACE ("enum val");
       return 0;

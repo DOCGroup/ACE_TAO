@@ -18,6 +18,7 @@ project(Benchmark_RoundTripClient_idl_gen) : componentidldefaults {
 
 project(Benchmark_RoundTripClient_idle_gen) : ciaoidldefaults {
   custom_only = 1
+  after += Benchmark_RoundTripClient_idl_gen
   idlflags += -Wb,export_macro=ROUNDTRIPCLIENT_EXEC_Export \
               -Wb,export_include=RoundTripClient_exec_export.h \
               -SS

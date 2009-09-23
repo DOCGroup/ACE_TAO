@@ -18,6 +18,7 @@ project(Swapping_Hello_Sender_idl_gen) : componentidldefaults {
 
 project(Swapping_Hello_Sender_idle_gen) : ciaoidldefaults {
   custom_only = 1
+  after += Swapping_Hello_Sender_idl_gen
   idlflags += -Wb,export_macro=SENDER_SVNT_Export \
               -Wb,export_include=Sender_svnt_export.h \
               -SS
