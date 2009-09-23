@@ -1,3 +1,12 @@
+Wed Sep 23 11:57:59 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+        * bin/ciao_tests.lst:
+
+          Added a test for XMI generation in case of module reopening.
+          Scheduled the test for run.
+
 Wed Sep 23 10:50:59 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
