@@ -3784,7 +3784,7 @@ dnl if test "$ace_cv_shm_open_requires_one_slash" = yes; then
 dnl   AC_DEFINE([ACE_SHM_OPEN_REQUIRES_ONE_SLASH])
 dnl fi
 
-ACE_CHECK_HAS_FUNCS(snprintf)
+ACE_CHECK_LACKS_FUNCS(vsnprintf)
 
 ACE_CHECK_LACKS_FUNCS(tempnam truncate)
 
