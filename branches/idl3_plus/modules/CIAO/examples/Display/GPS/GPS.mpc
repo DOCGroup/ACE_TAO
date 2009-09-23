@@ -18,6 +18,7 @@ project(Display_GPS_idl_gen) : componentidldefaults {
 
 project(Display_GPS_idle_gen) : ciaoidldefaults {
   custom_only = 1
+  after += Display_GPS_idl_gen
   idlflags += -Wb,export_macro=GPS_EXEC_Export \
               -Wb,export_include=GPS_exec_export.h \
               -SS
