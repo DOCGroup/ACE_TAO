@@ -1,3 +1,17 @@
+Wed Sep 23 21:23:19 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/CIDL/CodeGen/Basic.mpc:
+        
+          Added generation of export header files.
+          
+        * tests/CIDL/CodeGen/CodeGen_exec_export.h:
+        * tests/CIDL/CodeGen/Basic_stub_export.h:
+        * tests/CIDL/CodeGen/CodeGen_svnt_export.h:
+        * tests/CIDL/CodeGen/Basic_skel_export.h:
+        * tests/CIDL/CodeGen/CodeGen_stub_export.h:
+        
+          Removed these files, now generated.
+
 Wed Sep 23 19:37:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
