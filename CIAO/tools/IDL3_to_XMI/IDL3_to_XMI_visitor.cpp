@@ -232,7 +232,7 @@ namespace CIAO
           if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) == 0)
             {
               // If the module is reopened then put it on the stack.
-              ES_Guard (ele, this);
+              ES_Guard owned_guard (ele, this);
               this->visit_scope (node);
               // And don't do anything more.
               return 0;
