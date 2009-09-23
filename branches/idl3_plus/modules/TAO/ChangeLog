@@ -1,3 +1,13 @@
+Wed Sep 23 21:48:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_iface_inst.cpp:
+        
+          Removed unused args.
+          
+        * TAO_IDL/be/be_global.cpp:
+        
+          Replaced '=' with '==' in -Glfa option switch case.
+
 Wed Sep 23 19:44:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_iface_inst.h:

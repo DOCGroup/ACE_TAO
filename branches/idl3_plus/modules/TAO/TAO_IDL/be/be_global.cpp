@@ -2668,7 +2668,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 be_global->gen_ciao_exec_idl (true);
               }
-            else if (av[i][3] = 'f' && av[i][4] == 'a')
+            else if (av[i][3] == 'f' && av[i][4] == 'a')
               {
                 be_global->gen_lem_force_all (true);
               }
