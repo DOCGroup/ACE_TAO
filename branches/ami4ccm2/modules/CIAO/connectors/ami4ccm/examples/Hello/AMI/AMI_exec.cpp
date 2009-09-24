@@ -116,7 +116,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_foo (
-    ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/,
+    ::CCM_AMI::AMI_MyFoo_callback_ptr /*ami_handler*/,
     const char * in_str)
   {
     printf ("AMI (FOO) :\tsendc_foo <%s>\n", in_str);
@@ -130,7 +130,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   void
   AMI_MyFoo_exec_i::sendc_hello (
-    ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/)
+    ::CCM_AMI::AMI_MyFoo_callback_ptr /*ami_handler*/)
   {
     printf ("AMI (FOO) :\tsendc_hello\n");
 
@@ -144,19 +144,19 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   void
   AMI_MyFoo_exec_i::sendc_get_rw_attrib (
-  ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/)
+  ::CCM_AMI::AMI_MyFoo_callback_ptr /*ami_handler*/)
   {
     printf ("AMI (FOO) :\tsendc_get_rw_attrib\n");
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
         new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
     CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
-    //ami_foo_server_->sendc_get_rw_attrib (the_handler_var.in ());
+    ami_foo_server_->sendc_get_rw_attrib (the_handler_var.in ());
     printf ("AMI (FOO) : \tInvoked sendc_get_rw_attrib\n");
   }
   
   void
   AMI_MyFoo_exec_i::sendc_set_rw_attrib (
-  ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/,
+  ::CCM_AMI::AMI_MyFoo_callback_ptr /*ami_handler*/,
   CORBA::Short rw_attrib)
   {
     printf ("AMI (FOO) :\tsendc_set_rw_attrib\n");
@@ -164,13 +164,13 @@ namespace CIAO_Hello_AMI_AMI_Impl
         new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
     CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
     printf ("AMI (FOO) : \tSet rw_attrib <%d>\n", rw_attrib);
-    //ami_foo_server_->sendc_set_rw_attrib (the_handler_var.in (), rw_attrib);
+    ami_foo_server_->sendc_set_rw_attrib (the_handler_var.in (), rw_attrib);
     printf ("AMI (FOO) : \tInvoked sendc_set_rw_attrib\n");
   }
   
   void
   AMI_MyFoo_exec_i::sendc_get_ro_attrib (
-  ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/)
+  ::CCM_AMI::AMI_MyFoo_callback_ptr /*ami_handler*/)
   {
     printf ("AMI (FOO) :\tsendc_get_ro_attrib\n");
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
@@ -229,11 +229,11 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
   void
   AMI_MyInterface_exec_i::sendc_do_something_with_something (
-      ::CCM_AMI::AMI_MyInterface_callback_ptr cb_handler,
+      ::CCM_AMI::AMI_MyInterface_callback_ptr ami_handler,
       CORBA::Short something)
   {
     printf ("AMI (INTERFACE) :\tsendc_do_something_with_something <%d>\n", something);
-    if (CORBA::is_nil (cb_handler))
+    if (CORBA::is_nil (ami_handler))
       { //treat it as an oneway CORBA invocation
         printf ("AMI (INTERFACE) :\tONE WAY INVOCATION. Sending short <%d> to AMI CORBA server\n", something);
         ami_interface_server_->sendc_do_something_with_something (0, something);
@@ -242,7 +242,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
     else
       {
         ::CCM_CORBA_AMI_MyInterface_Impl::AMI_MyInterface_reply_handler*  handler =
-            new ::CCM_CORBA_AMI_MyInterface_Impl::AMI_MyInterface_reply_handler (cb_handler);
+            new ::CCM_CORBA_AMI_MyInterface_Impl::AMI_MyInterface_reply_handler (ami_handler);
         CCM_AMI::AMI_MyInterfaceHandler_var the_handler_var = handler->_this ();
         printf ("AMI (INTERFACE) :\tSending short <%d> to AMI CORBA server\n", something);
         ami_interface_server_->sendc_do_something_with_something (the_handler_var.in (), something);

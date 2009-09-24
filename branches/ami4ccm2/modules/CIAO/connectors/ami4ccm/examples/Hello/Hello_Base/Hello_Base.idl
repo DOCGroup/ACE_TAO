@@ -27,13 +27,13 @@ module CCM_AMI
   // using the AMI_foo interface.
   interface AMI_MyFoo
     {
-      void sendc_foo (in AMI_MyFoo_callback cb_handler, in string in_str);
-      void sendc_hello (in AMI_MyFoo_callback cb_handler);
+      void sendc_foo (in AMI_MyFoo_callback ami_handler, in string in_str);
+      void sendc_hello (in AMI_MyFoo_callback ami_handler);
       
       //asynch method for handling attributes
-      void sendc_get_rw_attrib (in AMI_MyFoo_callback cb_handler);
-      void sendc_set_rw_attrib (in AMI_MyFoo_callback cb_handler, in short rw_attrib);
-      void sendc_get_ro_attrib (in AMI_MyFoo_callback cb_handler);
+      void sendc_get_rw_attrib (in AMI_MyFoo_callback ami_handler);
+      void sendc_set_rw_attrib (in AMI_MyFoo_callback ami_handler, in short rw_attrib);
+      void sendc_get_ro_attrib (in AMI_MyFoo_callback ami_handler);
     };
 
   // callback interface from AMI-component to Sender component
@@ -46,6 +46,6 @@ module CCM_AMI
 
   interface AMI_MyInterface
     {
-      void sendc_do_something_with_something (in AMI_MyInterface_callback cb_handler, in short something);
+      void sendc_do_something_with_something (in AMI_MyInterface_callback ami_handler, in short something);
     };
 };

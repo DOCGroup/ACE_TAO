@@ -93,17 +93,15 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   {
     if (new_value == 0)
     {
-      printf ("Receiver (RW_ATTRIB) :\tnew_value == 0 -> INTERNALERROR with id <42> and errorstring <Hello World>\n");
+      printf ("Receiver (RW_ATTRIB) :\tnew_value == 0 -> THROW empty exception\n");
       CCM_AMI::InternalError ex;
-      ex.id = 42;
-      ex.error_string = "Hello world";
       throw ex;
     }
     else
     {
       printf ("Receiver (RW_ATTRIB) :\tSet <%d>\n", new_value);
+      ACE_OS::sleep (ACE_OS::rand () % 2);
     }
-    ACE_OS::sleep (ACE_OS::rand () % 2);
   }
     
   CORBA::Short

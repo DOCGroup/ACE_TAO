@@ -64,23 +64,23 @@ namespace CIAO_Hello_AMI_AMI_Impl
     virtual ~AMI_MyFoo_exec_i (void);
     virtual void
     sendc_foo (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler,
+      ::CCM_AMI::AMI_MyFoo_callback_ptr ami_handler,
       const char * in_str);
 
     virtual void
     sendc_hello (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler);
+      ::CCM_AMI::AMI_MyFoo_callback_ptr ami_handler);
     
     virtual void
     sendc_get_rw_attrib (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler);
+      ::CCM_AMI::AMI_MyFoo_callback_ptr ami_handler);
     virtual void
     sendc_set_rw_attrib (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler,
+      ::CCM_AMI::AMI_MyFoo_callback_ptr ami_handler,
       CORBA::Short rw_attrib);
     virtual void
         sendc_get_ro_attrib (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler);
+      ::CCM_AMI::AMI_MyFoo_callback_ptr ami_handler);
     
   private:
     CCM_AMI::MyFoo_var ami_foo_server_;
@@ -98,7 +98,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
     virtual void
     sendc_do_something_with_something (
-      ::CCM_AMI::AMI_MyInterface_callback_ptr cb_handler,
+      ::CCM_AMI::AMI_MyInterface_callback_ptr ami_handler,
       CORBA::Short something);
 
   private:

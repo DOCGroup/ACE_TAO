@@ -96,10 +96,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
   // FOO methods
   void
   MyFoo_callback_exec_i::foo_callback_handler (
-    ::CORBA::Long result,
+    ::CORBA::Long ami_return_val,
     const char * answer)
   {
-    printf ("Sender (FOO) :\tCallback from AMI : result <%d> answer <%s>\n", result, answer);
+    printf ("Sender (FOO) :\tCallback from AMI : result <%d> answer <%s>\n", ami_return_val, answer);
   }
 
   void
@@ -181,9 +181,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   void
   MyInterface_callback_exec_i::do_something_with_something_callback_handler (
-    ::CORBA::Float result)
+  ::CORBA::Float ami_return_val)
   {
-    printf ("Sender (INTERFACE) :\tCallback from AMI : result <%f>\n", result);
+    printf ("Sender (INTERFACE) :\tCallback from AMI : result <%f>\n", ami_return_val);
   }
 
   void
@@ -213,16 +213,16 @@ namespace CIAO_Hello_AMI_Sender_Impl
           }
         else
           {
-            printf ("Sender (ASYNCH) :\tInvoke Asynchronous call\n");
+            printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls\n");
             my_foo_ami_->sendc_foo (0, "Do something asynchronous");
             my_foo_ami_->sendc_hello (0);
             my_foo_ami_->sendc_get_rw_attrib(0);
             my_foo_ami_->sendc_set_rw_attrib(0, 15);
             my_foo_ami_->sendc_get_ro_attrib(0);
-            printf ("Sender (ASYNCH) :\tInvoked Asynchronous call\n");
+            printf ("Sender (ASYNCH) :\tInvoked Asynchronous calls\n");
           }
       }
-    printf ("Sender (ASYNCH) :\tInvoke Asynchronous call to test except handling\n");
+    printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls to test except handling\n");
     my_foo_ami_->sendc_foo (0, "");
     my_foo_ami_->sendc_set_rw_attrib(0, 0);
     printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
@@ -246,9 +246,19 @@ namespace CIAO_Hello_AMI_Sender_Impl
       {
         CORBA::Long result = my_foo_ami_->foo ("Do something synchronous", out_str);
         printf ("Sender (SYNCH):\tInvoked synchronous call (FOO) result <%d> answer <%s>\n", result, out_str);
+        
         CORBA::Long answer;
         my_foo_ami_->hello (answer);
         printf ("Sender (SYNCH):\tInvoked synchronous call (HELLO) answer <%d>\n", answer);
+        
+        CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
+        printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RW_ATTRIB) answer <%d>\n", rw_attrib);
+        
+        my_foo_ami_->rw_attrib (15);
+        printf ("Sender (SYNCH):\tInvoked synchronous call (SET_RW_ATTRIB) to <15>\n");
+        
+        CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
+        printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RO_ATTRIB) answer <%d>\n", ro_attrib);
       }
     try
       {
@@ -257,9 +267,23 @@ namespace CIAO_Hello_AMI_Sender_Impl
       }
     catch (CCM_AMI::InternalError& ex)
       {
-        printf ("Sender (SYNCH) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+        printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
       }
-    return 0;
+      
+    try
+      {
+        my_foo_ami_->rw_attrib (0);
+        printf ("Sender (SYNCH) :\tInvoked synchronous call rw_attrib\n");
+      }
+    catch (CCM_AMI::InternalError& ex)
+     {
+        printf ("Sender (SYNCH RW_ATTRIB) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+      }
+      catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Caught EXPECTED except:");
+      }
+      return 0;
   }
 
   //============================================================
@@ -283,7 +307,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
       else
       {
         printf ("Sender (INTERFACE) :\tInvoke Asynchronous call\n");
-        //MyInterface_callback_exec_i* cb = new MyInterface_callback_exec_i ();
         my_interface_ami_->sendc_do_something_with_something (0, i);
         printf ("Sender (INTERFACE) :\tInvoked Asynchronous call\n");
       }
@@ -358,24 +381,25 @@ namespace CIAO_Hello_AMI_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
+  
     ::CCM_AMI::AMI_MyFoo_var asynch_foo =
       this->context_->get_connection_run_asynch_my_foo();
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-/*
+  
     ::CCM_AMI::MyFoo_var synch_foo =
         this->context_->get_connection_run_my_foo ();
     synch_foo_generator* synch_foo_gen =
       new synch_foo_generator (synch_foo);
     synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-
+   
   ::CCM_AMI::AMI_MyInterface_var asynch_interface =
       this->context_->get_connection_run_asynch_my_interface();
   asynch_interface_generator* asynch_interface_gen =
     new asynch_interface_generator (asynch_interface);
   asynch_interface_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-*/
+
   }
 
   void

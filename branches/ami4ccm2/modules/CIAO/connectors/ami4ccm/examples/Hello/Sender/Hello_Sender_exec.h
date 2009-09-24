@@ -106,7 +106,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual void
     do_something_with_something_callback_handler (
-      ::CORBA::Float result);
+      ::CORBA::Float ami_return_val);
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
@@ -131,7 +131,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     // FOO Reply Handler
     virtual void
       foo_callback_handler (
-        ::CORBA::Long result,
+      ::CORBA::Long ami_return_val,
         const char * answer);
     virtual void
       foo_callback_excep (

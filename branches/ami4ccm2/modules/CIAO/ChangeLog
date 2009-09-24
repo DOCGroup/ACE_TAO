@@ -1,3 +1,27 @@
+Thu Sep 24 14:39:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
+          Changes to meet the CORBA AMI spec.
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
+          Applied naming convention to meet the spec.
+          Implemented all attribute handling.
+
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
+          Applied naming convention to meet the spec.
+
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Implemented exception handling for attributes.
+
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Implemented synchronous invocations. Also added exception
+          handling for synchronous invocations.
+
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+          Extended time frame in which the application should run.
+
 Thu Sep 24 10:04:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.h:
