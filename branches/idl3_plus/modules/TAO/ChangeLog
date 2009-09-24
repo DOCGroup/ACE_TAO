@@ -1,3 +1,12 @@
+Thu Sep 24 17:32:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_exs.h:
+        
+          Fixed bug related to unused args in generated empty executor
+          implementation methods, and removed 2 unused operations
+          from the visitor.
+
 Wed Sep 23 21:48:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_iface_inst.cpp:

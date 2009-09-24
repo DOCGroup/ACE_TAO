@@ -43,9 +43,6 @@ public:
   ~be_visitor_operation_exs (void);
 
   virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
-  
-  virtual int post_process (be_decl *bd);
   
   void scope (be_interface *node);
 
