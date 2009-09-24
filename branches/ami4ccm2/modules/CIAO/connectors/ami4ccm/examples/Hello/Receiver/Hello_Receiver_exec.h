@@ -64,6 +64,16 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual void
     hello (
       CORBA::Long_out answer);
+    
+    virtual CORBA::Short
+    rw_attrib ();
+    
+    virtual void
+    rw_attrib (
+      CORBA::Short new_value);
+    
+    virtual CORBA::Short
+        ro_attrib ();
   };
   
   class  MyInterface_exec_i

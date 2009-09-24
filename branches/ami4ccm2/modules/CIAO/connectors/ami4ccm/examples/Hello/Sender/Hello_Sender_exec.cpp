@@ -124,6 +124,50 @@ namespace CIAO_Hello_AMI_Sender_Impl
     HandleException (excep_holder, "HELLO");
   }
 
+  //GET rw_attrib Reply Handler
+  void 
+  MyFoo_callback_exec_i::get_rw_attrib_callback_handler (
+    ::CORBA::Short ami_return_val)
+  {
+    printf ("Sender (RW_ATTRIB) :\tCallback from AMI (RW_ATTRIB) : answer <%d>\n", ami_return_val);
+  }
+  
+  void 
+  MyFoo_callback_exec_i::get_rw_attrib_callback_excep (
+    ::Messaging::ExceptionHolder * excep_holder)
+  {
+    HandleException (excep_holder, "GET RW_ATTRIB");
+  }
+    
+  //SET rw_attrib Reply Handler
+  void 
+  MyFoo_callback_exec_i::set_rw_attrib_callback_handler ()
+  {
+    printf ("Sender (RW_ATTRIB) :\tCallback from AMI (RW_ATTRIB)\n");
+  }
+  
+  void 
+  MyFoo_callback_exec_i::set_rw_attrib_callback_excep (
+    ::Messaging::ExceptionHolder * excep_holder)
+  {
+    HandleException (excep_holder, "SET_RW_ATTRIB");
+  }
+  
+  //ro_attrib Reply Handler
+  void 
+  MyFoo_callback_exec_i::get_ro_attrib_callback_handler (
+    ::CORBA::Short ami_return_val)
+  {
+    printf ("Sender (RO_ATTRIB) :\tCallback from AMI (RO_ATTRIB) : answer <%d>\n", ami_return_val);
+  }
+    
+  void 
+  MyFoo_callback_exec_i::get_ro_attrib_callback_excep (
+    ::Messaging::ExceptionHolder * excep_holder)
+  {
+    HandleException (excep_holder, "RO_ATTRIB");
+  }
+  
   //============================================================
   // Operations from ::CCM_AMI::MyInterface_callback
   //============================================================
@@ -172,11 +216,15 @@ namespace CIAO_Hello_AMI_Sender_Impl
             printf ("Sender (ASYNCH) :\tInvoke Asynchronous call\n");
             my_foo_ami_->sendc_foo (0, "Do something asynchronous");
             my_foo_ami_->sendc_hello (0);
+            my_foo_ami_->sendc_get_rw_attrib(0);
+            my_foo_ami_->sendc_set_rw_attrib(0, 15);
+            my_foo_ami_->sendc_get_ro_attrib(0);
             printf ("Sender (ASYNCH) :\tInvoked Asynchronous call\n");
           }
       }
     printf ("Sender (ASYNCH) :\tInvoke Asynchronous call to test except handling\n");
     my_foo_ami_->sendc_foo (0, "");
+    my_foo_ami_->sendc_set_rw_attrib(0, 0);
     printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
     return 0;
   }
@@ -315,7 +363,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-
+/*
     ::CCM_AMI::MyFoo_var synch_foo =
         this->context_->get_connection_run_my_foo ();
     synch_foo_generator* synch_foo_gen =
@@ -327,7 +375,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   asynch_interface_generator* asynch_interface_gen =
     new asynch_interface_generator (asynch_interface);
   asynch_interface_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-
+*/
   }
 
   void

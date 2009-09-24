@@ -128,26 +128,39 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+    // FOO Reply Handler
     virtual void
-    foo_callback_handler (
-      ::CORBA::Long result,
-      const char * answer);
-    
+      foo_callback_handler (
+        ::CORBA::Long result,
+        const char * answer);
     virtual void
-    hello_callback_handler (
-      ::CORBA::Long answer);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void
-    foo_callback_excep (
+      foo_callback_excep (
         ::Messaging::ExceptionHolder * excep_holder);
-
+    
+    // Hello Reply Handler
     virtual void
-    hello_callback_excep (
+      hello_callback_handler (
+        ::CORBA::Long answer);
+    virtual void
+      hello_callback_excep (
         ::Messaging::ExceptionHolder * excep_holder);
+    
+    //GET rw_attrib Reply Handler
+    virtual void get_rw_attrib_callback_handler (
+      ::CORBA::Short ami_return_val);
+    virtual void get_rw_attrib_callback_excep (
+      ::Messaging::ExceptionHolder * excep_holder);
+    
+    //SET rw_attrib Reply Handler
+    virtual void set_rw_attrib_callback_handler (void);
+    virtual void set_rw_attrib_callback_excep (
+      ::Messaging::ExceptionHolder * excep_holder);
+    
+    //ro_attrib Reply Handler
+    virtual void get_ro_attrib_callback_handler (
+      ::CORBA::Short ami_return_val);
+    virtual void get_ro_attrib_callback_excep (
+      ::Messaging::ExceptionHolder * excep_holder);
   };
   
   class  Sender_exec_i

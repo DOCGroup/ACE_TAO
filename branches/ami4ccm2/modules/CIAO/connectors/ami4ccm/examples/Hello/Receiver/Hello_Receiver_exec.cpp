@@ -55,6 +55,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   {
     if (ACE_OS::strlen (in_str) == 0)
       {
+        printf ("Receiver (FOO) :\tEMPTY string received -> THROW INTERNALERROR with id <42> and errorstring <Hello World>\n");
         CCM_AMI::InternalError ex;
         ex.id = 42;
         ex.error_string = "Hello world";
@@ -62,7 +63,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
       }
     else
       {
-        printf ("Receiver :\tReceived string <%s>\n", in_str);
+        printf ("Receiver (FOO) :\tReceived string <%s>\n", in_str);
         ACE_OS::sleep (ACE_OS::rand () % 2);
         answer = CORBA::string_dup ("This is my answer : Hi");
         return ACE_OS::rand () % 100;
@@ -78,7 +79,42 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     answer = ACE_OS::rand () % 100;
   }
   
-//============================================================
+  CORBA::Short
+  MyFoo_exec_i::rw_attrib ()
+  {
+    printf ("Receiver (RW_ATTRIB) :\tReceived request\n");
+    ACE_OS::sleep (ACE_OS::rand () % 2);
+    return ACE_OS::rand () % 100;
+  }
+    
+  void
+  MyFoo_exec_i::rw_attrib (
+    CORBA::Short new_value)
+  {
+    if (new_value == 0)
+    {
+      printf ("Receiver (RW_ATTRIB) :\tnew_value == 0 -> INTERNALERROR with id <42> and errorstring <Hello World>\n");
+      CCM_AMI::InternalError ex;
+      ex.id = 42;
+      ex.error_string = "Hello world";
+      throw ex;
+    }
+    else
+    {
+      printf ("Receiver (RW_ATTRIB) :\tSet <%d>\n", new_value);
+    }
+    ACE_OS::sleep (ACE_OS::rand () % 2);
+  }
+    
+  CORBA::Short
+  MyFoo_exec_i::ro_attrib ()
+  {
+    printf ("Receiver (RO_ATTRIB) :\tReceived request\n");
+    ACE_OS::sleep (ACE_OS::rand () % 2);
+    return ACE_OS::rand () % 100;
+  }
+  
+   //============================================================
   // Facet Executor Implementation Class: MyInterface_exec_i
   //============================================================
   

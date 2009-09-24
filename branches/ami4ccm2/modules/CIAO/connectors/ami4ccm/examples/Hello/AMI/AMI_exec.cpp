@@ -142,6 +142,43 @@ namespace CIAO_Hello_AMI_AMI_Impl
     printf ("AMI (FOO) : \tInvoked sendc_foo\n");
   }
   
+  void
+  AMI_MyFoo_exec_i::sendc_get_rw_attrib (
+  ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/)
+  {
+    printf ("AMI (FOO) :\tsendc_get_rw_attrib\n");
+    ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+    CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
+    //ami_foo_server_->sendc_get_rw_attrib (the_handler_var.in ());
+    printf ("AMI (FOO) : \tInvoked sendc_get_rw_attrib\n");
+  }
+  
+  void
+  AMI_MyFoo_exec_i::sendc_set_rw_attrib (
+  ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/,
+  CORBA::Short rw_attrib)
+  {
+    printf ("AMI (FOO) :\tsendc_set_rw_attrib\n");
+    ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+    CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
+    printf ("AMI (FOO) : \tSet rw_attrib <%d>\n", rw_attrib);
+    //ami_foo_server_->sendc_set_rw_attrib (the_handler_var.in (), rw_attrib);
+    printf ("AMI (FOO) : \tInvoked sendc_set_rw_attrib\n");
+  }
+  
+  void
+  AMI_MyFoo_exec_i::sendc_get_ro_attrib (
+  ::CCM_AMI::AMI_MyFoo_callback_ptr /*cb_handler*/)
+  {
+    printf ("AMI (FOO) :\tsendc_get_ro_attrib\n");
+    ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
+        new ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler (foo_callback_);
+    CCM_AMI::AMI_MyFooHandler_var the_handler_var = handler->_this ();
+    ami_foo_server_->sendc_get_ro_attrib (the_handler_var.in ());
+    printf ("AMI (FOO) : \tInvoked sendc_get_ro_attrib\n");
+  }
   //============================================================
   // Facet Executor Implementation Class: AMI_MyFoo_exec_i
   //============================================================

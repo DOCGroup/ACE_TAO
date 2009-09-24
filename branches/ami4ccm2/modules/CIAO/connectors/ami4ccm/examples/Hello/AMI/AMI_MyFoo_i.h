@@ -34,7 +34,29 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       void
       hello_excep (
         ::Messaging::ExceptionHolder * excep_holder);
-
+      
+      void 
+      get_rw_attrib (
+        ::CORBA::Short ami_return_val);
+      
+      void 
+      get_rw_attrib_excep (
+        ::Messaging::ExceptionHolder * excep_holder);
+      
+      void 
+      set_rw_attrib ();
+  
+      void 
+      set_rw_attrib_excep (
+        ::Messaging::ExceptionHolder * excep_holder);
+  
+      void 
+      get_ro_attrib (
+        ::CORBA::Short ami_return_val);
+    
+      void 
+      get_ro_attrib_excep (
+        ::Messaging::ExceptionHolder * excep_holder);
     private:
       ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
   };
@@ -56,6 +78,16 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     void
     hello (
       CORBA::Long_out answer);
+  
+    CORBA::Short
+    rw_attrib (void);
+
+    void
+    rw_attrib (
+      CORBA::Short rw_attrib);
+  
+    CORBA::Short
+    ro_attrib (void);
 
   private:
     CORBA::ORB_var orb_;

@@ -70,7 +70,18 @@ namespace CIAO_Hello_AMI_AMI_Impl
     virtual void
     sendc_hello (
       ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler);
-
+    
+    virtual void
+    sendc_get_rw_attrib (
+      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler);
+    virtual void
+    sendc_set_rw_attrib (
+      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler,
+      CORBA::Short rw_attrib);
+    virtual void
+        sendc_get_ro_attrib (
+      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler);
+    
   private:
     CCM_AMI::MyFoo_var ami_foo_server_;
     ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;

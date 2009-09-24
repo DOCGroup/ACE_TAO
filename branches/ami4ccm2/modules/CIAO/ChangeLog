@@ -1,3 +1,18 @@
+Thu Sep 24 10:04:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.cpp:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello.idl:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Added attributes in IDL. Now, this example also shows
+          readonly and readwrite attribute AMI-handling.
+
 Tue Sep 22 07:16:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
