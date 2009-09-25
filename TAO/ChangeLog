@@ -1,7 +1,13 @@
+Fri Sep 25 21:34:45 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        
+          Changed max # of preprocessor args from 128 to 1024.
+
 Fri Sep 25 20:36:04 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
-        
+
           Changed max # of preprocessor args from 128 to 1024.
 
 Fri Sep 25 19:35:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
