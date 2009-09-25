@@ -606,7 +606,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   }
 
   void 
-  ::configure_default_topic_ (void)
+  Quoter_Connector_exec_i::configure_default_topic_ (void)
   {
     if (this->default_topic_configured_) return;
     
@@ -638,7 +638,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     if (this->__info_in_configured_)
       return;
     
-    this->configure_default_topic_ (void);
+    this->configure_default_topic_ ();
     
     try
       {
