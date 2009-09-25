@@ -80,10 +80,10 @@ for ($testid = 1; $testid <= 9; ++$testid) {
 
     my $SV;
 
-    $SV = $process->CreateProcess ("PI_ProcMode_Remote_TestServer", 
-                                      "-p $server_mode " .
+    $SV = $process->CreateProcess ("PI_ProcMode_Remote_TestServer",
+                                      "-p $server_mode -o $iorfile" .
                                       "-ORBobjrefstyle url");
-      
+
     print STDERR "\n\n==== Starting test variant #$testid\n\n";
 
     $server = $SV->Spawn ();
