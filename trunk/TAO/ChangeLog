@@ -1,3 +1,15 @@
+Fri Sep 25 18:54:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Abstract_Interface/run_test.pl:
+        * tests/Bug_2805_Regression/run_test.pl:
+        * tests/Bug_2909_Regression/run_test.pl:
+        * tests/Bug_3163_Regression/run_test.pl:
+        * tests/Bug_3333_Regression/run_test.pl:
+        * tests/Bug_3565_Regression/run_test.pl:
+        * tests/Bug_3566_Regression/run_test.pl:
+        * tests/Bug_3630_Regression/run_test.pl:
+          Various improvements for cross platform testing
+
 Sat Sep 19 13:17:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/logWalker/HostProcess.cpp:

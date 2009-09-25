@@ -17,7 +17,10 @@ foreach $i (@ARGV) {
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$SV = $server->CreateProcess ("client", "-ORBdebuglevel $debug_level");
+my $iorbase = "ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+
+$SV = $server->CreateProcess ("client", "-ORBdebuglevel $debug_level -k file://$server_iorfile");
 
 $test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
