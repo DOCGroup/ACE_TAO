@@ -1,3 +1,13 @@
+Fri Sep 25 19:35:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/DSI/run_test.pl
+        * tests/Portable_Interceptors/PolicyFactory/run_test.pl
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl
+        * tests/Object_Loader/run_test.pl
+        * tests/CSD_Collocation/run_test.pl
+          Various improvements for cross platform testing
+
 Fri Sep 25 18:54:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/run_test.pl:
