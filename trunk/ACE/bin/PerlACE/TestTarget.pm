@@ -256,20 +256,12 @@ sub RandomPort ($)
 sub ProcessStartWaitInterval ($)
 {
     my $self = shift;
-    my $new_val = shift;
-    if (defined $new_val) {
-        $self->{PROCESS_START_WAIT_INTERVAL} = $new_val;
-    }
     return $self->{PROCESS_START_WAIT_INTERVAL};
 }
 
 sub ProcessStopWaitInterval ($)
 {
     my $self = shift;
-    my $new_val = shift;
-    if (defined $new_val) {
-        $self->{PROCESS_STOP_WAIT_INTERVAL} = $new_val;
-    }
     return $self->{PROCESS_STOP_WAIT_INTERVAL};
 }
 
