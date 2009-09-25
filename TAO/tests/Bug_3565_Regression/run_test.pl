@@ -19,7 +19,7 @@ if ($server_status != 0) {
     exit 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStartWaitInterval());
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";

@@ -16,12 +16,16 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 my $iorbase = "server.ior";
 my $forward_forever = "forward_forever.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($forward_forever);
+my $server_forever = $server->LocalFile ($forward_forever);
+my $client_iorfile = $client->LocalFile ($iorbase);
+my $client_forever = $client->LocalFile ($forward_forever);
 $server->DeleteFile($iorbase);
+$server->DeleteFile($forward_forever);
+$client->DeleteFile($iorbase);
 $client->DeleteFile($forward_forever);
 
-$SV = $server->CreateProcess ("Bug3333_Server", "-o $server_iorfile -p $client_iorfile -ORBObjRefStyle URL -ORBCollocation NO");
-$CL = $client->CreateProcess ("Bug3333_Client", "-ORBDebugLevel0 -k file://$server_iorfile -l file://$client_iorfile");
+$SV = $server->CreateProcess ("Bug3333_Server", "-o $server_iorfile -p $server_forever -ORBObjRefStyle URL -ORBCollocation NO");
+$CL = $client->CreateProcess ("Bug3333_Client", "-ORBDebugLevel0 -k file://$client_iorfile -l file://$client_forever");
 
 print "Spawn server\n";
 $server_status = $SV->Spawn ();
@@ -80,6 +84,8 @@ if ($server_status != 0) {
 }
 
 $server->DeleteFile($iorbase);
+$server->DeleteFile($forward_forever);
+$client->DeleteFile($iorbase);
 $client->DeleteFile($forward_forever);
 
 exit $status;
