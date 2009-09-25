@@ -1,3 +1,20 @@
+Fri Sep 25 01:34:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3p:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.mpc:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl3:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl3p:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Distributor/controller.cpp:
+
+          Additional connector implementation. 
+        
 Wed Sep  9 11:50:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/connectoridldefaults.mpb:
@@ -14,8 +31,8 @@ Wed Sep  9 11:50:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/impl/ndds/Writer.h:
         * connectors/dds4ccm/impl/ndds/Writer.tpp:
 
-          Additional connector implementation. 
-        
+          Additional connector implementation.
+
         * connectors/dds4ccm/examples/Quoter/Quoter:
 
           Removed this file.
