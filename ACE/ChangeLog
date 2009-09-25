@@ -1,3 +1,8 @@
+Fri Sep 25 18:47:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Reverted back to the viewvc pages
+
 Fri Sep 25 12:06:11 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-openbsd.h:
