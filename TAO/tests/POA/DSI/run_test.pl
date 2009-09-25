@@ -13,13 +13,14 @@ $status = 0;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$iorbase = "server.ior";
-$iorfile = $server->LocalFile ($iorbase);
-
+my $iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-f $iorfile");
-$CL = $client->CreateProcess ("client", "-f $iorfile -x");
+$SV = $server->CreateProcess ("server", "-f $server_iorfile");
+$CL = $client->CreateProcess ("client", "-f $client_iorfile -x");
 
 $server_status = $SV->Spawn ();
 
@@ -49,5 +50,6 @@ if ($server_status2 != 0) {
 }
 
 $server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;
