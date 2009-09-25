@@ -1,3 +1,9 @@
+Fri Sep 25 20:36:04 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+        
+          Changed max # of preprocessor args from 128 to 1024.
+
 Fri Sep 25 19:35:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/DSI/run_test.pl
@@ -58,7 +64,7 @@ Mon Sep 14 06:39:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Sep 11 02:39:39 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.7.3 released.
+        * TAO version 1.7.3 released.
 
 Thu Sep 10 07:07:01 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 

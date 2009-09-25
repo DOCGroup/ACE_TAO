@@ -93,7 +93,7 @@ ACE_RCSID (driver,
            "$Id$")
 
 // Storage for preprocessor args.
-unsigned long const DRV_MAX_ARGCOUNT = 128;
+unsigned long const DRV_MAX_ARGCOUNT = 1024;
 unsigned long DRV_argcount = 0;
 ACE_TCHAR const * DRV_arglist[DRV_MAX_ARGCOUNT] = { 0 };
 
