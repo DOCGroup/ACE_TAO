@@ -1,3 +1,15 @@
+Sat Sep 26 08:34:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/corba-boolean.perl
+        * bin/corba-boolean.pl
+          Removed to .pl
+
+        * bin/tao_orb_tests.lst:
+          Enabled a few more tests for ce/labview/fuzz
+
+        * bin/tao_svcconf.pl:
+          Updated a comment
+
 Sat Sep 26 07:59:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Reply/run_test.pl
