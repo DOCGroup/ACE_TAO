@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 PerlACE::add_lib_path ('../TP_Foo_A/.');
 PerlACE::add_lib_path ('../TP_Common/.');
@@ -42,19 +42,19 @@ if (PerlACE::waitforfile_timed ($iorbase,
 
 for ($i = 0; $i < $num_clients; $i++) {
 
-  @CLS[$i] = $client->CreateProcess ("client_main", "-i file://$client_iorfile");
+    @CLS[$i] = $client->CreateProcess ("client_main", "-i file://$client_iorfile");
 
-  @CLS[$i]->Spawn ();
+    @CLS[$i]->Spawn ();
 }
 
 for ($i = 0; $i < $num_clients; $i++) {
 
-  $client = @CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
+    $client = @CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
 
-  if ($client != 0) {
-    print STDERR "ERROR: client $i returned $client\n";
-    $status = 1;
-  }
+    if ($client != 0) {
+        print STDERR "ERROR: client $i returned $client\n";
+        $status = 1;
+    }
 }
 
 $server = $SV->WaitKill ($server->ProcessStopWaitInterval());
