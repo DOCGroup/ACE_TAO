@@ -116,7 +116,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const char *filename)
+                    const ACE_TCHAR *filename)
 {
   FILE *file =
     ACE_OS::fopen (filename, "w");
@@ -127,7 +127,7 @@ write_iors_to_file (CORBA::Object_ptr object,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "%C: %C\n",
+                "%s: %C\n",
                 filename,
                 ior.in ()));
 
@@ -182,7 +182,7 @@ create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      ACE_TEXT_ALWAYS_CHAR (persistent_ior));
+                      persistent_ior);
 }
 
 void
@@ -234,7 +234,7 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      ACE_TEXT_ALWAYS_CHAR (transient_ior));
+                      transient_ior);
 }
 
 void
@@ -293,7 +293,7 @@ create_poa_with_tp_and_persistent_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      ACE_TEXT_ALWAYS_CHAR (tp_persistent_ior));
+                      tp_persistent_ior);
 }
 
 int
