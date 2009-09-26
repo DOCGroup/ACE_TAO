@@ -1,3 +1,17 @@
+Sat Sep 26 07:59:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Reply/run_test.pl
+        * tests/Collocated_Forwarding/run_test.pl
+        * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl
+        * tests/DiffServ/run_test.pl
+        * tests/DiffServ/server.cpp
+        * tests/DII_Collocation_Tests/oneway/run_test.pl
+        * tests/DII_Collocation_Tests/twoway/run_test.pl
+        * tests/RTCORBA/Linear_Priority/server.cpp
+        * tests/RTCORBA/Persistent_IOR/run_test.pl
+        * tests/RTCORBA/Persistent_IOR/server.cpp
+          Various improvements for cross platform testing
+
 Sat Sep 26 07:52:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DLL_ORB/run_test.pl

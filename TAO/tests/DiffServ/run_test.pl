@@ -19,7 +19,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel 1 -p 20000");
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel 1 -p 20000 -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "-ORBdebuglevel 1 -n 10 -k file://$client_iorfile");
 
 $server_status = $SV->Spawn ();
