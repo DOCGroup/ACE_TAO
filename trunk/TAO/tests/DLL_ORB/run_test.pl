@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 
 use lib  "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -18,8 +18,6 @@ my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
-
-unlink $file;
 
 $SV = $server->CreateProcess ("server");
 $CL = $client->CreateProcess ("client");
