@@ -1,7 +1,26 @@
+Sat Sep 26 07:52:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DLL_ORB/run_test.pl
+        * tests/IDL_Inherited_Operation/client.cpp
+        * tests/IDL_Inherited_Operation/run_test.pl
+        * tests/IDL_Inherited_Operation/server.cpp
+        * tests/Oneways_Invoking_Twoways/run_test.pl
+        * tests/POA/EndpointPolicy/run_test.pl
+        * tests/POA/EndpointPolicy/server.cpp
+        * tests/Portable_Interceptors/AdvSlotExt/run_test.pl
+        * tests/Portable_Interceptors/AdvSlotExt/server.cpp
+        * tests/RTCORBA/Destroy_Thread_Pool/run_test.pl
+        * tests/RTCORBA/Policies/run_test.pl
+        * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl
+        * tests/RTCORBA/RTMutex/run_test.pl
+        * tests/Smart_Proxies/dtor/run_test.pl
+        * tests/Timeout/run_test.pl
+          Various improvements for cross platform testing
+
 Fri Sep 25 21:34:45 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
-        
+
           Changed max # of preprocessor args from 128 to 1024.
 
 Fri Sep 25 20:36:04 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>

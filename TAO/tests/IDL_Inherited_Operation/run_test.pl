@@ -15,10 +15,12 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create client failed
 
 my $iorbase = "test.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server");
-$CL = $client->CreateProcess ("client");
+$SV = $server->CreateProcess ("server", "-o $server_iorfile");
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
