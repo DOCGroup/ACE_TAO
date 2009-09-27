@@ -8,6 +8,7 @@
 #include "tao/PI_Server/PI_Server.h"
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/Get_Opt.h"
 
 #include "StateTransferS.h"
 
