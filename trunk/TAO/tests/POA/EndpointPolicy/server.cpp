@@ -187,7 +187,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (host_form == multi_protocol)
     {
       extra[4] = ACE::strnew (ACE_TEXT ("-ORBSvcConf"));
-      extra[5] = ACE::strcpy (svc_conf_file);
+      extra[5] = ACE::strnew (svc_conf_file);
     }
 
   ACE_TCHAR **largv = new ACE_TCHAR *[argc+num_extra];
