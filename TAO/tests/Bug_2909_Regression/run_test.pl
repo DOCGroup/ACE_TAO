@@ -15,11 +15,11 @@ foreach $i (@ARGV) {
     }
 }
 
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 $SV = $server->CreateProcess ("client", "-ORBdebuglevel $debug_level -k $server_iorfile");
 
