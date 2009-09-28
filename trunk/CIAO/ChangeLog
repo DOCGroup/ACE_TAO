@@ -1,3 +1,384 @@
+Mon Sep 28 06:19:36 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        Integrated idl3_plus branch
+
+        Thu Sep 24 17:35:36 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/tests/RedirectionServiceTest/RedirectionServiceTest.mpc:
+
+          Added separate IDL processing project.
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+
+          Updated base project on IDL processing project, and
+          cosmetic changes.
+
+        * DAnCE/RepositoryManager/repository_manager_admin.cpp:
+
+          Commented out or removed unused args.
+
+        Wed Sep 23 21:50:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+
+          Removed unused arg.
+
+        * performance-tests/Protocols/Sender/Sender.mpc:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Swapping/Sender/Sender.mpc:
+        * examples/Swapping/Hello_Base/Hello_Base.mpc:
+        * examples/Null_Component/Null_Interface.mpc:
+
+          Fixed missing export header file generation and missing
+          dependency of *E.idl processing on *.idl processing.
+
+        Wed Sep 23 21:23:19 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/CIDL/CodeGen/Basic.mpc:
+
+          Added generation of export header files.
+
+        * tests/CIDL/CodeGen/CodeGen_exec_export.h:
+        * tests/CIDL/CodeGen/Basic_stub_export.h:
+        * tests/CIDL/CodeGen/CodeGen_svnt_export.h:
+        * tests/CIDL/CodeGen/Basic_skel_export.h:
+        * tests/CIDL/CodeGen/CodeGen_stub_export.h:
+
+          Removed these files, now generated.
+
+        Wed Sep 23 19:37:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+
+          Removed unnecessary base project.
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.cpp:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+
+          Updated visitors to reflect IDL3+ changes.
+
+        Tue Sep 22 22:17:57 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleCommon_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_stub_export.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec_export.h:
+        * DAnCE/tests/CIAO/Components/ProcessColocation_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleNull_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_stub_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleProvider_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleCommon_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_svnt_export.h:
+        * DAnCE/tests/CIAO/Components/SimpleNull_stub_export.h:
+
+          Removed these files, now generated.
+
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
+
+          MPC project changes.
+
+        Tue Sep 22 21:45:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec_export.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_svnt_export.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_svnt_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec_export.h:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_stub_export.h:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_skel_export.h:
+
+          Removed these files, now generated.
+
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+
+          Config updates.
+
+        Tue Sep 22 21:22:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Protocols/Sender/Sender_svnt_export.h:
+        * performance-tests/Protocols/Sender/Sender_stub_export.h:
+        * performance-tests/Protocols/Sender/Sender_exec_export.h:
+        * performance-tests/Protocols/Receiver/Receiver_exec_export.h:
+        * performance-tests/Protocols/Receiver/Receiver_svnt_export.h:
+        * performance-tests/Protocols/Receiver/Receiver_stub_export.h:
+        * performance-tests/Protocols/common/Protocols_stub_export.h:
+        * performance-tests/Protocols/common/Protocols_skel_export.h:
+
+          Removed these files, now generated.
+
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * performance-tests/Protocols/Receiver/Receiver.mpc:
+        * performance-tests/Protocols/common/Protocols.mpc:
+
+          Addition of -Glfa IDL compiler option where necessary.
+
+        Tue Sep 22 21:00:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Hello/Hello_Base/Hello_Base_stub_export.h:
+        * examples/Hello/Hello_Base/Hello_Base_skel_export.h:
+        * examples/BasicSP/BasicSP_exec_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+        * examples/BasicSP/EC/EC_exec_export.h:
+        * examples/BasicSP/EC/EC_svnt_export.h:
+        * examples/BasicSP/EC/EC_stub_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+        * examples/BasicSP/BasicSP_exec.cpp:
+        * examples/BasicSP/BMDevice/BMDevice_svnt_export.h:
+        * examples/BasicSP/BMDevice/BMDevice_stub_export.h:
+        * examples/BasicSP/BMDevice/BMDevice_exec_export.h:
+        * examples/BasicSP/BasicSP_exec.h:
+        * examples/Display/Display_Base/Display_Base_stub_export.h:
+        * examples/Display/Display_Base/Display_Base_skel_export.h:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec_export.h:
+        * examples/Display/RateGen/RateGen_exec_export.h:
+        * examples/Display/RateGen/RateGen_svnt_export.h:
+        * examples/Display/RateGen/RateGen_stub_export.h:
+        * examples/Display/GPS/GPS_exec_export.h:
+        * examples/Display/GPS/GPS_svnt_export.h:
+        * examples/Display/GPS/GPS_stub_export.h:
+        * examples/Display/NavDisplay/NavDisplay_exec_export.h:
+        * examples/Display/NavDisplay/NavDisplay_svnt_export.h:
+        * examples/Display/NavDisplay/NavDisplay_stub_export.h:
+        * examples/Swapping/Sender/Sender_svnt_export.h:
+        * examples/Swapping/Sender/Sender_stub_export.h:
+        * examples/Swapping/Sender/Sender_exec_1_export.h:
+        * examples/Swapping/Sender/Sender_exec_export.h:
+        * examples/Swapping/Sender/Sender_exec_2_export.h:
+        * examples/Swapping/Receiver/Receiver_exec_export.h:
+        * examples/Swapping/Receiver/Receiver_svnt_export.h:
+        * examples/Swapping/Receiver/Receiver_stub_export.h:
+        * examples/Swapping/Hello_Base/Hello_Base_stub_export.h:
+        * examples/Swapping/Hello_Base/Hello_Base_skel_export.h:
+        * examples/Null_Component/Null_Component_stub_export.h:
+        * examples/Null_Component/Null_Component_exec_export.h:
+        * examples/Null_Component/Null_Component_svnt_export.h:
+        * examples/Null_Component/Null_Interface_skel_export.h:
+        * examples/Null_Component/Null_Interface_stub_export.h:
+
+          Removed these export header files since they're now
+          generated. Also removed BasicSP_exec.*, and moved the
+          code to BMClosedED_exec.* and BMDevice_exec.*.
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL3.mpc:
+
+          MPC changes, and code moved from BasicSP_exec.*.
+
+        Mon Sep 21 22:01:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * examples/DevGuideExamples/Messenger/Administrator_Client.cpp:
+        * examples/DevGuideExamples/Messenger/Receiver.mpc:
+        * examples/DevGuideExamples/Messenger/Receiver_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_svnt_export.h:
+
+          Fixed config bugs.
+
+        * examples/DevGuideExamples/Messenger/Messenger_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_stub_export.h:
+        * examples/DevGuideExamples/Messenger/Messenger_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_stub_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Messenger_stub_export.h:
+
+          Removed these files from the repository, since they are now generated.
+
+        Mon Sep 21 21:58:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+
+          Fixed bug in implied IDL generation for ports.
+
+        Mon Sep 21 19:42:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_DeploymentPlan.idl:
+
+          Fixed name clash with 'port' identifier.
+
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink.idl:
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource.idl:
+        * tests/IDL3/Components/ComplexComponent/Facets/Facets.idl:
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.idl:
+
+          Fixed name clashes.
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+
+          Fixed bug in processing of valuetypes.
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManager_exec_export.h:
+        * DAnCE/TargetManager/TargetManager_stub_export.h:
+        * DAnCE/TargetManager/TargetManager_svnt_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/BasicSP/BMDevice/BMDevice_exec_export.h:
+        * examples/BasicSP/BMDevice/BMDevice_stub_export.h:
+        * examples/BasicSP/BMDevice/BMDevice_svnt_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/BasicSP_exec_export.h:
+        * examples/BasicSP/BasicSP_stub_export.h:
+        * examples/BasicSP/BasicSP_svnt_export.h:
+        * examples/BasicSP/EC/EC.mpc:
+        * examples/BasicSP/EC/EC_exec_export.h:
+        * examples/BasicSP/EC/EC_stub_export.h:
+        * examples/BasicSP/EC/EC_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_Client.cpp:
+        * examples/DevGuideExamples/Messenger/Administrator_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_stub_export.h:
+        * examples/DevGuideExamples/Messenger/Administrator_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+        * examples/DevGuideExamples/Messenger/Messenger_exec_export.h:
+        * examples/DevGuideExamples/Messenger/Messenger_stub_export.h:
+        * examples/DevGuideExamples/Messenger/Messenger_svnt_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_stub_export.h:
+        * examples/DevGuideExamples/Messenger/Receiver_svnt_export.h:
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Display/GPS/GPS_exec_export.h:
+        * examples/Display/GPS/GPS_stub_export.h:
+        * examples/Display/GPS/GPS_svnt_export.h:
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+        * examples/Display/NavDisplay/NavDisplay_exec_export.h:
+        * examples/Display/NavDisplay/NavDisplay_stub_export.h:
+        * examples/Display/NavDisplay/NavDisplay_svnt_export.h:
+        * examples/Display/RateGen/RateGen.mpc:
+        * examples/Display/RateGen/RateGen_exec_export.h:
+        * examples/Display/RateGen/RateGen_stub_export.h:
+        * examples/Display/RateGen/RateGen_svnt_export.h:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Null_Component/Null_Component.mpc:
+        * examples/Null_Component/Null_Component_exec_export.h:
+        * examples/Null_Component/Null_Component_stub_export.h:
+        * examples/Null_Component/Null_Component_svnt_export.h:
+        * examples/Swapping/Receiver/Receiver_exec_export.h:
+        * examples/Swapping/Receiver/Receiver_stub_export.h:
+        * examples/Swapping/Receiver/Receiver_svnt_export.h:
+        * examples/Swapping/Sender/Sender.mpc:
+        * examples/Swapping/Sender/Sender_exec_export.h:
+        * examples/Swapping/Sender/Sender_stub_export.h:
+        * examples/Swapping/Sender/Sender_svnt_export.h:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec_export.h:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_stub_export.h:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_svnt_export.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec_export.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_stub_export.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_svnt_export.h:
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        * tests/CIDL/CodeGen/CodeGen_exec_export.h:
+        * tests/CIDL/CodeGen/CodeGen_stub_export.h:
+        * tests/CIDL/CodeGen/CodeGen_svnt_export.h:
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc:
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc:
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.idl:
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.idl:
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.mpc:
+        * tests/Minimum/Receiver/Receiver.mpc:
+        * tests/Minimum/Receiver/Receiver_exec_export.h:
+        * tests/Minimum/Receiver/Receiver_stub_export.h:
+        * tests/Minimum/Receiver/Receiver_svnt_export.h:
+        * tests/Minimum/Sender/Sender.mpc:
+        * tests/Minimum/Sender/Sender_exec_export.h:
+        * tests/Minimum/Sender/Sender_stub_export.h:
+        * tests/Minimum/Sender/Sender_svnt_export.h:
+
+          Added configuration changes corresponding to IDL3+ changes
+          to IDL compiler.
+
+        Wed Sep  2 16:06:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+
+          Replaced commented-out gen_* methods with
+          corresponding visit_* methods for component ports.
+
+        Wed Aug 26 18:29:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+
+          Updated visitors to include the new visit methods,
+          and commented out the existing methods that use
+          port descriptions, which have been eliminated.
+
+        Fri Jul 17 19:07:47 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+
+          Added new visit_* methods corresponding to new nodes
+          added in the IDL compiler front end.
+
+        Wed Jul  8 22:44:15 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+
+          Added new visit_template_interface() and
+          visit_porttype() methods to keep these classes up to
+          date with the IDL compiler frontend. The methods are
+          empty for now, but the IDL3_to_IDL2 visitor classes are
+  kept concrete and instantiable.
+
 Wed Sep 23 11:57:59 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/IDL3_to_XMI/XMI_For_Module_Reopen/test.idl:
