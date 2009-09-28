@@ -1,3 +1,6 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
+
 #ifndef AST_TMPL_MIRROR_PORT_H
 #define AST_TMPL_MIRROR_PORT_H
 

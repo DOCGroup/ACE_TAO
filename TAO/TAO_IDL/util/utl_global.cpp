@@ -2077,7 +2077,7 @@ void
 IDL_GlobalData::original_local_name (Identifier *local_name)
 {
   const char *lname = local_name->get_string ();
-   
+
   // Remove _cxx_ if:
   // 1. it occurs and
   // 2. it occurs at the beginning of the string and
@@ -2085,10 +2085,10 @@ IDL_GlobalData::original_local_name (Identifier *local_name)
   if (ACE_OS::strstr (lname, "_cxx_") == lname)
     {
       TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-      
+
       unsigned int len =
         static_cast<unsigned int> (ACE_OS::strlen (lname + 5));
-        
+
       const TAO_IDL_CPP_Keyword_Entry *entry =
         cpp_key_tbl.lookup (lname + 5, len);
 
@@ -2099,3 +2099,4 @@ IDL_GlobalData::original_local_name (Identifier *local_name)
         }
     }
 }
+
