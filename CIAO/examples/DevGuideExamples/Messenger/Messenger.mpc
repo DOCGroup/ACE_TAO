@@ -18,7 +18,8 @@ project(Messenger_idl_gen) : ciaoidldefaults, anytypecode {
 
 project(Messenger_idlx_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=MESSENGER_STUB_Export \
+  idlflags += -Glfa \
+              -Wb,stub_export_macro=MESSENGER_STUB_Export \
               -Wb,stub_export_include=Messenger_stub_export.h \
               -Wb,skel_export_macro=MESSENGER_SVNT_Export \
               -Wb,skel_export_include=Messenger_svnt_export.h \
