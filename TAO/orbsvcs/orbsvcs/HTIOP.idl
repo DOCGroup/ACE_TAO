@@ -15,7 +15,7 @@ module HTIOP
   struct ListenPoint
   {
     string host;
-    unsigned short port;
+    unsigned short _port;
     string htid;
   };
 
