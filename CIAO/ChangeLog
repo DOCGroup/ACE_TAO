@@ -1,3 +1,25 @@
+Mon Sep 28 18:21:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        
+          Cosmetic changes.
+          
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+        
+          Config changes.
+
 Mon Sep 28 11:25:43 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tools/IDL3_to_XMI/Literals.cpp:

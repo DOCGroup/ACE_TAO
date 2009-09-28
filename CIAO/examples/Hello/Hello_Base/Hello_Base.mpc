@@ -13,6 +13,17 @@ project(Hello_Base_idl_gen) : componentidldefaults, anytypecode {
   }
 }
 
+project(Hello_Base_lem_gen) : componentidldefaults, anytypecode {
+  custom_only = 1
+  after += Hello_Base_idl_gen
+//  idlflags += -Wb,export_macro=HELLO_BASE_EXEC_Export \
+//              -Wb,export_include=Hello_Base_exec_export.h
+
+  IDL_Files {
+    Hello_BaseE.idl
+  }
+}
+
 project(Hello_Base_stub) : ccm_stub {
   after += Hello_Base_idl_gen
   libout = ../lib
