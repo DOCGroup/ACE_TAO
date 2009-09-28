@@ -47,7 +47,8 @@ namespace CIAO
      * @brief Visitor that generates XMI for the CARDAMOM code
      * generation facilities.
      */
-    class CIAO_IDL3_TO_XMI_Export ir_simulator_visitor : public ast_visitor
+    class CIAO_IDL3_TO_XMI_Export ir_simulator_visitor
+      : public ast_visitor
     {
     public:
       ir_simulator_visitor (void);
@@ -60,12 +61,27 @@ namespace CIAO
       virtual int visit_module (AST_Module *node);
       virtual int visit_interface (AST_Interface *node);
       virtual int visit_interface_fwd (AST_InterfaceFwd *node);
+      virtual int visit_template_interface (AST_Template_Interface *node);
       virtual int visit_valuebox (AST_ValueBox *node);
       virtual int visit_valuetype (AST_ValueType *node);
       void visit_valuetype_impl (AST_ValueType *);
       virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
       virtual int visit_component (AST_Component *node);
       virtual int visit_component_fwd (AST_ComponentFwd *node);
+      virtual int visit_provides (AST_Provides *node);
+      virtual int visit_uses (AST_Uses *node);
+      virtual int visit_publishes (AST_Publishes *node);
+      virtual int visit_emits (AST_Emits *node);
+      virtual int visit_consumes (AST_Consumes *node);
+      virtual int visit_porttype (AST_PortType *node);
+      virtual int visit_extended_port (AST_Extended_Port *node);
+      virtual int visit_mirror_port (AST_Mirror_Port *node);
+      virtual int visit_connector (AST_Connector *node);
+      virtual int visit_instantiated_connector (
+        AST_Instantiated_Connector *node);
+      virtual int visit_tmpl_port (AST_Tmpl_Port *node);
+      virtual int visit_tmpl_mirror_port (
+        AST_Tmpl_Mirror_Port *node);
       virtual int visit_eventtype (AST_EventType *node);
       virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
       virtual int visit_home (AST_Home *node);
@@ -107,9 +123,6 @@ namespace CIAO
       };
 
     private:
-      typedef ACE_Unbounded_Queue<AST_Component::port_description> PORTS;
-      void component_ports (PORTS &ports);
-
       bool do_i_care (AST_Decl *node);
       size_t associating_;
       std::set <std::string> seen_types_;

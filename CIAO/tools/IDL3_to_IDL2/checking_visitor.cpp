@@ -111,6 +111,12 @@ checking_visitor::visit_interface_fwd (AST_InterfaceFwd *)
 }
 
 int
+checking_visitor::visit_template_interface (AST_Template_Interface *)
+{
+  return 0;
+}
+
+int
 checking_visitor::visit_valuebox (AST_ValueBox *)
 {
   return 0;
@@ -153,6 +159,80 @@ checking_visitor::visit_component_fwd (AST_ComponentFwd *node)
     }
 
   this->is_local_idl3_ = true;
+  return 0;
+}
+
+int
+checking_visitor::visit_porttype (AST_PortType *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_provides (AST_Provides *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_uses (AST_Uses *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_publishes (AST_Publishes *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_emits (AST_Emits *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_consumes (AST_Consumes *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_extended_port (AST_Extended_Port *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_mirror_port (AST_Mirror_Port *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_connector (AST_Connector *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_instantiated_connector (
+  AST_Instantiated_Connector *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_tmpl_port (AST_Tmpl_Port *)
+{
+  return 0;
+}
+
+int
+checking_visitor::visit_tmpl_mirror_port (
+  AST_Tmpl_Mirror_Port *)
+{
   return 0;
 }
 

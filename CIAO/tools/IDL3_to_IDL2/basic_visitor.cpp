@@ -63,13 +63,17 @@ basic_visitor::visit_scope (UTL_Scope *node)
         {
           continue;
         }
+        
+      AST_Decl::NodeType nt = d->node_type ();
 
       // Want to skip the uses_xxxConnection structs added by uses
       // multiple ports.
       // @@@ (JP) This will go away when the visitor is finished, since
       // those uses_xxxConnection structs will not be added to the AST.
       if (ScopeAsDecl (node)->node_type () == AST_Decl::NT_component
-          && d->node_type () != AST_Decl::NT_attr)
+          && (nt == AST_Decl::NT_struct
+              || nt == AST_Decl::NT_sequence
+              || nt == AST_Decl::NT_typedef))
         {
           continue;
         }
@@ -122,6 +126,12 @@ basic_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << ";";
 
+  return 0;
+}
+
+int
+basic_visitor::visit_template_interface (AST_Template_Interface *)
+{
   return 0;
 }
 
@@ -217,8 +227,15 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
         {
           *os << ", ";
         }
+        
+      if (i == 0 && node->supports_concrete () != 0)
+        {
+          supports[i] = node->supports_concrete ();
+        }
 
-      *os << IdentifierHelper::orig_sn (supports[i]->name ()).c_str ();
+      AST_Interface *supported = supports[i];
+          
+      *os << IdentifierHelper::orig_sn (supported->name ()).c_str ();
     }
 
   *os << be_nl
@@ -262,6 +279,42 @@ basic_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << ";";
 
+  return 0;
+}
+
+int
+basic_visitor::visit_porttype (AST_PortType *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_provides (AST_Provides *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_uses (AST_Uses *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_publishes (AST_Publishes *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_emits (AST_Emits *)
+{
+  return 0;
+}
+
+int
+basic_visitor::visit_consumes (AST_Consumes *)
+{
   return 0;
 }
 
