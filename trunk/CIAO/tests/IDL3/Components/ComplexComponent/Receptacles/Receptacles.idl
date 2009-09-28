@@ -20,12 +20,12 @@ module ReceptaclesSingle
 
   component Foo
     {
-      uses foo_interface foo;
+      uses foo_interface u_foo;
     };
   
   component Bar : Foo
     {
-      uses bar_interface bar;
+      uses bar_interface u_bar;
     };
   
   component FooBar
@@ -53,12 +53,12 @@ module ReceptaclesMultiple
   
   component Foo
     {
-      uses multiple foo_interface foo;
+      uses multiple foo_interface um_foo;
     };
   
   component Bar
     {
-      uses multiple bar_interface bar;
+      uses multiple bar_interface um_bar;
     };
   
   component ObjectFoo

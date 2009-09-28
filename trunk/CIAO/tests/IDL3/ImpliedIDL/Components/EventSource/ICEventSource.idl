@@ -20,12 +20,12 @@ module ImpliedSources
   
   component Foo
     {
-      publishes foo_event foo;
+      publishes foo_event p_foo;
     };
   
   component Bar
     {
-      emits bar_event bar;
+      emits bar_event e_bar;
     };
   /*  
   interface test
