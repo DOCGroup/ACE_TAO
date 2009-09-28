@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.7.3 and ACE-5.7.4
 ====================================================
 
+. ACE_CDR::consolidate now returns an int, 0 is ok, -1 is failure
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.2 and ACE-5.7.3
 ====================================================
 
