@@ -13,6 +13,18 @@ project(SimpleCommon_idl_gen) : componentidldefaults, anytypecode {
   }
 }
 
+project(SimpleCommon_idle_gen) : ciaoidldefaults {
+  custom_only = 1
+  after += SimpleCommon_idl_gen
+  idlflags += -Wb,export_macro=SIMPLECOMMON_EXEC_Export \
+              -Wb,export_include=SimpleCommon_exec_export.h \
+              -SS
+              
+  IDL_Files {
+    SimpleCommonE.idl
+  }
+}
+
 project(SimpleCommon_stub) : ccm_stub {
   after += SimpleCommon_idl_gen
   libs  +=

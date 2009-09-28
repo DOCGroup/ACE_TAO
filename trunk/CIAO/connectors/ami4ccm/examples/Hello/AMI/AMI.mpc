@@ -3,7 +3,8 @@
 
 project(Hello_Base_AMI_idl_gen) : componentidldefaults   {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=AMI_STUB_Export \
+  idlflags += -Glfa \
+              -Wb,stub_export_macro=AMI_STUB_Export \
               -Wb,stub_export_include=AMI_stub_export.h \
               -Wb,skel_export_macro=AMI_SVNT_Export \
               -Wb,skel_export_include=AMI_svnt_export.h \
@@ -18,9 +19,9 @@ project(Hello_Base_AMI_idl_gen) : componentidldefaults   {
 project(Hello_Base_AMI_lem_gen) : ciaoidldefaults   {
   after += Hello_Base_AMI_idl_gen
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=AMI_LEM_STUB_Export \
-              -Wb,stub_export_include=AMI_lem_stub_export.h \
-              -SS -Gxhst
+  idlflags += -Wb,stub_export_macro=AMI_EXEC_Export \
+              -Wb,stub_export_include=AMI_exec_export.h \
+              -SS
 
   IDL_Files {
     AMIE.idl

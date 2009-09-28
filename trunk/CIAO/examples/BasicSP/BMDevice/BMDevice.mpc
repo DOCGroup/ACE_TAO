@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMDevice_idl_gen): componentidldefaults,anytypecode {
+project(BMDevice_idl_gen): componentidldefaults, anytypecode {
   custom_only = 1
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
               -Wb,stub_export_macro=BMDEVICE_STUB_Export \
@@ -57,9 +57,9 @@ project(BMDevice_stub): ccm_stub {
 }
 
 project(BMDevice_exec) : ciao_executor {
-  after      += BMDevice_stub BMDevice_lem_gen BasicSP_exec
+  after      += BMDevice_stub BMDevice_lem_gen
   sharedname = BMDevice_exec
-  libs       += BMDevice_stub BasicSP_exec BasicSP_stub
+  libs       += BMDevice_stub BasicSP_stub
   libout = ../lib
   libpaths += ../lib
 
@@ -92,7 +92,7 @@ project(BMDevice_svnt) : ciao_servant {
   sharedname = BMDevice_svnt
 
   libs    += BMDevice_stub BMDevice_exec
-  libs    += BasicSP_stub BasicSP_exec BasicSP_svnt
+  libs    += BasicSP_stub BasicSP_svnt
   dynamicflags = BMDEVICE_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib

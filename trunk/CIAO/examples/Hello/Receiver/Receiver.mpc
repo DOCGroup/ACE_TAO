@@ -5,11 +5,12 @@ project(Hello_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
-              -Wb,skel_export_macro=RECEIVER_SVNT_Export \
-              -Wb,skel_export_include=Receiver_svnt_export.h \
+              -Wb,skel_export_macro=RECEIVER_SKEL_Export \
+              -Wb,skel_export_include=Receiver_skel_export.h \
+              -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
+              -Wb,svnt_export_include=Receiver_svnt_export.h \
               -Wb,exec_export_macro=RECEIVER_EXEC_Export \
-              -Wb,exec_export_include=Receiver_exec_export.h \
-              -Gxhst -Gxhsv -Gxhex
+              -Wb,exec_export_include=Receiver_exec_export.h
 
   IDL_Files {
     Receiver.idl

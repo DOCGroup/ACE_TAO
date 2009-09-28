@@ -1036,24 +1036,24 @@ basic_visitor::gen_operation (AST_Operation *node)
 void
 basic_visitor::gen_attribute (AST_Attribute *node)
 {
-   bool rd_only = node->readonly ();
+  bool rd_only = node->readonly ();
 
-   // Keep output statements separate because of side effects.
-   // No need to check for anonymous array - anonymous types not
-   // accepted by parser for attributes.
-   *os << be_nl << be_nl
-       << (rd_only ? "readonly " : "") << "attribute ";
-   *os << this->type_name (node->field_type ());
-   *os << " "
-       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
+  // Keep output statements separate because of side effects.
+  // No need to check for anonymous array - anonymous types not
+  // accepted by parser for attributes.
+  *os << be_nl << be_nl
+     << (rd_only ? "readonly " : "") << "attribute ";
+  *os << this->type_name (node->field_type ());
+  *os << " "
+     << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
-   this->gen_exception_list (node->get_get_exceptions (),
-                             rd_only ? "" : "get");
+  this->gen_exception_list (node->get_get_exceptions (),
+                           rd_only ? "" : "get");
 
-   this->gen_exception_list (node->get_set_exceptions (),
-                             "set");
+  this->gen_exception_list (node->get_set_exceptions (),
+                           "set");
 
-   *os << ";";
+  *os << ";";
 }
 
 void

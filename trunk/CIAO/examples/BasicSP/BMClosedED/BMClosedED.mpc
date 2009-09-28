@@ -31,7 +31,7 @@ project(BMClosedED_lem_gen) : ciaoidldefaults {
 project(BMClosedED_stub): ccm_stub {
   libout = ../lib
   libpaths += ../lib
-  after += BasicSP_stub BMClosedED_idl_gen
+  after += BasicSP_stub BasicSP_lem_gen BMClosedED_idl_gen
   sharedname = BMClosedED_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
   libs += BasicSP_stub
@@ -53,10 +53,10 @@ project(BMClosedED_stub): ccm_stub {
 }
 
 project(BMClosedED_exec) : ciao_executor {
-  after      += BMClosedED_stub BMClosedED_lem_gen BasicSP_exec
+  after      += BMClosedED_stub BMClosedED_lem_gen
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub
-  libs       += BasicSP_stub BasicSP_exec
+  libs       += BasicSP_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
   libout = ../lib
   libpaths += ../lib
@@ -89,7 +89,7 @@ project(BMClosedED_svnt) : ciao_servant {
   sharedname = BMClosedED_svnt
 
   libs    += BMClosedED_stub BMClosedED_exec
-  libs    += BasicSP_stub BasicSP_exec BasicSP_svnt
+  libs    += BasicSP_stub BasicSP_svnt
   libout = ../lib
   libpaths += ../lib
 
