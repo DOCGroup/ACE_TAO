@@ -1893,7 +1893,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("%s export include not initialized\n"),
+                  ACE_TEXT ("%C export include not initialized\n"),
                   msg));
       return;
     }
@@ -1904,7 +1904,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("file open failed on %s\n"),
+                  ACE_TEXT ("file open failed on %C\n"),
                   filename));
       return;
     }
@@ -1917,7 +1917,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
-                  ACE_TEXT ("export macro %s does not end with ")
+                  ACE_TEXT ("export macro %C does not end with ")
                   ACE_TEXT ("\"_Export\""),
                   macro));
       return;
@@ -2943,7 +2943,7 @@ void
 TAO_CodeGen::gen_svnt_hdr_includes (void)
 {
   bool has_included = false;
-  
+
   if (be_global->gen_lem_force_all ())
     {
       size_t const nfiles = idl_global->n_included_idl_files ();
@@ -2954,7 +2954,7 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
 
           // Make a String out of it.
           UTL_String idl_name_str = idl_name;
-          
+
           // No *_svnt.h version of this one.
           if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
             {
@@ -2973,57 +2973,57 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
             {
               this->gen_standard_include (
                 this->ciao_svnt_header_,
-                svnt_hdr);      
-                    
+                svnt_hdr);
+
               has_included = true;
             }
           else
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("\nERROR, invalid ")
-                          ACE_TEXT ("file '%s' included"),
+                          ACE_TEXT ("file '%C' included"),
                           svnt_hdr));
             }
         }
     }
-  
+
   if (! has_included)
-    {  
+    {
       bool swapping = be_global->gen_component_swapping ();
-      
+
       this->gen_standard_include (
         this->ciao_svnt_header_,
         (swapping
            ? "ciao/Containers/Swapping/Swapping_Container.h"
            : "ciao/Containers/Container_BaseC.h"));
-                        
+
       this->gen_standard_include (
         this->ciao_svnt_header_,
         (swapping
            ? "cial/Contexts/Swapping/Upgradeable_Context_Impl_T.h"
            : "ciao/Contexts/Context_Impl_T.h"));
-                        
+
       this->gen_standard_include (this->ciao_svnt_header_,
                                   "ciao/Servants/Servant_Impl_T.h");
-                        
+
       this->gen_standard_include (
         this->ciao_svnt_header_,
         (swapping
            ? "ciao/Servants/Swapping/Swapping_Servant_Home_Impl_T.h"
            : "ciao/Servants/Home_Servant_Impl_T.h"));
     }
-      
+
   *this->ciao_svnt_header_ << be_nl;
-       
+
   this->gen_standard_include (
     this->ciao_svnt_header_,
-    be_global->be_get_ciao_exec_stub_hdr_fname (true));          
-       
+    be_global->be_get_ciao_exec_stub_hdr_fname (true));
+
   *this->ciao_svnt_header_ << be_nl;
-       
+
   this->gen_standard_include (
     this->ciao_svnt_header_,
-    be_global->be_get_server_hdr_fname (true));          
+    be_global->be_get_server_hdr_fname (true));
 }
 
 void
@@ -3032,36 +3032,36 @@ TAO_CodeGen::gen_svnt_src_includes (void)
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "ciao/Valuetype_Factories/Cookies.h");
-  
+
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "ciao/Containers/CIAO_Servant_ActivatorC.h");
-    
+
   this->gen_cond_file_include (
     be_global->gen_component_swapping (),
     "ciao/Servants/Swapping/Dynamic_Component_Activator.h",
     this->ciao_svnt_source_);
-  
+
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "ciao/Servants/Port_Activator_T.h");
-  
+
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "ciao/Servants/CIAO_Port_ActivatorC.h");
-  
+
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "tao/SystemException.h");
-  
+
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "tao/Valuetype/ValueFactory.h");
-  
+
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "tao/ORB_Core.h");
-  
+
   this->gen_standard_include (
     this->ciao_svnt_source_,
     "ace/SString.h");
@@ -3081,7 +3081,7 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
         be_global->exec_export_include (),
         true);
     }
-    
+
   this->gen_standard_include (
     this->ciao_exec_header_,
     "tao/LocalObject.h");
@@ -3097,14 +3097,14 @@ TAO_CodeGen::gen_exec_src_includes (void)
 
   this->gen_standard_include (
     this->ciao_exec_source_,
-    "ciao/CIAO_common.h");          
+    "ciao/CIAO_common.h");
 }
 
 void
 TAO_CodeGen::gen_exec_idl_includes (void)
 {
   bool has_included = false;
-  
+
   if (be_global->gen_lem_force_all ())
     {
       size_t const nfiles = idl_global->n_included_idl_files ();
@@ -3115,7 +3115,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
 
           // Make a String out of it.
           UTL_String idl_name_str = idl_name;
-          
+
           // No *E.idl version of this one.
           if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
             {
@@ -3140,36 +3140,36 @@ TAO_CodeGen::gen_exec_idl_includes (void)
                   // No newline first time for better formatting.
                   this->ciao_exec_idl_->print ("#include \"%s\"",
                                                exec_idl);
-                                            
+
                   has_included = true;
                 }
               else
                 {
                   this->gen_standard_include (
                     this->ciao_exec_idl_,
-                    exec_idl);          
+                    exec_idl);
                 }
             }
           else
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("\nERROR, invalid ")
-                          ACE_TEXT ("file '%s' included"),
+                          ACE_TEXT ("file '%C' included"),
                           exec_idl));
             }
         }
     }
-    
+
   // Otherwise it's included indirectly.
   if (! has_included)
     {
       this->ciao_exec_idl_->print (
         "#include \"ccm/CCM_Container.idl\"");
     }
-  
+
   this->gen_standard_include (
     this->ciao_exec_idl_,
-    idl_global->stripped_filename ()->get_string ());          
+    idl_global->stripped_filename ()->get_string ());
 }
 
 void
