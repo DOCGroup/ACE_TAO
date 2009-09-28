@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
+#include "ast_porttype.h"
 #include "ast_typedef.h"
 #include "ast_type.h"
 #include "ast_root.h"
@@ -1005,7 +1006,7 @@ UTL_Scope::add_native (AST_Native *n)
 AST_Factory *
 UTL_Scope::add_factory (AST_Factory *f)
 {
-  //We don't invite any new types so there is nothing actually to add
+  // We don't invite any new types so there is nothing actually to add
   if (f == 0)
     {
       return 0;
@@ -1013,6 +1014,18 @@ UTL_Scope::add_factory (AST_Factory *f)
 
   f->set_added (true);
   return f;
+}
+
+AST_PortType *
+UTL_Scope::add_porttype (AST_PortType *p)
+{
+  if (p == 0)
+    {
+      return 0;
+    }
+
+  p->set_added (true);
+  return p;
 }
 
 // Protected Front End Scope Management Protocol.
@@ -1216,6 +1229,79 @@ UTL_Scope::fe_add_native (AST_Native *)
 
 AST_Factory *
 UTL_Scope::fe_add_factory (AST_Factory *)
+{
+  return 0;
+}
+
+AST_PortType *
+UTL_Scope::fe_add_porttype (AST_PortType *)
+{
+  return 0;
+}
+
+AST_Provides *
+UTL_Scope::fe_add_provides (AST_Provides *)
+{
+  return 0;
+}
+
+AST_Uses *
+UTL_Scope::fe_add_uses (AST_Uses *)
+{
+  return 0;
+}
+
+AST_Publishes *
+UTL_Scope::fe_add_publishes (AST_Publishes *)
+{
+  return 0;
+}
+
+AST_Emits *
+UTL_Scope::fe_add_emits (AST_Emits *)
+{
+  return 0;
+}
+
+AST_Consumes *
+UTL_Scope::fe_add_consumes (AST_Consumes *)
+{
+  return 0;
+}
+
+AST_Extended_Port *
+UTL_Scope::fe_add_extended_port (AST_Extended_Port *)
+{
+  return 0;
+}
+
+AST_Mirror_Port *
+UTL_Scope::fe_add_mirror_port (AST_Mirror_Port *)
+{
+  return 0;
+}
+
+AST_Connector *
+UTL_Scope::fe_add_connector (AST_Connector *)
+{
+  return 0;
+}
+
+AST_Tmpl_Port *
+UTL_Scope::fe_add_tmpl_port (AST_Tmpl_Port *)
+{
+  return 0;
+}
+
+AST_Tmpl_Mirror_Port *
+UTL_Scope::fe_add_tmpl_mirror_port (AST_Tmpl_Mirror_Port *)
+{
+  return 0;
+}
+
+AST_Instantiated_Connector *
+UTL_Scope::fe_add_instantiated_connector (
+    AST_Instantiated_Connector *)
 {
   return 0;
 }
@@ -1666,12 +1752,12 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
                 }
 
               t = (0 == d ? 0 : AST_Type::narrow_from_decl (d));
-              
+
               if (0 != t && full_def_only && !t->is_defined ())
                 {
                   continue;
                 }
-                
+
               return d;
             }
           else
@@ -1697,12 +1783,12 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       AST_Module *m = AST_Module::narrow_from_decl (last_chance);
       d = m->look_in_previous (e);
       t = (0 == d ? 0 : AST_Type::narrow_from_decl (d));
-    
+
       if (0 != t && full_def_only && !t->is_defined ())
         {
           return 0;
         }
-        
+
       return d;
     }
   else
@@ -1776,7 +1862,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // The name does not start with "::"
   // Is name defined here?
   long index = 0;
-  AST_Decl *first_one_found= 0;
+  AST_Decl *first_one_found = 0;
   while (true)
     {
       d = this->lookup_by_name_local (e->head (),
@@ -1787,13 +1873,13 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         {
           // A no-op unless d can inherit.
           d = look_in_inherited (e, treat_as_ref);
-        
+
           if (0 == d)
             {
               // A no-op unless d can support interfaces.
               d = look_in_supported (e, treat_as_ref);
             }
-            
+
           if ((0 == d) && in_parent)
             {
               if (full_def_only && (0 != first_one_found))
@@ -1924,7 +2010,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                     }
                 }
             }
-            
+
           // OK, now return whatever we found.
           return d;
         }
@@ -2522,7 +2608,7 @@ UTL_Scope::destroy (void)
   this->pd_decls = 0;
   this->pd_decls_used = 0;
   this->pd_locals_used = 0;
-    
+
   for (long i = this->pd_name_referenced_used; i > 0; --i)
     {
       Identifier *id = this->pd_name_referenced[i - 1];

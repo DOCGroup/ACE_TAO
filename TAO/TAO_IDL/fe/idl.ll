@@ -64,7 +64,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 /*
- * idl.ll - Lexical scanner for IDL 1.1
+ * idl.ll - Lexical scanner for IDL 3.1
  */
 
 #include "utl_strlist.h"
@@ -80,6 +80,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_operation.h"
 #include "ast_root.h"
 #include "fe_interface_header.h"
+#include "fe_obv_header.h"
+#include "fe_event_header.h"
+#include "fe_component_header.h"
+#include "fe_home_header.h"
+#include "fe_template_interface_header.h"
 #include "global_extern.h"
 #include "fe_private.h"
 #include "fe_extern.h"
@@ -148,6 +153,7 @@ void            return IDL_VOID;
 native          return IDL_NATIVE;
 local           return IDL_LOCAL;
 abstract        return IDL_ABSTRACT;
+
 custom          return IDL_CUSTOM;
 factory         return IDL_FACTORY;
 private         return IDL_PRIVATE;
@@ -155,6 +161,7 @@ public          return IDL_PUBLIC;
 supports        return IDL_SUPPORTS;
 truncatable     return IDL_TRUNCATABLE;
 valuetype       return IDL_VALUETYPE;
+
 component       return IDL_COMPONENT;
 consumes        return IDL_CONSUMES;
 emits           return IDL_EMITS;
@@ -172,6 +179,14 @@ typeid          return IDL_TYPEID;
 typeprefix      return IDL_TYPEPREFIX;
 uses            return IDL_USES;
 manages         return IDL_MANAGES;
+
+typename        return IDL_TYPENAME;
+primitive       return IDL_PRIMITIVE;
+port            return IDL_PORT;
+mirrorport      return IDL_MIRRORPORT;
+porttype        return IDL_PORTTYPE;
+connector       return IDL_CONNECTOR;
+\$              return IDL_CONCAT;
 
 TRUE            return IDL_TRUETOK;
 FALSE           return IDL_FALSETOK;

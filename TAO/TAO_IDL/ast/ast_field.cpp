@@ -79,13 +79,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID (ast, ast_field, "$Id$")
+ACE_RCSID (ast,
+           ast_field,
+           "$Id$")
 
 AST_Field::AST_Field (void)
   : COMMON_Base (),
     AST_Decl (),
-    pd_field_type (0),
-    pd_visibility (vis_NA),
+    ref_type_ (0),
+    visibility_ (vis_NA),
     anonymous_type_ (false)
 {
 }
@@ -97,8 +99,8 @@ AST_Field::AST_Field (AST_Type *ft,
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_field,
               n),
-    pd_field_type (ft),
-    pd_visibility (vis),
+    ref_type_ (ft),
+    visibility_ (vis),
     anonymous_type_ (false)
 {
   AST_Decl::NodeType fnt = ft->node_type ();
@@ -117,8 +119,8 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
   : COMMON_Base (),
     AST_Decl (nt,
               n),
-    pd_field_type (ft),
-    pd_visibility (vis),
+    ref_type_ (ft),
+    visibility_ (vis),
     anonymous_type_ (false)
 {
   AST_Decl::NodeType fnt = ft->node_type ();
@@ -137,7 +139,7 @@ AST_Field::~AST_Field (void)
 void
 AST_Field::dump (ACE_OSTREAM_TYPE &o)
 {
-  switch (this->pd_visibility)
+  switch (this->visibility_)
     {
     case vis_PRIVATE:
       this->dump_i (o, "private ");
@@ -151,7 +153,7 @@ AST_Field::dump (ACE_OSTREAM_TYPE &o)
       break;
     }
 
-  this->pd_field_type->local_name ()->dump (o);
+  this->ref_type_->local_name ()->dump (o);
 
   this->dump_i (o, " ");
 
@@ -169,9 +171,9 @@ AST_Field::destroy (void)
 {
   if (this->anonymous_type_)
     {
-      this->pd_field_type->destroy ();
-      delete this->pd_field_type;
-      this->pd_field_type = 0;
+      this->ref_type_->destroy ();
+      delete this->ref_type_;
+      this->ref_type_ = 0;
     }
 
   this->AST_Decl::destroy ();
@@ -180,21 +182,19 @@ AST_Field::destroy (void)
 AST_Type *
 AST_Field::field_type (void) const
 {
-  return this->pd_field_type;
+  return this->ref_type_;
 }
 
 AST_Field::Visibility
-AST_Field::visibility (void)
+AST_Field::visibility (void) const
 {
-  return this->pd_visibility;
+  return this->visibility_;
 }
 
 int
 AST_Field::contains_wstring (void)
 {
-  return this->pd_field_type->contains_wstring ();
+  return this->ref_type_->contains_wstring ();
 }
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Field)

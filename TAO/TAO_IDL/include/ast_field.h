@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 // $Id$
 /*
 
@@ -109,8 +109,7 @@ public:
 
   // Data Accessors.
   AST_Type *field_type (void) const;
-
-  Visibility visibility (void);
+  Visibility visibility (void) const;
 
   // Are we or do we contain a wstring?
   virtual int contains_wstring (void);
@@ -136,10 +135,10 @@ public:
 private:
   // Data.
 
-  AST_Type *pd_field_type;
+  AST_Type *ref_type_;
   // Base type for field.
 
-  Visibility pd_visibility;
+  Visibility visibility_;
   // Used with valuetype and eventtype fields.
   
   bool anonymous_type_;

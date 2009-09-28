@@ -176,7 +176,8 @@ public:
                                            bool is_local,
                                            bool is_abstract);
 
-  virtual AST_Field *create_field (AST_Type *ft, UTL_ScopedName *n,
+  virtual AST_Field *create_field (AST_Type *ft,
+                                   UTL_ScopedName *n,
                                    AST_Field::Visibility vis =
                                      AST_Field::vis_NA);
 
@@ -263,6 +264,77 @@ public:
 
   // Create a node representing a OBV factory construct
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
+
+  virtual
+  AST_Template_Interface *create_template_interface (
+    UTL_ScopedName *n,
+    AST_Interface **ih,
+    long nih,
+    AST_Interface **ih_flat,
+    long nih_flat,
+    FE_Utils::T_PARAMLIST_INFO *template_params);
+
+  virtual
+  AST_PortType *create_porttype (
+    UTL_ScopedName *n,
+    FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Provides *create_provides (UTL_ScopedName *n,
+                                 AST_Type *provides_type);
+                                 
+  virtual
+  AST_Uses *create_uses (UTL_ScopedName *n,
+                         AST_Type *uses_type,
+                         bool is_multiple);
+    
+  virtual
+  AST_Publishes *create_publishes (UTL_ScopedName *n,
+                                   AST_EventType *publishes_type);
+    
+  virtual
+  AST_Emits *create_emits (UTL_ScopedName *n,
+                           AST_EventType *emits_type);
+    
+  virtual
+  AST_Consumes *create_consumes (UTL_ScopedName *n,
+                                 AST_EventType *consumes_type);
+  virtual
+  AST_Extended_Port *create_extended_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref,
+    AST_PortType::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Mirror_Port *create_mirror_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref,
+    AST_PortType::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Connector *create_connector (
+    UTL_ScopedName *n,
+    AST_Connector *base_connector,
+    FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Tmpl_Port *create_tmpl_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref);
+    
+  virtual
+  AST_Tmpl_Mirror_Port *create_tmpl_mirror_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref);
+    
+  virtual
+  AST_Instantiated_Connector *create_instantiated_connector (
+    UTL_ScopedName *n,
+    AST_Connector *connector_type,
+    AST_Template_Common::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Type *create_placeholder (UTL_ScopedName *n);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

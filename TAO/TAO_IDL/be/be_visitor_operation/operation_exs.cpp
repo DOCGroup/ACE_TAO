@@ -60,7 +60,6 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
   be_visitor_operation_rettype rt_visitor (&ctx);
-//  rt_visitor.for_exec (true);
 
   if (rt->accept (&rt_visitor) == -1)
     {
@@ -97,29 +96,6 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
   this->ctx_->node (node);
   
   return this->gen_op_body (rt);
-}
-
-int
-be_visitor_operation_exs::visit_argument (be_argument *node)
-{
-  os_ << "/* " << node->local_name () << " */";
-  
-  return 0;
-}
-
-int
-be_visitor_operation_exs::post_process (be_decl *bd)
-{
-  if (this->last_node (bd))
-    {
-      os_ << ");" << be_uidt;
-    }
-  else
-    {
-      os_ << "," << be_nl;
-    }
-
-  return 0;
 }
 
 void

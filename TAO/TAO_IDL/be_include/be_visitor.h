@@ -6,7 +6,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_visitor.h
@@ -32,6 +32,7 @@ class be_predefined_type;
 class be_module;
 class be_interface;
 class be_interface_fwd;
+class be_template_interface;
 class be_valuebox;
 class be_valuetype;
 class be_valuetype_fwd;
@@ -39,6 +40,18 @@ class be_eventtype;
 class be_eventtype_fwd;
 class be_component;
 class be_component_fwd;
+class be_porttype;
+class be_provides;
+class be_uses;
+class be_publishes;
+class be_emits;
+class be_consumes;
+class be_extended_port;
+class be_mirror_port;
+class be_connector;
+class be_tmpl_port;
+class be_tmpl_mirror_port;
+class be_instantiated_connector;
 class be_home;
 class be_factory;
 class be_structure;
@@ -82,119 +95,61 @@ public:
   virtual ~be_visitor (void);
 
   virtual int visit_decl (be_decl *d);
-  // visit a decl node
-
   virtual int visit_scope (be_scope *node);
-  // visit the scope
-
   virtual int visit_type (be_type *node);
-  // visit the type
-
   virtual int visit_predefined_type (be_predefined_type *node);
-  // visit the predefined type
-
   virtual int visit_module (be_module *node);
-  // visit module
-
   virtual int visit_interface (be_interface *node);
-  // visit interface
-
   virtual int visit_interface_fwd (be_interface_fwd *node);
-  // visit interface_fwd
-
+  virtual int visit_template_interface (
+    be_template_interface *node);
   virtual int visit_valuebox (be_valuebox *node);
-  // visit valuebox
-
   virtual int visit_valuetype (be_valuetype *node);
-  // visit valuetype
-
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-  // visit valuetype_fwd
-
   virtual int visit_eventtype (be_eventtype *node);
-  // visit eventtype
-
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
-  // visit eventtype_fwd
-
   virtual int visit_component (be_component *node);
-  // visit component
-
   virtual int visit_component_fwd (be_component_fwd *node);
-  // visit component_fwd
-
+  virtual int visit_porttype (be_porttype *node);
+  virtual int visit_provides (be_provides *node);
+  virtual int visit_uses (be_uses *node);
+  virtual int visit_publishes (be_publishes *node);
+  virtual int visit_emits (be_emits *node);
+  virtual int visit_consumes (be_consumes *node);
+  virtual int visit_extended_port (be_extended_port *node);
+  virtual int visit_mirror_port (be_mirror_port *node);
+  virtual int visit_connector (be_connector *node);
+  virtual int visit_instantiated_connector (
+    be_instantiated_connector *node);
+  virtual int visit_tmpl_port (be_tmpl_port *node);
+  virtual int visit_tmpl_mirror_port (be_tmpl_mirror_port *node);
   virtual int visit_home (be_home *node);
-  // visit component home
-
   virtual int visit_factory (be_factory *node);
-  // Visit a OBV factory construct.
-
   virtual int visit_structure (be_structure *node);
-  // visit a structure
-
   virtual int visit_structure_fwd (be_structure_fwd *node);
-  // visit a structure
-
   virtual int visit_exception (be_exception *node);
-  // visit exception
-
   virtual int visit_expression (be_expression *node);
-  // visit expression
-
   virtual int visit_enum (be_enum *node);
-  // visit an enum
-
   virtual int visit_operation (be_operation *node);
-  // visit an operation
-
   virtual int visit_field (be_field *node);
-  // visit a field
-
   virtual int visit_argument (be_argument *node);
-  // visit argument
-
   virtual int visit_attribute (be_attribute *node);
-  // visit an attribute
-
   virtual int visit_union (be_union *node);
-  // visit union
-
   virtual int visit_union_fwd (be_union_fwd *node);
-  // visit union
-
   virtual int visit_union_branch (be_union_branch *node);
-  // visit union branch
-
   virtual int visit_union_label (be_union_label *node);
-  // visit union label
-
   virtual int visit_constant (be_constant *node);
-  // visit a constant
-
   virtual int visit_enum_val (be_enum_val *node);
-  // visit enum val
-
   virtual int visit_array (be_array *node);
-  // visit an array
-
   virtual int visit_sequence (be_sequence *node);
-  // visit a sequence
-
   virtual int visit_string (be_string *node);
-  // visit a string
-
   virtual int visit_typedef (be_typedef *node);
-  // visit a typedef
-
   virtual int visit_root (be_root *node);
-  // visit a root
-
   virtual int visit_native (be_native *node);
-  // visit a native
 
 protected:
+  // Not abstract but we want to force subclassing anyway.
   be_visitor (void);
-  // constructor is protected
 };
 
 #endif // TAO_BE_VISITOR_H

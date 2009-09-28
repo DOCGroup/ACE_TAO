@@ -159,6 +159,17 @@ public:
       , NT_eventtype                // Denotes a CCM event source or sink
       , NT_eventtype_fwd            // Denotes a forward declared CCM event
       , NT_valuebox                 // Denotes an value box
+      , NT_type                     // Template interface parameter
+      , NT_fixed                    // Denotes (unsupported) fixed type
+      , NT_porttype                 // Denotes a port type
+      , NT_provides                 // Denotes a facet
+      , NT_uses                     // Denotes a receptacle
+      , NT_publishes                // Denotes an event source
+      , NT_emits                    // Denotes a one-to-one event source
+      , NT_consumes                 // Denotes an event sink
+      , NT_ext_port                 // Denotes an extended port
+      , NT_mirror_port              // Denotes a mirror port
+      , NT_connector                // Denotes a CCM connector
   };
 
   // Operations.
@@ -279,7 +290,7 @@ public:
   UTL_ScopedName *last_referenced_as (void) const;
   void last_referenced_as (UTL_ScopedName *n);
 
-  // Accessors for the prefix_socpe_ member.
+  // Accessors for the prefix_scope_ member.
   UTL_Scope *prefix_scope (void);
   void prefix_scope (UTL_Scope *s);
 
@@ -312,6 +323,9 @@ protected:
 
   void compute_flat_name (void);
   // Compute the flattened fully scoped name.
+
+  const char *node_type_to_string (NodeType nt);
+  // Convert a NodeType to a string for dumping.
 
 private:
   // Data
