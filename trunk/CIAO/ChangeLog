@@ -377,7 +377,7 @@ Mon Sep 28 06:19:36 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
           visit_porttype() methods to keep these classes up to
           date with the IDL compiler frontend. The methods are
           empty for now, but the IDL3_to_IDL2 visitor classes are
-  kept concrete and instantiable.
+          kept concrete and instantiable.
 
 Wed Sep 23 11:57:59 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
