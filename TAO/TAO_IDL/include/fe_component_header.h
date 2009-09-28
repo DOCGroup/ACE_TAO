@@ -40,3 +40,4 @@ protected:
 };
 
 #endif /* FE_COMPONENT_HEADER_H */
+

@@ -259,7 +259,7 @@ typedef union TAO_YYSTYPE
 }
 /* Line 1489 of yacc.c.  */
 
-	TAO_YYSTYPE;
+  TAO_YYSTYPE;
 # define tao_yystype TAO_YYSTYPE /* obsolescent; will be withdrawn */
 # define TAO_YYSTYPE_IS_DECLARED 1
 # define TAO_YYSTYPE_IS_TRIVIAL 1

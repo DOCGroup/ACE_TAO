@@ -58,8 +58,9 @@ FE_Utils::T_Inst_Info::destroy (void)
   this->name_->destroy ();
   delete this->name_;
   this->name_ = 0;
-  
+
   this->args_->destroy ();
   delete this->args_;
   this->args_ = 0;
 }
+
