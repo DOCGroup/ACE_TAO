@@ -29,6 +29,7 @@ project(BMDisplay_lem_gen) : ciaoidldefaults {
   }
 
 }
+
 project(BMDisplay_stub): ccm_stub {
   after += BasicSP_stub BMDisplay_idl_gen
   sharedname = BMDisplay_stub

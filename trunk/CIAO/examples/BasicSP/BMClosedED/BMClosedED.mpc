@@ -2,7 +2,7 @@
 
 project(BMClosedED_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+  idlflags += -Glfa -I $(CIAO_ROOT)/examples/BasicSP \
               -Wb,stub_export_macro=BMCLOSEDED_STUB_Export \
               -Wb,stub_export_include=BMClosedED_stub_export.h \
               -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export \
@@ -26,7 +26,6 @@ project(BMClosedED_lem_gen) : ciaoidldefaults {
   IDL_Files {
     BMClosedEDE.idl
   }
-
 }
 
 project(BMClosedED_stub): ccm_stub {
@@ -53,9 +52,12 @@ project(BMClosedED_stub): ccm_stub {
   }
 }
 
-
 project(BMClosedED_exec) : ciao_executor {
+<<<<<<< .working
   after      += BMClosedED_stub BMClosedED_lem_gen BasicSP_exec
+=======
+  after      += BMClosedED_stub
+>>>>>>> .merge-right.r86794
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub
   libs       += BasicSP_stub BasicSP_exec
