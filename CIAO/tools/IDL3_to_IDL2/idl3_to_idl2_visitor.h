@@ -48,17 +48,25 @@ public:
   virtual int visit_interface (AST_Interface *node);
   virtual int visit_component (AST_Component *node);
   virtual int visit_component_fwd (AST_ComponentFwd *node);
+  virtual int visit_provides (AST_Provides *node);
+  virtual int visit_uses (AST_Uses *node);
+  virtual int visit_publishes (AST_Publishes *node);
+  virtual int visit_emits (AST_Emits *node);
+  virtual int visit_consumes (AST_Consumes *node);
+  virtual int visit_extended_port (AST_Extended_Port *node);
+  virtual int visit_mirror_port (AST_Mirror_Port *node);
+  virtual int visit_connector (AST_Connector *node);
+  virtual int visit_instantiated_connector (
+    AST_Instantiated_Connector *node);
+  virtual int visit_tmpl_port (AST_Tmpl_Port *node);
+  virtual int visit_tmpl_mirror_port (
+    AST_Tmpl_Mirror_Port *node);
   virtual int visit_eventtype (AST_EventType *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
   virtual int visit_root (AST_Root *node);
 
 private:
-  void gen_provides (AST_Component *node);
-  void gen_uses (AST_Component *node);
-  void gen_publishes (AST_Component *node);
-  void gen_emits (AST_Component *node);
-  void gen_consumes (AST_Component *node);
   UTL_ScopedName *create_scoped_name (const char *prefix,
                                       const char *local_name,
                                       const char *suffix,
