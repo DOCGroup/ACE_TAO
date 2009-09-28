@@ -9,6 +9,7 @@ project(TSEC_CheckPoint_idl_gen) : componentidldefaults {
               -Wb,exec_export_macro=TSEC_CHECKPOINT_EXEC_Export \
               -Wb,exec_export_include=TSEC_CheckPoint_exec_export.h
   requires += dummy_label
+              -Glfa
 
   IDL_Files {
     TSEC_CheckPoint.idl
