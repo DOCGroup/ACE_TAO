@@ -42,18 +42,10 @@ public:
   virtual int visit_attribute (be_attribute *node);
   
 private:
-  enum port_kind
-  {
-    PROVIDES,
-    USES,
-    PUBLISHES,
-    CONSUMES,
-    EMITS,
-    NUM_PORT_KINDS
-  };
-  
   int gen_facets (void);
   
+  int gen_facet_ops_attrs (be_interface *node);
+                           
   void gen_context_class (void);
                            
   void gen_context_r (AST_Component *node);
@@ -65,23 +57,20 @@ private:
   int gen_component_attrs (AST_Component *node);
                      
   void gen_ports (AST_Component *node,
-                  port_kind kind,
+                  AST_Decl::NodeType nt,
                   bool in_servant);
    
-  void gen_provides (AST_Component::port_description *pd);
+  void gen_provides (AST_Provides *p);
                                      
-  void gen_uses (AST_Component::port_description *pd,
+  void gen_uses (AST_Uses *u,
                  bool in_servant);
                 
-  void gen_publishes (const char *obj_name,
-                      const char *port_name,
+  void gen_publishes (AST_Publishes *p,
                       bool in_servant);
   
-  void gen_consumes (const char *obj_name,
-                     const char *port_name);
+  void gen_consumes (AST_Consumes *c);
                                      
-  void gen_emits (const char *obj_name,
-                  const char *port_name,
+  void gen_emits (AST_Emits *e,
                   bool in_servant);
      
   /// Base class overrides and CIAO-specific code.                

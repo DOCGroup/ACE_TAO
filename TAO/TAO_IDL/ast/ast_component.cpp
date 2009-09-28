@@ -2,6 +2,12 @@
 
 #include "ast_component.h"
 #include "ast_attribute.h"
+#include "ast_provides.h"
+#include "ast_uses.h"
+#include "ast_publishes.h"
+#include "ast_emits.h"
+#include "ast_consumes.h"
+#include "ast_mirror_port.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
@@ -70,11 +76,6 @@ AST_Component::redefine (AST_Interface *from)
   this->AST_Interface::redefine (from);
 
   this->pd_base_component = c->pd_base_component;
-  this->pd_provides = c->pd_provides;
-  this->pd_uses = c->pd_uses;
-  this->pd_emits = c->pd_emits;
-  this->pd_publishes = c->pd_publishes;
-  this->pd_consumes = c->pd_consumes;
 }
 
 AST_Decl *
@@ -147,91 +148,9 @@ AST_Component::n_supports (void) const
   return this->n_inherits ();
 }
 
-AST_Component::PORTS &
-AST_Component::provides (void)
-{
-  return this->pd_provides;
-}
-
-AST_Component::PORTS &
-AST_Component::uses (void)
-{
-  return this->pd_uses;
-}
-
-AST_Component::PORTS &
-AST_Component::emits (void)
-{
-  return this->pd_emits;
-}
-
-AST_Component::PORTS &
-AST_Component::publishes (void)
-{
-  return this->pd_publishes;
-}
-
-AST_Component::PORTS &
-AST_Component::consumes (void)
-{
-  return this->pd_consumes;
-}
-
 void
 AST_Component::destroy (void)
 {
-  port_description *pd = 0;
-  
-  for (PORTS::ITERATOR i = this->pd_provides.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
-  for (PORTS::ITERATOR i = this->pd_uses.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
-  for (PORTS::ITERATOR i = this->pd_publishes.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
-  for (PORTS::ITERATOR i = this->pd_consumes.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
-  for (PORTS::ITERATOR i = this->pd_emits.begin ();
-       !i.done ();
-       i.advance ())
-    {
-      i.next (pd);
-      pd->id->destroy ();
-      delete pd->id;
-      pd->id = 0;
-    }
-    
   this->AST_Interface::destroy ();
 }
 
@@ -279,5 +198,271 @@ AST_Component::ast_accept (ast_visitor *visitor)
   return visitor->visit_component (this);
 }
 
-IMPL_NARROW_FROM_DECL(AST_Component)
-IMPL_NARROW_FROM_SCOPE(AST_Component)
+AST_Provides *
+AST_Component::fe_add_provides (AST_Provides *p)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (p, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, p->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (p);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (p,
+                           false,
+                           p->local_name ());
+
+  return p;
+}
+
+AST_Uses *
+AST_Component::fe_add_uses (AST_Uses *u)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (u, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      u,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, u->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      u,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (u);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (u,
+                           false,
+                           u->local_name ());
+
+  return u;
+}
+
+AST_Publishes *
+AST_Component::fe_add_publishes (AST_Publishes *p)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (p, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, p->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (p);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (p,
+                           false,
+                           p->local_name ());
+
+  return p;
+}
+
+AST_Emits *
+AST_Component::fe_add_emits (AST_Emits *e)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (e, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      e,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, e->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      e,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (e);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (e,
+                           false,
+                           e->local_name ());
+
+  return e;
+}
+
+AST_Consumes *
+AST_Component::fe_add_consumes (AST_Consumes *c)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (c, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      c,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, c->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      c,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (c);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (c,
+                           false,
+                           c->local_name ());
+
+  return c;
+}
+
+AST_Extended_Port *
+AST_Component::fe_add_extended_port (AST_Extended_Port *p)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (p, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, p->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (p);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (p,
+                           false,
+                           p->local_name ());
+
+  return p;
+}
+
+AST_Mirror_Port *
+AST_Component::fe_add_mirror_port (AST_Mirror_Port *p)
+{
+  AST_Decl *d = 0;
+
+  // Already defined? Or already used?
+  if ((d = this->lookup_for_add (p, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, p->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      p,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (p);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (p,
+                           false,
+                           p->local_name ());
+
+  return p;
+}
+
+IMPL_NARROW_FROM_DECL (AST_Component)
+IMPL_NARROW_FROM_SCOPE (AST_Component)

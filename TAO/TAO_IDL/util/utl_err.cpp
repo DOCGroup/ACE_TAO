@@ -165,6 +165,14 @@ error_string (UTL_Error::ErrorCode c)
       return "abstract type expected: ";
     case UTL_Error::EIDL_EVENTTYPE_EXPECTED:
       return "event type expected: ";
+    case UTL_Error::EIDL_TMPL_IFACE_EXPECTED:
+      return "template interface expected: ";
+    case UTL_Error::EIDL_PORTTYPE_EXPECTED:
+      return "porttype expected: ";
+    case UTL_Error::EIDL_CONNECTOR_EXPECTED:
+      return "connector expected: ";
+    case UTL_Error::EIDL_TYPEDEF_EXPECTED:
+      return "typedef expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_INCOMPATIBLE_TYPE:
@@ -215,6 +223,12 @@ error_string (UTL_Error::ErrorCode c)
       return "valuetype not allowed as type of boxed value type";
     case UTL_Error::EIDL_ILLEGAL_PRIMARY_KEY:
       return "illegal primary key";
+    case UTL_Error::EIDL_MISMATCHED_T_PARAM:
+      return "mismatched parameter in template reference or instantiation";
+    case UTL_Error::EIDL_DUPLICATE_T_PARAM:
+      return "duplicate template parameter id";
+    case UTL_Error::EIDL_T_ARG_LENGTH:
+      return "wrong # of template args";
   }
 
   return 0;
@@ -298,6 +312,8 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed exception declaration";
   case IDL_GlobalData::PS_InterfaceDeclSeen:
     return "Malformed interface declaration";
+  case IDL_GlobalData::PS_TmplInterfaceDeclSeen:
+    return "Malformed template interface declaration";
   case IDL_GlobalData::PS_ValueTypeDeclSeen:
     return "Malformed value type declaration";
   case IDL_GlobalData::PS_ComponentDeclSeen:
@@ -306,6 +322,10 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed home declaration";
   case IDL_GlobalData::PS_EventDeclSeen:
     return "Malformed event type declaration";
+  case IDL_GlobalData::PS_PorttypeDeclSeen:
+    return "Malformed port type declaration";
+  case IDL_GlobalData::PS_ConnectorDeclSeen:
+    return "Malformed connector declaration";
   case IDL_GlobalData::PS_ModuleDeclSeen:
     return "Malformed module declaration";
   case IDL_GlobalData::PS_AttrDeclSeen:
@@ -313,15 +333,23 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_OpDeclSeen:
     return "Malformed operation declaration";
   case IDL_GlobalData::PS_ProvidesDeclSeen:
-    return "Malformed provides declaration";
+    return "Malformed simple provides declaration";
+  case IDL_GlobalData::PS_ExtProvidesDeclSeen:
+    return "Malformed extended provides declaration";
   case IDL_GlobalData::PS_UsesDeclSeen:
-    return "Malformed uses declaration";
+    return "Malformed simple uses declaration";
+  case IDL_GlobalData::PS_ExtUsesDeclSeen:
+    return "Malformed extended uses declaration";
   case IDL_GlobalData::PS_EmitsDeclSeen:
     return "Malformed emits declaration";
   case IDL_GlobalData::PS_PublishesDeclSeen:
     return "Malformed publishes declaration";
   case IDL_GlobalData::PS_ConsumesDeclSeen:
     return "Malformed consumes declaration";
+  case IDL_GlobalData::PS_ExtendedPortDeclSeen:
+    return "Malformed extended port declaration";
+  case IDL_GlobalData::PS_MirrorPortDeclSeen:
+    return "Malformed mirror port declaration";
   case IDL_GlobalData::PS_FactoryDeclSeen:
     return "Malformed factory declaration";
   case IDL_GlobalData::PS_FinderDeclSeen:
@@ -360,6 +388,12 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following interface '}' closer";
   case IDL_GlobalData::PS_InterfaceBodySeen:
     return "Illegal syntax following interface body statement(s)";
+  case IDL_GlobalData::PS_TmplInterfaceSqSeen:
+    return "Illegal syntax or missing type following '<' in template interface";
+  case IDL_GlobalData::PS_TmplInterfaceQsSeen:
+    return "Illegal syntax or missing type following '>' in template interface";
+  case IDL_GlobalData::PS_TmplInterfaceBodySeen:
+    return "Illegal syntax following template interface body statement(s)";
   case IDL_GlobalData::PS_ValueTypeSeen:
     return "Missing interface identifier following VALUETYPE keyword";
   case IDL_GlobalData::PS_ValueTypeForwardSeen:
@@ -406,6 +440,16 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following home '}' closer";
   case IDL_GlobalData::PS_HomeBodySeen:
     return "Illegal syntax following home body statement(s)";
+  case IDL_GlobalData::PS_ConnectorSeen:
+    return "Missing connector identifier following CONNECTOR keyword";
+  case IDL_GlobalData::PS_ConnectorIDSeen:
+    return "Missing '{' or illegal syntax following connector identifier";
+  case IDL_GlobalData::PS_ConnectorSqSeen:
+    return "Illegal syntax following connector '{' opener";
+  case IDL_GlobalData::PS_ConnectorQsSeen:
+    return "Illegal syntax following connector '}' closer";
+  case IDL_GlobalData::PS_ConnectorBodySeen:
+    return "Illegal syntax following connector body statement(s)";
   case IDL_GlobalData::PS_StructForwardSeen:
     return "Missing ';' following forward struct declaration";
   case IDL_GlobalData::PS_UnionForwardSeen:
@@ -613,6 +657,16 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax for #pragma prefix";
   case IDL_GlobalData::PS_ValueBoxDeclSeen:
     return "Missing boxed valuetype identifier following VALUETYPE keyword";
+  case IDL_GlobalData::PS_PorttypeSeen:
+    return "Illegal syntax or missing identifier after PORTTYPE keyword";
+  case IDL_GlobalData::PS_PorttypeIDSeen:
+    return "Illegal syntax or missing '{' after porttype identifier";
+  case IDL_GlobalData::PS_PorttypeSqSeen:
+    return "Illegal syntax after porttype '{' opener";
+  case IDL_GlobalData::PS_PorttypeQsSeen:
+    return "Illegal syntax after porttype '}' closer";
+  case IDL_GlobalData::PS_PorttypeBodySeen:
+    return "Illegal syntax after porttype body statement(s)";
   default:
     return "Some syntax error";
   }
@@ -656,6 +710,7 @@ UTL_Error::error1 (UTL_Error::ErrorCode c,
   idl_error_header (c,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR, " - "));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1407,6 +1462,30 @@ UTL_Error::illegal_primary_key (AST_Decl *d)
                     d->line (),
                     d->file_name ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::duplicate_param_id (UTL_ScopedName *n)
+{
+  idl_error_header (EIDL_DUPLICATE_T_PARAM,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR, " - "));
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::mismatched_template_param (UTL_ScopedName *n)
+{
+  idl_error_header (EIDL_MISMATCHED_T_PARAM,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR, " - "));
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR, "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }

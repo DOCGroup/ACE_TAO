@@ -97,7 +97,7 @@ private:
   // List item.
   UTL_ScopedName *pd_car_data;
 
-  // Used only with valuetye inheritance list. Defualts to 0.
+  // Used only with valuetye inheritance list. Defualts to false.
   bool pd_truncatable;
 };
 

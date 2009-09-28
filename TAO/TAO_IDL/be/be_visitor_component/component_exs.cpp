@@ -45,12 +45,8 @@ be_visitor_component_exs::~be_visitor_component_exs (void)
 int
 be_visitor_component_exs::visit_component (be_component *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   node_ = node;
+  TAO_OutStream &os_  = *this->ctx_->stream ();
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
@@ -104,20 +100,26 @@ be_visitor_component_exs::visit_attribute (be_attribute *node)
 int
 be_visitor_component_exs::gen_facets (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i = node_->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
 
-      be_interface *intf =
-        be_interface::narrow_from_decl (pd->impl);
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
+
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
 
       // We don't want any '_cxx_' prefix here.
       const char *lname =
-        intf->original_local_name ()->get_string ();
+        impl->original_local_name ()->get_string ();
 
       os_ << be_nl
           << comment_border_ << be_nl
@@ -137,14 +139,20 @@ be_visitor_component_exs::gen_facets (void)
           << "{" << be_nl
           << "}";
 
-      op_scope_ = intf;
-
-      if (this->gen_facet_ops_attrs (intf) == -1)
+      if (impl->node_type () == AST_Decl::NT_interface)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_component_exs::gen_facet - "
-                             "gen_facet_ops_attrs() failed\n"),
-                            -1);
+          be_interface *intf =
+            be_interface::narrow_from_decl (impl);
+
+          op_scope_ = intf;
+
+          if (this->gen_facet_ops_attrs (intf) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_component_exs::gen_facet - "
+                                 "gen_facet_ops_attrs() failed\n"),
+                                -1);
+            }
         }
     }
 
@@ -190,9 +198,17 @@ be_visitor_component_exs::gen_exec_class (void)
   const char *lname = node_->local_name ();
 
   // In the interest of pretty formatting....
-  if (node_->provides ().size () > 0)
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      os_ << be_nl;
+      AST_Decl *d = si.item ();
+
+      if (d->node_type () == AST_Decl::NT_provides)
+        {
+          os_ << be_nl;
+          break;
+        }
     }
 
   os_ << be_nl
@@ -307,14 +323,24 @@ be_visitor_component_exs::gen_provides_r (AST_Component *node)
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i = node->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
-      this->gen_provides (pd->impl, pd->id);
+      AST_Decl *d = si.item ();
+
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
+
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
+
+      this->gen_provides (impl, p->local_name ());
     }
 
   node = node->base_component ();
@@ -356,14 +382,24 @@ be_visitor_component_exs::gen_consumes_r (AST_Component *node)
       return;
     }
 
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i = node->consumes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
-      this->gen_consumes (pd->impl, pd->id);
+      AST_Decl *d = si.item ();
+
+      if (d->node_type () != AST_Decl::NT_consumes)
+        {
+          continue;
+        }
+
+      AST_Consumes *c =
+        AST_Consumes::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (c->consumes_type ());
+
+      this->gen_consumes (impl, c->local_name ());
     }
 
   node = node->base_component ();
@@ -405,15 +441,13 @@ be_visitor_component_exs::gen_non_type_specific (void)
       << "_exec_i::set_session_context (" << be_idt_nl
       << "::Components::SessionContext_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
-      << global << sname << "::CCM_" << lname
-      << "_Context_var lctx = " << be_idt_nl
+      << "this->context_ =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (lctx.in ()))" << be_idt_nl
+      << "if ( ::CORBA::is_nil (this->context_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "this->context_ = lctx;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
       << "}";
 
   os_ << be_nl << be_nl

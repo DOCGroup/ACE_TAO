@@ -105,20 +105,27 @@ public:
     , PS_ConstDeclSeen          // Seen complete const declaration
     , PS_ExceptDeclSeen         // Seen complete exception declaration
     , PS_InterfaceDeclSeen      // Seen complete interface declaration
+    , PS_TmplInterfaceDeclSeen  // Seen complete template interface declaration
     , PS_ModuleDeclSeen         // Seen complete module declaration
     , PS_ValueTypeDeclSeen      // Seen complete valuetype declaration
     , PS_ComponentDeclSeen      // Seen complete component declaration
     , PS_HomeDeclSeen           // Seen complete home declaration
     , PS_EventDeclSeen          // Seen complete eventtype declartion
+    , PS_PorttypeDeclSeen       // Seen complete porttype declaration
+    , PS_ConnectorDeclSeen      // Seen complete connector declaration
     , PS_AttrDeclSeen           // Seen complete attribute declaration
     , PS_OpDeclSeen             // Seen complete operation declaration
     , PS_ProvidesDeclSeen       // Seen complete privides declaration
+    , PS_ExtProvidesDeclSeen    // Seen complete extended provides declaration
     , PS_UsesDeclSeen           // Seen complete uses declaration
+    , PS_ExtUsesDeclSeen        // Seen complete extended uses declaration
     , PS_EmitsDeclSeen          // Seen complete emits declaration
     , PS_PublishesDeclSeen      // Seen complete publishes declaration
     , PS_FactoryDeclSeen        // Seen complete factory declaration
     , PS_FinderDeclSeen         // Seen complete finder declaration
     , PS_ConsumesDeclSeen       // Seen complete subscribes declaration
+    , PS_ExtendedPortDeclSeen   // Seen extended port
+    , PS_MirrorPortDeclSeen     // Seen mirror port
     , PS_ModuleSeen             // Seen a MODULE keyword
     , PS_ModuleIDSeen           // Seen the module ID
     , PS_ModuleSqSeen           // '{' seen for module
@@ -136,6 +143,9 @@ public:
     , PS_InterfaceSqSeen        // '{' seen for interface
     , PS_InterfaceQsSeen        // '}' seen for interface
     , PS_InterfaceBodySeen      // Seen an interface body
+    , PS_TmplInterfaceSqSeen    // '{' seen for template interface
+    , PS_TmplInterfaceQsSeen    // '}' seen for template interface
+    , PS_TmplInterfaceBodySeen  // Seen a template interface body
     , PS_ValueTypeSeen          // Seen a VALUETYPE keyword
     , PS_ValueTypeForwardSeen   // Forward valuetype decl seen
     , PS_ValueTypeIDSeen        // Seen the valuetype ID
@@ -159,6 +169,11 @@ public:
     , PS_HomeSqSeen             // '{' seen for home
     , PS_HomeQsSeen             // '}' seen for home
     , PS_HomeBodySeen           // Seen a home body
+    , PS_ConnectorSeen          // Seen an CONNECTOR keyword
+    , PS_ConnectorIDSeen        // Seen the connector ID
+    , PS_ConnectorSqSeen        // '{' seen for connector
+    , PS_ConnectorQsSeen        // '}' seen for connector
+    , PS_ConnectorBodySeen      // Seen a connector body
     , PS_SNListCommaSeen        // Seen ',' in list of scoped names
     , PS_ScopedNameSeen         // Seen a complete scoped name
     , PS_SN_IDSeen              // Seen an identifier as part of a scoped name
@@ -264,6 +279,11 @@ public:
     , PS_NativeSeen             // Seen a native declaration
     , PS_PragmaPrefixSyntax     // Could not parse the #pragma prefix
     , PS_ValueBoxDeclSeen       // Seen complete valuebox declaration
+    , PS_PorttypeSeen           // Seen PORTTYPE keyword
+    , PS_PorttypeIDSeen         // Seen porttype indentifier
+    , PS_PorttypeSqSeen         // Seen '{' for porttype
+    , PS_PorttypeQsSeen         // Seen '}' for porttype
+    , PS_PorttypeBodySeen       // Seen complete porttype body
   };
 
   // flags for types of declarations seen while parsing.
@@ -591,8 +611,7 @@ public:
   void fini (void);
   // Do final cleanup just before process exits.
 
-  void create_uses_multiple_stuff (AST_Component *c,
-                                   AST_Component::port_description &pd);
+  void create_uses_multiple_stuff (AST_Component *c, AST_Uses *u);
   // We must do this in the front end since the executor
   // mapping IDL will have these data types.
 
@@ -614,7 +633,7 @@ public:
   const char *recursion_start (void) const;
   void recursion_start (const char *val);
   // Accessors for the member.
-  
+
   UTL_String *utl_string_factory (const char *str);
   // Utility function to create UTL_String classes on the FE heap.
 
@@ -624,7 +643,7 @@ public:
 
   bool validate_orb_include (UTL_String *);
   // Check if included file is in TAO specific include dirs.
-  
+
   void original_local_name (Identifier *local_name);
   // Strips _cxx_ prefix for use in port names.
 
