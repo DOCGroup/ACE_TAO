@@ -29,7 +29,7 @@
 struct TAO_SCIOP_Endpoint_Info
 {
   string host;
-  short port;
+  short _port;
   short priority;
 };
 
