@@ -3,7 +3,8 @@
 
 project(Benchmark_RoundTripClient_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=ROUNDTRIPCLIENT_STUB_Export \
+  idlflags += -Glfa \
+              -Wb,stub_export_macro=ROUNDTRIPCLIENT_STUB_Export \
               -Wb,stub_export_include=RoundTripClient_stub_export.h \
               -Wb,skel_export_macro=ROUNDTRIPCLIENT_SVNT_Export \
               -Wb,skel_export_include=RoundTripClient_svnt_export.h \
