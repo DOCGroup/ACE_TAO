@@ -1,3 +1,8 @@
+Mon Sep 28 13:14:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Don't convert ppt files
+
 Fri Sep 25 19:24:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/TestTarget.pm:
