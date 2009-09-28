@@ -25,5 +25,8 @@ project(Administrator_Client_IDL3): ccm_stub, valuetype {
   Source_Files {
     Administrator_Client_IDL3.cpp
   }
+  
+  Inline_Files {
+  }
 }
 
