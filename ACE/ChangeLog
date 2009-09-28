@@ -1,3 +1,13 @@
+Mon Sep 28 17:45:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Block.h:
+          Doxygen change
+
+        * ace/CDR_Base.{h,cpp}:
+          Changed consolidate to have a return value because setting the
+          new size can fail. Return 0 on ok, -1 on failure. Thanks to
+          Annette Wilson <awilson at raytheonvtc dot com>
+
 Mon Sep 28 13:14:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
