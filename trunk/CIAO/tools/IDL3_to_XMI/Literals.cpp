@@ -149,7 +149,7 @@ namespace CIAO
         ACE_TEXT("CORBAchar"),                              // ST_CHAR
         ACE_TEXT("CORBAInterface"),                         // ST_INTF
         ACE_TEXT("CCMPrimaryKey"),                          // ST_PRI_KEY
-        ACE_TEXT("CORBAany")                                // ST_ANY
+        ACE_TEXT("CORBAany"),                               // ST_ANY
         ACE_TEXT("CORBAnative")                             // ST_NATIVE
       };
   }
