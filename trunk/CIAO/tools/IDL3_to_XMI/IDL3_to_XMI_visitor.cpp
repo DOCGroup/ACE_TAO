@@ -10,6 +10,11 @@
 #include "ast_array.h"
 #include "ast_attribute.h"
 #include "ast_component_fwd.h"
+#include "ast_provides.h"
+#include "ast_uses.h"
+#include "ast_publishes.h"
+#include "ast_emits.h"
+#include "ast_consumes.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
 #include "ast_eventtype.h"
@@ -59,8 +64,6 @@ using XERCES_CPP_NAMESPACE::DOMText;
 using XERCES_CPP_NAMESPACE::DOMDocumentType;
 using XERCES_CPP_NAMESPACE::XMLChar1_1;
 using CIAO::XML::XStr;
-
-
 
 #if 0
 struct Foo {
@@ -188,6 +191,7 @@ namespace CIAO
           d->ast_accept (this);
           ++this->order_;
         }
+
       return 0;
     }
 
@@ -325,6 +329,7 @@ namespace CIAO
         {
           DOMElement * ele = 0;
           if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+>>>>>>> .merge-right.r86794
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
 
@@ -341,6 +346,13 @@ namespace CIAO
           throw;
         }
 
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_template_interface (
+      AST_Template_Interface *)
+    {
       return 0;
     }
 
@@ -532,40 +544,8 @@ namespace CIAO
                 ACE_TEXT_CHAR_TO_TCHAR (node->base_component ()->repoID ())));
             }
 
-          // Component ports
-          this->gen_component_ports (
-            node->provides (),
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
-            LITERALS[ST_PROVIDES],
-            ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
-
-          this->gen_component_ports (
-            node->uses (),
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
-            LITERALS[ST_USES],
-            ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
-
-          this->gen_component_ports (
-            node->emits (),
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
-            LITERALS[ST_EMITS],
-            ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
-
-          this->gen_component_ports (
-            node->publishes (),
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
-            LITERALS[ST_PUBLISH],
-            ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
-
-          this->gen_component_ports (
-            node->consumes (),
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
-            LITERALS[ST_CONSUMES],
-            ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
-
           ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
-          // attributes in scope.
           this->cached_type_ = node;
           this->visit_scope (node);
           this->cached_type_ = 0;
@@ -604,6 +584,85 @@ namespace CIAO
           throw;
         }
 
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_provides (AST_Provides *node)
+    {
+      this->add_port (LITERALS[ST_PROVIDES], node);
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_uses (AST_Uses *node)
+    {
+      this->add_port (LITERALS[ST_USES], node);
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_publishes (AST_Publishes *node)
+    {
+      this->add_port (LITERALS[ST_PUBLISH], node);
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_emits (AST_Emits *node)
+    {
+      this->add_port (LITERALS[ST_EMITS], node);
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_consumes (AST_Consumes *node)
+    {
+      this->add_port (LITERALS[ST_CONSUMES], node);
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_porttype (AST_PortType *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_extended_port (AST_Extended_Port *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_mirror_port (AST_Mirror_Port *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_connector (AST_Connector *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_instantiated_connector (
+      AST_Instantiated_Connector *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_tmpl_port (AST_Tmpl_Port *)
+    {
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_tmpl_mirror_port (
+      AST_Tmpl_Mirror_Port *)
+    {
       return 0;
     }
 
@@ -691,6 +750,7 @@ namespace CIAO
           if (node->factories ().size () != 0)
             {
               ES_Guard noe_guard (LITERALS[OWNEDELEMENT_TAG], this);
+
               for (size_t i = 0; i < node->factories ().size (); ++i)
                 {
                   AST_Operation **op = 0;
@@ -700,7 +760,9 @@ namespace CIAO
             }
 
           if (node->finders () .size () != 0)
-            throw Error ("home finders not supported", node);
+            {
+              throw Error ("home finders not supported", node);
+            }
 
           this->add_managed_component (
             ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
@@ -927,8 +989,10 @@ namespace CIAO
 
           // If we have a stereotype, set it
           if (stereotype != 0)
+            {
               this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
                                               stereotype);
+            }
 
           // XMI ID
           this->create_and_store_xmi_id (op);
@@ -948,6 +1012,7 @@ namespace CIAO
             }
 
             UTL_ExceptList *exceptions = op->exceptions ();
+
             if (exceptions != 0 && exceptions->length () > 0)
               {
                 for (UTL_ExceptlistActiveIterator ei (exceptions);
@@ -1172,9 +1237,12 @@ namespace CIAO
           this->set_attribute (LITERALS[XMI_ID], xid);
           this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
           this->set_containing_element (LITERALS[NS]);
+
           if (node->readonly ())
-            this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
-                                            LITERALS[ST_RO]);
+            {
+              this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
+                                              LITERALS[ST_RO]);
+            }
 
           ES_Guard assoc_conn (LITERALS[ASSOC_CONN_TAG], this);
 
@@ -1323,7 +1391,9 @@ namespace CIAO
             }
 
             for (unsigned long i = 0; i < node->label_list_length (); ++i)
-              this->visit_union_label (node->label (i));
+              {
+                this->visit_union_label (node->label (i));
+              }
 
           }
         }
@@ -1385,19 +1455,26 @@ namespace CIAO
       else
         {
           AST_Enum *desc (0);
+
           if ((desc = AST_Enum::narrow_from_decl (this->union_disc_)) == 0)
-            throw Error ("Descriminator type is not an enum");
+            {
+              throw Error ("Descriminator type is not an enum");
+            }
 
           AST_Decl *ev_decl =
             desc->lookup_by_name (exp->n (), 1);
 
           if (ev_decl == 0)
-            throw Error ("Couldn't look up enum name");
+            {
+              throw Error ("Couldn't look up enum name");
+            }
 
           AST_EnumVal *ev = AST_EnumVal::narrow_from_decl (ev_decl);
 
           if (ev == 0)
-            throw Error ("Couldn't look up enum name");
+            {
+              throw Error ("Couldn't look up enum name");
+            }
 
           buffer.reset (ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (ev->full_name ())));
           //const char *name = desc->lookup_by_value (exp)->full_name ();
@@ -1406,7 +1483,9 @@ namespace CIAO
         }
 
       if (buffer.get () == 0)
-        throw Error ("Unable to parse union label");
+        {
+          throw Error ("Unable to parse union label");
+        }
 
       return buffer.release ();
     }
@@ -1420,11 +1499,14 @@ namespace CIAO
       this->set_attribute (LITERALS[TAG], LITERALS[CASE]);
 
       if (node->label_kind () == AST_UnionLabel::UL_default)
-        this->set_attribute (LITERALS[VALUE], LITERALS[DEFAULT_UNION]);
+        {
+          this->set_attribute (LITERALS[VALUE],
+                               LITERALS[DEFAULT_UNION]);
+        }
       else
         {
-          ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>
-            buffer (this->union_label_value (node->label_val ()));
+          ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (
+            this->union_label_value (node->label_val ()));
 
           this->set_attribute (LITERALS[VALUE], buffer.get ());
         }
@@ -2190,7 +2272,6 @@ namespace CIAO
 
       XStr retval (ACE_TEXT_CHAR_TO_TCHAR (str.str ().c_str ()));
       return retval.release ();
-
     }
 
     XMLCh *
@@ -2202,13 +2283,20 @@ namespace CIAO
           current_id_ = rand ();
         }
 
-      // we want these IDs to be unique, but the CDMW code generator sometimes depends
-      // on the order these things were declared in IDL, so for cases like that,
-      // we generate an ID that will sort to the order it was declared in IDL,
+      // we want these IDs to be unique, but the CDMW
+      // code generator sometimes depends
+      // on the order these things were declared in IDL,
+      // so for cases like that,
+      // we generate an ID that will sort to the order it
+      // was declared in IDL,
       // no matter which order we visit the nodes.
       if (node != 0)
-        return gen_xmi_id (ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()),
-                           node->line ());
+        {
+          return
+            gen_xmi_id (
+              ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()),
+              node->line ());
+        }
 
       std::stringstream str;
 
@@ -2218,7 +2306,8 @@ namespace CIAO
     }
 
     void
-    idl3_to_xmi_visitor::set_containing_element (const ACE_TCHAR *cont_name)
+    idl3_to_xmi_visitor::set_containing_element (
+      const ACE_TCHAR *cont_name)
     {
       ACE_TString tmp;
       XStr xid;
@@ -2414,16 +2503,18 @@ namespace CIAO
     }
 
     void
-    idl3_to_xmi_visitor::add_port (const ACE_TCHAR *component,
-                                   const ACE_TCHAR *port_kind,
-                                   const ACE_TCHAR *port_type,
-                                   const ACE_TCHAR *name,
-                                   bool is_multiple,
-                                   const ACE_TCHAR *file_name,
-                                   long line)
+    idl3_to_xmi_visitor::add_port (const ACE_TCHAR *port_kind,
+                                   AST_Field *port_node)
     {
-      if (is_multiple)
-        throw Error ("uses multiple not yet supported.");
+      if (port_node->node_type () == AST_Decl::NT_uses)
+        {
+          AST_Uses *u = AST_Uses::narrow_from_decl (port_node);
+
+          if (u->is_multiple ())
+            {
+              throw Error ("uses multiple not yet supported.");
+            }
+        }
 
       ES_Guard es_guard (this->associations_, this);
       NS_Guard ns_guard (ACE_TEXT ("::"), this);
@@ -2431,7 +2522,7 @@ namespace CIAO
       ES_Guard assoc_guard (LITERALS[ASSOC_TAG], this);
 
       // Generate XMI ID
-      XStr xid (this->gen_xmi_id (file_name, line));
+      XStr xid (this->gen_xmi_id (port_node));
       this->set_attribute (LITERALS[XMI_ID], xid);
       this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
       this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR], port_kind);
@@ -2442,14 +2533,28 @@ namespace CIAO
       { // component end
         ES_Guard end_guard (LITERALS[ASSOC_END_TAG], this);
         this->set_attribute (LITERALS[MULT], ACE_TEXT ("1"));
-        this->find_and_set_xid_as_attr (LITERALS[TYPE], component);
+        this->find_and_set_xid_as_attr (
+          LITERALS[TYPE],
+          ACE_TEXT_CHAR_TO_TCHAR (this->cached_type_->repoID ()));
       }
 
       { // component end
         ES_Guard end_guard (LITERALS[ASSOC_END_TAG], this);
-        this->set_attribute (LITERALS[NAME], name);
+
+        Identifier *id =
+          IdentifierHelper::original_local_name (
+            port_node->local_name ());
+
+        this->set_attribute (LITERALS[NAME], id->get_string ());
         this->set_attribute (LITERALS[MULT], ACE_TEXT ("1"));
-        this->find_and_set_xid_as_attr (LITERALS[TYPE], port_type);
+
+        this->find_and_set_xid_as_attr (
+          LITERALS[TYPE],
+          port_node->field_type ()->repoID ());
+
+        id->destroy ();
+        delete id;
+        id = 0;
       }
     }
 
@@ -2502,26 +2607,6 @@ namespace CIAO
 
       NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
       this->gen_tagged_value (node);
-    }
-
-    void
-    idl3_to_xmi_visitor::gen_component_ports (PORTS &ports,
-                                              const ACE_TCHAR *component,
-                                              const ACE_TCHAR *port_kind,
-                                              const ACE_TCHAR *file_name)
-    {
-      for (size_t i = 0; i < ports.size (); ++i)
-        {
-          AST_Component::port_description *pd = 0;
-          ports.get (pd, i);
-          this->add_port (component,
-                          port_kind,
-                          ACE_TEXT_CHAR_TO_TCHAR (pd->impl->repoID ()),
-                          ACE_TEXT_CHAR_TO_TCHAR (IdentifierHelper::original_local_name (pd->id)->get_string ()),
-                          pd->is_multiple,
-                          file_name,
-                          pd->line_number);
-        }
     }
 
     idl3_to_xmi_visitor::ES_Guard::ES_Guard (const ACE_TCHAR *name,

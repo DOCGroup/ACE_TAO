@@ -9,6 +9,11 @@
 #include "ast_array.h"
 #include "ast_attribute.h"
 #include "ast_component_fwd.h"
+#include "ast_provides.h"
+#include "ast_uses.h"
+#include "ast_publishes.h"
+#include "ast_emits.h"
+#include "ast_consumes.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
 #include "ast_eventtype.h"
@@ -118,7 +123,6 @@ namespace CIAO
     ir_simulator_visitor::visit_type (AST_Type *)
     {
       XMI_TRACE ("got a type");
-
       return 0;
     }
 
@@ -134,19 +138,31 @@ namespace CIAO
     {
       XMI_TRACE ("module");
 
-      if (!this->do_i_care (node)) return 0;
+      if (!this->do_i_care (node))
+        {
+          return 0;
+        }
 
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
@@ -171,18 +187,32 @@ namespace CIAO
     ir_simulator_visitor::visit_interface (AST_Interface *node)
     {
       XMI_TRACE ("interface");
-      if (!this->do_i_care (node)) return 0;
+      
+      if (!this->do_i_care (node))
+        {
+          return 0;
+        }
+      
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
@@ -221,10 +251,22 @@ namespace CIAO
     }
 
     int
+    ir_simulator_visitor::visit_template_interface (
+      AST_Template_Interface *)
+    {
+      return 0;
+    }
+
+    int
     ir_simulator_visitor::visit_valuebox (AST_ValueBox *node)
     {
       XMI_TRACE ("valuebox");
-      if (!this->do_i_care (node)) return 0;
+      
+      if (!this->do_i_care (node))
+        {
+          return 0;
+        }
+      
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
@@ -235,7 +277,10 @@ namespace CIAO
           else guard.arm ();
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
@@ -272,27 +317,45 @@ namespace CIAO
     ir_simulator_visitor::visit_valuetype_impl (AST_ValueType *node)
     {
       Incr_Guard guard (this->associating_);
-      if (!this->do_i_care (node)) return;
+      
+      if (!this->do_i_care (node))
+        {
+          return;
+        }
+          
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return;
+          if (node->imported ())
+            {
+              return;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
           if (node->inherits_concrete () != 0)
-            this->visit_valuetype_impl (node->inherits_concrete ());
+            {
+              this->visit_valuetype_impl (node->inherits_concrete ());
+            }
 
           long lim = node->n_supports ();
           AST_Interface **sppts = node->supports ();
 
           for (long i = 0; i < lim; ++i)
-            sppts[i]->ast_accept (this);
+            {
+              sppts[i]->ast_accept (this);
+            }
 
           this->visit_scope (node);
         }
@@ -325,38 +388,48 @@ namespace CIAO
     ir_simulator_visitor::visit_component (AST_Component *node)
     {
       XMI_TRACE ("component");
-      if (!this->do_i_care (node)) return 0;
+      
+      if (!this->do_i_care (node))
+        {
+          return 0;
+        }
+      
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
           if (node->base_component () != 0)
-            node->base_component ()->ast_accept (this);
+            {
+              node->base_component ()->ast_accept (this);
+            }
 
           long len = node->n_supports ();
           AST_Interface **sppts = node->supports ();
 
           for (long i = 0; i < len; ++i)
-            sppts[i]->ast_accept (this);
+            {
+              sppts[i]->ast_accept (this);
+            }
 
-          // **** ports
-          this->component_ports (node->provides ());
-          this->component_ports (node->uses ());
-          this->component_ports (node->emits ());
-          this->component_ports (node->publishes ());
-          this->component_ports (node->consumes ());
-
-          // attributes in scope.
           this->visit_scope (node);
         }
       catch (Error &err)
@@ -366,18 +439,7 @@ namespace CIAO
 
       return 0;
     }
-
-    void
-    ir_simulator_visitor::component_ports (PORTS &ports)
-    {
-      for (size_t i = 0; i < ports.size (); ++i)
-        {
-          AST_Component::port_description *pd = 0;
-          ports.get (pd, i);
-          pd->impl->ast_accept (this);
-        }
-    }
-
+    
     int
     ir_simulator_visitor::visit_component_fwd (AST_ComponentFwd *node)
     {
@@ -393,6 +455,80 @@ namespace CIAO
           err.node (node);
         }
 
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_provides (AST_Provides *node)
+    {
+      return node->provides_type ()->ast_accept (this);
+    }
+
+    int
+    ir_simulator_visitor::visit_uses (AST_Uses *node)
+    {
+      return node->uses_type ()->ast_accept (this);
+    }
+
+    int
+    ir_simulator_visitor::visit_publishes (AST_Publishes *node)
+    {
+      return node->publishes_type ()->ast_accept (this);
+    }
+
+    int
+    ir_simulator_visitor::visit_emits (AST_Emits *node)
+    {
+      return node->emits_type ()->ast_accept (this);
+    }
+
+    int
+    ir_simulator_visitor::visit_consumes (AST_Consumes *node)
+    {
+      return node->consumes_type ()->ast_accept (this);
+    }
+
+    int
+    ir_simulator_visitor::visit_porttype (AST_PortType *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_extended_port (AST_Extended_Port *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_mirror_port (AST_Mirror_Port *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_connector (AST_Connector *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_instantiated_connector (
+      AST_Instantiated_Connector *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_tmpl_port (AST_Tmpl_Port *)
+    {
+      return 0;
+    }
+
+    int
+    ir_simulator_visitor::visit_tmpl_mirror_port (
+      AST_Tmpl_Mirror_Port *)
+    {
       return 0;
     }
 
@@ -427,18 +563,32 @@ namespace CIAO
     ir_simulator_visitor::visit_home (AST_Home *node)
     {
       XMI_TRACE ("home");
-      if (!this->do_i_care (node)) return 0;
+      
+      if (!this->do_i_care (node))
+        {
+          return 0;
+        }
+      
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
@@ -447,10 +597,14 @@ namespace CIAO
           AST_Interface **sppts = node->supports ();
 
           for (long i = 0; i < len; ++i)
-            sppts[i]->ast_accept (this);
+            {
+              sppts[i]->ast_accept (this);
+            }
 
           if (node->base_home ())
-            node->base_home ()->ast_accept (this);
+            {
+              node->base_home ()->ast_accept (this);
+            }
 
           if (node->managed_component ())
             {
@@ -458,7 +612,9 @@ namespace CIAO
             }
 
           if (node->primary_key ())
-            node->primary_key ()->ast_accept (this);
+            {
+              node->primary_key ()->ast_accept (this);
+            }
 
           for (size_t i = 0; i < node->factories ().size (); ++i)
             {
@@ -515,18 +671,31 @@ namespace CIAO
     void
     ir_simulator_visitor::visit_struct_impl (AST_Structure *node)
     {
-      if (!this->do_i_care (node)) return;
+      if (!this->do_i_care (node))
+        {
+          return;
+        }
+      
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return;
+          if (node->imported ())
+            {
+              return;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else  
+        {
+          node->set_imported (false);
+        }
 
       try
         {
@@ -599,18 +768,32 @@ namespace CIAO
     ir_simulator_visitor::visit_enum (AST_Enum *node)
     {
       XMI_TRACE ("enum");
-      if (!this->do_i_care (node)) return 0;
+      
+      if (!this->do_i_care (node))
+        {
+          return 0;
+        }
+      
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
@@ -635,12 +818,21 @@ namespace CIAO
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
@@ -651,9 +843,11 @@ namespace CIAO
               //              ACE_DEBUG ((LM_DEBUG, "bar"));
               node->return_type ()->ast_accept (this);
             }
+            
           // **** arguments
           // **** exceptions
           UTL_ExceptList *exceptions = node->exceptions ();
+          
           if (exceptions != 0 && exceptions->length () > 0)
             {
               for (UTL_ExceptlistActiveIterator ei (exceptions);
@@ -690,17 +884,28 @@ namespace CIAO
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       try
         {
           if (node->field_type ())
-            node->field_type ()->ast_accept (this);
+            {
+              node->field_type ()->ast_accept (this);
+            }
         }
       catch (Error &err)
         {
@@ -725,34 +930,46 @@ namespace CIAO
     {
       XMI_TRACE ("attribute");
 
-      this->visit_field (node);
-
-      return 0;
+      return this->visit_field (node);
     }
 
     int
     ir_simulator_visitor::visit_union (AST_Union *node)
     {
       XMI_TRACE ("union");
-      if (!this->do_i_care (node)) return 0;
+      
+      if (!this->do_i_care (node))
+        {
+          return 0;
+        }
+      
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
       if (node->disc_type ())
-        this->visit_type (node->disc_type ());
+        {
+          this->visit_type (node->disc_type ());
+        }
 
-      this->visit_scope (node);
-
-      return 0;
+      return this->visit_scope (node);
     }
 
     int
@@ -777,7 +994,9 @@ namespace CIAO
       XMI_TRACE ("union_label");
 
       if (node->label_val ())
-        node->label_val ()->ast_accept (this);
+        {
+          node->label_val ()->ast_accept (this);
+        }
 
       return 0;
     }
@@ -793,17 +1012,9 @@ namespace CIAO
     }
 
     int
-    ir_simulator_visitor::visit_enum_val (AST_EnumVal *node)
+    ir_simulator_visitor::visit_enum_val (AST_EnumVal *)
     {
-      try
-        {
-        }
-      catch (Error  &err)
-        {
-          err.node (node);
-          throw;
-        }
-
+      XMI_TRACE ("enum val");
       return 0;
     }
 
@@ -811,22 +1022,34 @@ namespace CIAO
     ir_simulator_visitor::visit_array (AST_Array *node)
     {
       XMI_TRACE ("array val");
-      if (!this->do_i_care (node)) return 0;
+      
+      if (!this->do_i_care (node))
+        {
+          return 0;
+        }
+      
       Incr_Guard guard (this->associating_);
 
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
-      node->base_type ()->ast_accept (this);
-
-      return 0;
+      return node->base_type ()->ast_accept (this);
     }
 
     int
@@ -841,12 +1064,21 @@ namespace CIAO
           if (!this->associating_)
             {
               // not associating, imported, not my concern
-              if (node->imported ()) return 0;
+              if (node->imported ())
+                {
+                  return 0;
+                }
               // not imported, but not associating, need to set the guard
-              else guard.arm ();
+              else
+                {
+                  guard.arm ();
+                }
             }
           // associating, import
-          else node->set_imported (false);
+          else
+            {
+              node->set_imported (false);
+            }
 
           node->base_type ()->ast_accept (this);
         }
@@ -876,22 +1108,30 @@ namespace CIAO
       if (!this->associating_)
         {
           // not associating, imported, not my concern
-          if (node->imported ()) return 0;
+          if (node->imported ())
+            {
+              return 0;
+            }
           // not imported, but not associating, need to set the guard
-          else guard.arm ();
+          else
+            {
+              guard.arm ();
+            }
         }
       // associating, import
-      else node->set_imported (false);
+      else
+        {
+          node->set_imported (false);
+        }
 
-      node->base_type ()->ast_accept (this);
-
-      return 0;
+      return node->base_type ()->ast_accept (this);
     }
 
     int
     ir_simulator_visitor::visit_root (AST_Root *node)
     {
       XMI_TRACE ("root");
+      
       try
         {
           this->visit_scope (node);
@@ -899,16 +1139,21 @@ namespace CIAO
       catch (const Error &ex)
         {
           if (ex.node_ != 0)
-            ACE_ERROR ((LM_ERROR, "%s:%d:error: %s\n",
-                        ex.node_->file_name ().c_str (),
-                        ex.node_->line (),
-                        ex.diag_.c_str ()));
+            {
+              ACE_ERROR ((LM_ERROR, "%s:%d:error: %s\n",
+                          ex.node_->file_name ().c_str (),
+                          ex.node_->line (),
+                          ex.diag_.c_str ()));
+            }
           else
-            ACE_ERROR ((LM_ERROR, "::error:%s\n",
-                        ex.diag_.c_str ()));
+            {
+              ACE_ERROR ((LM_ERROR, "::error:%s\n",
+                          ex.diag_.c_str ()));
+            }
 
           return -1;
         }
+        
       return 0;
     }
 
@@ -924,9 +1169,7 @@ namespace CIAO
     {
       std::string name (node->repoID ());
 
-      if (this->seen_types_.insert (name).second)
-        return true;
-      return false;
+      return this->seen_types_.insert (name).second;
     }
   }
 }
