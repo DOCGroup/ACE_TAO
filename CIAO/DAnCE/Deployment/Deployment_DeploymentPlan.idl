@@ -48,7 +48,7 @@ module Deployment {
                 ::CORBA::StringSeq supportedType;
                 ::CORBA::StringSeq idlFile;
                 Properties configProperty;
-                ComponentPortDescriptions port;
+                ComponentPortDescriptions _port;
                 ComponentPropertyDescriptions property;
                 Properties infoProperty;
         };
