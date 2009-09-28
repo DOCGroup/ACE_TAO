@@ -1,3 +1,15 @@
+Mon Sep 28 11:25:43 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tools/IDL3_to_XMI/Literals.cpp:
+
+          Added missing comma between CORBAany and CORBAnative literals.
+
+        * tests/IDL3_to_XMI/XMI_For_Native/test.idl:
+        * tests/IDL3_to_XMI/XMI_For_Native/run_test.pl:
+        * bin/ciao_tests.lst:
+
+          Added a test that checks for CORBAnative in XMI file.
+
 Mon Sep 28 06:19:36 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
 
         Integrated idl3_plus branch
