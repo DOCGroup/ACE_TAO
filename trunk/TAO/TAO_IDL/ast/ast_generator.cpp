@@ -79,6 +79,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
+#include "ast_template_interface.h"
+#include "ast_mirror_port.h"
+#include "ast_connector.h"
+#include "ast_instantiated_connector.h"
+#include "ast_tmpl_mirror_port.h"
+#include "ast_provides.h"
+#include "ast_uses.h"
+#include "ast_publishes.h"
+#include "ast_emits.h"
+#include "ast_consumes.h"
 #include "ast_exception.h"
 #include "ast_enum.h"
 #include "ast_attribute.h"
@@ -920,3 +930,207 @@ AST_Generator::create_valuebox (UTL_ScopedName *n,
 
   return retval;
 }
+
+AST_Template_Interface *
+AST_Generator::create_template_interface (
+  UTL_ScopedName *n,
+  AST_Interface **ih,
+  long nih,
+  AST_Interface **ih_flat,
+  long nih_flat,
+  FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  AST_Template_Interface *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Template_Interface (n,
+                                          ih,
+                                          nih,
+                                          ih_flat,
+                                          nih_flat,
+                                          template_params),
+                  0);
+
+  return retval;
+}
+
+AST_PortType *
+AST_Generator::create_porttype (
+  UTL_ScopedName *n,
+  FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  AST_PortType *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_PortType (n,
+                                template_params),
+                  0);
+
+  return retval;
+}
+
+AST_Provides *
+AST_Generator::create_provides (UTL_ScopedName *n,
+                                AST_Type *provides_type)
+{
+  AST_Provides *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Provides (n,
+                                provides_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Uses *
+AST_Generator::create_uses (UTL_ScopedName *n,
+                            AST_Type *uses_type,
+                            bool is_multiple)
+{
+  AST_Uses *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Uses (n,
+                            uses_type,
+                            is_multiple),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Publishes *
+AST_Generator::create_publishes (UTL_ScopedName *n,
+                                 AST_EventType *publishes_type)
+{
+  AST_Publishes *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Publishes (n,
+                                 publishes_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Emits *
+AST_Generator::create_emits (UTL_ScopedName *n,
+                             AST_EventType *emits_type)
+{
+  AST_Emits *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Emits (n,
+                             emits_type),
+                  0);
+                  
+  return retval;              
+}
+AST_Consumes *
+AST_Generator::create_consumes (UTL_ScopedName *n,
+                                AST_EventType *consumes_type)
+{
+  AST_Consumes *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Consumes (n,
+                                consumes_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Extended_Port *
+AST_Generator::create_extended_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref,
+  AST_PortType::T_ARGLIST *template_args)
+{
+  AST_Extended_Port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Extended_Port (n,
+                                     porttype_ref,
+                                     template_args),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Mirror_Port *
+AST_Generator::create_mirror_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref,
+  AST_PortType::T_ARGLIST *template_args)
+{
+  AST_Mirror_Port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Mirror_Port (n,
+                                   porttype_ref,
+                                   template_args),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Connector *
+AST_Generator::create_connector (
+  UTL_ScopedName *n,
+  AST_Connector *base_connector,
+  FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  AST_Connector *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Connector (n,
+                                 base_connector,
+                                 template_params),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Tmpl_Port *
+AST_Generator::create_tmpl_port (UTL_ScopedName *n,
+                                 AST_PortType *porttype_ref)
+{
+  AST_Tmpl_Port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Tmpl_Port (n,
+                                 porttype_ref),
+                  0);
+                  
+  return retval;
+}
+
+AST_Tmpl_Mirror_Port *
+AST_Generator::create_tmpl_mirror_port (UTL_ScopedName *n,
+                                        AST_PortType *porttype_ref)
+{
+  AST_Tmpl_Mirror_Port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Tmpl_Mirror_Port (n,
+                                        porttype_ref),
+                  0);
+                  
+  return retval;
+}
+
+AST_Instantiated_Connector *
+AST_Generator::create_instantiated_connector (
+  UTL_ScopedName *n,
+  AST_Connector *connector_type,
+  AST_Template_Common::T_ARGLIST *template_args)
+{
+  AST_Instantiated_Connector *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Instantiated_Connector (n,
+                                              connector_type,
+                                              template_args),
+                  0);
+                  
+  return retval;
+}
+
+AST_Type *
+AST_Generator::create_placeholder (UTL_ScopedName *n)
+{
+  AST_Type *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Type (AST_Decl::NT_type, n),
+                  0);
+                  
+  return retval;
+}
+

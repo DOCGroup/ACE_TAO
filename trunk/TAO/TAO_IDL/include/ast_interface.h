@@ -73,7 +73,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_type.h"
 #include "utl_scope.h"
-#include "ace/Unbounded_Queue.h"
 
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope

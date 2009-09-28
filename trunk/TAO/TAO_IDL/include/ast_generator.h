@@ -71,12 +71,28 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_argument.h"
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
+#include "ast_porttype.h"
+#include "ast_template_common.h"
+
+#include "fe_utils.h"
 
 class UTL_LabelList;
 class UTL_ExprList;
 class AST_Root;
 class AST_EventType;
 class AST_EventTypeFwd;
+class AST_Template_Interface;
+class AST_Extended_Port;
+class AST_Mirror_Port;
+class AST_Connector;
+class AST_Instantiated_Connector;
+class AST_Tmpl_Port;
+class AST_Tmpl_Mirror_Port;
+class AST_Provides;
+class AST_Uses;
+class AST_Publishes;
+class AST_Emits;
+class AST_Consumes;
 
 // Defines base class for node generators.
 
@@ -323,10 +339,10 @@ public:
   virtual AST_String *create_wstring (AST_Expression *v);
 
   // Create a node representing a type renaming (typedef).
-  virtual AST_Typedef*create_typedef (AST_Type *bt,
-                                      UTL_ScopedName *n,
-                                      bool is_local,
-                                      bool is_abstract);
+  virtual AST_Typedef *create_typedef (AST_Type *bt,
+                                       UTL_ScopedName *n,
+                                       bool is_local,
+                                       bool is_abstract);
 
   // Create a node representing a native.
   virtual AST_Native *create_native (UTL_ScopedName *n);
@@ -337,6 +353,78 @@ public:
   // Create a node representing a valuebox.
   virtual AST_ValueBox *create_valuebox (UTL_ScopedName *n,
                                          AST_Type *boxed_type);
+
+  virtual
+  AST_Template_Interface *create_template_interface (
+    UTL_ScopedName *n,
+    AST_Interface **ih,
+    long nih,
+    AST_Interface **ih_flat,
+    long nih_flat,
+    FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_PortType *create_porttype (
+    UTL_ScopedName *n,
+    FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Provides *create_provides (UTL_ScopedName *n,
+                                 AST_Type *provides_type);
+                                 
+  virtual
+  AST_Uses *create_uses (UTL_ScopedName *n,
+                         AST_Type *uses_type,
+                         bool is_multiple);
+    
+  virtual
+  AST_Publishes *create_publishes (UTL_ScopedName *n,
+                                   AST_EventType *publishes_type);
+    
+  virtual
+  AST_Emits *create_emits (UTL_ScopedName *n,
+                           AST_EventType *emits_type);
+    
+  virtual
+  AST_Consumes *create_consumes (UTL_ScopedName *n,
+                                 AST_EventType *consumes_type);
+                                 
+  virtual
+  AST_Extended_Port *create_extended_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref,
+    AST_PortType::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Mirror_Port *create_mirror_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref,
+    AST_PortType::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Connector *create_connector (
+    UTL_ScopedName  *n,
+    AST_Connector *base_connector,
+    FE_Utils::T_PARAMLIST_INFO *template_params);
+    
+  virtual
+  AST_Tmpl_Port *create_tmpl_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref);
+    
+  virtual
+  AST_Tmpl_Mirror_Port *create_tmpl_mirror_port (
+    UTL_ScopedName *n,
+    AST_PortType *porttype_ref);
+    
+  virtual
+  AST_Instantiated_Connector *create_instantiated_connector (
+    UTL_ScopedName *n,
+    AST_Connector *connector_type,
+    AST_Template_Common::T_ARGLIST *template_args);
+    
+  virtual
+  AST_Type *create_placeholder (UTL_ScopedName *n);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

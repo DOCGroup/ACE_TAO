@@ -7,7 +7,16 @@
 #include "ast_interface.h"
 #include "ace/Unbounded_Queue.h"
 
-class TAO_IDL_FE_Export AST_Component : public virtual AST_Interface
+class AST_Provides;
+class AST_Uses;
+class AST_Publishes;
+class AST_Emits;
+class AST_Consumes;
+class AST_Extended_Port;
+class AST_Mirror_Port;
+
+class TAO_IDL_FE_Export AST_Component
+  : public virtual AST_Interface
 {
 public:
   AST_Component (void);
@@ -32,26 +41,6 @@ public:
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
                                        bool treat_as_ref);
 
-  // Utility data structure for port declarations.
-  struct port_description
-  {
-    port_description (void)
-      : id (0),
-        impl (0),
-        is_multiple (false),
-        line_number (0)
-    {}
-
-    Identifier *id;
-    AST_Type *impl;
-    bool is_multiple;
-    
-    // These structs are queued, in a separate queue for each port type,
-    // this helps some backends get a total ordering for a component's 
-    // ports and attributes.
-    long line_number;
-  };
-
   // Accessors.
 
   AST_Component *base_component (void) const;
@@ -59,22 +48,14 @@ public:
   AST_Interface **supports (void) const;
 
   long n_supports (void) const;
-  
-  typedef ACE_Unbounded_Queue<port_description> PORTS;
-
-  PORTS &provides (void);
-  PORTS &uses (void);
-  PORTS &emits (void);
-  PORTS &publishes (void);
-  PORTS &consumes (void);
 
   // Cleanup function.
   virtual void destroy (void);
 
   // Narrowing.
 
-  DEF_NARROW_FROM_DECL(AST_Component);
-  DEF_NARROW_FROM_SCOPE(AST_Component);
+  DEF_NARROW_FROM_DECL (AST_Component);
+  DEF_NARROW_FROM_SCOPE (AST_Component);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
@@ -82,13 +63,23 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
+protected:
+  virtual AST_Provides *fe_add_provides (AST_Provides *p);
+
+  virtual AST_Uses *fe_add_uses (AST_Uses *p);
+
+  virtual AST_Publishes *fe_add_publishes (AST_Publishes *p);
+
+  virtual AST_Emits *fe_add_emits (AST_Emits *p);
+
+  virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
+ 
+  virtual AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p);
+
+  virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p);
+
+protected:
   AST_Component *pd_base_component;
-  PORTS pd_provides;
-  PORTS pd_uses;
-  PORTS pd_emits;
-  PORTS pd_publishes;
-  PORTS pd_consumes;
 };
 
 #endif // _AST_COMPONENT_AST_COMPONENT_HH

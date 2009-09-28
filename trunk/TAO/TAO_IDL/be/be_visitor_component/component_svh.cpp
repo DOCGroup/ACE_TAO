@@ -50,23 +50,16 @@ be_visitor_component_svh::~be_visitor_component_svh (void)
 int
 be_visitor_component_svh::visit_component (be_component *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-    
   node_ = node;
+  TAO_OutStream &os_  = *this->ctx_->stream ();
   
-  if (! be_global->gen_lem_force_all ())
+  if (this->gen_facets () == -1)
     {
-      if (this->gen_facets () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_component_svh::")
-                             ACE_TEXT ("visit_component - ")
-                             ACE_TEXT ("gen_facets() failed\n")),
-                            -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_svh::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("gen_facets() failed\n")),
+                        -1);
     }
     
   /// CIDL-generated namespace used 'CIDL_' + composition name.
@@ -112,37 +105,129 @@ be_visitor_component_svh::visit_attribute (be_attribute *node)
 int
 be_visitor_component_svh::gen_facets (void)
 {
-  AST_Component::port_description *pd = 0;
-  
-  for (AST_Component::PORTS::ITERATOR i = node_->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      be_interface *intf =
-        be_interface::narrow_from_decl (pd->impl);
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
         
-      if (intf->svnt_hdr_facet_gen ())
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
+        
+      if (impl->svnt_hdr_facet_gen ())
         {
           continue;
         }
        
-      int status =
-        intf->gen_facet_svnt_hdr (this, os_);
-        
-      if (status == -1)
+      // No '_cxx_' prefix>  
+      const char *lname =
+        impl->original_local_name ()->get_string ();
+      
+      be_decl *scope =
+        be_scope::narrow_from_scope (impl->defined_in ())->decl ();
+      ACE_CString suffix (scope->flat_name ());
+      
+      if (suffix != "")
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_component_svh")
-                             ACE_TEXT ("::gen_facets() - call ")
-                             ACE_TEXT ("into node failed\n")),
-                            -1);
+          suffix = ACE_CString ("_") + suffix;
         }
       
-      intf->svnt_hdr_facet_gen (true);
+      os_ << be_nl << be_nl
+          << "namespace CIAO_FACET" << suffix.c_str () << be_nl
+          << "{" << be_idt_nl;
+          
+      const char *impl_name = "::CORBA::Object";
+      bool is_intf = impl->node_type () == AST_Decl::NT_interface;
+          
+      if (is_intf)
+        {
+          impl_name =
+            be_interface::narrow_from_decl (impl)->full_skel_name ();
+        }
+         
+      os_ << "template<typename T>" << be_nl
+          << "class " << lname << "_Servant_T" << be_idt_nl
+          << ": public virtual " << impl_name << be_uidt_nl
+          << "{" << be_nl
+          << "public:" << be_idt_nl;
+         
+      AST_Decl *s = ScopeAsDecl (impl->defined_in ());
+      ACE_CString sname_str (s->full_name ());
+      const char *sname = sname_str.c_str ();
+      const char *global = (sname_str == "" ? "" : "::");
+         
+      os_ << lname << "_Servant_T (" << be_idt_nl
+          << global << sname << "::CCM_"
+          << lname << "_ptr executor," << be_nl
+          << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
+         
+      os_ << "virtual ~" << lname << "_Servant_T (void);";
+         
+      if (is_intf)
+        {
+          be_interface *intf =
+            be_interface::narrow_from_decl (impl);
+            
+          if (this->gen_facet_ops_attrs (intf) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_component_svh::gen_facet - "
+                                 "gen_facet_ops_attrs() failed\n"),
+                                -1);
+            }
+        }
+         
+      os_ << be_nl << be_nl << "// Get component implementation." << be_nl
+          << "virtual CORBA::Object_ptr _get_component (void);"
+          << be_uidt_nl << be_nl;
+         
+      os_ << "protected:" << be_idt_nl;
+      
+      os_ << "// Facet executor." << be_nl
+          << global << sname << "::CCM_"
+          << lname << "_var executor_;" << be_nl << be_nl;
+         
+      os_ << "// Context object." << be_nl
+          << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
+         
+      os_ << "};" << be_nl << be_nl;
+      
+      os_ << "typedef " << lname << "_Servant_T<int> "
+          << lname << "_Servant;" << be_uidt_nl;
+         
+      os_ << "}";
+      
+      impl->svnt_hdr_facet_gen (true);
     }
 
+  return 0;
+}
+
+int
+be_visitor_component_svh::gen_facet_ops_attrs (be_interface *node)
+{
+  int status =
+    node->traverse_inheritance_graph (
+      be_visitor_component_svh::op_attr_decl_helper,
+      &os_);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_svh::")
+                         ACE_TEXT ("gen_facet_ops_attrs - ")
+                         ACE_TEXT ("traverse_inheritance_graph() failed\n")),
+                        -1);
+    }
+    
   return 0;
 }
 
@@ -248,9 +333,9 @@ be_visitor_component_svh::gen_context_r (AST_Component *node)
       << "// defined in " << global << sname
       << "::CCM_" << lname << "_Context.";
      
-  this->gen_ports (node, USES, false);
-  this->gen_ports (node, PUBLISHES, false);
-  this->gen_ports (node, EMITS, false);
+  this->gen_ports (node, AST_Decl::NT_uses, false);
+  this->gen_ports (node, AST_Decl::NT_publishes, false);
+  this->gen_ports (node, AST_Decl::NT_emits, false);
   
   AST_Component *ancestor = node->base_component ();
   in_ancestor_ |= (ancestor != 0);
@@ -358,10 +443,11 @@ be_visitor_component_svh::gen_servant_r (AST_Component *node)
       << "// " << (in_ancestor_ ? "Inherited p" : "P")
       << "orts code.";
       
-  for (unsigned long i = 0UL; i < NUM_PORT_KINDS; ++i)
-    {
-      this->gen_ports (node, static_cast<port_kind> (i), true);
-    }
+  this->gen_ports (node, AST_Decl::NT_provides, true);
+  this->gen_ports (node, AST_Decl::NT_uses, true);
+  this->gen_ports (node, AST_Decl::NT_publishes, true);
+  this->gen_ports (node, AST_Decl::NT_emits, true);
+  this->gen_ports (node, AST_Decl::NT_consumes, true);
      
   os_ << be_nl << be_nl
       << "// " << (in_ancestor_ ? "Inherited c" : "C")
@@ -415,94 +501,74 @@ be_visitor_component_svh::gen_component_attrs (AST_Component *node)
 
 void
 be_visitor_component_svh::gen_ports (AST_Component *node,
-                                     port_kind kind,
+                                     AST_Decl::NodeType nt,
                                      bool in_servant)
 {
-  AST_Component::port_description *pd = 0;
-  
-  switch (kind)
+  os_ << be_nl << be_nl;
+
+  switch (nt)
     {
-      case PROVIDES:
-        os_ << be_nl << be_nl
-            << "// Facets.";
-      
-        for (AST_Component::PORTS::ITERATOR i = node->provides ().begin ();
-             !i.done ();
-             i.advance ())
-          {
-            i.next (pd);
-            this->gen_provides (pd);
-          }
-          
+      case AST_Decl::NT_provides:
+        os_ << "// Facets.";
         break;
-      case USES:
-        os_ << be_nl << be_nl
-            << "// Receptacles.";
-      
-        for (AST_Component::PORTS::ITERATOR i = node->uses ().begin ();
-             !i.done ();
-             i.advance ())
-          {
-            i.next (pd);
-            this->gen_uses (pd, in_servant);
-          }
-          
+      case AST_Decl::NT_uses:
+        os_ << "// Receptacles.";
         break;
-      case PUBLISHES:
-        os_ << be_nl << be_nl
-            << "// Event publishers.";
-      
-        for (AST_Component::PORTS::ITERATOR i = node->publishes ().begin ();
-             !i.done ();
-             i.advance ())
-          {
-            i.next (pd);
-            this->gen_publishes (pd->impl->full_name (),
-                                 pd->id->get_string (),
-                                 in_servant);
-          }
-          
+      case AST_Decl::NT_publishes:
+        os_ << "// Event publishers.";
         break;
-      case CONSUMES:
-        os_ << be_nl << be_nl
-            << "// Event consumers.";
-      
-        for (AST_Component::PORTS::ITERATOR i = node->consumes ().begin ();
-             !i.done ();
-             i.advance ())
-          {
-            i.next (pd);
-            this->gen_consumes (pd->impl->full_name (),
-                                pd->id->get_string ());
-          }
-          
+      case AST_Decl::NT_consumes:
+        os_ << "// Event consumers.";
         break;
-      case EMITS:
-        os_ << be_nl << be_nl
-            << "// Event emitters.";
-      
-        for (AST_Component::PORTS::ITERATOR i = node->emits ().begin ();
-             !i.done ();
-             i.advance ())
-          {
-            i.next (pd);
-            this->gen_emits (pd->impl->full_name (),
-                             pd->id->get_string (),
-                             in_servant);
-          }
-          
+      case AST_Decl::NT_emits:
+        os_ << "// Event emitters.";
         break;
       default:
         break;
     }
+    
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Decl *d = si.item ();
+      
+      if (d->node_type () != nt)
+        {
+          continue;
+        }
+        
+      switch (nt)
+        {
+          case AST_Decl::NT_provides:
+            this->gen_provides (AST_Provides::narrow_from_decl (d));
+            break;
+          case AST_Decl::NT_uses:
+            this->gen_uses (AST_Uses::narrow_from_decl (d),
+                            in_servant);
+            break;
+          case AST_Decl::NT_publishes:
+            this->gen_publishes (AST_Publishes::narrow_from_decl (d),
+                                 in_servant);
+            break;
+          case AST_Decl::NT_emits:
+            this->gen_emits (AST_Emits::narrow_from_decl (d),
+                             in_servant);
+            break;
+          case AST_Decl::NT_consumes:
+            this->gen_consumes (AST_Consumes::narrow_from_decl (d));
+            break;
+          default:
+            break;
+        }
+    }
 }
 
 void
-be_visitor_component_svh::gen_provides (
-  AST_Component::port_description *pd)
+be_visitor_component_svh::gen_provides (AST_Provides *p)
 {
-  const char *obj_name = pd->impl->full_name ();
-  const char *port_name = pd->id->get_string ();
+  const char *obj_name = p->provides_type ()->full_name ();
+  const char *port_name = p->local_name ()->get_string ();
 
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
@@ -522,17 +588,18 @@ be_visitor_component_svh::gen_provides (
 
 void
 be_visitor_component_svh::gen_uses (
-  AST_Component::port_description *pd,
+  AST_Uses *u,
   bool in_servant)
 {
-  const char *obj_name = pd->impl->full_name ();
-  const char *port_name = pd->id->get_string ();
+  const char *obj_name = u->uses_type ()->full_name ();
+  const char *port_name = u->local_name ()->get_string ();
+  bool is_multiple = u->is_multiple ();
   
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
       << "virtual ";
   
-  if (pd->is_multiple)
+  if (is_multiple)
     {
       os_ << "::" << node_->full_name () << "::"
           << port_name << "Connections *" << be_nl
@@ -554,7 +621,7 @@ be_visitor_component_svh::gen_uses (
     
   os_ << be_nl
       << "virtual "
-      << (pd->is_multiple ? "::Components::Cookie *" : "void")
+      << (is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
       << "connect_" << port_name << " (" << be_idt_nl
       << "::" << obj_name << "_ptr);"
@@ -563,7 +630,7 @@ be_visitor_component_svh::gen_uses (
   os_ << "virtual ::" << obj_name << "_ptr" << be_nl
       << "disconnect_" << port_name << " (";
      
-     if (pd->is_multiple)
+     if (is_multiple)
       {
         os_ << be_idt_nl
             << "::Components::Cookie * ck);" << be_uidt;
@@ -578,7 +645,7 @@ be_visitor_component_svh::gen_uses (
       os_ << be_uidt_nl << be_nl
           << "protected:" << be_idt_nl;
 
-      if (pd->is_multiple)
+      if (is_multiple)
         {
           os_ << "// Multiplex " << port_name << " connection." << be_nl
               << "typedef ACE_Array_Map<ptrdiff_t," << be_nl
@@ -600,10 +667,12 @@ be_visitor_component_svh::gen_uses (
 }
 
 void
-be_visitor_component_svh::gen_publishes (const char *obj_name,
-                                         const char *port_name,
+be_visitor_component_svh::gen_publishes (AST_Publishes *p,
                                          bool in_servant)
 {
+  const char *obj_name = p->publishes_type ()->full_name ();
+  const char *port_name = p->local_name ()->get_string ();
+  
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
  
@@ -658,9 +727,11 @@ be_visitor_component_svh::gen_publishes (const char *obj_name,
 }
 
 void
-be_visitor_component_svh::gen_consumes (const char *obj_name,
-                                        const char *port_name)
+be_visitor_component_svh::gen_consumes (AST_Consumes *c)
 {
+  const char *obj_name = c->consumes_type ()->full_name ();
+  const char *port_name = c->local_name ()->get_string ();
+  
   ACE_CString holder (obj_name);
   ACE_CString::size_type pos = holder.rfind (':');
   const char *ev_lname = 0;
@@ -762,10 +833,12 @@ be_visitor_component_svh::gen_consumes (const char *obj_name,
 }
 
 void
-be_visitor_component_svh::gen_emits (const char *obj_name,
-                                     const char *port_name,
+be_visitor_component_svh::gen_emits (AST_Emits *e,
                                      bool in_servant)
 {
+  const char *obj_name = e->emits_type ()->full_name ();
+  const char *port_name = e->local_name ()->get_string ();
+
   if (in_servant)
     {
       os_ << be_nl << be_nl;
@@ -860,7 +933,7 @@ be_visitor_component_svh::gen_non_type_specific (void)
       
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
-      << "ACE_CString ins_name_;";
+      << "const char * ins_name_;";
 }
 
 void

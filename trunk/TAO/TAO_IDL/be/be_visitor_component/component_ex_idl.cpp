@@ -45,19 +45,15 @@ be_visitor_component_ex_idl::visit_component (be_component *node)
     {
       return 0;
     }
-
+    
   node_ = node;
-
-  // Only if not already generated at interface level.
-  if (! be_global->gen_lem_force_all ())
-    {
-      this->gen_facets ();
-    }
-
+  
+  this->gen_facets ();
+  
   this->gen_component ();
-
+  
   this->gen_executor_derived ();
-
+  
   return 0;
 }
 
@@ -71,9 +67,9 @@ be_visitor_component_ex_idl::visit_attribute (be_attribute *node)
    // accepted by parser for attributes.
    os_ << be_nl
        << (rd_only ? "readonly " : "") << "attribute ";
-
+       
    be_type *ft = be_type::narrow_from_decl (node->field_type ());
-
+   
    os_ << IdentifierHelper::type_name (ft, this);
    os_ << " "
        << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
@@ -94,9 +90,9 @@ be_visitor_component_ex_idl::visit_sequence (be_sequence *node)
 {
   // Keep output statements separate because of side effects.
   os_ << "sequence<";
-
+  
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-
+  
   os_ << IdentifierHelper::type_name (bt, this);
 
   if (!node->unbounded ())
@@ -112,9 +108,11 @@ be_visitor_component_ex_idl::visit_sequence (be_sequence *node)
 int
 be_visitor_component_ex_idl::visit_string (be_string *node)
 {
-  os_ << (node->width () > (long) sizeof (char) ? "w" : "") << "string";
+  bool wide = static_cast<size_t> (node->width ()) > sizeof (char);
 
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  os_ << (wide ? "w" : "") << "string";
+
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
 
   if (bound > 0UL)
     {
@@ -125,34 +123,130 @@ be_visitor_component_ex_idl::visit_string (be_string *node)
 }
 
 void
+be_visitor_component_ex_idl::gen_nesting_open (AST_Decl *node)
+{
+  os_ << be_nl;
+  
+  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
+    {
+      UTL_ScopedName tmp (i.item (), 0);
+      AST_Decl *scope =
+        node->defined_in ()->lookup_by_name (&tmp, true);
+        
+      if (scope == 0)
+        {
+          i.next ();
+          continue;
+        }
+        
+      ACE_CString module_name =
+        IdentifierHelper::try_escape (scope->original_local_name ());
+      
+      if (module_name == "")
+        {
+          i.next ();
+          continue;
+        }
+        
+      i.next ();
+      
+      if (i.is_done ())
+        {
+          break;
+        }
+      
+      os_ << be_nl
+          << "module " << module_name.c_str () << be_nl
+          << "{" << be_idt;
+    }
+}
+
+void
+be_visitor_component_ex_idl::gen_nesting_close (AST_Decl *node)
+{
+  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
+    {
+      ACE_CString module_name (i.item ()->get_string ());
+      
+      if (module_name == "")
+        {
+          i.next ();
+          continue;
+        }
+        
+      i.next ();
+      
+      if (i.is_done ())
+        {
+          break;
+        }
+      
+      os_ << be_uidt_nl
+          << "};";
+    }
+}
+
+void
 be_visitor_component_ex_idl::gen_facets (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
-
-      be_interface *intf =
-        be_interface::narrow_from_decl (pd->impl);
+      AST_Decl *d = si.item ();
+      
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
         
-      intf->gen_facet_idl (os_);
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+        
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
+
+      if (impl->ex_idl_facet_gen ())
+        {
+          continue;
+        }
+        
+      // Without the '-Glfa' option, generate facet executor IDL
+      // only for facets whose interface type is in the main file.  
+      if (impl->imported () && !be_global->gen_lem_force_all ())
+        {
+          continue;
+        }
+      
+      this->gen_nesting_open (impl);
+      
+      os_ << be_nl
+          << "local interface CCM_"
+          << impl->original_local_name ()->get_string ()
+          << " : ::"
+          << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+          << be_nl
+          << "{" << be_idt;
+          
+      os_ << be_uidt_nl
+          << "};";
+      
+      this->gen_nesting_close (impl);
+      
+      impl->ex_idl_facet_gen (true);
     }
 }
 
 void
 be_visitor_component_ex_idl::gen_component (void)
 {
-  node_->gen_nesting_open (os_);
+  this->gen_nesting_open (node_);
   
   this->gen_executor_base ();
       
   this->gen_context ();
 
-  node_->gen_nesting_close (os_);
+  this->gen_nesting_close (node_);
 }
 
 void
@@ -230,47 +324,64 @@ be_visitor_component_ex_idl::gen_executor_contents (void)
 void
 be_visitor_component_ex_idl::gen_facet_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->provides ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
-      AST_Decl *scope = ScopeAsDecl (pd->impl->defined_in ());
+      if (d->node_type () != AST_Decl::NT_provides)
+        {
+          continue;
+        }
+        
+      AST_Provides *p =
+        AST_Provides::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->provides_type ());
+        
+      AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
       
       ACE_CString sname_str =
         IdentifierHelper::orig_sn (scope->name ());
       const char *sname = sname_str.c_str ();
       
       const char *lname =
-        pd->impl->original_local_name ()->get_string ();
+        impl->original_local_name ()->get_string ();
       
       const char *global = (sname_str == "" ? "" : "::");
       
       os_ << be_nl
           << global << sname << "::CCM_" << lname << " get_"
-          << pd->id->get_string () << " ();";
+          << p->local_name ()->get_string () << " ();";
     }
 }
 
 void
 be_visitor_component_ex_idl::gen_consumer_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->consumes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
+      if (d->node_type () != AST_Decl::NT_consumes)
+        {
+          continue;
+        }
+        
+      AST_Consumes *c =
+        AST_Consumes::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (c->consumes_type ());
+        
       os_ << be_nl
-          << "void push_" << pd->id->get_string () << " (in ::"
-          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << "void push_" << c->local_name ()->get_string ()
+          << " (in ::"
+          << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " e);";
     }
 }
@@ -352,18 +463,26 @@ be_visitor_component_ex_idl::gen_context (void)
 void
 be_visitor_component_ex_idl::gen_publisher_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->publishes ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
+      if (d->node_type () != AST_Decl::NT_publishes)
+        {
+          continue;
+        }
+        
+      AST_Publishes *p =
+        AST_Publishes::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (p->publishes_type ());
+        
       os_ << be_nl
-          << "void push_" << pd->id->get_string () << " (in ::"
-          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << "void push_" << p->local_name ()->get_string () << " (in ::"
+          << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " e);";
     }
 }
@@ -371,18 +490,26 @@ be_visitor_component_ex_idl::gen_publisher_ops (void)
 void
 be_visitor_component_ex_idl::gen_emitter_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->emits ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
+      if (d->node_type () != AST_Decl::NT_emits)
+        {
+          continue;
+        }
+        
+      AST_Emits *e =
+        AST_Emits::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (e->emits_type ());
+        
       os_ << be_nl
-          << "void push_" << pd->id->get_string () << " (in ::"
-          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << "void push_" << e->local_name ()->get_string () << " (in ::"
+          << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " e);";
     }
 }
@@ -390,15 +517,23 @@ be_visitor_component_ex_idl::gen_emitter_ops (void)
 void
 be_visitor_component_ex_idl::gen_receptacle_ops (void)
 {
-  AST_Component::port_description *pd = 0;
-
-  for (AST_Component::PORTS::ITERATOR i =
-         node_->uses ().begin ();
-       !i.done ();
-       i.advance ())
+  for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      i.next (pd);
+      AST_Decl *d = si.item ();
       
+      if (d->node_type () != AST_Decl::NT_uses)
+        {
+          continue;
+        }
+        
+      AST_Uses *u =
+        AST_Uses::narrow_from_decl (d);
+
+      be_type *impl =
+        be_type::narrow_from_decl (u->uses_type ());
+        
       os_ << be_nl
           << "::";
       
@@ -407,18 +542,18 @@ be_visitor_component_ex_idl::gen_receptacle_ops (void)
       // create this implied IDL node with the '_cxx_' so lookup
       // will fail (when processing the *E.idl file) if we
       // strip it off here.
-      if (pd->is_multiple)
+      if (u->is_multiple ())
         {
           os_ << IdentifierHelper::orig_sn (node_->name ()).c_str ()
-              << "::" << pd->id->get_string ()
+              << "::" << u->local_name ()->get_string ()
               << "Connections get_connections_"
-              << pd->id->get_string () << " ();";
+              << u->local_name ()->get_string () << " ();";
         }
       else
         {
-          os_ << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          os_ << IdentifierHelper::orig_sn (impl->name ()).c_str ()
               << " get_connection_"
-              << pd->id->get_string () << " ();";
+              << u->local_name ()->get_string () << " ();";
         }
     }
 }

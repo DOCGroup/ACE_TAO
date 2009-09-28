@@ -81,6 +81,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_home.h"
+#include "be_template_interface.h"
+#include "be_porttype.h"
+#include "be_mirror_port.h"
+#include "be_connector.h"
+#include "be_instantiated_connector.h"
+#include "be_tmpl_port.h"
+#include "be_tmpl_mirror_port.h"
+#include "be_provides.h"
+#include "be_uses.h"
+#include "be_publishes.h"
+#include "be_emits.h"
+#include "be_consumes.h"
 #include "be_union.h"
 #include "be_union_fwd.h"
 #include "be_structure.h"
@@ -911,3 +923,208 @@ be_generator::create_factory (UTL_ScopedName *n)
 
   return retval;
 }
+
+AST_Template_Interface *
+be_generator::create_template_interface (
+  UTL_ScopedName *n,
+  AST_Interface **ih,
+  long nih,
+  AST_Interface **ih_flat,
+  long nih_flat,
+  FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  be_template_interface *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_template_interface (n,
+                                         ih,
+                                         nih,
+                                         ih_flat,
+                                         nih_flat,
+                                         template_params),
+                  0);
+
+  return retval;
+}
+
+AST_PortType *
+be_generator::create_porttype (
+  UTL_ScopedName *n,
+  FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  be_porttype *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_porttype (n,
+                               template_params),
+                  0);
+
+  return retval;
+}
+
+AST_Provides *
+be_generator::create_provides (UTL_ScopedName *n,
+                               AST_Type *provides_type)
+{
+  be_provides *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_provides (n,
+                               provides_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Uses *
+be_generator::create_uses (UTL_ScopedName *n,
+                           AST_Type *uses_type,
+                           bool is_multiple)
+{
+  be_uses *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_uses (n,
+                           uses_type,
+                           is_multiple),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Publishes *
+be_generator::create_publishes (UTL_ScopedName *n,
+                                AST_EventType *publishes_type)
+{
+  be_publishes *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_publishes (n,
+                                publishes_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Emits *
+be_generator::create_emits (UTL_ScopedName *n,
+                            AST_EventType *emits_type)
+{
+  be_emits *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_emits (n,
+                            emits_type),
+                  0);
+                  
+  return retval;              
+}
+AST_Consumes *
+be_generator::create_consumes (UTL_ScopedName *n,
+                               AST_EventType *consumes_type)
+{
+  be_consumes *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_consumes (n,
+                               consumes_type),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Extended_Port *
+be_generator::create_extended_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref,
+  AST_PortType::T_ARGLIST *template_args)
+{
+  be_extended_port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_extended_port (n,
+                                    porttype_ref,
+                                    template_args),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Mirror_Port *
+be_generator::create_mirror_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref,
+  AST_PortType::T_ARGLIST *template_args)
+{
+  be_mirror_port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_mirror_port (n,
+                                  porttype_ref,
+                                  template_args),
+                  0);
+                  
+  return retval;              
+}
+
+AST_Connector *
+be_generator::create_connector (
+  UTL_ScopedName *n,
+  AST_Connector *base_connector,
+  FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  be_connector *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_connector (n,
+                                base_connector,
+                                template_params),
+                  0);
+                  
+  return retval;
+}
+
+AST_Tmpl_Port *
+be_generator::create_tmpl_port (UTL_ScopedName *n,
+                                AST_PortType *porttype_ref)
+{
+  be_tmpl_port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_tmpl_port (n,
+                                porttype_ref),
+                  0);
+                  
+  return retval;
+}
+
+AST_Tmpl_Mirror_Port *
+be_generator::create_tmpl_mirror_port (UTL_ScopedName *n,
+                                       AST_PortType *porttype_ref)
+{
+  be_tmpl_mirror_port *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_tmpl_mirror_port (n,
+                                       porttype_ref),
+                  0);
+                  
+  return retval;
+}
+
+AST_Instantiated_Connector *
+be_generator::create_instantiated_connector (
+  UTL_ScopedName *n,
+  AST_Connector *connector_type,
+  AST_Template_Common::T_ARGLIST *template_args)
+{
+  be_instantiated_connector *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_instantiated_connector (n,
+                                             connector_type,
+                                             template_args),
+                  0);
+                  
+  return retval;
+}
+
+AST_Type *
+be_generator::create_placeholder (UTL_ScopedName *n)
+{
+  be_type *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_type (AST_Decl::NT_type, n),
+                  0);
+                  
+  return retval;
+}
+
+

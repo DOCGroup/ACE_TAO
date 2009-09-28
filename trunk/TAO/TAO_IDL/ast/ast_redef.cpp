@@ -86,6 +86,7 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_component_fwd:
     case AST_Decl::NT_eventtype:
     case AST_Decl::NT_eventtype_fwd:
+    case AST_Decl::NT_porttype:
     case AST_Decl::NT_home:
     case AST_Decl::NT_const:
     case AST_Decl::NT_except:
@@ -102,6 +103,7 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_enum:
     case AST_Decl::NT_typedef:
     case AST_Decl::NT_valuebox:
+    case AST_Decl::NT_connector:
       return true;
 
     case AST_Decl::NT_union_branch:
@@ -110,6 +112,13 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_op:
     case AST_Decl::NT_pre_defined:
     case AST_Decl::NT_factory:
+    case AST_Decl::NT_provides:
+    case AST_Decl::NT_uses:
+    case AST_Decl::NT_publishes:
+    case AST_Decl::NT_emits:
+    case AST_Decl::NT_consumes:
+    case AST_Decl::NT_ext_port:
+    case AST_Decl::NT_mirror_port:
     default:
       return false;
     }

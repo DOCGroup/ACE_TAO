@@ -1013,11 +1013,11 @@ private:
   bool gen_skel_export_hdr_file_;
   bool gen_svnt_export_hdr_file_;
   bool gen_exec_export_hdr_file_;
-  // Flags to generate the various export header files.
+  // Flags toggling export header file generation.
   
   bool gen_lem_force_all_;
-  // Generate facet code for all visited interfaces, instead
-  // of navigating to them from provides ports.
+  // Toggles generation of exec IDL for facets with imported
+  // interface types (not in main IDL file).
 };
 
 #endif /* _BE_GLOBAL_H */

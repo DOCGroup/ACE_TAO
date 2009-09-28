@@ -65,7 +65,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 /*
- * idl.yy - YACC grammar for IDL 1.1
+ * idl.yy - YACC grammar for IDL 3.x
  */
 
 /* Declarations */
@@ -87,6 +87,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
+#include "ast_template_interface.h"
+#include "ast_porttype.h"
+#include "ast_connector.h"
+#include "ast_instantiated_connector.h"
+#include "ast_uses.h"
 #include "ast_constant.h"
 #include "ast_union.h"
 #include "ast_union_fwd.h"
@@ -100,6 +105,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_exception.h"
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
+#include "fe_template_interface_header.h"
+#include "fe_obv_header.h"
+#include "fe_event_header.h"
+#include "fe_component_header.h"
+#include "fe_home_header.h"
+#include "fe_utils.h"
 #include "utl_identifier.h"
 #include "utl_err.h"
 #include "utl_string.h"
@@ -139,6 +150,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   UTL_LabelList                 *llval;         /* Label list           */
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
+  FE_Template_InterfaceHeader   *thval;         /* Template interface hdr */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
   FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
@@ -163,6 +175,13 @@ AST_Decl *tao_enum_constant_decl = 0;
   char                          *strval;        /* char * value         */
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
+  AST_Decl::NodeType            ntval;          /* Node type value      */
+  FE_Utils::T_Param_Info        *pival;         /* Template interface param */
+  FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
+  FE_Utils::T_Ref_Info          *trval;         /* Template interface info */
+  FE_Utils::T_REFLIST_INFO      *rlval;         /* List of above structs */
+  FE_Utils::T_Inst_Info         *tival;         /* Template instantiation */
+  FE_Utils::T_Port_Info         *ptval;         /* Porttype reference */
 }
 
 /*
@@ -236,6 +255,14 @@ AST_Decl *tao_enum_constant_decl = 0;
 %token          IDL_TYPEPREFIX
 %token          IDL_USES
 %token          IDL_MANAGES
+                /* Extended ports tokens  */
+%token          IDL_TYPENAME
+%token          IDL_PRIMITIVE
+%token          IDL_PORT
+%token          IDL_MIRRORPORT
+%token          IDL_PORTTYPE
+%token          IDL_CONNECTOR
+%token          IDL_CONCAT
 
 %token <ival>   IDL_INTEGER_LITERAL
 %token <uival>  IDL_UINTEGER_LITERAL
@@ -259,13 +286,14 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <dcval>   template_type_spec sequence_type_spec string_type_spec
 %type <dcval>   struct_type enum_type switch_type_spec union_type
 %type <dcval>   array_declarator op_type_spec seq_head wstring_type_spec
-%type <dcval>   param_type_spec
+%type <dcval>   param_type_spec connector_inst_spec type_dcl type_declarator
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
 %type <idlist>  home_inheritance_spec primary_key_spec
 
 %type <slval>   opt_context at_least_one_string_literal
-%type <slval>   string_literals
+%type <slval>   string_literals template_param_refs
+%type <slval>   at_least_one_template_param_ref
 
 %type <nlval>   at_least_one_scoped_name scoped_names inheritance_spec
 %type <nlval>   opt_raises opt_getraises opt_setraises supports_spec
@@ -305,13 +333,31 @@ AST_Decl *tao_enum_constant_decl = 0;
 
 %type <deval>   declarator simple_declarator complex_declarator
 
-%type <bval>    opt_truncatable opt_multiple
+%type <bval>    opt_truncatable opt_multiple uses_opt_multiple
 
 %type <idval>   interface_decl value_decl union_decl struct_decl id
 %type <idval>   event_header event_plain_header event_custom_header
 %type <idval>   event_abs_header
 
-%type <ival>    type_dcl
+%type <ntval>   type_classifier
+
+%type <pival>   template_param
+
+%type <plval>   template_params at_least_one_template_param
+%type <plval>   opt_template_params
+
+%type <sval>    template_param_ref
+
+%type <trval>   template_ref
+
+%type <rlval>   template_refs at_least_one_template_ref
+%type <rlval>   template_inheritance_spec
+
+%type <thval>   template_interface_header
+
+%type <tival>   template_inst
+
+%type <ptval>   template_ref_decl
 %%
 
 /*
@@ -321,7 +367,7 @@ start : definitions ;
 
 definitions
         : definitions definition
-        | /* empty */
+        | /* EMPTY */
         ;
 
 definition
@@ -385,6 +431,16 @@ definition
 //      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
+        | template_interface_def
+        {
+//      | template_interface_def
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
+        }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
         | module
         {
 //      | module
@@ -429,6 +485,26 @@ definition
         {
 //      | event
           idl_global->set_parse_state (IDL_GlobalData::PS_EventDeclSeen);
+        }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | porttype_decl
+        {
+//      | porttype_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeDeclSeen);
+        }
+          ';'
+        {
+//      ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | connector_decl
+        {
+//      | connector_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorDeclSeen);
         }
           ';'
         {
@@ -2096,6 +2172,7 @@ template_type_spec
         : sequence_type_spec
         | string_type_spec
         | wstring_type_spec
+        | connector_inst_spec
         ;
 
 constructed_type_spec
@@ -4209,16 +4286,48 @@ param_type_spec
 //      | scoped_name
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = 0;
+          UTL_ScopedName *n = $1;
 
           if (s != 0)
             {
-              d = s->lookup_by_name ($1,
-                                     true);
+              d = s->lookup_by_name (n, true);
             }
 
           if (d == 0)
             {
-              idl_global->err ()->lookup_error ($1);
+              bool so_far_so_good = false;
+              
+              // We're looking for a template parameter ref, so
+              // the scoped name would just be a simple identifier.
+              if (n->length () == 1)
+                {  
+                  AST_Template_Interface *ti =
+                    AST_Template_Interface::narrow_from_scope (
+                      ScopeAsDecl (s)->defined_in ());
+                      
+                  if (ti != 0)
+                    {
+                      so_far_so_good =
+                        ti->find_param (n->head ()->get_string ());
+                    
+                      if (so_far_so_good)
+                        {
+                          d =
+                            idl_global->gen ()->create_placeholder (n);
+                          s->add_to_scope (d);
+                        }
+                    }
+                }
+                 
+              if (!so_far_so_good)
+                {    
+                  idl_global->err ()->lookup_error (n);
+                  $1->destroy ();
+                  $1 = 0;
+
+                  /* If we don't return here, we'll crash later.*/
+                  return 1;
+                }
             }
           else
             {
@@ -4241,7 +4350,7 @@ param_type_spec
                     {
                       td = AST_Typedef::narrow_from_decl (d);
                       AST_Type *pbt = td->primitive_base_type ();
-                      
+
                       if (pbt->node_type () == AST_Decl::NT_sequence)
                         {
                           t = pbt;
@@ -4251,7 +4360,7 @@ param_type_spec
                             seq_type->base_type ();
                           AST_Decl::NodeType elem_nt =
                             elem_type->node_type ();
-                            
+
                           if (elem_nt == AST_Decl::NT_typedef)
                             {
                               AST_Typedef *elem_td =
@@ -4259,7 +4368,7 @@ param_type_spec
                               elem_type = elem_td->primitive_base_type ();
                               elem_nt = elem_type->node_type ();
                             }
-                            
+
                           if (elem_nt == AST_Decl::NT_interface
                               || elem_nt == AST_Decl::NT_interface_fwd
                               || elem_nt == AST_Decl::NT_valuetype
@@ -4271,7 +4380,7 @@ param_type_spec
                             }
                         }
                     }
-                    
+
                   if (! t->is_defined () && ! can_be_undefined)
                     {
                       idl_global->err ()->error1 (
@@ -4749,74 +4858,73 @@ component_export
 //        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
+        | extended_port_decl
+        {
+//      | extended_port_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
         ;
 
-provides_decl :
-        IDL_PROVIDES
-        interface_type
-        id
+provides_decl : IDL_PROVIDES interface_type id
         {
 // provides_decl : IDL_PROVIDES interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Component *c = AST_Component::narrow_from_scope (s);
+          bool so_far_so_good = true;
 
-          if (c != 0)
+          AST_Decl *d = s->lookup_by_name ($2,
+                                           true);
+          if (d == 0)
             {
-              AST_Decl *d = s->lookup_by_name ($2,
-                                               true);
-              if (0 == d)
+              idl_global->err ()->lookup_error ($2);
+              so_far_so_good = false;
+            }
+          else if (d->node_type () != AST_Decl::NT_interface)
+            {
+              // Nothing else but CORBA::Object can have
+              // this identifier.
+              int comp_result =
+                ACE_OS::strcmp (d->local_name ()->get_string (),
+                                "Object");
+
+              // Simple provides port must use IDL interface
+              // or CORBA::Object.
+              if (comp_result != 0)
                 {
-                  idl_global->err ()->lookup_error ($2);
-
-                  $2->destroy ();
-                  delete $2;
-                  $2 = 0;
-
-                  $3->destroy ();
-                  delete $3;
-                  $3 = 0;
-
-                  break;
+                  idl_global->err ()->interface_expected (d);
+                  so_far_so_good = false;
                 }
-              else if (d->node_type () != AST_Decl::NT_interface)
-                {
-                  // Nothing else but CORBA::Object can have
-                  // this identifier.
-                  if (ACE_OS::strcmp (d->local_name ()->get_string (),
-                                      "Object")
-                        != 0)
-                    {
-                      idl_global->err ()->interface_expected (d);
-
-                      $2->destroy ();
-                      delete $2;
-                      $2 = 0;
-
-                      $3->destroy ();
-                      delete $3;
-                      $3 = 0;
-
-                      break;
-                    }
-                }
-
-              AST_Type *interface_type =
-                AST_Type::narrow_from_decl (d);
-
-              AST_Component::port_description pd;
-              
-              // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($3);
-              
-              pd.id = $3;
-              pd.impl = interface_type;
-              pd.line_number = idl_global->lineno ();
-              c->provides ().enqueue_tail (pd);
             }
 
+          if (so_far_so_good)
+            {
+              AST_Type *port_interface_type =
+                AST_Type::narrow_from_decl (d);
+
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
+
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Provides *p =
+                idl_global->gen ()->create_provides (&sn,
+                                                     port_interface_type);
+
+              (void) s->fe_add_provides (p);
+            }
+ 
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
         }
         ;
 
@@ -4852,81 +4960,86 @@ interface_type
         }
         ;
 
-uses_decl :
-        IDL_USES
-        opt_multiple
-        interface_type
-        id
+uses_decl : uses_opt_multiple interface_type id
         {
-// uses_decl : IDL_USES opt_multiple interface_type id
+// uses_decl : uses_opt_multiple interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($3,
+          bool so_far_so_good = true;
+
+          AST_Decl *d = s->lookup_by_name ($2,
                                            true);
-
-          if (0 == d)
+          if (d == 0)
             {
-              idl_global->err ()->lookup_error ($3);
-
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
-
-              $4->destroy ();
-              delete $4;
-              $4 = 0;
-
-              break;
+              idl_global->err ()->lookup_error ($2);
+              so_far_so_good = false;
             }
           else if (d->node_type () != AST_Decl::NT_interface)
             {
-              if (ACE_OS::strcmp (d->local_name ()->get_string (),
-                                  "Object")
-                    != 0)
+              // Nothing else but CORBA::Object can have
+              // this identifier.
+              int comp_result =
+                ACE_OS::strcmp (d->local_name ()->get_string (),
+                                "Object");
+
+              // Simple provides port must use IDL interface
+              // or CORBA::Object.
+              if (comp_result != 0)
                 {
                   idl_global->err ()->interface_expected (d);
-
-                  $3->destroy ();
-                  delete $3;
-                  $3 = 0;
-
-                  $4->destroy ();
-                  delete $4;
-                  $4 = 0;
-
-                  break;
+                  so_far_so_good = false;
                 }
             }
 
-          AST_Type *interface_type = AST_Type::narrow_from_decl (d);
-          AST_Component *c = AST_Component::narrow_from_scope (s);
-
-          if (c != 0)
+          if (so_far_so_good)
             {
-              AST_Component::port_description ud;
-              
-              // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($4);
-              
-              ud.id = $4;
-              ud.impl = interface_type;
-              ud.is_multiple = $2;
-              ud.line_number = idl_global->lineno ();
-              c->uses ().enqueue_tail (ud);
+              AST_Type *port_interface_type =
+                AST_Type::narrow_from_decl (d);
 
-              if (ud.is_multiple == true
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
+
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Uses *u =
+                idl_global->gen ()->create_uses (&sn,
+                                                 port_interface_type,
+                                                 $1);
+
+              (void) s->fe_add_uses (u);
+ 
+              AST_Component *c =
+                AST_Component::narrow_from_scope (s);
+
+              if (c != 0
+                  && u->is_multiple ()
                   && !idl_global->using_ifr_backend ()
                   && !idl_global->ignore_idl3 ())
                 {
                   // These datatypes must be created in the
                   // front end so they can be looked up
                   // when compiling the generated executor IDL.
-                  idl_global->create_uses_multiple_stuff (c, ud);
+                  idl_global->create_uses_multiple_stuff (c, u);
                 }
             }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
 
           $3->destroy ();
           delete $3;
           $3 = 0;
+        }
+        ;
+
+uses_opt_multiple
+        : IDL_USES opt_multiple
+        {
+// uses_opt_multiple : IDL_USES opt_multiple
+          // We use this extra rule here to use in both uses_decl and
+          // extended_uses_decl, so the LALR(1) parser can avoid conflicts.
+          $$ = $2;
         }
         ;
 
@@ -4943,193 +5056,145 @@ opt_multiple
         }
         ;
 
-emits_decl :
-        IDL_EMITS
-        scoped_name
-        id
+emits_decl : IDL_EMITS scoped_name id
         {
 // emits_decl : IDL_EMITS scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          bool so_far_so_good = true;
           AST_Decl *d = s->lookup_by_name ($2,
                                            true);
 
           if (0 == d)
             {
               idl_global->err ()->lookup_error ($2);
-
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
-
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
-
-              break;
+              so_far_so_good = false;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
-
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
-
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
-
-              break;
+              so_far_so_good = false;
             }
-          else
-            {
-              AST_Type *event_type = AST_Type::narrow_from_decl (d);
-              AST_Component *c = AST_Component::narrow_from_scope (s);
 
-              if (c != 0)
-                {
-                  AST_Component::port_description pd;
-              
-                  // Strip off _cxx_, if any, for port name.
-                  idl_global->original_local_name ($3);
-              
-                  pd.id = $3;
-                  pd.impl = event_type;
-                  pd.line_number = idl_global->lineno ();
-                  c->emits ().enqueue_tail (pd);
-                }
+          if (so_far_so_good)
+            {
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
+
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
+
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Emits *e =
+                idl_global->gen ()->create_emits (&sn,
+                                                  event_type);
+
+              (void) s->fe_add_emits (e);
             }
 
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
         }
         ;
 
-publishes_decl :
-        IDL_PUBLISHES
-        scoped_name
-        id
+publishes_decl : IDL_PUBLISHES scoped_name id
         {
 // publishes_decl : IDL_PUBLISHES scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          bool so_far_so_good = true;
           AST_Decl *d = s->lookup_by_name ($2,
                                            true);
 
           if (0 == d)
             {
               idl_global->err ()->lookup_error ($2);
-
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
-
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
-
-              break;
+              so_far_so_good = false;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
-
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
-
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
-
-              break;
+              so_far_so_good = false;
             }
-          else
-            {
-              AST_Type *event_type = AST_Type::narrow_from_decl (d);
-              AST_Component *c = AST_Component::narrow_from_scope (s);
 
-              if (c != 0)
-                {
-                  AST_Component::port_description pd;
-              
-                  // Strip off _cxx_, if any, for port name.
-                  idl_global->original_local_name ($3);
-              
-                  pd.id = $3;
-                  pd.impl = event_type;
-                  pd.line_number = idl_global->lineno ();
-                  c->publishes ().enqueue_tail (pd);
-                }
+          if (so_far_so_good)
+            {
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
+
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
+
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Publishes *p =
+                idl_global->gen ()->create_publishes (&sn,
+                                                      event_type);
+
+              (void) s->fe_add_publishes (p);
             }
 
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
         }
         ;
 
-consumes_decl :
-        IDL_CONSUMES
-        scoped_name
-        id
+consumes_decl : IDL_CONSUMES scoped_name id
         {
 // consumes_decl : IDL_CONSUMES scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          bool so_far_so_good = true;
           AST_Decl *d = s->lookup_by_name ($2,
                                            true);
 
           if (0 == d)
             {
               idl_global->err ()->lookup_error ($2);
-
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
-
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
-
-              break;
+              so_far_so_good = false;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
-
-              $2->destroy ();
-              delete $2;
-              $2 = 0;
-
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
-
-              break;
+              so_far_so_good = false;
             }
-          else
-            {
-              AST_Type *event_type = AST_Type::narrow_from_decl (d);
-              AST_Component *c = AST_Component::narrow_from_scope (s);
 
-              if (c != 0)
-                {
-                  AST_Component::port_description pd;
-              
-                  // Strip off _cxx_, if any, for port name.
-                  idl_global->original_local_name ($3);
-              
-                  pd.id = $3;
-                  pd.impl = event_type;
-                  pd.line_number = idl_global->lineno ();
-                  c->consumes ().enqueue_tail (pd);
-                }
+          if (so_far_so_good)
+            {
+              AST_EventType *event_type =
+                AST_EventType::narrow_from_decl (d);
+
+              // Strip off _cxx_, if any, for port name.
+              idl_global->original_local_name ($3);
+
+              UTL_ScopedName sn ($3,
+                                 0);
+
+              AST_Consumes *c =
+                idl_global->gen ()->create_consumes (&sn,
+                                                     event_type);
+
+              (void) s->fe_add_consumes (c);
             }
 
           $2->destroy ();
           delete $2;
           $2 = 0;
-        }
+
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
+       }
         ;
 
 home_decl :
@@ -5779,6 +5844,1082 @@ event_header
 // event_header : event_plain_header
           $$ = $1;
         }
+        ;
+
+type_classifier
+        : IDL_TYPENAME
+        {
+// type_classifier : IDL_TYPENAME
+          $<ntval>$ = AST_Decl::NT_type;
+        }
+        | IDL_STRUCT
+        {
+//        IDL_STRUCT
+          $<ntval>$ = AST_Decl::NT_struct;
+        }
+        | IDL_EVENTTYPE
+        {
+//        IDL_EVENTTYPE
+          $<ntval>$ = AST_Decl::NT_eventtype;
+        }
+        | IDL_PRIMITIVE
+        {
+//        IDL_PRIMITIVE
+          $<ntval>$ = AST_Decl::NT_pre_defined;
+        }
+        | IDL_FIXED
+        {
+//        IDL_FIXED
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("error in %C line %d:\n")
+                      ACE_TEXT ("Fixed types not supported ")
+                      ACE_TEXT ("in TAO.\n"),
+                      idl_global->filename ()->get_string (),
+                      idl_global->lineno ()));
+
+          // Caught and handled later.
+          $<ntval>$ = AST_Decl::NT_fixed;
+        }
+        | IDL_SEQUENCE
+        {
+//        IDL_SEQUENCE
+          $<ntval>$ = AST_Decl::NT_sequence;
+        }
+        | IDL_INTERFACE
+        {
+//        IDL_INTERFACE
+          $<ntval>$ = AST_Decl::NT_interface;
+        }
+        | IDL_VALUETYPE
+        {
+//        IDL_VALUETYPE
+          $<ntval>$ = AST_Decl::NT_valuetype;
+        }
+        ;
+
+template_interface_def
+        : template_interface_header
+        {
+// template_interface_def : template_interface_header
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          AST_Template_Interface *i =
+            idl_global->gen ()->create_template_interface (
+              $1->name (),
+              $1->inherits (),
+              $1->n_inherits (),
+              $1->inherits_flat (),
+              $1->n_inherits_flat (),
+              $1->param_info ());
+
+          (void) s->fe_add_interface (i);
+
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
+
+          idl_global->scopes ().push (i);
+        }
+        '{'
+        {
+//      '{'
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSqSeen);
+        }
+        exports
+        {
+//      exports
+//        TODO - concatenated identifiers, if they remain in the IDL3+ spec.
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
+        }
+        '}'
+        {
+//      '}'
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceQsSeen);
+
+          /*
+           * Done with this interface - pop it off the scopes stack
+           */
+          idl_global->scopes ().pop ();
+        }
+        ;
+
+template_interface_header
+        : interface_decl at_least_one_template_param template_inheritance_spec
+        {
+// template_interface_header : interface_decl at_least_one_template_param template_inheritance_spec
+          UTL_ScopedName *n = 0;
+          ACE_NEW_RETURN (n,
+                          UTL_ScopedName ($1, 0),
+                          1);
+
+          ACE_NEW_RETURN ($$,
+                          FE_Template_InterfaceHeader (n,
+                                                       $2,
+                                                       $3),
+                          1);
+        }
+        ;
+
+at_least_one_template_param
+        : '<'
+        {
+// at_least_one_template_param : '<'
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceSqSeen);
+        }
+        template_param template_params
+        {
+//        template_param template_params
+          if ($4 == 0)
+            {
+              ACE_NEW_RETURN ($4,
+                              FE_Utils::T_PARAMLIST_INFO,
+                              1);
+            }
+
+          $4->enqueue_head (*$3);
+          delete $3;
+          $3 = 0;
+        }
+        '>'
+        {
+//        '>'
+          idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceQsSeen);
+          $<plval>$ = $4;
+        }
+        ;
+
+template_params
+        : template_params ','
+        {
+// template_params : template_params ','
+          // Maybe add a new parse state to set here.
+        }
+        template_param
+        {
+//        template_param
+          if ($1 == 0)
+            {
+              ACE_NEW_RETURN ($1,
+                              FE_Utils::T_PARAMLIST_INFO,
+                              1);
+            }
+
+          $1->enqueue_tail (*$4);
+          delete $4;
+          $4 = 0;
+
+          $$ = $1;
+        }
+        | /* EMPTY */
+        {
+//        /* EMPTY */
+          $<plval>$ = 0;
+        }
+        ;
+
+template_param
+        : type_classifier IDENTIFIER
+        {
+// template_param : type_classifier IDENTIFIER
+
+          ACE_NEW_RETURN ($$,
+                          FE_Utils::T_Param_Info,
+                          1);
+
+          $<pival>$->type_ = $1;
+          $<pival>$->name_ = $2;
+        }
+        ;
+
+template_inheritance_spec
+        : ':' at_least_one_template_ref
+        {
+// template_inheritance_spec : ':' at_least_one_template_ref
+          $<rlval>$ = $2;
+        }
+        | /* EMPTY */
+        {
+//        /* EMPTY */
+          $<rlval>$ = 0;
+        }
+        ;
+
+at_least_one_template_ref
+        : template_ref template_refs
+        {
+// at_least_one_template_ref : template_ref template_refs
+          if ($2 == 0)
+            {
+              ACE_NEW_RETURN ($2,
+                              FE_Utils::T_REFLIST_INFO,
+                              1);
+            }
+
+          $2->enqueue_head (*$1);
+          delete $1;
+          $1 = 0;
+
+          $<rlval>$ = $2;
+        }
+        ;
+
+template_refs
+        : template_refs ',' template_ref
+        {
+// template_refs : template_refs ',' template_ref
+          if ($1 == 0)
+            {
+              ACE_NEW_RETURN ($1,
+                              FE_Utils::T_REFLIST_INFO,
+                              1);
+
+              $1->enqueue_tail (*$3);
+              delete $3;
+              $3 = 0;
+
+              $<rlval>$ = $1;
+            }
+        }
+        | /* EMPTY */
+        {
+//        /* EMPTY */
+          $<rlval>$ = 0;
+        }
+        ;
+
+template_ref
+        : scoped_name '<' at_least_one_template_param_ref '>'
+        {
+// template_ref : scoped_name '<' at_least_one_template_param_ref '>'
+          ACE_NEW_RETURN ($$,
+                          FE_Utils::T_Ref_Info ($1, $3),
+                          1);
+        }
+        ;
+
+at_least_one_template_param_ref
+        : template_param_ref template_param_refs
+        {
+// at_least_one_template_param_ref : template_param_ref template_param_refs
+          ACE_NEW_RETURN ($$,
+                          UTL_StrList ($1,
+                                       $2),
+                          1);
+        }
+        ;
+
+template_param_refs
+        : template_param_refs ',' template_param_ref
+        {
+// template_param_refs : template_param_refs ',' template_param_ref
+          if ($1 == 0)
+            {
+              ACE_NEW_RETURN ($1,
+                              UTL_StrList ($3,
+                                           0),
+                              1);
+            }
+          else
+            {
+              UTL_StrList *l = 0;
+              ACE_NEW_RETURN (l,
+                              UTL_StrList ($3,
+                                           0),
+                              1);
+
+              $1->nconc (l);
+            }
+
+          $<slval>$ = $1;
+        }
+        | /* EMPTY */
+        {
+//        /* EMPTY */
+          $<slval>$ = 0;
+        }
+        ;
+
+template_param_ref
+        : IDENTIFIER
+        {
+// template_param_ref : IDENTIFIER
+          ACE_NEW_RETURN ($$,
+                          UTL_String ($1),
+                          1);
+        }
+        ;
+
+porttype_decl
+        : IDL_PORTTYPE
+        {
+// porttype_decl : IDL_PORTTYPE
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSeen);
+        }
+        IDENTIFIER
+        {
+//        IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeIDSeen);
+        }
+        opt_template_params
+        {
+//        opt_template_params
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          Identifier id ($3);
+          ACE::strdelete ($3);
+          $3 = 0;
+
+          UTL_ScopedName sn (&id,
+                             0);
+
+          AST_PortType *p =
+            idl_global->gen ()->create_porttype (&sn,
+                                                 $5);
+
+          (void) s->fe_add_porttype (p);
+
+          // Push it on the scopes stack.
+          idl_global->scopes ().push (p);
+        }
+        '{'
+        {
+//        '{'
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSqSeen);
+        }
+        at_least_one_port_export
+        {
+//        at_least_one_port_export
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeBodySeen);
+        }
+        '}'
+        {
+//        '}'
+          idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeQsSeen);
+
+          // Done with this port type - pop it off the scopes stack.
+          idl_global->scopes ().pop ();
+        }
+        ;
+
+opt_template_params
+        : at_least_one_template_param
+        {
+// opt_template_params : at_least_one_template_param
+          $$ = $1;
+        }
+        | /* EMPTY */
+        {
+//        | /* EMPTY */
+          $$ = 0;
+        }
+        ;
+
+at_least_one_port_export
+        : port_export port_exports
+        {
+// at_least_one_port_export : port_export port_exports
+        }
+        ;
+
+port_exports
+        : port_exports port_export
+        {
+// port_exports : port_exports port_export
+        }
+        | /* EMPTY */
+        {
+//        | /* EMPTY */
+        }
+        ;
+
+port_export
+        : extended_provides_decl
+        {
+// port_export : extended_provides_decl
+        }
+        ';'
+        {
+//        ';'
+        }
+        | extended_uses_decl
+        {
+//        | extended_uses_decl
+        }
+        ';'
+        {
+//        ';'
+        }
+        ;
+
+extended_provides_decl
+        : provides_decl
+        {
+// extended_provides_decl : provides_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
+        }
+        | IDL_PROVIDES template_ref IDENTIFIER
+        {
+//        | IDL_PROVIDES template_ref IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtProvidesDeclSeen);
+          bool so_far_so_good =  true;
+          AST_Template_Interface *i = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2->name_,
+                                           true);
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2->name_);
+              so_far_so_good = false;
+            }
+          else
+            {
+              i = AST_Template_Interface::narrow_from_decl (d);
+
+              if (i == 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_TMPL_IFACE_EXPECTED,
+                    d);
+                  so_far_so_good = false;
+                }
+              else if (! i->match_param_names ($2->params_))
+                {
+                  idl_global->err ()->mismatched_template_param ($2->name_);
+                  so_far_so_good = false;
+                }
+            }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              UTL_ScopedName sn (&id, 0);
+
+              AST_Provides *p =
+                idl_global->gen ()->create_provides (&sn, i);
+
+              (void) s->fe_add_provides (p);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+
+          ACE::strdelete ($3);
+          $3 = 0;
+        }
+        ;
+
+extended_uses_decl
+        : uses_decl
+        {
+// extended_uses_decl : uses_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
+        }
+        | uses_opt_multiple template_ref IDENTIFIER
+        {
+//        | uses_opt_multiple template_ref IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtUsesDeclSeen);
+          bool so_far_so_good =  true;
+          AST_Template_Interface *i = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2->name_,
+                                           true);
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2->name_);
+              so_far_so_good = false;
+            }
+          else
+            {
+              i = AST_Template_Interface::narrow_from_decl (d);
+
+              if (i == 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_TMPL_IFACE_EXPECTED,
+                    d);
+                  so_far_so_good = false;
+                }
+              else if (! i->match_param_names ($2->params_))
+                {
+                  idl_global->err ()->mismatched_template_param ($2->name_);
+                  so_far_so_good = false;
+                }
+            }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              UTL_ScopedName sn (&id, 0);
+
+              AST_Uses *u =
+                idl_global->gen ()->create_uses (&sn, i, $1);
+
+              (void) s->fe_add_uses (u);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+
+          ACE::strdelete ($3);
+          $3 = 0;
+        }
+        ;
+
+extended_port_decl
+        : template_port_decl
+        | non_template_port_decl
+        ;
+
+template_port_decl
+        : IDL_PORT template_inst IDENTIFIER
+        {
+// extended_port_decl : IDL_PORT template_inst IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2->name_, true);
+          AST_PortType *pt = 0;
+          AST_PortType::T_ARGLIST *args = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2->name_);
+              so_far_so_good = false;
+            }
+           else
+             {
+               pt = AST_PortType::narrow_from_decl (d);
+
+               if (pt == 0)
+                 {
+                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                               d);
+                   so_far_so_good = false;
+                 }
+               else
+                 {
+                   args =
+                     pt->match_arg_names ($2->args_);
+
+                   if (args == 0)
+                     {
+                       so_far_so_good = false;
+                     }
+                 }
+             }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Extended_Port *ep =
+                idl_global->gen ()->create_extended_port (&sn,
+                                                          pt,
+                                                          args);
+
+              (void) s->fe_add_extended_port (ep);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+        }
+        | IDL_MIRRORPORT template_inst IDENTIFIER
+        {
+//        | IDL_MIRRORPORT template_inst IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2->name_, true);
+          AST_PortType *pt = 0;
+          AST_PortType::T_ARGLIST *args = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2->name_);
+              so_far_so_good = false;
+            }
+           else
+             {
+               pt = AST_PortType::narrow_from_decl (d);
+
+               if (pt == 0)
+                 {
+                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                               d);
+                   so_far_so_good = false;
+                 }
+               else
+                 {
+                   args =
+                     pt->match_arg_names ($2->args_);
+
+                   if (args == 0)
+                     {
+                       so_far_so_good = false;
+                     }
+                 }
+             }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Mirror_Port *mp =
+                idl_global->gen ()->create_mirror_port (&sn,
+                                                        pt,
+                                                        args);
+
+              (void) s->fe_add_mirror_port (mp);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+        }
+        ;
+
+non_template_port_decl
+        : IDL_PORT scoped_name IDENTIFIER
+        {
+// non_template_port_decl : IDL_PORT scoped_name IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2, true);
+          AST_PortType *pt = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2);
+              so_far_so_good = false;
+            }
+          else
+            {
+              pt = AST_PortType::narrow_from_decl (d);
+
+              if (pt == 0)
+                {
+                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                              d);
+                  so_far_so_good = false;
+                }
+              else
+                {
+                  FE_Utils::T_PARAMLIST_INFO *p_list =
+                    pt->template_params ();
+
+                  if (p_list != 0 && p_list->size () != 0)
+                    {
+                      idl_global->err ()->error0 (
+                        UTL_Error::EIDL_T_ARG_LENGTH);
+                      so_far_so_good = false;  
+                    }
+                }
+            }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Extended_Port *ep =
+                idl_global->gen ()->create_extended_port (
+                  &sn,
+                  pt,
+                  0);
+
+              (void) s->fe_add_extended_port (ep);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+        }
+        | IDL_MIRRORPORT scoped_name IDENTIFIER
+        {
+//        | IDL_MIRRORPORT scoped_name IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($2, true);
+          AST_PortType *pt = 0;
+          bool so_far_so_good = true;
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($2);
+              so_far_so_good = false;
+            }
+           else
+             {
+               pt = AST_PortType::narrow_from_decl (d);
+
+               if (pt == 0)
+                 {
+                   idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                               d);
+                   so_far_so_good = false;
+                 }
+               else
+                 {
+                   FE_Utils::T_PARAMLIST_INFO *p_list =
+                     pt->template_params ();
+
+                   if (p_list != 0 && p_list->size () != 0)
+                     {
+                       idl_global->err ()->error0 (
+                         UTL_Error::EIDL_T_ARG_LENGTH);
+                       so_far_so_good = false;  
+                     }
+                 }
+             }
+
+          if (so_far_so_good)
+            {
+              Identifier id ($3);
+              ACE::strdelete ($3);
+              $3 = 0;
+
+              UTL_ScopedName sn (&id,
+                                 0);
+
+              AST_Mirror_Port *mp =
+                idl_global->gen ()->create_mirror_port (
+                  &sn,
+                  pt,
+                  0);
+
+              (void) s->fe_add_mirror_port (mp);
+            }
+
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
+        }
+        ;
+
+template_inst
+        : scoped_name '<' at_least_one_scoped_name '>'
+        {
+// template_inst : scoped_name '<' at_least_one_scoped_name '>'
+          ACE_NEW_RETURN ($<tival>$,
+                          FE_Utils::T_Inst_Info ($1,
+                                                 $3),
+                          1);
+        }
+        ;
+
+connector_decl
+        : connector_header connector_body
+        ;
+
+connector_header
+        : IDL_CONNECTOR
+        {
+// connector_header : IDL_CONNECTOR 
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSeen);
+        }
+        IDENTIFIER
+        {
+//        IDENTIFIER
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorIDSeen);
+        }
+          opt_template_params
+        {
+//        opt_template_params
+        }
+        component_inheritance_spec
+        {
+//        component_inheritance_spec
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Connector *parent = 0;
+          bool so_far_so_good = true;
+
+          Identifier id ($3);
+          ACE::strdelete ($3);
+          $3 = 0;
+
+          UTL_ScopedName sn (&id, 0);
+
+          if ($7 != 0)
+            {
+              AST_Decl *d = s->lookup_by_name ($7, true);
+
+              if (d == 0)
+                {
+                  idl_global->err ()->lookup_error ($7);
+                  so_far_so_good = false;
+                }
+
+              parent =
+                AST_Connector::narrow_from_decl (d);
+
+              if (parent == 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_CONNECTOR_EXPECTED,
+                    d);
+
+                  so_far_so_good = false;
+                }
+
+              $7->destroy ();
+              delete $7;
+              $7 = 0;
+            }
+
+          if (so_far_so_good)
+            {
+              AST_Connector *c =
+                idl_global->gen ()->create_connector (&sn,
+                                                      parent,
+                                                      $5);
+
+              (void) s->fe_add_connector (c);
+
+              // Push it on the scopes stack.
+              idl_global->scopes ().push (c);
+           }
+        }
+        ;
+
+connector_body
+        : '{'
+        {
+// connector_body " '{'
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSqSeen);
+        }
+        at_least_one_connector_export
+        {
+//        at_least_one_connector_export
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorBodySeen);
+        }
+        '}'
+        {
+//        '}
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorQsSeen);
+
+          // Done with this connector - pop it off the scope stack.
+          idl_global->scopes ().pop ();
+        }
+        ;
+
+at_least_one_connector_export
+        : connector_export connector_exports
+        ;
+
+connector_exports
+        : connector_exports connector_export
+        | /* EMPTY */
+        ;
+
+connector_export
+        : provides_decl
+        {
+// connector_export : provides_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | uses_decl
+        {
+//        | uses_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | attribute
+        {
+//      | attribute
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | non_template_port_decl
+        {
+//      | non_template_port_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | template_extended_port_decl
+        {
+//      | template_extended_port_decl
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
+        }
+          ';'
+        {
+//        ';'
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+/*
+If this is also legal, there will be conflicts to be resolved
+        | extended_port_decl ';'
+*/
+        ;
+
+template_extended_port_decl
+        : IDL_PORT template_ref_decl
+        {
+// template_extended_port_decl : IDL_PORT template_ref_decl
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          if ($2 != 0)
+            {
+              Identifier id ($2->name_.c_str ());
+              UTL_ScopedName sn (&id, 0);
+
+              AST_Tmpl_Port *pt =
+                idl_global->gen ()->create_tmpl_port (
+                  &sn,
+                  $2->type_);
+
+              (void) s->fe_add_tmpl_port (pt);
+
+              delete $2;
+              $2 = 0;
+            }
+        }
+        | IDL_MIRRORPORT template_ref_decl
+        {
+//      | IDL_MIRRORPORT template_ref_decl
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          if ($2 != 0)
+            {
+              Identifier id ($2->name_.c_str ());
+              UTL_ScopedName sn (&id, 0);
+
+              AST_Tmpl_Mirror_Port *pt =
+                idl_global->gen ()->create_tmpl_mirror_port (
+                  &sn,
+                  $2->type_);
+
+              (void) s->fe_add_tmpl_mirror_port (pt);
+
+              delete $2;
+              $2 = 0;
+            }
+        }
+        ;
+
+template_ref_decl
+        : template_ref IDENTIFIER
+        {
+// template_ref_decl : template_ref IDENTIFIER
+          $$ = 0;
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Decl *d = s->lookup_by_name ($1->name_,
+                                           true);
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($1->name_);
+            }
+          else
+            {
+              AST_PortType *pt = AST_PortType::narrow_from_decl (d);
+
+              if (pt == 0)
+                {
+                  idl_global->err ()->error1 (UTL_Error::EIDL_PORTTYPE_EXPECTED,
+                                              d);
+                }
+              else
+                {
+                  ACE_NEW_RETURN ($$,
+                                  FE_Utils::T_Port_Info ($2,
+                                                         pt),
+                                  1);
+                }
+            }
+
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
+
+          ACE::strdelete ($2);
+          $2 = 0;
+        }
+        ;
+
+connector_inst_spec
+        : template_inst
+        {
+// connector_inst_spec : template_inst
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          $$ = 0;
+
+          AST_Decl *d =
+            s->lookup_by_name ($1->name_, true);  
+
+          if (d == 0)
+            {
+              idl_global->err ()->lookup_error ($1->name_);
+            }
+          else
+            {
+              AST_Connector *c = AST_Connector::narrow_from_decl (d);
+
+              if (c == 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_CONNECTOR_EXPECTED,
+                    d);
+                }
+              else
+                {
+                  AST_Template_Common::T_ARGLIST *args =
+                    c->match_arg_names ($1->args_);
+
+                  if (args != 0)
+                    {
+                      Identifier id ("connector");
+                      UTL_ScopedName sn (&id, 0);
+
+                      $$ =
+                        idl_global->gen ()->create_instantiated_connector (
+                          &sn,
+                          c,
+                          args);
+                    }
+                }
+            }
+
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
+        } 
         ;
 
 %%
