@@ -11,6 +11,9 @@ use PerlACE::TestTarget;
 PerlACE::add_lib_path ('../TP_Foo_A/.');
 PerlACE::add_lib_path ('../TP_Common/.');
 
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
@@ -20,9 +23,6 @@ $client->DeleteFile($iorbase);
 $status = 0;
 
 $num_clients=40;
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 $SV = $server->CreateProcess ("server_main", "-o $server_iorfile -n $num_clients");
 
@@ -42,14 +42,14 @@ if (PerlACE::waitforfile_timed ($iorbase,
 
 for ($i = 0; $i < $num_clients; $i++) {
 
-    @CLS[$i] = $client->CreateProcess ("client_main", "-i file://$client_iorfile");
+    $CLS[$i] = $client->CreateProcess ("client_main", "-i file://$client_iorfile");
 
-    @CLS[$i]->Spawn ();
+    $CLS[$i]->Spawn ();
 }
 
 for ($i = 0; $i < $num_clients; $i++) {
 
-    $client = @CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
+    $client = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
 
     if ($client != 0) {
         print STDERR "ERROR: client $i returned $client\n";
