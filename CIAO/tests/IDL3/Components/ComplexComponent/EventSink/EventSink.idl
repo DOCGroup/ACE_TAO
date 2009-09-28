@@ -18,12 +18,12 @@ module EventSink
   
   component Foo
     {
-      consumes foo_event foo;
+      consumes foo_event c_foo;
     };
   
   component Bar : Foo
     {
-      consumes bar_event bar;
+      consumes bar_event c_bar;
     };
   
 };

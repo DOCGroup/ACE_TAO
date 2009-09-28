@@ -20,17 +20,17 @@ module Facets
   
   component Foo
     {
-      provides foo_interface foo;
+      provides foo_interface p_foo;
     };
   
   component Bar : Foo
     {
-      provides bar_interface bar;
+      provides bar_interface p_bar;
     };
 
   component FooFoo : Foo
     {
-      provides foo_interface foofoo;
+      provides foo_interface p_foofoo;
     };
 
   component FooBar
