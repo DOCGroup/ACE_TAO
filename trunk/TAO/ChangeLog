@@ -1,3 +1,8 @@
+Mon Sep 28 11:31:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/include/fe_template_header_common.h:
+          Made destructor virtual
+
 Mon Sep 28 11:18:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
