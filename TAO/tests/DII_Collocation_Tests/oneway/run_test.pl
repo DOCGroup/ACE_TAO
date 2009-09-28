@@ -16,7 +16,7 @@ my $iorfile = $server->LocalFile ($iorbase);
 
 $server->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server");
+$SV = $server->CreateProcess ("Collocated_Test");
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile");
