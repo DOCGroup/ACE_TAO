@@ -1,3 +1,1562 @@
+Mon Sep 28 05:57:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Integrated idl3plus branch of Jeff with IDL3+ changes
+
+        Thu Sep 24 17:32:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_exs.h:
+
+          Fixed bug related to unused args in generated empty executor
+          implementation methods, and removed 2 unused operations
+          from the visitor.
+
+        Wed Sep 23 21:48:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_iface_inst.cpp:
+
+          Removed unused args.
+
+        * TAO_IDL/be/be_global.cpp:
+
+          Replaced '=' with '==' in -Glfa option switch case.
+
+        Wed Sep 23 19:44:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_iface_inst.h:
+        * TAO_IDL/be/be_visitor_iface_inst.cpp:
+
+          New files, overlooked in previous checkin.
+
+        Mon Sep 21 19:38:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_provides.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixes to various bugs uncovered while running CIAO/tests.
+
+        Fri Sep  4 17:12:34 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+
+          - New option '-Glfa', explained below
+
+          - New behavior for generating executor IDL for facets.
+            Default behavior is now to generate the local interface
+            only if the facet interface is in the main file. With
+            the option above, the local interface is generated
+            for all facets.
+
+        Thu Sep  3 18:01:14 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Fixed bug in component attribute visitation that left the
+          visitor state incorrect for further processing of the
+          component's scope.
+
+        Thu Sep  3 16:28:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Updated visitor to use component port nodes instead of the
+          old port lists.
+
+        Wed Sep  2 19:24:20 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_obv_header.cpp:
+
+          Fixed double deletion of valuetype supports list.
+
+        Wed Sep  2 19:13:18 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Changes to non-terminal 'member' to fix bug uncovered in CIAO
+          IDL3_to_IDL2 test.
+
+        Fri Aug 28 20:30:52 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_argument.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_template_common.h:
+
+          Added semantic action for an operation parameter type
+          that is a reference to one of its containing template
+          interface's template parameters.
+
+        Fri Aug 28 16:03:30 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_decl.h:
+
+          Reverted changes to these files in the entry below.
+
+        Thu Aug 27 16:23:53 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added support for a typedef inside a template interface where the
+          identifier has a template parameter prefixed to it.
+
+        Wed Aug 26 18:25:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Updated visitors to include the new visit methods,
+          and commented out the existing methods that use
+          port descriptions, which have been eliminated.
+
+        Wed Aug 26 17:33:01 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_instantiated_interface.h:
+        * TAO_IDL/be/be_instantiated_interface.cpp:
+        * TAO_IDL/ast/ast_instantiated_interface.cpp:
+        * TAO_IDL/be_include/be_instantiated_interface.h:
+
+          Removed these files, their function will be
+          handled in the backend.
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_generator.h:
+
+          Removed references to removed nodes from visitors
+          and factories.
+
+        Fri Aug 21 16:47:57 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_instantiated_connector.cpp:
+        * TAO_IDL/be_include/be_instantiated_connector.h:
+
+          Added be_type to the inheritance so typedef narrowing
+          works properly.
+
+        Fri Aug 21 16:29:35 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added file include for instantiated connector, regenerated and
+          recompiled.
+
+        Fri Aug 21 16:16:32 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Regenerated and recompiled.
+
+        Fri Aug 21 16:07:29 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+
+          Added code to set the member of the big parsing union with
+          the pointer to an instantiated connector, once it's created.
+
+        Fri Aug 21 13:51:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_instantiated_connector.cpp:
+        * TAO_IDL/ast/ast_instantiated_interface.cpp:
+
+          Commented out unused variables in partially implemented
+          dump() methods.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Regenerated and recompiled.
+
+        Fri Aug 21 13:27:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_instantiated_interface.cpp:
+        * TAO_IDL/include/ast_instantiated_connector.h:
+        * TAO_IDL/be/be_instantiated_connector.cpp:
+        * TAO_IDL/be_include/be_instantiated_connector.h:
+
+          New files, defining a node type for the template
+          instantiation of a connector type, which is part
+          of a typedef construct.
+
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_instantiated_connector.cpp:
+        * TAO_IDL/ast/ast_mirror_port.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be/be_connector.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_instantiated_interface.cpp:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_instantiated_interface.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/include/ast_extended_port.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_instantiated_interface.h:
+        * TAO_IDL/include/ast_mirror_port.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Changes associated with the new node types above and
+          with the semantic action that creates an instantiated
+          connector.
+
+        Thu Aug 20 17:27:16 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added missing semicolon, regenerated and recompiled.
+
+        Thu Aug 20 17:09:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Added methods to add AST_Tmpl_Port and AST_Tmpl_Mirror_Port
+          nodes to a connector's scope. Also added semantic actions
+          to create these nodes, check their validity, and call the
+          scope adding methods.
+
+        Wed Aug 19 20:54:41 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_tmpl_mirror_port.cpp:
+        * TAO_IDL/ast/ast_tmpl_port.cpp:
+        * TAO_IDL/include/ast_tmpl_port.h:
+        * TAO_IDL/include/ast_tmpl_mirror_port.h:
+        * TAO_IDL/be/be_tmpl_mirror_port.cpp:
+        * TAO_IDL/be/be_tmpl_port.cpp:
+        * TAO_IDL/be_include/be_tmpl_port.h:
+        * TAO_IDL/be_include/be_tmpl_mirror_port.h:
+
+          New files, containing node types that describe
+          a parameterized port or mirrorport found in the
+          body of a parameterized connector.
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Intergration of the new node types above into
+          the IDL compiler.
+
+        Wed Aug 19 16:38:17 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+
+          Fixed some comments.
+
+        Tue Jul 28 18:46:17 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/narrow/narrow.cpp:
+
+          Added missing cases for AST_Connector.
+
+        Tue Jul 28 18:22:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added semantic actions and inheritance checking for creation
+          of connector.
+
+        Tue Jul 28 16:46:35 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_connector.h:
+        * TAO_IDL/be/be_connector.cpp:
+
+          New files, defining the backend version of connectors.
+
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Changes related to the new backend type.
+
+        Tue Jul 28 15:29:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed parsing mistake that did not allow non-template
+          extended ports in a connector.
+
+        Tue Jul 28 14:34:46 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Production rules for connectors, and corresponding new
+          parse state and associated error message.
+
+        Mon Jul 27 19:20:07 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed typos in idl.yy and regenerated.
+
+        Mon Jul 27 18:57:11 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/ast/ast_connector.cp:
+
+          New files, defining a connector node class.
+
+        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_mirror_port.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be/be_extended_port.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_mirror_port.cpp:
+        * TAO_IDL/be_include/be_extended_port.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_mirror_port.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_extended_port.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_mirror_port.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Changed extended port and mirror port classes to take
+          an actual list of AST nodes, instead of a list of names.
+          Lookup and error checking on the list of names is now
+          done in the parser.
+
+        Mon Jul 27 14:46:05 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_extended_port.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Added production rules and semantic actions for extended
+            ports and mirror ports, as they appear in a component
+            (the connector versions, since connectors may be
+            parameterized, will be slightly different).
+
+          - Removed spaces in blank lines in several files.
+
+        Fri Jul 24 19:08:55 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_mirror_port.cpp:
+        * TAO_IDL/include/ast_mirror_port.h:
+        * TAO_IDL/be/be_mirror_port.cpp:
+        * TAO_IDL/be_include/be_mirror_port.h:
+
+          New files, defining a mirror port, which
+          is found in a component, and is an instantiation
+          of a porttype declaration, similar to an
+          extended port, but with all the 'uses' and
+          'provides' keywords interchanged.
+
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_visitor.h:
+
+          Other changes corresponding to the new mirror
+          port classes.
+
+        Fri Jul 24 17:49:30 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_extended_port.cpp:
+        * TAO_IDL/include/ast_extended_port.h:
+        * TAO_IDL/be/be_extended_port.cpp:
+        * TAO_IDL/be_include/be_extended_port.h:
+
+          New files, defining an extended port, which
+          is found in a component, and is an instantiation
+          of a porttype declaration.
+
+        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_visitor.h:
+
+          Other changes corresponding to the new extended
+          port classes.
+
+        Fri Jul 24 15:38:24 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added production rules and parse state for extended port.
+
+        Fri Jul 24 13:56:43 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/include/ast_template_interface.h:
+
+          Changed template param list member to be a pointer
+          so it can just be passed in from the parser, and then
+          can be 0 if there are no template parameters (for
+          porttype and port declarations, they are optional).
+
+        Thu Jul 23 18:33:54 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_template_interface.h:
+
+          Removed protected member duplicated in base class.
+
+        Thu Jul 23 18:12:16 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Added semantic actions for extended port creation.
+
+        Thu Jul 23 13:14:51 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_instantiated_interface_header.cpp:
+        * TAO_IDL/include/fe_instantiated_interface_header.h:
+
+          New files, defining a class to collect info in the parser
+          about interfaces instantiated in an extended port declatation
+          from a previously defined template interface.
+
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          Fixed typo in comment.
+
+        Tue Jul 21 19:47:09 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_instantiated_interface.cpp:
+        * TAO_IDL/include/ast_instantiated_interface.h:
+        * TAO_IDL/be/be_instantiated_interface.cpp:
+        * TAO_IDL/be_include/be_instantiated_interface.h:
+
+          New files, defining frontend and backend versions of
+          an interface that is instantiated in an extended
+          provides or uses declaration from a previously defined
+          template interface.
+
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/utl_namelist.h:
+
+          Changes corresponding to the new AST node type above.
+
+        Tue Jul 21 17:51:34 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Refactored semantic action code creating simple ports,
+          and fixed an incorrect comment.
+
+        Tue Jul 21 16:57:33 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/narrow/narrow.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Added missing narrowing code for porttypes.
+          - Removed unused out port list stuff in AST_Component.
+          - Updated port destroy() methods to include be_field.
+          - Cosmetic changes.
+
+        Tue Jul 21 16:09:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_provides.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be_include/be_consumes.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_uses.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          More changes resulting from the new port AST nodes,
+          including changes to code generation.
+
+        Mon Jul 20 14:33:57 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Changed semantic actions for component ports to use the new
+          AST_* port nodes.
+
+        Mon Jul 20 13:49:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/utl_scope.h:
+
+          Added fe_add_*() methods for ports to AST_Component and
+          AST_PortType, and to the common base class UTL_Scope.
+
+        Fri Jul 17 19:49:03 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be_include/be_consumes.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_uses.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_uses.h:
+
+          - Changed BE provides, uses, publishes, emits and
+            consumes node constructor signatures.
+
+          - Added FE and BE factory functions for new port nodes.
+
+        Fri Jul 17 19:03:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_provides.h:
+        * TAO_IDL/include/ast_uses.h:
+        * TAO_IDL/include/ast_consumes.h:
+        * TAO_IDL/include/ast_publishes.h:
+        * TAO_IDL/include/ast_emits.h:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/ast/ast_provides.cpp:
+        * TAO_IDL/ast/ast_consumes.cpp:
+        * TAO_IDL/ast/ast_publishes.cpp:
+        * TAO_IDL/ast/ast_emits.cpp:
+        * TAO_IDL/ast/ast_uses.cpp:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_uses.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_consumes.h:
+
+          New files, making component and porttype
+          port declarations full-fledged nodes in
+          the AST. Formerly they were stored as
+          a list of info structs.
+
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/be_include/be_visitor.h:
+
+          Changes corresponding to the new nodes
+          above, and cosmetic changes.
+
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+
+          Added new visit_* methods corresponding to the new
+          nodes.
+
+        Fri Jul 17 15:07:49 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Cleanup of semantic action code for facets.
+
+        * TAO_IDL/include/ast_component.h:
+
+          Removed whitespace spaces.
+
+        Fri Jul 17 13:37:43 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Fixed a double deletion bug in AST memory management.
+
+        * TAO_IDL/fe/fe_porttype_header.cpp:
+        * TAO_IDL/include/fe_porttype_header.h:
+
+          Removed these files.
+
+        Thu Jul 16 22:03:56 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/fe_porttype_header.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Added semantic actions for creating a porttype node in
+          the AST.
+
+        Wed Jul 15 21:41:00 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_porttype.cpp
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be_include/be_porttype.h:
+        * TAO_IDL/fe/fe_porttype_header.cpp:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/fe_porttype_header.h:
+        * TAO_IDL/include/fe_template_header_common.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/include/fe_utils.h:
+
+          Modified and refactored the IDL3+ info datatypes
+          and FE header classes.
+
+        Wed Jul 15 14:09:13 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Changed rules for extended provides and uses declarations to
+          parse overlooked template brackets.
+
+        Wed Jul 15 13:23:25 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added overlooked semicolon rule after porttype declaration.
+
+        Wed Jul 15 01:06:51 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          Fixed g++ build & runtime errors.
+
+        Wed Jul 15 00:08:05 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_template_header_common.h:
+        * TAO_IDL/fe/fe_template_header_common.cpp:
+        * TAO_IDL/include/ast_template_common.h:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/include/fe_porttype_header.h:
+        * TAO_IDL/fe/fe_porttype_header.cpp:
+
+          New files, defining:
+          - a porttype header class, to gather information about a porttype
+            declaration from the parser
+          - a template header base class, containing members and methods
+            common to classes FE_PorttypeHeader and FE_Template_InterfaceHeader
+          - a template ast base class containing members and methods common
+            to classes AST_PortType and AST_Template_Interface.
+
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          Changes to make use of the new base classes above.
+
+        * TAO_IDL/include/fe_utils.h:
+
+          Removed whitespace.
+
+        Tue Jul 14 20:36:44 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/fe_utils.h:
+
+          - Added data types to FE_Utils for storage of descriptions
+            of porttype contents.
+
+          - Changed all member names in FE_Utils data types to
+            have a trailing underscore.
+
+        Tue Jul 14 18:26:09 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Restored changed to template interface production rules with
+          the previous bug fixed.
+
+        Tue Jul 14 15:30:20 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Reverted some changes to template interface production rules
+          to eliminate runtime errors.
+
+        Thu Jul  9 21:13:38 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_porttype.cpp:
+
+          Fixed unused arg warning.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_err.cpp:
+
+          - Added production rules for porttype declarations.
+          - Added parse states for template interfaces and porttypes.
+          - Added error message and set statements corresponding to new parse states.
+
+        Wed Jul  8 22:37:55 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/be/be_porttype.cpp:
+        * TAO_IDL/be_include/be_porttype.h:
+
+          New files, containing frontend and backend definitions
+          of classes corresponding to the IDL3+ keyword 'porttype'.
+
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/be_include/be_visitor.h:
+
+          Added traversal methods for the new port type classes,
+          and other changes relating to the new AST node types.
+
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+
+          Added the new traversal methods to make this visitor base
+          class concrete.
+
+        Wed Jul  8 20:22:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+
+          - Added check for duplicate template parameter ids in
+            a template interface.
+
+          - Added check for mismatched template parameters (type
+            and id) between parent and child template interface.
+
+          - Added appropriate error messages for the above errors.
+
+          - Added narrowing, visiting and dumping methods to
+            AST_Template_Interface.
+
+          - Refactored code in FE_InterfaceHeader to get more
+            reuse.
+
+        Tue Jul  7 21:38:11 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added semantic action that creates a template interface in the AST.
+
+        Tue Jul  7 21:12:52 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+
+          - Changed FE_Template_InterfaceHeader to inherit from
+            FE_InterfaceHeader and reuse much of its code.
+
+          - Added factory methods for creating template interfaces
+            in the AST.
+
+        Tue Jul  7 18:56:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/include/fe_utils.h:
+
+          New files, defining datatypes used to hold information about a
+          template interface's template parameters and inheritance.
+
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          - Moved template interface info datatypes from class AST_Interface
+            to struct FE_Utils.
+
+          - Cosmetic changes to ast_component.h.
+
+          - Added semantic actions for template interface template parameters
+            and inheritance.
+
+        Fri Jul  3 23:40:25 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Added missing include.
+
+        Fri Jul  3 23:26:45 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_template_interface.h:
+        * TAO_IDL/include/idl_global.h:
+
+          - Moved template parameter info type/name pair data
+            structures to class AST_Interface.
+
+          - Added semantic action to capture a single template
+            parameter from an IDL3+ template interface.
+
+        Fri Jul  3 21:00:23 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_home_header.h:
+        * TAO_IDL/include/fe_event_header.h:
+        * TAO_IDL/include/fe_obv_header.h:
+        * TAO_IDL/include/fe_component_header.h:
+        * TAO_IDL/fe/fe_event_header.cpp:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+        * TAO_IDL/fe/fe_home_header.cpp:
+        * TAO_IDL/fe/fe_component_header.cpp:
+
+          New files, containing individual classes split
+          off from fe_interface_header.{h,cpp}. Also
+          added cleanup of pointer arrays allocated
+          while processing inherited and supported types.
+
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        * TAO_IDL/be_include/be_template_interface.h:
+        * TAO_IDL/include/ast_template_interface.h:
+
+          New files, defining front- and back-end nodes
+          for the template interface IDL3+ construct.
+
+        * TAO_IDL/include/idl_global.h:
+
+          Defined container types for single and multiple
+          type/name pairs used to desccribe the template
+          parameters of an IDL3+ template interface.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/fe_template_interface_header.h:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/include/fe_interface_header.h:
+
+          Minor/cosmetic changes.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Added #includes of the new fe_*_header.h files.
+
+        Fri Jul  3 15:18:29 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+
+        Thu Jun 25 19:45:13 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+
+          Fixed signed/unsigned mismatch warnings.
+
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          Fixed cut/paste errors.
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added production rules for template interface inheritance,
+          and fixed typo in new token declarations.
+
+        Thu Jun 25 16:33:34 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_template_interface_header.cpp:
+        * TAO_IDL/include/fe_template_interface_header.h:
+
+          New files, to be filled in later and used in the parser to
+          gather information about template interface declarations.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          New production rules for template interfaces.
+
+        * TAO_IDL/include/ast_decl.h:
+
+          Added new values to the NodeType enum.
+
+        Tue Jun 23 20:27:46 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpoints.pidl:
+        * orbsvcs/orbsvcs/SSLIOP.idl:
+        * orbsvcs/orbsvcs/HTIOP.idl:
+        * orbsvcs/orbsvcs/CSIIOP.idl:
+        * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
+        * tao/EndpointPolicy/IIOPEndpointValue.pidl:
+        * tao/Strategies/sciop_endpoints.pidl:
+
+          More escapes added to 'port' identifiers.
+
+        Tue Jun 23 20:12:06 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Removed switch statements with only a default case, and used
+          TAO_YYUSE, the parser-specific unused arg macro, on an unused
+          parameter in tao_yy_symbol_value_print().
+
+        Tue Jun 23 19:47:58 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/IIOP_Endpoints.pidl:
+        * tao/IIOP.pidl:
+
+          Added escapes to 'port' identifiers, since it is now a
+          keyword.
+
+        Tue Jun 23 19:03:19 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added new IDL3+ keywords: typename, primitive, port, mirrorport,
+          porttype, and connector. The $ concatenation symbol is also
+          now recognized as a token.
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Updated error messages stating the earliest required versions of
+          Bison and Flex.
+
+        Tue Jun 23 17:20:15 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+
+          Updated comment.
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Regenerated y.tab.cpp and lex.yy.cpp without changing the IDL grammar,
+          but using updated versions of Bison (2.3) and Flex (2.5.35), and updated
+          the corresponding diff files.
+
+        Mon Jun 22 09:22:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Generate closign )
+
+        Fri Jun 19 19:33:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/be_include/be_sunsoft.h:
+        * TAO_IDL/be_include/be_stream_factory.h:
+        * TAO_IDL/be/be_stream_factory.cpp:
+
+          Removed files, no longer needed.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_tmplinst.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_global.h:
+
+          - Made abstract class TAO_OutStream concrete
+            by moving 3 method implementations from
+            derived class TAO_SunSoft_OutStream and
+            eliminating the derived class.
+
+          - Added code generation of export header files.
+
+        Fri Jun 19 12:41:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+
+          Added the new visitor context states to switch
+          statements in visit_typedef() and visit_operation().
+
+        Thu Jun 18 18:44:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_identifier_helper.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/rettype.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_identifier_helper.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Fixed warnings in compilation of new visitors.
+
+          - Modified flat name computation, and initialization of
+            port name in component port descriptors, to leave off
+            the '_cxx_' prefix (indicating a clash with a C++
+            keyword) if it exists. Flat name and port name are
+            always used in concatenation with other strings, and
+            so the prefix isn't necessary, and is confusing to
+            read.
+
+          - Fixed CIAO servant, executor IDL and executor impl
+            code generation to be consistent when the IDL file
+            contains C++ keywords and escaped IDL keywords. There
+            is also a new test in CIAO_ROOT/tests/IDL_Test to
+            cover these use cases.
+
+          - Fixed bug in code generation for home servant finder
+            operations. These aren't implemented yet in CIAO, so
+            the arguments, if any, must be generated as commented
+            out, to avoid 'unused arg' warnings. Thanks to
+            Johnny Willemsen <jwillemsen@remedy.nl> for reporting
+            the bug.
+
+        Tue Jun 16 20:40:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+
+          Fixed bug in code generation of home operation body,
+          where the call is delegated to the executor.
+
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+
+          Fixed code generation bug where the facet servant
+          class and the facet executor interface were generated
+          for each use of a given interface in a facet. This
+          class and interface must be generated exactly once.
+
+        Tue Jun 16 16:46:15 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+          Fixed a couple of code generation bugs related to
+          scoping adjustments. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for reporting the problems.
+
+        Tue Jun 16 15:40:28 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib:
+        * TAO_IDL/contrib/mcpp/Makefile.am:
+        * TAO_IDL/contrib/mcpp/cc1.cpp:
+        * TAO_IDL/contrib/mcpp/configed.H:
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/eval.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/lib.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/main_libmcpp.c:
+        * TAO_IDL/contrib/mcpp/mbchar.cpp:
+        * TAO_IDL/contrib/mcpp/mcpp.mpc:
+        * TAO_IDL/contrib/mcpp/mcpp_lib.h:
+        * TAO_IDL/contrib/mcpp/mcpp_out.h:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.H:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+        * TAO_IDL/contrib/mcpp/testmain.c:
+
+          Merged in from trunk.
+
+        Tue Jun 16 13:09:05 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+
+          Added a method that restores the state of the home's
+          scope. The CCM pre_proc visitor makes some invasive
+          changes, and restoration was never done since at that
+          time, the home node was ignored from that point and
+          all code generation came from the added implied IDL
+          nodes. Now that we are doing addition code generation,
+          this scope state must be restored.
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+
+          Added the new context states related to CIAO code
+          generation to some switch statements in this visitor,
+          to avoid getting "bad context" errors.
+
+        Fri Jun 12 20:39:24 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+
+          Implemented overlooked generation of home servant factory
+          function.
+
+        Thu Jun 11 19:35:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+          Fixed errors in CIAO servant code generation.
+
+        Thu Jun 11 17:53:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_null_return_emitter.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be_include/be_null_return_emitter.h:
+
+          Fixed mistakes in executor implementation code generation.
+
+        Thu Jun 11 000:36:59 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exs.cpp:
+        * TAO_IDL/be/be_null_return_emitter.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/be_include/be_visitor_null_return_value.h:
+        * TAO_IDL/be_include/be_visitor_home/home_exs.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exs.h:
+        * TAO_IDL/be_include/be_null_return_emitter.h:
+
+          New files containing visitors in support of code generation
+          for CIAO executor implementation source files.
+
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exh.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be_include/be_visitor_argument/arglist.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+        * TAO_IDL/be_include/be_visitor_operation/arglist.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_util.h:
+        * TAO_IDL/be_include/be_visitor_any_extracted_type_decl.h:
+        * TAO_IDL/be_include/be_visitor_home.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Existing files modified in support of code generation for
+          CIAO executor implementation source files.
+
+        Tue Jun  9 20:55:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_home/home_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+
+          New files, visitors that generate the CIAO executor
+          implementation header file.
+
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_visitor_home.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Files modified to support the generation of the CIAO
+          executor implementation header file.
+
+        Fri Jun  5 16:38:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_identifier_helper.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be_include/be_visitor_any_extracted_type_decl.h:
+        * TAO_IDL/be_include/be_identifier_helper.h:
+        * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svs.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svh.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svs.h:
+        * TAO_IDL/be_include/be_visitor_attribute/set_from_extracted.h:
+        * TAO_IDL/be_include/be_visitor_attribute/component_init.h:
+
+          New files, visitors and utility classes to add support for
+          generation of CIAO servant code and executor IDL.
+
+        * TAO_IDL/TAO_IDL_ACE.mwc:
+
+          New file, for convenience when compiling the IDL compiler
+          after ACE has been updated.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * ast/ast_operation.cpp:
+        * ast/ast_interface.cpp:
+        * ast/ast_component.cpp:
+        * ast/ast_concrete_type.cpp:
+        * ast/ast_string.cpp:
+        * be_include/be_interface.h:
+        * be_include/be_visitor_component/component_ch.h:
+        * be_include/be_helper.h:
+        * be_include/be_visitor_attribute/attribute.h:
+        * be_include/be_visitor_root.h:
+        * be_include/be_codegen.h:
+        * be_include/be_visitor_attribute.h:
+        * be_include/be_global.h:
+        * be_include/be_visitor_home.h:
+        * be_include/be_visitor_operation.h:
+        * be_include/be_visitor_component.h:
+        * driver/drv_args.cpp:
+        * util/utl_global.cpp:
+
+          Changes to existing files in support of the new CIAO servant
+
 Sat Sep 26 08:34:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/corba-boolean.perl
