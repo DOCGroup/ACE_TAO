@@ -12,7 +12,7 @@ class TAO_IDL_FE_Export FE_TemplateHeader_Common
 public:
   FE_TemplateHeader_Common (FE_Utils::T_PARAMLIST_INFO *params);
 
-  ~FE_TemplateHeader_Common (void);
+  virtual ~FE_TemplateHeader_Common (void);
 
   // Data accessor.
   FE_Utils::T_PARAMLIST_INFO *param_info (void) const;
