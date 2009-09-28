@@ -329,7 +329,6 @@ namespace CIAO
         {
           DOMElement * ele = 0;
           if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
->>>>>>> .merge-right.r86794
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
 
