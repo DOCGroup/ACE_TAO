@@ -105,15 +105,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         simple_servant_ior_file = get_opts.opt_arg ();
         break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
       }
   // Indicates sucessful parsing of the command line
   return 0;
