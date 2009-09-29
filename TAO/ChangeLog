@@ -1,3 +1,9 @@
+Tue Sep 29 12:24:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+          Fixed a problem with the code generation for the servant
+
 Mon Sep 28 18:10:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/Makefile.am:

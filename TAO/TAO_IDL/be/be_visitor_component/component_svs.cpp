@@ -171,9 +171,8 @@ be_visitor_component_svs::gen_facets (void)
           << "namespace CIAO_FACET" << suffix.c_str () << be_nl
           << "{" << be_idt_nl;
 
-      os_ << "template<typename T>" << be_nl
-          << lname << "_Servant_T<T>::"
-          << lname << "_Servant_T (" << be_idt << be_idt_nl
+      os_ << lname << "_Servant::"
+          << lname << "_Servant (" << be_idt << be_idt_nl
           << global << sname << "::CCM_"
           << lname << "_ptr executor," << be_nl
           << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
@@ -186,9 +185,8 @@ be_visitor_component_svs::gen_facets (void)
           << "}";
 
       os_ << be_nl << be_nl
-          << "template<typename T>" << be_nl
-          << lname << "_Servant_T<T>::~"
-          << lname << "_Servant_T (void)" << be_nl
+          << lname << "_Servant::~"
+          << lname << "_Servant (void)" << be_nl
           << "{" << be_nl
           << "}";
 
@@ -214,9 +212,8 @@ be_visitor_component_svs::gen_facets (void)
       be_visitor_component_svs::in_facets_ = false;
 
       os_ << be_nl << be_nl
-          << "template<typename T>" << be_nl
           << "::CORBA::Object_ptr" << be_nl
-          << lname << "_Servant_T<T>::_get_component (void)"
+          << lname << "_Servant::_get_component (void)"
           << be_nl
           << "{" << be_idt_nl
           << "::Components::SessionContext_var sc =" << be_idt_nl
