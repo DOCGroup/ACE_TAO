@@ -1,3 +1,14 @@
+Tue Sep 29 14:37:17 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+
+          Provided a correct fix for XMI generation for module reopening.
+          Fixed similar code for interface/valuetype/eventtype/struct/
+          exception/union forward declarations. Extended a test for module
+          reopening.
+
 Tue Sep 29 11:57:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
