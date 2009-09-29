@@ -727,7 +727,7 @@ FE_store_env_include_paths (void)
        !iter.done (); iter.advance ())
     {
       iter.next (path_tmp);
-      idl_global->add_include_path (path_tmp->fast_rep ());
+      idl_global->add_include_path (path_tmp->fast_rep (), false);
     }
 }
 
