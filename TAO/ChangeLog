@@ -1,3 +1,24 @@
+Tue Sep 29 13:36:31 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/drv_extern.h:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed bug#3743. According to this change tao_idl distinguishes
+          include paths provided by user and the systems ones, i.e. TAO or
+          CIAO include paths.
+
+        * tests/Bug_3743_Regression/Test.idl:
+        * tests/Bug_3743_Regression/run_test.pl:
+        * tests/Bug_3743_Regression/README:
+        * bin/tao_orb_tests.lst:
+
+          Added a test for bug#3743 and scheduled it for run.
+
 Tue Sep 29 12:24:39 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:

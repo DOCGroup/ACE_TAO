@@ -300,7 +300,7 @@ DRV_parse_args (long ac, char **av)
                       arg += (has_space ? "\"" : "");
 
                       DRV_cpp_putarg (arg.c_str ());
-                      idl_global->add_include_path (arg.substr (2).c_str ());
+                      idl_global->add_include_path (arg.substr (2).c_str (), false);
                       ++i;
                     }
                   else
@@ -330,7 +330,7 @@ DRV_parse_args (long ac, char **av)
                   arg += av[i] + 2;
                   arg += (has_space? "\"" : "");
 
-                  idl_global->add_include_path (arg.substr (2).c_str ());
+                  idl_global->add_include_path (arg.substr (2).c_str (), false);
                   DRV_cpp_putarg (arg.c_str ());
                 }
 
