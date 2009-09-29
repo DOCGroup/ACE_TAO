@@ -1,3 +1,9 @@
+Tue Sep 29 09:53:54 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
+          Started to update this spec to meet the
+          original AMI CORBA spec.
+
 Thu Sep 24 14:39:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
