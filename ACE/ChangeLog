@@ -1,3 +1,12 @@
+Tue Sep 29 06:41:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.lib.GNU:
+          Reverted part of the change below, it breaks the realclean
+
+        Thu Aug 27 20:27:52 UTC 2009  Steve Huston  <shuston@riverace.com>
+        * include/makeinclude/rules.lib.GNU: Fix building, installing, and
+          cleaning up libs built in an ARCH build.
+
 Mon Sep 28 17:45:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Block.h:
