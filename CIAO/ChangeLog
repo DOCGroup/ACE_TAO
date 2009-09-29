@@ -1,9 +1,15 @@
+Tue Sep 29 12:36:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Connectors.graffle:
+        * docs/OMG-CCM-Tutorial.ppt:
+          Added new sheets for IDL3+, Connector, DDS4CCM, and AMI4CCM
+
 Mon Sep 28 18:21:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
-        
+
           Cosmetic changes.
-          
+
         * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
         * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.mpc:
         * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
@@ -17,7 +23,7 @@ Mon Sep 28 18:21:42 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/BasicSP/EC/EC.mpc:
         * examples/BasicSP/BMDevice/BMDevice.mpc:
         * examples/DevGuideExamples/Messenger/Messenger.mpc:
-        
+
           Config changes.
 
 Mon Sep 28 11:25:43 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
