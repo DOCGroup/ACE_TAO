@@ -232,29 +232,30 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) == 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) == 0)
             {
               // If the module is reopened then put it on the stack.
-              ES_Guard owned_guard (ele, this);
+              NS_Guard ns_guard (ec.ns_.c_str (), this);
+              ES_Guard owned_guard (ec.elem_, this);
               this->visit_scope (node);
               // And don't do anything more.
               return 0;
             }
 
           ES_Guard package_guard (LITERALS[PACKAGE_TAG], this);
-
           this->gen_common_elements (node, LITERALS[ST_MODULE]);
 
           {
-            NS_Guard ns_guard ((ACE_TEXT_CHAR_TO_TCHAR (node->repoID ())), this);
+            NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
             ES_Guard owned_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
             // Save ownedElement to add to it later if the module
             // will be reopened.
-            DOMElement *ele = 0;
-            this->stack_.top (ele);
-            this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+            this->stack_.top (ec.elem_);
+            // Same save namespace string.
+            this->namespace_.top (ec.ns_);
+            this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
 
             this->visit_scope (node);
           }
@@ -281,20 +282,21 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_INTF]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
 
-          ES_Guard class_guard (ele, this);
-          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
+          ES_Guard class_guard (ec.elem_, this);
+          NS_Guard ns_guard (ec.ns_.c_str (), this);
 
           { // Operations.
             ES_Guard owned_guard (LITERALS[OWNEDELEMENT_TAG], this);
@@ -307,7 +309,7 @@ namespace CIAO
           for (long i = 0; i < node->n_inherits (); ++i)
             {
               XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
                 ACE_TEXT_CHAR_TO_TCHAR (node->inherits ()[i]->repoID ())));
             }
         }
@@ -327,16 +329,17 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_INTF]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
         }
       catch (Error &err)
@@ -372,46 +375,8 @@ namespace CIAO
 
           // add a generalization for the value we box
           XStr xid (this->add_generalization (
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+            ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
             ACE_TEXT_CHAR_TO_TCHAR (node->boxed_type ()->repoID ())));
-        }
-      catch (Error &err)
-        {
-          err.node (node);
-          throw;
-        }
-
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_valuetype (AST_ValueType *node)
-    {
-      XMI_TRACE ("valuetype");
-
-      if (this->skip_imported_ && node->imported ())
-        {
-          this->visit_scope (node);
-          return 0;
-        }
-
-      try
-        {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
-              this->gen_common_elements (node, LITERALS[ST_VALUE]);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
-            }
-
-          ES_Guard class_guard (ele, this);
-
-          this->visit_valuetype_impl (node);
         }
       catch (Error &err)
         {
@@ -437,19 +402,17 @@ namespace CIAO
               this->set_attribute (LITERALS[ABSTRACT], LITERALS[_FALSE]);
             }
 
-          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
-
           if (node->inherits_concrete () != 0)
             {
               XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
                 ACE_TEXT_CHAR_TO_TCHAR (node->inherits_concrete ()->repoID ())));
             }
 
           for (long i = 0; i < node->n_supports (); ++i)
             {
               XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
                 ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
             }
 
@@ -473,22 +436,132 @@ namespace CIAO
     }
 
     int
+    idl3_to_xmi_visitor::visit_valuetype (AST_ValueType *node)
+    {
+      XMI_TRACE ("valuetype");
+
+      if (this->skip_imported_ && node->imported ())
+        {
+          this->visit_scope (node);
+          return 0;
+        }
+
+      try
+        {
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
+            {
+              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
+              this->gen_common_elements (node, LITERALS[ST_VALUE]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+
+              // Save in order not to generate same element later.
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
+            }
+
+          ES_Guard class_guard (ec.elem_, this);
+          NS_Guard ns_guard (ec.ns_.c_str (), this);
+
+          this->visit_valuetype_impl (node);
+        }
+      catch (Error &err)
+        {
+          err.node (node);
+          throw;
+        }
+
+      return 0;
+    }
+
+    int
     idl3_to_xmi_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
     {
       XMI_TRACE ("valuetype_fwd");
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_VALUE]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
+            }
+        }
+      catch (Error &err)
+        {
+          err.node (node);
+          throw;
+        }
+
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_eventtype (AST_EventType *node)
+    {
+      XMI_TRACE ("eventtype");
+
+      if (this->skip_imported_ && node->imported ())
+        {
+          this->visit_scope (node);
+          return 0;
+        }
+
+      try
+        {
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
+            {
+              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
+              this->gen_common_elements (node, LITERALS[ST_EVENT]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+
+              // Save in order not to generate same element later.
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
+            }
+
+          ES_Guard class_guard (ec.elem_, this);
+          NS_Guard ns_guard (ec.ns_.c_str (), this);
+
+          this->visit_valuetype_impl (node);
+        }
+      catch (Error &err)
+        {
+          err.node (node);
+          throw;
+        }
+
+      return 0;
+    }
+
+    int
+    idl3_to_xmi_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
+    {
+      XMI_TRACE ("eventtype_fwd");
+
+      try
+        {
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
+            {
+              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
+              this->gen_common_elements (node, LITERALS[ST_EVENT]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+
+              // Save in order not to generate same element later.
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
         }
       catch (Error &err)
@@ -513,25 +586,26 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_COMP]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
 
-          ES_Guard class_guard (ele, this);
-          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
+          ES_Guard class_guard (ec.elem_, this);
+          NS_Guard ns_guard (ec.ns_.c_str (), this);
 
           for (long i = 0; i < node->n_supports (); ++i)
             {
               XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
                 ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
 
             }
@@ -539,7 +613,7 @@ namespace CIAO
           if (node->base_component () != 0)
             {
               XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
                 ACE_TEXT_CHAR_TO_TCHAR (node->base_component ()->repoID ())));
             }
 
@@ -565,16 +639,17 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_COMP]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
         }
       catch (Error &err)
@@ -666,54 +741,6 @@ namespace CIAO
     }
 
     int
-    idl3_to_xmi_visitor::visit_eventtype (AST_EventType *node)
-    {
-      XMI_TRACE ("eventtype");
-
-      if (this->skip_imported_ && node->imported ())
-        {
-          this->visit_scope (node);
-          return 0;
-        }
-
-      try
-        {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
-              this->gen_common_elements (node, LITERALS[ST_EVENT]);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
-            }
-
-          ES_Guard class_guard (ele, this);
-
-          this->visit_valuetype_impl (node);
-        }
-      catch (Error &err)
-        {
-          err.node (node);
-          throw;
-        }
-
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
-    {
-      XMI_TRACE ("eventtype_fwd");
-
-      this->visit_valuetype_fwd (node);
-
-      return 0;
-    }
-
-    int
     idl3_to_xmi_visitor::visit_home (AST_Home *node)
     {
       XMI_TRACE ("home");
@@ -727,22 +754,20 @@ namespace CIAO
       try
         {
           ES_Guard es_guard (LITERALS[CLASS_TAG], this);
-
           this->gen_common_elements (node, LITERALS[ST_HOME]);
-
-          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
+          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
           for (long i = 0; i < node->n_supports (); ++i)
             {
               XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
                 ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
             }
 
           if (node->base_home () != 0)
             {
               XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
                 ACE_TEXT_CHAR_TO_TCHAR (node->base_home ()->repoID ())));
             }
 
@@ -764,7 +789,7 @@ namespace CIAO
             }
 
           this->add_managed_component (
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+            ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
             ACE_TEXT_CHAR_TO_TCHAR (node->managed_component ()->repoID ()));
 
           ES_Guard noe_guard (LITERALS[OWNEDELEMENT_TAG], this);
@@ -798,6 +823,21 @@ namespace CIAO
       return 0;
     }
 
+    void
+    idl3_to_xmi_visitor::visit_struct_impl (AST_Structure *node)
+    {
+      try
+        {
+          ES_Guard ns_oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
+          this->visit_scope (node);
+        }
+      catch (Error &err)
+        {
+          err.node (node);
+          throw;
+        }
+    }
+
     int
     idl3_to_xmi_visitor::visit_structure (AST_Structure *node)
     {
@@ -811,19 +851,21 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_STRUCT]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
 
-          ES_Guard class_guard (ele, this);
+          ES_Guard class_guard (ec.elem_, this);
+          NS_Guard ns_guard (ec.ns_.c_str (), this);
 
           this->visit_struct_impl (node);
         }
@@ -836,22 +878,6 @@ namespace CIAO
       return 0;
     }
 
-    void
-    idl3_to_xmi_visitor::visit_struct_impl (AST_Structure *node)
-    {
-      try
-        {
-          ES_Guard ns_oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
-          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
-          this->visit_scope (node);
-        }
-      catch (Error &err)
-        {
-          err.node (node);
-          throw;
-        }
-    }
-
     int
     idl3_to_xmi_visitor::visit_structure_fwd (AST_StructureFwd *node)
     {
@@ -859,16 +885,17 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_STRUCT]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
         }
       catch (Error &err)
@@ -893,19 +920,21 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[EXCEPTION_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_EX]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
 
-          ES_Guard class_guard (ele, this);
+          ES_Guard class_guard (ec.elem_, this);
+          NS_Guard ns_guard (ec.ns_.c_str (), this);
 
           this->visit_struct_impl (node);
         }
@@ -944,7 +973,7 @@ namespace CIAO
           ES_Guard es_guard (LITERALS[CLASS_TAG], this);
           this->gen_common_elements (node, LITERALS[ST_ENUM]);
 
-          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
+          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
           ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
           this->visiting_enum_ = true;
@@ -1284,20 +1313,21 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_UNION]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
 
-          ES_Guard class_guard (ele, this);
-          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
+          ES_Guard class_guard (ec.elem_, this);
+          NS_Guard ns_guard (ec.ns_.c_str (), this);
           ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
           // Set discriminator type
@@ -1322,16 +1352,17 @@ namespace CIAO
 
       try
         {
-          DOMElement * ele = 0;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele) != 0)
+          ElementContext ec;
+          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
             {
               ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
               this->gen_common_elements (node, LITERALS[ST_UNION]);
+              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
               // Save in order not to generate same element later.
-              this->stack_.top (ele);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ele);
+              this->stack_.top (ec.elem_);
+              this->namespace_.top (ec.ns_);
+              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
             }
         }
       catch (Error &err)
@@ -1661,7 +1692,7 @@ namespace CIAO
           ES_Guard att_guard (LITERALS[ATTR_TAG], this);
 
           this->create_and_store_xmi_id (
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()),
+            ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
             node);
           this->set_attribute (
             LITERALS[NAME],
@@ -1745,7 +1776,7 @@ namespace CIAO
 
         this->set_attribute (LITERALS[MULT], LITERALS[MULT_ZTO]);
 
-        xid = this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()));
+        xid = this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
         this->set_attribute (LITERALS[TYPE], xid);
 
         // <UML:AssociationEnd.qualifier>
@@ -1860,7 +1891,7 @@ namespace CIAO
 
         this->set_attribute (LITERALS[MULT], LITERALS[MULT_ZTO]);
 
-        xid = this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()));
+        xid = this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
         this->set_attribute (LITERALS[TYPE], xid);
 
         // <UML:AssociationEnd.qualifier>
@@ -2322,7 +2353,7 @@ namespace CIAO
       try
         {
           this->create_and_store_xmi_id (
-            ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), node);
+            ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), node);
         }
       catch (Error &ex)
         {
@@ -2414,7 +2445,7 @@ namespace CIAO
                            pdt);
             }
         default:
-          return this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()));
+          return this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
         }
     }
 
@@ -2442,7 +2473,7 @@ namespace CIAO
 
       this->set_attribute (LITERALS[TAG], LITERALS[TYPEID]);
       this->set_attribute (LITERALS[VALUE],
-                           ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()));
+                           ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
     }
 
     XMLCh *
@@ -2604,7 +2635,7 @@ namespace CIAO
       this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
                                       stereotype);
 
-      NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR  (node->repoID ()), this);
+      NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
       this->gen_tagged_value (node);
     }
 

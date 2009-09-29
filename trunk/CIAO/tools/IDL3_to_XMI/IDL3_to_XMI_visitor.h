@@ -68,6 +68,8 @@ namespace CIAO
       virtual int visit_valuebox (AST_ValueBox *node);
       virtual int visit_valuetype (AST_ValueType *node);
       virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
+      virtual int visit_eventtype (AST_EventType *node);
+      virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
       virtual int visit_component (AST_Component *node);
       virtual int visit_component_fwd (AST_ComponentFwd *node);
       virtual int visit_provides (AST_Provides *node);
@@ -84,8 +86,6 @@ namespace CIAO
       virtual int visit_tmpl_port (AST_Tmpl_Port *node);
       virtual int visit_tmpl_mirror_port (
         AST_Tmpl_Mirror_Port *node);
-      virtual int visit_eventtype (AST_EventType *node);
-      virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
       virtual int visit_home (AST_Home *node);
       virtual int visit_factory (AST_Factory *node);
       virtual int visit_structure (AST_Structure *node);
@@ -245,8 +245,13 @@ namespace CIAO
       /// element.
       ELEMENT_STACK stack_;
 
+      struct ElementContext {
+        ACE_TString ns_;
+        XERCES_CPP_NAMESPACE::DOMElement *elem_;
+      };
+
       typedef ACE_Hash_Map_Manager_Ex< ACE_TString,
-                                       XERCES_CPP_NAMESPACE::DOMElement *,
+                                       ElementContext,
                                        ACE_Hash <ACE_TString>,
                                        ACE_Equal_To <ACE_TString>,
                                        ACE_Null_Mutex > REPO_ID_MAP;
