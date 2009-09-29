@@ -44,15 +44,9 @@ ifdef static_libs
 endif
 
 SHLIB ?=
-# If SHLIB cleared, ensure it doesn't get built.
-ifeq ($(SHLIB),)
-  VSHLIB_NO_VER=
-  CLEANUP_VSHLIB_NO_VER=
-else
-  # Setup shared library variables, including versions.
-  VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
-  CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
-endif
+# Setup shared library variables, including versions.
+VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
+CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
 CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
 SHLIB_WITH_VER = $(SHLIB:%=%$(SOVERSION))
