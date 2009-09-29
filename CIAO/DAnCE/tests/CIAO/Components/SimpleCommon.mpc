@@ -13,7 +13,7 @@ project(SimpleCommon_idl_gen) : componentidldefaults {
   }
 }
 
-project(SimpleCommon_idle_gen) : ciaoidldefaults {
+project(SimpleCommon_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += SimpleCommon_idl_gen
   idlflags += -Wb,export_macro=SIMPLECOMMON_EXEC_Export \
