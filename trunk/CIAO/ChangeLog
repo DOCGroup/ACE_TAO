@@ -1,3 +1,10 @@
+Tue Sep 29 11:57:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
+          Build order fixes
+
 Tue Sep 29 11:49:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:

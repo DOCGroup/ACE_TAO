@@ -17,7 +17,7 @@ project(SimpleCommon_SNFP_idl_gen) : componentidldefaults {
 }
 
 project(SimpleCommon_SNFP_lem_gen) : ciaoidldefaults {
-  after += SimpleCommon_SNFP_idl_gen
+  after += SimpleCommon_SNFP_idl_gen SimpleCommon_lem_gen
   custom_only = 1
   idlflags += -Wb,export_macro=SIMPLENILFACETPROVIDER_EXEC_Export \
               -Wb,export_include=SimpleNilFacetProvider_exec_export.h \
