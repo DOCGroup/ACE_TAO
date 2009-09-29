@@ -1,6 +1,6 @@
 // $Id$
 
-project(BMDevice_idl_gen): componentidldefaults, anytypecode {
+project(BMDevice_idl_gen): componentidldefaults {
   custom_only = 1
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
               -Wb,stub_export_macro=BMDEVICE_STUB_Export \
