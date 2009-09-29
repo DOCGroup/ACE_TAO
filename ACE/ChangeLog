@@ -1,3 +1,8 @@
+Tue Sep 28 11:40:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Don't convert pptx and graffle files
+
 Tue Sep 29 06:41:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.lib.GNU:
