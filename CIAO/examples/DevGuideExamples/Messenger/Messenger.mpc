@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl Messenger"
 
-project(Messenger_idl_gen) : componentidldefaults, anytypecode {
+project(Messenger_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=MESSENGER_STUB_Export \
               -Wb,stub_export_include=Messenger_stub_export.h \
