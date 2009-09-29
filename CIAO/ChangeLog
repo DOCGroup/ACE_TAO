@@ -1,4 +1,16 @@
-Tue Sep 29 12:36:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Sep 29 11:49:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Null_Component/Null_Interface.mpc:
+        * examples/Swapping/Hello_Base/Hello_Base.mpc:
+        * performance-tests/Protocols/common/Protocols.mpc:
+        * tests/CIDL/CodeGen/Basic.mpc:
+          Removed duplicated base projects
+
+Tue Sep 29 11:36:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Connectors.graffle:
         * docs/OMG-CCM-Tutorial.ppt:
