@@ -576,9 +576,10 @@ public:
   // keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Is set by the IFR Service.
 
-  void add_include_path (const char *s);
-  // Add another path to 'include_paths_'.
-  
+  void add_include_path (const char *s, bool is_system);
+  // Add another path to 'include_paths_'. is_system is true for TAO/CIAO
+  // specific paths and false for paths provided by user.
+
   void add_rel_include_path (const char *s);
   ACE_Unbounded_Queue<char *> const & rel_include_paths (void) const;
   // Accessor/mutator for the rel_include_paths_ member.
@@ -722,9 +723,15 @@ private:
   bool preserve_cpp_keywords_;
   // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 
-  ACE_Unbounded_Queue<char *> include_paths_;
+  struct Include_Path_Info {
+    char *path_;
+    bool is_system_;
+  };
+  typedef ACE_Unbounded_Queue<Include_Path_Info> Unbounded_Paths_Queue;
+  typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info> Unbounded_Paths_Queue_Iterator;
+  Unbounded_Paths_Queue include_paths_;
   // List of -I options passed to us.
-  
+
   ACE_Unbounded_Queue<char *> rel_include_paths_;
   // Used by backends with the -r option.
 
