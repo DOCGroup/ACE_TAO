@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Null_Interface"
 
-project(Null_Interface_idl_gen) : componentidldefaults, anytypecode {
+project(Null_Interface_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NULL_INTERFACE_STUB_Export \
               -Wb,stub_export_include=Null_Interface_stub_export.h \
