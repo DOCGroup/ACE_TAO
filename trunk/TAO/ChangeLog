@@ -1,3 +1,14 @@
+Wed Sep 30 16:52:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        
+          Commented out unused local variables, used only in a
+          block which is also (for now) commented out.
+          
+        * TAO_IDL/contrib/mcpp/system.cpp:
+        
+          Fixed some signed/unsigned mismatches.
+
 Tue Sep 29 13:36:31 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * TAO_IDL/include/idl_global.h:
