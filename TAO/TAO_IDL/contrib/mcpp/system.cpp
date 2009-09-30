@@ -2848,7 +2848,7 @@ static void     def_macros( void)
  * This routine should be called before undef_macros().
  */
 {
-  int         i(0);
+  size_t         i(0);
   
   for (i = 0; i < def_cnt; i++)
     {
@@ -2864,7 +2864,7 @@ static void     undef_macros( void)
  */
 {
   const char *      name;
-  int         i;
+  size_t         i;
 
   for (i = 0; i < undef_cnt; i++) {
     name = undef_list[ i];
