@@ -1022,8 +1022,8 @@ DRV_pre_proc (const char *myfile)
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      char buffer[ACE_MAXLOGMSGLEN];
-      size_t bytes;
+//      char buffer[ACE_MAXLOGMSGLEN];
+//      size_t bytes;
 
       // ACE_DEBUG sends to stderr - we want stdout for this dump
       // of the preprocessor output. So we modify the singleton that
