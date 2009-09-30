@@ -48,7 +48,10 @@ be_visitor_component_ex_idl::visit_component (be_component *node)
 
   node_ = node;
 
-  this->gen_facets ();
+  if (be_global->gen_lem_force_all ())
+    {
+      this->gen_facets ();
+    }
 
   this->gen_component ();
 
@@ -207,13 +210,6 @@ be_visitor_component_ex_idl::gen_facets (void)
         be_type::narrow_from_decl (p->provides_type ());
 
       if (impl->ex_idl_facet_gen ())
-        {
-          continue;
-        }
-
-      // Without the '-Glfa' option, generate facet executor IDL
-      // only for facets whose interface type is in the main file.
-      if (impl->imported () && !be_global->gen_lem_force_all ())
         {
           continue;
         }

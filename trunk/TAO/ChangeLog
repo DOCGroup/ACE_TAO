@@ -1,3 +1,14 @@
+Wed Sep 30 18:29:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        
+          Revised logic of local executor mapping IDL generation.
+          -Glem: generates mapping for all interfaces in main IDL file
+          -Glfa: overrides -Glem and generates mapping for all
+                 interfaces (regardless of IDL file location) used
+                 in facets (in main IDL file).
+
 Wed Sep 30 16:52:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
