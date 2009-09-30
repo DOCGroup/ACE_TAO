@@ -1,3 +1,10 @@
+Wed Sep 29 09:59:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.6.GNU:
+          Added workaround for bug in the diab compiler. Thanks to
+          Sharon Mizrahi <sharon dot mizrahi at gmail dot com> for
+          reporting this
+
 Tue Sep 28 11:40:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
