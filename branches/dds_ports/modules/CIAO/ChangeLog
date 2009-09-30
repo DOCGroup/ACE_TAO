@@ -1,3 +1,10 @@
+Wed Sep 30 01:17:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+
+          Additional connector implementation. 
+        
 Fri Sep 25 01:34:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3:
@@ -13,8 +20,8 @@ Fri Sep 25 01:34:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
         * connectors/dds4ccm/examples/Quoter/Distributor/controller.cpp:
 
-          Additional connector implementation. 
-        
+          Additional connector implementation.
+
 Wed Sep  9 11:50:54 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/connectoridldefaults.mpb:

@@ -36,179 +36,15 @@
 #include "dds4ccm/impl/ndds/NDDS_Traits.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 
+// should be removed after lem fix
+#include "../Broker/BrokerEC.h"
+
+// should be removed after we refactor stuff back into ndds impl.
+#include "dds4ccm/impl/ndds/DataReader.h"
+
+
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
-  //============================================================
-  // Facet Executor Implementation Class: Stock_Info_Writer_exec_i
-  //============================================================
-  
-  Stock_Info_Writer_exec_i::Stock_Info_Writer_exec_i (void)
-  {
-  }
-  
-  Stock_Info_Writer_exec_i::~Stock_Info_Writer_exec_i (void)
-  {
-  }
-  
-  // Operations from ::CCM_DDS::Stock_Info_Writer
-  
-  void
-  Stock_Info_Writer_exec_i::write (
-    const ::Quoter::Stock_Info & /* an_instance */)
-  {
-    /* Your code here. */
-  }
-  //============================================================
-  // Facet Executor Implementation Class: DataWriter_exec_i
-  //============================================================
-  
-  DataWriter_exec_i::DataWriter_exec_i (void)
-  {
-  }
-  
-  DataWriter_exec_i::~DataWriter_exec_i (void)
-  {
-  }
-  
-  // Operations from ::DDS::DataWriter
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::enable (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::StatusCondition_ptr
-  DataWriter_exec_i::get_statuscondition (void)
-  {
-    /* Your code here. */
-    return ::DDS::StatusCondition::_nil ();
-  }
-  
-  ::DDS::StatusMask
-  DataWriter_exec_i::get_status_changes (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::InstanceHandle_t
-  DataWriter_exec_i::get_instance_handle (void)
-  {
-    /* Your code here. */
-    return ::DDS::NativeInstanceHandle_t ();
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::set_qos (
-    const ::DDS::DataWriterQos & /* qos */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_qos (
-    ::DDS::DataWriterQos & /* qos */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::set_listener (
-    ::DDS::DataWriterListener_ptr /* a_listener */,
-    ::DDS::StatusMask /* mask */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::DataWriterListener_ptr
-  DataWriter_exec_i::get_listener (void)
-  {
-    /* Your code here. */
-    return ::DDS::DataWriterListener::_nil ();
-  }
-  
-  ::DDS::Topic_ptr
-  DataWriter_exec_i::get_topic (void)
-  {
-    /* Your code here. */
-    return ::DDS::Topic::_nil ();
-  }
-  
-  ::DDS::Publisher_ptr
-  DataWriter_exec_i::get_publisher (void)
-  {
-    /* Your code here. */
-    return ::DDS::Publisher::_nil ();
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::wait_for_acknowledgments (
-    const ::DDS::Duration_t & /* max_wait */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_liveliness_lost_status (
-    ::DDS::LivelinessLostStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_offered_deadline_missed_status (
-    ::DDS::OfferedDeadlineMissedStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_offered_incompatible_qos_status (
-    ::DDS::OfferedIncompatibleQosStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_publication_matched_status (
-    ::DDS::PublicationMatchedStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::assert_liveliness (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_matched_subscriptions (
-    ::DDS::InstanceHandleSeq & /* subscription_handles */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataWriter_exec_i::get_matched_subscription_data (
-    ::DDS::SubscriptionBuiltinTopicData & /* subscription_data */,
-    const ::DDS::InstanceHandle_t & /* subscription_handle */)
-  {
-    /* Your code here. */
-    return 0;
-  }
   //============================================================
   // Facet Executor Implementation Class: Stock_Info_Reader_exec_i
   //============================================================
@@ -268,230 +104,6 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     const ::CCM_DDS::QueryFilter & /* filter */)
   {
     /* Your code here. */
-  }
-  //============================================================
-  // Facet Executor Implementation Class: ListenerControl_exec_i
-  //============================================================
-  
-  ListenerControl_exec_i::ListenerControl_exec_i (void)
-  {
-  }
-  
-  ListenerControl_exec_i::~ListenerControl_exec_i (void)
-  {
-  }
-  
-  // Operations from ::CCM_DDS::ListenerControl
-  
-  ::CORBA::Boolean
-  ListenerControl_exec_i::enabled (void)
-  {
-    /* Your code here. */
-    return false;
-  }
-  
-  void
-  ListenerControl_exec_i::enabled (
-    ::CORBA::Boolean /* enabled */)
-  {
-    /* Your code here. */
-  }
-  //============================================================
-  // Facet Executor Implementation Class: DataReader_exec_i
-  //============================================================
-  
-  DataReader_exec_i::DataReader_exec_i (void)
-  {
-  }
-  
-  DataReader_exec_i::~DataReader_exec_i (void)
-  {
-  }
-  
-  // Operations from ::DDS::DataReader
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::enable (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::StatusCondition_ptr
-  DataReader_exec_i::get_statuscondition (void)
-  {
-    /* Your code here. */
-    return ::DDS::StatusCondition::_nil ();
-  }
-  
-  ::DDS::StatusMask
-  DataReader_exec_i::get_status_changes (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::InstanceHandle_t
-  DataReader_exec_i::get_instance_handle (void)
-  {
-    /* Your code here. */
-    return ::DDS::NativeInstanceHandle_t ();
-  }
-  
-  ::DDS::ReadCondition_ptr
-  DataReader_exec_i::create_readcondition (
-    ::DDS::SampleStateMask /* sample_states */,
-    ::DDS::ViewStateMask /* view_states */,
-    ::DDS::InstanceStateMask /* instance_states */)
-  {
-    /* Your code here. */
-    return ::DDS::ReadCondition::_nil ();
-  }
-  
-  ::DDS::QueryCondition_ptr
-  DataReader_exec_i::create_querycondition (
-    ::DDS::SampleStateMask /* sample_states */,
-    ::DDS::ViewStateMask /* view_states */,
-    ::DDS::InstanceStateMask /* instance_states */,
-    const char * /* query_expression */,
-    const ::DDS::StringSeq & /* query_parameters */)
-  {
-    /* Your code here. */
-    return ::DDS::QueryCondition::_nil ();
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::delete_readcondition (
-    ::DDS::ReadCondition_ptr /* a_condition */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::delete_contained_entities (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::set_qos (
-    const ::DDS::DataReaderQos & /* qos */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_qos (
-    ::DDS::DataReaderQos & /* qos */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::set_listener (
-    ::DDS::DataReaderListener_ptr /* a_listener */,
-    ::DDS::StatusMask /* mask */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::DataReaderListener_ptr
-  DataReader_exec_i::get_listener (void)
-  {
-    /* Your code here. */
-    return ::DDS::DataReaderListener::_nil ();
-  }
-  
-  ::DDS::TopicDescription_ptr
-  DataReader_exec_i::get_topicdescription (void)
-  {
-    /* Your code here. */
-    return ::DDS::TopicDescription::_nil ();
-  }
-  
-  ::DDS::Subscriber_ptr
-  DataReader_exec_i::get_subscriber (void)
-  {
-    /* Your code here. */
-    return ::DDS::Subscriber::_nil ();
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_sample_rejected_status (
-    ::DDS::SampleRejectedStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_liveliness_changed_status (
-    ::DDS::LivelinessChangedStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_requested_deadline_missed_status (
-    ::DDS::RequestedDeadlineMissedStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_requested_incompatible_qos_status (
-    ::DDS::RequestedIncompatibleQosStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_subscription_matched_status (
-    ::DDS::SubscriptionMatchedStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_sample_lost_status (
-    ::DDS::SampleLostStatus & /* status */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::wait_for_historical_data (
-    const ::DDS::Duration_t & /* max_wait */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_matched_publications (
-    ::DDS::InstanceHandleSeq & /* publication_handles */)
-  {
-    /* Your code here. */
-    return 0;
-  }
-  
-  ::DDS::ReturnCode_t
-  DataReader_exec_i::get_matched_publication_data (
-    ::DDS::PublicationBuiltinTopicData & /* publication_data */,
-    const ::DDS::InstanceHandle_t & /* publication_handle */)
-  {
-    /* Your code here. */
-    return 0;
   }
   
   //============================================================
@@ -667,8 +279,122 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       }
   }
   
-    
+  
+  class info_out_Listener :
+    public virtual ::DDS::DataReaderListener
+  {
+  public:
+    info_out_Listener (::CCM_DDS::Stock_Info_RawListener_ptr listen,
+                   ::CCM_DDS::PortStatusListener_ptr psl)
+      : enable_ (false),
+        listener_ (::CCM_DDS::Stock_Info_RawListener::_duplicate (listen)),
+        portlistener_ (::CCM_DDS::PortStatusListener::_duplicate (psl))
+    {
+    };
 
+    // from DataReaderListener
+    virtual void on_data_available( ::DDS::DataReader *rdr)
+    {
+      if (!this->enable_.value ())
+        return;
+
+      ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd = dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(rdr);
+      ::Quoter::Stock_InfoDataReader * reader = dynamic_cast< ::Quoter::Stock_InfoDataReader * > ((rd->get_datareader ()));
+
+      if (!reader) {
+        /* In this specific case, this will never fail */
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Stock_InfoDataReader::narrow failed.\n")));
+        return;
+      }
+      
+      /* Loop until there are messages available in the queue */
+      for(;;) {
+        ::Quoter::Stock_Info instance;
+        ::DDS_SampleInfo sampleinfo;
+        ::DDS::ReturnCode_t result  = reader->take_next_sample(instance,
+                                                               sampleinfo);
+        if (result == DDS_RETCODE_NO_DATA) {
+            /* No more samples */
+            break;
+        } else if (result != DDS_RETCODE_OK) {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
+            return;
+        }
+        if (sampleinfo.valid_data) {
+            ::CCM_DDS::ReadInfo empty;
+            listener_->on_data (instance, empty);
+        }
+        
+      }
+      
+    };
+    
+    virtual void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
+                                               const ::DDS::RequestedDeadlineMissedStatus & status)
+    {
+      this->portlistener_->on_requested_deadline_missed (the_reader, status);
+    };
+    
+    
+    virtual void on_sample_lost (::DDS::DataReader_ptr the_reader,
+                                 const ::DDS::SampleLostStatus & status)
+    {
+      this->portlistener_->on_sample_lost (the_reader, status);
+    };
+    
+    
+    
+    // From ListenerControl
+    bool enabled () const;
+    void enabled (bool enable);
+    
+  private:
+    ::CCM_DDS::Stock_Info_RawListener_var listener_;
+    ::CCM_DDS::PortStatusListener_var portlistener_;
+    ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> enable_;;
+  };
+  
+  void
+  Quoter_Connector_exec_i::configure_port_info_out_ (void)
+  {
+    if (this->__info_out_configured_)
+      return;
+    
+    this->configure_default_topic_ ();
+    
+    try
+      {
+        if (CORBA::is_nil (this->__info_out_subscriber_.in ()))
+          {
+            ::DDS::SubscriberQos sqos;
+            this->__info_out_subscriber_ = this->domain_->create_subscriber (sqos,
+                                                                              0,
+                                                                              0);
+          }
+        
+        if (CORBA::is_nil (this->__info_out_datareader_.in ()))
+          {
+            this->__info_out_portstatus_ = this->context_->get_connection_info_out_status ();
+            
+            this->__info_out_datareaderlistener = new info_out_Listener (this->context_->get_connection_info_out_listener (),
+                                                                         this->context_->get_connection_info_out_status ());
+            
+            ::DDS::DataReaderQos drqos;
+            this->__info_out_datareaderlistener = 
+              this->__info_out_subscriber_->create_datareader (this->topic_.in (),
+                                                               drqos,
+                                                               this->__info_out_datareaderlistener.in (),
+                                                               DDS_DATA_AVAILABLE_STATUS);
+          }
+        
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_EMERGENCY, "Caught unknown c++ exception while creating subscriber entities\n"));
+        throw CORBA::INTERNAL ();
+      }
+  }
+  
   ::CCM_DDS::CCM_Stock_Info_Writer_ptr
   Quoter_Connector_exec_i::get_info_in_data (void)
   {
