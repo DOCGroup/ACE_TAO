@@ -97,7 +97,7 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
 	this->cur_seq_num_=1;
 
-
+	/*
 
 	// Do the energy propogation for this task instance
 	// This function automatically does this for the task instances before and after it.
@@ -157,6 +157,7 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	  return false;
   }
 
+  */
 
   if(!this->planner_->recurse_plan ()){
 	  this->planner_->undo_through(cur_cmd_id);
@@ -831,7 +832,10 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
 		this->planner_->undo_through(cur_cmd_id);
 		return false;
     }
+  }else{
+	delete adj_min_times_cmd;
   }
+
   if(max_end!=end_win.second)
   {
     max_times_changed=true;
@@ -842,6 +846,8 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
       this->planner_->undo_through(cur_cmd_id);
       return false;
     }
+  }else{
+	delete adj_max_times_cmd;
   }
   if(min_times_changed || max_times_changed) 
   {
@@ -928,7 +934,11 @@ bool SA_SchedStrategy::energy_prop_after (TaskInstID task_inst)
 		this->planner_->undo_through(cur_cmd_id);
 		return false;
     }
+  }else{
+	delete adj_min_times_cmd;
   }
+
+
   if(min_times_changed) 
   {
     //Since the time windows have changed, some unranked task instances have gone to before or after.
@@ -1010,6 +1020,8 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
       this->planner_->undo_through(cur_cmd_id);
       return false;
     }
+  }else{
+	delete adj_max_times_cmd;
   }
   if(max_times_changed) 
   {

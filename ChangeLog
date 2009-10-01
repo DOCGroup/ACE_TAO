@@ -1,10 +1,37 @@
+Thu Oct  1 17:25:36 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * C2W/C2W_Demo.cpp:
+
+        * PlanHeuristics.h:
+        * Planner.cpp:
+
+        * SANet/SANetFileIn.cpp:
+
+        * SA_POP_Types.h:
+        * SA_PlanStrategy.h:
+        * SA_PlanStrategy.cpp:
+        * SA_SchedStrategy.cpp:
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/ferry-example.pddl:
+        * utils/PDDLtoSANetTranslator/PDDLParser/ferry-problem-example.pddl:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/PDDLtoSAN.java:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/PDDL_Translator.java:
+
+        * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/SAN_Data/TaskNode.java:
+		
+		Various changes to the PDDL parser
+
 Wed Aug 12 19:15:30 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * utils/PDDLtoSANetTranslator:
 
         * utils/PDDLtoSANetTranslator/PDDLParser:
-		
-		Cleanup
+
+                Cleanup
 
 Wed Aug 12 19:02:39 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 

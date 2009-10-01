@@ -14,6 +14,10 @@
  */
 //=============================================================================
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include <iostream>
 #include <fstream>
 #include "SA_POP_Types.h"
@@ -191,8 +195,12 @@ int main (int argc, char* argv[])
   
 
   try {
+
+
     sanet_in.build_net (sanet_filename, &builder);
     tm_in.build_task_map (tm_filename, &builder);
+
+
   } catch (std::string e) {
     std::cerr << "ERROR while building task network and task map from files:";
     std::cerr << std::endl;
@@ -253,6 +261,7 @@ int main (int argc, char* argv[])
 	  planner->add_out_adapter (&screen_out);
 
     planner->plan (15, goal);
+
   } catch (std::string e) {
     std::cerr << "ERROR while planning:" << std::endl;
     std::cerr << e;
@@ -323,7 +332,7 @@ int main (int argc, char* argv[])
         tm_in.build_task_map (tm_filename, &rebuilder);
         planner = rebuilder.get_planner ();
         planner->add_out_adapter (&graph_out);
-        */
+*/
         for(std::map<SANet::CondID, double>::iterator cIter = condMap.begin(); cIter != condMap.end(); cIter++)
         {
           planner->update_cond_val((*cIter).first, (*cIter).second);
@@ -346,6 +355,9 @@ int main (int argc, char* argv[])
   char temp_;
   std::cin>>temp_;
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+
+
+  _CrtDumpMemoryLeaks();
 
   return 0;
 }

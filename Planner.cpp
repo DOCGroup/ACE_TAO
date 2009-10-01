@@ -265,8 +265,11 @@ void Planner::undo_command (CommandID id)
     throw msg;
   }
 
+  PlanCommand* tmp = this->cur_cmd_;
   this->cur_cmd_->undo ();
   this->cur_cmd_ = this->cur_cmd_->get_prev ();
+
+  delete tmp;
 };
 
 // Add a command to be executed later with execute_next().
@@ -318,6 +321,7 @@ void Planner::undo_through (CommandID id)
   temp->undo ();
   this->cur_cmd_ = temp->get_prev ();
 
+  delete temp;
 
 
   this->undo_through (id);

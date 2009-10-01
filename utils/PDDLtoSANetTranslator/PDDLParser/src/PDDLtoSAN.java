@@ -20,22 +20,23 @@ public class PDDLtoSAN {
 	 */
 	public static void main(String[] args) {
 		
-		if(args.length != 5){
-			System.out.println("Wrong number of arguments: "+args.length);
-			System.exit(0);
-		}
-
-		String domain_path = args[0];
-		String problem_path = args[1];
-		boolean include_init = new Boolean(args[2]);
-		int cond_combine = new Integer(args[3]);
-		String output_name = args[4];
 		
-//		String domain_path = "ferry.pddl";
-//		String problem_path = "pb1ferry.pddl";
-//		boolean include_init = false;
-//		int cond_combine = 3;
-//		String output_name = "ferry";
+//		if(args.length != 5){
+//			System.out.println("Wrong number of arguments: "+args.length);
+//			System.exit(0);
+//		}
+//
+//		String domain_path = args[0];
+//		String problem_path = args[1];
+//		boolean include_init = new Boolean(args[2]);
+//		int cond_combine = new Integer(args[3]);
+//		String output_name = args[4];
+		
+		String domain_path = "hanoi.pddl";
+		String problem_path = "hanoi-pb1.pddl";
+		boolean include_init = false;
+		int cond_combine = 4;
+		String output_name = "ferry-orig-pruned";
 		
 		Domain domain = null;
 		Problem problem = null;
