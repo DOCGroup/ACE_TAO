@@ -49,18 +49,18 @@ for ($i = 0; $i < $num_clients; $i++) {
 
 for ($i = 0; $i < $num_clients; $i++) {
 
-    $client = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
+    $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
 
-    if ($client != 0) {
-        print STDERR "ERROR: client $i returned $client\n";
+    if ($client_status != 0) {
+        print STDERR "ERROR: client $i returned $client_status\n";
         $status = 1;
     }
 }
 
-$server = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 

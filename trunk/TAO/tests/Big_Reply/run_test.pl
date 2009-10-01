@@ -17,8 +17,8 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-o file://$server_iorfile");
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
+$SV = $server->CreateProcess ("server", "-o $server_iorfile");
+$CL = $client->CreateProcess ("client", "-x -k file://$client_iorfile");
 
 $server_status = $SV->Spawn ();
 
