@@ -1,8 +1,19 @@
+Thu Oct  1 08:21:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2494_Regression/run_test.pl
+        * tests/Bug_2593_Regression/run_test.pl
+        * tests/Bug_2734_Regression/run_test.pl
+        * tests/Bug_2735_Regression/run_test.pl
+        * tests/Bug_2804_Regression/run_test.pl
+        * tests/Bug_2844_Regression/run_test.pl
+        * tests/Bug_3276_Regression/run_test.pl
+          Converted to the new test framework
+
 Wed Sep 30 18:29:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
         * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
-        
+
           Revised logic of local executor mapping IDL generation.
           -Glem: generates mapping for all interfaces in main IDL file
           -Glfa: overrides -Glem and generates mapping for all
@@ -12,12 +23,12 @@ Wed Sep 30 18:29:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Sep 30 16:52:41 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
-        
+
           Commented out unused local variables, used only in a
           block which is also (for now) commented out.
-          
+
         * TAO_IDL/contrib/mcpp/system.cpp:
-        
+
           Fixed some signed/unsigned mismatches.
 
 Tue Sep 29 13:36:31 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
