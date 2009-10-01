@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -o ../lib -u DDS -n Quoter_Base"
 
-project(DDS_Quoter_Base_idl_gen) : taoidldefaults {
+project(DDS_Quoter_Base_idl_gen) : taoidldefaults, anytypecode {
   custom_only = 1
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \

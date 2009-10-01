@@ -111,6 +111,13 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   //============================================================
   
   Quoter_Connector_exec_i::Quoter_Connector_exec_i (void)
+    : default_domain_configured_ (false),
+      domain_id_ (0),
+      default_topic_configured_ (false),
+      topic_name_ ("Quoter_Topic"),
+      __info_in_configured_ (false),
+      __info_out_configured_ (false)
+
   {
   }
   
@@ -196,6 +203,9 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   void
   Quoter_Connector_exec_i::configure_default_domain_ (void)
   {
+    CIAO_DEBUG ((LM_TRACE, CLINFO "Quoter_Connector_exec_i::configure_default_domain_ - "
+                 "Configuring default domain\n"));
+    
     if (this->default_domain_configured_) return;
 
     try
@@ -220,6 +230,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   void 
   Quoter_Connector_exec_i::configure_default_topic_ (void)
   {
+    CIAO_DEBUG ((LM_TRACE, CLINFO "Quoter_Connector_exec_i::configure_default_topic_ - "
+                 "Configuring default topic\n"));
     if (this->default_topic_configured_) return;
     
     this->configure_default_domain_ ();
@@ -380,7 +392,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
                                                                          this->context_->get_connection_info_out_status ());
             
             ::DDS::DataReaderQos drqos;
-            this->__info_out_datareaderlistener = 
+            this->__info_out_datareader_ = 
               this->__info_out_subscriber_->create_datareader (this->topic_.in (),
                                                                drqos,
                                                                this->__info_out_datareaderlistener.in (),
@@ -398,6 +410,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   ::CCM_DDS::CCM_Stock_Info_Writer_ptr
   Quoter_Connector_exec_i::get_info_in_data (void)
   {
+    std::cerr << "get_info_in_data" << std::endl;
+    
     this->configure_port_info_in_ ();
     
     return new CIAO::DDS4CCM::RTI::Writer_T<Stock_Info_Traits,
