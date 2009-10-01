@@ -6,43 +6,75 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
+$debug_level = '0';
 
-$control_ior = PerlACE::LocalFile ("control.ior");
-unlink $control_ior;
-
-$proxy_ior = PerlACE::LocalFile ("proxy.ior");
-unlink $proxy_ior;
-
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("manager", "-c control.ior -p proxy.ior");
-} else {
-    $SV = new PerlACE::Process ("manager", "-c $control_ior -p $proxy_ior");
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
 }
-$CL = new PerlACE::Process ("client", "-c file://$control_ior -p file://$proxy_ior");
 
-$SV->Spawn ();
-if (PerlACE::waitforfile_timed ($control_ior,
-                                $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$control_ior>\n";
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+my $controlbase = "control.ior";
+my $server_controlfile = $server->LocalFile ($controlbase);
+my $client_controlfile = $client->LocalFile ($controlbase);
+$server->DeleteFile($controlbase);
+$client->DeleteFile($controlbase);
+my $proxybase = "proxy.ior";
+my $server_proxyfile = $server->LocalFile ($proxybase);
+my $client_proxyfile = $client->LocalFile ($proxybase);
+$server->DeleteFile($proxybase);
+$client->DeleteFile($proxybase);
+
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -c $server_controlfile -p $server_proxyfile");
+$CL = $client->CreateProcess ("client", "-c file://$client_controlfile -p file://$client_proxyfile");
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (10);
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+if ($server->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $control_ior;
-unlink $proxy_ior;
+$server->DeleteFile($controlbase);
+$client->DeleteFile($controlbase);
+$server->DeleteFile($proxybase);
+$client->DeleteFile($proxybase);
 
 exit $status;
