@@ -1,3 +1,24 @@
+Thu Oct  1 18:48:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.cpp:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyInterface_i.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyInterface_i.cpp:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello.idl:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Fixed some compiler and fuzz errors. Also added attribute handling.
+
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+          Changed time out to 40 sec.
+
 Thu Oct  1 14:52:07 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
@@ -10,8 +31,8 @@ Thu Oct  1 14:52:07 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl:
         * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.mpc:
 
-         New -Glem behavior. 
-        
+         New -Glem behavior.
+
 Thu Oct  1 14:32:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:

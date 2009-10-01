@@ -64,6 +64,23 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual void
     hello (
       CORBA::Long_out answer);
+    
+    virtual void sendc_foo (
+      ::CCM_AMI::AMI_MyFooHandler_ptr ,
+      const char * ) {}
+    virtual void sendc_hello (
+      ::CCM_AMI::AMI_MyFooHandler_ptr ) {}
+    
+    
+    virtual CORBA::Short
+    rw_attrib ();
+    
+    virtual void
+    rw_attrib (
+      CORBA::Short new_value);
+    
+    virtual CORBA::Short
+        ro_attrib ();
   };
   
   class  MyInterface_exec_i
@@ -82,7 +99,12 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     virtual ::CORBA::Float
     do_something_with_something (
       CORBA::Short something);
+    
+    virtual void sendc_do_something_with_something (
+      ::CCM_AMI::AMI_MyInterfaceHandler_ptr ,
+      ::CORBA::Short ) {}
   };
+  
   
   class  Receiver_exec_i
     : public virtual Receiver_Exec,

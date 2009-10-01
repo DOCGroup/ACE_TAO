@@ -59,21 +59,32 @@ namespace CIAO_Hello_AMI_AMI_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_MyFoo_exec_i (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback);
+    AMI_MyFoo_exec_i (::CCM_AMI::AMI_MyFooCallback_ptr foo_callback);
 
     virtual ~AMI_MyFoo_exec_i (void);
     virtual void
     sendc_foo (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler,
+      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler,
       const char * in_str);
 
     virtual void
     sendc_hello (
-      ::CCM_AMI::AMI_MyFoo_callback_ptr cb_handler);
-
+      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler);
+    
+    virtual void
+    sendc_get_rw_attrib (
+      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler);
+    virtual void
+    sendc_set_rw_attrib (
+      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler,
+      CORBA::Short rw_attrib);
+    virtual void
+        sendc_get_ro_attrib (
+      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler);
+    
   private:
     CCM_AMI::MyFoo_var ami_foo_server_;
-    ::CCM_AMI::AMI_MyFoo_callback_var foo_callback_;
+      ::CCM_AMI::AMI_MyFooCallback_ptr foo_callback_;
   };
   
   class  AMI_MyInterface_exec_i
@@ -81,18 +92,18 @@ namespace CIAO_Hello_AMI_AMI_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_MyInterface_exec_i (::CCM_AMI::AMI_MyInterface_callback_ptr foo_callback);
+    AMI_MyInterface_exec_i (::CCM_AMI::AMI_MyInterfaceCallback_ptr foo_callback);
 
     virtual ~AMI_MyInterface_exec_i (void);
 
     virtual void
     sendc_do_something_with_something (
-      ::CCM_AMI::AMI_MyInterface_callback_ptr cb_handler,
+      ::CCM_AMI::AMI_MyInterfaceCallback_ptr ami_handler,
       CORBA::Short something);
 
   private:
     CCM_AMI::MyInterface_var ami_interface_server_;
-    ::CCM_AMI::AMI_MyInterface_callback_var interface_callback_;
+    ::CCM_AMI::AMI_MyInterfaceCallback_var interface_callback_;
   };
 
   class  AMI_exec_i
@@ -129,7 +140,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   private:
     ::Hello_AMI::CCM_AMI_Context_var  context_;
-    ::CCM_AMI::AMI_MyFoo_callback_var callback_foo_;
+    ::CCM_AMI::AMI_MyFooCallback_var callback_foo_;
   };
   
   extern "C" AMI_EXEC_Export ::Components::EnterpriseComponent_ptr

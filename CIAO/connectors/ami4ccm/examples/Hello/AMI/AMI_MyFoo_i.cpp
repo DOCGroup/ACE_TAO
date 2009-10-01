@@ -1,14 +1,16 @@
 // $Id$
 
 #include "AMI_MyFoo_i.h"
+#include "tao/Messaging/ExceptionHolder_i.h"
+#include "tao/Exception_Data.h"
 
 namespace CCM_CORBA_AMI_MyFoo_Impl
 {
   //============================================================
   // Implementation of the AMI CORBA FOO reply handler
   //============================================================
-  AMI_MyFoo_reply_handler::AMI_MyFoo_reply_handler (::CCM_AMI::AMI_MyFoo_callback_ptr foo_callback)
-  : foo_callback_ (::CCM_AMI::AMI_MyFoo_callback::_duplicate (foo_callback))
+  AMI_MyFoo_reply_handler::AMI_MyFoo_reply_handler (::CCM_AMI::AMI_MyFooCallback_ptr foo_callback)
+  : foo_callback_ (::CCM_AMI::AMI_MyFooCallback::_duplicate (foo_callback))
   {
   }
 
@@ -23,7 +25,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     const char * out_str)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo\n");
-    foo_callback_->foo_callback_handler (result, CORBA::string_dup (out_str));
+    foo_callback_->foo (result, CORBA::string_dup (out_str));
     this->_remove_ref ();
   }
 
@@ -32,7 +34,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (FOO) :\tMyFoo Foo Reply Handler::foo_excep\n");
-    foo_callback_->foo_callback_excep (excep_holder);
+    foo_callback_->foo_excep (excep_holder);
     this->_remove_ref ();
   }
   
@@ -41,18 +43,76 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   AMI_MyFoo_reply_handler::hello (
     CORBA::Long answer)
   {
-    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::foo\n");
-    foo_callback_->hello_callback_handler (answer);
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::hello\n");
+    foo_callback_->hello (answer);
     this->_remove_ref ();
   }
-
+  
   void
   AMI_MyFoo_reply_handler::hello_excep (
     ::Messaging::ExceptionHolder * excep_holder)
   {
-    foo_callback_->hello_callback_excep (excep_holder);
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::hello_excep\n");
+    foo_callback_->hello_excep (excep_holder);
     this->_remove_ref ();
   }
+  
+  //GET rw_attrib Reply Handler
+  void 
+  AMI_MyFoo_reply_handler::get_rw_attrib (
+    ::CORBA::Short ami_return_val)
+  {
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_rw_atrrib\n");
+    foo_callback_->get_rw_attrib (ami_return_val);
+    this->_remove_ref ();
+  }
+  
+  void 
+  AMI_MyFoo_reply_handler::get_rw_attrib_excep (
+    ::Messaging::ExceptionHolder * excep_holder)
+  {
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_rw_attrib_excep\n");
+    foo_callback_->get_rw_attrib_excep (excep_holder);
+    this->_remove_ref ();
+  }
+    
+  //SET rw_attrib Reply Handler
+  void 
+  AMI_MyFoo_reply_handler::set_rw_attrib ()
+  {
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::set_rw_attrib\n");
+    foo_callback_->set_rw_attrib ();
+    this->_remove_ref ();
+  }
+  
+  void 
+  AMI_MyFoo_reply_handler::set_rw_attrib_excep (
+    ::Messaging::ExceptionHolder * excep_holder)
+  {
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::set_rw_attrib_excep\n");
+    foo_callback_->set_rw_attrib_excep (excep_holder);
+    this->_remove_ref ();
+  }
+  
+  //ro_attrib Reply Handler
+  void 
+  AMI_MyFoo_reply_handler::get_ro_attrib (
+    ::CORBA::Short ami_return_val)
+  {
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_ro_attrib\n");
+    foo_callback_->get_ro_attrib (ami_return_val);
+    this->_remove_ref ();
+  }
+    
+  void 
+  AMI_MyFoo_reply_handler::get_ro_attrib_excep (
+    ::Messaging::ExceptionHolder * excep_holder)
+  {
+    printf ("AMI CORBA (FOO) :\tMyFoo Hello Reply Handler::get_ro_atrrib_excep\n");
+    foo_callback_->get_ro_attrib_excep (excep_holder);
+    this->_remove_ref ();
+  }
+  
 
   //============================================================
   // Implementation of the AMI CORBA FOO interface
@@ -67,51 +127,42 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   AMI_MyFoo_i::foo (const char * in_str,
                   CORBA::String_out out_str)
   {
-    try
-      {
-        printf ("AMI CORBA (FOO) :\tReceived string <%s>. Try passing it to the Receiver component\n", in_str);
-        CORBA::Long result = foo_receiver_->foo (CORBA::string_dup (in_str), out_str);
-        return result;
-      }
-    catch (CCM_AMI::InternalError& ex)
-      {
-        printf ("AMI CORBA (FOO) :\tCORRECT EXCEPT -> re-throwing\n");
-        throw ex;
-      }
-    catch (...)
-    {
-        printf ("AMI CORBA (FOO) :\t!!!!!UNKNOWN EXCEPT!!!!!\n");
-        CCM_AMI::InternalError excep;
-        excep.id = 43;
-        excep.error_string = CORBA::string_dup ("UNKNOWN");
-        throw excep;
-    }
+    printf ("AMI CORBA (FOO) :\tReceived string <%s>. Try passing it to the Receiver component\n", in_str);
+    CORBA::Long result = foo_receiver_->foo (CORBA::string_dup (in_str), out_str);
+    return result;
   }
 
   void
   AMI_MyFoo_i::hello (CORBA::Long_out answer)
   {
-    try
-      {
-        printf ("AMI CORBA (FOO) :\tHello. Try calling the Receiver component\n");
-        foo_receiver_->hello (answer);
-      }
-    catch (CCM_AMI::InternalError& ex)
-      {
-        printf ("AMI CORBA (FOO) :\tCORRECT EXCEPT -> re-throwing\n");
-        throw ex;
-      }
-    catch (...)
-    {
-        printf ("AMI CORBA (FOO) :\t!!!!!UNKNOWN EXCEPT!!!!!\n");
-        CCM_AMI::InternalError excep;
-        excep.id = 43;
-        excep.error_string = CORBA::string_dup ("UNKNOWN");
-        throw CCM_AMI::InternalError (excep);
-    }
+    printf ("AMI CORBA (FOO) :\tHello. Try calling the Receiver component\n");
+    foo_receiver_->hello (answer);
+  }
+  
+  CORBA::Short
+  AMI_MyFoo_i::rw_attrib ()
+  {
+    printf ("AMI CORBA (FOO) :\trw_attrib. Try calling the Receiver component\n");
+    CORBA::Short result = foo_receiver_->rw_attrib ();
+    return result;
   }
 
-  //============================================================
+  void
+  AMI_MyFoo_i::rw_attrib (CORBA::Short rw_attrib)
+  {
+    printf ("AMI CORBA (FOO) :\tSet rw_attrib. Try calling the Receiver component\n");
+    foo_receiver_->rw_attrib (rw_attrib);
+  }
+  
+  CORBA::Short
+  AMI_MyFoo_i::ro_attrib ()
+  {
+    printf ("AMI CORBA (FOO) :\tro_attrib. Try calling the Receiver component\n");
+    CORBA::Short result = foo_receiver_->ro_attrib ();
+    return result;
+  }
+  
+   //============================================================
   // Worker thread to service the AMI CORBA FOO interface
   //============================================================
   CORBA_MyFoo_server::CORBA_MyFoo_server (::CCM_AMI::MyFoo_ptr foo_receiver)
