@@ -1072,7 +1072,6 @@ nobase_include_HEADERS += \
   Timer_Queue_T.cpp \
   Timer_Queue_T.h \
   Timer_Queue_T.inl \
-  Timer_Queuefwd.h \
   Timer_Wheel_T.cpp \
   Timer_Wheel_T.h \
   Tokenizer_T.cpp \
