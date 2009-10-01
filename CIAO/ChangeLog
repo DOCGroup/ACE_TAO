@@ -1,3 +1,13 @@
+Thu Oct  1 14:32:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.idl:
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.idl:
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
+
+          New -Glem behavior. 
+        
 Thu Oct  1 11:38:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CIDL/CodeGen/CodeGen.mpc
