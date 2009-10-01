@@ -244,7 +244,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     CCM_DDS::PortStatusListener_var __info_out_portstatus_;
     ::DDS::Subscriber_var __info_out_subscriber_;
     ::DDS::DataReaderListener_var __info_out_listener_;
-    ::DDS::CCM_DataReader_var __info_out_datareader_;
+    ::DDS::DataReader_var __info_out_datareader_;
     ::DDS::DataReaderListener_var __info_out_datareaderlistener;
     
   };

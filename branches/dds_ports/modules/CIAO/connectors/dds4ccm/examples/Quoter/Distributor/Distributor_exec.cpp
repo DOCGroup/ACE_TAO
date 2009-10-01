@@ -80,10 +80,13 @@ namespace CIAO_Quoter_Distributor_Impl
     {
       return -1;
     }
-
+    
     // calculate the interval time
     long usec = 1000000 / hertz;
 
+    std::cerr << "Starting pulse_generator with hertz of " << hertz << ", interval of " 
+              << usec << std::endl;
+    
     if (this->reactor ()->schedule_timer (this,
                                           0,
                                           ACE_Time_Value (0, usec),
@@ -188,7 +191,11 @@ namespace CIAO_Quoter_Distributor_Impl
             if (i->second->current < i->second->low) 
               i->second->low = i->second->current;
             
-            this->writer_->write (i->second);
+            if (!CORBA::is_nil (this->writer_))
+              this->writer_->write (i->second);
+            else
+              std::cerr << "Writer reference is nil!" << std::endl;
+            
           }
       }
   }
@@ -280,12 +287,16 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::configuration_complete (void)
   {
     /* Your code here. */
+    this->writer_ = this->context_->get_connection_info_in_data ();
+    
+    this->ticker_->activate ();
   }
   
   void
   Distributor_exec_i::ccm_activate (void)
   {
     this->start ();
+    this->add_stock ("MSFT");
   }
   
   void
