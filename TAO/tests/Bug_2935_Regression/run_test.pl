@@ -93,14 +93,14 @@ if ($sink_status != 0) {
 }
 
 if($status == 0){
-  $connections = count_matching_lines($sinklogfile, "IIOP connection to peer");
-  if ($connections != 1) {
-      print STDERR "ERROR: Connections to sink should be 1: $connections\n";
-      $status = 1;
-  }
-  else {
-      print STDERR "OK: Found 1 connection to sink.\n";
-  }
+    $connections = count_matching_lines($sinklogfile, "IIOP connection to peer");
+    if ($connections != 1) {
+        print STDERR "ERROR: Connections to sink should be 1: $connections\n";
+        $status = 1;
+    }
+    else {
+        print STDERR "OK: Found 1 connection to sink.\n";
+   }
 }
 
 if($status == 0){
