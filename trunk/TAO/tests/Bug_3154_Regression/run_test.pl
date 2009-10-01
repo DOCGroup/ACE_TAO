@@ -6,29 +6,32 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
 if (exists $ENV{HOST_ROOT}) {
     $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
 }
 
+$idl_process = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
 # IDL file names
-$idl_file = PerlACE::LocalFile ("test.idl");
+$idlbase = "test.idl";
+$idl_file = $idl_process->LocalFile ("test.idl");
 
 # The IDL compiler
-$TAO_IDL = new PerlACE::Process ("$tao_idl");
+$TAO_IDL = $idl_process->CreateProcess ("$tao_idl");
 if (exists $ENV{HOST_ROOT}) {
   $TAO_IDL->IgnoreHostRoot(1);
 }
 $ENV{'INCLUDE'} = ":$ENV{TAO_ROOT}/orbsvcs/:$ENV{TAO_ROOT}/:";
 
 $TAO_IDL->Arguments ("-Se -hs _skel.h -hc _stub.h -I$ENV{TAO_ROOT} -I$ENV{TAO_ROOT}/orbsvcs/ test.idl");
-$TAO_IDL->SpawnWaitKill (60);
+$TAO_IDL->SpawnWaitKill ($idl_process->ProcessStartWaitInterval ());
 
 $found = 0;
 
-$stub_h = PerlACE::LocalFile("test_stub.h");
+$stub_h = $idl_process->LocalFile("test_stub.h");
 open (STUB_HANDLE, "<$stub_h");
 while ($line = <STUB_HANDLE>)
 {
@@ -50,7 +53,7 @@ while ($line = <STUB_HANDLE>)
 }
 close(STUB_HANDLE);
 
-$skel_h = PerlACE::LocalFile("test_skel.h");
+$skel_h = $idl_process->LocalFile("test_skel.h");
 open (SKEL_HANDLE, "<$skel_h");
 while ($line = <SKEL_HANDLE>)
 {
@@ -76,7 +79,7 @@ while ($line = <SKEL_HANDLE>)
 }
 close(SKEL_HANDLE);
 
-unlink <*.cpp *.inl *.h>;
+$idl_process->DeleteFile ("<*.cpp *.inl *.h>");
 
 if ($found == 7) {
     print "INFO: Test passed!\n";
