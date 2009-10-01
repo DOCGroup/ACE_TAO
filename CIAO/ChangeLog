@@ -1,3 +1,9 @@
+Thu Oct  1 20:14:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Swapping:
+         
+          Removed, this functionality isn't in CIAO anymore. 
+
 Thu Oct  1 19:17:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
