@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef HELLO_IDL
+#define HELLO_IDL
+
 module CCM_AMI
 {
   exception InternalError
@@ -23,3 +26,5 @@ module CCM_AMI
           raises (InternalError);
     };
 };
+
+#endif

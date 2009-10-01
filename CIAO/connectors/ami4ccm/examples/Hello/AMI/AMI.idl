@@ -5,7 +5,9 @@
 
 #include <Components.idl>
 
-#include "../Hello_Base/Hello_Base.idl"
+#include "Hello_Base/Hello_Base.idl"
+#include "Hello_Base/Hello_BaseE.idl"
+#include "Hello_Base/HelloE.idl"
 
 module Hello_AMI
 {
