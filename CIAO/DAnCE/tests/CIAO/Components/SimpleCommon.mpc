@@ -7,15 +7,28 @@ project(SimpleCommon_idl_gen) : ciaoidldefaults, anytypecode {
               -Wb,stub_export_macro=SIMPLECOMMON_STUB_Export \
               -Wb,stub_export_include=SimpleCommon_stub_export.h \
               -Wb,skel_export_macro=SIMPLECOMMON_SKEL_Export \
-              -Wb,skel_export_include=SimpleCommon_skel_export.h
+              -Wb,skel_export_include=SimpleCommon_skel_export.h -Glem
 
   IDL_Files {
     SimpleCommon.idl
   }
 }
 
-project(SimpleCommon_stub) : ccm_stub {
+project(SimpleCommon_lem_gen) : ciaoidldefaults {
+  custom_only = 1
+  idlflags += -Gxhst \
+              -Wb,export_macro=SIMPLECOMMON_EXEC_Export \
+              -Wb,export_include=SimpleCommon_exec_export.h \
+              -SS
   after += SimpleCommon_idl_gen
+
+  IDL_Files {
+    SimpleCommonE.idl
+  }
+}
+
+project(SimpleCommon_stub) : ccm_stub {
+  after += SimpleCommon_lem_gen
   libs  +=
 
   sharedname = SimpleCommon_stub
@@ -26,6 +39,7 @@ project(SimpleCommon_stub) : ccm_stub {
 
   Source_Files {
     SimpleCommonC.cpp
+    SimpleCommonEC.cpp
   }
 
   Header_Files {
