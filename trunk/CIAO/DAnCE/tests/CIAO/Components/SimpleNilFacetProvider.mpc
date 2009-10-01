@@ -3,7 +3,7 @@
 
 project(SimpleCommon_SNFP_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Glfa \
+  idlflags +=  \
               -Wb,stub_export_macro=SIMPLENILFACETPROVIDER_STUB_Export \
               -Wb,stub_export_include=SimpleNilFacetProvider_stub_export.h \
               -Wb,skel_export_macro=SIMPLENILFACETPROVIDER_SVNT_Export \

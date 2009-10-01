@@ -8,7 +8,7 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami   {
               -Wb,skel_export_macro=HELLO_SKEL_Export \
               -Wb,skel_export_include=Hello_skel_export.h \
               -Wb,exec_export_macro=HELLO_EXEC_Export \
-              -Wb,exec_export_include=Hello_exec_export.h
+              -Wb,exec_export_include=Hello_exec_export.h  -Glem
 
   IDL_Files {
     Hello.idl
