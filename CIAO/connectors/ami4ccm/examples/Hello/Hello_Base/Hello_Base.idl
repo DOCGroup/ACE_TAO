@@ -5,17 +5,26 @@
 
 #include "Hello_Base/Hello.idl"
 #include "tao/Messaging/Messaging.pidl"
+
 module CCM_AMI
 {
-
   // callback interface from AMI-component to Sender component
-  interface AMI_MyFoo_callback : ::Messaging::ReplyHandler
+  interface AMI_MyFooCallback : ::Messaging::ReplyHandler
     {
-      void foo_callback_handler (in long result, in string answer);
-      void foo_callback_excep   (in ::Messaging::ExceptionHolder excep_holder);
+      void foo (in long ami_return_val, in string answer);
+      void foo_excep   (in Messaging::ExceptionHolder excep_holder);
 
-      void hello_callback_handler (in long answer);
-      void hello_callback_excep   (in ::Messaging::ExceptionHolder excep_holder);
+      void hello (in long ami_return_val);
+      void hello_excep   (in Messaging::ExceptionHolder excep_holder);
+      
+      void get_rw_attrib (in short ami_return_val);
+      void get_rw_attrib_excep (in Messaging::ExceptionHolder excep_holder);
+      
+      void set_rw_attrib ();
+      void set_rw_attrib_excep (in Messaging::ExceptionHolder excep_holder);
+      
+      void get_ro_attrib (in short ami_return_val);
+      void get_ro_attrib_excep (in Messaging::ExceptionHolder excep_holder);
     };
 
   // AMI component. Sender calls AMI-component and AMI-component calls Receiver
@@ -23,21 +32,26 @@ module CCM_AMI
   // Example of a global reply handler
   interface AMI_MyFoo
     {
-      void sendc_foo (in AMI_MyFoo_callback cb_handler, in string in_str);
-      void sendc_hello (in AMI_MyFoo_callback cb_handler);
+      void sendc_foo (in AMI_MyFooCallback ami_handler, in string in_str);
+      void sendc_hello (in AMI_MyFooCallback ami_handler);
+      
+      //asynch method for handling attributes
+      void sendc_get_rw_attrib (in AMI_MyFooCallback ami_handler);
+      void sendc_set_rw_attrib (in AMI_MyFooCallback ami_handler, in short rw_attrib);
+      void sendc_get_ro_attrib (in AMI_MyFooCallback ami_handler);
     };
 
   // callback interface from AMI-component to Sender component
   // Example of a reply handler per request.
-  interface AMI_MyInterface_callback : ::Messaging::ReplyHandler
+  interface AMI_MyInterfaceCallback : ::Messaging::ReplyHandler
     {
-      void do_something_with_something_callback_handler (in float result);
-      void do_something_with_something_callback_excep   (in ::Messaging::ExceptionHolder excep_holder);
+      void do_something_with_something (in float ami_return_val);
+      void do_something_with_something_excep   (in Messaging::ExceptionHolder excep_holder);
     };
 
   interface AMI_MyInterface
     {
-      void sendc_do_something_with_something (in AMI_MyInterface_callback cb_handler, in short something);
+      void sendc_do_something_with_something (in AMI_MyInterfaceCallback ami_handler, in short something);
     };
 };
 

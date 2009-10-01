@@ -22,8 +22,8 @@ module Hello_AMI
     uses CCM_AMI::MyInterface   run_my_interface;
 
     //provides the callback function/exception for the AMI component.
-    provides CCM_AMI::AMI_MyFoo_callback        the_my_foo_callback;
-    provides CCM_AMI::AMI_MyInterface_callback  the_my_interface_callback;
+    provides CCM_AMI::AMI_MyFooCallback        the_my_foo_callback;
+    provides CCM_AMI::AMI_MyInterfaceCallback  the_my_interface_callback;
   };
 
   home SenderHome manages Sender

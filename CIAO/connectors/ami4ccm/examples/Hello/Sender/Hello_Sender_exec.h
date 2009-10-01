@@ -92,7 +92,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   };
 
   class  MyInterface_callback_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_MyInterface_callback,
+    : public virtual ::CCM_AMI::CCM_AMI_MyInterfaceCallback,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -105,19 +105,19 @@ namespace CIAO_Hello_AMI_Sender_Impl
     // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
-    do_something_with_something_callback_handler (
-      ::CORBA::Float result);
+    do_something_with_something (
+      ::CORBA::Float ami_return_val);
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
-    do_something_with_something_callback_excep (
+    do_something_with_something_excep (
         ::Messaging::ExceptionHolder * excep_holder);
   };
 
   class  MyFoo_callback_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_MyFoo_callback,
+    : public virtual ::CCM_AMI::CCM_AMI_MyFooCallback,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -128,26 +128,40 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
+    // FOO Reply Handler
+    virtual void
+      foo (
+      ::CORBA::Long ami_return_val,
+        const char * answer);
     
     virtual void
-    foo_callback_handler (
-      ::CORBA::Long result,
-      const char * answer);
-    
-    virtual void
-    hello_callback_handler (
-      ::CORBA::Long answer);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void
-    foo_callback_excep (
+      foo_excep (
         ::Messaging::ExceptionHolder * excep_holder);
-
+    
+    // Hello Reply Handler
     virtual void
-    hello_callback_excep (
+      hello (
+        ::CORBA::Long answer);
+    virtual void
+      hello_excep (
         ::Messaging::ExceptionHolder * excep_holder);
+    
+    //GET rw_attrib Reply Handler
+    virtual void get_rw_attrib (
+      ::CORBA::Short ami_return_val);
+    virtual void get_rw_attrib_excep (
+      ::Messaging::ExceptionHolder * excep_holder);
+    
+    //SET rw_attrib Reply Handler
+    virtual void set_rw_attrib (void);
+    virtual void set_rw_attrib_excep (
+      ::Messaging::ExceptionHolder * excep_holder);
+    
+    //ro_attrib Reply Handler
+    virtual void get_ro_attrib (
+      ::CORBA::Short ami_return_val);
+    virtual void get_ro_attrib_excep (
+      ::Messaging::ExceptionHolder * excep_holder);
   };
   
   class  Sender_exec_i
@@ -164,10 +178,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     // Port operations.
     
-    virtual ::CCM_AMI::CCM_AMI_MyFoo_callback_ptr
+    virtual ::CCM_AMI::CCM_AMI_MyFooCallback_ptr
     get_the_my_foo_callback (void);
 
-    virtual ::CCM_AMI::CCM_AMI_MyInterface_callback_ptr
+    virtual ::CCM_AMI::CCM_AMI_MyInterfaceCallback_ptr
     get_the_my_interface_callback (void);
 
     // Operations from Components::SessionComponent.

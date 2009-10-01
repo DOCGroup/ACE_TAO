@@ -8,8 +8,8 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
   // Implementation of the AMI CORBA INTERFACE reply handler
   //============================================================
   AMI_MyInterface_reply_handler::AMI_MyInterface_reply_handler (
-    ::CCM_AMI::AMI_MyInterface_callback_ptr interface_callback)
-    : interface_callback_ (::CCM_AMI::AMI_MyInterface_callback::_duplicate (interface_callback))
+    ::CCM_AMI::AMI_MyInterfaceCallback_ptr interface_callback)
+    : interface_callback_ (::CCM_AMI::AMI_MyInterfaceCallback::_duplicate (interface_callback))
   {
   }
     
@@ -22,7 +22,7 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
     CORBA::Float result)
   {
     printf ("AMI CORBA :\tMyInterface Reply Handler::do_something_with_something\n");
-    interface_callback_->do_something_with_something_callback_handler (result);
+    interface_callback_->do_something_with_something (result);
     this->_remove_ref ();
   }
 
@@ -31,7 +31,7 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
     ::Messaging::ExceptionHolder * excep_holder)
   {
     printf ("AMI CORBA (INTERFACE) :\tMyInterface Reply Handler::do_something_with_something_excep\n");
-    interface_callback_->do_something_with_something_callback_excep (excep_holder);
+    interface_callback_->do_something_with_something_excep (excep_holder);
     this->_remove_ref ();
   }
   
