@@ -6,6 +6,7 @@
 #include <Components.idl>
 
 #include "Hello_Receiver_Base.idl"
+#include "Hello_Receiver_BaseE.idl"
 
 module Hello_DDS
 {

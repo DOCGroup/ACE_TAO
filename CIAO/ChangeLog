@@ -1,13 +1,49 @@
+Thu Oct  1 20:15:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_ConnectorE.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Base.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector.mpc:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_ConnectorE.idl:
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.idl:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED.idl:
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.idl:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
+        * examples/DevGuideExamples/Messenger/Messenger.idl:
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Display/GPS/GPS.idl:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Hello/Sender/Sender.idl:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Null_Component/Null_Component.idl:
+        * examples/Null_Component/Null_Component.mpc:
+        * examples/Null_Component/Null_Interface.mpc:
+
+          -Glem changes. 
+        
 Thu Oct  1 20:14:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Swapping:
-         
-          Removed, this functionality isn't in CIAO anymore. 
+
+          Removed, this functionality isn't in CIAO anymore.
 
 Thu Oct  1 19:17:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
-        
+
           Fixed export macro/include in *_lem_gen project.
 
 Thu Oct  1 18:48:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>

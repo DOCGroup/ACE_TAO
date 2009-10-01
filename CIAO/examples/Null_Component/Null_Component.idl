@@ -11,6 +11,7 @@
 
 #include <Components.idl>
 #include "Null_Interface.idl"
+#include "Null_InterfaceE.idl"
 
 
 /**

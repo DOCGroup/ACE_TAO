@@ -15,8 +15,20 @@ project(Stock_Base_idl_gen) : componentidldefaults {
   }
 }
 
+project(Stock_Base_lem_gen) : ciaoidldefaults {
+  custom_only = 1
+  after += Stock_Base_idl_gen
+  idlflags += \
+              -Wb,export_macro=STOCK_BASE_EXEC_Export \
+              -Wb,export_include=Stock_Base_exec_export.h
+
+  IDL_Files {
+    Stock_BaseE.idl
+  }
+}
+
 project(Stock_Base_stub) : ccm_stub   {
-  after += Stock_Base_idl_gen 
+  after += Stock_Base_lem_gen 
   libs  += 
   libpaths += ../lib
   libout = ../lib
@@ -28,6 +40,7 @@ project(Stock_Base_stub) : ccm_stub   {
 
   Source_Files {
     Stock_BaseC.cpp
+    Stock_BaseEC.cpp
   }
 
   Header_Files {
