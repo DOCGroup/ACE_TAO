@@ -1,3 +1,8 @@
+Thu Oct  1 19:00:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3276_Regression/run_test.pl:
+          Resolved a fuzz warning and a few script errors
+
 Thu Oct  1 18:47:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_2935_Regression/run_test.pl:
