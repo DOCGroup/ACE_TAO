@@ -146,9 +146,8 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
   if (this->open_conds_.empty ())
 	  return this->planner_->full_sched();
 
-	//Note: change this number to limit the size of the final plan.  Set true for unlimited
-	//!(this->planner_->get_working_plan()->get_all_insts().size() > 12)
-	if(!(this->planner_->get_working_plan()->get_all_insts().size() > 8)){
+	if( MAX_TASK_INSTS == -1 ||
+		!(this->planner_->get_working_plan()->get_all_insts().size() > MAX_TASK_INSTS)){
 		// Increment step counter.
 		this->cur_step_++;
 

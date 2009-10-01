@@ -29,7 +29,7 @@
 #include "ace/Log_Priority.h"
 #endif  /* SA_POP_HAS_ACE */
 
-
+#define MAX_TASK_INSTS 8
 #define ANKET 1
 #define SA_POP_DEBUG_NORMAL 5
 #define SPARTAN 9
