@@ -15,7 +15,7 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
   {
     public:
       AMI_MyInterface_reply_handler (
-        ::CCM_AMI::AMI_MyInterface_callback_ptr interface_callback);
+        ::CCM_AMI::AMI_MyInterfaceCallback_ptr interface_callback);
       ~AMI_MyInterface_reply_handler (void);
 
       void
@@ -27,7 +27,7 @@ namespace CCM_CORBA_AMI_MyInterface_Impl
         ::Messaging::ExceptionHolder * excep_holder);
 
     private:
-      ::CCM_AMI::AMI_MyInterface_callback_var interface_callback_;
+      ::CCM_AMI::AMI_MyInterfaceCallback_var interface_callback_;
   };
 
   class AMI_MyInterface_i : public POA_CCM_AMI::MyInterface
