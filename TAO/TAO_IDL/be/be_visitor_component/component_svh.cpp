@@ -51,7 +51,6 @@ int
 be_visitor_component_svh::visit_component (be_component *node)
 {
   node_ = node;
-  TAO_OutStream &os_  = *this->ctx_->stream ();
 
   if (this->gen_facets () == -1)
     {
