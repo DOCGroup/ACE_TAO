@@ -58,12 +58,12 @@ int
 be_visitor_component_svs::visit_component (be_component *node)
 {
   node_ = node;
+ 
   n_provides_ = 0UL;
   n_uses_ = 0UL;
   n_publishes_ = 0UL;
   n_emits_ = 0UL;
   n_consumes_ = 0UL;
-  TAO_OutStream &os_ = *this->ctx_->stream ();
 
   this->compute_slots (node_);
 
