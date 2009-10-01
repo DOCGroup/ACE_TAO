@@ -1,3 +1,10 @@
+Thu Oct  1 10:14:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.mpc
+        * DAnCE/tests/CIAO/Components/SimpleProvider.mpc
+          Fixed to use the new -Glfa and -Glem behaviour
+
 Tue Sep 29 14:37:17 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
