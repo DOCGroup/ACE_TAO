@@ -1,3 +1,19 @@
+Thu Oct  1 20:10:38 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * C2W/C2W_Demo.cpp:
+		Modified the graph_out adapter call to take advantage of the new function call.
+
+        * LogGraphOut.h:
+        * LogGraphOut.cpp:
+		Refactored some of the code that draws the graph, improved visualization of non-stepping graph
+
+        * SANet/SANet.h:
+        * SANet/SANet.cpp:
+		Simplified the print_graphviz function to remove outside logging code. Takes a default color. 
+
+        * SA_PlanStrategy.cpp:
+		Resolved conflict about the task restrictor.
+
 Thu Oct  1 17:25:36 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * C2W/C2W_Demo.cpp:
@@ -22,8 +38,8 @@ Thu Oct  1 17:25:36 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/PDDL_Translator.java:
 
         * utils/PDDLtoSANetTranslator/PDDLParser/src/Translator/SAN_Data/TaskNode.java:
-		
-		Various changes to the PDDL parser
+
+                Various changes to the PDDL parser
 
 Wed Aug 12 19:15:30 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 

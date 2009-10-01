@@ -33,12 +33,20 @@
 using namespace SA_POP;
 
 // Constructor.
-LogGraphOut::LogGraphOut (std::ostream &out, int startstep)
+LogGraphOut::LogGraphOut (std::ostream &out, bool startstep)
 : out_ (out)
 {
-  graphn = startstep;
+  // Set up the current step
+  if(startstep)
+  {
+    curStep = 1;
+  }
+  else
+  {
+    curStep = 0;
+  }
+  byStep = startstep;
   hasTracks = false;
-  // Nothing to do.
 }
 
 // Destructor.
@@ -91,16 +99,8 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   time_t cur_time = time(0);
   bool done = false;
 
-  /*
-  GVC_t *gvc;
-  graph_t *g;
-  FILE *fp;
 
-  mfg::DrawGraph * graph;
-  */
-  
-  //gvc = gvContext();
-  //This 
+  //This sends planning info not included in the graph to the console,  about timing windows.
   this->out_ << std::endl;
   this->out_ << "Plan (" << plan.name << ") Changed at " << std::endl;
   this->out_ << ctime (&cur_time) << std::endl;
@@ -118,7 +118,7 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   //Make sure we don't run out of bounds
   int lastime = 0;
   int plansize = 0;
-  if(graphn > 0)
+  if(byStep)
   {
 	  for (PlanInstSet::iterator inst_iter = plan.task_insts.begin ();
 		inst_iter != plan.task_insts.end ();
@@ -127,11 +127,11 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
 	  	PlanTaskInst inst = *inst_iter;
 		  startimes.push_back(inst.start_window.first);
 	  }
-
+    //Sort the tasks and grab the current latest time
 	  std::sort(startimes.begin(), startimes.end());
-	  if(graphn < startimes.size())
+	  if(curStep < startimes.size())
 	  {
-		  lastime = startimes[graphn];
+		  lastime = startimes[curStep];
 	  }
 	  else
 	  {
@@ -147,163 +147,101 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   gfile.open("GViz.dot");
 
   
-  gfile << "strict digraph graph" << graphn << " {\n";
+  gfile << "strict digraph graph" << curStep << " {\n";
   
-  if(graphn == 0)
+  //Just draw out the graph from the causal links from the plan.
+  if(!byStep)
   {
+    //Print out the entire graph first.
     planner->print_graph(gfile, graphmap);
+    //Now print out the graph of the causal links in the plan.
 	  for (CLSet::iterator cl_iter = plan.causal_links.begin ();
 		cl_iter != plan.causal_links.end ();
 		cl_iter++)
 	  {
-		CausalLink clink = *cl_iter;
-		//this->out_ << "Build Graph from links.." << std::endl;
-		gfile << "\t" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << "[shape=box];\n";
-		gfile << "\t" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " -> ";
-		gfile <<  planner->get_cond_name (clink.cond.id) << ";\n";
-		gfile << "\t" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << "[shape=box];\n";
-		gfile << "\t" << planner->get_cond_name (clink.cond.id) << " -> ";
-		gfile << planner->get_task_name (
-		  planner->get_task_from_inst (clink.second)) << "\n";
+		  CausalLink clink = *cl_iter;
+		  gfile << "\t" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << "[shape=box];\n";
+		  gfile << "\t" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " -> ";
+		  gfile <<  planner->get_cond_name (clink.cond.id) << ";\n";
+		  gfile << "\t" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << "[shape=box];\n";
+		  gfile << "\t" << planner->get_cond_name (clink.cond.id) << " -> ";
+		  gfile << planner->get_task_name (planner->get_task_from_inst (clink.second)) << "\n";
 	  }
   }
-  else if(graphn == 1)
+  // Draw out the graph as if taking the plan step by step
+  else if(byStep)
   {
+    //Format a dot file with the entire graph to get the entire structure ready to print.
     planner->print_graph(gfile, graphmap);
-	for (CLSet::iterator cl_iter = plan.causal_links.begin ();
-		cl_iter != plan.causal_links.end ();
-		cl_iter++)
-	 {
-		CausalLink clink = *cl_iter;
-		//this->out_ << "Build Graph from links.." << std::endl;
-
-		if(planner->get_start_window (clink.first).first <= lastime)
-		{
-      if(planner->get_start_window (clink.first).first == lastime && !done)
-      {
-        std::map<std::string, std::string>::iterator citer = graphmap.find(planner->get_task_name (planner->get_task_from_inst (clink.first)));
-        if(citer != graphmap.end())
+    //Propogate the image of taking a step in the plan by modifying the colors of the nodes.
+    color_step(planner);
+    //Use the timing to find the current step and color as necessary
+	  for (CLSet::iterator cl_iter = plan.causal_links.begin ();cl_iter != plan.causal_links.end ();cl_iter++)
+	  {
+		  CausalLink clink = *cl_iter;
+		  if(planner->get_start_window (clink.first).first <= lastime)
+		  {
+        //Color the current step green
+        if(planner->get_start_window (clink.first).first == lastime && !done)
         {
-          (*citer).second = "green";
-        }
-        citer = graphmap.find(planner->get_cond_name (clink.cond.id));
-        if(citer != graphmap.end())
-        {
-          (*citer).second = "green";
-        }
-        gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box, color= green];\n";
-        gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " [shape=box, style=filled ,color = orange];\n";
-		  	gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
-		  	gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
-      }
-      else
-      {
-        std::map<std::string, std::string>::iterator citer = graphmap.find(planner->get_task_name (planner->get_task_from_inst (clink.first)));
-        if(citer != graphmap.end())
-        {
-          (*citer).second = "blue";
-        }
-        citer = graphmap.find(planner->get_cond_name (clink.cond.id));
-        if(citer != graphmap.end())
-        {
-          (*citer).second = "blue";
-        }
-			  gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box, color= turquoise1];\n";
-        gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[style=filled, color = turquoise1];\n";
-		  	gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
-		  	gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
-      }
-      
-      if(planner->get_start_window (clink.second).first <= lastime)
-			{
-        if(planner->get_start_window (clink.second).first == lastime &&  !done)
-        {
-          gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box, color = green];\n";
-          //gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = green];\n";
-				  gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
-				  gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << ";\n";
+          std::map<std::string, std::string>::iterator citer = graphmap.find(planner->get_task_name (planner->get_task_from_inst (clink.first)));
+          if(citer != graphmap.end())
+          {
+            (*citer).second = "green";
+          }
+          citer = graphmap.find(planner->get_cond_name (clink.cond.id));
+          if(citer != graphmap.end())
+          {
+            (*citer).second = "green";
+          }
+          gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box, color= green];\n";
+          gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " [style=filled ,color = orange];\n";
+		  	  gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
+		  	  gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
         }
         else
         {
-				  gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box, color = turquoise1];\n";
-          gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = turquoise1];\n";
-				  gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
-				  gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << ";\n";
-			
+          //Go through and color the path to the current step blue.
+          std::map<std::string, std::string>::iterator citer = graphmap.find(planner->get_task_name (planner->get_task_from_inst (clink.first)));
+          if(citer != graphmap.end())
+          {
+            (*citer).second = "blue";
+          }
+          citer = graphmap.find(planner->get_cond_name (clink.cond.id));
+          if(citer != graphmap.end())
+          {
+            (*citer).second = "blue";
+          }
+			    gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box, color= turquoise1];\n";
+          gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[style=filled, color = turquoise1];\n";
+		  	  gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
+		  	  gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
         }
-      }
-		}
-	 }
+      
+        //Otherwise print the graph with colors that indicate that the graph has been traversed through all the steps in the plan.
+        if(planner->get_start_window (clink.second).first <= lastime)
+			  {
+          if(planner->get_start_window (clink.second).first == lastime &&  !done)
+          {
+            gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box, color = green];\n";
+            //gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = green];\n";
+				    gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
+				    gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << ";\n";
+          }
+          else
+          {
+				    gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box, color = turquoise1];\n";
+            gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = turquoise1];\n";
+				    gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
+				    gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << ";\n";
+  			
+          }
+        }
+		  }
+	  }
   }
-  else
-  {
-   for (CLSet::iterator cl_iter = plan.causal_links.begin ();
-		cl_iter != plan.causal_links.end ();
-		cl_iter++)
-	 {
-		CausalLink clink = *cl_iter;
-		//this->out_ << "Build Graph from links.." << std::endl;
-
-		if(planner->get_start_window (clink.first).first <= lastime)
-		{
-      if(planner->get_start_window (clink.first).first == lastime && !done)
-      {
-        std::map<std::string, std::string>::iterator citer = graphmap.find(planner->get_task_name (planner->get_task_from_inst (clink.first)));
-        if(citer != graphmap.end())
-        {
-          (*citer).second = "green";
-        }
-        citer = graphmap.find(planner->get_cond_name (clink.cond.id));
-        if(citer != graphmap.end())
-        {
-          (*citer).second = "green";
-        }
-        gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box, style=filled ,color= green];\n";
-        gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[ style=filled , color = orange];\n";
-		  	gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
-		  	gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
-      }
-      else
-      {
-        std::map<std::string, std::string>::iterator citer = graphmap.find(planner->get_task_name (planner->get_task_from_inst (clink.first)));
-        if(citer != graphmap.end())
-        {
-          (*citer).second = "blue";
-        }
-        citer = graphmap.find(planner->get_cond_name (clink.cond.id));
-        if(citer != graphmap.end())
-        {
-          (*citer).second = "blue";
-        }
-			  gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << "[shape=box, style=filled ,color= turquoise1];\n";
-        gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[ style=filled ,color = turquoise1];\n";
-		  	gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.first)) << " " << planner->get_task_from_inst (clink.first) << "\" " << " -> ";
-		  	gfile <<  "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << ";\n";
-      }
-      
-      if(planner->get_start_window (clink.second).first <= lastime)
-			{
-        if(planner->get_start_window (clink.second).first == lastime &&  !done)
-        {
-          gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box, style=filled , color = green];\n";
-          //gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[color = green];\n";
-				  gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
-				  gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << ";\n";
-        }
-        else
-        {
-				  gfile << "\t" << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << "[shape=box, style=filled , color = turquoise1];\n";
-          gfile <<  "\t\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << "[style=filled , color = turquoise1];\n";
-				  gfile << "\t" << "\"" << planner->get_cond_name (clink.cond.id) << " " << clink.cond.id << "\" " << " -> ";
-				  gfile << "\"" << planner->get_task_name (planner->get_task_from_inst (clink.second)) << " " << planner->get_task_from_inst (clink.second) << "\" " << ";\n";
-			
-        }
-      }
-    }
-   }
-   }
   
-  
+  //If we are tracking conditions not controlled by the plan, but that impact it(such as environmental conditions
   if(hasTracks)
   {
     for(int i = 0; i < tracks.size(); i++)
@@ -320,6 +258,8 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
       }
     }
   }
+
+  // If we are actually done with the graph, color the goal as true, and done.
   if(done)
   {
     SA_POP::GoalMap curgoals = planner->get_goals();
@@ -347,6 +287,7 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   //system("dot -Tgif GViz.dot -o step.gif");
   //system("step.gif");
 
+  //This is debug output to the console about scheduling links
   for (SchedLinkSet::iterator sched_iter = plan.sched_links.begin ();
     sched_iter != plan.sched_links.end ();
     sched_iter++)
@@ -366,13 +307,50 @@ void LogGraphOut::notify_plan (SA_POP::Planner *planner)
   this->out_ << std::endl;
 };
 
-
+//Advance a step 
 void LogGraphOut::moveStep()
 {
-	graphn++;
+	curStep++;
 };
 
+//Reset current step
 void LogGraphOut::resetStep()
 {
-	graphn = 1;
+	curStep = 1;
+};
+
+// Uses a color pattern to effect the nodes in the plan to give the impression that they are the pervious step
+void LogGraphOut::color_step(SA_POP::Planner *planner)
+{
+  Plan plan = planner->get_plan ();
+  for (CLSet::iterator cl_iter = plan.causal_links.begin (); cl_iter != plan.causal_links.end (); cl_iter++)
+	{
+		CausalLink clink = *cl_iter;
+    std::map<std::string, std::string>::iterator titer = graphmap.find(planner->get_task_name (planner->get_task_from_inst (clink.first)));
+    if(titer != graphmap.end())
+    {
+      if((*titer).second == "blue" )
+      {
+        (*titer).second = "cornflowerblue";
+    
+      }
+      else if((*titer).second == "green")
+      {
+        (*titer).second = "red";
+      }
+    }
+    std::map<std::string, std::string>::iterator citer = graphmap.find(planner->get_cond_name (clink.cond.id));
+    if(citer != graphmap.end())
+    {
+      if((*citer).second == "blue" )
+      {
+        (*citer).second = "cornflowerblue";
+    
+      }
+      else if((*citer).second == "green")
+      {
+        (*citer).second = "red";
+      }
+    }
+  }
 };

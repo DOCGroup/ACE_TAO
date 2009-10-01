@@ -180,8 +180,10 @@ namespace SANet {
     /// Print Graphviz network representation to stream.
     /**
      * @param strm  Output stream on which to print network representation.
+     * @param graphmap  The color mapping being used.
+     * @param defaultColor  The default color if it's not in the mapping.     
      */
-    virtual void print_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap);
+    virtual void print_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap, std::string defaultColor = "grey");
 
     
 

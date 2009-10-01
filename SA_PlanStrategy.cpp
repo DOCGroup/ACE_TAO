@@ -142,9 +142,9 @@ CommandID SA_PlanStrategy::get_next_cmd_id (void)
 // scheduling constraint satisfaction through call back).
 bool SA_PlanStrategy::satisfy_open_conds (void)
 {
-	// If all open conditions have been satisfied, then return true for success.
-	if (this->open_conds_.empty ())
-		return this->planner_->full_sched();
+  // If all open conditions have been satisfied, then return true for success.
+  if (this->open_conds_.empty ())
+	  return this->planner_->full_sched();
 
 	//Note: change this number to limit the size of the final plan.  Set true for unlimited
 	//!(this->planner_->get_working_plan()->get_all_insts().size() > 12)

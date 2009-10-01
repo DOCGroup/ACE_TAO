@@ -211,7 +211,7 @@ int main (int argc, char* argv[])
 
 
   SA_POP::Planner *planner = 0;
-  SA_POP::LogGraphOut graph_out	(std::cout, 1);
+  SA_POP::LogGraphOut graph_out	(std::cout, false);
   
 
 
@@ -258,7 +258,7 @@ int main (int argc, char* argv[])
     planner->add_out_adapter (&graph_out);
 	  //SA_POP::SchemaOut s_out	(std::cout, *kconds);
     //planner->add_out_adapter (&s_out);
-	  planner->add_out_adapter (&screen_out);
+	  //planner->add_out_adapter (&screen_out);
 
     planner->plan (15, goal);
 
