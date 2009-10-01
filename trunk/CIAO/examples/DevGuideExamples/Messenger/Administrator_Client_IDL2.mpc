@@ -1,6 +1,7 @@
 // $Id$
 
 project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults {
+  requires += dummy_label
   // ensures that only idl3-to-idl2 processing is performed
   custom_only = 1
 
@@ -18,6 +19,7 @@ project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults {
 }
 
 project(Administrator_Client_IDL2): ccm_stub, valuetype {
+  requires += dummy_label
   after += Administrator_Client_IDL2_Compile
 
   exename = Administrator_Client_IDL2

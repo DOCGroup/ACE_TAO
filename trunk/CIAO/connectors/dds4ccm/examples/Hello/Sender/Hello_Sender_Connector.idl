@@ -3,6 +3,8 @@
 #include <Components.idl>
 
 #include "Hello_Sender_Base.idl"
+#include "Hello_Sender_BaseE.idl"
+#include "dds4ccm/idl/dds_rtf2_dcpsE.idl"
 
 module Hello_DDS
 {

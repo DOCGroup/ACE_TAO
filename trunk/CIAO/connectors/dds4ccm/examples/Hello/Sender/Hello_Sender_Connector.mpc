@@ -11,7 +11,6 @@ project(DDS_Hello_Sender_Connector_idl_gen) : connectoridldefaults , ciao_exampl
               -Wb,exec_export_include=Hello_Sender_Connector_exec_export.h
 
   IDL_Files {
-    idlflags -= -Glem
     Hello_Sender_Connector.idl
   }
 }

@@ -3,7 +3,7 @@
 
 project(Display_GPS_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Glfa \
+  idlflags +=  \
               -Wb,stub_export_macro=GPS_STUB_Export \
               -Wb,stub_export_include=GPS_stub_export.h \
               -Wb,skel_export_macro=GPS_SVNT_Export \
