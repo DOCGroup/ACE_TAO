@@ -31,7 +31,7 @@ my $client_proxyfile = $client->LocalFile ($proxybase);
 $server->DeleteFile($proxybase);
 $client->DeleteFile($proxybase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -c $server_controlfile -p $server_proxyfile");
+$SV = $server->CreateProcess ("manager", "-ORBdebuglevel $debug_level -c $server_controlfile -p $server_proxyfile");
 $CL = $client->CreateProcess ("client", "-c file://$client_controlfile -p file://$client_proxyfile");
 $server_status = $SV->Spawn ();
 
@@ -40,20 +40,20 @@ if ($server_status != 0) {
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
+if ($server->WaitForFileTimed ($controlbase,
                                $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    print STDERR "ERROR: cannot find file <$server_controlfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+if ($server->GetFile ($controlbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_controlfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+if ($client->PutFile ($controlbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_controlfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
