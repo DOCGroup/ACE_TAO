@@ -1,3 +1,9 @@
+Thu Oct  1 11:38:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CIDL/CodeGen/CodeGen.mpc
+        * tests/IDL_Test/Reused_Facet_Interface/Reused_Facet_Interface.mpc
+          Fixed lem generation using -Glfa
+
 Thu Oct  1 11:28:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI.mpc:
