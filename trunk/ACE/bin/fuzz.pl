@@ -1416,11 +1416,11 @@ sub check_for_bad_run_test ()
                     }
 
                     if (m/PerlACE::Run_Test/) {
-                        print_error ("$file:$.: using PerlACE::Run_Test");
+                        print_error ("$file:$.: using PerlACE::Run_Test, use TestTarget::random_port");
                     }
 
                     if (m/PerlACE::random_port/) {
-                        print_error ("$file:$.: using PerlACE::random_port");
+                        print_error ("$file:$.: using PerlACE::random_port, use TestTarget::random_port");
                     }
 
                     if (m/PerlACE::Process/) {

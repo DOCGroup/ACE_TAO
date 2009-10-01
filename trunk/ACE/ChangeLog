@@ -1,3 +1,8 @@
+Thu Oct  1 12:07:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended some fuzz messages with how to fix them
+
 Wed Sep 29 09:59:44 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.6.GNU:
