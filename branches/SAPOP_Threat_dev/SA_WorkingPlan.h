@@ -365,7 +365,6 @@ namespace SA_POP {
     // State information.
     // ************************************************************************
 
-    //Ben's.  Kill if it breaks this
     CLThreatSet threat_set;
 
     /// Flag for whether command prototypes have been set.
@@ -435,8 +434,6 @@ namespace SA_POP {
 	// The set of reused task instances
 	std::multiset<TaskInstID> reused_insts_;
 
-  //I can't use sched_links_ because something craps itself when it gets a link
-  //and the tasks don't have windows.  I hate it too.
   SchedulingLinks ordering_links;
   //useful for doing the loop detection algorithm
   SchedulingLinks reverse_ordering_links;

@@ -139,23 +139,23 @@ public class TaskNode{
 	
 	public String toString(){
 		String s =  ("Action node: ["+ name+"] ID: "+nodeID);
-		
-		for(PrecondLink l: positive_preconditions){
-			s+=("\n   "+l.toString());
-		}
-		
-		for(PrecondLink l: negative_preconditions){
-			s+=("\n   "+l.toString());
-		}
-		
-		for(EffectLink l: positive_effects){
-			s+=("\n   "+l.toString());
-		}
-		
-		for(EffectLink l: negative_effects){
-			s+=("\n   "+l.toString());
-		}
-		
+//		
+//		for(PrecondLink l: positive_preconditions){
+//			s+=("\n   "+l.toString());
+//		}
+//		
+//		for(PrecondLink l: negative_preconditions){
+//			s+=("\n   "+l.toString());
+//		}
+//		
+//		for(EffectLink l: positive_effects){
+//			s+=("\n   "+l.toString());
+//		}
+//		
+//		for(EffectLink l: negative_effects){
+//			s+=("\n   "+l.toString());
+//		}
+//		
 		return s;
 	}
 }

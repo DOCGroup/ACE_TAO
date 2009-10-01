@@ -183,8 +183,6 @@ namespace SA_POP {
      */
     virtual void undo (SA_RemoveOpenThreatsCmd *cmd);
 
-    //TODO ben's crap
-
     virtual bool satisfy_everything();
     virtual bool satisfy_schedule(void);
     virtual bool get_next_threat_resolution();
