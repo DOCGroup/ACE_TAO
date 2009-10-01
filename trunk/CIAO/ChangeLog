@@ -1,3 +1,9 @@
+Thu Oct  1 19:17:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
+        
+          Fixed export macro/include in *_lem_gen project.
+
 Thu Oct  1 18:48:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
