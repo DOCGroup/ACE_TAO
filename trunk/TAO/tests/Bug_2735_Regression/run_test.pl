@@ -53,8 +53,8 @@ open(STDERR, ">&SAVEERR");
 ## It should have thrown an exception, so if the server exits
 ## with a zero status, then something is wrong.
 if ($server_status == 0) {
-  print STDERR "ERROR: server returned $server\n";
-  exit(1);
+    print STDERR "ERROR: server returned $server\n";
+    exit(1);
 }
 
 
