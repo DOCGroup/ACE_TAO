@@ -1,3 +1,12 @@
+Thu Oct  1 13:08:24 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Big_Reply/run_test.pl:
+        * tests/Big_Reply/server.cpp:
+          Fixed test errors. 
+
+        * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl:
+          Fixed some minor bugs in this script.
+
 Thu Oct  1 12:43:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_2593_Regression/run_test.pl:
