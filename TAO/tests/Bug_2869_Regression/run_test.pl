@@ -6,38 +6,40 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-unlink $iorfile;
+my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
-                                          'PerlACE::Process');
-$CL = new $class ("client");
+my $iorbase = "test.ior";
+my $client_iorfile = $client->LocalFile ($iorbase);
 
-$client = $CL->Spawn ();
+$client->DeleteFile($iorbase);
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+$CL = $client->CreateProcess ("client");
+
+$client_status = $CL->Spawn ();
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+if ($client->WaitForFileTimed ($iorbase,
+                        $client->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$client_iorfile>\n";
     $CL->Kill (); $CL->TimedWait (1);
     exit 1;
 }
 
-$client = $CL->WaitKill (15);
+$client_status = $CL->WaitKill ($client->ProcessStopWaitInterval ());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-unlink $iorfile;
+$client->DeleteFile($iorbase);
 
 exit $status;
