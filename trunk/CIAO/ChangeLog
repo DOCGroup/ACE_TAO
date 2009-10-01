@@ -1,3 +1,17 @@
+Thu Oct  1 14:52:07 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.mpc:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello.idl:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.mpc:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.mpc:
+
+         New -Glem behavior. 
+        
 Thu Oct  1 14:32:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleCommon.mpc:
@@ -6,8 +20,8 @@ Thu Oct  1 14:32:08 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/Components/SimpleProvider.idl:
         * DAnCE/tests/CIAO/Components/SimpleProvider.mpc:
 
-          New -Glem behavior. 
-        
+          New -Glem behavior.
+
 Thu Oct  1 11:38:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CIDL/CodeGen/CodeGen.mpc

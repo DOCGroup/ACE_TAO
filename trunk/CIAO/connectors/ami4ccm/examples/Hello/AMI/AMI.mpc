@@ -3,13 +3,14 @@
 
 project(Hello_Base_AMI_idl_gen) : componentidldefaults   {
   custom_only = 1
-  idlflags += -Glfa \
+  idlflags +=  \
               -Wb,stub_export_macro=AMI_STUB_Export \
               -Wb,stub_export_include=AMI_stub_export.h \
               -Wb,skel_export_macro=AMI_SVNT_Export \
               -Wb,skel_export_include=AMI_svnt_export.h \
               -Wb,exec_export_macro=AMI_EXEC_Export \
-              -Wb,exec_export_include=AMI_exec_export.h 
+              -Wb,exec_export_include=AMI_exec_export.h \ 
+              -I..
 
   IDL_Files {
     AMI.idl
@@ -21,7 +22,7 @@ project(Hello_Base_AMI_lem_gen) : ciaoidldefaults   {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=AMI_LEM_STUB_Export \
               -Wb,stub_export_include=AMI_lem_stub_export.h \
-              -SS -Gxhst
+              -SS -Gxhst -I..
 
   IDL_Files {
     AMIE.idl
@@ -35,7 +36,7 @@ project(Hello_Base_AMI_lem_stub) : ccm_svnt, ami   {
   libout = ../lib
   sharedname = AMI_lem_stub
   dynamicflags   = AMI_LEM_STUB_BUILD_DLL
-
+  includes += ..
   IDL_Files {
   }
 
@@ -60,7 +61,7 @@ project(Hello_Base_AMI_stub) : ccm_stub, ami   {
   libout = ../lib
   sharedname = AMI_stub
   dynamicflags   = AMI_STUB_BUILD_DLL
-
+  includes += ..
   IDL_Files {
   }
 
@@ -85,7 +86,7 @@ project(Hello_Base_AMI_exec) : ciao_executor, ami   {
   libpaths += ../lib
   libout = ../lib
   dynamicflags   = AMI_EXEC_BUILD_DLL
-
+  includes += ..
   IDL_Files {
   }
 
@@ -116,7 +117,7 @@ project(Hello_Base_AMI_svnt) : ciao_servant, ami   {
   libpaths += ../lib
   libout = ../lib
   dynamicflags = AMI_SVNT_BUILD_DLL
-
+  includes += ..
   IDL_Files {
   }
 

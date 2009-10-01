@@ -1,6 +1,9 @@
 // $Id$
 
-#include "Hello.idl"
+#ifndef HELLO_BASE_IDL
+#define HELLO_BASE_IDL
+
+#include "Hello_Base/Hello.idl"
 #include "tao/Messaging/Messaging.pidl"
 module CCM_AMI
 {
@@ -37,3 +40,5 @@ module CCM_AMI
       void sendc_do_something_with_something (in AMI_MyInterface_callback cb_handler, in short something);
     };
 };
+
+#endif /* HELLO_BASE_IDL */
