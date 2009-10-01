@@ -26,7 +26,7 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
 $endpoints = "-ORBEndpoint shmiop://12345 -ORBEndpoint iiop://:"
-    . PerlACE::random_port();
+    . PerlACE::TestTarget::RandomPort(5000);
 $debug_conf = "-ORBDebugLevel $debug_level";
 $svc_conf = "-ORBSvcConf server.conf";
 

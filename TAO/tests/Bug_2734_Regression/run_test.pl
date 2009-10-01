@@ -19,12 +19,10 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
 my $status = 0;
-my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
-                                          'PerlACE::Process');
 my $SV = $server->CreateProcess ("server", "-o $server_iorfile");
 my $CL = $client->CreateProcess ("client", "-ORBid ClientORB -k file://$client_iorfile -l 35 -h 40");
 
-$server_status = $SV->Spawn ();
+my $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
@@ -38,7 +36,7 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
