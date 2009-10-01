@@ -1,3 +1,9 @@
+Thu Oct  1 13:44:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Removed duplicate Timer_Queuefwd.h. Thanks to Christian Ehrlicher
+          <Ch dot Ehrlicher at gmx dot de> for reporting this
+
 Thu Oct  1 12:07:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
