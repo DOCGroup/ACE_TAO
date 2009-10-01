@@ -5,6 +5,7 @@
 
 
 #include "../Hello_Base/Hello_Base.idl"
+#include "../Hello_Base/Hello_BaseE.idl"
 
 module Hello
 {

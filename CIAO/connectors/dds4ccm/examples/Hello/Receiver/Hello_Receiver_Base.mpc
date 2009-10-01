@@ -8,15 +8,27 @@ project(DDS_Hello_Receiver_Base_idl_gen) : connectoridldefaults , ciao_example_o
               -Wb,skel_export_macro=HELLO_RECEIVER_BASE_SKEL_Export \
               -Wb,skel_export_include=Hello_Receiver_Base_skel_export.h \
               -Wb,exec_export_macro=HELLO_RECEIVER_BASE_EXEC_Export \
-              -Wb,exec_export_include=Hello_Receiver_Base_exec_export.h
+              -Wb,exec_export_include=Hello_Receiver_Base_exec_export.h -I$(CIAO_ROOT)/connectors
 
   IDL_Files {
     Hello_Receiver_Base.idl
   }
 }
 
-project(DDS_Hello_Receiver_Base_stub) : ccm_stub , ciao_example_output, dds4ccm_base  {
+project(DDS_Hello_Receiver_Base_lem_gen) : ciaoidldefaults, ciao_example_output, dds4ccm_base  {
+  custom_only = 1
   after += DDS_Hello_Receiver_Base_idl_gen
+  idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_BASE_STUB_Export \
+              -Wb,stub_export_include=Hello_Receiver_Base_stub_export.h  -SS \
+              -Gxhst -I$(CIAO_ROOT)/connectors
+
+  IDL_Files {
+    Hello_Receiver_BaseE.idl
+  }
+}
+
+project(DDS_Hello_Receiver_Base_stub) : ccm_stub , ciao_example_output, dds4ccm_base  {
+  after += DDS_Hello_Receiver_Base_lem_gen
   libs  +=
 
   sharedname = DDS_Hello_Receiver_Base_stub
@@ -27,6 +39,7 @@ project(DDS_Hello_Receiver_Base_stub) : ccm_stub , ciao_example_output, dds4ccm_
 
   Source_Files {
     Hello_Receiver_BaseC.cpp
+    Hello_Receiver_BaseEC.cpp
   }
 
   Header_Files {

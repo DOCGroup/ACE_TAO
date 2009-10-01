@@ -11,6 +11,7 @@
 #define GPS_IDL
 
 #include "../Display_Base/Display_Base.idl"
+#include "../Display_Base/Display_BaseE.idl"
 
 module HUDisplay
 {

@@ -1,8 +1,14 @@
 // $Id$
 
+#ifndef HELLO_RECEIVER_BASE_IDL
+#define HELLO_RECEIVER_BASE_IDL
+
 #include "dds4ccm/idl/dds4ccm_Base.idl3"
+#include "dds4ccm/idl/dds4ccm_BaseE.idl"
 #include "dds4ccm/idl/dds4ccm_ListenerControl.idl3"
+#include "dds4ccm/idl/dds4ccm_ListenerControlE.idl"
 #include "dds4ccm/idl/dds4ccm_PortStatusListener.idl3"
+#include "dds4ccm/idl/dds4ccm_PortStatusListenerE.idl"
 
 module CCM_DDS
 {
@@ -34,3 +40,5 @@ module CCM_DDS
     void on_data (in string an_instance, in ReadInfo info);
   };
 };
+
+#endif

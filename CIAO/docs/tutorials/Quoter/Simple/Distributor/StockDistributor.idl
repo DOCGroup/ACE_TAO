@@ -4,6 +4,7 @@
 #define STOCKDISTRIBUTOR_IDL
 
 #include "../Stock_Base/Stock_Base.idl"
+#include "../Stock_Base/Stock_BaseE.idl"
 
 module Stock
 {

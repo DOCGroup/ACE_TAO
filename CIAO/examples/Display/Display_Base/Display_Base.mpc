@@ -13,8 +13,18 @@ project(Display_Base_idl_gen) : componentidldefaults {
   }
 }
 
+project(Display_Base_lem_gen) : ciaoidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=DISPLAY_BASE_STUB_Export \
+              -Wb,stub_export_include=Display_Base_stub_export.h \
+ 
+  IDL_Files {
+    Display_BaseE.idl
+  }
+}
+
 project(Display_Base_stub) : ccm_stub {
-  after += Display_Base_idl_gen
+  after += Display_Base_lem_gen
   libout = ../lib
   libpaths += ../lib
 
@@ -26,6 +36,7 @@ project(Display_Base_stub) : ccm_stub {
 
   Source_Files {
     Display_BaseC.cpp
+    Display_BaseEC.cpp
   }
 
   Header_Files {

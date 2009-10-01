@@ -2,14 +2,13 @@
 
 project(BMClosedED_idl_gen) : componentidldefaults {
   custom_only = 1
-  idlflags += -Glfa -I $(CIAO_ROOT)/examples/BasicSP \
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
               -Wb,stub_export_macro=BMCLOSEDED_STUB_Export \
               -Wb,stub_export_include=BMClosedED_stub_export.h \
               -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export \
               -Wb,skel_export_include=BMClosedED_svnt_export.h \
               -Wb,exec_export_macro=BMCLOSEDED_EXEC_Export \
               -Wb,exec_export_include=BMClosedED_exec_export.h \
-              -Glfa
 
   IDL_Files {
     BMClosedED.idl

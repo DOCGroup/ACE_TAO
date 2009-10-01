@@ -13,11 +13,11 @@ project(Hello_Base_idl_gen) : componentidldefaults {
   }
 }
 
-project(Hello_Base_lem_gen) : componentidldefaults {
+project(Hello_Base_lem_gen) : ciaoidldefaults {
   custom_only = 1
   after += Hello_Base_idl_gen
-//  idlflags += -Wb,export_macro=HELLO_BASE_EXEC_Export \
-//              -Wb,export_include=Hello_Base_exec_export.h
+  idlflags += -Wb,export_macro=HELLO_BASE_STUB_Export \
+              -Wb,export_include=Hello_Base_stub_export.h
 
   IDL_Files {
     Hello_BaseE.idl
@@ -25,7 +25,7 @@ project(Hello_Base_lem_gen) : componentidldefaults {
 }
 
 project(Hello_Base_stub) : ccm_stub {
-  after += Hello_Base_idl_gen
+  after += Hello_Base_lem_gen
   libout = ../lib
   sharedname = Hello_Base_stub
   dynamicflags   = HELLO_BASE_STUB_BUILD_DLL
@@ -35,6 +35,7 @@ project(Hello_Base_stub) : ccm_stub {
 
   Source_Files {
     Hello_BaseC.cpp
+    Hello_BaseEC.cpp
   }
 
   Header_Files {
