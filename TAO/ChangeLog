@@ -1,3 +1,12 @@
+Fri Oct  2 11:33:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled some tests for ce/labview/fuzz
+
+        * tests/CodeSets/simple/run_test.pl:
+        * tests/Hang_Shutdown/run_test.pl:
+          Converted to the new test framework
+
 Fri Oct  2 11:05:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
