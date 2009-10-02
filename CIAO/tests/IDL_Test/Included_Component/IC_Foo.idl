@@ -1,4 +1,6 @@
 // $Id$
+#ifndef IC_Foo_IDL
+#define IC_Foo_IDL
 
 #include <Components.idl>
 
@@ -6,3 +8,5 @@ component Foo
 {
 };
 
+
+#endif

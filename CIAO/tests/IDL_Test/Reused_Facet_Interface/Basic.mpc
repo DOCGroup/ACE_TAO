@@ -7,15 +7,29 @@ project(Reused_Facet_Interface_Basic_idl_gen) : ciaoidldefaults, anytypecode {
               -Wb,stub_export_include=Basic_stub_export.h \
               -Wb,skel_export_macro=BASIC_SKEL_Export \
               -Wb,skel_export_include=Basic_skel_export.h \
-              -Gxhst -Gxhsk
+              -Gxhst -Gxhsk -Glem
 
   IDL_Files {
     Basic.idl
   }
 }
 
-project(Reused_Facet_Interface_Basic_stub) : ccm_stub {
+project(Reused_Facet_Interface_Basic_lem_gen) : ciaoidldefaults, anytypecode {
+  custom_only = 1
   after += Reused_Facet_Interface_Basic_idl_gen
+  idlflags += -Wb,stub_export_macro=BASIC_STUB_Export \
+              -Wb,stub_export_include=Basic_stub_export.h \
+              -Wb,skel_export_macro=BASIC_SKEL_Export \
+              -Wb,skel_export_include=Basic_skel_export.h \
+              -Gxhst 
+
+  IDL_Files {
+    BasicE.idl
+  }
+}
+
+project(Reused_Facet_Interface_Basic_stub) : ccm_stub {
+  after += Reused_Facet_Interface_Basic_lem_gen
   libs  +=
 
   sharedname = Basic_stub
@@ -26,6 +40,7 @@ project(Reused_Facet_Interface_Basic_stub) : ccm_stub {
 
   Source_Files {
     BasicC.cpp
+    BasicEC.cpp
   }
 
   Header_Files {
