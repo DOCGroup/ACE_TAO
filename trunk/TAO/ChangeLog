@@ -1,3 +1,9 @@
+Fri Oct  2 14:46:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
+          Resolved some fuzz errors.
+
 Fri Oct  2 14:07:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl:
