@@ -13,6 +13,7 @@
 
 #include <Components.idl>
 #include "../Benchmark.idl"
+#include "../BenchmarkE.idl"
 
 module Benchmark
 {

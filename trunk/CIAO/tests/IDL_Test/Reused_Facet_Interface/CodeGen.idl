@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Basic.idl"
+#include "BasicE.idl"
 
 module Basic
 {

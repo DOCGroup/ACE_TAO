@@ -1,5 +1,6 @@
 // $Id$
-
+#ifndef PROTOCOLS_IDL
+#define PROTOCOLS_IDL
 module Protocols
 {
   interface test
@@ -27,3 +28,5 @@ module Protocols
                         inout octets payload);
   };
 };
+
+#endif
