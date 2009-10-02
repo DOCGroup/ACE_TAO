@@ -14,10 +14,11 @@ project(Display_Base_idl_gen) : componentidldefaults {
 }
 
 project(Display_Base_lem_gen) : ciaoidldefaults {
+  after += Display_Base_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DISPLAY_BASE_STUB_Export \
               -Wb,stub_export_include=Display_Base_stub_export.h \
- 
+
   IDL_Files {
     Display_BaseE.idl
   }
