@@ -18,8 +18,8 @@ project(DDS_Hello_Sender_Base_idl_gen) : connectoridldefaults , ciao_example_out
 project(DDS_Hello_Sender_Base_lem_gen) : ciaoidldefaults , ciao_example_output, dds4ccm_base  {
   after += DDS_Hello_Sender_Base_idl_gen
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=HELLO_SENDER_BASE_LEM_STUB_Export \
-              -Wb,stub_export_include=Hello_Sender_Base_lem_stub_export.h \
+  idlflags += -Wb,stub_export_macro=HELLO_SENDER_BASE_STUB_Export \
+              -Wb,stub_export_include=Hello_Sender_Base_stub_export.h \
               -SS -Gxhst -I$(CIAO_ROOT)/connectors
 
   IDL_Files {
