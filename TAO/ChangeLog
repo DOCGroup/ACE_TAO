@@ -1,3 +1,9 @@
+Fri Oct  2 07:11:45 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/StringSeqE.idl:
+        * tao/StringSeqEC.h:
+          Removed, not needed anymore with the new -Glem behaviour
+
 Thu Oct  1 19:24:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/tao_orb_tests.lst:
