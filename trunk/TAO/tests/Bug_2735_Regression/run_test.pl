@@ -18,14 +18,14 @@ $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+    exit (1);
 }
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
+    exit (1);
 }
 
 ## Next, test that the -ORBSvcConfDirective gives an error with bad
@@ -34,15 +34,15 @@ $SV = $server->CreateProcess ("server", "-f");
 
 ## Run the server, but redirect stdout and stderr to /dev/null
 ## so that the errors messages don't show up on the scoreboard
-open(SAVEOUT, ">&STDOUT");
-open(SAVEERR, ">&STDERR");
+
 open(STDOUT, '>' . File::Spec->devnull());
 open(STDERR, ">&STDOUT");
+
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+    exit (1);
 }
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
