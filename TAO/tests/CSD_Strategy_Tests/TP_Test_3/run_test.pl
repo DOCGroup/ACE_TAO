@@ -35,77 +35,66 @@ my @client_iorfile;
 
 my $ARGC = @ARGV;
 
-if ($ARGC > 0)
-{
-  if ($ARGC > 1)
-  {
-    print STDERR "ERROR: Too many command-line arguments for $0.\n";
-    exit 1;
-  }
+if ($ARGC > 0) {
+    if ($ARGC > 1) {
+        print STDERR "ERROR: Too many command-line arguments for $0.\n";
+        exit 1;
+    }
 
-  my $subtest = $ARGV[0];
+    my $subtest = $ARGV[0];
 
-  if ($subtest eq 'remote')
-  {
-    $num_remote_clients = 40;
-  }
-  elsif ($subtest eq 'collocated')
-  {
-    $num_remote_clients = 0;
-    $num_collocated_clients = 1;
-    $num_csd_threads=1;
-  }
-  elsif ($subtest eq 'remote_orbthreads')
-  {
-    $num_orb_threads = 5;
-    $num_remote_clients = 40;
-  }
-  elsif ($subtest eq 'remote_servants')
-  {
-    $num_servants = 5;
-    $num_remote_clients = 40;
-  }
-  elsif ($subtest eq 'remote_csdthreads')
-  {
-    $num_csd_threads = 5;
-    $num_remote_clients = 40;
-  }
-  elsif ($subtest eq 'remote_big')
-  {
-    $num_csd_threads = 5;
-    $num_servants = 10;
-    $num_orb_threads = 4;
-    $num_remote_clients = 40;
-  }
-  elsif ($subtest eq 'big')
-  {
-    $num_csd_threads = 5;
-    $num_servants = 10;
-    $num_orb_threads = 4;
-    $num_remote_clients = 40;
-    $num_collocated_clients = 40;
-  }
-  elsif ($subtest eq 'usage')
-  {
-    print STDOUT "Usage: $0 [<subtest>]\n" .
-                 "\n" .
-                 "Supported <subtest> values:\n" .
-                 "\n" .
-                 "\tremote\n" .
-                 "\tcollocated\n" .
-                 "\tremote_orbthreads\n" .
-                 "\tremote_servants\n" .
-                 "\tremote_csdthreads\n" .
-                 "\tremote_big\n" .
-                 "\tusage\n" .
-                 "\n";
-    exit 0;
-  }
-  else
-  {
-    print STDERR "ERROR: invalid subtest argument for $0: $subtest\n";
-    exit 1;
-  }
+    if ($subtest eq 'remote') {
+        $num_remote_clients = 40;
+    }
+    elsif ($subtest eq 'collocated') {
+        $num_remote_clients = 0;
+        $num_collocated_clients = 1;
+        $num_csd_threads=1;
+    }
+    elsif ($subtest eq 'remote_orbthreads') {
+        $num_orb_threads = 5;
+        $num_remote_clients = 40;
+    }
+    elsif ($subtest eq 'remote_servants') {
+        $num_servants = 5;
+        $num_remote_clients = 40;
+    }
+    elsif ($subtest eq 'remote_csdthreads') {
+        $num_csd_threads = 5;
+        $num_remote_clients = 40;
+    }
+    elsif ($subtest eq 'remote_big') {
+        $num_csd_threads = 5;
+        $num_servants = 10;
+        $num_orb_threads = 4;
+        $num_remote_clients = 40;
+    }
+    elsif ($subtest eq 'big') {
+        $num_csd_threads = 5;
+        $num_servants = 10;
+        $num_orb_threads = 4;
+        $num_remote_clients = 40;
+        $num_collocated_clients = 40;
+    }
+    elsif ($subtest eq 'usage') {
+        print STDOUT "Usage: $0 [<subtest>]\n" .
+                    "\n" .
+                    "Supported <subtest> values:\n" .
+                    "\n" .
+                    "\tremote\n" .
+                    "\tcollocated\n" .
+                    "\tremote_orbthreads\n" .
+                    "\tremote_servants\n" .
+                    "\tremote_csdthreads\n" .
+                    "\tremote_big\n" .
+                    "\tusage\n" .
+                    "\n";
+        exit 0;
+    }
+    else {
+        print STDERR "ERROR: invalid subtest argument for $0: $subtest\n";
+        exit 1;
+    }
 }
 
 #Fill array and delete old ior files.
@@ -156,8 +145,7 @@ for ($i = 0; $i < $num_remote_clients; $i++)
 {
     $client_status = $CLS[$i]->WaitKill($client->ProcessStopWaitInterval ());
 
-    if ($client_status != 0)
-    {
+    if ($client_status != 0) {
         print STDERR "ERROR: client $i returned $client_status\n";
         $status = 1;
     }
