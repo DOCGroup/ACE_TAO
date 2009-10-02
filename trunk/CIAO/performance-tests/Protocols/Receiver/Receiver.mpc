@@ -3,6 +3,7 @@
 
 project(Protocols_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
+  after += Protocols_idl_gen
   idlflags +=  \
               -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
