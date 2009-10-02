@@ -99,9 +99,12 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
       return ACE_OS::cond_wait (&this->cond_,
                                 &mutex.lock_);
   else
-    return ACE_OS::cond_timedwait (&this->cond_,
-                                   &mutex.lock_,
-                                   (ACE_Time_Value *) abstime);
+    {
+      ACE_Time_Value tv = *abstime;
+      return ACE_OS::cond_timedwait (&this->cond_,
+                                     &mutex.lock_,
+                                     &tv);
+    }
 }
 
 // Peform an "alertable" timed wait.  If the argument ABSTIME == 0
