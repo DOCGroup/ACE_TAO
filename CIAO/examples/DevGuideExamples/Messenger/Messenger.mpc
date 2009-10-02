@@ -18,7 +18,7 @@ project(Messenger_idl_gen) : componentidldefaults {
     Publication.idl
     Message.idl
     History.idl
-    Messenger.idl
+    Messenger.idl << PublicationE.idl MessageE.idl HistoryE.idl RunnableE.idl
   }
 }
 

@@ -2,6 +2,7 @@
 
 project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults {
   requires += dummy_label
+  after += Messenger_idl_gen Messenger_Administrator_idl_gen
   // ensures that only idl3-to-idl2 processing is performed
   custom_only = 1
 
