@@ -104,11 +104,12 @@ project(AMI_Hello_Base_Hello_Sender_exec) : ciao_executor, ami  {
 
 
 project(AMI_Hello_Base_Hello_Sender_svnt) : ciao_servant, ami   {
-  after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Sender_lem_stub
+  after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_exec
   sharedname  = Hello_Sender_svnt
   libs       += Hello_Sender_stub Hello_Sender_lem_stub  \
                 Hello_Base_skel \
-                Hello_Base_stub
+                Hello_Base_stub \
+                Hello_Base_exec
   libpaths += ../lib
   libout = ../lib
   dynamicflags = HELLO_SENDER_SVNT_BUILD_DLL
