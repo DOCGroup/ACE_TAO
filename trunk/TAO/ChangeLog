@@ -1,3 +1,13 @@
+Fri Oct  2 09:12:20 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled Bug_3154_Regression for ce/labview/fuzz
+
+        * tests/HandleExhaustion/run_test.pl:
+        * tests/OBV/Collocated/Forward/run_test.pl:
+        * tests/OBV/TC_Alignment/run_test.pl:
+          Converted to the new test framework
+
 Fri Oct  2 08:35:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_2735_Regression/run_test.pl:
