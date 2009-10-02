@@ -17,12 +17,12 @@ $idl_process = PerlACE::TestTarget::create_target (1) || die "Create target 1 fa
 
 # IDL file names
 $idlbase = "test.idl";
-$idl_file = $idl_process->LocalFile ("test.idl");
+$idl_process->LocalFile ($idlbase);
 
 # The IDL compiler
 $TAO_IDL = $idl_process->CreateProcess ("$tao_idl");
 if (exists $ENV{HOST_ROOT}) {
-  $TAO_IDL->IgnoreHostRoot(1);
+    $TAO_IDL->IgnoreHostRoot(1);
 }
 $ENV{'INCLUDE'} = ":$ENV{TAO_ROOT}/orbsvcs/:$ENV{TAO_ROOT}/:";
 
@@ -33,8 +33,7 @@ $found = 0;
 
 $stub_h = $idl_process->LocalFile("test_stub.h");
 open (STUB_HANDLE, "<$stub_h");
-while ($line = <STUB_HANDLE>)
-{
+while ($line = <STUB_HANDLE>) {
     # Process the line.
     chomp $line;
 
@@ -55,8 +54,7 @@ close(STUB_HANDLE);
 
 $skel_h = $idl_process->LocalFile("test_skel.h");
 open (SKEL_HANDLE, "<$skel_h");
-while ($line = <SKEL_HANDLE>)
-{
+while ($line = <SKEL_HANDLE>) {
     # Process the line.
     chomp $line;
 
