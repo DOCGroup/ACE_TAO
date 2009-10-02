@@ -1,3 +1,10 @@
+Fri Oct  2 18:30:12 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+        
+          Fixed some dependency problems.
+
 Fri Oct  2 14:01:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
