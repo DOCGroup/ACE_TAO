@@ -1,3 +1,28 @@
+Fri Oct  2 18:32:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/be_global.cpp:
+        * tools/IDL3_to_IDL2/be_produce.cpp:
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        
+          Replaced the -x <filename> option, which manually
+          excluded an IDL file include from getting its processed
+          name decorated with '_IDL2', with a mechanims that
+          detects automatically which included IDL files have
+          no IDL3 constructs, and skips mangling their processed
+          included name accordingly.
+          
+        * tests/IDL3/ImpliedIDL/All/all.mpc:
+        * tests/IDL3/ImpliedIDL/All/pass_through.idl:
+        
+          Minor changes to this test of idl3_to_idl2.
+          
+        * tools/IDL3_to_IDL2/README:
+        * docs/releasenotes/index.html:
+        
+          Updated documentation.
+
 Fri Oct  2 18:30:12 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/DevGuideExamples/Messenger/Administrator_Client_IDL2.mpc:

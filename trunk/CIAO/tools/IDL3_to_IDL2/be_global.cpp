@@ -41,18 +41,6 @@ BE_GlobalData::~BE_GlobalData (void)
 {
 }
 
-const char *
-BE_GlobalData::filename (void) const
-{
-  return this->filename_;
-}
-
-void
-BE_GlobalData::filename (char *fname)
-{
-  this->filename_ = fname;
-}
-
 const char*
 BE_GlobalData::output_dir (void) const
 {
@@ -78,6 +66,12 @@ BE_GlobalData::excluded_filenames (void)
   return this->excluded_filenames_;
 }
 
+void
+BE_GlobalData::set_excluded_filenames (const char *filenames)
+{
+  this->excluded_filenames_ = filenames;
+}
+
 bool
 BE_GlobalData::gen_copyright (void) const
 {
@@ -101,22 +95,6 @@ BE_GlobalData::parse_args (long &i, char **av)
         else
           {
             this->output_dir (av[i] + 2);
-          }
-        break;
-      case 'x':
-        if (this->excluded_filenames_ != "")
-          {
-            this->excluded_filenames_ += " ";
-          }
-
-        if (av[i][2] == '\0')
-          {
-            this->excluded_filenames_ += av [i + 1];
-            i++;
-          }
-        else
-          {
-            this->excluded_filenames_ += av[i] + 2;
           }
         break;
       case 'e':
@@ -153,11 +131,6 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -o <dir>\t\tOutput directory for the generated file.")
       ACE_TEXT (" Default is current directory\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -x <filename>\t\tIncluded IDL file that wasn't processed")
-      ACE_TEXT (" by this tool (regenerate include directive unchanged)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

@@ -110,16 +110,13 @@ BE_produce (void)
     
   checking_visitor c_visitor;
       
-  if (be_global->encapsulate_idl2 ())
+  if (c_visitor.visit_root (ast_root) == -1)
     {
-      if (c_visitor.visit_root (ast_root) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%N:%l) BE_produce - failed")
-                      ACE_TEXT (" to accept checking visitor\n")));
-                      
-          BE_abort ();
-        }
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%N:%l) BE_produce - failed")
+                  ACE_TEXT (" to accept checking visitor\n")));
+                  
+      BE_abort ();
     }
    
   // Create and launch the 'equivalent IDL' visitor only if IDL3

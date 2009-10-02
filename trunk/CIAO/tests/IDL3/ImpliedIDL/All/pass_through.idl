@@ -13,6 +13,7 @@
 #pragma prefix "glooby"
 
 #include "include.idl"
+#include "keyword_clash.idl"
 #include "raw_include.idl"
 
 module pre_mod
