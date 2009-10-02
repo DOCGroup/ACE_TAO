@@ -1,3 +1,10 @@
+Fri Oct  2 08:36:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Base.idl:
+        * performance-tests/Protocols/common/Protocols.idl:
+        * tests/IDL_Test/Included_Component/IC_Foo.idl:
+          Resolved some fuzz errors/warnings.
+
 Fri Oct  2 08:22:34 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.mpc
