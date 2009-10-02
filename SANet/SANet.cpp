@@ -14,6 +14,7 @@
 #include <map>
 #include <iostream>
 #include "SANet_Types.h"
+#include "SA_POP_Types.h"
 #include "SANet.h"
 #include "SANode.h"
 #include "SANet_Exceptions.h"
@@ -406,15 +407,15 @@ void SANet::Network::update (int max_steps)
     }
   }
 
+  //Until the initial task is not a task, we need to ensure that it always has a higher
+  //utility than anything else so it is considered first as a way to satisfy a task.
   double max_util = 0;
   for(TaskNodeMap::iterator it = task_nodes_.begin(); it != task_nodes_.end(); it++){
 	  if(it->second->get_pos_util().utility > max_util){
 		  max_util = it->second->get_pos_util().utility;
-	  }
-	  
+	  }	  
   }
-
-  task_nodes_.find(20)->second->set_pos_util(max_util*2);
+  task_nodes_.find(SA_POP::INIT_TASK_ID)->second->set_pos_util(max_util*2);
 
 };
 

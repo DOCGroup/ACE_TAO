@@ -223,7 +223,7 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 			to_sort.note_instance(it->second);
 		  }
 	
-		  if(!(iter->second == 20 && this->planner_->init_added)){
+		  if(!(iter->second == INIT_TASK_ID && this->planner_->init_added)){
 			tasks_with_existing_instances.push_back(to_sort);
 		 }
 	  
@@ -258,7 +258,7 @@ TaskChoiceList SA_TaskStrategy::choose_task (Condition open_cond)
   TaskSet tasks = this->planner_->get_satisfying_tasks (open_cond);
 
   if(this->planner_->init_added){
-    tasks.erase(20);
+    tasks.erase(INIT_TASK_ID);
   }
     
   // Add tasks to map with EU (to sort).
@@ -278,7 +278,6 @@ TaskChoiceList SA_TaskStrategy::choose_task (Condition open_cond)
 
   for(InstToTaskMap::iterator it = inst_task_map.begin(); 
 	  it != inst_task_map.end(); it++){
-
 		  tasks_to_insts.insert(std::pair<TaskID, TaskInstID>(it->second, it->first));
   }
 
