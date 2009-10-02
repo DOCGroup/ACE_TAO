@@ -30,7 +30,7 @@ if ($server_status != 0) {
 
 ## Next, test that the -ORBSvcConfDirective gives an error with bad
 ## options.
-my $SV = $server->CreateProcess ("server", "-f");
+$SV = $server->CreateProcess ("server", "-f");
 
 ## Run the server, but redirect stdout and stderr to /dev/null
 ## so that the errors messages don't show up on the scoreboard
