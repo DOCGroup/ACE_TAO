@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n -c server Benchmark"
 
-project(Benchmark_idl_gen) : ciaoidldefaults, anytypecode {
+project(Benchmark_idl_gen) : componentidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BENCHMARK_STUB_Export \
               -Wb,stub_export_include=Benchmark_stub_export.h \
@@ -13,8 +13,19 @@ project(Benchmark_idl_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
+project(Benchmark_lem_gen) : ciaoidldefaults, anytypecode {
+  after += Benchmark_lem_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=BENCHMARK_STUB_Export \
+              -Wb,stub_export_include=Benchmark_stub_export.h -SS
+
+  IDL_Files {
+    BenchmarkE.idl
+  }
+}
+
 project(Benchmark_stub) : ccm_stub {
-  after += Benchmark_idl_gen
+  after += Benchmark_lem_gen
   libs  +=
 
   sharedname = Benchmark_stub
@@ -24,6 +35,7 @@ project(Benchmark_stub) : ccm_stub {
   }
 
   Source_Files {
+    BenchmarkEC.cpp
     BenchmarkC.cpp
   }
 
@@ -66,7 +78,7 @@ project(Benchmark_skel) : ciao_executor {
 project (Benchmark_server) : taoserver, strategies, ciao_executor {
   exename = server
   after += Benchmark_skel
-  libs  += Benchmark_skel Benchmark_stub
+  libs  += Benchmark_skel Benchmark_stub Benchmark_stub
 
   IDL_Files {
   }

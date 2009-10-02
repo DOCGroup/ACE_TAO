@@ -6,15 +6,27 @@ project(Protocols_idl_gen) : componentidldefaults {
   idlflags += -Wb,stub_export_macro=PROTOCOLS_STUB_Export \
               -Wb,stub_export_include=Protocols_stub_export.h \
               -Wb,skel_export_macro=PROTOCOLS_SKEL_Export \
-              -Wb,skel_export_include=Protocols_skel_export.h
+              -Wb,skel_export_include=Protocols_skel_export.h 
 
   IDL_Files {
     Protocols.idl
   }
 }
 
+project(Protocols_lem_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=PROTOCOLS_STUB_Export \
+              -Wb,stub_export_include=Protocols_stub_export.h \
+              -Wb,skel_export_macro=PROTOCOLS_SKEL_Export \
+              -Wb,skel_export_include=Protocols_skel_export.h -SS
+
+  IDL_Files {
+    ProtocolsE.idl
+  }
+}
+
 project(Protocols_stub) : ccm_stub {
-  after += Protocols_idl_gen
+  after += Protocols_lem_gen
 
   sharedname = Protocols_stub
   dynamicflags   = PROTOCOLS_STUB_BUILD_DLL
@@ -24,6 +36,7 @@ project(Protocols_stub) : ccm_stub {
 
   Source_Files {
     ProtocolsC.cpp
+    ProtocolsEC.cpp
   }
 
   Header_Files {

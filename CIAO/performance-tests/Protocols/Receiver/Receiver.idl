@@ -2,6 +2,7 @@
 
 #include <Components.idl>
 #include "../common/Protocols.idl"
+#include "../common/ProtocolsE.idl"
 
 module Protocols
 {

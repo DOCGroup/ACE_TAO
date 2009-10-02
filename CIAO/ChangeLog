@@ -1,3 +1,28 @@
+Fri Oct  2 02:05:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/Benchmark.mpc:
+        * performance-tests/Benchmark/BenchmarkE.idl:
+        * performance-tests/Benchmark/Benchmark_skel_export.h:
+        * performance-tests/Benchmark/Benchmark_stub_export.h:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.idl:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Protocols/Receiver/Receiver.idl:
+        * performance-tests/Protocols/Receiver/Receiver.mpc:
+        * performance-tests/Protocols/common/Protocols.idl:
+        * performance-tests/Protocols/common/Protocols.mpc:
+        * tests/CIDL/CodeGen/Basic.mpc:
+        * tests/CIDL/CodeGen/CodeGen.idl:
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        * tests/IDL_Test/Included_Component/IC_Bar.idl:
+        * tests/IDL_Test/Included_Component/IC_Foo.idl:
+        * tests/IDL_Test/Reused_Facet_Interface/Basic.mpc:
+        * tests/IDL_Test/Reused_Facet_Interface/CodeGen.idl:
+        * tests/IDL_Test/Reused_Facet_Interface/Reused_Facet_Interface.mpc:
+
+          Additional -Glem changes. 
+        
 Thu Oct  1 20:15:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
@@ -32,8 +57,8 @@ Thu Oct  1 20:15:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/Null_Component/Null_Component.mpc:
         * examples/Null_Component/Null_Interface.mpc:
 
-          -Glem changes. 
-        
+          -Glem changes.
+
 Thu Oct  1 20:14:03 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Swapping:
