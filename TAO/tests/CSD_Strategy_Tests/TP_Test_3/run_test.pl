@@ -141,8 +141,7 @@ for ($i = 0; $i < $num_remote_clients; $i++) {
     $CLS[$i]->Spawn();
 }
 
-for ($i = 0; $i < $num_remote_clients; $i++)
-{
+for ($i = 0; $i < $num_remote_clients; $i++) {
     $client_status = $CLS[$i]->WaitKill($client->ProcessStopWaitInterval ());
 
     if ($client_status != 0) {
