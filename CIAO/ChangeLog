@@ -1,3 +1,8 @@
+Fri Oct  2 07:06:34 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider.mpc:
+          Fixed build order
+
 Fri Oct  2 02:05:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/Benchmark.mpc:
@@ -21,8 +26,8 @@ Fri Oct  2 02:05:34 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/IDL_Test/Reused_Facet_Interface/CodeGen.idl:
         * tests/IDL_Test/Reused_Facet_Interface/Reused_Facet_Interface.mpc:
 
-          Additional -Glem changes. 
-        
+          Additional -Glem changes.
+
 Thu Oct  1 20:15:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
