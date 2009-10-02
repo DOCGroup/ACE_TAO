@@ -381,14 +381,14 @@ TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_servants: !ST !CORBA_E
 TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_csdthreads: !ST !CORBA_E_MICRO !LynxOS
 TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_big: !ST !CORBA_E_MICRO !LynxOS
 TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl big: !ST !CORBA_E_MICRO !LynxOS
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl collocated: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_orbthreads: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_servants: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_csdthreads: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_big: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl big: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl: !ST !CORBA_E_MICRO !LynxOS
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote: !ST !CORBA_E_MICRO !LynxOS
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl collocated: !ST !CORBA_E_MICRO !LynxOS
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_orbthreads: !ST !CORBA_E_MICRO !LynxOS
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_servants: !ST !CORBA_E_MICRO !LynxOS
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_csdthreads: !ST !CORBA_E_MICRO !LynxOS
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_big: !ST !CORBA_E_MICRO !LynxOS
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl big: !ST !CORBA_E_MICRO !LynxOS
 TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl collocated: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT !WinCE !FUZZ
