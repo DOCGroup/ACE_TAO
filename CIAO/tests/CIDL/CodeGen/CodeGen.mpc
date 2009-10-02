@@ -7,6 +7,7 @@
 //       insert the logic for autogeneration of executor files).
 
 project(Basic_CodeGen_idl_gen) : componentidldefaults {
+  after += Basic_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CODEGEN_STUB_Export \
               -Wb,stub_export_include=CodeGen_stub_export.h \
@@ -14,7 +15,7 @@ project(Basic_CodeGen_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=CodeGen_svnt_export.h \
               -Wb,exec_export_macro=CODEGEN_EXEC_Export \
               -Wb,exec_export_include=CodeGen_exec_export.h \
-              -Gex 
+              -Gex
 
   IDL_Files {
     CodeGen.idl
