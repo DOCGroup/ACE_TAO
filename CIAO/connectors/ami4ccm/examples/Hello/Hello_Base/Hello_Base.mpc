@@ -8,7 +8,7 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami   {
               -Wb,skel_export_macro=HELLO_SKEL_Export \
               -Wb,skel_export_include=Hello_skel_export.h \
               -Wb,exec_export_macro=HELLO_EXEC_Export \
-              -Wb,exec_export_include=Hello_exec_export.h  -Glem -I..
+              -Wb,exec_export_include=Hello_exec_export.h -I..
 
   IDL_Files {
     Hello.idl
@@ -54,12 +54,12 @@ project(AMI_Hello_Base_lem_gen) : ciaoidldefaults {
 }
 
 project(AMI_Hello_Base_stub) : ccm_stub, ami   {
-  after += AMI_Hello_lem_gen AMI_Hello_Base_lem_gen 
+  after += AMI_Hello_lem_gen AMI_Hello_Base_lem_gen
   libs  +=
   libout = ../lib
   libpaths += ../lib
   includes +=   ..
-  
+
   sharedname = Hello_Base_stub
   dynamicflags   = HELLO_BASE_STUB_BUILD_DLL HELLO_STUB_BUILD_DLL
 
@@ -69,8 +69,6 @@ project(AMI_Hello_Base_stub) : ccm_stub, ami   {
   Source_Files {
     HelloC.cpp
     Hello_BaseC.cpp
-    HelloEC.cpp
-    Hello_BaseEC.cpp
   }
 
   Header_Files {
@@ -86,17 +84,48 @@ project(AMI_Hello_Base_stub) : ccm_stub, ami   {
   }
 }
 
+project(AMI_Hello_Base_exec) : ccm_executor, ami   {
+  after += AMI_Hello_lem_gen AMI_Hello_Base_lem_gen AMI_Hello_Base_stub
+  libs += Hello_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = Hello_Base_exec
+  dynamicflags   = HELLO_BASE_EXEC_BUILD_DLL HELLO_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    HelloEC.cpp
+    Hello_BaseEC.cpp
+  }
+
+  Header_Files {
+    HelloEC.h
+    Hello_BaseEC.h
+    Hello_Base_exec_export.h
+    Hello_exec_export.h
+}
+
+  Inline_Files {
+    HelloEC.inl
+    Hello_BaseEC.inl
+  }
+}
+
 
 project(AMI_Hello_Base_skel) : ciao_executor, ami   {
-  after      += AMI_Hello_Base_stub
+  after      += AMI_Hello_Base_stub AMI_Hello_Base_exec
   sharedname  = Hello_Base_skel
-  libs       += Hello_Base_stub
+  libs       += Hello_Base_stub Hello_Base_exec
   libout = ../lib
-  libpaths += ../lib 
-  includes +=   ..  
-  
+  libpaths += ../lib
+  includes +=   ..
+
   dynamicflags = HELLO_BASE_SKEL_BUILD_DLL HELLO_SKEL_BUILD_DLL
-  
+
   IDL_Files {
   }
 
