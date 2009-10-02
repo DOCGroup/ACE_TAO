@@ -164,7 +164,7 @@ void TaskMapFileIn::build_task_map (std::string filename, Builder *builder)
     builder->assoc_task_with_impl (taskID, implID, duration);
   }
 
-  builder->assoc_task_with_impl (20, "initact_impl", 1);
+  builder->assoc_task_with_impl (INIT_TASK_ID, "initact_impl", 1);
 
   // Get task implementation to resource associations.
   for (SA_POP::XML::TaskMap::implToResource_iterator iassocr_iter =

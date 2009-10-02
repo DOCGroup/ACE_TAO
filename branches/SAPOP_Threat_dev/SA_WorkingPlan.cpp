@@ -600,12 +600,12 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 	}
 	else if(task_choice.choice == NEW_INST){
 
-		if(task == 20 && this->planner_->init_added)
+		if(task == INIT_TASK_ID && this->planner_->init_added)
 		{
 			throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
 		}
 
-		if(task == 20){
+		if(task == INIT_TASK_ID){
 			this->planner_->init_added =  true;
 		}
 
@@ -769,7 +769,7 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 
 
 	if(cmd->last_task_choice_.choice == NEW_INST){
-		if(cmd->last_task_ == 20){
+		if(cmd->last_task_ == INIT_TASK_ID){
 			planner_->init_added = false;
 		}
 
@@ -957,7 +957,7 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 	Condition condition = cmd->condition;
 
 
-	if(task_insts_.find(cmd->second)->second == 20){
+	if(task_insts_.find(cmd->second)->second == INIT_TASK_ID){
 
 		debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule before initial task"<<std::endl;
 		SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());

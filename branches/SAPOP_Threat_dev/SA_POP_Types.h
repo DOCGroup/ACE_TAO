@@ -150,6 +150,8 @@ namespace SA_POP {
 	/// Null task instance ID (for unknown/uninitialized task instances).
 	const TaskInstID NULL_TASK_INST_ID = -2;
 
+	const TaskID INIT_TASK_ID = -5;
+
 	/// Type of a task implementation id.
 	/// (must be unique across all task implementations).
 	typedef std::string TaskImplID;
