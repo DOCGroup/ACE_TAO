@@ -1,8 +1,9 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -b ciao_example_output, dds4ccm_base Hello_Receiver_Connector"
 
-project(DDS_Hello_Receiver_Connector_idl_gen) : connectoridldefaults , ciao_example_output, dds4ccm_base  {
+project(DDS_Hello_Receiver_Connector_idl_gen) : connectoridldefaults , ciao_example_output, dds4ccm_base {
   custom_only = 1
+  after += DDS_Hello_Receiver_Base_idl_gen
   idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Hello_Receiver_Connector_stub_export.h \
               -Wb,skel_export_macro=HELLO_RECEIVER_CONNECTOR_SVNT_Export \
