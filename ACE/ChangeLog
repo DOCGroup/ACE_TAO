@@ -1,3 +1,10 @@
+Fri Oct  2 15:24:33 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Condition_T.cpp (wait): fixed the call to cond_timewait() so
+          it uses a copy of the const parameter to avoid breaking the
+          const contract.  Thanks to William Glenn <wglenn at scires dot
+          com> for reporting this.
+  
 Thu Oct  1 13:44:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.am:
