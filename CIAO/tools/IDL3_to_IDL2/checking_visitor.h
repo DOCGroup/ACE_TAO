@@ -20,6 +20,8 @@
 #ifndef TAO_IDL_CHECKING_VISITOR_H
 #define TAO_IDL_CHECKING_VISITOR_H
 
+#include "ace/SString.h"
+
 #include "ast_visitor.h"
 #include "utl_scoped_name.h"
 
@@ -99,11 +101,13 @@ public:
   virtual int visit_native (AST_Native *node);
   
   bool is_idl3 (void) const;
-  bool is_local_idl3 (void) const;
+  
+private:
+  void remove_idl2_only_filename (ACE_CString &filename);
 
 private:
   bool is_idl3_;
-  bool is_local_idl3_;
+  ACE_CString idl2_only_files_;
 };
 
 #endif /* TAO_IDL_CHECKING_VISITOR_H */

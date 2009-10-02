@@ -51,16 +51,14 @@ public:
   //=======================================
 
   // Data accessors.
-
-  const char *filename (void) const;
-  void filename (char *fname);
-
   const char* output_dir (void) const;
   void output_dir (const char* s);
 
   bool encapsulate_idl2 (void) const;
 
   ACE_CString & excluded_filenames (void);
+  
+  void set_excluded_filenames (const char *filenames);
   
   bool gen_copyright (void) const;
 

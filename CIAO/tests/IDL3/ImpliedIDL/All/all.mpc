@@ -9,13 +9,9 @@ project(ConvertIDL3) : taoidl3toidl2defaults, ciao_executor {
     convert.idl
     include.idl
     keyword_clash.idl
-  }
-  
-  IDL3TOIDL2_Files {
-    idl3toidl2flags += -x raw_include.idl
     pass_through.idl
   }
-
+  
   IDL_Files {
     convert_IDL2.idl
     include_IDL2.idl
