@@ -80,12 +80,12 @@ project(Hello_Base_AMI_stub) : ccm_stub, ami   {
 }
 
 project(Hello_Base_AMI_exec) : ciao_executor, ami   {
-  after   += Hello_Base_AMI_lem_stub AMI_Hello_Base_AMI_stub AMI_Hello_Base_skel
+  after   += Hello_Base_AMI_lem_stub AMI_Hello_Base_AMI_stub AMI_Hello_Base_skel AMI_Hello_Base_exec
   sharedname = AMI_exec
-  libs += AMI_stub AMI_lem_stub Hello_Base_stub Hello_Base_skel
+  libs += AMI_stub AMI_lem_stub Hello_Base_stub Hello_Base_skel Hello_Base_exec
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = AMI_EXEC_BUILD_DLL
+  dynamicflags = AMI_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
