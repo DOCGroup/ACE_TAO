@@ -39,4 +39,4 @@ if ($collocated_status != 0) {
 
 $collocated->DeleteFile ($iorbase);
 
-exit $status;
+exit $collocated_status;
