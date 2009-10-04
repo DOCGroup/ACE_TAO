@@ -2,6 +2,7 @@
 
 project(BMDevice_idl_gen): componentidldefaults {
   custom_only = 1
+  after += BasicSP_idl_gen
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
               -Wb,stub_export_macro=BMDEVICE_STUB_Export \
               -Wb,stub_export_include=BMDevice_stub_export.h \
