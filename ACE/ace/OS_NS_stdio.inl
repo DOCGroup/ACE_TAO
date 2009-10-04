@@ -1057,7 +1057,7 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
     buffer[maxlen-1] = '\0';
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
-  if (result == -1)
+  if (result == -1 && maxlen > 0)
     buffer[maxlen-1] = '\0';
 # endif
   // In out-of-range conditions, C99 defines vsnprintf() to return the number
@@ -1101,25 +1101,23 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
   result = ::_vsnwprintf (buffer, maxlen, format, ap);
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
-  if (result == static_cast<int> (maxlen))
+  if (result == static_cast<int> (maxlen) && maxlen > 0)
     buffer[maxlen-1] = '\0';
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
-  if (result == -1)
+  if (result == -1 && maxlen > 0)
     buffer[maxlen-1] = '\0';
 # else
   result = vswprintf (buffer, maxlen, format, ap);
 #endif
 
-  // In out-of-range conditions, C99 defines vsnprintf() to return the number
-  // of characters that would have been written if enough space was available.
-  // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
-  // -1. This method follows the C99 standard, but needs to guess at the
-  // value; uses maxlen + 1.
+  // In out-of-range conditions, C99 defines vsnprintf() to return the
+  // number of characters that would have been written if enough space
+  // was available.  Earlier variants of the vsnprintf() (e.g. UNIX98)
+  // defined it to return -1. This method follows the C99 standard,
+  // but needs to guess at the value; uses maxlen + 1.
   if (result == -1)
-    {
-      result = static_cast <int> (maxlen + 1);
-    }
+    result = static_cast <int> (maxlen + 1);
 
   return result;
 
