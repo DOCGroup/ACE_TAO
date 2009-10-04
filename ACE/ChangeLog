@@ -1,3 +1,9 @@
+Sun Oct  4 14:23:55 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_stdio.inl (vsnprintf): Added a check to ensure we
+          don't index before the bounds of the array.  Thanks to Hui Zhang
+          <zhanghui9527 at gmail dot com> for reporting this.
+
 Fri Oct  2 15:24:33 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Condition_T.cpp (wait): fixed the call to cond_timewait() so
