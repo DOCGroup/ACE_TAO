@@ -7,24 +7,31 @@ project(Messenger_idl_gen) : componentidldefaults {
               -Wb,stub_export_include=Messenger_stub_export.h \
               -Wb,skel_export_macro=MESSENGER_SVNT_Export \
               -Wb,skel_export_include=Messenger_svnt_export.h
-  idlflags -=-Gxhst -Gxhsk -Gxhsv -Gxhex
 
   IDL_Files {
-    idlflags += -Gxhst -Gxhsk -Gxhsv -Gxhex
     Runnable.idl
-  }
-
-  IDL_Files {
     Publication.idl
     Message.idl
     History.idl
+  }
+}
+
+project(Messenger_messenger_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += Messenger_idl_gen
+  idlflags += -Wb,stub_export_macro=MESSENGER_STUB_Export \
+              -Wb,stub_export_include=Messenger_stub_export.h \
+              -Wb,skel_export_macro=MESSENGER_SVNT_Export \
+              -Wb,skel_export_include=Messenger_svnt_export.h
+
+  IDL_Files {
     Messenger.idl << PublicationE.idl MessageE.idl HistoryE.idl RunnableE.idl
   }
 }
 
 project(Messenger_lem_gen) : ciaoidldefaults {
   custom_only = 1
-  after += Messenger_idl_gen 
+  after += Messenger_messenger_idl_gen
   idlflags += -Wb,export_macro=MESSENGER_EXEC_Export \
               -Wb,export_include=Messenger_exec_export.h \
               -SS
