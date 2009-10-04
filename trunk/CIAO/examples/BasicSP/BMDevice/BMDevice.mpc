@@ -57,9 +57,9 @@ project(BMDevice_stub): ccm_stub {
 }
 
 project(BMDevice_exec) : ciao_executor {
-  after      += BMDevice_stub BMDevice_lem_gen
+  after      += BMDevice_stub BMDevice_lem_gen BasicSP_exec
   sharedname = BMDevice_exec
-  libs       += BMDevice_stub BasicSP_stub
+  libs       += BMDevice_stub BasicSP_stub BasicSP_exec
   libout = ../lib
   libpaths += ../lib
 
@@ -86,12 +86,12 @@ project(BMDevice_exec) : ciao_executor {
 }
 
 project(BMDevice_svnt) : ciao_servant {
-  after += BasicSP_svnt BMDevice_exec
+  after += BasicSP_svnt BMDevice_exec BasicSP_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
 
   sharedname = BMDevice_svnt
 
-  libs    += BMDevice_stub BMDevice_exec
+  libs    += BMDevice_stub BMDevice_exec BasicSP_exec
   libs    += BasicSP_stub BasicSP_svnt
   dynamicflags = BMDEVICE_SVNT_BUILD_DLL
   libout = ../lib
