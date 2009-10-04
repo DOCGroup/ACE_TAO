@@ -347,7 +347,7 @@ void SA_WorkingPlan::generate_all_threats(void)
 		debug_text <<"  Task (" <<threat_possibility_taskid << ")"<< ": Inst (" <<iterator->first << ")" << std::endl;
 	}
 	debug_text<<std::endl;
-	SA_POP_DEBUG_STR (SPARTAN, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_LOW, debug_text.str ());
 	debug_text.str("");
 
 	debug_text << "SA_WorkingPlan::generate_all_threats:  All Causal Threats: " << std::endl;
@@ -1134,7 +1134,7 @@ bool SA_WorkingPlan::execute (SA_ResolveSchedOrderCmd *cmd)
 
 	debug_text<<"Scheduling "<<cmd->first<<" before "<<cmd->second<<std::endl;
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	TaskInstID first_task_inst = cmd->first;
@@ -1239,7 +1239,7 @@ bool SA_WorkingPlan::execute (SA_AdjustMinTimesCmd *cmd)
 {
 	std::ostringstream debug_text;
 	debug_text<<"adjusting min time for "<<cmd->task_inst_<<std::endl;
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	TimeWindow *start_win = &this->start_window_map_.find(cmd->task_inst_)->second;
@@ -1282,7 +1282,7 @@ bool SA_WorkingPlan::execute (SA_AdjustMinTimesCmd *cmd)
 
 	if(sched.empty()) debug_text<<"sched is empty"<<std::endl;
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	for(TaskInstSet::iterator iter=sched.begin();iter!=sched.end();iter++)
@@ -1316,7 +1316,7 @@ bool SA_WorkingPlan::execute (SA_AdjustMinTimesCmd *cmd)
 		}
 	}
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	for(SA_AdjustMinTimesCmd::MinTimesAdjustList::iterator iter=cmd->min_adjust_cmds.begin();iter!=cmd->min_adjust_cmds.end();iter++)
@@ -1344,7 +1344,7 @@ bool SA_WorkingPlan::execute (SA_AdjustMinTimesCmd *cmd)
 	}
 	debug_text<<"min times of "<<cmd->task_inst_<<" : "<<cmd->new_start_min<<" "<<cmd->new_end_min<<std::endl;
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	return true;
@@ -1448,7 +1448,7 @@ bool SA_WorkingPlan::execute (SA_AdjustMaxTimesCmd *cmd)
 		}
 	}
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 
@@ -1474,7 +1474,7 @@ bool SA_WorkingPlan::execute (SA_AdjustMaxTimesCmd *cmd)
 		unranked->erase(unranked->find(*iter));
 	}
 	debug_text<<"max times for "<<cmd->task_inst_<<" : "<<cmd->new_start_max<<" "<<cmd->new_end_max<<std::endl;
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	return true;
@@ -1486,7 +1486,7 @@ void SA_WorkingPlan::undo (SA_AdjustMaxTimesCmd *cmd)
 {
 	std::ostringstream debug_text;
 	debug_text<<"task inst is "<<cmd->task_inst_<<std::endl;
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	TimeWindow *start_win = &this->get_start_window(cmd->task_inst_);
@@ -1577,7 +1577,7 @@ void SA_WorkingPlan::add_sched_link(TaskInstID first_task_inst, TaskInstID secon
 {
 	std::ostringstream debug_text;
 	debug_text<<"Adding sched link insert"<<std::endl;
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	this->sched_links_.insert(std::make_pair(first_task_inst,second_task_inst));
@@ -1624,7 +1624,7 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
 	std::ostringstream debug_text;
 	debug_text<<"for "<<task_inst<<win_start.first<<" "<<win_start.second<<" "<<win_end.first<<" "<<win_end.second<<std::endl;
 	debug_text<<"for "<<task_inst<<start_win.first<<" "<<start_win.second<<" "<<end_win.first<<" "<<end_win.second<<std::endl;
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	if(win_start.first!=NULL_TIME)
@@ -1679,7 +1679,7 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
 
 			std::ostringstream debug_text;
 			debug_text<<"for "<<task_inst<<" "<<start_win.first<<" "<<start_win.second<<" "<<end_win.first<<" "<<end_win.second<<std::endl;
-			SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 			debug_text.str("");
 
 
@@ -1711,7 +1711,7 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
 			}
 		}
 
-		SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+		SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 		debug_text.str("");
 
 		if(unranked->empty()) return true;
@@ -1782,7 +1782,7 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
 			if(iter2_unranked->find(*iter)!=iter2_unranked->end()) iter2_unranked->erase(iter2_unranked->find(*iter));
 		}
 
-		SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+		SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 		debug_text.str("");
 
 	}
@@ -1838,7 +1838,7 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
 			if(iter_unranked->find(*iter2)!=iter_unranked->end()) iter_unranked->erase(*iter2);
 			if(iter2_unranked->find(*iter)!=iter2_unranked->end()) iter2_unranked->erase(iter2_unranked->find(*iter));
 
-			SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 			debug_text.str("");
 		}
 
@@ -1897,7 +1897,7 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
 				if(iter2_unranked->find(*iter1)!=iter2_unranked->end()) iter2_unranked->erase(iter2_unranked->find(*iter1));
 			}
 
-			SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 			debug_text.str("");
 
 			if(iter_simul->find(*iter2)!=iter_simul->end()) continue;
@@ -1936,7 +1936,7 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
 
 	}
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	this->print_prec();
@@ -1976,7 +1976,7 @@ void SA_WorkingPlan::print_prec()
 		}
 	}
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 };
 
@@ -2022,7 +2022,7 @@ void SA_WorkingPlan::prec_erase(TaskInstID task_inst, SA_AssocTaskImplCmd *cmd)
 			iter1->second.erase(task_inst);
 	}
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 };

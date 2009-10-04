@@ -1,3 +1,11 @@
+Sun Oct  4 19:44:35 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
+
+        * SA_POP_Types.h:
+        * SA_SchedStrategy.cpp:
+        * SA_WorkingPlan.cpp:
+
+	Changed debug levels
+
 Fri Oct  2 23:31:27 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * SANet/SANet.cpp:
@@ -8,7 +16,7 @@ Fri Oct  2 23:31:27 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
         * SA_WorkingPlan.cpp:
         * TaskMapFileIn.cpp:
 
-	Init task renumbered
+        Init task renumbered
 
 Thu Oct  1 21:33:24 UTC 2009  unknown  <unknown@vanderbilt.edu>
 
