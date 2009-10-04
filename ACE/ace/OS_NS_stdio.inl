@@ -1053,7 +1053,7 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
   result = ::_vsnprintf (buffer, maxlen, format, ap);
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
-  if (result == static_cast<int> (maxlen))
+  if (result == static_cast<int> (maxlen) && maxlen > 0)
     buffer[maxlen-1] = '\0';
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
