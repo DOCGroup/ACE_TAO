@@ -30,9 +30,9 @@
 #endif  /* SA_POP_HAS_ACE */
 
 #define MAX_TASK_INSTS 8
-#define ANKET 1
+#define SA_POP_DEBUG_VERBOSE 1
 #define SA_POP_DEBUG_NORMAL 5
-#define SPARTAN 9
+#define SA_POP_DEBUG_LOW 9
 #define SA_POP_DEBUG_HIGH 10
 #define _CRTDBG_MAP_ALLOC
 #if defined (SA_POP_HAS_ACE)

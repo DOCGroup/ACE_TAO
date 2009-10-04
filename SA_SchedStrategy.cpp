@@ -338,7 +338,7 @@ void SA_SchedStrategy::calculate_levels(TaskInstID task_inst)
 			}
 		}
 
-		SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+		SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 		debug_text.str("");
 
 		LevelMap temp;
@@ -441,7 +441,7 @@ bool SA_SchedStrategy::search(double min_crit)
 		std::ostringstream debug_text;
 
 		debug_text<<"Criticality of "<<*iter<<" consumer: "<<crit_cons.second<<std::endl;
-		SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+		SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 		debug_text.str("");
 
 
@@ -498,7 +498,7 @@ bool SA_SchedStrategy::prec_balance_prop (TaskInstID task_inst)
 
 	std::ostringstream debug_text;
 	debug_text<<"Doing Precedence balance prop for "<<task_inst<<std::endl;
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
@@ -518,7 +518,7 @@ bool SA_SchedStrategy::prec_balance_prop (TaskInstID task_inst)
 			if(temp_start.second!=NULL_TIME && temp_start.second<start_win.first)
 			{
 				debug_text<<"The consumer of "<<*iter<<" has to executed before"<<std::endl;
-				SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+				SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 				debug_text.str("");
 
 				if(temp_end.first!=NULL_TIME && (start_win.second==NULL_TIME || temp_end.first<start_win.second)) producers_unranked.insert(*iter);
@@ -566,7 +566,7 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 
 	std::ostringstream debug_text;
 	debug_text<<"Doing time balance prop for "<<task_inst<<std::endl;
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
 
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
@@ -589,7 +589,7 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 			{
 
 				debug_text<<"THe consumer of "<<*iter<<" has to execute before"<<std::endl;
-				SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+				SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 				debug_text.str("");
 
 				//The consumer has to be executed before this task instance
@@ -601,7 +601,7 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 				{
 					// This task instance can be pushed before the task instance
 					debug_text<<"Task inst "<<*iter<<" can cause trouble"<<std::endl;
-					SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+					SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 					debug_text.str("");
 
 
@@ -628,14 +628,14 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 			debug_text<<*iter2<<" ";
 		}
 
-		SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+		SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 		debug_text.str("");
 
 		if(level_before<0)
 		{
 			debug_text<<"The level_before is negative"<<std::endl;
 
-			SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 			debug_text.str("");
 
 			ResourceValue level_prod=0;
@@ -651,7 +651,7 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 			TimeWindow temp2_end = this->planner_->get_end_window(*iter2);
 			debug_text<<"greater than "<<*iter2<<std::endl;
 
-			SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 			debug_text.str("");
 
 			if(temp2_end.first>start_win.first)
@@ -677,7 +677,7 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 		for(TaskInstSet::const_iterator iter=simul->begin();iter!=simul->end();iter++)
 		{
 			debug_text<<"calculating for "<<*iter<<std::endl;
-			SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 			debug_text.str("");
 
 			ResourceMap temp_rm = this->planner_->get_all_resources(this->planner_->get_task_impl_from_inst(*iter));
@@ -691,7 +691,7 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 		for(TaskInstSet::const_iterator iter=unranked->begin();iter!=unranked->end();iter++)
 		{
 		    debug_text<<"checking out "<<*iter<<std::endl;
-			SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 			debug_text.str("");
 
 			TimeWindow temp_start = this->planner_->get_start_window(*iter);
@@ -760,7 +760,7 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
   std::ostringstream debug_text;
 
   debug_text<<"Doing energy precedence calculations for "<<task_inst<<std::endl;
-  SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
   debug_text.str("");
 
   CommandID cur_cmd_id = this->planner_->cur_command_id();
@@ -816,7 +816,7 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
 	}
     debug_text<<"After calculations for resource "<<rm_iter->first<<" start_min="<<min_start<<" and end_max="<<max_end<<std::endl;
   
-    SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
     debug_text.str("");	
   
   }
@@ -919,7 +919,7 @@ bool SA_SchedStrategy::energy_prop_after (TaskInstID task_inst)
 	}
     debug_text<<"After after calculations for resource "<<rm_iter->first<<" start_min="<<min_start<<std::endl;
 
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
   }
   if(min_start!=start_win.first)
@@ -1005,7 +1005,7 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
 	}
     debug_text<<"After before calculations for resource "<<rm_iter->first<<" and end_max="<<max_end<<std::endl;
   
-	SA_POP_DEBUG_STR (ANKET, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
 	debug_text.str("");
   }
   if(max_end!=end_win.second)
