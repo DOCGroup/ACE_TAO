@@ -103,7 +103,7 @@ public:
   bool is_idl3 (void) const;
   
 private:
-  void remove_idl2_only_filename (ACE_CString &filename);
+  void remove_idl2_only_filename (ACE_CString filename);
 
 private:
   bool is_idl3_;

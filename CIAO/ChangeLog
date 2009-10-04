@@ -1,3 +1,10 @@
+Sun Oct  4 17:36:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        
+          Fixed FC_8 build errors/warnings.
+
 Fri Oct  2 18:32:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/checking_visitor.h:

@@ -93,7 +93,7 @@ checking_visitor::visit_module (AST_Module *node)
 }
 
 int
-checking_visitor::visit_interface (AST_Interface *node)
+checking_visitor::visit_interface (AST_Interface *)
 {
   return 0;
 }
@@ -409,7 +409,7 @@ checking_visitor::is_idl3 (void) const
 }
 
 void
-checking_visitor::remove_idl2_only_filename (ACE_CString &filename)
+checking_visitor::remove_idl2_only_filename (ACE_CString filename)
 {
   if (this->idl2_only_files_.empty ())
     {
