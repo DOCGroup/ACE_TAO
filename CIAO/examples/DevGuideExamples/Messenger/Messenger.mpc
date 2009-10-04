@@ -25,7 +25,7 @@ project(Messenger_messenger_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=Messenger_svnt_export.h
 
   IDL_Files {
-    Messenger.idl << PublicationE.idl MessageE.idl HistoryE.idl RunnableE.idl
+    Messenger.idl
   }
 }
 
