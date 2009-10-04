@@ -53,10 +53,10 @@ project(BMClosedED_stub): ccm_stub {
 }
 
 project(BMClosedED_exec) : ciao_executor {
-  after      += BMClosedED_stub BMClosedED_lem_gen
+  after      += BMClosedED_stub BMClosedED_lem_gen BasicSP_exec
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub
-  libs       += BasicSP_stub
+  libs       += BasicSP_stub BasicSP_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
   libout = ../lib
   libpaths += ../lib
@@ -82,13 +82,13 @@ project(BMClosedED_exec) : ciao_executor {
 }
 
 project(BMClosedED_svnt) : ciao_servant {
-  after += BasicSP_svnt BMClosedED_exec
+  after += BasicSP_svnt BMClosedED_exec BasicSP_exec
 
   includes += $(CIAO_ROOT)/examples/BasicSP
 
   sharedname = BMClosedED_svnt
 
-  libs    += BMClosedED_stub BMClosedED_exec
+  libs    += BMClosedED_stub BMClosedED_exec BasicSP_exec
   libs    += BasicSP_stub BasicSP_svnt
   libout = ../lib
   libpaths += ../lib
@@ -111,3 +111,4 @@ project(BMClosedED_svnt) : ciao_servant {
   Inline_Files {
   }
 }
+
