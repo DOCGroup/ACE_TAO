@@ -92,6 +92,10 @@ project(Messenger_exec) : ciao_executor {
 
   Source_Files {
     MessengerEC.cpp
+    RunnableEC.cpp
+    PublicationEC.cpp
+    MessageEC.cpp
+    HistoryEC.cpp
     Messenger_exec_i.cpp
     Publication_exec_i.cpp
     History_exec_i.cpp
