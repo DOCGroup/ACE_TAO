@@ -370,7 +370,7 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
 {
   va_list ap;
   va_copy (ap, argptr);
-  int size = ACE_OS::vsnprintf(0, 0, format, ap);
+  int size = ACE_OS::vsnprintf (0, 0, format, ap);
   va_end (ap);
 
   if (size != -1)
