@@ -13,7 +13,7 @@
 #define NAVDISPLAY_EXEC_H
 
 #include "NavDisplayEC.h"
-#include "NavDisplayGUI_exec_export.h"
+#include "NavDisplay_exec_export.h"
 #include "ace/Synch.h"
 #include "tao/LocalObject.h"
 #include "NavUnit.h"
