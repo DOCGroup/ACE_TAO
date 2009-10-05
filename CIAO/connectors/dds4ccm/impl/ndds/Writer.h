@@ -16,7 +16,9 @@ namespace CIAO
     namespace RTI
     {
       template <typename NDDS_TYPE, typename BASE>
-      class Writer_T
+      class Writer_T : 
+//        public virtual BASE,
+        public virtual ::CORBA::LocalObject
       {
       public:
         // Constructor
@@ -29,6 +31,8 @@ namespace CIAO
 
         virtual void write (const typename NDDS_TYPE::seq_type& instances, bool coherent_write);
       private:
+        Writer_T<NDDS_TYPE, BASE> (const Writer_T<NDDS_TYPE, BASE> &);
+        Writer_T<NDDS_TYPE, BASE> & operator = (const Writer_T<NDDS_TYPE, BASE> &);
         typename NDDS_TYPE::data_writer *impl_;
       };
     }

@@ -55,7 +55,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    string_Writer_exec_i (String_Writer wr);
+    string_Writer_exec_i (String_Writer* wr);
     virtual ~string_Writer_exec_i (void);
 
     // Operations and attributes from ::CCM_DDS::string_Writer
@@ -66,7 +66,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
     virtual void write (const char * an_instance);
 
   private:
-    String_Writer writer_;
+    String_Writer* writer_;
   };
 
   /*
