@@ -2,7 +2,6 @@
 // This file is generated with "generate_component_mpc.pl -l ../lib -o ../lib -u DDS -b dds4ccm_base Broker"
 
 project(DDS_Broker_idl_gen) : componentidldefaults , connectoridldefaults  {
-  requires += dummy_label
   custom_only = 1
   after += DDS_Quoter_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=BROKER_STUB_Export \
@@ -18,7 +17,6 @@ project(DDS_Broker_idl_gen) : componentidldefaults , connectoridldefaults  {
 }
 
 project(DDS_Broker_lem_gen) : connectoridldefaults,   {
-  requires += dummy_label
   after += DDS_Broker_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BROKER_LEM_STUB_Export \
@@ -31,7 +29,6 @@ project(DDS_Broker_lem_gen) : connectoridldefaults,   {
 }
 
 project(DDS_Broker_lem_stub) : ccm_svnt , dds4ccm_base  {
-  requires += dummy_label
   after += DDS_Broker_lem_gen DDS_Broker_stub  DDS_Quoter_Connector_stub DDS_Quoter_Base_stub
   libs  +=  Broker_stub DDS_Quoter_Connector_stub DDS_Quoter_Base_stub
   libpaths += ../lib
@@ -58,7 +55,6 @@ project(DDS_Broker_lem_stub) : ccm_svnt , dds4ccm_base  {
 }
 
 project(DDS_Broker_stub) : ccm_stub , dds4ccm_base  {
-  requires += dummy_label
   after += DDS_Broker_idl_gen  DDS_Quoter_Connector_stub DDS_Quoter_Base_stub
   libs  += DDS_Quoter_Connector_stub DDS_Quoter_Base_stub
   libpaths += ../lib
@@ -85,10 +81,9 @@ project(DDS_Broker_stub) : ccm_stub , dds4ccm_base  {
 }
 
 project(DDS_Broker_exec) : ciao_executor , dds4ccm_base  {
-  requires += dummy_label
-  after   += DDS_Broker_lem_stub DDS_Broker_stub DDS_Quoter_Base_stub
+  after   += DDS_Broker_lem_stub DDS_Broker_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_lem_stub DDS4CCM_lem_stub 
   sharedname = Broker_exec
-  libs += Broker_stub Broker_lem_stub DDS_Quoter_Base_stub
+  libs += Broker_stub Broker_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_lem_stub DDS4CCM_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -112,10 +107,9 @@ project(DDS_Broker_exec) : ciao_executor , dds4ccm_base  {
 
 
 project(DDS_Broker_svnt) : ciao_servant , dds4ccm_base  {
-  requires += dummy_label
-  after      +=   DDS_Broker_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt
+  after      +=   DDS_Broker_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt DDS_Broker_exec DDS_Quoter_Connector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = Broker_svnt
-  libs       += Broker_stub Broker_lem_stub  DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt
+  libs       += Broker_stub Broker_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt Broker_exec DDS_Quoter_Connector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   libpaths += ../lib
   libout = ../lib
   includes += ..

@@ -158,7 +158,7 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::Distributor_exec_i (void)
     : rate_ (5)
   {
-    ACE_OS::srand (ACE_OS::time ());
+    ACE_OS::srand (static_cast <u_int> (ACE_OS::time ()));
     this->ticker_ = new pulse_Generator (*this);
   }
   
@@ -179,7 +179,7 @@ namespace CIAO_Quoter_Distributor_Impl
       {
         if (ACE_OS::rand () % 2)
           {
-            std::cerr << "Updating stock: " << i->first << std::endl;
+            //std::cerr << "Updating stock: " << i->first.c_str () << std::endl;
             
             int delta = (ACE_OS::rand () % 10) - 5;
             

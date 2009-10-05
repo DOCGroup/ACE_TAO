@@ -7,11 +7,17 @@
  * by-hand translation of the idl3p.
  */
 
+#ifndef QUOTER_CONNECTOR_IDL3_
+#define QUOTER_CONNECTOR_IDL3_
+
 #include  <Components.idl>
 #include "dds4ccm/idl/dds4ccm_ListenerControl.idl3"
+#include "dds4ccm/idl/dds4ccm_ListenerControlE.idl"
 #include "dds4ccm/idl/dds4ccm_PortStatusListener.idl3"
+#include "dds4ccm/idl/dds4ccm_PortStatusListenerE.idl"
 #include "dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3"
 #include "dds4ccm/idl/dds4ccm_ListenerControl.idl3"
+#include "dds4ccm/idl/dds_rtf2_dcpsE.idl"
 #include "Base/Quoter_Base.idl"
 
 module CCM_DDS
@@ -79,3 +85,5 @@ module Quoter
     uses CCM_DDS::PortStatusListener info_out_status;
   };
 };
+
+#endif /* QUOTER_CONNECTOR_IDL3_ */
