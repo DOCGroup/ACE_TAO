@@ -100,7 +100,7 @@ project(Lem_Export_exec) : ciao_executor   {
 
 
 project(Lem_Export_svnt) : ciao_servant   {
-  after      +=  
+  after      += Lem_Export_lem_stub Lem_Export_stub
   sharedname  = Lem_Export_svnt
   libs       += Lem_Export_stub Lem_Export_lem_stub  
   
