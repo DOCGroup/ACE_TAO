@@ -206,7 +206,7 @@ namespace CIAO_Quoter_Distributor_Impl
   {
     std::cerr << "Distributor_exec_i::add_stock - Adding stock: " << stock << std::endl;
     
-    ACE_GUARD_THROW_EX (ACE_Thread_Mutex, _guard, 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
     
     Quoter::Stock_Info *new_stock = new Quoter::Stock_Info;
@@ -224,7 +224,7 @@ namespace CIAO_Quoter_Distributor_Impl
   {
     std::cerr << "Distributor_exec_i::del_stock - Removing stock: "  << stock << std::endl;
     
-    ACE_GUARD_THROW_EX (ACE_Thread_Mutex, _guard, 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard, 
                         this->mutex_, CORBA::INTERNAL ());
     
     Stock_Table::iterator pos = this->stocks_.find (stock);
