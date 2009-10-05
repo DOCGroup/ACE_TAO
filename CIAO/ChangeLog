@@ -1,3 +1,9 @@
+Mon Oct  5 19:35:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/controller.cpp:
+          Removed this file because it was empty and was generating
+          fuzz errors.
+
 Mon Oct  5 19:28:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
