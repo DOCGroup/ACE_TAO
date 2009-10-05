@@ -180,10 +180,10 @@ namespace CIAO
                      impl_name, type_name));
 
         DDSTopic *rti_topic = this->impl_->create_topic (impl_name,
-                                                                type_name,
-                                                                DDS_TOPIC_QOS_DEFAULT,
-                                                                0,
-                                                                mask);
+                                                         type_name,
+                                                         DDS_TOPIC_QOS_DEFAULT,
+                                                         0,
+                                                         mask);
 
         if (rti_topic == 0)
           {
