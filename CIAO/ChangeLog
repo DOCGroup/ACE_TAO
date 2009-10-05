@@ -1,7 +1,42 @@
+Mon Oct  5 18:36:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.h
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.mpc
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_ConnectorE.idl
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl3
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h
+        * connectors/dds4ccm/idl/dds4ccm.mpc
+        * connectors/dds4ccm/impl/ndds/Writer.h
+          Enabled the quoter example.
+
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer.h
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer.tpp
+          New template for builtin types, will rework in the future, but by using
+          this one we don't have to rewrite the hello world example at this
+          moment
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_ConnectorE.idl
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_ConnectorE.idl
+          Removed, are generate now as part of the regular build
+
 Mon Oct  5 16:36:33 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/ImpliedIDL/All/all.mpc:
-        
+
           Fixed dependency problems, and added include.idl to
           IDL_Files block, since its include is now passed
           through unchanged automatically, even though include_IDL2.idl

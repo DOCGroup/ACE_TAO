@@ -11,6 +11,7 @@
 #define DDS_DISTRIBUTOR_IDL3
 
 #include "Connector/Quoter_Connector.idl3"
+#include "Connector/Quoter_ConnectorE.idl"
 
 module Quoter
 {
