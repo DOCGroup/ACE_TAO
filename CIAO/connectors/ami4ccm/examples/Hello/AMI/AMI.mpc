@@ -115,6 +115,7 @@ project(Hello_Base_AMI_svnt) : ciao_servant, ami   {
   libs       += AMI_stub AMI_lem_stub  \
                 Hello_Base_skel \
                 Hello_Base_stub \
+                Hello_Base_exec \
                 AMI_exec
   libpaths += ../lib
   libout = ../lib
