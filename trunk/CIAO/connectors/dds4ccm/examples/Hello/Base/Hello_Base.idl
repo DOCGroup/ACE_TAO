@@ -1,0 +1,19 @@
+// $Id$
+
+/**
+ * @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ *
+ */
+
+#ifndef HELLO_BASE_IDL
+#define HELLO_BASE_IDL
+
+module Hello
+{
+  struct Message
+  {
+    string msg;
+  };
+};
+
+#endif

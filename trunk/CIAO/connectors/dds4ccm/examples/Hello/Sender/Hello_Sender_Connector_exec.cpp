@@ -39,7 +39,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   // Facet Executor Implementation Class: string_Writer_exec_i
   //============================================================
 
-  string_Writer_exec_i::string_Writer_exec_i (String_Writer sw)
+  string_Writer_exec_i::string_Writer_exec_i (String_Writer* sw)
     : writer_ (sw)
   {
   }
@@ -51,7 +51,7 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
   void
   string_Writer_exec_i::write (const char *an_instance)
   {
-    writer_.write (an_instance);
+    writer_->write (an_instance);
     /*-----------------7-8-2009 14:13-------------------
      * Code to call a multi writer
     ::DDS_StringSeq myseq (1);
@@ -143,7 +143,8 @@ namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
 
         dw_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
 
-        String_Writer sw (dw_.in ());
+        // todo leak
+        String_Writer* sw = new String_Writer(dw_.in ());
 
         sw_ = new string_Writer_exec_i (sw);
 
