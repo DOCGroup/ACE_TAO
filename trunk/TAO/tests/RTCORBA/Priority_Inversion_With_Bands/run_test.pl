@@ -19,6 +19,7 @@ $common_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext" : ''
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
+my $iorbase = "ior";
 
 @configurations =
     ({
@@ -41,7 +42,7 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 sub run_test
 {
-    my $server_iorfile = $server->LocalFile ($test->{file});
+    my $server_iorfile = $server->LocalFile ($iorbase);
 
     for $test (@configurations) {
         $server->DeleteFile ($test->{file});
@@ -72,13 +73,12 @@ sub run_test
                 goto kill_server;
             }
         }
-        print $test->{file}."\n";
     }
 
     $CL[$i] = $client->CreateProcess ("client", "$common_args $arg");
     $CL[$i]->Spawn ();
 
-    $client_status = $CL[$i]->WaitKill ($client->ProcessStartWaitInterval (60));
+    $client_status = $CL[$i]->WaitKill ($client->ProcessStartWaitInterval () + 80);
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
@@ -87,7 +87,7 @@ sub run_test
 
 kill_server:
 
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval (120));
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval () + 180);
 
     if ($server_status != 0) {
         print STDERR "ERROR: server returned $server_status\n";
@@ -104,7 +104,7 @@ for $test (@configurations) {
     print STDERR "$test->{description}\n";
     print STDERR "*************************************************************\n\n";
 
-    my $file = $server->LocalFile($test->{file});
+    my $file = $client->LocalFile($test->{file});
     run_test ("-k file://$file $test->{args}");
 }
 
