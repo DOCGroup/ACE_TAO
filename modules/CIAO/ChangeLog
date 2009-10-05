@@ -1,3 +1,9 @@
+Mon Oct  5 11:55:20 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+
+          Deploment plan. 
+        
 Thu Oct  1 02:40:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dds4ccm_base.mpb:
@@ -11,8 +17,8 @@ Thu Oct  1 02:40:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
         * connectors/dds4ccm/examples/Quoter/descriptors:
         * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
 
-          Additional impolementation. 
-        
+          Additional impolementation.
+
 Wed Sep 30 01:17:02 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
