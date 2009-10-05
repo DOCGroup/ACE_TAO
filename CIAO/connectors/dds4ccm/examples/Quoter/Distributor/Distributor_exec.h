@@ -172,7 +172,7 @@ namespace CIAO_Quoter_Distributor_Impl
   private:
     pulse_Generator * ticker_;
     ::Quoter::CCM_Distributor_Context_var context_;
-    ACE_Thread_Mutex mutex_;
+    TAO_SYNCH_MUTEX mutex_;
     typedef std::map<std::string, Quoter::Stock_Info_var> Stock_Table;
     Stock_Table stocks_;
     CORBA::ULong rate_;
