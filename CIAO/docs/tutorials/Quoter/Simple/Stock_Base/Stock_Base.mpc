@@ -28,12 +28,12 @@ project(Stock_Base_lem_gen) : ciaoidldefaults {
 }
 
 project(Stock_Base_stub) : ccm_stub   {
-  after += Stock_Base_lem_gen 
-  libs  += 
+  after += Stock_Base_lem_gen
+  libs  +=
   libpaths += ../lib
   libout = ../lib
   sharedname = Stock_Base_stub
-  dynamicflags   = STOCK_BASE_STUB_BUILD_DLL
+  dynamicflags   = STOCK_BASE_STUB_BUILD_DLL STOCK_BASE_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -58,11 +58,11 @@ project(Stock_Base_skel) : ciao_executor   {
   after      +=  Stock_Base_stub Stock_Base_lem_stub
   sharedname  = Stock_Base_skel
   libs       += Stock_Base_stub
- 
+
   libpaths += ../lib
   libout = ../lib
   dynamicflags = STOCK_BASE_SKEL_BUILD_DLL
-  
+
   IDL_Files {
   }
 
