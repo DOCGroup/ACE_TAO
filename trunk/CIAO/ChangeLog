@@ -1,3 +1,11 @@
+Mon Oct  5 18:47:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
+          Updated build order and use -Glem
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_ConnectorE.idl:
+          Removed from the repository
+
 Mon Oct  5 18:36:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp
