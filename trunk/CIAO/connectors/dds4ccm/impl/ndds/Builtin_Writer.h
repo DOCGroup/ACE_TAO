@@ -16,27 +16,25 @@ namespace CIAO
     namespace RTI
     {
       template <typename NDDS_TYPE, typename BASE>
-      class Writer_T : 
-        public virtual BASE,
-        public virtual ::CORBA::LocalObject
+      class Builtin_Writer_T 
       {
       public:
         // Constructor
-        Writer_T (::DDS::DataWriter_ptr dw);
+        Builtin_Writer_T (::DDS::DataWriter_ptr dw);
 
         // Destructor
-        virtual ~Writer_T (void);
+        virtual ~Builtin_Writer_T (void);
 
         virtual void write (const typename NDDS_TYPE::value_type& an_instance);
 
         virtual void write (const typename NDDS_TYPE::seq_type& instances, bool coherent_write);
       private:
-        Writer_T<NDDS_TYPE, BASE> (const Writer_T<NDDS_TYPE, BASE> &);
-        Writer_T<NDDS_TYPE, BASE> & operator = (const Writer_T<NDDS_TYPE, BASE> &);
+        Builtin_Writer_T<NDDS_TYPE, BASE> (const Builtin_Writer_T<NDDS_TYPE, BASE> &);
+        Builtin_Writer_T<NDDS_TYPE, BASE> & operator = (const Builtin_Writer_T<NDDS_TYPE, BASE> &);
         typename NDDS_TYPE::data_writer *impl_;
       };
     }
   }
 }
 
-#include "dds4ccm/impl/ndds/Writer.tpp"
+#include "dds4ccm/impl/ndds/Builtin_Writer.tpp"

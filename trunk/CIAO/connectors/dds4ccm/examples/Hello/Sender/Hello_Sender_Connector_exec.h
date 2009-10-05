@@ -43,12 +43,12 @@
 #include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/DataWriter.h"
-#include "dds4ccm/impl/ndds/Writer.h"
+#include "dds4ccm/impl/ndds/Builtin_Writer.h"
 #include "dds4ccm/impl/ndds/NDDS_Traits.h"
 
 namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
 {
-  typedef CIAO::DDS4CCM::RTI::Writer_T< CIAO::DDS4CCM::RTI::String_Traits, ::CCM_DDS::CCM_string_Writer > String_Writer;
+  typedef CIAO::DDS4CCM::RTI::Builtin_Writer_T< CIAO::DDS4CCM::RTI::String_Traits, ::CCM_DDS::CCM_string_Writer > String_Writer;
 
   class HELLO_SENDER_CONNECTOR_EXEC_Export string_Writer_exec_i
     : public virtual ::CCM_DDS::CCM_string_Writer,
