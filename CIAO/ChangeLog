@@ -1,3 +1,8 @@
+Mon Oct  5 09:50:44 UTC 2009  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/descriptors/NodeMap.dat:
+	  Changed svn properties. Added svn eol-property.
+
 Sun Oct  4 17:36:44 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/checking_visitor.h:
