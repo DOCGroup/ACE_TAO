@@ -1,3 +1,8 @@
+Mon Oct  5 19:28:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+          Corrected type registration
+
 Mon Oct  5 19:14:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:

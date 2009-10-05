@@ -35,6 +35,7 @@
 
 #include "dds4ccm/impl/ndds/NDDS_Traits.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
+#include "dds4ccm/impl/ndds/DomainParticipant.h"
 
 // should be removed after lem fix
 #include "../Broker/BrokerEC.h"
@@ -243,8 +244,9 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       {
         if (CORBA::is_nil (this->topic_))
           {
+            CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part = dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
             DDS_ReturnCode_t retcode = Stock_Info_Traits::type_support::register_type(
-              0, Stock_Info_Traits::type_support::get_type_name ());
+              part->get_participant (), Stock_Info_Traits::type_support::get_type_name ());
             if (retcode == DDS_RETCODE_OK)
               {
                 ::DDS::TopicQos tqos;
@@ -254,6 +256,10 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
                                                tqos,
                                                0,
                                                0);
+              }
+            else
+              {
+                throw CORBA::INTERNAL ();
               }
           }
       }
