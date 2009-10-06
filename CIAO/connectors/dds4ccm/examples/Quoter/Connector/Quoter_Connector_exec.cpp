@@ -271,7 +271,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
             this->__info_out_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T<Stock_Info_Traits, ::CCM_DDS::Stock_Info_RawListener, ::CCM_DDS::PortStatusListener> (
               this->context_->get_connection_info_out_listener (),
               this->context_->get_connection_info_out_status (),
-							this->__info_out_rawlistener_enabled_);
+              this->__info_out_rawlistener_enabled_);
             ::DDS::DataReaderQos drqos;
             this->__info_out_datareader_ =
               this->__info_out_subscriber_->create_datareader (this->topic_.in (),
@@ -360,7 +360,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     if (!CORBA::is_nil (this->context_->get_connection_info_out_listener ()) ||
         !CORBA::is_nil (this->context_->get_connection_info_out_status ()))
       {
-	      this->configure_port_info_out_ ();
+        this->configure_port_info_out_ ();
       }
   }
   void

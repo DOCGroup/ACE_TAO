@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file dds4CCM_MultiWriter.idl3p
+ * @file dds4ccm_MultiWriter.idl3p
  *
  */
 
@@ -14,13 +14,13 @@ module CCM_DDS
 {
   interface MultiWriter<typename T> {
     typedef sequence<T> T$Seq;
-    unsigned long write(in T$Seq instances)	// returns nb of written
+    unsigned long write(in T$Seq instances) // returns nb of written
       raises (InternalError);
     attribute boolean is_coherent_write;
-    // behaviour: 
-    // - attempt to write is stopped at the first error
-    // - if is_coherent_write, write orders are placed betwen begin/end 
-    //	coherent updates (even if an error occurs)
+    //  behaviour:
+    //  - attempt to write is stopped at the first error
+    //  - if is_coherent_write, write orders are placed betwen begin/end
+    //    coherent updates (even if an error occurs)
   };
 };
 
