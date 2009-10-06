@@ -1,3 +1,38 @@
+Tue Oct  6 22:04:55 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_extended_port/extended_port.cpp:
+        * TAO_IDL/be/be_visitor_extended_port/extended_port_svh.cpp:
+        * TAO_IDL/be/be_visitor_extended_port.cpp:
+        * TAO_IDL/be_include/be_visitor_extended_port.h:
+        * TAO_IDL/be_include/be_visitor_extended_port/extended_port.h:
+        * TAO_IDL/be_include/be_visitor_extended_port/extended_port_svh.h:
+
+          New files, partially implemented visitors for extended port
+          code generation.
+
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_visitor_field.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+
+          Refactored existing visitor code to get more
+          re-use, and added calls to new (as yet uniimplemented)
+          visitors above.
+
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/serializer_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_field/serializer_op_cs.h:
+
+          Replaced be_visitor_scope base class with simpler
+          be_visistor_decl.
+
 Tue Oct  6 11:00:56 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3746_Regression/Bug_3746_Regression.mpc:

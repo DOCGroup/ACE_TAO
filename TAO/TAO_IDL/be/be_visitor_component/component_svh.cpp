@@ -102,6 +102,21 @@ be_visitor_component_svh::visit_attribute (be_attribute *node)
 }
 
 int
+be_visitor_component_svh::visit_extended_port (
+  be_extended_port *node)
+{
+  be_visitor_extended_port_svh visitor (this->ctx_);
+  return visitor.visit_extended_port (node);
+}
+
+int
+be_visitor_component_svh::visit_mirror_port (
+  be_mirror_port *node)
+{
+  return 0;
+}
+
+int
 be_visitor_component_svh::gen_facets (void)
 {
   for (UTL_ScopeActiveIterator si (node_, UTL_Scope::IK_decls);
@@ -109,118 +124,47 @@ be_visitor_component_svh::gen_facets (void)
        si.next ())
     {
       AST_Decl *d = si.item ();
+      AST_Decl::NodeType nt = d->node_type ();
 
-      if (d->node_type () != AST_Decl::NT_provides)
+      if (nt == AST_Decl::NT_provides)
         {
-          continue;
-        }
+          be_provides *p =
+            be_provides::narrow_from_decl (d);
 
-      AST_Provides *p =
-        AST_Provides::narrow_from_decl (d);
-
-      be_type *impl =
-        be_type::narrow_from_decl (p->provides_type ());
-
-      if (impl->svnt_hdr_facet_gen ())
-        {
-          continue;
-        }
-
-      // No '_cxx_' prefix>
-      const char *lname =
-        impl->original_local_name ()->get_string ();
-
-      be_decl *scope =
-        be_scope::narrow_from_scope (impl->defined_in ())->decl ();
-      ACE_CString suffix (scope->flat_name ());
-
-      if (suffix != "")
-        {
-          suffix = ACE_CString ("_") + suffix;
-        }
-
-      os_ << be_nl << be_nl
-          << "namespace CIAO_FACET" << suffix.c_str () << be_nl
-          << "{" << be_idt_nl;
-
-      const char *impl_name = "::CORBA::Object";
-      bool is_intf = impl->node_type () == AST_Decl::NT_interface;
-
-      if (is_intf)
-        {
-          impl_name =
-            be_interface::narrow_from_decl (impl)->full_skel_name ();
-        }
-
-      os_ << "class " << lname << "_Servant" << be_idt_nl
-          << ": public virtual " << impl_name << be_uidt_nl
-          << "{" << be_nl
-          << "public:" << be_idt_nl;
-
-      AST_Decl *s = ScopeAsDecl (impl->defined_in ());
-      ACE_CString sname_str (s->full_name ());
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
-
-      os_ << lname << "_Servant (" << be_idt_nl
-          << global << sname << "::CCM_"
-          << lname << "_ptr executor," << be_nl
-          << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
-
-      os_ << "virtual ~" << lname << "_Servant (void);";
-
-      if (is_intf)
-        {
-          be_interface *intf =
-            be_interface::narrow_from_decl (impl);
-
-          if (this->gen_facet_ops_attrs (intf) == -1)
+          if (p->gen_facet (os_) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_component_svh::gen_facet - "
-                                 "gen_facet_ops_attrs() failed\n"),
+                                 "be_visitor_component_svh::gen_facets - "
+                                 "gen_facet() failed\n"),
                                 -1);
             }
         }
-
-      os_ << be_nl << be_nl << "// Get component implementation." << be_nl
-          << "virtual CORBA::Object_ptr _get_component (void);"
-          << be_uidt_nl << be_nl;
-
-      os_ << "protected:" << be_idt_nl;
-
-      os_ << "// Facet executor." << be_nl
-          << global << sname << "::CCM_"
-          << lname << "_var executor_;" << be_nl << be_nl;
-
-      os_ << "// Context object." << be_nl
-          << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
-
-      os_ << "};" << be_nl << be_uidt_nl;
-
-      os_ << "}";
-
-      impl->svnt_hdr_facet_gen (true);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_component_svh::gen_facet_ops_attrs (be_interface *node)
-{
-  int status =
-    node->traverse_inheritance_graph (
-      be_visitor_component_svh::op_attr_decl_helper,
-      &os_);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svh::")
-                         ACE_TEXT ("gen_facet_ops_attrs - ")
-                         ACE_TEXT ("traverse_inheritance_graph() failed\n")),
-                        -1);
+      else if (nt == AST_Decl::NT_ext_port)
+        {
+          be_extended_port *ep =
+            be_extended_port::narrow_from_decl (d);
+            
+          if (this->visit_extended_port (ep) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_component_svh::gen_facets - "
+                                 "visit_extended_port() failed\n"),
+                                -1);
+            }
+        }
+      else if (nt == AST_Decl::NT_mirror_port)
+        {
+          be_mirror_port *mp =
+            be_mirror_port::narrow_from_decl (d);
+            
+          if (this->visit_mirror_port (mp) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_component_svh::gen_facets - "
+                                 "visit_mirror_port() failed\n"),
+                                -1);
+            }
+        }
     }
 
   return 0;
@@ -390,7 +334,7 @@ be_visitor_component_svh::gen_servant_class (void)
 
   int status =
     node_->traverse_inheritance_graph (
-      be_visitor_component_svh::op_attr_decl_helper,
+      be_interface::facet_op_attr_decl_helper,
       &os_,
       false,
       false);
@@ -942,27 +886,5 @@ be_visitor_component_svh::gen_entrypoint (void)
       << "::Components::EnterpriseComponent_ptr p," << be_nl
       << "::CIAO::Container_ptr c," << be_nl
       << "const char * ins_name);" << be_uidt;
-}
-
-int
-be_visitor_component_svh::op_attr_decl_helper (be_interface * /*derived */,
-                                               be_interface *ancestor,
-                                               TAO_OutStream *os)
-{
-  if (be_component::narrow_from_decl (ancestor) != 0)
-    {
-      return 0;
-    }
-
-  /// We're in a static method, so we have to instantiate a temporary
-  /// visitor and context.
-  be_visitor_context ctx;
-  ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
-  ctx.stream (os);
-  be_visitor_component_svh visitor (&ctx);
-
-  /// Since this visitor overriddes only visit_operation() and
-  /// visit_attribute(), we can get away with this for the declarations.
-  return visitor.visit_scope (ancestor);
 }
 

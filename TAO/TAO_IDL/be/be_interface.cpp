@@ -22,6 +22,7 @@
 
 #include "be_interface.h"
 #include "be_interface_strategy.h"
+#include "be_component.h"
 #include "be_attribute.h"
 #include "be_operation.h"
 #include "be_exception.h"
@@ -29,10 +30,12 @@
 #include "be_helper.h"
 #include "be_identifier_helper.h"
 #include "be_extern.h"
+#include "be_visitor_operation.h"
+#include "be_visitor_attribute.h"
+#include "be_visitor_context.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
 #include "ast_generator.h"
-#include "ast_component.h"
 #include "ast_home.h"
 #include "global_extern.h"
 #include "idl_defines.h"
@@ -2470,6 +2473,50 @@ be_interface::gen_abstract_init_helper (be_interface *node,
       << "servant" << be_uidt_nl
       << ")" << be_uidt;
 
+
+  return 0;
+}
+
+int
+be_interface::facet_op_attr_decl_helper (be_interface * /*derived */,
+                                         be_interface *ancestor,
+                                         TAO_OutStream *os)
+{
+  if (be_component::narrow_from_decl (ancestor) != 0)
+    {
+      return 0;
+    }
+
+  be_visitor_context ctx;
+  ctx.stream (os);
+  ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
+
+  for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      // Get the next AST decl node
+      AST_Decl *d = si.item ();
+
+      if (d->node_type () == AST_Decl::NT_op)
+        {
+          be_operation *op = be_operation::narrow_from_decl (d);
+          be_visitor_operation_ch v (&ctx);
+          
+          if (v.visit_operation (op) == -1)
+            {
+            }
+        }
+      else if (d->node_type () == AST_Decl::NT_attr)
+        {
+          be_attribute *attr = be_attribute::narrow_from_decl (d);
+          be_visitor_attribute v (&ctx);
+          
+          if (v.visit_attribute (attr) == -1)
+            {
+            }
+        }
+    }
 
   return 0;
 }
