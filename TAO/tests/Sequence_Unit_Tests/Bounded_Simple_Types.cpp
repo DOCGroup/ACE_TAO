@@ -39,7 +39,18 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   b[0] = a[0];
 
   int_sequence const & d = a;
-  c[0] = d[0];
+  try
+    {
+      c[0] = d[0];
+#if defined (TAO_CHECKED_SEQUENCE_INDEXING) && (TAO_CHECKED_SEQUENCE_INDEXING == 1)
+      return 1;
+#endif
+    }
+  catch (const ::CORBA::BAD_PARAM &)
+    {
+      // c has length = 0, so there is an exception when we try
+      // to access element above length.
+    }
 
   b.replace(0, int_sequence::allocbuf(), true);
 

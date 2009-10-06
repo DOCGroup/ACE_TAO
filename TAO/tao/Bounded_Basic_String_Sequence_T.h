@@ -66,10 +66,7 @@ public:
   /// @copydoc details::generic_sequence::length
   inline void length(CORBA::ULong length) {
     implementation_type::range::check_length(length, MAX);
-    if (MAX >= length)
-      {
-        impl_.length(length);
-      }
+    impl_.length(length);
   }
   /// @copydoc details::generic_sequence::operator[]
   inline const_element_type operator[](CORBA::ULong i) const {
