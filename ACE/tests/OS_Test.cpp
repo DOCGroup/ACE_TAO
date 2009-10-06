@@ -44,6 +44,9 @@ template <typename T> bool is_equal (const T& a, const T& b)
 int
 access_test (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing access method\n")));
+
   int test_status = 0;
 
   int status = ACE_OS::access (ACE_TEXT ("missing_file.txt"), F_OK);
@@ -60,6 +63,34 @@ access_test (void)
       test_status = -1;
     }
 
+  return test_status;
+}
+
+// Test ACE_OS::fileno()
+int
+fileno_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing fileno method\n")));
+
+  int test_status = 0;
+
+  if (ACE_OS::fileno (stdin) != ACE_STDIN)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("stdin test failed.\n")));
+      test_status = -1;
+    }
+  if (ACE_OS::fileno (stdout) != ACE_STDOUT)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("stdout test failed.\n")));
+      test_status = -1;
+    }
+  if (ACE_OS::fileno (stderr) != ACE_STDERR)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("stderr test failed.\n")));
+      test_status = -1;
+    }
+    
   return test_status;
 }
 
@@ -1186,6 +1217,9 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = access_test ()) != 0)
+    status = result;
+
+  if ((result = fileno_test ()) != 0)
     status = result;
 
   if ((result = rename_test ()) != 0)
