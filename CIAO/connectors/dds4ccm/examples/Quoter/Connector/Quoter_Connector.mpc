@@ -18,6 +18,7 @@ project(DDS_Quoter_Connector_idl_gen) : connectoridldefaults, componentidldefaul
 
 project(DDS_Quoter_Connector_lem_gen) : ciaoidldefaults {
   custom_only = 1
+  after += DDS_Quoter_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=QUOTER_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=Quoter_Connector_lem_stub_export.h \
               -SS -Gxhst \
