@@ -337,8 +337,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       for(;;) {
         ::Quoter::Stock_Info instance;
         ::DDS_SampleInfo sampleinfo;
-        ::DDS::ReturnCode_t result  = reader->take_next_sample(instance,
-                                                               sampleinfo);
+        ::DDS::ReturnCode_t const result  = reader->take_next_sample(instance,
+                                                                     sampleinfo);
         if (result == DDS_RETCODE_NO_DATA) {
             /* No more samples */
             break;
@@ -377,7 +377,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   private:
     ::CCM_DDS::Stock_Info_RawListener_var listener_;
     ::CCM_DDS::PortStatusListener_var portlistener_;
-    ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> enable_;;
+    ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> enable_;
   };
 
   void
