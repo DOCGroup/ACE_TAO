@@ -20,4 +20,4 @@ module Quoter
   };
 };
 
-#endif
+#endif /* BROKER_IDL3P */

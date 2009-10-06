@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file dds4CCM_RawListener.idl3p
  *
@@ -12,11 +14,11 @@ module CCM_DDS
 {
   interface RawListener<typename T> {
     void on_data (in T an_instance, in ReadInfo info);
-    // behaviour
-    // - similar to a get_next, except that in push mode instead of pull mode
-    // - triggered only if enabled is the associated ListenerControl
-    // - query filter (if any) in the associated Reader 
-  };        
+    //  behaviour
+    //  - similar to a get_next, except that in push mode instead of pull mode
+    //  - triggered only if enabled is the associated ListenerControl
+    //  - query filter (if any) in the associated Reader
+  };
 };
 
-#endif
+#endif /* DDS4CCM_RAWLISTENER_IDL3P */

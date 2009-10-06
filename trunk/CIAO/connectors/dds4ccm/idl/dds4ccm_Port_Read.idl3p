@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file dds4CCM_Port_Read.idl3p
  *
@@ -18,4 +20,4 @@ module CCM_DDS
   };
 };
 
-#endif
+#endif /* DDS4CCM_PORT_READ_IDL3P */

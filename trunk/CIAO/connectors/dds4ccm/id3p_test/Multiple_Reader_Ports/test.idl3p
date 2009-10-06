@@ -1,6 +1,10 @@
 // $Id$
 
 // IDL3+
+
+#ifndef TEST_IDL3P
+#define TEST_IDL3P
+
 module Hello_DDS
 {
   component Sender
@@ -10,3 +14,4 @@ module Hello_DDS
   };
 };
 
+#endif /* TEST_IDL3P */
