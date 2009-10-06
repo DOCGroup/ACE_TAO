@@ -12,6 +12,7 @@
  */
 
 #include "tao/Basic_Types.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -118,23 +119,28 @@ struct range_checking
   typedef T value_type;
 
   inline static void check(
-      CORBA::ULong /* index */,
-      CORBA::ULong /* length */,
+      CORBA::ULong index,
+      CORBA::ULong length,
       CORBA::ULong /* maximum */,
       char const * /* function_name */)
   {
     // Applications and tests can specialize this function to define
     // their own behavior
+#if defined (TAO_CHECKED_SEQUENCE_INDEXING) && (TAO_CHECKED_SEQUENCE_INDEXING == 1)
+    if (length <= index)
+      throw ::CORBA::BAD_PARAM ();
+#else
+    ACE_UNUSED_ARG (index);
+    ACE_UNUSED_ARG (length);
+#endif // TAO_CHECKED_SEQUENCE_INDEXING
   }
 
   inline static void check_length(
-      CORBA::ULong & /* new_length */,
-      CORBA::ULong /* maximum */)
+      CORBA::ULong &new_length,
+      CORBA::ULong maximum)
   {
-    /*
     if (maximum < new_length)
-      new_length = maximum;
-    */
+      throw ::CORBA::BAD_PARAM ();
   }
 };
 
