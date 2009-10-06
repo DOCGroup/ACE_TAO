@@ -1,10 +1,12 @@
+// $Id$
+
 /**
- * @file dds4CCM_ListenerControl.idl3p
+ * @file dds4CCM_ListenerControl.idl3
  *
  */
 
-#ifndef DDS4CCM_LISTENERCONTROL_IDL3P
-#define DDS4CCM_LISTENERCONTROL_IDL3P
+#ifndef DDS4CCM_LISTENERCONTROL_IDL3
+#define DDS4CCM_LISTENERCONTROL_IDL3
 
 #include "dds4ccm/idl/dds4ccm_Base.idl3"
 

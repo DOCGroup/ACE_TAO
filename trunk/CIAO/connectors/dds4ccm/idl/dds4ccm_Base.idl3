@@ -1,10 +1,11 @@
+// $Id$
 /**
- * @file dds4CCM_Base.idl3+
+ * @file dds4CCM_Base.idl3
  *
  */
 
-#ifndef DDS4CCM_BASE_IDL3P
-#define DDS4CCM_BASE_IDL3P
+#ifndef DDS4CCM_BASE_IDL3
+#define DDS4CCM_BASE_IDL3
 
 #include "dds_rtf2_dcps.idl"
 
@@ -12,17 +13,17 @@ module CCM_DDS
 {
   typedef sequence<unsigned long> InstanceNumberSeq;
   exception AlreadyCreated {
-    InstanceNumberSeq indexes;  // of the erroneous
+    InstanceNumberSeq indexes; // of the erroneous
   };
 
   exception NonExistent{
-    InstanceNumberSeq indexes;    // of the erroneous
+    InstanceNumberSeq indexes; // of the erroneous
   };
 
   exception InternalError{
-    unsigned long error_code;// DDS codes that are relevant:
-    // ERROR (1); UNSUPPORTED (2); OUT_OF_RESOURCE (5)
-    unsigned long index;	// of the erroneaous
+    unsigned long error_code; // DDS codes that are relevant:
+    //ERROR (1); UNSUPPORTED (2); OUT_OF_RESOURCE (5)
+    unsigned long index; // of the erroneaous
   };
 
   exception BadParameter {};
@@ -39,10 +40,10 @@ module CCM_DDS
   };
 
   struct ReadInfo {
-    AccessStatus	access_status;
-    InstanceStatus	instance_status;
-    DDS::Time_t	timestamp;
-    unsigned long	instance_rank;
+    AccessStatus  access_status;
+    InstanceStatus  instance_status;
+    DDS::Time_t timestamp;
+    unsigned long instance_rank;
   };
   typedef sequence<ReadInfo> ReadInfoSeq;
 
@@ -50,7 +51,6 @@ module CCM_DDS
     string            query;
     ::DDS::StringSeq  query_parameters;
   };
-
 };
 
 #endif
