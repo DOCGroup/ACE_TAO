@@ -112,6 +112,7 @@ namespace CIAO_Quoter_Broker_Impl
   Broker_exec_i::get_info_out_listener (void)
   {
     /* Your code here. */
+    printf ("*************** out listener\n");
     return new Stock_Info_RawListener_exec_i ();
   }
   
@@ -148,7 +149,16 @@ namespace CIAO_Quoter_Broker_Impl
   void
   Broker_exec_i::ccm_activate (void)
   {
-    /* Your code here. */
+    ::CCM_DDS::ListenerControl_var lc = 
+      this->context_->get_connection_info_out_control ();
+    
+    if (CORBA::is_nil (lc.in ()))
+      {
+	      printf ("Error:  Listener control receptacle is null!\n");
+	      throw CORBA::INTERNAL ();
+      }
+    
+    lc->enabled (true);
   }
   
   void

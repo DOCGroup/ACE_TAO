@@ -28,10 +28,11 @@
 // TAO_IDL - Generated from 
 // be/be_codegen.cpp:1422
 
-#include "dds4ccm_ListnerControlI.h"
+#include "ListenerControl.h"
 
 // Implementation skeleton constructor
-CCM_DDS_ListenerControl_i::CCM_DDS_ListenerControl_i (void)
+CCM_DDS_ListenerControl_i::CCM_DDS_ListenerControl_i (ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &flag)
+    : flag_ (flag)
 {
 }
 
@@ -42,13 +43,12 @@ CCM_DDS_ListenerControl_i::~CCM_DDS_ListenerControl_i (void)
 
 ::CORBA::Boolean CCM_DDS_ListenerControl_i::enabled (void)
 {
-  // Add your implementation here
+  return flag_.value ();
 }
 
-void CCM_DDS_ListenerControl_i::enabled (
-  ::CORBA::Boolean enabled)
+void CCM_DDS_ListenerControl_i::enabled (::CORBA::Boolean enabled)
 {
-  // Add your implementation here
+  this->flag_ = enabled;
 }
 
 
