@@ -6,7 +6,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
 $status = 0;
@@ -20,15 +19,9 @@ foreach $i (@ARGV) {
 }
 
 my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
-my $host = new PerlACE::TestTarget;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV1 = new PerlACE::ProcessVX ("./client", "-s $ciao_root/bin/ciao_componentserver")
-}
-else {
-    $SV1 = $target->CreateProcess ("./client", "-s $ciao_root/bin/ciao_componentserver");
-}
-    
+$SV1 = $target->CreateProcess ("./client", "-s $ciao_root/bin/ciao_componentserver");
+
 $server1 = $SV1->SpawnWaitKill (300);
 
 if ($server1 != 0) {
