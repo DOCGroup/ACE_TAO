@@ -15,7 +15,7 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami   {
   }
 }
 
-project(AMI_Hello_lem_gen) : ciaoidldefaults, ami   {
+project(AMI_Hello_lem_gen) : ciaoidldefaults {
   after += AMI_Hello_idl_gen
   custom_only = 1
   idlflags += \
