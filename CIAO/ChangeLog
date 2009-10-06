@@ -1,3 +1,8 @@
+Tue Oct  6 08:37:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.{h,cpp}:
+          First version of the reader as template
+
 Tue Oct  6 07:48:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
