@@ -6,7 +6,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
 $status = 0;
@@ -24,76 +23,88 @@ my $host = new PerlACE::TestTarget;
 
 $iorbase1 = "server1.ior";
 $iorbase2 = "server2.ior";
-$ior1 = $target->LocalFile ("$iorbase");
-$ior2 = $target->LocalFile ("$iorbase");
-$target->DeleteFile($iorfile1);
-$target->DeleteFile($iorfile2);
+
+$server_iorfile1 = $target->LocalFile ($iorbase1);
+$server_iorfile2 = $target->LocalFile ($iorbase2);
+
+$target->DeleteFile($iorbase1);
+$target->DeleteFile($iorbase2);
+
+$client_iorfile1 = $host->LocalFile ($iorbase1);
+$client_iorfile2 = $host->LocalFile ($iorbase2);
+
 $host->DeleteFile($iorbase1);
 $host->DeleteFile($iorbase2);
 
-if (PerlACE::is_vxworks_test()) {
-    $SV1 = new PerlACE::ProcessVX ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase1 -o $iorbase1");
-    $SV2 = new PerlACE::ProcessVX ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase2 -o $iorbase2");
-}
-else {
-    $SV1 = $target->CreateProcess ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase1 -o $iorbase1");
-    $SV2 = $target->CreateProcess ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase2 -o $iorbase2");
-}
-$CL = $host->CreateProcess ("client", "-k file://$iorbase1 -j file://$iorbase2");
-    
-$server1 = $SV1->Spawn ();
-$server2 = $SV2->Spawn ();
+$SV1 = $target->CreateProcess ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $server_iorfile1 -o $server_iorfile1");
+$SV2 = $target->CreateProcess ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $server_iorfile2 -o $server_iorfile2");
 
-if ($server1 != 0) {
-    print STDERR "ERROR: server1 returned $server\n";
+$CL = $host->CreateProcess ("client", "-k file://$client_iorfile1 -j file://$client_iorfile2");
+
+$server_status1 = $SV1->Spawn ();
+$server_status2 = $SV2->Spawn ();
+
+if ($server_status1 != 0) {
+    print STDERR "ERROR: server1 returned $server_status1\n";
     exit 1;
 }
-if ($server2 != 0) {
-    print STDERR "ERROR: server2 returned $server\n";
+if ($server_status2 != 0) {
+    print STDERR "ERROR: server2 returned $server_status2\n";
     exit 1;
 }
 
 if ($target->WaitForFileTimed ($iorbase1,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile1>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+                        $target->ProcessStartWaitInterval ()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile1>\n";
+    $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
-} 
+}
+
 if ($target->WaitForFileTimed ($iorbase2,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile2>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+                        $target->ProcessStartWaitInterval ()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile2>\n";
+    $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
-} 
+}
 
-if ($target->GetFile ($iorfile1, $iorbase) == -1) {
+if ($target->GetFile ($server_iorfile1, $iorbase) == -1) {
     print STDERR "ERROR: cannot retrieve file <$iorfile1>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
-}if ($target->GetFile ($iorfile2, $iorbase) == -1) {
+}
+
+if ($target->GetFile ($server_iorfile2, $iorbase) == -1) {
     print STDERR "ERROR: cannot retrieve file <$iorfile2>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
-} 
+}
 
-$client = $CL->SpawnWaitKill (300);
+$client_status = $CL->SpawnWaitKill (300);
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV1->WaitKill (10);
-$server = $SV2->WaitKill (10);
+$server_status1 = $SV1->WaitKill (10);
+$server_status2 = $SV2->WaitKill (10);
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($server_status1 != 0) {
+    print STDERR "ERROR: server1 returned $server_status1\n";
+    $status = 1;
+}
+
+if ($server_status2 != 0) {
+    print STDERR "ERROR: server2 returned $server_status2\n";
     $status = 1;
 }
 
 $target->GetStderrLog();
 
-$target->DeleteFile($iorfile);
-$host->DeleteFile ($iorbase);
+$target->DeleteFile($iorbase1);
+$target->DeleteFile($iorbase2);
+
+$host->DeleteFile($iorbase1);
+$host->DeleteFile($iorbase2);
 
 exit $status;
