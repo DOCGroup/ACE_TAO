@@ -1,3 +1,10 @@
+Tue Oct  6 10:53:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+          Moved listener into a template
+
 Tue Oct  6 10:16:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.mpc:
