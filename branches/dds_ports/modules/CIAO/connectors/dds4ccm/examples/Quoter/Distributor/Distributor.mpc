@@ -111,7 +111,7 @@ project(DDS_Distributor_svnt) : ciao_servant, dds4ccm_base   {
   after      += DDS_Quoter_Base_skel  DDS_Distributor_lem_stub
   sharedname  = Distributor_svnt
   libs       += Distributor_stub Distributor_lem_stub  \
-                DDS_Quoter_Base_skel \
+                 \
                 DDS_Quoter_Base_stub
   libpaths += ../lib
   libout = ../lib
