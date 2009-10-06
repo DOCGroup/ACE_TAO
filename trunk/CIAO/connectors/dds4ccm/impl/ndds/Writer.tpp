@@ -83,7 +83,7 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::
 
   CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
                "Preparing to write to DDS\n"));
-  for (::DDS_Long index = 0; index < instances.length(); index++)
+  for (::CORBA::ULong index = 0; index < instances.length(); index++)
     {
       DDS_ReturnCode_t retval = this->impl_->write (instances[index],
                                      DDS_HANDLE_NIL);
