@@ -34,6 +34,8 @@
 #include "be_publishes.h"
 #include "be_emits.h"
 #include "be_consumes.h"
+#include "be_mirror_port.h"
+#include "be_porttype.h"
 #include "be_attribute.h"
 #include "be_eventtype.h"
 #include "be_typedef.h"
@@ -45,6 +47,7 @@
 #include "be_valuetype.h"
 
 #include "be_visitor_component.h"
+#include "be_visitor_extended_port.h"
 #include "be_visitor_attribute.h"
 #include "be_visitor_operation.h"
 #include "be_visitor_interface.h"

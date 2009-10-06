@@ -62,7 +62,7 @@ public:
   virtual int visit_union (be_union *node);
 };
 
-class be_visitor_serializer_op_field_decl : public be_visitor_scope
+class be_visitor_serializer_op_field_decl : public be_visitor_decl
 {
   //
   // = TITLE

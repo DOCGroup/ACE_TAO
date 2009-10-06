@@ -283,6 +283,12 @@ public:
   // Helper method to initialize the obj_ member of each generated abstract
   // base class.
 
+  /// Helper method passed to traverse_inheritance_graph(),
+  /// collects supported operations and attributes.
+  static int facet_op_attr_decl_helper (be_interface *node,
+                                        be_interface *base,
+                                        TAO_OutStream *os);
+                     
   int gen_operation_table (const char *flat_name,
                            const char *skeleton_class_name);
   // Generate the operation table including entries for inherited interfaces.

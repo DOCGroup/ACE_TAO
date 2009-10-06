@@ -20,6 +20,9 @@ public:
             
   virtual ~be_provides (void);
   
+  // Common code called by visitors.
+  int gen_facet (TAO_OutStream &os);
+  
   // Narrowing.
   DEF_NARROW_FROM_DECL(be_provides);
 

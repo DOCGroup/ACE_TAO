@@ -33,8 +33,7 @@ ACE_RCSID (be_visitor_field,
 // **********************************************
 
 be_visitor_field_cdr_op_cs::be_visitor_field_cdr_op_cs (
-    be_visitor_context *ctx
-  )
+      be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
@@ -859,9 +858,8 @@ be_visitor_field_cdr_op_cs::visit_union (be_union *node)
 // ****************************************************************
 
 be_visitor_cdr_op_field_decl::be_visitor_cdr_op_field_decl (
-    be_visitor_context *ctx
-  )
-  : be_visitor_scope (ctx)
+      be_visitor_context *ctx)
+  : be_visitor_decl (ctx)
 {
 }
 
