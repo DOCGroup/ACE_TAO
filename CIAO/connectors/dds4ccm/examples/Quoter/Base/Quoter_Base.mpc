@@ -6,7 +6,7 @@ project(DDS_Quoter_Base_idl_gen) : taoidldefaults, anytypecode {
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
               -Wb,stub_export_macro=QUOTER_BASE_STUB_Export \
-              -Wb,stub_export_include=Quoter_Base_stub_export.h -GT
+              -Wb,stub_export_include=Quoter_Base_stub_export.h -GT 
 
   IDL_Files {
     Quoter_Base.idl
