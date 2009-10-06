@@ -57,7 +57,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
     virtual ::DDS::CCM_DataReader_ptr get_info_out_dds_entity (void);
 
-    virtual void et_session_context (::Components::SessionContext_ptr ctx);
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
