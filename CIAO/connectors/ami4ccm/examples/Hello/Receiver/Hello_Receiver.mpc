@@ -54,7 +54,7 @@ project(AMI_Hello_Base_Hello_Receiver_l_stub) : ccm_svnt {
   }
 }
 
-project(AMI_Hello_Base_Hello_Receiver_stub) : ccm_stub {
+project(AMI_Hello_Base_Hello_Receiver_stub) : ccm_stub, messaging {
   after += AMI_Hello_Base_Hello_Receiver_idl_gen AMI_Hello_Base_stub
   libs  += Hello_Base_stub
   libpaths += ../lib
@@ -79,7 +79,7 @@ project(AMI_Hello_Base_Hello_Receiver_stub) : ccm_stub {
   }
 }
 
-project(AMI_Hello_Base_Hello_Receiver_exec) : ciao_executor {
+project(AMI_Hello_Base_Hello_Receiver_exec) : ciao_executor, messaging {
   after   += AMI_Hello_Base_Hello_Receiver_l_stub AMI_Hello_Base_Hello_Receiver_stub AMI_Hello_Base_exec
   sharedname = Hello_Receiver_exec
   libs += Hello_Receiver_stub Hello_Receiver_lem_stub Hello_Base_stub Hello_Base_exec
@@ -104,7 +104,7 @@ project(AMI_Hello_Base_Hello_Receiver_exec) : ciao_executor {
 }
 
 
-project(AMI_Hello_Base_Hello_Receiver_svnt) : ciao_servant {
+project(AMI_Hello_Base_Hello_Receiver_svnt) : ciao_servant, messaging {
   after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Receiver_l_stub AMI_Hello_Base_exec
   sharedname  = Hello_Receiver_svnt
   libs       += Hello_Receiver_stub Hello_Receiver_lem_stub  \
