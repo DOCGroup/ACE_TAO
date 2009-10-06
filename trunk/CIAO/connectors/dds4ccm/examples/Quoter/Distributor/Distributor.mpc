@@ -136,24 +136,3 @@ project(DDS_Distributor_svnt) : ciao_servant, dds4ccm_base   {
   }
 }
 
-project (DDS_controller) : ccm_stub, valuetype   {
-  exename = controller
-  after += DDS_Distributor_stub
-  libs  += Distributor_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ..
-  IDL_Files {
-  }
-
-  Source_Files {
-    controller.cpp
-  }
-
-  Header_Files {
-  }
-
-  Inline_Files {
-  }
-}
-
