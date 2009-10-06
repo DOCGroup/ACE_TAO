@@ -1,3 +1,30 @@
+Tue Oct  6 11:26:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Base.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Connector_State.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Getter.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiUpdater.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiWriter.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Get.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiUpdate.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiWrite.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Update.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Write.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_RawListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Reader.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_StateListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Updater.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p:
+          Resolved some more fuzz errors.
+
 Tue Oct  6 10:53:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp

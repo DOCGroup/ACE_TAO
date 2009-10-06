@@ -154,8 +154,8 @@ namespace CIAO_Quoter_Broker_Impl
     
     if (CORBA::is_nil (lc.in ()))
       {
-	      printf ("Error:  Listener control receptacle is null!\n");
-	      throw CORBA::INTERNAL ();
+        printf ("Error:  Listener control receptacle is null!\n");
+        throw CORBA::INTERNAL ();
       }
     
     lc->enabled (true);
