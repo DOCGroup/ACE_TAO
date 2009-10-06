@@ -29,11 +29,11 @@ project(IC_Bar_lem_gen) : ciaoidldefaults {
 }
 
 project(IC_Bar_stub) : ccm_stub {
-  after += IC_Bar_idl_gen  IC_Foo_idl_gen
+  after += IC_Bar_idl_gen IC_Foo_lem_gen
   libs  +=
 
   sharedname = IC_Bar_stub
-  dynamicflags   = IC_BAR_STUB_BUILD_DLL
+  dynamicflags = IC_BAR_STUB_BUILD_DLL
 
   IDL_Files {
   }
