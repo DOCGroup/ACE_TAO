@@ -1,3 +1,15 @@
+Tue Oct  6 10:16:16 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.mpc:
+          AMI_Hello_lem_gen shouldn't be derived from ami. This would
+          result in unnecessary sendc methods in the Receiver.
+
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.mpc:
+          None of the projects shouldn't be derived from AMI.
+
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+          Cleanup unnecessary sendc methods.
+
 Tue Oct  6 09:34:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl
