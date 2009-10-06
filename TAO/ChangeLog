@@ -1,3 +1,49 @@
+Tue Oct  6 09:43:40 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Bounded_Array_Sequence_T.h:
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Range_Checking_T.h:
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * tao/Bounded_Value_Sequence_T.h:
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+
+          Fixed a bug#3746. Now if TAO_CHECKED_SEQUENCE_INDEXING
+          is defined sequence code will throw BAD_PARAM in case
+          there is an attempt to access elements above maximum.
+          Also there will be BAD_PARAM exception in case new sequence's
+          length is greater than bound and marshaling of bounded
+          sequences will fail if sequence length is above maximum.
+
+        * tests/Bug_3746_Regression/client.cpp:
+        * tests/Bug_3746_Regression/Test.idl:
+        * tests/Bug_3746_Regression/server.cpp:
+        * tests/Bug_3746_Regression/Test_i.cpp:
+        * tests/Bug_3746_Regression/Test_i.h:
+        * tests/Bug_3746_Regression/run_test.pl:
+        * bin/tao_orb_tests.lst:
+
+          Added a test for bug#3746.
+
+        * tests/Sequence_Unit_Tests/Bounded_String.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_String.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Octet.cpp:
+        * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+
+          Fixed sequence unit tests for proper testing of code
+          added with the fix for bug#3746.
+
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+
+          Rearranged the code. This fixes stack overflow exception in
+          standard/inline builds on win32. The problem was related to
+          incorrect code generation with /O2 optimization level. The
+          above exception was easy to reproduce when stepping through
+          assembler code. The exception was thrown by the code preceding
+          the first line of a test_duplicate_exception_in_assignment()
+          function.
+
 Mon Oct  5 14:29:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:

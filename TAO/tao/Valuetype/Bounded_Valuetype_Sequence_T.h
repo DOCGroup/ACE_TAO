@@ -62,10 +62,7 @@ public:
 
   inline void length(CORBA::ULong length) {
     implementation_type::range::check_length(length, MAX);
-    if (MAX >= length)
-      {
-        impl_.length(length);
-      }
+    impl_.length(length);
   }
   inline value_type const & operator[](CORBA::ULong i) const {
     return impl_[i];
@@ -183,7 +180,7 @@ private:
   bool marshal_sequence(stream & strm, const TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & source) {
 
     const ::CORBA::ULong length = source.length ();
-    if (!(strm << length)) {
+    if (length > source.maximum () || !(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {

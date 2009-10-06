@@ -389,10 +389,10 @@ struct string_sequence_tester
   {
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
-      tested_sequence x; x.length(8);
+      tested_sequence x; x.length(4);
       f.reset();
 
-      for(CORBA::ULong i = 0; i != 8; ++i)
+      for(CORBA::ULong i = 0; i != 4; ++i)
       {
         x[i] = helper::allocate_test_string();
       }
@@ -403,8 +403,8 @@ struct string_sequence_tester
 
 
       {
-        tested_sequence y; y.length(4);
-        for(CORBA::ULong i = 0; i != 4; ++i)
+        tested_sequence y; y.length(8);
+        for(CORBA::ULong i = 0; i != 8; ++i)
         {
           y[i] = helper::allocate_test_string();
         }
@@ -414,14 +414,14 @@ struct string_sequence_tester
         r.reset();
         f.reset();
         tested_element_traits::duplicate_calls.failure_countdown(4);
-        CHECK_THROW(y = x, testing_exception);
+        CHECK_THROW(x = y, testing_exception);
         FAIL_RETURN_IF_NOT(a.expect(1), a);
         FAIL_RETURN_IF_NOT(f.expect(1), f);
         FAIL_RETURN_IF_NOT(d.expect(4), d);
-        FAIL_RETURN_IF_NOT(r.expect(x.maximum()), r);
+        FAIL_RETURN_IF_NOT(r.expect(y.maximum()), r);
 
-        CHECK_EQUAL(CORBA::ULong(4), y.length());
-        for(CORBA::ULong i = 0; i != 4; ++i)
+        CHECK_EQUAL(CORBA::ULong(8), y.length());
+        for(CORBA::ULong i = 0; i != 8; ++i)
         {
           FAIL_RETURN_IF_NOT(
               helper::compare_test_string(y[i]),

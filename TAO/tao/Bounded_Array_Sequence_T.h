@@ -54,10 +54,8 @@ public:
     return impl_.length();
   }
   inline void length(CORBA::ULong length) {
-    if (MAX >= length)
-      {
-        impl_.length(length);
-      }
+    implementation_type::range::check_length(length, MAX);
+    impl_.length(length);
   }
   inline value_type const & operator[](CORBA::ULong i) const {
     return impl_[i];
@@ -134,7 +132,7 @@ namespace TAO
     typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
     typedef TAO::Array_Traits<forany> array_traits;
     ::CORBA::ULong const length = source.length ();
-    if (!(strm << length)) {
+    if (length > source.maximum () || !(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
