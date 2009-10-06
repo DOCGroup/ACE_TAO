@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p DDS_Quoter_Base -l .. -o ../lib -u DDS Quoter_Connector"
 
 project(DDS_Quoter_Connector_idl_gen) : connectoridldefaults, componentidldefaults  {
+  after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=QUOTER_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Quoter_Connector_stub_export.h \
