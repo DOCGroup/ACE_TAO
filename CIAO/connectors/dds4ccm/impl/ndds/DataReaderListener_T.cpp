@@ -9,7 +9,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTE
 typename RAWLISTENER::_ptr_type listen, typename PORTSTATUSLISTENER::_ptr_type psl, ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
       : listener_ (RAWLISTENER::_duplicate (listen)),
         portlistener_ (PORTSTATUSLISTENER::_duplicate (psl)),
-	      enable_ (enabled)
+        enable_ (enabled)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
 }
