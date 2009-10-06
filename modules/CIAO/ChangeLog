@@ -1,9 +1,22 @@
+Tue Oct  6 07:04:13 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc:
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/impl/ndds/ListenerControl.h:
+        * connectors/dds4ccm/impl/ndds/ListenerControl.cpp:
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc:
+
+          Completed implementation. 
+        
 Mon Oct  5 11:55:20 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
 
-          Deploment plan. 
-        
+          Deploment plan.
+
 Thu Oct  1 02:40:40 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dds4ccm_base.mpb:

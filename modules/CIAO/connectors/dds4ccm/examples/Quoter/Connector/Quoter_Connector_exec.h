@@ -241,6 +241,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     void configure_port_info_out_ (void);
     bool __info_out_configured_;
     CCM_DDS::Stock_Info_RawListener_var __info_out_rawlistener_;
+    ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> __info_out_rawlistener_enabled_;
     CCM_DDS::PortStatusListener_var __info_out_portstatus_;
     ::DDS::Subscriber_var __info_out_subscriber_;
     ::DDS::DataReaderListener_var __info_out_listener_;
