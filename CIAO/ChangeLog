@@ -1,3 +1,8 @@
+Tue Oct  6 09:03:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+          Converted to the new test framework
+
 Tue Oct  6 08:37:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.{h,cpp}:
