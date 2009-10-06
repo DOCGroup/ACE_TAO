@@ -1,3 +1,9 @@
+Tue Oct  6 18:33:50 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          Added a test for ACE_OS::fileno(). Patch to cleanup ACE_OS::fileno()
+          implementation will be committed later.
+
 Tue Oct  6 14:06:02 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-openbsd.h:
