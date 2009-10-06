@@ -166,7 +166,6 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     DDS::DomainId_t domain_id_;
     CORBA::String_var qos_profile_;
 
-
     // @from DDS_TopicBase
     void configure_default_topic_ (void);
     bool default_topic_configured_;
