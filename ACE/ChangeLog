@@ -1,3 +1,8 @@
+Tue Oct  6 14:06:02 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Minor cleanup.
+
 Tue Oct  6 06:20:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
