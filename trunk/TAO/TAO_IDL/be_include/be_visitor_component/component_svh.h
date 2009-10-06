@@ -40,12 +40,12 @@ public:
   virtual int visit_component (be_component *node);
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);
+  virtual int visit_extended_port (be_extended_port *node);
+  virtual int visit_mirror_port (be_mirror_port *node);
   
 private:
   int gen_facets (void);
   
-  int gen_facet_ops_attrs (be_interface *node);
-                           
   void gen_context_class (void);
                            
   void gen_context_r (AST_Component *node);
@@ -78,12 +78,6 @@ private:
   
   void gen_entrypoint (void);
                   
-  /// Helper method passed to traverse_inheritance_graph(),
-  /// collects supported operations and attributes.
-  static int op_attr_decl_helper (be_interface *,
-                                  be_interface *,
-                                  TAO_OutStream *);
-                     
 private:
   be_component *node_;
   TAO_OutStream &os_;

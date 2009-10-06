@@ -24,6 +24,8 @@
 
 #include "idl_defines.h"
 
+#include "ast_argument.h"
+
 #include "be_null_return_emitter.h"
 
 #include "be_visitor_scope.h"

@@ -12,7 +12,7 @@
 //    be_visitor_component.h
 //
 // = DESCRIPTION
-//    Concrete visitor for the Component class
+//    Concrete visitors for the Component class
 //
 // = AUTHOR
 //    Jeff Parsons
