@@ -116,7 +116,7 @@ sub store_file ($)
     elsif ($name =~ /\.(dsw|vcp)$/i) {
         push @files_dsw, ($name);
     }
-    elsif ($name =~ /\.(pidl|idl)$/i) {
+    elsif ($name =~ /\.(pidl|idl|idl3)$/i) {
         push @files_idl, ($name);
     }
     elsif ($name =~ /\.pl$/i) {

@@ -1,3 +1,8 @@
+Tue Oct  6 06:20:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check idl3 files as idl file
+
 Sun Oct  4 19:36:27 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_stdio.inl (vsnprintf): Added some more checks in other
@@ -16,7 +21,7 @@ Fri Oct  2 15:24:33 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           it uses a copy of the const parameter to avoid breaking the
           const contract.  Thanks to William Glenn <wglenn at scires dot
           com> for reporting this.
-  
+
 Thu Oct  1 13:44:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.am:
