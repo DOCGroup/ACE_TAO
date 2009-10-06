@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file dds4CCM_Connector_State.idl3p
  *
@@ -13,12 +15,12 @@
 
 module CCM_DDS
 {
-  connector DDS_State<typename T> : DDS_TopicBase {	// T assumed to be a data type
-    mirrorport DDS_Update<T> 		observable;
-    mirrorport DDS_Read<T>			passive_observer;
-    mirrorport DDS_Get<T>			pull_observer;
-    mirrorport DDS_StateListen<T>		push_observer;
+  connector DDS_State<typename T> : DDS_TopicBase { // T assumed to be a data type
+    mirrorport DDS_Update<T>      observable;
+    mirrorport DDS_Read<T>        passive_observer;
+    mirrorport DDS_Get<T>         pull_observer;
+    mirrorport DDS_StateListen<T> push_observer;
   };
 };
 
-#endif
+#endif /* DDS4CCM_CONNECTOR_STATE_IDL3P */

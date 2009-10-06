@@ -6,6 +6,8 @@
  *
  * IDL3P description of the quoter connector. 
  */
+#ifndef QUOTER_CONNECTOR_IDL3P
+#define QUOTER_CONNECTOR_IDL3P
 
 #include <dds4ccm/idl/dds4ccm_Connector_Base.idl3p>
 #include <dds4ccm/idl/dds4ccm_Port_RawListen.idl3p>
@@ -20,6 +22,4 @@ module Quoter
   };
 };
 
-
-
-  
+#endif /* QUOTER_CONNECTOR_IDL3P */

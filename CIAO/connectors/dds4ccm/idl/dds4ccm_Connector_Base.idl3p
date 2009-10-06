@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file dds4CCM_Connector_Base.idl3p
  *
@@ -11,15 +13,15 @@
 module CCM_DDS
 {
   connector DDS_Base {
-    uses ConnectorStatusListener		error_listener;
-    readonly attribute DDS::DomainId_t	domain_id;
-    readonly attribute string		qos_profile;// File URL or XML string
+    uses ConnectorStatusListener        error_listener;
+    readonly attribute DDS::DomainId_t  domain_id;
+    readonly attribute string           qos_profile;// File URL or XML string
   };
-  
+
   connector DDS_TopicBase : DDS_Base {
-    readonly attribute string		topic_name;
-    readonly attribute StringSeq		key_fields;
+    readonly attribute string     topic_name;
+    readonly attribute StringSeq  key_fields;
   };
 };
 
-#endif
+#endif /* DDS4CCM_CONNECTOR_BASE_IDL3P */

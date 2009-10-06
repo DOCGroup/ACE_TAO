@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file dds4CCM_Port_Get.idl3p
  *
@@ -12,10 +14,10 @@
 module CCM_DDS
 {
   porttype DDS_Get<typename T> {
-    uses Getter<T> data;
-    uses DDS::DataReader dds_entity;
+    uses Getter<T>  data;
+    uses DDS::DataReader  dds_entity;
     provides PortStatusListener status;
   };
 };
 
-#endif
+#endif /* DDS4CCM_PORT_GET_IDL3P */
