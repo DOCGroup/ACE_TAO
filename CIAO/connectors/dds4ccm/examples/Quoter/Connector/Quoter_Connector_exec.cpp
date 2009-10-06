@@ -42,7 +42,7 @@
 
 // should be removed after we refactor stuff back into ndds impl.
 #include "dds4ccm/impl/ndds/DataReader.h"
-
+#include "dds4ccm/impl/ndds/ListenerControl.h"
 
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
@@ -117,7 +117,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       default_topic_configured_ (false),
       topic_name_ ("Quoter_Topic"),
       __info_in_configured_ (false),
-      __info_out_configured_ (false)
+      __info_out_configured_ (false),
+      __info_out_rawlistener_enabled_ (false)
 
   {
   }
@@ -311,16 +312,18 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   {
   public:
     info_out_Listener (::CCM_DDS::Stock_Info_RawListener_ptr listen,
-                   ::CCM_DDS::PortStatusListener_ptr psl)
-      : enable_ (false),
-        listener_ (::CCM_DDS::Stock_Info_RawListener::_duplicate (listen)),
-        portlistener_ (::CCM_DDS::PortStatusListener::_duplicate (psl))
+		       ::CCM_DDS::PortStatusListener_ptr psl,
+		       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
+      : listener_ (::CCM_DDS::Stock_Info_RawListener::_duplicate (listen)),
+        portlistener_ (::CCM_DDS::PortStatusListener::_duplicate (psl)),
+	enable_ (enabled)
     {
     };
 
     // from DataReaderListener
     virtual void on_data_available( ::DDS::DataReader *rdr)
     {
+      printf ("*** on data available\n");
       if (!this->enable_.value ())
         return;
 
@@ -340,6 +343,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
         ::DDS::ReturnCode_t const result  = reader->take_next_sample(instance,
                                                                      sampleinfo);
         if (result == DDS_RETCODE_NO_DATA) {
+	  printf ("no more samples\n");
             /* No more samples */
             break;
         } else if (result != DDS_RETCODE_OK) {
@@ -347,6 +351,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
             return;
         }
         if (sampleinfo.valid_data) {
+	  printf ("got valid data\n");
             ::CCM_DDS::ReadInfo empty;
             listener_->on_data (instance, empty);
         }
@@ -377,7 +382,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   private:
     ::CCM_DDS::Stock_Info_RawListener_var listener_;
     ::CCM_DDS::PortStatusListener_var portlistener_;
-    ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> enable_;
+    ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enable_;
   };
 
   void
@@ -403,8 +408,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
             this->__info_out_portstatus_ = this->context_->get_connection_info_out_status ();
 
             this->__info_out_datareaderlistener = new info_out_Listener (this->context_->get_connection_info_out_listener (),
-                                                                         this->context_->get_connection_info_out_status ());
-
+                                                                         this->context_->get_connection_info_out_status (),
+									 this->__info_out_rawlistener_enabled_);
             ::DDS::DataReaderQos drqos;
             this->__info_out_datareader_ =
               this->__info_out_subscriber_->create_datareader (this->topic_.in (),
@@ -451,7 +456,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   Quoter_Connector_exec_i::get_info_out_control (void)
   {
     /* Your code here. */
-    return ::CCM_DDS::CCM_ListenerControl::_nil ();
+    return new CCM_DDS_ListenerControl_i (this->__info_out_rawlistener_enabled_);
   }
 
   ::DDS::CCM_DataReader_ptr
@@ -486,9 +491,12 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   void
   Quoter_Connector_exec_i::ccm_activate (void)
   {
-    /* Your code here. */
+    if (!CORBA::is_nil (this->context_->get_connection_info_out_listener ()) ||
+        !CORBA::is_nil (this->context_->get_connection_info_out_status ()))
+      {
+	      this->configure_port_info_out_ ();
+      }
   }
-
   void
   Quoter_Connector_exec_i::ccm_passivate (void)
   {

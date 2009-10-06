@@ -31,28 +31,31 @@
 #ifndef DDS4CCM_LISTNERCONTROLI_H_
 #define DDS4CCM_LISTNERCONTROLI_H_
 
-#include "dds4ccm_ListnerControlS.h"
+#include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
+#include "dds4ccm/idl/dds4ccm_ListenerControlEC.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  CCM_DDS_ListenerControl_i
-  : public virtual POA_CCM_DDS::ListenerControl
+class DDS4CCM_NDDS_IMPL_Export CCM_DDS_ListenerControl_i
+  : public virtual CCM_DDS::CCM_ListenerControl,
+    public virtual ::CORBA::LocalObject
 {
 public:
   // Constructor 
-  CCM_DDS_ListenerControl_i (void);
+  CCM_DDS_ListenerControl_i (ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &flag);
   
   // Destructor 
   virtual ~CCM_DDS_ListenerControl_i (void);
   
-  virtual
-  ::CORBA::Boolean enabled (void);
+  virtual ::CORBA::Boolean enabled (void);
   
-  virtual
-  void enabled (
-    ::CORBA::Boolean enabled);
+  virtual void enabled (::CORBA::Boolean enabled);
+  
+private:
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &flag_;
 };
 
 
