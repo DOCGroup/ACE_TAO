@@ -1,3 +1,14 @@
+Tue Oct  6 11:00:56 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3746_Regression/Bug_3746_Regression.mpc:
+
+          Added MPC files for the test.
+
+        * tao/Range_Checking_T.h:
+
+          Added define for TAO_CHECKED_SEQUENCE_INDEXING in debug
+          builds.
+
 Tue Oct  6 09:43:40 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tao/Bounded_Sequence_CDR_T.h:

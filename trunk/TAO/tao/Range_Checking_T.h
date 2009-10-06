@@ -14,6 +14,10 @@
 #include "tao/Basic_Types.h"
 #include "tao/SystemException.h"
 
+#if !defined (TAO_CHECKED_SEQUENCE_INDEXING) && !defined (ACE_NDEBUG)
+# define TAO_CHECKED_SEQUENCE_INDEXING 1
+#endif
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
