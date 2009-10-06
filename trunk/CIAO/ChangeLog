@@ -1,3 +1,13 @@
+Tue Oct  6 12:29:30 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_Base.idl3:
+        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
+        * connectors/dds4ccm/idl/dds4ccm_ListenerControl.idl3:
+        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3:
+        * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Resolved fuzz errors.
+
 Tue Oct  6 11:26:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
