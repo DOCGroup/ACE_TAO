@@ -5,8 +5,8 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
 
-#ifndef DDS_DISTRIBUTOR_IDL3p
-#define DDS_DISTRIBUTOR_IDL3p
+#ifndef DDS_DISTRIBUTOR_IDL3P
+#define DDS_DISTRIBUTOR_IDL3P
 
 module Quoter
 {
@@ -16,4 +16,4 @@ module Quoter
   };
 };
 
-#endif
+#endif /* DDS_DISTRIBUTOR_IDL3P */

@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file dds4CCM_Updater.idl3p
  *
@@ -21,13 +23,13 @@ module CCM_DDS
       raises (NonExistent,
               InternalError);
     readonly attribute boolean is_lifecycle_checked;
-    // behaviour:
-    // - exceptions AlreadyCreated or NonExistent are raised only if 
-    //	is_lifecycle_checked
-    // - note: this check requires to previously attempt to read (not free)
-    // - note: this check is not 100% guarantee as a creation or a deletion may
-    //	occur between the check and the actual write od dispose order
+    //  behaviour:
+    //  - exceptions AlreadyCreated or NonExistent are raised only if
+    //    is_lifecycle_checked
+    //  - note: this check requires to previously attempt to read (not free)
+    //  - note: this check is not 100% guarantee as a creation or a deletion may
+    //    occur between the check and the actual write od dispose order
   };
 };
 
-#endif
+#endif /* DDS4CCM_UPDATER_IDL3P */

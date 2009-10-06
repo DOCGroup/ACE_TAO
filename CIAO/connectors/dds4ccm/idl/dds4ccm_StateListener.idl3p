@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file dds4CCM_StateListener.idl3p
  *
@@ -14,12 +16,12 @@ module CCM_DDS
     void on_creation (in T an_instance, in DDS::Time_t timestamp);
     void on_update (in T an_instance, in DDS::Time_t timestamp);
     void on_deletion (in T an_instance, in DDS::Time_t timestamp);
-    // behaviour
-    // - similar to a get_next, except that different operations are called		
-    //	depending on the instance state
-    // - triggered only if enabled is the associated ListenerControl
-    // - query filter (if any) in the associated Reader 
+    //  behaviour
+    //  - similar to a get_next, except that different operations are called
+    //    depending on the instance state
+    //  - triggered only if enabled is the associated ListenerControl
+    //  - query filter (if any) in the associated Reader
   };
 };
 
-#endif
+#endif /* DDS4CCM_STATELISTENER_IDL3P */

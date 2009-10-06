@@ -1,3 +1,34 @@
+Tue Oct  6 09:30:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3p:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl3p:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3p:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3p:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl3p:
+        * connectors/dds4ccm/id3p_test/Multiple_Reader_Ports/test.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Base.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Connector_State.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Getter.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiUpdater.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_MultiWriter.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Get.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiUpdate.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiWrite.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Update.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Port_Write.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_RawListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Reader.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_StateListener.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Updater.idl3p:
+        * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p:
+          Resolve fuzz errors.
+
 Tue Oct  6 09:03:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:

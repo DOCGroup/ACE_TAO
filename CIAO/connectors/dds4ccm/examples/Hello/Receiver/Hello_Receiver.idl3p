@@ -1,3 +1,8 @@
+// $Id$
+
+#ifndef HELLO_RECEIVER_IDL3P
+#define HELLO_RECEIVER_IDL3P
+
 #include "Hello_Base.idl3p"
 
 module Hello_DDS
@@ -7,3 +12,5 @@ module Hello_DDS
     port DDS_RawListen<string> read_message;
   };
 };
+
+#endif /* HELLO_RECEIVER_IDL3P */

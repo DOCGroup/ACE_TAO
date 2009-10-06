@@ -1,3 +1,8 @@
+// $Id$
+
+#ifndef HELLO_SENDER_IDL3P
+#define HELLO_SENDER_IDL3P
+
 #include "Hello_Base.idl3p"
 
 module Hello_DDS
@@ -7,3 +12,5 @@ module Hello_DDS
     port DDS_Write<string> push_message;
   };
 };
+
+#endif /* HELLO_SENDER_IDL3P */

@@ -1,3 +1,5 @@
+// $Id$
+
 /**
  * @file dds4CCM_Reader.idl3p
  *
@@ -25,21 +27,20 @@ module CCM_DDS
               InternalError);
     attribute QueryFilter filter
       setraises (BadParameter);
-    // behaviour
-    // - read operations are performed with the following parameters
-    //	- READ or NO_READ
-    //	- NEW or NOT_NEW
-    //	- ALIVE
-    //	- through the query as specified in the filter ("" means no query)
-    // - data returned:
-    //	- read_all returns for each living instance, its last sample
-    //	  ordered by instance first and then by sample
-    // 	- read_all_history returns all the samples of all instances
-    //	  ordered by instance first and then by sample
-    // 	- read_one returns the last sample of the given instance
-    // 	- read_one_history returns all the samples for the given instance
+    //  behaviour
+    //  - read operations are performed with the following parameters
+    //  - READ or NO_READ
+    //  - NEW or NOT_NEW
+    //  - ALIVE
+    //  - through the query as specified in the filter ("" means no query)
+    //  - data returned:
+    //  - read_all returns for each living instance, its last sample
+    //    ordered by instance first and then by sample
+    //  - read_all_history returns all the samples of all instances
+    //    ordered by instance first and then by sample
+    //  - read_one returns the last sample of the given instance
+    //  - read_one_history returns all the samples for the given instance
   };
-
 };
 
-#endif
+#endif /* DDS4CCM_READER_IDL3P */
