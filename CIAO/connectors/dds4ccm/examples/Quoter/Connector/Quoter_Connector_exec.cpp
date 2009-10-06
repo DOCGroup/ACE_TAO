@@ -47,67 +47,6 @@
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
   //============================================================
-  // Facet Executor Implementation Class: Stock_Info_Reader_exec_i
-  //============================================================
-
-  Stock_Info_Reader_exec_i::Stock_Info_Reader_exec_i (void)
-  {
-  }
-
-  Stock_Info_Reader_exec_i::~Stock_Info_Reader_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::Stock_Info_Reader
-
-  void
-  Stock_Info_Reader_exec_i::read_all (
-    ::CCM_DDS::Stock_Info_Reader::Stock_InfoSeq_out /* instances */,
-    ::CCM_DDS::ReadInfoSeq_out /* infos */)
-  {
-    /* Your code here. */
-  }
-
-  void
-  Stock_Info_Reader_exec_i::read_all_history (
-    ::CCM_DDS::Stock_Info_Reader::Stock_InfoSeq_out /* instances */,
-    ::CCM_DDS::ReadInfoSeq_out /* infos */)
-  {
-    /* Your code here. */
-  }
-
-  void
-  Stock_Info_Reader_exec_i::read_one (
-    ::Quoter::Stock_Info & /* an_instance */,
-    ::CCM_DDS::ReadInfo_out /* info */)
-  {
-    /* Your code here. */
-  }
-
-  void
-  Stock_Info_Reader_exec_i::read_one_history (
-    const ::Quoter::Stock_Info & /* an_instance */,
-    ::CCM_DDS::Stock_Info_Reader::Stock_InfoSeq_out /* instances */,
-    ::CCM_DDS::ReadInfoSeq_out /* infos */)
-  {
-    /* Your code here. */
-  }
-
-  ::CCM_DDS::QueryFilter *
-  Stock_Info_Reader_exec_i::filter (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-
-  void
-  Stock_Info_Reader_exec_i::filter (
-    const ::CCM_DDS::QueryFilter & /* filter */)
-  {
-    /* Your code here. */
-  }
-
-  //============================================================
   // Component Executor Implementation Class: Quoter_Connector_exec_i
   //============================================================
 
@@ -312,11 +251,11 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   {
   public:
     info_out_Listener (::CCM_DDS::Stock_Info_RawListener_ptr listen,
-		       ::CCM_DDS::PortStatusListener_ptr psl,
-		       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
+		                   ::CCM_DDS::PortStatusListener_ptr psl,
+		                   ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
       : listener_ (::CCM_DDS::Stock_Info_RawListener::_duplicate (listen)),
         portlistener_ (::CCM_DDS::PortStatusListener::_duplicate (psl)),
-	enable_ (enabled)
+	      enable_ (enabled)
     {
     };
 
@@ -343,7 +282,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
         ::DDS::ReturnCode_t const result  = reader->take_next_sample(instance,
                                                                      sampleinfo);
         if (result == DDS_RETCODE_NO_DATA) {
-	  printf ("no more samples\n");
+	          printf ("no more samples\n");
             /* No more samples */
             break;
         } else if (result != DDS_RETCODE_OK) {
@@ -351,7 +290,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
             return;
         }
         if (sampleinfo.valid_data) {
-	  printf ("got valid data\n");
+	          printf ("got valid data\n");
             ::CCM_DDS::ReadInfo empty;
             listener_->on_data (instance, empty);
         }
@@ -372,8 +311,6 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     {
       this->portlistener_->on_sample_lost (the_reader, status);
     };
-
-
 
     // From ListenerControl
     bool enabled () const;
@@ -399,8 +336,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
           {
             ::DDS::SubscriberQos sqos;
             this->__info_out_subscriber_ = this->domain_->create_subscriber (sqos,
-                                                                              0,
-                                                                              0);
+                                                                             0,
+                                                                             0);
           }
 
         if (CORBA::is_nil (this->__info_out_datareader_.in ()))
@@ -448,8 +385,12 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   ::CCM_DDS::CCM_Stock_Info_Reader_ptr
   Quoter_Connector_exec_i::get_info_out_data (void)
   {
-    /* Your code here. */
-    return ::CCM_DDS::CCM_Stock_Info_Reader::_nil ();
+    std::cerr << "get_info_out_data" << std::endl;
+
+    //this->configure_port_info_in_ ();
+
+    return new CIAO::DDS4CCM::RTI::Reader_T<Stock_Info_Traits,
+      ::CCM_DDS::CCM_Stock_Info_Reader> (this->__info_out_datareader_.in ());
   }
 
   ::CCM_DDS::CCM_ListenerControl_ptr

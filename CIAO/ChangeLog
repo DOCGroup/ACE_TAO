@@ -1,3 +1,13 @@
+Tue Oct  6 09:34:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h
+        * connectors/dds4ccm/impl/ndds/Writer.tpp
+          Added a Stock_Info_Seq as corba sequence for the reader
+
 Tue Oct  6 09:30:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl3p:
