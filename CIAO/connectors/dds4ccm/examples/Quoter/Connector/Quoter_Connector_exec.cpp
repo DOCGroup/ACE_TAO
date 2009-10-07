@@ -15,11 +15,8 @@
 
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
-  //============================================================
-  // Component Executor Implementation Class: Quoter_Connector_exec_i
-  //============================================================
-
-  Quoter_Connector_exec_i::Quoter_Connector_exec_i (void)
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::Connector_T (void)
     : default_domain_configured_ (false),
       domain_id_ (0),
       default_topic_configured_ (false),
@@ -27,35 +24,34 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       __info_in_configured_ (false),
       __info_out_configured_ (false),
       __info_out_rawlistener_enabled_ (false)
-
   {
   }
 
-  Quoter_Connector_exec_i::~Quoter_Connector_exec_i (void)
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::~Connector_T (void)
   {
   }
 
-  // Supported operations and attributes.
-
-  // Component attributes.
-
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   char *
-  Quoter_Connector_exec_i::topic_name (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::topic_name (void)
   {
     // @from DDS_TopicBase
     return CORBA::string_dup (this->topic_name_.in ());
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::topic_name (
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::topic_name (
     const char * topic_name)
   {
     // @from DDS_TopicBase
     this->topic_name_ = topic_name;
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   ::DDS::StringSeq *
-  Quoter_Connector_exec_i::key_fields (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::key_fields (void)
   {
     // @from DDS_TopicBase
     ::DDS::StringSeq *retval =
@@ -67,8 +63,9 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     return retval;
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::key_fields (
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::key_fields (
     const ::DDS::StringSeq & key_fields)
   {
     // @from DDS_TopicBase
@@ -78,30 +75,34 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       this->key_fields_[i] = CORBA::string_dup (key_fields[i]);
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   ::DDS::DomainId_t
-  Quoter_Connector_exec_i::domain_id (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::domain_id (void)
   {
     // @from DDS_Base
     return this->domain_id_;
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::domain_id (
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::domain_id (
     ::DDS::DomainId_t domain_id)
   {
     // @from DDS_Base
     this->domain_id_ = domain_id;
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   char *
-  Quoter_Connector_exec_i::qos_profile (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::qos_profile (void)
   {
     // @from DDS_Base
     return CORBA::string_dup (this->qos_profile_.in ());
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::qos_profile (
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::qos_profile (
     const char * qos_profile)
   {
     // @from DDS_Base
@@ -110,8 +111,9 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
   // Port operations.
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::configure_default_domain_ (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_default_domain_ (void)
   {
     CIAO_DEBUG ((LM_TRACE, CLINFO "Quoter_Connector_exec_i::configure_default_domain_ - "
                  "Configuring default domain\n"));
@@ -140,8 +142,9 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       }
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::configure_default_topic_ (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_default_topic_ (void)
   {
     CIAO_DEBUG ((LM_TRACE, CLINFO "Quoter_Connector_exec_i::configure_default_topic_ - "
                  "Configuring default topic\n"));
@@ -154,14 +157,14 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
         if (CORBA::is_nil (this->topic_))
           {
             CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part = dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
-            DDS_ReturnCode_t retcode = Stock_Info_Traits::type_support::register_type(
-              part->get_participant (), Stock_Info_Traits::type_support::get_type_name ());
+            DDS_ReturnCode_t retcode = NDDS_TYPE::type_support::register_type(
+              part->get_participant (), NDDS_TYPE::type_support::get_type_name ());
             if (retcode == DDS_RETCODE_OK)
               {
                 ::DDS::TopicQos tqos;
                 this->topic_ =
                   this->domain_->create_topic (this->topic_name_.in (),
-                                               Stock_Info_Traits::type_support::get_type_name (),
+                                               NDDS_TYPE::type_support::get_type_name (),
                                                tqos,
                                                0,
                                                0);
@@ -179,8 +182,9 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       }
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::configure_port_info_in_ (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_in_ (void)
   {
     if (this->__info_in_configured_)
       return;
@@ -214,8 +218,9 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       }
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::configure_port_info_out_ (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_out_ (void)
   {
     if (this->__info_out_configured_)
       return;
@@ -236,7 +241,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
           {
             this->__info_out_portstatus_ = this->context_->get_connection_info_out_status ();
 
-            this->__info_out_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T<Stock_Info_Traits, ::CCM_DDS::Stock_Info_RawListener, ::CCM_DDS::PortStatusListener> (
+            this->__info_out_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CONNECTOR_TYPE::rawlistener_type, ::CCM_DDS::PortStatusListener> (
               this->context_->get_connection_info_out_listener (),
               this->context_->get_connection_info_out_status (),
               this->__info_out_rawlistener_enabled_);
@@ -256,58 +261,60 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
       }
   }
 
-  ::CCM_DDS::CCM_Stock_Info_Writer_ptr
-  Quoter_Connector_exec_i::get_info_in_data (void)
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
+  typename CONNECTOR_TYPE::writer_type::_ptr_type
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_in_data (void)
   {
     std::cerr << "get_info_in_data" << std::endl;
 
     this->configure_port_info_in_ ();
 
-    return new CIAO::DDS4CCM::RTI::Writer_T<Stock_Info_Traits,
-      ::CCM_DDS::CCM_Stock_Info_Writer> (this->__info_in_datawriter_.in ());
+    return new CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE,
+      CONNECTOR_TYPE::writer_type> (this->__info_in_datawriter_.in ());
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   ::DDS::CCM_DataWriter_ptr
-  Quoter_Connector_exec_i::get_info_in_dds_entity (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_in_dds_entity (void)
   {
     this->configure_port_info_in_ ();
 
     return this->__info_in_datawriter_.in ();
   }
 
-  ::CCM_DDS::CCM_Stock_Info_Reader_ptr
-  Quoter_Connector_exec_i::get_info_out_data (void)
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
+  typename CONNECTOR_TYPE::reader_type::_ptr_type
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_out_data (void)
   {
     std::cerr << "get_info_out_data" << std::endl;
 
     //this->configure_port_info_in_ ();
 
-    return new CIAO::DDS4CCM::RTI::Reader_T<Stock_Info_Traits,
-      ::CCM_DDS::CCM_Stock_Info_Reader> (this->__info_out_datareader_.in ());
+    return new CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE,
+      CONNECTOR_TYPE::reader_type> (this->__info_out_datareader_.in ());
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   ::CCM_DDS::CCM_ListenerControl_ptr
-  Quoter_Connector_exec_i::get_info_out_control (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_out_control (void)
   {
-    /* Your code here. */
     return new CCM_DDS_ListenerControl_i (this->__info_out_rawlistener_enabled_);
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   ::DDS::CCM_DataReader_ptr
-  Quoter_Connector_exec_i::get_info_out_dds_entity (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_out_dds_entity (void)
   {
-    /* Your code here. */
     return ::DDS::CCM_DataReader::_nil ();
   }
 
-  // Operations from Components::SessionComponent.
-
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::set_session_context (
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    ::Quoter::CCM_Quoter_Connector_Context_var lctx =
-      ::Quoter::CCM_Quoter_Connector_Context::_narrow (ctx);
+    CONNECTOR_TYPE::context_type::_var_type lctx =
+      CONNECTOR_TYPE::context_type::_narrow (ctx);
 
     if ( ::CORBA::is_nil (lctx.in ()))
       {
@@ -317,13 +324,15 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     this->context_ = lctx;
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::configuration_complete (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configuration_complete (void)
   {
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::ccm_activate (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::ccm_activate (void)
   {
     if (!CORBA::is_nil (this->context_->get_connection_info_out_listener ()) ||
         !CORBA::is_nil (this->context_->get_connection_info_out_status ()))
@@ -331,16 +340,25 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
         this->configure_port_info_out_ ();
       }
   }
+
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::ccm_passivate (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::ccm_passivate (void)
   {
-    /* Your code here. */
   }
 
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   void
-  Quoter_Connector_exec_i::ccm_remove (void)
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::ccm_remove (void)
   {
-    /* Your code here. */
+  }
+
+  Quoter_Connector_exec_i::Quoter_Connector_exec_i (void)
+  {
+  }
+  
+  Quoter_Connector_exec_i::~Quoter_Connector_exec_i (void) 
+  {
   }
 
   extern "C" QUOTER_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
