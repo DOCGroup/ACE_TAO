@@ -29,7 +29,7 @@ project(AMI_Hello_Base_Hello_Receiver_lem_gen) : ciaoidldefaults   {
   }
 }
 
-project(AMI_Hello_Base_Hello_Receiver_l_stub) : ccm_svnt {
+project(AMI_Hello_Base_Hello_Receiver_l_stub) : ccm_svnt, messaging {
   after += AMI_Hello_Base_Hello_Receiver_lem_gen AMI_Hello_Base_Hello_Receiver_stub Hello_Base_stub
   libs  += Hello_Base_stub Hello_Receiver_stub
   libpaths += ../lib
