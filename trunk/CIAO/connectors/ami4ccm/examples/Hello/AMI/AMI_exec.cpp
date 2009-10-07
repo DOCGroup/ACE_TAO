@@ -70,7 +70,8 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   // Facet Executor Implementation Class: AMI_MyFoo_exec_i
   //============================================================
   AMI_MyFoo_exec_i::AMI_MyFoo_exec_i (
-    ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback)
+    ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback,
+    ::Hello::MyFoo_ptr receiver_foo)
   : foo_callback_ (::Hello_AMI::AMI_MyFooCallback::_duplicate (foo_callback))
   {
     //initialize AMI client
@@ -81,9 +82,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     CORBA::ORB_var orb =
       CORBA::ORB_init (argc, argv, ACE_TEXT ("AMI_foo_client"));
 
-    CORBA::Object_var object =
-      orb->string_to_object ("file://foo.ior");
-    ami_foo_server_ = Hello::MyFoo::_narrow (object.in ());
+    ami_foo_server_ = ::Hello::MyFoo::_duplicate (receiver_foo);
 
     if (CORBA::is_nil (ami_foo_server_.in ()))
       {
@@ -206,7 +205,8 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   {
     ::Hello_AMI::AMI_MyFooCallback_var foo_callback =
       this->context_->get_connection_callback_my_foo ();
-    return new AMI_MyFoo_exec_i (foo_callback.in ());
+    return new AMI_MyFoo_exec_i (foo_callback.in (),
+                                 receiver_foo_.in ());
   }
   // Operations from Components::SessionComponent.
   
@@ -232,10 +232,10 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   void
   AMI_exec_i::ccm_activate (void)
   {
-    ::Hello::MyFoo_var receiver_foo =
+    receiver_foo_ =
         this->context_->get_connection_my_foo_receiver ();
     ::CCM_CORBA_AMI_MyFoo_Impl::CORBA_MyFoo_server* foo_srv =
-        new ::CCM_CORBA_AMI_MyFoo_Impl::CORBA_MyFoo_server (receiver_foo.in ());
+        new ::CCM_CORBA_AMI_MyFoo_Impl::CORBA_MyFoo_server (receiver_foo_.in ());
     printf ("AMI :\tStarting MyFoo CORBA server thread.\n");
     foo_srv->activate ();
   }
