@@ -11,7 +11,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   //============================================================
   // Implementation of the AMI CORBA FOO reply handler
   //============================================================
-  class AMI_MyFoo_reply_handler : public POA_CCM_AMI::AMI_MyFooHandler
+  class AMI_MyFoo_reply_handler : public POA_Hello::AMI_MyFooHandler
   {
     public:
       AMI_MyFoo_reply_handler (
@@ -61,13 +61,13 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       ::CCM_AMI::AMI_MyFooCallback_var foo_callback_;
   };
 
-  class AMI_MyFoo_i : public POA_CCM_AMI::MyFoo
+  class AMI_MyFoo_i : public POA_Hello::MyFoo
   {
   public:
     /// ctor
     AMI_MyFoo_i (
       CORBA::ORB_ptr orb,
-      ::CCM_AMI::MyFoo_ptr foo_receiver);
+      ::Hello::MyFoo_ptr foo_receiver);
 
     // The AMI methods.
     CORBA::Long
@@ -91,7 +91,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
 
   private:
     CORBA::ORB_var orb_;
-    ::CCM_AMI::MyFoo_var foo_receiver_;
+    ::Hello::MyFoo_var foo_receiver_;
   };
 
   // CORBA server which delivers the MyFoo interface
@@ -99,11 +99,11 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   {
     public:
       CORBA_MyFoo_server (
-    ::CCM_AMI::MyFoo_ptr foo_receiver);
+        ::Hello::MyFoo_ptr foo_receiver);
       virtual int svc (void);
 
     private:
-    ::CCM_AMI::MyFoo_var foo_receiver_;
+    ::Hello::MyFoo_var foo_receiver_;
   };
 }
 #endif /* AMI_MyFoo_i_H */

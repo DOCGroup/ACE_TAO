@@ -66,7 +66,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
         {
           excep_holder->raise_exception ();
         }
-      catch (const CCM_AMI::InternalError& ex)
+      catch (const Hello::InternalError& ex)
         {
           printf ("AMI CORBA (FOO) :\tCaught the correct except type (CCM_AMI::InternalError) <%d> <%s>\n",
                   ex.id, ex.error_string.in ());
@@ -207,8 +207,8 @@ namespace CIAO_Hello_AMI_Sender_Impl
   //============================================================
   // Worker thread for synchronous invocations for MyFoo
   //============================================================
-  synch_foo_generator::synch_foo_generator (::CCM_AMI::MyFoo_ptr my_foo_ami)
-  : my_foo_ami_ (::CCM_AMI::MyFoo::_duplicate (my_foo_ami))
+  synch_foo_generator::synch_foo_generator (::Hello::MyFoo_ptr my_foo_ami)
+  : my_foo_ami_ (::Hello::MyFoo::_duplicate (my_foo_ami))
   {
   }
 
@@ -240,7 +240,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
         CORBA::Long result = my_foo_ami_->foo ("", out_str);
         printf ("Sender (SYNCH) :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
       }
-    catch (CCM_AMI::InternalError& ex)
+    catch (Hello::InternalError& ex)
       {
         printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
       }
@@ -250,7 +250,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
         my_foo_ami_->rw_attrib (0);
         printf ("Sender (SYNCH) :\tInvoked synchronous call rw_attrib\n");
       }
-    catch (CCM_AMI::InternalError& ex)
+    catch (Hello::InternalError& ex)
      {
         printf ("Sender (SYNCH RW_ATTRIB) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
       }
@@ -320,7 +320,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
         new asynch_foo_generator (asynch_foo);
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
   
-    ::CCM_AMI::MyFoo_var synch_foo =
+    ::Hello::MyFoo_var synch_foo =
         this->context_->get_connection_run_my_foo ();
     synch_foo_generator* synch_foo_gen =
       new synch_foo_generator (synch_foo);

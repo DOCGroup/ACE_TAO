@@ -83,7 +83,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
       ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler);
     
   private:
-    CCM_AMI::MyFoo_var ami_foo_server_;
+    Hello::MyFoo_var ami_foo_server_;
       ::CCM_AMI::AMI_MyFooCallback_ptr foo_callback_;
   };
   

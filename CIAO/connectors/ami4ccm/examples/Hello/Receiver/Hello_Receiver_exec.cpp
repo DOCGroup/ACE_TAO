@@ -56,7 +56,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     if (ACE_OS::strlen (in_str) == 0)
       {
         printf ("Receiver (FOO) :\tEMPTY string received -> THROW INTERNALERROR with id <42> and errorstring <Hello World>\n");
-        CCM_AMI::InternalError ex;
+        Hello::InternalError ex;
         ex.id = 42;
         ex.error_string = "Hello world";
         throw ex;
@@ -94,7 +94,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     if (new_value == 0)
     {
       printf ("Receiver (RW_ATTRIB) :\tnew_value == 0 -> THROW empty exception\n");
-      CCM_AMI::InternalError ex;
+      Hello::InternalError ex;
       throw ex;
     }
     else
@@ -130,7 +130,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   
   // Port operations.
   
-  ::CCM_AMI::CCM_MyFoo_ptr
+  ::Hello::CCM_MyFoo_ptr
   Receiver_exec_i::get_do_my_foo (void)
   {
     return new MyFoo_exec_i ();
