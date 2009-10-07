@@ -65,6 +65,14 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
 =======================================================
 
+. Added second prototype of DDS4CCM that uses the RTI
+  CORBA Compatibility kit and a monolitic connector
+
+. Extended AMI4CCM prototype
+
+. Update all examples and tests for the changes in the -Glem
+  TAO_IDL option
+
 . In idl3_to_idl2 tool, replaced manual designation of IDL2-only
   files and resulting generated include of undecorated filename
   (using -x <filename> option) with a mechanism that does it
