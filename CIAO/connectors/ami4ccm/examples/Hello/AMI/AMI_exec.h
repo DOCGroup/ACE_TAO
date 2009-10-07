@@ -87,25 +87,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
       ::CCM_AMI::AMI_MyFooCallback_ptr foo_callback_;
   };
   
-  class  AMI_MyInterface_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_MyInterface,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    AMI_MyInterface_exec_i (::CCM_AMI::AMI_MyInterfaceCallback_ptr foo_callback);
-
-    virtual ~AMI_MyInterface_exec_i (void);
-
-    virtual void
-    sendc_do_something_with_something (
-      ::CCM_AMI::AMI_MyInterfaceCallback_ptr ami_handler,
-      CORBA::Short something);
-
-  private:
-    CCM_AMI::MyInterface_var ami_interface_server_;
-    ::CCM_AMI::AMI_MyInterfaceCallback_var interface_callback_;
-  };
-
   class  AMI_exec_i
     : public virtual AMI_Exec,
       public virtual ::CORBA::LocalObject
@@ -122,9 +103,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
     
     virtual ::CCM_AMI::CCM_AMI_MyFoo_ptr
     get_perform_asynch_my_foo (void);
-
-    virtual ::CCM_AMI::CCM_AMI_MyInterface_ptr
-    get_perform_asynch_my_interface (void);
     
     // Operations from Components::SessionComponent.
     

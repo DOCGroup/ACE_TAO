@@ -167,32 +167,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   {
     HandleException (excep_holder, "RO_ATTRIB");
   }
-  
-  //============================================================
-  // Operations from ::CCM_AMI::MyInterface_callback
-  //============================================================
-  MyInterface_callback_exec_i::MyInterface_callback_exec_i ()
-  {
-  }
-
-  MyInterface_callback_exec_i::~MyInterface_callback_exec_i ()
-  {
-  }
-
-  void
-  MyInterface_callback_exec_i::do_something_with_something (
-  ::CORBA::Float ami_return_val)
-  {
-    printf ("Sender (INTERFACE) :\tCallback from AMI : result <%f>\n", ami_return_val);
-  }
-
-  void
-  MyInterface_callback_exec_i::do_something_with_something_excep (
-      ::Messaging::ExceptionHolder * excep_holder)
-  {
-    HandleException (excep_holder, "HELLO");
-  }
-
+ 
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -287,42 +262,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
   }
 
   //============================================================
-  // Worker thread for asynchronous invocations for MyInterface
-  //============================================================
-  asynch_interface_generator::asynch_interface_generator (::CCM_AMI::AMI_MyInterface_ptr my_interface_ami)
-  : my_interface_ami_ (::CCM_AMI::AMI_MyInterface::_duplicate (my_interface_ami))
-  {
-  }
-
-  int asynch_interface_generator::svc ()
-  {
-    ACE_OS::sleep (3);
-    for (int i = 1; i < 15; ++i)
-    {
-      if (CORBA::is_nil (my_interface_ami_))
-      {
-        printf ("Sender (INTERFACE) :\tinterface_ami is NIL !!!\n");
-        return 1;
-      }
-      else
-      {
-        printf ("Sender (INTERFACE) :\tInvoke Asynchronous call\n");
-        my_interface_ami_->sendc_do_something_with_something (0, i);
-        printf ("Sender (INTERFACE) :\tInvoked Asynchronous call\n");
-      }
-    }
-    printf ("Sender (INTERFACE) :\tInvoke Asynchronous call to test except handling\n");
-    my_interface_ami_->sendc_do_something_with_something (0, 0);
-    printf ("Sender (INTERFACE) :\tInvoked Asynchronous call.\n");
-    return 0;
-  }
-
-  //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-  : global_foo_callback_ (0),
-    global_interface_callback_ (0)
+  : global_foo_callback_ (0)
   {
   }
 
@@ -345,17 +288,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     }
 
     return  global_foo_callback_;
-  }
-
-  ::CCM_AMI::CCM_AMI_MyInterfaceCallback_ptr
-  Sender_exec_i::get_the_my_interface_callback ()
-  {
-    if (CORBA::is_nil (global_interface_callback_))
-    {
-      global_interface_callback_ = new MyInterface_callback_exec_i ();
-    }
-
-    return  global_interface_callback_;
   }
 
   // Operations from Components::SessionComponent.
@@ -393,13 +325,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     synch_foo_generator* synch_foo_gen =
       new synch_foo_generator (synch_foo);
     synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-   
-  ::CCM_AMI::AMI_MyInterface_var asynch_interface =
-      this->context_->get_connection_run_asynch_my_interface();
-  asynch_interface_generator* asynch_interface_gen =
-    new asynch_interface_generator (asynch_interface);
-  asynch_interface_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-
   }
 
   void

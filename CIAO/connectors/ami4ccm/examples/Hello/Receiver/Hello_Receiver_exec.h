@@ -76,25 +76,6 @@ namespace CIAO_Hello_AMI_Receiver_Impl
         ro_attrib ();
   };
   
-  class  MyInterface_exec_i
-    : public virtual ::CCM_AMI::CCM_MyInterface,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    MyInterface_exec_i (void);
-    virtual ~MyInterface_exec_i (void);
-    
-    // Operations and attributes from ::CCM_AMI::MyFoo
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::CORBA::Float
-    do_something_with_something (
-      CORBA::Short something);
-  };
-  
-  
   class  Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -111,9 +92,6 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     
     virtual ::CCM_AMI::CCM_MyFoo_ptr
     get_do_my_foo (void);
-    
-    virtual ::CCM_AMI::CCM_MyInterface_ptr
-    get_do_my_interface (void);
     
     // Operations from Components::SessionComponent.
     

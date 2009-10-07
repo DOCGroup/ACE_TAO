@@ -79,43 +79,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     ::CCM_AMI::MyFoo_var my_foo_ami_;
   };
 
-  // Worker thread for synchronous invocations
-  class asynch_interface_generator : public virtual ACE_Task_Base
-  {
-  public:
-    asynch_interface_generator (::CCM_AMI::AMI_MyInterface_ptr my_interface_ami);
-
-    virtual int svc (void);
-
-  private:
-    ::CCM_AMI::AMI_MyInterface_ptr my_interface_ami_;
-  };
-
-  class  MyInterface_callback_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_MyInterfaceCallback,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    MyInterface_callback_exec_i (void);
-    virtual ~MyInterface_callback_exec_i (void);
-    
-    // Operations and attributes from ::CCM_AMI::MyFoo_callback
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void
-    do_something_with_something (
-      ::CORBA::Float ami_return_val);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void
-    do_something_with_something_excep (
-        ::Messaging::ExceptionHolder * excep_holder);
-  };
-
   class  MyFoo_callback_exec_i
     : public virtual ::CCM_AMI::CCM_AMI_MyFooCallback,
       public virtual ::CORBA::LocalObject
@@ -180,10 +143,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     virtual ::CCM_AMI::CCM_AMI_MyFooCallback_ptr
     get_the_my_foo_callback (void);
-
-    virtual ::CCM_AMI::CCM_AMI_MyInterfaceCallback_ptr
-    get_the_my_interface_callback (void);
-
     // Operations from Components::SessionComponent.
     
     virtual void
@@ -199,7 +158,6 @@ namespace CIAO_Hello_AMI_Sender_Impl
   private:
     ::Hello_AMI::CCM_Sender_Context_var context_;
     MyFoo_callback_exec_i* global_foo_callback_;
-    MyInterface_callback_exec_i* global_interface_callback_;
   };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

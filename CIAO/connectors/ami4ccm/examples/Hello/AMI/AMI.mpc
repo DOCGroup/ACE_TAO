@@ -94,13 +94,11 @@ project(Hello_Base_AMI_exec) : ciao_executor, ami   {
   Source_Files {
     AMI_exec.cpp
     AMI_MyFoo_i.cpp
-    AMI_MyInterface_i.cpp
   }
 
   Header_Files {
     AMI_exec.h
     AMI_MyFoo_i.h
-    AMI_MyInterface_i.h
     AMI_exec_export.h
   }
 
