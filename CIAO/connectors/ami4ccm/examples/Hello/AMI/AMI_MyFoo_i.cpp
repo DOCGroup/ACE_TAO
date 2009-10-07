@@ -191,37 +191,18 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       }
       PortableServer::POA_var root_poa =
           PortableServer::POA::_narrow (poa_object.in ());
-
       PortableServer::POAManager_var poa_manager =
           root_poa->the_POAManager ();
-
       AMI_MyFoo_i AMI_MyFoo_i (orb.in (), foo_receiver_);
-
       PortableServer::ObjectId_var id =
           root_poa->activate_object (&AMI_MyFoo_i);
-
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
-
       Hello::MyFoo_var ami_foo_var =
           Hello::MyFoo::_narrow (object.in ());
-
       CORBA::String_var ior =
           orb->object_to_string (ami_foo_var.in ());
-
-        // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen ("foo.ior", "w");
-      if (output_file == 0)
-      {
-        printf ("Cannot open output file for writing IOR: server.ior\n");
-        return 1;
-      }
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
-
       poa_manager->activate ();
-
       printf ("AMI CORBA (FOO) :\tFOO Server is activated\n");
-
       orb->run ();
     }
     catch (const CORBA::Exception& ex)
