@@ -9,8 +9,8 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   //============================================================
   // Implementation of the AMI CORBA FOO reply handler
   //============================================================
-  AMI_MyFoo_reply_handler::AMI_MyFoo_reply_handler (::CCM_AMI::AMI_MyFooCallback_ptr foo_callback)
-  : foo_callback_ (::CCM_AMI::AMI_MyFooCallback::_duplicate (foo_callback))
+  AMI_MyFoo_reply_handler::AMI_MyFoo_reply_handler (::Hello_AMI::AMI_MyFooCallback_ptr foo_callback)
+  : foo_callback_ (::Hello_AMI::AMI_MyFooCallback::_duplicate (foo_callback))
   {
   }
 

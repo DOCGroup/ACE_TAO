@@ -33,7 +33,7 @@
 #include "AMI_MyFoo_i.h"
 #include "ace/OS_NS_unistd.h"
 
-namespace CIAO_Hello_AMI_AMI_Impl
+namespace CIAO_Hello_AMI_AMI_AMI_Impl
 {
   //============================================================
   // Worker thread to call "perform_work"
@@ -70,8 +70,8 @@ namespace CIAO_Hello_AMI_AMI_Impl
   // Facet Executor Implementation Class: AMI_MyFoo_exec_i
   //============================================================
   AMI_MyFoo_exec_i::AMI_MyFoo_exec_i (
-    ::CCM_AMI::AMI_MyFooCallback_ptr foo_callback)
-  : foo_callback_ (::CCM_AMI::AMI_MyFooCallback::_duplicate (foo_callback))
+    ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback)
+  : foo_callback_ (::Hello_AMI::AMI_MyFooCallback::_duplicate (foo_callback))
   {
     //initialize AMI client
     int argc = 2;
@@ -115,7 +115,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
 
   void
   AMI_MyFoo_exec_i::sendc_foo (
-    ::CCM_AMI::AMI_MyFooCallback_ptr /*ami_handler*/,
+    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/,
     const char * in_str)
   {
     printf ("AMI (FOO) :\tsendc_foo <%s>\n", in_str);
@@ -130,7 +130,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   void
   AMI_MyFoo_exec_i::sendc_hello (
-    ::CCM_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
+    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
   {
     printf ("AMI (FOO) :\tsendc_hello\n");
 
@@ -145,7 +145,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   void
   AMI_MyFoo_exec_i::sendc_get_rw_attrib (
-  ::CCM_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
+    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
   {
     printf ("AMI (FOO) :\tsendc_get_rw_attrib\n");
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
@@ -158,7 +158,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   void
   AMI_MyFoo_exec_i::sendc_set_rw_attrib (
-  ::CCM_AMI::AMI_MyFooCallback_ptr /*ami_handler*/,
+    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/,
   CORBA::Short rw_attrib)
   {
     printf ("AMI (FOO) :\tsendc_set_rw_attrib\n");
@@ -173,7 +173,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   void
   AMI_MyFoo_exec_i::sendc_get_ro_attrib (
-  ::CCM_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
+    ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
   {
     printf ("AMI (FOO) :\tsendc_get_ro_attrib\n");
     ::CCM_CORBA_AMI_MyFoo_Impl::AMI_MyFoo_reply_handler*  handler =
@@ -201,10 +201,10 @@ namespace CIAO_Hello_AMI_AMI_Impl
   
   // Port operations.
   
-  ::CCM_AMI::CCM_AMI_MyFoo_ptr
+  ::Hello_AMI::CCM_AMI_MyFoo_ptr
   AMI_exec_i::get_perform_asynch_my_foo (void)
   {
-    ::CCM_AMI::AMI_MyFooCallback_var foo_callback =
+    ::Hello_AMI::AMI_MyFooCallback_var foo_callback =
       this->context_->get_connection_callback_my_foo ();
     return new AMI_MyFoo_exec_i (foo_callback.in ());
   }
@@ -215,7 +215,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Hello_AMI::CCM_AMI_Context::_narrow (ctx);
+      ::Hello_AMI_AMI::CCM_AMI_Context::_narrow (ctx);
     
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
@@ -267,7 +267,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
   }
 }
 
-namespace CIAO_Hello_AMI_AMI_Impl
+namespace CIAO_Hello_AMI_AMI_AMI_Impl
 {
   //============================================================
   // Home Executor Implementation Class: AMIHome_exec_i

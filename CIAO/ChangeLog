@@ -1,3 +1,17 @@
+Wed Oct  7 13:33:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.cpp:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
+          Renamed module interface of Hello_Base and AMI.
+
 Wed Oct  7 13:15:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:

@@ -15,7 +15,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   {
     public:
       AMI_MyFoo_reply_handler (
-        ::CCM_AMI::AMI_MyFooCallback_ptr foo_callback);
+      ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback);
       ~AMI_MyFoo_reply_handler (void);
 
       void
@@ -58,7 +58,7 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
       get_ro_attrib_excep (
         ::Messaging::ExceptionHolder * excep_holder);
     private:
-      ::CCM_AMI::AMI_MyFooCallback_var foo_callback_;
+      ::Hello_AMI::AMI_MyFooCallback_var foo_callback_;
   };
 
   class AMI_MyFoo_i : public POA_Hello::MyFoo

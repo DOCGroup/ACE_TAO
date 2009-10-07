@@ -42,7 +42,7 @@
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
 
-namespace CIAO_Hello_AMI_AMI_Impl
+namespace CIAO_Hello_AMI_AMI_AMI_Impl
 {
   class AMI_perform_work : public ACE_Task_Base
   {
@@ -55,36 +55,36 @@ namespace CIAO_Hello_AMI_AMI_Impl
   };
 
   class  AMI_MyFoo_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_MyFoo,
+    : public virtual ::Hello_AMI::CCM_AMI_MyFoo,
       public virtual ::CORBA::LocalObject
   {
   public:
-    AMI_MyFoo_exec_i (::CCM_AMI::AMI_MyFooCallback_ptr foo_callback);
+    AMI_MyFoo_exec_i (::Hello_AMI::AMI_MyFooCallback_ptr foo_callback);
 
     virtual ~AMI_MyFoo_exec_i (void);
     virtual void
     sendc_foo (
-      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler,
+      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
       const char * in_str);
 
     virtual void
     sendc_hello (
-      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler);
+      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler);
     
     virtual void
     sendc_get_rw_attrib (
-      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler);
+      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler);
     virtual void
     sendc_set_rw_attrib (
-      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler,
+      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler,
       CORBA::Short rw_attrib);
     virtual void
         sendc_get_ro_attrib (
-      ::CCM_AMI::AMI_MyFooCallback_ptr ami_handler);
+      ::Hello_AMI::AMI_MyFooCallback_ptr ami_handler);
     
   private:
     Hello::MyFoo_var ami_foo_server_;
-      ::CCM_AMI::AMI_MyFooCallback_ptr foo_callback_;
+      ::Hello_AMI::AMI_MyFooCallback_ptr foo_callback_;
   };
   
   class  AMI_exec_i
@@ -101,7 +101,7 @@ namespace CIAO_Hello_AMI_AMI_Impl
     
     // Port operations.
     
-    virtual ::CCM_AMI::CCM_AMI_MyFoo_ptr
+    virtual ::Hello_AMI::CCM_AMI_MyFoo_ptr
     get_perform_asynch_my_foo (void);
     
     // Operations from Components::SessionComponent.
@@ -117,15 +117,15 @@ namespace CIAO_Hello_AMI_AMI_Impl
     virtual void ccm_remove (void);
   
   private:
-    ::Hello_AMI::CCM_AMI_Context_var  context_;
-    ::CCM_AMI::AMI_MyFooCallback_var callback_foo_;
+    ::Hello_AMI_AMI::CCM_AMI_Context_var  context_;
+    ::Hello_AMI::AMI_MyFooCallback_var callback_foo_;
   };
   
   extern "C" AMI_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_AMI_AMI_Impl (void);
 }
 
-namespace CIAO_Hello_AMI_AMI_Impl
+namespace CIAO_Hello_AMI_AMI_AMI_Impl
 {
   class  AMIHome_exec_i
     : public virtual AMIHome_Exec,
