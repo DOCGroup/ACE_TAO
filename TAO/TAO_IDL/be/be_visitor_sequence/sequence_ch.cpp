@@ -147,7 +147,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       *os << be_nl
-          << "explicit "
           << node->local_name () << " ( ::CORBA::ULong max);";
     }
 
