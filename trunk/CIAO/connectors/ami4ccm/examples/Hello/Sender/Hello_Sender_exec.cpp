@@ -171,8 +171,8 @@ namespace CIAO_Hello_AMI_Sender_Impl
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
-  asynch_foo_generator::asynch_foo_generator (::CCM_AMI::AMI_MyFoo_ptr my_foo_ami)
-  : my_foo_ami_ (::CCM_AMI::AMI_MyFoo::_duplicate (my_foo_ami))
+  asynch_foo_generator::asynch_foo_generator (::Hello_AMI::AMI_MyFoo_ptr my_foo_ami)
+  : my_foo_ami_ (::Hello_AMI::AMI_MyFoo::_duplicate (my_foo_ami))
   {
   }
 
@@ -279,7 +279,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
 
   // Port operations.
 
-  ::CCM_AMI::CCM_AMI_MyFooCallback_ptr
+  ::Hello_AMI::CCM_AMI_MyFooCallback_ptr
   Sender_exec_i::get_the_my_foo_callback ()
   {
     if (CORBA::is_nil (global_foo_callback_))
@@ -314,7 +314,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
   
-    ::CCM_AMI::AMI_MyFoo_var asynch_foo =
+    ::Hello_AMI::AMI_MyFoo_var asynch_foo =
       this->context_->get_connection_run_asynch_my_foo();
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);

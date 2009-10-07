@@ -6,7 +6,7 @@
 #include "Hello_Base/Hello.idl"
 #include "tao/Messaging/Messaging.pidl"
 
-module CCM_AMI
+module Hello_AMI
 {
   // callback interface from AMI-component to Sender component
   interface AMI_MyFooCallback : ::Messaging::ReplyHandler

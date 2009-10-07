@@ -59,12 +59,12 @@ namespace CIAO_Hello_AMI_Sender_Impl
   class asynch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_foo_generator (::CCM_AMI::AMI_MyFoo_ptr my_foo_ami);
+    asynch_foo_generator (::Hello_AMI::AMI_MyFoo_ptr my_foo_ami);
 
     virtual int svc (void);
 
   private:
-    ::CCM_AMI::AMI_MyFoo_var my_foo_ami_;
+    ::Hello_AMI::AMI_MyFoo_var my_foo_ami_;
   };
 
   // Worker thread for synchronous invocations
@@ -80,7 +80,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
   };
 
   class  MyFoo_callback_exec_i
-    : public virtual ::CCM_AMI::CCM_AMI_MyFooCallback,
+    : public virtual ::Hello_AMI::CCM_AMI_MyFooCallback,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -141,7 +141,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
     
     // Port operations.
     
-    virtual ::CCM_AMI::CCM_AMI_MyFooCallback_ptr
+    virtual ::Hello_AMI::CCM_AMI_MyFooCallback_ptr
     get_the_my_foo_callback (void);
     // Operations from Components::SessionComponent.
     

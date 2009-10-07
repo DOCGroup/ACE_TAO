@@ -139,7 +139,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_AMI_Servant</string>
+          <string>create_Hello_AMI_AMI_AMI_Servant</string>
         </value>
       </value>
     </execParameter>
