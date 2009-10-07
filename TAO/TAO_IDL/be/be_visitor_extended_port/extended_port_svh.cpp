@@ -38,3 +38,4 @@ be_visitor_extended_port_svh::visit_extended_port (
 {
   return 0;
 }
+
