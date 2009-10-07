@@ -23,7 +23,7 @@
 
 #include "idl_defines.h"
 
-#include "be_visitor_decl.h"
+#include "be_visitor_scope.h"
 #include "be_visitor_field/field_ch.h"
 #include "be_visitor_field/field_ci.h"
 #include "be_visitor_field/field_cs.h"

@@ -65,7 +65,7 @@ public:
   int emit_valuetype_common (void);
 };
 
-class be_visitor_cdr_op_field_decl : public be_visitor_decl
+class be_visitor_cdr_op_field_decl : public be_visitor_scope
 {
   //
   // = TITLE

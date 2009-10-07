@@ -24,11 +24,6 @@
 #include "be_visitor_structure/serializer_op_cs.h"
 #include "be_visitor_union/serializer_op_cs.h"
 
-ACE_RCSID (be_visitor_field,
-           serializer_op_cs,
-           "$Id$")
-
-
 // **********************************************
 //  visitor for field in the client stubs file
 // **********************************************
@@ -993,9 +988,8 @@ be_visitor_field_serializer_op_cs::visit_union (be_union *node)
 // ****************************************************************
 
 be_visitor_serializer_op_field_decl::be_visitor_serializer_op_field_decl (
-    be_visitor_context *ctx
-  )
-  : be_visitor_decl (ctx)
+      be_visitor_context *ctx)
+  : be_visitor_scope (ctx)
 {
 }
 
