@@ -41,6 +41,9 @@ project(DDS_Quoter_Base_NDDS_TS) : nddslib, taolib {
     Quoter_BasePlugin.h
     Quoter_BaseSupport.h
   }
+  
+  Inline_Files {
+  }
 }
 
 project(DDS_Quoter_Base_stub) : ccm_stub {
