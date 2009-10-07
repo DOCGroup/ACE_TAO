@@ -1,3 +1,8 @@
+Wed Oct  7 06:46:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/Makefile.am:
+          Added new files
+
 Wed Oct  7 06:49:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_extended_port.cpp:
