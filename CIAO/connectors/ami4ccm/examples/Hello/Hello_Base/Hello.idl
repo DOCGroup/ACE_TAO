@@ -3,7 +3,7 @@
 #ifndef HELLO_IDL
 #define HELLO_IDL
 
-module CCM_AMI
+module Hello
 {
   exception InternalError
     {

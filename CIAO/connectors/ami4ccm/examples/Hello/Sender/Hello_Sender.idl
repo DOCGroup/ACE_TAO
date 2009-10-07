@@ -17,7 +17,7 @@ module Hello_AMI
     uses CCM_AMI::AMI_MyFoo       run_asynch_my_foo;
 
     // for synchronous invocation
-    uses CCM_AMI::MyFoo         run_my_foo;
+    uses Hello::MyFoo         run_my_foo;
 
     //provides the callback function/exception for the AMI component.
     provides CCM_AMI::AMI_MyFooCallback        the_my_foo_callback;

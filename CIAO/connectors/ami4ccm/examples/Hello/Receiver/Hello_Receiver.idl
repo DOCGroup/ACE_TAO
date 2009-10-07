@@ -14,7 +14,7 @@ module Hello_AMI
   component Receiver
   {
     //provides 
-    provides CCM_AMI::MyFoo do_my_foo;
+    provides Hello::MyFoo do_my_foo;
   };
 
   home ReceiverHome manages Receiver
