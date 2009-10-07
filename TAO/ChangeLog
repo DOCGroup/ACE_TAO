@@ -1,3 +1,10 @@
+Wed Oct  7 15:20:16 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Param_Test/ub_any_seq.cpp:
+
+          Fixed an undefined behaviour in the test when it tries
+          to access sequence elements without prior calling length().
+
 Wed Oct  7 15:10:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
@@ -10,9 +17,9 @@ Wed Oct  7 14:23:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_field.h:
         * TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
         * TAO_IDL/be_include/be_visitor_field/serializer_op_cs.h:
-        
+
           Reverted changes to visitor inheritance made in
-          
+
           Tue Oct  6 22:04:55 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct  7 13:44:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
