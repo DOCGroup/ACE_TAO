@@ -1,3 +1,8 @@
+Wed Oct  7 09:21:30 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Added a few defines.
+
 Wed Oct  7 07:49:00 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
