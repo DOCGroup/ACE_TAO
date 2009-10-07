@@ -1,3 +1,9 @@
+Wed Oct  7 06:49:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_extended_port.cpp:
+        * TAO_IDL/be/be_visitor_extended_port/extended_port_svh.cpp:
+          Resolved fuzz errors.
+
 Tue Oct  6 22:04:55 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_extended_port/extended_port.cpp:
