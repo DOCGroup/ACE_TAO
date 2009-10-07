@@ -103,7 +103,7 @@ project(Cornucopia_skel) : ccm_svnt {
 }
 
 project(Cornucopia_svnt) : ciao_servant {
-  after      += Cornucopia_exec Cornucopia_skel
+  after      += Cornucopia_exec Cornucopia_skel Cornucopia_stub
   sharedname  = Cornucopia_svnt
   libs       += Cornucopia_exec \
                 Cornucopia_skel \
