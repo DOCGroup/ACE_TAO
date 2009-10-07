@@ -147,11 +147,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       *os << be_nl
+          << "explicit "
           << node->local_name () << " ( ::CORBA::ULong max);";
     }
 
   *os << be_nl
-      << node->local_name () << " (" << be_idt << be_idt;
+      << node->local_name () << " (" << be_idt;
 
   if (node->unbounded ())
     {
@@ -177,8 +178,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   *os << "* buffer, " << be_nl
-      << "::CORBA::Boolean release = false" << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << "::CORBA::Boolean release = false);" << be_uidt_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl;
   *os << "virtual ~" << node->local_name () << " (void);";
