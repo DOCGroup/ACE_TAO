@@ -85,6 +85,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
 
   // Must be set explicitly (CORBA spec)
   this->in_->length (TEST_SEQ_LENGTH);
+  this->inout_->length (TEST_SEQ_LENGTH);
 
   for (CORBA::ULong i=0; i < this->in_->length (); i++)
     {
@@ -139,8 +140,8 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "setting constant string\n" ));
-                this->in_[i] <<= "Const string";
-                this->inout_[i] <<= 0; // different from in_
+          this->in_[i] <<= "Const string";
+          this->inout_[i] <<= 0; // different from in_
           break;
         }
     }
