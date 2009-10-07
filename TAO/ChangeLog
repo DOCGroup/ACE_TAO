@@ -1,3 +1,8 @@
+Wed Oct  7 15:10:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	  Don't use explicit
+
 Wed Oct  7 14:23:32 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
