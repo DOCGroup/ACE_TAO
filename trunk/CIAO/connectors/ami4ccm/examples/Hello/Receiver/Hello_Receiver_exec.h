@@ -44,7 +44,7 @@
 namespace CIAO_Hello_AMI_Receiver_Impl
 {
   class  MyFoo_exec_i
-    : public virtual ::CCM_AMI::CCM_MyFoo,
+    : public virtual ::Hello::CCM_MyFoo,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -90,7 +90,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
     
     // Port operations.
     
-    virtual ::CCM_AMI::CCM_MyFoo_ptr
+    virtual ::Hello::CCM_MyFoo_ptr
     get_do_my_foo (void);
     
     // Operations from Components::SessionComponent.

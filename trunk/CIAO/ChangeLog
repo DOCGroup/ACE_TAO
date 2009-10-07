@@ -1,3 +1,19 @@
+Wed Oct  7 13:15:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyFoo_i.cpp:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Changed name of module CCM_AMI into Hello.
+
 Wed Oct  7 12:42:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:

@@ -117,9 +117,9 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
   //============================================================
   // Implementation of the AMI CORBA FOO interface
   //============================================================
-  AMI_MyFoo_i::AMI_MyFoo_i (CORBA::ORB_ptr orb, ::CCM_AMI::MyFoo_ptr foo_receiver)
+  AMI_MyFoo_i::AMI_MyFoo_i (CORBA::ORB_ptr orb, ::Hello::MyFoo_ptr foo_receiver)
     : orb_ (CORBA::ORB::_duplicate (orb)),
-      foo_receiver_ (::CCM_AMI::MyFoo::_duplicate (foo_receiver))
+      foo_receiver_ (::Hello::MyFoo::_duplicate (foo_receiver))
   {
   }
 
@@ -165,8 +165,8 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
    //============================================================
   // Worker thread to service the AMI CORBA FOO interface
   //============================================================
-  CORBA_MyFoo_server::CORBA_MyFoo_server (::CCM_AMI::MyFoo_ptr foo_receiver)
-    : foo_receiver_ (::CCM_AMI::MyFoo::_duplicate (foo_receiver))
+  CORBA_MyFoo_server::CORBA_MyFoo_server (::Hello::MyFoo_ptr foo_receiver)
+    : foo_receiver_ (::Hello::MyFoo::_duplicate (foo_receiver))
   {
   }
 
@@ -202,8 +202,8 @@ namespace CCM_CORBA_AMI_MyFoo_Impl
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
-      CCM_AMI::MyFoo_var ami_foo_var =
-          CCM_AMI::MyFoo::_narrow (object.in ());
+      Hello::MyFoo_var ami_foo_var =
+          Hello::MyFoo::_narrow (object.in ());
 
       CORBA::String_var ior =
           orb->object_to_string (ami_foo_var.in ());

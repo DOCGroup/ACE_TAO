@@ -71,12 +71,12 @@ namespace CIAO_Hello_AMI_Sender_Impl
   class synch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    synch_foo_generator (::CCM_AMI::MyFoo_ptr my_foo_ami);
+    synch_foo_generator (::Hello::MyFoo_ptr my_foo_ami);
 
     virtual int svc (void);
 
   private:
-    ::CCM_AMI::MyFoo_var my_foo_ami_;
+    ::Hello::MyFoo_var my_foo_ami_;
   };
 
   class  MyFoo_callback_exec_i

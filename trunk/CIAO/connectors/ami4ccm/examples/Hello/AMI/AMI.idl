@@ -14,13 +14,13 @@ module Hello_AMI
   component AMI
   {
     //provides the interface for Sender
-    provides CCM_AMI::AMI_MyFoo       perform_asynch_my_foo;
+    provides CCM_AMI::AMI_MyFoo perform_asynch_my_foo;
 
     //uses the interface of the Receiver ('server')
-    uses CCM_AMI::MyFoo       my_foo_receiver;
+    uses Hello::MyFoo my_foo_receiver;
 
     //uses the callback interface of the sender
-    uses CCM_AMI::AMI_MyFooCallback        callback_my_foo;
+    uses CCM_AMI::AMI_MyFooCallback callback_my_foo;
   };
 
   home AMIHome manages AMI
