@@ -18,15 +18,9 @@ module CCM_AMI
         raises (InternalError);
       void hello (out long answer)
         raises (InternalError);
-      
+
       attribute short rw_attrib;
       readonly attribute short ro_attrib;
-    };
-
-  interface MyInterface
-    {
-      float do_something_with_something (in short something)
-          raises (InternalError);
     };
 };
 

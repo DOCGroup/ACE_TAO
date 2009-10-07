@@ -31,7 +31,6 @@
 #include "AMI_exec.h"
 #include "ciao/CIAO_common.h"
 #include "AMI_MyFoo_i.h"
-#include "AMI_MyInterface_i.h"
 #include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Hello_AMI_AMI_Impl
@@ -180,77 +179,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
     printf ("AMI (FOO) : \tInvoked sendc_get_ro_attrib\n");
   }
   //============================================================
-  // Facet Executor Implementation Class: AMI_MyFoo_exec_i
-  //============================================================
-
-  AMI_MyInterface_exec_i::AMI_MyInterface_exec_i (
-  ::CCM_AMI::AMI_MyInterfaceCallback_ptr interface_callback)
-  : interface_callback_ (::CCM_AMI::AMI_MyInterfaceCallback::_duplicate (interface_callback))
-  {
-    //initialize AMI client
-    int argc = 2;
-    ACE_TCHAR **argv = new ACE_TCHAR *[argc];
-    argv[0] = ACE::strnew (ACE_TEXT ("-ORBAMICollocation"));
-    argv[1] = ACE::strnew (ACE_TEXT ("0"));
-    CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ACE_TEXT ("AMI_Interface_client"));
-
-    CORBA::Object_var object =
-        orb->string_to_object ("file://interface.ior");
-    ami_interface_server_ = CCM_AMI::MyInterface::_narrow (object.in ());
-
-    if (CORBA::is_nil (ami_interface_server_.in ()))
-    {
-      printf ("Server is NIL\n");
-    }
-    // Activate POA to handle the call back.
-    CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
-
-    if (CORBA::is_nil (poa_object.in ()))
-      printf ("POA is NIL!\n");
-
-    PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
-
-    PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
-
-    poa_manager->activate ();
-    AMI_perform_work *pw = new AMI_perform_work (orb.in ());
-    pw->activate ();
-  }
-
-  AMI_MyInterface_exec_i::~AMI_MyInterface_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_AMI::AMI_ami_foo
-
-  void
-  AMI_MyInterface_exec_i::sendc_do_something_with_something (
-      ::CCM_AMI::AMI_MyInterfaceCallback_ptr ami_handler,
-      CORBA::Short something)
-  {
-    printf ("AMI (INTERFACE) :\tsendc_do_something_with_something <%d>\n", something);
-    if (CORBA::is_nil (ami_handler))
-      { //treat it as an oneway CORBA invocation
-        printf ("AMI (INTERFACE) :\tONE WAY INVOCATION. Sending short <%d> to AMI CORBA server\n", something);
-        ami_interface_server_->sendc_do_something_with_something (0, something);
-        printf ("AMI (INTERFACE) : \tInvoked sendc_do_something_with_something\n");
-      }
-    else
-      {
-        ::CCM_CORBA_AMI_MyInterface_Impl::AMI_MyInterface_reply_handler*  handler =
-            new ::CCM_CORBA_AMI_MyInterface_Impl::AMI_MyInterface_reply_handler (ami_handler);
-        CCM_AMI::AMI_MyInterfaceHandler_var the_handler_var = handler->_this ();
-        printf ("AMI (INTERFACE) :\tSending short <%d> to AMI CORBA server\n", something);
-        ami_interface_server_->sendc_do_something_with_something (the_handler_var.in (), something);
-        printf ("AMI (INTERFACE) : \tInvoked sendc_do_something_with_something\n");
-      }
-  }
-
-  //============================================================
   // Component Executor Implementation Class: AMI_exec_i
   //============================================================
   
@@ -275,15 +203,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
       this->context_->get_connection_callback_my_foo ();
     return new AMI_MyFoo_exec_i (foo_callback.in ());
   }
-
-  ::CCM_AMI::CCM_AMI_MyInterface_ptr
-  AMI_exec_i::get_perform_asynch_my_interface ()
-  {
-    ::CCM_AMI::AMI_MyInterfaceCallback_var interface_callback =
-        this->context_->get_connection_callback_my_interface ();
-    return new AMI_MyInterface_exec_i (interface_callback.in ());
-  }
-
   // Operations from Components::SessionComponent.
   
   void
@@ -314,13 +233,6 @@ namespace CIAO_Hello_AMI_AMI_Impl
         new ::CCM_CORBA_AMI_MyFoo_Impl::CORBA_MyFoo_server (receiver_foo.in ());
     printf ("AMI :\tStarting MyFoo CORBA server thread.\n");
     foo_srv->activate ();
-
-    ::CCM_AMI::MyInterface_var receiver_interface =
-        this->context_->get_connection_my_interface_receiver ();
-    ::CCM_CORBA_AMI_MyInterface_Impl::CORBA_MyInterface_server* interface_srv =
-        new ::CCM_CORBA_AMI_MyInterface_Impl::CORBA_MyInterface_server (receiver_interface.in ());
-    printf ("AMI :\tStarting MyInterface CORBA server thread.\n");
-    interface_srv->activate ();
   }
   
   void
