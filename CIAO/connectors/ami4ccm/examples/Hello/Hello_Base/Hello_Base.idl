@@ -40,19 +40,6 @@ module CCM_AMI
       void sendc_set_rw_attrib (in AMI_MyFooCallback ami_handler, in short rw_attrib);
       void sendc_get_ro_attrib (in AMI_MyFooCallback ami_handler);
     };
-
-  // callback interface from AMI-component to Sender component
-  // Example of a reply handler per request.
-  interface AMI_MyInterfaceCallback : ::Messaging::ReplyHandler
-    {
-      void do_something_with_something (in float ami_return_val);
-      void do_something_with_something_excep   (in Messaging::ExceptionHolder excep_holder);
-    };
-
-  interface AMI_MyInterface
-    {
-      void sendc_do_something_with_something (in AMI_MyInterfaceCallback ami_handler, in short something);
-    };
 };
 
 #endif /* HELLO_BASE_IDL */

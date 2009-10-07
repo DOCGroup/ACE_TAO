@@ -1,7 +1,28 @@
+Wed Oct  7 12:42:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.idl:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI.mpc:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello.idl:
+        * connectors/ami4ccm/examples/Hello/Hello_Base/Hello_Base.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
+          Removed interface MyInterface in order to focus on the MyFoo.
+
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyInterface_i.h:
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_MyInterface_i.cpp:
+          Removed these files.
+
 Tue Oct  6 21:52:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Null_Component/Null_Component.mpc:
-        
+
           Fixed build order bug.
 
 Tue Oct  6 12:30:44 UTC 2009  Johnny Willemsen <jwillemsen@remedy.nl>
