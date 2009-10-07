@@ -65,6 +65,11 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
 =======================================================
 
+. In idl3_to_idl2 tool, replaced manual designation of IDL2-only
+  files and resulting generated include of undecorated filename
+  (using -x <filename> option) with a mechanism that does it
+  automatically. The -x option has been eliminated.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.2 and CIAO-0.7.3
 =======================================================
 
