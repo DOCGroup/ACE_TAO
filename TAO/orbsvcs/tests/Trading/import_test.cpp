@@ -47,7 +47,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception&)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Trader Import Tests Failed."), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "Trader Import Tests Failed.\n"), -1);
     }
 
   return 0;
