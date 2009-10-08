@@ -241,7 +241,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
           {
             this->__info_out_portstatus_ = this->context_->get_connection_info_out_status ();
 
-            this->__info_out_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CONNECTOR_TYPE::rawlistener_type, ::CCM_DDS::PortStatusListener> (
+            this->__info_out_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, typename CONNECTOR_TYPE::rawlistener_type, ::CCM_DDS::PortStatusListener> (
               this->context_->get_connection_info_out_listener (),
               this->context_->get_connection_info_out_status (),
               this->__info_out_rawlistener_enabled_);
@@ -356,8 +356,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   Quoter_Connector_exec_i::Quoter_Connector_exec_i (void)
   {
   }
-  
-  Quoter_Connector_exec_i::~Quoter_Connector_exec_i (void) 
+
+  Quoter_Connector_exec_i::~Quoter_Connector_exec_i (void)
   {
   }
 
