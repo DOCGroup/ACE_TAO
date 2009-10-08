@@ -108,13 +108,9 @@ be_component::destroy ()
 int
 be_component::accept (be_visitor *visitor)
 {
-  if (idl_global->ignore_idl3 ())
-    {
-      idl_global->err ()->ignore_idl3_error (this);
-      return -1;
-    }
-
-  return visitor->visit_component (this);
+  return (idl_global->ignore_idl3 ()
+            ? 0
+            : visitor->visit_component (this));
 }
 
 AST_Structure *
