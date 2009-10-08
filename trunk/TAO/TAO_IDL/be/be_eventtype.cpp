@@ -20,9 +20,7 @@
 #include "be_eventtype.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be,
-           be_eventtype,
-           "$Id$")
+#include "global_extern.h"
 
 // Default constructor.
 be_eventtype::be_eventtype (void)
@@ -128,7 +126,9 @@ be_eventtype::~be_eventtype (void)
 int
 be_eventtype::accept (be_visitor *visitor)
 {
-  return visitor->visit_eventtype (this);
+  return (idl_global->ignore_idl3 ()
+            ? 0
+            : visitor->visit_eventtype (this));
 }
 
 void

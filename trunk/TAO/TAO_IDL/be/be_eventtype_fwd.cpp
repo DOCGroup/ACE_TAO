@@ -20,11 +20,10 @@
 
 #include "be_eventtype_fwd.h"
 #include "be_visitor.h"
+
 #include "ast_interface.h"
 
-ACE_RCSID (be, 
-           be_eventtype_fwd, 
-           "$Id$")
+#include "global_extern.h"
 
 be_eventtype_fwd::be_eventtype_fwd (void)
   : COMMON_Base (),
@@ -72,7 +71,9 @@ be_eventtype_fwd::~be_eventtype_fwd (void)
 int
 be_eventtype_fwd::accept (be_visitor *visitor)
 {
-  return visitor->visit_eventtype_fwd (this);
+  return (idl_global->ignore_idl3 ()
+            ? 0
+            : visitor->visit_eventtype_fwd (this));
 }
 
 void

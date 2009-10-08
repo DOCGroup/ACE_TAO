@@ -128,13 +128,9 @@ be_home::destroy (void)
 int
 be_home::accept (be_visitor *visitor)
 {
-  if (idl_global->ignore_idl3 ())
-    {
-      idl_global->err ()->ignore_idl3_error (this);
-      return -1;
-    }
-
-  return visitor->visit_home (this);
+  return (idl_global->ignore_idl3 ()
+            ? 0
+            : visitor->visit_home (this));
 }
 
 
