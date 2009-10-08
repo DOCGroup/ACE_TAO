@@ -1,3 +1,10 @@
+Thu Oct  8 14:30:33 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_extended_port/extended_port_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        
+          Fixed unused arg warnings.
+
 Thu Oct  8 14:02:45 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
