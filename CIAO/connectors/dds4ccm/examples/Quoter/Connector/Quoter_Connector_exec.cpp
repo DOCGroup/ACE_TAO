@@ -270,7 +270,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     this->configure_port_info_in_ ();
 
     return new CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE,
-      CONNECTOR_TYPE::writer_type> (this->__info_in_datawriter_.in ());
+      typename CONNECTOR_TYPE::writer_type> (this->__info_in_datawriter_.in ());
   }
 
   template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
@@ -291,7 +291,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     //this->configure_port_info_in_ ();
 
     return new CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE,
-      CONNECTOR_TYPE::reader_type> (this->__info_out_datareader_.in ());
+      typename CONNECTOR_TYPE::reader_type> (this->__info_out_datareader_.in ());
   }
 
   template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
