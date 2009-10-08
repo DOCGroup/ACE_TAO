@@ -78,7 +78,7 @@ project(IC_Bar_exec) : ciao_executor {
 
 project(IC_Bar_svnt) : ciao_servant {
   sharedname  = IC_Bar_svnt
-  after      += IC_Bar_exec IC_Foo_exec
+  after      += IC_Bar_exec IC_Foo_exec IC_Bar_stub
   libs       += IC_Bar_stub IC_Bar_exec IC_Foo_exec
 
   dynamicflags = IC_BAR_SVNT_BUILD_DLL
