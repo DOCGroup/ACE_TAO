@@ -5,6 +5,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.3 and ACE-5.7.4
 
 . Fixed a bug in the realclean feature of the GNU makefiles
 
+. Improved Sun Studio for Linux support
+
+. Improved OpenBSD support
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.2 and ACE-5.7.3
 ====================================================
 
