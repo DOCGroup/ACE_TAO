@@ -1,3 +1,8 @@
+Thu Oct  8 08:58:25 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Added $(PLATFORM_XT_LIBS) to PLATFORM_TK_LIBS to fix linking errors.
+
 Wed Oct  7 09:21:30 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-openbsd.h:
