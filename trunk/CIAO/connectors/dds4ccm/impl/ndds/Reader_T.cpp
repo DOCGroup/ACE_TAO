@@ -9,6 +9,7 @@ template <typename NDDS_TYPE, typename BASE >
 CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::Reader_T (::DDS::DataReader_ptr reader)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
+  ACE_UNUSED_ARG (reader);
 }
 
 // Implementation skeleton destructor
