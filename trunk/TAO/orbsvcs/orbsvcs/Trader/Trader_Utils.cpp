@@ -1159,6 +1159,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
   // Scrap the existing property sequence and begin a new one
   CosTrading::PropertySeq prop_seq (total_length);
+  prop_seq.length (total_length);
   //  this->offer_->properties.length (total_length);
 
   // Copy in the unaffected and modified props into the offer,

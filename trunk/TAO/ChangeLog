@@ -1,3 +1,17 @@
+Thu Oct  8 14:02:45 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+
+          Fixed an undefined behaviour in the Trading Service and in the
+          test when they try to access sequence elements without properly
+          set length.
+
+        * orbsvcs/tests/Trading/import_test.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+
+          Improved test's output.
+
 Thu Oct  8 07:40:09 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * NEWS:
