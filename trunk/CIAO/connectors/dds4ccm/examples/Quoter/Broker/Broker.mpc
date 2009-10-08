@@ -106,7 +106,7 @@ project(DDS_Broker_exec) : ciao_executor , dds4ccm_base  {
 }
 
 
-project(DDS_Broker_svnt) : ciao_servant , dds4ccm_base  {
+project(DDS_Broker_svnt) : ciao_servant , dds4ccm_base, nddslib {
   after      +=   DDS_Broker_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt DDS_Broker_exec DDS_Quoter_Connector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = Broker_svnt
   libs       += Broker_stub Broker_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt Broker_exec DDS_Quoter_Connector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
