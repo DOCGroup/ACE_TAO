@@ -1,3 +1,8 @@
+Thu Oct  8 13:46:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Don't convert odt files
+
 Thu Oct  8 08:58:25 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
