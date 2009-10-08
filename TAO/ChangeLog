@@ -1,3 +1,16 @@
+Thu Oct  8 19:07:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_eventtype_fwd.cpp:
+        * TAO_IDL/be/be_component_fwd.cpp:
+        * TAO_IDL/be/be_eventtype.cpp:
+        
+          Made accept() operations no-ops when -Sm (ignore IDL3
+          constructs) is present. This behavior eliminates the
+          need for an error message about improper use of -Sm,
+          so this error message was disabled.
+
 Thu Oct  8 14:30:33 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_extended_port/extended_port_svh.cpp:
