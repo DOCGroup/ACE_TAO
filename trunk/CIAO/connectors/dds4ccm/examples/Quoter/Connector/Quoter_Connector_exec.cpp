@@ -313,7 +313,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    CONNECTOR_TYPE::context_type::_var_type lctx =
+    typename CONNECTOR_TYPE::context_type::_var_type lctx =
       CONNECTOR_TYPE::context_type::_narrow (ctx);
 
     if ( ::CORBA::is_nil (lctx.in ()))
