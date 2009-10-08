@@ -111,7 +111,7 @@ be_visitor_component_svh::visit_extended_port (
 
 int
 be_visitor_component_svh::visit_mirror_port (
-  be_mirror_port *node)
+  be_mirror_port *)
 {
   return 0;
 }
@@ -143,7 +143,7 @@ be_visitor_component_svh::gen_facets (void)
         {
           be_extended_port *ep =
             be_extended_port::narrow_from_decl (d);
-            
+
           if (this->visit_extended_port (ep) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -156,7 +156,7 @@ be_visitor_component_svh::gen_facets (void)
         {
           be_mirror_port *mp =
             be_mirror_port::narrow_from_decl (d);
-            
+
           if (this->visit_mirror_port (mp) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,

@@ -34,7 +34,7 @@ be_visitor_extended_port_svh::~be_visitor_extended_port_svh (void)
 
 int
 be_visitor_extended_port_svh::visit_extended_port (
-  be_extended_port *node)
+  be_extended_port *)
 {
   return 0;
 }
