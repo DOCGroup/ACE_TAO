@@ -20,3 +20,8 @@ available at the CCM level, we need to have access to that.
 
 The DDS4CCM spec still has to be reviewed whether the given ports deliver the
 correct abstraction.
+
+The CIAO tooling will generate the full connector. The goal is to have just
+template instantiations and simple pass through code inside the connector, all
+real code should be in a supporting core library. That makes it possible to
+change the connector without changing the code generators.
