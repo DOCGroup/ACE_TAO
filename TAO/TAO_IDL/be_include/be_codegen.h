@@ -452,7 +452,8 @@ private:
   
   void gen_export_file (const char *filename,
                         const char *macro,
-                        const char *msg);
+                        const char *msg,
+                        bool for_skel = false);
 
 private:
   TAO_OutStream *client_header_;
