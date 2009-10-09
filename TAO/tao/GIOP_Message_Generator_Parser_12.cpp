@@ -35,10 +35,12 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
-  // Here are the Octet values for different policies
+  // Here are the Octet values for different policies. See the meaning
+  // of response_flags of RequestHeader_1_2 in the CORBA specificion as
+  // to why the values below are used.
   // '00000000' for SYNC_NONE
   // '00000000' for SYNC_WITH_TRANSPORT
-  // '00000010' for SYNC_WITH_SERVER
+  // '00000001' for SYNC_WITH_SERVER
   // '00000011' for SYNC_WITH_TARGET
   // '00000011' for regular two ways, but if they are invoked via a
   // DII with INV_NO_RESPONSE flag set then we need to send '00000001'
