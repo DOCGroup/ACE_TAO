@@ -59,8 +59,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTE
     }
 
   }
-
-};
+}
 
 template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
 void
@@ -68,8 +67,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTE
                                                const ::DDS::RequestedDeadlineMissedStatus & status)
 {
   this->portlistener_->on_requested_deadline_missed (the_reader, status);
-};
-
+}
 
 template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
 void
@@ -77,4 +75,5 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTE
                                  const ::DDS::SampleLostStatus & status)
 {
   this->portlistener_->on_sample_lost (the_reader, status);
-};
+}
+
