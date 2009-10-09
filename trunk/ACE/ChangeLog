@@ -1,4 +1,9 @@
-Fri Oct  9 08:04:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct  9 14:09:41 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Define ACE_HAS_ICMP_SUPPORT to value 1.
+
++Fri Oct  9 08:04:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Thread_Attrs_Test.cpp:
           Fixed compile error in single threaded builds
