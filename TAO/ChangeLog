@@ -1,3 +1,9 @@
+Fri Oct  9 08:25:07 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+
+          Updated the comment in write_request_header() for bug#3747.
+
 Thu Oct  8 19:07:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_home.cpp:
@@ -5,7 +11,7 @@ Thu Oct  8 19:07:56 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_eventtype_fwd.cpp:
         * TAO_IDL/be/be_component_fwd.cpp:
         * TAO_IDL/be/be_eventtype.cpp:
-        
+
           Made accept() operations no-ops when -Sm (ignore IDL3
           constructs) is present. This behavior eliminates the
           need for an error message about improper use of -Sm,
@@ -15,7 +21,7 @@ Thu Oct  8 14:30:33 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_extended_port/extended_port_svh.cpp:
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:
-        
+
           Fixed unused arg warnings.
 
 Thu Oct  8 14:02:45 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
