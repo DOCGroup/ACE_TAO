@@ -1854,10 +1854,12 @@ TAO_CodeGen::gen_export_files (void)
       this->gen_export_file (
         be_global->skel_export_include (),
         be_global->skel_export_macro (),
-        "skel");
+        "skel",
+        true);
     }
 
-  if (be_global->gen_svnt_export_hdr_file ())
+  if (be_global->gen_svnt_export_hdr_file ()
+      && be_global->svnt_export_include () != 0)
     {
       this->gen_export_file (
         be_global->svnt_export_include (),
@@ -1877,18 +1879,50 @@ TAO_CodeGen::gen_export_files (void)
 void
 TAO_CodeGen::gen_export_file (const char *filename,
                               const char *macro,
-                              const char *msg)
+                              const char *msg,
+                              bool for_skel)
 {
-  ACE_CString work (macro);
-
   // Svnt export macro may correctly default to skel
   // export macro, so we just return silently. The
   // null filename check below will catch a real error.
-  if (work == "")
+  if (macro == 0)
     {
       return;
     }
 
+  ACE_CString macro_str (macro);
+  ACE_CString file_str;
+
+  const char *output_path =
+    be_global->get_output_path (false, for_skel);
+    
+  if (output_path != 0)
+    {  
+      // Turn '\' and '\\' into '/'.
+      char* i = const_cast<char*> (output_path);
+
+      for (const char* j = output_path; *j != 0; ++i, ++j)
+        {
+          if (*j == '\\')
+            {
+              *i = '/';
+
+              if (*(j + 1) == '\\')
+                {
+                  ++j;
+                }
+            }
+          else
+            {
+              *i = *j;
+            }
+        }
+
+      *i = 0;
+      file_str += output_path;
+      file_str += '/';
+    }
+    
   if (filename == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -1898,9 +1932,11 @@ TAO_CodeGen::gen_export_file (const char *filename,
       return;
     }
 
+  file_str += filename;
+
   TAO_OutStream os;
 
-  if (os.open (filename) == -1)
+  if (os.open (file_str.c_str ()) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
@@ -1911,9 +1947,9 @@ TAO_CodeGen::gen_export_file (const char *filename,
 
   ACE_CString suffix ("_Export");
   size_t stem_len =
-    work.length () - suffix.length ();
+    macro_str.length () - suffix.length ();
 
-  if (work.substr (stem_len) != suffix)
+  if (macro_str.substr (stem_len) != suffix)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
@@ -1923,7 +1959,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
       return;
     }
 
-  ACE_CString stem_str (work.substr (0, stem_len));;
+  ACE_CString stem_str (macro_str.substr (0, stem_len));;
   const char *stem = stem_str.c_str ();
 
   os << "\n#ifndef " << stem << "_EXPORT_H\n"

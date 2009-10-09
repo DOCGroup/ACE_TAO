@@ -207,20 +207,8 @@ be_change_idl_file_extension (UTL_String* idl_file,
     }
 
   // Anyop * skel file output defaults to general output dir if not set.
-  const char *output_path = 0;
-
-  if (for_anyop && 0 != be_global->anyop_output_dir ())
-    {
-      output_path = be_global->anyop_output_dir ();
-    }
-  else if (for_skel && 0 != be_global->skel_output_dir ())
-    {
-      output_path = be_global->skel_output_dir ();
-    }
-  else
-    {
-      output_path = be_global->output_dir ();
-    }
+  const char *output_path =
+    be_global->get_output_path (for_anyop, for_skel);
 
   if (!base_name_only && output_path != 0)
     {
@@ -230,7 +218,9 @@ be_change_idl_file_extension (UTL_String* idl_file,
       ACE_OS::sprintf (fname, "%s/", output_path);
 
       // Append the base part to fname.
-      ACE_OS::strncpy (fname + ACE_OS::strlen (fname), string, base - string);
+      ACE_OS::strncpy (fname + ACE_OS::strlen (fname),
+                       string,
+                       base - string);
     }
   else
     {
@@ -248,7 +238,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
         {
           *i = '/';
 
-          if (*(j+1) == '\\')
+          if (*(j + 1) == '\\')
             {
               ++j;
             }
@@ -3620,4 +3610,22 @@ BE_GlobalData::generator_init (void)
                   0);
 
   return gen;
+}
+
+const char *
+BE_GlobalData::get_output_path (bool for_anyop,
+                                bool for_skel)
+{
+  if (for_anyop && 0 != be_global->anyop_output_dir ())
+    {
+      return be_global->anyop_output_dir ();
+    }
+  else if (for_skel && 0 != be_global->skel_output_dir ())
+    {
+      return be_global->skel_output_dir ();
+    }
+  else
+    {
+      return be_global->output_dir ();
+    }
 }
