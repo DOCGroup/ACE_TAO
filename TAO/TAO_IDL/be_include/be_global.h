@@ -738,6 +738,10 @@ public:
 
   AST_Generator *generator_init (void);
   // Create an AST node generator.
+  
+  const char *get_output_path (bool for_anyop,
+                               bool for_skel);
+  // Called from various places.
 
 private:
   size_t changing_standard_include_files_;
