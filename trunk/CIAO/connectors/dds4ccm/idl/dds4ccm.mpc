@@ -68,7 +68,7 @@ project (DDS4CCM_stub) : ciaolib_with_idl, ciao_output, taolib, anytypecode {
   }
 }
 
-project (DDS4CCM_lem_stub) : ciaolib_with_idl, ciao_output, taolib, valuetype, anytypecode {
+project (DDS4CCM_lem_stub) : ciaolib_with_idl, ciao_output, taolib, valuetype, anytypecode, ifr_client {
   after += DDS4CCM_stub DDS4CCM_lem_gen
   libs  += DDS4CCM_stub
   includes += $(CIAO_ROOT)/connectors
