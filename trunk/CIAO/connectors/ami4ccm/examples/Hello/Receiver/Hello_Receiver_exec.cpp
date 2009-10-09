@@ -55,7 +55,7 @@ namespace CIAO_Hello_AMI_Receiver_Impl
   {
     if (ACE_OS::strlen (in_str) == 0)
       {
-        printf ("Receiver (FOO) :\tEMPTY string received -> THROW INTERNALERROR with id <42> and errorstring <Hello World>\n");
+        printf ("Receiver (FOO) :\tEMPTY string received -> throw internal excep with id <42> and errorstring <Hello World>\n");
         Hello::InternalError ex;
         ex.id = 42;
         ex.error_string = "Hello world";

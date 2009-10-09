@@ -1,3 +1,13 @@
+Fri Oct  9 09:24:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Don't print expected exceptions; otherwise the scoreboard will be
+          confused.
+
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+          Wait 90 sec instead of 60 sec to compleet this example.
+
 Fri Oct  9 06:47:29 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/descriptors/USER_QOS_PROFILES.xml:
