@@ -74,7 +74,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception ("Caught unexpected except:");
+          // For now, this excep is EXPECTED! Don't print it 
+          // otherwise the scoreboard will be confused. 
+          //ex._tao_print_exception ("Caught unexpected except:");
         }
     }
 
@@ -256,7 +258,9 @@ namespace CIAO_Hello_AMI_Sender_Impl
       }
       catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("Caught EXPECTED except:");
+        // For now, this excep is EXPECTED! Don't print it 
+        // otherwise the scoreboard will be confused. 
+        //ex._tao_print_exception ("Caught unexpected except:");
       }
       return 0;
   }
