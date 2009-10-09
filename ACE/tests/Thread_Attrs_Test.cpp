@@ -125,9 +125,10 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Attrs_Test"));
 
+  int status = 0;
 #if defined (ACE_HAS_THREADS)
   Stack_Size_Check size_checker (42*1024);
-  int status = size_checker.open(0);
+  status = size_checker.open(0);
   if (status == 0)
     {
       if (size_checker.wait () == -1)
