@@ -56,7 +56,7 @@ project(Display_GPS_stub) : ccm_stub {
 }
 
 project(Display_GPS_exec) : ciao_executor {
-  after   += Display_GPS_lem_gen Display_GPS_stub
+  after   += Display_GPS_lem_gen Display_GPS_stub Display_Base_stub
   sharedname = GPS_exec
   libs += GPS_stub Display_Base_stub
   libout = ../lib
@@ -84,7 +84,7 @@ project(Display_GPS_exec) : ciao_executor {
 }
 
 project(Display_GPS_svnt) : ciao_servant {
-  after      += Display_Base_skel Display_GPS_exec
+  after      += Display_Base_skel Display_GPS_exec Display_Base_stub
   sharedname  = GPS_svnt
   libs       += GPS_exec \
                 GPS_stub \
