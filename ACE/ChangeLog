@@ -1,4 +1,12 @@
-Sat Oct 10 18:21:41 UTC 2009  Olli Savia  <ops@iki.fi>
+Sat Oct 10 18:43:41 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the patch below, it breaks g++ on windows
+
+        Mon Sep 14 08:54:18 UTC 2009  Olli Savia  <ops@iki.fi>
+        * include/makeinclude/platform_g++_common.GNU:
+          Make sure $PATH is exported properly.
+
+Sat Oct 10 18:21:41 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks.h:
         * ace/config-vxworks6.8.h:
