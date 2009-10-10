@@ -72,10 +72,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
                   ex.id, ex.error_string.in ());
           HandleException (ex.id, ex.error_string.in (), func);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
-          // For now, this excep is EXPECTED! Don't print it 
-          // otherwise the scoreboard will be confused. 
+          // For now, this excep is EXPECTED! Don't print it
+          // otherwise the scoreboard will be confused.
           //ex._tao_print_exception ("Caught unexpected except:");
         }
     }
@@ -127,49 +127,49 @@ namespace CIAO_Hello_AMI_Sender_Impl
   }
 
   //GET rw_attrib Reply Handler
-  void 
+  void
   MyFoo_callback_exec_i::get_rw_attrib (
     ::CORBA::Short ami_return_val)
   {
     printf ("Sender (RW_ATTRIB) :\tCallback from AMI (RW_ATTRIB) : answer <%d>\n", ami_return_val);
   }
-  
-  void 
+
+  void
   MyFoo_callback_exec_i::get_rw_attrib_excep (
     ::Messaging::ExceptionHolder * excep_holder)
   {
     HandleException (excep_holder, "GET RW_ATTRIB");
   }
-    
+
   //SET rw_attrib Reply Handler
-  void 
+  void
   MyFoo_callback_exec_i::set_rw_attrib ()
   {
     printf ("Sender (RW_ATTRIB) :\tCallback from AMI (RW_ATTRIB)\n");
   }
-  
-  void 
+
+  void
   MyFoo_callback_exec_i::set_rw_attrib_excep (
     ::Messaging::ExceptionHolder * excep_holder)
   {
     HandleException (excep_holder, "SET_RW_ATTRIB");
   }
-  
+
   //ro_attrib Reply Handler
-  void 
+  void
   MyFoo_callback_exec_i::get_ro_attrib (
     ::CORBA::Short ami_return_val)
   {
     printf ("Sender (RO_ATTRIB) :\tCallback from AMI (RO_ATTRIB) : answer <%d>\n", ami_return_val);
   }
-    
-  void 
+
+  void
   MyFoo_callback_exec_i::get_ro_attrib_excep (
     ::Messaging::ExceptionHolder * excep_holder)
   {
     HandleException (excep_holder, "RO_ATTRIB");
   }
- 
+
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -223,17 +223,17 @@ namespace CIAO_Hello_AMI_Sender_Impl
       {
         CORBA::Long result = my_foo_ami_->foo ("Do something synchronous", out_str);
         printf ("Sender (SYNCH):\tInvoked synchronous call (FOO) result <%d> answer <%s>\n", result, out_str);
-        
+
         CORBA::Long answer;
         my_foo_ami_->hello (answer);
         printf ("Sender (SYNCH):\tInvoked synchronous call (HELLO) answer <%d>\n", answer);
-        
+
         CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
         printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RW_ATTRIB) answer <%d>\n", rw_attrib);
-        
+
         my_foo_ami_->rw_attrib (15);
         printf ("Sender (SYNCH):\tInvoked synchronous call (SET_RW_ATTRIB) to <15>\n");
-        
+
         CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
         printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RO_ATTRIB) answer <%d>\n", ro_attrib);
       }
@@ -246,7 +246,7 @@ namespace CIAO_Hello_AMI_Sender_Impl
       {
         printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
       }
-      
+
     try
       {
         my_foo_ami_->rw_attrib (0);
@@ -256,10 +256,10 @@ namespace CIAO_Hello_AMI_Sender_Impl
      {
         printf ("Sender (SYNCH RW_ATTRIB) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
       }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
       {
-        // For now, this excep is EXPECTED! Don't print it 
-        // otherwise the scoreboard will be confused. 
+        // For now, this excep is EXPECTED! Don't print it
+        // otherwise the scoreboard will be confused.
         //ex._tao_print_exception ("Caught unexpected except:");
       }
       return 0;
@@ -317,13 +317,13 @@ namespace CIAO_Hello_AMI_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-  
+
     ::Hello_AMI::AMI_MyFoo_var asynch_foo =
       this->context_->get_connection_run_asynch_my_foo();
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-  
+
     ::Hello::MyFoo_var synch_foo =
         this->context_->get_connection_run_my_foo ();
     synch_foo_generator* synch_foo_gen =
