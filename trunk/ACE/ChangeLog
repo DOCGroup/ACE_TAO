@@ -1,9 +1,17 @@
+Sat Oct 10 18:21:41 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-vxworks.h:
+        * ace/config-vxworks6.8.h:
+        * include/makeinclude/platform_vxworks.GNU:
+        * include/makeinclude/platform_vxworks6.8.GNU:
+          Default configuration files for VxWorks 6.8
+
 Fri Oct  9 14:09:41 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-openbsd.h:
           Define ACE_HAS_ICMP_SUPPORT to value 1.
 
-+Fri Oct  9 08:04:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct  9 08:04:25 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Thread_Attrs_Test.cpp:
           Fixed compile error in single threaded builds
