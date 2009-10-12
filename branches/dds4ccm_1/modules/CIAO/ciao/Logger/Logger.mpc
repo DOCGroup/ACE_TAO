@@ -1,0 +1,18 @@
+// -*- MPC -*-
+// $Id$
+
+project(CIAO_Logger): ciao_lib, messaging {
+  sharedname   = CIAO_Logger
+  dynamicflags = CIAO_LOGGER_BUILD_DLL
+
+  Source_Files {
+    File_Logger_Backend.cpp
+    Logger_Service.cpp  
+  }
+  Header_Files {
+  }
+}
+
+    
+
+
