@@ -1,3 +1,9 @@
+Mon Oct 12 18:44:56 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * NEWS:
+
+          Further describe -Glem changes. 
+        
 Fri Oct  9 09:24:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:

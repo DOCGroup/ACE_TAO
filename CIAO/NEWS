@@ -71,7 +71,33 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
 . Extended AMI4CCM prototype
 
 . Update all examples and tests for the changes in the -Glem
-  TAO_IDL option
+  TAO_IDL option.  The behavior of this option has changed
+  dramatically, and will require that most user applications be
+  ported.  Previously, -Glem would cause the IDL compiler to generate
+  a E.idl file containing local executor mapping for all interfaces
+  provided as ports by any components in the main translation unit.
+  Therefore, files with interfaces, but no components defined will
+  have empty E.idl files generated.  Similarly, a file with no
+  interfaces defined, but with components defined would generate LEM
+  interfaces for interfaces provided by that component but not local
+  to the file in question.  While this behavior simplified a
+  rudimentary use case where interfaces would be provided by only one
+  component, more complicated use cases were much more difficult to
+  achieve.  
+
+  The new behvior causes the IDL compiler to generate LEM IDL for all
+  interfaces within a given translation unit, regardless of whether or
+  not they are provided as ports by a component in the same
+  translation unit.  Futhermore, if a component provides an interface
+  that is not defined with the translation unit of that compoment, it
+  is required that the user provide a #include directive to the
+  appropriate E.idl file which contains the required LEM interface for
+  the interfaces provided as facets.  
+
+  This new behavior is similar to the former behavior of -Glfa, and as
+  such the behavior of -Glfa has been changed to attempt to be
+  reflective of the old behavior of -Glem, and may be used as a
+  stopgap backwards compatibility measure.  
 
 . In idl3_to_idl2 tool, replaced manual designation of IDL2-only
   files and resulting generated include of undecorated filename
