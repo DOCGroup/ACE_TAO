@@ -1,10 +1,15 @@
+Mon Oct 12 06:57:13 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3632_Regression/test.cpp:
+          Fixed this test after the changes for bug#3746.
+
 Fri Oct  9 11:50:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be_include/be_codegen.h:
         * TAO_IDL/be_include/be_global.h:
-        
+
           Fixed generation of export macro header files to track
           with -o <output dir> option similarly to the other
           generated files. Thanks to Abdullah Sowayan
