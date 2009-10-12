@@ -1,0 +1,18 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file test.idl
+ *
+ * $Id$
+ *
+ * "test" IDL interface for the Codec test.
+ *
+ * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+module Foo
+{
+  typedef unsigned long type_ulong;
+};
