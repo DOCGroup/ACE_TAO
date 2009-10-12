@@ -58,13 +58,13 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
       }
     catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("Caught exception:");
+        ex._tao_print_exception ("Caught except:");
         return 1;
       }
     printf ("AMI :\t Exiting perform work");
     return 0;
   }
-  
+
 
   //============================================================
   // Facet Executor Implementation Class: AMI_MyFoo_exec_i
@@ -126,7 +126,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     ami_foo_server_->sendc_foo (the_handler_var.in (), in_str);
     printf ("AMI (FOO) : \tInvoked sendc_foo\n");
   }
-  
+
   void
   AMI_MyFoo_exec_i::sendc_hello (
     ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
@@ -141,7 +141,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     ami_foo_server_->sendc_hello (the_handler_var.in ());
     printf ("AMI (FOO) : \tInvoked sendc_foo\n");
   }
-  
+
   void
   AMI_MyFoo_exec_i::sendc_get_rw_attrib (
     ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
@@ -154,7 +154,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     ami_foo_server_->sendc_get_rw_attrib (the_handler_var.in ());
     printf ("AMI (FOO) : \tInvoked sendc_get_rw_attrib\n");
   }
-  
+
   void
   AMI_MyFoo_exec_i::sendc_set_rw_attrib (
     ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/,
@@ -169,7 +169,7 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     ami_foo_server_->sendc_set_rw_attrib (the_handler_var.in (), rw_attrib);
     printf ("AMI (FOO) : \tInvoked sendc_set_rw_attrib\n");
   }
-  
+
   void
   AMI_MyFoo_exec_i::sendc_get_ro_attrib (
     ::Hello_AMI::AMI_MyFooCallback_ptr /*ami_handler*/)
@@ -185,21 +185,21 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   //============================================================
   // Component Executor Implementation Class: AMI_exec_i
   //============================================================
-  
+
   AMI_exec_i::AMI_exec_i (void)
   {
   }
-  
+
   AMI_exec_i::~AMI_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes.
-  
+
   // Port operations.
-  
+
   ::Hello_AMI::CCM_AMI_MyFoo_ptr
   AMI_exec_i::get_perform_asynch_my_foo (void)
   {
@@ -209,26 +209,26 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
                                  receiver_foo_.in ());
   }
   // Operations from Components::SessionComponent.
-  
+
   void
   AMI_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::Hello_AMI_AMI::CCM_AMI_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   AMI_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
-  
+
   void
   AMI_exec_i::ccm_activate (void)
   {
@@ -239,30 +239,30 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
     printf ("AMI :\tStarting MyFoo CORBA server thread.\n");
     foo_srv->activate ();
   }
-  
+
   void
   AMI_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   AMI_exec_i::ccm_remove (void)
   {
     /* Your code here. */
   }
-  
+
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Hello_AMI_AMI_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_RETURN (
       retval,
       AMI_exec_i,
       ::Components::EnterpriseComponent::_nil ());
-    
+
     return retval;
   }
 }
@@ -272,48 +272,48 @@ namespace CIAO_Hello_AMI_AMI_AMI_Impl
   //============================================================
   // Home Executor Implementation Class: AMIHome_exec_i
   //============================================================
-  
+
   AMIHome_exec_i::AMIHome_exec_i (void)
   {
   }
-  
+
   AMIHome_exec_i::~AMIHome_exec_i (void)
   {
   }
-  
+
   // All operations and attributes.
-  
+
   // Factory operations.
-  
+
   // Finder operations.
-  
+
   // Implicit operations.
-  
+
   ::Components::EnterpriseComponent_ptr
   AMIHome_exec_i::create (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_THROW_EX (
       retval,
       AMI_exec_i,
       ::CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
-  
+
   extern "C"  ::Components::HomeExecutorBase_ptr
   create_Hello_AMI_AMIHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-    
+
     ACE_NEW_RETURN (
       retval,
       AMIHome_exec_i,
       ::Components::HomeExecutorBase::_nil ());
-    
+
     return retval;
   }
 }
