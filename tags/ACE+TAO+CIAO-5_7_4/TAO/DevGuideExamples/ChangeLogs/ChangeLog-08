@@ -1,0 +1,1496 @@
+Thu Oct 23 06:47:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * devguide_examples.lst:
+          Removed, merged this file into the main test lists
+
+Thu Oct 23 06:39:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * AMH_AMI/middle_server.cpp
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp
+        * ImplRepo/IORTable/MessengerClient.cpp
+        * NamingService/corbaloc_Messenger/MessengerClient.cpp
+        * NamingService/corbaname_Messenger/MessengerClient.cpp
+        * NamingService/Naming_Server/NamingTask.cpp
+        * NamingService/Naming_Server/NamingTask.h
+          wchar fixes
+
+Wed Oct 22 17:47:54 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * AMH_AMI/middle_server.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * Messaging/AMIcallback/MessengerServer.cpp:
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+
+          Fix fuzz errors by using ACE_OS:: functions instead of the naked/raw ones.
+
+Wed Oct 22 16:45:07 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ValueTypes/Notify/Event.idl:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
+Wed Oct 22 16:17:58 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.h:
+        * EventServices/OMG_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.h:
+        * EventServices/OMG_SupplierSideEC/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Consumer_i.h:
+        * EventServices/OMG_TypedEC/Messenger_i.h:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Filter/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * NamingService/Messenger/MessengerClient.cpp:
+        * NamingService/Messenger/MessengerServer.cpp:
+        * NamingService/Naming_Client/MessengerClient.cpp:
+        * NamingService/Naming_Client/MessengerServer.cpp:
+        * NamingService/Naming_Context_Ext/MessengerClient.cpp:
+        * NamingService/Naming_Context_Ext/MessengerServer.cpp:
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NamingService/corbaloc_Messenger/MessengerClient.cpp:
+        * NamingService/corbaloc_Messenger/MessengerServer.cpp:
+        * NamingService/corbaname_Messenger/MessengerClient.cpp:
+        * NamingService/corbaname_Messenger/MessengerServer.cpp:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.h:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.h:
+        * NotifyService/EventSequence/MessengerClient.cpp:
+        * NotifyService/EventSequence/MessengerConsumer.cpp:
+        * NotifyService/EventSequence/MessengerServer.cpp:
+        * NotifyService/EventSequence/Messenger_i.h:
+        * NotifyService/EventSequence/Messenger_i.cpp:
+        * NotifyService/Filtering/MessengerClient.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/Filtering/Messenger_i.h:
+        * NotifyService/Filtering/Messenger_i.cpp:
+        * NotifyService/Filtering/StructuredEventConsumer_i.h:
+        * NotifyService/Filtering/StructuredEventSupplier_i.h:
+        * NotifyService/Messenger/MessengerClient.cpp:
+        * NotifyService/Messenger/MessengerConsumer.cpp:
+        * NotifyService/Messenger/MessengerServer.cpp:
+        * NotifyService/Messenger/Messenger_i.h:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/Messenger/StructuredEventConsumer_i.h:
+        * NotifyService/Messenger/StructuredEventSupplier_i.h:
+        * NotifyService/OfferSubscriptions/MessengerClient.cpp:
+        * NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * NotifyService/OfferSubscriptions/MessengerServer.cpp:
+        * NotifyService/OfferSubscriptions/Messenger_i.h:
+        * NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.h:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.h:
+        * NotifyService/QoSProperties/MessengerClient.cpp:
+        * NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * NotifyService/QoSProperties/MessengerServer.cpp:
+        * NotifyService/QoSProperties/Messenger_i.h:
+        * NotifyService/QoSProperties/Messenger_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.h:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.h:
+        * NotifyService/RTNotify/MessengerClient.cpp:
+        * NotifyService/RTNotify/MessengerConsumer.cpp:
+        * NotifyService/RTNotify/MessengerServer.cpp:
+        * NotifyService/RTNotify/Messenger_i.h:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.h:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.h:
+        * NotifyService/SupplierSideNC/MessengerClient.cpp:
+        * NotifyService/SupplierSideNC/MessengerServer.cpp:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+        * NotifyService/SupplierSideNC/Messenger_i.h:
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.h:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.h:
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * Security/ParticipatingApp/Messenger_i.h:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
+Wed Oct 22 15:56:27 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * AMH/amh_pch.h:
+        * AMH_AMI/amh_ami_pch.h:
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/server.cpp:
+        * BiDirectionalGIOP/simple_i.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Consumer_i.cpp:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * GettingStarted/started_pch.h:
+        * ImplRepo/IORTable/MessengerServer.cpp:
+        * ImplRepo/MessengerServer.cpp:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * LocalObjects/Messenger/Messenger_i.h:
+        * LocalObjects/ServantLocator/MessengerServer.cpp:
+        * Messaging/RelativeRoundtripTimeout/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * Multithreading/GracefulShutdown/MessengerShutdownTimer.h:
+        * NamingService/Naming_Server/MessengerTask.h:
+        * NamingService/Naming_Server/NamingTask.h:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.cpp:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.cpp:
+        * NotifyService/Filtering/StructuredEventConsumer_i.cpp:
+        * NotifyService/Filtering/StructuredEventSupplier_i.cpp:
+        * NotifyService/Messenger/StructuredEventConsumer_i.cpp:
+        * NotifyService/Messenger/StructuredEventSupplier_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.cpp:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.cpp:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.h:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/Auth/MessengerServer.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/MessengerClient.cpp:
+        * PortableInterceptors/IOR/MessengerServer.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * RTCORBA/MessengerClient.cpp:
+        * RTCORBA/MessengerServer.cpp:
+        * RTCORBA/Messenger_i.h:
+        * RTCORBA/common.h:
+        * ValueTypes/Bank/_pch.h:
+        * ValueTypes/Bank/server.cpp:
+        * ValueTypes/Messenger/Message_i.h:
+        * ValueTypes/Messenger/Message_i.cpp:
+        * ValueTypes/Messenger/_pch.h:
+        * ValueTypes/Notify/Event_i.h:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
+Wed Oct 22 15:42:56 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * AMH_AMI/inner_i.cpp:
+        * AMH_AMI/middle_server.cpp:
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/server.cpp:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * ImplRepo/IORTable/MessengerClient.cpp:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * LocalObjects/ServantLocator/MessengerLocator_i.cpp:
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/Messenger_i.cpp:
+        * Messaging/RelativeRoundtripTimeout/Messenger_i.cpp:
+        * Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.h:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * Multithreading/GracefulShutdown/MessengerShutdownTimer.h:
+        * Multithreading/ThreadPerConnection/Messenger_i.cpp:
+        * Multithreading/ThreadPool/MessengerServer.cpp:
+        * Multithreading/ThreadPool/Messenger_i.cpp:
+        * NamingService/Naming_Server/MessengerTask.h:
+        * NamingService/Naming_Server/NamingMessenger.cpp:
+        * NamingService/Naming_Server/NamingTask.h:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NotifyService/EventSequence/Messenger_i.h:
+        * NotifyService/Filtering/MessengerConsumer.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * NotifyService/SupplierSideNC/MessengerConsumer.cpp:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * RTCORBA/Messenger_i.cpp:
+        * Security/ParticipatingApp/Messenger_i.cpp:
+        * Security/PolicyControllingApp/MessengerClient.cpp:
+        * SmartProxies/Logger_i.h:
+        * SmartProxies/Logger_i.cpp:
+        * ValueTypes/Bank/server.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Fixed fuzz errors. When including files from ACE/TAO/CIAO, use "" instead of <>.
+
+          Example: #include <ace/OS.h> was changed to "ace/OS.h"
+
+Wed Oct 22 15:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NotifyService/Messenger/Messenger.mpc:
+
+          Renamed to avoid name clash.
+
+        * NotifyService/Messenger/NotifyService_Messenger.mpc:
+
+Wed Oct 22 15:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * Multithreading/ThreadPerConnection/ThreadPerConnection.mpc:
+
+          Fixed project name length fuzz warnings.
+
+Wed Oct 22 14:39:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NamingService/Naming_Client/Messenger_i.cpp:
+
+          Fixed tabs found fuzz errors.
+
+Wed Oct 22 14:00:46 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DevGuideExamples.mwc:
+        * ImplRepo/Activator/run_test.pl:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * InterfaceRepo/InterfaceRepo.mpc:
+        * InterfaceRepo/run_test.pl:
+        * NotifyService/RTNotify/Priorities.h:
+        * NotifyService/SupplierSideNC/MessengerSupplier.cpp:
+        * Security/ParticipatingApp/ParticipatingApp.mpc:
+        * Security/ParticipatingApp/run_test.pl:
+        * Security/PolicyControllingApp/PolicyControllingApp.mpc:
+        * Security/PolicyControllingApp/run_test.pl:
+        * Security/SecurityUnawareApp/SecurityUnawareApp.mpc:
+        * Security/SecurityUnawareApp/run_test.pl:
+        * SmartProxies/Logger.idl:
+
+          Fixed fuzz error by adding "// $Id $" to the top of each file.
+
+Wed Oct 22 13:24:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * NotifyService/Messenger/MessengerConsumer.cpp:
+        * NotifyService/RTNotify/MessengerConsumer.cpp:
+        * NotifyService/EventSequence/MessengerConsumer.cpp:
+        * NamingService/Naming_Server/NamingMessenger.cpp:
+        * PortableInterceptors/Auth/MessengerServer.cpp:
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+
+          Fixed Lack of ACE_TMAIN fuzz errors.
+
+Wed Oct 22 13:01:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * PortableInterceptors/IOR/MessengerClient.cpp:
+        * PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * LocalObjects/Messenger/Messenger_i.h:
+        * LocalObjects/ServantLocator/MessengerLocator_i.h:
+        * NotifyService/Filtering/Messenger_i.h:
+        * NotifyService/OfferSubscriptions/Messenger_i.h:
+        * NotifyService/SupplierSideNC/Messenger_i.h:
+        * PortableInterceptors/Auth/ClientInitializer.h:
+        * LocalObjects/Messenger/Messenger.idl:
+        * LocalObjects/ServantLocator/Messenger.idl:
+        * Security/ParticipatingApp/Messenger.idl:
+
+          Fixed tabs found fuzz errors.
+
+Wed Oct 22 12:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * NotifyService/QoSProperties/MessengerServer.cpp:
+        * NotifyService/QoSProperties/Messenger_i.cpp:
+        * NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * NotifyService/Messenger/MessengerConsumer.cpp:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/RTNotify/MessengerConsumer.cpp:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * NamingService/Naming_Client/Messenger_i.cpp:
+        * Security/PolicyControllingApp/MessengerClient.cpp:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+
+          Fixed tabs found fuzz errors.
+
+Wed Oct 22 09:00:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * AMH_AMI/inner_cb.h
+        * AMH_AMI/inner_i.h
+        * AMH_AMI/middle_i.h
+          Removed deprecated PortableServer::RefCountServantBase
+
+Wed Oct 22 08:57:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * LocalObjects/Messenger/MessengerServer.cpp
+        * LocalObjects/ServantLocator/MessengerClient.cpp
+        * LocalObjects/ServantLocator/MessengerServer.cpp
+        * Messaging/AMIcallback/MessengerClient.cpp
+        * Messaging/AMIcallback/MessengerServer.cpp
+        * Messaging/RelativeRoundtripTimeout/MessengerServer.cpp
+        * NotifyService/EventSequence/MessengerServer.cpp
+        * NotifyService/Messenger/MessengerServer.cpp
+        * NotifyService/OfferSubscriptions/MessengerServer.cpp
+        * NotifyService/QoSProperties/MessengerServer.cpp
+        * NotifyService/RTNotify/MessengerServer.cpp
+        * NotifyService/SupplierSideNC/MessengerServer.cpp
+        * SmartProxies/LoggerServer.cpp
+          ACE_TMAIN changes
+
+Wed Oct 22 08:53:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO:
+          Moved to the CIAO distribution
+
+Tue Oct 21 23:33:19 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * EventServices/OMG_TypedEC/Consumer_i.h:
+        * EventServices/OMG_TypedEC/Consumer_i.cpp:
+        * EventServices/OMG_TypedEC/Messenger_i.h:
+        * EventServices/OMG_TypedEC/Messenger_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * ImplRepo/IORTable/Messenger_i.cpp:
+        * LocalObjects/Messenger/Messenger_i.h:
+        * LocalObjects/Messenger/Messenger_i.cpp:
+        * LocalObjects/ServantLocator/MessengerLocator_i.h:
+        * LocalObjects/ServantLocator/MessengerLocator_i.cpp:
+        * Messaging/AMIcallback/MessengerHandler.h:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/Messenger_i.h:
+        * Messaging/AMIcallback/Messenger_i.cpp:
+        * Messaging/RelativeRoundtripTimeout/Messenger_i.h:
+        * Multithreading/GracefulShutdown/Messenger_i.h:
+        * Multithreading/GracefulShutdown/Messenger_i.cpp:
+        * Multithreading/Reactive/Messenger_i.h:
+        * Multithreading/Reactive/Messenger_i.cpp:
+        * Multithreading/ThreadPerConnection/Messenger_i.h:
+        * Multithreading/ThreadPerConnection/Messenger_i.cpp:
+        * Multithreading/ThreadPool/Messenger_i.h:
+        * Multithreading/ThreadPool/Messenger_i.cpp:
+        * NamingService/Naming_Context_Ext/Messenger_i.h:
+        * NamingService/Naming_Context_Ext/Messenger_i.cpp:
+        * NamingService/Naming_Server/Messenger_i.h:
+        * NamingService/Naming_Server/Messenger_i.cpp:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.h:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.cpp:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.h:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.cpp:
+        * NotifyService/EventSequence/Messenger_i.h:
+        * NotifyService/EventSequence/Messenger_i.cpp:
+        * NotifyService/Filtering/Messenger_i.h:
+        * NotifyService/Filtering/Messenger_i.cpp:
+        * NotifyService/Filtering/StructuredEventConsumer_i.h:
+        * NotifyService/Filtering/StructuredEventConsumer_i.cpp:
+        * NotifyService/Filtering/StructuredEventSupplier_i.h:
+        * NotifyService/Filtering/StructuredEventSupplier_i.cpp:
+        * NotifyService/Messenger/Messenger_i.h:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/Messenger/StructuredEventConsumer_i.h:
+        * NotifyService/Messenger/StructuredEventConsumer_i.cpp:
+        * NotifyService/Messenger/StructuredEventSupplier_i.h:
+        * NotifyService/Messenger/StructuredEventSupplier_i.cpp:
+        * NotifyService/OfferSubscriptions/Messenger_i.h:
+        * NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.h:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.h:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.cpp:
+        * NotifyService/QoSProperties/Messenger_i.h:
+        * NotifyService/QoSProperties/Messenger_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.h:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.h:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.cpp:
+        * NotifyService/RTNotify/Messenger_i.h:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.h:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.cpp:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.h:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.cpp:
+        * NotifyService/SupplierSideNC/Messenger_i.h:
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.h:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.h:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.cpp:
+        * Security/ParticipatingApp/Messenger_i.h:
+        * Security/ParticipatingApp/Messenger_i.cpp:
+        * Security/PolicyControllingApp/Messenger_i.h:
+        * Security/PolicyControllingApp/Messenger_i.cpp:
+        * Security/SecurityUnawareApp/Messenger_i.h:
+        * Security/SecurityUnawareApp/Messenger_i.cpp:
+        * SmartProxies/Smart_Messenger_Proxy.h:
+        * SmartProxies/Smart_Messenger_Proxy.cpp:
+        * ValueTypes/Messenger/Messenger_i.h:
+        * ValueTypes/Messenger/Messenger_i.cpp:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Fixed fuzz errors by removing exception specifications.
+
+Tue Oct 21 22:50:24 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * AMH/AMH.mpc:
+        * AMH/Messenger.idl:
+        * AMH/MessengerClient.cpp:
+        * AMH/MessengerServer.cpp:
+        * AMH/README:
+        * AMH/amh_pch.h:
+        * AMH/amh_pch.cpp:
+        * AMH/run_test.pl:
+        * AMH_AMI/AMH_AMI.mpc:
+        * AMH_AMI/README:
+        * AMH_AMI/amh_ami_pch.h:
+        * AMH_AMI/amh_ami_pch.cpp:
+        * AMH_AMI/client.cpp:
+        * AMH_AMI/inner.idl:
+        * AMH_AMI/inner_cb.h:
+        * AMH_AMI/inner_cb.cpp:
+        * AMH_AMI/inner_server.cpp:
+        * AMH_AMI/middle.idl:
+        * AMH_AMI/middle_server.cpp:
+        * AMH_AMI/run_test.pl:
+        * BiDirectionalGIOP/BiDirectionalGIOP.mpc:
+        * BiDirectionalGIOP/README:
+        * BiDirectionalGIOP/bidir_giop_pch.h:
+        * BiDirectionalGIOP/bidir_giop_pch.cpp:
+        * BiDirectionalGIOP/callback.idl:
+        * BiDirectionalGIOP/callback_i.h:
+        * BiDirectionalGIOP/callback_i.cpp:
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/run_test.pl:
+        * BiDirectionalGIOP/server.cpp:
+        * BiDirectionalGIOP/simple.idl:
+        * BiDirectionalGIOP/simple_i.h:
+        * BiDirectionalGIOP/simple_i.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.h:
+        * EventServices/OMG_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_Basic/OMG_Basic.mpc:
+        * EventServices/OMG_Basic/README:
+        * EventServices/OMG_Basic/run_test.pl:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumerMain.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.h:
+        * EventServices/OMG_SupplierSideEC/EchoEventConsumer_i.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventSupplierMain.cpp:
+        * EventServices/OMG_SupplierSideEC/OMG_SupplierSideEC.mpc:
+        * EventServices/OMG_SupplierSideEC/README:
+        * EventServices/OMG_SupplierSideEC/run_test.pl:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Consumer_i.h:
+        * EventServices/OMG_TypedEC/Consumer_i.cpp:
+        * EventServices/OMG_TypedEC/Messenger.idl:
+        * EventServices/OMG_TypedEC/OMG_TypedEC.mpc:
+        * EventServices/OMG_TypedEC/README:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+        * EventServices/OMG_TypedEC/run_test.pl:
+        * EventServices/RTEC_Basic/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Basic/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Basic/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Basic/README:
+        * EventServices/RTEC_Basic/RTEC_Basic.mpc:
+        * EventServices/RTEC_Basic/run_test.pl:
+        * EventServices/RTEC_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Federated/README:
+        * EventServices/RTEC_Federated/RTEC_Federated.mpc:
+        * EventServices/RTEC_Federated/run_test.pl:
+        * EventServices/RTEC_Filter/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.h:
+        * EventServices/RTEC_Filter/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.h:
+        * EventServices/RTEC_Filter/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_Filter/README:
+        * EventServices/RTEC_Filter/RTEC_Filter.mpc:
+        * EventServices/RTEC_Filter/run_test.pl:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * EventServices/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * EventServices/RTEC_MCast_Federated/README:
+        * EventServices/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * EventServices/RTEC_MCast_Federated/run_test.pl:
+        * GettingStarted/GettingStarted.mpc:
+        * GettingStarted/Messenger.idl:
+        * GettingStarted/MessengerClient.cpp:
+        * GettingStarted/MessengerServer.cpp:
+        * GettingStarted/README:
+        * GettingStarted/run_test.pl:
+        * GettingStarted/started_pch.h:
+        * GettingStarted/started_pch.cpp:
+        * ImplRepo/Basic/ImplRepo_Basic.mpc:
+        * ImplRepo/Basic/Messenger.idl:
+        * ImplRepo/Basic/MessengerClient.cpp:
+        * ImplRepo/Basic/MessengerServer.cpp:
+        * ImplRepo/Basic/Messenger_i.h:
+        * ImplRepo/Basic/Messenger_i.cpp:
+        * ImplRepo/Basic/run_test.pl:
+        * ImplRepo/IORTable/ImplRepo_IORTable.mpc:
+        * ImplRepo/IORTable/Messenger.idl:
+        * ImplRepo/IORTable/MessengerClient.cpp:
+        * ImplRepo/IORTable/MessengerServer.cpp:
+        * ImplRepo/IORTable/Messenger_i.h:
+        * ImplRepo/IORTable/Messenger_i.cpp:
+        * ImplRepo/IORTable/run_test.pl:
+        * ImplRepo/ImplRepo.mpc:
+        * ImplRepo/Messenger.idl:
+        * ImplRepo/MessengerClient.cpp:
+        * ImplRepo/MessengerServer.cpp:
+        * ImplRepo/README:
+        * ImplRepo/run_test.pl:
+        * LocalObjects/Messenger/Messenger.idl:
+        * LocalObjects/Messenger/Messenger.mpc:
+        * LocalObjects/Messenger/MessengerServer.cpp:
+        * LocalObjects/Messenger/Messenger_i.h:
+        * LocalObjects/Messenger/Messenger_i.cpp:
+        * LocalObjects/Messenger/run_test.pl:
+        * LocalObjects/ServantLocator/Messenger.idl:
+        * LocalObjects/ServantLocator/MessengerClient.cpp:
+        * LocalObjects/ServantLocator/MessengerLocator_i.h:
+        * LocalObjects/ServantLocator/MessengerServer.cpp:
+        * LocalObjects/ServantLocator/ServantLocator.mpc:
+        * LocalObjects/ServantLocator/run_test.pl:
+        * Messaging/AMIcallback/AMIcallback.mpc:
+        * Messaging/AMIcallback/Messenger.idl:
+        * Messaging/AMIcallback/MessengerClient.cpp:
+        * Messaging/AMIcallback/MessengerHandler.h:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/MessengerServer.cpp:
+        * Messaging/AMIcallback/README:
+        * Messaging/AMIcallback/run_test.pl:
+        * Messaging/RelativeRoundtripTimeout/Messenger.idl:
+        * Messaging/RelativeRoundtripTimeout/MessengerClient.cpp:
+        * Messaging/RelativeRoundtripTimeout/MessengerServer.cpp:
+        * Messaging/RelativeRoundtripTimeout/README:
+        * Messaging/RelativeRoundtripTimeout/RelativeRoundtripTimeout.mpc:
+        * Messaging/RelativeRoundtripTimeout/run_test.pl:
+        * Multithreading/GracefulShutdown/GracefulShutdown.mpc:
+        * Multithreading/GracefulShutdown/Messenger.idl:
+        * Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * Multithreading/GracefulShutdown/README:
+        * Multithreading/GracefulShutdown/run_test.pl:
+        * Multithreading/Reactive/Messenger.idl:
+        * Multithreading/Reactive/MessengerClient.cpp:
+        * Multithreading/Reactive/MessengerServer.cpp:
+        * Multithreading/Reactive/README:
+        * Multithreading/Reactive/Reactive.mpc:
+        * Multithreading/Reactive/run_test.pl:
+        * Multithreading/ThreadPerConnection/Messenger.idl:
+        * Multithreading/ThreadPerConnection/MessengerClient.cpp:
+        * Multithreading/ThreadPerConnection/MessengerServer.cpp:
+        * Multithreading/ThreadPerConnection/README:
+        * Multithreading/ThreadPerConnection/ThreadPerConnection.mpc:
+        * Multithreading/ThreadPerConnection/run_test.pl:
+        * Multithreading/ThreadPool/Messenger.idl:
+        * Multithreading/ThreadPool/MessengerClient.cpp:
+        * Multithreading/ThreadPool/MessengerServer.cpp:
+        * Multithreading/ThreadPool/README:
+        * Multithreading/ThreadPool/ThreadPool.mpc:
+        * Multithreading/ThreadPool/run_test.pl:
+        * NamingService/Messenger/Messenger.idl:
+        * NamingService/Messenger/Messenger.mpc:
+        * NamingService/Messenger/MessengerClient.cpp:
+        * NamingService/Messenger/MessengerServer.cpp:
+        * NamingService/Messenger/README:
+        * NamingService/Messenger/run_test.pl:
+        * NamingService/Naming_Client/Messenger.idl:
+        * NamingService/Naming_Client/MessengerClient.cpp:
+        * NamingService/Naming_Client/MessengerServer.cpp:
+        * NamingService/Naming_Client/Naming_Client.mpc:
+        * NamingService/Naming_Client/README:
+        * NamingService/Naming_Client/run_test.pl:
+        * NamingService/Naming_Context_Ext/Messenger.idl:
+        * NamingService/Naming_Context_Ext/MessengerClient.cpp:
+        * NamingService/Naming_Context_Ext/MessengerServer.cpp:
+        * NamingService/Naming_Context_Ext/Naming_Context_Ext.mpc:
+        * NamingService/Naming_Context_Ext/README:
+        * NamingService/Naming_Context_Ext/run_test.pl:
+        * NamingService/Naming_Server/Messenger.idl:
+        * NamingService/Naming_Server/MessengerTask.h:
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * NamingService/Naming_Server/NamingMessenger.cpp:
+        * NamingService/Naming_Server/NamingTask.h:
+        * NamingService/Naming_Server/NamingTask.cpp:
+        * NamingService/Naming_Server/Naming_Server.mpc:
+        * NamingService/Naming_Server/README:
+        * NamingService/Naming_Server/run_test.pl:
+        * NamingService/corbaloc_Messenger/Messenger.idl:
+        * NamingService/corbaloc_Messenger/MessengerClient.cpp:
+        * NamingService/corbaloc_Messenger/MessengerServer.cpp:
+        * NamingService/corbaloc_Messenger/README:
+        * NamingService/corbaloc_Messenger/corbaloc_Messenger.mpc:
+        * NamingService/corbaloc_Messenger/run_test.pl:
+        * NamingService/corbaname_Messenger/Messenger.idl:
+        * NamingService/corbaname_Messenger/MessengerClient.cpp:
+        * NamingService/corbaname_Messenger/MessengerServer.cpp:
+        * NamingService/corbaname_Messenger/README:
+        * NamingService/corbaname_Messenger/corbaname_Messenger.mpc:
+        * NamingService/corbaname_Messenger/run_test.pl:
+        * NotifyService/EventSequence/EventSequence.mpc:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.h:
+        * NotifyService/EventSequence/EventSequenceConsumer_i.cpp:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.h:
+        * NotifyService/EventSequence/EventSequenceSupplier_i.cpp:
+        * NotifyService/EventSequence/Messenger.idl:
+        * NotifyService/EventSequence/MessengerClient.cpp:
+        * NotifyService/EventSequence/MessengerConsumer.cpp:
+        * NotifyService/EventSequence/MessengerServer.cpp:
+        * NotifyService/EventSequence/Messenger_i.h:
+        * NotifyService/EventSequence/Messenger_i.cpp:
+        * NotifyService/EventSequence/README:
+        * NotifyService/EventSequence/run_test.pl:
+        * NotifyService/Filtering/Filtering.mpc:
+        * NotifyService/Filtering/Messenger.idl:
+        * NotifyService/Filtering/MessengerClient.cpp:
+        * NotifyService/Filtering/MessengerConsumer.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/Filtering/Messenger_i.h:
+        * NotifyService/Filtering/Messenger_i.cpp:
+        * NotifyService/Filtering/README:
+        * NotifyService/Filtering/StructuredEventConsumer_i.h:
+        * NotifyService/Filtering/StructuredEventConsumer_i.cpp:
+        * NotifyService/Filtering/StructuredEventSupplier_i.h:
+        * NotifyService/Filtering/StructuredEventSupplier_i.cpp:
+        * NotifyService/Filtering/run_test.pl:
+        * NotifyService/Messenger/Messenger.idl:
+        * NotifyService/Messenger/Messenger.mpc:
+        * NotifyService/Messenger/MessengerClient.cpp:
+        * NotifyService/Messenger/MessengerConsumer.cpp:
+        * NotifyService/Messenger/MessengerServer.cpp:
+        * NotifyService/Messenger/Messenger_i.h:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/Messenger/README:
+        * NotifyService/Messenger/StructuredEventConsumer_i.h:
+        * NotifyService/Messenger/StructuredEventConsumer_i.cpp:
+        * NotifyService/Messenger/StructuredEventSupplier_i.h:
+        * NotifyService/Messenger/StructuredEventSupplier_i.cpp:
+        * NotifyService/Messenger/run_test.pl:
+        * NotifyService/OfferSubscriptions/Messenger.idl:
+        * NotifyService/OfferSubscriptions/MessengerClient.cpp:
+        * NotifyService/OfferSubscriptions/MessengerConsumer.cpp:
+        * NotifyService/OfferSubscriptions/MessengerServer.cpp:
+        * NotifyService/OfferSubscriptions/Messenger_i.h:
+        * NotifyService/OfferSubscriptions/Messenger_i.cpp:
+        * NotifyService/OfferSubscriptions/OfferSubscriptions.mpc:
+        * NotifyService/OfferSubscriptions/README:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.h:
+        * NotifyService/OfferSubscriptions/StructuredEventConsumer_i.cpp:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.h:
+        * NotifyService/OfferSubscriptions/StructuredEventSupplier_i.cpp:
+        * NotifyService/OfferSubscriptions/run_test.pl:
+        * NotifyService/QoSProperties/Messenger.idl:
+        * NotifyService/QoSProperties/MessengerClient.cpp:
+        * NotifyService/QoSProperties/MessengerConsumer.cpp:
+        * NotifyService/QoSProperties/MessengerServer.cpp:
+        * NotifyService/QoSProperties/Messenger_i.h:
+        * NotifyService/QoSProperties/Messenger_i.cpp:
+        * NotifyService/QoSProperties/QoSProperties.mpc:
+        * NotifyService/QoSProperties/README:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.h:
+        * NotifyService/QoSProperties/StructuredEventConsumer_i.cpp:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.h:
+        * NotifyService/QoSProperties/StructuredEventSupplier_i.cpp:
+        * NotifyService/QoSProperties/run_test.pl:
+        * NotifyService/RTNotify/Messenger.idl:
+        * NotifyService/RTNotify/MessengerClient.cpp:
+        * NotifyService/RTNotify/MessengerConsumer.cpp:
+        * NotifyService/RTNotify/MessengerServer.cpp:
+        * NotifyService/RTNotify/Messenger_i.h:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * NotifyService/RTNotify/README:
+        * NotifyService/RTNotify/RTNotify.mpc:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.h:
+        * NotifyService/RTNotify/StructuredEventConsumer_i.cpp:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.h:
+        * NotifyService/RTNotify/StructuredEventSupplier_i.cpp:
+        * NotifyService/RTNotify/run_test.pl:
+        * NotifyService/SupplierSideNC/Messenger.idl:
+        * NotifyService/SupplierSideNC/MessengerClient.cpp:
+        * NotifyService/SupplierSideNC/MessengerConsumer.cpp:
+        * NotifyService/SupplierSideNC/MessengerServer.cpp:
+        * NotifyService/SupplierSideNC/Messenger_i.h:
+        * NotifyService/SupplierSideNC/Messenger_i.cpp:
+        * NotifyService/SupplierSideNC/README:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.h:
+        * NotifyService/SupplierSideNC/StructuredEventConsumer_i.cpp:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.h:
+        * NotifyService/SupplierSideNC/StructuredEventSupplier_i.cpp:
+        * NotifyService/SupplierSideNC/SupplierSideNC.mpc:
+        * NotifyService/SupplierSideNC/run_test.pl:
+        * PortableInterceptors/Auth/Auth.mpc:
+        * PortableInterceptors/Auth/ClientInitializer.h:
+        * PortableInterceptors/Auth/ClientInitializer.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.h:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/Messenger.idl:
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/Auth/MessengerServer.cpp:
+        * PortableInterceptors/Auth/README:
+        * PortableInterceptors/Auth/ServerInitializer.h:
+        * PortableInterceptors/Auth/ServerInitializer.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.h:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/Auth/run_test.pl:
+        * PortableInterceptors/IOR/ClientInitializer.h:
+        * PortableInterceptors/IOR/ClientInitializer.cpp:
+        * PortableInterceptors/IOR/ClientInterceptor.h:
+        * PortableInterceptors/IOR/ClientInterceptor.cpp:
+        * PortableInterceptors/IOR/IOR.mpc:
+        * PortableInterceptors/IOR/Messenger.idl:
+        * PortableInterceptors/IOR/MessengerClient.cpp:
+        * PortableInterceptors/IOR/MessengerServer.cpp:
+        * PortableInterceptors/IOR/Messenger_i.h:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/IOR/README:
+        * PortableInterceptors/IOR/ServerIORInterceptor.h:
+        * PortableInterceptors/IOR/ServerIORInterceptor.cpp:
+        * PortableInterceptors/IOR/ServerInitializer.h:
+        * PortableInterceptors/IOR/ServerInitializer.cpp:
+        * PortableInterceptors/IOR/ServerInterceptor.h:
+        * PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/run_test.pl:
+        * PortableInterceptors/PICurrent/ClientInitializer.h:
+        * PortableInterceptors/PICurrent/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent/Messenger.idl:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent/PICurrent.mpc:
+        * PortableInterceptors/PICurrent/README:
+        * PortableInterceptors/PICurrent/ServerInitializer.h:
+        * PortableInterceptors/PICurrent/ServerInitializer.cpp:
+        * PortableInterceptors/PICurrent/ServerInterceptor.h:
+        * PortableInterceptors/PICurrent/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent/run_test.pl:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/Messenger.idl:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:
+        * PortableInterceptors/PICurrent_NameService/README:
+        * PortableInterceptors/PICurrent_NameService/ServerInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ServerInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/run_test.pl:
+        * PortableInterceptors/SimpleCodec/ClientInitializer.h:
+        * PortableInterceptors/SimpleCodec/ClientInitializer.cpp:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.h:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger.idl:
+        * PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.h:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/README:
+        * PortableInterceptors/SimpleCodec/ServerInitializer.h:
+        * PortableInterceptors/SimpleCodec/ServerInitializer.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.h:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/SimpleCode.mpc:
+        * PortableInterceptors/SimpleCodec/run_test.pl:
+        * RTCORBA/Messenger.idl:
+        * RTCORBA/MessengerClient.cpp:
+        * RTCORBA/MessengerServer.cpp:
+        * RTCORBA/Messenger_i.cpp:
+        * RTCORBA/README:
+        * RTCORBA/RTCORBA.mpc:
+        * RTCORBA/common.h:
+        * RTCORBA/common.cpp:
+        * RTCORBA/run_test.pl:
+        * SmartProxies/LoggerServer.cpp:
+        * SmartProxies/Logger_i.h:
+        * SmartProxies/Logger_i.cpp:
+        * SmartProxies/Messenger.idl:
+        * SmartProxies/MessengerClient.cpp:
+        * SmartProxies/MessengerServer.cpp:
+        * SmartProxies/README:
+        * SmartProxies/SmartProxies.mpc:
+        * SmartProxies/Smart_Messenger_Proxy.h:
+        * SmartProxies/Smart_Messenger_Proxy.cpp:
+        * SmartProxies/run_test.pl:
+        * ValueTypes/Bank/README:
+        * ValueTypes/Bank/_pch.h:
+        * ValueTypes/Bank/_pch.cpp:
+        * ValueTypes/Bank/bank.idl:
+        * ValueTypes/Bank/bank.mpc:
+        * ValueTypes/Bank/client.cpp:
+        * ValueTypes/Bank/run_test.pl:
+        * ValueTypes/Bank/server.cpp:
+        * ValueTypes/Messenger/Message_i.h:
+        * ValueTypes/Messenger/Message_i.cpp:
+        * ValueTypes/Messenger/Messenger.idl:
+        * ValueTypes/Messenger/MessengerClient.cpp:
+        * ValueTypes/Messenger/MessengerServer.cpp:
+        * ValueTypes/Messenger/Messenger_i.h:
+        * ValueTypes/Messenger/Messenger_i.cpp:
+        * ValueTypes/Messenger/README:
+        * ValueTypes/Messenger/ValueTypes.mpc:
+        * ValueTypes/Messenger/_pch.h:
+        * ValueTypes/Messenger/_pch.cpp:
+        * ValueTypes/Messenger/run_test.pl:
+        * ValueTypes/Notify/Event.idl:
+        * ValueTypes/Notify/Event_i.h:
+        * ValueTypes/Notify/Notify.mpc:
+        * ValueTypes/Notify/consumer.cpp:
+        * ValueTypes/Notify/readme.txt:
+        * ValueTypes/Notify/run_test.pl:
+        * ValueTypes/Notify/supplier.cpp:
+
+          Add "// $Id $" to the top of each file to address fuzz errors.
+
+Tue Oct 21 20:59:59 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * BiDirectionalGIOP/simple_i.h:
+        * BiDirectionalGIOP/simple_i.cpp:
+        * CIAO/Messenger/Administrator_exec_i.h:
+        * CIAO/Messenger/Administrator_exec_i.cpp:
+        * CIAO/Messenger/History_exec_i.h:
+        * CIAO/Messenger/History_exec_i.cpp:
+        * CIAO/Messenger/Messenger_exec_i.h:
+        * CIAO/Messenger/Messenger_exec_i.cpp:
+        * CIAO/Messenger/Publication_exec_i.h:
+        * CIAO/Messenger/Publication_exec_i.cpp:
+        * CIAO/Messenger/Receiver_exec_i.h:
+        * CIAO/Messenger/Receiver_exec_i.cpp:
+        * CIAO/Messenger/Runnable_exec_i.h:
+        * CIAO/Messenger/Runnable_exec_i.cpp:
+        * CIAO/Messenger/StaticDAnCE/StaticDAnCEApp.cpp:
+        * ImplRepo/IORTable/Messenger_i.h:
+        * PortableInterceptors/Auth/ClientInterceptor.h:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/Messenger_i.h:
+        * PortableInterceptors/Auth/Messenger_i.cpp:
+        * PortableInterceptors/Auth/ServerInitializer.h:
+        * PortableInterceptors/Auth/ServerInitializer.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.h:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/ClientInitializer.h:
+        * PortableInterceptors/IOR/ClientInitializer.cpp:
+        * PortableInterceptors/IOR/ClientInterceptor.h:
+        * PortableInterceptors/IOR/ClientInterceptor.cpp:
+        * PortableInterceptors/IOR/Messenger_i.h:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/IOR/ServerIORInterceptor.h:
+        * PortableInterceptors/IOR/ServerIORInterceptor.cpp:
+        * PortableInterceptors/IOR/ServerInitializer.h:
+        * PortableInterceptors/IOR/ServerInitializer.cpp:
+        * PortableInterceptors/IOR/ServerInterceptor.h:
+        * PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/Messenger_i.h:
+        * PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * PortableInterceptors/PICurrent_NameService/ServerInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ServerInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/ClientInitializer.h:
+        * PortableInterceptors/SimpleCodec/ClientInitializer.cpp:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.h:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/Messenger_i.h:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInitializer.h:
+        * PortableInterceptors/SimpleCodec/ServerInitializer.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.h:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * Security/SecurityUnawareApp/MessengerI.cpp:
+        * ValueTypes/Bank/server.cpp:
+
+          Remove exception specifications from the code. It has fallen out of favor.
+
+Wed Apr 23 13:09:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Disable the RTCORBA example for minimum CORBA and the like.
+
+Fri Apr 18 14:06:47 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * BiDirectionalGIOP/BiDirectionalGIOP.mpc:
+
+          Also excluded the Bidir client from CORBA/e micro.
+
+Thu Apr 17 22:43:37 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * BiDirectionalGIOP/BiDirectionalGIOP.mpc:
+        * ImplRepo/Basic/ImplRepo_Basic.mpc:
+        * ImplRepo/IORTable/ImplRepo_IORTable.mpc:
+        * ImplRepo/ImplRepo.mpc:
+        * devguide_examples.lst:
+
+          Excluded these from CORBA/e Micro builds.
+
+Wed Apr  9 14:44:33 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/RTEC_Federated/supplier.conf:
+
+          Fixed a problem where the last line was continued with a backslash.
+
+Fri Apr  4 11:55:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * Messaging/AMIcallback/Messenger_i.cpp:
+
+          Remove vc8 warning about conversion from time_t to smaller type.
+
+Mon Feb 25 17:28:59 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * PortableInterceptors/IOR/run_test.pl:
+          Additional timeout for monitoring service ior.
+
+        * EventServices/RTEC_Federated/supplier.conf:
+          Add block flushing and exclusive TransportMuxing
+          strategies. Adding these fixes scoreboard failures.
+
+Wed Sep 19 17:24:25 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * Security/SecurityUnawareApp/MessengerClient.cpp:
+        * Security/SecurityUnawareApp/run_test.pl:
+          Fix app to mask expected exception. Also test script doesn't
+          exit on expected failure.
+
+Tue Dec 18 23:28:01 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * CIAO/Messenger/StaticDAnCE/run_test.pl:
+        * CIAO/Messenger/descriptors/run_test.pl:
+
+          Using PerlACE::Process to determine the real path to NodeApplication
+          since it may need to be modified by -ExeSubDir.
+
+Thu Oct 25 14:48:21 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * CIAO/Messenger/Administrator.mpc:
+        * CIAO/Messenger/Messenger.mpc:
+        * CIAO/Messenger/Receiver.mpc:
+        * CIAO/Messenger/StaticDAnCE/Messenger_StaticDAnCE.mpc:
+
+          Added "requires += cidl" to all projects that did not already have
+          it.  This prevents the CIAO examples from being built when there is
+          no CIAO library built.
+
+Wed Oct 24 22:05:08 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * CIAO/Messenger/StaticDAnCE:
+        * CIAO/Messenger/StaticDAnCE/Messenger_StaticDAnCE.mpc:
+        * CIAO/Messenger/StaticDAnCE/README.txt:
+        * CIAO/Messenger/StaticDAnCE/StaticDAnCEApp.cpp:
+        * CIAO/Messenger/StaticDAnCE/plan.h:
+        * CIAO/Messenger/StaticDAnCE/run_test.pl:
+
+          Added a new example that builds on the CIAO/Messenger example but
+          runs one of the four nodes statically (no dlopen, etc.).
+
+Wed Oct 24 19:08:46 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * CIAO/Messenger/Administrator.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL2.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL3.mpc:
+        * CIAO/Messenger/Administrator_exec_i.h:
+        * CIAO/Messenger/Administrator_exec_i.cpp:
+        * CIAO/Messenger/History_exec_i.h:
+        * CIAO/Messenger/History_exec_i.cpp:
+        * CIAO/Messenger/Messenger.mpc:
+        * CIAO/Messenger/Messenger_exec_i.h:
+        * CIAO/Messenger/Messenger_exec_i.cpp:
+        * CIAO/Messenger/Publication_exec_i.h:
+        * CIAO/Messenger/Publication_exec_i.cpp:
+        * CIAO/Messenger/Receiver.mpc:
+        * CIAO/Messenger/Receiver_exec_i.h:
+        * CIAO/Messenger/Receiver_exec_i.cpp:
+        * CIAO/Messenger/Runnable_exec_i.h:
+        * CIAO/Messenger/Runnable_exec_i.cpp:
+        * CIAO/Messenger/descriptors/Application-flattened.cdp:
+        * CIAO/Messenger/descriptors/ApplicationNodeMap.dat:
+        * CIAO/Messenger/descriptors/README_15a:
+        * CIAO/Messenger/descriptors/run_test.pl:
+
+          Ported the CIAO example to TAO 1.5a (CIAO 0.5a).
+
+Fri Oct 19 20:56:50 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * BiDirectionalGIOP/BiDirectionalGIOP.mpc:
+        * Multithreading/GracefulShutdown/GracefulShutdown.mpc:
+        * NotifyService/Filtering/Filtering.mpc:
+
+          Added exename to account for the wchar changes (ACE_TMAIN).
+
+        * devguide_examples.lst:
+
+          Added the CIAO example, which is only run with -Config CIAO.
+
+Thu Oct 11 16:45:44 2007  ciju john  <john_c@ociweb.com>
+
+        Importing entry from $TAO_ROOT/OCIChangeLog
+        Wed Sep 19 17:24:25 UTC 2007  Ciju John  <johnc at ociweb dot com>
+        * Security/SecurityUnawareApp/MessengerClient.cpp:
+        * Security/SecurityUnawareApp/run_test.pl:
+          Fix app to mask expected exception. Also test script doesn't
+          exit on expected failure.
+
+Tue Oct  9 16:20:46 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * BiDirectionalGIOP/client.cpp:
+        * BiDirectionalGIOP/server.cpp:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Multithreading/GracefulShutdown/MessengerClient.cpp:
+        * Multithreading/GracefulShutdown/MessengerServer.h:
+        * Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * NotifyService/Filtering/MessengerServer.cpp:
+        * NotifyService/Messenger/Messenger_i.cpp:
+        * NotifyService/RTNotify/Messenger_i.cpp:
+        * SmartProxies/Logger_i.h:
+        * SmartProxies/Logger_i.cpp:
+        * ValueTypes/Notify/consumer.cpp:
+
+          Fixes for ACE_USES_WCHAR builds.
+
+Mon Jul 23 14:17:47 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * LocalObjects/ServantLocator/ServantLocator.mpc:
+
+          Exclude this example from CORBA/e Compact and Micro builds.
+
+Fri Jun 15 21:54:31 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+
+          Changed code to match the new enumeration name in the IDL.
+
+Mon Jun  4 11:58:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+
+          Updated address server implementation to be consistent with the
+          interface.
+
+Thu May 10 11:44:16 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NamingService/Naming_Server/MessengerTask.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+
+          Replaced the old ACE_.*_cast with the corresponding C++ style
+          cast.
+
+Fri Apr 27 13:15:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          Disable the PortableInterceptors examples if interceptors are
+          disabled.
+
+Fri Apr 27 13:12:00 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * PortableInterceptors/Auth/Auth.mpc:
+        * PortableInterceptors/IOR/IOR.mpc:
+        * PortableInterceptors/PICurrent/PICurrent.mpc:
+        * PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:
+        * PortableInterceptors/SimpleCodec/SimpleCode.mpc:
+
+          Added interceptors to the inheritence list for the clients.
+
+Wed Mar 21 14:48:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH_AMI/run_test.pl:
+        * BiDirectionalGIOP/run_test.pl:
+        * EventServices/RTEC_Basic/run_test.pl:
+        * EventServices/RTEC_Federated/run_test.pl:
+        * EventServices/RTEC_Filter/run_test.pl:
+        * EventServices/RTEC_MCast_Federated/run_test.pl:
+        * ImplRepo/run_test.pl:
+        * Messaging/AMIcallback/run_test.pl:
+        * NamingService/Naming_Context_Ext/run_test.pl:
+        * NamingService/corbaloc_Messenger/run_test.pl:
+        * PortableInterceptors/Auth/run_test.pl:
+        * PortableInterceptors/IOR/run_test.pl:
+        * PortableInterceptors/PICurrent/run_test.pl:
+        * PortableInterceptors/PICurrent_NameService/run_test.pl:
+        * PortableInterceptors/SimpleCodec/run_test.pl:
+        * SmartProxies/run_test.pl:
+        * ValueTypes/Bank/run_test.pl:
+        * ValueTypes/Messenger/run_test.pl:
+
+          Increase timeouts to allow these to run on slower machines.
+
+Tue Feb 27 12:17:34 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * PortableInterceptors/PICurrent_NameService/run_test.pl:
+
+          I introduced a bug into this script.  The MessengerServer does
+          not create an IOR file, just wait 1 second before starting the
+          client.
+
+Tue Feb 20 12:30:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * PortableInterceptors/Auth/run_test.pl:
+        * PortableInterceptors/IOR/run_test.pl:
+        * PortableInterceptors/PICurrent/run_test.pl:
+        * PortableInterceptors/PICurrent_NameService/run_test.pl:
+        * PortableInterceptors/SimpleCodec/run_test.pl:
+
+          Modified these tests to wait for the IOR file and then a half
+          second before starting the client.  On slower machines, the client
+          could get a TRANSIENT exception by invoking a method on the server
+          before it's ready.
+
+Mon Feb 19 15:23:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ImplRepo/run_test.pl:
+        * LocalObjects/ServantLocator/run_test.pl:
+        * Messaging/AMIcallback/run_test.pl:
+        * Messaging/RelativeRoundtripTimeout/run_test.pl:
+        * NamingService/Messenger/run_test.pl:
+        * NamingService/Naming_Client/run_test.pl:
+        * NamingService/Naming_Context_Ext/run_test.pl:
+        * NamingService/Naming_Server/run_test.pl:
+        * NamingService/corbaloc_Messenger/run_test.pl:
+        * NamingService/corbaname_Messenger/run_test.pl:
+        * NotifyService/EventSequence/run_test.pl:
+        * NotifyService/Filtering/run_test.pl:
+        * NotifyService/Messenger/run_test.pl:
+        * NotifyService/OfferSubscriptions/run_test.pl:
+        * NotifyService/QoSProperties/run_test.pl:
+        * NotifyService/RTNotify/run_test.pl:
+        * NotifyService/SupplierSideNC/run_test.pl:
+        * PortableInterceptors/Auth/run_test.pl:
+        * PortableInterceptors/IOR/run_test.pl:
+        * PortableInterceptors/PICurrent/run_test.pl:
+        * PortableInterceptors/PICurrent_NameService/run_test.pl:
+        * PortableInterceptors/SimpleCodec/run_test.pl:
+        * RTCORBA/run_test.pl:
+        * Security/ParticipatingApp/run_test.pl:
+        * Security/PolicyControllingApp/run_test.pl:
+        * Security/SecurityUnawareApp/run_test.pl:
+        * SmartProxies/run_test.pl:
+
+          Changed the return value check on SpawnWaitKill() from == -1 to !=
+          0 to catch process failures instead of just process timeouts.
+
+Thu Feb 15 12:23:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ValueTypes/Bank/bank.mpc:
+
+          With my rename from Wed Feb 14 14:29:40 UTC 2007, I forgot to
+          change the clients 'after' setting.
+
+Wed Feb 14 16:23:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * PortableInterceptors/PICurrent/ClientInitializer.h:
+        * PortableInterceptors/PICurrent/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+
+          Moved the setting of the PICurrent slot data to after the ORB and
+          PICurrent object are initialized.
+
+Wed Feb 14 14:29:40 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * PortableInterceptors/Auth/MessengerClient.cpp:
+        * PortableInterceptors/Auth/MessengerServer.cpp:
+        * PortableInterceptors/IOR/MessengerClient.cpp:
+        * PortableInterceptors/IOR/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerClient.cpp:
+        * PortableInterceptors/PICurrent_NameService/MessengerServer.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+
+          Include either tao/PI_Server/PI_Server.h or tao/PI/PI.h to ensure
+          that the PI_Server or PI libraries are actually linked into the
+          executable when statically linking.
+
+Wed Feb 14 14:03:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * devguide_examples.lst:
+
+          The ImplRepo test can no longer be run in a static build since the
+          ImR_Client library must be dynamically loaded in.  It is part of
+          the PortableServer library in TAO 1.4a.
+
+Tue Feb 13 13:05:57 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/Administrator_exec_i.h:
+        * CIAO/Messenger/Administrator_exec_i.cpp:
+        * CIAO/Messenger/History_exec_i.h:
+        * CIAO/Messenger/History_exec_i.cpp:
+        * CIAO/Messenger/Messenger_exec_i.h:
+        * CIAO/Messenger/Messenger_exec_i.cpp:
+        * CIAO/Messenger/Publication_exec_i.h:
+        * CIAO/Messenger/Publication_exec_i.cpp:
+        * CIAO/Messenger/Receiver_exec_i.h:
+        * CIAO/Messenger/Receiver_exec_i.cpp:
+        * CIAO/Messenger/Runnable_exec_i.h:
+        * CIAO/Messenger/Runnable_exec_i.cpp:
+        * EventServices/OMG_SupplierSideEC/EchoEventSupplierMain.cpp:
+        * PortableInterceptors/IOR/ServerIORInterceptor.h:
+        * PortableInterceptors/IOR/ServerIORInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+
+          Removed the ACE exception macros.
+
+        * EventServices/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * ValueTypes/Bank/bank.mpc:
+
+          Modified these project names so that they can be included in the
+          entire TAO workspace.
+
+Mon Feb 12 14:46:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * AMH_AMI/AMH_AMI.mpc:
+
+          Re-arranged the generated source files so that they are at the
+          beginning (like MPC would do if it were automatically generating
+          the list of source files).  This is required for template
+          instantiation to work properly for Visual Age 6.0.
+
+Thu Feb  8 14:32:40 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * LocalObjects/ServantLocator/ServantLocator.mpc:
+
+          Added the anytypecode base project for compatibility with this
+          change to TAO (see $TAO_ROOT/OCIChangeLog).
+          Thu Feb  8 14:28:06 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+Mon Feb  5 22:51:25 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * ValueTypes/Notify/Event.idl:
+        * ValueTypes/Notify/Event_i.h:
+
+          Replaced a custom typedef for sequence<long> with CORBA::LongSeq.
+          Using the type provided by the C++ mapping spec is simpler and it
+          avoids a lingering problem with Visual C++ and DLL exports with
+          templates.
+
+Fri Feb  2 02:54:02 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/Messenger/Administrator_Client_IDL2.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL3.mpc:
+
+          Added requires += cidl so that these projects will not be built if
+          cidl is not available.
+
+Thu Feb  1 19:00:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CIAO/CIAO.mwc:
+
+          Removed an unnecessary -includes.
+
+        * CIAO/Messenger/Administrator.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL2.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL3.mpc:
+        * CIAO/Messenger/Messenger.mpc:
+        * CIAO/Messenger/Receiver.mpc:
+
+          Removed requires += exceptions.
+
+Thu Feb  1 18:49:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ChangeLogs/ChangeLog-1.4a:
+        * readme.txt:
+        * AMH/AMH.mpc:
+        * AMH_AMI/AMH_AMI.mpc:
+        * AMH_AMI/inner_cb.cpp:
+        * AMH_AMI/inner_cb.h:
+        * BiDirectionalGIOP/BiDirectionalGIOP.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL2.mpc:
+        * CIAO/Messenger/Administrator_Client_IDL3.mpc:
+        * EventServices/OMG_Basic/OMG_Basic.mpc:
+        * EventServices/OMG_SupplierSideEC/OMG_SupplierSideEC.mpc:
+        * EventServices/OMG_TypedEC/ConsumerMain.cpp:
+        * EventServices/OMG_TypedEC/Messenger_i.cpp:
+        * EventServices/OMG_TypedEC/Messenger_i.h:
+        * EventServices/OMG_TypedEC/OMG_TypedEC.mpc:
+        * EventServices/OMG_TypedEC/SupplierMain.cpp:
+        * EventServices/RTEC_Basic/RTEC_Basic.mpc:
+        * EventServices/RTEC_Federated/RTEC_Federated.mpc:
+        * EventServices/RTEC_Filter/RTEC_Filter.mpc:
+        * EventServices/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * EventServices/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * GettingStarted/GettingStarted.mpc:
+        * ImplRepo/ImplRepo.mpc:
+        * ImplRepo/Basic/ImplRepo_Basic.mpc:
+        * ImplRepo/IORTable/ImplRepo_IORTable.mpc:
+        * InterfaceRepo/IFRBrowser.cpp:
+        * InterfaceRepo/InterfaceRepo.mpc:
+        * LocalObjects/Messenger/Messenger.mpc:
+        * LocalObjects/ServantLocator/MessengerServer.cpp:
+        * LocalObjects/ServantLocator/ServantLocator.mpc:
+        * Messaging/AMIcallback/AMIcallback.mpc:
+        * Messaging/AMIcallback/MessengerHandler.cpp:
+        * Messaging/AMIcallback/MessengerHandler.h:
+        * Messaging/RelativeRoundtripTimeout/RelativeRoundtripTimeout.mpc:
+        * Multithreading/GracefulShutdown/GracefulShutdown.mpc:
+        * Multithreading/Reactive/Reactive.mpc:
+        * Multithreading/ThreadPerConnection/ThreadPerConnection.mpc:
+        * Multithreading/ThreadPool/ThreadPool.mpc:
+        * NamingService/Messenger/Messenger.mpc:
+        * NamingService/Naming_Client/Naming_Client.mpc:
+        * NamingService/Naming_Context_Ext/Naming_Context_Ext.mpc:
+        * NamingService/Naming_Server/Naming_Server.mpc:
+        * NamingService/corbaloc_Messenger/corbaloc_Messenger.mpc:
+        * NamingService/corbaname_Messenger/corbaname_Messenger.mpc:
+        * NotifyService/EventSequence/EventSequence.mpc:
+        * NotifyService/Filtering/Filtering.mpc:
+        * NotifyService/Messenger/Messenger.mpc:
+        * NotifyService/OfferSubscriptions/OfferSubscriptions.mpc:
+        * NotifyService/QoSProperties/QoSProperties.mpc:
+        * NotifyService/RTNotify/RTNotify.mpc:
+        * NotifyService/SupplierSideNC/SupplierSideNC.mpc:
+        * PortableInterceptors/Auth/Auth.mpc:
+        * PortableInterceptors/Auth/ClientInitializer.h:
+        * PortableInterceptors/Auth/ClientInterceptor.cpp:
+        * PortableInterceptors/Auth/ClientInterceptor.h:
+        * PortableInterceptors/Auth/ServerInitializer.h:
+        * PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * PortableInterceptors/Auth/ServerInterceptor.h:
+        * PortableInterceptors/IOR/ClientInitializer.h:
+        * PortableInterceptors/IOR/ClientInterceptor.cpp:
+        * PortableInterceptors/IOR/ClientInterceptor.h:
+        * PortableInterceptors/IOR/IOR.mpc:
+        * PortableInterceptors/IOR/Messenger_i.cpp:
+        * PortableInterceptors/IOR/ServerInitializer.h:
+        * PortableInterceptors/IOR/ServerInterceptor.cpp:
+        * PortableInterceptors/IOR/ServerInterceptor.h:
+        * PortableInterceptors/PICurrent/ClientInitializer.h:
+        * PortableInterceptors/PICurrent/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent/PICurrent.mpc:
+        * PortableInterceptors/PICurrent/ServerInitializer.h:
+        * PortableInterceptors/PICurrent/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent/ServerInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/ClientInterceptor.h:
+        * PortableInterceptors/PICurrent_NameService/PICurrent_NameService.mpc:
+        * PortableInterceptors/PICurrent_NameService/ServerInitializer.h:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.cpp:
+        * PortableInterceptors/PICurrent_NameService/ServerInterceptor.h:
+        * PortableInterceptors/SimpleCodec/ClientInitializer.h:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/ClientInterceptor.h:
+        * PortableInterceptors/SimpleCodec/Messenger_i.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInitializer.h:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.cpp:
+        * PortableInterceptors/SimpleCodec/ServerInterceptor.h:
+        * PortableInterceptors/SimpleCodec/SimpleCode.mpc:
+        * RTCORBA/RTCORBA.mpc:
+        * Security/ParticipatingApp/ParticipatingApp.mpc:
+        * Security/PolicyControllingApp/PolicyControllingApp.mpc:
+        * Security/SecurityUnawareApp/SecurityUnawareApp.mpc:
+        * SmartProxies/SmartProxies.mpc:
+        * ValueTypes/Bank/bank.mpc:
+        * ValueTypes/Bank/server.cpp:
+        * ValueTypes/Messenger/Message_i.cpp:
+        * ValueTypes/Messenger/ValueTypes.mpc:
+        * ValueTypes/Notify/Notify.mpc:
+
+          Brought over the TAO 1.4a DevGuideExamples and updated them for
+          TAO 1.5a.

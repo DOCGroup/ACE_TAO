@@ -1,0 +1,12 @@
+// $Id$
+
+#include "ccm/CCM_EnterpriseComponent.idl"
+
+module CIAO
+{
+  local interface Swap_Exec : ::Components::EnterpriseComponent
+  {
+    Components::EnterpriseComponent incarnate ();
+    Components::EnterpriseComponent etherealize ();
+  };
+};
