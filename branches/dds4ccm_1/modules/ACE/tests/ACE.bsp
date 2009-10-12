@@ -1,0 +1,25 @@
+# Target description File for the Integrate utility for use with the 
+# INTEGRITY real-time operating system by Green Hills Software.
+# Before editing this file, refer to your Integrate documentation.
+
+# ACE.bsp is only appropriate for dynamic download INTEGRITY applications 
+# built for use with ACE/TAO
+
+Target
+	MinimumAddress				0x0
+	MaximumAddress				0x2fffffff
+	Clock					StandardTick
+	EndClock
+	Clock					HighResTimer
+	EndClock
+	Clock					RealTimeClock
+	EndClock
+	InitialKernelObjects 			50
+	DefaultStartIt				false
+	DefaultMaxPriority			255
+	DefaultPriority				127
+	DefaultWeight				255
+	DefaultMaxWeight			255
+        DefaultStackSize                        0x10000
+        DefaultMemoryRegionSize                 0x100000
+EndTarget
