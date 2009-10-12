@@ -19,9 +19,15 @@ One issue that has to be reraised is the fact that DDS SampleInfo is not
 available at the CCM level, we need to have access to that.
 
 The DDS4CCM spec still has to be reviewed whether the given ports deliver the
-correct abstraction.
+correct abstraction. We want to prevent that we get lightweight DDS for
+lightweight CCM.
 
 The CIAO tooling will generate the full connector. The goal is to have just
 template instantiations and simple pass through code inside the connector, all
 real code should be in a supporting core library. That makes it possible to
 change the connector without changing the code generators.
+
+A problem to resolve is the fact that DDS defines an implicit sequence. We
+need to be able to have the same sequence in IDL to be used for DDS and CCM.
+This is not possible at this moment because we have 2 different code
+generators each generating the same type.
