@@ -22,7 +22,7 @@
 #define _BE_VISITOR_EXTENDED_PORT_EXTENEDED_PORT_H_
 
 class be_visitor_extended_port
-  : public be_visitor_decl
+  : public be_visitor_scope
 {
   //
   // = TITLE
