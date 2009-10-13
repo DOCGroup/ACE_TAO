@@ -1,5 +1,0 @@
-// $Id$
-
-This test uses big value for -ORBIPHopLimit to simulate failure in
-TAO_IIOP_Connection_Handler::open(). Later could lead to connection
-handler leak.

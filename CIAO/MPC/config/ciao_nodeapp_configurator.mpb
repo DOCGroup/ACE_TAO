@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_config_manager {
-  libs += CIAO_NodeApp_Configurator
-  after += NodeApp_Configurator
-}

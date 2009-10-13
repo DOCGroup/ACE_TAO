@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance_deployment_stub {
-  libs  += CIAO_NoOp_Configurator
-  after += NoOp_Configurator
-}
