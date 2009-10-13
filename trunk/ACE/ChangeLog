@@ -1,3 +1,17 @@
+Tue Oct 13 18:56:22 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Reverted:
+
+          Mon Oct 13 11:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+        
+                  * include/makeinclude/platform_lynxos.GNU:
+                    Problems with Lynxos5.0 due to -mshared being passed to compiler
+                    (inaddition to linker)
+        
+          -mshared is needed on LynxOS 4.x. Need to find another
+          solution for LynxOS 5.0
+
 Tue Oct 13 10:03:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
@@ -28,7 +42,7 @@ Tue Oct 13 06:34:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 12 14:03:48 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.7.4 released.
+        * ACE version 5.7.4 released.
 
 Local Variables:
 mode: change-log
