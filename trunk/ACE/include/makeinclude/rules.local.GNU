@@ -284,7 +284,6 @@ ifeq ($(vxworks_ntbuild),1)
 		$(RM) $@ && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
 else #not vxworks_ntbuild
-  ifeq ($(mingw32),1)
     #If we're actually copying instead of linking, pay attention to timestamps to know when to install
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)
@@ -319,20 +318,6 @@ else #not vxworks_ntbuild
 		fi ; \
 	fi
     endif #firstword
-  else #not mingw32
-	@if test $(ARCH_SOURCE_DIR) != $(@D) -o -n "$(SOVERSION)" ; then \
-		if test -s $@ ; then \
-			echo "$(@F) already installed" ; \
-		else \
-			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
-			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			echo "Installing $(@F) -> $(@D)" ; \
-			$(RM) $@; \
-			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
-		fi ; \
-	fi
-  endif #mingw32
 endif #vxworks_ntbuild
 
 ifdef MVSLIB
