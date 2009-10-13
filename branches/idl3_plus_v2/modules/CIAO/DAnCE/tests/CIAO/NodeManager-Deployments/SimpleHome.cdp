@@ -1,0 +1,90 @@
+<Deployment:DeploymentPlan
+  xmlns:Deployment="http://www.omg.org/Deployment"
+  xmlns:xmi="http://www.omg.org/XMI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>SimpleComponent_Home</label>
+  <UUID>SimpleComponent_Home</UUID>
+
+  <!-- Implementations declarations -->
+
+  <!-- Server Dance implementation-->
+  <!-- Home implementation -->
+  <implementation xmi:id="SimpleNullHomeImplementation">
+    <name>SimpleNullHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleNull_ExecArtifact" />
+    <artifact xmi:idref="SimpleNull_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleNullHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleNullHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNull_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNull_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <!-- Instances declarations -->
+
+  <!-- Server Dance instances-->
+  <instance xmi:id="SimpleNullHomeInstance">
+    <name>SimpleNullHome</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleNullHomeImplementation" />
+  </instance>
+
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="SimpleNull_ExecArtifact">
+    <name>SimpleNull_exec</name>
+    <source/>
+    <node/>
+    <location>SimpleNull_exec</location>
+  </artifact>
+  <artifact xmi:id="SimpleNull_SvntArtifact">
+    <name>SimpleNull_svnt</name>
+    <source/>
+    <node/>
+    <location>SimpleNull_svnt</location>
+  </artifact>
+
+  </Deployment:DeploymentPlan>
