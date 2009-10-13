@@ -52,6 +52,7 @@ ifeq ($(buildbits),32)
 endif
 ifeq ($(buildbits),64)
   FLAGS_C_CC += -m64
+  LDFLAGS    += -m64
 endif
 
 #
