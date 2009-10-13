@@ -1,3 +1,14 @@
+Tue Oct 13 19:13:13 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+          Cleaned up ace_fileno_helper implementation and fixed compile
+          problem on MinGW.
+
+        * ace/os_include/os_unistd.h:
+          Redefined ACE_STD{IN,OUT,ERR}.
+          OS_Test now hopefully passes on all platforms.
+
 Tue Oct 13 19:00:53 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
