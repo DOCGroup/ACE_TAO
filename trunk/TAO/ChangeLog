@@ -1,23 +1,37 @@
+Tue Oct 13 15:54:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tests/Bug_3748_Regression/client.cpp:
+        * tests/Bug_3748_Regression/Bug_3748_Regression.mpc:
+        * tests/Bug_3748_Regression/Hello.cpp:
+        * tests/Bug_3748_Regression/Test.idl:
+        * tests/Bug_3748_Regression/server.cpp:
+        * tests/Bug_3748_Regression/Makefile.am:
+        * tests/Bug_3748_Regression/Hello.h:
+        * tests/Bug_3748_Regression/README:
+        * tests/Bug_3748_Regression/run_test.pl:
+        * bin/tao_orb_tests.lst:
+          Added a test for bug#3748.
+
 Tue Oct 13 15:36:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_extended_port/extended_port_svs.cpp:
         * TAO_IDL/be_include/be_visitor_extended_port/extended_port_svs.h:
-        
+
           New files, containing new visitor that generates the implementation
           of the facet servant class.
-        
+
         * TAO_IDL/be/be_provides.cpp:
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDL/be_include/be_interface.h:
         * TAO_IDL/be_include/be_provides.h:
-        
+
           Factored common code generation into the appropriate nodes.
-          
+
         * TAO_IDL/narrow/narrow.cpp:
-        
-          Added port types to the group of types that can be 
+
+          Added port types to the group of types that can be
           transformed from scope to decl and vice versa.
-          
+
         * TAO_IDL/be/be_visitor_extended_port/extended_port.cpp:
         * TAO_IDL/be/be_visitor_extended_port/extended_port_svh.cpp:
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:
@@ -26,7 +40,7 @@ Tue Oct 13 15:36:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_extended_port.h:
         * TAO_IDL/be_include/be_visitor_extended_port/extended_port.h:
         * TAO_IDL/be_include/be_visitor_extended_port/extended_port_svh.h:
-        
+
           Added new files as includes, factored common visitor code into
           base class, other minor changes.
 
