@@ -91,7 +91,7 @@ DAnCE_TargetManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option (ACE_TEXT("file"), 'f', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("init"), 'i', ACE_Get_Opt::ARG_REQUIRED);
 
-  char c;
+  int c;
   while ( (c = get_opts ()) != -1)
     {
       switch (c)
@@ -222,7 +222,7 @@ DAnCE_TargetManager_Module::create_object (CORBA::ORB_ptr orb,
 
       //Creating repository manager servant
       DAnCE::TargetManagerDaemon_i * rm = new DAnCE::TargetManagerDaemon_i (orb);
-                                                                            
+
       PortableServer::ServantBase_var safe_svt (rm);
 
       ACE_CString repository_manager_oid;

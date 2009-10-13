@@ -113,7 +113,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 
   //get_opts.long_option ("help", '?');
 
-  char c;
+  int c;
   while ( (c = get_opts ()) != -1)
     {
       switch (c)

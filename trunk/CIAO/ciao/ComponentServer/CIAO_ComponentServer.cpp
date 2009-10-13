@@ -322,7 +322,7 @@ namespace CIAO
       opts.long_option (ACE_TEXT("output-ior"),'o', ACE_Get_Opt::ARG_REQUIRED);
 
       //int j;
-      char c;
+      int c;
       ACE_CString s;
 
       while ((c = opts ()) != -1)
