@@ -259,10 +259,6 @@ NodeApplication_Impl::~NodeApplication_Impl()
   config_values.length (1L);
   CORBA::Any feature_any;
 
-  for (size_t i = 0;
-       i != this->servers_.size ();
-       ++i)
-    {
       /* TODO: This is highly suspect.  I believe we should be using get_component_server,
          not calling create_container. */
       DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
@@ -327,7 +323,6 @@ NodeApplication_Impl::~NodeApplication_Impl()
                         ACE_TEXT("Successfully removed container %u on node %C.\n"),
                         i, this->node_name_.c_str ()));
         }
-    }
 }
 
 void
@@ -1094,53 +1089,73 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
     }
 }
 
-/*
-void
-NodeApplication_Impl::create_container (unsigned int index)
+NodeApplication_Impl::ColocationMap
+NodeApplication_Impl::create_colocation_groups (void)
 {
-  DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_container - started\n"));
-
-  Components::ConfigValues config_values;
-  ACE_CString processDest;
-  CORBA::Any_var feature_any;
-
-  this->create_config_values (this->plan_.instance[index].configProperty,
-                              eCreateComponentServer,
-                              config_values);
-
-  ::Components::Deployment::ComponentServer_var compServer;
-
-
-  // COMPONENT_KIND
-  this->create_config_values (this->plan_.implementation[this->plan_.instance[index].implementationRef].execParameter,
-                              eCreateContainer,
-                              config_values);
-  try
+  DANCE_TRACE ("NodeApplication_impl::create_colocation_groups");
+  
+  ColocationMap  retval;
+  size_t num_servers (0);
+  
+  for (CORBA::ULong i = 0; i < this->plan_.instance.length (); ++i)
     {
-      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_container - "
-                   "creating container for destination: %C\n", processDest.c_str()));
-      this->containers_.rebind (processDest.c_str(), compServer->create_container (config_values));
-      DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_container - container created\n"));
+      retval [this->plan_.instance[i].name.in ()] = -1;
     }
-  catch (::Components::CreateFailure& )
+  
+  for (CORBA::ULong i = 0; i < this->plan_.localityConstraint.length (); ++i)
     {
-      DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::create_container - "
-                   "::Components::Deployment::ComponentServer_var::create_container() "
-                   "returned ::Components::CreateFailure exception\n"));
-      throw Deployment::StartError();
+      if (this->plan_.localityConstraint[i].constraint != ::Deployment::PlanSameProcess)
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
+                        ACE_TEXT ("Error: On locality constraint %u, unsupported locality constraint.\n"),
+                        i));
+          continue;
+        }
+      
+      const ::CORBA::ULongSeq &instances = this->plan_.localityConstraint[i].constrainedInstanceRef;
+      
+      for (CORBA::ULong j = 0; j < instances.length (); ++j)
+        {
+          std::string id = this->plan_.instance[instances[j]].name.in ();
+          
+          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
+                        ACE_TEXT ("Instance <%s> allocated to component server %u\n"),
+                        id.c_str (), num_servers));
+          
+          retval[id] = num_servers;
+        }
+      
+      ++num_servers;
     }
-  catch (::Components::Deployment::InvalidConfiguration& )
+  
+  bool create_default_server (false);
+  
+  for (ColocationMap::iterator i = retval.begin ();
+       i != retval.end (); ++i)
     {
-      DANCE_ERROR((LM_ERROR, DLINFO " NodeApplication_impl::create_container - "
-                   "::Components::Deployment::ComponentServer_var::create_container() "
-                   "returned ::Components::Deployment::InvalidConfiguration exception\n"));
-      throw ::Deployment::InvalidProperty();
+      if (i->second == -1)
+        {
+          if (!create_default_server)
+            {
+              DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
+                            ACE_TEXT ("Creating default colocation group.\n")));
+              create_default_server = true;
+            }
+          
+          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
+                        ACE_TEXT ("Assigning instance <%s> to default colocation group.\n"),
+                        i->first.c_str ()));
+          i->second = num_servers;
+        }
     }
-
-  DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::create_container - finished\n"));
+  
+  if (create_default_server) ++num_servers;
+  
+  this->servers_.size (num_servers);
+  
+  return retval;
 }
-*/
-
+  
 void
 NodeApplication_Impl::init_components()
 {
@@ -1151,15 +1166,18 @@ NodeApplication_Impl::init_components()
                ACE_TEXT("Configuring %u component/home instances\n"),
                this->plan_.instance.length()));
 
-  // @@TODO:  For the moment, we are only going to support a single component server and container.
-  // in the future, we will need to determine how many component servers we need.
-  if (this->plan_.instance.length () > 0)
+  if (this->plan_.instance.length () == 0)
+    return;
+  
+  ColocationMap colocation_map = this->create_colocation_groups ();
+
+  // @@TODO:  For the moment, we are only going to support a single container per server.
+  // in the future, we will need to determine how many containers we need per server.  
+  for (size_t i = 0; i < this->servers_.size (); ++i)
     {
-      ComponentServer server;
-      server.containers.size (1);
-      this->servers_.size (1);
-      this->servers_[0] = server;
+      this->servers_[i].containers.size (1);
     }
+  
 
   for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
     {
@@ -1179,13 +1197,13 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home\n"),
                               this->plan_.instance[i].name.in ()));
-
+                size_t svr = colocation_map[this->plan_.instance[i].name.in ()];                
                 size_t pos = this->servers_[0].containers[0].homes.size ();
-                this->servers_[0].containers[0].homes.size (pos + 1);
-                this->servers_[0].containers[0].homes[pos] = Instance (eHome,
-                                                                       &this->servers_[0].containers[0],
-                                                                       i,
-                                                                       this->plan_.instance[i].implementationRef);
+                this->servers_[svr].containers[0].homes.size (pos + 1);
+                this->servers_[svr].containers[0].homes[pos] = Instance (eHome,
+                                                                         &this->servers_[svr].containers[0],
+                                                                         i,
+                                                                         this->plan_.instance[i].implementationRef);
                 //this->instances_[i] = &this->servers_[0].containers[0].homes[pos];
                 break;
               }
@@ -1194,10 +1212,11 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a standalone component\n"),
                               this->plan_.instance[i].name.in ()));
+                size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t pos = this->servers_[0].containers[0].components.size ();
-                this->servers_[0].containers[0].components.size (pos + 1);
-                this->servers_[0].containers[0].components[pos] = Instance (eComponent,
-                                                                            &this->servers_[0].containers[0],
+                this->servers_[svr].containers[0].components.size (pos + 1);
+                this->servers_[svr].containers[0].components[pos] = Instance (eComponent,
+                                                                            &this->servers_[svr].containers[0],
                                                                             i,
                                                                             this->plan_.instance[i].implementationRef);
                 //this->instances_[i] = &this->servers_[0].containers[0].components[pos];
@@ -1208,10 +1227,11 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home managed component\n"),
                               this->plan_.instance[i].name.in ()));
+                size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t pos = this->servers_[0].containers[0].components.size ();
-                this->servers_[0].containers[0].components.size (pos + 1);
-                this->servers_[0].containers[0].components[pos] = Instance (eHomedComponent,
-                                                                            &this->servers_[0].containers[0],
+                this->servers_[svr].containers[0].components.size (pos + 1);
+                this->servers_[svr].containers[0].components[pos] = Instance (eHomedComponent,
+                                                                            &this->servers_[svr].containers[0],
                                                                             i,
                                                                             this->plan_.instance[i].implementationRef);
                 //this->instances_[i] = &this->servers_[0].containers[0].components[pos];
