@@ -1,3 +1,10 @@
+Tue Oct 13 09:33:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added test for getmacaddress, thanks to Paul Daugherty
+          <paul at nextalk dot com> for creating this. This is related to
+          bugzilla 3744
+
 Tue Oct 13 06:34:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:
