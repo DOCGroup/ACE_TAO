@@ -1,13 +1,7 @@
-Tue Oct 13 06:22:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Oct 13 06:34:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * etc/bczar/bczar.html:
-          Added instruction to update copy_script
-
-        * docs/Download.html:
-          Updated latest micro to 5.7.4
-
-        * etc/index.html:
-          Added 5.7.4
+        * include/makeinclude/platform_linux.GNU:
+          When doing a 64bit build, also add -m64 to the linker flags
 
 Mon Oct 12 14:03:48 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
