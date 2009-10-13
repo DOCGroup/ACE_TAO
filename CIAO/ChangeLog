@@ -1,3 +1,11 @@
+Tue Oct 13 18:38:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO/DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * CIAO/DAnCE/tests/CIAO/NodeManager-Deployments/SimpleProcessColocation_2.cdp:
+        * CIAO/DAnCE/tests/CIAO/NodeManager-Deployments/SimpleProcessColocation_Default.cdp:
+        
+          Additional testing and bugfixes.
+
 Tue Oct 13 18:15:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Benchmark/Benchmark_skel_export.h:
