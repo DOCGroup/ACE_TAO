@@ -7,6 +7,7 @@
 #include "ast_provides.h"
 
 #include "be_field.h"
+#include "be_interface.h"
 
 class be_interface;
 class be_visitor;
@@ -21,7 +22,8 @@ public:
   virtual ~be_provides (void);
   
   // Common code called by visitors.
-  int gen_facet (TAO_OutStream &os);
+  int gen_facet_svnt_decl (TAO_OutStream &os);
+  int gen_facet_svnt_defn (TAO_OutStream &os);
   
   // Narrowing.
   DEF_NARROW_FROM_DECL(be_provides);
@@ -31,6 +33,22 @@ public:
   
   // Cleanup.
   virtual void destroy (void);
+};
+
+// ====================================================
+
+class be_facet_op_attr_defn_helper
+  : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  be_facet_op_attr_defn_helper (be_interface *op_scope);
+  
+  virtual int emit (be_interface *derived_interface,
+                    TAO_OutStream *os,
+                    be_interface *base_interface);
+                    
+private:
+  be_interface *op_scope_;
 };
 
 #endif // BE_PROVIDES_H

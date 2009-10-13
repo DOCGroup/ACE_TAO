@@ -24,7 +24,7 @@
 
 be_visitor_extended_port::be_visitor_extended_port (
       be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
+  : be_visitor_scope (ctx),
     template_args_ (0),
     port_type_ (0)
 {

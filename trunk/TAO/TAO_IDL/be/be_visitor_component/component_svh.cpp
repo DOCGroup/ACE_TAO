@@ -103,10 +103,9 @@ be_visitor_component_svh::visit_attribute (be_attribute *node)
 
 int
 be_visitor_component_svh::visit_extended_port (
-  be_extended_port *node)
+  be_extended_port *)
 {
-  be_visitor_extended_port_svh visitor (this->ctx_);
-  return visitor.visit_extended_port (node);
+  return 0;
 }
 
 int
@@ -126,44 +125,59 @@ be_visitor_component_svh::gen_facets (void)
       AST_Decl *d = si.item ();
       AST_Decl::NodeType nt = d->node_type ();
 
-      if (nt == AST_Decl::NT_provides)
+      switch (nt)
         {
-          be_provides *p =
-            be_provides::narrow_from_decl (d);
-
-          if (p->gen_facet (os_) == -1)
+          case AST_Decl::NT_provides:
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_component_svh::gen_facets - "
-                                 "gen_facet() failed\n"),
-                                -1);
-            }
-        }
-      else if (nt == AST_Decl::NT_ext_port)
-        {
-          be_extended_port *ep =
-            be_extended_port::narrow_from_decl (d);
+              be_provides *p =
+                be_provides::narrow_from_decl (d);
 
-          if (this->visit_extended_port (ep) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_component_svh::gen_facets - "
-                                 "visit_extended_port() failed\n"),
-                                -1);
+              if (p->gen_facet_svnt_decl (os_) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("be_visitor_component_svh")
+                                     ACE_TEXT ("::gen_facets - ")
+                                     ACE_TEXT ("gen_facet_svnt_decl() ")
+                                     ACE_TEXT ("failed\n")),
+                                    -1);
+                }
+                
+              break;
             }
-        }
-      else if (nt == AST_Decl::NT_mirror_port)
-        {
-          be_mirror_port *mp =
-            be_mirror_port::narrow_from_decl (d);
+          case AST_Decl::NT_ext_port:
+            {
+              be_extended_port *ep =
+                be_extended_port::narrow_from_decl (d);
 
-          if (this->visit_mirror_port (mp) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_component_svh::gen_facets - "
-                                 "visit_mirror_port() failed\n"),
-                                -1);
+              be_visitor_extended_port_facet_svh visitor (this->ctx_);
+              
+              if (visitor.visit_extended_port (ep) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "be_visitor_component_svh::gen_facets - "
+                                     "visit_extended_port() failed\n"),
+                                    -1);
+                }
+                
+              break;
             }
+          case AST_Decl::NT_mirror_port:
+            {
+              be_mirror_port *mp =
+                be_mirror_port::narrow_from_decl (d);
+
+              if (this->visit_mirror_port (mp) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "be_visitor_component_svh::gen_facets - "
+                                     "visit_mirror_port() failed\n"),
+                                    -1);
+                }
+                
+              break;
+            }
+          default:
+            continue;
         }
     }
 

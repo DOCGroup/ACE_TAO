@@ -475,7 +475,8 @@ public:
                     be_interface *base_interface) = 0;
 };
 
-class be_code_emitter_wrapper : public TAO_IDL_Inheritance_Hierarchy_Worker
+class be_code_emitter_wrapper
+  : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
   be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
