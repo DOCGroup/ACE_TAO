@@ -42,8 +42,8 @@
 #  define DANCE_TRACE(X) ACE_TRACE_IMPL (X)
 #  define DANCE_ENABLE_TRACE() ACE_Trace::start_tracing ()
 #  define DANCE_DISABLE_TRACE() ACE_Trace::stop_tracing ()
-#  undef CLINFO // Make log messages indent with tracing.
-#  define CLINFO "%I(%P|%t) [%M] - %T - "
+#  undef DLINFO // Make log messages indent with tracing.
+#  define DLINFO "%I(%P|%t) [%M] - %T - "
 #  include "ace/Trace.h"
 #endif /* DANCE_NTRACE */
 

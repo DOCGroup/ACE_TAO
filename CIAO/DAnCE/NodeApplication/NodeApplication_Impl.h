@@ -34,6 +34,8 @@
 #include "Deployment/DeploymentC.h"
 #include "Deployment/Deployment_common.h"
 
+#include <map>
+
 namespace DAnCE
 {
 
@@ -152,6 +154,13 @@ namespace DAnCE
 
     void create_config_values(const ::Deployment::Properties& prop,
                             Components::ConfigValues& cfg) const;
+    
+    typedef std::map <std::string, int> ColocationMap;
+    
+    /// Creates colocation groups for all components in this node's deployment. 
+    /// Resulting map has mappings of component ids to appropriate server. 
+    /// As a postcondition, the size of the servers_ array is increased appropriately.
+    ColocationMap create_colocation_groups (void);
 
     void create_component_server (size_t index);
 
