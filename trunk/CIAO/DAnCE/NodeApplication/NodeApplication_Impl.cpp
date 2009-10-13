@@ -1198,7 +1198,7 @@ NodeApplication_Impl::init_components()
                               ACE_TEXT("Allocating instance %C as a home\n"),
                               this->plan_.instance[i].name.in ()));
                 size_t svr = colocation_map[this->plan_.instance[i].name.in ()];                
-                size_t pos = this->servers_[0].containers[0].homes.size ();
+                size_t pos = this->servers_[svr].containers[0].homes.size ();
                 this->servers_[svr].containers[0].homes.size (pos + 1);
                 this->servers_[svr].containers[0].homes[pos] = Instance (eHome,
                                                                          &this->servers_[svr].containers[0],
@@ -1213,12 +1213,12 @@ NodeApplication_Impl::init_components()
                               ACE_TEXT("Allocating instance %C as a standalone component\n"),
                               this->plan_.instance[i].name.in ()));
                 size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
-                size_t pos = this->servers_[0].containers[0].components.size ();
+                size_t pos = this->servers_[svr].containers[0].components.size ();
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eComponent,
-                                                                            &this->servers_[svr].containers[0],
-                                                                            i,
-                                                                            this->plan_.instance[i].implementationRef);
+                                                                              &this->servers_[svr].containers[0],
+                                                                              i,
+                                                                              this->plan_.instance[i].implementationRef);
                 //this->instances_[i] = &this->servers_[0].containers[0].components[pos];
                 break;
               }
@@ -1228,12 +1228,12 @@ NodeApplication_Impl::init_components()
                               ACE_TEXT("Allocating instance %C as a home managed component\n"),
                               this->plan_.instance[i].name.in ()));
                 size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
-                size_t pos = this->servers_[0].containers[0].components.size ();
+                size_t pos = this->servers_[svr].containers[0].components.size ();
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eHomedComponent,
-                                                                            &this->servers_[svr].containers[0],
-                                                                            i,
-                                                                            this->plan_.instance[i].implementationRef);
+                                                                              &this->servers_[svr].containers[0],
+                                                                              i,
+                                                                              this->plan_.instance[i].implementationRef);
                 //this->instances_[i] = &this->servers_[0].containers[0].components[pos];
                 break;
               }
