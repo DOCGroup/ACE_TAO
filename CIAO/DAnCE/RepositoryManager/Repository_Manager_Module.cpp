@@ -163,7 +163,7 @@ DAnCE_RepositoryManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
 
   //get_opts.long_option ("help", '?');
 
-  char c;
+  int c;
   while ( (c = get_opts ()) != -1)
     {
       switch (c)
@@ -506,7 +506,7 @@ DAnCE_RepositoryManager_Module::spawn_http (void)
   directive += this->options_.http_caching_;
   directive += ACE_TEXT (" -b 50 -f THR_NEW_LWP");
   directive += ACE_TEXT ("\"");
-  
+
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
   directive += ACE_TEXT ("/>");
   directive += ACE_TEXT ("</dynamic>");

@@ -136,7 +136,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
   opts.long_option(ACE_TEXT("dam-ior"), 'a', ACE_Get_Opt::ARG_REQUIRED);
 
   int j;
-  char c;
+  int c;
   ACE_TString s;
   while ( (c = opts ()) != -1)
     {
