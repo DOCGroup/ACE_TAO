@@ -115,9 +115,13 @@
   </artifact>
   
   <localityConstraint>
-    <constraint>DifferentProcess</constraint>
+    <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="ProcessColocationComponentInstance_1" />
-    <constrainedInstance xmi:idref="ProcessColocationComponentInstance_2" />
   </localityConstraint>
     
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="ProcessColocationComponentInstance_2" />
+  </localityConstraint>
+
   </Deployment:DeploymentPlan>
