@@ -1,3 +1,11 @@
+Tue Oct 13 10:03:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          When using cp to install a library, make sure we check date/time
+          in order to check if we need to copy. Thanks to Abdul Sowayan
+          <sowayan at gmail dot com> for reporting this. This fixes bugzilla
+          3728
+
 Tue Oct 13 09:44:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/INET_Addr_Test.cpp:
