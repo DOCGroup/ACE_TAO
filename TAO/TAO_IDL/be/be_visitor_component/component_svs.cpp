@@ -131,112 +131,48 @@ be_visitor_component_svs::gen_facets (void)
        si.next ())
     {
       AST_Decl *d = si.item ();
-
-      if (d->node_type () != AST_Decl::NT_provides)
+      AST_Decl::NodeType nt = d->node_type ();
+      
+      switch (nt)
         {
-          continue;
-        }
-
-      AST_Provides *p =
-        AST_Provides::narrow_from_decl (d);
-
-      be_type *impl =
-        be_type::narrow_from_decl (p->provides_type ());
-
-      if (impl->svnt_src_facet_gen ())
-        {
-          continue;
-        }
-
-      // No '_cxx_' prefix.
-      const char *lname =
-        impl->original_local_name ()->get_string ();
-
-      be_decl *scope =
-        be_scope::narrow_from_scope (impl->defined_in ())->decl ();
-
-      ACE_CString sname_str (scope->full_name ());
-
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
-
-      ACE_CString suffix (scope->flat_name ());
-
-      if (suffix != "")
-        {
-          suffix = ACE_CString ("_") + suffix;
-        }
-
-      os_ << be_nl << be_nl
-          << "namespace CIAO_FACET" << suffix.c_str () << be_nl
-          << "{" << be_idt_nl;
-
-      os_ << lname << "_Servant::"
-          << lname << "_Servant (" << be_idt << be_idt_nl
-          << global << sname << "::CCM_"
-          << lname << "_ptr executor," << be_nl
-          << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
-          << ": executor_ ( " << global << sname
-          << "::CCM_" << lname
-          << "::_duplicate (executor))," << be_idt_nl
-          << "ctx_ ( ::Components::CCMContext::_duplicate (ctx))"
-          << be_uidt << be_uidt_nl
-          << "{" << be_nl
-          << "}";
-
-      os_ << be_nl << be_nl
-          << lname << "_Servant::~"
-          << lname << "_Servant (void)" << be_nl
-          << "{" << be_nl
-          << "}";
-
-      be_visitor_component_svs::in_facets_ = true;
-      bool is_intf = impl->node_type () == AST_Decl::NT_interface;
-
-      if (is_intf)
-        {
-          be_interface *intf =
-            be_interface::narrow_from_decl (impl);
-
-          this->op_scope_ = intf;
-
-          if (this->gen_facet_ops_attrs (intf) == -1)
+          case AST_Decl::NT_provides:
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_component_svs::gen_facet - "
-                                 "gen_facet_ops_attrs() failed\n"),
-                                -1);
+              be_provides *p =
+                be_provides::narrow_from_decl (d);
+                
+              if (p->gen_facet_svnt_defn (os_) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("be_visitor_component_svs")
+                                     ACE_TEXT ("::gen_facets - ")
+                                     ACE_TEXT ("gen_facet_svnt_defn() ")
+                                     ACE_TEXT ("failed\n")),
+                                    -1);
+                }
+                
+              break;
             }
+          case AST_Decl::NT_ext_port:
+            {
+              be_extended_port *ep =
+                be_extended_port::narrow_from_decl (d);
+                
+              be_visitor_extended_port_facet_svs visitor (this->ctx_);
+            
+              if (visitor.visit_extended_port (ep) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "be_visitor_component_svs::gen_facets - "
+                                     "visit_extended_port() failed\n"),
+                                    -1);
+                }
+                
+              break;
+            }
+          case AST_Decl::NT_mirror_port:
+          default:
+            continue;
         }
-
-      be_visitor_component_svs::in_facets_ = false;
-
-      os_ << be_nl << be_nl
-          << "::CORBA::Object_ptr" << be_nl
-          << lname << "_Servant::_get_component (void)"
-          << be_nl
-          << "{" << be_idt_nl
-          << "::Components::SessionContext_var sc =" << be_idt_nl
-          << "::Components::SessionContext::_narrow (this->ctx_.in ());"
-          << be_uidt_nl << be_nl
-          << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return sc->get_CCM_object ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "::Components::EntityContext_var ec =" << be_idt_nl
-          << "::Components::EntityContext::_narrow (this->ctx_.in ());"
-          << be_uidt_nl << be_nl
-          << "if (! ::CORBA::is_nil (ec.in ()))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return ec->get_CCM_object ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-          << "}";
-
-      os_ << be_uidt_nl
-          << "}";
-
-      impl->svnt_src_facet_gen (true);
     }
 
   return 0;
@@ -2895,7 +2831,7 @@ Component_Op_Attr_Generator::Component_Op_Attr_Generator (
 }
 
 int
-Component_Op_Attr_Generator::emit (be_interface * /*derived_interface */,
+Component_Op_Attr_Generator::emit (be_interface * /* derived_interface */,
                                    TAO_OutStream * /* os */,
                                    be_interface * base_interface)
 {

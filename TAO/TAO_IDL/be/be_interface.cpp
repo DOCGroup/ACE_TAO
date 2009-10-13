@@ -1403,8 +1403,8 @@ be_interface::analyze_parentage (void)
 
 // ****************************************************************
 
-be_code_emitter_wrapper::
-be_code_emitter_wrapper (be_interface::tao_code_emitter emitter)
+be_code_emitter_wrapper::be_code_emitter_wrapper (
+      be_interface::tao_code_emitter emitter)
   : emitter_ (emitter)
 {
 }
@@ -1418,6 +1418,8 @@ be_code_emitter_wrapper::emit (be_interface *derived_interface,
                          base_interface,
                          output_stream);
 }
+
+// ****************************************************************
 
 // Template method that traverses the inheritance graph in a breadth-first
 // style. The actual work on each element in the inheritance graph is carried
