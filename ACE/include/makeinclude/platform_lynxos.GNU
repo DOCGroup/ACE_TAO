@@ -3,18 +3,6 @@
 # LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 4.2.0,
 # for example, add "VERSION=4.2.0" to your make invocation.
 
-#### NOTE:  It's best to create a file that includes this one, instead
-#### of symlinking it.  That way, you can easily override the default
-#### configuration.  For example, to configure for a PowerPC target, I
-#### use a include/makeinclude/platform_macros.GNU that contains the
-#### following lines (without comment markers):
-####
-####     LYNXTARGET = ppc
-####     include $(ACE_ROOT)/include/makeinclude/platform_lynxos.GNU
-####
-#### Similarly, the default VERSION and HOST_OS settings (see below)
-#### can be overridden for your particular platform.
-
 ifeq ($(shell uname -s),LynxOS)
   export VERSION=$(shell uname -r)
 
@@ -24,37 +12,9 @@ ifeq ($(shell uname -s),LynxOS)
 else
   CROSS-COMPILE = 1
 
-  #### The following may need to be customized for your host or target type.
-  #### Or, you can source the appropriate (for your shell) Lynx SETUP file
-  #### before running "make".
-
   ifeq (,$(VERSION))
     export VERSION = 4.0.0
   endif # VERSION
-
-  ifeq (,$(LYNXTARGET))
-    export LYNXTARGET = x86
-  endif # LYNXTARGET
-
-  ifeq (,$(OBJSFORMAT))
-    export OBJSFORMAT = elf
-  endif # OBJSFORMAT
-
-  ifeq (,$(HOST_OS))
-    export HOST_OS = linux
-  endif # HOST_OS
-
-  ifeq (,$(HOST_OS_REVISION))
-    export HOST_OS_REVISION = $(shell uname -r)
-  endif # HOST_OS_REVISION
-
-  ifeq (,$(ENV_PREFIX))
-    export ENV_PREFIX = /usr/lynx/$(VERSION)/$(LYNXTARGET)
-  endif # ENV_PREFIX
-
-  ifeq (,$(findstring $(ENV_PREFIX),$(PATH)))
-    export PATH := $(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/usr/bin:$(PATH)
-  endif # PATH
 endif # ! LynxOS
 
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
