@@ -1,3 +1,10 @@
+Tue Oct 13 09:37:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Svcconf_Handler.cpp:
+          Fixed compile problems with unicode enabled. Thanks to
+          Christian Freund <freund at wrz dot de> for reporting this. This
+          fixes bugzilla 3745.
+
 Mon Jul 30 08:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/svcconf/Svcconf_Handler.cpp:
