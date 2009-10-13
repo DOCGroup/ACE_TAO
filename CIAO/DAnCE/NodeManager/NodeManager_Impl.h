@@ -62,7 +62,6 @@ namespace DAnCE
     // @todo, see if we can use a _ptr
     typedef ACE_Map_Manager<ACE_CString, NodeApplicationManager_Impl*, ACE_Null_Mutex > TManagers;
     TManagers managers_;
-//    RedirectionService& redirection_;
     PROPERTY_MAP properties_;
   };
 }
