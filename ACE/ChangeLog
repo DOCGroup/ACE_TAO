@@ -2,8 +2,9 @@ Tue Oct 13 09:44:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/INET_Addr_Test.cpp:
           Extended this test to for is_multicast. This fails on little endian
-          machines at this moment. Thanks to <pr2345 at gmail dot com> for
-          extending this test. This is related to bugzilla 3729
+          machines at this moment. Thanks to Patrick Rabau
+          <pr2345 at gmail dot com> for extending this test. This is related
+          to bugzilla 3729
 
 Tue Oct 13 09:33:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
