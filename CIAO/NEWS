@@ -62,6 +62,23 @@ replacement in the near term:
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.7.4 and CIAO-0.7.5
+=======================================================
+
+.  Added rudimentary support for PlanLocality, which allows DAnCE to spawn
+   multiple CIAO processes per node.  Currently, only SameProcess
+   constraints are honored.  SameProcess constraints are honored by
+   creating a separate process per constraint as it appears in the
+   plan, with the appropriate component instances spawned in each
+   process.  
+
+   Constraints are not rigerously checked by the runtime, so behaviour
+   when a component instance appears in multiple SameProcess
+   constraints is currently undefined.  
+
+   Components not appearing in any constraint are placed in a default
+   component server process.  
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
 =======================================================
 
