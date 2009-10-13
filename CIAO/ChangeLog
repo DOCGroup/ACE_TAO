@@ -1,14 +1,21 @@
+Tue Oct 13 18:15:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Benchmark/Benchmark_skel_export.h:
+        * performance-tests/Benchmark/Benchmark_stub_export.h:
+        * performance-tests/Benchmark/BenchmarkE.idl:
+          Removed these files, they are generated as part of the build
+
 Tue Oct 13 17:17:39 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Log_Macros.h:
 
-          Fixed log message indenting with tracing enabled. 
-        
+          Fixed log message indenting with tracing enabled.
+
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleProcessColocation.cdp:
 
-          First pass planlocality support. 
+          First pass planlocality support.
 
 Tue Oct 13 06:32:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
