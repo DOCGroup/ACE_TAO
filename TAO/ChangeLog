@@ -1,3 +1,8 @@
+Wed Oct 14 18:26:38 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/tao_idl_fe.mpb:
+          New base project for tao_idl_fe
+
 Wed Oct 14 18:16:38 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/contrib/mcpp/system.cpp:
