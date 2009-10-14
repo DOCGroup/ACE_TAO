@@ -82,9 +82,9 @@ project(TAO_IDL_GEN) {
   }
 }
 
-project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_mcpp_local {
+project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_mcpp_local, tao_idl_fe {
   exename      = tao_idl
-  libs        += TAO_IDL_BE TAO_IDL_FE
+  libs        += TAO_IDL_BE
   exeout       = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE gperf
   includes    += $(TAO_ROOT)
@@ -127,11 +127,9 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_
 }
 
 
-project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile, tao_vc8warnings {
+project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE
-  libs        += TAO_IDL_FE
   dynamicflags = TAO_IDL_BE_BUILD_DLL
-  after       += TAO_IDL_FE
   includes    += $(TAO_ROOT)
 
   specific (automake) {
