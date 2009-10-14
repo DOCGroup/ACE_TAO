@@ -59,7 +59,7 @@ namespace CIAO_Quoter_Broker_Impl
             an_instance.low,
             an_instance.current,
             an_instance.high);
-  }
+  }  
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
@@ -107,7 +107,16 @@ namespace CIAO_Quoter_Broker_Impl
   // Component attributes.
   
   // Port operations.
-  
+  //mh
+  //::CCM_DDS::Stock_Info_Reader_ptr
+//	  Broker_exec_i::get_info_out_reader(void)
+  //{
+    // printf ("*************** out reader\n");
+	 //return new Stock_Info_Reader_exec_i ();
+//
+  //}
+
+  //
   ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
   Broker_exec_i::get_info_out_listener (void)
   {
@@ -148,16 +157,25 @@ namespace CIAO_Quoter_Broker_Impl
   
   void
   Broker_exec_i::ccm_activate (void)
-  {
-    ::CCM_DDS::ListenerControl_var lc = 
+  {  
+	 
+     ::CCM_DDS::ListenerControl_var lc = 
       this->context_->get_connection_info_out_control ();
-    
-    if (CORBA::is_nil (lc.in ()))
+  //mh
+	printf("2222222222");
+	::CCM_DDS::Stock_Info_Reader_var reader = this->context_->get_connection_info_out_data();
+	printf("33333333333");
+	//
+	  if (CORBA::is_nil (lc.in ()))
       {
         printf ("Error:  Listener control receptacle is null!\n");
         throw CORBA::INTERNAL ();
       }
-    
+    ::Quoter::Stock_Info  stock_info;
+	::CCM_DDS::ReadInfo readinfo;
+	     
+	reader->read_one (stock_info, readinfo );  
+	printf("444444444444444");
     lc->enabled (true);
   }
   
@@ -178,7 +196,7 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+    printf("in create FFFFFFFFFFFFFFFFFFFFFFFFF"); //mh
     ACE_NEW_NORETURN (
       retval,
       Broker_exec_i);

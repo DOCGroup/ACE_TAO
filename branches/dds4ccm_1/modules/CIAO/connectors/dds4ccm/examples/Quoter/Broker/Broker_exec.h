@@ -64,7 +64,6 @@ namespace CIAO_Quoter_Broker_Impl
       const ::Quoter::Stock_Info & an_instance,
       const ::CCM_DDS::ReadInfo & info);
   };
-  
   class BROKER_EXEC_Export PortStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_PortStatusListener,
       public virtual ::CORBA::LocalObject
@@ -105,6 +104,12 @@ namespace CIAO_Quoter_Broker_Impl
     // Component attributes.
     
     // Port operations.
+    
+	//mh
+	//virtual ::CCM_DDS::Stock_Info_Reader_ptr
+	//  Broker_exec_i::get_info_out_reader(void);
+    //
+
     
     virtual ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
     get_info_out_listener (void);
