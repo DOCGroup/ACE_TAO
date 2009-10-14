@@ -52,6 +52,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
     virtual ::DDS::CCM_DataWriter_ptr get_info_in_dds_entity (void);
 
+    virtual typename CONNECTOR_TYPE::updater_type::_ptr_type get_info_update_data (void);
+
     virtual typename CONNECTOR_TYPE::reader_type::_ptr_type get_info_out_data (void);
 
     virtual ::CCM_DDS::CCM_ListenerControl_ptr get_info_out_control (void);
@@ -115,13 +117,16 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
   template <typename BASE_TYPE,
             typename WRITER_TYPE,
+            typename UPDATER_TYPE,
             typename READER_TYPE,
             typename CONTEXT_TYPE,
             typename RAWLISTENER_TYPE>
+  
   struct Connector_Traits
   {
     typedef BASE_TYPE base_type;
     typedef WRITER_TYPE writer_type;
+    typedef UPDATER_TYPE updater_type;
     typedef READER_TYPE reader_type;
     typedef CONTEXT_TYPE context_type;
     typedef RAWLISTENER_TYPE rawlistener_type;
@@ -129,9 +134,10 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
   typedef Connector_Traits <
     ::CIAO_Quoter_Quoter_Connector_Impl::Quoter_Connector_Exec,
-    ::CCM_DDS::CCM_Stock_Info_Writer, 
-    ::CCM_DDS::CCM_Stock_Info_Reader, 
-    ::Quoter::CCM_Quoter_Connector_Context, 
+    ::CCM_DDS::CCM_Stock_Info_Writer,
+    ::CCM_DDS::CCM_Stock_Info_Updater,
+    ::CCM_DDS::CCM_Stock_Info_Reader,
+    ::Quoter::CCM_Quoter_Connector_Context,
     ::CCM_DDS::Stock_Info_RawListener> Stock_Info_Connector_Traits;
 
   class QUOTER_CONNECTOR_EXEC_Export Quoter_Connector_exec_i :

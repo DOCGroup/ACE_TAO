@@ -106,6 +106,7 @@ namespace CIAO_Quoter_Distributor_Impl
   pulse_Generator::stop (void)
   {
     // return if not valid.
+    printf ("Stopping ticker\n");
     if (this->active_ == 0)
     {
       return -1;
@@ -191,11 +192,30 @@ namespace CIAO_Quoter_Distributor_Impl
             if (i->second->current < i->second->low)
               i->second->low = i->second->current;
 
-            if (!CORBA::is_nil (this->writer_))
+            if (!CORBA::is_nil (this->writer_)) {
+              printf ("Write stock_info for <%s> %u:%u:%u\n",
+                            i->first.c_str(),
+                            i->second->low,
+                            i->second->current,
+                            i->second->high);
               this->writer_->write (i->second);
+            }
             else
               std::cerr << "Writer reference is nil!" << std::endl;
-
+          }
+        else
+          {
+            if (!CORBA::is_nil (this->updater_)) 
+              {
+                printf ("############ Update stock_info for <%s>\n",
+                          i->first.c_str ());
+                i->second->current = ACE_OS::rand () % 50;
+                i->second->high = i->second->current + ACE_OS::rand () % 50;
+                i->second->low =  i->second->current - ACE_OS::rand () % 50;
+                this->updater_->update (i->second);
+              }
+            else
+              std::cerr << "############ Updater reference is nil!" << std::endl;
           }
       }
   }
@@ -286,9 +306,9 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::configuration_complete (void)
   {
-    /* Your code here. */
-    this->writer_ = this->context_->get_connection_info_in_data ();
-
+    this->writer_  = this->context_->get_connection_info_in_data ();
+    printf ("############ get_connection_info_update_data \n");
+    this->updater_ = this->context_->get_connection_info_update_data ();
     this->ticker_->activate ();
   }
 
@@ -297,6 +317,11 @@ namespace CIAO_Quoter_Distributor_Impl
   {
     this->start ();
     this->add_stock ("MSFT");
+    this->add_stock ("IBM");
+    this->add_stock ("HP");
+    this->add_stock ("DELL");
+    this->add_stock ("ACER");
+    this->add_stock ("ASUS");
   }
 
   void

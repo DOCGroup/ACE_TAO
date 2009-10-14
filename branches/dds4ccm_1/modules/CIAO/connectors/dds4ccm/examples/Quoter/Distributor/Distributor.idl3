@@ -26,6 +26,7 @@ module Quoter
   component Distributor supports Trigger
   {
     uses CCM_DDS::Stock_Info_Writer info_in_data;
+    uses CCM_DDS::Stock_Info_Updater info_update_data;
     uses ::DDS::DataWriter info_in_dds_entity;
     attribute unsigned long rate;
   };

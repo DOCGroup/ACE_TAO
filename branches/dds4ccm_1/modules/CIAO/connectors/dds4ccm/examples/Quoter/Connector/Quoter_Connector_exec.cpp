@@ -8,6 +8,7 @@
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
+#include "dds4ccm/impl/ndds/Updater_T.h"
 
 // Should be removed after we refactor stuff back into ndds impl.
 #include "dds4ccm/impl/ndds/DataReader.h"
@@ -281,6 +282,21 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
     return this->__info_in_datawriter_.in ();
   }
+
+  template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
+  typename CONNECTOR_TYPE::updater_type::_ptr_type
+  Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_update_data (void)
+  {
+    printf ("############ get_info_update_data\n");
+/*
+    this->configure_port_info_update_ ();
+    return new CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE,
+    typename CONNECTOR_TYPE::updater_type> (this->__info_update_dataupdater_.in ());
+*/
+    this->configure_port_info_in_ ();
+    return new CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE,
+    typename CONNECTOR_TYPE::updater_type> (this->__info_in_datawriter_.in ());
+}
 
   template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
   typename CONNECTOR_TYPE::reader_type::_ptr_type

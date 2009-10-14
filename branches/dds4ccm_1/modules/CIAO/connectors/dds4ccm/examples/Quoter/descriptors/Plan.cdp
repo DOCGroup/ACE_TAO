@@ -286,6 +286,21 @@
     </internalEndpoint>
   </connection>
 
+  <connection>
+    <name>updater_connection</name>
+    <internalEndpoint>
+      <portName>info_update_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="DistributorComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>info_update_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Quoter_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
 
   <artifact xmi:id="Distributor_ExecArtifact">
     <name>Distributor_exec</name>
