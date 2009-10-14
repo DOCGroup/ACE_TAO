@@ -1466,7 +1466,7 @@ be_interface::traverse_inheritance_graph (
   if (!this->insert_queue.is_empty ())
     {
       // Dequeue the element at the head of the queue.
-      if (this->insert_queue.dequeue_head (intf))
+      if (this->insert_queue.dequeue_head (intf) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "

@@ -1,3 +1,14 @@
+Wed Oct 14 16:53:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_provides.cpp:
+        
+          Fixed bug in facet servant class generation.
+          
+        * TAO_IDL/be/be_interface.cpp(traverse_inheritance_graph):
+        
+          Added "!= 0" to an IF state checking the return value
+          of a call to ACE_Unbounded_Queue, which returns an int.
+
 Wed Oct 14 13:51:03 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp (universal_time): 
