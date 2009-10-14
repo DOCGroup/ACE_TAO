@@ -1,3 +1,10 @@
+Wed Oct 14 23:05:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/support.cpp:
+          Now releases ownership of in-memory buffers when retrieved for
+          preprocessing.  Fixes a crash when in-memory preprocessor
+          was used multiple times per process invocation.
+
 Wed Oct 14 18:31:38 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/tao_idl.mpc:
@@ -93,7 +100,7 @@ Tue Oct 13 15:36:48 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Oct 12 14:03:48 CDT 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	      * TAO version 1.7.4 released.
+              * TAO version 1.7.4 released.
 
 Local Variables:
 mode: change-log
