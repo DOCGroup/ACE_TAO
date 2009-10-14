@@ -1,9 +1,14 @@
+Wed Oct 14 07:54:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/01.html:
+          Updated link to MPC documentation
+
 Tue Oct 13 18:55:48 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:
 
-          Updated with PlanLocality. 
-        
+          Updated with PlanLocality.
+
 Tue Oct 13 18:38:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO/DAnCE/NodeApplication/NodeApplication_Impl.cpp:
