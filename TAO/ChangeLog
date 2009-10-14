@@ -1,3 +1,17 @@
+Wed Oct 14 13:51:03 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp (universal_time): 
+          Changed
+          
+          TAO_UTO *uto = 0;
+ 
+          to
+  
+          TAO_UTO_Var uto;
+  
+          to avoid a memory leak.  Thanks to Chris Shaw <google at
+          cshaw-tech dot co dot uk> for reporting this. 
+
 Tue Oct 13 15:54:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3748_Regression/client.cpp:

@@ -29,7 +29,7 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 CosTime::UTO_ptr
 TAO_Time_Service_Server::universal_time (void)
 {
-  TAO_UTO *uto = 0;
+  TAO_UTO_var uto = 0;
 
   TimeBase::TimeT timestamp;
   ORBSVCS_Time::Absolute_Time_Value_to_TimeT(timestamp, ACE_OS::gettimeofday());
