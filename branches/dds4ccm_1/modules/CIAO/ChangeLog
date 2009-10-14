@@ -1,3 +1,11 @@
+Wed Oct 14 15:09:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Changed logging. Catching proper exceptions.
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Changed logging. Using this-> for class variables.
+
 Wed Oct 14 13:48:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
