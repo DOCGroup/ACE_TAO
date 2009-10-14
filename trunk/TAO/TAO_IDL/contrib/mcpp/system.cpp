@@ -306,7 +306,7 @@ static char *   mkdep_mt;               /* Argument of -MT option   */
 /* sharp_filename is filename for #line line, used only in cur_file()   */
 static char *   sharp_filename = NULL;
 static char *   argv0;      /* argv[ 0] for usage() and version()   */
-static int      ansi;           /* __STRICT_ANSI__ flag for GNUC    */ 
+static int      ansi;           /* __STRICT_ANSI__ flag for GNUC    */
 static int      compat_mode;
 /* "Compatible" mode of recursive macro expansion   */
 #define MAX_ARCH_LEN    16
@@ -533,7 +533,7 @@ void    do_options(
         compat_mode = TRUE;     /* 'compatible' mode        */
         mcpp_mode = STD;
       }
-      else 
+      else
         usage( opt);
       standard = (mcpp_mode == STD || mcpp_mode == POST_STD);
       if (old_mode != STD && old_mode != mcpp_mode)
@@ -840,7 +840,7 @@ void    do_options(
       /* Fall through */
     case 'k':
       option_flags.k = TRUE;
-      /* Keep white spaces of input lines as they are */ 
+      /* Keep white spaces of input lines as they are */
       break;
 
 #if COMPILER == GNUC
@@ -1747,7 +1747,7 @@ static void def_a_macro(int     opt,                            /* 'D'  */
   skip_nl();                      /* Clear the appended <newline> */
 }
 
-static void     chk_opts( 
+static void     chk_opts(
                          int     sflag,      /* Flag of Standard or post-Standard mode   */
                          int     trad                    /* -traditional (GCC only)      */
                           )
@@ -1834,7 +1834,7 @@ static void init_cpu_macro (
 {
   ACE_UNUSED_ARG (gval);
   ACE_UNUSED_ARG (sse);
-    
+
   const char *    cpu_macro[][ 7] = {
 #if SYS_FAMILY == SYS_UNIX
     { "__i386__"
@@ -2048,7 +2048,7 @@ void    init_sys_macro( void)
  */
 {
   /* This order is important. */
-  
+
   def_macros();               /* Define macros specified by -D    */
 #if COMPILER == GNUC
   chk_env();
@@ -2248,7 +2248,7 @@ static void set_sys_dirs(
   set_a_dir( "/usr/local/include");
 #endif
 
-#ifdef  C_INCLUDE_DIR1 
+#ifdef  C_INCLUDE_DIR1
   set_a_dir( C_INCLUDE_DIR1);
 #endif
 #ifdef  C_INCLUDE_DIR2
@@ -2309,7 +2309,7 @@ static void set_a_dir(
 #if SYSTEM == SYS_MAC
     to_search_framework = &incdir[ framework_pos];
 #endif
-    max_inc *= 2;                   
+    max_inc *= 2;
   }
 
   if (dirname == 0)
@@ -2400,7 +2400,7 @@ static char *   norm_dir(
     if (! norm_name && option_flags.v)
       mcpp_fprintf( ERR, "Invalid header map file \"%s\" is ignored\n"
                     , dirname);
-  } else 
+  } else
 #endif
     {
       norm_name = norm_path( dirname, 0, FALSE, FALSE);
@@ -2650,7 +2650,7 @@ static char *   norm_path(
       } else {                                /* Impossible   */
         break;
       }
-    } else {                                    /* Impossible   */ 
+    } else {                                    /* Impossible   */
       break;
     }
   }
@@ -2777,7 +2777,7 @@ static void init_gcc_macro( void)
           && scan_token( skip_ws(), (tp = work_buf, &tp), work_end)
           == NAM
           && str_eq( work_buf, "define")) {
-        defp = do_define( TRUE, nargs);     /* Ignore re-definition */ 
+        defp = do_define( TRUE, nargs);     /* Ignore re-definition */
       }
       skip_nl();
     }
@@ -2849,12 +2849,12 @@ static void     def_macros( void)
  */
 {
   size_t         i(0);
-  
+
   for (i = 0; i < def_cnt; i++)
     {
       def_a_macro( 'D', def_list[ i]);
     }
-  
+
 }
 
 static void     undef_macros( void)
@@ -2992,7 +2992,7 @@ void    put_depend(
 }
 
 static char *   md_init(
-                        const char *    filename,   /* The source file name             */ 
+                        const char *    filename,   /* The source file name             */
                         char *  output              /* Output to dependency file        */
                         )
 /*
@@ -3299,7 +3299,7 @@ static int  has_directory(
                           )
 /*
  * If a directory is found in the 'source' filename string (i.e. "includer"),
- * the directory part of the string is copied to 'directory' and 
+ * the directory part of the string is copied to 'directory' and
  * has_directory() returns TRUE.
  * Else, nothing is copied and it returns FALSE.
  */
@@ -3443,7 +3443,7 @@ static int  open_file(
     return  FALSE;
   if (standard && included( fullname))        /* Once included    */
     goto  true_label;
-        
+
   if ((max_open != 0 && max_open <= include_nest)
       /* Exceed the known limit of open files */
       || ((fp = ACE_OS::fopen( fullname, "r")) == 0 && errno == EMFILE)) {
@@ -3473,7 +3473,7 @@ static int  open_file(
     }
     if (max_open == 0)      /* Remember the limit of the system */
       max_open = include_nest;
-  } else if (fp == 0)                  /* No read permission   */ 
+  } else if (fp == 0)                  /* No read permission   */
     goto  false_label;
   /* Truncate buffer of the includer to save memory   */
   len = (int) (file->bptr - file->buffer);
@@ -3530,7 +3530,7 @@ static int  open_file(
 
 void    add_file(
                  FILE *      fp,                         /* Open file pointer    */
-                 const char *    src_dir,                /* Directory of source  */
+                 const char *    ,/*src_dir*/                /* Directory of source  */
                  const char *    filename,               /* Name of the file     */
                  const char *    fullname,               /* Full path list       */
                  int         include_opt         /* File specified by -include option    */
@@ -3545,7 +3545,7 @@ void    add_file(
   FILEINFO *      file;
   const char *    too_many_include_nest =
     "More than %.0s%ld nesting of #include";    /* _F_ _W4_ */
-  
+
   filename = set_fname( filename);    /* Search or append to fnamelist[]  */
   fullname = set_fname( fullname);    /* Search or append to fnamelist[]  */
   file = get_file( filename, 0 /*src_dir*/, fullname, (size_t) NBUFF, include_opt);
@@ -3775,7 +3775,7 @@ static int      search_framework(
       return  TRUE;
   }
 
-  *cp2 = PATH_DELIM;      /* Restore original include file format */ 
+  *cp2 = PATH_DELIM;      /* Restore original include file format */
 
   return  FALSE;
 }
@@ -4272,7 +4272,7 @@ void    do_pragma( void)
   {
     INC_LIST *  inc;
     size_t      fnamelen;
-    
+
     if (once_list == 0)              /* No once file registered  */
       return  FALSE;
     fnamelen = ACE_OS::strlen( fullname);
@@ -4860,7 +4860,7 @@ void    do_pragma( void)
   char *  mcpp_stpcpy(
                  char *          dest,
                  const char *    src
-                 ) 
+                 )
   /*
    * Copy the string and return the advanced pointer.
    */
