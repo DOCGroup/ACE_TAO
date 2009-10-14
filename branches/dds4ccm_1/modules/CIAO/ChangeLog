@@ -1,3 +1,10 @@
+Wed Oct 14 13:48:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Implemented DDS interface for updater.
+
 Wed Oct 14 09:24:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
@@ -10,7 +17,7 @@ Wed Oct 14 09:24:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/impl/ndds/Updater_T.h:
         * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
           Added updater framework.
-          
+
         * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
           Reduced sleeping time.
 

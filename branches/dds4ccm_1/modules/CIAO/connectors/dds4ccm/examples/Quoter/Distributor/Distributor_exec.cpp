@@ -199,6 +199,20 @@ namespace CIAO_Quoter_Distributor_Impl
                             i->second->current,
                             i->second->high);
               this->writer_->write (i->second);
+              try 
+                {
+                  this->updater_->create (i->second);
+                }
+              catch (CCM_DDS::AlreadyCreated& ex)
+                {
+                  printf ("#@#@#@#@#@#@ Stock_info for <%s> already created.\n",
+                              i->first.c_str ());
+                }
+              catch (CCM_DDS::InternalError& ex)
+                {
+                    printf ("#@#@#@#@#@#@ Internal Error while creating Stock_info for <%s>.\n",
+                                i->first.c_str ());
+                }
             }
             else
               std::cerr << "Writer reference is nil!" << std::endl;
@@ -207,13 +221,29 @@ namespace CIAO_Quoter_Distributor_Impl
           {
             if (!CORBA::is_nil (this->updater_)) 
               {
-                printf ("############ Update stock_info for <%s>\n",
-                          i->first.c_str ());
                 i->second->current = ACE_OS::rand () % 50;
                 i->second->high = i->second->current + ACE_OS::rand () % 50;
-                i->second->low =  i->second->current - ACE_OS::rand () % 50;
-                this->updater_->update (i->second);
-              }
+                i->second->low =  ACE_OS::rand () % 50;
+                try 
+                  {
+                    this->updater_->update (i->second);
+                    printf ("############ Updated stock_info for <%s> %u:%u:%u\n",
+                                            i->first.c_str(),
+                                            i->second->low,
+                                            i->second->current,
+                                            i->second->high);
+                  }
+                catch (CCM_DDS::NonExistent& ex)
+                  {
+                    printf ("#@#@#@#@#@#@ Updated Stock_info for <%s> which didn't exist.\n",
+                                i->first.c_str ());
+                  }
+                catch (CCM_DDS::InternalError& ex)
+                  {
+                    printf ("#@#@#@#@#@#@ Internal Error while updating Stock_info for <%s>.\n",
+                                i->first.c_str ());
+                  }
+             }
             else
               std::cerr << "############ Updater reference is nil!" << std::endl;
           }
@@ -266,6 +296,13 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::stop (void)
   {
+    for (Stock_Table::iterator i = this->stocks_.begin ();
+         i != this->stocks_.end ();
+         ++i)
+      {
+        printf ("Unregister <%s>\n", i->first.c_str ());
+        this->updater_->_cxx_delete (i->second);
+      }
     this->ticker_->stop ();
   }
 
@@ -334,6 +371,7 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::ccm_remove (void)
   {
     /* Your code here. */
+    this->stop ();
   }
 
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -7,7 +7,8 @@
 // Implementation skeleton constructor
 template <typename NDDS_TYPE, typename BASE >
 CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr dw)
-  : impl_ (0)
+  : impl_ (0),
+    is_lifecycle_checked_ (true)
 {
   CIAO_TRACE ("############ CIAO::DDS4CCM::RTI::Updater_T::Updater_T");
 
@@ -15,7 +16,7 @@ CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr
 
   if (rdu == 0)
     {
-      CIAO_ERROR ((LM_ERROR, CLINFO "############ ############ CIAO::DDS4CCM::RTI::Updater_T::Updater - "
+      CIAO_ERROR ((LM_ERROR, CLINFO "############ CIAO::DDS4CCM::RTI::Updater_T::Updater - "
                    "Unable to cast provided DataUpdater to servant\n"));
       throw CORBA::INTERNAL ();
     }
@@ -39,11 +40,23 @@ CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::~Updater_T (void)
 }
 
 template <typename NDDS_TYPE, typename BASE >
+bool
+CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::is_lifecycle_checked ()
+{
+  printf ("############ CIAO::DDS4CCM::RTI::Updater_T::is_lifecycle_checked\n");
+  return is_lifecycle_checked_;
+}
+
+template <typename NDDS_TYPE, typename BASE >
 void
 CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::create (const typename NDDS_TYPE::value_type & an_instance)
 {
   printf ("############ CIAO::DDS4CCM::RTI::Updater_T::create\n");
-  ACE_UNUSED_ARG (an_instance);
+  
+  DDS_InstanceHandle_t hnd = impl_->lookup_instance (an_instance);
+  if (is_lifecycle_checked_ && !DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
+    throw CCM_DDS::AlreadyCreated (0);
+  impl_->register_instance (an_instance);
 }
 
 template <typename NDDS_TYPE, typename BASE >
@@ -51,7 +64,15 @@ void
 CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::update (const typename NDDS_TYPE::value_type & an_instance)
 {
   printf ("############ CIAO::DDS4CCM::RTI::Updater_T::update\n");
-  ACE_UNUSED_ARG (an_instance);
+  DDS_InstanceHandle_t hnd = impl_->lookup_instance (an_instance);
+  if (is_lifecycle_checked_ && DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
+    throw CCM_DDS::NonExistent (0);
+  ::DDS::ReturnCode_t const result  = impl_->write (an_instance, hnd);
+  if (result != DDS_RETCODE_OK)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("#@#@#@#@#@#@ Unable to update data, error %d.\n"), result));
+      throw CCM_DDS::InternalError (result, 0);;
+    }
 }
 
 template <typename NDDS_TYPE, typename BASE >
@@ -59,5 +80,13 @@ void
 CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::_cxx_delete (const typename NDDS_TYPE::value_type & an_instance)
 {
   printf ("############ CIAO::DDS4CCM::RTI::Updater_T::delete\n");
-  ACE_UNUSED_ARG (an_instance);
+  DDS_InstanceHandle_t hnd = impl_->lookup_instance (an_instance);
+  if (is_lifecycle_checked_ && DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
+    throw CCM_DDS::NonExistent (0);
+  ::DDS::ReturnCode_t const result  = impl_->unregister_instance (an_instance, hnd);
+  if (result != DDS_RETCODE_OK)
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("#@#@#@#@#@#@ Unable to unregister instance, error %d.\n"), result));
+    throw CCM_DDS::InternalError (result, 0);
+  }
 }
