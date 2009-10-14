@@ -1,3 +1,8 @@
+Wed Oct 14 14:43:01 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Added/removed some defines.
+
 Wed Oct 14 14:41:03 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_signal.h:
