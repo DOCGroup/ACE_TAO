@@ -1,27 +1,34 @@
+Wed Oct 14 17:42:38 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * tao/Acceptor_Impl.cpp:
+          Fixed bug#3748. It fixes a connection handler leak when
+          server accepts a connection but then fails to open a connection
+          handler.
+
 Wed Oct 14 16:53:09 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_provides.cpp:
-        
+
           Fixed bug in facet servant class generation.
-          
+
         * TAO_IDL/be/be_interface.cpp(traverse_inheritance_graph):
-        
+
           Added "!= 0" to an IF state checking the return value
           of a call to ACE_Unbounded_Queue, which returns an int.
 
 Wed Oct 14 13:51:03 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp (universal_time): 
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp (universal_time):
           Changed
-          
+
           TAO_UTO *uto = 0;
- 
+
           to
-  
+
           TAO_UTO_Var uto;
-  
+
           to avoid a memory leak.  Thanks to Chris Shaw <google at
-          cshaw-tech dot co dot uk> for reporting this. 
+          cshaw-tech dot co dot uk> for reporting this.
 
 Tue Oct 13 15:54:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
