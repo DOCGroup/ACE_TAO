@@ -33,6 +33,10 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+#if defined (__Lynx__)
+// LynxOS defines pthread_sigmask() in pthread.h
+# include "ace/os_include/os_pthread.h"
+#endif /* __Lynx__ */
 
 /*
  * We inline and undef some functions that may be implemented
