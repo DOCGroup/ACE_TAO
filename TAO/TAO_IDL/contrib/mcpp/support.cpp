@@ -149,6 +149,13 @@ typedef struct  mem_buf {
   char *  entry_pt;
   size_t  size;
   size_t  bytes_avail;
+  
+  mem_buf () 
+	  : buffer (0),
+	    entry_pt (0),
+		size (0),
+		bytes_avail (0)
+  {}
 } MEMBUF;
 
 static MEMBUF   mem_buffers[ NUM_OUTDEST];
@@ -162,9 +169,10 @@ void    mcpp_use_mem_buffers(
   use_mem_buffers = tf ? TRUE : FALSE;
 
   for (i = 0; i < NUM_OUTDEST; ++i) {
-    if (mem_buffers[ i].buffer)
+    if (mem_buffers[ i].buffer != 0)
       /* Free previously allocated memory buffer  */
       ACE_OS::free( mem_buffers[ i].buffer);
+	  mem_buffers[i].buffer = 0;
     if (use_mem_buffers) {
       /* Output to memory buffers instead of files    */
       mem_buffers[ i].buffer = 0;
@@ -248,7 +256,9 @@ char *  mcpp_get_mem_buffer(
                             OUTDEST od
                             )
 {
-  return mem_buffers[ od].buffer;
+  char *retval = mem_buffers[ od].buffer;
+  mem_buffers[ od].buffer = 0;
+  return retval;
 }
 
 #endif  /* MCPP_LIB */
