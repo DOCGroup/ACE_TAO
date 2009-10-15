@@ -50,9 +50,6 @@ cur_cmd_ (0)
   this->plan_.task_insts.clear ();
   this->plan_.threat_links.clear ();
 
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****
-  this->init_added = false;
-
   this->not_backtracking.decision_pt = -1;
   this->not_backtracking.seq_num = -1;
   this->not_backtracking.step = -1;
@@ -365,6 +362,10 @@ const GoalMap& Planner::get_goals (void)
 // Get a task's name.
 std::string Planner::get_task_name (TaskID task_id)
 {
+	if(task_id == INIT_TASK_ID){
+		return "init task";
+	}
+
   return this->sanet_->get_task_name (task_id);
 };
 
@@ -493,6 +494,11 @@ ResourceID resource_id)
 // Get all resources used by a task implementation.
 ResourceMap Planner::get_all_resources (TaskImplID impl_id)
 {
+
+	if(impl_id == INIT_TASK_IMPL_ID){
+		return SA_POP::ResourceMap();
+	}
+
   return this->task_map_->get_all_resources (impl_id);
 };
 

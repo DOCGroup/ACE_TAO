@@ -70,6 +70,9 @@ add_threats_cmd_ (0)
 	this->precedence_graph_.insert(std::make_pair(SIMUL,temp));
 	this->precedence_graph_.insert(std::make_pair(UNRANKED,temp));
 
+	this->init_start.insert(std::make_pair(-6, (TimeWindow)std::make_pair(NULL_TIME, NULL_TIME)));
+	this->init_end.insert(std::make_pair(-6, (TimeWindow)std::make_pair(NULL_TIME, NULL_TIME)));
+
 	for(int i = 0; i < 2; i++){
 		this->init_start.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 		this->init_end.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
@@ -79,6 +82,9 @@ add_threats_cmd_ (0)
 	this->no_link.cond.id = -4;
 	this->no_link.first = -4;
 	this->no_link.second = -4;
+
+	this->task_impls_.insert(std::pair<TaskInstID, TaskImplID>(INIT_TASK_INST_ID, INIT_TASK_IMPL_ID));
+	this->task_insts_.insert(std::pair<TaskInstID, TaskID>(INIT_TASK_INST_ID, INIT_TASK_ID));
 
 };
 
@@ -292,6 +298,10 @@ const TaskInstSet *SA_WorkingPlan::get_prec_set (TaskInstID task_inst, Precedenc
 // Get task id of a task instance.
 TaskID SA_WorkingPlan::get_task_from_inst (TaskInstID inst_id)
 {
+	if(inst_id == INIT_TASK_INST_ID){
+		return INIT_TASK_ID;
+	}
+
 	InstToTaskMap::iterator iter =
 		this->task_insts_.find (inst_id);
 	if (iter == this->task_insts_.end ())
@@ -347,7 +357,7 @@ void SA_WorkingPlan::generate_all_threats(void)
 		debug_text <<"  Task (" <<threat_possibility_taskid << ")"<< ": Inst (" <<iterator->first << ")" << std::endl;
 	}
 	debug_text<<std::endl;
-	SA_POP_DEBUG_STR (SA_POP_DEBUG_LOW, debug_text.str ());
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_MINIMAL, debug_text.str ());
 	debug_text.str("");
 
 	debug_text << "SA_WorkingPlan::generate_all_threats:  All Causal Threats: " << std::endl;
@@ -356,6 +366,11 @@ void SA_WorkingPlan::generate_all_threats(void)
 	for(InstToTaskMap::iterator iterator = this->task_insts_.begin(); iterator != this->task_insts_.end(); iterator++){
 		TaskInstID threat_possibility = iterator->first;
 		TaskID threat_possibility_taskid = iterator->second;
+
+		if(threat_possibility_taskid == INIT_TASK_ID){
+			continue;
+		}
+
 		CondSet set = this->planner_->get_effects(threat_possibility_taskid);
 
 		//Iterate through the effects of each task instance
@@ -375,7 +390,13 @@ void SA_WorkingPlan::generate_all_threats(void)
 				TaskID threatened_task = this->task_insts_.find(causal_threatened.first)->second;
 
 				SANet::LinkWeight threat_effect = this->planner_->get_link(threat_possibility_taskid, condition.id);
-				SANet::LinkWeight causal_effect = this->planner_->get_link(threatened_task, causal_threatened.cond.id);
+
+				SANet::LinkWeight causal_effect;
+				if(threatened_task == INIT_TASK_ID){
+					causal_effect = 2*(this->planner_->get_cond_val(causal_threatened.cond.id)-.5);
+				}else{
+					causal_effect = this->planner_->get_link(threatened_task, causal_threatened.cond.id);
+				}
 
 				if((threat_effect > 0 && causal_effect < 0 )|| (threat_effect < 0 && causal_effect > 0)){
 
@@ -600,13 +621,14 @@ void SA_WorkingPlan::execute (SA_AddTaskCmd *cmd)
 	}
 	else if(task_choice.choice == NEW_INST){
 
-		if(task == INIT_TASK_ID && this->planner_->init_added)
-		{
-			throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
-		}
+	//	if(task == INIT_TASK_ID && this->planner_->init_added)
+	//	{
+	//		throw "Reached SA_WorkingPlan::execute (SA_AddTaskCmd *cmd) for Special Initial Action after it was already existing instance tried";
+	//	}
 
 		if(task == INIT_TASK_ID){
-			this->planner_->init_added =  true;
+	//		this->planner_->init_added =  true;
+			bool asdf_problem = true;
 		}
 
 		task_inst = this->get_next_inst_id ();
@@ -769,10 +791,6 @@ void SA_WorkingPlan::undo (SA_AddTaskCmd *cmd)
 
 
 	if(cmd->last_task_choice_.choice == NEW_INST){
-		if(cmd->last_task_ == INIT_TASK_ID){
-			planner_->init_added = false;
-		}
-
 		this->task_insts_.erase (this->task_insts_.find(cmd->last_task_inst_));  
 	}else{
 		this->reused_insts_.erase(this->reused_insts_.find(cmd->last_task_inst_));
@@ -874,6 +892,11 @@ bool SA_WorkingPlan::execute (SA_AssocTaskImplCmd *cmd)
 
 
 	}
+
+	if(cmd->task_inst_ == INIT_TASK_INST_ID){
+		this->durations.insert(std::make_pair(cmd->task_inst_, 1));
+	}
+
 	// Update last implementation to this one and remove it from command.
 	cmd->last_impl_ = cmd->impls_.front ();
 	cmd->impls_.pop_front ();
@@ -957,7 +980,7 @@ bool SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd)
 	Condition condition = cmd->condition;
 
 
-	if(task_insts_.find(cmd->second)->second == INIT_TASK_ID){
+	if(cmd->second == INIT_TASK_INST_ID){
 
 		debug_text << "SA_WorkingPlan::execute (SA_ResolveCLThreatCmd * cmd):  Cannot schedule before initial task"<<std::endl;
 		SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, debug_text.str ());
@@ -1608,8 +1631,8 @@ bool SA_WorkingPlan::init_prec_insert(TaskInstID task_inst, SA_AssocTaskImplCmd 
 	this->precedence_graph_.find(SIMUL)->second.insert(std::make_pair(task_inst,temp));
 
 
-	if(init_start.size() <= task_inst){
-		for(int i = init_start.size(); i < 100+task_inst; i++){
+	if(init_start.size()-1 <= task_inst){
+		for(int i = init_start.size()-1; i < 100+task_inst; i++){
 			this->init_start.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 			this->init_end.insert(std::make_pair(i,(TimeWindow)std::make_pair(NULL_TIME,NULL_TIME)));
 		}
@@ -2039,6 +2062,7 @@ TaskInstSet SA_WorkingPlan::get_all_insts()
 /// Check if the instance id already exists and is being reused.
 bool SA_WorkingPlan::inst_exists (TaskInstID task_inst)
 {
+
 	if(this->task_impls_.find(task_inst)!=this->task_impls_.end()) return true;
 	else return false;
 }

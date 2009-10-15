@@ -40,11 +40,6 @@ namespace SA_POP {
   class Planner {
   public:
 
-    //KILL ME SOON
-    bool init_added;
-
-
-
 
     /// Constructor.
     Planner (void);

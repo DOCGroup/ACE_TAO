@@ -201,7 +201,9 @@ int main (int argc, char* argv[])
     tm_in.build_task_map (tm_filename, &builder);
 
 
-  } catch (std::string e) {
+  } 
+  
+  catch (std::string e) {
     std::cerr << "ERROR while building task network and task map from files:";
     std::cerr << std::endl;
     std::cerr << e;
@@ -215,7 +217,7 @@ int main (int argc, char* argv[])
   
 
 
-  try {
+ // try {
     planner = builder.get_planner ();
 
   //Set any probabilities not listed in the XML
@@ -262,7 +264,9 @@ int main (int argc, char* argv[])
 
     planner->plan (15, goal);
 
-  } catch (std::string e) {
+  //} 
+  /*
+  catch (std::string e) {
     std::cerr << "ERROR while planning:" << std::endl;
     std::cerr << e;
     delete planner;
@@ -270,6 +274,7 @@ int main (int argc, char* argv[])
     std::cerr << "UNKNOWN ERROR while planning." << std::endl;
     delete planner;
   }
+  */
   
   bool stop = false;
   while(!stop)
