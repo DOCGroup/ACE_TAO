@@ -44,6 +44,26 @@ module CCM_DDS
     readonly attribute boolean is_lifecycle_checked;
   };
   
+  interface Stock_Info_Getter
+  {
+    boolean get_all (out Quoter::Stock_Info_Seq instances, out ReadInfoSeq infos)
+            raises (InternalError);
+    boolean get_all_history (out Quoter::Stock_Info_Seq instances, out ReadInfoSeq infos)
+            raises (InternalError);
+    boolean get_one (inout Quoter::Stock_Info an_instance, out ReadInfo info)
+            raises (NonExistent,
+                    InternalError);
+    boolean get_one_history (in Quoter::Stock_Info an_instance,
+                           out Quoter::Stock_Info_Seq instances, out ReadInfoSeq infos)
+            raises (NonExistent,
+                    InternalError);
+    boolean get_next (out Quoter::Stock_Info an_instance, out ReadInfo info)
+            raises (InternalError);
+    attribute QueryFilter filter
+            setraises (BadParameter);
+    attribute DDS::Duration_t time_out;
+  };
+  
   // @from Reader<T> from DDS_RawListen for Quoter::Stock_Info
   interface Stock_Info_Reader
   {
