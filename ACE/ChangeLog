@@ -1,3 +1,8 @@
+Thu Oct 15 11:26:15 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Pipe.cpp:
+          It OK to use socketpair to implement pipe on LynxOS.
+
 Thu Oct 15 11:11:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
