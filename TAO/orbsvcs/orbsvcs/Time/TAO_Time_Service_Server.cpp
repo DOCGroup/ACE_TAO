@@ -6,7 +6,6 @@
 
 #include "tao/debug.h"
 
-
 ACE_RCSID (Time,
            TAO_Time_Service_Server,
            "$Id$")
@@ -29,7 +28,7 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 CosTime::UTO_ptr
 TAO_Time_Service_Server::universal_time (void)
 {
-  TAO_UTO_var uto = 0;
+  CosTime::UTO_var uto = 0;
 
   TimeBase::TimeT timestamp;
   ORBSVCS_Time::Absolute_Time_Value_to_TimeT(timestamp, ACE_OS::gettimeofday());
