@@ -11,8 +11,7 @@
 
 extern char *tao_preproc_buffer;
 extern int tao_preproc_buffer_length;
-
-int tao_preproc_buffer_pos = 0;
+extern int tao_preproc_buffer_pos;
 
 #define TAO_YY_INPUT(buf,result,max_size)                           \
   {                                                                 \
