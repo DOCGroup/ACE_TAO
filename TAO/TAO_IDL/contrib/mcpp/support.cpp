@@ -149,8 +149,8 @@ typedef struct  mem_buf {
   char *  entry_pt;
   size_t  size;
   size_t  bytes_avail;
-  
-  mem_buf () 
+
+  mem_buf ()
 	  : buffer (0),
 	    entry_pt (0),
 		size (0),
