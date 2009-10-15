@@ -39,7 +39,7 @@ ACE_Pipe::open (int buffer_size)
 {
   ACE_TRACE ("ACE_Pipe::open");
 
-#if defined (ACE_LACKS_SOCKETPAIR) || defined (__Lynx__)
+#if defined (ACE_LACKS_SOCKETPAIR)
   ACE_INET_Addr my_addr;
   ACE_SOCK_Acceptor acceptor;
   ACE_SOCK_Connector connector;
