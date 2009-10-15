@@ -210,7 +210,7 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_H
   int const result = ACCEPT_STRATEGY_BASE::accept_svc_handler (svc_handler);
   if (result == -1)
     {
-      svc_handler->transport ()->remove_reference ();
+//      svc_handler->transport ()->remove_reference ();
 
       // #REFCOUNT# is zero at this point.
     }
