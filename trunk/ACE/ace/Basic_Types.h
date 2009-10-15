@@ -904,7 +904,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define ACE_SIZEOF_LONG_DOUBLE 8
 #   elif LDBL_MAX_EXP == 16384
 #     if defined (LDBL_DIG)  &&  LDBL_DIG == 18
-#       if defined (__ia64) || defined (__x86_64)
+#       if defined (__ia64) || defined (__x86_64) || defined (__ppc64)
 #         define ACE_SIZEOF_LONG_DOUBLE 16
 #       else /* ! __ia64 */
 #       define ACE_SIZEOF_LONG_DOUBLE 12

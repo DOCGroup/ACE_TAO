@@ -1,3 +1,8 @@
+Thu Oct 15 11:11:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Fix for 64bit PPC
+
 Thu Oct 15 07:43:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3744_Regression_Test.cpp:
