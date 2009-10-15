@@ -1,3 +1,9 @@
+Thu Oct 15 17:02:54 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp
+          (universal_time): Replaced TAO_UTO_var with CosTime::UTO_var to
+          fix a compile error.  Thanks to Johnny for reporting this.
+
 Thu Oct 15 16:05:25 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * bin/tao_other_tests.lst:
