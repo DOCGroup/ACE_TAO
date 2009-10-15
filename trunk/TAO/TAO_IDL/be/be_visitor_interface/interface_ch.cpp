@@ -263,7 +263,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
-          *os << "// These methods travese the inheritance tree and set the"
+          *os << "// These methods traverse the inheritance tree and set the"
               << be_nl
               << "// parents piece of the given class in the right mode."
               << be_nl
