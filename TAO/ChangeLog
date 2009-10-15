@@ -1,3 +1,13 @@
+Thu Oct 15 16:05:25 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Disabled HTIOP tests on static builds since they need
+          dynamic loading for HTIOP library.
+
+        * tao/Acceptor_Impl.cpp:
+          Temporarily commented out problematic code until
+          HTIOP is fixed.
+
 Thu Oct 15 14:01:38 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_ch.cpp:
