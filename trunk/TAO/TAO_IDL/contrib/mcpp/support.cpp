@@ -151,10 +151,10 @@ typedef struct  mem_buf {
   size_t  bytes_avail;
 
   mem_buf ()
-	  : buffer (0),
-	    entry_pt (0),
-		size (0),
-		bytes_avail (0)
+    : buffer (0),
+      entry_pt (0),
+      size (0),
+      bytes_avail (0)
   {}
 } MEMBUF;
 
@@ -172,7 +172,7 @@ void    mcpp_use_mem_buffers(
     if (mem_buffers[ i].buffer != 0)
       /* Free previously allocated memory buffer  */
       ACE_OS::free( mem_buffers[ i].buffer);
-	  mem_buffers[i].buffer = 0;
+    mem_buffers[i].buffer = 0;
     if (use_mem_buffers) {
       /* Output to memory buffers instead of files    */
       mem_buffers[ i].buffer = 0;
