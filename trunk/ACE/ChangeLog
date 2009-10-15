@@ -1,3 +1,10 @@
+Thu Oct 15 07:43:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3744_Regression_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          Moved the regression for 3744 to its own file, we don't have a fix yet
+
 Wed Oct 14 23:15:59 UTC 2009  Abdul Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-snowleopard.h:
