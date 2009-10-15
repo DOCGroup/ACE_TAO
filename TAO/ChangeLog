@@ -1,3 +1,10 @@
+Thu Oct 15 07:20:38 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.mpc
+        * TAO_IDL/tao_idl_be.mpc
+        * TAO_IDL/tao_idl_fe.mpc
+          Added seperate mpc files for the back end and the front end library
+
 Wed Oct 14 23:05:35 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/support.cpp:
