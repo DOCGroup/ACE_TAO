@@ -1,3 +1,9 @@
+Thu Oct 15 14:01:38 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+          Fixed typo in comment
+
 Thu Oct 15 11:33:38 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/documentation.html:
