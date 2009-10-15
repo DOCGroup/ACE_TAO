@@ -584,11 +584,7 @@ ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 ACE_INLINE ACE_HANDLE
 ACE_OS::fileno (FILE *stream)
 {
-#if defined ACE_FILENO_EQUIVALENT
-  return (ACE_HANDLE)ACE_FILENO_EQUIVALENT (stream);
-#else
   return ace_fileno_helper (stream);
-#endif
 }
 
 #if !(defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
