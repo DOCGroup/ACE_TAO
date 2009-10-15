@@ -245,6 +245,7 @@ public class ErrorManager {
      */
     public void clear() {
         this.msg.clear();
+       // this.tMsg.clear();
     }
 
     /**

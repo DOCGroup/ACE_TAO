@@ -53,6 +53,8 @@ import javax.xml.transform.stream.*;
 
 
 public class PDDL_Translator {
+	
+	StatisticsReport stat_report;
 
 	Map<String, CondNode> condition_nodes = new LinkedHashMap<String, CondNode>();
 	Map<String, TaskNode> task_nodes= new LinkedHashMap<String, TaskNode>();
@@ -84,6 +86,8 @@ public class PDDL_Translator {
 	 * Include an initial action, with effects to all conditions, in the SAN
 	 */
 	public PDDL_Translator(PDDLObject pddl_object, int condition_combine_levels, boolean use_initial_action){
+		
+		stat_report = new StatisticsReport(pddl_object.getDomainName(), pddl_object.getProblemName());
 		
 		long start_time = new Date().getTime();
 		
@@ -140,13 +144,9 @@ public class PDDL_Translator {
         //Add the initial action in as an anchor--otherwise it would seem that none
         //of the conditions can come true
         setup_initial_action(init_act);
-        
-        System.out.println();
-        System.out.println("Initial Network Statistics: ");
-        System.out.println();
-        calculateNetworkStatistics();
-        System.out.println();
-        
+
+        calculateNetworkStatistics("before_impossibility_removal");
+
         System.out.println("Before optimizing: "+ this.task_nodes.size()+" tasks "+ this.condition_nodes.size()+" conditions");
         System.out.println("Elapsed: "+ (new Date().getTime()-start_time));
         
@@ -159,29 +159,22 @@ public class PDDL_Translator {
 	
 	        //Basically cut down through the tasks and conditions and only take the relevant
 	        //ones 
-	        keep_looping = eliminate_irreleevant_tasks_and_conditions()||keep_looping;
+	  //      keep_looping = eliminate_irreleevant_tasks_and_conditions()||keep_looping;
 	        //Get rid of tasks that take plan backwards and where getting there
 	        //helps nothing else
-	 //       keep_looping = eliminate_dominated_tasks()||keep_looping;
+	 ////////////       keep_looping = eliminate_dominated_tasks()||keep_looping;
         } while(keep_looping);
         
         //Go through and look to see if any conditions can be replaced by a set of other
         //conditions
         //TODO maybe try something like a kmap here?
         
-        System.out.println();
-        System.out.println("Network Statistics Before Condition Combining: ");
-        System.out.println();
-        calculateNetworkStatistics();
-        System.out.println();
+
+        calculateNetworkStatistics("before_cond_combining");
+
+    //    combine_conditions(condition_combine_levels);
         
-        combine_conditions(condition_combine_levels);
-        
-        System.out.println();
-        System.out.println("Network Statistics After Condition Combining: ");
-        System.out.println();
-        calculateNetworkStatistics();
-        System.out.println();
+ //       calculateNetworkStatistics("after_cond_combining");
         
         System.out.println("End elapsed: "+ (new Date().getTime()-start_time));
         
@@ -192,11 +185,13 @@ public class PDDL_Translator {
         record_task_impls();
 	}
 	
-	private void calculateNetworkStatistics(){
+	private void calculateNetworkStatistics(String label){
 		
-		System.out.println("Number of conditions: "+this.condition_nodes.size());
-		System.out.println("Number of tasks: "+ this.task_nodes.size());
-		
+		System.out.println();
+		System.out.println("Network stats at: "+label);
+		System.out.println("   Number of conditions: "+this.condition_nodes.size());
+		System.out.println("   Number of tasks: "+ this.task_nodes.size());
+		System.out.println();
 		
 		int total_precond_links = 0;
 		int num_sat_links = 0;
@@ -205,10 +200,15 @@ public class PDDL_Translator {
 		
 		int total_effect_links = 0;
 		
-		int[] effects_per_cond = new int[condition_nodes.size()];
-		int[] preconds_per_cond = new int[condition_nodes.size()];
-		int[] effects_per_task = new int[task_nodes.size()-1];
-		int[] preconds_per_task = new int[task_nodes.size()-1];
+//		int[] effects_per_cond = new int[condition_nodes.size()];
+//		int[] preconds_per_cond = new int[condition_nodes.size()];
+//		int[] effects_per_task = new int[task_nodes.size()-1];
+//		int[] preconds_per_task = new int[task_nodes.size()-1];
+		
+		List<Integer> effects_per_cond = new LinkedList<Integer>();
+		List<Integer> preconds_per_cond = new LinkedList<Integer>();
+		List<Integer> effects_per_task = new LinkedList<Integer>();
+		List<Integer> preconds_per_task = new LinkedList<Integer>();
 		
 		List<Integer> ways_to_sat_each_precond = new LinkedList<Integer>();
 		List<Integer> threats_to_each_precond = new LinkedList<Integer>();
@@ -221,7 +221,7 @@ public class PDDL_Translator {
 			
 			for(EffectLink el: cnd.getAffectedBy()){
 				
-				if(el.getTaskID().equals("20")){
+				if(el.action.getName().equals("initact")){
 					continue;
 				}
 				
@@ -252,9 +252,8 @@ public class PDDL_Translator {
 				total_precond_links++;
 			}
 			
-			preconds_per_cond[count] = cnd.getPreconditionTo().size();
-			
-			effects_per_cond[count] = cnd.getAffectedBy().size();
+			preconds_per_cond.add(cnd.getPreconditionTo().size());
+			effects_per_cond.add(cnd.getAffectedBy().size());
 			
 			count++;
 		}
@@ -266,48 +265,185 @@ public class PDDL_Translator {
 				continue;
 			}
 			
-			effects_per_task[count] = tnd.get_negative_effect_links().size()+tnd.get_positive_effect_links().size();
-			preconds_per_task[count] = tnd.get_positive_precondition_links().size()+tnd.get_negative_precondition_links().size();
+			effects_per_task.add(tnd.get_negative_effect_links().size()+tnd.get_positive_effect_links().size());
+			preconds_per_task.add(tnd.get_positive_precondition_links().size()+tnd.get_negative_precondition_links().size());
 			count++;
 		}
 		
-		double avg_effect_each_cond = total_effect_links/(double)condition_nodes.size();
-		double avg_precond_each_cond = total_precond_links/(double)condition_nodes.size();
-		double avg_effect_each_act = total_effect_links/(double)task_nodes.size();
-		double avg_precond_each_act = total_effect_links/(double)task_nodes.size();
-		double avg_ways_to_sat_precond = num_sat_links/(double)total_precond_links;
-		double avg_threats_per_precond = num_threat_links/(double)total_precond_links;
+		InfoSet info_set = new InfoSet();
 		
-		double stdev_effects_per_cond = get_std_dev(avg_effect_each_cond, effects_per_cond);
-		double stdev_precond_per_cond = get_std_dev(avg_precond_each_cond, preconds_per_cond);
-		double stdev_effects_per_task = get_std_dev(avg_effect_each_act, effects_per_task);
-		double stdev_precond_per_task = get_std_dev(avg_precond_each_act, preconds_per_task);
-		double stdev_ways_to_sat_precond = get_std_dev(avg_ways_to_sat_precond, ways_to_sat_each_precond);
-		double stdev_threats_pre_precond = get_std_dev(avg_threats_per_precond, threats_to_each_precond);
+		info_set.total_tasks = this.task_nodes.size() - 1;
+		info_set.total_conds = this.condition_nodes.size();
+		info_set.total_preconds = this.precondition_links.size();
+		info_set.total_effects = this.effect_links.size();
 		
-		System.out.println("Avg effects per cond: "+ avg_effect_each_cond);
-		System.out.println("  std dev: "+stdev_effects_per_cond);
-		System.out.println("Avg precond per cond:" + avg_precond_each_cond);
-		System.out.println("  std dev: "+stdev_precond_per_cond);
-		System.out.println("Avg effects per act: " + avg_effect_each_act);
-		System.out.println("  std dev: "+stdev_effects_per_task);
-		System.out.println("Avg precond per act: " + avg_precond_each_act);
-		System.out.println("  std dev: "+stdev_precond_per_task);
-		System.out.println("Avg ways to satisfy precond: "+ avg_ways_to_sat_precond);
-		System.out.println("  std dev: "+stdev_ways_to_sat_precond);
-		System.out.println("Avg threats to precond: "+avg_threats_per_precond);
-		System.out.println("  std dev: "+stdev_threats_pre_precond);
+		info_set.effects_per_cond = effects_per_cond;
+		info_set.preconds_per_cond = preconds_per_cond;
+		info_set.effects_per_act = effects_per_task;
+		info_set.preconds_per_act = preconds_per_task;
+		info_set.satisfiers_per_precond = ways_to_sat_each_precond;
+		info_set.threats_per_precond = threats_to_each_precond;
 		
-		//*Num conds						STD
-		//*Num actions						STD
-		//*Average effects to each cond		STD
-		//*Average precond each cond		STD
-		//*average effects each task		STD
-		//*average precond each task		STD
+		info_set.avg_effects_per_cond = total_effect_links/(double)condition_nodes.size();
+		info_set.avg_preconds_per_cond = total_precond_links/(double)condition_nodes.size();
+		info_set.avg_effects_per_act = total_effect_links/(double)task_nodes.size();
+		info_set.avg_preconds_per_act = total_effect_links/(double)task_nodes.size();
+		info_set.avg_satisfiers_per_precond = num_sat_links/(double)total_precond_links;
+		info_set.avg_threats_per_precond = num_threat_links/(double)total_precond_links;
 		
-		//Average #ways to satisfy each precond
-		//diameter!
+		info_set.std_dev_effects_per_cond = get_std_dev(info_set.avg_effects_per_cond, effects_per_cond);
+		info_set.std_dev_preconds_per_cond = get_std_dev(info_set.avg_preconds_per_cond, preconds_per_cond);
+		info_set.std_dev_effects_per_act = get_std_dev(info_set.avg_effects_per_act, effects_per_task);
+		info_set.std_dev_preconds_per_act = get_std_dev(info_set.avg_preconds_per_act, preconds_per_task);
+		info_set.std_dev_satisfiers_per_precond = get_std_dev(info_set.avg_satisfiers_per_precond , ways_to_sat_each_precond);
+		info_set.std_dev_threats_per_precond = get_std_dev(info_set.avg_threats_per_precond, threats_to_each_precond);
 		
+		//Find the probability that an arbitrary precondition has an effect opposite it
+		
+		double precond_with_negation = 0;
+		for(PrecondLink el: this.precondition_links){
+			TaskNode tnd = el.action;
+			
+			List<EffectLink> all_effects = new LinkedList<EffectLink>(tnd.get_negative_effect_links());
+			all_effects.addAll(tnd.get_positive_effect_links());
+			
+			for(EffectLink elk: all_effects){
+				if(elk.effect  == el.precondition && el.getRequiredState() != (elk.getWeight() == 1)){
+					precond_with_negation++;
+					break;
+				}
+			}
+		}
+		
+		info_set.reverse_link_prob = precond_with_negation/this.precondition_links.size();
+	//	System.out.println(info_set.reverse_link_prob);
+		
+		//TODO generate reverse link prob
+		//TODO generate clustering coeff
+		//TODO diameter!
+		
+	//	if(!label.equals("before_impossibility_removal")){
+		
+			System.out.println("Generating simplified graph");
+			Map<String, SimpleNode> simple_graph = generate_simplified_graph();
+			System.out.println("Done generating simplified graph");
+
+
+			List<Double> connectednesses = new LinkedList<Double>();
+			
+			for(SimpleNode sn: simple_graph.values()){
+				double connected = 0;
+				
+				for(SimpleNode sn_child: sn.neigbors){
+					for(SimpleNode sn_child_check: sn.neigbors){
+						if(sn_child == sn_child_check){
+							continue;
+						}
+						if(sn_child.neigbors.contains(sn_child_check)){
+							connected++;
+						}
+					}
+				}
+			//	System.out.println("Connected: "+connected);
+			//	System.out.println("Neighbors: "+sn.neigbors.size());
+			//	if(sn.neigbors.size() > 1)
+				connectednesses.add((connected)/(sn.neigbors.size()*(sn.neigbors.size()-1)));
+			//	System.out.println((connected)/(sn.neigbors.size()*(sn.neigbors.size()-1)));
+			}
+			
+			double sum = 0;
+			
+			for(Double d: connectednesses){
+				sum+=d;
+			}
+			info_set.clustering_coeff = sum/connectednesses.size();
+	//	}
+			
+		stat_report.reports.put(label, info_set);
+	}
+	
+	public StatisticsReport getStatReport(){
+		return stat_report;
+	}
+	
+	private Map<String, SimpleNode> generate_simplified_graph(){
+		Map<String, SimpleNode> node_name_to_simple = new LinkedHashMap<String, SimpleNode>();
+		
+		for(String tn: this.task_nodes.keySet()){
+			
+			if(tn.equals("initact")){
+				continue;
+			}
+			
+			node_name_to_simple.put(task_nodes.get(tn).getName(), new SimpleNode(tn));
+		}
+		
+		for(TaskNode tn: this.task_nodes.values()){
+			
+			if(tn.getName().equals("initact")){
+				continue;
+			}
+
+			List<EffectLink> all_effects = new LinkedList<EffectLink>(tn.get_negative_effect_links());
+			all_effects.addAll(tn.get_positive_effect_links());
+			
+			for(EffectLink elk: all_effects){
+				CondNode condition = elk.effect;
+				
+				//All precond from cond
+				for(PrecondLink pl: condition.getPreconditionTo()){
+					TaskNode tn2 = pl.action;
+					if(tn2 == tn || tn2.getName().equals("initact")){
+						continue;
+					}
+					
+
+					SimpleNode.connect(node_name_to_simple.get(tn.getName()), node_name_to_simple.get(tn2.getName()));
+				}
+					
+				//All effect from cond
+				for(EffectLink el: condition.getAffectedBy()){
+					TaskNode tn2 = el.action;
+					if(tn2 == tn || tn2.getName().equals("initact")){
+						continue;		
+					}
+					
+		//			System.out.println(tn2.getNodeID());
+		//			System.out.println(tn.getName());
+		//			System.out.println(tn2.getName());
+					SimpleNode.connect(node_name_to_simple.get(tn.getName()), node_name_to_simple.get(tn2.getName()));
+				}
+			}
+			
+			List<PrecondLink> all_preconds = new LinkedList<PrecondLink>(tn.get_negative_precondition_links());
+			all_preconds.addAll(tn.get_positive_precondition_links());
+			
+			for(PrecondLink plk: all_preconds){
+				CondNode condition  = plk.precondition;
+				
+				//All precond from cond
+				for(PrecondLink pl: condition.getPreconditionTo()){
+					TaskNode tn2 = pl.action;
+					if(tn2 == tn || tn2.getName().equals("initact")){
+						continue;
+					}
+					
+					SimpleNode.connect(node_name_to_simple.get(tn.getName()), node_name_to_simple.get(tn2.getName()));
+				}
+				
+				//All effect from cond
+				for(EffectLink el: condition.getAffectedBy()){
+					TaskNode tn2 = el.action;
+					if(tn2 == tn || tn2.getName().equals("initact")){
+						continue;
+					}
+					
+					SimpleNode.connect(node_name_to_simple.get(tn.getName()), node_name_to_simple.get(tn2.getName()));
+				}
+			}
+		}
+		
+		return node_name_to_simple;
 	}
 	
 	private double get_std_dev(double mean, int[] data){
@@ -424,6 +560,7 @@ public class PDDL_Translator {
 		
         long intv2 = new Date().getTime();
 	}
+	
 	
 	private boolean combine_conditions_aux(List<CondNode> fixed_cnds, int still_to_fix){
 		if(still_to_fix != 0){
@@ -2277,7 +2414,7 @@ public class PDDL_Translator {
 
 		for(TaskNode a: task_nodes.values()){
 			
-			if(!init_act_visible && a.getNodeID().equals("20")){
+			if(!init_act_visible && a.getName().equals("initact")){
 				continue;
 			}
 			
@@ -2386,7 +2523,7 @@ public class PDDL_Translator {
 		
 		for(EffectLink l: effect_links){
 			
-			if(!init_act_visible && l.action.getNodeID().equals("20")){
+			if(!init_act_visible && l.action.getName().equals("initact")){
 				continue;
 			}
 			

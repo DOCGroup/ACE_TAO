@@ -99,15 +99,15 @@ void TaskMapFileIn::build_task_map (std::string filename, Builder *builder)
     builder->add_task_impl (impl);
   }
 
-  ImplParamSet init_params;
-  ImplParam init_param;
-  init_param.id = "test_param1";
-  init_param.kind = "test_kind1";
-  init_param.value = "test_param_value1";
-  init_params.insert (init_param);
+ // ImplParamSet init_params;
+ // ImplParam init_param;
+ // init_param.id = "test_param1";
+ // init_param.kind = "test_kind1";
+ // init_param.value = "test_param_value1";
+ // init_params.insert (init_param);
 
-  TaskImpl* initimpl = new TaskImpl ("initact_impl", init_params);
-  builder->add_task_impl (initimpl);
+ // TaskImpl* initimpl = new TaskImpl ("initact_impl", init_params);
+ // builder->add_task_impl (initimpl);
 
   // Get resources.
   for (SA_POP::XML::TaskMap::resource_iterator res_iter =
@@ -141,7 +141,7 @@ void TaskMapFileIn::build_task_map (std::string filename, Builder *builder)
 
     builder->add_resource (resource);
 
-	builder->assoc_impl_with_resource ("initact_impl", resourceID, 1);
+//	builder->assoc_impl_with_resource ("initact_impl", resourceID, 1);
   }
 
   // Get task to implementation associations.
@@ -164,7 +164,7 @@ void TaskMapFileIn::build_task_map (std::string filename, Builder *builder)
     builder->assoc_task_with_impl (taskID, implID, duration);
   }
 
-  builder->assoc_task_with_impl (INIT_TASK_ID, "initact_impl", 1);
+ // builder->assoc_task_with_impl (INIT_TASK_ID, "initact_impl", 1);
 
   // Get task implementation to resource associations.
   for (SA_POP::XML::TaskMap::implToResource_iterator iassocr_iter =

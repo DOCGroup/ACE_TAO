@@ -187,6 +187,16 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
   TaskChoiceList task_list;
   task_list.clear ();
 
+    //If init can handle it, put it on here first
+  if(this->planner_->get_cond_val(open_cond.id) == open_cond.value){
+		TaskChoice init_choice;
+		init_choice.choice = REUSE_INST;
+		init_choice.task_id = INIT_TASK_ID;
+		init_choice.task_inst_id = INIT_TASK_INST_ID;
+
+		task_list.push_back(init_choice);
+  }
+
   std::vector<SortTaskByTime> tasks_with_existing_instances;
 
   for (std::multimap<EUCalc, TaskID>::reverse_iterator iter = task_map.rbegin ();
@@ -201,9 +211,6 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 		task_choice.task_inst_id = -2;
 
 		task_list.push_back(task_choice);
-
-
-
 
 	  }else{
 
@@ -223,9 +230,9 @@ TaskChoiceList SA_TaskStrategy::choose_task_fair (Condition open_cond)
 			to_sort.note_instance(it->second);
 		  }
 	
-		  if(!(iter->second == INIT_TASK_ID && this->planner_->init_added)){
+	//	  if(!(iter->second == INIT_TASK_ID && this->planner_->init_added)){
 			tasks_with_existing_instances.push_back(to_sort);
-		 }
+	//	 }
 	  
 	  }
   }
@@ -257,9 +264,9 @@ TaskChoiceList SA_TaskStrategy::choose_task (Condition open_cond)
 {
   TaskSet tasks = this->planner_->get_satisfying_tasks (open_cond);
 
-  if(this->planner_->init_added){
-    tasks.erase(INIT_TASK_ID);
-  }
+//  if(this->planner_->init_added){
+//    tasks.erase(INIT_TASK_ID);
+//  }
     
   // Add tasks to map with EU (to sort).
   std::multimap<EUCalc, TaskID> task_map;
@@ -284,6 +291,17 @@ TaskChoiceList SA_TaskStrategy::choose_task (Condition open_cond)
   // Add tasks to list in reverse order of map (highest EU first).
   TaskChoiceList task_list;
   task_list.clear ();
+
+  //If init can handle it, put it on here first
+  if(this->planner_->get_cond_val(open_cond.id) == open_cond.value){
+		TaskChoice init_choice;
+		init_choice.choice = REUSE_INST;
+		init_choice.task_id = INIT_TASK_ID;
+		init_choice.task_inst_id = INIT_TASK_INST_ID;
+
+		task_list.push_back(init_choice);
+  }
+
 
   for (std::multimap<EUCalc, TaskID>::reverse_iterator iter = task_map.rbegin ();
     iter != task_map.rend (); iter++)

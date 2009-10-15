@@ -207,8 +207,15 @@ bool SA_SchedStrategy::satisfy_full_sched ()
 			
 			  TaskInstEndTimeSet new_execute;
 			  new_execute.inst = prev_it->first;
-			  new_execute.end_time = current_execution_time + this->planner_->get_impl(working_plan_tmp->get_impl_id(prev_it->first))
-				  ->get_duration();
+
+			
+			  if(prev_it->first == INIT_TASK_INST_ID){
+				  new_execute.end_time = current_execution_time + 0;
+			  }else{
+				  new_execute.end_time = current_execution_time + this->planner_->get_impl(working_plan_tmp->get_impl_id(prev_it->first))
+					  ->get_duration();
+			  }
+
 			  executing_tasks.push_back(new_execute);
 			  befores.erase(prev_it);
 		  }

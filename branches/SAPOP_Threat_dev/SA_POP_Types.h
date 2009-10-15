@@ -29,10 +29,10 @@
 #include "ace/Log_Priority.h"
 #endif  /* SA_POP_HAS_ACE */
 
-#define MAX_TASK_INSTS 8
+
 #define SA_POP_DEBUG_VERBOSE 1
 #define SA_POP_DEBUG_NORMAL 5
-#define SA_POP_DEBUG_LOW 9
+#define SA_POP_DEBUG_MINIMAL 9
 #define SA_POP_DEBUG_HIGH 10
 #define _CRTDBG_MAP_ALLOC
 #if defined (SA_POP_HAS_ACE)
@@ -152,6 +152,10 @@ namespace SA_POP {
 
 	const TaskID INIT_TASK_ID = -5;
 
+	const TaskInstID INIT_TASK_INST_ID = -6;
+
+	const int MAX_TASK_INSTS = 12;
+
 	/// Type of a task implementation id.
 	/// (must be unique across all task implementations).
 	typedef std::string TaskImplID;
@@ -175,6 +179,8 @@ namespace SA_POP {
 		TaskID task_id;
 	};
 
+	
+	const TaskImplID INIT_TASK_IMPL_ID = "init_impl";
 
 
 	///List of TaskChoices
