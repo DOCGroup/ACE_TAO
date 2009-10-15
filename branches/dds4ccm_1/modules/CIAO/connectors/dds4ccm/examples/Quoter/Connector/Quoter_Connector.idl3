@@ -115,6 +115,7 @@ module Quoter
 
     // @from DDS_RawListen for Stock_Info
     provides CCM_DDS::Stock_Info_Reader info_out_data;
+    provides CCM_DDS::Stock_Info_Getter info_get_out_data;
     provides CCM_DDS::ListenerControl info_out_control;
     uses CCM_DDS::Stock_Info_RawListener info_out_listener;
     provides DDS::DataReader info_out_dds_entity;

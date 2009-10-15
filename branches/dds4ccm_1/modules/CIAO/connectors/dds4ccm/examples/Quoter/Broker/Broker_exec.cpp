@@ -161,21 +161,25 @@ namespace CIAO_Quoter_Broker_Impl
 	 
      ::CCM_DDS::ListenerControl_var lc = 
       this->context_->get_connection_info_out_control ();
+
+      ::CCM_DDS::Stock_Info_Getter_var getter = this->context_->get_connection_info_get_out_data();
+      ::Quoter::Stock_Info  stock_info;
+      ::CCM_DDS::ReadInfo readinfo;
+      getter->get_one (stock_info, readinfo);
+      
+      
   //mh
-	printf("2222222222");
-	::CCM_DDS::Stock_Info_Reader_var reader = this->context_->get_connection_info_out_data();
-	printf("33333333333");
-	//
-	  if (CORBA::is_nil (lc.in ()))
-      {
-        printf ("Error:  Listener control receptacle is null!\n");
-        throw CORBA::INTERNAL ();
-      }
-    ::Quoter::Stock_Info  stock_info;
-	::CCM_DDS::ReadInfo readinfo;
-	     
-	reader->read_one (stock_info, readinfo );  
-	printf("444444444444444");
+      printf("2222222222\n");
+      ::CCM_DDS::Stock_Info_Reader_var reader = this->context_->get_connection_info_out_data();
+      printf("33333333333\n");
+      //
+      if (CORBA::is_nil (lc.in ()))
+        {
+          printf ("Error:  Listener control receptacle is null!\n");
+          throw CORBA::INTERNAL ();
+        }
+      reader->read_one (stock_info, readinfo );
+      printf("444444444444444\n");
     lc->enabled (true);
   }
   

@@ -48,7 +48,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
           typename NDDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
-  printf("------- in read_one Reader_T of ndds ------------- \n");
+/*  printf("------- in read_one Reader_T of ndds ------------- \n");
 
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
   if (rdr == 0)
@@ -102,9 +102,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
         printf ("failed retval is %d ---\n", retval);
         throw ::CCM_DDS::InternalError (retval, 0);
       }
-printf("------- in read_one Reader_T of ndds 333333333333333\n");
-//  ACE_UNUSED_ARG (an_instance);
-//  ACE_UNUSED_ARG (info);
+printf("------- in read_one Reader_T of ndds 333333333333333\n");*/
+  ACE_UNUSED_ARG (an_instance);
+  ACE_UNUSED_ARG (info);
 }
 
 template <typename NDDS_TYPE, typename BASE >

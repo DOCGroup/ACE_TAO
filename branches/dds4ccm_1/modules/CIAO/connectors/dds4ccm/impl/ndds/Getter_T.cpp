@@ -1,17 +1,36 @@
 // $Id$
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "dds4ccm/impl/ndds/Utils.h"
+#include "dds4ccm/impl/ndds/NDDS_Traits.h"
 
 #include "ciao/Logger/Log_Macros.h"
 // Implementation skeleton constructor
 template <typename NDDS_TYPE, typename BASE >
 CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr reader)
-: impl_ (reader),
+: impl_ (0),
   condition_(0)
 {
   printf("----in constructor getter -----\n");
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
-  ACE_UNUSED_ARG (reader);
+
+  RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
+
+  if (rdr == 0)
+    {
+      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
+                   "Unable to cast provided DataWriter to servant\n"));
+      throw CORBA::INTERNAL ();
+    }
+
+  this->impl_ =  NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
+
+  if (!this->impl_)
+    {
+      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
+                   "Unable to narrow the provided writer entity to the specific "
+                   "type necessary to publish messages\n"));
+      throw CORBA::INTERNAL ();
+    }
 }
 
 // Implementation skeleton destructor
@@ -49,8 +68,33 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
           typename NDDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
-  ACE_UNUSED_ARG (an_instance);
-  ACE_UNUSED_ARG (info);
+/*  DDS_SampleInfoSeq sample_info;
+  DDS_ReturnCode_t retval;
+  typename NDDS_TYPE::dds_seq_type data;
+  if (this->condition_)
+    {
+      // retval =  impl_->read_w_condition (data, sample_info, 1, this->condition_);
+    }
+    else
+      {
+        retval = impl_->read (data,
+                           sample_info,
+                           1,
+                           DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+                           DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                           DDS_ALIVE_INSTANCE_STATE);
+       }
+    printf("------- in read_one Reader_T of ndds 222222222 \n");
+    if (retval == DDS_RETCODE_OK)
+      {
+        an_instance = data[0];
+        //info.timestamp <<= sample_info[0].reception_timestamp;
+      }
+    else
+      {
+        printf ("failed retval is %d ---\n", retval);
+        throw ::CCM_DDS::InternalError (retval, 0);
+      }*/
   return true;
 }
 

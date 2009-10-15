@@ -28,7 +28,7 @@ namespace CIAO
        */
       template <typename VALUE_TYPE,
                 typename SEQ_TYPE,
-				typename DDS_SEQ_TYPE,
+                typename DDS_SEQ_TYPE,
                 typename TYPE_SUPPORT,
                 typename DATA_WRITER,
                 typename DATA_READER>
@@ -44,7 +44,7 @@ namespace CIAO
 
       typedef Type_Traits < const char *,
                             DDS_StringSeq,
-							DDS_StringSeq,
+                            DDS_StringSeq,
                             DDSStringTypeSupport,
                             DDSStringDataWriter,
                             DDSStringDataReader > String_Traits;

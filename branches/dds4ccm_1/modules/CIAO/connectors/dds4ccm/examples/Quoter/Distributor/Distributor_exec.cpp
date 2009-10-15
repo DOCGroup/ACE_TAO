@@ -157,7 +157,7 @@ namespace CIAO_Quoter_Distributor_Impl
   }
 
   Distributor_exec_i::Distributor_exec_i (void)
-    : rate_ (5)
+    : rate_ (1)
   {
     ACE_OS::srand (static_cast <u_int> (ACE_OS::time ()));
     this->ticker_ = new pulse_Generator (*this);
@@ -203,14 +203,14 @@ namespace CIAO_Quoter_Distributor_Impl
                 {
                   this->updater_->create (i->second);
                 }
-              catch (CCM_DDS::AlreadyCreated& ex)
+              catch (CCM_DDS::AlreadyCreated& )
                 {
-                  printf ("#@#@#@#@#@#@ Stock_info for <%s> already created.\n",
+                  printf ("Stock_info for <%s> already created.\n",
                               i->first.c_str ());
                 }
-              catch (CCM_DDS::InternalError& ex)
+              catch (CCM_DDS::InternalError& )
                 {
-                  printf ("#@#@#@#@#@#@ Internal Error while creating Stock_info for <%s>.\n",
+                  printf ("Internal Error while creating Stock_info for <%s>.\n",
                                 i->first.c_str ());
                 }
             }
@@ -227,25 +227,25 @@ namespace CIAO_Quoter_Distributor_Impl
                 try 
                   {
                     this->updater_->update (i->second);
-                    printf ("############ Updated stock_info for <%s> %u:%u:%u\n",
+                    printf ("Updated stock_info for <%s> %u:%u:%u\n",
                                             i->first.c_str(),
                                             i->second->low,
                                             i->second->current,
                                             i->second->high);
                   }
-                catch (CCM_DDS::NonExistent& ex)
+                catch (CCM_DDS::NonExistent& )
                   {
-                    printf ("#@#@#@#@#@#@ Updated Stock_info for <%s> which didn't exist.\n",
-                                i->first.c_str ());
+                    printf ("Stock_info for <%s> not updated: <%s> didn't exist.\n",
+                                i->first.c_str (), i->first.c_str ());
                   }
-                catch (CCM_DDS::InternalError& ex)
+                catch (CCM_DDS::InternalError& )
                   {
-                    printf ("#@#@#@#@#@#@ Internal Error while updating Stock_info for <%s>.\n",
+                    printf ("Internal Error while updating Stock_info for <%s>.\n",
                                 i->first.c_str ());
                   }
              }
             else
-              std::cerr << "############ Updater reference is nil!" << std::endl;
+              std::cerr << "Updater reference is nil!" << std::endl;
           }
       }
   }
