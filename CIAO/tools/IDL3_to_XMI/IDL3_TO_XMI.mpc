@@ -1,12 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, crosscompile, ciao_xml_utils {
-  after       += TAO_IDL_FE
+project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, crosscompile, ciao_xml_utils, tao_idl_fe {
   sharedname   = CIAO_IDL3_TO_XMI_BE
-  libs        += TAO_IDL_FE
   dynamicflags = CIAO_IDL3_TO_XMI_BUILD_DLL
-  includes    += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes    += $(CIAO_ROOT)
@@ -33,14 +30,11 @@ project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, crosscompile, ciao_
   }
 }
 
-project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, crosscompile, ciao_xml_utils, tao_idl_mcpp, xerces {
-  after          += CIAO_IDL3_TO_XMI_BE TAO_IDL_FE
+project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, crosscompile, ciao_xml_utils, tao_idl_mcpp, xerces, tao_idl_fe {
+  after          += CIAO_IDL3_TO_XMI_BE
   exename         = tao_idl3_to_xmi
-  libs           += CIAO_IDL3_TO_XMI_BE TAO_IDL_FE
-  includes       += . $(TAO_ROOT)/TAO_IDL/include \
-                    $(TAO_ROOT)/TAO_IDL/fe \
-                    $(TAO_ROOT)
-  libpaths       += $(TAO_ROOT)/TAO_IDL
+  libs           += CIAO_IDL3_TO_XMI_BE
+  includes       += $(TAO_ROOT)
   exeout          = $(CIAO_ROOT)/bin
 
   // Adding a strict ordering dependency with TAO_IDL_EXE. It appears on some systems, there
