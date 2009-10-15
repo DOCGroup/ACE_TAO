@@ -124,8 +124,8 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
     try
       {
-        NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
-                                                                   NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
+        //NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
+        //                                                           NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
 
         // Generic code
         this->domain_factory_ = new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
@@ -310,7 +310,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   {
     std::cerr << "get_info_out_data" << std::endl;
 
-    //this->configure_port_info_in_ ();
+    this->configure_port_info_out_ ();
 
     return new CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE,
       typename CONNECTOR_TYPE::reader_type> (this->__info_out_datareader_.in ());

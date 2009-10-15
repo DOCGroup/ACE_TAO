@@ -113,6 +113,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   // @from use of Stock_Info as a parameter
   typedef CIAO::DDS4CCM::RTI::Type_Traits < ::Quoter::Stock_Info,
     ::Quoter::Stock_Info_Seq,
+    ::Quoter::Stock_InfoSeq,
     ::Quoter::Stock_InfoTypeSupport,
     ::Quoter::Stock_InfoDataWriter,
     ::Quoter::Stock_InfoDataReader > Stock_Info_DDS_Traits;
