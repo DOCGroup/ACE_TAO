@@ -1,3 +1,9 @@
+Thu Oct 15 07:23:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Use tao_idl_fe
+
 Wed Oct 14 07:54:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/01.html:

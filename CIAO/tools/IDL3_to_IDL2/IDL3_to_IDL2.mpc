@@ -1,12 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL3_TO_IDL2_BE) : acelib, install, ciao_output, crosscompile {
-  after       += TAO_IDL_FE
+project(TAO_IDL3_TO_IDL2_BE) : acelib, install, ciao_output, crosscompile, tao_idl_fe {
   sharedname   = TAO_IDL3_TO_IDL2_BE
-  libs        += TAO_IDL_FE
   dynamicflags = TAO_IDL3_TO_IDL2_BE_BUILD_DLL
-  includes    += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
@@ -36,14 +33,11 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, ciao_output, crosscompile {
   }
 }
 
-project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, crosscompile, tao_idl_mcpp {
-  after          += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
+project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, crosscompile, tao_idl_mcpp, tao_idl_fe {
+  after          += TAO_IDL3_TO_IDL2_BE
   exename         = tao_idl3_to_idl2
-  libs           += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
-  includes       += . $(TAO_ROOT)/TAO_IDL/include \
-                    $(TAO_ROOT)/TAO_IDL/fe \
-                    $(TAO_ROOT)
-  libpaths       += $(TAO_ROOT)/TAO_IDL
+  libs           += TAO_IDL3_TO_IDL2_BE
+  includes       += $(TAO_ROOT)
   exeout          = $(CIAO_ROOT)/bin
 
   // Adding a strict ordering dependency with TAO_IDL_EXE.  It appears on some systems, there
