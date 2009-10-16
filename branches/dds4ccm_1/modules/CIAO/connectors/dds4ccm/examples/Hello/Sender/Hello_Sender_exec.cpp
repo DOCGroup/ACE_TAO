@@ -70,16 +70,12 @@ namespace CIAO_Hello_DDS_Sender_Impl
     {
       if (!this->log_time_)
         return msg;
-
+      ACE_TCHAR timestamp[16];
       ACE_CString ret;
-      ACE_TCHAR timestamp[26]; 
-      ACE_Date_Time dt;
+      ACE_hrtime_t start = ACE_OS::gethrtime();
       ACE_OS::sprintf (timestamp,
-                        "%02d:%02d:%02d.%d",
-                        dt.hour (),
-                        dt.minute (),
-                        dt.second (),
-                        dt.microsec ());
+                        "%lld",
+                        start);
       ret.set (timestamp);
       ret = ret + " " + msg;
       return ret.c_str ();
@@ -100,7 +96,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     : iters_ (10),
       msg_ ("Hi Johnny, I'm a CCM component sending DDS messages!"),
       task_ (0),
-      log_time_ (false)
+      log_time_ (true)
   {
   }
 
