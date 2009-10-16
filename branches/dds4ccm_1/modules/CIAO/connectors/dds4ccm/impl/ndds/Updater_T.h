@@ -1,6 +1,5 @@
 /**
  * @author Marcel Smit <msmit@remedy.nl>
- * @author Johnny Willemsen <jwillemsen@remedy.nl>
  *
  * $Id$
  *
@@ -8,8 +7,6 @@
  */
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-
-#include <map>
 
 namespace CIAO
 {

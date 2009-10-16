@@ -1,6 +1,7 @@
 // $Id$
 #include "dds4ccm/impl/ndds/Utils.h"
 
+#include "dds4ccm/impl/ndds/DataReader.h"
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor

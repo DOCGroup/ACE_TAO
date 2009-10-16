@@ -1,3 +1,20 @@
+Fri Oct 16 10:51:03 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+          Left getter out for now.
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+          Removed Connector_T template class and put it in it's own file.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Created a Connector_T template class.
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+          Removed unnecessary include.
+
 Thu Oct 15 17:25:03 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3:

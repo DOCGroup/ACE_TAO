@@ -158,17 +158,11 @@ namespace CIAO_Quoter_Broker_Impl
   void
   Broker_exec_i::ccm_activate (void)
   {  
-	 
      ::CCM_DDS::ListenerControl_var lc = 
-      this->context_->get_connection_info_out_control ();
+        this->context_->get_connection_info_out_control ();
 
-      ::CCM_DDS::Stock_Info_Getter_var getter = this->context_->get_connection_info_get_out_data();
       ::Quoter::Stock_Info  stock_info;
       ::CCM_DDS::ReadInfo readinfo;
-      getter->get_one (stock_info, readinfo);
-      
-      
-  //mh
       printf("2222222222\n");
       ::CCM_DDS::Stock_Info_Reader_var reader = this->context_->get_connection_info_out_data();
       printf("33333333333\n");
@@ -200,7 +194,7 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    printf("in create FFFFFFFFFFFFFFFFFFFFFFFFF"); //mh
+    printf("in create FFFFFFFFFFFFFFFFFFFFFFFFF\n"); //mh
     ACE_NEW_NORETURN (
       retval,
       Broker_exec_i);
