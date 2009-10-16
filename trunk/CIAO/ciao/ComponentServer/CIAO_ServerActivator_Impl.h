@@ -30,32 +30,28 @@ namespace CIAO
 {
   namespace Deployment
   {
-    //namespace
-    //{
-      /**
-       * @brief The signal handler class for the SIGCHLD handling to avoid
-       * zombies
-       */
-      class Child_Handler : public virtual ACE_Event_Handler
+    /**
+     * @brief The signal handler class for the SIGCHLD handling to avoid
+     * zombies
+     */
+    class Child_Handler : public virtual ACE_Event_Handler
+    {
+    public:
+      virtual int handle_signal (int,
+                                 siginfo_t *,
+                                 ucontext_t *)
       {
-      public:
-        virtual int handle_signal (int,
-                                   siginfo_t *,
-                                   ucontext_t *)
-        {
-          // @@ Note that this code is not portable to all OS platforms
-          // since it uses print statements within signal handler context.
-          ACE_exitcode status;
-          // makes a claal to the underlying os system call
-          // -1 to wait for any child process
-          // and WNOHANG so that it retuurns immediately
-          ACE_OS::waitpid (-1 ,&status, WNOHANG, 0);
+        // @@ Note that this code is not portable to all OS platforms
+        // since it uses print statements within signal handler context.
+        ACE_exitcode status;
+        // makes a claal to the underlying os system call
+        // -1 to wait for any child process
+        // and WNOHANG so that it retuurns immediately
+        ACE_OS::waitpid (-1 ,&status, WNOHANG, 0);
 
-          return 0;
-        }
-      };
-      //    }
-
+        return 0;
+      }
+    };
 
     /**
      * @author William R. Otte <wotte@dre.vanderbilt.edu>
@@ -71,7 +67,7 @@ namespace CIAO
       : public virtual POA_CIAO::Deployment::ServerActivator
     {
     public:
-      // Constructor
+      /// Constructor
       CIAO_ServerActivator_i (CORBA::ULong def_spawn_delay,
                               const char * default_cs_path,
                               const char * cs_args,
@@ -80,7 +76,7 @@ namespace CIAO
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa_);
 
-      // Destructor
+      /// Destructor
       virtual ~CIAO_ServerActivator_i (void);
 
       virtual
@@ -186,7 +182,7 @@ namespace CIAO
       TAO_SYNCH_MUTEX mutex_;
 
       ACE_Condition<TAO_SYNCH_MUTEX> condition_;
-      
+
       CIAO::Deployment::ComponentInstallation_var ci_;
     };
 

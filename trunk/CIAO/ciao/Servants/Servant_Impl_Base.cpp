@@ -267,7 +267,7 @@ namespace CIAO
   Servant_Impl_Base::get_consumer (const char *sink_name)
   {
     CIAO_TRACE("Servant_Impl_Base::get_consumer (const char *sink_name)");
-    if (0 == sink_name)
+    if (!sink_name)
       {
         throw Components::InvalidName ();
       }

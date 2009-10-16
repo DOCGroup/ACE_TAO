@@ -45,7 +45,7 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, crosscompile, tao_
   after += TAO_IDL_EXE
 
   // This is necessary for MPC to pull in rules.ciao.GNU
-  includes += $(CIAO_ROOT)
+  includes += $(CIAO_ROOT) .
 
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
