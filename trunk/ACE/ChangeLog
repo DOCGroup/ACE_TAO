@@ -1,9 +1,16 @@
+Fri Oct 16 06:00:42 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+          Readded "Tue Oct 13 19:13:13 UTC 2009  Olli Savia  <ops@iki.fi>"
+          without os_unistd.h modifications.
+
 Thu Oct 15 17:33:05 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/OS_NS_stdio.h:
         * ace/OS_NS_stdio.inl:
         * ace/os_include/os_unistd.h:
- 
+
           Reverted Tue Oct 13 19:13:13 UTC 2009  Olli Savia  <ops@iki.fi>,
           it broke the IDL compiler.
 

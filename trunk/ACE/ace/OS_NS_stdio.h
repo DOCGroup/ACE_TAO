@@ -112,24 +112,18 @@ inline int ace_ungetc_helper (int ch, FILE *fp)
 #endif /* defined (ungetc) */
 }
 
+#if !defined ACE_FILENO_EQUIVALENT
 inline ACE_HANDLE ace_fileno_helper (FILE *fp)
 {
-#if defined (fileno) && !defined (ACE_WIN32)
-  return fileno (fp);
-#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-# if defined ACE_FILENO_EQUIVALENT
-  return (ACE_HANDLE)_get_osfhandle (ACE_FILENO_EQUIVALENT (fp));
-#else
-  return (ACE_HANDLE)_get_osfhandle (ACE_STD_NAMESPACE::fileno (fp));
-#endif /* ACE_FILENO_EQUIVALENT */
-#else
-  return ACE_STD_NAMESPACE::fileno (fp);
-#endif /* defined (fileno) */
-#if defined (fileno)
+# if defined (fileno)
+  return (ACE_HANDLE)fileno (fp);
 # undef fileno
-#endif /* defined (fileno) */
+# else
+  return (ACE_HANDLE)ACE_STD_NAMESPACE::fileno (fp);
+# endif /* defined (fileno) */
 }
-
+#endif /* !ACE_FILENO_EQUIVALENT */
+ 
 #if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
     && !defined(ACE_WIN32) && !defined (ACE_VXWORKS)
 /// Helper for the ACE_OS::cuserid() function
