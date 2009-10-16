@@ -1,3 +1,33 @@
+Fri Oct 16 19:54:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/servant_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svh.h:
+
+          New files, new visitors that contain code moved from
+          private methods in class be_visitor_component_svh.
+
+        * TAO_IDL/be/be_provides.cpp:
+
+          Fixed bug in code generation.
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Added new visitor files.
+
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+
+          Removed debugging output.
+
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_svh.h:
+
+          Moved code out to new visitor above.
+
 Tue Oct 13 15:54:44 UTC 2009  Vladimir Zykov  <vz@prismtech.com>
 
         * tests/Bug_3748_Regression/client.cpp:

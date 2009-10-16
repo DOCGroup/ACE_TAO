@@ -285,7 +285,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
 
-  for (UTL_ScopeActiveIterator i (op_scope_, UTL_Scope::IK_decls);
+  for (UTL_ScopeActiveIterator i (base_interface, UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {

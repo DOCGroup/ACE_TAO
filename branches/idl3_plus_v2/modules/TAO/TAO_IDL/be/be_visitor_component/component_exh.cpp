@@ -369,8 +369,6 @@ be_visitor_component_exh::gen_consumes_r (AST_Component *node)
       AST_Consumes *c =
         AST_Consumes::narrow_from_decl (d);
         
-        ACE_DEBUG ((LM_DEBUG, "%s\n", c->full_name ()));
-
       be_type *impl =
         be_type::narrow_from_decl (c->consumes_type ());
         
