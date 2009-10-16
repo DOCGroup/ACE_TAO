@@ -58,29 +58,19 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     const char * an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    ++received_;
-    ACE_TCHAR timestamp[26]; 
     ACE_Date_Time dt;
-    ACE_OS::sprintf (timestamp,
-                      "%02d:%02d:%02d.%d",
-                      dt.hour (),
-                      dt.minute (),
-                      dt.second (),
-                      dt.microsec ());
-    ACE_CString tm_now (timestamp);
-    ACE_CString ms_now = tm_now.substr (9, 6);
-    int ims_now = ACE_OS::atoi (ms_now.c_str ());
+    ++received_;
     
     ACE_CString tm_rec (an_instance);
-    ACE_CString ms_rec = tm_rec.substr (9, 6);
-    int ims_rec = ACE_OS::atoi (ms_rec.c_str ());
-    
-    int idiff = ims_now - ims_rec;
-    
-    printf ("(%d) <%s> string_RawListener::on_data received <%s>\n", 
-          idiff,
+    int ims_rec = ACE_OS::atoi (tm_rec.substr (9, 6).c_str ());
+    int ims_now = dt.microsec ();
+    if ((ims_now - ims_rec) < 0)
+        ims_now += 1000000;
+
+    printf ("<%s> received <%s>. difference <%d>\n", 
           this->name_.c_str (), 
-          an_instance);
+          an_instance,
+          ims_now - ims_rec);
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
