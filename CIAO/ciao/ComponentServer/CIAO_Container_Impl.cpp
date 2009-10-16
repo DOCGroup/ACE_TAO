@@ -72,7 +72,7 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_Container_i::install_component");
 
-      if (id == 0)
+      if (!id)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                        "No home ID provided\n"));
@@ -89,7 +89,7 @@ namespace CIAO
           throw Components::CreateFailure ();
         }
 
-      if (entrypt == 0)
+      if (!entrypt)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_component - "
                       "No executor entrypoint found.\n"));
@@ -109,7 +109,7 @@ namespace CIAO
       CIAO::Utility::build_config_values_map (cm, config);
       CORBA::Any val;
 
-      const char *tmp;
+      const char *tmp = 0;
       CORBA::String_var exec_art, svnt_art, svnt_entry;
 
       if (cm.find (SVNT_ENTRYPT, val) == 0)
@@ -255,7 +255,7 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_Container_i::install_home");
 
-      if (id == 0)
+      if (!id)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
                       "No home ID provided\n"));
@@ -272,7 +272,7 @@ namespace CIAO
           throw Components::CreateFailure ();
         }
 
-      if (entrypt == 0)
+      if (!entrypt)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
                       "No executor entrypoint found.\n"));

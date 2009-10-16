@@ -1,3 +1,25 @@
+Thu Oct 15 07:43:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Small code improvements
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+          Doxygen changes, removed commented out namespace
+
+        * ciao/Containers/Container_Base.h:
+        * ciao/ComponentServer/Configurator_Factory.cpp
+          Doxygen changes
+
+        * ciao/Servants/Port_Activator.cpp:
+        * ciao/Servants/Port_Activator.h:
+        * ciao/Servants/Port_Activator.inl:
+          Virtual functions shouldn't be in an inline file
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+          Fixed build error
+
 Thu Oct 15 07:23:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
