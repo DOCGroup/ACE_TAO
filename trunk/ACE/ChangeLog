@@ -1,3 +1,9 @@
+Fri Oct 16 08:51:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+        * htlm/index.html:
+          Added dds4ccm
+
 Fri Oct 16 06:38:19 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/run_test.lst:
