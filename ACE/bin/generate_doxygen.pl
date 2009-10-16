@@ -77,6 +77,7 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              ,'tao_ifr');
 @CIAO_DOCS = ('ciao_config_handlers'
              ,'ciao_DAnCE'
+             ,'ciao_dds4ccm'
              ,'ciao');
 @DDS_DOCS = ('dds');
 
