@@ -1,3 +1,8 @@
+Fri Oct 16 06:38:19 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/run_test.lst:
+          Run Enum_Interfaces_Test, MT_SOCK_Test, TP_Reactor_Test on LynxOS.
+
 Fri Oct 16 06:00:42 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdio.h:
