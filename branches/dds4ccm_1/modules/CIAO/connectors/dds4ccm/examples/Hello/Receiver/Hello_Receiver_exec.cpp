@@ -63,14 +63,23 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     
     ACE_CString tm_rec (an_instance);
     int ims_rec = ACE_OS::atoi (tm_rec.substr (9, 6).c_str ());
-    int ims_now = dt.microsec ();
-    if ((ims_now - ims_rec) < 0)
-        ims_now += 1000000;
+    if (ims_rec > 0)
+      {
+        int ims_now = dt.microsec ();
+        if ((ims_now - ims_rec) < 0)
+            ims_now += 1000000;
 
-    printf ("<%s> received <%s>. difference <%d>\n", 
-          this->name_.c_str (), 
-          an_instance,
-          ims_now - ims_rec);
+        printf ("<%s> received <%s>. difference <%d>\n", 
+              this->name_.c_str (), 
+              an_instance,
+              ims_now - ims_rec);
+      }
+    else 
+      {
+        printf ("<%s> received <%s>.\n", 
+              this->name_.c_str (), 
+              an_instance);
+      }
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i

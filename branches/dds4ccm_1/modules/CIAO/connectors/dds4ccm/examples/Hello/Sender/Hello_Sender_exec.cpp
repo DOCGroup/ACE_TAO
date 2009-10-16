@@ -41,10 +41,12 @@ namespace CIAO_Hello_DDS_Sender_Impl
   public:
     Sending_Task (const ACE_CString &msg,
                   CORBA::ULong iters,
-                  ::CCM_DDS::string_Writer_ptr writer) 
+                  ::CCM_DDS::string_Writer_ptr writer,
+                  bool log_time) 
       : msg_ (msg),
         iters_ (iters),
-        writer_ (::CCM_DDS::string_Writer::_duplicate (writer))
+        writer_ (::CCM_DDS::string_Writer::_duplicate (writer)),
+        log_time_ (log_time)
     {
     }
 
@@ -66,6 +68,9 @@ namespace CIAO_Hello_DDS_Sender_Impl
 
     ACE_CString create_message (const ACE_CString &msg)
     {
+      if (!this->log_time_)
+        return msg;
+
       ACE_CString ret;
       ACE_TCHAR timestamp[26]; 
       ACE_Date_Time dt;
@@ -83,6 +88,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     const ACE_CString &msg_;
     CORBA::ULong iters_;
     ::CCM_DDS::string_Writer_var writer_;
+    bool log_time_;
   };
 
 
@@ -93,7 +99,8 @@ namespace CIAO_Hello_DDS_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : iters_ (10),
       msg_ ("Hi Johnny, I'm a CCM component sending DDS messages!"),
-      task_ (0)
+      task_ (0),
+      log_time_ (false)
   {
   }
 
@@ -117,6 +124,18 @@ namespace CIAO_Hello_DDS_Sender_Impl
   Sender_exec_i::message (const char *msg)
   {
     this->msg_ = msg;
+  }
+
+  bool
+  Sender_exec_i::log_time (void)
+  {
+    return this->log_time_;
+  }
+
+  void
+  Sender_exec_i::log_time (bool log_time)
+  {
+    this->log_time_ = log_time;
   }
 
 
@@ -163,7 +182,8 @@ namespace CIAO_Hello_DDS_Sender_Impl
 
     this->task_ = new Sending_Task (this->msg_,
                                     this->iters_,
-                                    writer);
+                                    writer,
+                                    this->log_time_);
 
     this->task_->activate (THR_NEW_LWP | THR_JOINABLE,
                            1);

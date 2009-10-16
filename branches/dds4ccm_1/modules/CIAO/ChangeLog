@@ -1,3 +1,11 @@
+Fri Oct 16 14:23:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Introduced an attribute which controls the timestamp logging.
+
 Fri Oct 16 14:09:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
