@@ -15,9 +15,9 @@ extern int tao_preproc_buffer_pos;
 
 #define TAO_YY_INPUT(buf,result,max_size)                           \
   {                                                                 \
-    result = 0      ;                                               \
+    result = 0;                                               \
     while ((tao_preproc_buffer_pos < tao_preproc_buffer_length) &&  \
-          (result < max_size))                                      \
+          ((size_t) result < (size_t) max_size))                                      \
       {                                                             \
         buf[result] = tao_preproc_buffer[tao_preproc_buffer_pos];   \
         ++tao_preproc_buffer_pos;                                   \
