@@ -43,9 +43,64 @@
 
 #include /**/ "Broker_exec_export.h"
 #include "tao/LocalObject.h"
+#include "ace/Task.h"
+#include "ace/Reactor.h"
 
 namespace CIAO_Quoter_Broker_Impl
 {
+
+  class Broker_exec_i;
+  /**
+  * @class reader activity generator
+  *
+  * @brief an active object used by StockBroker to perform a periodical read action
+  *
+  */
+  class read_action_Generator : public ACE_Task_Base
+  {
+  public:
+    read_action_Generator (Broker_exec_i &callback);
+
+    ~read_action_Generator ();
+
+    /// Hook method that performs application-defined initialization activities
+    int open_h (void);
+
+    /// Hook method that performs application-defined destruction activites
+    int close_h (void);
+
+    /// appliation-defined method for starting the pulse-generation service
+    int start (CORBA::ULong hertz);
+
+    /// application-defined method for stopping the pulse-generation service
+    int stop (void);
+
+    /// Indicate whether the current object is active
+    int active (void);
+
+    /// Handle the timeout.
+    virtual int handle_timeout (const ACE_Time_Value &tv,
+                                const void *arg);
+
+    /// Called when timer handler is removed.
+    virtual int handle_close (ACE_HANDLE handle,
+                              ACE_Reactor_Mask close_mask);
+
+    /// Hook methods implemnting the task's service processing,
+    /// invoked by all threads activated by activate () method
+    virtual int svc (void);
+
+  private:
+    /// Tracking whether we are actively generating pulse or not.
+    int active_;
+
+    /// Maintains a handle that actually process the event
+    Broker_exec_i &pulse_callback_;
+
+  };
+
+
+
   class BROKER_EXEC_Export Stock_Info_RawListener_exec_i
     : public virtual ::CCM_DDS::CCM_Stock_Info_RawListener,
       public virtual ::CORBA::LocalObject
@@ -91,11 +146,16 @@ namespace CIAO_Quoter_Broker_Impl
       const ::DDS::SampleLostStatus & status);
   };
   
+
   class BROKER_EXEC_Export Broker_exec_i
     : public virtual Broker_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
+
+
+
+
     Broker_exec_i (void);
     virtual ~Broker_exec_i (void);
     
@@ -105,10 +165,7 @@ namespace CIAO_Quoter_Broker_Impl
     
     // Port operations.
     
-	//mh
-	//virtual ::CCM_DDS::Stock_Info_Reader_ptr
-	//  Broker_exec_i::get_info_out_reader(void);
-    //
+	
 
     
     virtual ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
@@ -116,9 +173,10 @@ namespace CIAO_Quoter_Broker_Impl
     
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
-    
+    void read (void);
     // Operations from Components::SessionComponent.
-    
+     
+     
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -128,9 +186,15 @@ namespace CIAO_Quoter_Broker_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
+     virtual void start (void);
+       virtual void stop (void);
+    
+ 
   
   private:
     ::Quoter::CCM_Broker_Context_var context_;
+    read_action_Generator * ticker_;
+    ::CCM_DDS::Stock_Info_Reader_var reader_;
   };
   
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr
