@@ -79,7 +79,7 @@ namespace CIAO
     virtual PortableServer::POA_ptr the_POA (void);
     virtual PortableServer::POA_ptr the_port_POA (void);
 
-    /// get the receptacle policy given the receptacle name
+    /// Get the receptacle policy given the receptacle name
     CORBA::PolicyList * get_receptacle_policy (const char *name);
 
     /// Install a new home
@@ -89,7 +89,7 @@ namespace CIAO
                                                   const char *servant_entrypoint,
                                                   const char *name) = 0;
 
-    // Uninstall a servant for component or home.
+    /// Uninstall a servant for component or home.
     virtual void uninstall_home (Components::CCMHome_ptr homeref) = 0;
 
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
@@ -106,7 +106,7 @@ namespace CIAO
                                                Container_Types::OA_Type type,
                                                PortableServer::ObjectId_out oid) = 0;
 
-    // Uninstall a servant for component.
+    /// Uninstall a servant for component.
     virtual void uninstall_servant (PortableServer::Servant objref,
                                     Container_Types::OA_Type type,
                                     PortableServer::ObjectId_out oid) = 0;

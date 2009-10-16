@@ -62,7 +62,7 @@ namespace CIAO
     virtual PortableServer::Servant activate (
         const PortableServer::ObjectId &oid) = 0;
 
-        virtual void deactivate (::PortableServer::Servant servant) = 0;
+    virtual void deactivate (::PortableServer::Servant servant) = 0;
 
   protected:
     /// The object ID that is used to activate the servant within the
@@ -76,10 +76,6 @@ namespace CIAO
     Port_Activator_Types::Type const t_;
   };
 }
-
-#if defined (__ACE_INLINE__)
-# include "Port_Activator.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
