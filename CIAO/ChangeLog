@@ -1,4 +1,9 @@
-Thu Oct 15 07:43:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Oct 16 08:52:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          new doxygen file for dds4ccm
+
+Fri Oct 16 07:43:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_Container_Impl.cpp:
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
