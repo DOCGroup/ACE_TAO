@@ -9,8 +9,6 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::Reader_T (::DDS::DataReader_ptr r
 : reader_ (reader),
   condition_(0)
 {
-  
-  printf("----in constructor reader -----\n");
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::Reader_T");
   ACE_UNUSED_ARG (reader);
 }
@@ -48,7 +46,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
           typename NDDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
-/*  printf("------- in read_one Reader_T of ndds ------------- \n");
+  printf("------- in read_one Reader_T of ndds ------------- \n");
 
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
   if (rdr == 0)
@@ -72,39 +70,38 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
     DDS_SampleInfoSeq sample_info;
     DDS_ReturnCode_t retval;
 	
-  //impl->read (
- // This has to be reworked using a reader template and traits. 
+   // This has to be reworked using a reader template and traits. 
     NDDS_TYPE::dds_seq_type data;
+    
 	// NDDS_TYPE::dds_seq_type = dds sequence
 	// NDDS_TYPE::seq_type = ccm sequence
     if (this->condition_)
-      {
+    {
         // retval =  impl_->read_w_condition (data, sample_info, 1, this->condition_);
-      }
+    }
     else
-      {
-    
-	retval = impl_->read (data,
-                           sample_info,
-                           1,
-                           DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                           DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                           DDS_ALIVE_INSTANCE_STATE);
-       }
-	printf("------- in read_one Reader_T of ndds 222222222 \n");
+    {
+      retval = impl_->read (data,
+                            sample_info,
+                            1,
+                          DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
+                          DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                          DDS_ALIVE_INSTANCE_STATE);
+     }
     if (retval == DDS_RETCODE_OK)
       {
-//        an_instance = data[0];
-        //info.timestamp <<= sample_info[0].reception_timestamp;
+         printf (" ****************** retval after read is %d **************************\n", retval);
+         an_instance = data[0];
+         //info.timestamp = sample_info[0].reception_timestamp;
       }
     else
       {
         printf ("failed retval is %d ---\n", retval);
-        throw ::CCM_DDS::InternalError (retval, 0);
+//        throw ::CCM_DDS::InternalError (retval, 0);
       }
-printf("------- in read_one Reader_T of ndds 333333333333333\n");*/
-  ACE_UNUSED_ARG (an_instance);
-  ACE_UNUSED_ARG (info);
+ //  ACE_UNUSED_ARG (an_instance);
+//  ACE_UNUSED_ARG (info);
+
 }
 
 template <typename NDDS_TYPE, typename BASE >
