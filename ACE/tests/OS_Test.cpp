@@ -958,7 +958,7 @@ strsignal_test (void)
           test_status = 1;
         }
       else
-	{
+        {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" Sig #%d: %s\n"), i, result));
         }
     }
