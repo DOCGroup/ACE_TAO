@@ -156,6 +156,18 @@ ACE_OS::strerror_emulation (int)
 }
 #endif /* ACE_LACKS_STRERROR */
 
+char *
+ACE_OS::strsignal (int sig)
+{
+#if defined (ACE_HAS_STRSIGNAL)
+  return ACE_STD_NAMESPACE::strsignal (sig);
+#else
+  static char signal_text[128];
+  ACE_OS::sprintf (signal_text, "Unknown signal: %d", sig);
+  return signal_text;
+#endif
+}
+
 const char *
 ACE_OS::strnchr (const char *s, int c, size_t len)
 {

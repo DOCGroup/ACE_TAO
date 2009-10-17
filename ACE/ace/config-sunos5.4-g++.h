@@ -129,6 +129,7 @@
 
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
+#define ACE_HAS_STRSIGNAL
 
 /* Turn off the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.
