@@ -646,8 +646,6 @@ ACE_HAS_SYS_LOADAVG_H                   Compiler/platform contains the
                                         <sys/loadavg.h> file.
 ACE_HAS_SYS_PSTAT_H                     Compiler/platform contains the
                                         <sys/pstat.h> file.
-ACE_HAS_SYS_SIGLIST                     Compiler/platform supports
-                                        _sys_siglist array
 ACE_HAS_SYS_SOCKIO_H                    Compiler/platform provides the
                                         sockio.h file
 ACE_HAS_SYS_SYSCALL_H                   Compiler/platform contains the
@@ -1706,27 +1704,6 @@ ACE_HAS_SYS_FILIO_H:
      <sgtty.h> defines some like FIOCLEX.
      some are never defined.
      use #ifdef HP-UX to modify sysincludes.h
-
-
-ACE_HAS_SYS_SIGLIST:
---------------------
-
-  Used in:
-     ace/OS.h
-     libsrc/Log_Msg/Log_Msg.C
-
-  Notes:
-     if not defined, does a:
-     extern const char **_sys_siglist;
-
-  Solaris:
-     This is an array holding signal descriptions.
-
-  HPUX:
-     don't set.
-     Some additional work is required.  In libsrc/Log_Msg/Log_Msg.C,
-     sys_siglist is used regardless of ACE_HAS_SYS_SIGLIST.
-     have to add #ifdefs to remove them.
 
 
 ACE_HAS_TEMPLATE_TYPEDEFS:

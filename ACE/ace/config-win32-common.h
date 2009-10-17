@@ -347,9 +347,6 @@
 // Platform provides <sys/filio.h> header.
 //define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports sys_siglist array.
-//define ACE_HAS_SYS_SIGLIST
-
 // Platform supports ACE_TLI timod STREAMS module.
 //define ACE_HAS_TIMOD_H
 

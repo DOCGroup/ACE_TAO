@@ -938,6 +938,34 @@ string_convert_test (void)
 #endif /* ACE_HAS_WCHAR */
 }
 
+// Test ACE_OS::strsignal()
+int
+strsignal_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing strsignal method\n")));
+
+  int test_status = 0;
+
+  const char* result = 0;
+
+  for (int i=0; i < (ACE_NSIG + 1); ++i)
+    {
+      result = ACE_OS::strsignal (i);
+      if (result == 0)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("strsignal returned null\n")));
+          test_status = 1;
+        }
+      else
+	{
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" Sig #%d: %s\n"), i, result));
+        }
+    }
+
+  return test_status;
+}
+
 // Test the methods for getting cpu info
 int
 cpu_info_test (void)
@@ -1238,6 +1266,9 @@ run_main (int, ACE_TCHAR *[])
     status = result;
 
   if ((result = string_strsncpy_test ()) != 0)
+      status = result;
+
+  if ((result = strsignal_test ()) != 0)
       status = result;
 
   if ((result = cpu_info_test ()) != 0)

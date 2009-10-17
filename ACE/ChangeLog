@@ -1,3 +1,28 @@
+Sat Oct 17 19:58:52 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_string.cpp:
+          Added ACE_OS::strsignal().
+
+        * ace/config-cygwin32.h:
+        * ace/config-freebsd.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+          Added ACE_HAS_STRSIGNAL
+
+        * tests/OS_Test.cpp:
+          Added a test for ACE_OS::strsignal().
+
+        * ace/config-win32-common.h:
+        * ace/README:
+        * ace/config-cray.h:
+          Removed references to ACE_HAS_SYS_SIGLIST. It will be removed
+          soon.
+
 Sat Oct 17 10:29:13 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:

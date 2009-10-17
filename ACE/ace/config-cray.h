@@ -189,8 +189,6 @@
 
 // Ones to check out at some point
 
-/* #define ACE_HAS_SYS_SIGLIST */
-
 // C++ Compiler stuff to verify
 /* #define ACE_NEW_THROWS_EXCEPTIONS */
 /* #define ACE_HAS_TEMPLATE_TYPEDEFS */
