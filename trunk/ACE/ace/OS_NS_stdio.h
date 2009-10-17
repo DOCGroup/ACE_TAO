@@ -234,10 +234,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int fclose (FILE *fp);
 
-# if defined (fdopen)
-#   undef fdopen
-# endif /* fdopen */
-
   ACE_NAMESPACE_INLINE_FUNCTION
   FILE *fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode);
 
