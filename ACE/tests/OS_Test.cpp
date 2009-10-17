@@ -1138,38 +1138,6 @@ ace_ctype_test (void)
 }
 
 int
-getmacaddress_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing getmacaddress\n")));
-
-#if defined (ACE_LACKS_NETWORKING)
-  return 0;
-#else /* ACE_LACKS_NETWORKING */
-  struct ACE_OS::macaddr_node_t node;
-
-  ACE_OS::memset (&node, 0x0, sizeof (node));
-  int retval = ACE_OS::getmacaddress (&node);
-  if (retval == 0)
-    {
-      if (node.node[0] == 0x0 && node.node[1] == 0x0 && node.node[2] == 0x0 &&
-          node.node[3] == 0x0 && node.node[4] == 0x0 && node.node[5] == 0x0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ACE_OS::getmacaddress() failed to get MAC address\n")));
-          ++retval;
-        }
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_OS::getmacaddress() returned %d, should be 0\n"),
-                  retval));
-    }
-  return retval;
-#endif /* ACE_LACKS_NETWORKING */
-}
-
-int
 ceil_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1291,9 +1259,6 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = ace_ctype_test ()) != 0)
-      status = result;
-
-  if ((result = getmacaddress_test ()) != 0)
       status = result;
 
   ACE_END_TEST;
