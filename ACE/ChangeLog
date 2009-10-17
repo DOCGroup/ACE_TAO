@@ -1,3 +1,8 @@
+Sat Oct 17 10:26:15 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdio.h:
+          Removed undef fdopen. We may need to add helper wrapper for fdopen.
+
 Sat Oct 17 07:32:19 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OS_Test.cpp:
