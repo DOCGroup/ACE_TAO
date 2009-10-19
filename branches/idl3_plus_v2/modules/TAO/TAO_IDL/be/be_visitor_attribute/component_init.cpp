@@ -35,6 +35,11 @@ int
 be_visitor_attribute_component_init::visit_attribute (
   be_attribute *node)
 {
+  if (node->readonly ())
+    {
+      return 0;
+    }
+    
   attr_ = node;
   be_type *ft = be_type::narrow_from_decl (node->field_type ());
   return ft->accept (this);

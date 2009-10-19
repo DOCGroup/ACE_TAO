@@ -73,7 +73,7 @@ int
 be_visitor_facet_svh::visit_extended_port (be_extended_port *node)
 {
   be_visitor_extended_port_facet_svh visitor (this->ctx_);
-
+  
   return visitor.visit_extended_port (node);
 }
 
