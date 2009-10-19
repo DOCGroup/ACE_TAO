@@ -1,3 +1,8 @@
+Mon Oct 19 11:58:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/INET_Addr_Test.cpp:
+          Unicode fixes
+
 Mon Oct 19 10:04:04 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_string.cpp:
