@@ -1,3 +1,17 @@
+Mon Oct 19 20:24:54 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+        * ace/config-cray.h:
+        * ace/config-cygwin32.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-rtems.h:
+        * configure.ac:
+        * m4/config_h.m4:
+          ACE_HAS_SYS_ERRLIST is no longer in use.
+
 Mon Oct 19 19:25:40 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/README:

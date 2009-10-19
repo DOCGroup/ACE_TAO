@@ -637,8 +637,6 @@ ACE_HAS_SYSV_SYSINFO                    Platform supports system
 ACE_HAS_SYSV_IPC                        Platform supports System V IPC
                                         (most versions of UNIX, but
                                         not Win32)
-ACE_HAS_SYS_ERRLIST                     Platform/compiler supports
-                                        _sys_errlist symbol
 ACE_HAS_SYS_FILIO_H                     Platform provides
                                         <sys/filio.h> header
 ACE_HAS_SYS_LOADAVG_H                   Compiler/platform contains the

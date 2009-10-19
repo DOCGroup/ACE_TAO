@@ -284,9 +284,6 @@
 
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-/* Platform/compiler supports _sys_errlist symbol */
-#define ACE_HAS_SYS_ERRLIST 1
-
 #define ACE_HAS_UALARM
 
 // Platform supports ucontext_t (which is used in the extended signal API).

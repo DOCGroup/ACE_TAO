@@ -1568,48 +1568,6 @@ ACE_CACHE_CHECK([for sys_siglist],
         ])
 ],[AC_DEFINE([ACE_HAS_SYS_SIGLIST])],)
 
-dnl Check for sys_errlist
-dnl TODO: Check whether this variable can be defined somewhere else.
-ACE_CACHE_CHECK([for sys_errlist],
-    [ace_cv_lib_posix_sys_errlist],[
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <stdio.h>
-#include <errno.h>
-#if !defined (_sys_errlist)
-# define _sys_errlist sys_errlist
-#endif
-        ]],[[
-         void* vp = (void*) &_sys_errlist;
-        ]])],[
-         ace_cv_lib_posix_sys_errlist=yes
-        ],[
-         dnl Check if sys_errlist is a global variable in a library
-         AC_LINK_IFELSE([AC_LANG_PROGRAM(
-           [[
-#include <stdio.h>
-#include <errno.h>
-
-#if !defined (_sys_errlist)
-# define _sys_errlist sys_errlist
-#endif
-
-extern const char * const _sys_errlist[];
-           ]],
-           [[
-            void* vp = (void*) &_sys_errlist;
-           ]])],
-           [
-            ace_cv_lib_posix_sys_errlist=yes
-           ],
-           [
-            ace_cv_lib_posix_sys_errlist=no
-           ])
-        ])
-    ],[AC_DEFINE([ACE_HAS_SYS_ERRLIST])],)
-
-dnl Save the cache for debugging purposes
-AC_CACHE_SAVE
-
 
 dnl SECTION 9: checks for compiler characteristics
 
