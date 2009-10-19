@@ -1,3 +1,9 @@
+Mon Oct 19 00:26:06 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp: Another shot
+          at trying to fix the memory leaks in the servants.  Thanks to
+          Johnny for reporting this.
+
 Fri Oct 16 02:09:47 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/mcpp_tao_yyinput.h:
