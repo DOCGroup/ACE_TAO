@@ -581,9 +581,6 @@ AH_TEMPLATE([ACE_HAS_SVR4_TLI],
 AH_TEMPLATE([ACE_HAS_SYSV_IPC],
 [Platform supports System V IPC (most versions of UNIX, but not Win32)])
 
-AH_TEMPLATE([ACE_HAS_SYS_ERRLIST],
-[Platform/compiler supports _sys_errlist symbol])
-
 AH_TEMPLATE([ACE_HAS_SYS_SIGLIST],
 [Compiler/platform supports _sys_siglist array])
 
