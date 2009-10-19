@@ -103,7 +103,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
       if (addr.get_ip_address () != ACE_HTONL (addr32))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error: %s failed get_ip_address() check\n")
+                      ACE_TEXT ("Error: %C failed get_ip_address() check\n")
                       ACE_TEXT ("0x%x != 0x%x\n"),
                       ipv4_addresses[i],
                       addr.get_ip_address (),
@@ -115,8 +115,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr() check\n")
-                      ACE_TEXT ("%s != %s\n"),
+                      ACE_TEXT ("%C failed get_host_addr() check\n")
+                      ACE_TEXT ("%C != %C\n"),
                       ipv4_addresses[i],
                       addr.get_host_addr (),
                       ipv4_addresses[i]));
@@ -129,8 +129,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::strcmp (&hostaddr[0], haddr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr(char* buf,int) check\n")
-                      ACE_TEXT ("buf ['%s'] != return value ['%s']\n"),
+                      ACE_TEXT ("%C failed get_host_addr(char* buf,int) check\n")
+                      ACE_TEXT ("buf ['%C'] != return value ['%C']\n"),
                       ipv4_addresses[i],
                       &hostaddr[0],
                       haddr));
@@ -139,8 +139,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
       if (ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr(char*,int) check\n")
-                      ACE_TEXT ("buf ['%s'] != expected value ['%s']\n"),
+                      ACE_TEXT ("%C failed get_host_addr(char*,int) check\n")
+                      ACE_TEXT ("buf ['%C'] != expected value ['%C']\n"),
                       ipv4_addresses[i],
                       &hostaddr[0],
                       ipv4_addresses[i]));
@@ -165,8 +165,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed second get_host_addr() check\n")
-                      ACE_TEXT ("return value ['%s'] != expected value ['%s']\n"),
+                      ACE_TEXT ("%C failed second get_host_addr() check\n")
+                      ACE_TEXT ("return value ['%C'] != expected value ['%C']\n"),
                       ipv4_addresses[i],
                       addr.get_host_addr (),
                       ipv4_addresses[i]));
@@ -220,7 +220,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
           if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv6_addresses[i]))
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("IPv6 get_host_addr failed: %s != %s\n"),
+                          ACE_TEXT ("IPv6 get_host_addr failed: %C != %C\n"),
                           addr.get_host_addr (),
                           ipv6_addresses[i]));
               status = 1;
@@ -251,7 +251,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ACE_INET_Addr::is_loopback() ")
-                      ACE_TEXT ("failed to distinguish loopback address. %s\n")
+                      ACE_TEXT ("failed to distinguish loopback address. %C\n")
                       , loopback_addresses[i].name));
           status = 1;
         }
