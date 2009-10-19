@@ -22,6 +22,8 @@
 #include "ComponentAttributesSetter.h"
 #include "Name_Utilities.h"
 
+#include <string>
+
 //#include "ComponentInstallation_Impl.h"
 
 #ifdef GEN_OSTREAM_OPS
