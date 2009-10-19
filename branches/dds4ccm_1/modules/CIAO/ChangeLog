@@ -1,3 +1,32 @@
+Mon Oct 19 17:08:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes:
+        * connectors/dds4ccm/examples/Shapes/Base:
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.mpc:
+        * connectors/dds4ccm/examples/Shapes/Connector:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3p:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3p:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.mpc:
+        * connectors/dds4ccm/examples/Shapes/Sender:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3p:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.mpc:
+        * connectors/dds4ccm/examples/Shapes/descriptors:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+          Added framework for a shape example.
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Removed logging regarding StockInfo.
+
 Mon Oct 19 13:17:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:

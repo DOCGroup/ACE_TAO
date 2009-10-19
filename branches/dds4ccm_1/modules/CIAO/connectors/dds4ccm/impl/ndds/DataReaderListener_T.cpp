@@ -35,7 +35,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTE
 
   if (!reader) {
     /* In this specific case, this will never fail */
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Stock_InfoDataReader::narrow failed.\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
     return;
   }
 
