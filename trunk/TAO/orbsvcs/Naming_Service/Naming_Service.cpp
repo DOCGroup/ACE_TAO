@@ -2,6 +2,7 @@
 
 #include "Naming_Service.h"
 
+#include "orbsvcs/Daemon_Utilities.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
@@ -28,6 +29,10 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 {
   try
     {
+      // Check if -ORBDaemon is specified and if so, daemonize at this moment,
+      // -ORBDaemon in the ORB core is faulty, see bugzilla 3335
+      TAO_Daemon_Utility::check_for_daemon (argc, argv);
+
       // Initialize the ORB
       this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -38,9 +43,9 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 
       // This function call initializes the naming service and returns
       // '-1' in case of an exception.
-      int result = this->my_naming_server_.init_with_orb (argc,
-                                                          argv,
-                                                          this->orb_.in ());
+      int const result = this->my_naming_server_.init_with_orb (argc,
+                                                                argv,
+                                                                this->orb_.in ());
 
       if (result == -1)
         return result;

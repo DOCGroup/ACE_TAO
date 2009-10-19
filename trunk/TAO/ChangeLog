@@ -1,3 +1,14 @@
+Mon Oct 19 12:18:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+          Add Daemon_Utilities
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+          Use Deamon_Utilities to handle -ORBDeamon in the naming service. This
+          is because -ORBDeamon doesn't work for these services due to bugzilla
+          3335. This is related to bugzilla 3656
+
 Mon Oct 19 12:13:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
