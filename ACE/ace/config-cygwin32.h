@@ -112,9 +112,6 @@
 
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 #define ACE_HAS_STRSIGNAL
 
 // Compiler supports the ssize_t typedef.

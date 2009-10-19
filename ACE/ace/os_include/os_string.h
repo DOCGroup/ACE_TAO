@@ -45,16 +45,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-  // this looks fishy... dhinton
-#if !defined (ACE_HAS_STRERROR)
-# if defined (ACE_HAS_SYS_ERRLIST)
-    extern char *sys_errlist[];
-#   define strerror(err) sys_errlist[err]
-# else
-#   define strerror(err) "strerror is unsupported"
-# endif /* ACE_HAS_SYS_ERRLIST */
-#endif /* !ACE_HAS_STRERROR */
-
 #if defined (ACE_LACKS_STRTOK_R_PROTOTYPE) && !defined (_POSIX_SOURCE)
   char *strtok_r (char *s, const char *delim, char **save_ptr);
 #endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */

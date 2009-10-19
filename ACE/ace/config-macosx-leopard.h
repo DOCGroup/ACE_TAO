@@ -142,9 +142,6 @@
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SYS_SOCKIO_H
 

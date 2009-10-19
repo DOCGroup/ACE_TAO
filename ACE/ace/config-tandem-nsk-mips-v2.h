@@ -185,9 +185,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // to make some ACE modifications.]
 //#define ACE_HAS_REGEX
 
-// Compiler/platform supports strerror ()
-#define ACE_HAS_STRERROR
-
 // Platform doesn't have truncate()
 #define ACE_LACKS_TRUNCATE
 

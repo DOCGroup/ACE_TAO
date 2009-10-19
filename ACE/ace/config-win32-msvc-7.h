@@ -50,7 +50,6 @@
 #define ACE_HAS_EXCEPTIONS
 #endif /* ACE_HAS_WINCE */
 
-#define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
 
 #define ACE_HAS_SIG_ATOMIC_T
