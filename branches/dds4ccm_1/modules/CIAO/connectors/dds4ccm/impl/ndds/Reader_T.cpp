@@ -56,7 +56,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
       throw CORBA::INTERNAL ();
   }
 
-  NDDS_TYPE::data_reader*
+  typename NDDS_TYPE::data_reader*
 	  impl_ =  NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
 
   if (!impl_)
@@ -71,7 +71,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
     DDS_ReturnCode_t retval;
 	
    // This has to be reworked using a reader template and traits. 
-    NDDS_TYPE::dds_seq_type data;
+    typename NDDS_TYPE::dds_seq_type data;
     
 	// NDDS_TYPE::dds_seq_type = dds sequence
 	// NDDS_TYPE::seq_type = ccm sequence

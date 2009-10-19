@@ -1,3 +1,23 @@
+Mon Oct 19 18:29:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+          Made is real IDL.
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
+          Resolved compiler errors
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Created a compileable version.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved some compiler errors on Linux.
+
 Mon Oct 19 17:20:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl:

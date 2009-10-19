@@ -8,8 +8,8 @@
 #ifndef RECEIVER_IDL3
 #define RECEIVER_IDL3
 
-#include "Connector/Shape_Connector.idl3"
-#include "Connector/Shape_ConnectorE.idl"
+#include "Connector/Shapes_Connector.idl3"
+#include "Connector/Shapes_ConnectorE.idl"
 
 module Shape
 {

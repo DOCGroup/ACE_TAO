@@ -14,7 +14,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
   {
   }
 
-  extern "C" Shapes_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" SHAPES_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Shapes_Shapes_Connector_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =

@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef CIAO_SHAPES_CONNECTOR_EXEC_H_
-#define CIAO_SHAPES_CONNECTOR_EXEC_H_
+#ifndef SHAPES_CONNECTOR_EXEC_H_
+#define SHAPES_CONNECTOR_EXEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -41,7 +41,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
     ::Shapes::CCM_Shapes_Connector_Context,
     ::CCM_DDS::Shape_Info_RawListener> Shape_Info_Connector_Traits;
 
-  class Shapes_CONNECTOR_EXEC_Export Shapes_Connector_exec_i :
+  class SHAPES_CONNECTOR_EXEC_Export Shapes_Connector_exec_i :
     public Connector_T <Shape_Info_DDS_Traits, Shape_Info_Connector_Traits>
   {
   public:
@@ -49,7 +49,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
     virtual ~Shapes_Connector_exec_i (void);
   };
 
-  extern "C" Shapes_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" SHAPES_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Shapes_Shapes_Connector_Impl (void);
 }
 
