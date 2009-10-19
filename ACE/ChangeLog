@@ -1,3 +1,8 @@
+Mon Oct 19 14:28:07 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+          Added ACE_HAS_SYS_SIGLIST.
+
 Mon Oct 19 14:24:45 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Log_Msg_Test.cpp:
