@@ -624,6 +624,8 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), nill_string));
   errno = ENOENT;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), SIGINT));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), ACE_NSIG));
 
   Log_Spec_Verify  verifier;
 
