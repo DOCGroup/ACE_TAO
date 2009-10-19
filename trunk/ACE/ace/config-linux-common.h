@@ -344,9 +344,6 @@
 
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // Don't define _XOPEN_SOURCE in ACE to make strptime() prototype
 // visible.  ACE shouldn't depend on feature test macros to make
 // prototypes visible.

@@ -62,7 +62,6 @@
 #    define ACE_HAS_SIG_ATOMIC_T
 #  endif /* !Win CE 6.0 or less */
 
-#define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
 
 // Evaluate this with a WinCE build; maybe things have improved since VC8.

@@ -3314,9 +3314,6 @@ fi
 
 ACE_CHECK_LACKS_FUNCS(strchr)
 
-# believe it or not, both ACE_LACKS_STRERROR and ACE_HAS_STRERROR
-# feature test macros are currently used.
-ACE_CHECK_HAS_FUNCS(strerror)
 ACE_CHECK_LACKS_FUNCS(strerror)
 
 ACE_CHECK_LACKS_FUNCS(strftime)
