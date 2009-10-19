@@ -149,13 +149,13 @@ extern "C"
 
 #if defined (ACE_VXWORKS)
 #  define ACE_NSIG (_NSIGS + 1)
-#elif defined (__Lynx__) || defined (ACE_HAS_RTEMS)
+#elif defined (ACE_HAS_RTEMS)
 #  define ACE_NSIG (NSIG + 1)
 #else
    // All other platforms set NSIG to one greater than the
    // highest-numbered signal.
 #  define ACE_NSIG NSIG
-#endif /* __Lynx__ */
+#endif /* ACE_VXWORKS */
 
 #if defined (ACE_HAS_WINCE)
   typedef void (__cdecl * __sighandler_t)(int);

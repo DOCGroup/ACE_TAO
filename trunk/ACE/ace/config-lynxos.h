@@ -91,7 +91,6 @@
 #define ACE_HAS_SYS_ERRLIST
 #define ACE_HAS_SYS_FILIO_H
 #define ACE_HAS_SYS_SIGLIST
-#define ACE_HAS_STRSIGNAL
 #define ACE_HAS_SYS_SOCKIO_H
 #define ACE_HAS_TERMIOS
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
@@ -182,6 +181,7 @@
 #  define ACE_LACKS_STROPTS_H
 #  define ACE_LACKS_STRRECVFD
 #  define ACE_LACKS_SYS_SEM_H
+#  define ACE_SYS_SIGLIST __sys_siglist
 #  define _sys_siglist __sys_siglist
 #else
 // LynxOS 5.0 Removals
@@ -195,6 +195,7 @@
 #  define ACE_LACKS_USECONDS_T
 #  define ACE_LACKS_VSNPRINTF
 #  define ACE_LACKS_WCHAR_H
+#  define ACE_SYS_SIGLIST sys_siglist
 #endif
 
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
