@@ -1,3 +1,9 @@
+Mon Oct 19 20:58:10 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * configure.ac:
+        * m4/config_h.m4:
+          Added a check for strsignal.
+
 Mon Oct 19 20:24:54 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/README:
