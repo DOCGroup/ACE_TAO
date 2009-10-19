@@ -1,3 +1,19 @@
+Mon Oct 19 12:15:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosconcurrency:
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosevent:
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosnaming:
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosnotification:
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-costrading:
+        * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-rtevent:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosconcurrency:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosevent:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnaming:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnotification:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-costrading:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-rtevent:
+          Use -ORBDeamon instead of --deamon
+
 Mon Oct 19 12:10:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3729_Regression_Test.cpp:

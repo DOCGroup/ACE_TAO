@@ -24,7 +24,7 @@ pidpath="/var/run/${prog}.pid"
 start()
 {
     echo -n $"Starting $prog: "
-    daemon --user tao $progpath -p $pidpath $OPTIONS -ORBSvcConf $svcconf --daemon
+    daemon --user tao $progpath -p $pidpath $OPTIONS -ORBSvcConf $svcconf -ORBDaemon
     RETVAL=$?
     [ "$RETVAL" = 0 ] && touch $lockpath
     echo
