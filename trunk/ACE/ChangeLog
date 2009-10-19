@@ -1,3 +1,8 @@
+Mon Oct 19 14:24:45 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Log_Msg_Test.cpp:
+          Added a few debug messages to exercise %S modifier.
+
 Mon Oct 19 14:00:20 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/Sock_Connect.cpp:
