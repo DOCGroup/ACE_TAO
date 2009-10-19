@@ -16,7 +16,7 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_stdlib.h"
 #endif /* ACE_HAS_WCHAR */
 
-#if !defined (ACE_LACKS_STRERROR)
+#if !defined (ACE_LACKS_STRERROR) || !defined (ACE_HAS_STRSIGNAL)
 #  include "ace/OS_NS_stdio.h"
 #endif /* ACE_LACKS_STRERROR */
 
