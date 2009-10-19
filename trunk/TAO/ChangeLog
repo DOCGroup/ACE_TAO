@@ -1,3 +1,14 @@
+Mon Oct 19 12:13:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+          Use tao_idl_fe base project
+
+        * orbsvcs/orbsvcs/Daemon_Utilities.cpp:
+        * orbsvcs/orbsvcs/Daemon_Utilities.h:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+          New helper class which checks for -ORBDeamon and when this is specified
+          it calls ACE::deamonize()
+
 Mon Oct 19 00:26:06 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp: Another shot
@@ -7,7 +18,7 @@ Mon Oct 19 00:26:06 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Fri Oct 16 02:09:47 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/mcpp_tao_yyinput.h:
-        
+
           Fixed potential signed/unsigned mismatch in macro definition
           for TAO_YY_INPUT.
 
@@ -15,7 +26,7 @@ Thu Oct 15 21:44:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/mcpp_tao_yyinput.h:
         * TAO_IDL/fe/fe_extern.cpp:
-        
+
           Made tao_preproc_buffer_pos an extern int, similar to
           its neighbor tao_preproc_buffer_length, so it can be
           reset to 0 for each new file processed in the same
@@ -24,7 +35,7 @@ Thu Oct 15 21:44:22 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
           an error in the CoSMIC-specific backend, which is the
           only one currently processing multiple IDL files in
           a single execution. When reading the first token from
-          the 2nd file, the lexer would not be at the top of 
+          the 2nd file, the lexer would not be at the top of
           the buffer and would therefore read garbage.
 
 Thu Oct 15 17:02:54 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
