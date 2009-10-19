@@ -156,16 +156,26 @@ ACE_OS::strerror_emulation (int)
 }
 #endif /* ACE_LACKS_STRERROR */
 
+
 char *
-ACE_OS::strsignal (int sig)
+ACE_OS::strsignal (int signum)
 {
 #if defined (ACE_HAS_STRSIGNAL)
-  return ACE_STD_NAMESPACE::strsignal (sig);
+  return ACE_STD_NAMESPACE::strsignal (signum);
 #else
   static char signal_text[128];
-  ACE_OS::sprintf (signal_text, "Unknown signal: %d", sig);
+# if defined (ACE_HAS_SYS_SIGLIST)
+  if (signum < 0 || signum > (ACE_NSIG))
+    {
+      ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
+      return signal_text;
+    }
+  return ACE_SYS_SIGLIST[signum];
+# else
+  ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
   return signal_text;
-#endif
+# endif /* ACE_HAS_SYS_SIGLIST */
+#endif /* ACE_HAS_STRSIGNAL */
 }
 
 const char *
