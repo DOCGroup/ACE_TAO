@@ -11,15 +11,15 @@
 module Shapes
 {
   struct Shape_Info {
-    string<16> color; // key
+    string<16> color; //@key
     int x;
     int y;
     int size;
   };
 
   struct Attributes {
-    string<16> shape; // key
-    string<16> color; // key
+    string<16> shape; //@key
+    string<16> color; //@key
     float speed;
   };
 

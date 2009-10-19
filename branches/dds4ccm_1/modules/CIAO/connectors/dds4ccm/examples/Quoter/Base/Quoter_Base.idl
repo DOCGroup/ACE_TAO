@@ -15,7 +15,7 @@ module Quoter
     unsigned long low;
     unsigned long high;
     unsigned long current;
-    string symbol; // @key
+    string symbol; //@key
   };
   typedef sequence<Stock_Info> Stock_Info_Seq;
 };

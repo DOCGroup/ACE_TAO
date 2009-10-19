@@ -1,3 +1,9 @@
+Mon Oct 19 17:20:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+          Removed the space character from "// @key"
+
 Mon Oct 19 17:08:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes:
