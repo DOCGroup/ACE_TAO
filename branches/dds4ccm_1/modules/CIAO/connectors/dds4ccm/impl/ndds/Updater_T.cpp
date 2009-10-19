@@ -59,7 +59,7 @@ CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::create (const typename NDDS_TYPE
   if (this->is_lifecycle_checked_ && !DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
     throw CCM_DDS::AlreadyCreated (0);
   hnd = this->impl_->register_instance (an_instance);
-  printf ("############# REGISTERED INSTANCE <%d>\n", hnd);
+  //printf ("############# REGISTERED INSTANCE <%d>\n", hnd);
 }
 
 template <typename NDDS_TYPE, typename BASE >

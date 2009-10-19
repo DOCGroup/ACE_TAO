@@ -307,10 +307,11 @@ typename CONNECTOR_TYPE::getter_type::_ptr_type
 Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_get_out_data (void)
 {
   CIAO_TRACE ("get_info_get_out_data");
-  return 0;
-/*  this->configure_port_info_out_ ();
+
+  this->configure_port_info_out_ ();
+
   return new CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE,
-  typename CONNECTOR_TYPE::getter_type> (this->__info_out_datareader_.in ());*/
+  typename CONNECTOR_TYPE::getter_type> (this->__info_out_datareader_.in ());
 }
 
 template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
@@ -368,14 +369,11 @@ template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
 void
 Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::ccm_activate (void)
 {
-  printf (">>>>>>>>>>>>>>> ccm_activate\n");
-
   if (!CORBA::is_nil (this->context_->get_connection_info_out_listener ()) ||
       !CORBA::is_nil (this->context_->get_connection_info_out_status ()))
     {
       this->configure_port_info_out_ ();
     }
-  printf ("<<<<<<<<<<<<<<< ccm_activate\n");
 }
 
 template <typename NDDS_TYPE, typename CONNECTOR_TYPE>

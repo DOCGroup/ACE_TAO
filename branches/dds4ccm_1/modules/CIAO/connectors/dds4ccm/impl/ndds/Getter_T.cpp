@@ -95,6 +95,8 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
         printf ("failed retval is %d ---\n", retval);
         throw ::CCM_DDS::InternalError (retval, 0);
       }*/
+  ACE_UNUSED_ARG (an_instance);
+  ACE_UNUSED_ARG (info);
   return true;
 }
 
