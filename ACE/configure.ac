@@ -3270,6 +3270,8 @@ if test "$ac_cv_func_strnlen" = yes; then
 		[#include <string.h>])
 fi
 
+ACE_CHECK_HAS_FUNCS(strsignal)
+
 ACE_CHECK_LACKS_FUNCS(strchr)
 
 ACE_CHECK_LACKS_FUNCS(strerror)
