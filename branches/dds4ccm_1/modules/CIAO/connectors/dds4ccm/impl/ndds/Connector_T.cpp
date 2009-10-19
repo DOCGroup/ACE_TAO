@@ -16,11 +16,11 @@
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
-Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::Connector_T (void)
+Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::Connector_T (const char * topic_name)
   : default_domain_configured_ (false),
     domain_id_ (0),
     default_topic_configured_ (false),
-    topic_name_ ("Quoter_Topic"),
+    topic_name_ (topic_name),
     __info_in_configured_ (false),
     __info_out_configured_ (false),
     __info_out_rawlistener_enabled_ (false)

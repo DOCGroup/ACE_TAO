@@ -1,3 +1,11 @@
+Mon Oct 19 13:17:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          The connector template should be provided with a name.
+
 Mon Oct 19 12:36:26 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:

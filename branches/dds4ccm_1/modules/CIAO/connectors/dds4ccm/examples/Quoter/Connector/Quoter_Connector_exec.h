@@ -45,7 +45,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     public Connector_T <Stock_Info_DDS_Traits, Stock_Info_Connector_Traits>
   {
   public:
-    Quoter_Connector_exec_i (void);
+    Quoter_Connector_exec_i (const char * topic_name);
     virtual ~Quoter_Connector_exec_i (void);
   };
 

@@ -16,7 +16,7 @@ class Connector_T
     public virtual ::CORBA::LocalObject
 {
 public:
-  Connector_T (void);
+  Connector_T (const char * topic_name);
   virtual ~Connector_T (void);
 
   virtual char *topic_name (void);

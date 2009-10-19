@@ -5,7 +5,8 @@
 
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
-  Quoter_Connector_exec_i::Quoter_Connector_exec_i (void)
+  Quoter_Connector_exec_i::Quoter_Connector_exec_i (const char * topic_name)
+    : Connector_T<Stock_Info_DDS_Traits, Stock_Info_Connector_Traits> (topic_name)
   {
   }
 
@@ -21,7 +22,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
     ACE_NEW_NORETURN (
       retval,
-      Quoter_Connector_exec_i);
+      Quoter_Connector_exec_i ("Quoter_Topic"));
 
     return retval;
   }
