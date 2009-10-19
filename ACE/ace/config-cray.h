@@ -201,7 +201,5 @@
 
 /* #define ACE_LACKS_NAMED_POSIX_SEM */
 
-/* #define ACE_HAS_SYS_ERRLIST */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_CRAY_H */
