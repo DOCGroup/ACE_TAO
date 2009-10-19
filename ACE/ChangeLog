@@ -1,3 +1,8 @@
+Mon Oct 19 12:18:26 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_string.cpp:
+          Include OS_NS_stdio.h if ACE_HAS_STRSIGNAL is not defined.
+
 Mon Oct 19 12:15:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-init-fedora/rc.d/init.d/tao-cosconcurrency:
