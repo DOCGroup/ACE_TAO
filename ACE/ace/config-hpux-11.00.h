@@ -292,9 +292,6 @@
 // Platform supports ucontext_t (which is used in the extended signal API).
 #define ACE_HAS_UCONTEXT_T
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // Platform/compiler supports void * as second parameter to gettimeofday().
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 

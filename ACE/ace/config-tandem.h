@@ -111,9 +111,6 @@
 #define ACE_HAS_STREAM_PIPES
 //Platform supports STREAM pipes
 
-//Compiler/platform supports strerror ()
-#define ACE_HAS_STRERROR
-
 //Compiler/platform supports struct strbuf
 #define ACE_HAS_STRBUF_T
 

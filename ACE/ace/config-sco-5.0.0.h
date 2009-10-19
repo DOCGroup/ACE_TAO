@@ -62,9 +62,6 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 // Note, this only works if the flag is set above!

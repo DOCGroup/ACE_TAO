@@ -229,9 +229,6 @@
 /* Platform supports STREAM pipes */
 #define ACE_HAS_STREAM_PIPES 1
 
-/* Compiler/platform supports strerror () */
-#define ACE_HAS_STRERROR 1
-
 /* Platform/Compiler supports a String class (e.g., GNU or Win32). */
 #define ACE_HAS_STRING_CLASS 1
 

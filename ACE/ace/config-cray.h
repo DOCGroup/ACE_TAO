@@ -98,8 +98,6 @@
 
 #define ACE_HAS_MSG
 
-#define ACE_HAS_STRERROR
-
 #define ACE_HAS_GPERF
 
 // Special modifications that apply to UNICOS/mk

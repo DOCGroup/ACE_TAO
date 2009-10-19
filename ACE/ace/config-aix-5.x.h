@@ -209,9 +209,6 @@
 #define ACE_HAS_STREAMS
 // #define ACE_HAS_STREAM_PIPES
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // AIX bzero()
 #define ACE_HAS_STRINGS
 
