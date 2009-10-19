@@ -108,7 +108,15 @@ be_visitor_context_svh::visit_component (be_component *node)
       << "// defined in " << global << sname
       << "::CCM_" << lname << "_Context.";
 
-  this->gen_context_r (node);
+  if (this->gen_context_r (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_context_svh")
+                         ACE_TEXT ("::visit_component - ")
+                         ACE_TEXT ("gen_context_r() ")
+                         ACE_TEXT ("failed\n")),
+                        -1);
+    }
 
   if (swapping_)
     {

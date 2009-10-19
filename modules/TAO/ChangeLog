@@ -1,3 +1,25 @@
+Mon Oct 19 23:26:07 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svs.h:
+
+          New files containing new visitors with code factored out
+          of class be_visitor_component_svs
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_svs.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Changes stemming from the new visitors above.
+
 Fri Oct 16 19:54:38 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
