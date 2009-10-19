@@ -1,3 +1,12 @@
+Mon Oct 19 07:55:21 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_string.cpp:
+        * ace/config-lynxos.h:
+          LynxOS lacks strsignal. Added emulation using sys_siglist.
+
+        * ace/os_include/os_signal.h:
+          LynxOS now defines NSIG rigth. No need to add +1.
+
 Sat Oct 17 19:58:52 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_string.h:
