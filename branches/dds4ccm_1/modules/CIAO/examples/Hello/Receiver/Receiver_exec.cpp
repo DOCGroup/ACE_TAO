@@ -20,6 +20,7 @@
 
 #include "Receiver_exec.h"
 #include "ciao/CIAO_common.h"
+#include "ace/Date_Time.h"
 
 namespace CIAO_Hello_Receiver_Impl
 {
@@ -46,10 +47,22 @@ namespace CIAO_Hello_Receiver_Impl
       throw CORBA::BAD_INV_ORDER ();
 
     CORBA::String_var str = rev->get_message ();
-
-    ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Got message from the server [%C]\n",
-                str.in () ));
+    ACE_hrtime_t now = ACE_OS::gethrtime();
+    ACE_CString tm_rec (str.in ());
+    ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
+    if (received > 0)
+      {
+        ACE_hrtime_t dur = now - received;
+        ACE_DEBUG ((LM_EMERGENCY,
+                  "Receiver - Got message from the server [%C]. difference <%Q>\n",
+                  str.in (), dur ));
+      }
+    else 
+      {
+        ACE_DEBUG ((LM_EMERGENCY,
+                  "Receiver - Got message from the server [%C].\n",
+                  str.in () ));
+      }
   }
 
   // Operations from Components::SessionComponen

@@ -68,6 +68,13 @@ namespace CIAO_Hello_Sender_Impl
     /// Operation to get the value of the attribute "local_message"
     virtual char * local_message ();
 
+    /// Operation to set the value of the attribute "log_time"
+    virtual void log_time (bool log_time);
+
+    /// Operation to get the value of the attribute "log_time"
+    virtual bool log_time ();
+
+
     /// Operation to set the value of the attribute "hertz"
     virtual void hertz (CORBA::Long hertz);
 
@@ -109,6 +116,8 @@ namespace CIAO_Hello_Sender_Impl
 
   private:
     CORBA::String_var message_;
+
+    CORBA::Boolean log_time_;
 
     CORBA::Long hertz_;
 
