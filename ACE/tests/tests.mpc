@@ -384,6 +384,13 @@ project(Bug_3710_Regression_Test) : acetest {
   }
 }
 
+project(Bug_3729_Regression_Test) : acetest {
+  exename = Bug_3729_Regression_Test
+  Source_Files {
+    Bug_3729_Regression_Test.cpp
+  }
+}
+
 project(Bug_3744_Regression_Test) : acetest {
   exename = Bug_3744_Regression_Test
   Source_Files {
