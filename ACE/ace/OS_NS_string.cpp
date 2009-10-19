@@ -165,7 +165,7 @@ ACE_OS::strsignal (int signum)
 #else
   static char signal_text[128];
 # if defined (ACE_HAS_SYS_SIGLIST)
-  if (signum < 0 || signum > (ACE_NSIG))
+  if (signum < 0 || signum >= ACE_NSIG)
     {
       ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
       return signal_text;
