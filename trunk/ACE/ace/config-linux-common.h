@@ -203,11 +203,13 @@
 // Completely common part :-)
 
 // Platform/compiler has the sigwait(2) prototype
-# define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGWAIT
 
-# define ACE_HAS_SIGSUSPEND
+#define ACE_HAS_SIGSUSPEND
 
-# define ACE_HAS_UALARM
+#define ACE_HAS_UALARM
+
+#define ACE_HAS_SYS_SIGLIST
 
 #if __GLIBC__ >= 2
 #ifndef ACE_HAS_POSIX_REALTIME_SIGNALS
