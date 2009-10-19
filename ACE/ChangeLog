@@ -1,3 +1,11 @@
+Mon Oct 19 12:10:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3729_Regression_Test.cpp:
+        * tests/INET_Addr_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Moved regression test for 3729 to its own file
+
 Mon Oct 19 11:58:04 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/INET_Addr_Test.cpp:
