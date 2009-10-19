@@ -1,3 +1,8 @@
+Mon Oct 19 18:18:37 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+          Added ACE_HAS_STRSIGNAL.
+
 Mon Oct 19 14:28:07 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
