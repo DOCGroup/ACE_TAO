@@ -164,17 +164,17 @@ ACE_OS::strsignal (int signum)
   return ACE_STD_NAMESPACE::strsignal (signum);
 #else
   static char signal_text[128];
-# if defined (ACE_HAS_SYS_SIGLIST)
   if (signum < 0 || signum >= ACE_NSIG)
     {
       ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
       return signal_text;
     }
+# if defined (ACE_SYS_SIGLIST)
   return ACE_SYS_SIGLIST[signum];
 # else
-  ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
+  ACE_OS::sprintf (signal_text, "Signal: %d", signum);
   return signal_text;
-# endif /* ACE_HAS_SYS_SIGLIST */
+# endif /* ACE_SYS_SIGLIST */
 #endif /* ACE_HAS_STRSIGNAL */
 }
 

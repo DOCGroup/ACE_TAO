@@ -1,3 +1,15 @@
+Tue Oct 20 10:35:57 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_string.cpp:
+          Reformatted returned string in emulated strsignal.
+          If signum is invalid, "Unknown signal %d" is used to
+          format the string. Otherwise, "Signal %d" is used.
+
+          Use ACE_SYS_SIGLIST instead of ACE_HAS_SYS_SIGLIST.
+
+        * ace/config-lynxos.h:
+          Removed ACE_HAS_SYS_SIGLIST. Macro is no longer used.
+
 Mon Oct 19 20:58:10 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * configure.ac:
