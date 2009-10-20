@@ -1,3 +1,11 @@
+Tue Oct 20 22:58:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/TAO_IDL_ACE.mwc:
+        
+          Updated in accordance with the changes of
+          
+          Thu Oct 15 07:20:38 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Tue Oct 20 12:09:06 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
