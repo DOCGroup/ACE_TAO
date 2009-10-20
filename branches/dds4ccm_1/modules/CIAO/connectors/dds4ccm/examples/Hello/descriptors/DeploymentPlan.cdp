@@ -471,16 +471,27 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>log_time</name>
+      <name>message</name>
       <value>
         <type>
-          <kind>tk_boolean</kind>
+          <kind>tk_string</kind>
         </type>
         <value>
-          <boolean>false</boolean>
+          <string>Hello, World</string>
         </value>
       </value>
     </configProperty>
+  <configProperty>
+    <name>log_time</name>
+    <value>
+      <type>
+        <kind>tk_boolean</kind>
+      </type>
+      <value>
+        <boolean>true</boolean>
+      </value>
+    </value>
+  </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>

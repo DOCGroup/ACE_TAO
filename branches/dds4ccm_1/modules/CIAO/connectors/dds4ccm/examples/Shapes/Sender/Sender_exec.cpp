@@ -32,15 +32,134 @@
 
 #include "Sender_exec.h"
 #include "ciao/CIAO_common.h"
+#include "ace/Guard_T.h"
 
 namespace CIAO_Shapes_Sender_Impl
 {
   //============================================================
+  // Pulse generator
+  //============================================================
+
+  pulse_Generator::pulse_Generator (Sender_exec_i &callback)
+    : active_ (0),
+      pulse_callback_ (callback)
+  {
+    // initialize the reactor
+    this->reactor (ACE_Reactor::instance ());
+  }
+
+  pulse_Generator::~pulse_Generator ()
+  {
+  }
+
+  int
+  pulse_Generator::open_h ()
+  {
+    // convert the task into a active object that runs in separate thread
+    return this->activate ();
+  }
+
+  int
+  pulse_Generator::close_h ()
+  {
+    this->reactor ()->end_reactor_event_loop ();
+
+    // wait for all threads in the task to exit before it returns
+    return this->wait ();
+  }
+
+  int
+  pulse_Generator::start (CORBA::ULong hertz)
+  {
+    // return if not valid
+    if (hertz == 0 || this->active_ != 0)
+    {
+      return -1;
+    }
+
+    // calculate the interval time
+    long usec = 1000000 / hertz;
+
+    std::cerr << "Starting pulse_generator with hertz of " << hertz << ", interval of "
+              << usec << std::endl;
+
+    if (this->reactor ()->schedule_timer (this,
+                                          0,
+                                          ACE_Time_Value (0, usec),
+                                          ACE_Time_Value (0, usec)) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to setup Timer\n"),
+                          -1);
+
+    }
+
+    this->active_ = 1;
+    return 0;
+  }
+
+  int
+  pulse_Generator::stop (void)
+  {
+    // return if not valid.
+    printf ("Stopping ticker\n");
+    if (this->active_ == 0)
+    {
+      return -1;
+    }
+    // cancle the timer
+    this->reactor ()->cancel_timer (this);
+    this->active_ = 0;
+    return 0;
+  }
+
+  int
+  pulse_Generator::active (void)
+  {
+    return this->active_;
+  }
+
+  int
+  pulse_Generator::handle_close (ACE_HANDLE handle,
+                                 ACE_Reactor_Mask close_mask)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
+                this,
+                handle,
+                close_mask));
+    return 0;
+  }
+
+  int
+  pulse_Generator::handle_timeout (const ACE_Time_Value &,
+                                   const void *)
+  {
+    // Notify the subscribers
+    this->pulse_callback_.tick ();
+    return 0;
+  }
+
+  int
+  pulse_Generator::svc (void)
+  {
+    // define the owner of the reactor thread
+    this->reactor ()->owner (ACE_OS::thr_self ());
+
+    // run event loop to wait for event, and then dispatch them to corresponding handlers
+    this->reactor ()->run_reactor_event_loop ();
+
+    return 0;
+  }
+  
+  //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   
-  Sender_exec_i::Sender_exec_i (void)
+  Sender_exec_i::Sender_exec_i (void) 
+    : rate_ (1)
   {
+    this->ticker_ = new pulse_Generator (*this);
   }
   
   Sender_exec_i::~Sender_exec_i (void)
@@ -49,16 +168,23 @@ namespace CIAO_Shapes_Sender_Impl
   
   // Supported operations and attributes.
   
+  void 
+  Sender_exec_i::tick ()
+  {
+    printf (">>> Ticking\n");
+    printf ("<<< Ticking\n");
+  }
+
   void
   Sender_exec_i::start (void)
   {
-    /* Your code here. */
+    this->ticker_->start (this->rate_);
   }
   
   void
   Sender_exec_i::stop (void)
   {
-    /* Your code here. */
+    this->ticker_->stop ();
   }
   
   // Component attributes.
@@ -66,15 +192,14 @@ namespace CIAO_Shapes_Sender_Impl
   ::CORBA::ULong
   Sender_exec_i::rate (void)
   {
-    /* Your code here. */
-    return 0;
+    return this->rate_;
   }
   
   void
   Sender_exec_i::rate (
-    ::CORBA::ULong /* rate */)
+    ::CORBA::ULong rate)
   {
-    /* Your code here. */
+    this->rate_ = rate;
   }
   
   // Port operations.
@@ -103,7 +228,8 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    /* Your code here. */
+    this->start ();
+    this->add_shape ("");
   }
   
   void

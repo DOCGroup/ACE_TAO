@@ -31,6 +31,7 @@
 #include "Hello_Receiver_exec.h"
 #include "ciao/CIAO_common.h"
 #include "ace/Date_Time.h"
+#include "ace/High_Res_Timer.h"
 
 #include "ace/Atomic_Op.h"
 
@@ -64,11 +65,13 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
     if (received > 0)
       {
-        ACE_hrtime_t dur = now - received;
-        printf ("<%s> received <%s>. difference <%lld>\n", 
+        ACE_Time_Value tv (0, 0);
+        ACE_High_Res_Timer::hrtime_to_tv (tv,
+                                          now - received);
+        printf ("<%s> received <%s>. difference <%d>\n", 
               this->name_.c_str (), 
               an_instance,
-              dur);
+              tv.usec ());
       }
     else 
       {

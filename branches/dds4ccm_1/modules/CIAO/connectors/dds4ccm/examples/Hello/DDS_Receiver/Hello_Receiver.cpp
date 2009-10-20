@@ -5,6 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
+#include "ace/High_Res_Timer.h"
 #include "ace/Date_Time.h"
 #include "ace/SString.h"
 
@@ -151,8 +152,10 @@ void HelloListener::on_data_available(::DDS::DataReader *reader) {
       ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
       if (received > 0)
         {
-          ACE_hrtime_t dur = now - received;
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C duration: %Q\n"), sample, dur));
+          ACE_Time_Value tv (0, 0);
+          ACE_High_Res_Timer::hrtime_to_tv (tv,
+                                            now - received);
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C duration: %d\n"), sample, tv.usec ()));
         }
       else 
         {
