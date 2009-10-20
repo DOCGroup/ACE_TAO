@@ -20,6 +20,7 @@
 
 #include "Receiver_exec.h"
 #include "ciao/CIAO_common.h"
+#include "ace/High_Res_Timer.h"
 #include "ace/Date_Time.h"
 
 namespace CIAO_Hello_Receiver_Impl
@@ -67,10 +68,12 @@ namespace CIAO_Hello_Receiver_Impl
         ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
         if (received > 0)
           {
-            ACE_hrtime_t dur = now - received;
+            ACE_Time_Value tv (0, 0);
+            ACE_High_Res_Timer::hrtime_to_tv (tv,
+                                              now - received);
             ACE_DEBUG ((LM_EMERGENCY,
-                      "Receiver - Got message from the server [%C]. difference <%Q>\n",
-                      str.in (), dur ));
+                      "Receiver - Got message from the server [%C]. difference <%d>\n",
+                      str.in (), tv.usec () ));
           }
         else 
           {

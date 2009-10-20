@@ -45,7 +45,6 @@ namespace CIAO_Hello_Sender_Impl
         strcpy(message, tm.in ());
         strcat(message, " ");
         strcat(message, this->component_.message_.in ());
-        ACE_DEBUG ((LM_EMERGENCY, "Sender sending out message: [%C]\n", message.in ()));
         return CORBA::string_dup(message);
       }
     else
