@@ -1,3 +1,11 @@
+Tue Oct 20 08:44:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/Receiver/Receiver.idl:
+        * examples/Hello/Receiver/Receiver_exec.h:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+          Added number of iterations.
+
 Mon Oct 19 18:29:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:

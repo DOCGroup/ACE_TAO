@@ -51,6 +51,12 @@ namespace CIAO_Hello_Receiver_Impl
     /// Default destructor.
     ~Receiver_exec_i ();
 
+    /// Operation to set the value of the attribute "iterations"
+    virtual void iterations (CORBA::Short iterations);
+
+    /// Operation to get the value of the attribute "iterations"
+    virtual CORBA::Short iterations ();
+    
     // Operation which will be called upon receiving the timeout event.
     virtual void
     push_click_in (::Hello::TimeOut *ev);
@@ -70,6 +76,7 @@ namespace CIAO_Hello_Receiver_Impl
 
   private:
     CORBA::String_var message_;
+    CORBA::Short iterations_;
   };
 
   /**

@@ -186,6 +186,17 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>10</short>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>

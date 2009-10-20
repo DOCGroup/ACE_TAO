@@ -31,6 +31,19 @@ namespace CIAO_Hello_Receiver_Impl
   Receiver_exec_i::~Receiver_exec_i ()
   {
   }
+  
+  void 
+  Receiver_exec_i::iterations (CORBA::Short iterations)
+  {
+    this->iterations_ = iterations;
+  }
+
+  CORBA::Short 
+  Receiver_exec_i::iterations ()
+  {
+    return this->iterations_;
+  }
+
 
   void
   Receiver_exec_i::push_click_in (::Hello::TimeOut * ev)
@@ -45,23 +58,26 @@ namespace CIAO_Hello_Receiver_Impl
 
     if (CORBA::is_nil (rev.in ()))
       throw CORBA::BAD_INV_ORDER ();
-
-    CORBA::String_var str = rev->get_message ();
-    ACE_hrtime_t now = ACE_OS::gethrtime();
-    ACE_CString tm_rec (str.in ());
-    ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
-    if (received > 0)
+    
+    for (int i = 0; i < this->iterations_; ++i)
       {
-        ACE_hrtime_t dur = now - received;
-        ACE_DEBUG ((LM_EMERGENCY,
-                  "Receiver - Got message from the server [%C]. difference <%Q>\n",
-                  str.in (), dur ));
-      }
-    else 
-      {
-        ACE_DEBUG ((LM_EMERGENCY,
-                  "Receiver - Got message from the server [%C].\n",
-                  str.in () ));
+        CORBA::String_var str = rev->get_message ();
+        ACE_hrtime_t now = ACE_OS::gethrtime();
+        ACE_CString tm_rec (str.in ());
+        ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
+        if (received > 0)
+          {
+            ACE_hrtime_t dur = now - received;
+            ACE_DEBUG ((LM_EMERGENCY,
+                      "Receiver - Got message from the server [%C]. difference <%Q>\n",
+                      str.in (), dur ));
+          }
+        else 
+          {
+            ACE_DEBUG ((LM_EMERGENCY,
+                      "Receiver - Got message from the server [%C].\n",
+                      str.in () ));
+          }
       }
   }
 
