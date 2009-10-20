@@ -1,3 +1,15 @@
+Tue Oct 20 16:20:33 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue_T.cpp (enqueue_*): Move the notify() call outside
+          the lock scope; holding the lock across a call that may block (or
+          do anything else we don't know about) is dangerous. It resulted in
+          deadlock at a customer site.
+
+          See Bugzilla #3250 for any follow-up issues.
+
+        * ace/Process_Mutex.h: Fix doxygen stuff and clarify the behavior
+          when based on semaphores vs. mutexes where there's a choice.
+
 Tue Oct 20 10:35:57 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_string.cpp:
