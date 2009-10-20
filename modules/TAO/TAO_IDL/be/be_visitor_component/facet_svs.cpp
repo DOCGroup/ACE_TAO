@@ -20,8 +20,7 @@
 // ============================================================================
 
 be_visitor_facet_svs::be_visitor_facet_svs (be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    os_ (*ctx->stream ())
+  : be_visitor_component_scope (ctx)
 {
 }
 

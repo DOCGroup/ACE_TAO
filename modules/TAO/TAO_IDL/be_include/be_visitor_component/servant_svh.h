@@ -23,7 +23,7 @@
 #ifndef _BE_COMPONENT_SERVANT_SVH_H_
 #define _BE_COMPONENT_SERVANT_SVH_H_
 
-class be_visitor_servant_svh : public be_visitor_scope
+class be_visitor_servant_svh : public be_visitor_component_scope
 {
   //
   // = TITLE
@@ -50,15 +50,8 @@ public:
   virtual int visit_mirror_port (be_mirror_port *node);
   
 private:
-  int gen_servant_r (be_component *node);
-                  
   /// Base class overrides and CIAO-specific code.                
   void gen_non_type_specific (void);
-  
-private:
-  be_component *node_;
-  TAO_OutStream &os_;
-  ACE_CString export_macro_;
 };
 
 #endif /* _BE_COMPONENT_SERVANT_SVH_H_ */

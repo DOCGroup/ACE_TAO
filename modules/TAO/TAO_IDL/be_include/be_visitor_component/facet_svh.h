@@ -23,7 +23,7 @@
 #ifndef _BE_COMPONENT_FACET_SVH_H_
 #define _BE_COMPONENT_FACET_SVH_H_
 
-class be_visitor_facet_svh : public be_visitor_scope
+class be_visitor_facet_svh : public be_visitor_component_scope
 {
   //
   // = TITLE
@@ -43,10 +43,6 @@ public:
   virtual int visit_provides (be_provides *node);
   virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_mirror_port (be_mirror_port *node);
-                  
-private:
-  TAO_OutStream &os_;
-  ACE_CString export_macro_;
 };
 
 #endif /* _BE_COMPONENT_FACET_SVH_H_ */
