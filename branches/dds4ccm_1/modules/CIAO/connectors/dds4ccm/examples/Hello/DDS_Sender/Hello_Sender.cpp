@@ -3,15 +3,18 @@
 #include "ace/OS_main.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Date_Time.h"
+#include "ace/SString.h"
 #include <ndds/ndds_namespace_cpp.h>
 
 int number_of_iterations = 100;
+bool log_time = false;
 const char* send_string = "This is a DDS sender";
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:s:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:s:t"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,6 +26,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'i':
         number_of_iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
+      case 't':
+        log_time = true;
+        break;
 
       case '?':
       default:
@@ -30,6 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "usage: %s "
                            "-s <send string>"
                            "-i <number of iterations>"
+                           "-t log timing"
                            "\n",
                            argv [0]),
                           -1);
@@ -100,8 +107,17 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     
     for (int i = 0; i < number_of_iterations; i++)
       {
+        ACE_TCHAR timestamp[16];
+        ACE_CString msg (send_string);
+        ACE_CString ret;
+        ACE_hrtime_t start = ACE_OS::gethrtime();
+        ACE_OS::sprintf (timestamp,
+                          "%lld",
+                          start);
+        ret.set (timestamp);
+        ret = ret + " " + msg;
         retcode = string_writer->write(
-                            send_string,
+                            ret.c_str (),
                             DDS_HANDLE_NIL);
         if (retcode != DDS_RETCODE_OK)
           {
