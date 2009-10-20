@@ -2,6 +2,8 @@
 
 #include "Notify_Service.h"
 
+#include "orbsvcs/Daemon_Utilities.h"
+
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Notify/EventChannelFactory.h"
 
@@ -110,6 +112,10 @@ TAO_Notify_Service_Driver::apply_timeout (CORBA::ORB_ptr orb)
 int
 TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 {
+  // Check if -ORBDaemon is specified and if so, daemonize at this moment,
+  // -ORBDaemon in the ORB core is faulty, see bugzilla 3335
+  TAO_Daemon_Utility::check_for_daemon (argc, argv);
+
   if (this->parse_args(argc, argv) != 0)
     return -1;
 
