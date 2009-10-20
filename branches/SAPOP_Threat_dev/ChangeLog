@@ -1,3 +1,13 @@
+Tue Oct 20 19:20:36 UTC 2009  Daniel L.C. Mack  <daniel.l.mack@vanderbilt.edu>
+
+        * utils/SANetGenerator:
+
+        * utils/SANetGenerator/Net_Skeleton.py:
+        * utils/SANetGenerator/Rand_Skeletons.py:
+
+	Added the initial files for generating SANets. Rand Skeletons is for different
+	random graph algorithms. Net Skeleton is a sample program using Rand Skeletons.
+
 Thu Oct 15 00:40:20 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * C2W/C2W_Demo.cpp:
@@ -20,7 +30,7 @@ Thu Oct 15 00:40:20 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
         * utils/PDDLtoSANetTranslator/PDDLParser/src/pddl4j/ErrorManager.java:
 
-	Eliminated initial action
+        Eliminated initial action
 
 Sun Oct  4 19:44:35 UTC 2009  Ben Podgursky  <bpodgursky@gmail.com>
 
