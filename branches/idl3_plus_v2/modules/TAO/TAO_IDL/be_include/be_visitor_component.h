@@ -25,6 +25,7 @@
 #include "be_visitor_interface.h"
 
 #include "be_visitor_component/component.h"
+#include "be_visitor_component/component_scope.h"
 #include "be_visitor_component/component_ch.h"
 #include "be_visitor_component/component_ci.h"
 #include "be_visitor_component/component_cs.h"

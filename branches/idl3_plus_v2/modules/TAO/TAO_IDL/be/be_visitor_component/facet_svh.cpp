@@ -20,18 +20,8 @@
 // ============================================================================
 
 be_visitor_facet_svh::be_visitor_facet_svh (be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    os_ (*ctx->stream ()),
-    export_macro_ (be_global->svnt_export_macro ())
+  : be_visitor_component_scope (ctx)
 {
-  /// All existing CIAO examples set the servant export values in the CIDL
-  /// compiler to equal the IDL compiler's skel export values. Below is a
-  /// partial effort to decouple them, should be completely decoupled
-  /// sometime. See comment in codegen.cpp, line 1173.
-  if (export_macro_ == "")
-    {
-      export_macro_ = be_global->skel_export_macro ();
-    }
 }
 
 be_visitor_facet_svh::~be_visitor_facet_svh (void)

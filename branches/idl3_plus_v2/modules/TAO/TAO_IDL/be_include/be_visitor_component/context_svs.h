@@ -23,7 +23,7 @@
 #ifndef _BE_COMPONENT_CONTEXT_SVS_H_
 #define _BE_COMPONENT_CONTEXT_SVS_H_
 
-class be_visitor_context_svs : public be_visitor_scope
+class be_visitor_context_svs : public be_visitor_component_scope
 {
   //
   // = TITLE
@@ -47,22 +47,32 @@ public:
   virtual int visit_mirror_port (be_mirror_port *node);
   
 private:
-  int gen_context_r (be_component *node);
-  
-  void gen_swapping_get_consumers_r (AST_Component *node);
-  void gen_swapping_get_consumer_block (const char *port_name);
-  
   void gen_uses_simplex (AST_Type *obj,
                          const char *port_name);       
   void gen_uses_multiplex (AST_Type *obj,
                            const char *port_name);
-                                   
+};
+
+// ======================================================
+
+class be_visitor_swapping_get_consumer
+  : public be_visitor_component_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_swapping_get_comsumer
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate a block of code
+  //   for each publishes port, including inherited ports.
+  //
+  //
+public:
+  be_visitor_swapping_get_consumer (be_visitor_context *ctx);
   
-private:
-  be_component *node_;
-  TAO_OutStream &os_;
-  bool swapping_;
-  bool static_config_;
+  ~be_visitor_swapping_get_consumer (void);
+  
+  virtual int visit_publishes (be_publishes *node);
 };
 
 #endif /* _BE_COMPONENT_CONTEXT_SVS_H_ */

@@ -23,7 +23,7 @@
 #ifndef _BE_COMPONENT_CONTEXT_SVH_H_
 #define _BE_COMPONENT_CONTEXT_SVH_H_
 
-class be_visitor_context_svh : public be_visitor_scope
+class be_visitor_context_svh : public be_visitor_component_scope
 {
   //
   // = TITLE
@@ -45,15 +45,6 @@ public:
   virtual int visit_emits (be_emits *node);
   virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_mirror_port (be_mirror_port *node);
-  
-private:
-  int gen_context_r (be_component *node);
-                  
-private:
-  be_component *node_;
-  TAO_OutStream &os_;
-  ACE_CString export_macro_;
-  bool swapping_;
 };
 
 #endif /* _BE_COMPONENT_CONTEXT_SVH_H_ */

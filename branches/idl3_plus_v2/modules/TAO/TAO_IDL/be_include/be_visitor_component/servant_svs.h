@@ -23,7 +23,8 @@
 #ifndef _BE_COMPONENT_SERVANT_SVS_H_
 #define _BE_COMPONENT_SERVANT_SVS_H_
 
-class be_visitor_servant_svs : public be_visitor_scope
+class be_visitor_servant_svs
+  : public be_visitor_component_scope
 {
   //
   // = TITLE
@@ -51,60 +52,210 @@ public:
   virtual int visit_mirror_port (be_mirror_port *node);
   
 private:
-  int gen_servant_r (be_component *node);
-  
   void compute_slots (AST_Component *node);
                   
-  void gen_obv_factory_registration_r (AST_Component *node);
-  void gen_obv_factory_registration (AST_Type *t);
-                  
-  int gen_attr_set_r (AST_Component *node);
-
   void gen_provides_top (void);
-  
-  void gen_facet_executor_block (const char *port_name);
-                  
   void gen_uses_top (void);
-  
-  void gen_connect_block (AST_Uses *u);
-                          
-  void gen_disconnect_block (AST_Uses *u);
-                             
-  void gen_receptacle_description (AST_Uses *u,
-                                   ACE_CDR::ULong slot);
-  
   void gen_publishes_top (void);
-  
-  void gen_subscribe_block (AST_Publishes *p);
-                            
-  void gen_unsubscribe_block (AST_Publishes *p);
-                              
-  void gen_event_source_description (AST_Publishes *p,
-                                     ACE_CDR::ULong slot);
-                                     
   void gen_emits_top (void);
-  
-  void gen_connect_consumer_block (AST_Emits *e);
-  
-  void gen_disconnect_consumer_block (AST_Emits *e);
-                                      
-  void gen_emitter_description (AST_Emits *e,
-                                ACE_CDR::ULong slot);
-  
-  void gen_populate_r (AST_Component *node);
-  
+
 private:
-  be_component *node_;
   be_interface *op_scope_;
-  TAO_OutStream &os_;
-  ACE_CString export_macro_;
-  bool swapping_;
+  
+  // Not used for now, but might be useful if generated
+  // code is optimized.
   ACE_CDR::ULong n_provides_;
   ACE_CDR::ULong n_uses_;
   ACE_CDR::ULong n_publishes_;
   ACE_CDR::ULong n_emits_;
   ACE_CDR::ULong n_consumes_;
 };
+
+// ======================================================
+
+class be_visitor_obv_factory_reg
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_obv_factory_reg (be_visitor_context *ctx);
+  
+  ~be_visitor_obv_factory_reg (void);
+  
+  virtual int visit_publishes (be_publishes *node);
+  virtual int visit_emits (be_emits *node);
+  virtual int visit_consumes (be_consumes *node);
+  
+private:
+  void gen_obv_factory_registration (AST_Type *t);
+};
+
+// ======================================================
+
+class be_visitor_attr_set : public be_visitor_component_scope
+{
+public:
+  be_visitor_attr_set (be_visitor_context *ctx);
+  
+  ~be_visitor_attr_set (void);
+  
+  virtual int visit_attribute (be_attribute *node);
+};
+
+// ======================================================
+
+class be_visitor_facet_executor_block
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_facet_executor_block (be_visitor_context *ctx);
+  
+  ~be_visitor_facet_executor_block (void);
+  
+  virtual int visit_provides (be_provides *node);
+};
+
+// ======================================================
+
+class be_visitor_connect_block
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_connect_block (be_visitor_context *ctx);
+  
+  ~be_visitor_connect_block (void);
+  
+  virtual int visit_uses (be_uses *node);
+};
+
+// ======================================================
+
+class be_visitor_disconnect_block
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_disconnect_block (be_visitor_context *ctx);
+  
+  ~be_visitor_disconnect_block (void);
+  
+  virtual int visit_uses (be_uses *node);
+};
+
+// ======================================================
+
+class be_visitor_receptacle_desc
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_receptacle_desc (be_visitor_context *ctx);
+  
+  ~be_visitor_receptacle_desc (void);
+  
+  virtual int visit_uses (be_uses *node);
+  
+private:
+  ACE_CDR::ULong slot_;
+};
+
+// ======================================================
+
+class be_visitor_subscribe_block
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_subscribe_block (be_visitor_context *ctx);
+  
+  ~be_visitor_subscribe_block (void);
+  
+  virtual int visit_publishes (be_publishes *node);
+};
+
+// ======================================================
+
+class be_visitor_unsubscribe_block
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_unsubscribe_block (be_visitor_context *ctx);
+  
+  ~be_visitor_unsubscribe_block (void);
+  
+  virtual int visit_publishes (be_publishes *node);
+};
+
+// ======================================================
+
+class be_visitor_event_source_desc
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_event_source_desc (be_visitor_context *ctx);
+  
+  ~be_visitor_event_source_desc (void);
+  
+  virtual int visit_publishes (be_publishes *node);
+  
+private:
+  ACE_CDR::ULong slot_;
+};
+
+// ======================================================
+
+class be_visitor_connect_consumer_block
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_connect_consumer_block (be_visitor_context *ctx);
+  
+  ~be_visitor_connect_consumer_block (void);
+  
+  virtual int visit_emits (be_emits *node);
+};
+
+// ======================================================
+
+class be_visitor_disconnect_consumer_block
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_disconnect_consumer_block (be_visitor_context *ctx);
+  
+  ~be_visitor_disconnect_consumer_block (void);
+  
+  virtual int visit_emits (be_emits *node);
+};
+
+// ======================================================
+
+class be_visitor_emitter_desc
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_emitter_desc (be_visitor_context *ctx);
+  
+  ~be_visitor_emitter_desc (void);
+  
+  virtual int visit_emits (be_emits *node);
+  
+private:
+  ACE_CDR::ULong slot_;
+};
+
+// ======================================================
+
+class be_visitor_populate_port_tables
+  : public be_visitor_component_scope
+{
+public:
+  be_visitor_populate_port_tables (be_visitor_context *ctx);
+  
+  ~be_visitor_populate_port_tables (void);
+  
+  virtual int visit_provides (be_provides *node);
+  
+  virtual int visit_consumes (be_consumes *node);
+};
+
+// ======================================================
 
 /// Worker class passed to traverse_inheritance_graph(),
 /// collects supported operations and attributes.

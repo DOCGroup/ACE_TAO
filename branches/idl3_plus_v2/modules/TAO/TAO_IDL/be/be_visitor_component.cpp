@@ -60,6 +60,7 @@
 #include "be_extern.h"
 
 #include "be_visitor_component/component.cpp"
+#include "be_visitor_component/component_scope.cpp"
 #include "be_visitor_component/component_ch.cpp"
 #include "be_visitor_component/component_ci.cpp"
 #include "be_visitor_component/component_cs.cpp"

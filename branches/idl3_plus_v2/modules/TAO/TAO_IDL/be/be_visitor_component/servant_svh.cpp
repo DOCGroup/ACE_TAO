@@ -20,19 +20,8 @@
 // ============================================================================
 
 be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    node_ (0),
-    os_ (*ctx->stream ()),
-    export_macro_ (be_global->svnt_export_macro ())
+  : be_visitor_component_scope (ctx)
 {
-  /// All existing CIAO examples set the servant export values in the CIDL
-  /// compiler to equal the IDL compiler's skel export values. Below is a
-  /// partial effort to decouple them, should be completely decoupled
-  /// sometime. See comment in codegen.cpp, line 1173.
-  if (export_macro_ == "")
-    {
-      export_macro_ = be_global->skel_export_macro ();
-    }
 }
 
 be_visitor_servant_svh::~be_visitor_servant_svh (void)
@@ -107,14 +96,14 @@ be_visitor_servant_svh::visit_component (be_component *node)
                         -1);
     }
 
-  status = this->gen_servant_r (node_);
+  status = this->visit_component_scope (node);
 
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_servant_svh::"
                          "visit_component - "
-                         "gen_servant_r() failed\n"),
+                         "visit_component_scope() failed\n"),
                         -1);
     }
 
@@ -368,30 +357,6 @@ be_visitor_servant_svh::visit_mirror_port (be_mirror_port *)
 {
   // TODO
   return 0;
-}
-
-int
-be_visitor_servant_svh::gen_servant_r (be_component *node)
-{
-  if (node == 0)
-    {
-      return 0;
-    }
-
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_servant_svh")
-                         ACE_TEXT ("::gen_servant_r - ")
-                         ACE_TEXT ("visit_scope() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
-    }
-
-  be_component *ancestor =
-    be_component::narrow_from_decl (node->base_component ());
-
-  return this->gen_servant_r (ancestor);
 }
 
 void
