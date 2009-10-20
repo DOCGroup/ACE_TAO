@@ -1781,9 +1781,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
 
     if (queue_count == -1)
       return -1;
-
-    this->notify ();
   }
+  this->notify ();
   return queue_count;
 }
 
@@ -1813,9 +1812,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
 
     if (queue_count == -1)
       return -1;
-
-    this->notify ();
   }
+  this->notify ();
   return queue_count;
 }
 
@@ -1845,9 +1843,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
 
     if (queue_count == -1)
       return -1;
-
-    this->notify ();
   }
+  this->notify ();
   return queue_count;
 }
 
@@ -1884,9 +1881,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
 
     if (queue_count == -1)
       return -1;
-
-    this->notify ();
   }
+  this->notify ();
   return queue_count;
 }
 
