@@ -15,6 +15,8 @@
 
 #include "Concurrency_Service.h"
 
+#include "orbsvcs/Daemon_Utilities.h"
+
 #include "ace/Argv_Type_Converter.h"
 #include "tao/debug.h"
 #include "ace/OS_main.h"
@@ -59,7 +61,7 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
     switch (c)
       {
       case 'd': // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o': // output the IOR to a file
         this->ior_file_name_ = get_opts.opt_arg();
@@ -91,6 +93,10 @@ Concurrency_Service::init (int argc,
 {
   ACE_DEBUG ((LM_DEBUG,
               "Concurrency_Service::init\n"));
+
+  // Check if -ORBDaemon is specified and if so, daemonize at this moment,
+  // -ORBDaemon in the ORB core is faulty, see bugzilla 3335
+  TAO_Daemon_Utility::check_for_daemon (argc, argv);
 
   // Copy command line parameter.
   ACE_Argv_Type_Converter command_line(argc, argv);

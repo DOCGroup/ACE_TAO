@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_Notify_Service) : orbsvcslib, orbsvcs_output, install, valuetype, orbsvcsexe, install, notification_serv, naming, iortable, messaging_optional {
+project(TAO_Notify_Service) : orbsvcslib, orbsvcs_output, install, valuetype, orbsvcsexe, install, notification_serv, naming, iortable, messaging_optional, svc_utils {
   sharedname   = TAO_Notify_Service
   dynamicflags = TAO_NOTIFY_SERVICE_BUILD_DLL
   Source_Files {

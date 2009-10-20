@@ -1,6 +1,7 @@
 // $Id$
 
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Daemon_Utilities.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "orbsvcs/CosEvent/CEC_Event_Loader.h"
@@ -19,18 +20,22 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   try
     {
+       // Check if -ORBDaemon is specified and if so, daemonize at this moment,
+       // -ORBDaemon in the ORB core is faulty, see bugzilla 3335
+      TAO_Daemon_Utility::check_for_daemon (argc, argv);
+
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Intialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv());
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_TCHAR_argv());
 
       // Call TAO_CEC_Event_Loader::init (argc, argv) from here.
       TAO_CEC_Event_Loader event_service;
 
       // To intialise the service
-      int result =
+      int const result =
         event_service.init (command_line.get_argc(), command_line.get_TCHAR_argv());
 
       if (result == -1)
