@@ -748,19 +748,6 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   return 0;
 }
 
-int
-be_visitor_servant_svs::visit_extended_port (be_extended_port *)
-{
-  return 0;
-}
-
-int
-be_visitor_servant_svs::visit_mirror_port (be_mirror_port *)
-{
-  // TODO
-  return 0;
-}
-
 void
 be_visitor_servant_svs::compute_slots (AST_Component *node)
 {
@@ -1231,6 +1218,24 @@ be_visitor_attr_set::visit_attribute (be_attribute *node)
                         -1);
     }
     
+  return 0;
+}
+
+int
+be_visitor_attr_set::visit_extended_port (be_extended_port *)
+{
+  return 0;
+}
+
+int
+be_visitor_attr_set::visit_mirror_port (be_mirror_port *)
+{
+  return 0;
+}
+
+int
+be_visitor_attr_set::visit_porttype (be_porttype *)
+{
   return 0;
 }
 

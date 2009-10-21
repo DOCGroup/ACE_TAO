@@ -279,16 +279,4 @@ be_visitor_context_svh::visit_emits (be_emits *node)
   return 0;
 }
 
-int
-be_visitor_context_svh::visit_extended_port (be_extended_port *)
-{
-  return 0;
-}
-
-int
-be_visitor_context_svh::visit_mirror_port (be_mirror_port *)
-{
-  // TODO
-  return 0;
-}
 

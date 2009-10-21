@@ -1,3 +1,57 @@
+Wed Oct 21 20:40:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_extended_port.cpp:
+        * TAO_IDL/be_include/be_visitor_extended_port.h:
+
+          Removed these files, should have been removed in
+
+          Wed Oct 21 14:10:35 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+
+        * TAO_IDL/be/be_visitor_component/facet_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/context_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_ex_idl.h:
+
+          New files, split executor IDL code generation into separate
+          visitors for the facet, context and executor classes. Also
+          added support for simple extended ports and porttypes.
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Added new files to the include lists.
+          
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be_include/be_util.h:
+
+          Moved utility methods to generate nested namespaces
+          to this class, so they can be visible to all visitors.
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_scope.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_scope.h:
+        * TAO_IDL/be_include/be_visitor_component/servant_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ex_idl.h:
+
+          Moved visit method overrides for extended port, mirror port
+          and porttype to the base class be_visitor_component_scope.
+          In every case so far, the extended port (and eventually the
+          mirror port) traversal just fetches the porttype reference
+          and visits its scope, calling back the port kind traversal
+          methods that happen to be overridden in the original
+          visitor, so there's no need to reimplement these methods
+          over and over.
+
 Wed Oct 21 14:10:35 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_extended_port/extended_port_svs.cpp:

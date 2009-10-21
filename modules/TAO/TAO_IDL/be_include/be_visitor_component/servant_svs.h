@@ -48,8 +48,6 @@ public:
   virtual int visit_publishes (be_publishes *node);
   virtual int visit_emits (be_emits *node);
   virtual int visit_consumes (be_consumes *node);
-  virtual int visit_extended_port (be_extended_port *node);
-  virtual int visit_mirror_port (be_mirror_port *node);
   
 private:
   void compute_slots (AST_Component *node);
@@ -99,6 +97,12 @@ public:
   ~be_visitor_attr_set (void);
   
   virtual int visit_attribute (be_attribute *node);
+  
+  // This visitor has nothing to do with ports, so we
+  // can override these base class methods to be no-ops.
+  virtual int visit_extended_port (be_extended_port *node);
+  virtual int visit_mirror_port (be_mirror_port *node);
+  virtual int visit_porttype (be_porttype *node);
 };
 
 // ======================================================

@@ -43,8 +43,6 @@ public:
   virtual int visit_uses (be_uses *node);
   virtual int visit_publishes (be_publishes *node);
   virtual int visit_emits (be_emits *node);
-  virtual int visit_extended_port (be_extended_port *node);
-  virtual int visit_mirror_port (be_mirror_port *node);
   
 private:
   void gen_uses_simplex (AST_Type *obj,

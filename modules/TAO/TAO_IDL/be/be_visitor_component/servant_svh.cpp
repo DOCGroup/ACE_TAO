@@ -346,19 +346,6 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
   return 0;
 }
 
-int
-be_visitor_servant_svh::visit_extended_port (be_extended_port *)
-{
-  return 0;
-}
-
-int
-be_visitor_servant_svh::visit_mirror_port (be_mirror_port *)
-{
-  // TODO
-  return 0;
-}
-
 void
 be_visitor_servant_svh::gen_non_type_specific (void)
 {
