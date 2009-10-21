@@ -81,6 +81,7 @@ namespace CIAO_Hello_Receiver_Impl
                       "Receiver - Got message from the server [%C].\n",
                       str.in () ));
           }
+        ACE_OS::sleep (0.2);
       }
   }
 

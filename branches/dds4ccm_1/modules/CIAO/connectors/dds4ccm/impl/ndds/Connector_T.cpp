@@ -64,18 +64,6 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::key_fields (void)
 }
 
 template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
-void
-Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::key_fields (
-  const ::DDS::StringSeq & key_fields)
-{
-  // @from DDS_TopicBase
-  this->key_fields_.length (key_fields.length ());
-
-  for (CORBA::ULong i = 0; i < this->key_fields_.length (); ++i)
-    this->key_fields_[i] = CORBA::string_dup (key_fields[i]);
-}
-
-template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
 ::DDS::DomainId_t
 Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::domain_id (void)
 {

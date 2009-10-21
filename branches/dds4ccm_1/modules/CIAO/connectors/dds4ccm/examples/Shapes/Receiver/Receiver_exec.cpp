@@ -157,7 +157,7 @@ namespace CIAO_Shape_Receiver_Impl
     /* Your code here. */
   }
   
-  extern "C"  ::Components::EnterpriseComponent_ptr
+  extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Shape_Receiver_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =

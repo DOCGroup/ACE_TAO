@@ -57,10 +57,10 @@ namespace CIAO_Hello_DDS_Sender_Impl
 
       for (size_t i = 0; i < this->iters_; ++i)
         {
-          ACE_OS::sleep (2);
           ACE_CString msg = create_message (this->msg_);
           this->writer_->write (msg.c_str ());
           ACE_DEBUG ((LM_DEBUG, "Sender has sent string\n"));
+          ACE_OS::sleep (0.2);
         } 
 
       return 0;

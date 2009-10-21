@@ -36,6 +36,8 @@
 
 #include "SenderEC.h"
 
+#include /**/ "Sender_exec_export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -91,7 +93,7 @@ namespace CIAO_Shapes_Sender_Impl
 
   };
   
-  class  Sender_exec_i
+  class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -114,6 +116,8 @@ namespace CIAO_Shapes_Sender_Impl
     stop (void);
     
     void tick ();
+    
+    void add_shape ();
     // Component attributes.
     
     // TAO_IDL - Generated from
@@ -149,8 +153,8 @@ namespace CIAO_Shapes_Sender_Impl
     CORBA::ULong rate_;
   };
   
-  extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Shapes_Sender_Impl (void);
+  extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Shape_Sender_Impl (void);
 }
 
 #endif /* ifndef */

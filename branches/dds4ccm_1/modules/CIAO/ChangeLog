@@ -1,3 +1,23 @@
+Wed Oct 21 08:44:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+          Changed sleeping times.
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Made key_fields attribute readonly.
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Changed in order to run run test script.
+
 Tue Oct 20 13:41:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:

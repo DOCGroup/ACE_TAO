@@ -127,7 +127,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Sending: %C\n"), send_string));
           }
-        ACE_OS::sleep (1);
+        ACE_OS::sleep (0.2);
     }
 
     /* --- Clean Up ------------------------------------------------------- */

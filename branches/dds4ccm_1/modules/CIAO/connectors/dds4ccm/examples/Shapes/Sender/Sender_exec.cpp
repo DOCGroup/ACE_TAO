@@ -175,6 +175,12 @@ namespace CIAO_Shapes_Sender_Impl
     printf ("<<< Ticking\n");
   }
 
+  void 
+  Sender_exec_i::add_shape ()
+  {
+  
+  }
+
   void
   Sender_exec_i::start (void)
   {
@@ -229,7 +235,7 @@ namespace CIAO_Shapes_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     this->start ();
-    this->add_shape ("");
+    this->add_shape ();
   }
   
   void
@@ -244,8 +250,8 @@ namespace CIAO_Shapes_Sender_Impl
     /* Your code here. */
   }
   
-  extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Shapes_Sender_Impl (void)
+  extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Shape_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();

@@ -128,7 +128,7 @@ namespace CIAO_Shape_Receiver_Impl
     ::Shape::CCM_Receiver_Context_var context_;
   };
   
-  extern "C"  ::Components::EnterpriseComponent_ptr
+  extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Shape_Receiver_Impl (void);
 }
 
