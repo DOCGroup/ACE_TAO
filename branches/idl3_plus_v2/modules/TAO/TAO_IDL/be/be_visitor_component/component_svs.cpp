@@ -46,7 +46,7 @@ be_visitor_component_svs::visit_component (be_component *node)
 {
   be_visitor_facet_svs facet_visitor (this->ctx_);
 
-  if (facet_visitor.visit_component (node) == -1)
+  if (facet_visitor.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_component_svs::")

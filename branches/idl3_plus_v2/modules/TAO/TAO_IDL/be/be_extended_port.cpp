@@ -32,6 +32,14 @@ be_extended_port::~be_extended_port (void)
 {
 }
 
+be_porttype *
+be_extended_port::port_type (void) const
+{
+  return
+    be_porttype::narrow_from_decl (
+      this->AST_Extended_Port::port_type ());
+}
+
 void
 be_extended_port::destroy (void)
 {

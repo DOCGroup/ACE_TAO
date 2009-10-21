@@ -47,7 +47,7 @@ be_visitor_component_svh::visit_component (be_component *node)
   // Generate the facet servant class declaration.
   be_visitor_facet_svh facet_visitor (this->ctx_);
   
-  if (facet_visitor.visit_component (node) == -1)
+  if (facet_visitor.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_component_svh::")
