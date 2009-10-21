@@ -147,25 +147,34 @@ namespace CIAO_Quoter_Broker_Impl
 
     return 0;
   }
-
-
-   void
-   Broker_exec_i::read (void)
-   {
+  
+  void
+  Broker_exec_i::read (void)
+  {
     std::cerr << "read" << std::endl;
-	::Quoter::Stock_Info  stock_info;
+    ::Quoter::Stock_Info  stock_info;
     ::CCM_DDS::ReadInfo readinfo;
-    printf("GO TO read ONE\n");    
-	this->reader_->read_one (stock_info, readinfo );  
+
+    printf("GO TO read ONE\n");
+      this->reader_->read_one (stock_info, readinfo );
 
     printf ("Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
             stock_info.symbol.in (),
             stock_info.low,
             stock_info.current,
             stock_info.high);
-   
-	printf("END OF READ_ONE\n");
-}
+    printf("END OF READ_ONE\n");
+    
+    printf("GO TO get ONE\n");
+      this->getter_->get_one (stock_info, readinfo );
+
+    printf ("Stock_Info_GET_One: received a stock_info for <%s> at %u:%u:%u\n",
+            stock_info.symbol.in (),
+            stock_info.low,
+            stock_info.current,
+            stock_info.high);
+    printf("END OF GET_ONE\n");
+  }
 	
 
   
@@ -286,14 +295,15 @@ namespace CIAO_Quoter_Broker_Impl
     /* Your code here. */
     std::cerr << ">>> Broker_exec_i::configuration_complete" << endl;
     this->reader_ = this->context_->get_connection_info_out_data();
+    this->getter_ = this->context_->get_connection_info_get_out_data ();
     this->ticker_->open_h ();
   }
       
  
   void
   Broker_exec_i::start (void)
-  { 
-	printf("start \n");
+  {
+    printf("start \n");
     std::cerr << ">>> Broker_exec_i::start" << endl;
     this->ticker_->start (500);
     printf("eind start \n");
@@ -310,8 +320,8 @@ namespace CIAO_Quoter_Broker_Impl
     std::cerr << ">>> Broker_exec_i::ccm_activate" << endl;
     ::CCM_DDS::ListenerControl_var lc = 
     this->context_->get_connection_info_out_control ();
-  
-	if (CORBA::is_nil (lc.in ()))
+
+    if (CORBA::is_nil (lc.in ()))
     {
       printf ("Error:  Listener control receptacle is null!\n");
       throw CORBA::INTERNAL ();
@@ -321,9 +331,6 @@ namespace CIAO_Quoter_Broker_Impl
    //in case of testing Reader set lc-> enabled false
     lc->enabled (false);
     this->start();
-
-
-
   }
   
   void

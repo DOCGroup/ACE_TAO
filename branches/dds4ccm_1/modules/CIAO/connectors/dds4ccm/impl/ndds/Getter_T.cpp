@@ -23,7 +23,7 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr r
     }
 
   this->impl_ =  NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
-
+  
   if (!this->impl_)
     {
       CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
@@ -68,34 +68,30 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
           typename NDDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
-/*  DDS_SampleInfoSeq sample_info;
-  DDS_ReturnCode_t retval;
+  DDSWaitSet* ws = new DDSWaitSet ();
+  DDSReadCondition* rd_condition = this->impl_->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
+                                                                  DDS_ANY_VIEW_STATE,
+                                                                  DDS_ANY_INSTANCE_STATE);
+  DDS_ReturnCode_t retcode = ws->attach_condition (rd_condition);
+  if (retcode != DDS_RETCODE_OK)
+    throw CCM_DDS::InternalError (retcode, 0);
+  DDSConditionSeq active_conditions;
+  DDS_SampleInfoSeq sample_info;
+  DDS_Duration_t dds_timeout = {0, 1000000000}; //1 sec.
+  retcode = ws->wait (active_conditions, dds_timeout);
+  if (retcode == DDS_RETCODE_TIMEOUT)
+    return false;
   typename NDDS_TYPE::dds_seq_type data;
-  if (this->condition_)
+  retcode = this->impl_->read_w_condition (data,
+                            sample_info,
+                            1,
+                            rd_condition);
+  if (retcode == DDS_RETCODE_OK)
     {
-      // retval =  impl_->read_w_condition (data, sample_info, 1, this->condition_);
+      an_instance = data[0];
     }
-    else
-      {
-        retval = impl_->read (data,
-                           sample_info,
-                           1,
-                           DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                           DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                           DDS_ALIVE_INSTANCE_STATE);
-       }
-    printf("------- in read_one Reader_T of ndds 222222222 \n");
-    if (retval == DDS_RETCODE_OK)
-      {
-        an_instance = data[0];
-        //info.timestamp <<= sample_info[0].reception_timestamp;
-      }
-    else
-      {
-        printf ("failed retval is %d ---\n", retval);
-        throw ::CCM_DDS::InternalError (retval, 0);
-      }*/
-  ACE_UNUSED_ARG (an_instance);
+  else
+    throw CCM_DDS::InternalError (retcode, 1);
   ACE_UNUSED_ARG (info);
   return true;
 }

@@ -55,6 +55,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     if (parse_args (argc, argv) != 0)
       return 1;
 
+    ACE_Time_Value tv (0, 1000); //1 msec
     /* Create the domain participant */
     ::DDS::DomainParticipant *participant = ::DDS::DomainParticipantFactory::get_instance()->
                         create_participant(
@@ -127,7 +128,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Sending: %C\n"), send_string));
           }
-        ACE_OS::sleep (0.2);
+        ACE_OS::sleep (tv);
     }
 
     /* --- Clean Up ------------------------------------------------------- */

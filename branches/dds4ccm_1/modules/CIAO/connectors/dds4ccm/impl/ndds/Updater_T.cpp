@@ -8,7 +8,7 @@
 template <typename NDDS_TYPE, typename BASE >
 CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr dw)
   : impl_ (0),
-    is_lifecycle_checked_ (true)
+    is_lifecycle_checked_ (false)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::Updater_T");
 

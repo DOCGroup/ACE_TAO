@@ -214,9 +214,9 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_in_ (void)
 
 template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
 void
-Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_out_ (void)
+Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_out_ (bool create_getter)
 {
-  if (this->__info_out_configured_)
+  if (this->__info_out_configured_ && this->__info_get_configured_ )
     return;
 
   this->configure_default_topic_ ();
@@ -241,12 +241,24 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_out_ (void)
                   this->context_->get_connection_info_out_status (),
                   this->__info_out_rawlistener_enabled_);
           ::DDS::DataReaderQos drqos;
-          this->__info_out_datareader_ =
-              this->__info_out_subscriber_->create_datareader (this->topic_.in (),
+          if (create_getter)
+            {
+              this->__info_get_datareader_ =
+                  this->__info_out_subscriber_->create_datareader (this->topic_.in (),
                                                                drqos,
                                                                this->__info_out_datareaderlistener.in (),
                                                                DDS_DATA_AVAILABLE_STATUS);
-          __info_out_configured_ = true;
+              this->__info_get_configured_ = true;
+            }
+          else
+            {
+              this->__info_out_datareader_ =
+                  this->__info_out_subscriber_->create_datareader (this->topic_.in (),
+                                                               drqos,
+                                                               this->__info_out_datareaderlistener.in (),
+                                                               DDS_DATA_AVAILABLE_STATUS);
+              this->__info_out_configured_ = true;
+            }
         }
     }
   catch (...)
@@ -296,7 +308,7 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_get_out_data (void)
 {
   CIAO_TRACE ("get_info_get_out_data");
 
-  this->configure_port_info_out_ ();
+  this->configure_port_info_out_ (true);
 
   return new CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE,
   typename CONNECTOR_TYPE::getter_type> (this->__info_out_datareader_.in ());
@@ -308,7 +320,7 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_out_data (void)
 {
   CIAO_TRACE ("get_info_out_data");
 
-  this->configure_port_info_out_ ();
+  this->configure_port_info_out_ (false);
 
   return new CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE,
   typename CONNECTOR_TYPE::reader_type> (this->__info_out_datareader_.in ());
@@ -360,7 +372,7 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::ccm_activate (void)
   if (!CORBA::is_nil (this->context_->get_connection_info_out_listener ()) ||
       !CORBA::is_nil (this->context_->get_connection_info_out_status ()))
     {
-      this->configure_port_info_out_ ();
+      this->configure_port_info_out_ (false);
     }
 }
 

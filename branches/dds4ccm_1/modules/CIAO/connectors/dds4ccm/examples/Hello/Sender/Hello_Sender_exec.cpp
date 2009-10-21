@@ -54,13 +54,13 @@ namespace CIAO_Hello_DDS_Sender_Impl
     {
       // Allowing some time for discovery to happen
       ACE_OS::sleep (5);
-
+      ACE_Time_Value tv (0, 1000); //1 msec
       for (size_t i = 0; i < this->iters_; ++i)
         {
           ACE_CString msg = create_message (this->msg_);
           this->writer_->write (msg.c_str ());
           ACE_DEBUG ((LM_DEBUG, "Sender has sent string\n"));
-          ACE_OS::sleep (0.2);
+          ACE_OS::sleep (tv);
         } 
 
       return 0;

@@ -195,6 +195,7 @@ namespace CIAO_Quoter_Broker_Impl
     ::Quoter::CCM_Broker_Context_var context_;
     read_action_Generator * ticker_;
     ::CCM_DDS::Stock_Info_Reader_var reader_;
+    ::CCM_DDS::Stock_Info_Getter_var getter_;
   };
   
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -1,3 +1,23 @@
+Wed Oct 21 13:43:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Used an ACE_Time_Value in sleep methods.
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+          Extended the Broker with get_one.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Giving the getter its own DataReader instance.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Implemented a draft version of get_one.
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          is_lifecycle_checked default set to false.
+
 Wed Oct 21 08:44:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:

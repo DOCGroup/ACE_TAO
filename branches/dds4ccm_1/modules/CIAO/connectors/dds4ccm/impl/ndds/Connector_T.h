@@ -84,7 +84,7 @@ private:
   typename CONNECTOR_TYPE::writer_type::_var_type __info_in_writer_;
 
   // @from DDS_RawListen
-  void configure_port_info_out_ (void);
+  void configure_port_info_out_ (bool create_getter);
   bool __info_out_configured_;
   typename CONNECTOR_TYPE::rawlistener_type::_var_type __info_out_rawlistener_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> __info_out_rawlistener_enabled_;
@@ -93,6 +93,10 @@ private:
   ::DDS::DataReaderListener_var __info_out_listener_;
   ::DDS::DataReader_var __info_out_datareader_;
   ::DDS::DataReaderListener_var __info_out_datareaderlistener;
+  
+  // @from DDS_Getter
+  bool __info_get_configured_;
+  ::DDS::DataReader_var __info_get_datareader_;
 };
 
   template <typename BASE_TYPE,
