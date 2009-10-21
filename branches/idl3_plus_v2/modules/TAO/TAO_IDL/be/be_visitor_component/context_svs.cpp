@@ -472,19 +472,6 @@ be_visitor_context_svs::visit_emits (be_emits *node)
   return 0;
 }
 
-int
-be_visitor_context_svs::visit_extended_port (be_extended_port *)
-{
-  return 0;
-}
-
-int
-be_visitor_context_svs::visit_mirror_port (be_mirror_port *)
-{
-  // TODO
-  return 0;
-}
-
 void
 be_visitor_context_svs::gen_uses_simplex (
   AST_Type *obj,

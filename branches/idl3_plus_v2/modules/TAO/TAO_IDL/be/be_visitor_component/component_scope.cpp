@@ -43,6 +43,28 @@ be_visitor_component_scope::~be_visitor_component_scope (
 }
 
 int
+be_visitor_component_scope::visit_extended_port (
+  be_extended_port *node)
+{
+  return this->visit_porttype (node->port_type ());
+}
+
+int
+be_visitor_component_scope::visit_mirror_port (
+  be_mirror_port *)
+{
+  // TODO
+  return 0;
+}
+
+int
+be_visitor_component_scope::visit_porttype (
+  be_porttype *node)
+{
+  return this->visit_scope (node);
+}
+
+int
 be_visitor_component_scope::visit_component_scope (
   be_component *node)
 {

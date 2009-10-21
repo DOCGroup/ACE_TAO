@@ -38,6 +38,10 @@ protected:
   virtual ~be_visitor_component_scope (void);
   
 public:
+  virtual int visit_extended_port (be_extended_port *node);
+  virtual int visit_mirror_port (be_mirror_port *node);
+  virtual int visit_porttype (be_porttype *node);
+
   int visit_component_scope (be_component *node);
   
 protected:
