@@ -35,6 +35,7 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_time.h"
 
+
 namespace CIAO_Quoter_Broker_Impl
 {
 
@@ -132,7 +133,8 @@ namespace CIAO_Quoter_Broker_Impl
                                    const void *)
   {
     // Notify the subscribers
-    this->pulse_callback_.read ();
+    this->pulse_callback_.read_one();
+    this->pulse_callback_.read_all();
     return 0;
   }
 
@@ -147,22 +149,48 @@ namespace CIAO_Quoter_Broker_Impl
 
     return 0;
   }
+<<<<<<< .mine
+
+
+   void
+   Broker_exec_i::read_one (void)
+   {
+=======
   
   void
   Broker_exec_i::read (void)
   {
-    std::cerr << "read" << std::endl;
+>>>>>>> .r87188
+    std::cerr << "read_one" << std::endl;
     ::Quoter::Stock_Info  stock_info;
+    stock_info.symbol= "IBM";
     ::CCM_DDS::ReadInfo readinfo;
+<<<<<<< .mine
+    try
+    {
+        this->reader_->read_one (stock_info, readinfo );
+        time_t tim = readinfo.timestamp.sec;
+        printf("Read_Info. -> date = %s",ctime(&tim));
+        printf ("Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
+=======
 
     printf("GO TO read ONE\n");
       this->reader_->read_one (stock_info, readinfo );
 
     printf ("Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
+>>>>>>> .r87188
             stock_info.symbol.in (),
             stock_info.low,
             stock_info.current,
             stock_info.high);
+<<<<<<< .mine
+    }
+    catch(CCM_DDS::NonExistent& )
+    {
+      printf("Stock_Info_Read_One: no stock_info receieved\n");
+    }
+}
+=======
     printf("END OF READ_ONE\n");
     
     printf("GO TO get ONE\n");
@@ -175,7 +203,48 @@ namespace CIAO_Quoter_Broker_Impl
             stock_info.high);
     printf("END OF GET_ONE\n");
   }
+>>>>>>> .r87188
+
+void
+   Broker_exec_i::read_all (void)
+   {
+    std::cerr << "***************************read_all_in" << std::endl;
 	
+    ::Quoter::Stock_Info_Seq  *stock_infos = new ::Quoter::Stock_Info_Seq;
+    ::CCM_DDS::ReadInfoSeq *readinfoseq = new ::CCM_DDS::ReadInfoSeq;
+    this->reader_->read_all(stock_infos, readinfoseq);
+   
+    std::cerr << "***************************read_all_uit" << std::endl;
+    printf(" stock_infos = %s, readinfoseq = % s\n",stock_infos,readinfoseq);
+    
+    if(readinfoseq)
+    { 
+      int nr_of_infos = readinfoseq->length();
+      printf("Broker: read_all nr_of_readinfoseq %d\n",nr_of_infos);
+    //  for(int i = 0; i < nr_of_infos; i ++)
+    //  {
+    //    time_t tim = readinfoseq[i]->  ..timestamp.sec;
+    //    printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+    //  }
+    }
+    if(stock_infos)
+    { 
+    int nr_of_stock_infos = stock_infos->length();
+    for(int i = 0; i < nr_of_stock_infos; i ++)
+    {    ::Quoter::Stock_Info  stock_info;
+          
+         printf ("Stock_Info_Read_All: Nubber %d : received a stock_info for <%s> at %u:%u:%u\n",
+            i,
+            stock_info.symbol.in (),
+            stock_info.low,
+            stock_info.current,
+            stock_info.high);
+    }
+    }
+    
+
+   
+}	
 
   
   //============================================================
@@ -302,11 +371,14 @@ namespace CIAO_Quoter_Broker_Impl
  
   void
   Broker_exec_i::start (void)
+<<<<<<< .mine
+  { 
+=======
   {
     printf("start \n");
+>>>>>>> .r87188
     std::cerr << ">>> Broker_exec_i::start" << endl;
     this->ticker_->start (500);
-    printf("eind start \n");
   }
   void
   Broker_exec_i::stop (void)

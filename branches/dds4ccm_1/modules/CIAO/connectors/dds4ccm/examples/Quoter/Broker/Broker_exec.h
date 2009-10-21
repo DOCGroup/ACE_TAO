@@ -173,7 +173,8 @@ namespace CIAO_Quoter_Broker_Impl
     
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
-    void read (void);
+    void read_one (void);
+    void read_all(void);
     // Operations from Components::SessionComponent.
      
      
