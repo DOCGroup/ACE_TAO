@@ -1,3 +1,37 @@
+Wed Oct 21 14:10:35 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_extended_port/extended_port_svs.cpp:
+        * TAO_IDL/be/be_visitor_extended_port/extended_port.cpp:
+        * TAO_IDL/be/be_visitor_extended_port/extended_port_svh.cpp:
+        * TAO_IDL/be_include/be_visitor_extended_port/extended_port_svs.h:
+        * TAO_IDL/be_include/be_visitor_extended_port/extended_port.h:
+        * TAO_IDL/be_include/be_visitor_extended_port/extended_port_svh.h:
+
+          Removed these visitors, better use of polymorphism can be made
+          by just implementing their methods in the appropriate
+          component visitor.
+
+        * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svs.h:
+
+          Copied code from removed visitor methods above, and
+          removed visit_component() method.
+
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+
+          Spawned facet visitors above with visit_component_scope()
+          call, eliminating the extra step of calling visit_component().
+
+          
+        * TAO_IDL/be_include/be_extended_port.h:
+        * TAO_IDL/be/be_extended_port.cpp:
+
+          Overloaded port_type() method to return backend-specific
+          type, to eliminate many narrowing calls.
+
 Tue Oct 20 22:55:25 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_scope.cpp:
