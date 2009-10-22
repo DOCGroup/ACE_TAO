@@ -13,14 +13,33 @@
 #include "Time_t.h"
 
 inline void
+operator<<= (::CCM_DDS::AccessStatus & access_status, const ::DDS_SampleStateKind  & sample_state)
+{
+  if (sample_state == DDS_NOT_READ_SAMPLE_STATE)
+    access_status = ::CCM_DDS::FRESH_INFO;
+  else if (sample_state == DDS_READ_SAMPLE_STATE)
+    access_status = ::CCM_DDS::ALREADY_SEEN;
+}
+
+inline void
+operator<<= (::CCM_DDS::InstanceStatus & instance_status, const ::DDS_InstanceStateKind  & instance_state)
+{
+  if (instance_state == DDS_ALIVE_INSTANCE_STATE)
+    instance_status = ::CCM_DDS::INSTANCE_CREATED;
+  else if (instance_state == DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+    instance_status = ::CCM_DDS::INSTANCE_DELETED;
+  else if (instance_state == DDS_NOT_ALIVE_NO_WRITERS_INSTANCE_STATE)
+    instance_status = ::CCM_DDS::INSTANCE_UPDATED;
+}
+
+inline void
 operator<<= (::CCM_DDS::ReadInfo & ccm_dds_readinfo, const ::DDS_SampleInfoSeq & sample_info)
 {
   //an_instance = data[number_of_instances-1];
   ccm_dds_readinfo.timestamp <<= sample_info[sample_info.length () - 1].reception_timestamp;
-  //what about the following attributes?
-  //info.access_status     DDS_SampleStateKind  sample_state or   DDS_ViewStateKind view_state; ?
-  //info.instance_status   DDS_InstanceStateKind instance_state;
-  //info.instance_rank     DDS_Long sample_rank;   is always 0 with last sample 
+  ccm_dds_readinfo.access_status <<= sample_info[sample_info.length () - 1].sample_state;
+  ccm_dds_readinfo.instance_status <<= sample_info[sample_info.length () - 1].instance_state;
+  ccm_dds_readinfo.instance_rank = sample_info[sample_info.length () - 1].sample_rank;
 }
 
 inline void

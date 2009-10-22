@@ -1,3 +1,8 @@
+Thu Oct 22 13:50:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+          Added conversion methods for AccessStatus and InstanceStatus.
+
 Thu Oct 22 13:13:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
@@ -8,7 +13,7 @@ Thu Oct 22 13:13:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
           Extended sleep time.
-          
+
         * connectors/dds4ccm/examples/Hello/descriptors/run_test_dds.pl:
           Added to run DDS only hello example.
 
