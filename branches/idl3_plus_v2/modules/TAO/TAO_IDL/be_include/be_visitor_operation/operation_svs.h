@@ -47,7 +47,6 @@ public:
   
   virtual int post_process (be_decl *bd);
   
-  void for_facets (bool val);
   void scope (be_interface *node);
   
 private:
@@ -55,7 +54,6 @@ private:
   
 private:
   be_interface *scope_;
-  bool for_facets_;
   bool swapping_;
 };
 

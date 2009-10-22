@@ -46,7 +46,7 @@ public:
   
   be_component *base_component (void) const;
   // Override of the AST method to eliminate narrowing of
-  // the return value.
+  // the return value. Non-virtual.
 
   virtual void redefine (AST_Interface *from);
   // Catch BE-specific members before delegating to the base class.

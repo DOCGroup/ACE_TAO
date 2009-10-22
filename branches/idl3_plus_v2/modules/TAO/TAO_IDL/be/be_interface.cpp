@@ -2480,9 +2480,9 @@ be_interface::gen_abstract_init_helper (be_interface *node,
 }
 
 int
-be_interface::facet_op_attr_decl_helper (be_interface * /*derived */,
-                                         be_interface *ancestor,
-                                         TAO_OutStream *os)
+be_interface::op_attr_decl_helper (be_interface * /*derived */,
+                                   be_interface *ancestor,
+                                   TAO_OutStream *os)
 {
   if (be_component::narrow_from_decl (ancestor) != 0)
     {

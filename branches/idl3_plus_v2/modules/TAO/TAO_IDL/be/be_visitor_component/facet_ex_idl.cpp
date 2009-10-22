@@ -31,8 +31,7 @@ be_visitor_facet_ex_idl::~be_visitor_facet_ex_idl (void)
 int
 be_visitor_facet_ex_idl::visit_provides (be_provides *node)
 {
-  be_type *impl =
-    be_type::narrow_from_decl (node->provides_type ());
+  be_type *impl = node->provides_type ();
 
   if (impl->ex_idl_facet_gen ())
     {

@@ -240,7 +240,6 @@ be_visitor_servant_svs::visit_operation (be_operation *node)
     }
     
   be_visitor_operation_svs v (this->ctx_);
-  v.for_facets (false);
   v.scope (this->op_scope_);
 
   return v.visit_operation (node);

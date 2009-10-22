@@ -21,6 +21,9 @@ public:
             
   virtual ~be_provides (void);
   
+  // Non-virtual override of frontend method.
+  be_type *provides_type (void) const;
+  
   // Common code called by visitors.
   int gen_facet_svnt_decl (TAO_OutStream &os);
   int gen_facet_svnt_defn (TAO_OutStream &os);

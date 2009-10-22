@@ -1,3 +1,75 @@
+Thu Oct 22 19:21:26 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/executor_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/executor_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+
+          New files, containing new visitors that handle code
+          generation class-by-class in the executor implementation.
+
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_consumes.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_publishes.cpp:
+        * TAO_IDL/be/be_uses.cpp:
+        * TAO_IDL/be/be_emits.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be_include/be_field.h:
+        * TAO_IDL/be_include/be_publishes.h:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_uses.h:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_attribute.h:
+        * TAO_IDL/be_include/be_emits.h:
+        * TAO_IDL/be_include/be_consumes.h:
+        * TAO_IDL/be_include/be_sequence.h:
+
+          Add non-virtual override of frontend methods that
+          fetch the referenced provides, uses, publishes, emits,
+          consumes, field, or base type. This addition concentrates
+          the narrowing to the backend type so it need not be
+          done over and over in the visitors.
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          Added new visitor files.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+
+          Renamed static method facet_op_attr_decl_helper to
+          op_attr_decl_helper, since its use is now more general.
+
+        * TAO_IDL/be_include/be_visitor_component/component_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_exs.h:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+
+          Split code out of these visitors and distributed it
+          among the new visitors.
+
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/component.h:
+
+          Minor or cosmetic changes.
+
 Wed Oct 21 20:40:45 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_extended_port.cpp:

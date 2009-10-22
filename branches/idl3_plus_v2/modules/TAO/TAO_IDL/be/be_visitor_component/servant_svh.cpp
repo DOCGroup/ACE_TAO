@@ -82,7 +82,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
 
   int status =
     node_->traverse_inheritance_graph (
-      be_interface::facet_op_attr_decl_helper,
+      be_interface::op_attr_decl_helper,
       &os_,
       false,
       false);
