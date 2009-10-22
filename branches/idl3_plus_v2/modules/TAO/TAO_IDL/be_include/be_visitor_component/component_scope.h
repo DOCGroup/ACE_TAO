@@ -42,7 +42,12 @@ public:
   virtual int visit_mirror_port (be_mirror_port *node);
   virtual int visit_porttype (be_porttype *node);
 
+  // Automatically recurses to the ancestor scopes, if any.
   int visit_component_scope (be_component *node);
+  
+  // Swaps uses for provides members and vice versa.S
+ 
+  int visit_porttype_mirror (be_porttype *node);
   
 protected:
   be_component *node_;
