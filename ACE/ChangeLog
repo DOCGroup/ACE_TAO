@@ -1,3 +1,11 @@
+Thu Oct 22 14:16:10 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          If a custom 'dependent' setting contains a double quote, then we
+          must make a fake rule that corresponds to it.  Otherwise, make
+          doesn't know how to deal with it.
+
 Tue Oct 20 16:20:33 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue_T.cpp (enqueue_*): Move the notify() call outside
