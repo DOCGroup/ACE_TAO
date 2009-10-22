@@ -513,6 +513,9 @@ LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
 PATH              := $(PATH):<%custom_type->libpath%>
 
 <%endif%>
+<%if(contains(custom_type->dependent, "))%><%custom_type->dependent%>:
+
+<%endif%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
 GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
