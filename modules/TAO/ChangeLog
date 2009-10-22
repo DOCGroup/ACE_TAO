@@ -1,3 +1,18 @@
+Thu Oct 22 20:39:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_scope.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_scope.h:
+        
+          Added code generation for mirror ports.
+          
+        * TAO_IDL/be_include/be_visitor_component/facet_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svs.h:
+        * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+        
+          Changed base class to be_visitor_component_scope to
+          pull in the mirror port support.
+
 Thu Oct 22 19:21:26 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/facet_exs.cpp:

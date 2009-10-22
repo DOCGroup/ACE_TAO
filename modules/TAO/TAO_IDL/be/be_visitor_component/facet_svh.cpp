@@ -44,22 +44,3 @@ be_visitor_facet_svh::visit_provides (be_provides *node)
   return 0;
 }
 
-int
-be_visitor_facet_svh::visit_extended_port (be_extended_port *node)
-{
-  return this->visit_porttype (node->port_type ());
-}
-
-int
-be_visitor_facet_svh::visit_mirror_port (be_mirror_port *)
-{
-  // TODO
-  return 0;
-}
-
-int
-be_visitor_facet_svh::visit_porttype (be_porttype *node)
-{
-  return this->visit_scope (node);
-}
-
