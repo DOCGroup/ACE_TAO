@@ -188,45 +188,37 @@ namespace CIAO_Quoter_Broker_Impl
   }
 
 void
-   Broker_exec_i::read_all (void)
-   {
-    std::cerr << "***************************read_all_in" << std::endl;
+  Broker_exec_i::read_all (void)
+  {
+    std::cerr << "read_all" << std::endl;
 	
-    ::Quoter::Stock_Info_Seq  *stock_infos = new ::Quoter::Stock_Info_Seq;
-    ::CCM_DDS::ReadInfoSeq *readinfoseq = new ::CCM_DDS::ReadInfoSeq;
-    this->reader_->read_all(stock_infos, readinfoseq);
-   
-    std::cerr << "***************************read_all_uit" << std::endl;
-    printf(" stock_infos = %s, readinfoseq = % s\n",stock_infos,readinfoseq);
-    
-    if(readinfoseq)
+    ::Quoter::Stock_Info_Seq_var  stock_infos;
+    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
+    this->reader_->read_all(stock_infos.out(), readinfoseq.out());
+    if(0 != &readinfoseq && readinfoseq->length()!= 0)
     { 
       int nr_of_infos = readinfoseq->length();
-      printf("Broker: read_all nr_of_readinfoseq %d\n",nr_of_infos);
-    //  for(int i = 0; i < nr_of_infos; i ++)
-    //  {
-    //    time_t tim = readinfoseq[i]->  ..timestamp.sec;
-    //    printf("Read_Info.timestamp -> date = %s",ctime(&tim));
-    //  }
+      for(int i = 0; i < nr_of_infos; i ++)
+      {
+        time_t tim = readinfoseq[i].timestamp.sec;
+        printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+      }
     }
-    if(stock_infos)
+    if( 0!= &stock_infos && stock_infos->length()!= 0)
     { 
-    int nr_of_stock_infos = stock_infos->length();
-    for(int i = 0; i < nr_of_stock_infos; i ++)
-    {    ::Quoter::Stock_Info  stock_info;
-          
+      int nr_of_stock_infos = stock_infos->length();
+      for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+      {            
          printf ("Stock_Info_Read_All: Nubber %d : received a stock_info for <%s> at %u:%u:%u\n",
             i,
-            stock_info.symbol.in (),
-            stock_info.low,
-            stock_info.current,
-            stock_info.high);
+            stock_infos[i].symbol,
+            stock_infos[i].low,
+            stock_infos[i].current,
+            stock_infos[i].high);
+            
+      }
     }
-    }
-    
-
-   
-}	
+  }	
 
   
   //============================================================
