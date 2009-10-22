@@ -102,7 +102,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     }
     
     // Sleep a couple seconds to allow discovery to happen
-    ACE_OS::sleep (2);
+    ACE_OS::sleep (1);
     
     /* --- Write Data ----------------------------------------------------- */
     
@@ -111,23 +111,19 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
         ACE_TCHAR timestamp[16];
         ACE_CString msg (send_string);
         ACE_CString ret;
-        ACE_hrtime_t start = ACE_OS::gethrtime();
+        ACE_Date_Time now;
         ACE_OS::sprintf (timestamp,
-                          "%lld",
-                          start);
+                          "%02d.%d",
+                          now.second(),
+                          now.microsec ());
         ret.set (timestamp);
         ret = ret + " " + msg;
         retcode = string_writer->write(
                             ret.c_str (),
                             DDS_HANDLE_NIL);
         if (retcode != DDS_RETCODE_OK)
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Write failed: %d.\n"), retcode));
-          }
-        else
-          {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Sending: %C\n"), send_string));
-          }
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Write failed: %d.\n"), retcode));
+        //ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C.\n"), ret.c_str()));
         ACE_OS::sleep (tv);
     }
 

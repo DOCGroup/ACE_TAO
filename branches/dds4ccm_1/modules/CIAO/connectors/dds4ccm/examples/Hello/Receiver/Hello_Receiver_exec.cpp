@@ -59,19 +59,20 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     const char * an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    ACE_hrtime_t now = ACE_OS::gethrtime();
+    
     ++received_;
-    ACE_CString tm_rec (an_instance);
-    ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
-    if (received > 0)
+    ACE_CString rec (an_instance);
+    ACE_Date_Time now;
+    int sec_rec = ACE_OS::atoi (rec.substr (0, 2).c_str() );
+    if (sec_rec > 0)
       {
-        ACE_Time_Value tv (0, 0);
-        ACE_High_Res_Timer::hrtime_to_tv (tv,
-                                          now - received);
+        int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
+        if (sec_rec != now.second ())
+          usec_rec += 10000000;
         printf ("<%s> received <%s>. difference <%d>\n", 
               this->name_.c_str (), 
               an_instance,
-              tv.usec ());
+              now.microsec () - usec_rec);
       }
     else 
       {

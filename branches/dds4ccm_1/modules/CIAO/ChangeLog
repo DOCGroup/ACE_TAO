@@ -1,3 +1,22 @@
+Thu Oct 22 13:13:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Used ACE_Date_Time to log timing differences.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+          Extended sleep time.
+          
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test_dds.pl:
+          Added to run DDS only hello example.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+          Added operators to convert SampleInfoSeq to ReadInfo
+          and to convert SampleInfoSeq to ReadInfoSeq.
+
 Wed Oct 21 13:43:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:

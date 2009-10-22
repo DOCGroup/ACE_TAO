@@ -1,7 +1,7 @@
 // $Id$
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "dds4ccm/impl/ndds/Utils.h"
-#include "Time_t.h"
+#include "dds4ccm/impl/ndds/SampleInfo.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -32,7 +32,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
   // at the moment this function returns all samples of all instances (=read_all_history)
   printf("------- in read_all Reader_T of ndds  ------------- \n");
 
-  NDDS_TYPE::seq_type::_var_type  inst_seq = new NDDS_TYPE::seq_type;
+  typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
  
@@ -79,11 +79,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
     {
       case DDS_RETCODE_OK:
         printf (" Reader_T: read_all Data: retval is %d , number of data = %d---\n", retval, data.length() );
-        infoseq->length(sample_info.length ());
-        for (CORBA::ULong i = 0; i < (CORBA::ULong)sample_info.length(); i++)
-        { 
-          sample_info[i].reception_timestamp >>= infoseq[i].timestamp;
-        } 
+        infoseq <<= sample_info;
         inst_seq->length(data.length());
         for (CORBA::ULong i = 0; i < (CORBA::ULong)data.length(); i++)
         { 
@@ -194,12 +190,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
         printf("number_of_instances =%d\n", number_of_instances); 
         //get last instance
         an_instance = data[number_of_instances-1];
-        sample_info[number_of_instances-1].reception_timestamp >>= info.timestamp;
-        //what about the following attributes?
-        //info.access_status     DDS_SampleStateKind  sample_state or   DDS_ViewStateKind view_state; ?
-        //info.instance_status   DDS_InstanceStateKind instance_state;
-        //info.instance_rank     DDS_Long sample_rank;   is always 0 with last sample 
-        
+        info <<= sample_info;
          break;
       case DDS_RETCODE_NO_DATA:
         printf ("No data : retval is %d ---\n", retval);

@@ -5,7 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/High_Res_Timer.h"
 #include "ace/Date_Time.h"
 #include "ace/SString.h"
 
@@ -146,18 +145,18 @@ void HelloListener::on_data_available(::DDS::DataReader *reader) {
     }
     if (info.valid_data) {
       // Valid (this isn't just a lifecycle sample): print it
-      ACE_hrtime_t now = ACE_OS::gethrtime();
       ++received_samples;
-      ACE_CString tm_rec (sample);
-      ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
-      if (received > 0)
+      ACE_CString rec (sample);
+      ACE_Date_Time now;
+      int sec_rec = ACE_OS::atoi (rec.substr (0, 2).c_str() );
+      if (sec_rec > 0)
         {
-          ACE_Time_Value tv (0, 0);
-          ACE_High_Res_Timer::hrtime_to_tv (tv,
-                                            now - received);
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C duration: %d\n"), sample, tv.usec ()));
+          int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
+          if (sec_rec != now.second ())
+            usec_rec += 10000000;
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C dur <%d>\n"), sample, now.microsec () - usec_rec));
         }
-      else 
+      else
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C\n"), sample));
         }

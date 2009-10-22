@@ -71,12 +71,12 @@ namespace CIAO_Hello_DDS_Sender_Impl
       if (!this->log_time_)
         return msg;
       ACE_TCHAR timestamp[16];
-      ACE_CString ret;
-      ACE_hrtime_t start = ACE_OS::gethrtime();
+      ACE_Date_Time now;
       ACE_OS::sprintf (timestamp,
-                        "%lld",
-                        start);
-      ret.set (timestamp);
+                        "%02d.%d",
+                        now.second(),
+                        now.microsec ());
+      ACE_CString ret (timestamp);
       ret = ret + " " + msg;
       return ret.c_str ();
     }
