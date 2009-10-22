@@ -93,7 +93,7 @@ be_visitor_executor_ex_idl::visit_attribute (
    os_ << be_nl
        << (rd_only ? "readonly " : "") << "attribute ";
 
-   be_type *ft = be_type::narrow_from_decl (node->field_type ());
+   be_type *ft = node->field_type ();
 
    os_ << IdentifierHelper::type_name (ft, this);
    os_ << " "
@@ -117,8 +117,7 @@ be_visitor_executor_ex_idl::visit_sequence (
   // Keep output statements separate because of side effects.
   os_ << "sequence<";
 
-  be_type *bt =
-    be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = node->base_type ();
 
   os_ << IdentifierHelper::type_name (bt, this);
 
@@ -155,8 +154,7 @@ int
 be_visitor_executor_ex_idl::visit_provides (
   be_provides *node)
 {
-  be_type *impl =
-    be_type::narrow_from_decl (node->provides_type ());
+  be_type *impl = node->provides_type ();
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
 
@@ -180,8 +178,7 @@ int
 be_visitor_executor_ex_idl::visit_consumes (
   be_consumes *node)
 {
-  be_type *impl =
-    be_type::narrow_from_decl (node->consumes_type ());
+  be_eventtype *impl = node->consumes_type ();
 
   os_ << be_nl
       << "void push_" << node->local_name ()->get_string ()

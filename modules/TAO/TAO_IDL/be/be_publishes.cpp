@@ -26,6 +26,14 @@ be_publishes::~be_publishes (void)
 {
 }
 
+be_eventtype *
+be_publishes::publishes_type (void) const
+{
+  return
+    be_eventtype::narrow_from_decl (
+      this->AST_Publishes::publishes_type ());
+}
+
 int
 be_publishes::accept (be_visitor *visitor)
 {

@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_attribute,
-           attribute,
-           "$Id$")
-
 // Attribute gets mapped to one or possibly two operations based on whether
 // it is readonly or not. The two operations "get" and "set" the value of the
 // attribute.
@@ -177,7 +173,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ROOT_SVS:
       {
         be_visitor_operation_svs visitor (&ctx);
-        visitor.for_facets (this->for_facets_);
         visitor.scope (this->op_scope_);
         status = get_op.accept (&visitor);
         break;
@@ -391,7 +386,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ROOT_SVS:
       {
         be_visitor_operation_svs visitor (&ctx);
-        visitor.for_facets (this->for_facets_);
         visitor.scope (this->op_scope_);
         status = set_op.accept (&visitor);
         break;

@@ -54,7 +54,3 @@
 #include "be_visitor_attribute/set_from_extracted.cpp"
 #include "be_visitor_attribute/component_init.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_attribute, 
-           "$Id$")
-

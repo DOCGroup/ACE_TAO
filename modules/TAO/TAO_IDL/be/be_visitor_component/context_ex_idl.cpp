@@ -88,8 +88,7 @@ int
 be_visitor_context_ex_idl::visit_uses (
   be_uses *node)
 {
-  be_type *impl =
-    be_type::narrow_from_decl (node->uses_type ());
+  be_type *impl = node->uses_type ();
 
   os_ << be_nl
       << "::";
@@ -120,8 +119,7 @@ int
 be_visitor_context_ex_idl::visit_publishes (
   be_publishes *node)
 {
-  be_type *impl =
-    be_type::narrow_from_decl (node->publishes_type ());
+  be_eventtype *impl = node->publishes_type ();
 
   os_ << be_nl
       << "void push_" << node->local_name ()->get_string ()
@@ -136,8 +134,7 @@ int
 be_visitor_context_ex_idl::visit_emits (
   be_emits *node)
 {
-  be_type *impl =
-    be_type::narrow_from_decl (node->emits_type ());
+  be_eventtype *impl = node->emits_type ();
 
   os_ << be_nl
       << "void push_" << node->local_name ()->get_string ()

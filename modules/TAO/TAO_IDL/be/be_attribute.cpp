@@ -86,7 +86,13 @@ be_attribute::be_attribute (bool ro,
     }
 }
 
-
+be_type *
+be_attribute::field_type (void) const
+{
+  return
+    be_type::narrow_from_decl  (
+      this->AST_Attribute::field_type ());
+}
 
 int
 be_attribute::accept (be_visitor *visitor)
