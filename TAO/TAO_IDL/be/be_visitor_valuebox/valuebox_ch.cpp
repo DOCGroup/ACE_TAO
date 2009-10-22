@@ -197,7 +197,7 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
   this->emit_assignment (node, "", "const ", "");
 
   // Public accessor and modifier methods
-  *os << "// accessors and modifier" << be_nl;
+  *os << "// Accessors and modifier" << be_nl;
 
   *os << "const " << node->full_name () << "_slice* "
       << "_value (void) const;" << be_nl;
@@ -286,7 +286,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   // Retrieve the base type since we will need to do some code
   // generation for it.
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  
+
   if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -368,7 +368,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
 
   // Generate base type for sequence then remainder of operator []
   *os << "const ";
-  
+
   if (bt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -377,7 +377,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
                          "base type visit failed\n"),
                         -1);
     }
-    
+
   *os << "& operator[] ( ::CORBA::ULong index) const;" << be_nl << be_nl
       << "::CORBA::ULong maximum (void) const;" << be_nl
       << "::CORBA::ULong length (void) const;" << be_nl
@@ -397,7 +397,7 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 
   const char *string_type;
   const char *char_type;
-  
+
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";
@@ -448,13 +448,13 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   *os << vb_node->local_name () << "& operator= (const ::CORBA::"
       << string_type << "_var& var);" << be_nl << be_nl;
 
-  *os << "// accessor" << be_nl;
+  *os << "// Accessor" << be_nl;
 
   // Accessor function takes no arguments and returns a const char *
   *os << "const " << node->full_name ()
       << " _value (void) const;" << be_nl << be_nl;
 
-  *os << "// modifiers" << be_nl;
+  *os << "// Modifiers" << be_nl;
 
   // Modifier function with one argument of type char *
   *os << "void _value (" << node->full_name () << " val);" << be_nl;
@@ -471,10 +471,10 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   this->emit_boxed_access (node, "", "const ", "", "");
 
   // Overloaded subscript operators
-  *os << "// allows access and modification using a slot." << be_nl
+  *os << "// Allows access and modification using a slot." << be_nl
       << char_type << " & operator[] ( ::CORBA::ULong slot);"
       << be_nl << be_nl
-      << "// allows only accessing thru a slot." << be_nl
+      << "// Allows only accessing thru a slot." << be_nl
       << char_type << " operator[] ( ::CORBA::ULong slot) const;"
       << be_nl;
 
@@ -502,7 +502,7 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
   // Public copy constructor
   this->emit_copy_constructor ();
 
-  *os << be_nl << "// assignment operator" << be_nl;
+  *os << be_nl << "// Assignment operator" << be_nl;
 
   // Public assignment operator with one argument of type const T&
   this->emit_assignment (node, "", "const ", "&");
@@ -524,11 +524,11 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
   // member.  These functions have the same signatures as
   // acessor and modifier functions for union members.
 
-  AST_Decl *d;
-  AST_Field *field;
-  be_type *bt;
+  AST_Decl *d = 0;
+  AST_Field *field = 0;
+  be_type *bt = 0;
   be_visitor_context ctx (*this->ctx_);
-  
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
         si.next ())
@@ -550,7 +550,7 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
 
       // Create a visitor and use that to process the type.
       be_visitor_valuebox_field_ch visitor (&ctx);
-      
+
       if (bt->accept (&visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -604,7 +604,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
   // Public copy constructor
   this->emit_copy_constructor ();
 
-  *os << be_nl << "// assignment operator" << be_nl;
+  *os << be_nl << "// Assignment operator" << be_nl;
 
   // Public assignment operator with one argument of type const T&
   this->emit_assignment (node, "", "const ", "&");
@@ -625,11 +625,11 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
   // Now generate the accessor and modifier functions for each union
   // member.
 
-  AST_Decl *d;
-  AST_Field *field;
-  be_type *bt;
+  AST_Decl *d = 0;
+  AST_Field *field = 0;
+  be_type *bt = 0;
   be_visitor_context ctx (*this->ctx_);
-  
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
         si.next ())
@@ -651,7 +651,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
 
       // Create a visitor and use that to process the type.
       be_visitor_valuebox_field_ch visitor (&ctx);
-      
+
       if (bt->accept (&visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -720,7 +720,7 @@ be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
   // Public copy constructor
   this->emit_copy_constructor ();
 
-  *os << be_nl << "// assignment operator" << be_nl;
+  *os << be_nl << "// Assignment operator" << be_nl;
 
   if (is_any)
     { // Public assignment operator with one argument of type const T&
@@ -739,7 +739,7 @@ be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
       this->emit_assignment (node, type_suffix, "", "");
 
       // Public accessor and modifier methods
-      *os << "// accessor and modifier" << be_nl;
+      *os << "// Accessor and modifier" << be_nl;
 
       *os << node->full_name () << type_suffix
           << " _value (void) const;" << be_nl;
@@ -765,7 +765,7 @@ be_visitor_valuebox_ch::emit_default_constructor (void)
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * vb_node = this->ctx_->node ();
 
-  *os << be_nl << be_nl << "// constructors" << be_nl;
+  *os << be_nl << be_nl << "// Constructors" << be_nl;
 
   // Public default constructor
   *os << vb_node->local_name () << " (void);" << be_nl;
@@ -825,7 +825,7 @@ be_visitor_valuebox_ch::emit_boxed_access (be_decl *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// access to the boxed value for method signatures" << be_nl;
+  *os << "// Access to the boxed value for method signatures" << be_nl;
 
   // Access to the boxed value for method signatures
   *os << const_prefix << node->full_name () << type_suffix << in_ref_modifier
@@ -841,7 +841,7 @@ be_visitor_valuebox_ch::emit_accessor_modifier (be_decl *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// accessors and modifier" << be_nl;
+  *os << "// Accessors and modifier" << be_nl;
 
   // Public accessor method (const)
   *os << "const " << node->full_name () << "& _value (void) const;"
