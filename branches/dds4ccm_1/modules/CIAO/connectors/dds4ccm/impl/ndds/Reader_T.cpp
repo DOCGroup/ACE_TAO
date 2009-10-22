@@ -28,8 +28,14 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
   typename NDDS_TYPE::seq_type::_out_type instances,
   ::CCM_DDS::ReadInfoSeq_out infos)
 {
-printf("------- in read_all Reader_T of ndds  ------------- \n");
-//return last sample of all instances
+  //TO DO:  this function has to return the last sample of all instances
+  // at the moment this function returns all samples of all instances (=read_all_history)
+  printf("------- in read_all Reader_T of ndds  ------------- \n");
+
+  NDDS_TYPE::seq_type::_var_type  inst_seq = new NDDS_TYPE::seq_type;
+  ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
+
+ 
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
   if (rdr == 0)
   {
@@ -52,8 +58,6 @@ printf("------- in read_all Reader_T of ndds  ------------- \n");
 
     DDS_SampleInfoSeq sample_info;
     DDS_ReturnCode_t retval;
-	
-   
     typename NDDS_TYPE::dds_seq_type data;
     
 	// NDDS_TYPE::dds_seq_type = dds sequence
@@ -74,41 +78,28 @@ printf("------- in read_all Reader_T of ndds  ------------- \n");
     switch(retval)
     {
       case DDS_RETCODE_OK:
-        printf (" 11111111111Data: retval is %d , number of data = %d---\n", retval, data.length() );
- 
-        //DDS_SampleInfoSeq sample_info  convert to ::CCM_DDS::ReadInfoSeq_out infos
-        //typename NDDS_TYPE::dds_seq_type data  convert to  typename NDDS_TYPE::seq_type::_out_type instances
-        
-      /*   infos = new ::CCM_DDS::ReadInfoSeq(sample_info.length ());
-         printf (" 22222222222Data: retval is %d , number of data = %d---\n, sample_info_length = %d ==\n", retval, data.length(), sample_info.length());
-         for (CORBA::ULong i = 0; i < (CORBA::ULong)sample_info.length(); ++i)
-         { 
-            printf("23232323232332sample_info[%d].reception_timestamp = %d\n",i,sample_info[i].reception_timestamp);
-            //sample_info[i].reception_timestamp >>= (*infos)[i].timestamp;
-         } 
-         
-         printf (" 3333333333333Data: retval is %d , number of data = %d---\n", retval, data.length() );
- 
-         instances = new typename NDDS_TYPE::seq_type(data.length());
-         printf (" 44444444444Data: retval is %d , number of data = %d---\n", retval, data.length() );
-         //printf("instances.size() = %d\n", instances.size());
-         for (CORBA::ULong i = 0; i < (CORBA::ULong)data.length(); i++)
-         { 
-             printf("444444444444444444444data.symbol[%d] = %s\n",i, data[i].symbol);
-             memcpy(instances[i],data[i]);
-
-         }
-         */
-         printf (" 55555555555Data: retval is %d , number of data = %d---\n", retval, data.length() );
-         break;
+        printf (" Reader_T: read_all Data: retval is %d , number of data = %d---\n", retval, data.length() );
+        infoseq->length(sample_info.length ());
+        for (CORBA::ULong i = 0; i < (CORBA::ULong)sample_info.length(); i++)
+        { 
+          sample_info[i].reception_timestamp >>= infoseq[i].timestamp;
+        } 
+        inst_seq->length(data.length());
+        for (CORBA::ULong i = 0; i < (CORBA::ULong)data.length(); i++)
+        { 
+          inst_seq[i] = data[i];
+        }
+        break;
       case DDS_RETCODE_NO_DATA:
-        printf ("No data : retval is %d ---\n", retval);
+        printf ("Reader_T: read_all No data : retval is %d ---\n", retval);
         break;
       default:
-        printf ("failed retval is %d ---\n", retval);
+        printf ("Reader_T: read_all Failed retval is %d ---\n", retval);
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
     }
+    infos = infoseq._retn ();
+    instances = inst_seq._retn();
 }
 
 template <typename NDDS_TYPE, typename BASE >
