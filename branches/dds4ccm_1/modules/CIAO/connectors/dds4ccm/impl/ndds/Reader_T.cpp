@@ -132,7 +132,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
   //this function has to return all samples of all instances
   printf("------- in read_all_history Reader_T of ndds  ------------- \n");
 
-  NDDS_TYPE::seq_type::_var_type  inst_seq = new NDDS_TYPE::seq_type;
+  typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
  

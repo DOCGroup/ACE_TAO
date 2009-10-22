@@ -57,7 +57,7 @@ namespace CIAO
         Getter_T<NDDS_TYPE, BASE> & operator = (const Getter_T<NDDS_TYPE, BASE> &);
         typename NDDS_TYPE::data_reader *impl_;
         DDSQueryCondition* condition_;
-        DDS::Duration_t* time_out_;
+        ::DDS::Duration_t time_out_;
       };
     }
   }

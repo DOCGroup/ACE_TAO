@@ -1,3 +1,16 @@
+Thu Oct 22 15:19:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Used the correct duration conversion.
+
+        * connectors/dds4ccm/impl/ndds/Duration_t.h:
+        * connectors/dds4ccm/impl/ndds/Time_t.h:
+          Rename variables to proper names.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved compiler errors on Linux.
+
 Thu Oct 22 14:14:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/SampleInfo.h:

@@ -1,14 +1,16 @@
 // $Id$
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "dds4ccm/impl/ndds/Utils.h"
-#include "dds4ccm/impl/ndds/NDDS_Traits.h"
+#include "dds4ccm/impl/ndds/Duration_t.h"
+#include "dds4ccm/impl/ndds/SampleInfo.h"
 
 #include "ciao/Logger/Log_Macros.h"
 // Implementation skeleton constructor
 template <typename NDDS_TYPE, typename BASE >
 CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr reader)
 : impl_ (0),
-  condition_(0)
+  condition_(0),
+  time_out_ ()
 {
   printf("----in constructor getter -----\n");
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
@@ -77,8 +79,9 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
     throw CCM_DDS::InternalError (retcode, 0);
   DDSConditionSeq active_conditions;
   DDS_SampleInfoSeq sample_info;
-  DDS_Duration_t dds_timeout = {0, 1000000000}; //1 sec.
-  retcode = ws->wait (active_conditions, dds_timeout);
+  DDS_Duration_t timeout;
+  timeout<<=this->time_out_;
+  retcode = ws->wait (active_conditions, timeout);
   if (retcode == DDS_RETCODE_TIMEOUT)
     return false;
   typename NDDS_TYPE::dds_seq_type data;
@@ -86,13 +89,13 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
                             sample_info,
                             1,
                             rd_condition);
+  info <<= sample_info;
   if (retcode == DDS_RETCODE_OK)
     {
       an_instance = data[0];
     }
   else
     throw CCM_DDS::InternalError (retcode, 1);
-  ACE_UNUSED_ARG (info);
   return true;
 }
 
@@ -138,12 +141,12 @@ template <typename NDDS_TYPE, typename BASE >
 ::DDS::Duration_t
 CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::time_out (void)
 {
-  return ::DDS::Duration_t ();
+  return this->time_out_;
 }
 
 template <typename NDDS_TYPE, typename BASE >
 void
 CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::time_out (const ::DDS::Duration_t & time_out)
 {
-  ACE_UNUSED_ARG (time_out);
+  this->time_out_ = time_out;
 }
