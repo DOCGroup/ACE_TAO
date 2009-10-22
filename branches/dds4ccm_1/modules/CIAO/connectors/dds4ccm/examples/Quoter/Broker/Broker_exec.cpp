@@ -149,52 +149,34 @@ namespace CIAO_Quoter_Broker_Impl
 
     return 0;
   }
-<<<<<<< .mine
-
-
    void
    Broker_exec_i::read_one (void)
    {
-=======
-  
-  void
-  Broker_exec_i::read (void)
-  {
->>>>>>> .r87188
     std::cerr << "read_one" << std::endl;
     ::Quoter::Stock_Info  stock_info;
     stock_info.symbol= "IBM";
     ::CCM_DDS::ReadInfo readinfo;
-<<<<<<< .mine
+
     try
     {
         this->reader_->read_one (stock_info, readinfo );
         time_t tim = readinfo.timestamp.sec;
         printf("Read_Info. -> date = %s",ctime(&tim));
         printf ("Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
-=======
-
-    printf("GO TO read ONE\n");
-      this->reader_->read_one (stock_info, readinfo );
-
-    printf ("Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
->>>>>>> .r87188
             stock_info.symbol.in (),
             stock_info.low,
             stock_info.current,
             stock_info.high);
-<<<<<<< .mine
     }
     catch(CCM_DDS::NonExistent& )
     {
       printf("Stock_Info_Read_One: no stock_info receieved\n");
     }
-}
-=======
+
     printf("END OF READ_ONE\n");
     
     printf("GO TO get ONE\n");
-      this->getter_->get_one (stock_info, readinfo );
+   /* this->getter_->get_one (stock_info, readinfo );
 
     printf ("Stock_Info_GET_One: received a stock_info for <%s> at %u:%u:%u\n",
             stock_info.symbol.in (),
@@ -202,8 +184,8 @@ namespace CIAO_Quoter_Broker_Impl
             stock_info.current,
             stock_info.high);
     printf("END OF GET_ONE\n");
+    */
   }
->>>>>>> .r87188
 
 void
    Broker_exec_i::read_all (void)
@@ -371,12 +353,7 @@ void
  
   void
   Broker_exec_i::start (void)
-<<<<<<< .mine
-  { 
-=======
   {
-    printf("start \n");
->>>>>>> .r87188
     std::cerr << ">>> Broker_exec_i::start" << endl;
     this->ticker_->start (500);
   }
