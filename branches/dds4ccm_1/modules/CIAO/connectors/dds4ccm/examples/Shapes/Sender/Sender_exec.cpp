@@ -293,7 +293,7 @@ namespace CIAO_Shapes_Sender_Impl
     ::CORBA::ULong rate)
   {
     this->rate_ = rate;
-    printf ("SETTING rate : <%d>\n", rate);
+    printf ("SETTING rate sender : <%d>\n", rate);
   }
   
   

@@ -211,7 +211,7 @@ void
       {            
          printf ("Stock_Info_Read_All: Nubber %d : received a stock_info for <%s> at %u:%u:%u\n",
             i,
-            stock_infos[i].symbol,
+            stock_infos[i].symbol.in (),
             stock_infos[i].low,
             stock_infos[i].current,
             stock_infos[i].high);

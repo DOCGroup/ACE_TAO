@@ -1,3 +1,13 @@
+Fri Oct 23 10:59:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Resolved runtime crashes related to compiler warnings.
+          Specified which rate is set (sender or receiver).
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Specified which rate is set (sender or receiver).
+
 Fri Oct 23 10:46:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:

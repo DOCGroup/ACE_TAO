@@ -229,12 +229,12 @@ namespace CIAO_Shape_Receiver_Impl
       }
     for(CORBA::ULong i = 0; i < (CORBA::ULong)shape_infos->length(); ++i)
       {
-        printf ("Shape_Info_Read_All: Number %d : received shape_info for <%s>",// at %u:%u:%u\n",
+        printf ("Shape_Info_Read_All: Number %d : received shape_info for <%s> at %u:%u:%u\n",
             i,
-            shape_infos[i].color);
-//            shape_infos[i].x,
-//            shape_infos[i].y,
-//            shape_infos[i].size);
+            shape_infos[i].color.in (),
+            shape_infos[i].x,
+            shape_infos[i].y,
+            shape_infos[i].size);
       }
   }
 
@@ -250,7 +250,7 @@ namespace CIAO_Shape_Receiver_Impl
     ::CORBA::ULong rate)
   {
     this->rate_ = rate;
-    printf ("SETTING rate : <%d>\n", rate);
+    printf ("SETTING rate receiver : <%d>\n", rate);
   }
 
   // Port operations.
@@ -300,13 +300,13 @@ namespace CIAO_Shape_Receiver_Impl
   void
   Receiver_exec_i::ccm_passivate (void)
   {
-    /* Your code here. */
+    this->ticker_->stop ();
   }
   
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    /* Your code here. */
+    this->ticker_->close_h ();
   }
   
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
