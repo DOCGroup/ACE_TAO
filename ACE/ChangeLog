@@ -1,3 +1,10 @@
+Fri Oct 23 09:51:17 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc-9.h:
+          Added missing  _get_osfhandle() call to ACE_FILENO_EQUIVALENT macro.
+
 Thu Oct 22 14:16:10 UTC 2009  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
