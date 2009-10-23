@@ -43,9 +43,61 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
+#include "ace/Task.h"
+#include "ace/Reactor.h"
 
 namespace CIAO_Shape_Receiver_Impl
 {
+  class Receiver_exec_i;
+  /**
+  * @class reader activity generator
+  *
+  * @brief an active object used by Receiver to perform a periodical read action
+  *
+  */
+  class read_action_Generator : public ACE_Task_Base
+  {
+  public:
+    read_action_Generator (Receiver_exec_i &callback);
+
+    ~read_action_Generator ();
+
+    /// Hook method that performs application-defined initialization activities
+    int open_h (void);
+
+    /// Hook method that performs application-defined destruction activites
+    int close_h (void);
+
+    /// appliation-defined method for starting the pulse-generation service
+    int start (CORBA::ULong hertz);
+
+    /// application-defined method for stopping the pulse-generation service
+    int stop (void);
+
+    /// Indicate whether the current object is active
+    int active (void);
+
+    /// Handle the timeout.
+    virtual int handle_timeout (const ACE_Time_Value &tv,
+                                const void *arg);
+
+    /// Called when timer handler is removed.
+    virtual int handle_close (ACE_HANDLE handle,
+                              ACE_Reactor_Mask close_mask);
+
+    /// Hook methods implemnting the task's service processing,
+    /// invoked by all threads activated by activate () method
+    virtual int svc (void);
+
+  private:
+    /// Tracking whether we are actively generating pulse or not.
+    int active_;
+
+    /// Maintains a handle that actually process the event
+    Receiver_exec_i &pulse_callback_;
+
+  };
+  
   class RECEIVER_EXEC_Export Shape_Info_RawListener_exec_i
     : public virtual ::CCM_DDS::CCM_Shape_Info_RawListener,
       public virtual ::CORBA::LocalObject
@@ -64,35 +116,8 @@ namespace CIAO_Shape_Receiver_Impl
       const ::Shapes::Shape_Info & an_instance,
       const ::CCM_DDS::ReadInfo & info);
   };
-  class RECEIVER_EXEC_Export PortStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_PortStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    PortStatusListener_exec_i (void);
-    virtual ~PortStatusListener_exec_i (void);
-    
-    // Operations and attributes from ::CCM_DDS::PortStatusListener
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void
-    on_requested_deadline_missed (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::RequestedDeadlineMissedStatus & status);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void
-    on_sample_lost (
-      ::DDS::DataReader_ptr the_reader,
-      const ::DDS::SampleLostStatus & status);
-  };
-
   
-  class  Receiver_exec_i
+  class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -101,9 +126,15 @@ namespace CIAO_Shape_Receiver_Impl
     virtual ~Receiver_exec_i (void);
     
     // Supported operations and attributes.
-    
+    void read_one (void);
+    void read_all (void);
     // Component attributes.
+    virtual ::CORBA::ULong
+    rate (void);
     
+    virtual void
+    rate (
+      ::CORBA::ULong rate);
     // Port operations.
     
     virtual ::CCM_DDS::CCM_Shape_Info_RawListener_ptr
@@ -126,6 +157,9 @@ namespace CIAO_Shape_Receiver_Impl
   
   private:
     ::Shape::CCM_Receiver_Context_var context_;
+    ::CCM_DDS::Shape_Info_Reader_var reader_;
+    read_action_Generator * ticker_;
+    CORBA::ULong rate_;
   };
   
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

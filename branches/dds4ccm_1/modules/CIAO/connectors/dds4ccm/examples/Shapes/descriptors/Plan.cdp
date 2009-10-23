@@ -166,6 +166,17 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>1</long>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Shapes_ConnectorComponentInstance">
     <name>Shapes_ConnectorComponent</name>
@@ -194,7 +205,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>10</long>
+          <long>1</long>
         </value>
       </value>
     </configProperty>
@@ -251,38 +262,6 @@
   </connection>
 
   <connection>
-    <name>info_get_out_data</name>
-    <internalEndpoint>
-      <portName>info_get_out_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>info_get_out_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>_listenercontrol</name>
-    <internalEndpoint>
-      <portName>info_out_control</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>info_out_control</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
     <name>_rawlistner</name>
     <internalEndpoint>
       <portName>info_out_listener</portName>
@@ -292,38 +271,6 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>info_out_listener</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>_datareader</name>
-    <internalEndpoint>
-      <portName>info_out_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>info_out_dds_entity</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>_portstatuslistener</name>
-    <internalEndpoint>
-      <portName>info_out_status</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>info_out_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />

@@ -186,7 +186,7 @@ namespace CIAO_Shapes_Sender_Impl
         else
           {
             --i->second->x;
-            i->second->x_increasing = i->second->x - 1 <= 0;
+            i->second->x_increasing = i->second->x - 1 < 0;
           }
         if (i->second->y_increasing)
           {
@@ -196,7 +196,7 @@ namespace CIAO_Shapes_Sender_Impl
         else
           {
             --i->second->y;
-            i->second->y_increasing = i->second->x - 1 <= 0;
+            i->second->y_increasing = i->second->x - 1 < 0;
           }
         if (i->second->size_increasing)
           {
@@ -206,7 +206,7 @@ namespace CIAO_Shapes_Sender_Impl
         else
           {
             --i->second->size;
-            i->second->size_increasing = i->second->size - 1 <= 0;
+            i->second->size_increasing = i->second->size - 1 < 0;
           }
         try 
           {

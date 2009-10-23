@@ -1,3 +1,16 @@
+Fri Oct 23 10:46:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Implemented read_one and read_all
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resolved minor bug.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          changed to meet the receivers IDL.
+
 Fri Oct 23 09:03:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
