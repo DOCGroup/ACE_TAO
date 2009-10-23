@@ -1,3 +1,8 @@
+Fri Oct 23 13:23:49 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * m4/config_h.m4:
+          Reverted: Mon Oct 19 20:58:10 UTC 2009  Olli Savia  <ops@iki.fi>
+        
 Fri Oct 23 13:10:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/File_Lock.{h,cpp,inl}:

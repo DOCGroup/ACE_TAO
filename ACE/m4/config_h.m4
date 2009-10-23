@@ -486,10 +486,6 @@ AH_TEMPLATE([ACE_HAS_REENTRANT_FUNCTIONS],
 [Platform supports reentrant functions (i.e., all the POSIX *_r
    functions).])
 
-AH_TEMPLATE([ACE_LACKS_STRERROR],[Compiler/platform lacks support for strerror().])
-
-AH_TEMPLATE([ACE_HAS_STRSIGNAL],[Compiler/platform supports strsignal().])
-
 AH_TEMPLATE([ACE_HAS_X86_STAT_MACROS],
 [Solaris for intel uses macros for fstat() and stat(), these are
    wrappers for _fxstat() and _xstat() uses of the macros.  Causes
