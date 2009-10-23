@@ -1,3 +1,10 @@
+Fri Oct 23 21:38:31 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_snowleopard.GNU:
+
+          Enhanced this file to remove -Wno-long-double from CFLAG.
+          Thanks to Adam Mitz for the suggestion on how to fix this.
+
 Fri Oct 23 20:25:13 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/os_include/os_string.h:
