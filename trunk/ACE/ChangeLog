@@ -1,3 +1,8 @@
+Fri Oct 23 20:25:13 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/os_include/os_string.h:
+          Removed some legacy code.
+
 Fri Oct 23 13:58:45 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/run_test.lst:
