@@ -196,7 +196,7 @@ namespace CIAO_Shapes_Sender_Impl
         else
           {
             --i->second->y;
-            i->second->y_increasing = i->second->x - 1 < 0;
+            i->second->y_increasing = i->second->y - 1 < 0;
           }
         if (i->second->size_increasing)
           {
@@ -240,8 +240,8 @@ namespace CIAO_Shapes_Sender_Impl
 
     ::Shapes::Shape_Info *shape = new ::Shapes::Shape_Info;
 
-    shape->x = ACE_OS::rand () % 100;
-    shape->y = shape->x;
+    shape->x = ACE_OS::rand () % this->max_x_;
+    shape->y = ACE_OS::rand () % this->max_y_;
     shape->size = ACE_OS::rand () % 25;
     shape->color = color;
 

@@ -1,3 +1,8 @@
+Fri Oct 23 11:37:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resolved a typo which results in strange behaviour.
+
 Fri Oct 23 11:32:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
