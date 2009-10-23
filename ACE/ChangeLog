@@ -1,3 +1,8 @@
+Fri Oct 23 13:10:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/File_Lock.{h,cpp,inl}:
+          Use bool instead of int
+
 Fri Oct 23 12:52:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/run_test.pl:
