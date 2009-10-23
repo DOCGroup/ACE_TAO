@@ -26,18 +26,10 @@
 
 #include "ace/os_include/os_stddef.h"
 
-// Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
-#if defined (ACE_HAS_GNU_CSTRING_H)
-// Define this file to keep /usr/include/memory.h from being included.
-# include /**/ <cstring>
-#else
-# if !defined (ACE_LACKS_MEMORY_H)
-#   include /**/ <memory.h>
-# endif /* !ACE_LACKS_MEMORY_H */
-# if !defined (ACE_LACKS_STRING_H)
-#   include /**/ <string.h>
-# endif /* !ACE_LACKS_STRING_H */
-#endif /* ACE_HAS_GNU_CSTRING_H */
+#if !defined (ACE_LACKS_STRING_H)
+# include /**/ <string.h>
+#endif /* !ACE_LACKS_STRING_H */
+
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
