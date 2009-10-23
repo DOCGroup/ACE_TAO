@@ -1,3 +1,8 @@
+Fri Oct 23 09:56:50 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-aix-5.x.h:
+          Added ACE_HAS_STRSIGNAL.
+
 Fri Oct 23 09:51:17 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-msvc-10.h:
