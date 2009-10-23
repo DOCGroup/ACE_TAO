@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// $
+// $Id$
 
  #include "ciao/CIAO_common.h"
 // 

@@ -165,8 +165,6 @@ namespace CIAO_Quoter_Broker_Impl
     
     // Port operations.
     
-	
-
     
     virtual ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
     get_info_out_listener (void);

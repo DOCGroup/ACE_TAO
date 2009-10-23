@@ -191,7 +191,7 @@ void
   Broker_exec_i::read_all (void)
   {
     std::cerr << "read_all" << std::endl;
-	
+
     ::Quoter::Stock_Info_Seq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(stock_infos.out(), readinfoseq.out());
@@ -215,12 +215,10 @@ void
             stock_infos[i].low,
             stock_infos[i].current,
             stock_infos[i].high);
-            
       }
     }
-  }	
+  }
 
-  
   //============================================================
   // Facet Executor Implementation Class: Stock_Info_RawListener_exec_i
   //============================================================
@@ -247,9 +245,7 @@ void
             an_instance.current,
             an_instance.high);
        */
-  
-
-  }  
+  }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
@@ -312,7 +308,7 @@ void
   Broker_exec_i::get_info_out_status (void)
   {
     /* Your code here. */
-	 return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
   
   // Operations from Components::SessionComponent.
@@ -341,20 +337,21 @@ void
     this->getter_ = this->context_->get_connection_info_get_out_data ();
     this->ticker_->open_h ();
   }
-      
- 
+
   void
   Broker_exec_i::start (void)
   {
     std::cerr << ">>> Broker_exec_i::start" << endl;
     this->ticker_->start (500);
   }
+
   void
   Broker_exec_i::stop (void)
   {
     std::cerr << ">>> Broker_exec_i::stop" << endl;
     this->ticker_->stop ();
   }
+
   void
   Broker_exec_i::ccm_activate (void)
   { 

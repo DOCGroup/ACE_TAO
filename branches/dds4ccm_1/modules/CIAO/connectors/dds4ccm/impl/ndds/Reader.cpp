@@ -31,7 +31,7 @@ void CCM_DDS_string_Reader_i::read_one (
   ::CCM_DDS::ReadInfo_out info)
 {
   printf("------read_one in Reader.cpp of ndds ----------");
-	// Add your implementation here
+  // Add your implementation here
 }
 
 void CCM_DDS_string_Reader_i::read_one_history (
