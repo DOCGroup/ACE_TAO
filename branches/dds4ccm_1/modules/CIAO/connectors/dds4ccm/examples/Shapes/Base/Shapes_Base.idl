@@ -15,6 +15,9 @@ module Shapes
     short x;
     short y;
     short size;
+    boolean x_increasing;
+    boolean y_increasing;
+    boolean size_increasing;
   };
 
   struct Attributes {

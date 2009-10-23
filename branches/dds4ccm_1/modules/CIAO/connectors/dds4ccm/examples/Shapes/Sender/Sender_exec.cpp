@@ -157,7 +157,10 @@ namespace CIAO_Shapes_Sender_Impl
   //============================================================
   
   Sender_exec_i::Sender_exec_i (void) 
-    : rate_ (1)
+    : rate_ (1),
+      max_x_ (100),
+      max_y_ (100),
+      max_size_ (25)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -171,14 +174,98 @@ namespace CIAO_Shapes_Sender_Impl
   void 
   Sender_exec_i::tick ()
   {
-    printf (">>> Ticking\n");
-    printf ("<<< Ticking\n");
+    for (Shapes::iterator i = this->shapes_.begin ();
+         i != this->shapes_.end ();
+         ++i)
+      {
+        if (i->second->x_increasing)
+          {
+            ++i->second->x;
+            i->second->x_increasing = i->second->x + 1 <= this->max_x_;
+          }
+        else
+          {
+            --i->second->x;
+            i->second->x_increasing = i->second->x - 1 <= 0;
+          }
+        if (i->second->y_increasing)
+          {
+            ++i->second->y;
+            i->second->y_increasing = i->second->y + 1 <= this->max_y_;
+          }
+        else
+          {
+            --i->second->y;
+            i->second->y_increasing = i->second->x - 1 <= 0;
+          }
+        if (i->second->size_increasing)
+          {
+            ++i->second->size;
+            i->second->size_increasing = i->second->size + 1 <= this->max_size_;
+          }
+        else
+          {
+            --i->second->size;
+            i->second->size_increasing = i->second->size - 1 <= 0;
+          }
+        try 
+          {
+            this->updater_->update (i->second);
+            printf ("UPDATED Shape_info for <%s> %u:%u:%u\n",
+                      i->first.c_str (),
+                      i->second->x,
+                      i->second->y,
+                      i->second->size);
+          }
+        catch (CCM_DDS::NonExistent& )
+          {
+            printf ("Shape_info for <%s> not updated: <%s> didn't exist.\n",
+                        i->first.c_str (), i->first.c_str ());
+          }
+        catch (CCM_DDS::InternalError& )
+          {
+            printf ("Internal Error while updating Shape_info for <%s>.\n",
+                        i->first.c_str ());
+          }
+      }
   }
 
   void 
-  Sender_exec_i::add_shape ()
+  Sender_exec_i::add_shape (const char * color)
   {
-  
+    printf ("Sender_exec_i::add_shape - Adding shape with color <%s>\n", color);
+
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                        this->mutex_, CORBA::INTERNAL ());
+
+    ::Shapes::Shape_Info *shape = new ::Shapes::Shape_Info;
+
+    shape->x = ACE_OS::rand () % 100;
+    shape->y = shape->x;
+    shape->size = ACE_OS::rand () % 25;
+    shape->color = color;
+
+    this->shapes_[color] = shape;
+    //Register shape with dds.
+    printf ("REGISTER Shape_info for <%s> %u:%u:%u\n",
+                  color,
+                  shape->x,
+                  shape->y,
+                  shape->size);
+    try 
+      {
+        this->updater_->create (*shape);
+      }
+    catch (CCM_DDS::AlreadyCreated& )
+      {
+        printf ("Shape_info for <%s> already created.\n",
+                    color);
+      }
+    catch (CCM_DDS::InternalError& )
+      {
+        printf ("Internal Error while creating Shape_info for <%s>.\n",
+                      color);
+      }
   }
 
   void
@@ -206,8 +293,52 @@ namespace CIAO_Shapes_Sender_Impl
     ::CORBA::ULong rate)
   {
     this->rate_ = rate;
+    printf ("SETTING rate : <%d>\n", rate);
   }
   
+  
+  ::CORBA::UShort
+  Sender_exec_i::max_x (void)
+  {
+    return this->max_x_;
+  }
+  
+  void
+  Sender_exec_i::max_x (
+    ::CORBA::UShort max_x)
+  {
+    this->max_x_ = max_x;
+    printf ("SETTING max x : <%d>\n", max_x);
+  }
+  
+  ::CORBA::UShort
+  Sender_exec_i::max_y (void)
+  {
+    return this->max_y_;
+  }
+  
+  void
+  Sender_exec_i::max_y (
+    ::CORBA::UShort max_y)
+  {
+    this->max_y_ = max_y;
+    printf ("SETTING max y : <%d>\n", max_y);
+  }
+  
+  ::CORBA::UShort
+  Sender_exec_i::max_size (void)
+  {
+    return this->max_size_;
+  }
+  
+  void
+  Sender_exec_i::max_size (
+    ::CORBA::UShort max_size)
+  {
+    this->max_size_ = max_size;
+    printf ("SETTING max size : <%d>\n", max_size);
+  }
+
   // Port operations.
   
   // Operations from Components::SessionComponent.
@@ -229,13 +360,18 @@ namespace CIAO_Shapes_Sender_Impl
   Sender_exec_i::configuration_complete (void)
   {
     /* Your code here. */
+    this->updater_ = this->context_->get_connection_info_update_data ();
+    this->ticker_->activate ();
   }
   
   void
   Sender_exec_i::ccm_activate (void)
   {
     this->start ();
-    this->add_shape ();
+    this->add_shape ("blue");
+    this->add_shape ("pink");
+    this->add_shape ("green");
+    this->add_shape ("yellow");
   }
   
   void

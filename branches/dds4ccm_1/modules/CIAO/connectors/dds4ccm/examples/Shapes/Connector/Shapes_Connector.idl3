@@ -99,7 +99,7 @@ module Shapes
   {
     // @from DDS_TopicBase
     attribute string topic_name;
-    attribute DDS::StringSeq key_fields;
+    readonly attribute DDS::StringSeq key_fields;
 
     // @from DDS_TopicBase : DDS_Base
     uses CCM_DDS::ConnectorStatusListener error_listener;

@@ -1,3 +1,13 @@
+Fri Oct 23 09:03:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Added functionality to the sender.
+
 Fri Oct 23 06:45:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:

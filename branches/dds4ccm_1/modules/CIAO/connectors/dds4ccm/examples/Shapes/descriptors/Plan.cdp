@@ -187,6 +187,50 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>max_x</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>100</short>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>max_y</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>100</short>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>max_size</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>25</short>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
 
@@ -283,22 +327,6 @@
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>writer_connection</name>
-    <internalEndpoint>
-      <portName>info_in_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="SenderComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>info_in_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 

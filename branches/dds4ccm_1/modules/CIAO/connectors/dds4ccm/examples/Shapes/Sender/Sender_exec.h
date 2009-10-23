@@ -46,6 +46,8 @@
 #include "ace/Task.h"
 #include "ace/Reactor.h"
 
+#include <map>
+
 namespace CIAO_Shapes_Sender_Impl
 {
   class Sender_exec_i;
@@ -117,7 +119,7 @@ namespace CIAO_Shapes_Sender_Impl
     
     void tick ();
     
-    void add_shape ();
+    void add_shape (const char * color);
     // Component attributes.
     
     // TAO_IDL - Generated from
@@ -126,13 +128,31 @@ namespace CIAO_Shapes_Sender_Impl
     virtual ::CORBA::ULong
     rate (void);
     
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
     virtual void
     rate (
       ::CORBA::ULong rate);
     
+    virtual ::CORBA::UShort
+    max_x (void);
+    
+    virtual void
+    max_x (
+      ::CORBA::UShort max_x);
+    
+    virtual ::CORBA::UShort
+    max_y (void);
+    
+    virtual void
+    max_y (
+      ::CORBA::UShort max_y);
+
+    virtual ::CORBA::UShort
+    max_size (void);
+    
+    virtual void
+    max_size (
+      ::CORBA::UShort max_size);
+
     // Port operations.
     
     // Operations from Components::SessionComponent.
@@ -148,9 +168,18 @@ namespace CIAO_Shapes_Sender_Impl
     virtual void ccm_remove (void);
   
   private:
+    CCM_DDS::Shape_Info_Updater_var updater_;
+
     pulse_Generator * ticker_;
     ::Shapes::CCM_Sender_Context_var context_;
     CORBA::ULong rate_;
+    CORBA::UShort max_x_;
+    CORBA::UShort max_y_;
+    CORBA::UShort max_size_;
+
+    TAO_SYNCH_MUTEX mutex_;
+    typedef std::map<ACE_CString, Shapes::Shape_Info_var> Shapes;
+    Shapes shapes_;
   };
   
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
