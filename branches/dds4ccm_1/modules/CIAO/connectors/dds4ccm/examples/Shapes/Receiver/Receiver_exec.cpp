@@ -199,7 +199,12 @@ namespace CIAO_Shape_Receiver_Impl
     {
         this->reader_->read_one (shape_info, readinfo );
         time_t tim = readinfo.timestamp.sec;
-        printf("Read_Info. -> date = %s",ctime(&tim));
+        tm* time = localtime(&tim);
+        printf("Read_Info -> date = %02d:%02d:%02d.%d\n",
+                            time->tm_hour,
+                            time->tm_min,
+                            time->tm_sec,
+                            readinfo.timestamp.nanosec);
         printf ("Shape_Info_Read_One: received shape_info for <%s> at %u:%u:%u\n",
             shape_info.color.in (),
             shape_info.x,
@@ -225,7 +230,12 @@ namespace CIAO_Shape_Receiver_Impl
     for(unsigned int i = 0; i < readinfoseq->length(); ++i)
       {
         time_t tim = readinfoseq[i].timestamp.sec;
-        printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+        tm* time = localtime(&tim);
+        printf("Read_All_Info -> UTC date = %02d:%02d:%02d.%d\n",
+                            time->tm_hour,
+                            time->tm_min,
+                            time->tm_sec,
+                            readinfoseq[i].timestamp.nanosec);
       }
     for(CORBA::ULong i = 0; i < (CORBA::ULong)shape_infos->length(); ++i)
       {

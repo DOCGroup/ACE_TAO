@@ -1,3 +1,8 @@
+Fri Oct 23 11:32:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          More accurate date time logging.
+
 Fri Oct 23 10:59:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
