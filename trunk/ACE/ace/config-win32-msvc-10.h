@@ -51,7 +51,7 @@
 #define ACE_STRCASECMP_EQUIVALENT ::_stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
-#define ACE_FILENO_EQUIVALENT ::_fileno
+#define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
 
 #ifndef ACE_HAS_EXCEPTIONS
 # define ACE_HAS_EXCEPTIONS
