@@ -1411,6 +1411,10 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using \$PerlACE::waitforfile_timed");
                     }
 
+                    if (m/\$PerlACE::is_vxworks_test/) {
+                        print_error ("$file:$.: using \$PerlACE::is_vxworks_test");
+                    }
+
                     if (m/\$PerlACE::add_lib_path/) {
                         print_error ("$file:$.: using \$PerlACE::add_lib_path");
                     }

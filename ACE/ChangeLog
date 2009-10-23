@@ -1,3 +1,8 @@
+Fri Oct 23 12:52:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/run_test.pl:
+          Extended run_test check
+
 Fri Oct 23 09:56:50 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-aix-5.x.h:
