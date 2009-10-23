@@ -311,7 +311,7 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_get_out_data (void)
   this->configure_port_info_out_ (true);
 
   return new CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE,
-  typename CONNECTOR_TYPE::getter_type> (this->__info_out_datareader_.in ());
+  typename CONNECTOR_TYPE::getter_type> (this->__info_get_datareader_.in ());
 }
 
 template <typename NDDS_TYPE, typename CONNECTOR_TYPE>

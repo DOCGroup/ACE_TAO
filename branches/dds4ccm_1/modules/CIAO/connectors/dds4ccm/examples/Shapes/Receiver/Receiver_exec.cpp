@@ -130,8 +130,16 @@ namespace CIAO_Shape_Receiver_Impl
   {
     // Notify the subscribers
     printf ("START NOTIFY SUBSCRIBERS\n");
-    this->pulse_callback_.read_one();
-    this->pulse_callback_.read_all();
+    if (pulse_callback_.read_data ())
+      {
+        this->pulse_callback_.read_one();
+        this->pulse_callback_.read_all();
+      }
+    if (pulse_callback_.get_data ())
+      {
+        this->pulse_callback_.get_one ();
+        this->pulse_callback_.get_all ();
+      }
     return 0;
   }
 
@@ -177,7 +185,10 @@ namespace CIAO_Shape_Receiver_Impl
   //============================================================
   
   Receiver_exec_i::Receiver_exec_i (void)
-    : rate_ (0)
+    : rate_ (0),
+      get_data_ (true),
+      read_data_ (true)
+    
   {
     this->ticker_ = new read_action_Generator (*this);
   }
@@ -200,12 +211,12 @@ namespace CIAO_Shape_Receiver_Impl
         this->reader_->read_one (shape_info, readinfo );
         time_t tim = readinfo.timestamp.sec;
         tm* time = localtime(&tim);
-        printf("Read_Info -> date = %02d:%02d:%02d.%d\n",
+        printf("READ_ONE Read_Info -> date = %02d:%02d:%02d.%d\n",
                             time->tm_hour,
                             time->tm_min,
                             time->tm_sec,
                             readinfo.timestamp.nanosec);
-        printf ("Shape_Info_Read_One: received shape_info for <%s> at %u:%u:%u\n",
+        printf ("READ ON shape info : received shape_info for <%s> at %u:%u:%u\n",
             shape_info.color.in (),
             shape_info.x,
             shape_info.y,
@@ -218,7 +229,7 @@ namespace CIAO_Shape_Receiver_Impl
 
     printf("END OF READ_ONE\n");
   }
-
+   
   void
   Receiver_exec_i::read_all (void)
   {
@@ -231,7 +242,7 @@ namespace CIAO_Shape_Receiver_Impl
       {
         time_t tim = readinfoseq[i].timestamp.sec;
         tm* time = localtime(&tim);
-        printf("Read_All_Info -> UTC date = %02d:%02d:%02d.%d\n",
+        printf("READ_ALL ReadInfo -> UTC date = %02d:%02d:%02d.%d\n",
                             time->tm_hour,
                             time->tm_min,
                             time->tm_sec,
@@ -239,7 +250,7 @@ namespace CIAO_Shape_Receiver_Impl
       }
     for(CORBA::ULong i = 0; i < (CORBA::ULong)shape_infos->length(); ++i)
       {
-        printf ("Shape_Info_Read_All: Number %d : received shape_info for <%s> at %u:%u:%u\n",
+        printf ("READ_ALL Shape Info : Number %d : received shape_info for <%s> at %u:%u:%u\n",
             i,
             shape_infos[i].color.in (),
             shape_infos[i].x,
@@ -248,6 +259,43 @@ namespace CIAO_Shape_Receiver_Impl
       }
   }
 
+  void
+  Receiver_exec_i::get_one (void)
+  {
+    printf ("GET_ONE\n");
+    ::Shapes::Shape_Info  shape_info;
+    shape_info.color = "yellow";
+    ::CCM_DDS::ReadInfo readinfo;
+
+    try
+      {
+        this->getter_->get_one (shape_info, readinfo );
+        time_t tim = readinfo.timestamp.sec;
+        tm* time = localtime(&tim);
+        printf("GET_ONE ReadInfo -> date = %02d:%02d:%02d.%d\n",
+                            time->tm_hour,
+                            time->tm_min,
+                            time->tm_sec,
+                            readinfo.timestamp.nanosec);
+        printf ("GET_ONE Shape_Info : received shape_info for <%s> at %u:%u:%u\n",
+            shape_info.color.in (),
+            shape_info.x,
+            shape_info.y,
+            shape_info.size);
+    }
+    catch(CCM_DDS::NonExistent& )
+    {
+      printf("Shape_Info_Read_One: no shape_info receieved\n");
+    }
+
+    printf("END OF GET_ONE\n");
+  }
+   
+  void
+  Receiver_exec_i::get_all (void)
+  {
+    printf ("get_all\n");
+  }
   // Component attributes.
   ::CORBA::ULong
   Receiver_exec_i::rate (void)
@@ -261,6 +309,33 @@ namespace CIAO_Shape_Receiver_Impl
   {
     this->rate_ = rate;
     printf ("SETTING rate receiver : <%d>\n", rate);
+  }
+  ::CORBA::Boolean
+  Receiver_exec_i::get_data (void)
+  {
+    return this->get_data_;
+  }
+  
+  void
+  Receiver_exec_i::get_data (
+    ::CORBA::Boolean get_data)
+  {
+    this->get_data_ = get_data;
+    printf ("SETTING get_data : <%d>\n", get_data);
+  }
+  
+  ::CORBA::Boolean
+  Receiver_exec_i::read_data (void)
+  {
+    return this->read_data_;
+  }
+  
+  void
+  Receiver_exec_i::read_data (
+    ::CORBA::Boolean read_data)
+  {
+    this->read_data_ = read_data;
+    printf ("SETTING read_data : <%d>\n", read_data);
   }
 
   // Port operations.
@@ -298,6 +373,7 @@ namespace CIAO_Shape_Receiver_Impl
   Receiver_exec_i::configuration_complete (void)
   {
     this->reader_ = this->context_->get_connection_info_out_data();
+    this->getter_ = this->context_->get_connection_info_get_out_data();
     this->ticker_->activate ();
   }
   

@@ -1,3 +1,21 @@
+Fri Oct 23 12:20:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Started with the implementation of the getter in this example.
+          The user is able to configure (using the deployment plan) whether
+          to get the data, to read the data or to do both.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          The user is able to configure whether to get the data,
+          to read the data or to do both.
+          Added configparameters 'get_data' and 'read_data' to establish
+          this.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Resolved bug.
+
 Fri Oct 23 11:37:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:

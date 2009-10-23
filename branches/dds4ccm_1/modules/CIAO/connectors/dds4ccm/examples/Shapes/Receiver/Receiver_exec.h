@@ -128,6 +128,9 @@ namespace CIAO_Shape_Receiver_Impl
     // Supported operations and attributes.
     void read_one (void);
     void read_all (void);
+    void get_one (void);
+    void get_all (void);
+    
     // Component attributes.
     virtual ::CORBA::ULong
     rate (void);
@@ -135,6 +138,20 @@ namespace CIAO_Shape_Receiver_Impl
     virtual void
     rate (
       ::CORBA::ULong rate);
+    
+    virtual ::CORBA::Boolean
+    get_data (void);
+    
+    virtual void
+    get_data (
+      ::CORBA::Boolean get_data);
+    
+    virtual ::CORBA::Boolean
+    read_data (void);
+    
+    virtual void
+    read_data (
+      ::CORBA::Boolean read_data);
     // Port operations.
     
     virtual ::CCM_DDS::CCM_Shape_Info_RawListener_ptr
@@ -158,8 +175,11 @@ namespace CIAO_Shape_Receiver_Impl
   private:
     ::Shape::CCM_Receiver_Context_var context_;
     ::CCM_DDS::Shape_Info_Reader_var reader_;
+    ::CCM_DDS::Shape_Info_Getter_var getter_;
+    
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
+    CORBA::Boolean get_data_, read_data_;
   };
   
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

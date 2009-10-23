@@ -177,6 +177,28 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>get_data</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>read_data</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Shapes_ConnectorComponentInstance">
     <name>Shapes_ConnectorComponent</name>
@@ -244,7 +266,6 @@
     </configProperty>
   </instance>
 
-
   <connection>
     <name>info_out_data</name>
     <internalEndpoint>
@@ -260,7 +281,21 @@
       <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-
+  <connection>
+    <name>info_get_out_data</name>
+    <internalEndpoint>
+      <portName>info_get_out_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>info_get_out_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
   <connection>
     <name>_rawlistner</name>
     <internalEndpoint>
