@@ -901,13 +901,17 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   if LDBL_MAX_EXP == 128
 #     define ACE_SIZEOF_LONG_DOUBLE 4
 #   elif LDBL_MAX_EXP == 1024
-#     define ACE_SIZEOF_LONG_DOUBLE 8
+#     if (defined (__powerpc64__))
+#       define ACE_SIZEOF_LONG_DOUBLE 16
+#     else
+#       define ACE_SIZEOF_LONG_DOUBLE 8
+#     endif
 #   elif LDBL_MAX_EXP == 16384
 #     if defined (LDBL_DIG)  &&  LDBL_DIG == 18
-#       if defined (__ia64) || defined (__x86_64) || defined (__ppc64)
+#       if defined (__ia64) || defined (__x86_64)
 #         define ACE_SIZEOF_LONG_DOUBLE 16
-#       else /* ! __ia64 */
-#       define ACE_SIZEOF_LONG_DOUBLE 12
+#       else /* ! __ia64 || __x86_64 */
+#         define ACE_SIZEOF_LONG_DOUBLE 12
 #       endif /* __ia64 */
 #     else  /* ! LDBL_DIG  ||  LDBL_DIG != 18 */
 #       define ACE_SIZEOF_LONG_DOUBLE 16
