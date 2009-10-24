@@ -1,3 +1,8 @@
+Sat Oct 24 12:15:40 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_string.cpp (strsignal):
+          Fix for Solaris and AIX.
+
 Fri Oct 23 21:38:31 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_snowleopard.GNU:
