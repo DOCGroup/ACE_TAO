@@ -1,8 +1,9 @@
 // $Id$
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdlib.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID (ace,
            OS_NS_string,
@@ -11,14 +12,6 @@ ACE_RCSID (ace,
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_string.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
-
-#if defined (ACE_HAS_WCHAR)
-#  include "ace/OS_NS_stdlib.h"
-#endif /* ACE_HAS_WCHAR */
-
-#if !defined (ACE_LACKS_STRERROR) || !defined (ACE_HAS_STRSIGNAL)
-#  include "ace/OS_NS_stdio.h"
-#endif /* ACE_LACKS_STRERROR */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -160,10 +153,16 @@ ACE_OS::strerror_emulation (int)
 char *
 ACE_OS::strsignal (int signum)
 {
-#if defined (ACE_HAS_STRSIGNAL)
-  return ACE_STD_NAMESPACE::strsignal (signum);
-#else
   static char signal_text[128];
+#if defined (ACE_HAS_STRSIGNAL)
+  char *ret_val = ACE_STD_NAMESPACE::strsignal (signum);
+  if (ret_val <= reinterpret_cast<char *> (0))
+    {
+      ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
+      ret_val = signal_text;
+    }
+  return ret_val;
+#else
   if (signum < 0 || signum >= ACE_NSIG)
     {
       ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
