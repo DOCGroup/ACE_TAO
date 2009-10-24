@@ -2500,20 +2500,15 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
      return *sig;
    #endif /* _POSIX_C_SOURCE - 0 >= 199506L || _POSIX_PTHREAD_SEMANTICS */
 # elif defined (ACE_HAS_PTHREADS)
-  // LynxOS and Digital UNIX have their own hoops to jump through.
-#   if defined (__Lynx__)
-    // Second arg is a void **, which we don't need (the selected
-    // signal number is returned).
-    *sig = ::sigwait (sset, 0);
-    return *sig;
-#   elif defined (DIGITAL_UNIX)  &&  defined (__DECCXX_VER)
+  // Digital UNIX has own hoops to jump through.
+#   if defined (DIGITAL_UNIX) && defined (__DECCXX_VER)
       // DEC cxx (but not g++) needs this direct call to its internal
       // sigwait ().  This allows us to #undef sigwait, so that we can
       // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait
       // if sigwait is _not_ #undef'ed.
       errno = ::_Psigwait (sset, sig);
       return errno == 0  ?  *sig  :  -1;
-#   else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
+#   else /* !(DIGITAL_UNIX && __DECCXX_VER) */
 #     if defined (CYGWIN32)
         // Cygwin has sigwait definition, but it is not implemented
         ACE_UNUSED_ARG (sset);
@@ -2525,7 +2520,7 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
         errno = ::sigwait (sset, sig);
         return errno == 0  ?  *sig  :  -1;
 #     endif /* CYGWIN32 */
-#   endif /* ! __Lynx__ && ! (DIGITAL_UNIX && __DECCXX_VER) */
+#   endif /* !(DIGITAL_UNIX && __DECCXX_VER) */
 # elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
