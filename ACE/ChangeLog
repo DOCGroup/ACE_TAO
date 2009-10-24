@@ -1,3 +1,8 @@
+Sat Oct 24 14:30:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Fix for PPC64
+
 Sat Oct 24 12:18:00 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_Thread.inl:

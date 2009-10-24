@@ -53,6 +53,9 @@ endif
 ifeq ($(buildbits),64)
   FLAGS_C_CC += -m64
   LDFLAGS    += -m64
+  ifeq ($(SYSARCH),ppc64)
+    FLAGS_C_CC += -mminimal-toc
+  endif
 endif
 
 #
