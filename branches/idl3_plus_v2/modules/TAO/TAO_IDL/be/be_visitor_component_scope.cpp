@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    component_scope.cpp
+//    be_visitor_component_scope.cpp
 //
 // = DESCRIPTION
 //    Abstract visitor providing ancestor scope visitation.
@@ -17,6 +17,19 @@
 //    Jeff Parsons
 //
 // ============================================================================
+
+#include "be_visitor_component_scope.h"
+#include "be_visitor_context.h"
+
+#include "be_mirror_port.h"
+#include "be_component.h"
+#include "be_provides.h"
+#include "be_uses.h"
+
+#include "be_extern.h"
+
+#include "utl_identifier.h"
+#include "nr_extern.h"
 
 be_visitor_component_scope::be_visitor_component_scope (
       be_visitor_context *ctx)
@@ -46,21 +59,33 @@ int
 be_visitor_component_scope::visit_extended_port (
   be_extended_port *node)
 {
-  return this->visit_porttype (node->port_type ());
+  
+  AST_Decl::NodeType nt =
+    ScopeAsDecl (node->defined_in ())->node_type ();
+  
+  // Store this to prefix to contained provides or uses node name.  
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+    {
+      this->current_port_name_ = node->local_name ()->get_string ();
+    }
+    
+  return this->visit_porttype_scope (node->port_type ());
 }
 
 int
 be_visitor_component_scope::visit_mirror_port (
   be_mirror_port *node)
 {
-  return this->visit_porttype_mirror (node->port_type ());
-}
-
-int
-be_visitor_component_scope::visit_porttype (
-  be_porttype *node)
-{
-  return this->visit_scope (node);
+  AST_Decl::NodeType nt =
+    ScopeAsDecl (node->defined_in ())->node_type ();
+    
+  // Store this to prefix to contained provides or uses node name.  
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+    {
+      this->current_port_name_ = node->local_name ()->get_string ();
+    }
+    
+  return this->visit_porttype_scope_mirror (node->port_type ());
 }
 
 int
@@ -86,13 +111,22 @@ be_visitor_component_scope::visit_component_scope (
 }
 
 int
-be_visitor_component_scope::visit_porttype_mirror (be_porttype *node)
+be_visitor_component_scope::visit_porttype_scope (
+  be_porttype *node)
+{
+  return this->visit_scope (node);
+}
+
+int
+be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
 {
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
     {
       be_decl *d = be_decl::narrow_from_decl (si.item ());
+      
+      (void) this->pre_process (d);
 
       switch (d->node_type ())
         {
@@ -139,6 +173,30 @@ be_visitor_component_scope::visit_porttype_mirror (be_porttype *node)
             }
           default:
             return d->accept (this);
+        }
+    }
+    
+  return 0;
+}
+
+int
+be_visitor_component_scope::pre_process (be_decl *node)
+{
+  AST_Decl::NodeType nt = node->node_type ();
+  
+  if (nt == AST_Decl::NT_provides || nt == AST_Decl::NT_uses)
+    {
+      AST_Decl *s = ScopeAsDecl (node->defined_in ());
+      AST_Decl::NodeType snt = s->node_type ();
+      
+      if (snt == AST_Decl::NT_porttype)
+        {
+          ACE_CString new_name = current_port_name_;
+          new_name += '_';
+          new_name += node->local_name ()->get_string ();
+          
+          Identifier *i = node->name ()->last_component ();
+          i->replace_string (new_name.c_str ());
         }
     }
     

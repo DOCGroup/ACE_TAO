@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    component_scope.h
+//    be_visitor_component_scope.h
 //
 // = DESCRIPTION
 //    Base class for visitors that need to visit the scope of a 
@@ -21,6 +21,10 @@
 
 #ifndef _BE_COMPONENT_COMPONENT_SCOPE_H_
 #define _BE_COMPONENT_COMPONENT_SCOPE_H_
+
+#include "ace/SString.h"
+
+#include "be_visitor_scope.h"
 
 class be_visitor_component_scope : public be_visitor_scope
 {
@@ -40,14 +44,25 @@ protected:
 public:
   virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_mirror_port (be_mirror_port *node);
-  virtual int visit_porttype (be_porttype *node);
 
   // Automatically recurses to the ancestor scopes, if any.
   int visit_component_scope (be_component *node);
   
-  // Swaps uses for provides members and vice versa.S
- 
-  int visit_porttype_mirror (be_porttype *node);
+  // These two methods are used instead of overriding
+  // visit_porttype so we can traverse a porttype only
+  // when it is referenced.
+  
+  int visit_porttype_scope (be_porttype *node);
+
+  // Swaps uses for provides members and vice versa.S 
+  int visit_porttype_scope_mirror (be_porttype *node);
+  
+  // This override is used to prefix a provides or uses
+  // node's local name with the name of the port or
+  // mirrorport node that may contain reference the
+  // containing porttype.
+  // TODO - support nested ports, if they are allowed.
+  virtual int pre_process (be_decl *); 
   
 protected:
   be_component *node_;
@@ -55,6 +70,9 @@ protected:
   ACE_CString export_macro_;
   bool swapping_;
   bool static_config_;
+  
+private:
+  ACE_CString current_port_name_;
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_SCOPE_H_ */

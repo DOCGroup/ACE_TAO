@@ -1,3 +1,28 @@
+Sun Oct 25 17:10:27 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_component_scope.h:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        
+          Moved these files from the be_visitor_component
+          subdirectory, so the visitor would be accessible
+          as a base class to be_visitor_ccm_pre_proc. Also
+          add override of base class (be_visitor_scope)
+          method pre_proces(), to extend the generated 
+          names of provides and uses methods with a
+          prefix of the port or mirrorport name, if any.
+          
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        
+          Made class be_visitor_component_scope the base class
+          of this visitor, thereby adding support for simple
+          ports, mirrorports and porttypes.
+          
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        
+          Removed relocated files from these file lists.
+
 Thu Oct 22 20:39:02 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_scope.cpp:
