@@ -25,7 +25,7 @@
 #ifndef TAO_BE_VISITOR_CCM_PRE_PROC_H
 #define TAO_BE_VISITOR_CCM_PRE_PROC_H
 
-#include "be_visitor_scope.h"
+#include "be_visitor_component_scope.h"
 #include "ast_component.h"
 #include "ast_template_common.h"
 #include "utl_identifier.h"
@@ -35,7 +35,7 @@ class be_exception;
 class UTL_ExceptList;
 class AST_Template_Interface;
 
-class be_visitor_ccm_pre_proc : public be_visitor_scope
+class be_visitor_ccm_pre_proc : public be_visitor_component_scope
 {
   //
   // = TITLE
