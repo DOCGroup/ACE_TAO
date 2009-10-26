@@ -1,3 +1,8 @@
+Mon Oct 26 12:25:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Fix for msvc10
+
 Mon Oct 26 11:54:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
