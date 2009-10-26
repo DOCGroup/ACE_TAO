@@ -1,8 +1,14 @@
+Mon Oct 26 11:19:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/docs/DDS for CCM FTF 22Oct09.doc:
+        * connectors/dds4ccm/docs/DDS4CCM v1-0 batch5.odt:
+          Latest version of the spec
+
 Mon Oct 19 19:53:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
           Fixed vc71 error.
-          
+
 Fri Oct 16 08:52:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao_dds4ccm.doxygen:
