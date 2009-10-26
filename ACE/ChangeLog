@@ -1,3 +1,8 @@
+Mon Oct 26 10:23:13 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/run_test.lst:
+          Don't run MEM_Stream_Test and MT_SOCK_Test on LynxOS.
+
 Mon Oct 26 10:18:28 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Bug_2653_Regression_Test.cpp:
