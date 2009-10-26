@@ -79,7 +79,7 @@ fileno_test (void)
   ACE_HANDLE fn;
 
   fn = ACE_OS::fileno (stdin);
-  if (fn == -1)
+  if (fn == (ACE_HANDLE)-1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("fileno returned -1 (stdin).\n")));
       test_status = -1;
@@ -91,7 +91,7 @@ fileno_test (void)
     }
 
   fn = ACE_OS::fileno (stdout);
-  if (fn == -1)
+  if (fn == (ACE_HANDLE)-1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("fileno returned -1 (stdout).\n")));
       test_status = -1;
@@ -100,7 +100,7 @@ fileno_test (void)
 #if defined (ACE_WIN32)
   // Check if stdout is not associated with an output stream.
   // This not an error.
-  if (fn == -2)
+  if (fn == (ACE_HANDLE)-2)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("fileno returned -2 (stdout).\n")));
     }
@@ -114,7 +114,7 @@ fileno_test (void)
 #endif
 
   fn = ACE_OS::fileno (stderr);
-  if (fn == -1)
+  if (fn == (ACE_HANDLE)-1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("fileno returned -1 (stderr).\n")));
       test_status = -1;
@@ -123,7 +123,7 @@ fileno_test (void)
 #if defined (ACE_WIN32)
   // Check if stderr is not associated with an output stream.
   // This not an error.
-  if (fn == -2)
+  if (fn == (ACE_HANDLE)-2)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("fileno returned -2 (stderr).\n")));
     }
