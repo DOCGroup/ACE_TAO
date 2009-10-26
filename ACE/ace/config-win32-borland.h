@@ -161,6 +161,7 @@
 #define ACE_STRCASECMP_EQUIVALENT ::stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 #define ACE_WTOF_EQUIVALENT ::_wtof
+#define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
 #define ACE_HAS_ITOA 1
 
 #include /**/ "ace/post.h"
