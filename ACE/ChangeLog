@@ -1,3 +1,19 @@
+Mon Oct 26 10:41:43 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Session.h:
+        * protocols/ace/HTBP/HTBP_Environment.cpp:
+        * protocols/ace/HTBP/HTBP_Channel.h:
+        * protocols/ace/HTBP/HTBP_Filter_Factory.h:
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+        * protocols/ace/HTBP/HTBP_Session.inl:
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp:
+        * protocols/ace/HTBP/HTBP_Channel.inl:
+        * protocols/ace/HTBP/HTBP_Channel.cpp:
+        * protocols/ace/HTBP/HTBP_Environment.h:
+        * protocols/ace/HTBP/HTBP_Filter_Factory.cpp:
+          Simplified the code and fixed several memory leaks.
+
 Mon Oct 26 10:23:13 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/run_test.lst:

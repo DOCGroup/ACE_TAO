@@ -83,10 +83,10 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
 {
   char *buffer;
   ACE_NEW_RETURN (buffer, char[this->url_.length()+16],-1);
+  ACE_Auto_Array_Ptr<char> guard (buffer);
   ACE_OS::sprintf (buffer,"GET %s HTTP/1.0\n\n",
                    ACE_TEXT_ALWAYS_CHAR(url_.c_str()));
   int result = cli_stream->send_n (buffer,ACE_OS::strlen(buffer));
-  delete [] buffer;
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
