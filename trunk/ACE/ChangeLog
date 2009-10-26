@@ -1,3 +1,8 @@
+Mon Oct 26 11:54:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Small improvement for PPC64
+
 Mon Oct 26 10:41:43 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
