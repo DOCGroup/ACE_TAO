@@ -1,3 +1,18 @@
+Mon Oct 26 10:52:01 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h:
+          Fixed several memory leaks. Changed HTIOP Acceptor to use
+          strategies implemented in HTIOP_Acceptor_Impl.*. This was
+          required for proper fix for bug#3748.
+
+        * tao/Acceptor_Impl.cpp:
+          Uncommented code for a fix for bug#3748.
+
 Thu Oct 22 10:47:21 UTC 2009  Johnny Willemsen  <jwilllemsen@remedy.nl>
 
         * TAO_IDL/TAO_IDL_ACE.mwc:

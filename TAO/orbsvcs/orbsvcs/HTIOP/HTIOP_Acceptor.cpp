@@ -34,7 +34,7 @@ TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
     hostname_in_ior_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    base_acceptor_ (),
+    base_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
@@ -456,7 +456,9 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                       sizeof (char*) * this->endpoint_count_);
 
       ACE::HTBP::ID_Requestor req(ht_env_);
-      this->addrs_[0] = ACE_TEXT_ALWAYS_CHAR(req.get_HTID());
+      ACE_TCHAR *htid = req.get_HTID ();
+      ACE_Auto_Array_Ptr<ACE_TCHAR> guard (htid);
+      this->addrs_[0] = ACE_TEXT_ALWAYS_CHAR (htid);
       return 0;
 
     }
@@ -488,7 +490,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
-                  CONCURRENCY_STRATEGY (),
+                  CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->accept_strategy_,
