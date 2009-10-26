@@ -1,3 +1,10 @@
+Mon Oct 26 10:18:28 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Bug_2653_Regression_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+          LynxOS improvements.
+
 Mon Oct 26 08:32:08 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:
