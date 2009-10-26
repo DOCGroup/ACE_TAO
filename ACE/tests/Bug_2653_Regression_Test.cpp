@@ -117,13 +117,13 @@ Handler::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
 
-#if defined (__OpenBSD__) || defined (ACE_VXWORKS) || defined (__Lynx__)
+#if defined (__OpenBSD__) || defined (ACE_VXWORKS)
   // All that we need written has been written, so don't
   // call handle_output again.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
                               ACE_Event_Handler::WRITE_MASK,
                               ACE_Reactor::CLR_MASK);
-#endif /* __OpenBSD__ || ACE_VXWORKS || __Lynx__ */
+#endif /* __OpenBSD__ || ACE_VXWORKS */
 
   return 0;
 }
