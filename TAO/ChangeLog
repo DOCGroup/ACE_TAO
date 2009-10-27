@@ -1,3 +1,9 @@
+Tue Oct 27 16:58:33 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Enabled Bug_3748_Regression in all builds except for single
+          threaded.
+
 Mon Oct 26 10:52:01 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
