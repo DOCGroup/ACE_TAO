@@ -1,3 +1,8 @@
+Tue Oct 27 20:14:50 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS.inl:
+          Removed some legacy code.
+
 Tue Oct 27 19:40:59 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-msvc-7.h:
