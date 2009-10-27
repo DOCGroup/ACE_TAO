@@ -1,3 +1,8 @@
+Tue Oct 27 19:40:59 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-win32-msvc-7.h:
+          Added missing ACE_FILENO_EQUIVALENT macro.
+
 Tue Oct 27 19:35:06 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:
