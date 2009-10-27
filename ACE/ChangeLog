@@ -1,3 +1,20 @@
+Tue Oct 27 08:12:25 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-snowleopard.h:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_snowleopard.GNU:
+        * include/makeinclude/platform_macosx_tiger.GNU:
+        
+          Re-factored snow leopard support, I now get a clean compile. 
+          Tests will be evaluated when we get our x86 Mac hardware. 
+        
+        * tests/Message_Queue_Test.cpp:
+
+          Introduced some pointer gymnastics to convert a ACE_thread_t
+          to a seed for the random number generator.  This was done to avoid
+          compile warnings due to pointers being bigger than a uint_t and losing
+          precision in the conversion.
+        
 Tue Oct 27 07:55:38 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:
@@ -59,6 +76,7 @@ Mon Oct 26 08:32:08 UTC 2009  Olli Savia  <ops@iki.fi>
           with an output stream. This may happen with Windows application
           without a console window.
 
+>>>>>>> .r87235
 Mon Oct 26 07:48:19 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-msvc-10.h:

@@ -4,10 +4,7 @@
 
 #include "ace/config-macosx-leopard.h"
 
-// This define suppresses the following error message:
-// error: #error ucontext routines are deprecated, 
-// and require _XOPEN_SOURCE to be defined
-#define _XOPEN_SOURCE
+// This header has been deprecated in Snow Leopard.
+#define ACE_LACKS_UCONTEXT_H
 
 #endif ACE_CONFIG_MACOSX_SNOWLEOPARD_H
-

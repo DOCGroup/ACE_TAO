@@ -1,5 +1,4 @@
 # $Id$
 
-include $(ACE_ROOT)/include/makeinclude/platform_macosx_leopard.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
 
-CFLAGS := $(subst -Wno-long-double,,$(CFLAGS))
