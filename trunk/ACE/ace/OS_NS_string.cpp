@@ -155,7 +155,15 @@ ACE_OS::strsignal (int signum)
 {
   static char signal_text[128];
 #if defined (ACE_HAS_STRSIGNAL)
-  char *ret_val = ACE_STD_NAMESPACE::strsignal (signum);
+  char *ret_val;
+
+# if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
+  if (signum < 0 || signum >= ACE_NSIG)
+    ret_val = 0;
+  else
+# endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
+  ret_val = ACE_STD_NAMESPACE::strsignal (signum);
+
   if (ret_val <= reinterpret_cast<char *> (0))
     {
       ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
