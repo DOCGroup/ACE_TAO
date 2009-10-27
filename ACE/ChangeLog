@@ -1,3 +1,8 @@
+Tue Oct 27 19:35:06 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          Fixed wrong logic with macros
+
 Thu Oct 22 21:12:21 UTC 2009  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Pipe.h (ACE_Pipe): Updated the document to correct a typo.
