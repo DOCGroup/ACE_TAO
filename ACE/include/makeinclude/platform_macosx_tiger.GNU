@@ -5,4 +5,4 @@
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
 
-CGLAGS += -Wno-long-double
+CFLAGS += -Wno-long-double
