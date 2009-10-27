@@ -322,5 +322,6 @@
 #define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
 #define ACE_LACKS_ISCTYPE
 #define ACE_HAS_STRSIGNAL
+#define ACE_NEEDS_STRSIGNAL_RANGE_CHECK
 
 #endif /* ACE_CONFIG_AIX_5_X_H */
