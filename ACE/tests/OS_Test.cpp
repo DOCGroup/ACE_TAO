@@ -105,13 +105,12 @@ fileno_test (void)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("fileno(stdout) returned -2.\n")));
     }
   else
-#else
+#endif
   if (fn != ACE_STDOUT)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("stdout test failed.\n")));
       test_status = -1;
     }
-#endif
 
   fn = ACE_OS::fileno (stderr);
   if (fn == ACE_INVALID_HANDLE)
@@ -128,13 +127,12 @@ fileno_test (void)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("fileno(stderr) returned -2.\n")));
     }
   else
-#else
+#endif
   if (fn != ACE_STDERR)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("stderr test failed.\n")));
       test_status = -1;
     }
-#endif
 
   return test_status;
 }
