@@ -1,3 +1,19 @@
+Wed Oct 28 11:54:03 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+          Use ACE_OS::strsignal() instead of sys_siglist.
+
+        * ace/config-freebsd.h:
+        * ace/config-linux-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+          Removed legacy sys_siglist related settings.
+
 Wed Oct 28 06:30:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_g++.GNU:

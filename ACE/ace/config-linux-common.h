@@ -209,8 +209,6 @@
 
 #define ACE_HAS_UALARM
 
-#define ACE_HAS_SYS_SIGLIST
-
 #define ACE_HAS_STRSIGNAL
 
 #if __GLIBC__ >= 2
