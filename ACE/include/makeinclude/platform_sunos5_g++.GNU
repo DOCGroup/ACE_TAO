@@ -18,6 +18,11 @@ ifeq ($(exceptions),0)
   CCFLAGS += -fno-exceptions
 endif # exceptions
 
+ifeq ($(buildbits),64)
+  FLAGS_C_CC += -m64
+  LDFLAGS    += -m64
+endif
+
 ifeq ($(shell /bin/uname -m),i86pc)
   #### gcc on Solaris86 doesn't use -g
   DCFLAGS         += -gstabs+
@@ -29,8 +34,7 @@ endif # ! i86pc
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -W -Wall -Wpointer-arith
-CCFLAGS         += -W -Wall -Wpointer-arith
+FLAGS_C_CC      += -W -Wall -Wpointer-arith
 
 ifeq ($(threads),1)
   CPPFLAGS      += -D_REENTRANT
@@ -58,7 +62,8 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS         += $(TEMPLATES_FLAG)
+CFLAGS  += $(FLAGS_C_CC)
+CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
 
 # Make sure we resolve all symbols at link time, see bugzilla 2710
 LDFLAGS         += -z now
