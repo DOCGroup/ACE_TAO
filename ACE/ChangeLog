@@ -1,3 +1,14 @@
+Wed Oct 28 19:49:39 UTC 2009  Chris Cleeland  <cleeland@ociweb.com>
+
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.cpp:
+
+          Changed the second recv() that is used in case of a short first
+          read to be a recv_n(), blocking until the rest of the buffer can
+          be received on the pipe.  The problem was discovered during
+          routine testing (Notify_Performance_Test) on VxWorks 6.7 on a P3
+          platform, but could occur on any platform. [Bugzilla 3754]
+
 Wed Oct 28 11:58:21 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-win32-msvc-7.h:
