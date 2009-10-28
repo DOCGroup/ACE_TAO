@@ -73,7 +73,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         
       if (stime.minimum_sample () != 1083466309.88374)
         {
-          error ("Time TAO_Statistic::minimum_sample() failed");
+          error ("Time Monitor_Base::minimum_sample() failed");
         }
         
       if (stime.maximum_sample () != 1183466377.9922)
@@ -116,7 +116,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       l.push_back ("three");
       list.receive (l);
       
-      if (counter.count () != 3)
+      if (list.count () != 3)
         {
           error ("List Monitor_Base::receive() failed");
         }

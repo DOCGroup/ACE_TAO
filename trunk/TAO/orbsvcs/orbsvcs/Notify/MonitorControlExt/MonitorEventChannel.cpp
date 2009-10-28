@@ -39,33 +39,22 @@ public:
   {
   }
   
-  virtual void update (void)
-  {
+  virtual void update (void) {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
         Monitor_Control_Types::NameList list;
-        
-        if (this->is_supplier_)  
-          {
-            this->interf_->get_suppliers (&list);
-          }
+        if (this->is_supplier_)
+          this->interf_->get_suppliers (&list);
         else
-          {
-            this->interf_->get_consumers (&list);
-          }
-          
+          this->interf_->get_consumers (&list);
         this->receive (list);
       }
     else
-      { 
+      {
         if (this->is_supplier_)
-          {
-            this->receive (this->interf_->get_suppliers (0));
-          }
+          this->receive (this->interf_->get_suppliers (0));
         else
-          {
-            this->receive (this->interf_->get_consumers (0));
-          }
+          this->receive (this->interf_->get_consumers (0));
       }
   }
    
@@ -86,8 +75,7 @@ public:
   {
   }
 
-  virtual void update (void)
-  {
+  virtual void update (void) {
     Monitor_Control_Types::NameList list;
     this->interf_->get_timedout_consumers (&list);
     this->receive (list);
@@ -204,6 +192,17 @@ public:
     Monitor_Control_Types::NameList list;
     this->interf_->determine_slowest_consumer (&list);
     this->receive (list);
+  }
+};
+
+class QueueOverflows:
+  public Monitor_Base
+{
+public:
+  QueueOverflows (const ACE_CString& name)
+  : Monitor_Base (
+      name.c_str (),
+      Monitor_Control_Types::MC_COUNTER) {
   }
 };
 
@@ -806,6 +805,19 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       // Registry manages refcount, so we do this regardless.
       slowest->remove_ref ();
 
+      stat_name = dir_name +
+                  NotifyMonitoringExt::EventChannelQueueOverflows;
+      QueueOverflows* overflows = 0;
+      ACE_NEW_THROW_EX (overflows,
+                        QueueOverflows (stat_name.c_str ()),
+                        CORBA::NO_MEMORY ());
+      if (!this->register_statistic (stat_name, overflows))
+        {
+          delete overflows;
+          ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
+                      stat_name.c_str ()));
+        }
+
       TAO_Control_Registry* cinstance =
         TAO_Control_Registry::instance ();
 
@@ -1207,7 +1219,7 @@ TAO_MonitorEventChannel::calculate_queue_size (bool count)
               // TAO_Notify_Event which has an associated set of data
               // which can be used to estimate the amount of memory
               // allocated to the message queue
-              size += (queue->message_count () * sizeof (TAO_Notify_Event));
+              size += (queue->message_count () /* * sizeof (TAO_Notify_Event) */);
             }
         }
     }

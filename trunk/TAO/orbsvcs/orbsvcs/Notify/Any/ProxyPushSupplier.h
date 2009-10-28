@@ -59,6 +59,7 @@ public:
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
   virtual void validate ();
+  virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::ProxyType MyType (void);

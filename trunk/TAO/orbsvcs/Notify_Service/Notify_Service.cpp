@@ -11,6 +11,16 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
 
+#if defined (TAO_HAS_NOTIFICATION_MONITOR_CONTROL) && defined (TAO_AS_STATIC_LIBS)
+// for static builds, be sure the library is included
+#include "orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h"
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h"
+#endif
+
+#if defined (TAO_EXPLICIT_NEGOTIATE_CODESETS)
+#include "tao/Codeset/Codeset.h"
+#endif /* TAO_EXPLICIT_NEGOTIATE_CODESETS */
+
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/Messaging/Messaging.h"
 #endif /* TAO_HAS_CORBA_MESSAGING != 0 */
@@ -46,6 +56,9 @@ int
 TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
+
+  ACE_LOG_MSG->open
+    (argv[0], ACE_Log_Msg::SYSLOG, ACE_TEXT ("TAO Notify"));
 
   this->apply_timeout (this->orb_.in ());
 
@@ -759,3 +772,10 @@ ACE_STATIC_SVC_DEFINE (TAO_Notify_Service_Driver,
 
 
 ACE_FACTORY_DEFINE (TAO_Notify_Service, TAO_Notify_Service_Driver)
+
+
+#if defined (TAO_HAS_NOTIFICATION_MONITOR_CONTROL) && defined (TAO_AS_STATIC_LIBS)
+ACE_STATIC_SVC_REQUIRE(TAO_MC_Notify_Service)
+ACE_STATIC_SVC_REQUIRE(TAO_MonitorAndControl)
+#endif
+

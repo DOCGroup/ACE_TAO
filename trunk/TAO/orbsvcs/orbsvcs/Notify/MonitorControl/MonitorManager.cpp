@@ -47,22 +47,40 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
       {
         case 'o':
           this->task_.ior_output_ = opts.opt_arg ();
+          if (TAO_debug_level > 7)
+            {
+              ACE_DEBUG((LM_INFO,
+                ACE_TEXT("(%P|%t) TAO_MonitorManager: Setting IOR output file to: %s"),
+                  this->task_.ior_output_.c_str ()));
+            }
           break;
         case 0:
           if (ACE_OS::strcmp (opts.long_option (), orbarg) == 0)
             {
-              this->task_.argv_.add (opts.opt_arg ());
+              ACE_TCHAR * orbArgs = opts.opt_arg ();
+              if (TAO_debug_level > 7)
+                {
+                  ACE_DEBUG((LM_INFO,
+                    ACE_TEXT("(%P|%t) TAO_MonitorManager: Setting Orb arguments to: %s"),
+                      orbArgs));
+                }
+              this->task_.argv_.add (ACE_TEXT_ALWAYS_CHAR (orbArgs));
             }
           else if (ACE_OS::strcmp (opts.long_option (), nonamesvc) == 0)
             {
+              if (TAO_debug_level > 7)
+                {
+                  ACE_DEBUG((LM_INFO,
+                    ACE_TEXT("(%P|%t) TAO_MonitorManager: Not using naming service")));
+                }
               this->task_.use_name_svc_ = false;
             }
           break;
         case ':':
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%s requires an argument\n"),
+                             ACE_TEXT ("(%P|%t) TAO_MonitorManager: %s requires an argument\n"),
                              opts.last_option ()),
-                            -1);
+                             -1);
       }
 
   // Force the ARGV_T to copy the elements added by the add() method
