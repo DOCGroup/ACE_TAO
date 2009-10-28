@@ -1,3 +1,14 @@
+Wed Oct 28 06:09:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Enabled a few tests for ce/fuzz
+
+        * orbsvcs/tests/Notify/Bug_2926_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/run_test.pl
+          Converted to the new test framework
+
 Tue Oct 27 16:58:33 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
