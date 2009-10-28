@@ -293,8 +293,6 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports sys_siglist array.
-#define ACE_HAS_SYS_SIGLIST
 #define ACE_HAS_STRSIGNAL
 
 // SunOS 5.5.x does not support mkstemp

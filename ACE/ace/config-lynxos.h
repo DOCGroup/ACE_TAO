@@ -179,7 +179,6 @@
 #  define ACE_LACKS_STRRECVFD
 #  define ACE_LACKS_SYS_SEM_H
 #  define ACE_SYS_SIGLIST __sys_siglist
-#  define _sys_siglist __sys_siglist
 #else
 // LynxOS 5.0 Removals
 #  define ACE_HAS_LYNXOS_SIGNALS
