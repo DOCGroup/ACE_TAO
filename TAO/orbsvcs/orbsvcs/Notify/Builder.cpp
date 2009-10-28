@@ -67,11 +67,12 @@ public:
 
     proxy_id = proxy->id ();
 
-    proxy_ret = PROXY::_narrow (obj.in());
-
     // insert proxy in admin container.
     parent->insert (proxy);
 
+    proxy->configure (*parent, proxy_id);
+
+    proxy_ret = PROXY::_narrow (obj.in());
     return proxy_ret._retn ();
   }
 

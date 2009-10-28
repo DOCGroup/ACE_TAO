@@ -94,9 +94,45 @@ TAO_Notify_Buffering_Strategy::oldest_event (void)
   return tv;
 }
 
+
+TAO_Notify_Buffering_Strategy::Tracker::Tracker (void)
+  : child_ (0)
+{
+}
+
+
 TAO_Notify_Buffering_Strategy::Tracker::~Tracker (void)
 {
 }
+
+
+void
+TAO_Notify_Buffering_Strategy::Tracker::register_child (TAO_Notify_Buffering_Strategy::Tracker * child)
+{
+  if (this->child_ == 0)
+    {
+      this->child_ = child;
+    }
+  else if (this->child_ != child)
+    {
+      this->child_->register_child (child);
+    }
+  // we simply ignore duplicate registrations.
+}
+
+void
+TAO_Notify_Buffering_Strategy::Tracker::unregister_child (TAO_Notify_Buffering_Strategy::Tracker * child)
+{
+  if (this->child_ == child)
+    {
+      this->child_ = this->child_->child_;
+    }
+  else if (this->child_ != 0)
+    {
+      this->child_->unregister_child (child);
+    }
+}
+
 
 int
 TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* method_request)
@@ -141,6 +177,10 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
               continue;
             }
         }
+      if (tracker_ != 0)
+        {
+          tracker_->count_queue_overflow (local_overflow, global_overflow);
+        }
 
       discarded_existing = this->discard(method_request);
       if (discarded_existing)
@@ -174,7 +214,9 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 
   size_t count = this->msg_queue_.message_count ();
   if (this->tracker_ != 0)
-    this->tracker_->update_queue_count (count);
+    {
+      this->tracker_->update_queue_count (count);
+    }
 
   return ACE_Utils::truncate_cast<int> (count);
 }
@@ -204,7 +246,9 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
     return -1;
 
   if (this->tracker_ != 0)
-    this->tracker_->update_queue_count (this->msg_queue_.message_count ());
+    {
+      this->tracker_->update_queue_count (this->msg_queue_.message_count ());
+    }
 
   method_request = dynamic_cast<TAO_Notify_Method_Request_Queueable*>(mb);
 
@@ -222,7 +266,14 @@ void
 TAO_Notify_Buffering_Strategy::set_tracker (
                         TAO_Notify_Buffering_Strategy::Tracker* tracker)
 {
-  this->tracker_ = tracker;
+  if (this->tracker_ == 0)
+    {
+      this->tracker_ = tracker;
+    }
+  else if (this->tracker_ != tracker)
+    {
+      this->tracker_->register_child (tracker);
+    }
 }
 
 int
@@ -312,5 +363,7 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
 
   return false;
 }
+
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

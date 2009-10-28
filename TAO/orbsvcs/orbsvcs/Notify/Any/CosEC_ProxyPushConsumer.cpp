@@ -92,4 +92,14 @@ TAO_Notify_CosEC_ProxyPushConsumer::validate ()
   }
 }
 
+void
+TAO_Notify_CosEC_ProxyPushConsumer::configure(
+  TAO_Notify_SupplierAdmin & /*admin*/,
+  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
+{
+  // Nothing to do.
+  // This virtual method was added to support Notification MC
+}
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL

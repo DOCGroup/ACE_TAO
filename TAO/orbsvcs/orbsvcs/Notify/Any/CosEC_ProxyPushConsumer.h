@@ -51,6 +51,7 @@ public:
 
   virtual const char * get_proxy_type_name (void) const;
   virtual void validate ();
+  virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods

@@ -117,10 +117,15 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   /// schedule our timer.  The caller should have locked the proxy lock
   /// before calling this method.
   void assume_pending_events (TAO_Notify_Consumer& rhs);
-    
+
   /// Is the connected consumer still around?
   bool is_alive (bool allow_nil_consumer);
-  
+
+  /// Estimate how many events are pending delivery for this consumer
+  ///
+  /// The estimate does not include events queued at the admin level which
+  /// have not been passed to this consumer for delivery yet.
+  size_t pending_count (void);
 
 protected:
 
@@ -198,7 +203,7 @@ protected:
   /// The Timer Manager that we use.
   TAO_Notify_Timer::Ptr timer_;
 
-  /// Last time either push an event or validate connection 
+  /// Last time either push an event or validate connection
   /// via _non_exist call.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
 

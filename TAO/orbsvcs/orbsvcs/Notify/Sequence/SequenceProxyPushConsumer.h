@@ -53,6 +53,7 @@ public:
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
   virtual void validate ();
+  virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
   ///= Data Members
