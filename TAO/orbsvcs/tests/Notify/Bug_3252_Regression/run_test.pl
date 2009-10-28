@@ -8,24 +8,21 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-if (PerlACE::is_vxworks_test()) {
-  $SVP = new PerlACE::ProcessVX ("server", "");
-}
-else {
-  $SVP = new PerlACE::Process ("server", "");
-}
-# Run the AMH server.
-$sv = $SVP->Spawn ();
+$status = 0;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $iorbase = "test.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
 
-if ($sv != 0) {
-   print STDERR "ERROR: server returned $sv\n";
-   exit 1;
-}
+$SV = $server->CreateProcess ("server", "");
 
-$svnk = $SVP->WaitKill (60);
-if ($svnk != 0) {
-    print STDERR "ERROR: Server returned $svnk\n";
+$collocated = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($collocated != 0) {
+    print STDERR "ERROR: server returned $collocated\n";
     $status = 1;
 }
+
+$server->DeleteFile($iorbase);
 
 exit $status;
