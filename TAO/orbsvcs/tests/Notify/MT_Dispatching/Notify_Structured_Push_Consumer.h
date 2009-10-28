@@ -29,12 +29,17 @@ public:
                         const char* name,
                         unsigned int expected,
                         Notify_Test_Client& client);
+  void set_delay_parameters (unsigned int delay_count, unsigned long delay_period);
+
 protected:
   void push_structured_event (const CosNotification::StructuredEvent&);
 
   ACE_CString name_;
   unsigned int expected_;
   unsigned int count_;
+  unsigned int delay_count_;
+  unsigned long delay_period_;
+
   Notify_Test_Client& client_;
 };
 

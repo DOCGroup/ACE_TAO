@@ -10,6 +10,7 @@
 #include "ace/ARGV.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Barrier.h"
+#include "ace/Service_Config.h"
 
 #include "tao/ORB.h"
 
@@ -66,6 +67,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT(TAO_Notify_MC, TAO_MonitorAndControl)
 ACE_FACTORY_DECLARE(TAO_Notify_MC, TAO_MonitorAndControl)
+
 
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 

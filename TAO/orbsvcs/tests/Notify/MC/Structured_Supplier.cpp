@@ -52,7 +52,7 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
         "usage:  %s "
-        "-o <iorfile> -e <# of events> -d"
+        "-o <iorfile> -e <# of events> "
         "\n",
         argv [0]),
         -1);
@@ -147,8 +147,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             MonitorTestInterface::_narrow (object.in ());
 
           if (CORBA::is_nil (sig.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR, "Error: Narrow failed.\n"),1);
-
+            ACE_ERROR_RETURN ((LM_ERROR, "Error: Structured Supplier: Narrow to MonitorTestInterface failed.\n"),1);
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
             create_supplieradmin (ec.in ());
           if (!CORBA::is_nil (admin.in ()))
@@ -156,7 +155,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               create_suppliers (admin.in (), client.root_poa ());
 
               sig->running (MonitorTestInterface::Supplier);
-
               ACE_DEBUG ((LM_DEBUG,
                           "1 supplier sending %d events...\n", max_events));
               for (int i = 0; i < max_events; ++i)
@@ -166,9 +164,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
               ACE_DEBUG ((LM_DEBUG,
                           "\nSupplier sent %d events.\n", max_events));
-
               sig->finished (MonitorTestInterface::Supplier);
-
               supplier_1->disconnect ();
             }
         }

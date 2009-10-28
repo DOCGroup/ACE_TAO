@@ -24,6 +24,7 @@ module Monitor
     double sum_of_squares;
     double minimum;
     double maximum;
+    double last;
   };
   enum DataType { DATA_NUMERIC, DATA_TEXT };
   union UData switch (DataType) {

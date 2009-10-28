@@ -1,3 +1,75 @@
+Wed Oct 28 23:27:02 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * MPC/config/negotiate_codesets.mpb:
+        * MPC/config/notify_monitor_control.mpb:
+        * MPC/config/tao_notify_service.mpb:
+        * docs/notification/monitor.html:
+        * interop-tests/wchar/Client.java:
+        * interop-tests/wchar/interop_wchar.mpc:
+        * interop-tests/wchar/server.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.inl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorStructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExt.idl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+        * orbsvcs/tests/Notify/MC/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/MC/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/MC/notify.conf:
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+        * tao/Monitor/Monitor_Types.pidl:
+
+          Merged following changes from OCI made between 1.5a p15 and p16 releases. 
+          
+          - Added consumer-level queueing statistics to the Notification Service MC.
+          - Added queue-overflow statistics to the Notification Service MC.
+          - Modified Notification Service MC to work in static builds.
+          - Corrected an error that caused Notification Service MC statistics to fail
+            when -AllocateTaskPerProxy is used.
+          - QueueDepth have been changed to measure the number of entries rather than
+            attempting unsuccessfully to estimate the amount of memory used by the queue.
+          - Added TAO_EXPLICIT_NEGOTIATE_CODESETS macro to improve the ease of including
+            optional codeset support to Notify_Service in static builds. 
+           
 Wed Oct 28 06:09:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:

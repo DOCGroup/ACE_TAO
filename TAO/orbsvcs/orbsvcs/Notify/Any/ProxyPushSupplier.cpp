@@ -104,4 +104,15 @@ TAO_Notify_ProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
     }
 }
 
+void
+TAO_Notify_ProxyPushSupplier::configure(
+  TAO_Notify_ConsumerAdmin & /*admin*/,
+  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
+{
+  // presently nothing to do here.
+  // this method was added to support NotificationMC
+}
+
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL

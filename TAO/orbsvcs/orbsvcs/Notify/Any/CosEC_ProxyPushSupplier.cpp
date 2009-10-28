@@ -52,7 +52,7 @@ TAO_Notify_CosEC_ProxyPushSupplier::get_proxy_type_name (void) const
   return "ec_proxy_push_supplier";
 }
 
-void 
+void
 TAO_Notify_CosEC_ProxyPushSupplier::validate ()
 {
   TAO_Notify_Consumer* con = this->consumer ();
@@ -66,6 +66,15 @@ TAO_Notify_CosEC_ProxyPushSupplier::validate ()
     }
     this->disconnect_push_supplier ();
   }
+}
+
+void
+TAO_Notify_CosEC_ProxyPushSupplier::configure(
+  TAO_Notify_ConsumerAdmin & /*admin*/,
+  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
+{
+  // Nothing to do.
+  // This virtual method was added to support Notification MC
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
