@@ -105,10 +105,6 @@ ACE_OS::atof (const wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (atop)
-#  undef atop
-#endif /* atop */
-
 ACE_INLINE void *
 ACE_OS::atop (const char *s)
 {

@@ -1,3 +1,10 @@
+Thu Oct 29 13:58:25 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_time.h:
+          Removed some legacy undefs.
+
 Thu Oct 29 08:08:51 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/Log_Msg.cpp:
