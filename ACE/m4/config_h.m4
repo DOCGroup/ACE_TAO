@@ -262,9 +262,6 @@ AH_TEMPLATE([ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS],
 AH_TEMPLATE([ACE_HAS_BROKEN_MAP_FAILED],
 [Platform doesn't cast MAP_FAILED to a (void *).])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_CTIME],
-[Compiler/platform uses macro for ctime (e.g., MVS)])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_DGRAM_SENDV],
 [Platform sendv() does not work properly with datagrams, i.e. it
 fails when the iovec size is IOV_MAX.])
@@ -277,9 +274,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_MMAP_H],
 
 AH_TEMPLATE([ACE_HAS_BROKEN_POSIX_TIME],
 [Platform defines struct timespec in <sys/timers.h>])
-
-AH_TEMPLATE([ACE_HAS_BROKEN_R_ROUTINES],
-[Platform defines ctime_r, asctime_r, rand_r and getpwnam_r as macros])
 
 AH_TEMPLATE([ACE_HAS_BROKEN_RANDR],
 [OS/compiler's header files are inconsistent with libC definition of
