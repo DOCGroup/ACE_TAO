@@ -107,9 +107,6 @@
    the one in ace/OS.i. */
 #define ACE_HAS_GETRUSAGE_PROTOTYPE 1
 
-/* Denotes that GNU has cstring.h as standard which redefines memchr() */
-#define ACE_HAS_GNU_CSTRING_H
-
 /* The GPERF utility is compiled for this platform */
 #define ACE_HAS_GPERF 1
 

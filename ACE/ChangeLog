@@ -1,3 +1,23 @@
+Thu Oct 29 21:04:27 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+        * ace/config-aix-5.x.h:
+        * ace/config-irix6.x-g++.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-sco-5.0.0-nothread.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tru64.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed references to ACE_HAS_GNU_CSTRING_H.
+
 Thu Oct 29 20:30:35 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdlib.h:
