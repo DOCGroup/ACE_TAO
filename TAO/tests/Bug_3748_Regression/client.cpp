@@ -72,7 +72,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               if (++encountered_failures % 500 == 0)
                 {
-#if 0
+#if 1
                   ACE_DEBUG ((LM_DEBUG,
                               "Expected exception\n"));
 #endif
