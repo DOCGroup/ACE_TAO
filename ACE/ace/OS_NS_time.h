@@ -36,11 +36,6 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-# if defined (ACE_HAS_BROKEN_R_ROUTINES)
-#   undef ctime_r
-#   undef asctime_r
-# endif /* ACE_HAS_BROKEN_R_ROUTINES */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Type-safe, and unsigned.
@@ -196,10 +191,6 @@ namespace ACE_OS
 #endif
   ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
 
-# if defined (difftime)
-#   undef difftime
-# endif /* difftime */
-
 #if !defined (ACE_LACKS_DIFFTIME)
   ACE_NAMESPACE_INLINE_FUNCTION
 #else
@@ -267,10 +258,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   time_t time (time_t *tloc = 0);
-
-# if defined (timezone)
-#   undef timezone
-# endif /* timezone */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long timezone (void);
