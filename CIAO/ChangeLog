@@ -1,3 +1,9 @@
+Thu Oct 29 11:31:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Logger/Log_Macros.h:
+        * DAnCE/Logger/Logger_Service.h:
+          Unicode fixes
+
 Mon Oct 26 11:19:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/DDS for CCM FTF 22Oct09.doc:
