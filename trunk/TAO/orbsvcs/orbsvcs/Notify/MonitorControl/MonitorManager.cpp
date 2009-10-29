@@ -64,7 +64,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
                     ACE_TEXT("(%P|%t) TAO_MonitorManager: Setting Orb arguments to: %s"),
                       orbArgs));
                 }
-              this->task_.argv_.add (ACE_TEXT_ALWAYS_CHAR (orbArgs));
+              this->task_.argv_.add (orbArgs);
             }
           else if (ACE_OS::strcmp (opts.long_option (), nonamesvc) == 0)
             {
