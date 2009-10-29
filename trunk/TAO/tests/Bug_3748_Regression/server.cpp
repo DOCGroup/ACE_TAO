@@ -180,7 +180,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                ACE_Thread_Manager::instance ());
       if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
         {
-          ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error activating server task\n"),
+                            1);
         }
 
       orb->run ();

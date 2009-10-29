@@ -1,3 +1,10 @@
+Thu Oct 29 14:56:17 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3748_Regression/client.cpp:
+        * tests/Bug_3748_Regression/server.cpp:
+        * tests/Bug_3748_Regression/run_test.pl:
+          Temporarily made the output a bit more verbose.
+
 Thu Oct 29 02:12:40 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
@@ -69,8 +76,8 @@ Wed Oct 28 23:27:02 UTC 2009  Yan Dai  <dai_y@ociweb.com>
         * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
         * tao/Monitor/Monitor_Types.pidl:
 
-          Merged following changes from OCI made between 1.5a p15 and p16 releases. 
-          
+          Merged following changes from OCI made between 1.5a p15 and p16 releases.
+
           - Added consumer-level queueing statistics to the Notification Service MC.
           - Added queue-overflow statistics to the Notification Service MC.
           - Modified Notification Service MC to work in static builds.
@@ -79,8 +86,8 @@ Wed Oct 28 23:27:02 UTC 2009  Yan Dai  <dai_y@ociweb.com>
           - QueueDepth have been changed to measure the number of entries rather than
             attempting unsuccessfully to estimate the amount of memory used by the queue.
           - Added TAO_EXPLICIT_NEGOTIATE_CODESETS macro to improve the ease of including
-            optional codeset support to Notify_Service in static builds. 
-           
+            optional codeset support to Notify_Service in static builds.
+
 Wed Oct 28 06:09:33 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
