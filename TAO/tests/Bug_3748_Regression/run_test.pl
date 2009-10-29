@@ -9,7 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $status = 0;
-$debug_level = '0';
+$debug_level = '1';
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
