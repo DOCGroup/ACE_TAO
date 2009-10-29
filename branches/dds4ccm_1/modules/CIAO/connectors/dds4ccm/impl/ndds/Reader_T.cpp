@@ -96,6 +96,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
         if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
         { 
             nr_of_last_samples++;
+        }
       }
       infoseq->length(nr_of_last_samples);
       inst_seq->length(nr_of_last_samples);
@@ -340,14 +341,14 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
 //this function has to return all samples of all instances
   printf("------- in read_one_history Reader_T of ndds  ------------- \n");
 
-  NDDS_TYPE::seq_type::_var_type  inst_seq = new NDDS_TYPE::seq_type;
+  typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
- 
+
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
   if (rdr == 0)
   {
-	CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
+      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
                    "Unable to cast provided DataReader to servant\n"));
       throw CORBA::INTERNAL ();
   }

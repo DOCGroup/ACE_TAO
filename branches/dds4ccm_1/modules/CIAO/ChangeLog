@@ -1,3 +1,8 @@
+Thu Oct 29 14:36:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved compiler errors on linux.
+
 Thu Oct 29 13:41:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
