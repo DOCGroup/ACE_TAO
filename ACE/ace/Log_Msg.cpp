@@ -1633,13 +1633,13 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'S': // format the string for with this signal number.
                   {
                     const int sig = va_arg (argp, int);
-		    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-		    if (can_check)
-		      this_len = ACE_OS::snprintf
-			(bp, bspace, format, ACE_OS::strsignal(sig));
-		    else
-		      this_len = ACE_OS::sprintf
-			(bp, format, ACE_OS::strsignal(sig));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
+                    if (can_check)
+                      this_len = ACE_OS::snprintf
+                        (bp, bspace, format, ACE_OS::strsignal(sig));
+                    else
+                      this_len = ACE_OS::sprintf
+                        (bp, format, ACE_OS::strsignal(sig));
                     ACE_UPDATE_COUNT (bspace, this_len);
                     break;
                   }

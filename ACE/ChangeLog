@@ -1,3 +1,9 @@
+Thu Oct 29 08:08:51 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Log_Msg.cpp:
+        * ace/Select_Reactor_Base.cpp:
+          Fixed fuzz errors.
+
 Wed Oct 28 19:49:39 UTC 2009  Chris Cleeland  <cleeland@ociweb.com>
 
         * ace/Select_Reactor_Base.h:
