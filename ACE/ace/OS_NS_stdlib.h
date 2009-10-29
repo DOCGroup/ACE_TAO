@@ -48,6 +48,11 @@ extern "C" {
 }
 #endif /* ACE_WIN32 && _MSC_VER */
 
+// FreeBSD has atop macro (not related to ACE_OS::atop)
+#if defined (atop)
+# undef atop
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
