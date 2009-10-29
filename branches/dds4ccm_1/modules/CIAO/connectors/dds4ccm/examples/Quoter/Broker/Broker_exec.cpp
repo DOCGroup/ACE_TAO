@@ -36,6 +36,7 @@
 #include "ace/OS_NS_time.h"
 
 
+
 namespace CIAO_Quoter_Broker_Impl
 {
 
@@ -130,11 +131,13 @@ namespace CIAO_Quoter_Broker_Impl
 
   int
   read_action_Generator::handle_timeout (const ACE_Time_Value &,
-                                   const void *)
+                                         const void *)
   {
     // Notify the subscribers
     this->pulse_callback_.read_one();
+    this->pulse_callback_.read_one_history();
     this->pulse_callback_.read_all();
+    this->pulse_callback_.read_all_history();
     return 0;
   }
 
@@ -170,13 +173,12 @@ namespace CIAO_Quoter_Broker_Impl
     }
     catch(CCM_DDS::NonExistent& )
     {
-      printf("Stock_Info_Read_One: no stock_info receieved\n");
+      printf("Stock_Info_Read_One: no stock_info received\n");
     }
 
-    printf("END OF READ_ONE\n");
-    
-    printf("GO TO get ONE\n");
-   /* this->getter_->get_one (stock_info, readinfo );
+        
+   /* printf("GO TO get ONE\n");
+     this->getter_->get_one (stock_info, readinfo );
 
     printf ("Stock_Info_GET_One: received a stock_info for <%s> at %u:%u:%u\n",
             stock_info.symbol.in (),
@@ -209,7 +211,7 @@ void
       int nr_of_stock_infos = stock_infos->length();
       for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
       {            
-         printf ("Stock_Info_Read_All: Nubber %d : received a stock_info for <%s> at %u:%u:%u\n",
+         printf ("Stock_Info_Read_All: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
             i,
             stock_infos[i].symbol.in (),
             stock_infos[i].low,
@@ -218,7 +220,80 @@ void
       }
     }
   }
+void
+  Broker_exec_i::read_all_history (void)
+  {
+    std::cerr << "read_all_history" << std::endl;
+	
+    ::Quoter::Stock_Info_Seq_var  stock_infos;
+    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
+    this->reader_->read_all_history(stock_infos.out(), readinfoseq.out());
+    if(0 != &readinfoseq && readinfoseq->length()!= 0)
+    { 
+      int nr_of_infos = readinfoseq->length();
+      for(int i = 0; i < nr_of_infos; i ++)
+      {
+        time_t tim = readinfoseq[i].timestamp.sec;
+        printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+      }
+    }
+    if( 0!= &stock_infos && stock_infos->length()!= 0)
+    { 
+      int nr_of_stock_infos = stock_infos->length();
+      for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+      {            
+         printf ("Stock_Info_Read_All_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+            i,
+            stock_infos[i].symbol,
+            stock_infos[i].low,
+            stock_infos[i].current,
+            stock_infos[i].high);
+            
+      }
+    }
+  }	
+  // read all samples of an given instance
+  void
+  Broker_exec_i::read_one_history (void)
+  {
+    std::cerr << "read_one_history" << std::endl;
+    ::Quoter::Stock_Info  stock_info;
+    stock_info.symbol= "IBM";  //key of instance to read 
 
+    ::Quoter::Stock_Info_Seq_var  stock_infos;
+    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
+    try
+    {
+        this->reader_->read_one_history(stock_info,stock_infos.out(), readinfoseq.out());
+        if(0 != &readinfoseq && readinfoseq->length()!= 0)
+        { 
+          int nr_of_infos = readinfoseq->length();
+          for(int i = 0; i < nr_of_infos; i ++)
+          {
+            time_t tim = readinfoseq[i].timestamp.sec;
+            printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+          }
+        }
+        if( 0!= &stock_infos && stock_infos->length()!= 0)
+        { 
+          int nr_of_stock_infos = stock_infos->length();
+          for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+          {            
+             printf ("Stock_Info_Read_One_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+                i,
+                stock_infos[i].symbol,
+                stock_infos[i].low,
+                stock_infos[i].current,
+                stock_infos[i].high);
+                
+          }
+        }
+    }
+    catch(CCM_DDS::NonExistent& )
+    {
+       printf("Stock_Info_Read_One_History: no stock_info's received\n");
+    }
+  }	
   //============================================================
   // Facet Executor Implementation Class: Stock_Info_RawListener_exec_i
   //============================================================
@@ -238,13 +313,13 @@ void
     const ::Quoter::Stock_Info & an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-      /*
+      
     printf ("Stock_Info_RawListener: received a stock_info for <%s> at %u:%u:%u\n",
             an_instance.symbol.in (),
             an_instance.low,
             an_instance.current,
             an_instance.high);
-       */
+       
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
@@ -366,7 +441,7 @@ void
     }
     //in case of testing RawListener set lc-> enabled true
     // lc->enabled (true);
-   //in case of testing Reader set lc-> enabled false
+    //in case of testing Reader set lc-> enabled false, so the RawListener doesn't consume all the messages 
     lc->enabled (false);
     this->start();
   }

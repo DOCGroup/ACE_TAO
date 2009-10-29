@@ -172,7 +172,9 @@ namespace CIAO_Quoter_Broker_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
     void read_one (void);
+    void read_one_history (void);
     void read_all(void);
+    void read_all_history(void);
     // Operations from Components::SessionComponent.
      
      
@@ -185,8 +187,8 @@ namespace CIAO_Quoter_Broker_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-     virtual void start (void);
-       virtual void stop (void);
+    virtual void start (void);
+    virtual void stop (void);
     
  
   
