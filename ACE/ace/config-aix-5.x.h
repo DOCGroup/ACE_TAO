@@ -93,8 +93,7 @@
 # define ACE_HAS_STRING_CLASS
 
 # include "ace/config-g++-common.h"
-  // Denotes that GNU has cstring.h as standard, to redefine memchr().
-# define ACE_HAS_GNU_CSTRING_H
+
 # define ACE_HAS_SSIZE_T
 
 # if (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ == 0))

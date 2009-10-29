@@ -37,7 +37,6 @@
 
 # include "ace/config-g++-common.h"
 
-# define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_REENTRANT_FUNCTIONS
 #elif defined (__DECCXX)
 

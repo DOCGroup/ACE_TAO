@@ -1004,12 +1004,6 @@ AC_CHECK_HEADER([new],
    ACE_CHECK_HAS_HEADERS([new.h])
   ])
 
-dnl ace/OS.i can #include <cstring>,not #include <cstring.h>
-dnl "cstring" is the correct form.
-dnl TODO: Double check the above comment.
-AC_CHECK_HEADER([cstring],
-  [AC_DEFINE([ACE_HAS_GNU_CSTRING_H])],)
-
 AC_CHECK_HEADER([memory],,)
 
 dnl Check for availablity of "new style" C++ stream headers

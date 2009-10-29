@@ -322,9 +322,6 @@ AH_TEMPLATE([ACE_HAS_GETPAGESIZE],
 [Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must
 be defined, except on Win32).])
 
-AH_TEMPLATE([ACE_HAS_GNU_CSTRING_H],
-[Denotes that GNU has cstring.h as standard which redefines memchr()])
-
 AH_TEMPLATE([ACE_HAS_INTRINSIC_INTERLOCKED],
 [Platform supports the intrinsic interlocked optimizations.])
 
