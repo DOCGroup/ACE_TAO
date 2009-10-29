@@ -129,7 +129,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       str = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       data = nsm_->get_statistic(str.c_str ());
       num = data->data_union.num ();
-      if (num.dlist[0].value != 1)
+      if (num.dlist[0].value != 0)
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be no events queued\n"));
 
         brain_dump ("Running Consumer");
@@ -141,13 +141,14 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       str = this->base_ + NotifyMonitoringExt::EventChannelSupplierCount;
       data = nsm_->get_statistic(str.c_str ());
       num = data->data_union.num ();
-      if (num.dlist[0].value != 0)
+
+      if (num.dlist[0].value != 1)
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Supplier\n"));
 
       str = this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;
       data = nsm_->get_statistic(str.c_str ());
       num = data->data_union.num ();
-      if (num.dlist[0].value != 0)
+      if (num.dlist[0].value != 1)
         ACE_ERROR ((LM_ERROR,
               "Monitor: ERROR: There should be only one SupplierAdmin\n"));
         brain_dump ("Running Supplier");

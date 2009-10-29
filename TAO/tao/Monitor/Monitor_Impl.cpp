@@ -178,6 +178,7 @@ TAO_Monitor::get_monitor_data (
       num.count = static_cast<CORBA::ULong> (monitor->count ());
       num.minimum = monitor->minimum_sample ();
       num.maximum = monitor->maximum_sample ();
+      num.last = monitor->last_sample ();
       num.dlist.length (1);
       num.dlist[0].value = monitor->last_sample ();
       Monitor_Control_Types::Data d (monitor->type ());
