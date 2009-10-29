@@ -173,7 +173,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>1</long>
+          <long>10</long>
         </value>
       </value>
     </configProperty>
@@ -184,7 +184,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>true</boolean>
+          <boolean>false</boolean>
         </value>
       </value>
     </configProperty>
@@ -227,7 +227,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>1</long>
+          <long>10</long>
         </value>
       </value>
     </configProperty>
@@ -238,7 +238,7 @@
           <kind>tk_short</kind>
         </type>
         <value>
-          <short>100</short>
+          <short>225</short>
         </value>
       </value>
     </configProperty>
@@ -249,7 +249,7 @@
           <kind>tk_short</kind>
         </type>
         <value>
-          <short>100</short>
+          <short>250</short>
         </value>
       </value>
     </configProperty>

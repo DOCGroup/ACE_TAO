@@ -58,6 +58,9 @@ namespace CIAO
         typename NDDS_TYPE::data_reader *impl_;
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;
+        DDSGuardCondition*  gd_;
+        DDSWaitSet* ws_;
+        DDSReadCondition* rd_condition_;
       };
     }
   }

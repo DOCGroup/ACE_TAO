@@ -160,8 +160,13 @@ namespace CIAO_Shapes_Sender_Impl
     : rate_ (1),
       max_x_ (100),
       max_y_ (100),
-      max_size_ (25)
+      max_size_ (25),
+      x_increasing (false),
+      y_increasing (false),
+      size_increasing (false)
+
   {
+    square_ = new ShapeType;
     this->ticker_ = new pulse_Generator (*this);
   }
   
@@ -174,97 +179,54 @@ namespace CIAO_Shapes_Sender_Impl
   void 
   Sender_exec_i::tick ()
   {
-    for (Shapes::iterator i = this->shapes_.begin ();
-         i != this->shapes_.end ();
-         ++i)
+    if (this->x_increasing)
       {
-        if (i->second->x_increasing)
-          {
-            ++i->second->x;
-            i->second->x_increasing = i->second->x + 1 <= this->max_x_;
-          }
-        else
-          {
-            --i->second->x;
-            i->second->x_increasing = i->second->x - 1 < 0;
-          }
-        if (i->second->y_increasing)
-          {
-            ++i->second->y;
-            i->second->y_increasing = i->second->y + 1 <= this->max_y_;
-          }
-        else
-          {
-            --i->second->y;
-            i->second->y_increasing = i->second->y - 1 < 0;
-          }
-        if (i->second->size_increasing)
-          {
-            ++i->second->size;
-            i->second->size_increasing = i->second->size + 1 <= this->max_size_;
-          }
-        else
-          {
-            --i->second->size;
-            i->second->size_increasing = i->second->size - 1 < 0;
-          }
-        try 
-          {
-            this->updater_->update (i->second);
-            printf ("UPDATED Shape_info for <%s> %u:%u:%u\n",
-                      i->first.c_str (),
-                      i->second->x,
-                      i->second->y,
-                      i->second->size);
-          }
-        catch (CCM_DDS::NonExistent& )
-          {
-            printf ("Shape_info for <%s> not updated: <%s> didn't exist.\n",
-                        i->first.c_str (), i->first.c_str ());
-          }
-        catch (CCM_DDS::InternalError& )
-          {
-            printf ("Internal Error while updating Shape_info for <%s>.\n",
-                        i->first.c_str ());
-          }
+        ++square_->x;
+        this->x_increasing = square_->x + 1 <= this->max_x_;
       }
-  }
-
-  void 
-  Sender_exec_i::add_shape (const char * color)
-  {
-    printf ("Sender_exec_i::add_shape - Adding shape with color <%s>\n", color);
-
-    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                        this->mutex_, CORBA::INTERNAL ());
-
-    ::Shapes::Shape_Info *shape = new ::Shapes::Shape_Info;
-
-    shape->x = ACE_OS::rand () % this->max_x_;
-    shape->y = ACE_OS::rand () % this->max_y_;
-    shape->size = ACE_OS::rand () % 25;
-    shape->color = color;
-
-    this->shapes_[color] = shape;
-    //Register shape with dds.
-    printf ("REGISTER Shape_info for <%s> %u:%u:%u\n",
-                  color,
-                  shape->x,
-                  shape->y,
-                  shape->size);
+    else
+      {
+        --square_->x;
+        this->x_increasing = square_->x - 1 < 0;
+      }
+    if (this->y_increasing)
+      {
+        ++square_->y;
+        this->y_increasing = square_->y + 1 <= this->max_y_;
+      }
+    else
+      {
+        --square_->y;
+        this->y_increasing = square_->y - 1 < 0;
+      }
+    if (this->size_increasing)
+      {
+        ++square_->shapesize;
+        this->size_increasing = square_->shapesize + 1 <= this->max_size_;
+      }
+    else
+      {
+        --square_->shapesize;
+        this->size_increasing = square_->shapesize - 1 < 0;
+      }
     try 
       {
-        this->updater_->create (*shape);
+        this->updater_->update (*square_);
+        printf ("UPDATED Shape_info for <%s> %u:%u:%u\n",
+                  square_->color.in (),
+                  square_->x,
+                  square_->y,
+                  square_->shapesize);
       }
-    catch (CCM_DDS::AlreadyCreated& )
+    catch (CCM_DDS::NonExistent& )
       {
-        printf ("Shape_info for <%s> already created.\n",
-                    color);
+        printf ("Shape_info for <%s> not updated: <%s> didn't exist.\n",
+                    square_->color.in (), square_->color.in ());
       }
     catch (CCM_DDS::InternalError& )
       {
-        printf ("Internal Error while creating Shape_info for <%s>.\n",
-                      color);
+        printf ("Internal Error while updating Shape_info for <%s>.\n",
+                    square_->color.in ());
       }
   }
 
@@ -368,10 +330,31 @@ namespace CIAO_Shapes_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     this->start ();
-    this->add_shape ("blue");
-    this->add_shape ("pink");
-    this->add_shape ("green");
-    this->add_shape ("yellow");
+    square_->x = ACE_OS::rand () % this->max_x_;
+    square_->y = ACE_OS::rand () % this->max_y_;
+    square_->shapesize = ACE_OS::rand () % 25;
+    square_->color = CORBA::string_dup("GREEN");
+
+    //Register shape with dds.
+    printf ("REGISTER Shape_info for <%s> %u:%u:%u\n",
+                  square_->color.in (),
+                  square_->x,
+                  square_->y,
+                  square_->shapesize);
+    try 
+      {
+        this->updater_->create (*square_);
+      }
+    catch (CCM_DDS::AlreadyCreated& )
+      {
+        printf ("Shape_info for <%s> already created.\n",
+                    square_->color.in ());
+      }
+    catch (CCM_DDS::InternalError& )
+      {
+        printf ("Internal Error while creating Shape_info for <%s>.\n",
+                      square_->color.in ());
+      }
   }
   
   void

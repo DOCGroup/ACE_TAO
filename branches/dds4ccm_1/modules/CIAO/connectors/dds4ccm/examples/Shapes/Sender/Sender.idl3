@@ -23,7 +23,7 @@ module Shapes
   
   component Sender supports Trigger
   {
-    uses CCM_DDS::Shape_Info_Updater info_update_data;
+    uses CCM_DDS::ShapeType_Updater info_update_data;
     attribute unsigned long rate;
     attribute unsigned short max_x;
     attribute unsigned short max_y;

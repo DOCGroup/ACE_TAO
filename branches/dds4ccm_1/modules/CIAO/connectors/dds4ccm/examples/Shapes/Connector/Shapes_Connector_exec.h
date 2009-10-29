@@ -23,26 +23,26 @@
 namespace CIAO_Shapes_Shapes_Connector_Impl
 {
 
-  // @from use of Shape_Info as a parameter
+  // @from use of ShapeType as a parameter
   typedef CIAO::DDS4CCM::RTI::Type_Traits < 
-    ::Shapes::Shape_Info,
-    ::Shapes::Shape_Info_Seq,
-    ::Shapes::Shape_InfoSeq,
-    ::Shapes::Shape_InfoTypeSupport,
-    ::Shapes::Shape_InfoDataWriter,
-    ::Shapes::Shape_InfoDataReader > Shape_Info_DDS_Traits;
+    ShapeType,
+    ShapeType_Seq,
+    ShapeTypeSeq,
+    ShapeTypeTypeSupport,
+    ShapeTypeDataWriter,
+    ShapeTypeDataReader > ShapeType_DDS_Traits;
 
   typedef Connector_Traits <
     ::CIAO_Shapes_Shapes_Connector_Impl::Shapes_Connector_Exec,
-    ::CCM_DDS::CCM_Shape_Info_Writer,
-    ::CCM_DDS::CCM_Shape_Info_Updater,
-    ::CCM_DDS::CCM_Shape_Info_Getter,
-    ::CCM_DDS::CCM_Shape_Info_Reader,
+    ::CCM_DDS::CCM_ShapeType_Writer,
+    ::CCM_DDS::CCM_ShapeType_Updater,
+    ::CCM_DDS::CCM_ShapeType_Getter,
+    ::CCM_DDS::CCM_ShapeType_Reader,
     ::Shapes::CCM_Shapes_Connector_Context,
-    ::CCM_DDS::Shape_Info_RawListener> Shape_Info_Connector_Traits;
+    ::CCM_DDS::ShapeType_RawListener> ShapeType_Connector_Traits;
 
   class SHAPES_CONNECTOR_EXEC_Export Shapes_Connector_exec_i :
-    public Connector_T <Shape_Info_DDS_Traits, Shape_Info_Connector_Traits>
+    public Connector_T <ShapeType_DDS_Traits, ShapeType_Connector_Traits>
   {
   public:
     Shapes_Connector_exec_i (const char * topic_name);

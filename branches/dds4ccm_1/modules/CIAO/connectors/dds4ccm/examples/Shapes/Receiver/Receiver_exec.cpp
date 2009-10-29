@@ -156,29 +156,29 @@ namespace CIAO_Shape_Receiver_Impl
   }
 
   //============================================================
-  // Facet Executor Implementation Class: Shape_Info_RawListener_exec_i
+  // Facet Executor Implementation Class: ShapeType_RawListener_exec_i
   //============================================================
   
-  Shape_Info_RawListener_exec_i::Shape_Info_RawListener_exec_i (void)
+  ShapeType_RawListener_exec_i::ShapeType_RawListener_exec_i (void)
   {
   }
   
-  Shape_Info_RawListener_exec_i::~Shape_Info_RawListener_exec_i (void)
+  ShapeType_RawListener_exec_i::~ShapeType_RawListener_exec_i (void)
   {
   }
   
-  // Operations from ::CCM_DDS::Shape_Info_RawListener
+  // Operations from ::CCM_DDS::ShapeType_RawListener
   
   void
-  Shape_Info_RawListener_exec_i::on_data (
-    const ::Shapes::Shape_Info & an_instance ,
+  ShapeType_RawListener_exec_i::on_data (
+    const ShapeType & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    printf ("Shape_Info_RawListener: received shape_info for <%s> at %u:%u:%u\n",
+    printf ("ShapeType_RawListener: received shape_info for <%s> at %u:%u:%u\n",
             an_instance.color.in (),
             an_instance.x,
             an_instance.y,
-            an_instance.size);
+            an_instance.shapesize);
   }
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_i
@@ -202,7 +202,7 @@ namespace CIAO_Shape_Receiver_Impl
    Receiver_exec_i::read_one (void)
    {
     printf ("read_one\n");
-    ::Shapes::Shape_Info  shape_info;
+    ShapeType  shape_info;
     shape_info.color = "IBM";
     ::CCM_DDS::ReadInfo readinfo;
 
@@ -220,11 +220,11 @@ namespace CIAO_Shape_Receiver_Impl
             shape_info.color.in (),
             shape_info.x,
             shape_info.y,
-            shape_info.size);
+            shape_info.shapesize);
     }
     catch(CCM_DDS::NonExistent& )
     {
-      printf("Shape_Info_Read_One: no shape_info receieved\n");
+      printf("ShapeType_Read_One: no shape_info receieved\n");
     }
 
     printf("END OF READ_ONE\n");
@@ -235,7 +235,7 @@ namespace CIAO_Shape_Receiver_Impl
   {
     printf ("read_all\n");
 
-    ::Shapes::Shape_Info_Seq_var shape_infos;
+    ShapeType_Seq_var shape_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(shape_infos.out(), readinfoseq.out());
     for(unsigned int i = 0; i < readinfoseq->length(); ++i)
@@ -255,7 +255,7 @@ namespace CIAO_Shape_Receiver_Impl
             shape_infos[i].color.in (),
             shape_infos[i].x,
             shape_infos[i].y,
-            shape_infos[i].size);
+            shape_infos[i].shapesize);
       }
   }
 
@@ -263,7 +263,7 @@ namespace CIAO_Shape_Receiver_Impl
   Receiver_exec_i::get_one (void)
   {
     printf ("GET_ONE\n");
-    ::Shapes::Shape_Info  shape_info;
+    ShapeType  shape_info;
     shape_info.color = "yellow";
     ::CCM_DDS::ReadInfo readinfo;
 
@@ -277,15 +277,15 @@ namespace CIAO_Shape_Receiver_Impl
                             time->tm_min,
                             time->tm_sec,
                             readinfo.timestamp.nanosec);
-        printf ("GET_ONE Shape_Info : received shape_info for <%s> at %u:%u:%u\n",
+        printf ("GET_ONE ShapeType : received shape_info for <%s> at %u:%u:%u\n",
             shape_info.color.in (),
             shape_info.x,
             shape_info.y,
-            shape_info.size);
+            shape_info.shapesize);
     }
     catch(CCM_DDS::NonExistent& )
     {
-      printf("Shape_Info_Read_One: no shape_info receieved\n");
+      printf("ShapeType_Read_One: no shape_info receieved\n");
     }
 
     printf("END OF GET_ONE\n");
@@ -340,11 +340,11 @@ namespace CIAO_Shape_Receiver_Impl
 
   // Port operations.
   
-  ::CCM_DDS::CCM_Shape_Info_RawListener_ptr
+  ::CCM_DDS::CCM_ShapeType_RawListener_ptr
   Receiver_exec_i::get_info_out_listener (void)
   {
     printf ("*************** out listener\n");
-    return new Shape_Info_RawListener_exec_i ();
+    return new ShapeType_RawListener_exec_i ();
   }
   
   ::CCM_DDS::CCM_PortStatusListener_ptr

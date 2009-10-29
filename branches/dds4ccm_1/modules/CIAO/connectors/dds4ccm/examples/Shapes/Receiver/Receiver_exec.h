@@ -98,22 +98,22 @@ namespace CIAO_Shape_Receiver_Impl
 
   };
   
-  class RECEIVER_EXEC_Export Shape_Info_RawListener_exec_i
-    : public virtual ::CCM_DDS::CCM_Shape_Info_RawListener,
+  class RECEIVER_EXEC_Export ShapeType_RawListener_exec_i
+    : public virtual ::CCM_DDS::CCM_ShapeType_RawListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Shape_Info_RawListener_exec_i (void);
-    virtual ~Shape_Info_RawListener_exec_i (void);
+    ShapeType_RawListener_exec_i (void);
+    virtual ~ShapeType_RawListener_exec_i (void);
     
-    // Operations and attributes from ::CCM_DDS::Shape_Info_RawListener
+    // Operations and attributes from ::CCM_DDS::ShapeType_RawListener
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void
     on_data (
-      const ::Shapes::Shape_Info & an_instance,
+      const ShapeType & an_instance,
       const ::CCM_DDS::ReadInfo & info);
   };
   
@@ -154,7 +154,7 @@ namespace CIAO_Shape_Receiver_Impl
       ::CORBA::Boolean read_data);
     // Port operations.
     
-    virtual ::CCM_DDS::CCM_Shape_Info_RawListener_ptr
+    virtual ::CCM_DDS::CCM_ShapeType_RawListener_ptr
     get_info_out_listener (void);
     
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -174,8 +174,8 @@ namespace CIAO_Shape_Receiver_Impl
   
   private:
     ::Shape::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::Shape_Info_Reader_var reader_;
-    ::CCM_DDS::Shape_Info_Getter_var getter_;
+    ::CCM_DDS::ShapeType_Reader_var reader_;
+    ::CCM_DDS::ShapeType_Getter_var getter_;
     
     read_action_Generator * ticker_;
     CORBA::ULong rate_;

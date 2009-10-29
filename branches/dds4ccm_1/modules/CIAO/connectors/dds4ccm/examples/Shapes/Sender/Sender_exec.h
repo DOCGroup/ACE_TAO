@@ -119,7 +119,6 @@ namespace CIAO_Shapes_Sender_Impl
     
     void tick ();
     
-    void add_shape (const char * color);
     // Component attributes.
     
     // TAO_IDL - Generated from
@@ -168,7 +167,7 @@ namespace CIAO_Shapes_Sender_Impl
     virtual void ccm_remove (void);
   
   private:
-    CCM_DDS::Shape_Info_Updater_var updater_;
+    CCM_DDS::ShapeType_Updater_var updater_;
 
     pulse_Generator * ticker_;
     ::Shapes::CCM_Sender_Context_var context_;
@@ -176,10 +175,12 @@ namespace CIAO_Shapes_Sender_Impl
     CORBA::UShort max_x_;
     CORBA::UShort max_y_;
     CORBA::UShort max_size_;
-
-    TAO_SYNCH_MUTEX mutex_;
-    typedef std::map<ACE_CString, Shapes::Shape_Info_var> Shapes;
-    Shapes shapes_;
+    
+    bool x_increasing;
+    bool y_increasing;
+    bool size_increasing;
+    
+    ShapeType* square_;
   };
   
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

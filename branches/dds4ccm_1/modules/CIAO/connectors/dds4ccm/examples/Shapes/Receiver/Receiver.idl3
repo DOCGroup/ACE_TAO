@@ -15,9 +15,9 @@ module Shape
 {
   component Receiver
   {
-    uses CCM_DDS::Shape_Info_Reader info_out_data;
-    uses CCM_DDS::Shape_Info_Getter info_get_out_data;
-    provides CCM_DDS::Shape_Info_RawListener info_out_listener;
+    uses CCM_DDS::ShapeType_Reader info_out_data;
+    uses CCM_DDS::ShapeType_Getter info_get_out_data;
+    provides CCM_DDS::ShapeType_RawListener info_out_listener;
     attribute unsigned long rate;
     attribute boolean get_data; //if true, get_one and get_all are invoked
     attribute boolean read_data;//if true, read_one and read_all are invoked.

@@ -22,63 +22,63 @@
 
 module CCM_DDS
 {
-  // @from DDS_Write for Shapes::Shape_Info
-  interface Shape_Info_Writer
+  // @from DDS_Write for Shapes::ShapeType
+  interface ShapeType_Writer
   {
-    void write (in Shapes::Shape_Info an_instance)
+    void write (in ShapeType an_instance)
       raises (InternalError);
   };
 
-  // @from DDS_Update for Shapes::Shape_Info
-  interface Shape_Info_Updater
+  // @from DDS_Update for Shapes::ShapeType
+  interface ShapeType_Updater
   {
-    void create (in Shapes::Shape_Info an_instance)
+    void create (in ShapeType an_instance)
         raises (AlreadyCreated,
                 InternalError);
-    void update(in Shapes::Shape_Info an_instance)
+    void update(in ShapeType an_instance)
         raises (NonExistent,
                 InternalError);
-    void delete (in Shapes::Shape_Info an_instance)
+    void delete (in ShapeType an_instance)
         raises (NonExistent,
                 InternalError);
     readonly attribute boolean is_lifecycle_checked;
   };
   
-  interface Shape_Info_Getter
+  interface ShapeType_Getter
   {
-    boolean get_all (out Shapes::Shape_Info_Seq instances, out ReadInfoSeq infos)
+    boolean get_all (out ShapeType_Seq instances, out ReadInfoSeq infos)
             raises (InternalError);
-    boolean get_all_history (out Shapes::Shape_Info_Seq instances, out ReadInfoSeq infos)
+    boolean get_all_history (out ShapeType_Seq instances, out ReadInfoSeq infos)
             raises (InternalError);
-    boolean get_one (inout Shapes::Shape_Info an_instance, out ReadInfo info)
+    boolean get_one (inout ShapeType an_instance, out ReadInfo info)
             raises (NonExistent,
                     InternalError);
-    boolean get_one_history (in Shapes::Shape_Info an_instance,
-                           out Shapes::Shape_Info_Seq instances, out ReadInfoSeq infos)
+    boolean get_one_history (in ShapeType an_instance,
+                           out ShapeType_Seq instances, out ReadInfoSeq infos)
             raises (NonExistent,
                     InternalError);
-    boolean get_next (out Shapes::Shape_Info an_instance, out ReadInfo info)
+    boolean get_next (out ShapeType an_instance, out ReadInfo info)
             raises (InternalError);
     attribute QueryFilter filter
             setraises (BadParameter);
     attribute DDS::Duration_t time_out;
   };
   
-  // @from Reader<T> from DDS_RawListen for Shapes::Shape_Info
-  interface Shape_Info_Reader
+  // @from Reader<T> from DDS_RawListen for Shapes::ShapeType
+  interface ShapeType_Reader
   {
-    void read_all (out Shapes::Shape_Info_Seq instances, out ReadInfoSeq infos)
+    void read_all (out ShapeType_Seq instances, out ReadInfoSeq infos)
       raises (InternalError);
 
-    void read_all_history (out Shapes::Shape_Info_Seq instances, out ReadInfoSeq infos)
+    void read_all_history (out ShapeType_Seq instances, out ReadInfoSeq infos)
       raises (InternalError);
 
-    void read_one (inout Shapes::Shape_Info an_instance, out ReadInfo info)
+    void read_one (inout ShapeType an_instance, out ReadInfo info)
       raises (NonExistent,
               InternalError);
 
-    void read_one_history (in Shapes::Shape_Info an_instance,
-                           out Shapes::Shape_Info_Seq instances, out ReadInfoSeq infos)
+    void read_one_history (in ShapeType an_instance,
+                           out ShapeType_Seq instances, out ReadInfoSeq infos)
       raises (NonExistent,
               InternalError);
 
@@ -86,10 +86,10 @@ module CCM_DDS
       setraises (BadParameter);
   };
 
-  // @from RawListener for Shapes::Shape_Info
-  interface Shape_Info_RawListener
+  // @from RawListener for Shapes::ShapeType
+  interface ShapeType_RawListener
   {
-    void on_data (in Shapes::Shape_Info an_instance, in ReadInfo info);
+    void on_data (in ShapeType an_instance, in ReadInfo info);
   };
 };
 
@@ -106,18 +106,18 @@ module Shapes
     attribute DDS::DomainId_t domain_id;
     attribute string qos_profile;
 
-    // @from DDS_Write for Shape_Info
-    provides CCM_DDS::Shape_Info_Writer info_in_data;
+    // @from DDS_Write for ShapeType
+    provides CCM_DDS::ShapeType_Writer info_in_data;
     provides DDS::DataWriter info_in_dds_entity;
 
-    // @from DDS_Update for Shape_Info
-    provides CCM_DDS::Shape_Info_Updater info_update_data;
+    // @from DDS_Update for ShapeType
+    provides CCM_DDS::ShapeType_Updater info_update_data;
 
-    // @from DDS_RawListen for Shape_Info
-    provides CCM_DDS::Shape_Info_Reader info_out_data;
-    provides CCM_DDS::Shape_Info_Getter info_get_out_data;
+    // @from DDS_RawListen for ShapeType
+    provides CCM_DDS::ShapeType_Reader info_out_data;
+    provides CCM_DDS::ShapeType_Getter info_get_out_data;
     provides CCM_DDS::ListenerControl info_out_control;
-    uses CCM_DDS::Shape_Info_RawListener info_out_listener;
+    uses CCM_DDS::ShapeType_RawListener info_out_listener;
     provides DDS::DataReader info_out_dds_entity;
     uses CCM_DDS::PortStatusListener info_out_status;
   };

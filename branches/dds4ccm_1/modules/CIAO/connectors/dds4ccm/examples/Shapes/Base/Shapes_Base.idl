@@ -8,25 +8,19 @@
 #ifndef SHAPES_BASE_IDL
 #define SHAPES_BASE_IDL
 
-module Shapes
-{
-  struct Shape_Info {
-    string color; //@key
-    short x;
-    short y;
-    short size;
-    boolean x_increasing;
-    boolean y_increasing;
-    boolean size_increasing;
-  };
-
-  struct Attributes {
-    string shape; //@key
-    string color; //@key
-    float speed;
-  };
-
-  typedef sequence<Shape_Info> Shape_Info_Seq;
+struct ShapeType {
+  string color; //@key
+  short x;
+  short y;
+  short shapesize;
 };
+
+struct Attributes {
+  string shape; //@key
+  string color; //@key
+  float speed;
+};
+
+typedef sequence<ShapeType> ShapeType_Seq;
 
 #endif
