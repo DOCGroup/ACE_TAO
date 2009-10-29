@@ -62,7 +62,13 @@ public:
   // mirrorport node that may contain reference the
   // containing porttype.
   // TODO - support nested ports, if they are allowed.
-  virtual int pre_process (be_decl *); 
+  virtual int pre_process (be_decl *);
+  
+protected:
+  void gen_svnt_entrypoint_decl (void);
+  void gen_svnt_entrypoint_defn (void);
+  void gen_exec_entrypoint_decl (void);
+  void gen_exec_entrypoint_defn (void);
   
 protected:
   be_component *node_;

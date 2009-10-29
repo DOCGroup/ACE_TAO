@@ -81,6 +81,7 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_exec_src_ending_ (ACE::strnew ("_exec.cpp")),
     ciao_exec_stub_hdr_ending_ (ACE::strnew ("EC.h")),
     ciao_exec_idl_ending_ (ACE::strnew ("E.idl")),
+    dds_typesupport_hdr_ending_ (ACE::strnew ("Support.h")),
     output_dir_ (0),
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
@@ -451,6 +452,18 @@ BE_GlobalData::be_get_ciao_exec_idl (
     be_change_idl_file_extension (
       idl_file_name,
       be_global->ciao_exec_idl_ending (),
+      base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_dds_typesupport_header (
+  UTL_String *idl_file_name,
+  bool base_name_only)
+{
+  return
+    be_change_idl_file_extension (
+      idl_file_name,
+      be_global->dds_typesupport_hdr_ending (),
       base_name_only);
 }
 
@@ -1178,6 +1191,19 @@ const char*
 BE_GlobalData::ciao_exec_idl_ending (void) const
 {
   return this->ciao_exec_idl_ending_;
+}
+
+void
+BE_GlobalData::dds_typesupport_hdr_ending (const char* s)
+{
+  ACE::strdelete (this->dds_typesupport_hdr_ending_);
+  this->dds_typesupport_hdr_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::dds_typesupport_hdr_ending (void) const
+{
+  return this->dds_typesupport_hdr_ending_;
 }
 
 void
