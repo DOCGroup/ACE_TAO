@@ -1,3 +1,9 @@
+Thu Oct 29 16:36:53 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+
+          Fixed a compilation error on wchar build.
+
 Thu Oct 29 15:34:15 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
