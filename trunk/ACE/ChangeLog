@@ -1,3 +1,16 @@
+Thu Oct 29 21:45:30 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_pwd.h:
+        * ace/OS_NS_time.inl:
+        * ace/README:
+        * ace/config-mvs.h:
+        * ace/config-tru64.h:
+        * ace/os_include/os_time.h:
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed references to ACE_HAS_BROKEN_CTIME and 
+          ACE_HAS_BROKEN_R_ROUTINES.
+
 Thu Oct 29 21:25:49 UTC 2009  Chris Cleeland  <cleeland@ociweb.com>
 
         * tests/Message_Queue_Test.cpp:
