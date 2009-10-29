@@ -1,3 +1,10 @@
+Thu Oct 29 15:34:15 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Disabled running tests 3531, 3647, and 3683 in NO_MESSAGING and
+          CORBA_E_MICRO builds since those tests are not built in such
+          setups.
+
 Thu Oct 29 14:56:17 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3748_Regression/client.cpp:
