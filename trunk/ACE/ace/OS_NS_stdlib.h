@@ -35,10 +35,6 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-# if defined (ACE_HAS_BROKEN_R_ROUTINES)
-#   undef rand_r
-# endif /* ACE_HAS_BROKEN_R_ROUTINES */
-
 // We need this for MVS... as well as Linux, etc...
 // On Windows, we explicitly set this up as __cdecl so it's correct even
 // if building with another calling convention, such as __stdcall.
@@ -118,10 +114,6 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
   // atop not in spec
-# if defined (atop)
-#   undef atop
-# endif /* atop */
-
   /*
    * Convert string to pointer
    */
