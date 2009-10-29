@@ -123,13 +123,7 @@ Counting_Test_Producer::svc (void)
   // correct.
   // Also, to be sure there's not just 1 producer and 1 consumer pinging
   // back and forth, make the producers randomly delay between blocks.
-  
-  // Seeding the random number generator like this really isn't a good idea,
-  // due to the wild differences between platforms with respect to the definition
-  // of ACE_thread_t.  These pointer gymnastics are intended to suppress warnings
-  // that we really don't care about.
-  void *thr_id = reinterpret_cast <void *> (ACE_Thread::self ());
-  ACE_OS::srand (*reinterpret_cast <u_int *> (thr_id));
+  ACE_OS::srand ((u_int)ACE_Thread::self ());
   int multiple = ACE_OS::rand () % 10;
   int delay_ms = (ACE_OS::rand () % 10) / 2;
   // The delay usually causes the test to time out in the automated
@@ -219,13 +213,7 @@ Counting_Test_Consumer::svc (void)
   // a calculated number of blocks then stop; the test checker will determine
   // if the number consumed plus the number remaining is correct for the
   // number produced.
-
-  // Seeding the random number generator like this really isn't a good idea,
-  // due to the wild differences between platforms with respect to the definition
-  // of ACE_thread_t.  These pointer gymnastics are intended to suppress warnings
-  // that we really don't care about.
-  void *thr_id = reinterpret_cast <void *> (ACE_Thread::self ());
-  ACE_OS::srand (*reinterpret_cast <u_int *> (thr_id));
+  ACE_OS::srand ((u_int)ACE_Thread::self ());
   int multiple = ACE_OS::rand () % 10;
   int delay_ms = ACE_OS::rand () % 10;
   // The delay usually causes the test to time out in the automated
