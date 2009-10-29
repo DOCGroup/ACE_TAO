@@ -5931,58 +5931,6 @@ dnl
 dnl SECTION 13: checks for system services
 dnl
 
-dnl Check if platform defines ctime() as a macro
-ACE_CACHE_CHECK([for ctime() macro],
-  [ace_cv_feature_have_ctime_macro],
-  [
-   AC_EGREP_CPP([ACE_CTIME_MACRO],
-     [
-#include <time.h>
-
-#if defined (ctime)
-  ACE_CTIME_MACRO
-#endif
-     ],
-     [
-      ace_cv_feature_have_ctime_macro=yes
-     ],
-     [
-      ace_cv_feature_have_ctime_macro=no
-     ])
-  ], [AC_DEFINE([ACE_HAS_BROKEN_CTIME])],)
-
-dnl Check if platform defines ctime_r, asctime_r, rand_r or getpwnam_r
-dnl as macros.
-ACE_CACHE_CHECK([for reentrant function macros],
-  [ace_cv_feature_has_broken_r_routines],
-  [
-   AC_EGREP_CPP([ACE_R_MACROS],
-     [
-#ifndef _REENTRANT
-# define _REENTRANT
-#endif
-
-#include <time.h>
-
-#if !defined (ACE_LACKS_PWD_H)
-# include <pwd.h>
-#endif
-
-#if defined (ctime_r) || \
-    defined (asctime_r) || \
-    defined (rand_r) || \
-    defined (getpwnam_r)
-  ACE_R_MACROS
-#endif
-     ],
-     [
-      ace_cv_feature_has_broken_r_routines=yes
-     ],
-     [
-      ace_cv_feature_has_broken_r_routines=no
-     ])
-  ], [AC_DEFINE([ACE_HAS_BROKEN_R_ROUTINES])],)
-
 dnl Check for open() mode masks
 ACE_CACHE_CHECK([for open() mode masks],
   [ace_cv_feature_have_open_mode_masks],[

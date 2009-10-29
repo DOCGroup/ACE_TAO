@@ -97,9 +97,7 @@ ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime (const time_t *t)
 {
   ACE_OS_TRACE ("ACE_OS::ctime");
-#if defined (ACE_HAS_BROKEN_CTIME)
-  ACE_OSCALL_RETURN (::asctime (::localtime (t)), char *, 0);
-#elif defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
   static ACE_TCHAR buf [ctime_buf_size];
   return ACE_OS::ctime_r (t,
                           buf,
@@ -124,7 +122,7 @@ ACE_OS::ctime (const time_t *t)
 #  else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
 #  endif /* ACE_USES_WCHAR */
-# endif /* ACE_HAS_BROKEN_CTIME */
+# endif /* ACE_HAS_WINCE */
 }
 
 #if !defined (ACE_HAS_WINCE)  /* CE version in OS.cpp */
