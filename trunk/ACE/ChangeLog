@@ -1,3 +1,8 @@
+Thu Oct 29 20:30:35 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+          Readded undef atop. Fixes compile error on FreeBSD.
+
 Thu Oct 29 13:58:25 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdlib.h:
