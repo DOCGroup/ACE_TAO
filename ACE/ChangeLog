@@ -1,3 +1,13 @@
+Thu Oct 29 21:25:49 UTC 2009  Chris Cleeland  <cleeland@ociweb.com>
+
+        * tests/Message_Queue_Test.cpp:
+
+          Reverted change from Tue Oct 27 08:12:25 UTC 2009
+          William R. Otte  <wotte@dre.vanderbilt.edu>.  The change
+          was causing core dumps on some platforms due to treating
+          the thread ID as a pointer and dereferencing that pointer.
+          Better to live with compiler warnings than crashes.
+
 Thu Oct 29 21:04:27 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/README:
