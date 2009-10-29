@@ -161,10 +161,10 @@ namespace CIAO_Shapes_Sender_Impl
       max_x_ (100),
       max_y_ (100),
       max_size_ (25),
-      x_increasing (false),
-      y_increasing (false),
-      size_increasing (false)
-
+      x_increasing_ (false),
+      y_increasing_ (false),
+      size_increasing_ (false),
+      resize_ (false)
   {
     square_ = new ShapeType;
     this->ticker_ = new pulse_Generator (*this);
@@ -179,35 +179,38 @@ namespace CIAO_Shapes_Sender_Impl
   void 
   Sender_exec_i::tick ()
   {
-    if (this->x_increasing)
+    if (this->x_increasing_)
       {
         ++square_->x;
-        this->x_increasing = square_->x + 1 <= this->max_x_;
+        this->x_increasing_ = square_->x + 1 <= this->max_x_;
       }
     else
       {
         --square_->x;
-        this->x_increasing = square_->x - 1 < 0;
+        this->x_increasing_ = square_->x - 1 < 0;
       }
-    if (this->y_increasing)
+    if (this->y_increasing_)
       {
         ++square_->y;
-        this->y_increasing = square_->y + 1 <= this->max_y_;
+        this->y_increasing_ = square_->y + 1 <= this->max_y_;
       }
     else
       {
         --square_->y;
-        this->y_increasing = square_->y - 1 < 0;
+        this->y_increasing_ = square_->y - 1 < 0;
       }
-    if (this->size_increasing)
+    if (resize_shape ())
       {
-        ++square_->shapesize;
-        this->size_increasing = square_->shapesize + 1 <= this->max_size_;
-      }
-    else
-      {
-        --square_->shapesize;
-        this->size_increasing = square_->shapesize - 1 < 0;
+        if (this->size_increasing_)
+          {
+            ++square_->shapesize;
+            this->size_increasing_ = square_->shapesize + 1 <= this->max_size_;
+          }
+        else
+          {
+            --square_->shapesize;
+            this->size_increasing_ = square_->shapesize - 1 < 0;
+          }
       }
     try 
       {
@@ -300,6 +303,19 @@ namespace CIAO_Shapes_Sender_Impl
     this->max_size_ = max_size;
     printf ("SETTING max size : <%d>\n", max_size);
   }
+  
+  void
+  Sender_exec_i::resize_shape (
+      ::CORBA::Boolean resize)
+  {
+    this->resize_ = resize;
+  }
+
+  ::CORBA::Boolean
+  Sender_exec_i::resize_shape ()
+  {
+    return this->resize_;
+  }
 
   // Port operations.
   
@@ -332,7 +348,7 @@ namespace CIAO_Shapes_Sender_Impl
     this->start ();
     square_->x = ACE_OS::rand () % this->max_x_;
     square_->y = ACE_OS::rand () % this->max_y_;
-    square_->shapesize = ACE_OS::rand () % 25;
+    square_->shapesize = max_size_;
     square_->color = CORBA::string_dup("GREEN");
 
     //Register shape with dds.

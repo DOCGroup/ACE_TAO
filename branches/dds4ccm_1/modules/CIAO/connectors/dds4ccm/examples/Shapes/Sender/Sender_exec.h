@@ -151,6 +151,13 @@ namespace CIAO_Shapes_Sender_Impl
     virtual void
     max_size (
       ::CORBA::UShort max_size);
+    
+    virtual void
+    resize_shape (
+      ::CORBA::Boolean resize);
+
+    virtual ::CORBA::Boolean
+    resize_shape (void);
 
     // Port operations.
     
@@ -176,9 +183,10 @@ namespace CIAO_Shapes_Sender_Impl
     CORBA::UShort max_y_;
     CORBA::UShort max_size_;
     
-    bool x_increasing;
-    bool y_increasing;
-    bool size_increasing;
+    bool x_increasing_;
+    bool y_increasing_;
+    bool size_increasing_;
+    bool resize_;
     
     ShapeType* square_;
   };

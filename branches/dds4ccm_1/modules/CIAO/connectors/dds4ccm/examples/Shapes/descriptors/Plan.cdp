@@ -173,7 +173,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>10</long>
+          <long>1</long>
         </value>
       </value>
     </configProperty>
@@ -227,7 +227,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>10</long>
+          <long>1</long>
         </value>
       </value>
     </configProperty>
@@ -261,6 +261,17 @@
         </type>
         <value>
           <short>25</short>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>resize_shape</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
         </value>
       </value>
     </configProperty>

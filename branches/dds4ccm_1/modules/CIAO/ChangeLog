@@ -1,3 +1,12 @@
+Thu Oct 29 14:42:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Made shape resize configurable.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Made shape resize configurable.
+
 Thu Oct 29 14:36:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
