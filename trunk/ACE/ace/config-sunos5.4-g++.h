@@ -17,7 +17,6 @@
 #define ACE_HAS_STRING_CLASS
 
 #include "ace/config-g++-common.h"
-#define ACE_HAS_GNU_CSTRING_H
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 

@@ -335,9 +335,6 @@ ACE_HAS_GETRUSAGE_PROTOTYPE             Platform has a getrusage ()
                                         prototype in sys/resource.h
                                         that differs from the one in
                                         ace/OS.i.
-ACE_HAS_GNU_CSTRING_H                   Denotes that GNU has cstring.h
-                                        as standard which redefines
-                                        memchr()
 ACE_HAS_GPERF                           The GPERF utility is compiled
                                         for this platform
 ACE_HAS_GETIFADDRS                      This platform has ifaddrs.h and
