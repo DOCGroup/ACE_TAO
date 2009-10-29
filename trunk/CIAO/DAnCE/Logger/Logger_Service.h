@@ -7,8 +7,7 @@
 #include "DAnCE/Logger/File_Logger_Backend.h"
 
 namespace DAnCE
-  {
-
+{
     class DAnCE_Logger_Export Logger_Service : public ::DAnCE::DAnCELoggerFactory
     {
     public:
@@ -23,7 +22,6 @@ namespace DAnCE
       bool trace_;
       int log_level_;
     };
-
 } // DAnCE
 
 ACE_FACTORY_DECLARE (DAnCE_Logger, Logger_Service)

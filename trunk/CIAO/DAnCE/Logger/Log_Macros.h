@@ -17,7 +17,7 @@
 #  else
 #    define DANCE_NTRACE ACE_NTRACE
 #  endif
-#endif DANCE_NTRACE 
+#endif DANCE_NTRACE
 */
 #define DLINFO ACE_TEXT("(%P|%t) [%M] - %T - ")
 
@@ -43,7 +43,7 @@
 #  define DANCE_ENABLE_TRACE() ACE_Trace::start_tracing ()
 #  define DANCE_DISABLE_TRACE() ACE_Trace::stop_tracing ()
 #  undef DLINFO // Make log messages indent with tracing.
-#  define DLINFO "%I(%P|%t) [%M] - %T - "
+#  define DLINFO ACE_TEXT("%I(%P|%t) [%M] - %T - ")
 #  include "ace/Trace.h"
 #endif /* DANCE_NTRACE */
 
