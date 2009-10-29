@@ -26,6 +26,7 @@
 #include "be_provides.h"
 #include "be_uses.h"
 
+#include "be_helper.h"
 #include "be_extern.h"
 
 #include "utl_identifier.h"
@@ -202,3 +203,87 @@ be_visitor_component_scope::pre_process (be_decl *node)
     
   return 0;
 }
+
+void
+be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
+{
+  os_ << be_nl << be_nl
+      << "extern \"C\" " << export_macro_.c_str ()
+      << " ::PortableServer::Servant" << be_nl
+      << "create_" << node_->flat_name ()
+      << "_Servant (" << be_idt_nl
+      << "::Components::EnterpriseComponent_ptr p," << be_nl
+      << "::CIAO::Container_ptr c," << be_nl
+      << "const char * ins_name);" << be_uidt;
+}
+
+void
+be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
+{
+  ACE_CString sname_str (
+    ScopeAsDecl (node_->defined_in ())->full_name ());
+  const char *sname = sname_str.c_str ();
+  const char *lname = node_->local_name ();
+  const char *global = (sname_str == "" ? "" : "::");
+
+  os_ << be_nl << be_nl
+      << "extern \"C\" " << export_macro_.c_str ()
+      << " ::PortableServer::Servant" << be_nl
+      << "create_" << node_->flat_name ()
+      << "_Servant (" << be_idt_nl
+      << "::Components::EnterpriseComponent_ptr p," << be_nl
+      << "::CIAO::Container_ptr c," << be_nl
+      << "const char * ins_name)" << be_uidt_nl
+      << "{" << be_idt_nl
+      << global << sname << "::CCM_" << lname
+      << "_var x =" << be_idt_nl
+      << global << sname << "::CCM_" << lname
+      << "::_narrow (p);" << be_uidt_nl << be_nl
+      << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "::PortableServer::Servant retval = 0;" << be_nl
+      << "ACE_NEW_RETURN (retval," << be_nl
+      << "                " << lname << "_Servant (" << be_idt_nl
+      << "                x.in ()," << be_nl
+      << "                ::Components::CCMHome::_nil ()," << be_nl
+      << "                ins_name," << be_nl
+      << "                0," << be_nl
+      << "                c)," << be_uidt_nl
+      << "                0);" << be_nl << be_nl
+      << "return retval;" << be_uidt_nl
+      << "}";
+}
+
+void
+be_visitor_component_scope::gen_exec_entrypoint_decl (void)
+{
+  os_ << be_nl << be_nl
+      << "extern \"C\" " << export_macro_.c_str ()
+      << " ::Components::EnterpriseComponent_ptr" << be_nl
+      << "create_" << node_->flat_name ()
+      << "_Impl (void);"; 
+}
+
+void
+be_visitor_component_scope::gen_exec_entrypoint_defn (void)
+{
+  os_ << be_nl << be_nl
+      << "extern \"C\" " << export_macro_.c_str ()
+      << " ::Components::EnterpriseComponent_ptr" << be_nl
+      << "create_" << node_->flat_name ()
+      << "_Impl (void)" << be_nl
+      << "{" << be_idt_nl
+      << "::Components::EnterpriseComponent_ptr retval ="
+      << be_idt_nl
+      << "::Components::EnterpriseComponent::_nil ();"
+      << be_uidt_nl << be_nl
+      << "ACE_NEW_NORETURN (" << be_idt_nl
+      << "retval," << be_nl
+      << node_->local_name () << "_exec_i);"
+      << be_uidt_nl << be_nl
+      << "return retval;" << be_uidt_nl
+      << "}";
+}
+

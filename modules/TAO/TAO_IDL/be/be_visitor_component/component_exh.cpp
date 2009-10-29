@@ -35,6 +35,8 @@ be_visitor_component_exh::~be_visitor_component_exh (void)
 int
 be_visitor_component_exh::visit_component (be_component *node)
 {
+  node_ = node;
+
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl << be_nl
@@ -67,12 +69,7 @@ be_visitor_component_exh::visit_component (be_component *node)
                         -1);
     }
     
-  os_ << be_nl << be_nl
-      << "extern \"C\" " << export_macro_.c_str ()
-      << " ::Components::EnterpriseComponent_ptr" << be_nl
-      << "create_" << node->flat_name ()
-      << "_Impl (void);"; 
-
+  this->gen_exec_entrypoint_decl ();
 
   os_ << be_uidt_nl
       << "}";

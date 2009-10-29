@@ -416,6 +416,12 @@ public:
   void gen_export_files (void);
   // Generates the export files selected on the command line.
 
+  void gen_standard_include (TAO_OutStream *stream,
+                             const char *included_file,
+                             bool add_comment = false);
+  // Generate file include, with optional empty comment to 
+  // short-circuit DOxygen.
+
   void destroy (void);
   // Cleanup.
 
@@ -424,10 +430,6 @@ private:
                           TAO_OutStream *stream,
                           const char *prefix,
                           const char *suffix);
-
-  void gen_standard_include (TAO_OutStream *stream,
-                             const char *included_file,
-                             bool add_comment = false);
 
   /// Utility methods for generating file includes.
   void gen_stub_hdr_includes (void);
