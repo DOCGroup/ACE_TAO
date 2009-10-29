@@ -237,6 +237,7 @@ NotificationServiceMonitor_i::get_data (
       num.sum_of_squares = 0;
       num.minimum = 0;
       num.maximum = 0;
+      num.last = 0;
     }
   else
     {
