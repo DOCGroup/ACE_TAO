@@ -902,8 +902,8 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
           // won't be aligned correctly.  I'm not sure quite what to
           // do at this point.  It's probably best just to return -1.
           if (ACE::recv_n (handle,
-			   ((char *) &buffer) + n,
-			   remainder) != remainder)
+                           ((char *) &buffer) + n,
+                           remainder) != remainder)
             return -1;
         }
 
