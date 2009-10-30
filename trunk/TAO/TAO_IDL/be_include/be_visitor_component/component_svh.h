@@ -38,51 +38,13 @@ public:
   ~be_visitor_component_svh (void);
   
   virtual int visit_component (be_component *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_extended_port (be_extended_port *node);
-  virtual int visit_mirror_port (be_mirror_port *node);
   
 private:
-  int gen_facets (void);
-  
-  void gen_context_class (void);
-                           
-  void gen_context_r (AST_Component *node);
-  
-  int gen_servant_class (void);
-  
-  int gen_servant_r (AST_Component *node);
-  
-  int gen_component_attrs (AST_Component *node);
-                     
-  void gen_ports (AST_Component *node,
-                  AST_Decl::NodeType nt,
-                  bool in_servant);
-   
-  void gen_provides (AST_Provides *p);
-                                     
-  void gen_uses (AST_Uses *u,
-                 bool in_servant);
-                
-  void gen_publishes (AST_Publishes *p,
-                      bool in_servant);
-  
-  void gen_consumes (AST_Consumes *c);
-                                     
-  void gen_emits (AST_Emits *e,
-                  bool in_servant);
-     
-  /// Base class overrides and CIAO-specific code.                
-  void gen_non_type_specific (void);
-  
-  void gen_entrypoint (void);
+  void gen_entrypoint (be_component *node);
                   
 private:
-  be_component *node_;
   TAO_OutStream &os_;
   ACE_CString export_macro_;
-  bool in_ancestor_;
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_SVH_H_ */

@@ -2008,6 +2008,37 @@ TAO_CodeGen::gen_export_file (const char *filename,
 }
 
 void
+TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
+                                   const char *included_file,
+                                   bool add_comment)
+{
+  // Switch between changing or non-changing standard include files
+  // include files, so that #include statements can be
+  // generated with ""s or <>s respectively, for the standard include
+  // files (e.g. tao/corba.h).
+
+  const char *start_delimiter = "\"";
+  const char *end_delimiter = "\"";
+
+  if (be_global->changing_standard_include_files () == 0)
+    {
+      start_delimiter = "<";
+      end_delimiter = ">";
+    }
+
+  *stream << "\n#include ";
+
+  if (add_comment)
+    {
+      *stream << "/**/ ";
+    }
+
+  *stream << start_delimiter
+          << included_file
+          << end_delimiter;
+}
+
+void
 TAO_CodeGen::gen_ifndef_string (const char *fname,
                                 TAO_OutStream *stream,
                                 const char *prefix,
@@ -2052,37 +2083,6 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
                  macro_name);
   stream->print ("#define %s\n\n",
                  macro_name);
-}
-
-void
-TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
-                                   const char *included_file,
-                                   bool add_comment)
-{
-  // Switch between changing or non-changing standard include files
-  // include files, so that #include statements can be
-  // generated with ""s or <>s respectively, for the standard include
-  // files (e.g. tao/corba.h).
-
-  const char *start_delimiter = "\"";
-  const char *end_delimiter = "\"";
-
-  if (be_global->changing_standard_include_files () == 0)
-    {
-      start_delimiter = "<";
-      end_delimiter = ">";
-    }
-
-  *stream << "\n#include ";
-
-  if (add_comment)
-    {
-      *stream << "/**/ ";
-    }
-
-  *stream << start_delimiter
-          << included_file
-          << end_delimiter;
 }
 
 void
@@ -3121,6 +3121,58 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
   this->gen_standard_include (
     this->ciao_exec_header_,
     "tao/LocalObject.h");
+  
+  // Placeholder until we get real-world logic in place.
+  bool dds_connector_seen = true;
+  
+  if (dds_connector_seen)
+    {  
+      *this->ciao_exec_header_ << be_nl;
+  
+      this->gen_standard_include (this->ciao_exec_header_,
+                                  "dds4ccm/impl/ndds/NDDS_Traits.h");
+  
+      this->gen_standard_include (this->ciao_exec_header_,
+                                  "dds4ccm/impl/ndds/Connector_T.h");
+
+      size_t const nfiles = idl_global->n_included_idl_files ();
+
+      for (size_t j = 0; j < nfiles; ++j)
+        {
+          char* idl_name = idl_global->included_idl_files ()[j];
+
+          // Make a String out of it.
+          UTL_String idl_name_str = idl_name;
+
+          // No *_svnt.h version of this one.
+          if (ACE_OS::strcmp (idl_name, "Components.idl") == 0)
+            {
+              continue;
+            }
+
+          // Get the constructed IDL file name.
+          const char* ts_hdr =
+            BE_GlobalData::be_get_dds_typesupport_header (
+              &idl_name_str);
+
+          idl_name_str.destroy ();
+
+          // Sanity check and then print.
+          if (ts_hdr != 0)
+            {
+              this->gen_standard_include (
+                this->ciao_exec_header_,
+                ts_hdr);
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("\nERROR, invalid ")
+                          ACE_TEXT ("file '%C' included"),
+                          ts_hdr));
+            }
+        }
+    } 
 }
 
 void

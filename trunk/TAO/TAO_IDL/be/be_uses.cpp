@@ -28,6 +28,14 @@ be_uses::~be_uses (void)
 {
 }
 
+be_type *
+be_uses::uses_type (void) const
+{
+  return
+    be_type::narrow_from_decl (
+      this->AST_Uses::uses_type ());
+}
+
 int
 be_uses::accept (be_visitor *visitor)
 {

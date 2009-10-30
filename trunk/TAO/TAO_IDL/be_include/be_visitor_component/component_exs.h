@@ -22,7 +22,8 @@
 #ifndef _BE_COMPONENT_COMPONENT_EXS_H_
 #define _BE_COMPONENT_COMPONENT_EXS_H_
 
-class be_visitor_component_exs : public be_visitor_component
+class be_visitor_component_exs
+  : public be_visitor_component_scope
 {
   //
   // = TITLE
@@ -39,44 +40,14 @@ public:
   ~be_visitor_component_exs (void);
   
   virtual int visit_component (be_component *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  
-private:
-  int gen_facets (void);
-  
-  int gen_facet_ops_attrs (be_interface *node);
-                           
-  int gen_exec_class (void);
-  
-  int gen_component_attrs_r (AST_Component *node);
-                     
-  void gen_provides_r (AST_Component *node);
-   
-  void gen_provides (AST_Type *obj,
-                     Identifier *port_id);
-                                     
-  void gen_consumes_r (AST_Component *node);
-  
-  void gen_consumes (AST_Type *obj,
-                     Identifier *port_id);
-                                     
-  /// Base class overrides and CIAO-specific code.                
-  void gen_non_type_specific (void);
-  
-  void gen_entrypoint (void);
-                  
-private:
-  be_component *node_;
-  be_interface *op_scope_;
-  TAO_OutStream &os_;
-  const char *comment_border_;
-  const char *your_code_here_;
-  ACE_CString export_macro_;
 };
 
+// =============================================
+
 /// Worker class passed to traverse_inheritance_graph(),
-/// collects supported operations and attributes.
+/// collects supported operations and attributes. Not used
+/// by this visitor but by 2 visitors spawned from this one,
+/// hence the central location for the code.
 class Component_Exec_Op_Attr_Generator
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {

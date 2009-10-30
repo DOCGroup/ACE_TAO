@@ -26,6 +26,14 @@ be_consumes::~be_consumes (void)
 {
 }
 
+be_eventtype *
+be_consumes::consumes_type (void) const
+{
+  return
+    be_eventtype::narrow_from_decl (
+      this->AST_Consumes::consumes_type ());
+}
+
 int
 be_consumes::accept (be_visitor *visitor)
 {

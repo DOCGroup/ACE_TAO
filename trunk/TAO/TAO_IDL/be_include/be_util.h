@@ -13,16 +13,19 @@
 //    Static helper methods used by multiple visitors.
 //
 // = AUTHOR
-//    Gary Maxey
+//    Gary Maxey, Jeff Parsons
 //
 // ============================================================================
 
 #ifndef TAO_BE_UTIL_H
 #define TAO_BE_UTIL_H
 
-#include "be_helper.h"
-#include "be_module.h"
+class TAO_OutStream;
+class be_module;
+class AST_Decl;
 
+// (JP) Someday these should be consolidated, along with several
+// similar methods scattered throughout the backend.
 class be_util
 {
 public:
@@ -31,6 +34,12 @@ public:
 
   static void
   gen_nested_namespace_end (TAO_OutStream *os, be_module *node);
+
+  static void
+  gen_nesting_open (TAO_OutStream &os, AST_Decl *node);
+  
+  static void
+  gen_nesting_close (TAO_OutStream &os, AST_Decl *node);
 };
 
 

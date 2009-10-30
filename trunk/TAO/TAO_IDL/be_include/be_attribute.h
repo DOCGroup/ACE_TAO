@@ -34,15 +34,16 @@ class be_attribute : public virtual AST_Attribute,
 {
 public:
   be_attribute (void);
-  // Default constructor.
 
   be_attribute (bool ro,
                 AST_Type *ft,
                 UTL_ScopedName *n,
                 bool local,
                 bool abstract);
-  // Constructor.
 
+  // Non-virtual override of frontend method.
+  be_type *field_type (void) const;
+  
   // Visiting.
   virtual int accept (be_visitor *visitor);
 

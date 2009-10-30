@@ -25,6 +25,7 @@
 #include "ast_extended_port.h"
 
 #include "be_field.h"
+#include "be_porttype.h"
 
 class be_visitor;
 
@@ -45,6 +46,8 @@ public:
     AST_PortType::T_ARGLIST *template_args);
     
   virtual ~be_extended_port (void);
+  
+  be_porttype *port_type (void) const;
   
   virtual void destroy (void);
   
