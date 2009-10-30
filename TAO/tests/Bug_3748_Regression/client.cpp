@@ -6,12 +6,11 @@
 ACE_RCSID(Hello, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-const ACE_TCHAR *shutdown_ior = ACE_TEXT ("file://shutdown_test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:s:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -21,16 +20,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
 
-      case 's':
-        shutdown_ior = get_opts.opt_arg ();
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-k <ior> "
-                           "-s <shutdown_ior>"
+                           "-k <ior>"
                            "\n",
                            argv [0]),
                           -1);
@@ -61,8 +55,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      int encountered_failures = 0;
-      for (int i = 0; i < 5000; ++i)
+      CORBA::ULong encountered_failures = 0;
+      for (CORBA::ULong i = 0; i < Test::expected_failure_number; ++i)
         {
           try
             {
@@ -70,7 +64,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
           catch (::CORBA::Exception const &)
             {
-              if (++encountered_failures % 500 == 0)
+              CORBA::ULong const modulo = Test::expected_failure_number / 10;
+              if (++encountered_failures % modulo == 0)
                 {
 #if 1
                   ACE_DEBUG ((LM_DEBUG,
@@ -84,19 +79,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                     "ERROR: No expected exceptions occured.\n"));
 
-      tmp = orb->string_to_object(shutdown_ior);
-
-      Test::Hello_var shutdown_hello = Test::Hello::_narrow(tmp.in ());
-
-      if (CORBA::is_nil (shutdown_hello.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             shutdown_ior),
-                            1);
-        }
-
-      shutdown_hello->shutdown ();
+      // By this time the server should accept the connection and
+      // must handle shutdown gracefully.
+      hello->shutdown ();
 
       orb->destroy ();
     }

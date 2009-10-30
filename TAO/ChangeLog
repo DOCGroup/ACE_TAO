@@ -1,3 +1,22 @@
+Fri Oct 30 13:08:30 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3748_Regression/client.cpp:
+        * tests/Bug_3748_Regression/Bug_3748_Regression.mpc:
+        * tests/Bug_3748_Regression/Server_ORBInitializer.h:
+        * tests/Bug_3748_Regression/Hello.cpp:
+        * tests/Bug_3748_Regression/Test.idl:
+        * tests/Bug_3748_Regression/server.cpp:
+        * tests/Bug_3748_Regression/Test_Protocols_Hooks.cpp:
+        * tests/Bug_3748_Regression/Makefile.am:
+        * tests/Bug_3748_Regression/Hello.h:
+        * tests/Bug_3748_Regression/Test_Protocols_Hooks.h:
+        * tests/Bug_3748_Regression/README:
+        * tests/Bug_3748_Regression/run_test.pl:
+        * tests/Bug_3748_Regression/Server_ORBInitializer.cpp:
+        * bin/tao_orb_tests.lst:
+          Complitely rewrote the test for bug#3748 and changed configs
+          in which this test can run.
+
 Fri Oct 30 06:15:53 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged changes from Jeff for port/porttype/mirrorport to head

@@ -14,7 +14,7 @@ class Hello
 {
 public:
   /// Constructor
-  Hello (CORBA::ORB_ptr orb, CORBA::ORB_ptr shutdown_orb);
+  Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
   virtual char * get_string (void);
@@ -25,7 +25,6 @@ private:
   /// Use an ORB reference to conver strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
-  CORBA::ORB_var shutdown_orb_;
 };
 
 #include /**/ "ace/post.h"
