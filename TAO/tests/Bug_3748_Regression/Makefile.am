@@ -85,6 +85,8 @@ server_SOURCES = \
   Hello.cpp \
   TestC.cpp \
   TestS.cpp \
+  Server_ORBInitializer.cpp \
+  Test_Protocols_Hooks.cpp \
   server.cpp \
   Hello.h
 

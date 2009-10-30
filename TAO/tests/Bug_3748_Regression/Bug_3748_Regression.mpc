@@ -9,10 +9,12 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver {
+project(*Server): taoserver, pi {
   after += *idl
   Source_Files {
     Hello.cpp
+    Server_ORBInitializer.cpp
+    Test_Protocols_Hooks.cpp
     server.cpp
   }
   Source_Files {
