@@ -429,54 +429,61 @@ DRV_sweep_dirs (const char *rel_path,
 }
 
 ACE_CString&
-DRV_add_include_path (ACE_CString& include_path, const char* p,
-                      const char* suffix, bool is_system)
+DRV_add_include_path (ACE_CString& include_path, const char *path,
+                      const char *suffix, bool is_system)
 {
-  if (p == 0) return include_path;
+  if (!path)
+    return include_path;
 
-  ACE_CString include_option ("-I");
+  const bool needToQuote= (('"' == *path) || ACE_OS::strchr (path, ' '));
+  const size_t pathLength= ACE_OS::strlen (path);
+  const char
+#if defined (ACE_WIN32)
+    nativeDir=  '\\',
+    foreignDir= '/';
+#else
+    nativeDir=  '/',
+    foreignDir= '\\';
+#endif
 
-  size_t len = ACE_OS::strlen (p);
+  // Eliminate possible enclosing quotes from the path, and since some compilers
+  // choke on double directory separators in paths, ensure that the path does not
+  // end with a directory slash.
+  include_path=
+    ACE_CString (path + ('"' == *path),     // Skip leading Quote
+                 pathLength
+                 - ('"' == *path)           // Don't count leading Quote
+                 - ( (1uL < pathLength) &&  // Don't count trailing Quote XOR directory
+                     ('"'        == path [pathLength - 1uL] ||
+                      nativeDir  == path [pathLength - 1uL] ||
+                      foreignDir == path [pathLength - 1uL]
+                   ) )
+                 - ( (2uL < pathLength) &&  // Don't count trailing Quote AND directory
+                     '"' == path [pathLength - 1uL] &&
+                     (nativeDir  == path [pathLength - 2uL] ||
+                      foreignDir == path [pathLength - 2uL]
+                   ) )
+                );
 
-  bool quote = !(p[0] == '"' || ACE_OS::strchr (p, ' ') == 0);
-
-  // Eliminate possible quotes from the path
-  if ('"' == p[0])
-  {
-    include_path = p + 1;
-    include_path[len - 2] = 0;
-  }
-  else
-  {
-    include_path = p;
-  }
-
-  // Some compilers choke on "//" separators.
-  if (p[len - 1] == '/' || p[len - 1] == '\\')
+  if (suffix)
     {
-      include_path[len - 1] = '\0';
+      if (!include_path.length () && ((nativeDir == *suffix) || (foreignDir == *suffix)))
+        ++suffix; // Path is empty, don't add the suffix's leading directory seporator
+
+      if (include_path.length () && *suffix && (nativeDir != *suffix) && (foreignDir != *suffix))
+        include_path+= nativeDir; // Force a directory seporator
+
+      // Add the suffix string to the path, ensuring that foreign directory slashes
+      // are added as the native type.
+      for ( ; *suffix; ++suffix)
+        include_path+= (foreignDir == *suffix) ? nativeDir : *suffix;
     }
 
-  for ( ; suffix != 0 && *suffix != 0; suffix++)
-  {
-#if defined (ACE_WIN32)
-    if (*suffix == '/')
-        include_path += '\\';
-#else
-    if (*suffix == '\\')
-        include_path += '/';
-#endif
-    else
-        include_path += *suffix;
-  }
-
-  if (quote)
-      include_option += '"';
-
-  include_option += include_path; //.c_str ();
-
-  if (quote)
-      include_option += '"';
+  // Build up the include string from the new path+suffix
+  ACE_CString include_option ("-I\"", 2 + needToQuote);
+  include_option+= include_path;
+  if (needToQuote)
+    include_option+= '"';
 
   DRV_cpp_putarg (include_option.c_str ());
   idl_global->add_include_path (include_path.c_str (), is_system);
@@ -489,7 +496,6 @@ DRV_add_include_path (ACE_CString& include_path, const char* p,
 void
 DRV_cpp_post_init (void)
 {
-
   // Add include path for TAO_ROOT/orbsvcs.
   char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
 
