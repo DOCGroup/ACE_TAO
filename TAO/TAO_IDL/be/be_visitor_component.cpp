@@ -47,7 +47,6 @@
 #include "be_valuetype.h"
 
 #include "be_visitor_component.h"
-#include "be_visitor_extended_port.h"
 #include "be_visitor_attribute.h"
 #include "be_visitor_operation.h"
 #include "be_visitor_interface.h"
@@ -55,8 +54,9 @@
 #include "be_visitor_typedef.h"
 #include "be_visitor_typecode.h"
 #include "be_visitor_context.h"
-#include "be_identifier_helper.h"
+#include "be_util.h"
 #include "be_helper.h"
+#include "be_identifier_helper.h"
 #include "be_extern.h"
 
 #include "be_visitor_component/component.cpp"
@@ -69,16 +69,25 @@
 #include "be_visitor_component/component_ih.cpp"
 #include "be_visitor_component/component_is.cpp"
 #include "be_visitor_component/component_svh.cpp"
+#include "be_visitor_component/facet_svh.cpp"
+#include "be_visitor_component/context_svh.cpp"
+#include "be_visitor_component/servant_svh.cpp"
 #include "be_visitor_component/component_svs.cpp"
+#include "be_visitor_component/facet_svs.cpp"
+#include "be_visitor_component/context_svs.cpp"
+#include "be_visitor_component/servant_svs.cpp"
 #include "be_visitor_component/component_ex_idl.cpp"
+#include "be_visitor_component/facet_ex_idl.cpp"
+#include "be_visitor_component/executor_ex_idl.cpp"
+#include "be_visitor_component/context_ex_idl.cpp"
 #include "be_visitor_component/component_exh.cpp"
+#include "be_visitor_component/facet_exh.cpp"
+#include "be_visitor_component/executor_exh.cpp"
 #include "be_visitor_component/component_exs.cpp"
+#include "be_visitor_component/facet_exs.cpp"
+#include "be_visitor_component/executor_exs.cpp"
 #include "be_visitor_component/any_op_ch.cpp"
 #include "be_visitor_component/any_op_cs.cpp"
 #include "be_visitor_component/cdr_op_ch.cpp"
 #include "be_visitor_component/cdr_op_cs.cpp"
-
-ACE_RCSID (be, 
-           be_visitor_component, 
-           "$Id$")
 

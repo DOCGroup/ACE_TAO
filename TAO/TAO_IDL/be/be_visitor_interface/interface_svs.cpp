@@ -61,7 +61,6 @@ int
 be_visitor_interface_svs::visit_operation (be_operation *node)
 {
   be_visitor_operation_svs v (this->ctx_);
-  v.for_facets (true);
   v.scope (be_interface::narrow_from_decl (this->ctx_->scope ()));
   
   return v.visit_operation (node);

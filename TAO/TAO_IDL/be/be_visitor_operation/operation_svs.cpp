@@ -18,18 +18,10 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           operation_svs,
-           "$Id$")
-
-// ************************************************************
-// Operation visitor for CIAO servant implementations
-// ************************************************************
-
-be_visitor_operation_svs::be_visitor_operation_svs (be_visitor_context *ctx)
+be_visitor_operation_svs::be_visitor_operation_svs (
+      be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     scope_ (0),
-    for_facets_ (false),
     swapping_ (be_global->gen_component_swapping ())
 {
 }
@@ -171,12 +163,6 @@ be_visitor_operation_svs::post_process (be_decl *bd)
     }
 
   return 0;
-}
-
-void
-be_visitor_operation_svs::for_facets (bool val)
-{
-  this->for_facets_ = val;
 }
 
 void

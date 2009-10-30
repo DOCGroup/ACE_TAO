@@ -36,10 +36,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_sequence,
-           "$Id$")
-
 be_sequence::be_sequence (void)
   : COMMON_Base (),
     AST_Decl (),
@@ -147,6 +143,14 @@ be_sequence::be_sequence (AST_Expression *v,
             break;
         }
     }
+}
+
+be_type *
+be_sequence::base_type (void) const
+{
+  return
+    be_type::narrow_from_decl (
+      this->AST_Sequence::base_type ());
 }
 
 // Helper to create_name.

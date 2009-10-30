@@ -38,6 +38,9 @@ public:
             UTL_ScopedName *n,
             Visibility vis = vis_NA);
             
+  // Non-virtual override of frontend method.
+  be_type *field_type (void) const;
+  
   // Generate debugging ostream operator for members.
   void gen_member_ostream_operator (TAO_OutStream *os,
                                     const char *instance_name,

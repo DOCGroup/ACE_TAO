@@ -60,6 +60,14 @@ be_field::be_field (AST_Type *ft,
     }
 }
 
+be_type *
+be_field::field_type (void) const
+{
+  return
+    be_type::narrow_from_decl  (
+      this->AST_Field::field_type ());
+}
+
 void
 be_field::gen_member_ostream_operator (TAO_OutStream *os,
                                        const char *instance_name,

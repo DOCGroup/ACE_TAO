@@ -63,6 +63,9 @@ public:
                bool local,
                bool abstract);
 
+    // Non-virtual override of frontend method.
+  be_type *base_type (void) const;
+  
   virtual int create_name (be_typedef *node);
   // Create a name for ourselves. If we are typedefed, then we get the name of
   // the typedef node, else we generate a name for ourselves.

@@ -12,17 +12,18 @@
 //    Static helper methods used by multiple visitors.
 //
 // = AUTHOR
-//    Gary Maxey
+//    Gary Maxey, Jeff Parsons
 //
 // ============================================================================
 
 #include "be_util.h"
-#include "utl_identifier.h"
-#include "ace/OS_NS_string.h"
+#include "be_helper.h"
+#include "be_module.h"
+#include "be_identifier_helper.h"
 
-ACE_RCSID (be, 
-           be_util, 
-           "$Id$")
+#include "utl_identifier.h"
+
+#include "ace/OS_NS_string.h"
 
 void
 be_util::gen_nested_namespace_begin (TAO_OutStream *os, be_module *node)
@@ -56,3 +57,68 @@ be_util::gen_nested_namespace_end (TAO_OutStream *os, be_module *node)
 
   *os << be_nl << be_nl;
 }
+
+void
+be_util::gen_nesting_open (TAO_OutStream &os, AST_Decl *node)
+{
+  os << be_nl;
+
+  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
+    {
+      UTL_ScopedName tmp (i.item (), 0);
+      AST_Decl *scope =
+        node->defined_in ()->lookup_by_name (&tmp, true);
+
+      if (scope == 0)
+        {
+          i.next ();
+          continue;
+        }
+
+      ACE_CString module_name =
+        IdentifierHelper::try_escape (scope->original_local_name ());
+
+      if (module_name == "")
+        {
+          i.next ();
+          continue;
+        }
+
+      i.next ();
+
+      if (i.is_done ())
+        {
+          break;
+        }
+
+      os << be_nl
+         << "module " << module_name.c_str () << be_nl
+         << "{" << be_idt;
+    }
+}
+
+void
+be_util::gen_nesting_close (TAO_OutStream &os, AST_Decl *node)
+{
+  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
+    {
+      ACE_CString module_name (i.item ()->get_string ());
+
+      if (module_name == "")
+        {
+          i.next ();
+          continue;
+        }
+
+      i.next ();
+
+      if (i.is_done ())
+        {
+          break;
+        }
+
+      os << be_uidt_nl
+         << "};";
+    }
+}
+

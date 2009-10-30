@@ -199,6 +199,10 @@ public:
   static const char *be_get_ciao_exec_idl (
     UTL_String *idl_file_name,
     bool base_name_only = false);
+    
+  static const char *be_get_dds_typesupport_header (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
 
   const char* skel_export_macro (void) const;
   /// Returns the macro name for exporting server side classes in Win32
@@ -441,6 +445,10 @@ public:
   const char* ciao_exec_idl_ending (void) const;
   // Similar to above, but for CIAO servant and executor
   // impl and executor IDL files, if generated.
+  
+  void dds_typesupport_hdr_ending (const char* s);
+  const char* dds_typesupport_hdr_ending (void) const;
+  // For generating TypeSupport header file includes.
 
   void use_clonable_in_args (bool clonable);
   // Set the clonable_in_args.
@@ -846,6 +854,9 @@ private:
   
   // CIAO executor IDL file name ending. Default is "E.idl".
   char* ciao_exec_idl_ending_;
+  
+  // DDS TypeSupport header file name ending. Default is "Support.h".
+  char* dds_typesupport_hdr_ending_;
 
   char* output_dir_;
   // Directory where all the IDL-Compiler-Generated files are to be
