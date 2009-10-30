@@ -32,7 +32,7 @@ int
 be_visitor_context_svs::visit_component (be_component *node)
 {
   node_ = node;
-  
+
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
@@ -83,7 +83,7 @@ be_visitor_context_svs::visit_component (be_component *node)
       << "return dynamic_cast<" << lname
       << "_Context *> (p);" << be_uidt_nl
       << "}";
-      
+
   if (this->visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,7 +122,7 @@ be_visitor_context_svs::visit_component (be_component *node)
           << "ACE_UNUSED_ARG (_ciao_size);";
 
       be_visitor_swapping_get_consumer v (this->ctx_);
-      
+
       if (v.visit_component_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -769,6 +769,7 @@ be_visitor_swapping_get_consumer::visit_publishes (
   os_ << be_uidt_nl << be_nl
       << "return retval._retn ();" << be_uidt_nl
       << "}";
-      
+
   return 0;
 }
+
