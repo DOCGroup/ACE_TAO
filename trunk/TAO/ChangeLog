@@ -1,3 +1,9 @@
+Fri Oct 30 14:50:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Improve the DRV_add_include_path() space within roots and
+          directory slash handling.   (TAO782)
+
 Fri Oct 30 13:08:30 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3748_Regression/client.cpp:
@@ -465,6 +471,7 @@ Mon Oct 26 10:52:01 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
         * tao/Acceptor_Impl.cpp:
           Uncommented code for a fix for bug#3748.
 
+>>>>>>> .r87276
 Thu Oct 22 10:47:21 UTC 2009  Johnny Willemsen  <jwilllemsen@remedy.nl>
 
         * TAO_IDL/TAO_IDL_ACE.mwc:
