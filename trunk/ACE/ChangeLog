@@ -1,3 +1,9 @@
+Fri Oct 30 18:46:03 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Added -DNDEBUG to CPPFLAGS when debug=0 is set.
+
 Thu Oct 29 21:45:30 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_pwd.h:
@@ -8,7 +14,7 @@ Thu Oct 29 21:45:30 UTC 2009  Olli Savia  <ops@iki.fi>
         * ace/os_include/os_time.h:
         * configure.ac:
         * m4/config_h.m4:
-          Removed references to ACE_HAS_BROKEN_CTIME and 
+          Removed references to ACE_HAS_BROKEN_CTIME and
           ACE_HAS_BROKEN_R_ROUTINES.
 
 Thu Oct 29 21:25:49 UTC 2009  Chris Cleeland  <cleeland@ociweb.com>
