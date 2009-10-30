@@ -266,11 +266,15 @@ endif
 INCLDIRS ?=
 DEFFLAGS ?=
 
+ifeq ($(debug),0)
+  DEFFLAGS        += -DNDEBUG
+endif
+
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)
 endif
 
-CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
+CPPFLAGS          += $(DEFFLAGS) $(INCLDIRS)
 
 # Define default extensions for IDL-generated files
 IDL_CLIENT_HDR_EXT ?= C.h
