@@ -30,7 +30,7 @@ class be_visitor_facet_ex_idl
   //   be_visitor_facet_ex_idl
   //
   // = DESCRIPTION
-  //   This is a concrete visitor to generate the 
+  //   This is a concrete visitor to generate the
   //   CIAO executor IDL for facets.
   //
   //
@@ -42,5 +42,5 @@ public:
   virtual int visit_provides (be_provides *node);
 };
 
-#endif /_BE_COMPONENT_FACET_EX_IDL_H_ */
+#endif /* _BE_COMPONENT_FACET_EX_IDL_H_ */
 
