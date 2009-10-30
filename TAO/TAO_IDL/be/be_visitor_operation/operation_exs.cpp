@@ -18,14 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           operation_exs,
-           "$Id$")
-
-// ************************************************************
-// Operation visitor for CIAO executor implementations
-// ************************************************************
-
 be_visitor_operation_exs::be_visitor_operation_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),

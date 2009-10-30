@@ -21,6 +21,9 @@ public:
             
   virtual ~be_uses (void);
   
+  // Non-virtual override of frontend method.
+  be_type *uses_type (void) const;
+  
   // Narrowing.
   DEF_NARROW_FROM_DECL(be_uses);
 

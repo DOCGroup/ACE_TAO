@@ -26,6 +26,14 @@ be_emits::~be_emits (void)
 {
 }
 
+be_eventtype *
+be_emits::emits_type (void) const
+{
+  return
+    be_eventtype::narrow_from_decl (
+      this->AST_Emits::emits_type ());
+}
+
 int
 be_emits::accept (be_visitor *visitor)
 {

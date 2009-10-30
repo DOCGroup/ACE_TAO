@@ -90,6 +90,14 @@ be_component::~be_component (void)
 {
 }
 
+be_component *
+be_component::base_component (void) const
+{
+  return
+    be_component::narrow_from_decl (
+      this->AST_Component::base_component ());
+}
+
 void
 be_component::redefine (AST_Interface *from)
 {

@@ -37,6 +37,14 @@ be_provides::~be_provides (void)
 {
 }
 
+be_type *
+be_provides::provides_type (void) const
+{
+  return
+    be_type::narrow_from_decl (
+      this->AST_Provides::provides_type ());
+}
+
 int
 be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
 {
@@ -98,7 +106,7 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
 
       int status =
         intf->traverse_inheritance_graph (
-          be_interface::facet_op_attr_decl_helper,
+          be_interface::op_attr_decl_helper,
           &os);
 
       if (status == -1)
@@ -300,7 +308,6 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
                 be_operation::narrow_from_decl (d);
                 
               be_visitor_operation_svs v (&ctx);
-              v.for_facets (true);
               v.scope (op_scope_);
               
               if (v.visit_operation (op) == -1)

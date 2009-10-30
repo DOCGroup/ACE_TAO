@@ -36,10 +36,8 @@ class be_visitor_component : public be_visitor_interface
 
 public:
   be_visitor_component (be_visitor_context *ctx);
-  // constructor
 
   ~be_visitor_component (void);
-  // destructor
 
   virtual int visit_attribute (be_attribute *node);
   // This is the only type of declaration a component may contain.

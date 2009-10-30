@@ -41,10 +41,6 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
-ACE_RCSID (be,
-           be_visitor_ccm_pre_proc,
-           "$Id$")
-
 const char *EXCEP_NAMES[] =
   {
     "AlreadyConnected",
@@ -64,8 +60,9 @@ const char *EXCEP_NAMES[] =
 const int N_EXCEPS = sizeof (EXCEP_NAMES) / sizeof (char *);
 be_exception *EXCEPS[N_EXCEPS];
 
-be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
+be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
+      be_visitor_context *ctx)
+  : be_visitor_component_scope (ctx),
     module_id_ ("Components"),
     cookie_ (0),
     already_connected_ (0),
