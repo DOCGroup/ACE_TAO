@@ -293,12 +293,13 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_ccm_pre_proc.cpp \
   be/be_visitor_component.cpp \
   be/be_visitor_component_fwd.cpp \
+  be/be_visitor_component_scope.cpp \
+  be/be_visitor_connector.cpp \
   be/be_visitor_constant.cpp \
   be/be_visitor_context.cpp \
   be/be_visitor_decl.cpp \
   be/be_visitor_enum.cpp \
   be/be_visitor_exception.cpp \
-  be/be_visitor_extended_port.cpp \
   be/be_visitor_factory.cpp \
   be/be_visitor_field.cpp \
   be/be_visitor_home.cpp \
@@ -398,12 +399,13 @@ noinst_HEADERS += \
   be_include/be_visitor_ccm_pre_proc.h \
   be_include/be_visitor_component.h \
   be_include/be_visitor_component_fwd.h \
+  be_include/be_visitor_component_scope.h \
+  be_include/be_visitor_connector.h \
   be_include/be_visitor_constant.h \
   be_include/be_visitor_context.h \
   be_include/be_visitor_decl.h \
   be_include/be_visitor_enum.h \
   be_include/be_visitor_exception.h \
-  be_include/be_visitor_extended_port.h \
   be_include/be_visitor_factory.h \
   be_include/be_visitor_field.h \
   be_include/be_visitor_home.h \
