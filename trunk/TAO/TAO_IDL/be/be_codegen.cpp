@@ -1895,9 +1895,9 @@ TAO_CodeGen::gen_export_file (const char *filename,
 
   const char *output_path =
     be_global->get_output_path (false, for_skel);
-    
+
   if (output_path != 0)
-    {  
+    {
       // Turn '\' and '\\' into '/'.
       char* i = const_cast<char*> (output_path);
 
@@ -1922,7 +1922,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
       file_str += output_path;
       file_str += '/';
     }
-    
+
   if (filename == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -3121,19 +3121,19 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
   this->gen_standard_include (
     this->ciao_exec_header_,
     "tao/LocalObject.h");
-  
+
   // Placeholder until we get real-world logic in place.
   bool dds_connector_seen = true;
-  
+
   if (dds_connector_seen)
-    {  
+    {
       *this->ciao_exec_header_ << be_nl;
-  
-      this->gen_standard_include (this->ciao_exec_header_,
-                                  "dds4ccm/impl/ndds/NDDS_Traits.h");
-  
-      this->gen_standard_include (this->ciao_exec_header_,
-                                  "dds4ccm/impl/ndds/Connector_T.h");
+
+//      this->gen_standard_include (this->ciao_exec_header_,
+//                                  "dds4ccm/impl/ndds/NDDS_Traits.h");
+
+//      this->gen_standard_include (this->ciao_exec_header_,
+//                                  "dds4ccm/impl/ndds/Connector_T.h");
 
       size_t const nfiles = idl_global->n_included_idl_files ();
 
@@ -3172,7 +3172,7 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
                           ts_hdr));
             }
         }
-    } 
+    }
 }
 
 void
