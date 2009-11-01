@@ -3160,9 +3160,9 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
           // Sanity check and then print.
           if (ts_hdr != 0)
             {
-              this->gen_standard_include (
-                this->ciao_exec_header_,
-                ts_hdr);
+//              this->gen_standard_include (
+//                this->ciao_exec_header_,
+//                ts_hdr);
             }
           else
             {
