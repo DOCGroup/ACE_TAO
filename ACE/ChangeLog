@@ -1,3 +1,8 @@
+Sun Nov  1 16:47:29 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Sig_Handler.cpp:
+          LynxOS 4.x supports SA_SIGINFO.
+
 Fri Oct 30 18:46:03 UTC 2009  Steven Stallion  <stallions@ociweb.com>
 
         * include/makeinclude/wrapper_macros.GNU:
