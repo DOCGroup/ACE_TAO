@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance_deployment_stub, dance_executionmanager_stub {
-  includes += $(CIAO_ROOT)/DAnCE/ExecutionManager
-  libs     += CIAO_ExecutionManager_stub
-  after    += CIAO_ExecutionManager_stub
-}
