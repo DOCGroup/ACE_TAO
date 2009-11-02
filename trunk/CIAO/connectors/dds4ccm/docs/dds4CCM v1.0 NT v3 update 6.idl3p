@@ -1,3 +1,5 @@
+// $Id$
+
 #include "dds_rtf2_dcps.idl"
 
 module CCM_DDS {
@@ -13,7 +15,7 @@ module CCM_DDS {
 	typedef sequence<InstanceNumber_t>	InstanceNumberSeq;
 
 	enum AccessStatus {
-		FRESH_INFO,	
+		FRESH_INFO,
 		ALREADY_SEEN
 		};
 
@@ -25,7 +27,7 @@ module CCM_DDS {
 		INSTANCE_DELETED
 		};
 
-	struct ReadInfo {	
+	struct ReadInfo {
 		DDS::InstanceHandle_t	instance_handle;
 		DDS::Time_t				source_timestamp;
 		AccessStatus			access_status;
@@ -38,14 +40,14 @@ module CCM_DDS {
 		string 				query;
 		DDS::StringSeq		query_parameters;
 		};
-	
+
 	// Data Listener control
 	// ---------------------
 	enum ListenerMode {
 		NOT_ENABLED,
 		ONE_BY_ONE,
 		MANY_BY_MANY
-		};		
+		};
 
 	// ----------
 	// Exceptions
@@ -60,27 +62,27 @@ module CCM_DDS {
 
 	exception InternalError{
 		unsigned long error_code;	// DDS codes that are relevant:
-									// ERROR (1); 
-									// UNSUPPORTED (2); 
+									// ERROR (1);
+									// UNSUPPORTED (2);
 									// BAD_PARAMETER (3)
 									// PRECONDITION_NOT_MET (4)
 									// OUT_OF_RESOURCE (5)
 		InstanceNumber_t index;		// of the erroneous
 		};
-		
+
 	exception BadParameter {};
-	
+
 	// ----------
 	// Interfaces
 	// ----------
-	
+
 	// Listener Control
-	// ----------------		
+	// ----------------
 	local interface DataListenerControl {
 		attribute ListenerMode 		mode;					// default NOT_ENABLED
 		attribute InstanceNumber_t 	max_delivered_samples	// default 0 (no limit)
 		};
-		
+
 	local interface StateListenerControl : dataListenerControl {
 		attribute boolean 			is_filter_interpreted;	// default False
 		};
@@ -92,31 +94,31 @@ module CCM_DDS {
 			in DDS::DataReader						the_reader,
 			in DDS::RequestedDeadlineMissedStatus	status);
 		void on_sample_lost(
-			in DDS::DataReader						the_reader, 
+			in DDS::DataReader						the_reader,
 			in DDS::SampleLostStatus				status);
 		};
 
 	local interface ConnectorStatusListener { // status that are relevant system-wide
 		void on_inconsistent_topic(
-			in DDS::Topic							the_topic, 
+			in DDS::Topic							the_topic,
 			in DDS::InconsistentTopicStatus			status);
 		void on_requested_incompatible_qos(
 			in DDS::DataReader 						the_reader,
 			in DDS::RequestedIncompatibleQosStatus	status);
 		void on_sample_rejected(
-			in DDS::DataReader 						the_reader, 
+			in DDS::DataReader 						the_reader,
 			in DDS::SampleRejectedStatus 			status);
 		void on_offered_deadline_missed(
-			in DDS::DataWriter 						the_writer, 
+			in DDS::DataWriter 						the_writer,
 			in DDS::OfferedDeadlineMissedStatus 	status);
 		void on_offered_incompatible_qos(
-			in DDS::DataWriter 						the_writer, 
+			in DDS::DataWriter 						the_writer,
 			in DDS::OfferedIncompatibleQosStatus 	status);
 		void on_unexpected_status (
 			in DDS::Entity 							the_entity,
 			in DDS::StatusKind						status_kind);
 		};
-		
+
 	// ---------------
 	// Connector bases
 	// ---------------
@@ -130,26 +132,26 @@ module CCM_DDS {
 		readonly attribute string			topic_name;
 		readonly attribute DDS::StringSeq	key_fields;
 		};
-	
+
 	// ====================================================================================
-	// Typed sub-part 
+	// Typed sub-part
 	//	(here are placed all the construct that are depending on the data type
 	//	 either directly or indirectly)
 	// ====================================================================================
-	
-	module Typed <typename T, sequence<T> TSeq> {	
+
+	module Typed <typename T, sequence<T> TSeq> {
 	// Gathers all the constructs that are dependent on the data type (T),
-	// either directly -- interfaces making use of T or TSeq, 
+	// either directly -- interfaces making use of T or TSeq,
 	// or indirectly -- porttypes using or providing those intefaces.
 	// TSeq is passed as a second parameter to avoid creating a new sequence type.
-	
+
 		// -------------------------------------
 		// Interfaces to be 'used' or 'provided'
 		// -------------------------------------
 
 		// Data access - publishing side
 		// -----------------------------
-			
+
 		// -- InstanceHandle Manager
 		local interface HandleInstanceManager {
 			DDS::InstanceHandle_t register_instance (in T an_Instance);
@@ -167,35 +169,35 @@ module CCM_DDS {
 			// ---------
 			// - the handle is exactly managed as by DDS (cf. DDS spec for more details)
 			// - attempt to write_many is stopped at the first error
-			// - if is_coherent_write, DDS write orders issued by a write_many 
+			// - if is_coherent_write, DDS write orders issued by a write_many
 			//	 are placed between begin/end coherent updates (even if an error occurs)
 			};
-		
+
 		// -- Updater: when the instance lifecycle is a concern
 		local interface Updater : HandleInstanceManager {
-			void create_one (in DDS::InstanceHandle_t a_handle, in T an_instance) 
+			void create_one (in DDS::InstanceHandle_t a_handle, in T an_instance)
 				raises (AlreadyCreated,
 					InternalError);
-			void update_one (in DDS::InstanceHandle_t a_handle, in T an_instance) 
+			void update_one (in DDS::InstanceHandle_t a_handle, in T an_instance)
 				raises (NonExistent,
 					InternalError);
 			void delete_one (in DDS::InstanceHandle_t a_handle, in T an_instance)
 				raises (NonExistent,
 					InternalError);
-					
-			void create_many (in TSeq instances) 
+
+			void create_many (in TSeq instances)
 				raises (AlreadyCreated,
 					InternalError);
 			void update_many (in TSeq instances)
 				raises (NonExistent,
 					InternalError);
-			void delete_many (in TSeq instances) 
+			void delete_many (in TSeq instances)
 				raises (NonExistent,
 					InternalError);
-					
+
 			readonly attribute boolean is_global_scope;			// False by defauls
 			attribute boolean is_coherent_write;				// False by default
-			
+
 			// behavior
 			// --------
 			// - the handle is exactly managed as by DDS (cf. DDS spec for more details)
