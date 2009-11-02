@@ -18,6 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_MonitorManager::TAO_MonitorManager (void)
   : run_ (false)
+  , initialized_ (false)
 {
 }
 
@@ -85,6 +86,9 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
 
   // Force the ARGV_T to copy the elements added by the add() method
   this->task_.argv_.argv ();
+  
+  // Rember that Monitor has been configured
+  this->initialized_ = true;
   return 0;
 }
 
@@ -121,7 +125,7 @@ TAO_MonitorManager::run (void)
                                   task_.argv_.argv (),
                                   task_.mc_orb_name_.c_str ());
 
-    if (!this->run_)
+    if (!this->run_ && this->initialized_)
       {
         this->run_ = true;
         activate = true;

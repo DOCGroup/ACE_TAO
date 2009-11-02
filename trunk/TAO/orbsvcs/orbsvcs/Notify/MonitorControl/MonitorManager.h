@@ -58,6 +58,7 @@ private:
   };
 
   bool run_;
+  bool initialized_;
   ORBTask task_;
 };
 
