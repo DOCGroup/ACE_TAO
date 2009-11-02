@@ -991,7 +991,7 @@ strsignal_test (void)
 
   const char* result = 0;
 
-  for (int i=0; i < (ACE_NSIG + 1); ++i)
+  for (int i=-1; i < (ACE_NSIG + 1); ++i)
     {
       result = ACE_OS::strsignal (i);
       if (result == 0)
