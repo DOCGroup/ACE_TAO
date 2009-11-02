@@ -184,7 +184,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>false</boolean>
+          <boolean>true</boolean>
         </value>
       </value>
     </configProperty>
@@ -206,6 +206,17 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Square</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Shapes_ConnectorComponentInstance2">
     <name>Shapes_ConnectorComponent2</name>

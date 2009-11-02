@@ -370,9 +370,11 @@ void
 Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::ccm_activate (void)
 {
   if (!CORBA::is_nil (this->context_->get_connection_info_out_listener ()) ||
-      !CORBA::is_nil (this->context_->get_connection_info_out_status ()))
+     (!CORBA::is_nil (this->context_->get_connection_info_out_status () )))
     {
       this->configure_port_info_out_ (false);
+      this->configure_port_info_out_ (true);
+      this->configure_port_info_in_ ();
     }
 }
 

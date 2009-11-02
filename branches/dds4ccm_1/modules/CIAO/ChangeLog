@@ -1,3 +1,29 @@
+Mon Nov  2 12:37:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
+          Realingment.
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Implemented framework PortStatusListener. 
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resize shape can be set in Deployment plan.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/USER_QOS_PROFILES.xml:
+          Resize shape made available. Also set Qos settings for DDS exactly these
+          same as in the DDS demo.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+          Minor changes.
+
 Thu Oct 29 14:42:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:

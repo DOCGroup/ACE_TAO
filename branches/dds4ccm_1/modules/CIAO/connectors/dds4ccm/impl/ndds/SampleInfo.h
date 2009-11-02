@@ -47,10 +47,13 @@ operator<<= (::CCM_DDS::ReadInfoSeq & ccm_dds_readinfo_seq, const ::DDS_SampleIn
   ccm_dds_readinfo_seq.length(sample_info.length ());
   for (CORBA::ULong i = 0; i < (CORBA::ULong)sample_info.length(); i++)
     {
-      ccm_dds_readinfo_seq[i].timestamp <<= sample_info[i].reception_timestamp;
-      ccm_dds_readinfo_seq[i].access_status <<= sample_info[i].sample_state;
-      ccm_dds_readinfo_seq[i].instance_status <<= sample_info[i].instance_state;
-      ccm_dds_readinfo_seq[i].instance_rank = sample_info[i].sample_rank;
+      if (sample_info[i].valid_data)
+        {
+          ccm_dds_readinfo_seq[i].timestamp <<= sample_info[i].reception_timestamp;
+          ccm_dds_readinfo_seq[i].access_status <<= sample_info[i].sample_state;
+          ccm_dds_readinfo_seq[i].instance_status <<= sample_info[i].instance_state;
+          ccm_dds_readinfo_seq[i].instance_rank = sample_info[i].sample_rank;
+        }
     }
 }
 

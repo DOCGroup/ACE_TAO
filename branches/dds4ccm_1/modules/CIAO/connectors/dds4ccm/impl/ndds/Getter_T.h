@@ -61,6 +61,10 @@ namespace CIAO
         DDSGuardCondition*  gd_;
         DDSWaitSet* ws_;
         DDSReadCondition* rd_condition_;
+
+        bool
+        wait (
+          DDSConditionSeq& active_conditions);
       };
     }
   }

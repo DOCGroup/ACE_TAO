@@ -22,7 +22,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
 
     ACE_NEW_NORETURN (
       retval,
-      Shapes_Connector_exec_i ("Square"));
+      Shapes_Connector_exec_i ("Default_Topic_Name")); //should be set by dep. plan.
 
     return retval;
   }

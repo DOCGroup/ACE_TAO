@@ -116,7 +116,34 @@ namespace CIAO_Shape_Receiver_Impl
       const ShapeType & an_instance,
       const ::CCM_DDS::ReadInfo & info);
   };
-  
+
+  class RECEIVER_EXEC_Export PortStatusListener_exec_i
+    : public virtual ::CCM_DDS::CCM_PortStatusListener,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    PortStatusListener_exec_i (void);
+    virtual ~PortStatusListener_exec_i (void);
+    
+    // Operations and attributes from ::CCM_DDS::PortStatusListener
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    on_requested_deadline_missed (
+      ::DDS::DataReader_ptr the_reader,
+      const ::DDS::RequestedDeadlineMissedStatus & status);
+    
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void
+    on_sample_lost (
+      ::DDS::DataReader_ptr the_reader,
+      const ::DDS::SampleLostStatus & status);
+  };
+
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject

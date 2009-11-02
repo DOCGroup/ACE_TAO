@@ -182,11 +182,11 @@ namespace CIAO_Shapes_Sender_Impl
     CORBA::UShort max_x_;
     CORBA::UShort max_y_;
     CORBA::UShort max_size_;
+    CORBA::Boolean resize_;
     
     bool x_increasing_;
     bool y_increasing_;
     bool size_increasing_;
-    bool resize_;
     
     ShapeType* square_;
   };

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- 
 
 Description
@@ -36,7 +36,7 @@ RTI Data Distribution Service user manual.
           </max_blocking_time>
         </reliability>
         <durability>
-          <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          <kind>TRANSIENT_DURABILITY_QOS</kind>
         </durability>
         <history>
           <kind>KEEP_LAST_HISTORY_QOS</kind>

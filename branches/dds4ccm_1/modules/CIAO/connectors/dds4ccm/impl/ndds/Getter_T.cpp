@@ -16,7 +16,6 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr r
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
 
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
-
   if (rdr == 0)
     {
       CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
@@ -25,8 +24,8 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr r
     }
 
   this->impl_ =  NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
-  
-  if (!this->impl_)
+
+  if (this->impl_ == 0)
     {
       CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
                    "Unable to narrow the provided writer entity to the specific "
@@ -41,10 +40,16 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr r
                                                      DDS_ANY_INSTANCE_STATE);
   DDS_ReturnCode_t retcode = ws_->attach_condition (gd_);
   if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR ((LM_ERROR, CLINFO "GETTER:Unable to attach guard condition to waitset.\n"));
       throw CCM_DDS::InternalError (retcode, 0);
+    }
   retcode = ws_->attach_condition (rd_condition_);
   if (retcode != DDS_RETCODE_OK)
+    {
+      CIAO_ERROR ((LM_ERROR, CLINFO "GETTER: Unable to attach read condition to waitset.\n"));
       throw CCM_DDS::InternalError (retcode, 1);
+    }
 }
 
 // Implementation skeleton destructor
@@ -53,6 +58,25 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::~Getter_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::~Getter_T");
   delete ws_;
+  delete gd_;
+}
+
+template <typename NDDS_TYPE, typename BASE >
+bool
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::wait (
+          DDSConditionSeq& active_conditions)
+{
+  DDS_Duration_t timeout;
+  timeout<<=this->time_out_;
+  
+  DDS_ReturnCode_t retcode = ws_->wait (active_conditions, timeout);
+  
+  if (retcode == DDS_RETCODE_TIMEOUT)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));
+      return false;
+    }
+  return true;
 }
 
 template <typename NDDS_TYPE, typename BASE >
@@ -72,9 +96,14 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_all_history (
           typename NDDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
+  DDSConditionSeq active_conditions;
+  DDS_SampleInfoSeq sample_info;
+  if (!this->wait (active_conditions))
+    return false;
+
   ACE_UNUSED_ARG (instances);
   ACE_UNUSED_ARG (infos);
-  return true;
+  return false;
 }
 
 template <typename NDDS_TYPE, typename BASE >
@@ -85,14 +114,8 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
 {
   DDSConditionSeq active_conditions;
   DDS_SampleInfoSeq sample_info;
-  DDS_Duration_t timeout;
-  timeout<<=this->time_out_;
-  DDS_ReturnCode_t retcode = ws_->wait (active_conditions, timeout);
-  if (retcode == DDS_RETCODE_TIMEOUT)
-    {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));
-      return false;
-    }
+  if (!this->wait (active_conditions))
+    return false;
   typename NDDS_TYPE::dds_seq_type data;
   for (int i = 0; i < active_conditions.length(); i++)
     {
@@ -107,33 +130,38 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
         {
           // Check trigger
           if (active_conditions[i]->get_trigger_value() )
-          {
-            printf("wait condition trigger was set.\n");
-          }
+            {
+              printf("wait condition trigger was set.\n");
+            }
 
           // Take read condition
           printf("##### GETTER START READ\n");
-          retcode = this->impl_->read (data,
+          DDS_ReturnCode_t retcode = this->impl_->read (data,
                                     sample_info,
                                     DDS_LENGTH_UNLIMITED,
-                                    DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
-                                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                    DDS_ALIVE_INSTANCE_STATE);
+                                    DDS_NOT_READ_SAMPLE_STATE ,
+                                    DDS_ANY_VIEW_STATE,
+                                    DDS_ANY_INSTANCE_STATE);
 
-          if (retcode == DDS_RETCODE_NO_DATA) {
-            throw CCM_DDS::InternalError (retcode, 1);
-          } else if (retcode != DDS_RETCODE_OK) {
+          if (retcode == DDS_RETCODE_NO_DATA) 
+            {
+              throw CCM_DDS::InternalError (retcode, 1);
+            } 
+          else if (retcode != DDS_RETCODE_OK) 
+            {
               CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
-                   "Unable to return the loan to DDS: <%d>\n", retcode));
-            break;
-          }
-          info <<= sample_info;
-          if (retcode == DDS_RETCODE_OK)
+                    "Unable to return the loan to DDS: <%d>\n", retcode));
+              break;
+            }
+          info <<= sample_info; //retrieves the last sample.
+          if (retcode == DDS_RETCODE_OK && data.length () >= 0)
             {
               an_instance = data[0];
             }
           else
-            throw CCM_DDS::InternalError (retcode, 1);
+            {
+              throw CCM_DDS::InternalError (retcode, 0);
+            }
 
           retcode = this->impl_->return_loan(data,sample_info);
           if (retcode != DDS_RETCODE_OK) 
@@ -141,7 +169,7 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
               printf("return loan error %d\n", retcode);
             }
         }
-    } // endif able to take w condition
+    }
   return true;
 }
 

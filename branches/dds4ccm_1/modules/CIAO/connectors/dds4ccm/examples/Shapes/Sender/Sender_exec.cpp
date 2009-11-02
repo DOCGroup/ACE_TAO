@@ -161,10 +161,10 @@ namespace CIAO_Shapes_Sender_Impl
       max_x_ (100),
       max_y_ (100),
       max_size_ (25),
+      resize_ (false),
       x_increasing_ (false),
       y_increasing_ (false),
-      size_increasing_ (false),
-      resize_ (false)
+      size_increasing_ (false)
   {
     square_ = new ShapeType;
     this->ticker_ = new pulse_Generator (*this);
@@ -309,6 +309,7 @@ namespace CIAO_Shapes_Sender_Impl
       ::CORBA::Boolean resize)
   {
     this->resize_ = resize;
+    printf ("SETTING resize : <%d>\n", this->resize_);
   }
 
   ::CORBA::Boolean

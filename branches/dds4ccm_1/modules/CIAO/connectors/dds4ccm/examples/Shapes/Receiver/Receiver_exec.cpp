@@ -128,8 +128,6 @@ namespace CIAO_Shape_Receiver_Impl
   read_action_Generator::handle_timeout (const ACE_Time_Value &,
                                    const void *)
   {
-    // Notify the subscribers
-    printf ("START NOTIFY SUBSCRIBERS\n");
     if (pulse_callback_.read_data ())
       {
         this->pulse_callback_.read_one();
@@ -181,6 +179,36 @@ namespace CIAO_Shape_Receiver_Impl
             an_instance.shapesize);
   }
   //============================================================
+  // Facet Executor Implementation Class: PortStatusListener_exec_i
+  //============================================================
+  
+  PortStatusListener_exec_i::PortStatusListener_exec_i (void)
+  {
+  }
+  
+  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
+  {
+  }
+  
+  // Operations from ::CCM_DDS::PortStatusListener
+  
+  void
+  PortStatusListener_exec_i::on_requested_deadline_missed (
+    ::DDS::DataReader_ptr /* the_reader */,
+    const ::DDS::RequestedDeadlineMissedStatus & /* status */)
+  {
+    /* Your code here. */
+  }
+  
+  void
+  PortStatusListener_exec_i::on_sample_lost (
+    ::DDS::DataReader_ptr /* the_reader */,
+    const ::DDS::SampleLostStatus & /* status */)
+  {
+   
+  }
+  
+  //============================================================
   // Component Executor Implementation Class: Receiver_exec_i
   //============================================================
   
@@ -203,7 +231,7 @@ namespace CIAO_Shape_Receiver_Impl
    {
     printf ("read_one\n");
     ShapeType  shape_info;
-    shape_info.color = "IBM";
+    shape_info.color = "yellow";
     ::CCM_DDS::ReadInfo readinfo;
 
     try
@@ -269,19 +297,25 @@ namespace CIAO_Shape_Receiver_Impl
 
     try
       {
-        this->getter_->get_one (shape_info, readinfo );
-        time_t tim = readinfo.timestamp.sec;
-        tm* time = localtime(&tim);
-        printf("GET_ONE ReadInfo -> date = %02d:%02d:%02d.%d\n",
-                            time->tm_hour,
-                            time->tm_min,
-                            time->tm_sec,
-                            readinfo.timestamp.nanosec);
-        printf ("GET_ONE ShapeType : received shape_info for <%s> at %u:%u:%u\n",
-            shape_info.color.in (),
-            shape_info.x,
-            shape_info.y,
-            shape_info.shapesize);
+        if (this->getter_->get_one (shape_info, readinfo ))
+          {
+            time_t tim = readinfo.timestamp.sec;
+            tm* time = localtime(&tim);
+            printf("GET_ONE ReadInfo -> date = %02d:%02d:%02d.%d\n",
+                                time->tm_hour,
+                                time->tm_min,
+                                time->tm_sec,
+                                readinfo.timestamp.nanosec);
+            printf ("GET_ONE ShapeType : received shape_info for <%s> at %u:%u:%u\n",
+                shape_info.color.in (),
+                shape_info.x,
+                shape_info.y,
+                shape_info.shapesize);
+          }
+        else
+          {
+            printf ("GET_ONE No data available for <%s>\n", shape_info.color.in ());
+          }
     }
     catch(CCM_DDS::NonExistent& )
     {
@@ -343,15 +377,15 @@ namespace CIAO_Shape_Receiver_Impl
   ::CCM_DDS::CCM_ShapeType_RawListener_ptr
   Receiver_exec_i::get_info_out_listener (void)
   {
-    printf ("*************** out listener\n");
+    printf ("*************** new ShapeType RAW listener\n");
     return new ShapeType_RawListener_exec_i ();
   }
   
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    /* Your code here. */
-    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+    printf ("*************** new Port Status listener\n");
+    return new PortStatusListener_exec_i ();
   }
   
   // Operations from Components::SessionComponent.
