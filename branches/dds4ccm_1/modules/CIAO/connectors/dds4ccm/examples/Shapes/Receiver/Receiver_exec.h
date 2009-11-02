@@ -46,7 +46,7 @@
 #include "ace/Task.h"
 #include "ace/Reactor.h"
 
-namespace CIAO_Shape_Receiver_Impl
+namespace CIAO_Shapes_Receiver_Impl
 {
   class Receiver_exec_i;
   /**
@@ -200,7 +200,7 @@ namespace CIAO_Shape_Receiver_Impl
     virtual void ccm_remove (void);
   
   private:
-    ::Shape::CCM_Receiver_Context_var context_;
+    ::Shapes::CCM_Receiver_Context_var context_;
     ::CCM_DDS::ShapeType_Reader_var reader_;
     ::CCM_DDS::ShapeType_Getter_var getter_;
     

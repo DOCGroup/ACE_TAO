@@ -33,7 +33,7 @@
 #include "Receiver_exec.h"
 #include "ciao/CIAO_common.h"
 
-namespace CIAO_Shape_Receiver_Impl
+namespace CIAO_Shapes_Receiver_Impl
 {
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : active_ (0),
@@ -72,7 +72,7 @@ namespace CIAO_Shape_Receiver_Impl
     }
 
     // calculate the interval time
-    long usec = 1000 / hertz;
+    long usec = 1000000 / hertz;
 
     std::cerr << "Starting read_action_generator with hertz of " << hertz << ", interval of "
               << usec << std::endl;
@@ -231,7 +231,7 @@ namespace CIAO_Shape_Receiver_Impl
    {
     printf ("read_one\n");
     ShapeType  shape_info;
-    shape_info.color = "yellow";
+    shape_info.color = "GREEN";
     ::CCM_DDS::ReadInfo readinfo;
 
     try
@@ -395,8 +395,7 @@ namespace CIAO_Shape_Receiver_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Shape::CCM_Receiver_Context::_narrow (ctx);
-    
+      ::Shapes::CCM_Receiver_Context::_narrow (ctx);
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
@@ -406,14 +405,32 @@ namespace CIAO_Shape_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
-    this->getter_ = this->context_->get_connection_info_get_out_data();
-    this->ticker_->activate ();
+    if (this->read_data ())
+      {
+        this->reader_ = this->context_->get_connection_info_out_data();
+      }
+    if (this->get_data ())
+      {
+        this->getter_ = this->context_->get_connection_info_get_out_data();
+      }
   }
   
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    ::CCM_DDS::ListenerControl_var lc = 
+    this->context_->get_connection_info_out_control ();
+
+    if (CORBA::is_nil (lc.in ()))
+    {
+      printf ("Error:  Listener control receptacle is null!\n");
+      throw CORBA::INTERNAL ();
+    }
+    //in case of testing RawListener set lc-> enabled true
+    // lc->enabled (true);
+    //in case of testing Reader set lc-> enabled false, so the RawListener doesn't consume all the messages 
+    lc->enabled (true);
+    
     this->ticker_->start (this->rate_);
   }
   
@@ -430,7 +447,7 @@ namespace CIAO_Shape_Receiver_Impl
   }
   
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Shape_Receiver_Impl (void)
+  create_Shapes_Receiver_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();

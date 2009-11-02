@@ -19,7 +19,7 @@
           <kind>tk_string</kind>
 	</type>
 	<value>
-          <string>create_Shape_Receiver_Impl</string>
+          <string>create_Shapes_Receiver_Impl</string>
 	</value>
       </value>
     </execParameter>
@@ -30,7 +30,7 @@
           <kind>tk_string</kind>
 	</type>
 	<value>
-          <string>create_Shape_Receiver_Servant</string>
+          <string>create_Shapes_Receiver_Servant</string>
 	</value>
       </value>
     </execParameter>
@@ -184,7 +184,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>true</boolean>
+          <boolean>false</boolean>
         </value>
       </value>
     </configProperty>

@@ -1,3 +1,13 @@
+Mon Nov  2 18:35:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Resolved typo. Also extended with connection to ListenControl.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Changed due to previous typos.
+
 Mon Nov  2 12:37:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
@@ -6,7 +16,7 @@ Mon Nov  2 12:37:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
-          Implemented framework PortStatusListener. 
+          Implemented framework PortStatusListener.
 
         * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
         * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:

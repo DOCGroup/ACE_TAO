@@ -11,12 +11,13 @@
 #include "Connector/Shapes_Connector.idl3"
 #include "Connector/Shapes_ConnectorE.idl"
 
-module Shape
+module Shapes
 {
   component Receiver
   {
     uses CCM_DDS::ShapeType_Reader info_out_data;
     uses CCM_DDS::ShapeType_Getter info_get_out_data;
+    uses CCM_DDS::ListenerControl info_out_control;
     provides CCM_DDS::ShapeType_RawListener info_out_listener;
     provides CCM_DDS::PortStatusListener info_out_status;
     attribute unsigned long rate;
