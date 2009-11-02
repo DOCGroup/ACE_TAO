@@ -1,3 +1,9 @@
+Mon Nov  2 08:36:24 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/Sig_Handler.cpp:
+          Removed setting of SA_SIGINFO flag. It should not be used
+          with POSIX.1 signal handler (sa_handler).
+
 Sun Nov  1 16:47:29 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/Sig_Handler.cpp:
