@@ -20,32 +20,28 @@ ACE_Addr::operator != (const ACE_Addr &sap) const
           sap.addr_size_ != this->addr_size_   );
 }
 
-// Return the size of the address.
-
+/// Return the size of the address.
 ACE_INLINE int
 ACE_Addr::get_size (void) const
 {
   return this->addr_size_;
 }
 
-// Sets the size of the address.
-
+/// Sets the size of the address.
 ACE_INLINE void
 ACE_Addr::set_size (int size)
 {
   this->addr_size_ = size;
 }
 
-// Return the type of the address.
-
+/// Return the type of the address.
 ACE_INLINE int
 ACE_Addr::get_type (void) const
 {
   return this->addr_type_;
 }
 
-// Set the type of the address.
-
+/// Set the type of the address.
 ACE_INLINE void
 ACE_Addr::set_type (int type)
 {

@@ -1,3 +1,14 @@
+Mon Nov  2 13:45:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/RW_Process_Mutex.h:
+        * ace/Default_Constants.h:
+          Added ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS with which the end user
+          can override the default permissions
+
+        * ace/Addr.inl:
+        * ace/MMAP_Memory_Pool.cpp:
+          Doxygen changes
+
 Mon Nov  2 08:52:05 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:
