@@ -1,3 +1,10 @@
+Mon Nov  2 16:54:24 UTC 2009  Steven Stallion  <stallions@ociweb.com>
+
+        * tests/RTCORBA/Bug_3643_Regression/test_i.cpp:
+
+          Dropped spurious use of NDEBUG; tests should not predicate debug
+          logging based on the (lack of) presence of NDEBUG.
+
 Fri Oct 30 16:25:53 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3755_Regression/orb1_svc.conf:
