@@ -30,7 +30,6 @@ test_i::method (CORBA::Long client_id,
   TAO_Thread_Lane *lane =
     static_cast <TAO_Thread_Lane *> (tss->lane_);
 
-#ifndef NDEBUG  
   if (lane)
     ACE_DEBUG ((LM_DEBUG,
                 "Request in thread %t (pool id = %d; lane id = %d) for client %d iteration %d\n",
@@ -43,8 +42,7 @@ test_i::method (CORBA::Long client_id,
                 "Request in thread %t (default thread pool) for client %d iteration %d\n",
                 client_id,
                 iteration));
-#endif // NDEBUG
-  
+
   ACE_OS::sleep (this->nap_time_);
 
   if (lane)
