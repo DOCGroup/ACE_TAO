@@ -455,7 +455,7 @@ namespace CIAO
             }
         }
 
-      if (info == 0)
+      if (!info)
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
                        "CIAO_ServerActivator_i::remove_component_server - "
