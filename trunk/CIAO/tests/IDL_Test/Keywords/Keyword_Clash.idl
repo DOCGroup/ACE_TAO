@@ -29,7 +29,27 @@ module static
       interface virtual
       {
       };
-      
+
+      interface _port
+      {
+      };
+
+      interface _alias
+      {
+      };
+
+      interface _mirrorport
+      {
+      };
+
+      interface _porttype
+      {
+      };
+
+      interface _connector
+      {
+      };
+
       eventtype _eventtype
       {
         private virtual _public;
@@ -54,23 +74,23 @@ module _component
     provides _interface::_attribute _local;
     provides _oneway else;
     provides static::_readonly::protected::virtual while;
-    
+
     attribute long _abstract;
-    
+
     uses multiple _interface::_attribute if;
     uses multiple _oneway mutable;
     uses multiple static::_readonly::protected::virtual register;
-    
+
     uses _interface::_attribute _union;
     uses _oneway _struct;
     uses static::_readonly::protected::virtual volatile;
-    
+
     publishes _eventtype _object;
     publishes static::_readonly::protected::_eventtype do;
-    
+
     consumes _eventtype _const;
     consumes static::_readonly::protected::_eventtype const_cast;
-    
+
     emits _eventtype class;
     emits static::_readonly::protected::_eventtype delete;
   };
@@ -81,7 +101,7 @@ module _component
     catch (
         inout static::_readonly::protected::_eventtype try)
       raises (_interface::_attribute::_inout);
-      
+
     finder continue (in _interface::_attribute _inout);
   };
 };
