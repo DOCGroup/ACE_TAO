@@ -1,3 +1,18 @@
+Tue Nov  3 17:32:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_init.cpp:
+        
+          Added IDL3+ keywords to the list used to check for clashes
+          and leading underscore retention.
+          
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Added creation of uses multiple-specific struct and sequence
+          nodes in the AST when the uses multiple port
+          appears in an extended port declaration, identically to what
+          is now added for a standalone uses multiple port.
+
 Mon Nov  2 22:59:48 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:

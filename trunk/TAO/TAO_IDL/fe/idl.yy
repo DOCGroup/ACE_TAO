@@ -6377,7 +6377,7 @@ extended_port_decl
 template_port_decl
         : IDL_PORT template_inst IDENTIFIER
         {
-// extended_port_decl : IDL_PORT template_inst IDENTIFIER
+// template_port_decl : IDL_PORT template_inst IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name ($2->name_, true);
@@ -6548,6 +6548,25 @@ non_template_port_decl
                   0);
 
               (void) s->fe_add_extended_port (ep);
+              
+              // Create (in the AST) the struct(s) and sequence(s)
+              // needed for multiplex uses ports, if any.
+              for (UTL_ScopeActiveIterator i (pt, UTL_Scope::IK_decls);
+                   !i.is_done ();
+                   i.next ())
+                {
+                  d = i.item ();
+                  
+                  AST_Uses *u = AST_Uses::narrow_from_decl (d);
+                  
+                  if (u != 0 && u->is_multiple ())
+                    {
+                      AST_Component *c =
+                        AST_Component::narrow_from_scope (s);
+                        
+                      idl_global->create_uses_multiple_stuff (c, u);
+                    }
+                }
             }
 
           $2->destroy ();
