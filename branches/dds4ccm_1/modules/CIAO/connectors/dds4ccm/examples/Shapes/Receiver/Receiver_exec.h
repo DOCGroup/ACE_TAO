@@ -179,7 +179,16 @@ namespace CIAO_Shapes_Receiver_Impl
     virtual void
     read_data (
       ::CORBA::Boolean read_data);
+    
+    virtual ::CORBA::Boolean
+    raw_listen (void);
+    
+    virtual void
+    raw_listen (
+      ::CORBA::Boolean raw_listen);
     // Port operations.
+    
+    
     
     virtual ::CCM_DDS::CCM_ShapeType_RawListener_ptr
     get_info_out_listener (void);
@@ -206,7 +215,7 @@ namespace CIAO_Shapes_Receiver_Impl
     
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
-    CORBA::Boolean get_data_, read_data_;
+    CORBA::Boolean get_data_, read_data_, raw_listen_;
   };
   
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

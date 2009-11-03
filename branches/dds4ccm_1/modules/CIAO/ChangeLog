@@ -1,3 +1,15 @@
+Tue Nov  3 15:02:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Enabled rawlistener. Also created a flag to turn this on/off using
+          the deployment plan.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Added ability to turn on/off raw listener. Also created connections
+          to enable raw listen.
+
 Mon Nov  2 18:35:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:

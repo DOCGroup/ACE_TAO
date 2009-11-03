@@ -209,13 +209,14 @@ namespace CIAO_Shapes_Receiver_Impl
   }
   
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_i
+  // Component Executor Implementation Class: Receiver_exec_iShapeType_RawListener_exec_i ();
   //============================================================
   
   Receiver_exec_i::Receiver_exec_i (void)
     : rate_ (0),
       get_data_ (true),
-      read_data_ (true)
+      read_data_ (true),
+      raw_listen_ (false)
     
   {
     this->ticker_ = new read_action_Generator (*this);
@@ -372,6 +373,21 @@ namespace CIAO_Shapes_Receiver_Impl
     printf ("SETTING read_data : <%d>\n", read_data);
   }
 
+
+  ::CORBA::Boolean
+  Receiver_exec_i::raw_listen (void)
+  {
+    return this->raw_listen_;
+  }
+  
+  void
+  Receiver_exec_i::raw_listen (
+    ::CORBA::Boolean raw_listen)
+  {
+    this->raw_listen_ = raw_listen;
+    printf ("SETTING raw_listen : <%d>\n", raw_listen_);
+  }
+
   // Port operations.
   
   ::CCM_DDS::CCM_ShapeType_RawListener_ptr
@@ -429,7 +445,7 @@ namespace CIAO_Shapes_Receiver_Impl
     //in case of testing RawListener set lc-> enabled true
     // lc->enabled (true);
     //in case of testing Reader set lc-> enabled false, so the RawListener doesn't consume all the messages 
-    lc->enabled (true);
+    lc->enabled (this->raw_listen_);
     
     this->ticker_->start (this->rate_);
   }
