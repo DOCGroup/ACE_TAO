@@ -32,7 +32,7 @@ namespace CIAO
 {
   class Container;
   typedef Container *Container_ptr;
-  
+
 
   /**
    * @class Home_Servant_Impl
@@ -57,23 +57,18 @@ namespace CIAO
     virtual ~Home_Servant_Impl (void);
 
     // Operations for CCMHome interface.
-
     virtual void remove_component (Components::CCMObject_ptr comp);
 
     // Operations for keyless home interface.
-
     virtual ::Components::CCMObject_ptr create_component ();
 
     // Operations for implicit home interface.
-
     virtual typename COMP_SVNT::_stub_ptr_type create ();
 
-    virtual void
-    update_component_map (PortableServer::ObjectId &oid);
+    virtual void update_component_map (PortableServer::ObjectId &oid);
 
   protected:
     // CIAO-specific operations.
-
     typename COMP_SVNT::_stub_ptr_type
     _ciao_activate_component (typename COMP_SVNT::_exec_type::_ptr_type exe);
 
@@ -94,7 +89,7 @@ namespace CIAO
     typedef OBJREF_MAP::iterator OBJ_ITERATOR;
 
     OBJREF_MAP objref_map_;
-    
+
     ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
   };
 }
