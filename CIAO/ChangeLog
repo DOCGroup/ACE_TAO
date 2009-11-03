@@ -1,3 +1,9 @@
+Tue Nov  3 13:54:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/extension/*:
+          Removed this from svn head for the moment. We don't support QoS4CCM at all
+          at this moment, so let us only ship things we really need
+
 Tue Nov  3 13:41:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/CIAO_Port_Activator_export.h:
