@@ -9453,6 +9453,25 @@ tao_yyreduce:
                   0);
 
               (void) s->fe_add_extended_port (ep);
+              
+              // Create (in the AST) the struct(s) and sequence(s)
+              // needed for multiplex uses ports, if any.
+              for (UTL_ScopeActiveIterator i (pt, UTL_Scope::IK_decls);
+                   !i.is_done ();
+                   i.next ())
+                {
+                  d = i.item ();
+                  
+                  AST_Uses *u = AST_Uses::narrow_from_decl (d);
+                  
+                  if (u != 0 && u->is_multiple ())
+                    {
+                      AST_Component *c =
+                        AST_Component::narrow_from_scope (s);
+                        
+                      idl_global->create_uses_multiple_stuff (c, u);
+                    }
+                }
             }
 
           (tao_yyvsp[(2) - (3)].idlist)->destroy ();
