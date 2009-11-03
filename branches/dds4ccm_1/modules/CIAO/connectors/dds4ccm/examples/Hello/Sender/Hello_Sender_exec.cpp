@@ -122,14 +122,14 @@ namespace CIAO_Hello_DDS_Sender_Impl
     this->msg_ = msg;
   }
 
-  bool
+  ::CORBA::Boolean
   Sender_exec_i::log_time (void)
   {
     return this->log_time_;
   }
 
   void
-  Sender_exec_i::log_time (bool log_time)
+	  Sender_exec_i::log_time (::CORBA::Boolean log_time)
   {
     this->log_time_ = log_time;
   }

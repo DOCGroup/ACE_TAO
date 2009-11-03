@@ -1,3 +1,9 @@
+Tue Nov  3 15:42:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Resolved compiler errors on Windows.
+
 Tue Nov  3 15:02:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
