@@ -1,3 +1,9 @@
+Tue Nov  3 13:32:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Contexts/Swapping/*:
+          Removed from the archive, swapping containers don't work and it will be a major
+          job to reimplement this
+
 Tue Nov  3 13:29:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Swapping/*:
