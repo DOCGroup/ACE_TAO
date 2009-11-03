@@ -76,7 +76,7 @@ namespace CIAO
   COMPONENTSERVANTCREATOR_FUNCPTR_MAP;
 
 
-  struct Session_Container_Export Static_Config_EntryPoints_Maps
+  struct SESSION_CONTAINER_Export Static_Config_EntryPoints_Maps
   {
     /// Map of home creator entry point name and func ptr
     HOMECREATOR_FUNCPTR_MAP* home_creator_funcptr_map_;
@@ -91,7 +91,7 @@ namespace CIAO
     COMPONENTSERVANTCREATOR_FUNCPTR_MAP* component_servant_creator_funcptr_map_;
   };
 
-  class Session_Container_Export Session_Container : public Container_i
+  class SESSION_CONTAINER_Export Session_Container : public Container_i
   {
   public:
     Session_Container (CORBA::ORB_ptr o,
