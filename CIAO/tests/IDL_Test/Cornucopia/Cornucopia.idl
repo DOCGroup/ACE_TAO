@@ -72,6 +72,23 @@ enum Color
 
 module DerivedMod
 {
+  porttype CombinedPort
+  {
+    provides pface pface_provider;
+    uses uface uface_user;
+    uses multiple umface umface_umuser;
+  };
+
+  component CompCombinedPort
+  {
+    port CombinedPort cc;
+  };
+
+  component MirrorCompCombinedPort
+  {
+    mirrorport CombinedPort cc;
+  };
+
   component CompDerived : BaseMod::CompBase
   {
     attribute Color stripe;
