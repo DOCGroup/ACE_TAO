@@ -19,9 +19,6 @@ namespace CIAO
 {
   namespace Deployment
   {
-    class ComponentServer_Configurator;
-
-
     class ComponentServer_Task : ACE_Task_Base
     {
     public:
@@ -60,8 +57,6 @@ namespace CIAO
       ACE_CString uuid_;
       ACE_TString callback_ior_str_;
       ACE_TString output_file_;
-      auto_ptr<ComponentServer_Configurator> configurator_;
-
     };
   }
 }

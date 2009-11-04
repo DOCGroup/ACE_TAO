@@ -26,7 +26,7 @@ namespace CIAO
      * @class CIAO_Container
      * @brief Implements external interface for CIAO container.
      */
-    class CIAO_ComponentServer_svnt_Export CIAO_Container_i
+    class CIAO_COMPONENTSERVER_SVNT_Export CIAO_Container_i
       : public virtual POA_CIAO::Deployment::Container
     {
     public:

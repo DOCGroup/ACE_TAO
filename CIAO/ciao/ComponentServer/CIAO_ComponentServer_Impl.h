@@ -21,7 +21,7 @@ namespace CIAO
 {
   namespace Deployment
   {
-    class  CIAO_ComponentServer_svnt_Export CIAO_ComponentServer_i
+    class  CIAO_COMPONENTSERVER_SVNT_Export CIAO_ComponentServer_i
       : public virtual POA_CIAO::Deployment::ComponentServer
     {
     public:
