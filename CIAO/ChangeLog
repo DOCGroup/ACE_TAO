@@ -1,3 +1,10 @@
+Wed Nov  4 10:04:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/RT-CCM/*:
+          Removed from svn head, RTCCM isn't supported anymore. On the long
+          term we want to support RTCCM through the QoS4CCM spec, at that
+          moment we can revive this directory from svn
+
 Wed Nov  4 06:48:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
