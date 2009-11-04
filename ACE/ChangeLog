@@ -1,10 +1,15 @@
+Wed Nov  4 17:50:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Queue_Test.cpp:
+          Improved portability
+
 Wed Nov  4 14:51:00 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/Bug_3758_Regression_Test.cpp:
         * tests/OS_Test.cpp:
         * tests/run_test.lst:
         * tests/tests.mpc:
-          Moved regression test for 3758 to its own file. 
+          Moved regression test for 3758 to its own file.
 
 Wed Nov  4 11:39:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
