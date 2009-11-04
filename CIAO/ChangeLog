@@ -1,8 +1,24 @@
+Wed Nov  4 06:48:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+          Suppress skeleton files
+
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.cpp:
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.h:
+        * ciao/ComponentServer/Configurators/Config_Manager.h:
+          Layout changes
+
+        * ciao/ComponentServer/Configurators/RTNodeApp_Configurator.cpp:
+          Initialise pointer with 0
+
+        * ciao/ComponentServer/Configurators/RT/RT_Configurator.mpc:
+          New file
+
 Tue Nov  3 17:46:17 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Cornucopia/Cornucopia.idl:
         * tests/IDL_Test/Keywords/Keyword_Clash.idl:
-        
+
           Updated test IDL to included IDL3+ cases, sent by
           Johnny Willemsen <jwillemsen at remedy dot nl>.
 

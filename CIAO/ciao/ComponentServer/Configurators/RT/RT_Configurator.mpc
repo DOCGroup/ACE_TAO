@@ -1,0 +1,11 @@
+// $Id$
+project(RT_Configurator) : ccm_stub, ciao_componentserver_stub, ciao_lib  {
+  after += CIAO_Basic_Configurator
+  libs += CIAO_Basic_Configurator
+  dynamicflags = CIAO_RTNA_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    RTConfig_Manager.cpp
+  }
+}
+
+

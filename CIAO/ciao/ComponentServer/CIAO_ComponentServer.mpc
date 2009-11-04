@@ -22,8 +22,11 @@ project(CIAO_CS_Client_IDL) : ciaoidldefaults, anytypecode {
   custom_only=1
 
   IDL_Files {
-    CIAO_CS_Client.idl
     CIAO_Properties.idl
+    idlflags += -SS
+  }
+  IDL_Files {
+    CIAO_CS_Client.idl
   }
 }
 
