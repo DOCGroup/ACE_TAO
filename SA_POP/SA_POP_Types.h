@@ -3,50 +3,69 @@
 
 //=============================================================================
 /**
- * @file  SA_POP_Types.h
- *
- * This file contains the definitions of types used throughout SA-POP.
- *
- * @author  John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>
- */
+* @file  SA_POP_Types.h
+*
+* This file contains the definitions of types used throughout SA-POP.
+*
+* @author  John S. Kinnebrew <john.s.kinnebrew@vanderbilt.edu>
+*/
 //=============================================================================
 
 #ifndef SA_POP_TYPES_H_
 #define SA_POP_TYPES_H_
+
 
 #include <string>
 #include <set>
 #include <list>
 #include <map>
 #include <sstream>
+#include <iostream>
+
+#include "SA_POP_Utils.h"
 
 #if defined (SA_POP_HAS_ACE)
 #include "ace/Log_Msg.h"
 #include "ace/Log_Priority.h"
 #endif  /* SA_POP_HAS_ACE */
 
-#define SA_POP_DEBUG_NORMAL 5
-#define SA_POP_DEBUG_HIGH 10
 
+#define SA_POP_DEBUG_MINIMAL 2
+#define SA_POP_DEBUG_NORMAL 5
+#define SA_POP_DEBUG_VERBOSE 10
+#define SA_POP_DEBUG_HIGH 15
+
+// SET current SA-POP Debug output level.
+#define SA_POP_DEBUG_LEVEL SA_POP_DEBUG_MINIMAL
+
+#define _CRTDBG_MAP_ALLOC
 #if defined (SA_POP_HAS_ACE)
 #define SA_POP_DEBUG(x,y) \
-if (x > 0) \
-ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("SA-POP: %s\n"), y));
+if (x <= SA_POP_DEBUG_LEVEL) \
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("SA-POP: %s\n"), y));
 #define SA_POP_DEBUG_STR(x,y) \
-if (x > 0) \
-ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("SA-POP: %s\n"), y.c_str ()));
+if (x <= SA_POP_DEBUG_LEVEL) \
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("SA-POP: %s\n"), y.c_str ()));
 #else  /* SA_POP_HAS_ACE not defined */
 #include <iostream>
 #define SA_POP_DEBUG(x,y) \
-if (x > 0) \
+if (x <= SA_POP_DEBUG_LEVEL) \
   std::cout << "SA-POP: " << y << std::endl;
 #define SA_POP_DEBUG_STR(x,y) \
-if (x > 0) \
+if (x <= SA_POP_DEBUG_LEVEL) \
   std::cout << "SA-POP: " << y << std::endl;
 #endif  /* SA_POP_HAS_ACE */
 
 
 namespace SA_POP {
+
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  /// MAXIMUM number of task instances to allow in plan before planning failure.
+  const int MAX_TASK_INSTS = 12;
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+
+
+
 
   /// Environment variable for root path.
   const std::string ROOT_PATH_STR = "SAPOP_ROOT";
@@ -73,7 +92,7 @@ namespace SA_POP {
     CondID id;
     CondValue value;
     CondKind kind;
-    bool operator== (const Condition &s) const { return this->id == s.id; };
+    bool operator== (const Condition &s) const { return this->id == s.id && this->value == s.value; };
     bool operator!= (const Condition &s) const { return !(*this == s); };
     bool operator< (const Condition &s) const { return this->id < s.id; };
   };
@@ -98,7 +117,7 @@ namespace SA_POP {
   /// (N.B. this must be a double or float to handle [0,1] range probabilities
   /// and multiplication factors).
   typedef double EUCalc;
-          
+
   /// Type of a condition utility.
   typedef EUCalc Utility;
 
@@ -141,13 +160,19 @@ namespace SA_POP {
 
   /// Type of a task instance id.
   /// (must be unique across all task instances).
-  typedef int TaskInstID;
+  typedef long TaskInstID;
 
   /// Goal task instance ID (for task instance placeholders in open goals).
   const TaskInstID GOAL_TASK_INST_ID = -1;
 
   /// Null task instance ID (for unknown/uninitialized task instances).
   const TaskInstID NULL_TASK_INST_ID = -2;
+
+  /// Initial state (as task) ID (for placeholder in planning).
+  const TaskID INIT_TASK_ID = -5;
+
+  /// Initial state (as task) instance ID (for placeholder in planning).
+  const TaskInstID INIT_TASK_INST_ID = -6;
 
   /// Type of a task implementation id.
   /// (must be unique across all task implementations).
@@ -164,6 +189,53 @@ namespace SA_POP {
 
   /// Type of a task implementation parameter value.
   typedef std::string ImplParamValue;
+  enum TaskChoiceType{REUSE_INST, NEW_INST};
+  struct TaskChoice {
+
+    TaskChoiceType choice;
+    TaskInstID task_inst_id;
+    TaskID task_id;
+  };
+
+
+  /// Initial state (as task) implementation ID (for placeholder in planning/scheduling).
+  const TaskImplID INIT_TASK_IMPL_ID = "init_impl";
+
+
+  /// List of TaskChoices
+  typedef std::list<TaskChoice> TaskChoiceList;
+
+  /// Map from Task Instance IDs to Task IDs.
+  typedef std::map <TaskInstID, TaskID> InstToTaskMap;
+
+
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+  // WHAT DOES THIS STRUCT DO / HOW IS IT USED?
+  struct SortTaskByTime{
+
+    TaskID task_id;
+    TaskInstID last_instance;
+
+    void note_instance(TaskInstID instance){
+      if (last_instance < instance){
+        this->last_instance = instance;
+      }
+    }
+
+    // IS THE LESS THAN OPERATOR REALLY SUPPOSED TO COMPARE INSTANCES BY GREATER THAN?
+    bool operator<(const SortTaskByTime & s) {
+      return this->last_instance > s.last_instance;
+    }
+    bool operator!=(const SortTaskByTime & s) {
+      return this->last_instance != s.last_instance;
+    }
+    bool operator==(const SortTaskByTime & s) {
+      return this->last_instance == s.last_instance;
+    }
+  };
+//*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****TEMP*****
+
+
 
   /// Type of an implementation parameter.
   struct ImplParam {
@@ -179,6 +251,7 @@ namespace SA_POP {
   /// (must be unique across all resources).
   typedef std::string ResourceID;
 
+  /// Null resource ID (for unknown resources).
   const ResourceID NULL_RESOURCE_ID = "NULL_RESOURCE_ID";
 
   /// Type of a resource capacity or utilization value.
@@ -203,7 +276,7 @@ namespace SA_POP {
   typedef long TimeValue;
 
   /// NULL time (for unknown or unconstrained times).
-  #define NULL_TIME -1
+  const TimeValue NULL_TIME = -1;
 
   /// Time Window (e.g. start or end window for a task instance or plan).
   typedef std::pair<SA_POP::TimeValue, SA_POP::TimeValue> TimeWindow;
@@ -215,9 +288,9 @@ namespace SA_POP {
     int step;
     int decision_pt;
     int seq_num;
-    bool operator== (CommandID &s) const { return (this->step == s.step && this->decision_pt == s.decision_pt && this->seq_num == s.seq_num); };
-    bool operator!= (CommandID &s) const { return !(*this == s); };
-    bool operator< (CommandID &s) const
+    bool operator== (const CommandID &s) const { return (this->step == s.step && this->decision_pt == s.decision_pt && this->seq_num == s.seq_num); };
+    bool operator!= (const CommandID &s) const { return !(*this == s); };
+    bool operator< (const CommandID &s) const
     {
       if (this->step == s.step) {
         if (this->decision_pt == s.decision_pt)
@@ -227,6 +300,7 @@ namespace SA_POP {
       return this->step < s.step;
     };
   };
+
 
   /// Type of a causal link.
   /// ("first" task instance achieves "cond" for "second" task instance.)
@@ -240,7 +314,7 @@ namespace SA_POP {
     {
       if (this->first == s.first) {
         if (this->second == s.second)
-          return this->cond < cond;
+          return this->cond < s.cond;
         return this->second < s.second;
       }
       return this->first < s.first;
@@ -293,15 +367,13 @@ namespace SA_POP {
   /// Type of a set of resources (map from id to resource).
   typedef std::map<ResourceID, Resource> Resources;
 
-	/// Type of Criticality as a pair of the Resource it is in and the value.
-	typedef std::pair<ResourceID,double> Criticality;
+  /// Type of Criticality as a pair of the Resource it is in and the value.
+  typedef std::pair<ResourceID,double> Criticality;
 
-	/// Type of a set of conditions (condition & value).
+  /// Type of a set of conditions (condition & value).
   typedef std::set<Condition> CondSet;
 
-  /// Type of a set of open conditions, each associated with task instances
-  /// for which it is a precondition.
-  typedef std::multimap<Condition, TaskInstID> OpenCondMap;
+
 
   /// Type of a set of causal link threats.
   typedef std::set<CLThreat> CLThreatSet;
@@ -459,6 +531,217 @@ namespace SA_POP {
     bool operator!= (const Goal &s) const { return !(*this == s); };
     bool operator< (const Goal &s) const { return this->goal_id < s.goal_id; };
   };
+
+
+  struct TaskInstEndTimeSet{
+    TaskInstID inst;
+    double end_time;
+
+    bool operator< (const TaskInstEndTimeSet & compare) const{
+      return end_time < compare.end_time;
+    };
+  };
+
+
+  /// Type of particular Task Implementation mapped to a Task Implementation Set.
+  /// This is a particular Precedence set. Like Before, After etc.
+  typedef std::map <TaskInstID, TaskInstSet> PrecedenceSet;
+
+  /// Type of a Precedence Relation mapped to a Precedence Set.
+  /// This gives the whole Precedence Graph
+  typedef std::map <PrecedenceRelation, PrecedenceSet> PrecedenceGraph;
+
+
+  /// Type of a set of open conditions, each associated with task instances
+  /// for which it is a precondition. With new list functionality
+  typedef SA_POP::ListMultiMap<Condition, TaskInstID> OpenCondMap;
+
+
+  //Following structures form the condition-checking heuristic we use; if a task satisfies a condition for a 
+  //instance task once, it cannot satisfy another instance of that task unless some of the open conditions open
+  //when it was first used
+
+  struct StoredCondition{
+
+    Condition satisfied_cond;
+    TaskID satisfying_task;
+    bool satisfied_to;
+
+    StoredCondition(){};
+
+    StoredCondition(Condition cond, TaskID task){
+      this->satisfied_cond = cond;
+      this->satisfied_to = cond.value;
+      this->satisfying_task = task;
+    }
+
+    bool operator==(const StoredCondition & s)const{
+      return (satisfied_cond == s.satisfied_cond &&
+        satisfying_task == s.satisfying_task &&
+        satisfied_to == s.satisfied_to);
+    };
+
+    bool operator<(const StoredCondition & s) const{
+      if(this->satisfied_cond == s.satisfied_cond)
+        return this->satisfying_task < s.satisfying_task;
+      return this->satisfied_cond < s.satisfied_cond;
+    };
+  };
+
+  struct StoredConditionKey{
+
+    CommandID satisfying_cmd;
+    CommandID free_pass_cmd;
+
+    StoredCondition satisfy_set;
+    bool free_pass_used;
+
+    StoredConditionKey(Condition cond, TaskID task, CommandID cmd){
+      satisfying_cmd = cmd;
+      satisfy_set.satisfied_cond = cond;
+      satisfy_set.satisfying_task = task;
+
+      free_pass_cmd.decision_pt = 0;
+      free_pass_cmd.step = 0;
+      free_pass_cmd.seq_num = 0;
+
+      free_pass_used = false;
+    }
+
+    bool operator==(const StoredConditionKey & s)const{
+      return (this->satisfy_set == s.satisfy_set);
+    };
+
+    bool operator<(const StoredConditionKey & s) const {
+      return this->satisfy_set < s.satisfy_set;
+    };
+
+  };
+
+
+
+  typedef std::set<StoredCondition> StoredConditionSet;
+  typedef std::multimap<StoredConditionKey, StoredConditionSet> StoredConditionMap;
+
+  struct StoredConditionEvaluator{
+    StoredConditionMap condition_map;
+
+    std::pair<bool, CommandID> should_continue(CommandID cur_cmd, Condition satisfied_cond, 
+      TaskID satisfying_task, OpenCondMap & open_conds, InstToTaskMap & task_insts){
+
+        StoredConditionKey stored_cond (satisfied_cond, satisfying_task, cur_cmd);
+
+        std::pair<StoredConditionMap::iterator,
+          StoredConditionMap::iterator>
+          range 
+          = condition_map.equal_range(stored_cond);
+
+        bool should_continue = true;
+        CommandID return_to;
+        return_to.decision_pt = 0;
+        return_to.seq_num = 0;
+        return_to.step = 0;
+
+
+        bool using_free_pass = false;
+
+        if(range.first != range.second)
+        {
+          for(StoredConditionMap::iterator it = range.first; it != range.second; it++)
+          {
+            bool all_pairs_in_open_conds = true;
+
+            StoredConditionSet old_open_conds = it->second;
+
+            for(StoredConditionSet::iterator it2 = old_open_conds.begin();
+              it2 != old_open_conds.end(); it2++)
+            {
+
+
+              std::pair<OpenCondMap::iterator, OpenCondMap::iterator>
+                cond_map_range = open_conds.equal_range((*it2).satisfied_cond);
+
+              bool found_no_equiv_in_open = true;
+
+              for(OpenCondMap::iterator it3 = cond_map_range.first; it3 != cond_map_range.second; it3++){
+                if((*it2).satisfying_task == -1){
+                  if((*it3).second == -1){
+                    found_no_equiv_in_open = false;
+                  }
+                }
+                else{
+                  if((*it3).second == -1)
+                  {}
+                  else if((*it2).satisfying_task == task_insts.find((*it3).second)->second &&
+                    (*it2).satisfied_to == ((*it3).first).value){
+                      found_no_equiv_in_open = false;
+                  }
+                }
+              }
+
+              if(found_no_equiv_in_open){
+                all_pairs_in_open_conds = false;
+                break;
+              }
+            }
+
+            if(all_pairs_in_open_conds){
+
+              should_continue = false;
+              return_to = it->first.satisfying_cmd;
+              break;
+            }
+          }
+        }else{
+          should_continue = true;
+        }
+
+        if(should_continue && !using_free_pass)
+        {
+
+          StoredConditionSet current_open;
+          for(OpenCondMap::iterator it = open_conds.begin(); it != open_conds.end(); it++)
+          {
+            if(it->second == -1)
+            {
+              current_open.insert(StoredCondition(it->first, -1));
+            }else{
+              current_open.insert(StoredCondition(it->first, task_insts.find(it->second)->second));
+            }
+          }
+
+          StoredConditionKey this_choice(satisfied_cond, satisfying_task, cur_cmd);
+
+          this->condition_map.insert(
+            std::pair<StoredConditionKey, StoredConditionSet>(this_choice, current_open));
+        }
+
+        return std::pair<bool, CommandID>(should_continue, return_to);
+    }
+
+    void undo_binding(CommandID cur_cmd, Condition satisfied_cond, TaskID satisfying_task){
+      StoredConditionKey key(satisfied_cond, satisfying_task, cur_cmd);
+
+      std::pair<StoredConditionMap::iterator, StoredConditionMap::iterator> range
+        = condition_map.equal_range(key);
+
+      StoredConditionMap::iterator it;
+
+      for(it = range.first; it != range.second; it++){
+        if(it->first.satisfying_cmd == cur_cmd){  
+          condition_map.erase(it);
+          break;
+        }
+      }
+    }
+  };
+
+  //Map from a causal link to the suspended conditions that are waiting for something to come
+  //between them and the orig. condition so they can be unsuspended
+  typedef std::multimap<CausalLink, std::pair<Condition, TaskInstID>> SuspendedConditionListenerMap;
+
+  //List of all condition/task insts that are suspended
+  typedef std::set<std::pair<Condition, TaskInstID>> SuspendedConditionSet;
 
   inline std::string to_string(int x)
   {

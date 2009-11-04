@@ -39,6 +39,8 @@ namespace SA_POP {
    */
   class Planner {
   public:
+
+
     /// Constructor.
     Planner (void);
 
@@ -74,6 +76,8 @@ namespace SA_POP {
      */
     virtual void add_out_adapter (OutAdapter *out);
 
+
+    virtual void generate_all_threats(void);
 
 
     // ************************************************************************
@@ -153,7 +157,7 @@ namespace SA_POP {
     /// Satisfy scheduling constraints in fully instantiated plan (no
     /// recursive call backs).
     /**
-     * @param task_inst  Current task instance being tried in the plan.
+     * 
      *
      * @return  True if fully satisfied plan found, false otherwise.
      */
@@ -319,6 +323,8 @@ namespace SA_POP {
      * @return  Set of all effects with associated values.
      */
     virtual CondSet get_effects (TaskID task_id);
+
+    SANet::LinkWeight get_link(SANet::TaskID id, SANet::CondID cond_ID);
 
     /// Get all tasks that satisfy a condition.
     /**
@@ -509,6 +515,9 @@ namespace SA_POP {
    */
   virtual void print_graph (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap);
 
+  virtual WorkingPlan*  get_working_plan(void){return this->working_plan_;};
+
+  virtual void set_backtrack_cmd_id(CommandID cmd){backtrack_cmd = cmd;};
 
   protected:
     /// Threshold for current probability of a condition to be satisfied.
@@ -546,6 +555,10 @@ namespace SA_POP {
 
     /// Notify all output adapters that plans have changed.
     virtual void notify_plan_changed (void);
+
+	CommandID backtrack_cmd;
+
+	CommandID not_backtracking;
   };
 
 };  /* SA_POP namespace */

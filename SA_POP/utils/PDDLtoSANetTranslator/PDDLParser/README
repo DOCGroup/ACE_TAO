@@ -1,0 +1,123 @@
+PDDL to SANet translator 
+
+Ben Podgursky
+benjamin.t.podgursky@vanderbilt.edu
+
+DESCRIPTION
+
+	This package holds the java program which is able to automatically translate PDDL problems 
+	into Spreading Activation networks, doing limited optimization and pruning in the process.  
+	It takes as an input a PDDL domain file, PDDL problem file, and arguments dictating the form 
+	of the conversion.
+
+	It is capable of translating the following PDDL requirements:
+
+	strips
+	typing
+	equality
+	negative preconditions
+	disjunctive preconditions
+	conditional effects
+	probabilistic--limited
+
+INSTALLATION/RUNNING
+
+	Install ant (http://ant.apache.org/)
+	Make sure that ant's bin is in your path
+	Navigate to PDDLtoSANetTranslator\PDDLParser
+	
+	To run the translator, enter:
+	
+	ant clean build -Dargs="<domain file> <problem file> <want init action> 
+		<condition checking depth> <output file name>" PDDLtoSAN
+		
+	The arguments:
+	<domain file> the name of the pddl domain file 
+	<problem file> the name of the pddl problem file
+	<want init action> whether to include an initial action in the output xml
+		file.  The initial action has no preconditions and effect links to all 
+		conditions equivalent to their initial states
+	<condition checking depth> number of conditions to check against a condition.  eg,
+		if it is set to 3, it will check if any 3 conditions are together effected by the 
+		same tasks as any one other task.
+	<output file name> the 3 produced files are given this as their suffix.  Eg, for name
+		"test" it would generate "test-san.xml", "test-tm.xml", "test-goals.xml" for the 
+		spreading activation network, task map, and goal files respectively.
+		
+	For example, to run the ferry example included:
+	
+	ant clean build -Dargs="ferry.pddl pb1ferry.pddl false 3 ferry" PDDLtoSAN
+		
+TRANSLATION STRATEGIES
+
+	strips-- strips syntax is translated using a naive propositional expansion of all actions 
+		and predicates, using all of the objects specified in the problem file
+
+	typing-- propositionalizes actions and conditions using only objects of the proper types
+		for each action/condition
+		
+	equality/inequality-- makes sure that equality and inequality constraints are respected in
+		action definitions.  preserves transitivity and reversibility
+		
+	negative preconditions-- spreading activation networks can easily handle negative preconditions;
+		the true probability of the precondition link from the condition to the action is 0, and the 
+		false probability is positive
+		
+	disjunctive preconditions-- these are handled by first putting the action's preconditions in disjunctive normal
+		form, where the disjunction is the outermost function, and then splitting each clause into a separate 
+		action.  Eg, if an action A has preconditions condA || condB, it is split into two actions, A[0] with
+		precondition condA and A[1] with precondition condB.  The effects of each action are identical to those
+		of the original action
+		
+	conditional effects-- actions conditional effects are resolved by splitting the action into two actions, the
+		first where the condition's preconditions are asserted true in the preconditions, and the second where
+		they are asserted false.
+		
+	probabilisitic effects-- by the nature of spreading activation networks, probabilistic effects can have
+		at most one term, and this term can have at most one condition asserted to a value (linking 
+		effects together would be counter to the structure of a bayesian network, where effects are assumed to 
+		be independent, and would generate incorrect plans.)
+	
+OPTIMIZATIONS:
+
+		The above actions will produce a spreading activation network, but a massive one.  The following optimizations
+	cut down the size of the network, while still preserving optimal paths:
+
+	Elimination and propagation of impossible conditions
+			Conditions falling in two categories should not need to exist in a network; conditions initially true
+		which have no effect links setting them false, and conditions initially false which are never set true;
+		collectively, these represent the conditions which never change value.  Remove all of these condition nodes
+		from the network.
+			Then for each of these conditions, investigate its precondition links. If a task requires the condition in
+		the state it is always in, remove the precondition link, as it is trivial to satisfy anyway.  If the action
+		needs the condition to be opposite its value, remove that task from the network, because it will never be able
+		to execute.  This may cause other conditions to never change; continue in this manner until nothing can be
+		removed
+		
+	Pruning of irrelevant tasks and conditions
+
+			All the conditions and tasks in the network are now likely attainable, but depending on the domain, most
+		be irrelevant to the problem at hand.  We find only the relevant tasks by essentially doing a depth first search
+		from the goal conditions specified in the problem description.  Start by finding all tasks which satisfy the
+		goal conditions.  The find all tasks which satisfy the preconditions to these tasks, and continue until all 
+		relevant tasks and conditions have been added.  Now the network consists only of tasks and conditions which
+		are on a causal path to a goal.
+		
+	Elimiation of regressive tasks
+
+			Often there are tasks which are intuitively bad to a human which do not get eliminated in the above steps
+		because they are on a valid path to the goal, albeit not the most efficient path.  
+			One type of useless task is one which leaves the environment in a state which was necessarily true one
+		step before it was executed.  We have to be careful though; we have to make sure that bringing the environment
+		into a state where this task can be executed did not allow another part of the plan to execute, and that the
+		task under scrutiny does not "reset" the environment to do something else useful; for example, a ferry sailing 
+		repeatedly back and forth across a river.
+			
+	Removal of aggregate conditions
+	
+			Aggregate conditions are especially bad for causal link planners, but are common in strips problems, as
+		they have no negative preconditions.  For example, in the ferry problem included, (empty-ferry) is equivalent
+		to (not (on c1 the-ferry)) && (not (on c2 the-ferry)).  Replacing the former with the latter makes it easier 
+		for the planner to choose the correct tasks to satisfy the preconditions.  This translator looks for 
+		situations where this can be done.  A parameter passed in determines the depth of checking that should be done
+		here.

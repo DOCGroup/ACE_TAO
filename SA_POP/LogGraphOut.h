@@ -37,7 +37,7 @@ namespace SA_POP {
     /**
      * @param strm  Output stream to log to.
      */
-    LogGraphOut (std::ostream &out, int startStep);
+    LogGraphOut (std::ostream &out, bool startStep);
 
     /// Destructor.
     virtual ~LogGraphOut (void);
@@ -72,10 +72,20 @@ namespace SA_POP {
     */
   void addTracking(std::vector<SANet::CondID> checks);
 
+    /// Color the graph to immitate the nextstep
+    /**
+    *
+    */
+  void color_step(SA_POP::Planner *planner);
+
   protected:
-    /// Output stream to log to.
-    std::ostream &out_;
-	int graphn;
+  /// Output stream to log to.
+  std::ostream &out_;
+  // Utilize the graphviz layout to fake taking steps?
+	bool byStep;
+
+  // Utilized for the step needed to isolate
+  int curStep;
   bool hasTracks;
   std::map<std::string, std::string> graphmap;
   std::vector<SANet::CondID> tracks;

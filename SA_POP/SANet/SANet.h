@@ -67,6 +67,24 @@ namespace SANet {
     virtual void add_task (TaskID ID, std::string name,
       MultFactor atten_factor, TaskCost cost, Probability prior_prob);
 
+    /// Get a prior for the task node in the network.
+    /**
+     * @param ID  Node ID.
+     *
+     *
+     * @returns Probability of the prior.
+     */
+    virtual Probability get_prior (TaskID ID);
+
+    /// Get a link weight for an effect in the network.
+    /**
+     * @param ID  Task ID.
+     * @param ID  Cond ID.
+     *
+     * @returns LinkWeight of the link.
+     */
+    virtual LinkWeight get_link(TaskID ID, CondID cond_ID);
+
     /// Add a new condition node to the network.
     /**
      * @param ID  Node ID.
@@ -132,8 +150,18 @@ namespace SANet {
      * @param port_ID  ID of port (on task) associated with this condition
      *                 (used for data nodes).
      */
-    void update_effect_link(TaskID task_ID, CondID cond_ID,
+    virtual void update_effect_link(TaskID task_ID, CondID cond_ID,
                                LinkWeight weight, PortID port_ID= "");
+
+    /// Update the task prior.
+    /**
+     *
+     * @param task_ID  Task node ID.
+     *
+     *
+     * @param prior new prior to be used for the task;
+     */
+    virtual void update_prior(TaskID task_ID, Probability prior);
 
 
     // ************************************************************************
@@ -152,8 +180,10 @@ namespace SANet {
     /// Print Graphviz network representation to stream.
     /**
      * @param strm  Output stream on which to print network representation.
+     * @param graphmap  The color mapping being used.
+     * @param defaultColor  The default color if it's not in the mapping.     
      */
-    virtual void print_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap);
+    virtual void print_graphviz (std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap, std::string defaultColor = "grey");
 
     
 

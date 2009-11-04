@@ -21,6 +21,8 @@ project(SA_POP) : xerces, acelib, sapop_xml, sapop_out {
       SA_POP_Types.h
       SA_POP_Exceptions.h
 
+      SA_POP_Utils.h
+
       Builder.h
       SA_Builder.h
 
@@ -57,6 +59,8 @@ project(SA_POP) : xerces, acelib, sapop_xml, sapop_out {
 
    Source_Files {
       SA_POP_Exceptions.cpp
+
+      SA_POP_Utils.cpp
 
       SA_Builder.cpp
 

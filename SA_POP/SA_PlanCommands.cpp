@@ -18,6 +18,8 @@
 #include "SA_PlanStrategy.h"
 #include <string>
 #include <stdlib.h>
+#include <fstream>
+#include <iostream>
 
 using namespace SA_POP;
 
@@ -178,13 +180,20 @@ PlanCommand *SA_AddTaskCmd::clone (void)
 // Execute next option for this command.
 bool SA_AddTaskCmd::execute_next (void)
 {
+
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
 
+
   this->undo();
-  if (this->tasks_.empty ())
+
+  bool isInitial = false;
+
+  if (this->tasks_.empty())
     return false;
+
   this->working_plan_->execute (this);
   this->num_tries_++;
+
   return true;
 };
 
@@ -210,17 +219,17 @@ std::string SA_AddTaskCmd::get_log_text (void)
   log_str += "Adding Task (CommandID ";
   log_str += to_string (this->get_id ());
   log_str += "): ";
-  TaskList::iterator task_iter = this->tasks_.begin ();
+  TaskChoiceList::iterator task_iter = this->tasks_.begin ();
   if (task_iter == this->tasks_.end ())
     log_str += "[NO TASKS TO ADD]";
   else
-    log_str += to_string (*task_iter);
+    log_str += to_string (task_iter->task_id);
 
   return log_str;
 };
 
 // Set (ordered) list of tasks to add (one per execution) to the plan.
-void SA_AddTaskCmd::set_tasks (const TaskList &tasks)
+void SA_AddTaskCmd::set_tasks (const TaskChoiceList &tasks)
 {
   if (!this->tasks_.empty ())
     throw "SA_POP::SA_AddTaskCmd::set_tasks (): called while current task list is not empty.";
@@ -256,11 +265,19 @@ TaskInstID SA_AddTaskCmd::get_task_inst (void)
   return this->last_task_inst_;
 };
 
+TaskInstSet SA_AddTaskCmd::get_satisfied_tasks(void){
+  return this->task_insts_;
+}
+
 /// Check if the instance id used by the task of this command already exists.
+
+
 bool SA_AddTaskCmd::inst_exists (void)
 {
-	 return !this->used_task_insts_.empty();
+	return (this->last_task_choice_.choice == REUSE_INST);
+
 }
+
 // Constructor.
 SA_AssocTaskImplCmd::SA_AssocTaskImplCmd (SA_WorkingPlan *working_plan)
 : working_plan_ (working_plan),
@@ -292,9 +309,19 @@ bool SA_AssocTaskImplCmd::execute_next (void)
 {
   SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
 
+  	if(get_id().step == 12 && get_id().decision_pt == 2 && get_id().seq_num == 1){
+		bool k = true;
+	}
+
   this->undo();
-  if (this->impls_.empty ())
+
+  got_to_scheduling = false;
+
+
+  if (this->impls_.empty ()){
     return false;
+  }
+
 
   this->num_tries_++;
   return this->working_plan_->execute (this);
@@ -353,6 +380,14 @@ TaskInstID SA_AssocTaskImplCmd::get_task_inst (void)
 {
   return this->task_inst_;
 };
+
+void SA_AssocTaskImplCmd::set_satisfied_insts(TaskInstSet set){
+	this->satisfied_insts = set;
+}
+
+void SA_AssocTaskImplCmd::set_added_links(CLSet set){
+	this->added_links = set;
+}
 
 
 // Constructor.
@@ -513,7 +548,7 @@ std::string SA_RemoveOpenCondsCmd::get_log_text (void)
 };
 
 // Set the open conditions to remove.
-void SA_RemoveOpenCondsCmd::set_conds (const CondSet &conds)
+void SA_RemoveOpenCondsCmd::set_conds (const CondSet &conds, const TaskInstSet &tasks)
 {
   if (!this->conds_.empty ())
     throw "SA_POP::SA_RemoveOpenCondsCmd::set_conds (): called while current condition set is not empty.";
@@ -522,21 +557,23 @@ void SA_RemoveOpenCondsCmd::set_conds (const CondSet &conds)
     throw "SA_POP::SA_RemoveOpenCondsCmd::set_conds (): called before last execution undone.";
 
   this->conds_ = conds;
+  this->tasks_ = tasks;
 };
 
 
 
 // Constructor.
 SA_AddOpenThreatsCmd::SA_AddOpenThreatsCmd (SA_PlanStrategy *plan_strat)
-: plan_strat_ (plan_strat)
+: plan_strat_ (plan_strat),
+has_executed_ (false)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  this->threats_.clear ();
 };
 
 // Destructor.
 SA_AddOpenThreatsCmd::~SA_AddOpenThreatsCmd (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  // Nothing specific to destruct
 };
 
 // Create a deep copy of this command.
@@ -548,17 +585,25 @@ PlanCommand *SA_AddOpenThreatsCmd::clone (void)
 // Execute next option for this command.
 bool SA_AddOpenThreatsCmd::execute_next (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-//  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
-//  this->plan_strat_->execute (this);
-  return false;
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
+
+  if (this->threats_.empty ())
+    return false;
+
+  this->undo();
+  this->plan_strat_->execute (this);
+  this->has_executed_ = true;
+  return true;
 };
 
 // Undo this command.
 void SA_AddOpenThreatsCmd::undo (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-//  this->plan_strat_->undo (this);
+  if (!this->has_executed_ || this->threats_.empty ())
+    return;
+
+  this->plan_strat_->undo (this);
+  this->threats_.clear ();
 };
 
 // Get log text for most recent execution of command.
@@ -574,24 +619,28 @@ std::string SA_AddOpenThreatsCmd::get_log_text (void)
 };
 
 // Set the open threats to add.
-void SA_AddOpenThreatsCmd::set_threats (const CLThreatSet &)
+void SA_AddOpenThreatsCmd::set_threats (const CLThreatSet & threats)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+    if (!this->threats_.empty ())
+    throw "SA_POP::SA_AddOpenThreatsCmd::set_conds (): called while current Threat set is not empty.";
+
+  this->threats_ = threats;
 };
 
 
 
 // Constructor.
 SA_RemoveOpenThreatsCmd::SA_RemoveOpenThreatsCmd (SA_PlanStrategy *plan_strat)
-: plan_strat_ (plan_strat)
+: plan_strat_ (plan_strat),
+executed_ (false)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  this->threats_.clear ();
 };
 
 // Destructor.
 SA_RemoveOpenThreatsCmd::~SA_RemoveOpenThreatsCmd (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  //Nothing to destruct
 };
 
 // Create a deep copy of this command.
@@ -603,17 +652,24 @@ PlanCommand *SA_RemoveOpenThreatsCmd::clone (void)
 // Execute next option for this command.
 bool SA_RemoveOpenThreatsCmd::execute_next (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-//  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
-//  this->plan_strat_->execute (this);
-  return false;
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
+
+  if (this->threats_.empty ())
+    return false;
+
+  this->undo();
+  this->plan_strat_->execute (this);
+  this->executed_ = true;
+  return true;
 };
 
 // Undo this command.
 void SA_RemoveOpenThreatsCmd::undo (void)
-{
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-//  this->plan_strat_->undo (this);
+{  if (!(this->executed_) || (this->threats_.empty ()))
+    return;
+
+  this->plan_strat_->undo (this);
+  this->threats_.clear ();
 };
 
 // Get log text for most recent execution of command.
@@ -629,9 +685,13 @@ std::string SA_RemoveOpenThreatsCmd::get_log_text (void)
 };
 
 // Set the open threats to remove.
-void SA_RemoveOpenThreatsCmd::set_threats (const CLThreatSet &)
+void SA_RemoveOpenThreatsCmd::set_threats (const CLThreatSet & threats)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  if (!this->threats_.empty ())
+    throw "SA_POP::SA_RemoveOpenThreatsCmd::set_threats (): called while current threat set is not empty.";
+
+
+  this->threats_ = threats;
 };
 
 
@@ -640,13 +700,13 @@ void SA_RemoveOpenThreatsCmd::set_threats (const CLThreatSet &)
 SA_ResolveCLThreatCmd::SA_ResolveCLThreatCmd (SA_WorkingPlan *working_plan)
 : working_plan_ (working_plan)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  choices = 0;
 };
 
 // Destructor.
 SA_ResolveCLThreatCmd::~SA_ResolveCLThreatCmd (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  //No Temps Necessary, this does nothing
 };
 
 // Create a deep copy of this command.
@@ -658,17 +718,80 @@ PlanCommand *SA_ResolveCLThreatCmd::clone (void)
 // Execute next option for this command.
 bool SA_ResolveCLThreatCmd::execute_next (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-//  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
-//  this->working_plan_->execute (this);
-  return false;
+  bool goodOption = true;
+
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
+  if(choices == 0)
+  {
+	got_to_change_precedences = false;
+
+    //Add this next line to execute function
+    this->working_plan_->add_sched_link(this->threat.threat,this->threat.clink.first);
+    choices++;
+    this->first = this->threat.threat;
+    this->second = this->threat.clink.first;
+    this->condition = this->threat.clink.cond;
+
+      
+    goodOption =  this->working_plan_->execute (this);
+
+    if(goodOption)
+    {
+      return goodOption;
+    }
+
+  }
+
+  if(choices == 1)
+  {
+     this->undo();
+
+	 got_to_change_precedences = false;
+
+    //Add this next line to execute function
+     this->working_plan_->add_sched_link(this->threat.clink.second, this->threat.threat);
+     choices++;
+     this->second = this->threat.threat;
+     this->first = this->threat.clink.second;
+    this->condition = this->threat.clink.cond;
+
+	  goodOption = this->working_plan_->execute (this);
+
+    if(goodOption)
+    {
+      return goodOption;
+    }
+    else
+    {
+        return false;
+    }
+
+
+  }
+  else
+  {
+    return false;
+  }
+	
+  
 };
 
 // Undo this command.
 void SA_ResolveCLThreatCmd::undo (void)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-//  this->working_plan_->undo (this);
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_NORMAL, this->get_log_text ());
+  if(choices == 1)
+  {
+    //Add this next line to execute function
+    this->working_plan_->remove_sched_link(this->threat.threat,this->threat.clink.first);
+	  return this->working_plan_->undo (this);
+  }
+  else if(choices == 2)
+  {
+    //Add this next line to execute function
+     this->working_plan_->remove_sched_link(this->threat.clink.second, this->threat.threat);
+	   return this->working_plan_->undo (this);
+  }
 };
 
 // Get log text for most recent execution of command.
@@ -684,11 +807,17 @@ std::string SA_ResolveCLThreatCmd::get_log_text (void)
 };
 
 // Set the causal link threat to resolve.
-void SA_ResolveCLThreatCmd::set_threat (CLThreat &)
+void SA_ResolveCLThreatCmd::set_threat (CLThreat & tht)
 {
-  //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+  threat = tht;
 };
 
+// Set the task instances to order.
+void SA_ResolveCLThreatCmd::set_task_insts (TaskInstID task_inst_a, TaskInstID task_inst_b)
+{
+	this->first = task_inst_a;
+	this->second = task_inst_b;
+};
 
 
 // Constructor.

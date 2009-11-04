@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="PDDLParser">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="PDDLParser.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="commons-collections-3.2.1.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="PDDLParser.classpath"/>
+        </javac>
+    </target>
+
+    <target name="PDDLtoSAN">
+        <java classname="PDDLtoSAN" failonerror="true" fork="yes">
+            <classpath refid="PDDLParser.classpath"/>
+			<arg line="${args}" />
+        </java>
+	</target>
+	
+    <target name="jar">
+        <mkdir dir=""/>
+        <jar destfile="HelloWorld.jar" basedir="bin/">
+		<zipfileset src="commons-collections-3.2.1.jar" />
+            <manifest>
+                <attribute name="Main-Class" value="PDDLtoSAN"/>
+            </manifest>
+        </jar>
+    </target>
+	
+	<target name="run-jar">
+        <java jar="HelloWorld.jar" fork="true">
+			<arg line="${args}" />
+		</java>
+    </target>
+
+
+</project>

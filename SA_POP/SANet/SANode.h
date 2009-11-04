@@ -156,6 +156,7 @@ namespace SANet {
     virtual void print_xml (std::basic_ostream<char, std::char_traits<char> >& strm) = 0;
 
 
+
   protected:
     /// Unique ID of node (for identification within network).
     NodeID ID_;
@@ -281,6 +282,23 @@ namespace SANet {
      */
     virtual Utility get_utility (int step);
 
+    /// Get Prior of the TaskNode.
+    /**
+     * 
+     *
+     * @return  Expected utility.
+     */
+    virtual Probability get_prior (void);
+
+    /// Update Prior of the TaskNode.
+    /**
+     * 
+     * @param prior the new prior for the task
+     *
+     * 
+     */
+    virtual void update_prior (Probability prior);
+
     /// Add precondition link.
     /**
      * @param ID  Node ID.
@@ -317,6 +335,11 @@ namespace SANet {
      * true, or negative of the probability task sets condition to false).
      */
     virtual void update_effect (CondID ID, CondNode *node, LinkWeight weight);
+
+	void set_pos_util(double util);
+
+	Utility_Info get_pos_util();
+
 
   protected:
     /// Unconditional prior probability of success.
