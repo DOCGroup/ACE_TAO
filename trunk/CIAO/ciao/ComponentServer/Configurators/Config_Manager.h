@@ -5,10 +5,8 @@
  *  @file    Config_Manager.h
  *
  *  $Id$
- *
  */
 //=============================================================================
-
 
 #ifndef CIAO_CONFIG_MANAGER_H
 #define CIAO_CONFIG_MANAGER_H
@@ -32,17 +30,17 @@ namespace CIAO
     {
     public:
       virtual ~Config_Manager (void) {};
-      
+
       virtual int pre_orb_initialize (void) = 0;
-      
+
       virtual int post_orb_initialize (CORBA::ORB_ptr o) = 0;
-      
+
       virtual void init_resources (const ServerResource &info) = 0;
-      
+
       virtual void init (CORBA::ORB_ptr orb) = 0;
-      
+
       virtual CORBA::PolicyList *find_policies_by_name (const char *name)= 0;
-      
+
       virtual bool policy_exists (const char *name) = 0;
     };
   }

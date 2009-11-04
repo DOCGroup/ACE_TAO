@@ -51,7 +51,7 @@ CIAO::RTNodeApp_Configurator::init_resource_manager
 
       if (ACE_OS::strcmp ("CIAOServerResources", properties[i].name.in ()) == 0)
         {
-          const CIAO::DAnCE::ServerResource *svr_resource;
+          const CIAO::DAnCE::ServerResource *svr_resource = 0;
           if (properties[i].value >>= svr_resource)
             {
               this->config_manager_.init_resources (*svr_resource);

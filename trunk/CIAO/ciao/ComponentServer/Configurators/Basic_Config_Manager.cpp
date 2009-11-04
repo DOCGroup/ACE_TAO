@@ -12,7 +12,6 @@ namespace CIAO
 {
   namespace Deployment
   {
-
     void
     Basic_Config_Manager::init (CORBA::ORB_ptr orb)
     {
@@ -83,7 +82,7 @@ namespace CIAO
                                           policy_list) != 0)
                 {
                   CIAO_ERROR ((LM_ERROR,
-            "Error binding Policy_Set with name: %C\n",
+                              "Error binding Policy_Set with name: %C\n",
                               sets[i].Id.in ()));
                   throw CORBA::INTERNAL ();
                 }
@@ -91,7 +90,7 @@ namespace CIAO
                 {
                   CIAO_DEBUG ((LM_DEBUG,
                               "Basic_Config_Manager::init_resource"
-            " added policy set : %C with %d policies\n",
+                              " added policy set : %C with %d policies\n",
                               sets[i].Id.in (), array_index));
                 }
             }
@@ -99,7 +98,7 @@ namespace CIAO
             {
               CIAO_DEBUG ((LM_DEBUG,
                           "Basic_Config_Manager::init_resource"
-        " added policy set : %C with %d policies\n",
+                          " added policy set : %C with %d policies\n",
                           sets[i].Id.in (), array_index));
             }
         }
