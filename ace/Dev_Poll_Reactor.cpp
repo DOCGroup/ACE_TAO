@@ -1850,13 +1850,18 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
   ACE_TRACE ("ACE_Dev_Poll_Reactor::resume_handler_i");
 
   Event_Tuple *info = this->handler_rep_.find (handle);
-  if (info == 0 || !info->suspended)
+  if (info == 0)
     return -1;
+
+  if (!info->suspended)
+    return 0;
 
   ACE_Reactor_Mask mask = info->mask;
-
   if (mask == ACE_Event_Handler::NULL_MASK)
-    return -1;
+    {
+      info->suspended = false;
+      return 0;   // Nothing to do
+    }
 
   // Place the handle back in to the "interest set."
   //
