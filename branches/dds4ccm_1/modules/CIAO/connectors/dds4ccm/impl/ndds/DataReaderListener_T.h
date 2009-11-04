@@ -8,6 +8,8 @@
  */
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "ace/Task.h"
+#include "ace/Reactor.h"
 
 namespace CIAO
 {
@@ -15,6 +17,24 @@ namespace CIAO
   {
     namespace RTI
     {
+      template <typename NDDS_TYPE, typename RAWLISTENER>
+      class DataReaderHandler_T : 
+        public ACE_Task<ACE_NULL_SYNCH>
+      {
+        public:
+          DataReaderHandler_T (
+              typename RAWLISTENER::_ptr_type listen,
+              typename NDDS_TYPE::data_reader * reader);
+          ~DataReaderHandler_T ();
+
+          virtual int open (void * = 0);
+          virtual int svc (void);
+        private:
+          ACE_Reactor ar_;
+          typename RAWLISTENER::_var_type listener_;
+          typename NDDS_TYPE::data_reader * reader_;
+      };
+
       template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
       class DataReaderListener_T :
         public virtual ::DDS::DataReaderListener

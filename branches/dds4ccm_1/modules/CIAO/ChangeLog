@@ -1,3 +1,10 @@
+Wed Nov  4 12:57:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Created context switch. The rawlistener informs port listener
+          in a seperate thread.
+
 Tue Nov  3 15:42:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
