@@ -1,3 +1,8 @@
+Wed Nov  4 11:39:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/index.html:
+          Updated description for DDS4CCM documentation
+
 Wed Nov  4 00:07:49 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp (resume_handler_i): If asked to resume a
