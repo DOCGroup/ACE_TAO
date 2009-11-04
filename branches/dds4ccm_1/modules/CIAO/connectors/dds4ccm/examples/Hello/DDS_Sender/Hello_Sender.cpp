@@ -3,6 +3,7 @@
 #include "ace/OS_main.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Date_Time.h"
 #include "ace/SString.h"
 #include <ndds/ndds_namespace_cpp.h>

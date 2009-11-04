@@ -1,3 +1,8 @@
+Wed Nov  4 16:56:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+          Added missing include for msvc9
+
 Wed Nov  4 12:57:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
