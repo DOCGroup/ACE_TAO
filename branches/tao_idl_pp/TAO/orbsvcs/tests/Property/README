@@ -1,0 +1,42 @@
+This tests TAO's CosPropertyService implementation.
+
+Please report bugs/comments to <alex@cs.wustl.edu> and
+                               <ace-users@cs.wustl.edu>        
+
+To compile:
+==========
+
+% make realclean all
+
+
+To run:
+======
+
+% run_test.pl
+
+OR
+
+Run the each of NamingService, Server and Client separately within the
+same host.
+
+
+Naming Service:
+--------------
+
+% $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service [-ORBnameserviceport <portnum>]
+
+Server:
+-----
+
+% server        [-ORBnameserviceport <portnum>]
+
+Client:
+------
+% client        [-ORBnameserviceport <portnum>]
+        
+<portnum> is same everywhere.
+
+
+Expected Result:
+----------------
+If everything goes well, client prints "Test Succeeded". 

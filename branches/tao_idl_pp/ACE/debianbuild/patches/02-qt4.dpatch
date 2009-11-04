@@ -1,0 +1,32 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02-qt4.dpatch by Thomas Girard <thomas.g.girard@free.fr>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: detect Qt4 instead of Qt3
+
+@DPATCH@
+--- ACE_wrappers.orig/m4/ace.m4
++++ ACE_wrappers/m4/ace.m4
+@@ -1265,18 +1265,18 @@
+ AC_DEFUN([ACE_PATH_QT],
+ [
+  ac_qt_found=no
+- PKG_CHECK_MODULES([Qt], [qt-mt],
++ PKG_CHECK_MODULES([Qt4], [QtCore QtGui],
+                    [ac_qt_found=yes],
+                    [AC_MSG_RESULT([not found])])
+  if test X"${ac_qt_found}" = Xyes; then
+-   ACE_QT_CPPFLAGS="${Qt_CFLAGS}"
+-   ACE_QT_LIBS="${Qt_LIBS}"
++   ACE_QT_CPPFLAGS="${Qt4_CFLAGS}"
++   ACE_QT_LIBS="${Qt4_LIBS}"
+    AC_SUBST(ACE_QT_CPPFLAGS)
+    AC_SUBST(ACE_QT_LIBS)
+ 
+    AS_IF([test -n "$QTDIR"],
+          [],
+-         [QTDIR=`$PKG_CONFIG --variable=prefix qt-mt 2>/dev/null`])
++         [QTDIR=`$PKG_CONFIG --variable=prefix QtCore 2>/dev/null`])
+    AC_SUBST(QTDIR)
+  fi
+ ])

@@ -1,0 +1,12 @@
+// $Id$
+
+#if !defined (CCM_ENTERPRISECOMPONENT_IDL)
+#define CCM_ENTERPRISECOMPONENT_IDL
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  local interface EnterpriseComponent {};
+};
+#endif /* CCM_CONTAINER_IDL */

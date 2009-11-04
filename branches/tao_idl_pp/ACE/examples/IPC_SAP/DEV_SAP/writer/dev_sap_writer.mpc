@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project : aceexe, avoids_ace_for_tao {
+  exename = writer
+  Source_Files {
+    writer.cpp
+  }
+}
+
