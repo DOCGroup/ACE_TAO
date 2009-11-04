@@ -63,7 +63,7 @@ namespace CIAO
      * so there will be only one actor *modifying* data at a particular
      * point in time.
      */
-    class CIAO_CS_Client_svnt_Export CIAO_ServerActivator_i
+    class CIAO_CS_CLIENT_SVNT_Export CIAO_ServerActivator_i
       : public virtual POA_CIAO::Deployment::ServerActivator
     {
     public:

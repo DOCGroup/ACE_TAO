@@ -1,29 +1,30 @@
 // $Id$
 project(CIAO_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
-  idlflags     += -Wb,stub_export_macro=CIAO_ComponentServer_stub_Export
-  idlflags     += -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h
-  idlflags     += -Wb,skel_export_macro=CIAO_ComponentServer_svnt_Export
-  idlflags     += -Wb,skel_export_include=CIAO_ComponentServer_svnt_export.h
+  idlflags     += -Wb,stub_export_macro=CIAO_COMPONENTSERVER_STUB_Export \
+                  -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h \
+                  -Wb,skel_export_macro=CIAO_COMPONENTSERVER_SVNT_Export \
+                  -Wb,skel_export_include=CIAO_ComponentServer_svnt_export.h \
+                  -Gxhst -Gxhsk
 
   custom_only=1
 
   IDL_Files {
     CIAO_ComponentServer.idl
-    CIAO_ServerResources.idl
   }
 }
 
 project(CIAO_CS_Client_IDL) : ciaoidldefaults, anytypecode {
-  idlflags     += -Wb,stub_export_macro=CIAO_ComponentServer_stub_Export
-  idlflags     += -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h
-  idlflags     += -Wb,skel_export_macro=CIAO_CS_Client_svnt_Export
-  idlflags     += -Wb,skel_export_include=CIAO_CS_Client_svnt_export.h
+  idlflags     += -Wb,stub_export_macro=CIAO_COMPONENTSERVER_STUB_Export \
+                  -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h \
+                  -Wb,skel_export_macro=CIAO_CS_CLIENT_SVNT_Export \
+                  -Wb,skel_export_include=CIAO_CS_Client_svnt_export.h \
+                  -Gxhsk
 
   custom_only=1
 
   IDL_Files {
     CIAO_Properties.idl
-    idlflags += -SS
+    idlflags += -SS -Sci
   }
   IDL_Files {
     CIAO_CS_Client.idl
@@ -40,7 +41,6 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, ciaolib_with_idl,
   Source_Files {
     CIAO_ComponentServerC.cpp
     CIAO_CS_ClientC.cpp
-    CIAO_ServerResourcesC.cpp
     CIAO_PropertiesC.cpp
   }
   Header_Files {
@@ -67,21 +67,17 @@ project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componen
   }
 }
 
-project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, ciao_componentserver_configurator, \
+project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
                                      ciao_session_container, naming, ciao_server {
 
   dynamicflags = CIAO_COMPONENTSERVER_SVNT_BUILD_DLL
-  after += CIAO_Basic_Configurator
-  libs += CIAO_Basic_Configurator
 
   IDL_Files {
   }
   Source_Files {
      CIAO_ComponentServer_Impl.cpp
      CIAO_ComponentServerS.cpp
-     CIAO_ServerResourcesS.cpp
      CIAO_Container_Impl.cpp
-     Configurator_Factory.cpp
   }
   Header_Files {
     CIAO_ComponentServer_svnt_export.h
@@ -92,8 +88,6 @@ project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ci
 				    messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container,\
                                     ciao_logger {
   exename = ciao_componentserver
-  libs += CIAO_Basic_Configurator
-  after += CIAO_Basic_Configurator
   macros += CIAO_BUILD_COMPONENTSERVER_EXE
   Source_Files {
     CIAO_ComponentServer.cpp
