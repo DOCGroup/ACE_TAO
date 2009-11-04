@@ -1,3 +1,9 @@
+Wed Nov  4 12:48:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Deployment/Deployment_DeploymentPlan.idl:
+          Escaped MirrorPort, it is a reserved keyword with the changes
+          in TAO_IDL from yesterday
+
 Wed Nov  4 11:50:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/ComponentServer/CCM_ComponentServer.mpc:

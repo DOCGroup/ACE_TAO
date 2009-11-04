@@ -17,7 +17,7 @@ module Deployment {
                 EventPublisher,
                 EventConsumer,
                 ExtendedPort,
-                MirrorPort
+                _MirrorPort
         };
 
         struct ComponentPortDescription {
@@ -106,7 +106,7 @@ module Deployment {
         };
 
         typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
-        
+
         //@! in DOCGroup provider, portName and supportesType are removed
         struct ExternalReferenceEndpoint {
                 string location;
