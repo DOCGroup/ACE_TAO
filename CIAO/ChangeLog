@@ -1,3 +1,40 @@
+Wed Nov  4 11:07:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciao_componentserver_configurator.mpb:
+        * MPC/config/ciao_config_manager.mpb:
+        * MPC/config/ciao_nodeapp_configurator.mpb:
+        * MPC/config/ciao_noop_configurator.mpb:
+          Removed, not used anymore
+
+        * ciao/ComponentServer/Configurators/*:
+        * ciao/ComponentServer/CIAO_ServerResources.idl:
+        * ciao/ComponentServer/Configurator_Factory.cpp:
+        * ciao/ComponentServer/Configurator_Factory.h:
+        * ciao/ComponentServer/CIAO_CS_Client_svnt_export.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_stub_export.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_svnt_export.h:
+          Removed, all not used anymore.
+
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+          Updated export macro
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.h:
+          Removed all configurator support which was doing nothing more then a noop
+          configurator
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+          Cleanup, generate export macros
+
+        * ciao/ComponentServer/CIAO_Properties.idl:
+          Removed deprecated property
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+          Removed old stuff
+
 Wed Nov  4 10:04:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/RT-CCM/*:

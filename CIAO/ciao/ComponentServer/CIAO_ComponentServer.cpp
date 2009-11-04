@@ -26,8 +26,6 @@
 
 #include "CIAO_ComponentServer_Impl.h"
 #include "CIAO_CS_ClientC.h"
-#include "Configurator_Factory.h"
-#include "Configurators/Server_Configurator.h"
 
 #ifdef CIAO_BUILD_COMPONENTSERVER_EXE
 
@@ -99,25 +97,10 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
                    "Creating server object\n"));
-      Configurator_Factory cf;
-      this->configurator_.reset (cf (argc, argv));
-
-      if (!this->configurator_->create_config_managers ())
-        {
-          CIAO_ERROR ((LM_ERROR, CLINFO
-                       "ComponentServer_Task::ComponentServer_Task - "
-                       "Error configuring ComponentServer configurator, exiting.\n"));
-          throw Error ("Unable to load ComponentServer configurator.");
-        }
-
-
-      this->configurator_->pre_orb_initialize ();
 
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
                    "Creating ORB\n"));
       this->orb_ = CORBA::ORB_init (argc, argv);
-
-      this->configurator_->post_orb_initialize (this->orb_.in ());
 
       this->parse_args (argc, argv);
       this->configure_logging_backend ();
@@ -258,51 +241,9 @@ namespace CIAO
     {
       CIAO_TRACE ("ComponentServer_Task::run");
 
-      if (this->configurator_->rt_support ())
-        {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::run - Starting ORB with RT support\n"));
-
-          this->check_supported_priorities ();
-
-          // spawn a thread
-          // Task activation flags.
-          long flags =
-            THR_NEW_LWP |
-            THR_JOINABLE |
-            this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
-
-          // Activate task.
-          int result = this->activate (flags);
-          if (result == -1)
-            {
-              if (errno == EPERM)
-                {
-                  CIAO_ERROR ((LM_EMERGENCY, CLINFO
-                              "ComponentServer_Task::run - Cannot create thread with scheduling policy %C\n"
-                              "because the user does not have the appropriate privileges, terminating program. "
-                              "Check svc.conf options and/or run as root\n",
-                              sched_policy_name (this->orb_->orb_core ()->orb_params ()->ace_sched_policy ())));
-                  throw Error ("Unable to start RT support due to permissions problem.");
-                }
-              else
-                throw Error ("Unknown error while spawning ORB thread.");
-            }
-
-          // Wait for task to exit.
-          result = this->wait ();
-
-          if (result != -1)
-            throw Error ("Unknown error waiting for ORB thread to complete");
-
-          CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer_Task::run - ORB thread completed, terminating ComponentServer %C\n",
-                      this->uuid_.c_str ()));
-        }
-      else
-        {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::run - Starting ORB without RT support\n"));
-          this->svc ();
-          CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer_Task::run - ORB has shutdown, terminating ComponentServer\n"));
-        }
+      CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::run - Starting ORB\n"));
+      this->svc ();
+      CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer_Task::run - ORB has shutdown, terminating ComponentServer\n"));
     }
 
     void

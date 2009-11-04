@@ -7,7 +7,6 @@
 #include "ciao/Client_init.h"
 #include "ciao/CIAO_FailureReasonsC.h"
 
-#include "CIAO_ServerResourcesC.h"
 #include "CIAO_ComponentServerC.h"
 #include "CIAO_PropertiesC.h"
 
@@ -285,37 +284,6 @@ namespace CIAO
 
       cmd_options += " -u ";
       cmd_options += server.uuid_;
-
-      if (server.cmap_->find (SERVER_RESOURCES, val) == 0)
-        {
-          // There may be command line arguments specified in the plan
-          ServerResource_var sr;
-          val >>= sr;
-
-          // If command line options are specified through RTCCM descriptors,
-          // then we should honor these command line options as well.
-          for (CORBA::ULong arg_i = 0;
-               arg_i < sr->args.length ();
-               ++arg_i)
-            {
-              CIAO_DEBUG ((LM_TRACE, CLINFO
-                           "CIAO_ServerActivator_i::construct_command_line - Adding argument %C from ServerResource\n",
-                           sr->args[arg_i].in ()));
-              cmd_options += " "; // space between command line args
-              cmd_options += sr->args[arg_i];
-            }
-
-          // If service configuration file is specified through RTCCM
-          // descriptors, then we should honor it as well.
-          if (ACE_OS::strcmp (sr->svcconf.in (), "") != 0)
-            {
-              CIAO_DEBUG ((LM_TRACE, CLINFO
-                           "CIAO_ServerActivator_i::construct_command_line - Using SvcConf file %C\n",
-                           sr->svcconf.in ()));
-              cmd_options += " -ORBSvcConf ";
-              cmd_options += sr->svcconf;
-            }
-        }
 
       return cmd_options;
     }

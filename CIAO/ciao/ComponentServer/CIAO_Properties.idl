@@ -2,7 +2,7 @@
  * @file CIAO_Properties.idl
  * @author William R. Otte
  * $Id$
- * Standardizes names of configvalues used by CIAO. 
+ * Standardizes names of configvalues used by CIAO.
  */
 
 #ifndef CIAO_PROPERTIES_IDL
@@ -15,7 +15,6 @@ module CIAO
     const string SVNT_ENTRYPT = "edu.vanderbilt.dre.CIAO.ServantEntrypoint";
     const string SVNT_ARTIFACT = "edu.vanderbilt.dre.CIAO.ServantArtifact";
     const string EXEC_ARTIFACT = "edu.vanderbilt.dre.CIAO.ExecutorArtifact";
-    const string SERVER_RESOURCES = "edu.vanderbilt.dre.CIAO.ServerResources";
     const string SERVER_UUID = "edu.vanderbilt.dre.CIAO.ServerUUID";
     const string SERVER_EXECUTABLE = "edu.vanderbilt.dre.CIAO.ComponentServerExecutable";
     const string SERVER_ARGUMENTS = "edu.vanderbilt.dre.CIAO.ComponentServerArgs";
