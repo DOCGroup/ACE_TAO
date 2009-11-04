@@ -2,17 +2,27 @@
 // $Id$
 
 project(CCM_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
-  idlflags     += -Wb,stub_export_macro=DAnCE_ComponentServer_stub_Export
-  idlflags     += -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h
-  idlflags     += -Wb,skel_export_macro=DAnCE_ComponentServer_svnt_Export
-  idlflags     += -Wb,skel_export_include=DAnCE_ComponentServer_svnt_export.h
+  idlflags     += -Wb,stub_export_macro=DANCE_COMPONENTSERVER_STUB_Export \
+                  -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h \
+                  -Wb,skel_export_macro=DANCE_COMPONENTSERVER_SVNT_Export \
+                  -Wb,skel_export_include=DAnCE_ComponentServer_svnt_export.h \
+                  -Gxhst -Gxhsk
 
   custom_only = 1
 
   IDL_Files {
-    CCM_ComponentServer.idl
+    idlflags += -SS -Sci
     CCM_ComponentServer_Base.idl
+  }
+
+  IDL_Files {
+    idlflags += -Ssi
     CCM_ComponentServer_Client.idl
+  }
+
+  IDL_Files {
+    idlflags += -Ssi
+    CCM_ComponentServer.idl
   }
 }
 
@@ -49,7 +59,6 @@ project(CCM_ComponentServer_svnt) : ciaolib_with_idl, ciao_output, messaging, cc
   Source_Files {
     CCM_ComponentServerS.cpp
     CCM_ComponentServer_ClientS.cpp
-    CCM_ComponentServer_BaseS.cpp
   }
   IDL_Files {
   }
