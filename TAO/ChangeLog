@@ -1,3 +1,9 @@
+Wed Nov  4 20:57:08 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * MPC/config/notify_monitor_control.mpb:
+
+          Disable this feature on wince=1 build.
+          
 Tue Nov  3 17:32:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_init.cpp:
