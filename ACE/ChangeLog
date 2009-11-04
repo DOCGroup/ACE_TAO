@@ -1,3 +1,10 @@
+Wed Nov  4 00:07:49 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (resume_handler_i): If asked to resume a
+          handler without any bits currently set, just note the handler has
+          been resumed, don't fail it. Prevents orphaned handle if a
+          auto-suspended handler's callback clears the lone bit set.
+
 Mon Nov  2 13:45:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/RW_Process_Mutex.h:
