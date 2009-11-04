@@ -46,10 +46,6 @@ namespace CIAO
 
       void usage (void);
 
-      const char * sched_policy_name (int sched_policy);
-
-      void check_supported_priorities (void);
-
       CORBA::ORB_var orb_;
 
       auto_ptr<CIAO::Logger_Service> logger_;

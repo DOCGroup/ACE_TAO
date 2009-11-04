@@ -111,7 +111,7 @@ namespace CIAO
                                       ACE_Equal_To<ACE_CString>,
                                       ACE_Null_Mutex> CCMNaming_Map;
       CCMNaming_Map naming_map_;
-      
+
       CIAO::Deployment::ComponentInstallation_var ci_;
     };
   }
