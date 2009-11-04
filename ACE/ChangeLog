@@ -6,12 +6,6 @@ Wed Nov  4 14:51:00 UTC 2009  Olli Savia  <ops@iki.fi>
         * tests/tests.mpc:
           Moved regression test for 3758 to its own file. 
 
-Wed Nov  4 14:49:18 UTC 2009  Olli Savia  <ops@iki.fi>
-
-        * tests/Bug_3758_Regression_Test.cpp:
-        * tests/run_test.lst:
-        * tests/tests.mpc:
-
 Wed Nov  4 11:39:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/index.html:
