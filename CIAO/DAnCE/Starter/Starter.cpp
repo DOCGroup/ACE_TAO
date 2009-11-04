@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @Brief Dynamically runs libraries
+ * @brief Dynamically runs libraries
  *
  * @author Vinzenz Tornow <vt@prismtech.com>
  */

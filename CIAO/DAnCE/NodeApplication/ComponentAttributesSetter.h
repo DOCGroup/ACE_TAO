@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Workaround for component attributes setting
+ * @brief  Workaround for component attributes setting
  *
  * @author Erwin Gottlieb <eg@prismtech.com>
  */

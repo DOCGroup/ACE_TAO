@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Implementation of POA_Deployment::DomainApplicationManager
+ * @brief  Implementation of POA_Deployment::DomainApplicationManager
  *
  * @author Erwin Gottlieb <eg@prismtech.com>
  */

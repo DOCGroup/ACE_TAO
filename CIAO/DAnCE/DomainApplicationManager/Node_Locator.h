@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Locates NodeManager instances.
+ * @brief  Locates NodeManager instances.
  *
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */

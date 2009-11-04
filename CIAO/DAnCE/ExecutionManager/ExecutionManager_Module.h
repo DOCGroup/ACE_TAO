@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @Brief
+ * @brief
  *
  * @author Vinzenz Tornow <vt@prismtech.com>
  */

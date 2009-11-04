@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Return location of component artifact
+ * @brief  Return location of component artifact
  *
  * @author Erwin Gottlieb <eg@prismtech.com>
  */
