@@ -341,53 +341,6 @@ namespace CIAO
 
     }
 
-    const char *
-    ComponentServer_Task::sched_policy_name (int sched_policy)
-    {
-      const char *name = 0;
-
-      switch (sched_policy)
-        {
-        case ACE_SCHED_OTHER:
-          name = "SCHED_OTHER";
-          break;
-        case ACE_SCHED_RR:
-          name = "SCHED_RR";
-          break;
-        case ACE_SCHED_FIFO:
-          name = "SCHED_FIFO";
-          break;
-        }
-
-      return name;
-    }
-
-    /// The following check is taken from $(TAO_ROOT)/tests/RTCORBA/
-    void
-    ComponentServer_Task::check_supported_priorities (void)
-    {
-      CIAO_TRACE ("ComponentServer_Task::check_supported_priorities");
-
-      int const sched_policy =
-        this->orb_->orb_core ()->orb_params ()->ace_sched_policy ();
-
-      // Check that we have sufficient priority range to run,
-      // i.e., more than 1 priority level.
-      int const max_priority = ACE_Sched_Params::priority_max (sched_policy);
-      int const min_priority = ACE_Sched_Params::priority_min (sched_policy);
-
-      if (max_priority == min_priority)
-        {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::check_supported_priorities - "
-                      " Not enough priority levels with the %C scheduling policy\n"
-                      "on this platform to run, terminating ....\n"
-                      "Check svc.conf options\n",
-                      sched_policy_name (sched_policy)));
-
-          throw Error ("Bad scheduling policy.");
-        }
-    }
-
     void
     ComponentServer_Task::configure_logging_backend (void)
     {

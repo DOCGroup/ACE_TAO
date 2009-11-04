@@ -1,3 +1,12 @@
+Wed Nov  4 11:16:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.h:
+          Removed more deprecated code
+
+        * ciao/ComponentServer/CIAO_Container_Impl.h
+          Layout change
+
 Wed Nov  4 11:07:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ciao_componentserver_configurator.mpb:
