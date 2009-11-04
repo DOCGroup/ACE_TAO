@@ -5,13 +5,12 @@ project(CCM_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_macro=DANCE_COMPONENTSERVER_STUB_Export \
                   -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h \
                   -Wb,skel_export_macro=DANCE_COMPONENTSERVER_SVNT_Export \
-                  -Wb,skel_export_include=DAnCE_ComponentServer_svnt_export.h \
-                  -Gxhst -Gxhsk
+                  -Wb,skel_export_include=DAnCE_ComponentServer_svnt_export.h
 
   custom_only = 1
 
   IDL_Files {
-    idlflags += -SS -Sci
+    idlflags += -SS -Sci -Gxhst -Gxhsk
     CCM_ComponentServer_Base.idl
   }
 
