@@ -1,3 +1,26 @@
+Wed Nov  4 11:30:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h
+        * DAnCE/DomainApplication/Domain_Application_Impl.h
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/DomainApplicationManager/Node_Locator.h
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h
+        * DAnCE/NodeApplication/ComponentAttributesSetter.h
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * DAnCE/NodeApplication/ServerActivator_Impl.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/NodeManager/Node_Manager_Module.h
+        * DAnCE/NodeManager/NodeManager_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.h
+        * DAnCE/RepositoryManager/Repository_Manager_Module.h
+        * DAnCE/Starter/Starter.cpp
+        * DAnCE/TargetManager/Target_Manager_Module.h
+        * DAnCE/Utils/Plan_Handler.h
+          Doxygen fixes
+
 Wed Nov  4 11:16:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.cpp:

@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @Brief  Run PlanLauncher
+ * @brief  Run PlanLauncher
  *
  * @author Vinzenz Tornow <vt@prismtech.com>
  */
