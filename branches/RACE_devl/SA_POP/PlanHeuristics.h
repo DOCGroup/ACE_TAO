@@ -48,6 +48,8 @@ namespace SA_POP {
      * @return  Next open condition to satisfy.
      */
     virtual Condition choose_cond (const OpenCondMap &open_conds) = 0;
+	virtual Condition choose_cond_suspension (const OpenCondMap &open_conds) = 0;
+	virtual Condition choose_cond_suspension_most_constrained (const OpenCondMap &open_conds)=0;
 
   protected:
     /// Pointer to Planner object.
@@ -79,7 +81,15 @@ namespace SA_POP {
      *
      * @return  Sorted list of tasks that satisfy given condition.
      */
-    virtual TaskList choose_task (Condition open_cond) = 0;
+    virtual TaskChoiceList choose_task (Condition open_cond) = 0;
+
+    /// Choose the (ordering of) task(s) to satisfy an open condition.  Better
+    /**
+     * @param open_cond  Open condition to satisfy.
+     *
+     * @return  Sorted list of tasks that satisfy given condition.
+     */
+	virtual TaskChoiceList choose_task_fair (Condition open_cond) = 0;
 
   protected:
     /// Pointer to Planner object.

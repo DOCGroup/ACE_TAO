@@ -168,7 +168,7 @@ namespace SA_POP {
     // ************************************************************************
 
     /// Scheduling is fourth decision point.
-    static const int SCHEDULE_DECISION = 3;
+    static const int SCHEDULE_DECISION = 4;
 
     // ************************************************************************
     // Prototypes of commands that work on other objects.

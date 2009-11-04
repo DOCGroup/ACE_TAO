@@ -67,7 +67,7 @@
     <xs:sequence>
       <xs:element name="taskID" type="SA-POP:TaskID" />
       <xs:element name="implID" type="SA-POP:TaskImplID" />
-      <xs:element name="duration" type="SA-POP:TimeValue" default="-1" />
+      <xs:element name="duration" type="SA-POP:TimeValue" default="0" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ImplToResource">

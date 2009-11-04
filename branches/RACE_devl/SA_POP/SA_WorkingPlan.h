@@ -20,7 +20,8 @@
 #include "WorkingPlan.h"
 #include "PlanCommands.h"
 #include "SA_PlanCommands.h"
-
+#include <stack>
+#include <map>
 
 namespace SA_POP {
 
@@ -262,7 +263,7 @@ namespace SA_POP {
     /**
      * @param cmd  Command object.
      */
-    virtual void execute (SA_ResolveCLThreatCmd *cmd);
+    virtual bool execute (SA_ResolveCLThreatCmd *cmd);
 
     /// Undo a command to resolve a causal link threat in the
     /// plan (with promotion or demotion).
@@ -327,10 +328,44 @@ namespace SA_POP {
      */
 	virtual void reset_plan ();
 
+
+    virtual void generate_all_threats(void);
+
+
+	virtual InstToTaskMap get_task_insts(void){return task_insts_;};
+
+	virtual bool inst_has_impl(TaskInstID inst_id);
+
+	void print_precedence_graph(std::string source);
+
+	bool condition_in_suspended(Condition condition, TaskInstID required_by_);
+
+	CausalLink clink_on_path(Condition condition, TaskInstID required_by);
+
+	CausalLink clink_on_path_aux(Condition condition, TaskInstID required_by, 
+										std::set<TaskInstID> & expanded);
+
+	void unsuspend_listeners(CausalLink link, TaskInstID exception);
+	void unsuspend_listeners_aux(CausalLink link, TaskInstID exception);
+
+	void suspend_condition(Condition cond, TaskInstID required_by, CausalLink suspended_by);
+
+	void resume_condition(Condition cond, TaskInstID required_by, CausalLink suspended_by);
+
+	bool is_null_condition(Condition cond);
+
+	bool is_null_link(CausalLink link);
+
+	Condition get_no_condition();
+
+	PrecedenceGraph get_precedence_graph();
+
   protected:
     // ************************************************************************
     // State information.
     // ************************************************************************
+
+    CLThreatSet threat_set;
 
     /// Flag for whether command prototypes have been set.
     bool has_cmds_;
@@ -338,7 +373,7 @@ namespace SA_POP {
     /// Task instance ID to use for next instance created.
     TaskInstID next_inst_id_;
 
-    typedef std::map <TaskInstID, TaskID> InstToTaskMap;
+
     /// Task instances in plan (mapping to task id).
     InstToTaskMap task_insts_;
 
@@ -348,9 +383,16 @@ namespace SA_POP {
     // Type of a map from conditions to causal links.
     typedef std::multimap <Condition, CausalLink> CondToCLinksMap;
 
+	typedef std::multimap <TaskInstID, CausalLink> TaskToCLinksMap;
+
     /// Causal links in plan (mapping from conditions to all causal links
     /// containing that condition).
     CondToCLinksMap causal_links_;
+	TaskToCLinksMap causal_links_by_first;
+	TaskToCLinksMap causal_links_by_second;
+
+	SuspendedConditionListenerMap suspended_listener_map;
+	SuspendedConditionSet suspended_conditions;
 
     /// Current plan (generated upon request).
     Plan plan_;
@@ -358,13 +400,9 @@ namespace SA_POP {
     /// Helper function to create next instance id.
     virtual TaskInstID get_next_inst_id (void);
 
-  	/// Type of particular Task Implementation mapped to a Task Implementation Set.
-  	/// This is a particular Precedence set. Like Before, After etc.
-	  typedef std::map <TaskInstID, TaskInstSet> PrecedenceSet;
 
-	  /// Type of a Precedence Relation mapped to a Precedence Set.
-	  /// This gives the whole Precedence Graph
-	  typedef std::map <PrecedenceRelation, PrecedenceSet> PrecedenceGraph;
+	Condition no_condition;
+	CausalLink no_link;
 
 	/// PrecedenceGraph
 	PrecedenceGraph precedence_graph_;
@@ -395,6 +433,18 @@ namespace SA_POP {
 
 	// The set of reused task instances
 	std::multiset<TaskInstID> reused_insts_;
+
+  SchedulingLinks ordering_links;
+  //useful for doing the loop detection algorithm
+  SchedulingLinks reverse_ordering_links;
+ // SA_AssocTaskImplCmd* associate_cmd;
+  
+  /*
+  bool is_cycle_in_ordering(void);
+  void dfs_aux(TaskInstID current, std::stack<TaskInstID>& s, std::map<TaskInstID, bool>& visited, std::map<TaskInstID, bool>& unvisited);
+  bool dfs_aux2(TaskInstID current, std::map<TaskInstID, bool>& visited);
+ */
+
   /// Insert initially task by task in the precedence graph
   /**
    * @param task_inst The task instance to insert into the precedence graph

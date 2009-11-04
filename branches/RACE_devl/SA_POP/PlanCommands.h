@@ -58,7 +58,7 @@ namespace SA_POP {
     /**
      * @param prev  Pointer to the previous command.
      */
-    virtual void set_prev (PlanCommand *prev) { this->prev_ = prev; };
+    virtual void set_prev (PlanCommand *prev) { this->prev_ = prev;};
 
     /// Get pointer to previous command.
     /**
@@ -84,6 +84,11 @@ namespace SA_POP {
      * @return  Log text for most recent execution of command.
      */
     virtual std::string get_log_text (void) = 0;
+
+
+
+    int choices;
+
 
   protected:
     /// ID of this command.
@@ -164,7 +169,7 @@ namespace SA_POP {
     /**
      * @param tasks  Ordered list of tasks.
      */
-    virtual void set_tasks (const TaskList &tasks) = 0;
+    virtual void set_tasks (const TaskChoiceList &tasks) = 0;
 
     /// Set causal link info to add to the plan with task.
     /**
@@ -192,6 +197,12 @@ namespace SA_POP {
      * @return  True if this command is using an already existing instance id.
      */
     virtual bool inst_exists (void) = 0;
+
+	virtual TaskInstSet get_satisfied_tasks(void) = 0;
+
+	virtual Condition get_condition(void) = 0;
+
+	virtual CLSet get_causal_insertions(void) = 0;
   };
 
   /**
@@ -220,6 +231,10 @@ namespace SA_POP {
      * @return  ID of instance of this command.
      */
     virtual TaskInstID get_task_inst (void) = 0;
+
+	virtual void set_satisfied_insts(TaskInstSet set)=0;
+	
+	virtual void set_added_links(CLSet set) = 0;
   };
 
   /**
@@ -267,7 +282,7 @@ namespace SA_POP {
     /**
      * @param conds  Set of open conditions to remove.
      */
-    virtual void set_conds (const CondSet &conds) = 0;
+    virtual void set_conds (const CondSet &conds, const TaskInstSet &tasks) = 0;
   };
 
   /**
@@ -331,6 +346,10 @@ namespace SA_POP {
      * @param threat  The causal link threat to resolve.
      */
     virtual void set_threat (CLThreat &threat) = 0;
+    
+
+   virtual TaskInstID get_first_task(void) = 0;
+   virtual TaskInstID get_second_task(void)=0;
   };
 
   /**

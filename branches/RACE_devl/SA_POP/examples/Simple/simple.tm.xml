@@ -67,12 +67,12 @@
   <taskToImpl>
     <taskID>2220</taskID>
     <implID>2220_A0_1</implID>
-    <duration>-1</duration>
+    <duration>1</duration>
   </taskToImpl>
   <taskToImpl>
     <taskID>2221</taskID>
     <implID>2221_A1_1</implID>
-    <duration>-1</duration>
+    <duration>2</duration>
   </taskToImpl>
   <taskToImpl>
     <taskID>2221</taskID>
@@ -82,7 +82,7 @@
   <taskToImpl>
     <taskID>2222</taskID>
     <implID>2222_A2_1</implID>
-    <duration>-1</duration>
+    <duration>1</duration>
   </taskToImpl>
 
   <implToResource>

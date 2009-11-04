@@ -49,6 +49,12 @@ cur_cmd_ (0)
   this->plan_.sched_links.clear ();
   this->plan_.task_insts.clear ();
   this->plan_.threat_links.clear ();
+
+  this->not_backtracking.decision_pt = -1;
+  this->not_backtracking.seq_num = -1;
+  this->not_backtracking.step = -1;
+
+  this->backtrack_cmd = this->not_backtracking;
 };
 
 
@@ -117,6 +123,7 @@ bool Planner::plan (size_t sa_max_steps, SA_POP::Goal goal)
 
   // Set planning strategy goals and satisfy open conditions.
   this->plan_strat_->set_goals (goal.goal_conds);
+
   if (this->plan_strat_->satisfy_open_conds ()) {
     this->plan_ = this->working_plan_->get_plan ();
     this->notify_plan_changed ();
@@ -255,8 +262,11 @@ void Planner::undo_command (CommandID id)
     throw msg;
   }
 
+  PlanCommand* tmp = this->cur_cmd_;
   this->cur_cmd_->undo ();
   this->cur_cmd_ = this->cur_cmd_->get_prev ();
+
+  delete tmp;
 };
 
 // Add a command to be executed later with execute_next().
@@ -269,6 +279,14 @@ void Planner::add_command (PlanCommand *command)
 // On current command, undo last execution (if any) & execute next option.
 bool Planner::try_next (CommandID id)
 {
+	if(this->backtrack_cmd != this->not_backtracking){
+		if(id != this->backtrack_cmd){
+			return false;
+		}else{
+			this->backtrack_cmd = this->not_backtracking;
+		}
+	}
+
   if (this->cur_cmd_->get_id () != id) {
     char char_buf[35];
     sprintf(char_buf, "%d.%d.%d", id.step, id.decision_pt, id.seq_num); 
@@ -299,6 +317,10 @@ void Planner::undo_through (CommandID id)
   PlanCommand *temp = this->cur_cmd_;
   temp->undo ();
   this->cur_cmd_ = temp->get_prev ();
+
+  delete temp;
+
+
   this->undo_through (id);
 };
 /// Get the current command id.
@@ -340,6 +362,10 @@ const GoalMap& Planner::get_goals (void)
 // Get a task's name.
 std::string Planner::get_task_name (TaskID task_id)
 {
+	if(task_id == INIT_TASK_ID){
+		return "init task";
+	}
+
   return this->sanet_->get_task_name (task_id);
 };
 
@@ -378,6 +404,9 @@ CondSet Planner::get_unsat_preconds (TaskID task_id)
 {
   CondSet temp = this->get_preconds (task_id);
 
+  //Note:  removed because when threats exist, it is wrong.  Uses initial condition
+  ///instead
+  /*
   // Remove satisfied preconditions.
   for (CondSet::iterator iter = temp.begin ();
     iter != temp.end (); )
@@ -394,6 +423,9 @@ CondSet Planner::get_unsat_preconds (TaskID task_id)
     if (cur_prob > this->cond_prob_thresh_)
       temp.erase (prev_iter);
   }
+  
+  */
+  
 
   return temp;
 }
@@ -404,6 +436,11 @@ CondSet Planner::get_effects (TaskID task_id)
 {
   return this->sanet_->get_effects (task_id);
 };
+
+SANet::LinkWeight Planner::get_link(SANet::TaskID id, SANet::CondID cond_ID)
+{
+  return this->sanet_->get_link(id, cond_ID);
+}
 
 // Get all tasks that satisfy a condition.
 TaskSet Planner::get_satisfying_tasks (Condition cond)
@@ -423,6 +460,11 @@ TaskID Planner::get_task_from_inst (TaskInstID inst_id)
 {
   return this->working_plan_->get_task_from_inst (inst_id);
 };
+
+void Planner::generate_all_threats(void)
+{
+   this->working_plan_->generate_all_threats();
+}
 
 // Get all current causal link threats.
 CLThreatSet Planner::get_all_threats (void)
@@ -452,6 +494,11 @@ ResourceID resource_id)
 // Get all resources used by a task implementation.
 ResourceMap Planner::get_all_resources (TaskImplID impl_id)
 {
+
+	if(impl_id == INIT_TASK_IMPL_ID){
+		return SA_POP::ResourceMap();
+	}
+
   return this->task_map_->get_all_resources (impl_id);
 };
 

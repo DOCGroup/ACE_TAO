@@ -14,9 +14,13 @@
 
 #include "SA_POP_Types.h"
 #include "SA_SchedStrategy.h"
+#include "SA_WorkingPlan.h"
 #include "Planner.h"
 #include <list>
 #include <set>
+#include <fstream>
+#include <algorithm>
+#include <vector>
 using namespace SA_POP;
 
 // Constructor.
@@ -82,6 +86,9 @@ CommandID SA_SchedStrategy::get_next_cmd_id (void)
 // satisfaction of open conditions by recursive call back to planning).
 bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 {
+
+
+
   //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
   //return this->planner_->recurse_plan ();
   // Adjust schedule.
@@ -89,13 +96,20 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	// Get the current command id to backtrack to.
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
 	this->cur_seq_num_=1;
+
 	// Do the energy propogation for this task instance
 	// This function automatically does this for the task instances before and after it.
+  
+
+	
   if(!this->energy_prop(task_inst))
   {
+
+
 	  this->planner_->undo_through(cur_cmd_id);
 	  return false;
   }
+
   // Do the balance propogation related to time windows for this task instance 
   // and those unranked with respect to it
   if(!this->time_balance_prop(task_inst))
@@ -140,7 +154,15 @@ bool SA_SchedStrategy::satisfy_sched (TaskInstID task_inst)
 	  this->planner_->undo_through(cur_cmd_id);
 	  return false;
   }
-	return this->planner_->recurse_plan ();
+
+  
+
+  if(!this->planner_->recurse_plan ()){
+	  this->planner_->undo_through(cur_cmd_id);
+	  return false;
+  }else{
+	  return true;
+  }
 };
 
 // Satisfy fully instantiated plan.
@@ -156,6 +178,131 @@ bool SA_SchedStrategy::satisfy_full_sched ()
 	  this->planner_->undo_through(cur_cmd_id);
 	  return false;
   }
+	
+  SA_WorkingPlan* working_plan_tmp = (SA_WorkingPlan*)this->planner_->get_working_plan();
+
+ // working_plan_tmp->get_precedence_graph()
+  PrecedenceSet befores = (working_plan_tmp->get_precedence_graph().find(BEFORE)->second);
+  PrecedenceSet afters = (working_plan_tmp->get_precedence_graph().find(AFTER)->second);
+  PrecedenceSet simuls = (working_plan_tmp->get_precedence_graph().find(SIMUL)->second);
+  PrecedenceSet unrankeds = (working_plan_tmp->get_precedence_graph().find(UNRANKED)->second);
+
+  //double current_execution_time = 0
+  //vector currently executing actions
+
+
+  std::vector<TaskInstEndTimeSet> executing_tasks;
+
+  double current_execution_time = 0;
+
+  int total_tasks = befores.size();
+  int completed_tasks = 0;
+
+  while(completed_tasks < total_tasks){
+
+	  for(PrecedenceSet::iterator it = befores.begin(); it != befores.end();){
+		
+		  PrecedenceSet::iterator prev_it = it++;
+		  if((befores.find(prev_it->first))->second.empty()){
+			
+			  TaskInstEndTimeSet new_execute;
+			  new_execute.inst = prev_it->first;
+
+			
+			  if(prev_it->first == INIT_TASK_INST_ID){
+				  new_execute.end_time = current_execution_time + 0;
+			  }else{
+				  new_execute.end_time = current_execution_time + this->planner_->get_impl(working_plan_tmp->get_impl_id(prev_it->first))
+					  ->get_duration();
+			  }
+
+			  executing_tasks.push_back(new_execute);
+			  befores.erase(prev_it);
+		  }
+	  }
+
+	  std::sort(executing_tasks.begin(), executing_tasks.end());
+
+	  TaskInstEndTimeSet next_done = *executing_tasks.begin();
+	  current_execution_time = next_done.end_time;
+
+	  std::list<TaskInstEndTimeSet> to_remove;
+
+	  for(std::vector<TaskInstEndTimeSet>::iterator it3 = executing_tasks.begin(); 
+		  it3 != executing_tasks.end();){
+
+			if(it3->end_time != current_execution_time){	 
+			  break;
+			 }
+		  std::vector<TaskInstEndTimeSet>::iterator prev_it = it3++;
+
+		  std::cout<<"Task "<<prev_it->inst<<" finishes at time "<<prev_it->end_time<<std::endl;
+		  completed_tasks++;
+
+		  for(PrecedenceSet::iterator it2 = befores.begin(); it2 != befores.end(); it2++){
+			  it2->second.erase(prev_it->inst);
+		  }
+		  befores.erase(prev_it->inst);
+		  to_remove.push_front(*prev_it);
+	//	  executing_tasks.erase(prev_it);
+	  }
+
+	  for( std::list<TaskInstEndTimeSet>::iterator it3 = to_remove.begin(); it3 != to_remove.end(); it3++){
+		  std::vector<TaskInstEndTimeSet>::iterator it4;
+		  for(it4 = executing_tasks.begin(); it4 != executing_tasks.end(); it4++){
+			  if(it4->inst == it3->inst){
+				break;
+			  }
+		  }
+		  executing_tasks.erase(it4);
+	  }
+  }
+
+  //while #actions finished != total actions
+  //find all actions with no more befores
+  //add to currently executing actions sorted by current_time + their duration
+  //take action(s if there are multiple that end at the same time) off currently executing actions
+  //
+  //remove them from the befores of all other actions
+  //remove them from befores
+  //current execution time = when they finish
+
+  /*
+  std::list<TaskInstID> execute_this_time;
+
+  int time = 0;
+  while(!befores.empty()){
+
+	  execute_this_time.clear();
+
+	  for(PrecedenceSet::iterator it = befores.begin(); it != befores.end();){
+		
+		  PrecedenceSet::iterator prev_it = it++;
+
+		  if((befores.find(prev_it->first))->second.empty()){
+			
+			  execute_this_time.push_front(prev_it->first);
+
+			  befores.erase(prev_it);
+		  }
+	  }
+
+	
+	  for(std::list<TaskInstID>::iterator it = execute_this_time.begin(); it != execute_this_time.end(); it++){
+	
+		  std::cout<<"Task "<<(*it)<<" can execute at time "<<time<<std::endl;
+
+		  for(PrecedenceSet::iterator it2 = befores.begin(); it2 != befores.end(); it2++){
+				it2->second.erase(*it);
+		  }
+	  }
+	  time++;
+
+
+
+  }
+  */
+
   return true;
 };
 /// Calculate the min and max levels for the consumer of a task instance
@@ -172,6 +319,9 @@ void SA_SchedStrategy::calculate_levels(TaskInstID task_inst)
 		ResourceValue Q=this->planner_->get_capacity(rm_iter->first);
 		// The max and min levels at the consumer
 		ResourceValue cons_min=Q,cons_max=Q;
+
+		std::ostringstream debug_text;
+
 		for(TaskInstSet::const_iterator iter=unranked->begin();iter!=unranked->end();iter++)
 		{
 			// get the resourse usage by the task instance in the unranked set
@@ -184,16 +334,20 @@ void SA_SchedStrategy::calculate_levels(TaskInstID task_inst)
 			//The consumer of *iter can be executed before and its producer after the consumer of task_inst
 			if(start_win.second==NULL_TIME || temp_start.first<start_win.second)
 			{
-				std::cout<<"The consumer of "<<*iter<<" can be executed before and its producer after the consumer of "<<task_inst<<std::endl;
+				debug_text<<"The consumer of "<<*iter<<" can be executed before and its producer after the consumer of "<<task_inst<<std::endl;
 				cons_min-=temp_rm_iter->second;
 			}
 			// The consumer of *iter has to executed before the consumer of task_inst
 			if(temp_start.second!=NULL_TIME && temp_start.second<start_win.first)
 			{
-				std::cout<<"THe consumer of "<<*iter<<" has to executed before the consumer of "<<task_inst<<std::endl;
+				debug_text<<"THe consumer of "<<*iter<<" has to executed before the consumer of "<<task_inst<<std::endl;
 				cons_max-=temp_rm_iter->second;
 			}
 		}
+
+		SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+		debug_text.str("");
+
 		LevelMap temp;
 		MinimumLevels::iterator iter1=this->min_cons_levels_.find(rm_iter->first);
 		// Insert dummy levels if this is a new task instance
@@ -290,7 +444,14 @@ bool SA_SchedStrategy::search(double min_crit)
 	for(TaskInstSet::iterator iter=all.begin();iter!=all.end();iter++)
 	{
 		Criticality crit_cons = this->crit(*iter);
-		std::cout<<"Criticality of "<<*iter<<" consumer: "<<crit_cons.second<<std::endl;
+
+		std::ostringstream debug_text;
+
+		debug_text<<"Criticality of "<<*iter<<" consumer: "<<crit_cons.second<<std::endl;
+		SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+		debug_text.str("");
+
+
 		if(crit_cons.second>=max_crit.second)
 		{
 			max_crit=crit_cons;
@@ -341,7 +502,12 @@ bool SA_SchedStrategy::search(double min_crit)
 ///Precedence Link Based Balance Constraint Propogation 5.3.3 (labourie paper)
 bool SA_SchedStrategy::prec_balance_prop (TaskInstID task_inst)
 {
-	std::cout<<"Doing Precedence balance prop for "<<task_inst<<std::endl;
+
+	std::ostringstream debug_text;
+	debug_text<<"Doing Precedence balance prop for "<<task_inst<<std::endl;
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+	debug_text.str("");
+
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
 	const TaskInstSet *unranked = this->planner_->get_prec_insts(task_inst,UNRANKED);	
 	TimeWindow start_win = this->planner_->get_start_window(task_inst);
@@ -358,7 +524,10 @@ bool SA_SchedStrategy::prec_balance_prop (TaskInstID task_inst)
 			TimeWindow temp_end = this->planner_->get_end_window(*iter);
 			if(temp_start.second!=NULL_TIME && temp_start.second<start_win.first)
 			{
-				std::cout<<"The consumer of "<<*iter<<" has to executed before"<<std::endl;
+				debug_text<<"The consumer of "<<*iter<<" has to executed before"<<std::endl;
+				SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+				debug_text.str("");
+
 				if(temp_end.first!=NULL_TIME && (start_win.second==NULL_TIME || temp_end.first<start_win.second)) producers_unranked.insert(*iter);
 				//The consumer has to be executed before this task instance
 				ResourceMap temp_rm = this->planner_->get_all_resources(this->planner_->get_task_impl_from_inst(*iter));
@@ -401,7 +570,12 @@ bool SA_SchedStrategy::prec_balance_prop (TaskInstID task_inst)
 ///Time Based Balance Constraint Propogation 5.3.3 (labourie paper)
 bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 {
-	std::cout<<"Doing time balance prop for "<<task_inst<<std::endl;
+
+	std::ostringstream debug_text;
+	debug_text<<"Doing time balance prop for "<<task_inst<<std::endl;
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+	debug_text.str("");
+
 	CommandID cur_cmd_id = this->planner_->cur_command_id();
 	const TaskInstSet *unranked = this->planner_->get_prec_insts(task_inst,UNRANKED);	
 	TimeWindow start_win = this->planner_->get_start_window(task_inst);
@@ -420,7 +594,11 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 			TimeWindow temp_end = this->planner_->get_end_window(*iter);
 			if(temp_start.second!=NULL_TIME && temp_start.second<start_win.first)
 			{
-				std::cout<<"THe consumer of "<<*iter<<" has to executed before"<<std::endl;
+
+				debug_text<<"THe consumer of "<<*iter<<" has to execute before"<<std::endl;
+				SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+				debug_text.str("");
+
 				//The consumer has to be executed before this task instance
 				ResourceMap temp_rm = this->planner_->get_all_resources(this->planner_->get_task_impl_from_inst(*iter));
 				ResourceMap::iterator temp_rm_iter = temp_rm.find(rm_iter->first);
@@ -429,7 +607,11 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 				if(temp_end.first!=NULL_TIME && (start_win.second==NULL_TIME || temp_end.first<start_win.second))
 				{
 					// This task instance can be pushed before the task instance
-					std::cout<<"Task inst "<<*iter<<" can cause trouble"<<std::endl;
+					debug_text<<"Task inst "<<*iter<<" can cause trouble"<<std::endl;
+					SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+					debug_text.str("");
+
+
 					if(producers_unranked.empty())
 						producers_unranked.push_front(*iter);	
 					else
@@ -446,15 +628,23 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 				else continue;
 			}
 		}
-		std::cout<<"The producers_unranked list is: "<<std::endl;
+
+		debug_text<<"The producers_unranked list is: "<<std::endl;
 		for(std::list<TaskInstID>::iterator iter2=producers_unranked.begin();iter2!=producers_unranked.end();iter2++)
 		{
-			std::cout<<*iter2<<" ";
+			debug_text<<*iter2<<" ";
 		}
+
+		SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+		debug_text.str("");
 
 		if(level_before<0)
 		{
-			std::cout<<"The level_before is negative"<<std::endl;
+			debug_text<<"The level_before is negative"<<std::endl;
+
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+			debug_text.str("");
+
 			ResourceValue level_prod=0;
 			std::list<TaskInstID>::iterator iter2=producers_unranked.begin();
 			for(;iter2!=producers_unranked.end();iter2++)
@@ -466,7 +656,11 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 			}
 			if(iter2==producers_unranked.end()) return false;
 			TimeWindow temp2_end = this->planner_->get_end_window(*iter2);
-			std::cout<<"greater than "<<*iter2<<std::endl;
+			debug_text<<"greater than "<<*iter2<<std::endl;
+
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+			debug_text.str("");
+
 			if(temp2_end.first>start_win.first)
 			{
 				AdjustMinTimesCmd *adj_min_times_cmd = static_cast<AdjustMinTimesCmd *> (this->adj_min_times_cmd_->clone ());
@@ -489,7 +683,10 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 		const TaskInstSet *simul = this->planner_->get_prec_insts(task_inst,SIMUL);
 		for(TaskInstSet::const_iterator iter=simul->begin();iter!=simul->end();iter++)
 		{
-			std::cout<<"calculating for "<<*iter<<std::endl;
+			debug_text<<"calculating for "<<*iter<<std::endl;
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+			debug_text.str("");
+
 			ResourceMap temp_rm = this->planner_->get_all_resources(this->planner_->get_task_impl_from_inst(*iter));
 			ResourceMap::iterator temp_rm_iter = temp_rm.find(rm_iter->first);
 			//This task instance doesn't use this resource
@@ -500,7 +697,10 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 		std::list<TaskInstID> producers_unranked;
 		for(TaskInstSet::const_iterator iter=unranked->begin();iter!=unranked->end();iter++)
 		{
-		    std::cout<<"checking out "<<*iter<<std::endl;
+		    debug_text<<"checking out "<<*iter<<std::endl;
+			SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+			debug_text.str("");
+
 			TimeWindow temp_start = this->planner_->get_start_window(*iter);
 			TimeWindow temp_end = this->planner_->get_end_window(*iter);
 			if(end_win.first==NULL_TIME ||(temp_start.second!=NULL_TIME && temp_start.second<end_win.first))
@@ -564,7 +764,12 @@ bool SA_SchedStrategy::time_balance_prop (TaskInstID task_inst)
 //otherwise, repeat these for this task instance till the windows stop changing and stop in this branch.
 bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
 {
-  std::cout<<"Doing energy precedence calculations for "<<task_inst<<std::endl;
+  std::ostringstream debug_text;
+
+  debug_text<<"Doing energy precedence calculations for "<<task_inst<<std::endl;
+  SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+  debug_text.str("");
+
   CommandID cur_cmd_id = this->planner_->cur_command_id();
   AdjustMinTimesCmd *adj_min_times_cmd = static_cast<AdjustMinTimesCmd *> (this->adj_min_times_cmd_->clone ());
   AdjustMaxTimesCmd *adj_max_times_cmd = static_cast<AdjustMaxTimesCmd *> (this->adj_max_times_cmd_->clone ());
@@ -578,7 +783,7 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
   {
 	//Based on all task instances before task_inst
 	ResourceValue Q = this->planner_->get_capacity(rm_iter->first);
-	std::cout<<"The capacity of resource:"<<rm_iter->first<<" is "<<Q<<std::endl;
+	debug_text<<"The capacity of resource:"<<rm_iter->first<<" is "<<Q<<std::endl;
 	double first_before=-1,first_after=-1,second_before=0,second_after=0;
 	const TaskInstSet *before = this->planner_->get_prec_insts(task_inst,BEFORE);
 	const TaskInstSet *after = this->planner_->get_prec_insts(task_inst,AFTER);
@@ -616,7 +821,11 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
 		}
 		if(first_after!=-1 && max_end>first_after-second_after) max_end=first_after-second_after;
 	}
-    std::cout<<"After calculations for resource "<<rm_iter->first<<" start_min="<<min_start<<" and end_max="<<max_end<<std::endl;
+    debug_text<<"After calculations for resource "<<rm_iter->first<<" start_min="<<min_start<<" and end_max="<<max_end<<std::endl;
+  
+    SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+    debug_text.str("");	
+  
   }
   if(min_start!=start_win.first)
   {
@@ -628,7 +837,10 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
 		this->planner_->undo_through(cur_cmd_id);
 		return false;
     }
+  }else{
+	delete adj_min_times_cmd;
   }
+
   if(max_end!=end_win.second)
   {
     max_times_changed=true;
@@ -639,6 +851,8 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
       this->planner_->undo_through(cur_cmd_id);
       return false;
     }
+  }else{
+	delete adj_max_times_cmd;
   }
   if(min_times_changed || max_times_changed) 
   {
@@ -657,29 +871,32 @@ bool SA_SchedStrategy::energy_prop (TaskInstID task_inst)
   const TaskInstSet *aft = this->planner_->get_prec_insts(task_inst,AFTER);
   const TaskInstSet *bef = this->planner_->get_prec_insts(task_inst,BEFORE);
 
-  for(TaskInstSet::const_iterator iter = aft->begin();iter!=aft->end();iter++)
-    {
-      if(!this->energy_prop_after(*iter))
-      {
-		this->planner_->undo_through(cur_cmd_id);
-		return false;
-      }
-    }
+	  for(TaskInstSet::const_iterator iter = aft->begin();iter!=aft->end();iter++)
+		{
+		  if(!this->energy_prop_after(*iter))
+		  {
+			this->planner_->undo_through(cur_cmd_id);
+			return false;
+		  }
+		}
 
-    for(TaskInstSet::const_iterator iter = bef->begin();iter!=bef->end();iter++)
-    {
-      if(!this->energy_prop_before(*iter))
-      {
-      this->planner_->undo_through(cur_cmd_id);
-      return false;
-      }
-    }
+		for(TaskInstSet::const_iterator iter = bef->begin();iter!=bef->end();iter++)
+		{
+		  if(!this->energy_prop_before(*iter))
+		  {
+		  this->planner_->undo_through(cur_cmd_id);
+		  return false;
+		  }
+		}
+	
   return true;
 }
 /// Do the uni directional energy precedence propogation in the after direction
 bool SA_SchedStrategy::energy_prop_after (TaskInstID task_inst)
 {
-  std::cout<<"Doing energy precedence after calculations for "<<task_inst<<std::endl;
+  std::ostringstream debug_text;
+
+  debug_text<<"Doing energy precedence after calculations for "<<task_inst<<std::endl;
   CommandID cur_cmd_id = this->planner_->cur_command_id();
   AdjustMinTimesCmd *adj_min_times_cmd = static_cast<AdjustMinTimesCmd *> (this->adj_min_times_cmd_->clone ());
   TimeWindow start_win = this->planner_->get_start_window(task_inst);
@@ -691,7 +908,7 @@ bool SA_SchedStrategy::energy_prop_after (TaskInstID task_inst)
   {
 	//Based on all task instances before task_inst
 	ResourceValue Q = this->planner_->get_capacity(rm_iter->first);
-	std::cout<<"The capacity of resource:"<<rm_iter->first<<" is "<<Q<<std::endl;
+	debug_text<<"The capacity of resource:"<<rm_iter->first<<" is "<<Q<<std::endl;
 	double first_before=-1,second_before=0;
 	const TaskInstSet *before = this->planner_->get_prec_insts(task_inst,BEFORE);
 	if(!before->empty())
@@ -707,7 +924,10 @@ bool SA_SchedStrategy::energy_prop_after (TaskInstID task_inst)
 		}
 		if(first_before!=-1 && min_start<first_before+second_before) min_start=first_before+second_before;
 	}
-    std::cout<<"After after calculations for resource "<<rm_iter->first<<" start_min="<<min_start<<std::endl;
+    debug_text<<"After after calculations for resource "<<rm_iter->first<<" start_min="<<min_start<<std::endl;
+
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+	debug_text.str("");
   }
   if(min_start!=start_win.first)
   {
@@ -719,7 +939,11 @@ bool SA_SchedStrategy::energy_prop_after (TaskInstID task_inst)
 		this->planner_->undo_through(cur_cmd_id);
 		return false;
     }
+  }else{
+	delete adj_min_times_cmd;
   }
+
+
   if(min_times_changed) 
   {
     //Since the time windows have changed, some unranked task instances have gone to before or after.
@@ -729,25 +953,28 @@ bool SA_SchedStrategy::energy_prop_after (TaskInstID task_inst)
 		this->planner_->undo_through(cur_cmd_id);
 		return false;
     }
-  }
-	//TaskInstSet aft = this->planner_->after_orderings(task_inst);
-	//TaskInstSet bef = this->planner_->before_orderings(task_inst);
-  const TaskInstSet *aft = this->planner_->get_prec_insts(task_inst,AFTER);
+  
+		//TaskInstSet aft = this->planner_->after_orderings(task_inst);
+		//TaskInstSet bef = this->planner_->before_orderings(task_inst);
+	  const TaskInstSet *aft = this->planner_->get_prec_insts(task_inst,AFTER);
 
-  for(TaskInstSet::const_iterator iter = aft->begin();iter!=aft->end();iter++)
-    {
-      if(!this->energy_prop_after(*iter))
-      {
-		this->planner_->undo_through(cur_cmd_id);
-		return false;
-      }
-    }
+	  for(TaskInstSet::const_iterator iter = aft->begin();iter!=aft->end();iter++)
+		{
+		  if(!this->energy_prop_after(*iter))
+		  {
+			this->planner_->undo_through(cur_cmd_id);
+			return false;
+		  }
+		}
+	}
   return true;
 }
 /// Do the uni directional energy precedence propogation in the after direction
 bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
 {
-  std::cout<<"Doing before energy precedence calculations for "<<task_inst<<std::endl;
+  std::ostringstream debug_text;
+
+  debug_text<<"Doing before energy precedence calculations for "<<task_inst<<std::endl;
   CommandID cur_cmd_id = this->planner_->cur_command_id();
   AdjustMaxTimesCmd *adj_max_times_cmd = static_cast<AdjustMaxTimesCmd *> (this->adj_max_times_cmd_->clone ());
   TimeWindow start_win = this->planner_->get_start_window(task_inst);
@@ -760,7 +987,7 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
   {
 	//Based on all task instances before task_inst
 	ResourceValue Q = this->planner_->get_capacity(rm_iter->first);
-	std::cout<<"The capacity of resource:"<<rm_iter->first<<" is "<<Q<<std::endl;
+	debug_text<<"The capacity of resource:"<<rm_iter->first<<" is "<<Q<<std::endl;
 	double first_after=-1,second_after=0;
 	const TaskInstSet *after = this->planner_->get_prec_insts(task_inst,AFTER);
 	if(!after->empty() && end_win.second!=NULL_TIME)
@@ -783,7 +1010,10 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
 		}
 		if(first_after!=-1 && max_end>first_after-second_after) max_end=first_after-second_after;
 	}
-    std::cout<<"After before calculations for resource "<<rm_iter->first<<" and end_max="<<max_end<<std::endl;
+    debug_text<<"After before calculations for resource "<<rm_iter->first<<" and end_max="<<max_end<<std::endl;
+  
+	SA_POP_DEBUG_STR (SA_POP_DEBUG_VERBOSE, debug_text.str ());
+	debug_text.str("");
   }
   if(max_end!=end_win.second)
   {
@@ -795,6 +1025,8 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
       this->planner_->undo_through(cur_cmd_id);
       return false;
     }
+  }else{
+	delete adj_max_times_cmd;
   }
   if(max_times_changed) 
   {
@@ -805,9 +1037,9 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
 		this->planner_->undo_through(cur_cmd_id);
 		return false;
     }
-  }
+
 	//TaskInstSet bef = this->planner_->before_orderings(task_inst);
-  const TaskInstSet *bef = this->planner_->get_prec_insts(task_inst,BEFORE);
+	const TaskInstSet *bef = this->planner_->get_prec_insts(task_inst,BEFORE);
 
     for(TaskInstSet::const_iterator iter = bef->begin();iter!=bef->end();iter++)
     {
@@ -817,5 +1049,7 @@ bool SA_SchedStrategy::energy_prop_before (TaskInstID task_inst)
       return false;
       }
     }
+	
+	}
   return true;
 }

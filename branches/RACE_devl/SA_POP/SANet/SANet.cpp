@@ -71,6 +71,48 @@ void SANet::Network::add_task (TaskID ID, std::string name, MultFactor atten_fac
   }
 };
 
+Probability SANet::Network::get_prior(TaskID ID)
+{
+  TaskNodeMap::iterator task_iter = task_nodes_.find (ID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  TaskNode *task_node = task_iter->second;
+
+  return task_node->get_prior();
+
+}
+
+LinkWeight SANet::Network::get_link(TaskID ID, CondID cond_ID)
+{
+  TaskNodeMap::iterator task_iter = task_nodes_.find (ID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  TaskNode *task_node = task_iter->second;
+  SANet::LinkMap lmap = task_node->get_post();
+
+  LinkMap::iterator lIter =lmap.find(cond_ID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  LinkWeight curWeight = lIter->second;
+
+  return curWeight;
+
+}
+
+void SANet::Network::update_prior(TaskID tID, Probability prior)
+{
+  TaskNodeMap::iterator task_iter = task_nodes_.find (tID);
+  if (task_iter == task_nodes_.end ()) {
+    throw UnknownNode ();
+  }
+  TaskNode *task_node = task_iter->second;
+
+  task_node->update_prior(prior);
+  
+}
 
 void SANet::Network::add_cond (CondID ID, std::string name, MultFactor atten_factor,
                         Probability true_prob, Probability false_prob,
@@ -181,54 +223,33 @@ void SANet::Network::update_effect_link(TaskID task_ID, CondID cond_ID,
 
 };
 
-void SANet::Network::print_graphviz(std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap)
+void SANet::Network::print_graphviz(std::basic_ostream<char, std::char_traits<char> >& strm, std::map<std::string, std::string>& graphmap, std::string defaultColor)
 {
+  //Go through the task nodes, and if it's without a color, then give it the default. Then write it to the stream.
   for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
     node_iter != task_nodes_.end (); node_iter++)
   {
     std::map<std::string, std::string>::iterator titer = graphmap.find(node_iter->second->get_name());
-    if(titer != graphmap.end())
+    if(titer == graphmap.end())
     {
-      if((*titer).second == "blue" )
-      {
-        (*titer).second = "cornflowerblue";
-    
-      }
-      else if((*titer).second == "green")
-      {
-        (*titer).second = "red";
-      }
-    }
-    else
-    {
-      graphmap[node_iter->second->get_name()] =  "grey";
+      graphmap[node_iter->second->get_name()] =  defaultColor;
     }
     strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first  << "\" " << "[shape=box, style=filled, color = " << graphmap[node_iter->second->get_name()] <<"];\n";
   }
 
+  //Go through the cond nodes, and if it's without a color, then give it the default. Then write it to the stream.
   for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
     node_iter != cond_nodes_.end (); node_iter++)
   {
     std::map<std::string, std::string>::iterator citer = graphmap.find(node_iter->second->get_name());
-    if(citer != graphmap.end())
+    if(citer == graphmap.end())
     {
-      if((*citer).second == "blue" )
-      {
-        (*citer).second = "cornflowerblue";
-    
-      }
-      else if((*citer).second == "green")
-      {
-        (*citer).second = "red";
-      }
-    }
-    else
-    {
-      graphmap[node_iter->second->get_name()] =  "grey";
+      graphmap[node_iter->second->get_name()] =  defaultColor;
     }
     strm << "\t" << "\"" << node_iter->second->get_name() << " " << node_iter->first  << "\" " << "[style=filled, color = " << graphmap[node_iter->second->get_name()] << "];\n";
   }
 
+  //Go through the effect and preconds for the task nodes and link them in the stream
   for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
     node_iter != task_nodes_.end (); node_iter++)
   {
@@ -384,6 +405,7 @@ void SANet::Network::update (int max_steps)
       }
     }
   }
+
 };
 
 // Update a condition's current value (probability of being true).
