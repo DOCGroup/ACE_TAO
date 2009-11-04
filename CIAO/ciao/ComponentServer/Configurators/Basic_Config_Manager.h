@@ -26,7 +26,7 @@
 #include "ciao/ComponentServer/CIAO_ServerResourcesC.h"
 
 #include "Config_Manager.h"
-#include "Basic_Config_Manager_export.h" 
+#include "Basic_Config_Manager_export.h"
 
 namespace CIAO
 {
@@ -34,7 +34,7 @@ namespace CIAO
   {
     /**
      */
-    class Basic_Config_Manager_Export Basic_Config_Manager 
+    class Basic_Config_Manager_Export Basic_Config_Manager
       : public Config_Manager
     {
     public:
@@ -58,8 +58,7 @@ namespace CIAO
       /// Cached an ORB reference.
       CORBA::ORB_var orb_;
 
-      CORBA::Policy_ptr create_single_policy
-        (const PolicyDef &policy_def);
+      CORBA::Policy_ptr create_single_policy (const PolicyDef &policy_def);
 
       /// Hash_Map stuff.
       typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
@@ -68,11 +67,11 @@ namespace CIAO
         ACE_Equal_To<ACE_CString>,
         ACE_Null_Mutex> POLICY_MAP;
 
-    /// Internal TP names to id map.
-    POLICY_MAP policy_map_;
-  };
-}
+        /// Internal TP names to id map.
+        POLICY_MAP policy_map_;
+    };
   }
+}
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_NACONFIG_MANAGER_H */
