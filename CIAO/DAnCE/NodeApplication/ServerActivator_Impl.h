@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Implementation of Deployment::ServerActivator
+ * @brief  Implementation of Deployment::ServerActivator
  *
  * @author Erwin Gottlieb <eg@prismtech.com>
  */

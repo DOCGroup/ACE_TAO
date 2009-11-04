@@ -3,7 +3,7 @@
  *
  * @file   Plan_Handler.h
  *
- * @Brief  This file contains the implementation of
+ * @brief  This file contains the implementation of
  *         the Plan_Handler class.
  *
  * @author Gan Deng <gan.deng@vanderbilt.edu>
@@ -28,7 +28,7 @@ namespace DAnCE
    * can modify the deployment plan internals.
    *
    * The main methods on this class are:
-   *  
+   *
    *  - Add a instance to the deployment plan;
    *  - Add a connection to the deployment plan;
    *  - Remove a connection from the deployment plan;
@@ -42,25 +42,25 @@ namespace DAnCE
   {
   public:
     static void add_instance (
-        ::Deployment::DeploymentPlan &deployment_plan, 
-        const char *instance_name, 
-        const char *node_name, 
-        const char *impl_name, 
+        ::Deployment::DeploymentPlan &deployment_plan,
+        const char *instance_name,
+        const char *node_name,
+        const char *impl_name,
         const char *ns_name = 0);
 
     static void add_connection (
-        ::Deployment::DeploymentPlan &deployment_plan, 
-        const char *connection_name, 
-        const char *port_name, 
-        const char *facet_instance, 
+        ::Deployment::DeploymentPlan &deployment_plan,
+        const char *connection_name,
+        const char *port_name,
+        const char *facet_instance,
         const char *receptacle_instance);
 
     static void remove_instance (
-        ::Deployment::DeploymentPlan &deployment_plan, 
+        ::Deployment::DeploymentPlan &deployment_plan,
         const char *instance_name);
 
     static void remove_connection (
-        ::Deployment::DeploymentPlan &deployment_plan, 
+        ::Deployment::DeploymentPlan &deployment_plan,
         const char *connection_name);
 
     static void print_instances (

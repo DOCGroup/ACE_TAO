@@ -1,4 +1,5 @@
 // $Id$
+
 project(CIAO_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_macro=CIAO_COMPONENTSERVER_STUB_Export \
                   -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h \

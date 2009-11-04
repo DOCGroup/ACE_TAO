@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @Brief  To start RepositoryManager by starter
+ * @brief  To start RepositoryManager by starter
  *
  * @author Vinzenz Tornow <vt@prismtech.com>
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
@@ -60,14 +60,14 @@ class DAnCE_RepositoryManager_Module_Export DAnCE_RepositoryManager_Module
         const ACE_TCHAR * package_dir_;
         const ACE_TCHAR * name_;
         const ACE_TCHAR * server_address_;
-        
+
         bool spawn_http_;
         const ACE_TCHAR *http_port_;
         const ACE_TCHAR *http_threads_;
         const ACE_TCHAR *http_threading_;
         const ACE_TCHAR *http_io_;
         const ACE_TCHAR *http_caching_;
-        
+
         SOptions() :
           domain_nc_ (0),
           ior_file_ (0),
@@ -102,14 +102,14 @@ class DAnCE_RepositoryManager_Module_Export DAnCE_RepositoryManager_Module
 
  private:
   void create_poas (void);
-  
+
   void spawn_http (void);
-  
+
   /// Here we store the servants.
   typedef ACE_Map_Manager < ACE_CString,
                             DAnCE::RepositoryManagerDaemon_i *,
                             ACE_Null_Mutex > Servant_Map;
-  
+
   Servant_Map rm_map_;
 
   CORBA::ORB_var orb_;

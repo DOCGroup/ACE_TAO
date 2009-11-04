@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @Brief  Uses to run PlanLauncher from starter
+ * @brief  Uses to run PlanLauncher from starter
  *
  * @author Vinzenz Tornow <vt@prismtech.com>
  */

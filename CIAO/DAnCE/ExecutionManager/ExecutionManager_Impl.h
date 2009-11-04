@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Implementation of Deployment::ExecutionManager and POA_DAnCE::ExecutionManagerDaemon
+ * @brief  Implementation of Deployment::ExecutionManager and POA_DAnCE::ExecutionManagerDaemon
  *
  * @author Erwin Gottlieb <eg@prismtech.com>
  */
@@ -55,11 +55,11 @@ namespace DAnCE
       // This one derived from ExecutionManagerDaemon interface
       // for shutdowning DAnCE agent
       virtual void shutdown ();
-      
+
       void add_node_manager (const ACE_TCHAR *name, const ACE_TCHAR *ior);
 
       void load_node_map (const ACE_TCHAR *filename);
-      
+
     private:
       CORBA::ORB_var orb_;
       PortableServer::POA_var poa_;

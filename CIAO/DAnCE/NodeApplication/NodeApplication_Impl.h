@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Implementation of Deployment::NodeApplication
+ * @brief  Implementation of Deployment::NodeApplication
  *
  * @author Erwin Gottlieb <eg@prismtech.com>
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
@@ -154,11 +154,11 @@ namespace DAnCE
 
     void create_config_values(const ::Deployment::Properties& prop,
                             Components::ConfigValues& cfg) const;
-    
+
     typedef std::map <std::string, int> ColocationMap;
-    
-    /// Creates colocation groups for all components in this node's deployment. 
-    /// Resulting map has mappings of component ids to appropriate server. 
+
+    /// Creates colocation groups for all components in this node's deployment.
+    /// Resulting map has mappings of component ids to appropriate server.
     /// As a postcondition, the size of the servers_ array is increased appropriately.
     ColocationMap create_colocation_groups (void);
 

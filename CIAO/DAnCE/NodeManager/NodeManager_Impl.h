@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Implementation of POA_Deployment::NodeManager
+ * @brief  Implementation of POA_Deployment::NodeManager
  *
  * @author Erwin Gottlieb <eg@prismtech.com>
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @Brief  To start TargetManager by starter
+ * @brief  To start TargetManager by starter
  *
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
@@ -53,7 +53,7 @@ class DAnCE_TargetManager_Module_Export DAnCE_TargetManager_Module
         const ACE_TCHAR * ior_file_;
         const ACE_TCHAR * domain_descr_;
         const ACE_TCHAR * name_;
-        
+
         SOptions() :
           domain_nc_ (0),
           ior_file_ (0),
@@ -81,12 +81,12 @@ class DAnCE_TargetManager_Module_Export DAnCE_TargetManager_Module
 
  private:
   void create_poas (void);
-  
+
   /// Here we store the servants.
   typedef ACE_Map_Manager < ACE_CString,
                             DAnCE::TargetManagerDaemon_i *,
                             ACE_Null_Mutex > Servant_Map;
-  
+
   Servant_Map rm_map_;
 
   CORBA::ORB_var orb_;

@@ -3,7 +3,7 @@
  *
  * @file   Domain_Application_Impl.h
  *
- * @Brief  This file contains the implementation of
+ * @brief  This file contains the implementation of
  *         the DomainApplication interface.
  *
  * @author Vinzenz Tornow <vt@prismtech.com>

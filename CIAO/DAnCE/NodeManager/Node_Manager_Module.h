@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @Brief  To start NodeManager by starter
+ * @brief  To start NodeManager by starter
  *
  * @author Vinzenz Tornow <vt@prismtech.com>
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

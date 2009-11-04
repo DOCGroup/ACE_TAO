@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * @Brief  Implementation of POA_Deployment::NodeApplicationManager
+ * @brief  Implementation of POA_Deployment::NodeApplicationManager
  *
  * @author Erwin Gottlieb <eg@prismtech.com>
  */
