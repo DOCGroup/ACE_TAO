@@ -1,3 +1,9 @@
+Wed Nov  4 20:57:08 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Set notify_monitor_control default value be 0.
+          
 Wed Nov  4 17:50:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Message_Queue_Test.cpp:
