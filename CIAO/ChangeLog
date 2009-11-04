@@ -1,3 +1,9 @@
+Wed Nov  4 17:54:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/ComponentServer/CCM_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+          Only generate the export files using one idl file
+
 Wed Nov  4 13:38:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/DDS for CCM FTF 04Nov09.doc:

@@ -18,14 +18,13 @@ project(CIAO_CS_Client_IDL) : ciaoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_macro=CIAO_COMPONENTSERVER_STUB_Export \
                   -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h \
                   -Wb,skel_export_macro=CIAO_CS_CLIENT_SVNT_Export \
-                  -Wb,skel_export_include=CIAO_CS_Client_svnt_export.h \
-                  -Gxhsk
+                  -Wb,skel_export_include=CIAO_CS_Client_svnt_export.h
 
   custom_only=1
 
   IDL_Files {
     CIAO_Properties.idl
-    idlflags += -SS -Sci
+    idlflags += -SS -Sci -Gxhsk
   }
   IDL_Files {
     CIAO_CS_Client.idl
