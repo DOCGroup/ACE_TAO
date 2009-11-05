@@ -1,3 +1,8 @@
+Thu Nov  5 09:17:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener.h:
+          Removed, not needed at all
 
 Thu Nov  5 10:04:04 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
