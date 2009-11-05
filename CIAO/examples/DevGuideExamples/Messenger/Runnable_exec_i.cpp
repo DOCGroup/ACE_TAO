@@ -19,7 +19,6 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Runnable_exec_i.h"
-#include "ciao/CIAO_common.h"
 
 namespace CIAO_Messenger_Impl
 {

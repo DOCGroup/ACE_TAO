@@ -9,7 +9,7 @@
 #include "Deployment.hpp"
 #include "Package_Handlers/CPD_Handler.h"
 #include "tools/Config_Handlers/CPD_Handler.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 namespace CIAO
 {
   namespace Config_Handlers

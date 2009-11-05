@@ -19,7 +19,6 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Administrator_exec_i.h"
-#include "ciao/CIAO_common.h"
 
 // MY CODE
 #include <iostream>

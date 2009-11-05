@@ -6,7 +6,7 @@
 #include "Any_Handler.h"
 #include "Deployment.hpp"
 #include "DAnCE/Deployment/Deployment_TargetDataC.h"
-#include "CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ namespace CIAO
       retval_ (false)
     {
       CIAO_TRACE("DP_PCD_Handler::constructor");
-      
+
       XERCES_CPP_NAMESPACE::DOMDocument *dom =
         XML_Helper::XML_HELPER.create_dom (file);
 

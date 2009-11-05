@@ -29,7 +29,6 @@
 // be/be_codegen.cpp:1278
 
 #include "Hello_Sender_exec.h"
-#include "ciao/CIAO_common.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Task.h"
 
@@ -40,35 +39,35 @@ namespace CIAO_Hello_DDS_Sender_Impl
   public:
     Sending_Task (const ACE_CString &msg,
                   CORBA::ULong iters,
-                  ::CCM_DDS::string_Writer_ptr writer) 
+                  ::CCM_DDS::string_Writer_ptr writer)
       : msg_ (msg),
         iters_ (iters),
         writer_ (::CCM_DDS::string_Writer::_duplicate (writer))
     {
     }
-      
+
     virtual int svc (void)
     {
       // Allowing some time for discovery to happen
       ACE_OS::sleep (10);
-        
+
       for (size_t i = 0; i < this->iters_; ++i)
         {
           ACE_OS::sleep (2);
           this->writer_->write (this->msg_.c_str ());
           ACE_DEBUG ((LM_DEBUG, "Sender has sent string\n"));
-        } 
-      
+        }
+
       return 0;
     }
-      
+
   private:
     const ACE_CString &msg_;
     CORBA::ULong iters_;
     ::CCM_DDS::string_Writer_var writer_;
   };
-    
-  
+
+
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
@@ -89,26 +88,26 @@ namespace CIAO_Hello_DDS_Sender_Impl
   // Supported operations and attributes.
 
   // Component attributes.
-  
+
   char *
   Sender_exec_i::message (void)
   {
     return CORBA::string_dup (this->msg_.c_str ());
   }
-  
+
   void
   Sender_exec_i::message (const char *msg)
   {
     this->msg_ = msg;
   }
 
-  
-  ::CORBA::ULong 
+
+  ::CORBA::ULong
   Sender_exec_i::iterations (void)
   {
     return this->iters_;
   }
-  
+
   void
   Sender_exec_i::iterations (CORBA::ULong iters)
   {
@@ -143,11 +142,11 @@ namespace CIAO_Hello_DDS_Sender_Impl
   {
     ::CCM_DDS::string_Writer_var writer =
       this->context_->get_connection_push_data_data ();
-    
+
     this->task_ = new Sending_Task (this->msg_,
                                     this->iters_,
                                     writer);
-    
+
     this->task_->activate (THR_NEW_LWP | THR_JOINABLE,
                            1);
   }

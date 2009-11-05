@@ -3,7 +3,6 @@
 
 #include "tools/Config_Handlers/DD_Handler.h"
 #include "tools/Config_Handlers/DnC_Dump.h"
-#include "ciao/CIAO_common.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 #ifdef GEN_OSTREAM_OPS
@@ -17,17 +16,17 @@ DAnCE::DomainDataManager::init (CORBA::ORB_ptr orb,
                                 const ACE_TCHAR *domain_name)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::init");
-  
+
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->target_mgr_ = ::Deployment::TargetManager::_duplicate(target);
 
   DANCE_DEBUG ((LM_DEBUG, DLINFO "DAnCE::DomainDataManager::init - "
                 "Parsing initial domain from file %s\n",
                 domain_name));
-  
+
   CIAO::Config_Handlers::DD_Handler dd (domain_name);
   ::Deployment::Domain* dmn = dd.domain_idl ();
-  
+
   DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
                 "Initial domain successfully parsed\n"));
 #ifdef GEN_OSTREAM_OPS
@@ -55,7 +54,7 @@ int DAnCE::DomainDataManager::update_domain (const ::CORBA::StringSeq &,
                                              ::Deployment::DomainUpdateKind update_kind)
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::update_domain");
-  
+
   // Update the subset of the domain which the above
   // parameter corresponds to
 
@@ -107,21 +106,21 @@ int DAnCE::DomainDataManager::update_domain (const ::CORBA::StringSeq &,
 ::Deployment::Domain* DAnCE::DomainDataManager::get_current_domain ()
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::get_current_domain");
-  
+
   return new ::Deployment::Domain (provisioned_data_);
 }
 
 ::Deployment::Domain* DAnCE::DomainDataManager::get_initial_domain ()
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::get_initial_domain");
-  
+
   return new ::Deployment::Domain (initial_domain_);
 }
 
 int DAnCE::DomainDataManager::readin_domain_data ()
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::readin_domain_data");
-  
+
   // here read in Domain data ...
   //
   return 0;
@@ -130,7 +129,7 @@ int DAnCE::DomainDataManager::readin_domain_data ()
 int DAnCE::DomainDataManager::call_all_node_managers ()
 {
   DANCE_TRACE ("DAnCE::DomainDataManager::call_all_node_managers");
-  
+
 /*  if ( this->deployment_config_.init ("NodeDetails.dat") == -1 )
     {
       DANCE_ERROR ((LM_ERROR,

@@ -2,7 +2,6 @@
 // $Id$
 
 #include "Quoter_Connector_exec.h"
-#include "ciao/CIAO_common.h"
 
 #include "dds4ccm/impl/ndds/NDDS_Traits.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"

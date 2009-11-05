@@ -10,7 +10,6 @@
 
 #include "GPS_exec_export.h"
 #include "GPSEC.h"
-#include "ciao/CIAO_common.h"
 #include "ace/OS_NS_time.h"
 #include "tao/LocalObject.h"
 
@@ -24,7 +23,7 @@ namespace MyImpl
    * GPS executor implementation class.
    */
   class GPS_EXEC_Export GPS_exec_i :
-    public virtual ::CIAO_HUDisplay_GPS_Impl::GPS_Exec, 
+    public virtual ::CIAO_HUDisplay_GPS_Impl::GPS_Exec,
     public virtual ::CORBA::LocalObject
   {
 

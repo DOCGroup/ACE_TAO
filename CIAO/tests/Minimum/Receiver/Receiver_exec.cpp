@@ -19,7 +19,6 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Receiver_exec.h"
-#include "ciao/CIAO_common.h"
 
 namespace CIAO_Minimum_Receiver_Impl
 {

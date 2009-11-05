@@ -19,7 +19,6 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Sender_exec.h"
-#include "ciao/CIAO_common.h"
 
 namespace CIAO_Hello_Sender_Impl
 {

@@ -19,7 +19,6 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Null_Component_exec.h"
-#include "ciao/CIAO_common.h"
 
 namespace CIAO_Null_Component_Impl
 {

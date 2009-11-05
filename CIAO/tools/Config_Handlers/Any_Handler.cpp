@@ -6,7 +6,7 @@
 #include "DataType_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "tao/AnyTypeCode/Any.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "DynAny_Handler/DynAny_Handler.h"
 
 #include "ace/Null_Mutex.h"
@@ -35,7 +35,7 @@ namespace CIAO
                                                                             desc.value ());
 
           toconfig = *dyn->to_any ();
-          
+
           dyn->destroy ();
         }
       catch (Config_Error &ex)

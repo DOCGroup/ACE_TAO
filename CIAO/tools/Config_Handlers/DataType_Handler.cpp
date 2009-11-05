@@ -3,7 +3,7 @@
 #include "DataType_Handler.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 namespace CIAO
 {
   namespace Config_Handlers

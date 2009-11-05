@@ -18,7 +18,6 @@
 #include "tao/CORBA_methods.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB_Core.h"
-#include "ciao/CIAO_common.h"
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Server_init.h"

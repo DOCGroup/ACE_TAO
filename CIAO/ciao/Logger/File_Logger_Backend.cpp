@@ -3,7 +3,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Log_Record.h"
 #include "ace/Log_Msg.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
 {

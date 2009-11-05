@@ -19,8 +19,6 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "StockBroker_exec.h"
-#include "ciao/CIAO_common.h"
-
 
 namespace CIAO_Stock_StockBroker_Impl
 {

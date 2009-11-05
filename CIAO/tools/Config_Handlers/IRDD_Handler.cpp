@@ -4,7 +4,7 @@
 #include "Basic_Deployment_Data.hpp"
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "Property_Handler.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 
 namespace CIAO
@@ -26,7 +26,7 @@ namespace CIAO
                                Deployment::InstanceResourceDeploymentDescription& toconfig)
     {
       CIAO_TRACE("IRDD_Handler::instance_resource_deployment_descr");
-      
+
       switch (desc.resourceUsage ().integral ())
         {
         case ResourceUsageKind::None_l:

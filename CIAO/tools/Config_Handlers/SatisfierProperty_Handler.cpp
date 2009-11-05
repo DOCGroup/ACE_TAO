@@ -4,7 +4,7 @@
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "DAnCE/Deployment/Deployment_DataC.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "Utils/Exceptions.h"
 namespace CIAO
 {
@@ -25,7 +25,7 @@ namespace CIAO
                                                  Deployment::SatisfierProperty& toconfig)
     {
       CIAO_TRACE("SatisfierProperty_Handler::get_sat_property");
-      
+
       toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
 
       switch (desc.kind ().integral ())
@@ -53,15 +53,15 @@ namespace CIAO
         case SatisfierPropertyKind::Selection_l:
           toconfig.kind = Deployment::Selection;
           break;
-          
+
         default:
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
           throw Config_Error (desc.name (), ACE_TEXT ("Unknown SatisfierPropertyKind"));
-          
+
         }
 
       toconfig.dynamic = desc.dynamic ();
-      
+
       try
         {
           Any_Handler::extract_into_any (desc.value (),
