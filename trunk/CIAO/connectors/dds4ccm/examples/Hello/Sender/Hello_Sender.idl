@@ -12,6 +12,7 @@ module Hello_DDS
 
     attribute unsigned long iterations;
     attribute string message;
+    attribute boolean log_time;
   };
 
   home SenderHome manages Sender

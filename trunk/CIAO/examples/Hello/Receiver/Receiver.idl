@@ -11,6 +11,8 @@ module Hello
   {
     uses ReadMessage read_message;
     consumes TimeOut click_in;
+    
+    attribute short iterations;
   };
 
   home ReceiverHome manages Receiver

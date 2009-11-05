@@ -21,8 +21,8 @@ module Hello
   enum COLOR_SELECTION 
     {
       empty,
-      white, 
-      red, 
+      white,
+      red,
       yellow
     };
 
@@ -32,7 +32,7 @@ module Hello
     publishes TimeOut click_out;
     attribute string local_message;
     readonly attribute long hertz;
-
+    attribute boolean log_time;
     // A test attribute to test setting attributes through XML
     attribute COLOR_SELECTION color;
   };

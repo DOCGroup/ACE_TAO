@@ -17,8 +17,8 @@ namespace CIAO
     {
       template <typename NDDS_TYPE, typename BASE>
       class Reader_T :
-        public virtual BASE,
-        public virtual ::CORBA::LocalObject
+          public virtual BASE,
+          public virtual ::CORBA::LocalObject
       {
       public:
         // Constructor
@@ -50,6 +50,11 @@ namespace CIAO
       private:
         Reader_T<NDDS_TYPE, BASE> (const Reader_T<NDDS_TYPE, BASE> &);
         Reader_T<NDDS_TYPE, BASE> & operator = (const Reader_T<NDDS_TYPE, BASE> &);
+
+        //DDSStringDataReader *reader_;
+        ::DDS::DataReader_ptr reader_;
+        DDSQueryCondition* condition_;
+
       };
     }
   }
