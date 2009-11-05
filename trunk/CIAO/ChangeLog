@@ -1,3 +1,10 @@
+Thu Nov  5 19:16:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Fix some compile errors due to refactoring on head
+
 Thu Nov  5 18:53:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Integrated work of the dds4ccm_1 branch which extends the DDS4CCM
