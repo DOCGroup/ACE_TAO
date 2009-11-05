@@ -161,8 +161,8 @@ extern "C"
   typedef void (__cdecl * __sighandler_t)(int);
 #endif
 
-#if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES) || defined (ACE_HAS_LYNXOS50_SIGNALS)
-   // Prototypes for both signal() and struct sigaction are consistent..
+#if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
+  // Prototypes for both signal() and struct sigaction are consistent..
   typedef void (*ACE_SignalHandler)(int);
   typedef void (*ACE_SignalHandlerV)(int);
 #elif defined (ACE_HAS_LYNXOS_SIGNALS) || defined (ACE_HAS_TANDEM_SIGNALS)
