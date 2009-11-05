@@ -1,3 +1,8 @@
+Thu Nov  5 17:04:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Removed some printf statements.
+
 Thu Nov  5 16:32:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:

@@ -172,11 +172,12 @@ namespace CIAO_Shapes_Receiver_Impl
     const ShapeType & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    printf ("ShapeType_RawListener: received shape_info for <%s> at %u:%u:%u\n",
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_RawListener: ")
+            ACE_TEXT ("received shape_info for <%s> at %u:%u:%u\n"),
             an_instance.color.in (),
             an_instance.x,
             an_instance.y,
-            an_instance.shapesize);
+            an_instance.shapesize));
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
@@ -230,7 +231,6 @@ namespace CIAO_Shapes_Receiver_Impl
    void
    Receiver_exec_i::read_one (void)
    {
-    printf ("read_one\n");
     ShapeType  shape_info;
     shape_info.color = "GREEN";
     ::CCM_DDS::ReadInfo readinfo;
@@ -240,30 +240,29 @@ namespace CIAO_Shapes_Receiver_Impl
         this->reader_->read_one (shape_info, readinfo );
         time_t tim = readinfo.timestamp.sec;
         tm* time = localtime(&tim);
-        printf("READ_ONE Read_Info -> date = %02d:%02d:%02d.%d\n",
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
+                  ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,
                             time->tm_min,
                             time->tm_sec,
-                            readinfo.timestamp.nanosec);
-        printf ("READ ON shape info : received shape_info for <%s> at %u:%u:%u\n",
+                            readinfo.timestamp.nanosec));
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON shape info : ")
+            ACE_TEXT ("received shape_info for <%s> at %u:%u:%u\n"),
             shape_info.color.in (),
             shape_info.x,
             shape_info.y,
-            shape_info.shapesize);
+            shape_info.shapesize));
     }
     catch(CCM_DDS::NonExistent& )
     {
-      printf("ShapeType_Read_One: no shape_info receieved\n");
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: ")
+                  ACE_TEXT ("no shape_info receieved\n")));
     }
-
-    printf("END OF READ_ONE\n");
   }
    
   void
   Receiver_exec_i::read_all (void)
   {
-    printf ("read_all\n");
-
     ShapeType_Seq_var shape_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(shape_infos.out(), readinfoseq.out());
@@ -271,27 +270,28 @@ namespace CIAO_Shapes_Receiver_Impl
       {
         time_t tim = readinfoseq[i].timestamp.sec;
         tm* time = localtime(&tim);
-        printf("READ_ALL ReadInfo -> UTC date = %02d:%02d:%02d.%d\n",
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+            ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,
                             time->tm_min,
                             time->tm_sec,
-                            readinfoseq[i].timestamp.nanosec);
+                            readinfoseq[i].timestamp.nanosec));
       }
     for(CORBA::ULong i = 0; i < (CORBA::ULong)shape_infos->length(); ++i)
       {
-        printf ("READ_ALL Shape Info : Number %d : received shape_info for <%s> at %u:%u:%u\n",
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
+              ACE_TEXT ("Number <%d> : received shape_info for <%s> at %u:%u:%u\n"),
             i,
             shape_infos[i].color.in (),
             shape_infos[i].x,
             shape_infos[i].y,
-            shape_infos[i].shapesize);
+            shape_infos[i].shapesize));
       }
   }
 
   void
   Receiver_exec_i::get_one (void)
   {
-    printf ("GET_ONE\n");
     ShapeType  shape_info;
     shape_info.color = "yellow";
     ::CCM_DDS::ReadInfo readinfo;
@@ -302,34 +302,34 @@ namespace CIAO_Shapes_Receiver_Impl
           {
             time_t tim = readinfo.timestamp.sec;
             tm* time = localtime(&tim);
-            printf("GET_ONE ReadInfo -> date = %02d:%02d:%02d.%d\n",
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
+                                   ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
                                 time->tm_hour,
                                 time->tm_min,
                                 time->tm_sec,
-                                readinfo.timestamp.nanosec);
-            printf ("GET_ONE ShapeType : received shape_info for <%s> at %u:%u:%u\n",
+                                readinfo.timestamp.nanosec));
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType : ")
+                                   ACE_TEXT ("received shape_info for <%s> at %u:%u:%u\n"),
                 shape_info.color.in (),
                 shape_info.x,
                 shape_info.y,
-                shape_info.shapesize);
+                shape_info.shapesize));
           }
         else
           {
-            printf ("GET_ONE No data available for <%s>\n", shape_info.color.in ());
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE No data available for <%C>\n"), 
+                    shape_info.color.in ()));
           }
     }
     catch(CCM_DDS::NonExistent& )
     {
-      printf("ShapeType_Read_One: no shape_info receieved\n");
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: no shape_info receieved\n")));
     }
-
-    printf("END OF GET_ONE\n");
   }
    
   void
   Receiver_exec_i::get_all (void)
   {
-    printf ("get_all\n");
   }
   // Component attributes.
   ::CORBA::ULong
@@ -343,7 +343,6 @@ namespace CIAO_Shapes_Receiver_Impl
     ::CORBA::ULong rate)
   {
     this->rate_ = rate;
-    printf ("SETTING rate receiver : <%d>\n", rate);
   }
   ::CORBA::Boolean
   Receiver_exec_i::get_data (void)
@@ -356,7 +355,6 @@ namespace CIAO_Shapes_Receiver_Impl
     ::CORBA::Boolean get_data)
   {
     this->get_data_ = get_data;
-    printf ("SETTING get_data : <%d>\n", get_data);
   }
   
   ::CORBA::Boolean
@@ -370,7 +368,6 @@ namespace CIAO_Shapes_Receiver_Impl
     ::CORBA::Boolean read_data)
   {
     this->read_data_ = read_data;
-    printf ("SETTING read_data : <%d>\n", read_data);
   }
 
 
@@ -385,7 +382,6 @@ namespace CIAO_Shapes_Receiver_Impl
     ::CORBA::Boolean raw_listen)
   {
     this->raw_listen_ = raw_listen;
-    printf ("SETTING raw_listen : <%d>\n", raw_listen_);
   }
 
   // Port operations.
@@ -393,14 +389,14 @@ namespace CIAO_Shapes_Receiver_Impl
   ::CCM_DDS::CCM_ShapeType_RawListener_ptr
   Receiver_exec_i::get_info_out_listener (void)
   {
-    printf ("*************** new ShapeType RAW listener\n");
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new ShapeType RAW listener\n")));
     return new ShapeType_RawListener_exec_i ();
   }
   
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    printf ("*************** new Port Status listener\n");
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
   
@@ -439,12 +435,9 @@ namespace CIAO_Shapes_Receiver_Impl
 
     if (CORBA::is_nil (lc.in ()))
     {
-      printf ("Error:  Listener control receptacle is null!\n");
+      CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
       throw CORBA::INTERNAL ();
     }
-    //in case of testing RawListener set lc-> enabled true
-    // lc->enabled (true);
-    //in case of testing Reader set lc-> enabled false, so the RawListener doesn't consume all the messages 
     lc->enabled (this->raw_listen_);
     
     this->ticker_->start (this->rate_);
