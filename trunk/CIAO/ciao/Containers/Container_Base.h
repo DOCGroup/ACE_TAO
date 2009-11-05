@@ -150,24 +150,6 @@ namespace CIAO
   };
 }
 
-/// Macro for registration of an OBV factory in the generated
-/// servant class. Similar to the macro for TAO in
-/// tao/ValueType/ValueFactory.h but here we take advantage of
-/// the fact that we have access to the current ORB indirectly
-/// through the context and container.
-#define CIAO_REGISTER_OBV_FACTORY(FACTORY, VALUETYPE) \
-  {  \
-    CORBA::ValueFactory factory = new FACTORY; \
-    CORBA::ORB_ptr orb = \
-      this->context_->_ciao_the_Container ()->the_ORB (); \
-    CORBA::ValueFactory prev_factory = \
-      orb->register_value_factory ( \
-               VALUETYPE::_tao_obv_static_repository_id (), \
-               factory); \
-    CORBA::remove_ref (prev_factory); \
-    CORBA::add_ref (factory);  \
-  }
-
 #if defined (__ACE_INLINE__)
 # include "Container_Base.inl"
 #endif /* __ACE_INLINE__ */
