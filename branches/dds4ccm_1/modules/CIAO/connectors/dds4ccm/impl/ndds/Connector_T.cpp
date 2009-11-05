@@ -242,10 +242,14 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_out_ (bool create_ge
       if (CORBA::is_nil (this->__info_out_datareader_.in ()))
         {
           this->__info_out_portstatus_ = this->context_->get_connection_info_out_status ();
+          
           this->__info_out_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
-              <NDDS_TYPE, typename CONNECTOR_TYPE::rawlistener_type, ::CCM_DDS::PortStatusListener> (
-                  this->context_->get_connection_info_out_listener (),
+            <NDDS_TYPE, typename CONNECTOR_TYPE::rawlistener_type, ::CCM_DDS::PortStatusListener,::CCM_DDS::ConnectorStatusListener> (
+     //mh
+       //      <NDDS_TYPE, typename CONNECTOR_TYPE::rawlistener_type, ::CCM_DDS::PortStatusListener> (
+               this->context_->get_connection_info_out_listener (),
                   this->context_->get_connection_info_out_status (),
+                  this->__info_out_connector_status_,
                   this->__info_out_rawlistener_enabled_,
                   context_->get_CCM_object()->_get_orb ());
           ::DDS::DataReaderQos drqos;
@@ -268,7 +272,7 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_out_ (bool create_ge
               this->__info_out_configured_ = true;
             }
         }
-  printf ("66666666666666666666666666\n");
+  
     }
   catch (...)
     {

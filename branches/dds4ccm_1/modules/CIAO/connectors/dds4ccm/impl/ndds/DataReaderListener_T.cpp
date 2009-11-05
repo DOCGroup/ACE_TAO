@@ -49,14 +49,19 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::handle_exceptio
 
 
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER>::DataReaderListener_T (
+//template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
+//CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER>::DataReaderListener_T (
+template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>
+CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER, CONNECTORSTATUSLISTENER>::DataReaderListener_T (
+
       typename RAWLISTENER::_ptr_type listen, 
       typename PORTSTATUSLISTENER::_ptr_type psl, 
-      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled,
+      typename CONNECTORSTATUSLISTENER::_ptr_type csl, 
+       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled,
       CORBA::ORB_ptr orb)
       : listener_ (RAWLISTENER::_duplicate (listen)),
         portlistener_ (PORTSTATUSLISTENER::_duplicate (psl)),
+        connectorstatuslistener_ (CONNECTORSTATUSLISTENER::_duplicate (csl)), //mh
         orb_ (CORBA::ORB::_duplicate (orb)),
         enable_ (enabled)
 {
@@ -64,15 +69,15 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTE
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER>::~DataReaderListener_T (void)
+template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>
+CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>::~DataReaderListener_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::~DataReaderListener_T");
 }
 
-template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
+template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>
 void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER>::on_data_available( ::DDS::DataReader *rdr)
+CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>::on_data_available( ::DDS::DataReader *rdr)
 {
   if (!this->enable_.value ())
     return;
@@ -89,19 +94,30 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTE
   orb_->orb_core ()->reactor ()->notify (rh);
 }
 
-template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
+template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>
 void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER>::on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
+CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER,CONNECTORSTATUSLISTENER>::on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
                                                const ::DDS::RequestedDeadlineMissedStatus & status)
 {
   this->portlistener_->on_requested_deadline_missed (the_reader, status);
 }
 
-template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
+template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>
 void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER>::on_sample_lost (::DDS::DataReader_ptr the_reader,
+CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER, CONNECTORSTATUSLISTENER>::on_sample_lost (::DDS::DataReader_ptr the_reader,
                                  const ::DDS::SampleLostStatus & status)
 {
   this->portlistener_->on_sample_lost (the_reader, status);
 }
 
+template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>
+void
+CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER, CONNECTORSTATUSLISTENER>::on_requested_incompatible_qos (::DDS::DataReader_ptr the_reader,
+                                 const ::DDS::RequestedIncompatibleQosStatus & status)
+{
+  printf("in on_requested_incompatible_qos\n");
+  this->connectorstatuslistener_->on_requested_incompatible_qos (the_reader, status);
+  
+}
+
+   
