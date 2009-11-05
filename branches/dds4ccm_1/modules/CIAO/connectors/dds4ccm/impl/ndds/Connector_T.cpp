@@ -11,7 +11,6 @@
 #include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/ListenerControl.h"
-#include "dds4ccm/impl/ndds/ConnectorStatusListener.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
