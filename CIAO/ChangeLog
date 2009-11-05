@@ -1,3 +1,9 @@
+Thu Nov  5 19:43:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/RawListener.cpp:
+        * connectors/dds4ccm/impl/ndds/RawListener.h:
+          Deleted, not used
+
 Thu Nov  5 19:16:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
