@@ -27,12 +27,8 @@ namespace CIAO
               typename NDDS_TYPE::data_reader * reader);
           ~DataReaderHandler_T ();
 
-          virtual int handle_input (ACE_HANDLE fc = ACE_INVALID_HANDLE);
-          //virtual int handle_signal (int );
-          virtual int handle_output (ACE_HANDLE fc = ACE_INVALID_HANDLE);
           virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
         private:
-          //ACE_Reactor ar_;
           typename RAWLISTENER::_var_type listener_;
           typename NDDS_TYPE::data_reader * reader_;
       };

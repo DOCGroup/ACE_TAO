@@ -1,3 +1,10 @@
+Thu Nov  5 12:09:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Cleanup some printf and unused methods.
+
+
 Thu Nov  5 11:22:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
