@@ -66,9 +66,9 @@ namespace CIAO_Hello_DDS_Sender_Impl
     
     virtual void message (const char *message);
     
-	virtual ::CORBA::Boolean log_time (void);
+  virtual ::CORBA::Boolean log_time (void);
     
-	virtual void log_time (::CORBA::Boolean log_time);
+  virtual void log_time (::CORBA::Boolean log_time);
     
     // Port operations.
     
