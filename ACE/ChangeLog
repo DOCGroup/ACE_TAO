@@ -1,9 +1,16 @@
+Thu Nov  5 11:32:07 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+        * ace/os_include/os_signal.h:
+          Use ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES instead of
+          ACE_HAS_LYNXOS50_SIGNALS.
+
 Wed Nov  4 20:57:08 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.features:
 
           Set notify_monitor_control default value be 0.
-          
+
 Wed Nov  4 17:50:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Message_Queue_Test.cpp:
