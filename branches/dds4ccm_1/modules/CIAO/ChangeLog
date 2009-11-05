@@ -1,3 +1,11 @@
+Thu Nov  5 07:34:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+          X, Y and shapesize should be long (in stead off short).
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Default rawlistener on.
+
 Wed Nov  4 16:56:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:

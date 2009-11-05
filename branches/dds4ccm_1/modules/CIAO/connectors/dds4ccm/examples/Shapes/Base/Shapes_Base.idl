@@ -10,9 +10,9 @@
 
 struct ShapeType {
   string color; //@key
-  short x;
-  short y;
-  short shapesize;
+  long x;
+  long y;
+  long shapesize;
 };
 
 struct Attributes {
