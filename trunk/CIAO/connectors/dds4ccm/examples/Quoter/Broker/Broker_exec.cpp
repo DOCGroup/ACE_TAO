@@ -31,24 +31,23 @@
 // be/be_codegen.cpp:1278
 
 #include "Broker_exec.h"
-#include "ciao/CIAO_common.h"
 
 namespace CIAO_Quoter_Broker_Impl
 {
   //============================================================
   // Facet Executor Implementation Class: Stock_Info_RawListener_exec_i
   //============================================================
-  
+
   Stock_Info_RawListener_exec_i::Stock_Info_RawListener_exec_i (void)
   {
   }
-  
+
   Stock_Info_RawListener_exec_i::~Stock_Info_RawListener_exec_i (void)
   {
   }
-  
+
   // Operations from ::CCM_DDS::Stock_Info_RawListener
-  
+
   void
   Stock_Info_RawListener_exec_i::on_data (
     const ::Quoter::Stock_Info & an_instance,
@@ -63,17 +62,17 @@ namespace CIAO_Quoter_Broker_Impl
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
-  
+
   PortStatusListener_exec_i::PortStatusListener_exec_i (void)
   {
   }
-  
+
   PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
   {
   }
-  
+
   // Operations from ::CCM_DDS::PortStatusListener
-  
+
   void
   PortStatusListener_exec_i::on_requested_deadline_missed (
     ::DDS::DataReader_ptr /* the_reader */,
@@ -81,7 +80,7 @@ namespace CIAO_Quoter_Broker_Impl
   {
     /* Your code here. */
   }
-  
+
   void
   PortStatusListener_exec_i::on_sample_lost (
     ::DDS::DataReader_ptr /* the_reader */,
@@ -89,25 +88,25 @@ namespace CIAO_Quoter_Broker_Impl
   {
     /* Your code here. */
   }
-  
+
   //============================================================
   // Component Executor Implementation Class: Broker_exec_i
   //============================================================
-  
+
   Broker_exec_i::Broker_exec_i (void)
   {
   }
-  
+
   Broker_exec_i::~Broker_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   // Component attributes.
-  
+
   // Port operations.
-  
+
   ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
   Broker_exec_i::get_info_out_listener (void)
   {
@@ -115,74 +114,74 @@ namespace CIAO_Quoter_Broker_Impl
     printf ("*************** out listener\n");
     return new Stock_Info_RawListener_exec_i ();
   }
-  
+
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Broker_exec_i::get_info_out_status (void)
   {
     /* Your code here. */
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
-  
+
   // Operations from Components::SessionComponent.
-  
+
   void
   Broker_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    ::Quoter::CCM_Broker_Context_var lctx = 
+    ::Quoter::CCM_Broker_Context_var lctx =
       ::Quoter::CCM_Broker_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (lctx.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
-    
+
     this->context_ = lctx;
   }
-  
+
   void
   Broker_exec_i::configuration_complete (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Broker_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::ListenerControl_var lc = 
+    ::CCM_DDS::ListenerControl_var lc =
       this->context_->get_connection_info_out_control ();
-    
+
     if (CORBA::is_nil (lc.in ()))
       {
         printf ("Error:  Listener control receptacle is null!\n");
         throw CORBA::INTERNAL ();
       }
-    
+
     lc->enabled (true);
   }
-  
+
   void
   Broker_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
   }
-  
+
   void
   Broker_exec_i::ccm_remove (void)
   {
     /* Your code here. */
   }
-  
+
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Quoter_Broker_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Broker_exec_i);
-    
+
     return retval;
   }
 }

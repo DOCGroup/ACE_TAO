@@ -19,9 +19,7 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "StockDistributor_exec.h"
-#include "ciao/CIAO_common.h"
 #include "ace/Reactor.h"
-
 
 namespace CIAO_Stock_StockDistributor_Impl
 {

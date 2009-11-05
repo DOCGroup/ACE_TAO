@@ -10,7 +10,6 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/orbsvcs/Naming/Naming_Loader.h"
-#include "ciao/CIAO_common.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"

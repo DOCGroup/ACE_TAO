@@ -5,7 +5,7 @@
 
 #include "ciao/Servants/Servant_Impl_Base.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
 {

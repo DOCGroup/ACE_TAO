@@ -3,7 +3,7 @@
 #include "Req_Handler.h"
 #include "Property_Handler.h"
 #include "DAnCE/Deployment/Deployment_BaseC.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 namespace CIAO
 {
   namespace Config_Handlers

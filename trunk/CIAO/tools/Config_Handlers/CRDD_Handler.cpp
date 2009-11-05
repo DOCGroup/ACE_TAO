@@ -6,7 +6,7 @@
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "Property_Handler.h"
 
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
 {
@@ -45,7 +45,7 @@ namespace CIAO
       CIAO_TRACE("CRDD_Handler::get_ConnectionResourceDeploymentDescription- reverse");
       XMLSchema::string< ACE_TCHAR > tname (ACE_TEXT_CHAR_TO_TCHAR (src.targetName));
       XMLSchema::string< ACE_TCHAR > reqname (ACE_TEXT_CHAR_TO_TCHAR(src.requirementName));
-      XMLSchema::string <ACE_TCHAR> resname (ACE_TEXT_CHAR_TO_TCHAR (src.resourceName)); 
+      XMLSchema::string <ACE_TCHAR> resname (ACE_TEXT_CHAR_TO_TCHAR (src.resourceName));
 
       ConnectionResourceDeploymentDescription crdd (tname,
                                                     reqname,

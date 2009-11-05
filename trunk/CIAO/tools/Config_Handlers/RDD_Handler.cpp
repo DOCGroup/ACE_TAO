@@ -4,7 +4,7 @@
 #include "Basic_Deployment_Data.hpp"
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "Any_Handler.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "Property_Handler.h"
 
 namespace CIAO

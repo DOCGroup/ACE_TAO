@@ -19,7 +19,6 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Messenger_exec_i.h"
-#include "ciao/CIAO_common.h"
 
 // MY CODE
 #include "ace/OS_NS_unistd.h"

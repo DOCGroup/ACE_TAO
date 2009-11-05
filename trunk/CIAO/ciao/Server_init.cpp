@@ -5,7 +5,7 @@
 #include <ccm/CCM_ComponentC.h>
 #include <ccm/CCM_StandardConfiguratorC.h>
 #include "Valuetype_Factories/Cookies.h"
-#include "CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "Client_init.h"
 #include "ace/Tokenizer_T.h"
 

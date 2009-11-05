@@ -7,7 +7,7 @@
 #include "Common.h"
 
 #include "DAnCE/Deployment/Deployment_DataC.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
 {

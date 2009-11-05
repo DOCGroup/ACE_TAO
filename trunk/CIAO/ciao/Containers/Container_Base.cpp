@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Container_Base.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"

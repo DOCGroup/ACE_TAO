@@ -24,7 +24,7 @@
 namespace CIAO_Quoter_Quoter_Connector_Impl
 {
   template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
-  class Connector_T 
+  class Connector_T
     : public virtual CONNECTOR_TYPE::base_type,
       public virtual ::CORBA::LocalObject
   {
@@ -106,13 +106,6 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     ::DDS::DataReaderListener_var __info_out_datareaderlistener;
   };
 
-  // @from use of Stock_Info as a parameter
-  typedef CIAO::DDS4CCM::RTI::Type_Traits < ::Quoter::Stock_Info,
-    ::Quoter::Stock_Info_Seq,
-    ::Quoter::Stock_InfoTypeSupport,
-    ::Quoter::Stock_InfoDataWriter,
-    ::Quoter::Stock_InfoDataReader > Stock_Info_DDS_Traits;
-
   template <typename BASE_TYPE,
             typename WRITER_TYPE,
             typename READER_TYPE,
@@ -127,11 +120,18 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     typedef RAWLISTENER_TYPE rawlistener_type;
   };
 
+  // @from use of Stock_Info as a parameter
+  typedef CIAO::DDS4CCM::RTI::Type_Traits < ::Quoter::Stock_Info,
+    ::Quoter::Stock_Info_Seq,
+    ::Quoter::Stock_InfoTypeSupport,
+    ::Quoter::Stock_InfoDataWriter,
+    ::Quoter::Stock_InfoDataReader > Stock_Info_DDS_Traits;
+
   typedef Connector_Traits <
     ::CIAO_Quoter_Quoter_Connector_Impl::Quoter_Connector_Exec,
-    ::CCM_DDS::CCM_Stock_Info_Writer, 
-    ::CCM_DDS::CCM_Stock_Info_Reader, 
-    ::Quoter::CCM_Quoter_Connector_Context, 
+    ::CCM_DDS::CCM_Stock_Info_Writer,
+    ::CCM_DDS::CCM_Stock_Info_Reader,
+    ::Quoter::CCM_Quoter_Connector_Context,
     ::CCM_DDS::Stock_Info_RawListener> Stock_Info_Connector_Traits;
 
   class QUOTER_CONNECTOR_EXEC_Export Quoter_Connector_exec_i :

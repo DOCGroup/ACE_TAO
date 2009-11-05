@@ -4,7 +4,7 @@
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "DAnCE/Deployment/Deployment_DataC.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 namespace CIAO
 {
   namespace Config_Handlers
@@ -28,7 +28,7 @@ namespace CIAO
         {
           toconfig.name =
             CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()));
-          
+
           Any_Handler::extract_into_any (desc.value (),
                                          toconfig.value);
         }

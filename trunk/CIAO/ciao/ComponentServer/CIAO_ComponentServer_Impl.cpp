@@ -1,7 +1,7 @@
 // $Id$
 #include "CIAO_ComponentServer_Impl.h"
 
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 #include "CIAO_CS_ClientC.h"
 #include "CIAO_Container_Impl.h"

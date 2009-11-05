@@ -1,3 +1,103 @@
+Thu Nov  5 12:44:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CIAO_common.h:
+          Deleted
+
+        * ciao/Client_init.cpp
+        * ciao/Client_init.h
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp
+        * ciao/Containers/Container_Base.cpp
+        * ciao/Containers/Servant_Activator.cpp
+        * ciao/Containers/Session/Session_Container.cpp
+        * ciao/Logger/File_Logger_Backend.cpp
+        * ciao/Servants/Home_Servant_Impl_T.cpp
+        * ciao/Servants/Servant_Impl_Base.cpp
+        * ciao/Servants/Servant_Impl_Utils_T.cpp
+        * ciao/Server_init.cpp
+        * connectors/ami4ccm/examples/Hello/AMI/AMI_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * connectors/dds4ccm/docs/DDS4CCM v1-0 batch5.odt
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * onnectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp
+        * DAnCE/NodeManager/Node_Manager_Module.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h
+        * DAnCE/TargetManager/DomainDataManager.cpp
+        * DAnCE/TargetManager/TargetManager_exec.cpp
+        * DAnCE/tests/CIAO/Components/ProcessColocation_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleConsumer_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleMultipleUser_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetProvider_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleNilFacetUser_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleNull_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleProvider_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.cpp
+        * DAnCE/tests/CIAO/Components/SimpleUser_exec.cpp
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.cpp
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.cpp
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp
+        * examples/BasicSP/BMDevice/BMDevice_exec.cpp
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.cpp
+        * examples/BasicSP/EC/EC_exec.cpp
+        * examples/DevGuideExamples/Messenger/Administrator_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/History_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Publication_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Receiver_exec_i.cpp
+        * examples/DevGuideExamples/Messenger/Runnable_exec_i.cpp
+        * examples/Display/GPS/GPS_exec.cpp
+        * examples/Display/GPS/GPS_exec.h
+        * examples/Display/GPS/GPS_tracing_exec.cpp
+        * examples/Display/NavDisplay/NavDisplay_exec.cpp
+        * examples/Display/RateGen/RateGen_exec.cpp
+        * examples/Hello/Receiver/Receiver_exec.cpp
+        * examples/Hello/Sender/Sender_exec.cpp
+        * examples/Null_Component/Null_Component_exec.cpp
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.cpp
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.cpp
+        * tests/IDL_Test/Lem_Specific_Export/Lem_Export_exec.cpp
+        * tests/Minimum/Receiver/Receiver_exec.cpp
+        * tests/Minimum/Sender/Sender_exec.cpp
+        * tools/Config_Handlers/Any_Handler.cpp
+        * tools/Config_Handlers/CCD_Handler.cpp
+        * tools/Config_Handlers/CEPE_Handler.cpp
+        * tools/Config_Handlers/ComponentPropertyDescription_Handler.cpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/CRDD_Handler.cpp
+        * tools/Config_Handlers/DataType_Handler.cpp
+        * tools/Config_Handlers/DD_Handler.cpp
+        * tools/Config_Handlers/DP_PCD_Handler.cpp
+        * tools/Config_Handlers/ERE_Handler.cpp
+        * tools/Config_Handlers/ID_Handler.cpp
+        * tools/Config_Handlers/IDREF_Base.cpp
+        * tools/Config_Handlers/IRDD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/PC_Intf.cpp
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/PL_Handler.cpp
+        * tools/Config_Handlers/Property_Handler.cpp
+        * tools/Config_Handlers/RDD_Handler.cpp
+        * tools/Config_Handlers/Req_Handler.cpp
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp
+        * tools/Config_Handlers/STD_PC_Intf.cpp
+        * tools/Config_Handlers/XML_File_Intf.cpp
+          Removed CIAO_Common.h, the macro was just needed for one file, not for all
+          users. If you need CIAO logging macros, include ciao/Logger/Log_Macros.h
+
 Thu Nov  5 10:19:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base.h:

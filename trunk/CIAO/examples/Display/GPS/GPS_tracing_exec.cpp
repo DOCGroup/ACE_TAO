@@ -1,7 +1,6 @@
 // $Id$
 
 #include "GPS_tracing_exec.h"
-#include "CIAO_common.h"
 
 #include "ace/OS_NS_time.h"
 
