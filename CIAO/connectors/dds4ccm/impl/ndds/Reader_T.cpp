@@ -349,8 +349,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
   }
 
   typename NDDS_TYPE::data_reader*
-	  impl =  NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
-   
+      impl =  NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
 
   if (!impl)
     {
@@ -364,8 +363,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
     DDS_ReturnCode_t retval;
     typename NDDS_TYPE::dds_seq_type data;
     
-	// NDDS_TYPE::dds_seq_type = dds sequence
-	// NDDS_TYPE::seq_type = ccm sequence
+    // NDDS_TYPE::dds_seq_type = dds sequence
+    // NDDS_TYPE::seq_type = ccm sequence
     if (this->condition_)
     {
         // retval =  impl->read_w_condition (data, sample_info, 1, this->condition_);
