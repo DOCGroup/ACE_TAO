@@ -80,11 +80,10 @@ namespace CIAO
 
     virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
 
-    // CIAO-specific.
-
+    /// CIAO-specific.
     CIAO::Container_ptr _ciao_the_Container (void) const;
 
-    // Accessors for the private member.
+    /// Accessors for the private member.
     const char *_ciao_instance_id (void) const;
     void _ciao_instance_id (const char *instance_id);
 

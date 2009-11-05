@@ -1,3 +1,11 @@
+Thu Nov  5 10:19:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base.h:
+          Removed old macro that wasn't used and didn't compile
+
+        * ciao/Contexts/Context_Impl_Base.h:
+          Doxygen changes
+
 Wed Nov  4 17:54:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/ComponentServer/CCM_ComponentServer.mpc:
