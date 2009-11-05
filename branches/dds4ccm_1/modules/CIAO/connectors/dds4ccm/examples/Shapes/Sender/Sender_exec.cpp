@@ -102,7 +102,6 @@ namespace CIAO_Shapes_Sender_Impl
   pulse_Generator::stop (void)
   {
     // return if not valid.
-    printf ("Stopping ticker\n");
     if (this->active_ == 0)
     {
       return -1;
@@ -215,21 +214,21 @@ namespace CIAO_Shapes_Sender_Impl
     try 
       {
         this->updater_->update (*square_);
-        printf ("UPDATED Shape_info for <%s> %u:%u:%u\n",
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UPDATED Shape_info for <%s> %u:%u:%u\n"),
                   square_->color.in (),
                   square_->x,
                   square_->y,
-                  square_->shapesize);
+                  square_->shapesize));
       }
     catch (CCM_DDS::NonExistent& )
       {
-        printf ("Shape_info for <%s> not updated: <%s> didn't exist.\n",
-                    square_->color.in (), square_->color.in ());
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%s> not updated: <%s> didn't exist.\n"),
+                    square_->color.in (), square_->color.in ()));
       }
     catch (CCM_DDS::InternalError& )
       {
-        printf ("Internal Error while updating Shape_info for <%s>.\n",
-                    square_->color.in ());
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while updating Shape_info for <%s>.\n"),
+                    square_->color.in ()));
       }
   }
 
@@ -258,7 +257,6 @@ namespace CIAO_Shapes_Sender_Impl
     ::CORBA::ULong rate)
   {
     this->rate_ = rate;
-    printf ("SETTING rate sender : <%d>\n", rate);
   }
   
   
@@ -273,7 +271,6 @@ namespace CIAO_Shapes_Sender_Impl
     ::CORBA::UShort max_x)
   {
     this->max_x_ = max_x;
-    printf ("SETTING max x : <%d>\n", max_x);
   }
   
   ::CORBA::UShort
@@ -287,7 +284,6 @@ namespace CIAO_Shapes_Sender_Impl
     ::CORBA::UShort max_y)
   {
     this->max_y_ = max_y;
-    printf ("SETTING max y : <%d>\n", max_y);
   }
   
   ::CORBA::UShort
@@ -301,7 +297,6 @@ namespace CIAO_Shapes_Sender_Impl
     ::CORBA::UShort max_size)
   {
     this->max_size_ = max_size;
-    printf ("SETTING max size : <%d>\n", max_size);
   }
   
   void
@@ -309,7 +304,6 @@ namespace CIAO_Shapes_Sender_Impl
       ::CORBA::Boolean resize)
   {
     this->resize_ = resize;
-    printf ("SETTING resize : <%d>\n", this->resize_);
   }
 
   ::CORBA::Boolean
@@ -353,24 +347,24 @@ namespace CIAO_Shapes_Sender_Impl
     square_->color = CORBA::string_dup("GREEN");
 
     //Register shape with dds.
-    printf ("REGISTER Shape_info for <%s> %u:%u:%u\n",
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("REGISTER Shape_info for <%s> %u:%u:%u\n"),
                   square_->color.in (),
                   square_->x,
                   square_->y,
-                  square_->shapesize);
+                  square_->shapesize));
     try 
       {
         this->updater_->create (*square_);
       }
     catch (CCM_DDS::AlreadyCreated& )
       {
-        printf ("Shape_info for <%s> already created.\n",
-                    square_->color.in ());
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%s> already created.\n"),
+                    square_->color.in ()));
       }
     catch (CCM_DDS::InternalError& )
       {
-        printf ("Internal Error while creating Shape_info for <%s>.\n",
-                      square_->color.in ());
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating Shape_info for <%s>.\n"),
+                      square_->color.in ()));
       }
   }
   

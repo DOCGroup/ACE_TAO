@@ -1,3 +1,13 @@
+Thu Nov  5 16:32:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resolved compiler errors.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Removed some printf statements.
+
 Thu Nov  5 16:09:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:

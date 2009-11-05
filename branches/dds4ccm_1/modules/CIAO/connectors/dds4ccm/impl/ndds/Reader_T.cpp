@@ -35,7 +35,6 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
   ::CCM_DDS::ReadInfoSeq_out infos)
 {
   //this function has to return the last sample of all instances
-  printf("------- in read_all Reader_T of ndds  ------------- \n");
   typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
@@ -43,8 +42,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
   if (rdr == 0)
     {
-      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
-                   "Unable to cast provided DataReader to servant\n"));
+      CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+                   ACE_TEXT ("Unable to cast provided DataReader to servant\n")));
       throw CORBA::INTERNAL ();
     }
 
@@ -53,9 +52,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
 
   if (!impl)
   {
-    CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
-                   "Unable to narrow the provided reader entity to the specific "
-                   "type necessary to publish messages\n"));
+    CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+                   ACE_TEXT ("Unable to narrow the provided reader entity to the specific ")
+                   ACE_TEXT ("type necessary to publish messages\n")));
     throw CORBA::INTERNAL ();
   }
 
@@ -87,7 +86,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
     case DDS_RETCODE_OK:
       ix = 0;
       nr_of_last_samples = 0;
-      printf (" Reader_T: read_all Data: retval is %d , number of data = %d---\n", retval, data.length() );
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+                              ACE_TEXT ("number_of_samples <%d>\n"), data.length() ));
       //infoseq <<= sample_info; ??
 
        // count the last samples of all instances
@@ -109,17 +109,17 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
           sample_info[i].reception_timestamp >>= infoseq[ix].timestamp;
 
          inst_seq[ix] = data[i];
-         //printf("rank is 0\n");
           ix++;
         }
       } 
     
       break;
     case DDS_RETCODE_NO_DATA:
-      printf ("Reader_T: read_all No data : retval is %d ---\n", retval);
+      CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - No data")));
       break;
     default:
-      printf ("Reader_T: read_all Failed retval is %d ---\n", retval);
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+                              ACE_TEXT ("retval is %d\n"), retval));
       throw ::CCM_DDS::InternalError (retval, 0);
       break;
   }
