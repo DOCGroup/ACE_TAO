@@ -1,19 +1,24 @@
+Thu Nov  5 10:48:07 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3748_Regression/server.cpp:
+          Fixed warnings.
+
 Wed Nov  4 20:57:08 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * MPC/config/notify_monitor_control.mpb:
 
           Disable this feature on wince=1 build.
-          
+
 Tue Nov  3 17:32:03 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_init.cpp:
-        
+
           Added IDL3+ keywords to the list used to check for clashes
           and leading underscore retention.
-          
+
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Added creation of uses multiple-specific struct and sequence
           nodes in the AST when the uses multiple port
           appears in an extended port declaration, identically to what
@@ -26,7 +31,7 @@ Mon Nov  2 22:59:48 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
           Made MonitorManager not start ORBTask if MC is not required.
           This should resolve Notify tests failure on static builds.
-          
+
         * orbsvcs/tests/Notify/MC/notify.conf:
 
           Removed this file as it'll be generated when running the test
