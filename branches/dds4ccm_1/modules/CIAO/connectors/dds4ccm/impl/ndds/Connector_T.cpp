@@ -12,6 +12,7 @@
 #include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/ListenerControl.h"
+#include "dds4ccm/impl/ndds/ConnectorStatusListener.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -197,6 +198,15 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_in_ (void)
       if (CORBA::is_nil  (this->__info_in_datawriter_.in ()))
         {
           ::DDS::DataWriterQos dwqos;
+          //test mh     
+     //     dwqos.history.depth=1;
+      //    dwqos.resource_limits.max_instances   = 5; // >= Initial Instances
+      //    dwqos.resource_limits.max_samples_per_instance = 4; //>= Depth,  <=Max Samples
+      //    dwqos.deadline.period.nanosec = 0;
+     //     dwqos.deadline.period.sec = 1;
+     
+      
+// 
           ::DDS::DataWriter_var dwv_tmp = this->__info_in_publisher_->create_datawriter (this->topic_.in (),
                                                                                           dwqos,
                                                                                           0,
@@ -252,7 +262,7 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::configure_port_info_out_ (bool create_ge
             }
           else
             {
-              this->__info_out_datareader_ =
+               this->__info_out_datareader_ =
                   this->__info_out_subscriber_->create_datareader (this->topic_.in (),
                                                                drqos,
                                                                this->__info_out_datareaderlistener.in (),
@@ -333,6 +343,17 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_out_control (void)
   CIAO_TRACE ("get_info_out_control");
   return new CCM_DDS_ListenerControl_i (this->__info_out_rawlistener_enabled_);
 }
+//mh
+template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
+::CCM_DDS::CCM_ConnectorStatusListener_ptr
+Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_out_connector_status (void)
+{
+  CIAO_TRACE ("get_info_out_connector_status");
+  return new CCM_DDS_ConnectorStatusListener_i();
+}
+
+
+
 
 template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
 ::DDS::CCM_DataReader_ptr

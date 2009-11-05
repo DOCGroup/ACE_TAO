@@ -44,7 +44,9 @@ public:
   virtual typename CONNECTOR_TYPE::reader_type::_ptr_type get_info_out_data (void);
 
   virtual ::CCM_DDS::CCM_ListenerControl_ptr get_info_out_control (void);
-
+//mh
+  virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr get_info_out_connector_status(void);
+//end mh
   virtual ::DDS::CCM_DataReader_ptr get_info_out_dds_entity (void);
 
   virtual void set_session_context (::Components::SessionContext_ptr ctx);
@@ -93,7 +95,11 @@ private:
   ::DDS::DataReaderListener_var __info_out_listener_;
   ::DDS::DataReader_var __info_out_datareader_;
   ::DDS::DataReaderListener_var __info_out_datareaderlistener;
-  
+ 
+  //mh
+  CCM_DDS::ConnectorStatusListener_var __info_out_connector_status_;
+  //end mh
+
   // @from DDS_Getter
   bool __info_get_configured_;
   ::DDS::DataReader_var __info_get_datareader_;
@@ -105,7 +111,9 @@ private:
             typename GETTER_TYPE,
             typename READER_TYPE,
             typename CONTEXT_TYPE,
-            typename RAWLISTENER_TYPE>
+            typename RAWLISTENER_TYPE,
+            typename CONNECTORSTATUSLISTENER_TYPE
+  >
 
   struct Connector_Traits
   {
@@ -116,6 +124,8 @@ private:
     typedef READER_TYPE reader_type;
     typedef CONTEXT_TYPE context_type;
     typedef RAWLISTENER_TYPE rawlistener_type;
+    typedef CONNECTORSTATUSLISTENER_TYPE connectorstatuslistener_type;
+
   };
 
 

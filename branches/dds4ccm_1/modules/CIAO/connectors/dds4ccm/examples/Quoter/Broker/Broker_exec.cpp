@@ -134,10 +134,10 @@ namespace CIAO_Quoter_Broker_Impl
                                          const void *)
   {
     // Notify the subscribers
-    this->pulse_callback_.read_one();
-    this->pulse_callback_.read_one_history();
-    this->pulse_callback_.read_all();
-    this->pulse_callback_.read_all_history();
+ //   this->pulse_callback_.read_one();
+ //   this->pulse_callback_.read_one_history();
+ //   this->pulse_callback_.read_all();
+ //   this->pulse_callback_.read_all_history();
     return 0;
   }
 
@@ -322,11 +322,59 @@ void
        
   }
   //============================================================
+  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  //============================================================
+  
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
+  {
+  }
+  
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+    
+  }
+  
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr the_topic, 
+     const DDS::InconsistentTopicStatus & status)
+    {
+      printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
+    }
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+    ::DDS::DataReader_ptr the_reader,
+     const DDS::RequestedIncompatibleQosStatus & status)  {
+      printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+    }
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr the_reader, 
+     const DDS::SampleRejectedStatus & status)  {
+      printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+    }
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr the_writer,
+     const DDS::OfferedDeadlineMissedStatus & status)  {
+      printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+    }
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr the_writer, 
+     const DDS::OfferedIncompatibleQosStatus & status)  {
+      printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+    }
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr the_entity,
+    ::DDS::StatusKind  status_kind)  {
+      printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+    }
+ 
+
+//============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
   
   PortStatusListener_exec_i::PortStatusListener_exec_i (void)
   {
+     printf("####### construct PortStatusListener ######");/* Your code here. */
   }
   
   PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
@@ -340,15 +388,18 @@ void
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-    /* Your code here. */
+    printf("####### deadline missed ######");/* Your code here. */
   }
   
   void
   PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr /* the_reader */,
-    const ::DDS::SampleLostStatus & /* status */)
+    ::DDS::DataReader_ptr  the_reader ,
+    const ::DDS::SampleLostStatus &  status )
   {
-   
+   printf("####### sample lost ######");
+   printf(" status.total_count = %d\n", status.total_count);
+   printf(" status.total_count_change = %d\n", status.total_count_change);
+
   }
   
   //============================================================
@@ -377,13 +428,22 @@ void
   {
     printf ("*************** out listener\n");
     return new Stock_Info_RawListener_exec_i ();
+   
   }
   
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Broker_exec_i::get_info_out_status (void)
   {
-    /* Your code here. */
-    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+    printf ("*************** out status************************\n");
+    //return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+    return new PortStatusListener_exec_i ();
+  }
+
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Broker_exec_i::get_info_out_connector_status (void)
+  {
+    printf ("*************** out connector status************************\n");
+     return new ConnectorStatusListener_exec_i ();
   }
   
   // Operations from Components::SessionComponent.
@@ -408,9 +468,11 @@ void
   {
     /* Your code here. */
     std::cerr << ">>> Broker_exec_i::configuration_complete" << endl;
-    this->reader_ = this->context_->get_connection_info_out_data();
-    this->getter_ = this->context_->get_connection_info_get_out_data ();
-    this->ticker_->open_h ();
+     this->reader_ = this->context_->get_connection_info_out_data();
+//  this->getter_ = this->context_->get_connection_info_get_out_data ();
+//  this->ticker_->open_h ();   
+     ::CCM_DDS::CCM_ConnectorStatusListener_var pl = this->get_info_out_connector_status();
+   
   }
 
   void
@@ -434,15 +496,17 @@ void
     ::CCM_DDS::ListenerControl_var lc = 
     this->context_->get_connection_info_out_control ();
 
+       
+
     if (CORBA::is_nil (lc.in ()))
     {
       printf ("Error:  Listener control receptacle is null!\n");
       throw CORBA::INTERNAL ();
     }
     //in case of testing RawListener set lc-> enabled true
-    // lc->enabled (true);
+    lc->enabled (true);
     //in case of testing Reader set lc-> enabled false, so the RawListener doesn't consume all the messages 
-    lc->enabled (false);
+    //lc->enabled (false);
     this->start();
   }
   

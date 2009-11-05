@@ -1,3 +1,18 @@
+
+Thu Nov  5 10:04:04 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc:
+        Add implementation of ConnectorStatusControl
+
 Thu Nov  5 07:34:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:

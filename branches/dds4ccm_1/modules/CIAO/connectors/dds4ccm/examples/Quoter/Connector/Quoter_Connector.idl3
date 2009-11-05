@@ -16,6 +16,7 @@
 #include "dds4ccm/idl/dds4ccm_PortStatusListener.idl3"
 #include "dds4ccm/idl/dds4ccm_PortStatusListenerE.idl"
 #include "dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3"
+#include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerE.idl"
 #include "dds4ccm/idl/dds4ccm_ListenerControl.idl3"
 #include "dds4ccm/idl/dds_rtf2_dcpsE.idl"
 #include "Base/Quoter_Base.idl"
@@ -91,6 +92,8 @@ module CCM_DDS
   {
     void on_data (in Quoter::Stock_Info an_instance, in ReadInfo info);
   };
+  
+  
 };
 
 module Quoter
@@ -120,6 +123,7 @@ module Quoter
     uses CCM_DDS::Stock_Info_RawListener info_out_listener;
     provides DDS::DataReader info_out_dds_entity;
     uses CCM_DDS::PortStatusListener info_out_status;
+    uses CCM_DDS::ConnectorStatusListener info_out_connector_status;
   };
 };
 

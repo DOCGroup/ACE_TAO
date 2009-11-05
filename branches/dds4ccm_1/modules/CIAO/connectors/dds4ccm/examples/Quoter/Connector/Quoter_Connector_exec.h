@@ -39,7 +39,9 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     ::CCM_DDS::CCM_Stock_Info_Getter,
     ::CCM_DDS::CCM_Stock_Info_Reader,
     ::Quoter::CCM_Quoter_Connector_Context,
-    ::CCM_DDS::Stock_Info_RawListener> Stock_Info_Connector_Traits;
+    ::CCM_DDS::Stock_Info_RawListener,
+    ::CCM_DDS::ConnectorStatusListener> Stock_Info_Connector_Traits;
+    
 
   class QUOTER_CONNECTOR_EXEC_Export Quoter_Connector_exec_i :
     public Connector_T <Stock_Info_DDS_Traits, Stock_Info_Connector_Traits>
