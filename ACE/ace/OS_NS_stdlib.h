@@ -60,7 +60,7 @@ extern "C" {
  * using the pre-processor.
  */
 
-#if !defined (ACE_LACKS_STRTOLL)
+#if !defined (ACE_LACKS_STRTOLL) && !defined (ACE_STRTOLL_EQUIVALENT)
 inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
 {
 # if defined (strtoll)
@@ -70,9 +70,9 @@ inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
   return ACE_STD_NAMESPACE::strtoll (s, ptr, base);
 # endif /* strtoll */
 }
-#endif /* ACE_LACKS_STRTOLL */
+#endif /* !ACE_LACKS_STRTOLL && !ACE_STRTOLL_EQUIVALENT */
 
-#if !defined (ACE_LACKS_STRTOULL)
+#if !defined (ACE_LACKS_STRTOULL) && !defined (ACE_STRTOULL_EQUIVALENT)
 inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
 {
 # if defined (strtoull)
@@ -82,7 +82,7 @@ inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
   return ACE_STD_NAMESPACE::strtoull (s, ptr, base);
 # endif /* strtoull */
 }
-#endif /* ACE_LACKS_STRTOULL */
+#endif /* !ACE_LACKS_STRTOULL && !ACE_STRTOULL_EQUIVALENT */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

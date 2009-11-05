@@ -1,3 +1,9 @@
+Thu Nov  5 13:58:25 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+          Another fix for platforms that define ACE_STRTOLL_EQUIVALENT.
+          ACE_STRTOULL_EQUIVALENT.
+
 Thu Nov  5 13:46:34 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdlib.h:
