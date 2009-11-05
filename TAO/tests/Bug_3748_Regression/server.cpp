@@ -63,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      if (CORBA::is_nil (root_poa))
+      if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
@@ -72,7 +72,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
-                      Hello (orb),
+                      Hello (orb.in ()),
                       1);
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
