@@ -1,3 +1,607 @@
+Thu Nov  5 18:53:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Integrated work of the dds4ccm_1 branch which extends the DDS4CCM
+        connector infrastructure, adds a shapes component and adds timestamp
+        to the hello world example for measuring latency
+
+        Thu Nov  5 17:04:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Removed some printf statements.
+
+        Thu Nov  5 16:32:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resolved compiler errors.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Removed some printf statements.
+
+        Thu Nov  5 16:09:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Resolved compiler errors on linux.
+
+        Thu Nov  5 16:06:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Removed some printf statements.
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+          Added ConnectionStatusListener
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Removed some comments and printf statements.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Removed some printf statements.
+
+        Thu Nov  5 14:40:52 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+        Change in DataRaederListener for ConnectionStatus
+
+        Thu Nov  5 12:39:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Resolved compiler errors on Linux.
+
+        Thu Nov  5 12:25:04 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+        * connectors/dds4ccm/impl/ndds/ConnectorStatusListener.cpp
+        * connectors/dds4ccm/impl/ndds/ConnectorStatusListener.h
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        Changes in implementation of ConnectorStatusControl
+
+        Thu Nov  5 12:09:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Cleanup some printf and unused methods.
+
+
+        Thu Nov  5 11:22:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Enabled resizing of shape.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Implemented context switch.
+
+        Thu Nov  5 10:37:04 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * connectors/dds4ccm/impl/ndds/ConnectorStatusListener.cpp:
+        * connectors/dds4ccm/impl/ndds/ConnectorStatusListener.h:
+          Add implementation of ConnectorStatusControl
+
+        Thu Nov  5 09:17:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/ndds/PortStatusListener.h:
+          Removed, not needed at all
+
+        Thu Nov  5 10:04:04 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc:
+        Add implementation of ConnectorStatusControl
+
+        Thu Nov  5 07:34:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+          X, Y and shapesize should be long (in stead off short).
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Default rawlistener on.
+
+        Wed Nov  4 16:56:37 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+          Added missing include for msvc9
+
+        Wed Nov  4 12:57:37 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Created context switch. The rawlistener informs port listener
+          in a seperate thread.
+
+        Tue Nov  3 15:42:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Resolved compiler errors on Windows.
+
+        Tue Nov  3 15:02:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Enabled rawlistener. Also created a flag to turn this on/off using
+          the deployment plan.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Added ability to turn on/off raw listener. Also created connections
+          to enable raw listen.
+
+        Mon Nov  2 18:35:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Resolved typo. Also extended with connection to ListenControl.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Changed due to previous typos.
+
+        Mon Nov  2 12:37:27 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
+          Realingment.
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Implemented framework PortStatusListener.
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resize shape can be set in Deployment plan.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/USER_QOS_PROFILES.xml:
+          Resize shape made available. Also set Qos settings for DDS exactly these
+          same as in the DDS demo.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+          Minor changes.
+
+        Thu Oct 29 14:42:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Made shape resize configurable.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Made shape resize configurable.
+
+        Thu Oct 29 14:36:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved compiler errors on linux.
+
+        Thu Oct 29 13:41:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+          Refactored so that it suits the RTI shapes demo.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Refactored the get_one method.
+
+        Fri Oct 23 12:20:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Started with the implementation of the getter in this example.
+          The user is able to configure (using the deployment plan) whether
+          to get the data, to read the data or to do both.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          The user is able to configure whether to get the data,
+          to read the data or to do both.
+          Added configparameters 'get_data' and 'read_data' to establish
+          this.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Resolved bug.
+
+        Fri Oct 23 11:37:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resolved a typo which results in strange behaviour.
+
+        Fri Oct 23 11:32:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          More accurate date time logging.
+
+        Fri Oct 23 10:59:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Resolved runtime crashes related to compiler warnings.
+          Specified which rate is set (sender or receiver).
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Specified which rate is set (sender or receiver).
+
+        Fri Oct 23 10:46:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Implemented read_one and read_all
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resolved minor bug.
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          changed to meet the receivers IDL.
+
+        Fri Oct 23 09:03:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Added functionality to the sender.
+
+        Fri Oct 23 06:45:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved some fuzz errors.
+
+        Thu Oct 22 15:19:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Used the correct duration conversion.
+
+        * connectors/dds4ccm/impl/ndds/Duration_t.h:
+        * connectors/dds4ccm/impl/ndds/Time_t.h:
+          Rename variables to proper names.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved compiler errors on Linux.
+
+        Thu Oct 22 14:14:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+          Used the conversion methods for AccessStatus
+          and InstanceStatus in seq conversion operators.
+
+        Thu Oct 22 13:50:23 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+          Added conversion methods for AccessStatus and InstanceStatus.
+
+        Thu Oct 22 13:13:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Used ACE_Date_Time to log timing differences.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+          Extended sleep time.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test_dds.pl:
+          Added to run DDS only hello example.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h:
+          Added operators to convert SampleInfoSeq to ReadInfo
+          and to convert SampleInfoSeq to ReadInfoSeq.
+
+        Wed Oct 21 13:43:25 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Used an ACE_Time_Value in sleep methods.
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+          Extended the Broker with get_one.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Giving the getter its own DataReader instance.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Implemented a draft version of get_one.
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          is_lifecycle_checked default set to false.
+
+        Wed Oct 21 08:44:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+          Changed sleeping times.
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Made key_fields attribute readonly.
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Changed in order to run run test script.
+
+        Tue Oct 20 13:41:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+          Added number of iterations.
+
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+          Times in micro seconds
+
+        * examples/Hello/Sender/Sender_exec.cpp:
+          Removed extra loggin.
+
+        Tue Oct 20 12:44:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Logging in micro seconds.
+
+        Tue Oct 20 09:24:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+          Added timing.
+
+        Tue Oct 20 08:44:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/Receiver/Receiver.idl:
+        * examples/Hello/Receiver/Receiver_exec.h:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+          Added number of iterations.
+
+        Mon Oct 19 18:29:02 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+          Made is real IDL.
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
+          Resolved compiler errors
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Created a compileable version.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved some compiler errors on Linux.
+
+        Mon Oct 19 17:20:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+          Removed the space character from "// @key"
+
+        Mon Oct 19 17:08:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes:
+        * connectors/dds4ccm/examples/Shapes/Base:
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.mpc:
+        * connectors/dds4ccm/examples/Shapes/Connector:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3p:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3p:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.mpc:
+        * connectors/dds4ccm/examples/Shapes/Sender:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3p:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.mpc:
+        * connectors/dds4ccm/examples/Shapes/descriptors:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+          Added framework for a shape example.
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Removed logging regarding StockInfo.
+
+        Mon Oct 19 13:17:12 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          The connector template should be provided with a name.
+
+        Mon Oct 19 12:36:26 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+          Code outlining.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Enabled getter.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Resolved compiler warnings.
+
+        Mon Oct 19 11:14:34 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+          Added log timing flag.
+
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Sender/Sender.idl:
+        * examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+          Implemented timing information.
+
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+          Added log timing flag.
+
+        Fri Oct 16 15:00:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Using high res timers to determine time difference.
+
+        Fri Oct 16 14:23:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Introduced an attribute which controls the timestamp logging.
+
+        Fri Oct 16 14:09:33 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Rewritten timers.
+
+        Fri Oct 16 13:46:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Added send and receive timestamps.
+
+        Fri Oct 16 10:51:03 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+          Left getter out for now.
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+          Removed Connector_T template class and put it in it's own file.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Created a Connector_T template class.
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+          Removed unnecessary include.
+
+        Thu Oct 15 17:25:03 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+          Removed some tabs. Expanded the getter framework.
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+          Expanded the getter framework.
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Improved logging regarding updater.
+
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+          Added connector for the getter.
+
+        * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
+          Sleep time changed.
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Expanded the getter framework a bit more.
+
+        * connectors/dds4ccm/impl/ndds/NDDS_Traits.h:
+          Removed tabs.
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Some more investigation on the updater framework.
+
+        Thu Oct 15 09:21:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Added Getter framework.
+
+        Wed Oct 14 15:09:11 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Changed logging. Catching proper exceptions.
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Changed logging. Using this-> for class variables.
+
+        Wed Oct 14 13:48:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Implemented DDS interface for updater.
+
+        Wed Oct 14 09:24:51 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl3:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+          Added updater framework.
+
+        * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
+          Reduced sleeping time.
+
 Thu Nov  5 12:44:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CIAO_common.h:

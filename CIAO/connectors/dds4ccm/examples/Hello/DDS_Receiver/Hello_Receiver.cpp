@@ -5,6 +5,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
+#include "ace/Date_Time.h"
+#include "ace/SString.h"
 
 #include <ndds/ndds_namespace_cpp.h>
 
@@ -32,14 +34,14 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv) {
     {
       char *end = 0;
       num_samples = ACE_OS::strtol (argv[1], &end, 10);
-        
+
       if (end == argv[1] && num_samples < 0)
         {
           ACE_ERROR ((LM_ERROR, "Error: provided argument not a valid integer over zero\n"));
           return -1;
         }
     }
-            
+
   /* Create the domain participant on domain ID 0 */
   ::DDS::DomainParticipant *participant = ::DDS::DomainParticipantFactory::get_instance()->
       create_participant(
@@ -144,8 +146,20 @@ void HelloListener::on_data_available(::DDS::DataReader *reader) {
     if (info.valid_data) {
       // Valid (this isn't just a lifecycle sample): print it
       ++received_samples;
-      
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C\n"), sample));
+      ACE_CString rec (sample);
+      ACE_Date_Time now;
+      int sec_rec = ACE_OS::atoi (rec.substr (0, 2).c_str() );
+      if (sec_rec > 0)
+        {
+          int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
+          if (sec_rec != now.second ())
+            usec_rec += 10000000;
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C dur <%d>\n"), sample, now.microsec () - usec_rec));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%C\n"), sample));
+        }
       if(received_samples == num_samples || ACE_OS::strlen(sample) == 0){
         shutdown_flag = true;
       }

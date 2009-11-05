@@ -186,6 +186,17 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>10</short>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>
@@ -272,6 +283,17 @@
         </type>
         <value>
           <enum>yellow</enum>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>log_time</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
         </value>
       </value>
     </configProperty>

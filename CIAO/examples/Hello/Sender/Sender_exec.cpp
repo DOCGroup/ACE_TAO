@@ -19,14 +19,38 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Sender_exec.h"
+#include "ace/Date_Time.h"
+
 
 namespace CIAO_Hello_Sender_Impl
 {
   char*
   Message_Impl::get_message ()
   {
-    ACE_DEBUG ((LM_EMERGENCY, "Sender sending out message: [%C]\n", component_.message_.in ()));
-    return CORBA::string_dup (component_.message_.in ());
+    CORBA::String_var message;
+    if (this->component_.log_time ())
+      {
+        //Add extra time
+        ACE_hrtime_t start = ACE_OS::gethrtime();
+        ACE_TCHAR timestamp[16];
+        ACE_OS::sprintf (timestamp,
+                          "%lld",
+                          start);
+        CORBA::String_var tm = CORBA::string_dup(timestamp);
+        int tm_length = strlen(tm);
+        int message_length = strlen(this->component_.message_.in ());
+        //one extra for a space character.
+        message = CORBA::string_alloc( (tm_length + message_length + 2));
+        strcpy(message, tm.in ());
+        strcat(message, " ");
+        strcat(message, this->component_.message_.in ());
+        return CORBA::string_dup(message);
+      }
+    else
+      {
+        ACE_DEBUG ((LM_EMERGENCY, "Sender sending out message: [%C]\n", component_.message_.in ()));
+        return CORBA::string_dup (message);
+      }
   }
 
   Sender_exec_i::~Sender_exec_i ()
@@ -43,6 +67,18 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::local_message ()
   {
     return CORBA::string_dup (message_.in ());
+  }
+
+  void
+  Sender_exec_i::log_time (bool log_time)
+  {
+    log_time_ = log_time;
+  }
+
+  bool
+  Sender_exec_i::log_time ()
+  {
+    return log_time_;
   }
 
   void

@@ -19,6 +19,8 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Receiver_exec.h"
+#include "ace/High_Res_Timer.h"
+#include "ace/Date_Time.h"
 
 namespace CIAO_Hello_Receiver_Impl
 {
@@ -29,6 +31,19 @@ namespace CIAO_Hello_Receiver_Impl
   Receiver_exec_i::~Receiver_exec_i ()
   {
   }
+  
+  void 
+  Receiver_exec_i::iterations (CORBA::Short iterations)
+  {
+    this->iterations_ = iterations;
+  }
+
+  CORBA::Short 
+  Receiver_exec_i::iterations ()
+  {
+    return this->iterations_;
+  }
+
 
   void
   Receiver_exec_i::push_click_in (::Hello::TimeOut * ev)
@@ -43,12 +58,30 @@ namespace CIAO_Hello_Receiver_Impl
 
     if (CORBA::is_nil (rev.in ()))
       throw CORBA::BAD_INV_ORDER ();
-
-    CORBA::String_var str = rev->get_message ();
-
-    ACE_DEBUG ((LM_DEBUG,
-                "Receiver - Got message from the server [%C]\n",
-                str.in () ));
+    
+    for (int i = 0; i < this->iterations_; ++i)
+      {
+        CORBA::String_var str = rev->get_message ();
+        ACE_hrtime_t now = ACE_OS::gethrtime();
+        ACE_CString tm_rec (str.in ());
+        ACE_hrtime_t received = ACE_OS::strtoull (tm_rec.substr(0, 15).c_str(), 0, 0);
+        if (received > 0)
+          {
+            ACE_Time_Value tv (0, 0);
+            ACE_High_Res_Timer::hrtime_to_tv (tv,
+                                              now - received);
+            ACE_DEBUG ((LM_EMERGENCY,
+                      "Receiver - Got message from the server [%C]. difference <%d>\n",
+                      str.in (), tv.usec () ));
+          }
+        else 
+          {
+            ACE_DEBUG ((LM_EMERGENCY,
+                      "Receiver - Got message from the server [%C].\n",
+                      str.in () ));
+          }
+        ACE_OS::sleep (0.2);
+      }
   }
 
   // Operations from Components::SessionComponen
