@@ -155,7 +155,7 @@ namespace CIAO_Quoter_Distributor_Impl
   }
 
   Distributor_exec_i::Distributor_exec_i (void)
-    : rate_ (5)
+    : rate_ (1)
   {
     ACE_OS::srand (static_cast <u_int> (ACE_OS::time ()));
     this->ticker_ = new pulse_Generator (*this);
@@ -190,11 +190,60 @@ namespace CIAO_Quoter_Distributor_Impl
             if (i->second->current < i->second->low)
               i->second->low = i->second->current;
 
-            if (!CORBA::is_nil (this->writer_))
+            if (!CORBA::is_nil (this->writer_)) {
+              printf ("WRITE AND CREATE stock_info for <%s> %u:%u:%u\n",
+                            i->first.c_str(),
+                            i->second->low,
+                            i->second->current,
+                            i->second->high);
               this->writer_->write (i->second);
+              try 
+                {
+                  this->updater_->create (i->second);
+                }
+              catch (CCM_DDS::AlreadyCreated& )
+                {
+                  printf ("Stock_info for <%s> already created.\n",
+                              i->first.c_str ());
+                }
+              catch (CCM_DDS::InternalError& )
+                {
+                  printf ("Internal Error while creating Stock_info for <%s>.\n",
+                                i->first.c_str ());
+                }
+            }
             else
               std::cerr << "Writer reference is nil!" << std::endl;
-
+          }
+        else
+          {
+            if (!CORBA::is_nil (this->updater_)) 
+              {
+                i->second->current = ACE_OS::rand () % 50;
+                i->second->high = i->second->current + ACE_OS::rand () % 50;
+                i->second->low =  ACE_OS::rand () % 50;
+                try 
+                  {
+                    this->updater_->update (i->second);
+                    printf ("Updated stock_info for <%s> %u:%u:%u\n",
+                                            i->first.c_str(),
+                                            i->second->low,
+                                            i->second->current,
+                                            i->second->high);
+                  }
+                catch (CCM_DDS::NonExistent& )
+                  {
+                    printf ("Stock_info for <%s> not updated: <%s> didn't exist.\n",
+                                i->first.c_str (), i->first.c_str ());
+                  }
+                catch (CCM_DDS::InternalError& )
+                  {
+                    printf ("Internal Error while updating Stock_info for <%s>.\n",
+                                i->first.c_str ());
+                  }
+             }
+            else
+              std::cerr << "Updater reference is nil!" << std::endl;
           }
       }
   }
@@ -245,6 +294,13 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::stop (void)
   {
+    for (Stock_Table::iterator i = this->stocks_.begin ();
+         i != this->stocks_.end ();
+         ++i)
+      {
+        printf ("Unregister <%s>\n", i->first.c_str ());
+        this->updater_->_cxx_delete (i->second);
+      }
     this->ticker_->stop ();
   }
 
@@ -285,9 +341,8 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::configuration_complete (void)
   {
-    /* Your code here. */
-    this->writer_ = this->context_->get_connection_info_in_data ();
-
+    this->writer_  = this->context_->get_connection_info_in_data ();
+    this->updater_ = this->context_->get_connection_info_update_data ();
     this->ticker_->activate ();
   }
 
@@ -296,6 +351,11 @@ namespace CIAO_Quoter_Distributor_Impl
   {
     this->start ();
     this->add_stock ("MSFT");
+    this->add_stock ("IBM");
+    this->add_stock ("HP");
+    this->add_stock ("DELL");
+    this->add_stock ("ACER");
+    this->add_stock ("ASUS");
   }
 
   void
@@ -308,6 +368,7 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::ccm_remove (void)
   {
     /* Your code here. */
+    //this->stop ();
   }
 
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

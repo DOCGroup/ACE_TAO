@@ -207,6 +207,22 @@
   </connection>
 
   <connection>
+    <name>info_get_out_data</name>
+    <internalEndpoint>
+      <portName>info_get_out_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="BrokerComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>info_get_out_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
     <name>_listenercontrol</name>
     <internalEndpoint>
       <portName>info_out_control</portName>
@@ -271,6 +287,22 @@
   </connection>
 
   <connection>
+    <name>_connectorstatuslistener</name>
+    <internalEndpoint>
+      <portName>info_out_connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="BrokerComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>info_out_connector_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
     <name>writer_connection</name>
     <internalEndpoint>
       <portName>info_in_data</portName>
@@ -286,6 +318,21 @@
     </internalEndpoint>
   </connection>
 
+  <connection>
+    <name>updater_connection</name>
+    <internalEndpoint>
+      <portName>info_update_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="DistributorComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>info_update_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Quoter_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
 
   <artifact xmi:id="Distributor_ExecArtifact">
     <name>Distributor_exec</name>

@@ -11,24 +11,24 @@
 #define CIAO_RTI_DURATION_T_H
 
 inline void
-operator<<= (::DDS::Duration_t &ddsstatus, const ::DDS_Duration_t & status)
+operator<<= (::DDS::Duration_t &ddsduration, const ::DDS_Duration_t & duration)
 {
-  ddsstatus.sec = status.sec;
-  ddsstatus.nanosec = status.nanosec;
+  ddsduration.sec = duration.sec;
+  ddsduration.nanosec = duration.nanosec;
 }
 
 inline void
-operator<<= (::DDS_Duration_t &ddsstatus, const ::DDS::Duration_t & status)
+operator<<= (::DDS_Duration_t &ddsduration, const ::DDS::Duration_t & duration)
 {
-  ddsstatus.sec = status.sec;
-  ddsstatus.nanosec = status.nanosec;
+  ddsduration.sec = duration.sec;
+  ddsduration.nanosec = duration.nanosec;
 }
 
 inline void
-operator>>= (const ::DDS_Duration_t &status, ::DDS::Duration_t & ddsstatus)
+operator>>= (const ::DDS_Duration_t &duration, ::DDS::Duration_t & ddsduration)
 {
-  ddsstatus.sec = status.sec;
-  ddsstatus.nanosec = status.nanosec;
+  ddsduration.sec = duration.sec;
+  ddsduration.nanosec = duration.nanosec;
 }
 
 #endif /* CIAO_RTI_DURATION_T_H */

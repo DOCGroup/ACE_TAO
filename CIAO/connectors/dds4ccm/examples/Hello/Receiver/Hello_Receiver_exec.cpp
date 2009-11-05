@@ -6,6 +6,8 @@
 // be/be_codegen.cpp:1278
 
 #include "Hello_Receiver_exec.h"
+#include "ace/Date_Time.h"
+#include "ace/High_Res_Timer.h"
 
 #include "ciao/Logger/Log_Macros.h"
 #include "ace/Atomic_Op.h"
@@ -34,8 +36,27 @@ namespace CIAO_Hello_DDS_Receiver_Impl
     const char * an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
+    
     ++received_;
-    printf ("<%s> string_RawListener::on_data received <%s>\n", this->name_.c_str (), an_instance);
+    ACE_CString rec (an_instance);
+    ACE_Date_Time now;
+    int sec_rec = ACE_OS::atoi (rec.substr (0, 2).c_str() );
+    if (sec_rec > 0)
+      {
+        int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
+        if (sec_rec != now.second ())
+          usec_rec += 10000000;
+        printf ("<%s> received <%s>. difference <%d>\n", 
+              this->name_.c_str (), 
+              an_instance,
+              now.microsec () - usec_rec);
+      }
+    else 
+      {
+        printf ("<%s> received <%s>.\n", 
+              this->name_.c_str (), 
+              an_instance);
+      }
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i

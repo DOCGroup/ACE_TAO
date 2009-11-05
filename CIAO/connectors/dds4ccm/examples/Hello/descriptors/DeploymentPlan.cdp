@@ -471,6 +471,39 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>message</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello, World</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>log_time</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
         <type>

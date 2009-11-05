@@ -10,6 +10,10 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, cc
   Header_Files {
     *.h
   }
+  
+  Template_Files {
+    *_T.cpp
+  }
 
   Source_Files {
     DataWriter.cpp
@@ -29,5 +33,5 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, cc
     QueryCondition.cpp
     Utils.cpp
     ListenerControl.cpp
-  }
+   }
 }

@@ -3,15 +3,19 @@
 #include "ace/OS_main.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/Date_Time.h"
+#include "ace/SString.h"
 #include <ndds/ndds_namespace_cpp.h>
 
 int number_of_iterations = 100;
+bool log_time = false;
 const char* send_string = "This is a DDS sender";
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:s:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:s:t"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,6 +27,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'i':
         number_of_iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
+      case 't':
+        log_time = true;
+        break;
 
       case '?':
       default:
@@ -30,6 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "usage: %s "
                            "-s <send string>"
                            "-i <number of iterations>"
+                           "-t log timing"
                            "\n",
                            argv [0]),
                           -1);
@@ -48,6 +56,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     if (parse_args (argc, argv) != 0)
       return 1;
 
+    ACE_Time_Value tv (0, 1000); //1 msec
     /* Create the domain participant */
     ::DDS::DomainParticipant *participant = ::DDS::DomainParticipantFactory::get_instance()->
                         create_participant(
@@ -94,24 +103,29 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
     }
     
     // Sleep a couple seconds to allow discovery to happen
-    ACE_OS::sleep (2);
+    ACE_OS::sleep (1);
     
     /* --- Write Data ----------------------------------------------------- */
     
     for (int i = 0; i < number_of_iterations; i++)
       {
+        ACE_TCHAR timestamp[16];
+        ACE_CString msg (send_string);
+        ACE_CString ret;
+        ACE_Date_Time now;
+        ACE_OS::sprintf (timestamp,
+                          "%02d.%d",
+                          now.second(),
+                          now.microsec ());
+        ret.set (timestamp);
+        ret = ret + " " + msg;
         retcode = string_writer->write(
-                            send_string,
+                            ret.c_str (),
                             DDS_HANDLE_NIL);
         if (retcode != DDS_RETCODE_OK)
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Write failed: %d.\n"), retcode));
-          }
-        else
-          {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Sending: %C\n"), send_string));
-          }
-        ACE_OS::sleep (1);
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Write failed: %d.\n"), retcode));
+        //ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C.\n"), ret.c_str()));
+        ACE_OS::sleep (tv);
     }
 
     /* --- Clean Up ------------------------------------------------------- */

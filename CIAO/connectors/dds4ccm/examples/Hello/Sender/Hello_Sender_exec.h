@@ -66,6 +66,10 @@ namespace CIAO_Hello_DDS_Sender_Impl
     
     virtual void message (const char *message);
     
+	virtual ::CORBA::Boolean log_time (void);
+    
+	virtual void log_time (::CORBA::Boolean log_time);
+    
     // Port operations.
     
     // Operations from Components::SessionComponent.
@@ -86,6 +90,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     CORBA::ULong iters_;
     ACE_CString msg_;
     Sending_Task *task_;
+    bool log_time_;
   };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
