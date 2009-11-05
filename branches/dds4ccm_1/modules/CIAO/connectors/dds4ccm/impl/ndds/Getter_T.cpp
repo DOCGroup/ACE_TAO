@@ -12,7 +12,6 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr r
   condition_(0),
   time_out_ ()
 {
-  printf("----in constructor getter -----\n");
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
 
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
@@ -121,21 +120,15 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
     {
       if (active_conditions[i] == gd_)
         {
-          printf("Got event status event for Guard Matched\n");
-          //Must reset guard trigger
           gd_->set_trigger_value(false);
         }
 
       if (active_conditions[i] == rd_condition_)
         {
           // Check trigger
-          if (active_conditions[i]->get_trigger_value() )
-            {
-              printf("wait condition trigger was set.\n");
-            }
+          active_conditions[i]->get_trigger_value();
 
           // Take read condition
-          printf("##### GETTER START READ\n");
           DDS_ReturnCode_t retcode = this->impl_->read (data,
                                     sample_info,
                                     DDS_LENGTH_UNLIMITED,
@@ -164,9 +157,9 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
             }
 
           retcode = this->impl_->return_loan(data,sample_info);
-          if (retcode != DDS_RETCODE_OK) 
+          if (retcode != DDS_RETCODE_OK)
             {
-              printf("return loan error %d\n", retcode);
+              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("return loan error %d\n"), retcode));
             }
         }
     }

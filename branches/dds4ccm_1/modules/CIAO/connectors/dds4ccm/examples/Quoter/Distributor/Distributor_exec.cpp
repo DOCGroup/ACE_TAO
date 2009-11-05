@@ -106,7 +106,6 @@ namespace CIAO_Quoter_Distributor_Impl
   pulse_Generator::stop (void)
   {
     // return if not valid.
-    printf ("Stopping ticker\n");
     if (this->active_ == 0)
     {
       return -1;

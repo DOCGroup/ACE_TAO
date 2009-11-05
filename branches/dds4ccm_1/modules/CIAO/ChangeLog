@@ -1,9 +1,26 @@
+Thu Nov  5 16:06:58 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Removed some printf statements.
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+          Added ConnectionStatusListener
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Removed some comments and printf statements.
+          
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Removed some printf statements.
+
 Thu Nov  5 14:40:52 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Connector_T.cpp
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
-	Change in DataRaederListener for ConnectionStatus 
+        Change in DataRaederListener for ConnectionStatus
 
 Thu Nov  5 12:39:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 

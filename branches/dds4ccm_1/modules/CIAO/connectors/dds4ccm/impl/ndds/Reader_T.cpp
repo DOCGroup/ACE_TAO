@@ -136,8 +136,6 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
   //this function has to return all samples of all instances
-  printf("------- in read_all_history Reader_T of ndds  ------------- \n");
-
   typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
@@ -145,7 +143,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
   if (rdr == 0)
     {
-      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
+      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::read_all_history - "
                     "Unable to cast provided DataReader to servant\n"));
       throw CORBA::INTERNAL ();
     }
@@ -156,7 +154,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
 
   if (!impl)
     {
-      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
+      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::read_all_history - "
                    "Unable to narrow the provided reader entity to the specific "
                    "type necessary to publish messages\n"));
       throw CORBA::INTERNAL ();
@@ -186,7 +184,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
     switch(retval)
     {
       case DDS_RETCODE_OK:
-        printf (" Reader_T: read_all_history Data: retval is %d , number of data = %d---\n", retval, data.length() );
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all_history - ")
+                               ACE_TEXT ("number_of_samples <%d>\n"), data.length() ));
 
         //count the number of valid data
         for (CORBA::ULong i = 0 ; i < (CORBA::ULong)sample_info.length(); i++)
@@ -208,10 +207,11 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
         } 
         break;
       case DDS_RETCODE_NO_DATA:
-        printf ("Reader_T: read_all_history No data : retval is %d ---\n", retval);
+        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all_history - No data")));
         break;
       default:
-        printf ("Reader_T: read_all_history Failed retval is %d ---\n", retval);
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all_history - ")
+                               ACE_TEXT ("retval is %d\n"), retval));
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
     }
@@ -227,12 +227,10 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
           typename NDDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
-  printf("------- in read_one Reader_T of ndds ------------- \n");
-
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
   if (rdr == 0)
     {
-      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
+      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::read_one - "
                     "Unable to cast provided DataReader to servant\n"));
       throw CORBA::INTERNAL ();
     }
@@ -243,19 +241,14 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
 
   if (!impl)
     {
-      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
+      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::read_one - "
                    "Unable to narrow the provided reader entity to the specific "
                    "type necessary to publish messages\n"));
       throw CORBA::INTERNAL ();
     }
     
 
-    DDS_InstanceHandle_t hnd = impl->lookup_instance (an_instance);
-    if (DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-    {
-        printf ("Reader->read_one: Instance not registered\n");
-    }
-
+  DDS_InstanceHandle_t hnd = impl->lookup_instance (an_instance);
   DDS_SampleInfoSeq sample_info;
   DDS_ReturnCode_t retval;
 
@@ -273,7 +266,6 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
        // else return last instance regardless of key
       if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
         {
-          printf(" ------ read_instance --------\n");
           retval = impl->read_instance(data,
                             sample_info,
                             DDS_LENGTH_UNLIMITED,
@@ -284,8 +276,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
         }
       else
         {
-           printf(" ------ read  without an instance --------\n");
-           retval = impl->read(data,
+          CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_history - ")
+                                ACE_TEXT ("No instance found.\n")));
+          retval = impl->read(data,
                             sample_info,
                             DDS_LENGTH_UNLIMITED,
                             DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
@@ -298,7 +291,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
     switch(retval)
     {
       case DDS_RETCODE_OK:
-        printf (" Data: retval is %d , number_of_samples =%d ---\n", retval,number_of_samples);
+        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one - ")
+                              ACE_TEXT ("number_of_samples =%d\n"), number_of_samples));
         number_of_samples = data.length();
         //get last instance
         if(sample_info[number_of_samples-1].valid_data)
@@ -316,14 +310,16 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
          impl->return_loan(data,sample_info);
          break;
       case DDS_RETCODE_NO_DATA:
-        printf ("No data : retval is %d ---\n", retval);
+        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one - ")
+                              ACE_TEXT ("No data\n")));
         impl->return_loan(data,sample_info);
         //only if a key and no instance for that key throw NonExistent exception  
         if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
           throw ::CCM_DDS::NonExistent(0);
         break;
       default:
-        printf ("failed retval is %d ---\n", retval);
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one - ")
+                               ACE_TEXT ("retval <%d>\n"), retval));
         impl->return_loan(data,sample_info);
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
@@ -339,7 +335,6 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
 {
 
 //this function has to return all samples of all instances
-  printf("------- in read_one_history Reader_T of ndds  ------------- \n");
 
   typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
@@ -348,8 +343,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
   if (rdr == 0)
   {
-      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
-                   "Unable to cast provided DataReader to servant\n"));
+      CIAO_ERROR ((LM_ERROR, CLINFO ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_history - ")
+                                    ACE_TEXT ("Unable to cast provided DataReader to servant\n")));
       throw CORBA::INTERNAL ();
   }
 
@@ -359,16 +354,12 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
 
   if (!impl)
     {
-      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::Reader_T - "
+      CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Reader_T::read_one_history - "
                    "Unable to narrow the provided reader entity to the specific "
                    "type necessary to publish messages\n"));
       throw CORBA::INTERNAL ();
     }
     DDS_InstanceHandle_t hnd = impl->lookup_instance (an_instance);
-    if (DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-    {
-        printf ("Reader->read_one_history: Instance not registered\n");
-    }
     DDS_SampleInfoSeq sample_info;
     DDS_ReturnCode_t retval;
     typename NDDS_TYPE::dds_seq_type data;
@@ -383,7 +374,6 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
     {
       if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
       {
-          printf(" ------ read_instance --------\n");
           retval = impl->read_instance(data,
                             sample_info,
                             DDS_LENGTH_UNLIMITED,
@@ -394,6 +384,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
       }
       else
       {
+          CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_history - ")
+                                ACE_TEXT ("No instance found.\n")));
           retval = impl->read(data,
                             sample_info,
                             DDS_LENGTH_UNLIMITED,
@@ -407,9 +399,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
     CORBA::ULong nr_of_samples = 0;
     switch(retval)
     {
-      
       case DDS_RETCODE_OK:
-        printf (" Reader_T: read_all_history Data: retval is %d , number of data = %d---\n", retval, data.length() );
          //count the number of valid data
         for (CORBA::ULong i = 0 ; i < (CORBA::ULong)sample_info.length(); i++)
         { 
@@ -427,7 +417,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
         } 
         break;
       case DDS_RETCODE_NO_DATA:
-        printf ("Reader_T: read_all_history No data : retval is %d ---\n", retval);
+        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("Reader_T: read_all_history No data : retval is %d ---\n"), retval));
         if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
         {    impl->return_loan(data,sample_info);
           throw ::CCM_DDS::NonExistent(0);
@@ -435,7 +425,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
         break;
         break;
       default:
-        printf ("Reader_T: read_all_history Failed retval is %d ---\n", retval);
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Reader_T: read_all_history Failed retval is %d ---\n"), retval));
         impl->return_loan(data,sample_info);
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
