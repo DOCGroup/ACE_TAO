@@ -2,7 +2,7 @@
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "CCD_Handler.h"
 #include "ccd.hpp"
 #include "Property_Handler.h"

@@ -1,6 +1,5 @@
 // $Id$
 #include "TargetManager_exec.h"
-//#include "ciao/CIAO_common.h"
 #include "tools/Config_Handlers/DD_Handler.h"
 #include "tools/Config_Handlers/DnC_Dump.h"
 
@@ -24,7 +23,7 @@ namespace CIAO_CIAO_TargetManagerImpl_Impl
 
     // get its own obj ref , then call
     ::Deployment::TargetManager_var target = this->exec_->get_targetMgr ();
-    
+
     // Create Domain Data here
 
     CIAO::DOMAIN_DATA_MANAGER->init (orb_.in (), target.in ());

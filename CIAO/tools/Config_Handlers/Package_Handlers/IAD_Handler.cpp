@@ -9,7 +9,7 @@
 #include "XML_Typedefs.h"
 
 #include "Deployment.hpp"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
 {

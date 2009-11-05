@@ -31,7 +31,6 @@
 #define MAX_STRING_SIZE         1024
 
 #include "Hello_Receiver_Connector_exec.h"
-#include "ciao/CIAO_common.h"
 
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DataReader.h"
@@ -180,7 +179,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     char *& an_instance,
     ::CCM_DDS::ReadInfo_out info)
   {
-    // This has to be reworked using a reader template and traits. 
+    // This has to be reworked using a reader template and traits.
     DDS_StringSeq data;
     DDS_SampleInfoSeq sample_info;
     DDS_ReturnCode_t retval;
@@ -341,7 +340,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
     DDSStringDataReader * string_reader = DDSStringDataReader::narrow(rd->get_datareader ());
     if (string_reader)
       return new string_Reader_exec_i (string_reader);
-      
+
     throw ::CORBA::INTERNAL ();
   }
 
@@ -378,7 +377,7 @@ namespace CIAO_Hello_DDS_Hello_receiver_Connector_Impl
       {
         throw ::CORBA::INTERNAL ();
       }
-      
+
     this->context_ = lctx;
   }
 

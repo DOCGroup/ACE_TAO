@@ -9,7 +9,6 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ciao/CIAO_common.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ExecutionManager_Module.h"
 #include "ExecutionManager_Impl.h"

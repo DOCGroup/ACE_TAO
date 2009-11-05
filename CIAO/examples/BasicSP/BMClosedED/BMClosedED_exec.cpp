@@ -2,7 +2,6 @@
 
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
-#include "ciao/CIAO_common.h"
 #include "BMClosedED_exec.h"
 
 #define DISPLACEMENT 256

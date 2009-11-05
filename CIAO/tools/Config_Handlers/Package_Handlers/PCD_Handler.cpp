@@ -1,6 +1,6 @@
 // $Id$
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "XML_Typedefs.h"
 #include "XML/XercesString.h"
@@ -40,7 +40,7 @@ namespace CIAO
         if (root == XStr (ACE_TEXT ("Deployment:topLevelPackageDescription")))
           {
             TopLevelPackageDescription tpd;
-        
+
             tpd = reader::topLevelPackageDescription (dom);
 
             PCD_Handler::package_config (*(*tpd.begin_package ()),

@@ -29,7 +29,7 @@
 // be/be_codegen.cpp:1278
 
 #include "AMI_exec.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "AMI_MyFoo_i.h"
 #include "ace/OS_NS_unistd.h"
 

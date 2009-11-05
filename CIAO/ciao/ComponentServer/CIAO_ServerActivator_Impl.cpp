@@ -3,7 +3,7 @@
 #include "CIAO_ServerActivator_Impl.h"
 #include "ace/Log_Msg.h"
 #include "ace/UUID.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 #include "ciao/Client_init.h"
 #include "ciao/CIAO_FailureReasonsC.h"
 

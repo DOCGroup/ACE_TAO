@@ -3,7 +3,7 @@
 #include "ID_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "DAnCE/Deployment/Deployment_DataC.h"
-#include "ciao/CIAO_common.h"
+#include "ciao/Logger/Log_Macros.h"
 namespace CIAO
 {
   namespace Config_Handlers
@@ -23,7 +23,7 @@ namespace CIAO
     {
 
       CIAO_TRACE("ID_Handler::get_ImplementationDependency");
-      
+
       toconfig.requiredType=
         CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.requiredType ().c_str ()));
     }

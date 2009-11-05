@@ -1,7 +1,6 @@
 // $Id$
 
 #include "RateGen_exec.h"
-#include "ciao/CIAO_common.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
@@ -83,7 +82,7 @@ int
 MyImpl::Pulse_Handler::handle_close (ACE_HANDLE handle,
                                      ACE_Reactor_Mask close_mask)
 {
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
               this,

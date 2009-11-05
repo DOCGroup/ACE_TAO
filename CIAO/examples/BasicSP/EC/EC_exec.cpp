@@ -1,7 +1,6 @@
 // $Id$
 
 #include "EC_exec.h"
-#include "ciao/CIAO_common.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 

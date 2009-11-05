@@ -29,7 +29,6 @@
 // be/be_codegen.cpp:1278
 
 #include "Hello_Sender_Connector_exec.h"
-#include "ciao/CIAO_common.h"
 
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 

@@ -44,7 +44,7 @@ namespace CIAO
    * to register these stuff automatically.
    */
   CIAO_CLIENT_Export int Client_init (CORBA::ORB_ptr o);
-  
+
   namespace Utility
   {
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
@@ -52,18 +52,23 @@ namespace CIAO
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> CONFIGVALUE_MAP;
-  
-    void CIAO_CLIENT_Export build_config_values_map (CONFIGVALUE_MAP &map, 
+
+    void CIAO_CLIENT_Export build_config_values_map (CONFIGVALUE_MAP &map,
                                                      const ::Components::ConfigValues &config);
-  
+
     void CIAO_CLIENT_Export build_config_values_sequence (::Components::ConfigValues &config,
                                                           const CONFIGVALUE_MAP &map);
-    
-    /*void CIAO_SERVER_Export print_config_values (const ::Components::ConfigValues &config,
-                                                 ACE_Log_Priority prio,
-                                                 const char * prefix);*/
   }
 }
+
+#define CIAO_REGISTER_VALUE_FACTORY(ORB,FACTORY,VALUETYPE)       {\
+        CORBA::ValueFactory factory = new FACTORY; \
+        CORBA::ValueFactory prev_factory = \
+          ORB->register_value_factory \
+          (VALUETYPE::_tao_obv_static_repository_id (), \
+           factory); \
+        if (prev_factory) prev_factory->_remove_ref (); \
+        factory->_remove_ref ();      }
 
 #include /**/ "ace/post.h"
 
