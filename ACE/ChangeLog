@@ -1,3 +1,10 @@
+Thu Nov  5 11:56:13 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+          Added ace_strtoll_helper and ace_strtoull_helper to fix compile
+          errors if strtoll or strtoull is macro.
+
 Thu Nov  5 11:32:07 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
