@@ -319,24 +319,6 @@ ACE::log2 (u_long num)
   return log;
 }
 
-ACE_INLINE ACE_TCHAR
-ACE::nibble2hex (u_int n)
-{
-  // Hexadecimal characters.
-#if defined (ACE_VXWORKS) && !defined (__DCPLUSPLUS__)
-  // temporary solution to prevent Windriver GNU toolchains from spewing
-  // loads of warnings when inlining.
-  // problem (incorrect warning leftover from older GNU) has been reported as
-  // TSR to Windriver.
-  const ACE_TCHAR hex_chars[] = ACE_TEXT ("0123456789abcdef");
-#else
-  static const ACE_TCHAR hex_chars[] = ACE_TEXT ("0123456789abcdef");
-#endif
-
-  // Yes, this works for UNICODE
-  return hex_chars[n & 0x0f];
-}
-
 ACE_INLINE int
 ACE::map_errno (int error)
 {

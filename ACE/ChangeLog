@@ -1,7 +1,15 @@
+Thu Nov  5 20:13:47 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+        * ace/ACE.inl:
+        * ace/ACE.cpp:
+          Moved nibble2hex from .inl to .cpp file to avoid static
+          data in inline function.
+
 Thu Nov  5 13:58:25 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdlib.h:
-          Another fix for platforms that define ACE_STRTOLL_EQUIVALENT.
+          Another fix for platforms that define ACE_STRTOLL_EQUIVALENT or
           ACE_STRTOULL_EQUIVALENT.
 
 Thu Nov  5 13:46:34 UTC 2009  Olli Savia  <ops@iki.fi>
