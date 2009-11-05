@@ -1,3 +1,8 @@
+Thu Nov  5 12:24:52 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3748_Regression/run_test.pl:
+          Extended the time for running client.
+
 Thu Nov  5 10:48:07 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3748_Regression/server.cpp:
