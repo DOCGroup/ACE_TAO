@@ -10,7 +10,7 @@
 #ifndef DDS4CCM_PORTSTATUSLISTENERI_H_
 #define DDS4CCM_PORTSTATUSLISTENERI_H_
 
-#include "dds4ccm_PortStatusListenerS.h"
+#include "dds4ccm/idl/dds4ccm_PortStatusListenerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
