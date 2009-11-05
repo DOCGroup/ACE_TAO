@@ -1,8 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ciao/CIAO_common.h"
-
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
