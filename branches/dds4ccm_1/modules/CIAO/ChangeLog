@@ -1,3 +1,11 @@
+Thu Nov  5 12:25:04 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+        * connectors/dds4ccm/impl/ndds/ConnectorStatusListener.cpp
+        * connectors/dds4ccm/impl/ndds/ConnectorStatusListener.h
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        Changes in implementation of ConnectorStatusControl
+
 Thu Nov  5 12:09:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:

@@ -44,9 +44,7 @@ public:
   virtual typename CONNECTOR_TYPE::reader_type::_ptr_type get_info_out_data (void);
 
   virtual ::CCM_DDS::CCM_ListenerControl_ptr get_info_out_control (void);
-//mh
-  virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr get_info_out_connector_status(void);
-//end mh
+
   virtual ::DDS::CCM_DataReader_ptr get_info_out_dds_entity (void);
 
   virtual void set_session_context (::Components::SessionContext_ptr ctx);

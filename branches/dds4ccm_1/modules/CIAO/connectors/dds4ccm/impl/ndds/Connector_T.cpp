@@ -343,17 +343,6 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_out_control (void)
   CIAO_TRACE ("get_info_out_control");
   return new CCM_DDS_ListenerControl_i (this->__info_out_rawlistener_enabled_);
 }
-//mh
-template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
-::CCM_DDS::CCM_ConnectorStatusListener_ptr
-Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::get_info_out_connector_status (void)
-{
-  CIAO_TRACE ("get_info_out_connector_status");
-  return new CCM_DDS_ConnectorStatusListener_i();
-}
-
-
-
 
 template <typename NDDS_TYPE, typename CONNECTOR_TYPE>
 ::DDS::CCM_DataReader_ptr
@@ -396,6 +385,7 @@ Connector_T<NDDS_TYPE, CONNECTOR_TYPE>::ccm_activate (void)
       this->configure_port_info_out_ (false);
       this->configure_port_info_out_ (true);
       this->configure_port_info_in_ ();
+      
     }
 }
 
