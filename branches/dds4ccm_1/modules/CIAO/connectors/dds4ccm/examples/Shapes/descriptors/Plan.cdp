@@ -260,7 +260,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>1</long>
+          <long>10</long>
         </value>
       </value>
     </configProperty>
@@ -304,7 +304,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>false</boolean>
+          <boolean>true</boolean>
         </value>
       </value>
     </configProperty>

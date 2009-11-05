@@ -19,7 +19,7 @@ namespace CIAO
     {
       template <typename NDDS_TYPE, typename RAWLISTENER>
       class DataReaderHandler_T : 
-        public ACE_Task<ACE_NULL_SYNCH>
+        public ACE_Event_Handler
       {
         public:
           DataReaderHandler_T (
@@ -27,10 +27,12 @@ namespace CIAO
               typename NDDS_TYPE::data_reader * reader);
           ~DataReaderHandler_T ();
 
-          virtual int open (void * = 0);
-          virtual int svc (void);
+          virtual int handle_input (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+          //virtual int handle_signal (int );
+          virtual int handle_output (ACE_HANDLE fc = ACE_INVALID_HANDLE);
+          virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
         private:
-          ACE_Reactor ar_;
+          //ACE_Reactor ar_;
           typename RAWLISTENER::_var_type listener_;
           typename NDDS_TYPE::data_reader * reader_;
       };
@@ -41,7 +43,11 @@ namespace CIAO
       {
       public:
         // Constructor
-        DataReaderListener_T (typename RAWLISTENER::_ptr_type listen, typename PORTSTATUSLISTENER::_ptr_type psl, ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled);
+        DataReaderListener_T (
+                      typename RAWLISTENER::_ptr_type listen, 
+                      typename PORTSTATUSLISTENER::_ptr_type psl, 
+                      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled,
+                      CORBA::ORB_ptr orb);
 
         // Destructor
         virtual ~DataReaderListener_T (void);
@@ -62,6 +68,7 @@ namespace CIAO
         typename RAWLISTENER::_var_type listener_;
         typename PORTSTATUSLISTENER::_var_type portlistener_;
         ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enable_;
+        CORBA::ORB_var orb_;
       };
     }
   }

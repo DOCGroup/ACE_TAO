@@ -3,7 +3,7 @@
 
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "ciao/Logger/Log_Macros.h"
-
+#include "tao/ORB_Core.h"
 
 template <typename NDDS_TYPE, typename RAWLISTENER>
 CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::DataReaderHandler_T (
@@ -15,39 +15,39 @@ typename NDDS_TYPE::data_reader * reader)
 }
 
 template <typename NDDS_TYPE, typename RAWLISTENER>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::~DataReaderHandler_T ()
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::~DataReaderHandler_T (void)
 {
-  printf ("############### ~DataReaderHandler_T before wait\n");
-  this->wait ();
-  printf ("############### ~DataReaderHandler_T after wait\n");
 }
 
 template <typename NDDS_TYPE, typename RAWLISTENER>
 int
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::open (void *)
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::handle_input (ACE_HANDLE)
 {
-  this->reactor (&this->ar_);
-  return this->activate ();
+  printf ("##### DataReaderHandler_T::handle_input\n");
+  return 0;
 }
 
 template <typename NDDS_TYPE, typename RAWLISTENER>
 int
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::svc (void)
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::handle_output (ACE_HANDLE)
 {
+  printf ("##### DataReaderHandler_T::handle_output\n");
+  return 0;
+}
+
+template <typename NDDS_TYPE, typename RAWLISTENER>
+int
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::handle_exception (ACE_HANDLE)
+{
+  printf ("##### DataReaderHandler_T::handle_exception\n");
   //start transmitting data to the sender.
-  printf ("############### svc\n");
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Waiting for events\n")));
-  this->ar_.owner (ACE_Thread::self ());
-  this->ar_.handle_events ();
-  printf ("############### svc Start handling samples\n");
-  /* Loop until there are messages available in the queue */
+  // Loop until there are messages available in the queue 
   for(;;) 
     {
       typename NDDS_TYPE::value_type instance;
       ::DDS_SampleInfo sampleinfo;
       ::DDS::ReturnCode_t const result  = this->reader_->take_next_sample(instance,
                                                                   sampleinfo);
-      printf ("############### svc Samples taken\n");
       if (result == DDS_RETCODE_NO_DATA) 
         {
           printf ("no more samples\n");
@@ -65,18 +65,29 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::svc (void)
           listener_->on_data (instance, empty);
         }
     }
-  printf ("############### svc END LOOP\n");
   return 0;
 }
+
 
 // Implementation skeleton constructor
 template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
 CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER>::DataReaderListener_T (
-typename RAWLISTENER::_ptr_type listen, typename PORTSTATUSLISTENER::_ptr_type psl, ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
+      typename RAWLISTENER::_ptr_type listen, 
+      typename PORTSTATUSLISTENER::_ptr_type psl, 
+      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled,
+      CORBA::ORB_ptr orb)
       : listener_ (RAWLISTENER::_duplicate (listen)),
         portlistener_ (PORTSTATUSLISTENER::_duplicate (psl)),
         enable_ (enabled)
 {
+  if (!CORBA::is_nil (orb))
+    {
+      orb_ = CORBA::ORB::_duplicate (orb);
+    }
+  else
+    {
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ORB is nil in construtor DataReaderListener_T\n")));
+    }
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
 }
 
@@ -105,14 +116,13 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTE
   }
   printf ("############### Create DataReaderHandler_T\n");
   DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>* rh = new  DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>(this->listener_, reader);
-  if (rh->open () == -1)
+  if (!CORBA::is_nil (orb_))
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to open reactor thread.\n")));
-      return;
+      printf ("############### Notify reactor\n");
+      orb_->orb_core ()->reactor ()->notify (rh);
+      //rh->reactor ()->notify ();
+      printf ("############### Reactor notified\n");
     }
-  printf ("############### Notify reactor\n");
-  rh->reactor ()->notify ();
-  printf ("############### Reactor notified\n");
 }
 
 template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER>
