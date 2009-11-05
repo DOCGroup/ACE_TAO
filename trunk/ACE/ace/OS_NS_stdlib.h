@@ -53,6 +53,34 @@ extern "C" {
 # undef atop
 #endif
 
+/*
+ * We inline and undef some functions that may be implemented
+ * as macros on some platforms. This way macro definitions will
+ * be usable later as there is no way to save the macro definition
+ * using the pre-processor.
+ */
+
+inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
+{
+#if defined (strtoll)
+  return strtoll (s, ptr, base);
+#undef strtoll
+#else
+  return ACE_STD_NAMESPACE::strtoll (s, ptr, base);
+#endif /* strtoll */
+}
+
+inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
+{
+#if defined (strtoull)
+  return strtoull (s, ptr, base);
+#undef strtoull
+#else
+  return ACE_STD_NAMESPACE::strtoull (s, ptr, base);
+#endif /* strtoull */
+}
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
