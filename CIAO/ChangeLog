@@ -1,3 +1,26 @@
+Fri Nov  6 18:33:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/docs/DDS4CCM v1-0-interim 7.odt:
+          Update of the spec of this evening
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Use %C for char strings
+
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.h
+        * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.cpp
+        * connectors/dds4ccm/impl/ndds/Coherent_Changes_Guard.h
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h
+        * connectors/dds4ccm/impl/ndds/Getter_T.h
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/Reader_T.h
+        * connectors/dds4ccm/impl/ndds/Updater_T.h
+        * connectors/dds4ccm/impl/ndds/Writer_T.cpp
+        * connectors/dds4ccm/impl/ndds/Writer_T.h
+          Moved Coherent_Changes_Guard to its own file. Use ACE_Copy_Disabled and
+          some small code cleanup
+
 Fri Nov  6 17:07:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Writer_T.cpp:

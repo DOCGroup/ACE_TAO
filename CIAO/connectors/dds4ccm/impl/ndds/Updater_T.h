@@ -7,6 +7,7 @@
  */
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "ace/Copy_Disabled.h"
 
 namespace CIAO
 {
@@ -15,9 +16,10 @@ namespace CIAO
     namespace RTI
     {
       template <typename NDDS_TYPE, typename CCM_TYPE>
-      class Updater_T : 
+      class Updater_T :
         public virtual CCM_TYPE::updater_type,
-        public virtual ::CORBA::LocalObject
+        public virtual ::CORBA::LocalObject,
+        private ACE_Copy_Disabled
       {
       public:
         // Constructor
@@ -35,8 +37,6 @@ namespace CIAO
         virtual bool is_lifecycle_checked ();
 
       private:
-        Updater_T<NDDS_TYPE, CCM_TYPE> (const Writer_T<NDDS_TYPE, CCM_TYPE> &);
-        Updater_T<NDDS_TYPE, CCM_TYPE> & operator = (const Writer_T<NDDS_TYPE, CCM_TYPE> &);
         typename NDDS_TYPE::data_writer *impl_;
         bool is_lifecycle_checked_;
       };
