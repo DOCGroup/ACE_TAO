@@ -45,12 +45,11 @@ namespace CIAO
       private:
         DataReaderListener_T<DDS_TYPE, CCM_TYPE> (const DataReaderListener_T<DDS_TYPE, CCM_TYPE> &);
         DataReaderListener_T<DDS_TYPE, CCM_TYPE> & operator = (const DataReaderListener_T<DDS_TYPE, CCM_TYPE> &);
-  
+
         typename CCM_TYPE::context_type::_var_type context_;
 
         CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;
         CCM_DDS::PortStatusListener_var       info_out_portstatus_;
-        typename CCM_TYPE::rawlistener_type::_var_type listener_;
         ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enable_;
       };
     }

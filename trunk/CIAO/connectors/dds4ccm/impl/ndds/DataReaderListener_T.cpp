@@ -17,7 +17,6 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
   this->info_out_portstatus_ = this->context_->get_connection_info_out_status ();
   this->info_out_connector_status_ = this->context_->get_connection_error_listener ();
-  this->listener_ = this->context_->get_connection_info_out_listener ();
 }
 
 // Implementation skeleton destructor
@@ -34,17 +33,17 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
   if (!this->enable_.value ())
     return;
 
-  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd = 
+  ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd =
       dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(rdr);
-  typename DDS_TYPE::data_reader * reader = 
+  typename DDS_TYPE::data_reader * reader =
       dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_datareader ()));
-  
+
   if (!reader) {
     /* In this specific case, this will never fail */
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
     return;
   }
-  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh = 
+  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
       new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->context_, reader);
   this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
 }
