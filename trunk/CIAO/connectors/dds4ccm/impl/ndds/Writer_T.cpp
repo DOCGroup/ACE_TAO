@@ -4,6 +4,22 @@
 
 #include "ciao/Logger/Log_Macros.h"
 
+CIAO::DDS4CCM::RTI::Coherent_Write_Guard::Coherent_Write_Guard (DDSPublisher* p, bool coherent_write) : p_ (p), coherent_write_ (coherent_write)
+{
+  if (this->coherent_write_)
+    {
+      p_->begin_coherent_changes ();
+    }
+}
+
+CIAO::DDS4CCM::RTI::Coherent_Write_Guard::~Coherent_Write_Guard ()
+{
+  if (this->coherent_write_)
+    {
+      this->p_->end_coherent_changes ();
+    }
+}
+
 // Implementation skeleton constructor
 template <typename NDDS_TYPE, typename CCM_TYPE >
 CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::Writer_T (::DDS::DataWriter_ptr writer)
@@ -43,20 +59,10 @@ void
 CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
-  
-  /*
-  if (CORBA::is_nil (an_instance))
-    {
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
-                   "Write was provided a null instance to write\n"));
-      return;
-    }
-  */
 
   CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
                "Preparing to write to DDS\n"));
-  DDS_ReturnCode_t retval = this->impl_->write (an_instance,
-                                                DDS_HANDLE_NIL);
+  DDS_ReturnCode_t const retval = this->impl_->write (an_instance, DDS_HANDLE_NIL);
 
   if (retval != DDS_RETCODE_OK)
     {
@@ -76,16 +82,13 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TY
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
 
-  if (coherent_write)
-    {
-      this->impl_->get_publisher()->begin_coherent_changes ();
-    }
+  Coherent_Write_Guard guard (this->impl_->get_publisher(), coherent_write);
 
   CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
                "Preparing to write to DDS\n"));
   for (::CORBA::ULong index = 0; index < instances.length(); index++)
     {
-      DDS_ReturnCode_t retval = this->impl_->write (instances[index],
+      DDS_ReturnCode_t const retval = this->impl_->write (instances[index],
                                      DDS_HANDLE_NIL);
 
       if (retval != DDS_RETCODE_OK)
@@ -95,11 +98,6 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TY
                        translate_retcode (retval)));
           throw CCM_DDS::InternalError (retval, index);
         }
-    }
-
-  if (coherent_write)
-    {
-      this->impl_->get_publisher()->end_coherent_changes ();
     }
 
   CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
