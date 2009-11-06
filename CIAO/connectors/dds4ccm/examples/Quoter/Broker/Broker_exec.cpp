@@ -71,9 +71,9 @@ namespace CIAO_Quoter_Broker_Impl
   {
     // return if not valid
     if (hertz == 0 || this->active_ != 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
 
     // calculate the interval time
     long usec = 1000 / hertz;
@@ -85,12 +85,12 @@ namespace CIAO_Quoter_Broker_Impl
                                           0,
                                           ACE_Time_Value(0),
                                           ACE_Time_Value(3)) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to setup Timer\n"),
-                          -1);
-
-    }
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "Unable to setup Timer\n"),
+                            -1);
+  
+      }
 
     this->active_ = 1;
     return 0;
@@ -101,9 +101,9 @@ namespace CIAO_Quoter_Broker_Impl
   {
     // return if not valid.
     if (this->active_ == 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
     // cancle the timer
     this->reactor ()->cancel_timer (this);
     this->active_ = 0;
@@ -133,10 +133,10 @@ namespace CIAO_Quoter_Broker_Impl
                                          const void *)
   {
     // Notify the subscribers
- //   this->pulse_callback_.read_one();
- //   this->pulse_callback_.read_one_history();
- //   this->pulse_callback_.read_all();
- //   this->pulse_callback_.read_all_history();
+    //    this->pulse_callback_.read_one();
+    //    this->pulse_callback_.read_one_history();
+    //    this->pulse_callback_.read_all();
+    //    this->pulse_callback_.read_all_history();
     return 0;
   }
 
@@ -151,16 +151,17 @@ namespace CIAO_Quoter_Broker_Impl
 
     return 0;
   }
-   void
-   Broker_exec_i::read_one (void)
-   {
+  
+  void
+  Broker_exec_i::read_one (void)
+  {
     std::cerr << "read_one" << std::endl;
     ::Quoter::Stock_Info  stock_info;
     stock_info.symbol= "IBM";
     ::CCM_DDS::ReadInfo readinfo;
 
     try
-    {
+      {
         this->reader_->read_one (stock_info, readinfo );
         time_t tim = readinfo.timestamp.sec;
         printf("Read_Info. -> date = %s",ctime(&tim));
@@ -169,26 +170,14 @@ namespace CIAO_Quoter_Broker_Impl
             stock_info.low,
             stock_info.current,
             stock_info.high);
-    }
+      }
     catch(CCM_DDS::NonExistent& )
-    {
-      printf("Stock_Info_Read_One: no stock_info received\n");
-    }
-
-
-   /* printf("GO TO get ONE\n");
-     this->getter_->get_one (stock_info, readinfo );
-
-    printf ("Stock_Info_GET_One: received a stock_info for <%s> at %u:%u:%u\n",
-            stock_info.symbol.in (),
-            stock_info.low,
-            stock_info.current,
-            stock_info.high);
-    printf("END OF GET_ONE\n");
-    */
+      {
+        printf("Stock_Info_Read_One: no stock_info received\n");
+      }
   }
 
-void
+  void
   Broker_exec_i::read_all (void)
   {
     std::cerr << "read_all" << std::endl;
@@ -197,29 +186,29 @@ void
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(stock_infos.out(), readinfoseq.out());
     if(readinfoseq->length()!= 0)
-    {
-      int nr_of_infos = readinfoseq->length();
-      for(int i = 0; i < nr_of_infos; i ++)
       {
-        time_t tim = readinfoseq[i].timestamp.sec;
-        printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+        int nr_of_infos = readinfoseq->length();
+        for(int i = 0; i < nr_of_infos; i ++)
+          {
+            time_t tim = readinfoseq[i].timestamp.sec;
+            printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+          }
       }
-    }
     if(stock_infos->length()!= 0)
-    {
-      int nr_of_stock_infos = stock_infos->length();
-      for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
       {
-         printf ("Stock_Info_Read_All: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
-            i,
-            stock_infos[i].symbol.in (),
-            stock_infos[i].low,
-            stock_infos[i].current,
-            stock_infos[i].high);
+        int nr_of_stock_infos = stock_infos->length();
+        for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+          {
+            printf ("Stock_Info_Read_All: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+                i,
+                stock_infos[i].symbol.in (),
+                stock_infos[i].low,
+                stock_infos[i].current,
+                stock_infos[i].high);
+          }
       }
-    }
   }
-void
+  void
   Broker_exec_i::read_all_history (void)
   {
     std::cerr << "read_all_history" << std::endl;
@@ -228,28 +217,27 @@ void
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all_history(stock_infos.out(), readinfoseq.out());
     if(readinfoseq->length()!= 0)
-    {
-      int nr_of_infos = readinfoseq->length();
-      for(int i = 0; i < nr_of_infos; i ++)
       {
-        time_t tim = readinfoseq[i].timestamp.sec;
-        printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+        int nr_of_infos = readinfoseq->length();
+        for(int i = 0; i < nr_of_infos; i ++)
+          {
+            time_t tim = readinfoseq[i].timestamp.sec;
+            printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+          }
       }
-    }
     if(stock_infos->length()!= 0)
-    {
-      int nr_of_stock_infos = stock_infos->length();
-      for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
       {
-         printf ("Stock_Info_Read_All_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
-            i,
-            stock_infos[i].symbol.in (),
-            stock_infos[i].low,
-            stock_infos[i].current,
-            stock_infos[i].high);
-
+        int nr_of_stock_infos = stock_infos->length();
+        for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+          {
+            printf ("Stock_Info_Read_All_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+                i,
+                stock_infos[i].symbol.in (),
+                stock_infos[i].low,
+                stock_infos[i].current,
+                stock_infos[i].high);
+          }
       }
-    }
   }
   // read all samples of an given instance
   void
@@ -262,36 +250,35 @@ void
     ::Quoter::Stock_Info_Seq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     try
-    {
+      {
         this->reader_->read_one_history(stock_info,stock_infos.out(), readinfoseq.out());
         if(readinfoseq->length()!= 0)
-        {
-          int nr_of_infos = readinfoseq->length();
-          for(int i = 0; i < nr_of_infos; i ++)
           {
-            time_t tim = readinfoseq[i].timestamp.sec;
-            printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+            int nr_of_infos = readinfoseq->length();
+            for(int i = 0; i < nr_of_infos; i ++)
+              {
+                time_t tim = readinfoseq[i].timestamp.sec;
+                printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+              }
           }
-        }
         if(stock_infos->length()!= 0)
-        {
-          int nr_of_stock_infos = stock_infos->length();
-          for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
           {
-             printf ("Stock_Info_Read_One_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
-                i,
-                stock_infos[i].symbol.in (),
-                stock_infos[i].low,
-                stock_infos[i].current,
-                stock_infos[i].high);
-
+            int nr_of_stock_infos = stock_infos->length();
+            for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+              {
+                printf ("Stock_Info_Read_One_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
+                    i,
+                    stock_infos[i].symbol.in (),
+                    stock_infos[i].low,
+                    stock_infos[i].current,
+                    stock_infos[i].high);
+              }
           }
-        }
-    }
+      }
     catch(CCM_DDS::NonExistent& )
-    {
-       printf("Stock_Info_Read_One_History: no stock_info's received\n");
-    }
+      {
+         printf("Stock_Info_Read_One_History: no stock_info's received\n");
+      }
   }
   //============================================================
   // Facet Executor Implementation Class: Stock_Info_RawListener_exec_i
@@ -312,13 +299,11 @@ void
     const ::Quoter::Stock_Info & an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-
     printf ("Stock_Info_RawListener: received a stock_info for <%s> at %u:%u:%u\n",
             an_instance.symbol.in (),
             an_instance.low,
             an_instance.current,
             an_instance.high);
-
   }
   //============================================================
   // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
@@ -337,43 +322,52 @@ void
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
-    {
-      printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
-    }
+  {
+    printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
+  }
+  
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-      printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
-    }
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)  
+  {
+    printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+  }
+  
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-      printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
-    }
+     const DDS::SampleRejectedStatus & /*status*/)  
+  {
+    printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+  }
+
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-      printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
-    }
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)  
+  {
+    printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+  }
+  
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-      printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
-    }
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)  
+  {
+    printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+  }
+  
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)  {
-      printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
-    }
+    ::DDS::StatusKind  /*status_kind*/)  
+  {
+    printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+  }
 
-
-//============================================================
+  //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
 
   PortStatusListener_exec_i::PortStatusListener_exec_i (void)
   {
-     printf("####### construct PortStatusListener ######");
+    printf("####### construct PortStatusListener ######");
   }
 
   PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
@@ -395,10 +389,9 @@ void
     ::DDS::DataReader_ptr  /*the_reader*/ ,
     const ::DDS::SampleLostStatus &  status )
   {
-   printf("####### sample lost ######");
-   printf(" status.total_count = %d\n", status.total_count);
-   printf(" status.total_count_change = %d\n", status.total_count_change);
-
+    printf("####### sample lost ######");
+    printf(" status.total_count = %d\n", status.total_count);
+    printf(" status.total_count_change = %d\n", status.total_count_change);
   }
 
   //============================================================
@@ -406,7 +399,7 @@ void
   //============================================================
 
   Broker_exec_i::Broker_exec_i (void)
-   {
+  {
     ACE_OS::srand (static_cast <u_int> (ACE_OS::time ()));
     this->ticker_ = new read_action_Generator (*this);
   }
@@ -427,7 +420,6 @@ void
   {
     printf ("*************** out listener\n");
     return new Stock_Info_RawListener_exec_i ();
-
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -442,7 +434,7 @@ void
   Broker_exec_i::get_info_out_connector_status (void)
   {
     printf ("*************** out connector status************************\n");
-     return new ConnectorStatusListener_exec_i ();
+    return new ConnectorStatusListener_exec_i ();
   }
 
   // Operations from Components::SessionComponent.
@@ -465,13 +457,11 @@ void
   void
   Broker_exec_i::configuration_complete (void)
   {
-    /* Your code here. */
     std::cerr << ">>> Broker_exec_i::configuration_complete" << endl;
-     this->reader_ = this->context_->get_connection_info_out_data();
+    this->reader_ = this->context_->get_connection_info_out_data();
 //  this->getter_ = this->context_->get_connection_info_get_out_data ();
 //  this->ticker_->open_h ();
-     ::CCM_DDS::CCM_ConnectorStatusListener_var pl = this->get_info_out_connector_status();
-
+    ::CCM_DDS::CCM_ConnectorStatusListener_var pl = this->get_info_out_connector_status();
   }
 
   void
@@ -495,13 +485,11 @@ void
     ::CCM_DDS::ListenerControl_var lc =
     this->context_->get_connection_info_out_control ();
 
-
-
     if (CORBA::is_nil (lc.in ()))
-    {
-      printf ("Error:  Listener control receptacle is null!\n");
-      throw CORBA::INTERNAL ();
-    }
+      {
+        printf ("Error:  Listener control receptacle is null!\n");
+        throw CORBA::INTERNAL ();
+      }
     //in case of testing RawListener set lc-> enabled true
     lc->enabled (true);
     //in case of testing Reader set lc-> enabled false, so the RawListener doesn't consume all the messages
