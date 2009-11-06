@@ -283,8 +283,8 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_in_data (void)
 
   this->configure_port_info_in_ ();
 
-  return new CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE,
-    typename CCM_TYPE::writer_type> (this->__info_in_datawriter_.in ());
+  return new CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE> 
+          (this->__info_in_datawriter_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -305,8 +305,8 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_data (void)
   CIAO_TRACE ("get_info_update_data");
 
   this->configure_port_info_in_ ();
-  return new CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE,
-  typename CCM_TYPE::updater_type> (this->__info_in_datawriter_.in ());
+  return new CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>
+          (this->__info_in_datawriter_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -317,8 +317,8 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_get_out_data (void)
 
   this->configure_port_info_out_ (true);
 
-  return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE,
-  typename CCM_TYPE::getter_type> (this->__info_get_datareader_.in ());
+  return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> 
+          (this->__info_get_datareader_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -329,8 +329,8 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_data (void)
 
   this->configure_port_info_out_ (false);
 
-  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE,
-  typename CCM_TYPE::reader_type> (this->__info_out_datareader_.in ());
+  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> 
+          (this->__info_out_datareader_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

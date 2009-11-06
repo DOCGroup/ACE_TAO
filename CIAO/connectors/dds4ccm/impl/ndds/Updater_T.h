@@ -16,7 +16,7 @@ namespace CIAO
     {
       template <typename NDDS_TYPE, typename CCM_TYPE>
       class Updater_T : 
-        public virtual CCM_TYPE,
+        public virtual CCM_TYPE::updater_type,
         public virtual ::CORBA::LocalObject
       {
       public:
