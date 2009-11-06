@@ -16,7 +16,7 @@ namespace CIAO
     namespace RTI
     {
       template <typename NDDS_TYPE, typename BASE>
-      class Writer_T : 
+      class Writer_T :
         public virtual BASE,
         public virtual ::CORBA::LocalObject
       {
@@ -39,4 +39,4 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/ndds/Writer.tpp"
+#include "dds4ccm/impl/ndds/Writer_T.cpp"

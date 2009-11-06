@@ -43,7 +43,7 @@
 #include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/DataReader.h"
-#include "dds4ccm/impl/ndds/Writer.h"
+#include "dds4ccm/impl/ndds/Writer_T.h"
 #include "dds4ccm/impl/ndds/DataReaderListener.h"
 #include "dds4ccm/impl/ndds/NDDS_Traits.h"
 

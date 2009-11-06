@@ -16,7 +16,7 @@ namespace CIAO
     namespace RTI
     {
       template <typename NDDS_TYPE, typename BASE>
-      class Builtin_Writer_T 
+      class Builtin_Writer_T
       {
       public:
         // Constructor
@@ -37,4 +37,4 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/ndds/Builtin_Writer.tpp"
+#include "dds4ccm/impl/ndds/Builtin_Writer_T.cpp"
