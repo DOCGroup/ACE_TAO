@@ -1378,7 +1378,7 @@ sub check_for_bad_run_test ()
     }
     $config_list->add_one_config ("FUZZ");
     @valid_files = $config_list->valid_entries ();
-    foreach $file (@files_pl) {
+    foreach $file (@valid_files) {
         if (open (FILE, $file)) {
             my $is_run_test = 0;
             my $sub = 0;
