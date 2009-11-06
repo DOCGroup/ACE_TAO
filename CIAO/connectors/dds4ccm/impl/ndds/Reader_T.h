@@ -8,6 +8,7 @@
  */
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "ace/Copy_Disabled.h"
 
 namespace CIAO
 {
@@ -18,7 +19,8 @@ namespace CIAO
       template <typename NDDS_TYPE, typename CCM_TYPE>
       class Reader_T :
           public virtual CCM_TYPE::reader_type,
-          public virtual ::CORBA::LocalObject
+          public virtual ::CORBA::LocalObject,
+          private virtual ACE_Copy_Disabled
       {
       public:
         // Constructor
@@ -48,10 +50,6 @@ namespace CIAO
 
         virtual void filter (const ::CCM_DDS::QueryFilter & filter);
       private:
-        Reader_T<NDDS_TYPE, CCM_TYPE> (const Reader_T<NDDS_TYPE, CCM_TYPE> &);
-        Reader_T<NDDS_TYPE, CCM_TYPE> & operator = (const Reader_T<NDDS_TYPE, CCM_TYPE> &);
-
-        //DDSStringDataReader *reader_;
         ::DDS::DataReader_ptr reader_;
         DDSQueryCondition* condition_;
 

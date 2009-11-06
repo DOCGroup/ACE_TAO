@@ -8,6 +8,7 @@
  */
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "ace/Copy_Disabled.h"
 
 namespace CIAO
 {
@@ -16,21 +17,19 @@ namespace CIAO
     namespace RTI
     {
       template <typename DDS_TYPE, typename CCM_TYPE>
-      class Builtin_Writer_T
+      class Builtin_Writer_T : private ACE_Copy_Disabled
       {
       public:
-        // Constructor
+        /// Constructor
         Builtin_Writer_T (::DDS::DataWriter_ptr dw);
 
-        // Destructor
+        /// Destructor
         virtual ~Builtin_Writer_T (void);
 
         virtual void write (const typename DDS_TYPE::value_type& an_instance);
 
         virtual void write (const typename DDS_TYPE::seq_type& instances, bool coherent_write);
       private:
-        Builtin_Writer_T<DDS_TYPE, CCM_TYPE> (const Builtin_Writer_T<DDS_TYPE, CCM_TYPE> &);
-        Builtin_Writer_T<DDS_TYPE, CCM_TYPE> & operator = (const Builtin_Writer_T<DDS_TYPE, CCM_TYPE> &);
         typename DDS_TYPE::data_writer *impl_;
       };
     }

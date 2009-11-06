@@ -9,11 +9,13 @@
 #define CONNECTOR_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "ace/Copy_Disabled.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class Connector_T
   : public virtual CCM_TYPE::base_type,
-    public virtual ::CORBA::LocalObject
+    public virtual ::CORBA::LocalObject,
+    private virtual ACE_Copy_Disabled
 {
 public:
   Connector_T (const char * topic_name);

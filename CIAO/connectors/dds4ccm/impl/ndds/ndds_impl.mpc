@@ -10,12 +10,13 @@ project(CIAO_DDS4CCM_NDDS_Impl) : dds4ccm_skel, taolib, ciao_output, nddslib, cc
   Header_Files {
     *.h
   }
-  
+
   Template_Files {
     *_T.cpp
   }
 
   Source_Files {
+    Coherent_Changes_Guard.cpp
     DataWriter.cpp
     DataWriterListener.cpp
     DataReader.cpp

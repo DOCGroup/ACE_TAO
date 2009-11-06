@@ -120,12 +120,12 @@ namespace CIAO_Shapes_Sender_Impl
 
     return 0;
   }
-  
+
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
-  
-  Sender_exec_i::Sender_exec_i (void) 
+
+  Sender_exec_i::Sender_exec_i (void)
     : rate_ (1),
       max_x_ (100),
       max_y_ (100),
@@ -138,14 +138,14 @@ namespace CIAO_Shapes_Sender_Impl
     square_ = new ShapeType;
     this->ticker_ = new pulse_Generator (*this);
   }
-  
+
   Sender_exec_i::~Sender_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
-  void 
+
+  void
   Sender_exec_i::tick ()
   {
     if (this->x_increasing_)
@@ -181,10 +181,10 @@ namespace CIAO_Shapes_Sender_Impl
             this->size_increasing_ = square_->shapesize - 1 < 0;
           }
       }
-    try 
+    try
       {
         this->updater_->update (*square_);
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UPDATED Shape_info for <%s> %u:%u:%u\n"),
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UPDATED Shape_info for <%C> %u:%u:%u\n"),
                   square_->color.in (),
                   square_->x,
                   square_->y,
@@ -192,12 +192,12 @@ namespace CIAO_Shapes_Sender_Impl
       }
     catch (CCM_DDS::NonExistent& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%s> not updated: <%s> didn't exist.\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%C> not updated: <%C> didn't exist.\n"),
                     square_->color.in (), square_->color.in ()));
       }
     catch (CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while updating Shape_info for <%s>.\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while updating Shape_info for <%C>.\n"),
                     square_->color.in ()));
       }
   }
@@ -207,67 +207,67 @@ namespace CIAO_Shapes_Sender_Impl
   {
     this->ticker_->start (this->rate_);
   }
-  
+
   void
   Sender_exec_i::stop (void)
   {
     this->ticker_->stop ();
   }
-  
+
   // Component attributes.
   ::CORBA::ULong
   Sender_exec_i::rate (void)
   {
     return this->rate_;
   }
-  
+
   void
   Sender_exec_i::rate (
     ::CORBA::ULong rate)
   {
     this->rate_ = rate;
   }
-  
-  
+
+
   ::CORBA::UShort
   Sender_exec_i::max_x (void)
   {
     return this->max_x_;
   }
-  
+
   void
   Sender_exec_i::max_x (
     ::CORBA::UShort max_x)
   {
     this->max_x_ = max_x;
   }
-  
+
   ::CORBA::UShort
   Sender_exec_i::max_y (void)
   {
     return this->max_y_;
   }
-  
+
   void
   Sender_exec_i::max_y (
     ::CORBA::UShort max_y)
   {
     this->max_y_ = max_y;
   }
-  
+
   ::CORBA::UShort
   Sender_exec_i::max_size (void)
   {
     return this->max_size_;
   }
-  
+
   void
   Sender_exec_i::max_size (
     ::CORBA::UShort max_size)
   {
     this->max_size_ = max_size;
   }
-  
+
   void
   Sender_exec_i::resize_shape (
       ::CORBA::Boolean resize)
@@ -282,7 +282,7 @@ namespace CIAO_Shapes_Sender_Impl
   }
 
   // Port operations.
-  
+
   // Operations from Components::SessionComponent.
   void
   Sender_exec_i::set_session_context (
@@ -296,14 +296,14 @@ namespace CIAO_Shapes_Sender_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Sender_exec_i::configuration_complete (void)
   {
     this->updater_ = this->context_->get_connection_info_update_data ();
     this->ticker_->activate ();
   }
-  
+
   void
   Sender_exec_i::ccm_activate (void)
   {
@@ -314,37 +314,37 @@ namespace CIAO_Shapes_Sender_Impl
     square_->color = CORBA::string_dup("GREEN");
 
     //Register shape with dds.
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("REGISTER Shape_info for <%s> %u:%u:%u\n"),
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("REGISTER Shape_info for <%C> %u:%u:%u\n"),
                   square_->color.in (),
                   square_->x,
                   square_->y,
                   square_->shapesize));
-    try 
+    try
       {
         this->updater_->create (*square_);
       }
     catch (CCM_DDS::AlreadyCreated& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%s> already created.\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Shape_info for <%C> already created.\n"),
                     square_->color.in ()));
       }
     catch (CCM_DDS::InternalError& )
       {
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating Shape_info for <%s>.\n"),
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating Shape_info for <%C>.\n"),
                       square_->color.in ()));
       }
   }
-  
+
   void
   Sender_exec_i::ccm_passivate (void)
   {
   }
-  
+
   void
   Sender_exec_i::ccm_remove (void)
   {
   }
-  
+
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Shape_Sender_Impl (void)
   {
