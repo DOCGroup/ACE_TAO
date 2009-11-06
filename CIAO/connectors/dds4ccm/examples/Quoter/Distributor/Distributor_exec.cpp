@@ -76,9 +76,9 @@ namespace CIAO_Quoter_Distributor_Impl
   {
     // return if not valid
     if (hertz == 0 || this->active_ != 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
 
     // calculate the interval time
     long usec = 1000000 / hertz;
@@ -90,12 +90,11 @@ namespace CIAO_Quoter_Distributor_Impl
                                           0,
                                           ACE_Time_Value (0, usec),
                                           ACE_Time_Value (0, usec)) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to setup Timer\n"),
-                          -1);
-
-    }
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "Unable to setup Timer\n"),
+                            -1);
+      }
 
     this->active_ = 1;
     return 0;
@@ -106,9 +105,9 @@ namespace CIAO_Quoter_Distributor_Impl
   {
     // return if not valid.
     if (this->active_ == 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
     // cancle the timer
     this->reactor ()->cancel_timer (this);
     this->active_ = 0;
