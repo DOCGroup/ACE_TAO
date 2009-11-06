@@ -17,7 +17,7 @@ namespace CIAO
     {
       template <typename NDDS_TYPE, typename CCM_TYPE>
       class Writer_T :
-        public virtual CCM_TYPE,
+        public virtual CCM_TYPE::writer_type,
         public virtual ::CORBA::LocalObject
       {
       public:
