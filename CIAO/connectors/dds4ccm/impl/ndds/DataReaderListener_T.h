@@ -17,21 +17,22 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename DDS_TYPE, typename RAWLISTENER>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       class DataReaderHandler_T : 
         public ACE_Event_Handler
       {
         public:
           DataReaderHandler_T (
-              typename RAWLISTENER::_ptr_type listen,
+              typename CCM_TYPE::rawlistener_type::_ptr_type listen,
               typename DDS_TYPE::data_reader * reader);
           ~DataReaderHandler_T ();
 
           virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
         private:
-          typename RAWLISTENER::_var_type listener_;
+          typename CCM_TYPE::rawlistener_type::_var_type listener_;
           typename DDS_TYPE::data_reader * reader_;
       };
+      
       template <typename DDS_TYPE, typename CCM_TYPE>
       class DataReaderListener_T :
         public virtual ::DDS::DataReaderListener
