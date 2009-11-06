@@ -3,49 +3,8 @@
 
 #include "dds4ccm/impl/ndds/DataReader.h"
 #include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/ndds/DataReaderHandler_T.h"
 #include "tao/ORB_Core.h"
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T (
-typename CCM_TYPE::rawlistener_type::_ptr_type listen,
-typename DDS_TYPE::data_reader * reader)
-      : listener_ (CCM_TYPE::rawlistener_type::_duplicate (listen)),
-        reader_ (reader)
-{
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::~DataReaderHandler_T (void)
-{
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-int
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
-{
-  // Loop until there are messages available in the queue 
-  for(;;) 
-    {
-      typename DDS_TYPE::value_type instance;
-      ::DDS_SampleInfo sampleinfo;
-      ::DDS::ReturnCode_t const result  = this->reader_->take_next_sample(instance,
-                                                                  sampleinfo);
-      if (result == DDS_RETCODE_NO_DATA) 
-          break;
-      else if (result != DDS_RETCODE_OK) 
-        {
-          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
-          return 1;
-        }
-      if (sampleinfo.valid_data) 
-        {
-          CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderHandler_T : found valid data\n")));
-          ::CCM_DDS::ReadInfo empty;
-          listener_->on_data (instance, empty);
-        }
-    }
-  return 0;
-}
 
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -85,8 +44,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
     return;
   }
-  DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh = 
-      new  DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->listener_, reader);
+  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh = 
+      new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->context_, reader);
   this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
 }
 
