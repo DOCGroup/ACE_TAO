@@ -1,3 +1,11 @@
+Fri Nov  6 12:03:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h:
+          Moved this listener out of the RTI specific namespace, it
+          is a vendor indepedent template
+
 Fri Nov  6 12:56:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.h:
