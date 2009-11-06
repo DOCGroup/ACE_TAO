@@ -16,7 +16,7 @@ namespace CIAO
     {
       template <typename DDS_TYPE, typename CCM_TYPE>
       class Getter_T :
-         public virtual CCM_TYPE,
+         public virtual CCM_TYPE::getter_type,
          public virtual ::CORBA::LocalObject
       {
       public:

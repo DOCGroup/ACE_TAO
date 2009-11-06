@@ -1,3 +1,13 @@
+Fri Nov  6 13:22:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+        * connectors/dds4ccm/impl/ndds/Writer_T.h:
+          Every class is now derived from its appropriate type
+          (instead of CCM_TYPE).
+
 Fri Nov  6 13:05:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.h:
