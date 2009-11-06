@@ -52,7 +52,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
       typename CCM_TYPE::context_type::_ptr_type context,
       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
-      : context_ (context), //(CORBA::ORB::_duplicate (context)),
+      : context_ (CCM_TYPE::context_type::_duplicate (context)),
         enable_ (enabled)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
