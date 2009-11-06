@@ -4,6 +4,7 @@
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
+#include "dds4ccm/impl/ndds/DataWriterListener_T.h"
 #include "dds4ccm/impl/ndds/Writer_T.h"
 #include "dds4ccm/impl/ndds/Updater_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
@@ -103,7 +104,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
   CIAO_DEBUG ((LM_TRACE, CLINFO "Connector_T::configure_default_domain_ - "
                 "Configuring default domain\n"));
 
-  if (this->default_domain_configured_) 
+  if (this->default_domain_configured_)
     return;
 
   try
@@ -193,19 +194,21 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 
       if (CORBA::is_nil  (this->__info_in_datawriter_.in ()))
         {
+          this->__info_out_datawriterlistener = new ::CIAO::DDS4CCM::RTI::DataWriterListener_T
+            <DDS_TYPE, CCM_TYPE> (
+                  this->context_,
+                  this->__info_out_rawlistener_enabled_);
+
           ::DDS::DataWriterQos dwqos;
-          //test mh     
+          //test mh
      //     dwqos.history.depth=1;
       //    dwqos.resource_limits.max_instances   = 5; // >= Initial Instances
       //    dwqos.resource_limits.max_samples_per_instance = 4; //>= Depth,  <=Max Samples
       //    dwqos.deadline.period.nanosec = 0;
      //     dwqos.deadline.period.sec = 1;
-     
-      
-// 
           ::DDS::DataWriter_var dwv_tmp = this->__info_in_publisher_->create_datawriter (this->topic_.in (),
                                                                                           dwqos,
-                                                                                          0,
+                                                                                          this->__info_out_datawriterlistener.in (),
                                                                                           0);
           this->__info_in_datawriter_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
           __info_in_configured_ = true;
@@ -263,7 +266,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_out_ (bool create_getter)
               this->__info_out_configured_ = true;
             }
         }
-  
+
     }
   catch (...)
     {

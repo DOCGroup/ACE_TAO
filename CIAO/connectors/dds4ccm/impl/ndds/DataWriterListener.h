@@ -35,23 +35,19 @@ namespace CIAO
         // Destructor
         virtual ~RTI_DataWriterListener_i (void);
 
-        virtual void
-        on_offered_deadline_missed (
+        virtual void on_offered_deadline_missed (
           ::DDSDataWriter *the_writer,
           const ::DDS_OfferedDeadlineMissedStatus & status);
 
-        virtual void
-        on_offered_incompatible_qos (
+        virtual void on_offered_incompatible_qos (
           ::DDSDataWriter *the_writer,
           const ::DDS_OfferedIncompatibleQosStatus & status);
 
-        virtual void
-        on_liveliness_lost (
+        virtual void on_liveliness_lost (
           ::DDSDataWriter *the_writer,
           const ::DDS_LivelinessLostStatus & status);
 
-        virtual void
-        on_publication_matched (
+        virtual void on_publication_matched (
           ::DDSDataWriter *the_writer,
           const ::DDS_PublicationMatchedStatus & status);
 
