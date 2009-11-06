@@ -6,8 +6,8 @@
 
 #include "ciao/Logger/Log_Macros.h"
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr reader)
+template <typename NDDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::Getter_T (::DDS::DataReader_ptr reader)
 : impl_ (0),
   condition_(0),
   time_out_ ()
@@ -52,17 +52,17 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::Getter_T (::DDS::DataReader_ptr r
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::~Getter_T (void)
+template <typename NDDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::~Getter_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::~Getter_T");
   delete ws_;
   delete gd_;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::wait (
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::wait (
           DDSConditionSeq& active_conditions)
 {
   DDS_Duration_t timeout;
@@ -78,9 +78,9 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::wait (
   return true;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_all (
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::get_all (
           typename NDDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
@@ -89,9 +89,9 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_all (
   return true;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_all_history (
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::get_all_history (
           typename NDDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
@@ -105,9 +105,9 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_all_history (
   return false;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::get_one (
           typename NDDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
@@ -166,9 +166,9 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one (
   return true;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one_history (
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::get_one_history (
           const typename NDDS_TYPE::value_type& an_instance,
           typename NDDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
@@ -179,9 +179,9 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_one_history (
   return true;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_next (
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::get_next (
           typename NDDS_TYPE::value_type::_out_type  an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
@@ -190,30 +190,30 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::get_next (
   return true;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
  ::CCM_DDS::QueryFilter *
- CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::filter (void)
+ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::filter (void)
 {
   return 0;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::filter (const ::CCM_DDS::QueryFilter & filter)
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::filter (const ::CCM_DDS::QueryFilter & filter)
 {
   ACE_UNUSED_ARG (filter);
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 ::DDS::Duration_t
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::time_out (void)
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::time_out (void)
 {
   return this->time_out_;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, BASE>::time_out (const ::DDS::Duration_t & time_out)
+CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::time_out (const ::DDS::Duration_t & time_out)
 {
   this->time_out_ = time_out;
 }

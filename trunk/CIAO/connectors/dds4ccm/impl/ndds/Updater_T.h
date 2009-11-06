@@ -14,9 +14,9 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename NDDS_TYPE, typename BASE>
+      template <typename NDDS_TYPE, typename CCM_TYPE>
       class Updater_T : 
-        public virtual BASE,
+        public virtual CCM_TYPE,
         public virtual ::CORBA::LocalObject
       {
       public:
@@ -35,8 +35,8 @@ namespace CIAO
         virtual bool is_lifecycle_checked ();
 
       private:
-        Updater_T<NDDS_TYPE, BASE> (const Writer_T<NDDS_TYPE, BASE> &);
-        Updater_T<NDDS_TYPE, BASE> & operator = (const Writer_T<NDDS_TYPE, BASE> &);
+        Updater_T<NDDS_TYPE, CCM_TYPE> (const Writer_T<NDDS_TYPE, CCM_TYPE> &);
+        Updater_T<NDDS_TYPE, CCM_TYPE> & operator = (const Writer_T<NDDS_TYPE, CCM_TYPE> &);
         typename NDDS_TYPE::data_writer *impl_;
         bool is_lifecycle_checked_;
       };

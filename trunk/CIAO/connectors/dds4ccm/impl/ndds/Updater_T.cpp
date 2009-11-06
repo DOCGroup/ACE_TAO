@@ -5,8 +5,8 @@
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
-template <typename DDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr dw)
+template <typename DDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::Updater_T (::DDS::DataWriter_ptr dw)
   : impl_ (0),
     is_lifecycle_checked_ (false)
 {
@@ -33,23 +33,23 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr 
 }
 
 // Implementation skeleton destructor
-template <typename DDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::~Updater_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::~Updater_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::~Updater_T");
 }
 
-template <typename DDS_TYPE, typename BASE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::is_lifecycle_checked ()
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_lifecycle_checked ()
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::~is_lifecycle_checked");
   return this->is_lifecycle_checked_;
 }
 
-template <typename DDS_TYPE, typename BASE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::create (const typename DDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create (const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create");
   
@@ -59,9 +59,9 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::create (const typename DDS_TYPE::
   hnd = this->impl_->register_instance (an_instance);
 }
 
-template <typename DDS_TYPE, typename BASE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::update (const typename DDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update (const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update");
   
@@ -76,9 +76,9 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::update (const typename DDS_TYPE::
     }
 }
 
-template <typename DDS_TYPE, typename BASE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::_cxx_delete (const typename DDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::_cxx_delete (const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::_cxx_delete");
   
