@@ -49,19 +49,24 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::is_lifecycle_checked ()
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create (const typename DDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::create (
+            const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create");
   
   DDS_InstanceHandle_t hnd = this->impl_->lookup_instance (an_instance);
-  if (this->is_lifecycle_checked_ && !DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-    throw CCM_DDS::AlreadyCreated (0);
-  hnd = this->impl_->register_instance (an_instance);
+  if (this->is_lifecycle_checked_ && 
+      !DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
+    {
+      throw CCM_DDS::AlreadyCreated (0);
+    }
+  this->impl_->register_instance (an_instance);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update (const typename DDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update (
+            const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update");
   
@@ -71,8 +76,9 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::update (const typename DDS_TY
   ::DDS::ReturnCode_t const result  = this->impl_->write (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("#@#@#@#@#@#@ Unable to update data, error %d.\n"), result));
-      throw CCM_DDS::InternalError (result, 0);;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::update : ")
+                            ACE_TEXT ("Unable to update data, error %d.\n"), result));
+      throw CCM_DDS::InternalError (result, 0);
     }
 }
 
@@ -87,8 +93,9 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::_cxx_delete (const typename D
     throw CCM_DDS::NonExistent (0);
   ::DDS::ReturnCode_t const result  = this->impl_->unregister_instance (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
-  {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("#@#@#@#@#@#@ Unable to unregister instance, error %d.\n"), result));
-    throw CCM_DDS::InternalError (result, 0);
-  }
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Updater_T::_cxx_delete ")
+                            ACE_TEXT ("Unable to unregister instance, error %d.\n"), result));
+      throw CCM_DDS::InternalError (result, 0);
+    }
 }

@@ -38,11 +38,12 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
   typename DDS_TYPE::data_reader * reader =
       dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_datareader ()));
 
-  if (!reader) {
-    /* In this specific case, this will never fail */
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
-    return;
-  }
+  if (!reader) 
+    {
+      /* In this specific case, this will never fail */
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
+      return;
+    }
   ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh =
       new  ::CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->context_, reader);
   this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
