@@ -1,3 +1,17 @@
+Fri Nov  6 10:13:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+
+          Updated DRV_add_include_path() space within roots and
+          directory slash handling. (TAO782) It wasn't detecting
+          or handling spaced roots or trailing directory slashes
+          correctly.
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Allow for the gperf absolute directory path to contain spaces.
+
 Thu Nov  5 12:48:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
