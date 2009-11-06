@@ -39,9 +39,9 @@ namespace CIAO_Shapes_Receiver_Impl
   {
     // return if not valid
     if (hertz == 0 || this->active_ != 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
 
     // calculate the interval time
     long usec = 1000000 / hertz;
@@ -53,12 +53,11 @@ namespace CIAO_Shapes_Receiver_Impl
                                           0,
                                           ACE_Time_Value(0),
                                           ACE_Time_Value(3)) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to setup Timer\n"),
-                          -1);
-
-    }
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "Unable to setup Timer\n"),
+                            -1);
+      }
 
     this->active_ = 1;
     return 0;
@@ -69,9 +68,9 @@ namespace CIAO_Shapes_Receiver_Impl
   {
     // return if not valid.
     if (this->active_ == 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
     // cancle the timer
     this->reactor ()->cancel_timer (this);
     this->active_ = 0;
@@ -200,15 +199,15 @@ namespace CIAO_Shapes_Receiver_Impl
   }
   
   // Supported operations and attributes.
-   void
-   Receiver_exec_i::read_one (void)
-   {
+  void
+  Receiver_exec_i::read_one (void)
+  {
     ShapeType  shape_info;
     shape_info.color = "GREEN";
     ::CCM_DDS::ReadInfo readinfo;
 
     try
-    {
+      {
         this->reader_->read_one (shape_info, readinfo );
         time_t tim = readinfo.timestamp.sec;
         tm* time = localtime(&tim);
@@ -224,12 +223,12 @@ namespace CIAO_Shapes_Receiver_Impl
             shape_info.x,
             shape_info.y,
             shape_info.shapesize));
-    }
+      }
     catch(CCM_DDS::NonExistent& )
-    {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: ")
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: ")
                   ACE_TEXT ("no shape_info receieved\n")));
-    }
+      }
   }
    
   void
@@ -292,11 +291,11 @@ namespace CIAO_Shapes_Receiver_Impl
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE No data available for <%C>\n"), 
                     shape_info.color.in ()));
           }
-    }
+      }
     catch(CCM_DDS::NonExistent& )
-    {
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: no shape_info receieved\n")));
-    }
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: no shape_info receieved\n")));
+      }
   }
    
   void
@@ -342,13 +341,12 @@ namespace CIAO_Shapes_Receiver_Impl
     this->read_data_ = read_data;
   }
 
-
   ::CORBA::Boolean
   Receiver_exec_i::raw_listen (void)
   {
     return this->raw_listen_;
   }
-  
+
   void
   Receiver_exec_i::raw_listen (
     ::CORBA::Boolean raw_listen)
@@ -357,7 +355,6 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   // Port operations.
-  
   ::CCM_DDS::CCM_ShapeType_RawListener_ptr
   Receiver_exec_i::get_info_out_listener (void)
   {
@@ -373,7 +370,6 @@ namespace CIAO_Shapes_Receiver_Impl
   }
   
   // Operations from Components::SessionComponent.
-  
   void
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -406,12 +402,11 @@ namespace CIAO_Shapes_Receiver_Impl
     this->context_->get_connection_info_out_control ();
 
     if (CORBA::is_nil (lc.in ()))
-    {
-      CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
-      throw CORBA::INTERNAL ();
-    }
+      {
+        CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+        throw CORBA::INTERNAL ();
+      }
     lc->enabled (this->raw_listen_);
-    
     this->ticker_->start (this->rate_);
   }
   
@@ -432,11 +427,11 @@ namespace CIAO_Shapes_Receiver_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Receiver_exec_i);
-    
+
     return retval;
   }
 }

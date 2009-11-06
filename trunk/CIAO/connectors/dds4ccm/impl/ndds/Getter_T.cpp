@@ -67,9 +67,7 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::wait (
 {
   DDS_Duration_t timeout;
   timeout<<=this->time_out_;
-  
   DDS_ReturnCode_t retcode = ws_->wait (active_conditions, timeout);
-  
   if (retcode == DDS_RETCODE_TIMEOUT)
     {
       CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));

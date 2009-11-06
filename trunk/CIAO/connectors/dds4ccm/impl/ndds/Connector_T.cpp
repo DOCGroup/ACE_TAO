@@ -56,8 +56,9 @@ Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
     new ::DDS::StringSeq (this->key_fields_.length ());
 
   for (CORBA::ULong i = 0; i < this->key_fields_.length (); ++i)
-    (*retval)[i] = CORBA::string_dup (this->key_fields_[i]);
-
+    {
+      (*retval)[i] = CORBA::string_dup (this->key_fields_[i]);
+    }
   return retval;
 }
 
@@ -146,7 +147,8 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
     {
       if (CORBA::is_nil (this->topic_))
         {
-          CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part = dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
+          CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part = 
+            dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
           DDS_ReturnCode_t retcode = DDS_TYPE::type_support::register_type(
                 part->get_participant (), DDS_TYPE::type_support::get_type_name ());
           if (retcode == DDS_RETCODE_OK)
@@ -305,8 +307,8 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_data (void)
   CIAO_TRACE ("get_info_update_data");
 
   this->configure_port_info_in_ ();
-  return new CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>
-          (this->__info_in_datawriter_.in ());
+  return new CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE> (
+          this->__info_in_datawriter_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -317,8 +319,8 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_get_out_data (void)
 
   this->configure_port_info_out_ (true);
 
-  return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> 
-          (this->__info_get_datareader_.in ());
+  return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> (
+          this->__info_get_datareader_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -329,8 +331,8 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_data (void)
 
   this->configure_port_info_out_ (false);
 
-  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> 
-          (this->__info_out_datareader_.in ());
+  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
+          this->__info_out_datareader_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -338,7 +340,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_control (void)
 {
   CIAO_TRACE ("get_info_out_control");
-  return new CCM_DDS_ListenerControl_i (this->__info_out_rawlistener_enabled_);
+  return new CCM_DDS_ListenerControl_i (
+          this->__info_out_rawlistener_enabled_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -358,7 +361,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
   typename CCM_TYPE::context_type::_var_type lctx =
     CCM_TYPE::context_type::_narrow (ctx);
 
-  if ( ::CORBA::is_nil (lctx.in ()))
+  if (::CORBA::is_nil (lctx.in ()))
     {
       throw ::CORBA::INTERNAL ();
     }

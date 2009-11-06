@@ -45,9 +45,9 @@ namespace CIAO_Shapes_Sender_Impl
   {
     // return if not valid
     if (hertz == 0 || this->active_ != 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
 
     // calculate the interval time
     long usec = 1000000 / hertz;
@@ -59,13 +59,11 @@ namespace CIAO_Shapes_Sender_Impl
                                           0,
                                           ACE_Time_Value (0, usec),
                                           ACE_Time_Value (0, usec)) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to setup Timer\n"),
-                          -1);
-
-    }
-
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "Unable to setup Timer\n"),
+                            -1);
+      }
     this->active_ = 1;
     return 0;
   }
@@ -75,9 +73,9 @@ namespace CIAO_Shapes_Sender_Impl
   {
     // return if not valid.
     if (this->active_ == 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
     // cancle the timer
     this->reactor ()->cancel_timer (this);
     this->active_ = 0;
@@ -217,7 +215,6 @@ namespace CIAO_Shapes_Sender_Impl
   }
   
   // Component attributes.
-  
   ::CORBA::ULong
   Sender_exec_i::rate (void)
   {
@@ -287,14 +284,13 @@ namespace CIAO_Shapes_Sender_Impl
   // Port operations.
   
   // Operations from Components::SessionComponent.
-  
   void
   Sender_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::Shapes::CCM_Sender_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
@@ -304,7 +300,6 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    /* Your code here. */
     this->updater_ = this->context_->get_connection_info_update_data ();
     this->ticker_->activate ();
   }
@@ -343,13 +338,11 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::ccm_passivate (void)
   {
-    /* Your code here. */
   }
   
   void
   Sender_exec_i::ccm_remove (void)
   {
-    /* Your code here. */
   }
   
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
@@ -357,11 +350,11 @@ namespace CIAO_Shapes_Sender_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Sender_exec_i);
-    
+
     return retval;
   }
 }
