@@ -194,7 +194,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 
       if (CORBA::is_nil  (this->__info_in_datawriter_.in ()))
         {
-          this->__info_out_datawriterlistener = new ::CIAO::DDS4CCM::RTI::DataWriterListener_T
+          this->__info_out_datawriterlistener = new ::CIAO::DDS4CCM::DataWriterListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
                   this->__info_out_rawlistener_enabled_);

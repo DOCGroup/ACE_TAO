@@ -6,26 +6,26 @@
 
 // Implementation skeleton constructor
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::DataWriterListener_T (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::DataWriterListener_T (
       typename CCM_TYPE::context_type::_ptr_type context,
       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
       : context_ (CCM_TYPE::context_type::_duplicate (context)),
         enable_ (enabled)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataWriterListener_T::DataWriterListener_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::DataWriterListener_T");
   this->info_out_connector_status_ = this->context_->get_connection_error_listener ();
 }
 
 // Implementation skeleton destructor
 template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::~DataWriterListener_T (void)
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::~DataWriterListener_T (void)
 {
-  CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataWriterListener_T::~DataWriterListener_T");
+  CIAO_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::~DataWriterListener_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_missed (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_missed (
                                               ::DDS::DataWriter_ptr the_Writer,
                                                const ::DDS::OfferedDeadlineMissedStatus & status)
 {
@@ -34,7 +34,7 @@ CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadlin
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_qos (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_qos (
                                   ::DDS::DataWriter_ptr the_Writer,
                                   const ::DDS::OfferedIncompatibleQosStatus & status)
 {
@@ -43,7 +43,7 @@ CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompa
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
                                 ::DDS::DataWriter_ptr the_Writer,
                                 const ::DDS::LivelinessLostStatus &)
 {
@@ -52,7 +52,7 @@ CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
                                 ::DDS::DataWriter_ptr the_Writer,
                                 const ::DDS::PublicationMatchedStatus &)
 {
