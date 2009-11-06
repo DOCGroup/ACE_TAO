@@ -11,7 +11,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-class Connector_T 
+class Connector_T
   : public virtual CCM_TYPE::base_type,
     public virtual ::CORBA::LocalObject
 {
@@ -89,6 +89,7 @@ private:
   ::DDS::Subscriber_var __info_out_subscriber_;
   ::DDS::DataReader_var __info_out_datareader_;
   ::DDS::DataReaderListener_var __info_out_datareaderlistener;
+  ::DDS::DataWriterListener_var __info_out_datawriterlistener;
 
   // @from DDS_Getter
   bool __info_get_configured_;
