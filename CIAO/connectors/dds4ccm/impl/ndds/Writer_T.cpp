@@ -5,8 +5,8 @@
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::Writer_T (::DDS::DataWriter_ptr writer)
+template <typename NDDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::Writer_T (::DDS::DataWriter_ptr writer)
   : impl_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::Writer_T");
@@ -32,15 +32,15 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::Writer_T (::DDS::DataWriter_ptr w
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::~Writer_T (void)
+template <typename NDDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::~Writer_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::~Writer_T");
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
   
@@ -70,9 +70,9 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::
                "Write successful\n"));
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, BASE>::write (const typename NDDS_TYPE::seq_type& instances, bool coherent_write)
+CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TYPE::seq_type& instances, bool coherent_write)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
 

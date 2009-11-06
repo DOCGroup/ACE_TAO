@@ -14,9 +14,9 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename DDS_TYPE, typename BASE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       class Getter_T :
-         public virtual BASE,
+         public virtual CCM_TYPE,
          public virtual ::CORBA::LocalObject
       {
       public:
@@ -53,8 +53,8 @@ namespace CIAO
         virtual ::DDS::Duration_t time_out (void);
         virtual void time_out (const ::DDS::Duration_t & time_out);
       private:
-        Getter_T<DDS_TYPE, BASE> (const Getter_T<DDS_TYPE, BASE> &);
-        Getter_T<DDS_TYPE, BASE> & operator = (const Getter_T<DDS_TYPE, BASE> &);
+        Getter_T<DDS_TYPE, CCM_TYPE> (const Getter_T<DDS_TYPE, CCM_TYPE> &);
+        Getter_T<DDS_TYPE, CCM_TYPE> & operator = (const Getter_T<DDS_TYPE, CCM_TYPE> &);
         typename DDS_TYPE::data_reader *impl_;
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;

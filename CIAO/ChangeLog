@@ -1,3 +1,17 @@
+Fri Nov  6 12:56:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.h:
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.h:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Writer_T.h:
+        * connectors/dds4ccm/impl/ndds/Writer_T.cpp:
+          Renamed template argument BASE into CCM_TYPE.
+
 Fri Nov  6 11:51:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
