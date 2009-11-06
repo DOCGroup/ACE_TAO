@@ -1,3 +1,20 @@
+Fri Nov  6 09:20:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_Connector_exec.h
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_Connector_exec.h
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.cpp
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.h
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/Writer_T.cpp
+        * connectors/dds4ccm/impl/ndds/Writer_T.h
+          Renamed writer files to be consistent
+
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer.h
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer.tpp
+        * connectors/dds4ccm/impl/ndds/Writer.h
+        * connectors/dds4ccm/impl/ndds/Writer.tpp
+          removed
+
 Fri Nov  6 10:03:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
