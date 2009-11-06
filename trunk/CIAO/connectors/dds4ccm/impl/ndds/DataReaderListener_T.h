@@ -8,6 +8,7 @@
  */
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "ace/Copy_Disabled.h"
 
 namespace CIAO
 {
@@ -17,7 +18,8 @@ namespace CIAO
     {
       template <typename DDS_TYPE, typename CCM_TYPE>
       class DataReaderListener_T :
-        public virtual ::DDS::DataReaderListener
+        public ::DDS::DataReaderListener,
+        private ACE_Copy_Disabled
       {
       public:
         // Constructor
@@ -43,9 +45,6 @@ namespace CIAO
         void enabled (bool enable);
 
       private:
-        DataReaderListener_T<DDS_TYPE, CCM_TYPE> (const DataReaderListener_T<DDS_TYPE, CCM_TYPE> &);
-        DataReaderListener_T<DDS_TYPE, CCM_TYPE> & operator = (const DataReaderListener_T<DDS_TYPE, CCM_TYPE> &);
-
         typename CCM_TYPE::context_type::_var_type context_;
 
         CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;

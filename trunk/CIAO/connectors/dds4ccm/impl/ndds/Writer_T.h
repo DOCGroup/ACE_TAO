@@ -9,7 +9,6 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
-#include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {
@@ -17,16 +16,6 @@ namespace CIAO
   {
     namespace RTI
     {
-      class Coherent_Write_Guard : private ACE_Copy_Disabled
-      {
-        public:
-          Coherent_Write_Guard (DDSPublisher* p, bool coherent_write);
-          ~Coherent_Write_Guard ();
-        private:
-          ::DDSPublisher* p_;
-          bool const coherent_write_;
-      };
-
       template <typename NDDS_TYPE, typename CCM_TYPE>
       class Writer_T :
         public virtual CCM_TYPE::writer_type,
@@ -42,9 +31,10 @@ namespace CIAO
 
         virtual void write (const typename NDDS_TYPE::value_type& an_instance);
 
-        virtual void write (const typename NDDS_TYPE::seq_type& instances, bool coherent_write);
+        virtual void write (const typename NDDS_TYPE::seq_type& instances);
       private:
         typename NDDS_TYPE::data_writer *impl_;
+        bool is_coherent_write_;
       };
     }
   }
