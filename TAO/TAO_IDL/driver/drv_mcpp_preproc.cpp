@@ -125,8 +125,8 @@ DRV_cpp_putarg (const char *str)
   if (DRV_argcount >= DRV_MAX_ARGCOUNT)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: More than %d arguments to preprocessor\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  "%C: More than %d arguments to preprocessor\n",
+                  idl_global->prog_name (),
                   DRV_MAX_ARGCOUNT));
 
       throw Bailout ();
@@ -328,8 +328,8 @@ DRV_sweep_dirs (const char *rel_path,
   if (ACE_OS::chdir (rel_path) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "DRV_sweep_dirs: chdir %s failed\n",
-                         ACE_TEXT_CHAR_TO_TCHAR (rel_path)),
+                         "DRV_sweep_dirs: chdir %C failed\n",
+                         rel_path),
                         -1);
     }
 
@@ -353,8 +353,8 @@ DRV_sweep_dirs (const char *rel_path,
       if (ACE_OS::lstat (lname.c_str (), &stat_buf) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "DRV_sweep_dirs: ACE_OS::lstat (%s) failed\n",
-                             ACE_TEXT_CHAR_TO_TCHAR (lname.c_str ())),
+                             "DRV_sweep_dirs: ACE_OS::lstat (%C) failed\n",
+                             lname.c_str ()),
                             -1);
         }
 
@@ -403,8 +403,8 @@ DRV_sweep_dirs (const char *rel_path,
   if (ACE_OS::chdir (DIR_DOT_DOT) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "DRV_sweep_dirs: chdir .. (from %s) failed\n",
-                         ACE_TEXT_CHAR_TO_TCHAR (rel_path)),
+                         "DRV_sweep_dirs: chdir .. (from %C) failed\n",
+                         rel_path),
                         -1);
     }
 
@@ -412,54 +412,61 @@ DRV_sweep_dirs (const char *rel_path,
 }
 
 ACE_CString&
-DRV_add_include_path (ACE_CString& include_path, const char* p,
-                      const char* suffix, bool is_system)
+DRV_add_include_path (ACE_CString& include_path, const char *path,
+                      const char *suffix, bool is_system)
 {
-  if (p == 0) return include_path;
+  if (!path)
+    return include_path;
 
-  ACE_CString include_option ("-I");
+  const bool needToQuote= (('"' == *path) || ACE_OS::strchr (path, ' '));
+  const size_t pathLength= ACE_OS::strlen (path);
+  const char
+#if defined (ACE_WIN32)
+    nativeDir=  '\\',
+    foreignDir= '/';
+#else
+    nativeDir=  '/',
+    foreignDir= '\\';
+#endif
 
-  size_t len = ACE_OS::strlen (p);
+  // Eliminate possible enclosing quotes from the path, and since some compilers
+  // choke on double directory separators in paths, ensure that the path does not
+  // end with a directory slash.
+  include_path=
+    ACE_CString (path + ('"' == *path),     // Skip leading Quote
+                 pathLength
+                 - ('"' == *path)           // Don't count leading Quote
+                 - ( (1uL < pathLength) &&  // Don't count trailing Quote XOR directory
+                     ('"'        == path [pathLength - 1uL] ||
+                      nativeDir  == path [pathLength - 1uL] ||
+                      foreignDir == path [pathLength - 1uL]
+                   ) )
+                 - ( (2uL < pathLength) &&  // Don't count trailing Quote AND directory
+                     '"' == path [pathLength - 1uL] &&
+                     (nativeDir  == path [pathLength - 2uL] ||
+                      foreignDir == path [pathLength - 2uL]
+                   ) )
+                );
 
-  bool quote = !(p[0] == '"' || ACE_OS::strchr (p, ' ') == 0);
-
-  // Eliminate possible quotes from the path
-  if ('"' == p[0])
-  {
-    include_path = p + 1;
-    include_path[len - 2] = 0;
-  }
-  else
-  {
-    include_path = p;
-  }
-
-  // Some compilers choke on "//" separators.
-  if (p[len - 1] == '/' || p[len - 1] == '\\')
+  if (suffix)
     {
-      include_path[len - 1] = '\0';
+      if (!include_path.length () && ((nativeDir == *suffix) || (foreignDir == *suffix)))
+        ++suffix; // Path is empty, don't add the suffix's leading directory seporator
+
+      if (include_path.length () && *suffix && (nativeDir != *suffix) && (foreignDir != *suffix))
+        include_path+= nativeDir; // Force a directory seporator
+
+      // Add the suffix string to the path, ensuring that foreign directory slashes
+      // are added as the native type.
+      for ( ; *suffix; ++suffix)
+        include_path+= (foreignDir == *suffix) ? nativeDir : *suffix;
     }
 
-  for ( ; suffix != 0 && *suffix != 0; suffix++)
-  {
-#if defined (ACE_WIN32)
-    if (*suffix == '/')
-        include_path += '\\';
-#else
-    if (*suffix == '\\')
-        include_path += '/';
-#endif
-    else
-        include_path += *suffix;
-  }
-
-  if (quote)
-      include_option += '"';
-
-  include_option += include_path; //.c_str ();
-
-  if (quote)
-      include_option += '"';
+  // Build up the include string from the new path+suffix
+  ACE_CString include_option ("-I\"", 2 + needToQuote);
+  include_option+= include_path;
+  if (needToQuote)
+    include_option+= '"';
 
   DRV_cpp_putarg (include_option.c_str ());
   idl_global->add_include_path (include_path.c_str (), is_system);
@@ -472,7 +479,6 @@ DRV_add_include_path (ACE_CString& include_path, const char* p,
 void
 DRV_cpp_post_init (void)
 {
-
   // Add include path for TAO_ROOT/orbsvcs.
   char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
 
@@ -579,8 +585,8 @@ DRV_cpp_post_init (void)
   if (DRV_sweep_dirs (idl_global->recursion_start (), "") == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "DRV_cpp_post_init: DRV_sweep_dirs (%s) failed\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->recursion_start ())));
+                  "DRV_cpp_post_init: DRV_sweep_dirs (%C) failed\n",
+                  idl_global->recursion_start ()));
 
       throw Bailout ();
     }
@@ -590,8 +596,8 @@ DRV_cpp_post_init (void)
   if (ACE_OS::chdir (cwd_path) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "DRV_cpp_post_init: ACE_OS::chdir (%s) failed\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (cwd_path)));
+                  "DRV_cpp_post_init: ACE_OS::chdir (%C) failed\n",
+                  cwd_path));
 
       throw Bailout ();
     }
@@ -677,8 +683,7 @@ DRV_check_for_include (const char* buf)
   // We're not handling redirection from stdin.
   if (*h == '\0')
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO_IDL: No input files\n")));
+      ACE_ERROR ((LM_ERROR, "TAO_IDL: No input files\n"));
 
 
       throw Bailout ();
@@ -823,8 +828,7 @@ DRV_convert_includes (const char* buf)
   // We're not handling redirection from stdin.
   if (*r == '\0')
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO_IDL: No input files\n")));
+      ACE_ERROR ((LM_ERROR, "TAO_IDL: No input files\n"));
 
 
       throw Bailout ();
@@ -865,8 +869,8 @@ DRV_get_orb_idl_includes (void)
       if (fp == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "TAO_IDL: cannot open or find file: %s\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (orb_idl_path.c_str ())));
+                      "TAO_IDL: cannot open or find file: %C\n",
+                      orb_idl_path.c_str ()));
 
           throw Bailout ();
         }
@@ -928,8 +932,8 @@ DRV_check_file_for_includes (const char *filename)
   if (fin == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: cannot open input file\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ())));
+                  "%C: cannot open input file\n",
+                  idl_global->prog_name ()));
 
       throw Bailout ();
     }
@@ -990,9 +994,9 @@ DRV_pre_proc (const char *myfile)
   if (mcpp_lib_main (DRV_argcount, tmp_arglist) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: mcpp preprocessor execution failed:\n%s",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (mcpp_get_mem_buffer(ERR))));
+                  "%C: mcpp preprocessor execution failed:\n%C",
+                  idl_global->prog_name (),
+                  mcpp_get_mem_buffer (ERR)));
       throw Bailout ();
     }
 
@@ -1011,9 +1015,9 @@ DRV_pre_proc (const char *myfile)
   if (yyin == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not retrieve preprocessed buffer\n%s",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (mcpp_get_mem_buffer(ERR))));
+                  "%C: Could not retrieve preprocessed buffer\n%C",
+                  idl_global->prog_name (),
+                  mcpp_get_mem_buffer(ERR)));
 
       throw Bailout ();
     }
@@ -1039,7 +1043,7 @@ DRV_pre_proc (const char *myfile)
 
       for (size_t i = 0; i < end; i += ACE_MAXLOGMSGLEN)
         {
-          ACE_DEBUG ((LM_DEBUG, "%s",
+          ACE_DEBUG ((LM_DEBUG, "%C",
                       yyin + i));
         }
       /*

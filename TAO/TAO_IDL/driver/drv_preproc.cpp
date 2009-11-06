@@ -134,8 +134,8 @@ DRV_cpp_putarg (const char *str)
   if (DRV_argcount >= DRV_MAX_ARGCOUNT)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: More than %d arguments to preprocessor\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  "%C: More than %d arguments to preprocessor\n",
+                  idl_global->prog_name (),
                   DRV_MAX_ARGCOUNT ));
 
       throw Bailout ();
@@ -341,8 +341,8 @@ DRV_sweep_dirs (const char *rel_path,
   if (ACE_OS::chdir (rel_path) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "DRV_sweep_dirs: chdir %s failed\n",
-                         ACE_TEXT_CHAR_TO_TCHAR (rel_path)),
+                         "DRV_sweep_dirs: chdir %C failed\n",
+                         rel_path),
                         -1);
     }
 
@@ -420,8 +420,8 @@ DRV_sweep_dirs (const char *rel_path,
   if (ACE_OS::chdir (DIR_DOT_DOT) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "DRV_sweep_dirs: chdir .. (from %s) failed\n",
-                         ACE_TEXT_CHAR_TO_TCHAR (rel_path)),
+                         "DRV_sweep_dirs: chdir .. (from %C) failed\n",
+                         rel_path),
                         -1);
     }
 
@@ -602,8 +602,8 @@ DRV_cpp_post_init (void)
   if (DRV_sweep_dirs (idl_global->recursion_start (), "") == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "DRV_cpp_post_init: DRV_sweep_dirs (%s) failed\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->recursion_start ())));
+                  "DRV_cpp_post_init: DRV_sweep_dirs (%C) failed\n",
+                  idl_global->recursion_start ()));
 
       throw Bailout ();
     }
@@ -613,8 +613,8 @@ DRV_cpp_post_init (void)
   if (ACE_OS::chdir (cwd_path) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "DRV_cpp_post_init: ACE_OS::chdir (%s) failed\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (cwd_path)));
+                  "DRV_cpp_post_init: ACE_OS::chdir (%C) failed\n",
+                  cwd_path));
 
       throw Bailout ();
     }
@@ -700,9 +700,7 @@ DRV_check_for_include (const char* buf)
   // We're not handling redirection from stdin.
   if (*h == '\0')
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO_IDL: No input files\n")));
-
+      ACE_ERROR ((LM_ERROR, "TAO_IDL: No input files\n"));
 
       throw Bailout ();
     }
@@ -846,9 +844,7 @@ DRV_convert_includes (const char* buf)
   // We're not handling redirection from stdin.
   if (*r == '\0')
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO_IDL: No input files\n")));
-
+      ACE_ERROR ((LM_ERROR, "TAO_IDL: No input files\n"));
 
       throw Bailout ();
     }
@@ -888,8 +884,8 @@ DRV_get_orb_idl_includes (void)
       if (fp == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "TAO_IDL: cannot open or find file: %s\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (orb_idl_path.c_str ())));
+                      "TAO_IDL: cannot open or find file: %C\n",
+                      orb_idl_path.c_str ()));
 
           throw Bailout ();
         }
@@ -923,10 +919,10 @@ DRV_copy_input (FILE *fin,
   if (f == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: cannot open temp file \"%s\" for copying from \"%s\": %p\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (fn),
-                  ACE_TEXT_CHAR_TO_TCHAR (orig_filename)));
+                  "%C: cannot open temp file \"%C\" for copying from \"%C\": %p\n",
+                  idl_global->prog_name (),
+                  fn,
+                  orig_filename));
 
       throw Bailout ();
     }
@@ -934,8 +930,8 @@ DRV_copy_input (FILE *fin,
   if (fin == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: cannot open input file\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ())));
+                  "%C: cannot open input file\n",
+                  idl_global->prog_name ()));
 
       throw Bailout ();
     }
@@ -1037,9 +1033,9 @@ DRV_pre_proc (const char *myfile)
       || tlen + sizeof (tao_idli_template) > sizeof (tmp_ifile))
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: temporary path/filename length is greater than "
+                  "%C: temporary path/filename length is greater than "
                   "length allowed by platform\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ())));
+                  idl_global->prog_name ()));
 
       throw Bailout ();
     }
@@ -1055,9 +1051,9 @@ DRV_pre_proc (const char *myfile)
   if (ti_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to create temporary file \"%s\": %p\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (tmp_ifile)));
+                  "%C: Unable to create temporary file \"%C\": %p\n",
+                  idl_global->prog_name (),
+                  tmp_ifile));
 
       throw Bailout ();
     }
@@ -1066,9 +1062,9 @@ DRV_pre_proc (const char *myfile)
   if (tf_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to create temporary file \"%s\": %p\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (tmp_file)));
+                  "%C: Unable to create temporary file \"%C\": %p\n",
+                  idl_global->prog_name (),
+                  tmp_file));
 
       throw Bailout ();
     }
@@ -1135,8 +1131,8 @@ DRV_pre_proc (const char *myfile)
   if (cpp_options.command_line (DRV_arglist) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%s: command line processing \"%s\" failed\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  "%C: command line processing \"%s\" failed\n",
+                  idl_global->prog_name (),
                   DRV_arglist[0]));
       throw Bailout ();
     }
@@ -1147,10 +1143,10 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::rename (tmp_file, t_file) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to rename temporary file \"%s\" to \"%s\": %p\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (tmp_file),
-                  ACE_TEXT_CHAR_TO_TCHAR (t_file)));
+                  "%C: Unable to rename temporary file \"%C\" to \"%C\": %p\n",
+                  idl_global->prog_name (),
+                  tmp_file,
+                  t_file));
 
 
       throw Bailout ();
@@ -1158,10 +1154,10 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::rename (tmp_ifile, t_ifile) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to rename temporary file \"%s\" to \"%s\": %p\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (tmp_ifile),
-                  ACE_TEXT_CHAR_TO_TCHAR (t_ifile)));
+                  "%C: Unable to rename temporary file \"%C\" to \"%C\": %p\n",
+                  idl_global->prog_name (),
+                  tmp_ifile,
+                  t_ifile));
 
 
       throw Bailout ();
@@ -1192,9 +1188,9 @@ DRV_pre_proc (const char *myfile)
       if (fd == ACE_INVALID_HANDLE)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: cannot open temp file \"%s\" for writing: %p\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                      ACE_TEXT_CHAR_TO_TCHAR (t_file)));
+                      "%C: cannot open temp file \"%C\" for writing: %p\n",
+                      idl_global->prog_name (),
+                      t_file));
 
           throw Bailout ();
         }
@@ -1202,11 +1198,17 @@ DRV_pre_proc (const char *myfile)
       cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
     }
 
+  if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
+    {
+      ACE_DEBUG ((LM_DEBUG, "%C: spawning: %s\n",
+                  idl_global->prog_name (),
+                  cpp_options.command_line_buf ()));
+    }
   if (process.spawn (cpp_options) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: spawn of \"%s\" failed\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  "%C: spawn of \"%s\" failed\n",
+                  idl_global->prog_name (),
                   DRV_arglist[0]));
 
 
@@ -1219,9 +1221,9 @@ DRV_pre_proc (const char *myfile)
       if (ACE_OS::close (fd) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-            "%s: cannot close temp file \"%s\" on parent: %p\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                      ACE_TEXT_CHAR_TO_TCHAR (t_file)));
+            "%C: cannot close temp file \"%C\" on parent: %p\n",
+                      idl_global->prog_name (),
+                      t_file));
 
           throw Bailout ();
         }
@@ -1237,8 +1239,8 @@ DRV_pre_proc (const char *myfile)
   if (process.wait (&status) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: wait for child process failed\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ())));
+                  "%C: wait for child process failed\n",
+                  idl_global->prog_name ()));
 
       throw Bailout ();
     }
@@ -1251,8 +1253,8 @@ DRV_pre_proc (const char *myfile)
           errno = WEXITSTATUS ((status));
 
           ACE_ERROR ((LM_ERROR,
-                      "%s: preprocessor \"%s\" returned with an error\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                      "%C: preprocessor \"%s\" returned with an error\n",
+                      idl_global->prog_name (),
                       DRV_arglist[0]));
 
           throw Bailout ();
@@ -1264,9 +1266,9 @@ DRV_pre_proc (const char *myfile)
       errno = EINTR;
 
       ACE_ERROR ((LM_ERROR,
-                  "%s: preprocessor \"%s\" appears "
+                  "%C: preprocessor \"%s\" appears "
                   "to have been interrupted\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   DRV_arglist[0]));
 
       throw Bailout ();
@@ -1284,9 +1286,9 @@ DRV_pre_proc (const char *myfile)
   if (yyin == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not open cpp output file \"%s\": %p\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (t_file)));
+                  "%C: Could not open cpp output file \"%C\": %p\n",
+                  idl_global->prog_name (),
+                  t_file));
 
       throw Bailout ();
     }
@@ -1302,9 +1304,9 @@ DRV_pre_proc (const char *myfile)
       if (preproc == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: Could not open cpp output file \"$s\": %p\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                      ACE_TEXT_CHAR_TO_TCHAR (t_file)));
+                      "%C: Could not open cpp output file \"$C\": %p\n",
+                      idl_global->prog_name (),
+                      t_file));
 
           throw Bailout ();
         }
@@ -1337,9 +1339,9 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::unlink (t_ifile) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not remove cpp input file \"%s\": %p\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (t_ifile)));
+                  "%C: Could not remove cpp input file \"%C\": %p\n",
+                  idl_global->prog_name (),
+                  t_ifile));
 
       throw Bailout ();
     }
@@ -1347,9 +1349,9 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::unlink (t_file) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not remove cpp output file \"%s\": %p\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (t_file)));
+                  "%C: Could not remove cpp output file \"%C\": %p\n",
+                  idl_global->prog_name (),
+                  t_file));
 
       throw Bailout ();
     }

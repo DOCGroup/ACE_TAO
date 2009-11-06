@@ -1488,9 +1488,7 @@ IDL_GlobalData::check_gperf (void)
   ACE_Process_Options process_options;
 
   // Set the command line for the gperf program.
-  process_options.command_line (ACE_TEXT ("%s")
-                                ACE_TEXT (" ")
-                                ACE_TEXT ("-V"),
+  process_options.command_line (ACE_TEXT ("\"%s\" -V"),
                                 idl_global->gperf_path ());
 
   // Spawn a process for gperf.
@@ -1798,8 +1796,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
       if (this->dcps_type_info_map_.bind( id, newinfo) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Unable to insert type")
-                      ACE_TEXT (" into DCPS type container: %s.\n"),
+                      "(%P|%t) Unable to insert type into DCPS type container: %s.\n",
                       id));
           return;
         }
@@ -1807,7 +1804,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
   else
     {
       ACE_ERROR ((LM_WARNING,
-                  ACE_TEXT ("(%P|%t) Duplicate DCPS type defined: %s.\n"),
+                  "(%P|%t) Duplicate DCPS type defined: %s.\n",
                   id));
     }
 
@@ -1828,7 +1825,7 @@ IDL_GlobalData::add_dcps_data_key (const char* id, const char* key)
   else
     {
       ACE_ERROR((LM_ERROR,
-                 ACE_TEXT ("missing previous #pragma DCPS_DATA_TYPE\n")));
+                 "missing previous #pragma DCPS_DATA_TYPE\n"));
     }
 
   return false;
