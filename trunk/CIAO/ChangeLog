@@ -1,3 +1,11 @@
+Fri Nov  6 12:28:42 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Put DataReaderHandler_T in its seperate file.
+
 Fri Nov  6 12:02:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
