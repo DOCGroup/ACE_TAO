@@ -1,15 +1,21 @@
+Fri Nov  6 10:44:13 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Template argument CCM_TYPE also used in DataReaderHandler_T.
+
 Fri Nov  6 10:30:06 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Connector_T.h:
         * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
           Renamed NDDS_TYPE to DDS_TYPE. Clean up some
           unused variables.
-        
+
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
         * connectors/dds4ccm/impl/ndds/Getter_T.h:
         * connectors/dds4ccm/impl/ndds/Updater_T.cpp:
-          Renamed NDDS_TYPE to DDS_TYPE. 
+          Renamed NDDS_TYPE to DDS_TYPE.
 
 Fri Nov  6 09:20:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 

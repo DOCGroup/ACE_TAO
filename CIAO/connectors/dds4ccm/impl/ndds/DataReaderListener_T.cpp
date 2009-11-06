@@ -5,23 +5,23 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 
-template <typename DDS_TYPE, typename RAWLISTENER>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, RAWLISTENER>::DataReaderHandler_T (
-typename RAWLISTENER::_ptr_type listen,
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T (
+typename CCM_TYPE::rawlistener_type::_ptr_type listen,
 typename DDS_TYPE::data_reader * reader)
-      : listener_ (RAWLISTENER::_duplicate (listen)),
+      : listener_ (CCM_TYPE::rawlistener_type::_duplicate (listen)),
         reader_ (reader)
 {
 }
 
-template <typename DDS_TYPE, typename RAWLISTENER>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, RAWLISTENER>::~DataReaderHandler_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::~DataReaderHandler_T (void)
 {
 }
 
-template <typename DDS_TYPE, typename RAWLISTENER>
+template <typename DDS_TYPE, typename CCM_TYPE>
 int
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, RAWLISTENER>::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
 {
   // Loop until there are messages available in the queue 
   for(;;) 
@@ -85,8 +85,8 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
     return;
   }
-  DataReaderHandler_T<DDS_TYPE, typename CCM_TYPE::rawlistener_type>* rh = 
-      new  DataReaderHandler_T<DDS_TYPE, typename CCM_TYPE::rawlistener_type>(this->listener_, reader);
+  DataReaderHandler_T<DDS_TYPE, CCM_TYPE>* rh = 
+      new  DataReaderHandler_T<DDS_TYPE, CCM_TYPE>(this->listener_, reader);
   this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
 }
 
