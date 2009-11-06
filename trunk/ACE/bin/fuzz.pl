@@ -33,6 +33,7 @@ use PerlACE::Run_Test;
 ###### END TODO
 
 # Lists of all the files
+@files_cdp = ();
 @files_cpp = ();
 @files_inl = ();
 @files_h = ();
@@ -139,6 +140,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.(icc|ncb|zip)$/i) {
         push @files_noncvs, ($name);
+    }
+    elsif ($name =~ /\.(cdp)$/i) {
+        push @files_cdp, ($name);
     }
 }
 
@@ -398,7 +402,7 @@ sub check_for_ACE_Thread_Mutex ()
 sub check_for_tab ()
 {
     print "Running tabs check\n";
-    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl) {
+    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl, @files_cdp) {
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
@@ -1374,7 +1378,7 @@ sub check_for_bad_run_test ()
     }
     $config_list->add_one_config ("FUZZ");
     @valid_files = $config_list->valid_entries ();
-    foreach $file (@valid_files) {
+    foreach $file (@files_pl) {
         if (open (FILE, $file)) {
             my $is_run_test = 0;
             my $sub = 0;
