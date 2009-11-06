@@ -5,8 +5,8 @@
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr dw)
+template <typename DDS_TYPE, typename BASE >
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr dw)
   : impl_ (0),
     is_lifecycle_checked_ (false)
 {
@@ -21,7 +21,7 @@ CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr
       throw CORBA::INTERNAL ();
     }
 
-  this->impl_ =  NDDS_TYPE::data_writer::narrow (rdu->get_datawriter ());
+  this->impl_ =  DDS_TYPE::data_writer::narrow (rdu->get_datawriter ());
 
   if (!this->impl_)
     {
@@ -33,23 +33,23 @@ CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::Updater_T (::DDS::DataWriter_ptr
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::~Updater_T (void)
+template <typename DDS_TYPE, typename BASE >
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::~Updater_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::~Updater_T");
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename DDS_TYPE, typename BASE >
 bool
-CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::is_lifecycle_checked ()
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::is_lifecycle_checked ()
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::~is_lifecycle_checked");
   return this->is_lifecycle_checked_;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename DDS_TYPE, typename BASE >
 void
-CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::create (const typename NDDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::create (const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::create");
   
@@ -59,9 +59,9 @@ CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::create (const typename NDDS_TYPE
   hnd = this->impl_->register_instance (an_instance);
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename DDS_TYPE, typename BASE >
 void
-CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::update (const typename NDDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::update (const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::update");
   
@@ -76,9 +76,9 @@ CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::update (const typename NDDS_TYPE
     }
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename DDS_TYPE, typename BASE >
 void
-CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE, BASE>::_cxx_delete (const typename NDDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, BASE>::_cxx_delete (const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Updater_T::_cxx_delete");
   

@@ -17,22 +17,22 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename NDDS_TYPE, typename RAWLISTENER>
+      template <typename DDS_TYPE, typename RAWLISTENER>
       class DataReaderHandler_T : 
         public ACE_Event_Handler
       {
         public:
           DataReaderHandler_T (
               typename RAWLISTENER::_ptr_type listen,
-              typename NDDS_TYPE::data_reader * reader);
+              typename DDS_TYPE::data_reader * reader);
           ~DataReaderHandler_T ();
 
           virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
         private:
           typename RAWLISTENER::_var_type listener_;
-          typename NDDS_TYPE::data_reader * reader_;
+          typename DDS_TYPE::data_reader * reader_;
       };
-      template <typename NDDS_TYPE, typename CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       class DataReaderListener_T :
         public virtual ::DDS::DataReaderListener
       {
@@ -60,8 +60,8 @@ namespace CIAO
         void enabled (bool enable);
 
       private:
-        DataReaderListener_T<NDDS_TYPE, CCM_TYPE> (const DataReaderListener_T<NDDS_TYPE, CCM_TYPE> &);
-        DataReaderListener_T<NDDS_TYPE, CCM_TYPE> & operator = (const DataReaderListener_T<NDDS_TYPE, CCM_TYPE> &);
+        DataReaderListener_T<DDS_TYPE, CCM_TYPE> (const DataReaderListener_T<DDS_TYPE, CCM_TYPE> &);
+        DataReaderListener_T<DDS_TYPE, CCM_TYPE> & operator = (const DataReaderListener_T<DDS_TYPE, CCM_TYPE> &);
   
         typename CCM_TYPE::context_type::_var_type context_;
 
