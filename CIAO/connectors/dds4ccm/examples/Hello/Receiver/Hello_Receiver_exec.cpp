@@ -46,7 +46,7 @@ namespace CIAO_Hello_DDS_Receiver_Impl
         int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
         if (sec_rec != now.second ())
           usec_rec += 10000000;
-        printf ("<%s> received <%s>. difference <%d>\n", 
+        printf ("<%s> received <%s>. difference <%ld>\n", 
               this->name_.c_str (), 
               an_instance,
               now.microsec () - usec_rec);
