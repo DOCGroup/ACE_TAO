@@ -88,15 +88,10 @@ private:
   bool __info_out_configured_;
   typename CONNECTOR_TYPE::rawlistener_type::_var_type __info_out_rawlistener_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> __info_out_rawlistener_enabled_;
-  CCM_DDS::PortStatusListener_var __info_out_portstatus_;
   ::DDS::Subscriber_var __info_out_subscriber_;
   ::DDS::DataReaderListener_var __info_out_listener_;
   ::DDS::DataReader_var __info_out_datareader_;
   ::DDS::DataReaderListener_var __info_out_datareaderlistener;
- 
-  //mh
-  CCM_DDS::ConnectorStatusListener_var __info_out_connector_status_;
-  //end mh
 
   // @from DDS_Getter
   bool __info_get_configured_;
@@ -123,7 +118,6 @@ private:
     typedef CONTEXT_TYPE context_type;
     typedef RAWLISTENER_TYPE rawlistener_type;
     typedef CONNECTORSTATUSLISTENER_TYPE connectorstatuslistener_type;
-
   };
 
 

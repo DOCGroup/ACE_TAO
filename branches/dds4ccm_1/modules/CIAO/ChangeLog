@@ -1,3 +1,16 @@
+Fri Nov  6 09:10:32 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+          Created logmessage.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Moved the context to the DataReaderListener_T. This will
+          make the Connector_T code cleaner and all functionality is
+          at hand in the DataReaderListener_T. 
+
 Thu Nov  5 17:04:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:

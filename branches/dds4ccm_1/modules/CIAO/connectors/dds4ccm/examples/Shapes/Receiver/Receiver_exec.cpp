@@ -172,7 +172,7 @@ namespace CIAO_Shapes_Receiver_Impl
     const ShapeType & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_RawListener: ")
+    CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_RawListener: ")
             ACE_TEXT ("received shape_info for <%s> at %u:%u:%u\n"),
             an_instance.color.in (),
             an_instance.x,
