@@ -196,7 +196,7 @@ void
     ::Quoter::Stock_Info_Seq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(stock_infos.out(), readinfoseq.out());
-    if(0 != &readinfoseq && readinfoseq->length()!= 0)
+    if(readinfoseq->length()!= 0)
     {
       int nr_of_infos = readinfoseq->length();
       for(int i = 0; i < nr_of_infos; i ++)
@@ -205,7 +205,7 @@ void
         printf("Read_Info.timestamp -> date = %s",ctime(&tim));
       }
     }
-    if( 0!= &stock_infos && stock_infos->length()!= 0)
+    if(stock_infos->length()!= 0)
     {
       int nr_of_stock_infos = stock_infos->length();
       for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
@@ -227,7 +227,7 @@ void
     ::Quoter::Stock_Info_Seq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all_history(stock_infos.out(), readinfoseq.out());
-    if(0 != &readinfoseq && readinfoseq->length()!= 0)
+    if(readinfoseq->length()!= 0)
     {
       int nr_of_infos = readinfoseq->length();
       for(int i = 0; i < nr_of_infos; i ++)
@@ -236,14 +236,14 @@ void
         printf("Read_Info.timestamp -> date = %s",ctime(&tim));
       }
     }
-    if( 0!= &stock_infos && stock_infos->length()!= 0)
+    if(stock_infos->length()!= 0)
     {
       int nr_of_stock_infos = stock_infos->length();
       for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
       {
          printf ("Stock_Info_Read_All_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
             i,
-            stock_infos[i].symbol,
+            stock_infos[i].symbol.in (),
             stock_infos[i].low,
             stock_infos[i].current,
             stock_infos[i].high);
@@ -264,7 +264,7 @@ void
     try
     {
         this->reader_->read_one_history(stock_info,stock_infos.out(), readinfoseq.out());
-        if(0 != &readinfoseq && readinfoseq->length()!= 0)
+        if(readinfoseq->length()!= 0)
         {
           int nr_of_infos = readinfoseq->length();
           for(int i = 0; i < nr_of_infos; i ++)
@@ -273,14 +273,14 @@ void
             printf("Read_Info.timestamp -> date = %s",ctime(&tim));
           }
         }
-        if( 0!= &stock_infos && stock_infos->length()!= 0)
+        if(stock_infos->length()!= 0)
         {
           int nr_of_stock_infos = stock_infos->length();
           for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
           {
              printf ("Stock_Info_Read_One_History: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
                 i,
-                stock_infos[i].symbol,
+                stock_infos[i].symbol.in (),
                 stock_infos[i].low,
                 stock_infos[i].current,
                 stock_infos[i].high);
@@ -335,34 +335,34 @@ void
 
   // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr the_topic,
-     const DDS::InconsistentTopicStatus & status)
+     ::DDS::Topic_ptr /*the_topic*/,
+     const DDS::InconsistentTopicStatus & /*status*/)
     {
       printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
     }
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr the_reader,
-     const DDS::RequestedIncompatibleQosStatus & status)  {
+    ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
       printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
     }
   void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr the_reader,
-     const DDS::SampleRejectedStatus & status)  {
+     ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::SampleRejectedStatus & /*status*/)  {
       printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr the_writer,
-     const DDS::OfferedDeadlineMissedStatus & status)  {
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
       printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
     }
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr the_writer,
-     const DDS::OfferedIncompatibleQosStatus & status)  {
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
       printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
     }
   void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)  {
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind  /*status_kind*/)  {
       printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
     }
 
@@ -373,7 +373,7 @@ void
 
   PortStatusListener_exec_i::PortStatusListener_exec_i (void)
   {
-     printf("####### construct PortStatusListener ######");/* Your code here. */
+     printf("####### construct PortStatusListener ######");
   }
 
   PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
@@ -387,12 +387,12 @@ void
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::RequestedDeadlineMissedStatus & /* status */)
   {
-    printf("####### deadline missed ######");/* Your code here. */
+    printf("####### deadline missed ######");
   }
 
   void
   PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr  the_reader ,
+    ::DDS::DataReader_ptr  /*the_reader*/ ,
     const ::DDS::SampleLostStatus &  status )
   {
    printf("####### sample lost ######");
