@@ -14,7 +14,7 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename NDDS_TYPE, typename BASE>
+      template <typename DDS_TYPE, typename BASE>
       class Getter_T :
          public virtual BASE,
          public virtual ::CORBA::LocalObject
@@ -27,24 +27,24 @@ namespace CIAO
         virtual ~Getter_T (void);
 
         virtual bool get_all (
-          typename NDDS_TYPE::seq_type::_out_type instances,
+          typename DDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual bool get_all_history (
-          typename NDDS_TYPE::seq_type::_out_type instances,
+          typename DDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual bool get_one (
-          typename NDDS_TYPE::value_type& an_instance,
+          typename DDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info);
 
         virtual bool get_one_history (
-          const typename NDDS_TYPE::value_type& an_instance,
-          typename NDDS_TYPE::seq_type::_out_type instances,
+          const typename DDS_TYPE::value_type& an_instance,
+          typename DDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual bool get_next (
-          typename NDDS_TYPE::value_type::_out_type  an_instance,
+          typename DDS_TYPE::value_type::_out_type  an_instance,
           ::CCM_DDS::ReadInfo_out info);
 
         virtual ::CCM_DDS::QueryFilter *filter (void);
@@ -53,9 +53,9 @@ namespace CIAO
         virtual ::DDS::Duration_t time_out (void);
         virtual void time_out (const ::DDS::Duration_t & time_out);
       private:
-        Getter_T<NDDS_TYPE, BASE> (const Getter_T<NDDS_TYPE, BASE> &);
-        Getter_T<NDDS_TYPE, BASE> & operator = (const Getter_T<NDDS_TYPE, BASE> &);
-        typename NDDS_TYPE::data_reader *impl_;
+        Getter_T<DDS_TYPE, BASE> (const Getter_T<DDS_TYPE, BASE> &);
+        Getter_T<DDS_TYPE, BASE> & operator = (const Getter_T<DDS_TYPE, BASE> &);
+        typename DDS_TYPE::data_reader *impl_;
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;
         DDSGuardCondition*  gd_;

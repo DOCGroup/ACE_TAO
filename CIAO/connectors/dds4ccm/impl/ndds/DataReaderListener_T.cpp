@@ -5,28 +5,28 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 
-template <typename NDDS_TYPE, typename RAWLISTENER>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::DataReaderHandler_T (
+template <typename DDS_TYPE, typename RAWLISTENER>
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, RAWLISTENER>::DataReaderHandler_T (
 typename RAWLISTENER::_ptr_type listen,
-typename NDDS_TYPE::data_reader * reader)
+typename DDS_TYPE::data_reader * reader)
       : listener_ (RAWLISTENER::_duplicate (listen)),
         reader_ (reader)
 {
 }
 
-template <typename NDDS_TYPE, typename RAWLISTENER>
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::~DataReaderHandler_T (void)
+template <typename DDS_TYPE, typename RAWLISTENER>
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, RAWLISTENER>::~DataReaderHandler_T (void)
 {
 }
 
-template <typename NDDS_TYPE, typename RAWLISTENER>
+template <typename DDS_TYPE, typename RAWLISTENER>
 int
-CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::handle_exception (ACE_HANDLE)
+CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, RAWLISTENER>::handle_exception (ACE_HANDLE)
 {
   // Loop until there are messages available in the queue 
   for(;;) 
     {
-      typename NDDS_TYPE::value_type instance;
+      typename DDS_TYPE::value_type instance;
       ::DDS_SampleInfo sampleinfo;
       ::DDS::ReturnCode_t const result  = this->reader_->take_next_sample(instance,
                                                                   sampleinfo);
@@ -48,8 +48,8 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<NDDS_TYPE, RAWLISTENER>::handle_exceptio
 }
 
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CCM_TYPE>::DataReaderListener_T (
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
       typename CCM_TYPE::context_type::_ptr_type context,
       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
       : context_ (context), //(CORBA::ORB::_duplicate (context)),
@@ -62,55 +62,55 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CCM_TYPE>::DataReaderListene
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CCM_TYPE>::~DataReaderListener_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderListener_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::~DataReaderListener_T");
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader *rdr)
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader *rdr)
 {
   if (!this->enable_.value ())
     return;
 
   ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd = 
       dynamic_cast < ::CIAO::DDS4CCM::RTI::RTI_DataReader_i*>(rdr);
-  typename NDDS_TYPE::data_reader * reader = 
-      dynamic_cast< typename NDDS_TYPE::data_reader * > ((rd->get_datareader ()));
+  typename DDS_TYPE::data_reader * reader = 
+      dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_datareader ()));
   
   if (!reader) {
     /* In this specific case, this will never fail */
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
     return;
   }
-  DataReaderHandler_T<NDDS_TYPE, typename CCM_TYPE::rawlistener_type>* rh = 
-      new  DataReaderHandler_T<NDDS_TYPE, typename CCM_TYPE::rawlistener_type>(this->listener_, reader);
+  DataReaderHandler_T<DDS_TYPE, typename CCM_TYPE::rawlistener_type>* rh = 
+      new  DataReaderHandler_T<DDS_TYPE, typename CCM_TYPE::rawlistener_type>(this->listener_, reader);
   this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
                                               ::DDS::DataReader_ptr the_reader,
                                                const ::DDS::RequestedDeadlineMissedStatus & status)
 {
   this->info_out_portstatus_->on_requested_deadline_missed (the_reader, status);
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CCM_TYPE>::on_sample_lost (
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
                                   ::DDS::DataReader_ptr the_reader,
                                   const ::DDS::SampleLostStatus & status)
 {
   this->info_out_portstatus_->on_sample_lost (the_reader, status);
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<NDDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos (
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos (
                                 ::DDS::DataReader_ptr the_reader,
                                 const ::DDS::RequestedIncompatibleQosStatus & status)
 {
