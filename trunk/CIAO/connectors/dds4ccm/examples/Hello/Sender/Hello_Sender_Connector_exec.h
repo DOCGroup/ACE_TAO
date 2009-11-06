@@ -43,7 +43,7 @@
 #include "tao/LocalObject.h"
 
 #include "dds4ccm/impl/ndds/DataWriter.h"
-#include "dds4ccm/impl/ndds/Builtin_Writer.h"
+#include "dds4ccm/impl/ndds/Builtin_Writer_T.h"
 #include "dds4ccm/impl/ndds/NDDS_Traits.h"
 
 namespace CIAO_Hello_DDS_Hello_sender_Connector_Impl
