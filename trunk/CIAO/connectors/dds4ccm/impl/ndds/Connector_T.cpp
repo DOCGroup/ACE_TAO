@@ -12,8 +12,8 @@
 
 #include "ciao/Logger/Log_Macros.h"
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
-Connector_T<NDDS_TYPE, CCM_TYPE>::Connector_T (const char * topic_name)
+template <typename DDS_TYPE, typename CCM_TYPE>
+Connector_T<DDS_TYPE, CCM_TYPE>::Connector_T (const char * topic_name)
   : default_domain_configured_ (false),
     domain_id_ (0),
     default_topic_configured_ (false),
@@ -24,31 +24,31 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::Connector_T (const char * topic_name)
 {
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
-Connector_T<NDDS_TYPE, CCM_TYPE>::~Connector_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE>
+Connector_T<DDS_TYPE, CCM_TYPE>::~Connector_T (void)
 {
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 char *
-Connector_T<NDDS_TYPE, CCM_TYPE>::topic_name (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (void)
 {
   // @from DDS_TopicBase
   return CORBA::string_dup (this->topic_name_.in ());
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::topic_name (
+Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
   const char * topic_name)
 {
   // @from DDS_TopicBase
   this->topic_name_ = topic_name;
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StringSeq *
-Connector_T<NDDS_TYPE, CCM_TYPE>::key_fields (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
 {
   // @from DDS_TopicBase
   ::DDS::StringSeq *retval =
@@ -60,34 +60,34 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::key_fields (void)
   return retval;
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::DomainId_t
-Connector_T<NDDS_TYPE, CCM_TYPE>::domain_id (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
 {
   // @from DDS_Base
   return this->domain_id_;
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::domain_id (
+Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
   ::DDS::DomainId_t domain_id)
 {
   // @from DDS_Base
   this->domain_id_ = domain_id;
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 char *
-Connector_T<NDDS_TYPE, CCM_TYPE>::qos_profile (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
 {
   // @from DDS_Base
   return CORBA::string_dup (this->qos_profile_.in ());
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::qos_profile (
+Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
   const char * qos_profile)
 {
   // @from DDS_Base
@@ -96,9 +96,9 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::qos_profile (
 
 // Port operations.
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
 {
   CIAO_DEBUG ((LM_TRACE, CLINFO "Connector_T::configure_default_domain_ - "
                 "Configuring default domain\n"));
@@ -129,9 +129,9 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
     }
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
 {
   CIAO_DEBUG ((LM_TRACE, CLINFO "Connector_T::configure_default_topic_ - "
                 "Configuring default topic\n"));
@@ -146,14 +146,14 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
       if (CORBA::is_nil (this->topic_))
         {
           CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part = dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
-          DDS_ReturnCode_t retcode = NDDS_TYPE::type_support::register_type(
-                part->get_participant (), NDDS_TYPE::type_support::get_type_name ());
+          DDS_ReturnCode_t retcode = DDS_TYPE::type_support::register_type(
+                part->get_participant (), DDS_TYPE::type_support::get_type_name ());
           if (retcode == DDS_RETCODE_OK)
             {
               ::DDS::TopicQos tqos;
               this->topic_ =
                 this->domain_->create_topic (this->topic_name_.in (),
-                                             NDDS_TYPE::type_support::get_type_name (),
+                                             DDS_TYPE::type_support::get_type_name (),
                                              tqos,
                                              0,
                                              0);
@@ -172,9 +172,9 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
     }
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 {
   if (this->__info_in_configured_)
     return;
@@ -218,9 +218,9 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
     }
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::configure_port_info_out_ (bool create_getter)
+Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_out_ (bool create_getter)
 {
   if (this->__info_out_configured_ && this->__info_get_configured_ )
     return;
@@ -239,9 +239,8 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::configure_port_info_out_ (bool create_getter)
 
       if (CORBA::is_nil (this->__info_out_datareader_.in ()))
         {
-          
           this->__info_out_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
-            <NDDS_TYPE, CCM_TYPE> (
+            <DDS_TYPE, CCM_TYPE> (
                   this->context_,
                   this->__info_out_rawlistener_enabled_);
           ::DDS::DataReaderQos drqos;
@@ -273,21 +272,21 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::configure_port_info_out_ (bool create_getter)
     }
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::writer_type::_ptr_type
-Connector_T<NDDS_TYPE, CCM_TYPE>::get_info_in_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_in_data (void)
 {
   CIAO_TRACE ("get_info_in_data");
 
   this->configure_port_info_in_ ();
 
-  return new CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE,
+  return new CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE,
     typename CCM_TYPE::writer_type> (this->__info_in_datawriter_.in ());
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataWriter_ptr
-Connector_T<NDDS_TYPE, CCM_TYPE>::get_info_in_dds_entity (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_in_dds_entity (void)
 {
   CIAO_TRACE ("get_info_in_dds_entity");
 
@@ -296,60 +295,60 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::get_info_in_dds_entity (void)
   return this->__info_in_datawriter_.in ();
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::updater_type::_ptr_type
-Connector_T<NDDS_TYPE, CCM_TYPE>::get_info_update_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_data (void)
 {
   CIAO_TRACE ("get_info_update_data");
 
   this->configure_port_info_in_ ();
-  return new CIAO::DDS4CCM::RTI::Updater_T<NDDS_TYPE,
+  return new CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE,
   typename CCM_TYPE::updater_type> (this->__info_in_datawriter_.in ());
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::getter_type::_ptr_type
-Connector_T<NDDS_TYPE, CCM_TYPE>::get_info_get_out_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_get_out_data (void)
 {
   CIAO_TRACE ("get_info_get_out_data");
 
   this->configure_port_info_out_ (true);
 
-  return new CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE,
+  return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE,
   typename CCM_TYPE::getter_type> (this->__info_get_datareader_.in ());
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::reader_type::_ptr_type
-Connector_T<NDDS_TYPE, CCM_TYPE>::get_info_out_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_data (void)
 {
   CIAO_TRACE ("get_info_out_data");
 
   this->configure_port_info_out_ (false);
 
-  return new CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE,
+  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE,
   typename CCM_TYPE::reader_type> (this->__info_out_datareader_.in ());
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_ListenerControl_ptr
-Connector_T<NDDS_TYPE, CCM_TYPE>::get_info_out_control (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_control (void)
 {
   CIAO_TRACE ("get_info_out_control");
   return new CCM_DDS_ListenerControl_i (this->__info_out_rawlistener_enabled_);
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataReader_ptr
-Connector_T<NDDS_TYPE, CCM_TYPE>::get_info_out_dds_entity (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_dds_entity (void)
 {
   CIAO_TRACE ("get_info_out_dds_entity");
   return ::DDS::CCM_DataReader::_nil ();
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::set_session_context (
+Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
   ::Components::SessionContext_ptr ctx)
 {
   CIAO_TRACE ("set_session_context");
@@ -364,15 +363,15 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::set_session_context (
   this->context_ = lctx;
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::configuration_complete (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::ccm_activate (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   if (!CORBA::is_nil (this->context_->get_connection_info_out_listener ()) ||
      (!CORBA::is_nil (this->context_->get_connection_info_out_status () )))
@@ -383,14 +382,14 @@ Connector_T<NDDS_TYPE, CCM_TYPE>::ccm_activate (void)
     }
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<NDDS_TYPE, CCM_TYPE>::ccm_remove (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
 }

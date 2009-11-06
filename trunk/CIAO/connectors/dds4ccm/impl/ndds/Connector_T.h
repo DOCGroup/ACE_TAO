@@ -10,7 +10,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
-template <typename NDDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE>
 class Connector_T 
   : public virtual CCM_TYPE::base_type,
     public virtual ::CORBA::LocalObject
@@ -65,7 +65,6 @@ private:
   ::DDS::DomainParticipant_var domain_;
 
   // @from DDS_Base
-  CCM_DDS::ConnectorStatusListener_var error_listener_;
   DDS::DomainId_t domain_id_;
   CORBA::String_var qos_profile_;
 
@@ -86,10 +85,8 @@ private:
   // @from DDS_RawListen
   void configure_port_info_out_ (bool create_getter);
   bool __info_out_configured_;
-  typename CCM_TYPE::rawlistener_type::_var_type __info_out_rawlistener_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> __info_out_rawlistener_enabled_;
   ::DDS::Subscriber_var __info_out_subscriber_;
-  ::DDS::DataReaderListener_var __info_out_listener_;
   ::DDS::DataReader_var __info_out_datareader_;
   ::DDS::DataReaderListener_var __info_out_datareaderlistener;
 
