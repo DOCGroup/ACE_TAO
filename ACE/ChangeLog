@@ -1,3 +1,21 @@
+Fri Nov  6 10:13:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Tokenizer_T.cpp:
+
+          Allow tokens to have embedded quotes so that
+          tao_idl, which generates parameters such as
+          -I"directory with spaces", actually works.
+
+          I.E. Only remove surrounding quotes. With
+          embedded quotes; the original code simply
+          returned the token when the quote character
+          was detected, without inserting a token splitting
+          null at the quote character (which if it had,
+          would then mess up the next quoted token
+          processing). This ment that the parameters got
+          repeated many times over as they are inserted
+          and interpreted again and again.
+
 Fri Nov  6 08:30:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
