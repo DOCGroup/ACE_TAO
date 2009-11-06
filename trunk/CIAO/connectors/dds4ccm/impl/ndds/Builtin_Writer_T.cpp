@@ -5,8 +5,8 @@
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Builtin_Writer_T<NDDS_TYPE, CCM_TYPE>::Builtin_Writer_T (::DDS::DataWriter_ptr writer)
+template <typename DDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Builtin_Writer_T<DDS_TYPE, CCM_TYPE>::Builtin_Writer_T (::DDS::DataWriter_ptr writer)
   : impl_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Builtin_Writer_T::Builtin_Writer_T");
@@ -20,7 +20,7 @@ CIAO::DDS4CCM::RTI::Builtin_Writer_T<NDDS_TYPE, CCM_TYPE>::Builtin_Writer_T (::D
       throw CORBA::INTERNAL ();
     }
 
-  impl_ =  NDDS_TYPE::data_writer::narrow (rdw->get_datawriter ());
+  impl_ =  DDS_TYPE::data_writer::narrow (rdw->get_datawriter ());
 
   if (!impl_)
     {
@@ -32,15 +32,15 @@ CIAO::DDS4CCM::RTI::Builtin_Writer_T<NDDS_TYPE, CCM_TYPE>::Builtin_Writer_T (::D
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Builtin_Writer_T<NDDS_TYPE, CCM_TYPE>::~Builtin_Writer_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Builtin_Writer_T<DDS_TYPE, CCM_TYPE>::~Builtin_Writer_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Builtin_Writer_T::~Builtin_Writer_T");
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Builtin_Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Builtin_Writer_T<DDS_TYPE, CCM_TYPE>::write (const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Builtin_Writer_T::write");
 
@@ -70,9 +70,9 @@ CIAO::DDS4CCM::RTI::Builtin_Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename
                "Write successful\n"));
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Builtin_Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TYPE::seq_type& instances, bool coherent_write)
+CIAO::DDS4CCM::RTI::Builtin_Writer_T<DDS_TYPE, CCM_TYPE>::write (const typename DDS_TYPE::seq_type& instances, bool coherent_write)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Builtin_Writer_T::write");
 

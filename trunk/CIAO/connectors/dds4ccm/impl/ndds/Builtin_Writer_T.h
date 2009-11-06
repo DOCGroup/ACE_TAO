@@ -15,7 +15,7 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename NDDS_TYPE, typename CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       class Builtin_Writer_T
       {
       public:
@@ -25,13 +25,13 @@ namespace CIAO
         // Destructor
         virtual ~Builtin_Writer_T (void);
 
-        virtual void write (const typename NDDS_TYPE::value_type& an_instance);
+        virtual void write (const typename DDS_TYPE::value_type& an_instance);
 
-        virtual void write (const typename NDDS_TYPE::seq_type& instances, bool coherent_write);
+        virtual void write (const typename DDS_TYPE::seq_type& instances, bool coherent_write);
       private:
-        Builtin_Writer_T<NDDS_TYPE, CCM_TYPE> (const Builtin_Writer_T<NDDS_TYPE, CCM_TYPE> &);
-        Builtin_Writer_T<NDDS_TYPE, CCM_TYPE> & operator = (const Builtin_Writer_T<NDDS_TYPE, CCM_TYPE> &);
-        typename NDDS_TYPE::data_writer *impl_;
+        Builtin_Writer_T<DDS_TYPE, CCM_TYPE> (const Builtin_Writer_T<DDS_TYPE, CCM_TYPE> &);
+        Builtin_Writer_T<DDS_TYPE, CCM_TYPE> & operator = (const Builtin_Writer_T<DDS_TYPE, CCM_TYPE> &);
+        typename DDS_TYPE::data_writer *impl_;
       };
     }
   }
