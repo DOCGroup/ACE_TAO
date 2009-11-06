@@ -32,18 +32,15 @@ namespace CIAO
           typename RAWLISTENER::_var_type listener_;
           typename NDDS_TYPE::data_reader * reader_;
       };
-      template <typename NDDS_TYPE, typename RAWLISTENER, typename PORTSTATUSLISTENER, typename CONNECTORSTATUSLISTENER>
+      template <typename NDDS_TYPE, typename CCM_TYPE>
       class DataReaderListener_T :
         public virtual ::DDS::DataReaderListener
       {
       public:
         // Constructor
         DataReaderListener_T (
-                      typename RAWLISTENER::_ptr_type listen, 
-                      typename PORTSTATUSLISTENER::_ptr_type psl, 
-                      typename CONNECTORSTATUSLISTENER::_ptr_type csl,
-                      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled,
-                      CORBA::ORB_ptr orb);
+                      typename CCM_TYPE::context_type::_ptr_type context,
+                      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled);
 
         // Destructor
         virtual ~DataReaderListener_T (void);
@@ -51,27 +48,27 @@ namespace CIAO
         virtual void on_data_available( ::DDS::DataReader *rdr);
 
         virtual void on_requested_deadline_missed (::DDS::DataReader_ptr the_reader,
-                                               const ::DDS::RequestedDeadlineMissedStatus & status);
+                                 const ::DDS::RequestedDeadlineMissedStatus & status);
 
         virtual void on_sample_lost (::DDS::DataReader_ptr the_reader,
                                  const ::DDS::SampleLostStatus & status);
 
         virtual void on_requested_incompatible_qos (::DDS::DataReader_ptr the_reader,
                                  const ::DDS::RequestedIncompatibleQosStatus & status);
-        
+
         bool enabled () const;
         void enabled (bool enable);
 
       private:
-        DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER,CONNECTORSTATUSLISTENER> (const DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER, CONNECTORSTATUSLISTENER> &);
-        DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER,CONNECTORSTATUSLISTENER> & operator = (const DataReaderListener_T<NDDS_TYPE, RAWLISTENER, PORTSTATUSLISTENER, CONNECTORSTATUSLISTENER> &);
- 
-        
-        typename RAWLISTENER::_var_type listener_;
-        typename PORTSTATUSLISTENER::_var_type portlistener_;
-        typename CONNECTORSTATUSLISTENER::_var_type connectorstatuslistener_;
+        DataReaderListener_T<NDDS_TYPE, CCM_TYPE> (const DataReaderListener_T<NDDS_TYPE, CCM_TYPE> &);
+        DataReaderListener_T<NDDS_TYPE, CCM_TYPE> & operator = (const DataReaderListener_T<NDDS_TYPE, CCM_TYPE> &);
+  
+        typename CCM_TYPE::context_type::_var_type context_;
+
+        CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;
+        CCM_DDS::PortStatusListener_var       info_out_portstatus_;
+        typename CCM_TYPE::rawlistener_type::_var_type listener_;
         ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enable_;
-        CORBA::ORB_var orb_;
       };
     }
   }

@@ -59,7 +59,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
   }
 
   DDS_SampleInfoSeq sample_info;
-  DDS_ReturnCode_t retval;
+  DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
   typename NDDS_TYPE::dds_seq_type data;
     
   // NDDS_TYPE::dds_seq_type = dds sequence
@@ -161,7 +161,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
     }
 
   DDS_SampleInfoSeq sample_info;
-  DDS_ReturnCode_t retval;
+  DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
   typename NDDS_TYPE::dds_seq_type data;
 
   // NDDS_TYPE::dds_seq_type = dds sequence
@@ -250,7 +250,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
 
   DDS_InstanceHandle_t hnd = impl->lookup_instance (an_instance);
   DDS_SampleInfoSeq sample_info;
-  DDS_ReturnCode_t retval;
+  DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
 
   typename NDDS_TYPE::dds_seq_type data;
 
@@ -360,7 +360,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
     }
     DDS_InstanceHandle_t hnd = impl->lookup_instance (an_instance);
     DDS_SampleInfoSeq sample_info;
-    DDS_ReturnCode_t retval;
+    DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
     typename NDDS_TYPE::dds_seq_type data;
     
     // NDDS_TYPE::dds_seq_type = dds sequence

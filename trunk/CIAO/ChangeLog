@@ -1,3 +1,19 @@
+Fri Nov  6 10:03:08 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Resolved some compiler warnings.
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+          Moved the context to the DataReaderListener_T. This will
+          make the Connector_T code cleaner and all functionality is
+          at hand in the DataReaderListener_T.
+          Also renamed CONNECTOR_TYPE to CCM_TYPE.
+
 Thu Nov  5 20:51:18 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
