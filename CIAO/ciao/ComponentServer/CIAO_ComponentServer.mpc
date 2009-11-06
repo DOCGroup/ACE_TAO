@@ -68,7 +68,7 @@ project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componen
 }
 
 project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
-                                     ciao_session_container, naming, ciao_server {
+                                     ciao_session_container, naming, ciao_server, ciao_lib {
 
   dynamicflags = CIAO_COMPONENTSERVER_SVNT_BUILD_DLL
 
