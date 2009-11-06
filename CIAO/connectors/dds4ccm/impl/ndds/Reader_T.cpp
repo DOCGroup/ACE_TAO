@@ -8,8 +8,8 @@
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::Reader_T (::DDS::DataReader_ptr reader)
+template <typename NDDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::Reader_T (::DDS::DataReader_ptr reader)
 : reader_ (reader),
   condition_(0)
 {
@@ -18,8 +18,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::Reader_T (::DDS::DataReader_ptr r
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename BASE >
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::~Reader_T (void)
+template <typename NDDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::~Reader_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::~Reader_T");
 }
@@ -28,9 +28,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::~Reader_T (void)
 //for the requirement : 'samples ordered by instances' the following settings are necessary:
 // ordered_access -> true   and     DDS_INSTANCE_PRESENTATION_QOS (default) .
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
+CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all (
   typename NDDS_TYPE::seq_type::_out_type instances,
   ::CCM_DDS::ReadInfoSeq_out infos)
 {
@@ -129,9 +129,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all (
   instances = inst_seq._retn();
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
+CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all_history (
           typename NDDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
@@ -221,9 +221,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_all_history (
   instances = inst_seq._retn();
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
+CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one (
           typename NDDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
@@ -326,9 +326,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one (
     }
  }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
+CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one_history (
           const typename NDDS_TYPE::value_type& an_instance,
           typename NDDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
@@ -435,16 +435,16 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::read_one_history (
     instances = inst_seq._retn();
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
  ::CCM_DDS::QueryFilter *
- CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::filter (void)
+ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::filter (void)
 {
   return 0;
 }
 
-template <typename NDDS_TYPE, typename BASE >
+template <typename NDDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, BASE>::filter (const ::CCM_DDS::QueryFilter & filter)
+CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::filter (const ::CCM_DDS::QueryFilter & filter)
 {
   ACE_UNUSED_ARG (filter);
 }

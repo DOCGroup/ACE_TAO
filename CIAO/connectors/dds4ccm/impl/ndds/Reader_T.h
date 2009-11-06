@@ -15,9 +15,9 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename NDDS_TYPE, typename BASE>
+      template <typename NDDS_TYPE, typename CCM_TYPE>
       class Reader_T :
-          public virtual BASE,
+          public virtual CCM_TYPE,
           public virtual ::CORBA::LocalObject
       {
       public:
@@ -48,8 +48,8 @@ namespace CIAO
 
         virtual void filter (const ::CCM_DDS::QueryFilter & filter);
       private:
-        Reader_T<NDDS_TYPE, BASE> (const Reader_T<NDDS_TYPE, BASE> &);
-        Reader_T<NDDS_TYPE, BASE> & operator = (const Reader_T<NDDS_TYPE, BASE> &);
+        Reader_T<NDDS_TYPE, CCM_TYPE> (const Reader_T<NDDS_TYPE, CCM_TYPE> &);
+        Reader_T<NDDS_TYPE, CCM_TYPE> & operator = (const Reader_T<NDDS_TYPE, CCM_TYPE> &);
 
         //DDSStringDataReader *reader_;
         ::DDS::DataReader_ptr reader_;
