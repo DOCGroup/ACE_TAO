@@ -43,7 +43,7 @@ module CCM_DDS
                 InternalError);
     readonly attribute boolean is_lifecycle_checked;
   };
-  
+
   interface ShapeType_Getter
   {
     boolean get_all (out ShapeType_Seq instances, out ReadInfoSeq infos)
@@ -63,7 +63,7 @@ module CCM_DDS
             setraises (BadParameter);
     attribute DDS::Duration_t time_out;
   };
-  
+
   // @from Reader<T> from DDS_RawListen for Shapes::ShapeType
   interface ShapeType_Reader
   {
@@ -91,6 +91,22 @@ module CCM_DDS
   {
     void on_data (in ShapeType an_instance, in ReadInfo info);
   };
+
+  porttype DDS_Write {
+    uses CCM_DDS::ShapeType_Writer data;
+    uses DDS::DataWriter    dds_entity;
+  };
+  porttype DDS_Update {
+    uses CCM_DDS::ShapeType_Updater data;
+  };
+  porttype DDS_Listen {
+    uses CCM_DDS::ShapeType_Reader data;
+    uses CCM_DDS::ShapeType_Getter get_data;
+    uses CCM_DDS::ListenerControl control;
+    provides CCM_DDS::ShapeType_RawListener listener;
+    uses DDS::DataReader dds_entity;
+    provides CCM_DDS::PortStatusListener status;
+  };
 };
 
 module Shapes
@@ -107,11 +123,10 @@ module Shapes
     attribute string qos_profile;
 
     // @from DDS_Write for ShapeType
-    provides CCM_DDS::ShapeType_Writer info_in_data;
-    provides DDS::DataWriter info_in_dds_entity;
+    mirrorport CCM_DDS::DDS_Write info_in;
 
     // @from DDS_Update for ShapeType
-    provides CCM_DDS::ShapeType_Updater info_update_data;
+    mirrorport CCM_DDS::DDS_Update info_update;
 
     // @from DDS_RawListen for ShapeType
     provides CCM_DDS::ShapeType_Reader info_out_data;
