@@ -1,3 +1,8 @@
+Sat Nov  7 08:32:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Fix long double for ppc64
+
 Fri Nov  6 11:41:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
