@@ -1,3 +1,8 @@
+Sat Nov  7 08:11:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+          Start using extended ports
+
 Fri Nov  6 18:33:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/DDS4CCM v1-0-interim 7.odt:
