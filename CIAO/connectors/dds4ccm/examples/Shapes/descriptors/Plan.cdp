@@ -15,45 +15,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Shapes_Receiver_Impl</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Shapes_Receiver_Servant</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Receiver_svnt</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Receiver_exec</string>
-	</value>
+        </value>
       </value>
     </execParameter>
   </implementation>
@@ -67,45 +67,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Shapes_Shapes_Connector_Impl</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Shapes_Shapes_Connector_Servant</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Shapes_Connector_svnt</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Shapes_Connector_exec</string>
-	</value>
+        </value>
       </value>
     </execParameter>
   </implementation>
@@ -118,45 +118,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Shape_Sender_Impl</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Shapes_Sender_Servant</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Sender_svnt</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Sender_exec</string>
-	</value>
+        </value>
       </value>
     </execParameter>
   </implementation>
@@ -419,7 +419,7 @@
     <source/>
     <node/>
     <location>Sender_stub</location>
-  </artifact>  
+  </artifact>
   <artifact xmi:id="Shapes_Connector_ExecArtifact">
     <name>Shapes_Connector_exec</name>
     <source/>
@@ -437,7 +437,7 @@
     <source/>
     <node/>
     <location>DDS_Shapes_Connector_stub</location>
-  </artifact>  
+  </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
     <source/>
@@ -455,5 +455,5 @@
     <source/>
     <node/>
     <location>Receiver_stub</location>
-  </artifact>  
+  </artifact>
 </Deployment:DeploymentPlan>
