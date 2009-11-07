@@ -15,45 +15,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Quoter_Broker_Impl</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Quoter_Broker_Servant</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Broker_svnt</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Broker_exec</string>
-	</value>
+        </value>
       </value>
     </execParameter>
   </implementation>
@@ -67,45 +67,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Quoter_Quoter_Connector_Impl</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Quoter_Quoter_Connector_Servant</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Quoter_Connector_svnt</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Quoter_Connector_exec</string>
-	</value>
+        </value>
       </value>
     </execParameter>
   </implementation>
@@ -118,45 +118,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Quoter_Distributor_Impl</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>create_Quoter_Distributor_Servant</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Distributor_svnt</string>
-	</value>
+        </value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-	<type>
+        <type>
           <kind>tk_string</kind>
-	</type>
-	<value>
+        </type>
+        <value>
           <string>Distributor_exec</string>
-	</value>
+        </value>
       </value>
     </execParameter>
   </implementation>
@@ -351,7 +351,7 @@
     <source/>
     <node/>
     <location>Distributor_stub</location>
-  </artifact>  
+  </artifact>
   <artifact xmi:id="Quoter_Connector_ExecArtifact">
     <name>Quoter_Connector_exec</name>
     <source/>
@@ -369,7 +369,7 @@
     <source/>
     <node/>
     <location>DDS_Quoter_Connector_stub</location>
-  </artifact>  
+  </artifact>
   <artifact xmi:id="Broker_ExecArtifact">
     <name>Broker_exec</name>
     <source/>
@@ -387,5 +387,5 @@
     <source/>
     <node/>
     <location>Broker_stub</location>
-  </artifact>  
+  </artifact>
 </Deployment:DeploymentPlan>
