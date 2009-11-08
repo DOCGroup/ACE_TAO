@@ -12,7 +12,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener
       typename CCM_TYPE::context_type::_ptr_type context,
       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
       : context_ (CCM_TYPE::context_type::_duplicate (context)),
-        enable_ (enabled)
+        enabled_ (enabled)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
   this->info_out_portstatus_ = this->context_->get_connection_info_out_status ();
@@ -30,7 +30,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader *rdr)
 {
-  if (!this->enable_.value ())
+  if (!this->enabled_.value ())
     return;
 
   ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd =
@@ -38,7 +38,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
   typename DDS_TYPE::data_reader * reader =
       dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_datareader ()));
 
-  if (!reader) 
+  if (!reader)
     {
       /* In this specific case, this will never fail */
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
@@ -75,3 +75,18 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incom
 {
   this->info_out_connector_status_->on_requested_incompatible_qos (the_reader, status);
 }
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+bool
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::enabled (void) const
+{
+  return this->enabled_;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::enabled (bool enabled)
+{
+  this->enabled_ = enabled;
+}
+

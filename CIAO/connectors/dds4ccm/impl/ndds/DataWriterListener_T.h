@@ -20,12 +20,12 @@ namespace CIAO
       private ACE_Copy_Disabled
     {
     public:
-      // Constructor
+      /// Constructor
       DataWriterListener_T (
                     typename CCM_TYPE::context_type::_ptr_type context,
                     ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled);
 
-      // Destructor
+      /// Destructor
       virtual ~DataWriterListener_T (void);
 
       virtual void on_offered_deadline_missed (

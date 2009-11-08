@@ -22,12 +22,12 @@ namespace CIAO
         private ACE_Copy_Disabled
       {
       public:
-        // Constructor
+        /// Constructor
         DataReaderListener_T (
                       typename CCM_TYPE::context_type::_ptr_type context,
                       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled);
 
-        // Destructor
+        /// Destructor
         virtual ~DataReaderListener_T (void);
 
         virtual void on_data_available( ::DDS::DataReader *rdr);
@@ -49,7 +49,7 @@ namespace CIAO
 
         CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;
         CCM_DDS::PortStatusListener_var       info_out_portstatus_;
-        ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enable_;
+        ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled_;
       };
     }
   }
