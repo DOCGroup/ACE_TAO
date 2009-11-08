@@ -134,11 +134,11 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::get_one (
                                     DDS_ANY_VIEW_STATE,
                                     DDS_ANY_INSTANCE_STATE);
 
-          if (retcode == DDS_RETCODE_NO_DATA) 
+          if (retcode == DDS_RETCODE_NO_DATA)
             {
               throw CCM_DDS::InternalError (retcode, 1);
-            } 
-          else if (retcode != DDS_RETCODE_OK) 
+            }
+          else if (retcode != DDS_RETCODE_OK)
             {
               CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
                     "Unable to return the loan to DDS: <%d>\n", retcode));
@@ -199,7 +199,7 @@ template <typename NDDS_TYPE, typename CCM_TYPE >
 void
 CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::filter (const ::CCM_DDS::QueryFilter & filter)
 {
-  ACE_UNUSED_ARG (filter);
+  this->query_filter_ = filter;
 }
 
 template <typename NDDS_TYPE, typename CCM_TYPE >
@@ -215,3 +215,4 @@ CIAO::DDS4CCM::RTI::Getter_T<NDDS_TYPE, CCM_TYPE>::time_out (const ::DDS::Durati
 {
   this->time_out_ = time_out;
 }
+
