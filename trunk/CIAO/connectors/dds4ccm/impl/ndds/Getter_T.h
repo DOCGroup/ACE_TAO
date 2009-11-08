@@ -55,12 +55,13 @@ namespace CIAO
         virtual ::DDS::Duration_t time_out (void);
         virtual void time_out (const ::DDS::Duration_t & time_out);
       private:
-          typename DDS_TYPE::data_reader *impl_;
+        typename DDS_TYPE::data_reader *impl_;
         DDSQueryCondition* condition_;
         ::DDS::Duration_t time_out_;
         DDSGuardCondition*  gd_;
         DDSWaitSet* ws_;
         DDSReadCondition* rd_condition_;
+        ::CCM_DDS::QueryFilter query_filter_;
 
         bool
         wait (
