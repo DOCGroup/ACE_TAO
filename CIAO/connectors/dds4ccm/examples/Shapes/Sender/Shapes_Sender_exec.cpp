@@ -146,6 +146,8 @@ namespace CIAO_Shapes_Sender_Impl
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while deleting Shape_info for <%C>.\n"),
                     square_->color.in ()));
       }
+    delete this->ticker_;
+    delete this->square_;
   }
 
   // Component attributes.
