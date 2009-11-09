@@ -1,3 +1,10 @@
+Mon Nov  9 03:41:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Message_Queue_Test.cpp:
+
+          Another attempt at fixing this problem on Snow Leopard, hopefully
+          less disruptive than the last attempt.
+        
 Sat Nov  7 08:32:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
