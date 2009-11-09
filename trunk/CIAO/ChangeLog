@@ -1,3 +1,9 @@
+Mon Nov  9 07:03:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Sender/Sender_exec.cpp:
+          Resolved compiler errors on Windows.
+
 Sat Nov  7 08:11:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
