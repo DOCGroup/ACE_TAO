@@ -151,7 +151,9 @@ IDL_GlobalData::IDL_GlobalData (void)
     ignore_idl3_ (false),
     dcps_support_zero_copy_read_ (false),
     dcps_gen_zero_copy_read_ (false),
-    recursion_start_ (0)  // Not used by all backends.
+    recursion_start_ (0),
+    multi_file_input_ (false),
+    big_file_name_ ("PICML_IDL_file_bag")
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -1763,6 +1765,24 @@ IDL_GlobalData::recursion_start (const char *val)
 {
   ACE::strdelete (this->recursion_start_);
   this->recursion_start_ = ACE::strnew (val);
+}
+
+bool
+IDL_GlobalData::multi_file_input (void) const
+{
+  return this->multi_file_input_;
+}
+
+void
+IDL_GlobalData::multi_file_input (bool val)
+{
+  this->multi_file_input_ = val;
+}
+
+const char *
+IDL_GlobalData::big_file_name (void) const
+{
+  return this->big_file_name_;
 }
 
 UTL_String *
