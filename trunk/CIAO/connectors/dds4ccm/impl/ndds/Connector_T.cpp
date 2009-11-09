@@ -147,7 +147,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
     {
       if (CORBA::is_nil (this->topic_))
         {
-          CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part = 
+          CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part =
             dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
           DDS_ReturnCode_t retcode = DDS_TYPE::type_support::register_type(
                 part->get_participant (), DDS_TYPE::type_support::get_type_name ());
@@ -285,7 +285,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_in_data (void)
 
   this->configure_port_info_in_ ();
 
-  return new CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE> 
+  return new CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>
           (this->__info_in_datawriter_.in ());
 }
 
