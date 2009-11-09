@@ -1,3 +1,28 @@
+Mon Nov  9 14:58:34 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/tao_idl.cpp:
+        
+          Added the (optional) behavior of creating a new IDL file
+          containing #includes of the individual IDL files on the
+          command line, or in the directory tree specified by -r
+          on some backends. Processing this 'container' IDL file
+          results in significant performance improvement when
+          processing multiple IDL files, especially if they include
+          Components.idl, since all the middleware IDL is then
+          processed only once.
+          
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+        
+          Added a flag to toggle the above behavior, set by a
+          backend (currently only idl_to_picml) that processes
+          multiple IDL files into one output.
+
 Mon Nov  9 12:41:31 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_helper.cpp:

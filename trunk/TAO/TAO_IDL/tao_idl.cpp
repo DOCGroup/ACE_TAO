@@ -75,15 +75,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "drv_extern.h"
 #include "tao/Version.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
 #  include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-
-ACE_RCSID (TAO_IDL,
-           tao_idl,
-           "$Id$")
 
 extern const ACE_TCHAR *DRV_arglist[];
 extern unsigned long DRV_argcount;
@@ -223,10 +221,15 @@ DRV_drive (const char *s)
   // and checked below.
   (void) FE_yyparse ();
 
-  // Filename set by FE_yyparse(), so we output it immediately after.
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("processing %C\n"),
-              idl_global->filename ()->get_string ()));
+  // This option creates a single IDL file that includes all
+  // input files. The backend outputs their names individually.
+  if (!idl_global->multi_file_input ())
+    {
+      // Filename set by FE_yyparse(), so we output it immediately after.
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("processing %C\n"),
+                  idl_global->filename ()->get_string ()));
+    }
 
   // We must do this as late as possible to make sure any
   // forward declared structs or unions contained in a
@@ -362,12 +365,36 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Does various things in various backends.
       BE_post_init (DRV_files, DRV_nfiles);
+      
+      FILE *output_file = 0;
+
+      if (idl_global->multi_file_input ())
+        {
+          output_file =
+            ACE_OS::fopen (idl_global->big_file_name (), "w");
+        }
 
       for (DRV_file_index = 0;
            DRV_file_index < DRV_nfiles;
            ++DRV_file_index)
         {
-          DRV_drive (DRV_files[DRV_file_index]);
+          if (idl_global->multi_file_input ())
+            {
+              ACE_OS::fprintf (output_file,
+                               "#include \"%s\"\n",
+                               DRV_files[DRV_file_index]);
+            }
+          else
+            {
+              DRV_drive (DRV_files[DRV_file_index]);
+            }
+        }
+        
+      if (idl_global->multi_file_input ())
+        {
+          ACE_OS::fclose (output_file);
+          DRV_drive (idl_global->big_file_name ());
+          ACE_OS::unlink (idl_global->big_file_name ());
         }
     }
   catch (Bailout)
