@@ -13,7 +13,7 @@ project(DDS_Sender_idl_gen) : connectoridldefaults, componentidldefaults   {
               -I ..
 
   IDL_Files {
-    Sender.idl3
+    Sender.idl
   }
 }
 

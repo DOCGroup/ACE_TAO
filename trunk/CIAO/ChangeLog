@@ -1,3 +1,21 @@
+Mon Nov  9 12:43:45 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.mpc:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.mpc:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3p:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver.idl3p:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3p:
+          Removed idl3p files and renamed idl3 extention to idl.
+          Inserted the content of the idl3p files at the bottom of
+          the idl files.
+
 Mon Nov  9 12:13:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:

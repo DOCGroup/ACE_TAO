@@ -13,7 +13,7 @@ project(DDS_Shapes_Connector_idl_gen) : connectoridldefaults, componentidldefaul
               -I ..
 
   IDL_Files {
-    Shapes_Connector.idl3
+    Shapes_Connector.idl
   }
 }
 

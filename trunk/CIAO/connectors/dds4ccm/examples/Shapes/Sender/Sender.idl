@@ -7,10 +7,10 @@
  * by-hand idl3 translation of sender components.
  */
 
-#ifndef DDS_SENDER_IDL3
-#define DDS_SENDER_IDL3
+#ifndef DDS_SENDER_IDL
+#define DDS_SENDER_IDL
 
-#include "Connector/Shapes_Connector.idl3"
+#include "Connector/Shapes_Connector.idl"
 #include "Connector/Shapes_ConnectorE.idl"
 
 module Shapes
@@ -33,4 +33,14 @@ module Shapes
   };
 };
 
+/*
+For future use: IDL3 plus
+module Shapes
+{
+  component Sender
+  {
+    port CCM_DDS::DDS_Write <Shape_Info> info;
+  };
+};
+*/
 #endif
