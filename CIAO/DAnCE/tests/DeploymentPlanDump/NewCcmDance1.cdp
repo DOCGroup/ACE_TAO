@@ -520,7 +520,7 @@
   <implementation id="TestDriverImplementation">
     <name>TestDriverImplementation</name>
     <source/>
-	<artifact>ClientDanceArtifact</artifact>
+        <artifact>ClientDanceArtifact</artifact>
   </implementation>
 
 
@@ -557,7 +557,7 @@
 
   <instance id="ServerDance">
     <name>ServerDance</name>
-    <node>MyHost</node>    
+    <node>MyHost</node>
     <source/>
     <implementation>ServerDanceImplementation</implementation>
 
@@ -599,7 +599,7 @@
         </value>
       </value>
     </configProperty>
- 
+
     <configProperty>
       <!-- Attribute: expectedClientHostname2-->
       <name>expectedClientHostname2</name>
@@ -1041,7 +1041,7 @@
     </internalEndpoint>
   </connection>
 
-  
+
 
 
 
@@ -1059,5 +1059,5 @@
     <node/>
     <location>/home/sl/install/ofccm_v0/demos/demo_dance1/c++/i686-pc-linux-gnu/libClientCcmDance1Demo.so</location>
   </artifact>
-  
+
   </Deployment:DeploymentPlan>

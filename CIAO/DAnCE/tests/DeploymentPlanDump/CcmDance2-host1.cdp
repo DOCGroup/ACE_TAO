@@ -295,7 +295,7 @@
   <implementation id="TestDriverImplementation">
     <name>TestDriverImplementation</name>
     <source/>
-	<artifact>ClientDanceArtifact</artifact>
+        <artifact>ClientDanceArtifact</artifact>
   </implementation>
 
 
@@ -455,10 +455,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/serverHostInfo1.Port</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/serverHostInfo1.Port</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -471,10 +471,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance.Component</location>
-		  <provider>false</provider>
-		  <portName>clientHostInfo1</portName>
-		  <supportedType/>
+                  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance.Component</location>
+                  <provider>false</provider>
+                  <portName>clientHostInfo1</portName>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -487,10 +487,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance.Component</location>
-		  <provider>false</provider>
-		  <portName>hostnamePublishes</portName>
-		  <supportedType/>
+                  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance.Component</location>
+                  <provider>false</provider>
+                  <portName>hostnamePublishes</portName>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -503,10 +503,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/commands.Port</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/commands.Port</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -519,10 +519,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/supports.Port</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/supports.Port</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -535,10 +535,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-	  <location>corbaname::rhel4x.prismtech.com:21869</location>
-	  <provider>true</provider>
-	  <portName/>
-	  <supportedType/>
+          <location>corbaname::rhel4x.prismtech.com:21869</location>
+          <provider>true</provider>
+          <portName/>
+          <supportedType/>
     </externalReference>
   </connection>
 
@@ -551,10 +551,10 @@
       <instance>TestDriver1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/supports.Port</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/supports.Port</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -583,10 +583,10 @@
       <instance>TestDriver1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ClientDance2/supports.Port</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ClientDance2/supports.Port</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -599,10 +599,10 @@
       <instance>TestDriver1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/supports.Port</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::rhel4y.prismtech.com:12345#Host2/CcmDance2_1.DeploymentPlan/ServerDance/supports.Port</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -635,5 +635,5 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   </Deployment:DeploymentPlan>
