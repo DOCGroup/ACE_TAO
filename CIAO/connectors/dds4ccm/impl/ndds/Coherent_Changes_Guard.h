@@ -35,3 +35,4 @@ namespace CIAO
 }
 
 #endif /* _CIAO_COHERENT_CHANGES_GUARD */
+
