@@ -16,7 +16,7 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename NDDS_TYPE, typename CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       class Writer_T :
         public virtual CCM_TYPE::writer_type,
         public virtual ::CORBA::LocalObject,
@@ -29,11 +29,16 @@ namespace CIAO
         /// Destructor
         virtual ~Writer_T (void);
 
-        virtual void write (const typename NDDS_TYPE::value_type& an_instance);
+        virtual void write (const typename DDS_TYPE::value_type& an_instance);
 
-        virtual void write (const typename NDDS_TYPE::seq_type& instances);
+        virtual void write_many (const typename DDS_TYPE::seq_type& instances);
+        
+        virtual ::DDS::InstanceHandle_t register_instance (const typename DDS_TYPE::value_type & datum);
+    
+        virtual void unregister_instance (const typename DDS_TYPE::value_type & datum, const ::DDS::InstanceHandle_t & instance_handle);
+
       private:
-        typename NDDS_TYPE::data_writer *impl_;
+        typename DDS_TYPE::data_writer *impl_;
         bool is_coherent_write_;
       };
     }

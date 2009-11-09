@@ -22,10 +22,17 @@
 
 module CCM_DDS
 {
+  interface ShapeType_InstanceHandleManager {
+    DDS::InstanceHandle_t register_instance (in ShapeType datum);
+    void unregister_instance (in ShapeType datum, in DDS::InstanceHandle_t instance_handle);
+  };
+
   // @from DDS_Write for Shapes::ShapeType
-  interface ShapeType_Writer
+  interface ShapeType_Writer : ShapeType_InstanceHandleManager
   {
     void write (in ShapeType an_instance)
+      raises (InternalError);
+    void write_many (in ShapeType_Seq an_instance)
       raises (InternalError);
   };
 

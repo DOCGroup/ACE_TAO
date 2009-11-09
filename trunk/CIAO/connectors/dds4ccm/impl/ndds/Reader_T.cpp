@@ -8,8 +8,8 @@
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::Reader_T (::DDS::DataReader_ptr reader)
+template <typename DDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::Reader_T (::DDS::DataReader_ptr reader)
 : reader_ (reader),
   condition_(0)
 {
@@ -18,8 +18,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::Reader_T (::DDS::DataReader_p
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::~Reader_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::~Reader_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Reader_T::~Reader_T");
 }
@@ -28,14 +28,14 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::~Reader_T (void)
 //for the requirement : 'samples ordered by instances' the following settings are necessary:
 // ordered_access -> true   and     DDS_INSTANCE_PRESENTATION_QOS (default) .
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all (
-  typename NDDS_TYPE::seq_type::_out_type instances,
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
+  typename DDS_TYPE::seq_type::_out_type instances,
   ::CCM_DDS::ReadInfoSeq_out infos)
 {
   //this function has to return the last sample of all instances
-  typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
+  typename DDS_TYPE::seq_type::_var_type  inst_seq = new typename DDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
@@ -46,8 +46,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all (
       throw CORBA::INTERNAL ();
     }
 
-  typename NDDS_TYPE::data_reader*
-      impl =  NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
+  typename DDS_TYPE::data_reader*
+      impl =  DDS_TYPE::data_reader::narrow (rdr->get_datareader ());
 
   if (!impl)
     {
@@ -59,9 +59,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all (
 
   DDS_SampleInfoSeq sample_info;
   DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
-  typename NDDS_TYPE::dds_seq_type data;
-  // NDDS_TYPE::dds_seq_type = dds sequence
-  // NDDS_TYPE::seq_type = ccm sequence
+  typename DDS_TYPE::dds_seq_type data;
+  // DDS_TYPE::dds_seq_type = dds sequence
+  // DDS_TYPE::seq_type = ccm sequence
   if (this->condition_)
     {
         // retval =  impl->read_w_condition (data, sample_info, 1, this->condition_);
@@ -86,7 +86,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all (
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
                                 ACE_TEXT ("number_of_samples <%d>\n"), data.length() ));
         //infoseq <<= sample_info; ??
-  
+
         // count the last samples of all instances
         for (CORBA::ULong i = 0 ; i < (CORBA::ULong)sample_info.length(); i++)
           {
@@ -99,7 +99,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all (
         inst_seq->length(nr_of_last_samples);
         // we need only the last sample of each instance
         for (CORBA::ULong i = 0 ; i < (CORBA::ULong)sample_info.length(); i++)
-          { 
+          {
             if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
               {
                 sample_info[i].reception_timestamp >>= infoseq[ix].timestamp;
@@ -117,20 +117,20 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all (
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
     }
-  //return the loan 
+  //return the loan
   impl->return_loan(data,sample_info);
   infos = infoseq._retn ();
   instances = inst_seq._retn();
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all_history (
-          typename NDDS_TYPE::seq_type::_out_type instances,
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all_history (
+          typename DDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
   //this function has to return all samples of all instances
-  typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
+  typename DDS_TYPE::seq_type::_var_type  inst_seq = new typename DDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
 
@@ -142,9 +142,9 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all_history (
       throw CORBA::INTERNAL ();
     }
 
-  typename NDDS_TYPE::data_reader*
-      impl =  NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
-   
+  typename DDS_TYPE::data_reader*
+      impl =  DDS_TYPE::data_reader::narrow (rdr->get_datareader ());
+
 
   if (!impl)
     {
@@ -156,10 +156,10 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all_history (
 
   DDS_SampleInfoSeq sample_info;
   DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
-  typename NDDS_TYPE::dds_seq_type data;
+  typename DDS_TYPE::dds_seq_type data;
 
-  // NDDS_TYPE::dds_seq_type = dds sequence
-  // NDDS_TYPE::seq_type = ccm sequence
+  // DDS_TYPE::dds_seq_type = dds sequence
+  // DDS_TYPE::seq_type = ccm sequence
   if (this->condition_)
     {
       // retval =  impl->read_w_condition (data, sample_info, 1, this->condition_);
@@ -210,16 +210,16 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_all_history (
           throw ::CCM_DDS::InternalError (retval, 0);
           break;
       }
-  //return the loan 
+  //return the loan
   impl->return_loan(data,sample_info);
   infos = infoseq._retn ();
   instances = inst_seq._retn();
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one (
-          typename NDDS_TYPE::value_type& an_instance,
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one (
+          typename DDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (this->reader_);
@@ -230,8 +230,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one (
       throw CORBA::INTERNAL ();
     }
 
-  typename NDDS_TYPE::data_reader*
-      impl = NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
+  typename DDS_TYPE::data_reader*
+      impl = DDS_TYPE::data_reader::narrow (rdr->get_datareader ());
 
 
   if (!impl)
@@ -246,10 +246,10 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one (
   DDS_SampleInfoSeq sample_info;
   DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
 
-  typename NDDS_TYPE::dds_seq_type data;
+  typename DDS_TYPE::dds_seq_type data;
 
-  // NDDS_TYPE::dds_seq_type = dds sequence
-  // NDDS_TYPE::seq_type = ccm sequence
+  // DDS_TYPE::dds_seq_type = dds sequence
+  // DDS_TYPE::seq_type = ccm sequence
   if (this->condition_)
     {
       // retval =  impl->read_w_condition (data, sample_info, 1, this->condition_);
@@ -292,7 +292,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one (
         if(sample_info[number_of_samples-1].valid_data)
           {
             an_instance = data[number_of_samples-1];
-            //info <<= sample_info; 
+            //info <<= sample_info;
             sample_info[number_of_samples-1].reception_timestamp >>= info.timestamp;
           }
         //else   ?? What to do ?
@@ -300,15 +300,15 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one (
         //what about the following attributes?
         //info.access_status     DDS_SampleStateKind  sample_state or   DDS_ViewStateKind view_state; ?
         //info.instance_status   DDS_InstanceStateKind instance_state;
-        //info.instance_rank     DDS_Long sample_rank;   is always 0 with last sample 
-        //return the loan 
+        //info.instance_rank     DDS_Long sample_rank;   is always 0 with last sample
+        //return the loan
         impl->return_loan(data,sample_info);
         break;
       case DDS_RETCODE_NO_DATA:
         CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one - ")
                               ACE_TEXT ("No data\n")));
         impl->return_loan(data,sample_info);
-        //only if a key and no instance for that key throw NonExistent exception  
+        //only if a key and no instance for that key throw NonExistent exception
         if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
           {
             throw ::CCM_DDS::NonExistent(0);
@@ -323,16 +323,16 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one (
     }
  }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one_history (
-          const typename NDDS_TYPE::value_type& an_instance,
-          typename NDDS_TYPE::seq_type::_out_type instances,
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_history (
+          const typename DDS_TYPE::value_type& an_instance,
+          typename DDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
   //this function has to return all samples of all instances
 
-  typename NDDS_TYPE::seq_type::_var_type  inst_seq = new typename NDDS_TYPE::seq_type;
+  typename DDS_TYPE::seq_type::_var_type  inst_seq = new typename DDS_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
 
@@ -344,8 +344,8 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one_history (
       throw CORBA::INTERNAL ();
     }
 
-  typename NDDS_TYPE::data_reader*
-      impl = NDDS_TYPE::data_reader::narrow (rdr->get_datareader ());
+  typename DDS_TYPE::data_reader*
+      impl = DDS_TYPE::data_reader::narrow (rdr->get_datareader ());
 
   if (!impl)
     {
@@ -357,10 +357,10 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one_history (
   DDS_InstanceHandle_t hnd = impl->lookup_instance (an_instance);
   DDS_SampleInfoSeq sample_info;
   DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
-  typename NDDS_TYPE::dds_seq_type data;
+  typename DDS_TYPE::dds_seq_type data;
 
-  // NDDS_TYPE::dds_seq_type = dds sequence
-  // NDDS_TYPE::seq_type = ccm sequence
+  // DDS_TYPE::dds_seq_type = dds sequence
+  // DDS_TYPE::seq_type = ccm sequence
   if (this->condition_)
     {
       // retval =  impl->read_w_condition (data, sample_info, 1, this->condition_);
@@ -402,7 +402,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one_history (
               {
                 ++nr_of_samples;
               }
-          } 
+          }
         infoseq->length(nr_of_samples);
         inst_seq->length(nr_of_samples);
 
@@ -411,7 +411,7 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one_history (
             sample_info[i].reception_timestamp >>= infoseq[ix].timestamp;
             inst_seq[ix] = data[i];
             ix++;
-          } 
+          }
         break;
       case DDS_RETCODE_NO_DATA:
         CIAO_DEBUG ((LM_INFO, ACE_TEXT ("Reader_T: read_all_history No data : retval is %d ---\n"), retval));
@@ -427,22 +427,22 @@ CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::read_one_history (
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
     }
-  //return the loan 
+  //return the loan
   impl->return_loan(data,sample_info);
   infos = infoseq._retn ();
   instances = inst_seq._retn();
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
  ::CCM_DDS::QueryFilter *
- CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::filter (void)
+ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (void)
 {
   return 0;
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<NDDS_TYPE, CCM_TYPE>::filter (const ::CCM_DDS::QueryFilter & filter)
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::filter (const ::CCM_DDS::QueryFilter & filter)
 {
   ACE_UNUSED_ARG (filter);
 }
