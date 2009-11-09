@@ -1,3 +1,8 @@
+Mon Nov  9 12:13:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Resolved compiler warning on Windows.
+
 Mon Nov  9 11:46:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:

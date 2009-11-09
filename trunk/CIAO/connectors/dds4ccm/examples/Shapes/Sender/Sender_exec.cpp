@@ -116,7 +116,7 @@ namespace CIAO_Shapes_Sender_Impl
   {
     // calculate the interval time
     long usec = 1000000 / this->rate_;
-    if (!this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
                 ACE_Time_Value (0, usec),
