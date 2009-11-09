@@ -1,6 +1,6 @@
 // $Id$
 
-project(DDS_Sender_idl_gen) : connectoridldefaults, componentidldefaults   {
+project(DDS_Hello_Sender_idl_gen) : connectoridldefaults, componentidldefaults   {
   after += DDS_Hello_Connector_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_STUB_Export \
@@ -16,8 +16,8 @@ project(DDS_Sender_idl_gen) : connectoridldefaults, componentidldefaults   {
   }
 }
 
-project(DDS_Sender_lem_gen) : connectoridldefaults   {
-  after += DDS_Sender_idl_gen
+project(DDS_Hello_Sender_lem_gen) : connectoridldefaults   {
+  after += DDS_Hello_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_LEM_STUB_Export \
               -Wb,stub_export_include=Sender_lem_stub_export.h \
@@ -28,8 +28,8 @@ project(DDS_Sender_lem_gen) : connectoridldefaults   {
   }
 }
 
-project(DDS_Sender_lem_stub) : ccm_svnt, dds4ccm_base   {
-  after += DDS_Sender_lem_gen DDS_Sender_stub DDS_Hello_Base_stub
+project(DDS_Hello_Sender_lem_stub) : ccm_svnt, dds4ccm_base   {
+  after += DDS_Hello_Sender_lem_gen DDS_Hello_Sender_stub DDS_Hello_Base_stub
   libs  += DDS_Hello_Base_stub Sender_stub
   libpaths += ../lib
   libout = ../lib
@@ -54,8 +54,8 @@ project(DDS_Sender_lem_stub) : ccm_svnt, dds4ccm_base   {
   }
 }
 
-project(DDS_Sender_stub) : ccm_stub, dds4ccm_base   {
-  after += DDS_Sender_idl_gen DDS_Hello_Base_stub DDS_Hello_Connector_stub
+project(DDS_Hello_Sender_stub) : ccm_stub, dds4ccm_base   {
+  after += DDS_Hello_Sender_idl_gen DDS_Hello_Base_stub DDS_Hello_Connector_stub
   libs  += DDS_Hello_Base_stub DDS_Hello_Connector_stub
   includes += ..
   libpaths += ../lib
@@ -80,8 +80,8 @@ project(DDS_Sender_stub) : ccm_stub, dds4ccm_base   {
   }
 }
 
-project(DDS_Sender_exec) : ciao_executor, dds4ccm_base   {
-  after   += DDS_Sender_lem_stub DDS_Sender_stub DDS_Hello_Connector_lem_stub DDS_Hello_Connector_stub
+project(DDS_Hello_Sender_exec) : ciao_executor, dds4ccm_base   {
+  after   += DDS_Hello_Sender_lem_stub DDS_Hello_Sender_stub DDS_Hello_Connector_lem_stub DDS_Hello_Connector_stub
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub DDS_Hello_Base_stub DDS_Hello_Connector_lem_stub DDS_Hello_Connector_stub
   libpaths += ../lib
@@ -106,8 +106,8 @@ project(DDS_Sender_exec) : ciao_executor, dds4ccm_base   {
 }
 
 
-project(DDS_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
-  after      += DDS_Hello_Base_stub  DDS_Sender_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Hello_Connector_stub DDS_Hello_Connector_svnt  DDS_Hello_Connector_lem_stub
+project(DDS_Hello_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
+  after      += DDS_Hello_Base_stub  DDS_Hello_Sender_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Hello_Connector_stub DDS_Hello_Connector_svnt  DDS_Hello_Connector_lem_stub
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \
                 DDS_Hello_Base_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Hello_Connector_stub DDS_Hello_Connector_svnt DDS_Hello_Connector_lem_stub
