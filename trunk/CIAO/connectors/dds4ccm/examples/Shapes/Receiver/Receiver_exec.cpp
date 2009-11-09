@@ -4,95 +4,17 @@
 
 #include "Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
+#include "tao/ORB_Core.h"
 
 namespace CIAO_Shapes_Receiver_Impl
 {
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
-    : active_ (0),
-      pulse_callback_ (callback)
+    : pulse_callback_ (callback)
   {
-    // initialize the reactor
-    this->reactor (ACE_Reactor::instance ());
   }
 
   read_action_Generator::~read_action_Generator ()
   {
-  }
-
-  int
-  read_action_Generator::open_h ()
-  {
-    // convert the task into a active object that runs in separate thread
-    return this->activate ();
-  }
-
-  int
-  read_action_Generator::close_h ()
-  {
-    this->reactor ()->end_reactor_event_loop ();
-    // wait for all threads in the task to exit before it returns
-    return this->wait ();
-  }
-
-  int
-  read_action_Generator::start (CORBA::ULong hertz)
-  {
-    // return if not valid
-    if (hertz == 0 || this->active_ != 0)
-      {
-        return -1;
-      }
-
-    // calculate the interval time
-    long usec = 1000000 / hertz;
-
-    std::cerr << "Starting read_action_generator with hertz of " << hertz << ", interval of "
-              << usec << std::endl;
-
-    if (this->reactor ()->schedule_timer (this,
-                                          0,
-                                          ACE_Time_Value(0),
-                                          ACE_Time_Value(3)) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "Unable to setup Timer\n"),
-                            -1);
-      }
-
-    this->active_ = 1;
-    return 0;
-  }
-
-  int
-  read_action_Generator::stop (void)
-  {
-    // return if not valid.
-    if (this->active_ == 0)
-      {
-        return -1;
-      }
-    // cancle the timer
-    this->reactor ()->cancel_timer (this);
-    this->active_ = 0;
-    return 0;
-  }
-
-  int
-  read_action_Generator::active (void)
-  {
-    return this->active_;
-  }
-
-  int
-  read_action_Generator::handle_close (ACE_HANDLE handle,
-                                 ACE_Reactor_Mask close_mask)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
-                this,
-                handle,
-                close_mask));
-    return 0;
   }
 
   int
@@ -109,18 +31,6 @@ namespace CIAO_Shapes_Receiver_Impl
         this->pulse_callback_.get_one ();
         this->pulse_callback_.get_all ();
       }
-    return 0;
-  }
-
-  int
-  read_action_Generator::svc (void)
-  {
-    // define the owner of the reactor thread
-    this->reactor ()->owner (ACE_OS::thr_self ());
-
-    // run event loop to wait for event, and then dispatch them to corresponding handlers
-    this->reactor ()->run_reactor_event_loop ();
-
     return 0;
   }
 
@@ -407,19 +317,28 @@ namespace CIAO_Shapes_Receiver_Impl
         throw CORBA::INTERNAL ();
       }
     lc->enabled (this->raw_listen_);
-    this->ticker_->start (this->rate_);
+
+    // calculate the interval time
+    long usec = 1000000 / this->rate_;
+    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
+                                          this->ticker_,
+                                          0,
+                                          ACE_Time_Value(0, usec),
+                                          ACE_Time_Value(0, usec)) == -1)
+      {
+        CIAO_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
+      }
   }
   
   void
   Receiver_exec_i::ccm_passivate (void)
   {
-    this->ticker_->stop ();
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
   }
   
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    this->ticker_->close_h ();
   }
   
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

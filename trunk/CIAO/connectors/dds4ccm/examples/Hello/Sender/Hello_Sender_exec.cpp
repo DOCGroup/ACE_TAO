@@ -69,7 +69,7 @@ namespace CIAO_Hello_DDS_Sender_Impl
     {
       if (!this->log_time_)
         return msg;
-      ACE_TCHAR timestamp[16];
+      char timestamp[16];
       ACE_Date_Time now;
       ACE_OS::sprintf (timestamp,
                         "%02d.%d",
