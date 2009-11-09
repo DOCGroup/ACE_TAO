@@ -13,7 +13,7 @@ project(DDS_Sender_idl_gen) : connectoridldefaults, componentidldefaults   {
               -I ..
 
   IDL_Files {
-    Sender.idl
+    Shapes_Sender.idl
   }
 }
 
@@ -25,7 +25,7 @@ project(DDS_Sender_lem_gen) : connectoridldefaults   {
               -SS -Gxhst -I $CIAO_ROOT/connectors -I ..
 
   IDL_Files {
-    SenderE.idl
+    Shapes_SenderE.idl
   }
 }
 
@@ -42,16 +42,16 @@ project(DDS_Sender_lem_stub) : ccm_svnt, dds4ccm_base   {
   }
 
   Source_Files {
-    SenderEC.cpp
+    Shapes_SenderEC.cpp
   }
 
   Header_Files {
-    SenderEC.h
+    Shapes_SenderEC.h
     Sender_lem_stub_export.h
   }
 
   Inline_Files {
-    SenderEC.inl
+    Shapes_SenderEC.inl
   }
 }
 
@@ -68,16 +68,16 @@ project(DDS_Sender_stub) : ccm_stub, dds4ccm_base   {
   }
 
   Source_Files {
-    SenderC.cpp
+    Shapes_SenderC.cpp
   }
 
   Header_Files {
-    SenderC.h
+    Shapes_SenderC.h
     Sender_stub_export.h
   }
 
   Inline_Files {
-    SenderC.inl
+    Shapes_SenderC.inl
   }
 }
 
@@ -94,11 +94,11 @@ project(DDS_Sender_exec) : ciao_executor, dds4ccm_base   {
   }
 
   Source_Files {
-    Sender_exec.cpp
+    Shapes_Sender_exec.cpp
   }
 
   Header_Files {
-    Sender_exec.h
+    Shapes_Sender_exec.h
     Sender_exec_export.h
   }
 
@@ -121,18 +121,18 @@ project(DDS_Sender_svnt) : ciao_servant, dds4ccm_base, nddslib {
   }
 
   Source_Files {
-    SenderS.cpp
-    Sender_svnt.cpp
+    Shapes_SenderS.cpp
+    Shapes_Sender_svnt.cpp
   }
 
   Header_Files {
-    SenderS.h
-    Sender_svnt.h
+    Shapes_SenderS.h
+    Shapes_Sender_svnt.h
     Sender_svnt_export.h
   }
 
   Inline_Files {
-    SenderS.inl
+    Shapes_SenderS.inl
   }
 }
 
