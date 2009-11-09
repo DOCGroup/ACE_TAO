@@ -15,13 +15,7 @@
 
 module Shapes
 {
-  interface Trigger
-  {
-    void start ();
-    void stop ();
-  };
-
-  component Sender supports Trigger
+  component Sender
   {
     uses CCM_DDS::ShapeType_Updater info_update_data;
 //port CCM_DDS::DDS_Update info_update;

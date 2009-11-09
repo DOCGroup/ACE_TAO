@@ -334,6 +334,7 @@ namespace CIAO_Shapes_Receiver_Impl
   Receiver_exec_i::ccm_passivate (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+    delete this->ticker_;
   }
   
   void
