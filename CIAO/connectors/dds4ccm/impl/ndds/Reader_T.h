@@ -16,7 +16,7 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename NDDS_TYPE, typename CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       class Reader_T :
           public virtual CCM_TYPE::reader_type,
           public virtual ::CORBA::LocalObject,
@@ -30,20 +30,20 @@ namespace CIAO
         virtual ~Reader_T (void);
 
         virtual void read_all (
-          typename NDDS_TYPE::seq_type::_out_type instances,
+          typename DDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual void read_all_history (
-          typename NDDS_TYPE::seq_type::_out_type instances,
+          typename DDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual void read_one (
-          typename NDDS_TYPE::value_type& an_instance,
+          typename DDS_TYPE::value_type& an_instance,
           ::CCM_DDS::ReadInfo_out info);
 
         virtual void read_one_history (
-          const typename NDDS_TYPE::value_type& an_instance,
-          typename NDDS_TYPE::seq_type::_out_type instances,
+          const typename DDS_TYPE::value_type& an_instance,
+          typename DDS_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual ::CCM_DDS::QueryFilter *filter (void);

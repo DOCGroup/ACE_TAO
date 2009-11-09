@@ -15,7 +15,7 @@ namespace CIAO
   {
     namespace RTI
     {
-      template <typename NDDS_TYPE, typename CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE>
       class Updater_T :
         public virtual CCM_TYPE::updater_type,
         public virtual ::CORBA::LocalObject,
@@ -28,16 +28,16 @@ namespace CIAO
         // Destructor
         virtual ~Updater_T (void);
 
-        virtual void create (const typename NDDS_TYPE::value_type& an_instance);
+        virtual void create (const typename DDS_TYPE::value_type& an_instance);
 
-        virtual void update (const typename NDDS_TYPE::value_type& an_instance);
+        virtual void update (const typename DDS_TYPE::value_type& an_instance);
 
-        virtual void _cxx_delete (const typename NDDS_TYPE::value_type& an_instance);
+        virtual void _cxx_delete (const typename DDS_TYPE::value_type& an_instance);
 
         virtual bool is_lifecycle_checked ();
 
       private:
-        typename NDDS_TYPE::data_writer *impl_;
+        typename DDS_TYPE::data_writer *impl_;
         bool is_lifecycle_checked_;
       };
     }
