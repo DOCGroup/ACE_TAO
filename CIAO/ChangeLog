@@ -1,3 +1,17 @@
+Mon Nov  9 09:49:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender.idl3
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp
+        * connectors/dds4ccm/impl/ndds/Reader_T.h
+        * connectors/dds4ccm/impl/ndds/Updater_T.h
+        * connectors/dds4ccm/impl/ndds/Writer_T.cpp
+        * connectors/dds4ccm/impl/ndds/Writer_T.h
+          Cleanup and some experiments for update 6 of the spec
+
 Mon Nov  9 07:03:57 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/Receiver/Receiver_exec.cpp:

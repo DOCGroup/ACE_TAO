@@ -2,12 +2,13 @@
 #include "dds4ccm/impl/ndds/DataWriter.h"
 #include "dds4ccm/impl/ndds/Utils.h"
 #include "dds4ccm/impl/ndds/Coherent_Changes_Guard.h"
+#include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
 // Implementation skeleton constructor
-template <typename NDDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::Writer_T (::DDS::DataWriter_ptr writer)
+template <typename DDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::Writer_T (::DDS::DataWriter_ptr writer)
   : impl_ (0),
     is_coherent_write_ (false)
 {
@@ -22,7 +23,7 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::Writer_T (::DDS::DataWriter_p
       throw CORBA::INTERNAL ();
     }
 
-  impl_ =  NDDS_TYPE::data_writer::narrow (rdw->get_datawriter ());
+  impl_ =  DDS_TYPE::data_writer::narrow (rdw->get_datawriter ());
 
   if (!impl_)
     {
@@ -34,15 +35,15 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::Writer_T (::DDS::DataWriter_p
 }
 
 // Implementation skeleton destructor
-template <typename NDDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::~Writer_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE >
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::~Writer_T (void)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::~Writer_T");
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TYPE::value_type & an_instance)
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write (const typename DDS_TYPE::value_type & an_instance)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
 
@@ -62,9 +63,9 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TY
                "Write successful\n"));
 }
 
-template <typename NDDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TYPE::seq_type& instances)
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write_many (const typename DDS_TYPE::seq_type& instances)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
 
@@ -88,4 +89,23 @@ CIAO::DDS4CCM::RTI::Writer_T<NDDS_TYPE, CCM_TYPE>::write (const typename NDDS_TY
 
   CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO::DDS4CCM::RTI::Writer_T::write - "
                "Write successful\n"));
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE >
+::DDS::InstanceHandle_t 
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::register_instance (const typename DDS_TYPE::value_type & datum)
+{
+  ::DDS_InstanceHandle_t const handle = this->impl_->register_instance (datum);
+  ::DDS::InstanceHandle_t dds_handle;
+  dds_handle <<= handle;
+  return dds_handle;
+}
+    
+template <typename DDS_TYPE, typename CCM_TYPE >
+void 
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::unregister_instance (const typename DDS_TYPE::value_type & datum, const ::DDS::InstanceHandle_t & instance_handle)
+{
+  ::DDS_InstanceHandle_t handle;
+  handle <<= instance_handle;
+  this->impl_->unregister_instance (datum, handle);
 }
