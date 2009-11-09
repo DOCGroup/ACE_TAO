@@ -1,3 +1,13 @@
+Mon Nov  9 19:34:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Cornucopia/Cornucopia.idl:
+        
+          Added an abstract interface and concrete child to the
+          test IDL, to test a multiple-definition code generation
+          bug across the stub and LEM header files. Thanks to
+          Johnny Willemsen <jwillemsen at remedy dot nl> for
+          providing the test case.
+
 Mon Nov  9 19:32:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc

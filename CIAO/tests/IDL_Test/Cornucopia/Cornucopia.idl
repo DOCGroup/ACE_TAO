@@ -41,6 +41,16 @@ interface pface {};
 interface uface {};
 interface umface {};
 
+abstract interface IfAb
+{
+  long op (out long value);
+};
+
+interface IfConcr : IfAb
+{
+  long concr_op (out long value);
+};
+
 valuetype pkey : Components::PrimaryKeyBase
 {
   public string info;
