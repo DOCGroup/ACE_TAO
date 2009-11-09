@@ -12,7 +12,7 @@ project(DDS_Receiver_idl_gen) : componentidldefaults , connectoridldefaults  {
               -Wb,exec_export_include=Receiver_exec_export.h -I..
 
   IDL_Files {
-    Receiver.idl
+    Shapes_Receiver.idl
   }
 }
 
@@ -24,7 +24,7 @@ project(DDS_Receiver_lem_gen) : connectoridldefaults,   {
               -SS -Gxhst -I..
 
   IDL_Files {
-    ReceiverE.idl
+    Shapes_ReceiverE.idl
   }
 }
 
@@ -41,16 +41,16 @@ project(DDS_Receiver_lem_stub) : ccm_svnt , dds4ccm_base  {
   }
 
   Source_Files {
-    ReceiverEC.cpp
+    Shapes_ReceiverEC.cpp
   }
 
   Header_Files {
-    ReceiverEC.h
+    Shapes_ReceiverEC.h
     Receiver_lem_stub_export.h
   }
 
   Inline_Files {
-    ReceiverEC.inl
+    Shapes_ReceiverEC.inl
   }
 }
 
@@ -67,16 +67,16 @@ project(DDS_Receiver_stub) : ccm_stub , dds4ccm_base  {
   }
 
   Source_Files {
-    ReceiverC.cpp
+    Shapes_ReceiverC.cpp
   }
 
   Header_Files {
-    ReceiverC.h
+    Shapes_ReceiverC.h
     Receiver_stub_export.h
   }
 
   Inline_Files {
-    ReceiverC.inl
+    Shapes_ReceiverC.inl
   }
 }
 
@@ -93,11 +93,11 @@ project(DDS_Receiver_exec) : ciao_executor , dds4ccm_base  {
   }
 
   Source_Files {
-    Receiver_exec.cpp
+    Shapes_Receiver_exec.cpp
   }
 
   Header_Files {
-    Receiver_exec.h
+    Shapes_Receiver_exec.h
     Receiver_exec_export.h
   }
 
@@ -119,18 +119,18 @@ project(DDS_Receiver_svnt) : ciao_servant , dds4ccm_base, nddslib {
   }
 
   Source_Files {
-    ReceiverS.cpp
-    Receiver_svnt.cpp
+    Shapes_ReceiverS.cpp
+    Shapes_Receiver_svnt.cpp
   }
 
   Header_Files {
-    ReceiverS.h
-    Receiver_svnt.h
+    Shapes_ReceiverS.h
+    Shapes_Receiver_svnt.h
     Receiver_svnt_export.h
   }
 
   Inline_Files {
-    ReceiverS.inl
+    Shapes_ReceiverS.inl
   }
 }
 

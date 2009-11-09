@@ -34,7 +34,7 @@
 #define CIAO_RECEIVER_EXEC_H_
 
 
-#include "ReceiverEC.h"
+#include "Shapes_ReceiverEC.h"
 
 #include /**/ "Receiver_exec_export.h"
 
