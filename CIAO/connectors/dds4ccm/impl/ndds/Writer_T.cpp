@@ -65,7 +65,7 @@ CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write (const typename DDS_TYPE
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write_many (const typename DDS_TYPE::seq_type& instances)
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write_many (const typename CCM_TYPE::seq_type& instances)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Writer_T::write");
 

@@ -49,7 +49,6 @@ namespace CIAO
 
     private:
       typename CCM_TYPE::context_type::_var_type context_;
-
       CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;
       ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enable_;
     };

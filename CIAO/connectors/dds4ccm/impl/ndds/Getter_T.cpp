@@ -79,7 +79,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::wait (
 template <typename DDS_TYPE, typename CCM_TYPE >
 bool
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_all (
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
   ACE_UNUSED_ARG (instances);
@@ -90,7 +90,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_all (
 template <typename DDS_TYPE, typename CCM_TYPE >
 bool
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_all_history (
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
   DDSConditionSeq active_conditions;
@@ -168,7 +168,7 @@ template <typename DDS_TYPE, typename CCM_TYPE >
 bool
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one_history (
           const typename DDS_TYPE::value_type& an_instance,
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
   ACE_UNUSED_ARG (an_instance);

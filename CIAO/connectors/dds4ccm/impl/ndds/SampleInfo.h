@@ -45,7 +45,7 @@ inline void
 operator<<= (::CCM_DDS::ReadInfoSeq & ccm_dds_readinfo_seq, const ::DDS_SampleInfoSeq & sample_info)
 {
   ccm_dds_readinfo_seq.length(sample_info.length ());
-  for (CORBA::ULong i = 0; i < (CORBA::ULong)sample_info.length(); i++)
+  for (::DDS_Long i = 0; i < sample_info.length(); i++)
     {
       if (sample_info[i].valid_data)
         {

@@ -29,11 +29,11 @@ namespace CIAO
         virtual ~Getter_T (void);
 
         virtual bool get_all (
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual bool get_all_history (
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual bool get_one (
@@ -42,7 +42,7 @@ namespace CIAO
 
         virtual bool get_one_history (
           const typename DDS_TYPE::value_type& an_instance,
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual bool get_next (
