@@ -201,8 +201,12 @@ bool SA_PlanStrategy::satisfy_open_conds (void)
 			}
 
 			//Do not execute if the condition has been noted before and not helped
-			std::pair<bool, CommandID> return_data = this->store_map.should_continue(add_task_cmd->get_id(), add_task_cmd->get_condition(), 
-				stored_task, this->open_conds_, this->planner_->get_working_plan()->get_task_insts());
+			std::pair<bool, CommandID> return_data = 
+			  this->store_map.should_continue(add_task_cmd->get_id(), 
+							  add_task_cmd->get_condition(), 
+							  stored_task, 
+							  this->open_conds_, 
+							  this->planner_->get_working_plan()->get_task_insts());
 
 			if(return_data.first)
 			{

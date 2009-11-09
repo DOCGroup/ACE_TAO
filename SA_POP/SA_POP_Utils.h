@@ -41,7 +41,10 @@ namespace SA_POP {
     
     typedef typename _multimap::key_type key_type;
     typedef typename _multimap::mapped_type mapped_type;
+#ifdef _MSC_VER
     typedef typename _multimap::referent_type referent_type;  // retained
+#else
+#endif
     typedef typename _multimap::key_compare key_compare;
 
     typedef typename _multimap::value_compare value_compare;
@@ -58,9 +61,15 @@ namespace SA_POP {
     typedef typename _multimap::const_reverse_iterator
       const_reverse_iterator;
     typedef typename _multimap::value_type value_type;
+
+#ifdef _MSC_VER
     typedef typename _multimap::_Pairib _Pairib;
     typedef typename _multimap::_Pairii _Pairii;
-    typedef typename _multimap::_Paircc _Paircc;
+    typedef typename _multimap::_Paircc _Paircc; 
+#else
+    typedef typename std::pair< typename _multimap::iterator, typename _multimap::iterator > _Pairii;
+    typedef typename std::pair< typename _multimap::const_iterator, typename _multimap::const_iterator > _Paircc;
+#endif
 
 
     ///TypeDefs for the List
@@ -127,7 +136,7 @@ namespace SA_POP {
     
     ///Clear
     void clear();
-    
+
     ///Equal Range
     _Pairii equal_range(const key_type& _Keyval);
     _Paircc equal_range(const key_type& _Keyval) const;

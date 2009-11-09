@@ -332,7 +332,7 @@ namespace SA_POP {
     virtual void generate_all_threats(void);
 
 
-	virtual InstToTaskMap get_task_insts(void){return task_insts_;};
+	virtual InstToTaskMap & get_task_insts(void){return task_insts_;};
 
 	virtual bool inst_has_impl(TaskInstID inst_id);
 

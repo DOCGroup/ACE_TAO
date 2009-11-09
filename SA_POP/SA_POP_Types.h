@@ -223,13 +223,13 @@ namespace SA_POP {
     }
 
     // IS THE LESS THAN OPERATOR REALLY SUPPOSED TO COMPARE INSTANCES BY GREATER THAN?
-    bool operator<(const SortTaskByTime & s) {
+    bool operator<(const SortTaskByTime & s) const {
       return this->last_instance > s.last_instance;
     }
-    bool operator!=(const SortTaskByTime & s) {
+    bool operator!=(const SortTaskByTime & s) const {
       return this->last_instance != s.last_instance;
     }
-    bool operator==(const SortTaskByTime & s) {
+    bool operator==(const SortTaskByTime & s) const {
       return this->last_instance == s.last_instance;
     }
   };
@@ -626,8 +626,12 @@ namespace SA_POP {
   struct StoredConditionEvaluator{
     StoredConditionMap condition_map;
 
-    std::pair<bool, CommandID> should_continue(CommandID cur_cmd, Condition satisfied_cond, 
-      TaskID satisfying_task, OpenCondMap & open_conds, InstToTaskMap & task_insts){
+    std::pair<bool, CommandID> should_continue (CommandID cur_cmd, 
+						Condition satisfied_cond, 
+						TaskID satisfying_task, 
+						OpenCondMap &open_conds, 
+						InstToTaskMap &task_insts)
+    {
 
         StoredConditionKey stored_cond (satisfied_cond, satisfying_task, cur_cmd);
 
@@ -738,10 +742,10 @@ namespace SA_POP {
 
   //Map from a causal link to the suspended conditions that are waiting for something to come
   //between them and the orig. condition so they can be unsuspended
-  typedef std::multimap<CausalLink, std::pair<Condition, TaskInstID>> SuspendedConditionListenerMap;
+  typedef std::multimap<CausalLink, std::pair<Condition, TaskInstID> > SuspendedConditionListenerMap;
 
   //List of all condition/task insts that are suspended
-  typedef std::set<std::pair<Condition, TaskInstID>> SuspendedConditionSet;
+  typedef std::set<std::pair<Condition, TaskInstID> > SuspendedConditionSet;
 
   inline std::string to_string(int x)
   {
