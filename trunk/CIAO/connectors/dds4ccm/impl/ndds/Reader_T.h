@@ -30,11 +30,11 @@ namespace CIAO
         virtual ~Reader_T (void);
 
         virtual void read_all (
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual void read_all_history (
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual void read_one (
@@ -43,16 +43,15 @@ namespace CIAO
 
         virtual void read_one_history (
           const typename DDS_TYPE::value_type& an_instance,
-          typename DDS_TYPE::seq_type::_out_type instances,
+          typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
         virtual ::CCM_DDS::QueryFilter *filter (void);
 
         virtual void filter (const ::CCM_DDS::QueryFilter & filter);
       private:
+        typename DDS_TYPE::data_reader *impl_;
         ::DDS::DataReader_ptr reader_;
-        DDSQueryCondition* condition_;
-
       };
     }
   }

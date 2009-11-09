@@ -26,7 +26,6 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
   // @from use of ShapeType as a parameter
   typedef CIAO::DDS4CCM::RTI::Type_Traits < 
     ShapeType,
-    ShapeType_Seq,
     ShapeTypeSeq,
     ShapeTypeTypeSupport,
     ShapeTypeDataWriter,
@@ -34,6 +33,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
 
   typedef Connector_Traits <
     ::CIAO_Shapes_Shapes_Connector_Impl::Shapes_Connector_Exec,
+    ShapeType_Seq,
     ::CCM_DDS::CCM_ShapeType_Writer,
     ::CCM_DDS::CCM_ShapeType_Updater,
     ::CCM_DDS::CCM_ShapeType_Getter,

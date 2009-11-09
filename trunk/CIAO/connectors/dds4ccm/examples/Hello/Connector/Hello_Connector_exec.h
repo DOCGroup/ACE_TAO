@@ -24,9 +24,8 @@ namespace CIAO_Hello_Hello_Connector_Impl
 {
 
   // @from use of DDSHello as a parameter
-  typedef CIAO::DDS4CCM::RTI::Type_Traits < 
+  typedef CIAO::DDS4CCM::RTI::Type_Traits <
     DDSHello,
-    DDSHello_Seq,
     DDSHelloSeq,
     DDSHelloTypeSupport,
     DDSHelloDataWriter,
@@ -34,6 +33,7 @@ namespace CIAO_Hello_Hello_Connector_Impl
 
   typedef Connector_Traits <
     ::CIAO_Hello_Hello_Connector_Impl::Hello_Connector_Exec,
+    DDSHello_Seq,
     ::CCM_DDS::CCM_DDSHello_Writer,
     ::CCM_DDS::CCM_DDSHello_Updater,
     ::CCM_DDS::CCM_DDSHello_Getter,

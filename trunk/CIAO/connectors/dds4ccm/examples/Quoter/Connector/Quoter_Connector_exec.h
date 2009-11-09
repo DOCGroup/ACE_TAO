@@ -26,7 +26,6 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   // @from use of Stock_Info as a parameter
   typedef CIAO::DDS4CCM::RTI::Type_Traits < 
     ::Quoter::Stock_Info,
-    ::Quoter::Stock_Info_Seq,
     ::Quoter::Stock_InfoSeq,
     ::Quoter::Stock_InfoTypeSupport,
     ::Quoter::Stock_InfoDataWriter,
@@ -34,6 +33,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
 
   typedef Connector_Traits <
     ::CIAO_Quoter_Quoter_Connector_Impl::Quoter_Connector_Exec,
+    ::Quoter::Stock_Info_Seq,
     ::CCM_DDS::CCM_Stock_Info_Writer,
     ::CCM_DDS::CCM_Stock_Info_Updater,
     ::CCM_DDS::CCM_Stock_Info_Getter,

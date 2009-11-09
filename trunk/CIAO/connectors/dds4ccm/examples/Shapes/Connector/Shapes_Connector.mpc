@@ -83,9 +83,9 @@ project(DDS_Shapes_Connector_stub) : ccm_stub, dds4ccm_base   {
 }
 
 project(DDS_Shapes_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
-  after   += DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_Shapes_Base_ndds_ts_gen
+  after   += DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_Shapes_Base_NDDS_TS
   sharedname = DDS_Shapes_Connector_exec
-  libs += DDS_Shapes_Connector_stub DDS_Shapes_Connector_lem_stub DDS_Shapes_Base_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub
+  libs += DDS_Shapes_Connector_stub DDS_Shapes_Connector_lem_stub DDS_Shapes_Base_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub DDS_Shapes_Base_NDDS_TS
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -96,10 +96,6 @@ project(DDS_Shapes_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
 
   Source_Files {
     Shapes_Connector_exec.cpp
-    ../Base/Shapes_Base.cxx
-    ../Base/Shapes_BasePlugin.cxx
-    ../Base/Shapes_BaseSupport.cxx
-
   }
 
   Header_Files {

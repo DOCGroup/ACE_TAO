@@ -5,7 +5,7 @@ project(DDS_Hello_Base_idl_gen) : taoidldefaults, anytypecode {
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
               -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
-              -Wb,stub_export_include=Hello_Base_stub_export.h -GT
+              -Wb,stub_export_include=Hello_Base_stub_export.h
 
   IDL_Files {
     Hello_Base.idl
@@ -28,6 +28,7 @@ project(DDS_Hello_Base_NDDS_TS) : nddslib, taolib {
   libout = ../lib
   libpaths    += ../lib
   sharedname = DDS_Hello_Base_NDDS_TS
+  dynamicflags = NDDS_USER_DLL_EXPORT
 
   Source_Files {
     Hello_Base.cxx
@@ -40,7 +41,7 @@ project(DDS_Hello_Base_NDDS_TS) : nddslib, taolib {
     Hello_BasePlugin.h
     Hello_BaseSupport.h
   }
-  
+
   Inline_Files {
   }
 }
