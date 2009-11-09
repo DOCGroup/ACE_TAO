@@ -52,14 +52,12 @@ namespace CIAO_Shapes_Sender_Impl
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
-    virtual void
-    start (void);
+    void start (void);
     
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
     
-    virtual void
-    stop (void);
+    void stop (void);
     
     void tick ();
     
