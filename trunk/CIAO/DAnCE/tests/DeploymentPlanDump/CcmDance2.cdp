@@ -185,7 +185,7 @@
               </value>
             </member>
           </element>
-        </value>        
+        </value>
       </value>
     </execParameter> -->
   </implementation>
@@ -484,7 +484,7 @@
   <implementation id="TestDriverImplementation">
     <name>TestDriverImplementation</name>
     <source/>
-	<artifact>ClientDanceArtifact</artifact>
+        <artifact>ClientDanceArtifact</artifact>
   </implementation>
 
 
@@ -517,7 +517,7 @@
 
   <instance id="ServerDance">
     <name>ServerDance</name>
-    <node>Host2</node>    
+    <node>Host2</node>
     <source/>
     <implementation>ServerDanceImplementation</implementation>
 
@@ -547,9 +547,9 @@
       </value>
     </configProperty>
 
-    <configProperty> 
+    <configProperty>
       <!-- Attribute: fooStruct-->
-      <name>fooStruct</name> 
+      <name>fooStruct</name>
       <value>
         <type>
           <kind>tk_struct</kind>
@@ -585,14 +585,14 @@
           </member>
         </value>
       </value>
-    </configProperty> 
+    </configProperty>
 
     <configProperty>
       <!-- Attribute: fooEnum-->
       <name>fooEnum</name>
       <value>
         <type>
-	  <kind>tk_enum</kind>
+          <kind>tk_enum</kind>
               <enum>
                 <name>FooEnum</name>
                 <typeId>IDL:acme.com/CcmDance2Test/FooEnum:1.0</typeId>
@@ -607,7 +607,7 @@
       </value>
     </configProperty>
 
-    <configProperty> 
+    <configProperty>
       <!-- Attribute: fooStructSeq-->
       <name>fooStructSeq</name>
       <value>
@@ -689,7 +689,7 @@
         </type>
         <value>
           <element>
-            <enum>A</enum>              
+            <enum>A</enum>
           </element>
           <element>
             <enum>C</enum>
@@ -827,7 +827,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance id="ClientDance2">
     <name>ClientDance2</name>
     <node>Host2</node>
@@ -1101,10 +1101,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-	  <location>corbaname::rhel4y.prismtech.com:21869</location>
-	  <provider>true</provider>
-	  <portName/>
-	  <supportedType/>
+          <location>corbaname::rhel4y.prismtech.com:21869</location>
+          <provider>true</provider>
+          <portName/>
+          <supportedType/>
     </externalReference>
   </connection>
 
@@ -1133,13 +1133,13 @@
       <instance>ClientDance2</instance>
     </internalEndpoint>
     <externalReference>
-	  <location>corbaname::rhel4y.prismtech.com:21869</location>
-	  <provider>true</provider>
-	  <portName/>
-	  <supportedType/>
+          <location>corbaname::rhel4y.prismtech.com:21869</location>
+          <provider>true</provider>
+          <portName/>
+          <supportedType/>
     </externalReference>
   </connection>
-  
+
   <connection>
     <name>testDriver_server</name>
     <internalEndpoint>
@@ -1204,7 +1204,7 @@
     </internalEndpoint>
   </connection>
 
-  
+
 
 
 
@@ -1265,7 +1265,7 @@
         </value>
       </value>
     </execParameter>
-  </artifact>  
+  </artifact>
 
   <artifact id="ClientDanceArtifact">
     <name>ClientDanceArtifact</name>
@@ -1294,7 +1294,7 @@
         </value>
       </value>
     </execParameter>
-    
+
   </artifact>
-  
+
   </Deployment:DeploymentPlan>
