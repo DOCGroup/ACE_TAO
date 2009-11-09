@@ -119,7 +119,7 @@
       </value>
     </execParameter>
 
-    <execParameter> 
+    <execParameter>
       <!-- FAULT_TOLERANCE_REPLICATION_STYLE -->
       <name>cdmw.config.FaultToleranceReplicationStyle</name>
       <value>
@@ -386,7 +386,7 @@
   <implementation id="TestDriverImplementation">
     <name>TestDriverImplementation</name>
     <source/>
-	<artifact>ClientDanceArtifact</artifact>
+        <artifact>ClientDanceArtifact</artifact>
   </implementation>
 
   <!-- Instances declarations -->
@@ -398,7 +398,7 @@
     <!-- hostname -->
     <source/>
     <implementation>ServerDanceHomeImplementation</implementation>
-    
+
     <configProperty>
       <!-- PROCESS_DESTINATION -->
       <name>cdmw.config.ProcessDestination</name>
@@ -415,7 +415,7 @@
 
   <instance id="ServerDance1">
     <name>ServerDance1</name>
-    <node>Host1</node>    
+    <node>Host1</node>
     <source/>
     <implementation>ServerDanceImplementation</implementation>
 
@@ -503,7 +503,7 @@
       <name>fooEnum</name>
       <value>
         <type>
-	  <kind>tk_enum</kind>
+          <kind>tk_enum</kind>
               <enum>
                 <name>FooEnum</name>
                 <typeId>IDL:acme.com/CcmDance2WithFTTest/FooEnum:1.0</typeId>
@@ -600,7 +600,7 @@
         </type>
         <value>
           <element>
-            <enum>A</enum>              
+            <enum>A</enum>
           </element>
           <element>
             <enum>C</enum>
@@ -787,10 +787,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -801,7 +801,7 @@
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance>ServerDance1</instance>
-    </internalEndpoint> 
+    </internalEndpoint>
     <internalEndpoint>
       <portName>clientHostInfo</portName>
       <provider>true</provider>
@@ -819,12 +819,12 @@
       <instance>ServerDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaloc:iiop:1.2@rhel4y.prismtech.com:12345/%14%01%0f%00NUP%00%00%00%16%02%00%00%00%01%00%00%00RootPOA%00Host2%00CcmDance2_1/ClientDance2/clientHostInfo</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaloc:iiop:1.2@rhel4y.prismtech.com:12345/%14%01%0f%00NUP%00%00%00%16%02%00%00%00%01%00%00%00RootPOA%00Host2%00CcmDance2_1/ClientDance2/clientHostInfo</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
-  </connection> 
+  </connection>
 
   <connection>
     <name>client1_consumer_to_publishes</name>
@@ -841,10 +841,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
-		  <provider>false</provider>
-		  <portName>hostnamePublishes</portName>
-		  <supportedType/>
+                  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
+                  <provider>false</provider>
+                  <portName>hostnamePublishes</portName>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -857,11 +857,11 @@
       <instance>ServerDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaloc:iiop:1.2@rhel4y.prismtech.com:12345/%14%01%0f%00NUP%00%00%00%16%02%00%00%00%01%00%00%00RootPOA%00Host2%00CcmDance2_1/ClientDance2/hostnameResults</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
-    </externalReference> 
+                  <location>corbaloc:iiop:1.2@rhel4y.prismtech.com:12345/%14%01%0f%00NUP%00%00%00%16%02%00%00%00%01%00%00%00RootPOA%00Host2%00CcmDance2_1/ClientDance2/hostnameResults</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
+    </externalReference>
   </connection>
 
   <connection>
@@ -873,10 +873,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -889,10 +889,10 @@
       <instance>ClientDance1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -905,10 +905,10 @@
       <instance>TestDriver1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -937,10 +937,10 @@
       <instance>TestDriver1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaloc:iiop:1.2@rhel4y.prismtech.com:12345/%14%01%0f%00NUP%00%00%00%16%02%00%00%00%01%00%00%00RootPOA%00Host2%00CcmDance2_1/ClientDance2/supports</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaloc:iiop:1.2@rhel4y.prismtech.com:12345/%14%01%0f%00NUP%00%00%00%16%02%00%00%00%01%00%00%00RootPOA%00Host2%00CcmDance2_1/ClientDance2/supports</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
@@ -953,14 +953,14 @@
       <instance>TestDriver1</instance>
     </internalEndpoint>
     <externalReference>
-		  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
-		  <provider>true</provider>
-		  <portName/>
-		  <supportedType/>
+                  <location>corbaname::localhost:21869#CDMW__FaultToleranceDomain/ServerDanceFT</location>
+                  <provider>true</provider>
+                  <portName/>
+                  <supportedType/>
     </externalReference>
   </connection>
 
-  
+
 
 
 
@@ -1051,5 +1051,5 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   </Deployment:DeploymentPlan>
