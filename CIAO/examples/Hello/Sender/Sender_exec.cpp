@@ -20,7 +20,8 @@
 
 #include "Sender_exec.h"
 #include "ace/Date_Time.h"
-
+#include "ace/OS_NS_time.h"
+#include "ace/High_Res_Timer.h"
 
 namespace CIAO_Hello_Sender_Impl
 {
