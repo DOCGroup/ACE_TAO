@@ -49,6 +49,7 @@ module CCM_DDS
         raises (NonExistent,
                 InternalError);
     readonly attribute boolean is_lifecycle_checked;
+    attribute boolean is_coherent_write;
   };
 
   interface ShapeType_Getter

@@ -4,7 +4,6 @@
 #ifndef CIAO_SENDER_EXEC_H_
 #define CIAO_SENDER_EXEC_H_
 
-
 #include "SenderEC.h"
 
 #include /**/ "Sender_exec_export.h"
@@ -16,8 +15,6 @@
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
 #include "ace/Reactor.h"
-
-#include <map>
 
 namespace CIAO_Shapes_Sender_Impl
 {
