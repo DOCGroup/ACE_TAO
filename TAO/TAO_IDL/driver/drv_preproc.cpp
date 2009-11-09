@@ -168,58 +168,58 @@ DRV_cpp_expand_output_arg (const char *filename)
 static bool
 DRV_get_line (FILE *f)
 {
-    char *l = ACE_OS::fgets (drv_line,
-                             drv_line_size,
-                             f);
-
-    if (l == 0)
-      {
-        return false;
-      }
-
-    if (*l == '\0' && feof (f))
-      {
-        return false;
-      }
-
-    if (*l == '\0')
-      {
-        return true;
-      }
-
-    while (ACE_OS::strchr (drv_line, '\n') == 0)
-      {
-        // Haven't got to a newline yet.
-        // Create a bigger buffer and keep reading.
-        size_t temp_size;
-        temp_size = drv_line_size * 2;
-        char *temp = 0;
-        ACE_NEW_RETURN (temp,
-                        char[temp_size],
-                        false);
-        ACE_OS::strcpy (temp, drv_line);
-        delete [] drv_line;
-        drv_line = temp;
-        drv_line_size = temp_size;
-
-        l = ACE_OS::fgets (drv_line + ACE_OS::strlen (drv_line),
-                           drv_line_size - ACE_OS::strlen(drv_line),
+  char *l = ACE_OS::fgets (drv_line,
+                           drv_line_size,
                            f);
 
-        if (l == 0 || *l == '\0')
-          {
-            break;
-          }
-      }
+  if (l == 0)
+    {
+      return false;
+    }
 
-    size_t i = ACE_OS::strlen (drv_line) - 1;
+  if (*l == '\0' && feof (f))
+    {
+      return false;
+    }
 
-    if (drv_line[i] == '\n')
-      {
-        drv_line[i] = '\0';
-      }
+  if (*l == '\0')
+    {
+      return true;
+    }
 
-    return true;
+  while (ACE_OS::strchr (drv_line, '\n') == 0)
+    {
+      // Haven't got to a newline yet.
+      // Create a bigger buffer and keep reading.
+      size_t temp_size;
+      temp_size = drv_line_size * 2;
+      char *temp = 0;
+      ACE_NEW_RETURN (temp,
+                      char[temp_size],
+                      false);
+      ACE_OS::strcpy (temp, drv_line);
+      delete [] drv_line;
+      drv_line = temp;
+      drv_line_size = temp_size;
+
+      l = ACE_OS::fgets (drv_line + ACE_OS::strlen (drv_line),
+                         drv_line_size - ACE_OS::strlen(drv_line),
+                         f);
+
+      if (l == 0 || *l == '\0')
+        {
+          break;
+        }
+    }
+
+  size_t i = ACE_OS::strlen (drv_line) - 1;
+
+  if (drv_line[i] == '\n')
+    {
+      drv_line[i] = '\0';
+    }
+
+  return true;
 }
 
 // Initialize the cpp argument list.

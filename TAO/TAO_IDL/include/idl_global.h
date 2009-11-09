@@ -635,6 +635,13 @@ public:
   void recursion_start (const char *val);
   // Accessors for the member.
 
+  bool multi_file_input (void) const;
+  void multi_file_input (bool val);
+  // Accessors for the member.
+  
+  const char *big_file_name (void) const;
+  // Just get the const string.
+
   UTL_String *utl_string_factory (const char *str);
   // Utility function to create UTL_String classes on the FE heap.
 
@@ -727,6 +734,7 @@ private:
     char *path_;
     bool is_system_;
   };
+  
   typedef ACE_Unbounded_Queue<Include_Path_Info> Unbounded_Paths_Queue;
   typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info> Unbounded_Paths_Queue_Iterator;
   Unbounded_Paths_Queue include_paths_;
@@ -764,6 +772,12 @@ private:
   char *recursion_start_;
   // Path to directory subtree we are iterating/recursing over.
   // Not used by all backends.
+  
+  bool multi_file_input_;
+  // Some backends process multiple files to a single output.
+  
+  const char *big_file_name_;
+  // Used if the above flag is set.
 };
 
 
