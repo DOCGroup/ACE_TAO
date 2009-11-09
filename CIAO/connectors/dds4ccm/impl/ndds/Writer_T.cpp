@@ -92,7 +92,7 @@ CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write_many (const typename DDS
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
-::DDS::InstanceHandle_t 
+::DDS::InstanceHandle_t
 CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::register_instance (const typename DDS_TYPE::value_type & datum)
 {
   ::DDS_InstanceHandle_t const handle = this->impl_->register_instance (datum);
@@ -100,9 +100,9 @@ CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::register_instance (const typen
   dds_handle <<= handle;
   return dds_handle;
 }
-    
+
 template <typename DDS_TYPE, typename CCM_TYPE >
-void 
+void
 CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::unregister_instance (const typename DDS_TYPE::value_type & datum, const ::DDS::InstanceHandle_t & instance_handle)
 {
   ::DDS_InstanceHandle_t handle;

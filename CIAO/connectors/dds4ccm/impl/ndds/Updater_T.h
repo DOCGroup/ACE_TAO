@@ -39,6 +39,7 @@ namespace CIAO
       private:
         typename DDS_TYPE::data_writer *impl_;
         bool is_lifecycle_checked_;
+        bool is_coherent_write_;
       };
     }
   }

@@ -7,6 +7,9 @@
  * Wrapper facade for NDDS.
  */
 
+#ifndef _CIAO_COHERENT_CHANGES_GUARD
+#define _CIAO_COHERENT_CHANGES_GUARD
+
 #include "ace/Copy_Disabled.h"
 #include "ndds/ndds_cpp.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"
@@ -21,7 +24,7 @@ namespace CIAO
         private ACE_Copy_Disabled
       {
         public:
-          Coherent_Changes_Guard (DDSPublisher* p, bool coherent_write);
+          Coherent_Changes_Guard (::DDSPublisher* p, bool coherent_write);
           ~Coherent_Changes_Guard ();
         private:
           ::DDSPublisher* p_;
@@ -31,3 +34,4 @@ namespace CIAO
   }
 }
 
+#endif /* _CIAO_COHERENT_CHANGES_GUARD */
