@@ -31,7 +31,7 @@ namespace CIAO
 
         virtual void write (const typename DDS_TYPE::value_type& an_instance);
 
-        virtual void write_many (const typename DDS_TYPE::seq_type& instances);
+        virtual void write_many (const typename CCM_TYPE::seq_type& instances);
         
         virtual ::DDS::InstanceHandle_t register_instance (const typename DDS_TYPE::value_type & datum);
     

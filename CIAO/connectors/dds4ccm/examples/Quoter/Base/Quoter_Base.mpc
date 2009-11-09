@@ -6,7 +6,7 @@ project(DDS_Quoter_Base_idl_gen) : taoidldefaults, anytypecode {
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
               -Wb,stub_export_macro=QUOTER_BASE_STUB_Export \
-              -Wb,stub_export_include=Quoter_Base_stub_export.h -GT 
+              -Wb,stub_export_include=Quoter_Base_stub_export.h
 
   IDL_Files {
     Quoter_Base.idl
@@ -29,6 +29,7 @@ project(DDS_Quoter_Base_NDDS_TS) : nddslib, taolib {
   libout = ../lib
   libpaths    += ../lib
   sharedname = DDS_Quoter_Base_NDDS_TS
+  dynamicflags = NDDS_USER_DLL_EXPORT
 
   Source_Files {
     Quoter_Base.cxx
@@ -41,7 +42,7 @@ project(DDS_Quoter_Base_NDDS_TS) : nddslib, taolib {
     Quoter_BasePlugin.h
     Quoter_BaseSupport.h
   }
-  
+
   Inline_Files {
   }
 }
@@ -50,6 +51,7 @@ project(DDS_Quoter_Base_stub) : ccm_stub {
   after += DDS_Quoter_Base_idl_gen
   libs  +=
   libout = ../lib
+  libpaths    += ../lib
   sharedname = DDS_Quoter_Base_stub
   dynamicflags   = QUOTER_BASE_STUB_BUILD_DLL
 

@@ -83,9 +83,9 @@ project(DDS_Quoter_Connector_stub) : ccm_stub, dds4ccm_base   {
 }
 
 project(DDS_Quoter_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
-  after   += DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_Quoter_Base_ndds_ts_gen
+  after   += DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub DDS4CCM_lem_stub CIAO_DDS4CCM_NDDS_Impl DDS_Quoter_Base_NDDS_TS
   sharedname = DDS_Quoter_Connector_exec
-  libs += DDS_Quoter_Connector_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Base_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub
+  libs += DDS_Quoter_Connector_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Base_stub CIAO_DDS4CCM_NDDS_Impl DDS4CCM_lem_stub DDS_Quoter_Base_NDDS_TS
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -96,10 +96,6 @@ project(DDS_Quoter_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
 
   Source_Files {
     Quoter_Connector_exec.cpp
-    ../Base/Quoter_Base.cxx
-    ../Base/Quoter_BasePlugin.cxx
-    ../Base/Quoter_BaseSupport.cxx
-
   }
 
   Header_Files {

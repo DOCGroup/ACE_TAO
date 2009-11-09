@@ -1,3 +1,40 @@
+Mon Nov  9 19:32:42 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.mpc
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.mpc
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.mpc
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.h
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp
+        * connectors/dds4ccm/impl/ndds/Getter_T.h
+        * connectors/dds4ccm/impl/ndds/NDDS_Traits.h
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h
+        * connectors/dds4ccm/impl/ndds/Writer_T.cpp
+        * connectors/dds4ccm/impl/ndds/Writer_T.h
+          Use the new RTI Corba kit feature to put the generated code in its
+          own library. Moved CCM sequence to the connector traits.
+
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.cpp
+        * connectors/dds4ccm/impl/ndds/Builtin_Writer_T.h
+          Deleted, not used anymore. No buildit types are supported
+
+        * connectors/dds4ccm/impl/ndds/Reader.cpp
+        * connectors/dds4ccm/impl/ndds/Reader.h
+          Deleted, not used at all
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp
+        * connectors/dds4ccm/impl/ndds/Reader_T.h
+          Small refactoring to prevent code duplication
+
 Mon Nov  9 19:11:42 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:

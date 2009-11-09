@@ -37,17 +37,17 @@ namespace CIAO_Shapes_Receiver_Impl
   //============================================================
   // Facet Executor Implementation Class: ShapeType_RawListener_exec_i
   //============================================================
-  
+
   ShapeType_RawListener_exec_i::ShapeType_RawListener_exec_i (void)
   {
   }
-  
+
   ShapeType_RawListener_exec_i::~ShapeType_RawListener_exec_i (void)
   {
   }
-  
+
   // Operations from ::CCM_DDS::ShapeType_RawListener
-  
+
   void
   ShapeType_RawListener_exec_i::on_data (
     const ShapeType & an_instance ,
@@ -63,17 +63,17 @@ namespace CIAO_Shapes_Receiver_Impl
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
-  
+
   PortStatusListener_exec_i::PortStatusListener_exec_i (void)
   {
   }
-  
+
   PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
   {
   }
-  
+
   // Operations from ::CCM_DDS::PortStatusListener
-  
+
   void
   PortStatusListener_exec_i::on_requested_deadline_missed (
     ::DDS::DataReader_ptr /* the_reader */,
@@ -81,33 +81,33 @@ namespace CIAO_Shapes_Receiver_Impl
   {
     /* Your code here. */
   }
-  
+
   void
   PortStatusListener_exec_i::on_sample_lost (
     ::DDS::DataReader_ptr /* the_reader */,
     const ::DDS::SampleLostStatus & /* status */)
   {
-   
+
   }
-  
+
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iShapeType_RawListener_exec_i ();
   //============================================================
-  
+
   Receiver_exec_i::Receiver_exec_i (void)
     : rate_ (0),
       get_data_ (true),
       read_data_ (true),
       raw_listen_ (false)
-    
+
   {
     this->ticker_ = new read_action_Generator (*this);
   }
-  
+
   Receiver_exec_i::~Receiver_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
   void
   Receiver_exec_i::read_one (void)
@@ -140,7 +140,7 @@ namespace CIAO_Shapes_Receiver_Impl
                   ACE_TEXT ("no shape_info receieved\n")));
       }
   }
-   
+
   void
   Receiver_exec_i::read_all (void)
   {
@@ -158,7 +158,7 @@ namespace CIAO_Shapes_Receiver_Impl
                             time->tm_sec,
                             readinfoseq[i].timestamp.nanosec));
       }
-    for(CORBA::ULong i = 0; i < (CORBA::ULong)shape_infos->length(); ++i)
+    for(CORBA::ULong i = 0; i < shape_infos->length(); ++i)
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
               ACE_TEXT ("Number <%d> : received shape_info for <%s> at %u:%u:%u\n"),

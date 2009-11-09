@@ -99,6 +99,7 @@ private:
 };
 
   template <typename BASE_TYPE,
+            typename SEQ_TYPE,
             typename WRITER_TYPE,
             typename UPDATER_TYPE,
             typename GETTER_TYPE,
@@ -111,6 +112,7 @@ private:
   struct Connector_Traits
   {
     typedef BASE_TYPE base_type;
+    typedef SEQ_TYPE seq_type;
     typedef WRITER_TYPE writer_type;
     typedef UPDATER_TYPE updater_type;
     typedef GETTER_TYPE getter_type;

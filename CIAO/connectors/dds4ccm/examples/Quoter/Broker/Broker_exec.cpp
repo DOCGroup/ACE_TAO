@@ -89,7 +89,7 @@ namespace CIAO_Quoter_Broker_Impl
         ACE_ERROR_RETURN ((LM_ERROR,
                           "Unable to setup Timer\n"),
                             -1);
-  
+
       }
 
     this->active_ = 1;
@@ -151,7 +151,7 @@ namespace CIAO_Quoter_Broker_Impl
 
     return 0;
   }
-  
+
   void
   Broker_exec_i::read_one (void)
   {
@@ -196,8 +196,7 @@ namespace CIAO_Quoter_Broker_Impl
       }
     if(stock_infos->length()!= 0)
       {
-        int nr_of_stock_infos = stock_infos->length();
-        for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+        for(CORBA::ULong i = 0; i < stock_infos->length(); i ++)
           {
             printf ("Stock_Info_Read_All: Number %d : received a stock_info for <%s> at %u:%u:%u\n",
                 i,
@@ -325,38 +324,38 @@ namespace CIAO_Quoter_Broker_Impl
   {
     printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
   }
-  
+
   void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
     printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
   }
-  
+
   void ConnectorStatusListener_exec_i::on_sample_rejected(
      ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  
+     const DDS::SampleRejectedStatus & /*status*/)
   {
     printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
   }
 
   void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
   {
     printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
   }
-  
+
   void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
      ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
   {
     printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
   }
-  
+
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)  
+    ::DDS::StatusKind  /*status_kind*/)
   {
     printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
   }
