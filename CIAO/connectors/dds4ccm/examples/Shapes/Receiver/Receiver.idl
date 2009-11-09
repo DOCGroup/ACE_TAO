@@ -5,10 +5,10 @@
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef RECEIVER_IDL3
-#define RECEIVER_IDL3
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
 
-#include "Connector/Shapes_Connector.idl3"
+#include "Connector/Shapes_Connector.idl"
 #include "Connector/Shapes_ConnectorE.idl"
 
 module Shapes
@@ -27,4 +27,17 @@ module Shapes
   };
 };
 
+/*
+For future use: IDL3 plus
+#include <dds4ccm/idl/dds4ccm_Connector_Base.idl3p>
+#include <dds4ccm/idl/dds4ccm_Port_RawListen.idl3p>
+
+module Shapes
+{
+  component Receiver
+  {
+    port CCM_DDS::DDS_RawListen <Shape_Info> info;
+  };
+};
+*/
 #endif
