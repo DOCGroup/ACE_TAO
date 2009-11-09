@@ -1,3 +1,11 @@
+Mon Nov  9 03:29:31 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Added the process ID to the temporary file used for gperf, due
+          to a perhaps weak random number generator not being random
+          enough for parallel builds on OS X. 
+        
 Fri Nov  6 10:13:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/driver/drv_preproc.cpp:

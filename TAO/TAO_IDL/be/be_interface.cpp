@@ -912,6 +912,7 @@ be_interface::gen_operation_table (const char *flat_name,
                         char [ACE_OS::strlen (idl_global->temp_dir ())
                               + 11 // The number of possible digits in
                                    // a 32-bit number plus a dot
+                              + 11 // for process id
                               + ACE_OS::strlen (flat_name)
                               + ACE_OS::strlen (".gperf")
                               + 1],
@@ -925,9 +926,10 @@ be_interface::gen_operation_table (const char *flat_name,
           (static_cast<ACE_RANDR_TYPE> (ACE_OS::time())
            + static_cast<ACE_RANDR_TYPE> (ACE_OS::getpid ()));
         ACE_OS::sprintf (temp_file,
-                         "%s%d.%s.gperf",
+                         "%s%d.%d.%s.gperf",
                          idl_global->temp_dir (),
                          ACE_OS::rand_r (seed),
+                         ACE_OS::getpid (),
                          flat_name);
 
         // QNX can't handle individual file names (path components)
@@ -1749,10 +1751,10 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
   if (input == ACE_INVALID_HANDLE)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Error:%p:File open failed on gperf's temp input file\n",
-                         "open_temp_file"),
-                        -1);
+      ACE_ERROR ((LM_ERROR, "Error:%p:File open failed on gperf's temp input file %s\n",
+                  "open_temp_file",
+                  tao_cg->gperf_input_filename ()));
+      return -1;
     }
 
 #ifndef ACE_OPENVMS
