@@ -21,6 +21,7 @@
 #include "Receiver_exec.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Date_Time.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Hello_Receiver_Impl
 {
