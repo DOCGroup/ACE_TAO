@@ -761,7 +761,7 @@ void SA_WorkingPlan::unsuspend_listeners_aux(CausalLink link, TaskInstID excepti
 void SA_WorkingPlan::suspend_condition(Condition cond, TaskInstID required_by, CausalLink suspended_by){
 
 	std::pair<Condition, TaskInstID> require_set (cond, required_by);
-	std::pair<CausalLink, std::pair<Condition, TaskInstID>> to_insert (suspended_by, require_set);
+	std::pair<CausalLink, std::pair<Condition, TaskInstID> > to_insert (suspended_by, require_set);
 
 	this->suspended_listener_map.insert(to_insert);
 	this->suspended_conditions.insert(require_set);
@@ -770,9 +770,9 @@ void SA_WorkingPlan::suspend_condition(Condition cond, TaskInstID required_by, C
 //Note that a condition should be removed from the suspend map
 void SA_WorkingPlan::resume_condition(Condition cond, TaskInstID required_by, CausalLink suspended_by){
 	std::pair<Condition, TaskInstID> require_set (cond, required_by);
-	std::pair<CausalLink, std::pair<Condition, TaskInstID>> to_insert (suspended_by, require_set);
+	std::pair<CausalLink, std::pair<Condition, TaskInstID> > to_insert (suspended_by, require_set);
 
-	std::multimap<CausalLink, std::pair<Condition, TaskInstID>> ::iterator it;
+	std::multimap<CausalLink, std::pair<Condition, TaskInstID> > ::iterator it;
 
 	for(it = suspended_listener_map.lower_bound(suspended_by);
 		it != suspended_listener_map.upper_bound(suspended_by); it++){

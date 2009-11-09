@@ -98,7 +98,7 @@ Condition SA_CondStrategy::choose_cond_suspension_most_constrained (const OpenCo
       return iter->first;
   }
 
-	std::map<int, std::pair<Condition, TaskInstID>> by_num_satisfying;
+	std::map<int, std::pair<Condition, TaskInstID> > by_num_satisfying;
 
 	for(OpenCondMap::const_iterator iter = open_conds.begin();
 		iter != open_conds.end(); iter++){
@@ -106,12 +106,12 @@ Condition SA_CondStrategy::choose_cond_suspension_most_constrained (const OpenCo
 		int num_sat = this->planner_->get_satisfying_tasks(iter->first).size();
 			
 
-		by_num_satisfying.insert(std::pair<int, std::pair<Condition, TaskInstID>>(num_sat, *iter));
+		by_num_satisfying.insert(std::pair<int, std::pair<Condition, TaskInstID> >(num_sat, *iter));
 	}
 
   SA_WorkingPlan* working_plan = (SA_WorkingPlan*)this->planner_->get_working_plan();
 
-  for(std::map<int, std::pair<Condition, TaskInstID>>::iterator it = by_num_satisfying.begin(); it != by_num_satisfying.end(); it++){
+  for(std::map<int, std::pair<Condition, TaskInstID> >::iterator it = by_num_satisfying.begin(); it != by_num_satisfying.end(); it++){
 	  
 
 	if(!working_plan->condition_in_suspended(it->second.first, it->second.second)){

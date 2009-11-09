@@ -196,7 +196,7 @@ namespace SA_POP {
 
     virtual void generate_all_threats(void) = 0;
 
-	virtual InstToTaskMap get_task_insts(void) = 0;
+    virtual InstToTaskMap & get_task_insts(void) = 0;
 
   protected:
     /// Pointer to Planner object.

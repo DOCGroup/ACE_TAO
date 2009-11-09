@@ -1,3 +1,16 @@
+Mon Nov  9 00:49:19 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * SA_POP_Types.h:
+        * SA_POP_Utils.h:
+        * SA_POP_Utils.cpp:
+        * SA_PlanHeuristics.cpp:
+        * SA_PlanStrategy.cpp:
+        * SA_WorkingPlan.h:
+        * SA_WorkingPlan.cpp:
+        * WorkingPlan.h:
+
+	  Portablility fixes. 
+	
 Wed Nov  4 22:47:08 UTC 2009  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
 

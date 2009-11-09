@@ -60,9 +60,9 @@ typename SA_POP::ListMultiMap<L,T>::size_type SA_POP::ListMultiMap<L,T>::erase(c
 
   //Removal all list items with matching key in the pair
 
-  for(SA_POP::ListMultiMap<L,T>::list_iterator l_iter = list_.begin(); l_iter != list_.end();)
+  for(typename SA_POP::ListMultiMap<L,T>::list_iterator l_iter = list_.begin(); l_iter != list_.end();)
   {
-    SA_POP::ListMultiMap<L,T>::list_iterator prev_iter = l_iter;
+    typename SA_POP::ListMultiMap<L,T>::list_iterator prev_iter = l_iter;
     l_iter++;
     if((*prev_iter).first == key)
     {
@@ -82,9 +82,9 @@ void SA_POP::ListMultiMap<L,T>::erase(typename SA_POP::ListMultiMap<L,T>::iterat
       //Removal first or last list items with matching key in the pair
       if(remove_dir_ == SA_POP::FRONT)
       {
-        for(SA_POP::ListMultiMap<L,T>::list_iterator l_iter = list_.begin(); l_iter != list_.end();)
+        for(typename SA_POP::ListMultiMap<L,T>::list_iterator l_iter = list_.begin(); l_iter != list_.end();)
         {
-          SA_POP::ListMultiMap<L,T>::list_iterator prev_iter = l_iter;
+          typename SA_POP::ListMultiMap<L,T>::list_iterator prev_iter = l_iter;
           l_iter++;
           if((*prev_iter).first == _Where->first && (*prev_iter).second == _Where->second )
           {
@@ -95,8 +95,8 @@ void SA_POP::ListMultiMap<L,T>::erase(typename SA_POP::ListMultiMap<L,T>::iterat
       }
       else if(remove_dir_ == SA_POP::BACK)
       {
-        SA_POP::ListMultiMap<L,T>::list_iterator last_iter = list_.end();
-        for(SA_POP::ListMultiMap<L,T>::list_iterator l_iter = list_.begin(); l_iter != list_.end();l_iter++)
+        typename SA_POP::ListMultiMap<L,T>::list_iterator last_iter = list_.end();
+        for(typename SA_POP::ListMultiMap<L,T>::list_iterator l_iter = list_.begin(); l_iter != list_.end();l_iter++)
         {
           if((*l_iter).first == _Where->first && (*l_iter).second == _Where->second)
           {
@@ -127,9 +127,9 @@ void SA_POP::ListMultiMap<L,T>::erase(typename SA_POP::ListMultiMap<L,T>::iterat
   //iterate through the range [_First, _Last) and erasing each iterator in turn
   if(_First != this->end())
   {
-    for(SA_POP::ListMultiMap<L,T>::iterator m_iter = _First; m_iter != _Last;)
+    for(typename SA_POP::ListMultiMap<L,T>::iterator m_iter = _First; m_iter != _Last;)
     {
-      SA_POP::ListMultiMap<L,T>::iterator prev_iter = m_iter;
+      typename SA_POP::ListMultiMap<L,T>::iterator prev_iter = m_iter;
       m_iter++;
       this->erase(prev_iter);
     }
@@ -266,9 +266,9 @@ typename SA_POP::ListMultiMap<L,T>::list_iterator SA_POP::ListMultiMap<L,T>::era
   if(_Where != list_.end())
   {
 
-    for (std::multimap<L, T>::iterator m_iter = multimap_.lower_bound ((*_Where).first);m_iter != multimap_.upper_bound ((*_Where).first);)
+    for (typename std::multimap<L, T>::iterator m_iter = multimap_.lower_bound ((*_Where).first);m_iter != multimap_.upper_bound ((*_Where).first);)
     {
-      std::multimap<L, T>::iterator prev_iter = m_iter;
+      typename std::multimap<L, T>::iterator prev_iter = m_iter;
       m_iter++;
       
       if(prev_iter->second == (*_Where).second)
@@ -344,7 +344,7 @@ template<typename L, typename T>
 void SA_POP::ListMultiMap<L,T>::pop_back()
 {
   //This will erase the back item in both list and multimap.
-  SA_POP::ListMultiMap<L,T>::list_iterator l_iter= -- this->list_.end();
+  typename SA_POP::ListMultiMap<L,T>::list_iterator l_iter= -- this->list_.end();
   this->erase(l_iter);
 };
 
