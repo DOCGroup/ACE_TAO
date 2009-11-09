@@ -1,3 +1,18 @@
+Mon Nov  9 11:46:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Resolved unicode compiler error.
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Sender_exec.cpp:
+          Removed thread. Using the ORB reactor thread to generate
+          and receive ShapeTypes.
+
+        * examples/Hello/Sender/Sender_exec.cpp:
+          Resolved unicode compiler error.
+
 Mon Nov  9 09:49:35 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl3

@@ -33,7 +33,7 @@ namespace CIAO_Hello_Sender_Impl
       {
         //Add extra time
         ACE_hrtime_t start = ACE_OS::gethrtime();
-        ACE_TCHAR timestamp[16];
+        char timestamp[16];
         ACE_OS::sprintf (timestamp,
                           "%lld",
                           start);
