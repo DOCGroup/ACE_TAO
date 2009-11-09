@@ -48,7 +48,8 @@ be_field::be_field (AST_Type *ft,
                n,
                vis),
     be_decl (AST_Decl::NT_field,
-             n)
+             n),
+    port_name_prefixed_ (false)
 {
   // This covers valuetype fields as well, which is what we want.
   AST_Decl::NodeType nt =
@@ -75,6 +76,18 @@ be_field::gen_member_ostream_operator (TAO_OutStream *os,
 {
   be_type *ft = be_type::narrow_from_decl (this->field_type ());
   ft->gen_member_ostream_operator (os, instance_name, accessor);
+}
+
+bool
+be_field::port_name_prefixed (void) const
+{
+  return this->port_name_prefixed_;
+}
+
+void
+be_field::port_name_prefixed (bool val)
+{
+  this->port_name_prefixed_ = val;
 }
 
 int

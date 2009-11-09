@@ -45,6 +45,10 @@ public:
   void gen_member_ostream_operator (TAO_OutStream *os,
                                     const char *instance_name,
                                     bool accessor = false);
+        
+  // Accessors for the member.                                  
+  bool port_name_prefixed (void) const;
+  void port_name_prefixed (bool val);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
@@ -55,6 +59,12 @@ public:
   // Narrowing.
 
   DEF_NARROW_FROM_DECL (be_field);
+  
+private:
+  // If the name of a provides or uses node has already been
+  // prefixed with the (mirror)port name(s), we don't want
+  // to prefix it again.
+  bool port_name_prefixed_;
 };
 
 #endif

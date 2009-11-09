@@ -1397,7 +1397,10 @@ be_interface::analyze_parentage (void)
                           || nt == AST_Decl::NT_component
                           || nt == AST_Decl::NT_home;
 
-  if (this->has_mixed_parentage_ == 1 && can_be_mixed && this->is_defined ())
+  if (this->has_mixed_parentage_ == 1
+      && can_be_mixed
+      && this->is_defined ()
+      && !this->imported ())
     {
       be_global->mixed_parentage_interfaces.enqueue_tail (this);
     }

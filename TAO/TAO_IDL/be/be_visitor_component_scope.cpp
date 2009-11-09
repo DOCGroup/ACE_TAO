@@ -68,6 +68,7 @@ be_visitor_component_scope::visit_extended_port (
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       this->current_port_name_ = node->local_name ()->get_string ();
+      this->current_port_name_ += '_';
     }
     
   return this->visit_porttype_scope (node->port_type ());
@@ -84,6 +85,7 @@ be_visitor_component_scope::visit_mirror_port (
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       this->current_port_name_ = node->local_name ()->get_string ();
+      this->current_port_name_ += '_';
     }
     
   return this->visit_porttype_scope_mirror (node->port_type ());
@@ -189,15 +191,21 @@ be_visitor_component_scope::pre_process (be_decl *node)
     {
       AST_Decl *s = ScopeAsDecl (node->defined_in ());
       AST_Decl::NodeType snt = s->node_type ();
+      be_field *f = be_field::narrow_from_decl (node);
       
-      if (snt == AST_Decl::NT_porttype)
+      if (snt == AST_Decl::NT_porttype && !f->port_name_prefixed ())
         {
           ACE_CString new_name = current_port_name_;
-          new_name += '_';
           new_name += node->local_name ()->get_string ();
           
           Identifier *i = node->name ()->last_component ();
           i->replace_string (new_name.c_str ());
+          
+          // And replace the local name string as well.
+          i = node->local_name ();
+          i->replace_string (new_name.c_str ());
+          
+          f->port_name_prefixed (true);
         }
     }
     
