@@ -8,7 +8,7 @@
 #ifndef DDS4CCM_PORT_UPDATE_IDL3P
 #define DDS4CCM_PORT_UPDATE_IDL3P
 
-#include "dds4ccm/idl/dds4ccm_Updater.idl3p"
+#include "connectors/dds4ccm/idl/dds4ccm_Updater.idl3p"
 
 module CCM_DDS
 {
