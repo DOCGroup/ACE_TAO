@@ -41,7 +41,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_TEXT("MyName1"),
     ACE_TEXT("-cNODE_LOCAL"),
     address_arg1,
-    NULL
+    0
   };
   int m_argc =
     sizeof (m_argv) / sizeof (ACE_TCHAR *) -1;
@@ -54,7 +54,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_TEXT("MyName2"),
     ACE_TEXT("-cNODE_LOCAL"),
     address_arg2,
-    NULL
+    0
   };
 
   int n_argc =

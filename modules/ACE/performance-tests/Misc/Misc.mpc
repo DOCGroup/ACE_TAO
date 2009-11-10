@@ -36,6 +36,7 @@ project(*test_mutex) : aceexe {
 
 project(*test_naming) : aceexe {
   avoids += ace_for_tao
+  requires += ace_other
   exename = test_naming
   Source_Files {
     test_naming.cpp

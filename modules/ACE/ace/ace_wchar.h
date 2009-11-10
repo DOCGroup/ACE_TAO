@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+//* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -12,6 +12,8 @@
 
 #ifndef ACE_WCHAR_H
 #define ACE_WCHAR_H
+
+#include "ace/config-macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -76,10 +78,17 @@
 #   include /**/ <cwctype>
 # elif defined (ACE_HAS_WINCE)
 #   include /**/ <wtypes.h>
-# elif !defined (__BORLANDC__)
+# else
 #   include /**/ <wchar.h>
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #endif /* ACE_HAS_WCHAR */
+
+#if defined (ACE_HAS_ICONV)
+#  include /**/ <iconv.h>
+#  if !defined (ACE_MAX_ICONV_BUFFER)
+#    define ACE_MAX_ICONV_BUFFER   16*1024
+#  endif
+#endif /* ACE_HAS_ICONV */
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
@@ -113,7 +122,10 @@ using std::size_t;
 #if defined (ACE_USES_WCHAR)
 typedef wchar_t ACE_TCHAR;
 typedef char ACE_ANTI_TCHAR;
-# define ACE_LIB_TEXT(STRING) ACE_TEXT_WIDE (STRING)
+# define ACE_TEXT(STRING) ACE_TEXT_WIDE (STRING)
+# if !defined (ACE_LACKS_DEPRECATED_MACROS)
+#  define ACE_LIB_TEXT(STRING) ACE_TEXT_WIDE (STRING)
+# endif
 # define ACE_TEXT_ALWAYS_CHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 # define ACE_TEXT_ALWAYS_WCHAR(STRING) STRING
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
@@ -122,19 +134,16 @@ typedef char ACE_ANTI_TCHAR;
 #else /* ACE_USES_WCHAR */
 typedef char ACE_TCHAR;
 typedef wchar_t ACE_ANTI_TCHAR;
-# define ACE_LIB_TEXT(STRING) STRING
+# define ACE_TEXT(STRING) STRING
+# if !defined (ACE_LACKS_DEPRECATED_MACROS)
+#  define ACE_LIB_TEXT(STRING) STRING
+# endif
 # define ACE_TEXT_ALWAYS_CHAR(STRING) STRING
 # define ACE_TEXT_ALWAYS_WCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) STRING
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 # define ACE_TEXT_ANTI_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 #endif /* ACE_USES_WCHAR */
-
-#if defined (ACE_LEGACY_MODE)
-# define ACE_TEXT TEXT
-#else /* ACE_LEGACY_MODE */
-# define ACE_TEXT ACE_LIB_TEXT
-#endif /* ACE_LEGACY_MODE */
 
 // The OS_String module defines some wide-char functions that are not
 // universally available. In particular, they're not part of the
@@ -193,6 +202,10 @@ private:
   /// Internal pointer to the converted string.
   char *s_;
 
+#if defined (ACE_HAS_ICONV)
+  static iconv_t ACE_Wide_To_Ascii_iconv_env;
+#endif /* ACE_HAS_ICONV */
+
   /// Disallow these operation.
   ACE_Wide_To_Ascii (void);
   ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &);
@@ -227,6 +240,10 @@ private:
   /// Internal pointer to the converted string.
   wchar_t *s_;
 
+#if defined (ACE_HAS_ICONV)
+  static iconv_t ACE_Ascii_To_Wide_iconv_env;
+#endif /* ACE_HAS_ICONV */
+
   /// Disallow these operation.
   ACE_Ascii_To_Wide (void);
   ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &);
@@ -244,10 +261,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32)
 #if defined (ACE_USES_WCHAR)
+#define ACE_LPSTR                                LPWSTR
 #define ACE_TEXT_SERVICE_TABLE_ENTRY             SERVICE_TABLE_ENTRYW
 #define ACE_TEXT_STARTUPINFO                     STARTUPINFOW
 #define ACE_TEXT_WIN32_FIND_DATA                 WIN32_FIND_DATAW
 #define ACE_TEXT_OSVERSIONINFO                   OSVERSIONINFOW
+#define ACE_TEXT_EXPLICIT_ACCESS                 EXPLICIT_ACCESS_W
 
 #define ACE_TEXT_CreateEvent                     ::CreateEventW
 #define ACE_TEXT_CreateFile                      ::CreateFileW
@@ -268,6 +287,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_GetModuleFileName               ::GetModuleFileNameW
 #define ACE_TEXT_GetTempPath                     ::GetTempPathW
 #define ACE_TEXT_GetUserName                     ::GetUserNameW
+#define ACE_TEXT_GetUserNameEx                   ::GetUserNameExW
 #define ACE_TEXT_GetVersionEx                    ::GetVersionExW
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryW
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExW
@@ -293,12 +313,19 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_SearchPath                      ::SearchPathW
 #define ACE_TEXT_StartService                    ::StartServiceW
 #define ACE_TEXT_StartServiceCtrlDispatcher      ::StartServiceCtrlDispatcherW
+#define ACE_TEXT_SetFileSecurity                 ::SetFileSecurityW
+#define ACE_TEXT_SetEntriesInAcl                 ::SetEntriesInAclW
+#define ACE_TEXT_PdhExpandCounterPath            ::PdhExpandCounterPathW
+#define ACE_TEXT_PdhOpenQuery                    ::PdhOpenQueryW
+#define ACE_TEXT_PdhAddCounter                   ::PdhAddCounterW
 
 #else /* ACE_USES_WCHAR */
+#define ACE_LPSTR                                LPSTR
 #define ACE_TEXT_SERVICE_TABLE_ENTRY             SERVICE_TABLE_ENTRYA
 #define ACE_TEXT_STARTUPINFO                     STARTUPINFOA
 #define ACE_TEXT_WIN32_FIND_DATA                 WIN32_FIND_DATAA
 #define ACE_TEXT_OSVERSIONINFO                   OSVERSIONINFOA
+#define ACE_TEXT_EXPLICIT_ACCESS                 EXPLICIT_ACCESS_A
 
 #define ACE_TEXT_CreateEvent                     ::CreateEventA
 #define ACE_TEXT_CreateFile                      ::CreateFileA
@@ -319,6 +346,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_GetModuleFileName               ::GetModuleFileNameA
 #define ACE_TEXT_GetTempPath                     ::GetTempPathA
 #define ACE_TEXT_GetUserName                     ::GetUserNameA
+#define ACE_TEXT_GetUserNameEx                   ::GetUserNameExA
 #define ACE_TEXT_GetVersionEx                    ::GetVersionExA
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryA
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExA
@@ -344,6 +372,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_SearchPath                      ::SearchPathA
 #define ACE_TEXT_StartService                    ::StartServiceA
 #define ACE_TEXT_StartServiceCtrlDispatcher      ::StartServiceCtrlDispatcherA
+#define ACE_TEXT_SetFileSecurity                 ::SetFileSecurityA
+#define ACE_TEXT_SetEntriesInAcl                 ::SetEntriesInAclA
+#define ACE_TEXT_PdhExpandCounterPath            ::PdhExpandCounterPathA
+#define ACE_TEXT_PdhOpenQuery                    ::PdhOpenQueryA
+#define ACE_TEXT_PdhAddCounter                   ::PdhAddCounterA
 #endif /* ACE_USES_WCHAR */
 #endif /* ACE_WIN32 */
 

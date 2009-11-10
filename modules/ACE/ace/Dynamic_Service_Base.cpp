@@ -20,7 +20,7 @@ ACE_Dynamic_Service_Base::dump (void) const
   ACE_TRACE ("ACE_Dynamic_Service_Base::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -34,15 +34,6 @@ ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name, bool no_global)
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
   return instance (ACE_Service_Config::current (), name, no_global);
 }
-
-
-void *
-ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
-{
-  ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
-  return instance (ACE_Service_Config::current (), name, false);
-}
-
 
 // Find a service registration
 
@@ -68,7 +59,6 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
 
 
 // Get the instance using <name> for specific configuration repository.
-
 void *
 ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                                     const ACE_TCHAR *name,
@@ -92,30 +82,25 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
     {
       ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
 
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("ACE (%P|%t) DSB::instance, repo=%@, name=%s")
-                  ACE_LIB_TEXT (" type=%@ => %@"),
-                  repo->repo_, name, type, obj));
-
       if (repo->repo_ != repo_found->repo_)
-        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" [in repo=%@]\n"),
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ACE (%P|%t) DSB::instance, repo=%@, name=%s")
+                    ACE_TEXT (" type=%@ => %@")
+                    ACE_TEXT (" [in repo=%@]\n"),
+                    repo->repo_, name, type, obj, 
                     repo_found->repo_));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ACE (%P|%t) DSB::instance, repo=%@, name=%s")
+                    ACE_TEXT (" type=%@ => %@\n"),
+                    repo->repo_, name, type, obj));
+        }
     }
 
   return obj;
 }
-
-
-// Get the instance using <name> for specific configuration repository.
-
-void *
-ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
-                                    const ACE_TCHAR *name)
-{
-  return instance(repo,name,false);
-}
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL

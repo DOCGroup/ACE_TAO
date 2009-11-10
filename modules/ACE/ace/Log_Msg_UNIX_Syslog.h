@@ -58,7 +58,7 @@ public:
   virtual int close (void);
 
   /// This is called when we want to log a message.
-  virtual int log (ACE_Log_Record &log_record);
+  virtual ssize_t log (ACE_Log_Record &log_record);
 
 private:
   /// Convert an ACE_Log_Priority value to the corresponding syslog priority.

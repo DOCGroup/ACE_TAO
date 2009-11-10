@@ -32,6 +32,11 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+#include "ace/os_include/os_ctype.h"
+#if defined ACE_HAS_WCHAR
+# include "ace/os_include/os_wctype.h"
+#endif /* ACE_HAS_WCHAR */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
@@ -55,6 +60,14 @@ namespace ACE_OS {
   /// Returns true if the character is an alphabetic character.
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isalpha (ACE_TCHAR c);
+
+  /// Returns true if the character is a control character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isblank (ACE_TCHAR c);
+
+  /// Returns true if the character is a control character.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isascii (ACE_TCHAR c);
 
   /// Returns true if the character is a control character.
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -96,11 +109,11 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_tolower (int c);
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWLOWER)
+#if defined (ACE_HAS_WCHAR)
   /// Converts a character to lower case (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   wint_t ace_towlower (wint_t c);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
+#endif /* ACE_HAS_WCHAR */
 
   /// Converts a character to upper case (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -112,6 +125,9 @@ namespace ACE_OS {
   wint_t ace_towupper (wint_t c);
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWUPPER */
 
+  /// Tests @a c for the property specified by the @a desc argument
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ace_isctype (int c, ctype_t desc);
   //@}
 
 } /* namespace ACE_OS */

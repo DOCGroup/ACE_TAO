@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Hash_Map_Manager_T.cpp
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cse.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Hash_Map_Manager_T.cpp
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cse.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_HASH_MAP_MANAGER_T_CPP
 #define ACE_HASH_MAP_MANAGER_T_CPP
@@ -61,8 +58,20 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::key ()
   return ext_id_;
 }
 
+template <class EXT_ID, class INT_ID> const EXT_ID &
+ACE_Hash_Map_Entry<EXT_ID, INT_ID>::key () const
+{
+  return ext_id_;
+}
+
 template <class EXT_ID, class INT_ID> INT_ID &
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::item ()
+{
+  return int_id_;
+}
+
+template <class EXT_ID, class INT_ID> const INT_ID &
+ACE_Hash_Map_Entry<EXT_ID, INT_ID>::item () const
 {
   return int_id_;
 }
@@ -72,8 +81,8 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("next_ = %d"), this->next_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("prev_ = %d"), this->prev_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %d"), this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("prev_ = %d"), this->prev_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -83,8 +92,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump 
 {
 #if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("total_size_ = %d"), this->total_size_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ncur_size_ = %d"), this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %d\n"), this->total_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("cur_size_ = %d\n"), this->cur_size_));
   this->table_allocator_->dump ();
   this->entry_allocator_->dump ();
   this->lock_.dump ();
@@ -96,7 +105,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::create_buckets (size_t size)
 {
   size_t bytes = size * sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>);
-  void *ptr;
+  void *ptr = 0;
 
   ACE_ALLOCATOR_RETURN (ptr,
                         this->table_allocator_->malloc (bytes),
@@ -215,12 +224,10 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
                                                                                    const INT_ID &int_id,
                                                                                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t loc;
-  int result = this->shared_find (ext_id, entry, loc);
-
-  if (result == -1)
+  size_t loc = 0;
+  if (this->shared_find (ext_id, entry, loc) == -1)
     {
-      void *ptr;
+      void *ptr = 0;
       // Not found.
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
@@ -232,7 +239,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
                                                             &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else
@@ -244,13 +251,11 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
                                                                                       INT_ID &int_id,
                                                                                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t loc;
-  int result = this->shared_find (ext_id, entry, loc);
-
-  if (result == -1)
+  size_t loc = 0;
+  if (this->shared_find (ext_id, entry, loc) == -1)
     {
       // Not found.
-      void *ptr;
+      void *ptr = 0;
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
                             -1);
@@ -261,7 +266,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
                                                             &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
-      this->cur_size_++;
+      ++this->cur_size_;
       return 0;
     }
   else
@@ -274,10 +279,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp;
 
-  size_t loc;
-  int result = this->shared_find (ext_id, temp, loc);
-
-  if (result == -1)
+  size_t loc = 0;
+  if (this->shared_find (ext_id, temp, loc) == -1)
     {
       errno = ENOENT;
       return -1;
@@ -298,7 +301,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
   ACE_DES_FREE_TEMPLATE2 (entry, this->entry_allocator_->free,
                           ACE_Hash_Map_Entry, EXT_ID, INT_ID);
 
-  this->cur_size_--;
+  --this->cur_size_;
   return 0;
 }
 
@@ -307,6 +310,12 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::share
                                                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
                                                                                         size_t &loc)
 {
+  if (this->total_size_ == 0)
+    {
+      errno = ENOENT;
+      return -1;
+    }
+
   loc = this->hash (ext_id) % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc].next_;
@@ -331,7 +340,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      const INT_ID &int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy;
+  size_t dummy = 0;
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
@@ -348,7 +357,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy;
+  size_t dummy = 0;
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
@@ -367,7 +376,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy;
+  size_t dummy = 0;
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
@@ -390,8 +399,8 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("index_ = %d "), this->index_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("next_ = %x"), this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %x"), this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -434,7 +443,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
     return -1;
   else if (this->index_ == static_cast<ssize_t> (this->map_man_->total_size_))
     {
-      this->index_--;
+      --this->index_;
       return this->reverse_i ();
     }
   else if (this->index_ < 0)
@@ -464,8 +473,8 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
   ACE_TRACE ("ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("index_ = %d "), this->index_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("next_ = %x"), this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %x"), this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -479,7 +488,7 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
   // Handle initial case specially.
   else if (this->index_ == -1)
     {
-      this->index_++;
+      ++this->index_;
       return this->forward_i ();
     }
   else if (this->index_ >= (ssize_t) this->map_man_->total_size_)
@@ -508,7 +517,7 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
     return -1;
   else if (this->index_ == (ssize_t) this->map_man_->total_size_)
     {
-      this->index_--;
+      --this->index_;
       return this->reverse_i ();
     }
   else if (this->index_ < 0)

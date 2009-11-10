@@ -22,7 +22,7 @@ Handle_R_Dgram::open (const ACE_INET_Addr &r, int async)
     return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_R_Dgram::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
@@ -30,7 +30,7 @@ Handle_R_Dgram::info (ACE_TCHAR **strp, size_t length) const
 
   if (this->get_local_addr (sa) == -1)
     return -1;
-  
+
   ACE_OS::sprintf (buf, ACE_TEXT ("%d/"), sa.get_port_number ());
   ACE_OS::strcat (buf, ACE_TEXT ("udp # tests remote dgram\n"));
 
@@ -48,26 +48,25 @@ Handle_R_Dgram::init (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
-       {
-       case 'p': 
-	 sidg.set (ACE_OS::atoi (get_opt.opt_arg ()));
-	 break;
-       default:
-	 break;
-       }
-  
+    switch (c)
+      {
+      case 'p':
+        sidg.set (ACE_OS::atoi (get_opt.opt_arg ()));
+        break;
+      default:
+        break;
+      }
+
   if (this->open (sidg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
-  else if (ACE_Reactor::instance ()->register_handler 
-	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
+  else if (ACE_Reactor::instance ()->register_handler (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("registering service with ACE_Reactor")), -1);
   return 0;
 }
 
-ACE_INLINE int 
-Handle_R_Dgram::fini (void) 
+ACE_INLINE int
+Handle_R_Dgram::fini (void)
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
@@ -75,11 +74,11 @@ Handle_R_Dgram::fini (void)
 
 ACE_INLINE ACE_HANDLE
 Handle_R_Dgram::get_handle (void) const
-{ 
-  return ACE_SOCK_Dgram::get_handle (); 
+{
+  return ACE_SOCK_Dgram::get_handle ();
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_R_Dgram::handle_input (ACE_HANDLE)
 {
   ACE_INET_Addr sa;

@@ -58,6 +58,6 @@ const wxString& ValueDlg::GetStringValue()
 
 u_int ValueDlg::GetUINTValue()
 {
-  return atoi(m_Value);
+  return ACE_OS::atoi(m_Value);
 }
 

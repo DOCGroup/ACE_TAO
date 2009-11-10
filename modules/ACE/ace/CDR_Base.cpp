@@ -14,6 +14,11 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if defined (NONNATIVE_LONGDOUBLE)
+static const ACE_INT16 max_eleven_bit = 0x3ff;
+static const ACE_INT16 max_fifteen_bit = 0x3fff;
+#endif /* NONNATIVE_LONGDOUBLE */
+
 //
 // See comments in CDR_Base.inl about optimization cases for swap_XX_array.
 //
@@ -29,7 +34,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
   // Later, we try to read in 32 or 64 bit chunks,
   // so make sure we don't do that for unaligned addresses.
 #if ACE_SIZEOF_LONG == 8 && \
-    !(defined(__amd64__) && defined(__GNUG__))
+    !((defined(__amd64__) || defined (__x86_64__)) && defined(__GNUG__))
   char const * const o8 = ACE_ptr_align_binary (orig, 8);
   while (orig < o8 && n > 0)
     {
@@ -64,7 +69,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 
   // See if we're aligned for writting in 64 or 32 bit chunks...
 #if ACE_SIZEOF_LONG == 8 && \
-    !(defined(__amd64__) && defined(__GNUG__))
+    !((defined(__amd64__) || defined (__x86_64__)) && defined(__GNUG__))
   if (target == ACE_ptr_align_binary (target, 8))
 #else
   if (target == ACE_ptr_align_binary (target, 4))
@@ -72,7 +77,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
     {
       while (orig < end)
         {
-#if (defined (ACE_HAS_PENTIUM) || defined(__amd64__)) && defined (__GNUG__)
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
           unsigned int a =
             * reinterpret_cast<const unsigned int*> (orig);
           unsigned int b =
@@ -133,7 +138,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
       // We're out of luck. We have to write in 2 byte chunks.
       while (orig < end)
         {
-#if (defined (ACE_HAS_PENTIUM) || defined(__amd64__)) && defined (__GNUG__)
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
           unsigned int a =
             * reinterpret_cast<const unsigned int*> (orig);
           unsigned int b =
@@ -289,7 +294,7 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           register unsigned long b =
             * reinterpret_cast<const long*> (orig + 8);
 
-#if defined(__amd64__) && defined(__GNUC__)
+#if defined(ACE_HAS_INTEL_ASSEMBLY)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
           asm ("bswapq %1" : "=r" (b) : "0" (b));
           asm ("rol $32, %1" : "=r" (a) : "0" (a));
@@ -325,7 +330,7 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           register unsigned long b =
             * reinterpret_cast<const long*> (orig + 8);
 
-#if defined(__amd64__) && defined(__GNUC__)
+#if defined(ACE_HAS_INTEL_ASSEMBLY)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
           asm ("bswapq %1" : "=r" (b) : "0" (b));
           asm ("rol $32, %1" : "=r" (a) : "0" (a));
@@ -544,20 +549,22 @@ ACE_CDR::total_length (const ACE_Message_Block* begin,
   return l;
 }
 
-void
+int
 ACE_CDR::consolidate (ACE_Message_Block *dst,
                       const ACE_Message_Block *src)
 {
   if (src == 0)
-    return;
+    return 0;
 
-  size_t newsize =
+  size_t const newsize =
     ACE_CDR::first_size (ACE_CDR::total_length (src, 0)
                          + ACE_CDR::MAX_ALIGNMENT);
-  dst->size (newsize);
+
+  if (dst->size (newsize) == -1)
+    return -1;
 
 #if !defined (ACE_CDR_IGNORE_ALIGNMENT)
-  // We must copy the contents of <src> into the new buffer, but
+  // We must copy the contents of src into the new buffer, but
   // respecting the alignment.
   ptrdiff_t srcalign =
     ptrdiff_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
@@ -581,6 +588,7 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
       else
         dst->wr_ptr (i->length ());
     }
+  return 0;
 }
 
 #if defined (NONNATIVE_LONGLONG)
@@ -599,6 +607,85 @@ ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
 #endif /* NONNATIVE_LONGLONG */
 
 #if defined (NONNATIVE_LONGDOUBLE)
+ACE_CDR::LongDouble&
+ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
+{
+  ACE_OS::memset (this->ld, 0, sizeof (this->ld));
+
+  if (sizeof (rhs) == 8)
+    {
+#if defined (ACE_LITTLE_ENDIAN)
+      static const size_t byte_zero = 1;
+      static const size_t byte_one = 0;
+      char rhs_ptr[16];
+      ACE_CDR::swap_8 (reinterpret_cast<const char*> (&rhs), rhs_ptr);
+#else
+      static const size_t byte_zero = 0;
+      static const size_t byte_one = 1;
+      const char* rhs_ptr = reinterpret_cast<const char*> (&rhs);
+#endif
+      ACE_INT16 sign  = static_cast<ACE_INT16> (
+                          static_cast<signed char> (rhs_ptr[0])) & 0x8000;
+      ACE_INT16 exponent = ((rhs_ptr[0] & 0x7f) << 4) |
+                           ((rhs_ptr[1] >> 4) & 0xf);
+      const char* exp_ptr = reinterpret_cast<const char*> (&exponent);
+
+      // Infinity and NaN have an exponent of 0x7ff in 64-bit IEEE
+      if (exponent == 0x7ff)
+        {
+          exponent = 0x7fff;
+        }
+      else
+        {
+          exponent = (exponent - max_eleven_bit) + max_fifteen_bit;
+        }
+      exponent |= sign;
+
+      // Store the sign bit and exponent
+      this->ld[0] = exp_ptr[byte_zero];
+      this->ld[1] = exp_ptr[byte_one];
+
+      // Store the mantissa.  In an 8 byte double, it is split by
+      // 4 bits (because of the 12 bits for sign and exponent), so
+      // we have to shift and or the rhs to get the right bytes.
+      size_t li = 2;
+      bool direction = true;
+      for (size_t ri = 1; ri < sizeof (rhs);)
+        {
+          if (direction)
+            {
+              this->ld[li] |= ((rhs_ptr[ri] << 4) & 0xf0);
+              direction = false;
+              ++ri;
+            }
+          else
+            {
+              this->ld[li] |= ((rhs_ptr[ri] >> 4) & 0xf);
+              direction = true;
+              ++li;
+            }
+        }
+#if defined (ACE_LITTLE_ENDIAN)
+      ACE_OS::memcpy (rhs_ptr, this->ld, sizeof (this->ld));
+      ACE_CDR::swap_16 (rhs_ptr, this->ld);
+#endif
+    }
+  else
+    {
+      ACE_OS::memcpy(this->ld,
+                     reinterpret_cast<const char*> (&rhs), sizeof (rhs));
+    }
+  return *this;
+}
+
+ACE_CDR::LongDouble&
+ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble& rhs)
+{
+  if (this != &rhs)
+    *this = rhs;
+  return *this;
+}
+
 bool
 ACE_CDR::LongDouble::operator== (const ACE_CDR::LongDouble &rhs) const
 {
@@ -611,6 +698,82 @@ ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
   return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
 }
 
+ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
+{
+  ACE_CDR::LongDouble::NativeImpl ret = 0.0;
+  char* lhs_ptr = reinterpret_cast<char*> (&ret);
+
+  if (sizeof (ret) == 8)
+    {
+#if defined (ACE_LITTLE_ENDIAN)
+      static const size_t byte_zero = 1;
+      static const size_t byte_one = 0;
+      char copy[16];
+      ACE_CDR::swap_16 (this->ld, copy);
+#else
+      static const size_t byte_zero = 0;
+      static const size_t byte_one = 1;
+      const char* copy = this->ld;
+#endif
+      ACE_INT16 exponent = 0;
+      char* exp_ptr = reinterpret_cast<char*> (&exponent);
+      exp_ptr[byte_zero] = copy[0];
+      exp_ptr[byte_one] = copy[1];
+
+      ACE_INT16 sign = (exponent & 0x8000);
+      exponent &= 0x7fff;
+
+      // Infinity and NaN have an exponent of 0x7fff in 128-bit IEEE
+      if (exponent == 0x7fff)
+        {
+          exponent = 0x7ff;
+        }
+      else
+        {
+          exponent = (exponent - max_fifteen_bit) + max_eleven_bit;
+        }
+      exponent = (exponent << 4) | sign;
+
+      // Store the sign and exponent
+      lhs_ptr[0] = exp_ptr[byte_zero];
+      lhs_ptr[1] = exp_ptr[byte_one];
+
+      // Store the mantissa.  In an 8 byte double, it is split by
+      // 4 bits (because of the 12 bits for sign and exponent), so
+      // we have to shift and or the rhs to get the right bytes.
+      size_t li = 1;
+      bool direction = true;
+      for (size_t ri = 2; li < sizeof (ret);) {
+        if (direction)
+          {
+            lhs_ptr[li] |= ((copy[ri] >> 4) & 0xf);
+            direction = false;
+            ++li;
+          }
+        else
+          {
+            lhs_ptr[li] |= ((copy[ri] & 0xf) << 4);
+            direction = true;
+            ++ri;
+          }
+      }
+
+#if defined (ACE_LITTLE_ENDIAN)
+      ACE_CDR::swap_8 (lhs_ptr, lhs_ptr);
+#endif
+    }
+  else
+    {
+      ACE_OS::memcpy(lhs_ptr, this->ld, sizeof (ret));
+    }
+
+  // This bit of code is unnecessary.  However, this code is
+  // necessary to work around a bug in the gcc 4.1.1 optimizer.
+  ACE_CDR::LongDouble tmp;
+  tmp.assign (ret);
+
+  return ret;
+}
 #endif /* NONNATIVE_LONGDOUBLE */
 
 #if defined(_UNICOS) && !defined(_CRAYMPP)

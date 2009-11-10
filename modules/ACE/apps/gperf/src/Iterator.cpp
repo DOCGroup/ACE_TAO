@@ -1,25 +1,27 @@
 // -*- C++ -*-
 
-// $Id$
-
-// Copyright (C) 1989 Free Software Foundation, Inc.
-// written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
-
-// This file is part of GNU GPERF.
-
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+/**
+ * $Id$
+ *
+ * Copyright (C) 1989 Free Software Foundation, Inc.
+ * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ *
+ * This file is part of GNU GPERF.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 
 #include "Iterator.h"
 
@@ -27,10 +29,9 @@ ACE_RCSID(src, Iterator, "$Id$")
 
 #if defined (ACE_HAS_GPERF)
 
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
-// Constructor for Iterator.
-
+/// Constructor for Iterator.
 Iterator::Iterator (char *s,
                     int lo,
                     int hi,
@@ -46,9 +47,8 @@ Iterator::Iterator (char *s,
 {
 }
 
-// Provide an Iterator, returning the ``next'' value from the list of
-// valid values given in the constructor.
-
+/// Provide an Iterator, returning the ``next'' value from the list of
+/// valid values given in the constructor.
 int
 Iterator::operator() (void)
 {
@@ -75,21 +75,30 @@ Iterator::operator() (void)
           case '$': str++; return end_word;
           case '0': case '1': case '2': case '3': case '4':
           case '5': case '6': case '7': case '8': case '9':
-            for (curr_value = 0; isdigit (*str); str++)
-              curr_value = curr_value * 10 + *str - '0';
+            for (curr_value = 0; ACE_OS::ace_isdigit (*str); str++)
+              {
+                curr_value = curr_value * 10 + *str - '0';
+              }
 
             if (*str == '-')
               {
 
                 for (size = 1, upper_bound = 0;
-                     isdigit (*++str);
-                     upper_bound = upper_bound * 10 + *str - '0');
+                     ACE_OS::ace_isdigit (*++str);
+                     upper_bound = upper_bound * 10 + *str - '0')
+                  {
+                    // Do nothing.
+                  }
 
                 if (upper_bound <= curr_value || upper_bound > hi_bound)
-                  return error_value;
+                  {
+                    return error_value;
+                  }
               }
+
             return curr_value >= lo_bound && curr_value <= hi_bound
-              ? curr_value : error_value;
+                   ? curr_value
+                   : error_value;
           }
 
       return end;

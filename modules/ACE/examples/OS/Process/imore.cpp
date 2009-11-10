@@ -38,8 +38,6 @@ ACE_RCSID(Process, imore, "$Id$")
 
 #if defined (ACE_WIN32)
 static const ACE_TCHAR *executable = ACE_TEXT("MORE.COM");
-static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("c:/temp");
-static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #else
 static const char * executable = "more"; // I like less better.
 static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("/tmp");
@@ -47,14 +45,14 @@ static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #endif /* ACE_WIN32 */
 
 static ACE_TCHAR *fname = 0;   // File you want to view.
-static int use_named_pipe = 0;	// Do we want to use named pipe?
+static int use_named_pipe = 0; // Do we want to use named pipe?
 
 static void
 usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Usage: imore [-n|-u] <filename>\n"
-	      "\t-n Use named pipe.\n"
-	      "\t-u Use unnamed pipe.\n"));
+              "\t-n Use named pipe.\n"
+              "\t-u Use unnamed pipe.\n"));
 }
 
 static int
@@ -67,23 +65,23 @@ parse_args (int argc, ACE_TCHAR **argv)
     {
     switch (c)
       {
-      case 'n':			// We want to use named pipe.
+      case 'n': // We want to use named pipe.
 #if !defined (ACE_WIN32)
-	use_named_pipe = 1;
+        use_named_pipe = 1;
 #else
-	ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
 #endif /* !ACE_WIN32 */
-	break;
-      case 'u':			// Use unnamed pipe.
-	use_named_pipe = 0;
-	break;
-      default:			// What are you talking about?
-	usage ();
-	return -1;
+        break;
+      case 'u':  // Use unnamed pipe.
+        use_named_pipe = 0;
+        break;
+      default:  // What are you talking about?
+        usage ();
+        return -1;
       }
     }
 
-  if (get_opt.opt_ind () >= argc)	// Do you forget to give me a filename to "more?"
+  if (get_opt.opt_ind () >= argc) // Do you forget to give me a filename to "more?"
     {
       usage ();
       return -1;
@@ -94,6 +92,7 @@ parse_args (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
+#if !defined (ACE_WIN32)
 static int
 setup_named_pipes (ACE_Process_Options &opt)
 {
@@ -102,7 +101,7 @@ setup_named_pipes (ACE_Process_Options &opt)
                                            rendezvous_pfx);
 
   // Out of memory?
-  if (rendezvous == NULL)
+  if (rendezvous == 0)
     return -1;
 
   // Alright, this is indeed strange.  Named pipes are meant to be
@@ -142,7 +141,9 @@ setup_named_pipes (ACE_Process_Options &opt)
   wfifo.close ();
   return 0;
 }
+#endif
 
+#if !defined (ACE_WIN32)
 static int
 setup_unnamed_pipe (ACE_Process_Options &opt)
 {
@@ -169,7 +170,9 @@ setup_unnamed_pipe (ACE_Process_Options &opt)
   pipe.close ();
   return 0;
 }
+#endif
 
+#if !defined (ACE_WIN32)
 static int
 print_file (ACE_HANDLE infd)
 {
@@ -179,18 +182,24 @@ print_file (ACE_HANDLE infd)
   while ((len = ACE_OS::read (infd, buffer, BUFSIZ)) > 0)
     {
       if ((ACE_OS::write (ACE_STDOUT, buffer, len) != len))
-	if (errno == EPIPE)
-	  {
-	    // I tried to "produce" EPIPE warning to test
-	    // the program but never seen one.  (odd.)
-	    // ACE_ERROR ((LM_ERROR, "\n\nEPIPE\n"));
-	    break;
-	  }
-	else
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write"), -1);
+        {
+          if (errno == EPIPE)
+           {
+              // I tried to "produce" EPIPE warning to test
+              // the program but never seen one.  (odd.)
+              // ACE_ERROR ((LM_ERROR, "\n\nEPIPE\n"));
+              break;
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write"), -1);
+            }
+        }
     }
+
   return 0;
 }
+#endif
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -215,24 +224,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Process new_process;
 
-  // Notice that we must enclose ACE_Process_Options in the block
-  // so the file handlers it keeps can be close elegantly.
+  // The ACE_Process_Options does not need to be enclosed in a block
+  // because it does not close the file handles, the ACE_Process closes
+  // them upon destruction.
 #if !defined (ACE_WIN32)
-  {
-    ACE_Process_Options options;
+  ACE_Process_Options options;
 
-    if ((use_named_pipe ? ::setup_named_pipes :
-         ::setup_unnamed_pipe) (options) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+  if ((use_named_pipe ? ::setup_named_pipes :
+       ::setup_unnamed_pipe) (options) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
 
-    options.command_line (executable);
-    if (new_process.spawn (options) == -1)
-      {
-        int error = ACE_OS::last_error ();
-        ACE_ERROR_RETURN ((LM_ERROR, "%p errno = %d.\n",
-                           "test_more", error), -1);
-      }
-  }
+  options.command_line (executable);
+  if (new_process.spawn (options) == -1)
+    {
+      int error = ACE_OS::last_error ();
+      ACE_ERROR_RETURN ((LM_ERROR, "%p errno = %d.\n",
+                         "test_more", error), -1);
+    }
 
   // write file to ACE_STDOUT.
   if (::print_file (infile) == -1)

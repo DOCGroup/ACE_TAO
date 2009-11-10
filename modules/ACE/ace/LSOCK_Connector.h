@@ -42,7 +42,7 @@ public:
   ACE_LSOCK_Connector (void);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @a new_stream if things go well.
    * All arguments are relayed to the ACE_SOCK_Connector constructor
    * for handling.
    * @see ACE_SOCK_Connector().
@@ -56,7 +56,7 @@ public:
                        int perms = 0);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @a new_stream if things go well.
    * The @c ACE_SOCK_Connector::connect() method is called to perform
    * the actual connection attempt.
    * @see ACE_SOCK_Connector::connect().

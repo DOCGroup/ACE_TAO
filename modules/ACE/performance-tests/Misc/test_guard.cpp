@@ -50,14 +50,20 @@ char *test_name[TEST_END] = { "ACE_Guard", "ACE_Thread_Mutex_Guard" };
 guard_func test_function=guard;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
-  ACE_Get_Opt getopt (argc, argv, "gtn:");
+
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("gtn:"));
+  //FUZZ: enable check_for_lack_ACE_OS
+
   int iterations = DEFAULT_ITERATIONS;
   int c, i;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   while ((c = getopt()) != -1)
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
@@ -105,7 +111,7 @@ main (int argc, char *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

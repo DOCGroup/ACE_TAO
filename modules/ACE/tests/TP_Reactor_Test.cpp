@@ -344,13 +344,12 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 int
 Acceptor::start (const ACE_INET_Addr &addr)
 {
-  if (ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
-      ::open (addr,
-              ACE_Reactor::instance (),
-              ACE_NONBLOCK) < 0)
+  if (ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>::open (addr,
+                                                      ACE_Reactor::instance (),
+                                                      ACE_NONBLOCK) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "Acceptor::start () - open failed"),
+                       ACE_TEXT("%p\n"),
+                       ACE_TEXT("Acceptor::start () - open failed")),
                        0);
   return 1;
 }
@@ -507,11 +506,11 @@ Receiver::handle_input (ACE_HANDLE h)
       LogLocker log_lock;
 
       ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_input () SessionId=%d****\n", index_));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", BUFSIZ));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", h));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transferred", res));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", err));
-      ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
+      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
+      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
+      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
+      ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
     }
 
@@ -592,11 +591,11 @@ Receiver::handle_output (ACE_HANDLE h)
           LogLocker log_lock;
 
           ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_output () SessionId=%d****\n", index_));
-          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", bytes));
-          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", h));
-          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transferred", res));
-          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", err));
-          ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
+          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_write", bytes));
+          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
+          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
+          ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
           ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
         }
     }
@@ -706,13 +705,12 @@ int
 Connector::start (const ACE_INET_Addr & addr, int num)
 {
 
-  if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
-      ::open (ACE_Reactor::instance (),
-              ACE_NONBLOCK) < 0)
+  if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::open (ACE_Reactor::instance (),
+                                                      ACE_NONBLOCK) < 0)
     ACE_ERROR_RETURN
       ((LM_ERROR,
-        "%p\n",
-        "Connector::start () - open failed"),
+        ACE_TEXT("%p\n"),
+        ACE_TEXT("Connector::start () - open failed")),
        0);
 
   int rc = 0;
@@ -721,12 +719,11 @@ Connector::start (const ACE_INET_Addr & addr, int num)
     {
       Sender * sender = 0;
 
-      if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
-          ::connect (sender, addr) < 0)
+      if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::connect (sender, addr) < 0)
         ACE_ERROR_RETURN
           ((LM_ERROR,
-            "%p\n",
-            "Connector::start () - connect failed"),
+            ACE_TEXT("%p\n"),
+            ACE_TEXT("Connector::start () - connect failed")),
            rc);
     }
 
@@ -922,11 +919,11 @@ Sender::handle_input (ACE_HANDLE h)
       LogLocker log_lock;
 
       ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%d****\n", index_));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", BUFSIZ));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", h));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transferred", res));
-      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", err));
-      ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
+      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
+      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
+      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
+      ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
     }
 
@@ -990,11 +987,11 @@ Sender::handle_output (ACE_HANDLE h)
           LogLocker log_lock;
 
           ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_output () SessionId=%d****\n", index_));
-          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", bytes));
-          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", h));
-          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transferred", res));
-          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", err));
-          ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
+          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_write", bytes));
+          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
+          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
+          ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
           ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
         }
     }
@@ -1123,19 +1120,19 @@ disable_signal (int sigmin, int sigmax)
 {
 #if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
   sigset_t signal_set;
-  if (sigemptyset (&signal_set) == - 1)
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
-                "Error: (%P | %t):%p\n",
-                "sigemptyset failed"));
+                ACE_TEXT("Error: (%P | %t):%p\n"),
+                ACE_TEXT("sigemptyset failed")));
 
   for (int i = sigmin; i <= sigmax; i++)
-    sigaddset (&signal_set, i);
+    ACE_OS::sigaddset (&signal_set, i);
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
     ACE_ERROR ((LM_ERROR,
-                "Error: (%P | %t):%p\n",
-                "pthread_sigmask failed"));
+                ACE_TEXT("Error: (%P | %t):%p\n"),
+                ACE_TEXT("pthread_sigmask failed")));
 #else
   ACE_UNUSED_ARG(sigmin);
   ACE_UNUSED_ARG(sigmax);

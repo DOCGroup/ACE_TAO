@@ -66,8 +66,8 @@ public:
 protected:
   // = Default settings not part of public Interface.
   //
-  // @@todo These sizes should be taken from the appropriate
-  // POSIX/system header files and/or defined dynamically.
+  /// @todo These sizes should be taken from the appropriate
+  /// POSIX/system header files and/or defined dynamically.
   enum
   {
     MAX_COMMAND_LINE_OPTIONS = 128,
@@ -77,11 +77,11 @@ protected:
 
 public:
   /**
-   * If @a inherit_environment == 1, the new process will inherit the
+   * If @a inherit_environment == true, the new process will inherit the
    * environment of the current process.  @a command_line_buf_len is the
    * max strlen for command-line arguments.
    */
-  ACE_Process_Options (int inherit_environment = 1,
+  ACE_Process_Options (bool inherit_environment = true,
                        int command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN,
                        int env_buf_len = ENVIRONMENT_BUFFER,
                        int max_env_args = MAX_ENVIRONMENT_ARGS);
@@ -113,7 +113,7 @@ public:
    * Set a single environment variable, @a variable_name.  Since
    * different platforms separate each environment variable
    * differently, you must call this method once for each variable.
-   * <format> can be any printf format string.  So options->setenv
+   * @a format can be any printf format string.  So options->setenv
    * ("FOO","one + two = %s", "three") will result in "FOO=one + two =
    * three".
    */
@@ -152,7 +152,6 @@ public:
   /// Same as above in argv format.  @a argv must be null terminated.
   int command_line (const ACE_TCHAR * const argv[]);
 
-  // = Set/get the pathname used to name the process.
   /**
    * Specify the full path or relative path, or just the executable
    * name for the process. If this is set, then @a name will be used to
@@ -169,10 +168,18 @@ public:
   /// Get the creation flags.
   u_long creation_flags (void) const;
 
-  /// Set the creation flags.
+  /**
+   * Set the creation flags to affect how a new process is spawned.
+   * The only ACE-defined flag is @c NO_EXEC which prevents the new process
+   * from executing a new program image; this is a simple POSIX fork().
+   * The @c NO_EXEC option has no affect on Windows; on other platforms where
+   * a POSIX fork is not possible, specifying @c NO_EXEC will cause
+   * ACE_Process::spawn() to fail.
+   *
+   * On Windows, the value of creation_flags is passed to the @c CreateProcess
+   * system call as the value of the @c dwCreationFlags parameter.
+   */
   void creation_flags (u_long);
-
-  // = <ACE_Process> uses these operations to retrieve option values.
 
   /// Current working directory.  Returns "" if nothing has been set.
   ACE_TCHAR *working_directory (void);
@@ -213,9 +220,9 @@ public:
   /// ACE_Process_Manager to manage groups of processes.
   pid_t setgroup (pid_t pgrp);
 
-  /// Allows disabling of handle inheritence, default is TRUE.
-  int handle_inheritence (void);
-  void handle_inheritence (int);
+  /// Allows disabling of handle inheritance, default is TRUE.
+  int handle_inheritance (void);
+  void handle_inheritance (int);
 
   /// Cause the specified handle to be passed to a child process
   /// when it runs a new program image.
@@ -252,6 +259,16 @@ public:
 
   /// Get current value for avoid_zombies.
   int avoid_zombies (void);
+
+  /// Enable the use of a Unicode environment.  This only makes sense
+  /// for Win32 when ACE_USES_WCHAR is not defined.
+  void enable_unicode_environment (void);
+
+  /// Disable the use of a Unicode environment.
+  void disable_unicode_environment (void);
+
+  /// Return the unicode environment status
+  bool use_unicode_environment (void) const;
 
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
@@ -299,12 +316,12 @@ public:
   /**
    * Get the inherit_environment flag.
    */
-  int inherit_environment (void) const;
+  bool inherit_environment (void) const;
 
   /**
    * Set the inherit_environment flag.
    */
-  void inherit_environment (int nv);
+  void inherit_environment (bool nv);
 #endif /* ACE_WIN32 */
 protected:
 
@@ -315,7 +332,7 @@ protected:
 
   /// Whether the child process inherits the current process
   /// environment.
-  int inherit_environment_;
+  bool inherit_environment_;
 #endif /* !ACE_HAS_WINCE */
 
   /// Default 0.
@@ -333,9 +350,6 @@ protected:
   int environment_inherited_;
 
   ACE_TEXT_STARTUPINFO startup_info_;
-
-  /// Default TRUE.
-  BOOL handle_inheritence_;
 
   /// Pointer to security_buf1_.
   LPSECURITY_ATTRIBUTES process_attributes_;
@@ -361,6 +375,9 @@ protected:
   uid_t rgid_;
   uid_t egid_;
 #endif /* ACE_WIN32 */
+
+  /// Default true.
+  bool handle_inheritance_;
 
 #if !defined (ACE_HAS_WINCE)
   /// Is 1 if stdhandles was called.
@@ -420,6 +437,9 @@ protected:
   /// Pathname for the process. Relative path or absolute path or just
   /// the program name.
   ACE_TCHAR process_name_[MAXPATHLEN + 1];
+
+  /// Indicate if a Unicode environment should be used
+  bool use_unicode_environment_;
 };
 
 //class ACE_Process_Manager;
@@ -475,14 +495,14 @@ public:
    */
   virtual void child (pid_t parent);
 
-  /// Called by a <Process_Manager> that is removing this Process from
+  /// Called by a Process_Manager that is removing this Process from
   /// its table of managed Processes.  Default is to do nothing.
   virtual void unmanage (void);
 
   /**
-   * Wait for the process we've created to exit.  If <status> != 0, it
+   * Wait for the process we've created to exit.  If @a status != 0, it
    * points to an integer where the function store the exit status of
-   * child process to.  If <wait_options> == <WNOHANG> then return 0
+   * child process to.  If @a wait_options == @c WNOHANG then return 0
    * and don't block if the child process hasn't exited yet.  A return
    * value of -1 represents the <wait> operation failed, otherwise,
    * the child process id is returned.
@@ -494,7 +514,7 @@ public:
    * Timed wait for the process we've created to exit.  A return value
    * of -1 indicates that the something failed; 0 indicates that a
    * timeout occurred.  Otherwise, the child's process id is returned.
-   * If <status> != 0, it points to an integer where the function
+   * If @a status != 0, it points to an integer where the function
    * stores the child's exit status.
    *
    * @note On UNIX platforms this function uses <ualarm>, i.e., it
@@ -511,7 +531,7 @@ public:
   int kill (int signum = SIGINT);
 
   /**
-   * Terminate the process abruptly using <ACE::terminate_process>.
+   * Terminate the process abruptly using ACE::terminate_process().
    * This call doesn't give the process a chance to cleanup, so use it
    * with caution...
    */
@@ -571,11 +591,17 @@ protected:
 
   /// Set of handles that were passed to the child process.
   ACE_Handle_Set handles_passed_;
+
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
 
+private:
+#if defined (ACE_WIN32) && \
+    defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR) && \
+    !defined (ACE_HAS_WINCE)
+  wchar_t* convert_env_buffer (const char* env) const;
+#endif
 };
-
 
 /**
  * @class ACE_Managed_Process
@@ -597,7 +623,6 @@ protected:
 
   /// Make sure that we're allocated dynamically!
   virtual ~ACE_Managed_Process (void);
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

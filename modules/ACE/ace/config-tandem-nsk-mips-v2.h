@@ -48,9 +48,6 @@
                                 // note: on nsk TNS/R there is room in
                                 // sigset_t for 128 signals but those
                                 // above 31 are not valid.
-typedef long    fd_mask;        // should be in select.h but no such file
-#define NBBY 8                  // must be consistent with value in sys/types.h
-#define NFDBITS         (sizeof (fd_mask) * NBBY)       /* bits per mask */
 #define MAXNAMLEN  248          // missing from dirent.h
 #define ERRMAX 4218             // from errno.h
 
@@ -188,9 +185,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // to make some ACE modifications.]
 //#define ACE_HAS_REGEX
 
-// Compiler/platform supports strerror ()
-#define ACE_HAS_STRERROR
-
 // Platform doesn't have truncate()
 #define ACE_LACKS_TRUNCATE
 
@@ -218,11 +212,8 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform supports System V IPC
 #define ACE_HAS_SYSV_IPC
 
-// Platform lacks the socketpair() call
-// [Needed due to failure of Pipe_Test.  even though nsk platform
-// has socketpair(), Pipe.cpp tries to set socket buf size but this
-// is not allowed for AF_UNIX protocol on nsk.]
-#define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_SO_SNDBUF
+#define ACE_LACKS_SO_RCVBUF
 
 // Platform lacks the socketpair() call
 #define ACE_LACKS_SOCKETPAIR
@@ -234,8 +225,8 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_HRTIME_T_IS_BASIC_TYPE
 
 // printf format specifiers for 64 bit integers
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
-# define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
+# define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Ld"
+# define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"
 
 //=========================================================================
 // Threads specific parts
@@ -249,19 +240,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // one of the below to say which one.  Also may need some
 // ACE_HAS_... thing for extensions.
 #define ACE_HAS_PTHREADS
-
-// Platform's 'Pthreads' is .4a draft 4
-#ifndef ACE_TANDEM_T1248_PTHREADS
-#  define ACE_HAS_PTHREADS_DRAFT4
-#  define ACE_LACKS_CONST_TIMESPEC_PTR
-extern int cma_sigwait  (sigset_t *);
-#endif
-
-// Platform supports POSIX.1c-1995 threads
-// (This is the final standard Pthreads).
-#ifdef ACE_TANDEM_T1248_PTHREADS
-#define ACE_HAS_PTHREADS_STD
-#endif
 
 // Standard pthreads supports only SCHED_FIFO
 #define ACE_HAS_ONLY_SCHED_FIFO
@@ -290,13 +268,15 @@ extern int cma_sigwait  (sigset_t *);
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 
 // Platform lacks pthread_attr_setstackaddr
-#define ACE_LACKS_THREAD_STACK_ADDR
+#define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
 
 // Defining ACE_HAS_UCONTEXT_T since G06.21 version of spthreads has
 // a definition for it.
 #ifdef ACE_TANDEM_T1248_PTHREADS
 #define ACE_HAS_UCONTEXT_T
 #endif
+
+#define ACE_LACKS_FD_MASK
 
 //=========================================================================
 // Include file characteristics
@@ -374,9 +354,6 @@ extern int cma_sigwait  (sigset_t *);
 // Compiler's template mechanism must see source code (i.e.,
 // .cpp files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-
-// Compiler implements template specialization
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 // Compiler implements templates that support typedefs inside
 // of classes used as formal arguments to a template class.

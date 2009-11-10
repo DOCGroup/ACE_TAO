@@ -47,27 +47,23 @@ ACE_Test_Output::ACE_Test_Output (void)
 
 ACE_Test_Output::~ACE_Test_Output (void)
 {
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_PSOS)
-  ACE_OSTREAM_TYPE *log_msg_stream =  ACE_LOG_MSG->msg_ostream ();
-
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   ACE_LOG_MSG->msg_ostream (&cerr, 0);
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY && ! ACE_PSOS */
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_HAS_PHARLAP)
-  if (this->output_file_ == log_msg_stream)
-    delete this->output_file_;
-  // else something else changed the stream and hence should
-  // have closed and deleted the output_file_
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && \
+    (!defined (ACE_HAS_PHARLAP) || defined (ACE_PHARLAP_TESTLOG_TO_FILE))
+  delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
 OFSTREAM *
 ACE_Test_Output::output_file (void)
 {
-  // the output_file_ is given to ACE_LOG_MSG
+  // the output_file_ is loaned to ACE_LOG_MSG
   // and something else might destroy and/or change the stream
   // so return what ACE_LOG_MSG is using.
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -80,46 +76,48 @@ ACE_Test_Output::output_file (void)
 int
 ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
-#if defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_PHARLAP) && !defined (ACE_PHARLAP_TESTLOG_TO_FILE)
   // For PharLap, just send it all to the host console for now - redirect
   // to a file there for saving/analysis.
   EtsSelectConsole(ETS_CO_HOST);
   ACE_LOG_MSG->msg_ostream (&cout);
 
 #else
-  ACE_TCHAR temp[MAXPATHLEN];
+  ACE_TCHAR temp[MAXPATHLEN + 1] = { 0 };
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir;
+  const ACE_TCHAR *test_dir = 0;
 
-#if !defined (ACE_HAS_WINCE)
-#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
-#  else
-  ACE_TCHAR tempenv[MAXPATHLEN];
-  char *test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
+#else
+  ACE_TCHAR tempenv[MAXPATHLEN + 1] = { 0 };
+  char const * const test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
   if (test_dir_n == 0)
-    test_dir = 0;
+    {
+      test_dir = 0;
+    }
   else
     {
-      ACE_OS::strcpy (tempenv, ACE_TEXT_CHAR_TO_TCHAR (test_dir_n));
+      ACE_OS::strncpy (tempenv,
+                       ACE_TEXT_CHAR_TO_TCHAR (test_dir_n),
+                       MAXPATHLEN);
       test_dir = tempenv;
     }
-#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
+#endif /* ACE_WIN32 */
   if (test_dir == 0)
-#endif /* ACE_HAS_WINCE */
-    test_dir = ACE_TEXT ("");
+    test_dir = ACE_DEFAULT_TEST_DIR;
 
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
   // Easier to keep straight like this.
-  ACE_OS_String::strcpy (temp, test_dir);
-  ACE_OS_String::strcat (temp, ACE_LOG_DIRECTORY);
-  ACE_OS_String::strcat
-    (temp, ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR));
-  ACE_OS_String::strcat (temp, ACE_LOG_FILE_EXT_NAME);
+  ACE_OS::strncpy (temp, test_dir, MAXPATHLEN);
+  ACE_OS::strcat (temp, ACE_LOG_DIRECTORY);
+  ACE_OS::strcat (temp,
+                  ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR));
+  ACE_OS::strcat (temp, ACE_LOG_FILE_EXT_NAME);
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   // This is the only way I could figure out to avoid a console
   // warning about opening an existing file (w/o O_CREAT), or
   // attempting to unlink a non-existant one.
@@ -131,23 +129,19 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
       ACE_OS::close (fd);
       ACE_OS::unlink (temp);
     }
-# else /* ! VXWORKS */
+#else /* ! ACE_VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
   // exist: it creates a plain file instead of a directory.  If the
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-#   if defined (ACE_HAS_WINCE)
-      ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);
-#   else
-      ACE_OS::mkdir (ACE_LOG_DIRECTORY);
-#   endif  // ACE_HAS_WINCE
-# endif /* ! VXWORKS */
+  ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);
+#endif /* ACE_VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
                             ios::out | (append ? ios::app : ios::trunc));
-  if (this->output_file_->bad ())
+  if (!this->output_file_->good ())
     return -1;
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
   ACE_TCHAR *fmode = 0;
@@ -158,8 +152,8 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
-  ACE_LOG_MSG->msg_ostream (this->output_file_);
-#endif /* ACE_HAS_PHARLAP */
+  ACE_LOG_MSG->msg_ostream (this->output_file_, 0);
+#endif /* ACE_HAS_PHARLAP && !ACE_PHARLAP_TESTLOG_TO_FILE */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
@@ -176,19 +170,17 @@ ACE_Test_Output::close (void)
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
     this->output_file_->flush ();
     this->output_file_->close ();
-    delete this->output_file_;
 #else
-  ACE_OS::fflush (this->output_file_);
-  ACE_OS::fclose (this->output_file_);
+    ACE_OS::fflush (this->output_file_);
+    ACE_OS::fclose (this->output_file_);
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
-    this->output_file_=0;
-    ACE_LOG_MSG->msg_ostream (this->output_file_, 0);
+    ACE_LOG_MSG->msg_ostream (0, 0);
   }
   // else something else changed the stream and hence should
-  // have closed and deleted the output_file_
+  // have closed the output_file_
 }
 
-ACE_Test_Output*
+ACE_Test_Output *
 ACE_Test_Output::instance ()
 {
   if (ACE_Test_Output::instance_ == 0)
@@ -226,27 +218,3 @@ ACE_Test_Output::close_singleton (void)
   delete ACE_Test_Output::instance_;
   ACE_Test_Output::instance_ = 0;
 }
-
-void
-randomize (int array[], size_t size)
-{
-  size_t i;
-
-  for (i = 0; i < size; i++)
-    array [i] = static_cast <int> (i);
-
-  // See with a fixed number so that we can produce "repeatable"
-  // random numbers.
-  ACE_OS::srand (0);
-
-  // Generate an array of random numbers from 0 .. size - 1.
-
-  for (i = 0; i < size; i++)
-    {
-      size_t index = ACE_OS::rand() % size--;
-      int temp = array [index];
-      array [index] = array [size];
-      array [size] = temp;
-    }
-}
-

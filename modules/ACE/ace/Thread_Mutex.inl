@@ -86,7 +86,7 @@ ACE_Thread_Mutex::remove (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::remove");
   int result = 0;
-  if (this->removed_ == false)
+  if (!this->removed_)
     {
       this->removed_ = true;
       result = ACE_OS::thread_mutex_destroy (&this->lock_);

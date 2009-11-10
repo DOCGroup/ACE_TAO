@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server) : aceexe {
-  avoids += ace_for_tao
+project(*Server) : aceexe, avoids_ace_for_tao {
   exename = Event_Server
   Source_Files {
     Consumer_Router.cpp

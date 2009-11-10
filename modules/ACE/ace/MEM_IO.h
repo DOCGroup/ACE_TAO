@@ -59,16 +59,16 @@ public:
                             const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to <timeout> amount of time to send <buf>.  If <send>
-   * times out a -1 is returned with <errno == ETIME>.  If it succeeds
+   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
                             const ACE_Time_Value *timeout);
 
   /**
-   * Convert the buffer offset <off> to absolute address to <buf>.
-   * Return the size of valid information containing in the <buf>,
+   * Convert the buffer offset <off> to absolute address to @a buf.
+   * Return the size of valid information containing in the @a buf,
    * -1 if <shm_malloc_> is not initialized.
    */
   ssize_t get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf);
@@ -121,15 +121,15 @@ public:
   /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
-   * using ACE::recv, <timeout> only applies to ACE::recv.
+   * using ACE::recv, @a timeout only applies to ACE::recv.
    */
   virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                             int flags,
                             const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to <timeout> amount of time to send <buf>.  If <send>
-   * times out a -1 is returned with <errno == ETIME>.  If it succeeds
+   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
@@ -196,30 +196,30 @@ public:
    */
   int fini (void);
 
-  /// Send an <n> byte buffer to the other process using shm_malloc_
+  /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
   ssize_t send (const void *buf,
                 size_t n,
                 int flags) ;
 
-  /// Recv an <n> byte buffer from the shm_malloc_ thru connected socket.
+  /// Recv an @a n byte buffer from the shm_malloc_ thru connected socket.
   ssize_t recv (void *buf,
                 size_t n,
                 int flags) ;
 
-  /// Send an <n> byte buffer to the other process using shm_malloc_
+  /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
   ssize_t send (const void *buf,
                 size_t n) ;
 
-  /// Recv an <n> byte buffer from the shm_malloc_ thru connected socket.
+  /// Recv an @a n byte buffer from the shm_malloc_ thru connected socket.
   ssize_t recv (void *buf,
                 size_t n) ;
 
   /**
-   * Wait to to <timeout> amount of time to send up to <n> bytes into
-   * <buf> from <handle> (uses the <send> call).  If <send> times out
-   * a -1 is returned with <errno == ETIME>.  If it succeeds the
+   * Wait to to @a timeout amount of time to send up to @a n bytes into
+   * @a buf from <handle> (uses the <send> call).  If <send> times out
+   * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
   ssize_t send (const void *buf,
@@ -227,9 +227,9 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to <timeout> amount of time to send up to <n> bytes into
-   * <buf> from <handle> (uses the <send> call).  If <send> times out
-   * a -1 is returned with <errno == ETIME>.  If it succeeds the
+   * Wait to to @a timeout amount of time to send up to @a n bytes into
+   * @a buf from <handle> (uses the <send> call).  If <send> times out
+   * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
   ssize_t send (const void *buf,
@@ -238,17 +238,17 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to <timeout> amount of time to send the <message_block>.
-   * If <send> times out a -1 is returned with <errno == ETIME>.  If
+   * Wait to to @a timeout amount of time to send the @a message_block.
+   * If <send> times out a -1 is returned with @c errno == ETIME.  If
    * it succeeds the number of bytes sent is returned.
    */
   ssize_t send (const ACE_Message_Block *message_block,
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait up to <timeout> amount of time to receive up to <n> bytes
-   * into <buf> from <handle> (uses the <recv> call).  If <recv> times
-   * out a -1 is returned with <errno == ETIME>.  If it succeeds the
+   * Wait up to @a timeout amount of time to receive up to @a n bytes
+   * into @a buf from <handle> (uses the <recv> call).  If <recv> times
+   * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
   ssize_t recv (void *buf,
@@ -256,9 +256,9 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait up to <timeout> amount of time to receive up to <n> bytes
-   * into <buf> from <handle> (uses the <recv> call).  If <recv> times
-   * out a -1 is returned with <errno == ETIME>.  If it succeeds the
+   * Wait up to @a timeout amount of time to receive up to @a n bytes
+   * into @a buf from <handle> (uses the <recv> call).  If <recv> times
+   * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
   ssize_t recv (void *buf,

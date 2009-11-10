@@ -42,11 +42,11 @@
 
 ACE_RCSID(Proactor, test_proactor2, "test_proactor2.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 #include "ace/WIN32_Proactor.h"
 
@@ -118,9 +118,11 @@ public:
   Receiver (void);
   ~Receiver (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
   // This is called after the new connection has been accepted.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
   // These methods are called by the framework
@@ -372,8 +374,12 @@ class Sender : public ACE_Handler
 public:
   Sender (void);
   ~Sender (void);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
   void close ();
+  //FUZZ: enable check_for_lack_ACE_OS
+
   ACE_HANDLE handle (void) const;
   void handle (ACE_HANDLE);
 
@@ -409,7 +415,7 @@ MyMutex m_Mtx ;
 long    nIOCount ;
 };
 
-static char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
 
 Sender::Sender (void)
   :nIOCount ( 0 )
@@ -420,7 +426,7 @@ Sender::Sender (void)
 
 Sender::~Sender (void)
 {
-  close ();
+  this->close ();
 }
 
 void Sender::close ()
@@ -676,7 +682,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (parse_args (argc, argv) == -1)
     return -1;
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
   ACE_WIN32_Proactor *      pImpl = new ACE_WIN32_Proactor;
 
@@ -703,7 +709,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int Rc = -1 ;
 
-  if ( host == NULL ) // Acceptor
+  if ( host == 0 ) // Acceptor
     {
       // Simplify , initial read with  zero size
       Rc = acceptor.open (ACE_INET_Addr (port),0,1);
@@ -724,7 +730,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Proactor::end_event_loop () ;
 
-  if ( host != NULL ) // we are sender
+  if ( host != 0 ) // we are sender
     {
       sender.close () ; // disconnect to get reciever error !!!
     }
@@ -734,7 +740,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   pTM->wait_task ( & Task1 ) ;
 
-  ACE_Proactor::instance( ( ACE_Proactor* )NULL );
+  ACE_Proactor::instance( ( ACE_Proactor* )0 );
 
   return 0;
 }
@@ -746,14 +752,14 @@ int DisableSignal ( int SigNum )
 
 #ifndef ACE_WIN32
   sigset_t signal_set;
-  if ( sigemptyset (&signal_set) == - 1 )
+  if ( ACE_OS::sigemptyset (&signal_set) == - 1 )
     {
       ACE_ERROR ((LM_ERROR,
                   "Error:(%P | %t):%p\n",
                   "sigemptyset failed"));
     }
 
-  sigaddset (&signal_set, SigNum);
+  ACE_OS::sigaddset (&signal_set, SigNum);
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
@@ -789,7 +795,7 @@ int PrintSigMask ()
       }
     else  for (int i = 1 ; i < 1000; i++)
       {
-        member = sigismember (&mask,i);
+        member = ACE_OS::sigismember (&mask,i);
 
         COUT ( "\nSig " )
           COUT ( i )
@@ -805,4 +811,14 @@ int PrintSigMask ()
   return 0;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+#else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "This example does not work on this platform.\n"));
+  return 1;
+}
+
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

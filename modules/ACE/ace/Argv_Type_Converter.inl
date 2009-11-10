@@ -29,7 +29,7 @@ ACE_Argv_Type_Converter::get_ASCII_argv (void)
       this->align_char_with_wchar ();
     }
 
-  this->char_passed_ = 1;
+  this->char_passed_ = true;
 #endif  // ACE_USES_WCHAR
 
   return this->char_argv_;

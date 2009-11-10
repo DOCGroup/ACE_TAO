@@ -68,10 +68,10 @@ FIFO_Recv_Handler::handle_input (ACE_HANDLE)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("msg.len = %d, n = %d\n"), msg.len, n));
 
       if (msg.len > 0)
-	{
-	  // Do some work in here...
-	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("msg.buf = %C\n"), msg.buf));
-	}
+        {
+          // Do some work in here...
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("msg.buf = %C\n"), msg.buf));
+        }
       return 0;
     }
 }

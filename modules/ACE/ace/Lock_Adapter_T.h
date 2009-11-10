@@ -43,7 +43,7 @@ public:
 
   // = Initialization/Finalization methods.
 
-  /// Constructor. All locking requests will be forwarded to <lock>.
+  /// Constructor. All locking requests will be forwarded to @a lock.
   ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock);
 
   /// Constructor. Since no lock is provided by the user, one will be
@@ -102,7 +102,7 @@ private:
 
   /// This flag keep track of whether we are responsible for deleting
   /// the lock
-  int delete_lock_;
+  bool delete_lock_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -81,7 +81,7 @@ RWho_DB_Manager::get_next_host (void)
         ACE_OS::open (dir_ptr->d_name, O_RDONLY);
 
       if (user_file < 0)
-	return -1;
+        return -1;
 
       int host_data_length =
         ACE_OS::read (user_file,
@@ -90,14 +90,14 @@ RWho_DB_Manager::get_next_host (void)
 
       if (host_data_length > WHOD_HEADER_SIZE
           && current_time - this->host_data.wd_recvtime < MAX_HOST_TIMEOUT)
-	{
-	  this->current_user = 0;
-	  this->number_of_users = (host_data_length - WHOD_HEADER_SIZE) / sizeof *this->host_data.wd_we;
-	  ACE_OS::close (user_file);
-	  return 1; // We found a good host, so return it.
-	}
+        {
+          this->current_user = 0;
+          this->number_of_users = (host_data_length - WHOD_HEADER_SIZE) / sizeof *this->host_data.wd_we;
+          ACE_OS::close (user_file);
+          return 1; // We found a good host, so return it.
+        }
       else
-	ACE_OS::close (user_file);
+        ACE_OS::close (user_file);
     }
 
   // There are no more hosts, so return False.

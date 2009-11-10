@@ -21,6 +21,8 @@
 
 #include "ace/Reactor.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(WFMO_Reactor, Prerun_State_Changes, "$Id$")
 
@@ -44,7 +46,7 @@ public:
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_HANDLE handle = (ACE_HANDLE) ::socket (PF_INET, SOCK_STREAM, 0);
+  ACE_HANDLE handle = ACE_OS::socket (PF_INET, SOCK_STREAM, 0);
 
   Event_Handler *event_handler = new Event_Handler;
 

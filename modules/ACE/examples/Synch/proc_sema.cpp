@@ -46,7 +46,9 @@ int consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("csn:xi:d:"));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int is_consumer = 1;          // By default, make us a consumer.
   int delete_sema = 0;
@@ -56,8 +58,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int opt;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   while ((opt = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch (opt)
         {
         case 'c':               // Make us a consumer.

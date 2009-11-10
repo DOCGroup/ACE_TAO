@@ -74,15 +74,16 @@ test (ACE_Configuration *config,
                                       42))
     return -4;
 
-  u_char data[80];
+  static size_t const data_len = 80;
+  u_char data[data_len];
 
-  for (int i = 0; i < 80; i++)
-    data[i] = i + 128;
+  for (size_t i = 0; i < data_len ; ++i)
+    data[i] = static_cast<u_char> (i + 128);
 
   if (config->set_binary_value (testsection,
                                 ACE_TEXT ("binvalue"),
                                 data,
-                                80))
+                                data_len))
     return -5;
 
   // Get the values and compare
@@ -102,21 +103,29 @@ test (ACE_Configuration *config,
   else if (intvalue != 42)
     return -9;
 
-  u_char *data_out = 0;
-  size_t length = 0;
+  u_char *data_out (0);
 
-  if (config->get_binary_value (testsection,
-                                ACE_TEXT ("binvalue"),
-                                (void*&) data_out,
-                                length))
-    return -10;
+  {
+    void *data_tmp = 0; // Workaround for GCC strict aliasing warning.
+    size_t length = 0;
+
+    if (config->get_binary_value (testsection,
+                                  ACE_TEXT ("binvalue"),
+                                  data_tmp,
+                                  length))
+      return -10;
+
+    data_out = reinterpret_cast <u_char *> (data_tmp);
+  }
+
+  u_char * the_data = static_cast<u_char *> (data_out);
 
   // compare em
-  for (int j = 0; j < 80; j++)
-    if (data_out[j] != data[j])
+  for (size_t j = 0; j < data_len; ++j)
+    if (the_data[j] != data[j])
       return -11;
 
-  delete [] data_out;
+  delete [] the_data;
 
   // Test iteration.
   ACE_TString name;
@@ -344,13 +353,23 @@ run_tests (void)
                   status));
     ACE_Ini_ImpExp import (cf);
     // This one should work...
-    status = import.import_config (ACE_TEXT ("Config_Test_Import_1.ini"));
+    ACE_TCHAR import_file_name [MAXPATHLEN];
+#if defined (TEST_DIR)
+    ACE_OS::strcpy (import_file_name, TEST_DIR);
+    ACE_OS::strcat (import_file_name, ACE_DIRECTORY_SEPARATOR_STR);
+    ACE_OS::strcat (import_file_name, ACE_TEXT ("Config_Test_Import_1.ini"));
+#else
+    ACE_OS::strcpy (import_file_name, ACE_TEXT ("Config_Test_Import_1.ini"));
+#endif
+
+    status = import.import_config (import_file_name);
     if (status != 0) {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("Config_Test_Import_1.ini failed")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p: %s\n"),
+                  ACE_TEXT ("Config_Test_Import_1.ini failed"),
+                  import_file_name));
     }
     else {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config_Test_Import_1.ini imported\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s imported\n"), import_file_name));
 
       // Imported clean; verify content.  See ini file for expected content.
       // Verify the expected sections are there, but no others. Verify the
@@ -512,7 +531,7 @@ run_tests (void)
     }
   }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
   {
     ACE_Configuration_Win32Registry RegConfig (HKEY_LOCAL_MACHINE);
     int result = test_subkey_path (&RegConfig);
@@ -541,7 +560,7 @@ run_tests (void)
 
   ACE_Configuration_Win32Registry RegConfig (root);
   {
-    int result = test (&RegConfig);
+    int const result = test (&RegConfig);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Win32 registry test root failed (%d)\n"),
@@ -549,12 +568,30 @@ run_tests (void)
                         -1);
   }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
+
   // Test Heap version
   ACE_Configuration_Heap heap_config;
 
-  if (heap_config.open ())
-    return 0;
+  if (heap_config.open () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open %p\n"),
+                       ACE_TEXT ("local-heap config")),
+                      -1);
+  if (heap_config.open () == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open heap allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open heap expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, ACE_ERRNO_GET),
+                        -1);
+    }
   {
     int result = test_subkey_path (&heap_config);
     if (result)
@@ -573,14 +610,44 @@ run_tests (void)
                         -1);
   }
 
+#if !defined (ACE_LACKS_MMAP)
   // Test persistent heap version
   ACE_OS::unlink (ACE_TEXT ("test.reg"));
   ACE_Configuration_Heap pers_config;
 
   if (pers_config.open (ACE_TEXT ("test.reg")))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open test.reg\n")),
+                       ACE_TEXT ("Cannot open %p\n"),
+                       ACE_TEXT ("test.reg")),
                       -1);
+  if (pers_config.open (ACE_TEXT ("test.reg")) == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(mmap) allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(mmap) expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, ACE_ERRNO_GET),
+                        -1);
+    }
+  if (pers_config.open () == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(new) allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(new) expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, ACE_ERRNO_GET),
+                        -1);
+    }
 
   {
     int result = test (&pers_config);
@@ -590,6 +657,7 @@ run_tests (void)
                          result),
                         -1);
   }
+#endif /* !ACE_LACKS_MMAP */
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test passed\n")));
   return 0;
@@ -979,7 +1047,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                             // we're not equal if we cannot get rhs int
                             rc = false;
 
-                          ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), intValue);
+                          ACE_OS::sprintf (int_value, ACE_TEXT ("%08x"), intValue);
                           originalString = int_value;
                         }
                       else if (originalType == ACE_Configuration::BINARY)
@@ -1001,10 +1069,10 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                               while (binary_length)
                                 {
                                   if (ptr != binary_data)
-                                    originalString += ACE_LIB_TEXT (",");
+                                    originalString += ACE_TEXT (",");
 
                                   ACE_OS::sprintf (bin_value,
-                                                   ACE_LIB_TEXT ("%02x"),
+                                                   ACE_TEXT ("%02x"),
                                                    *ptr);
                                   originalString += bin_value;
                                   --binary_length;
@@ -1064,7 +1132,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                  sectionName.c_str (),
                                  0); // do not remove subsections.
 
-      sectionIndex++;
+      ++sectionIndex;
 
     }// end section while loop
 
@@ -1074,7 +1142,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
          (!original.enumerate_sections (originalRoot,
                                         sectionIndex,
                                         sectionName)))
-    sectionIndex++;
+    ++sectionIndex;
 
   rc = sectionIndex == 0;
 
@@ -1084,23 +1152,23 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 // change a network section value
 int Config_Test::change_one (ACE_Configuration &cfg, u_int a)
 {
-	ACE_Configuration_Section_Key root = cfg.root_section ();
-	ACE_Configuration_Section_Key NetworkSection;
-	ACE_Configuration_Section_Key LoggerSection;
-	ACE_Configuration_Section_Key BinarySection;
-	
-	if (cfg.open_section (root,
-		ACE_TEXT ("network"),
-		1,
-		NetworkSection))
-		return -1;
-	
-	if (cfg.set_integer_value (NetworkSection,
-		ACE_TEXT ("TimeToLive"),
-		a))
-		return -2;
-	
-	return 0;
+  ACE_Configuration_Section_Key root = cfg.root_section ();
+  ACE_Configuration_Section_Key NetworkSection;
+  ACE_Configuration_Section_Key LoggerSection;
+  ACE_Configuration_Section_Key BinarySection;
+
+  if (cfg.open_section (root,
+                        ACE_TEXT ("network"),
+                        1,
+                        NetworkSection))
+    return -1;
+
+  if (cfg.set_integer_value (NetworkSection,
+                             ACE_TEXT ("TimeToLive"),
+                             a))
+    return -2;
+
+  return 0;
 }
 
 // Used to test INI Import Export class
@@ -1355,27 +1423,27 @@ Config_Test::testRegFormat ()
                            ACE_TEXT ("equal original (%d)\n"),
                            rc),
                           -1);
-		
-		// 7.1 Change a value and test NOT equal case
-		change_one (original, 101);
-		if (fromFile == original)
-		{
-			ACE_ERROR_RETURN ((LM_ERROR,
-				ACE_TEXT ("not pass value change test (%d)\n"),
-				rc),
-				-1);
-		}
 
-		// 7.2 change value back, they should be equal now
-		change_one (original, 100);
-		if (fromFile != original)
-		{
-			ACE_ERROR_RETURN ((LM_ERROR,
-				ACE_TEXT ("not pass value change test (%d)\n"),
-				rc),
-				-1);
-		}
-		
+      // 7.1 Change a value and test NOT equal case
+      change_one (original, 101);
+      if (fromFile == original)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("not pass value change test (%d)\n"),
+                             rc),
+                            -1);
+        }
+
+      // 7.2 change value back, they should be equal now
+      change_one (original, 100);
+        if (fromFile != original)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("not pass value change test (%d)\n"),
+                             rc),
+                            -1);
+        }
+
     }// end if heap could not be opened.
   else
     ACE_ERROR_RETURN ((LM_ERROR,

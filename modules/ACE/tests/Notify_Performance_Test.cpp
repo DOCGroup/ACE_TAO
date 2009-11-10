@@ -102,9 +102,9 @@ create_reactor (void)
 
   if (opt_wfmo_reactor)
     {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 1)
       ACE_NEW (impl, ACE_WFMO_Reactor);
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WINSOCK2 == 1 */
     }
   else if (opt_select_reactor)
     {
@@ -166,11 +166,13 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Notify_Performance_Test"));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("pswdc:l:"));
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
+  //FUZZ: enable check_for_lack_ACE_OS
       case 'p':
         opt_dev_poll_reactor = 1;
         break;

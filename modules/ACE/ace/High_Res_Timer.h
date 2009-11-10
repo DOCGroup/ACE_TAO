@@ -120,26 +120,19 @@ public:
   /// Returns the global_scale_factor.
   static ACE_UINT32 global_scale_factor (void);
 
-  // On Win32, QueryPerformanceFrequency is used as a base for the global
-  // scale factor. The value this returns is often too small to be usefully
-  // converted to "ticks"/second - it loses unacceptably high levels of
-  // precision. So on Win32, global_scale_factor_ is in ticks/msec, not
-  // ticks/usec as on all others.
-#if defined (ACE_WIN32)
-#  define ACE_HR_SCALE_CONVERSION (ACE_ONE_SECOND_IN_MSECS)
-#else
+#ifndef  ACE_HR_SCALE_CONVERSION
 #  define ACE_HR_SCALE_CONVERSION (ACE_ONE_SECOND_IN_USECS)
-#endif /* ACE_WIN32 */
+#endif /* ACE_HR_SCALE_CONVERSION */
 
   /**
-   * Sets the global_scale_factor to the value in the <env>
+   * Sets the global_scale_factor to the value in the @a env
    * environment variable.  Returns 0 on success, -1 on failure.
    * @note If @a env points to string "0" (value zero), this call will fail.
    * This is basically a no-op on CE because there is no concept of
    * environment variable on CE.
    */
   static int get_env_global_scale_factor (const ACE_TCHAR *env
-                                          = ACE_LIB_TEXT ("ACE_SCALE_FACTOR"));
+                                          = ACE_TEXT ("ACE_SCALE_FACTOR"));
 
   /**
    * Set (and return, for info) the global scale factor by sleeping
@@ -211,12 +204,8 @@ public:
   /// to start_incr and stop_incr.
   void elapsed_time_incr (ACE_hrtime_t &nanoseconds) const;
 
-#if !defined (ACE_HAS_WINCE)
-  // @@ WINCE These two functions are currently not supported on Windows CE.
-  //    However, we should probably use the handle and ACE_Log_Msg to
-  //    print out the result.
   /// Print total time.
-  /// @note only use <print_total> if incremental timings had been used!
+  /// @note only use @c print_total if incremental timings had been used!
   void print_total (const ACE_TCHAR *message,
                     const int iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;
@@ -225,7 +214,6 @@ public:
   void print_ave (const ACE_TCHAR *message,
                   const int iterations = 1,
                   ACE_HANDLE handle = ACE_STDOUT) const;
-#endif /* !ACE_HAS_WINCE */
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -257,7 +245,7 @@ public:
   static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
                                         ACE_OS::ACE_HRTIMER_GETTIME);
 
-  /// Converts an <hrt> to <tv> using global_scale_factor_.
+  /// Converts an @a hrt to @a tv using global_scale_factor_.
   static void hrtime_to_tv (ACE_Time_Value &tv,
                             const ACE_hrtime_t hrt);
 

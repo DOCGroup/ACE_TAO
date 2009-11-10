@@ -4,19 +4,22 @@
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Throughput_Stats.h"
 
 #include "ping.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  const char* host = 0;
+  char* host = 0;
   int nsamples = 10000;
   int c;
 
-  ACE_Get_Opt getopt (argc, argv, "h:i:");
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("h:i:"));
 
   while ((c = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch ((char) c)
         {
         case 'h':
@@ -66,7 +69,6 @@ int main (int argc, char* argv[])
   ACE_DEBUG ((LM_DEBUG, " done\n"));
 
   throughput.dump_results ("Client", gsf);
-
 
   return 0;
 }

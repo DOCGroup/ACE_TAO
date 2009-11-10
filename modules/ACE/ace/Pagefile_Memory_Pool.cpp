@@ -14,6 +14,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Truncate.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"
@@ -22,7 +23,7 @@
 
 ACE_RCSID(ace, Pagefile_Memory_Pool, "$Id$")
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 #if !defined (ACE_HAS_WINCE)
 #define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)\
   MapViewOfFileEx (_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)
@@ -91,7 +92,11 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
   if (update_backing_store_name
       && ACE_OS::strlen (this->backing_store_name_) < sizeof this->backing_store_name_)
       ACE_OS::strcat (this->backing_store_name_,
-                      ACE_LIB_TEXT ("_"));
+                      ACE_TEXT ("_"));
+}
+
+ACE_Pagefile_Memory_Pool::~ACE_Pagefile_Memory_Pool (void)
+{
 }
 
 void *
@@ -252,7 +257,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
       size_low  = static_cast<DWORD> (this->local_cb_.sh_.max_size_ & 0xFFFFFFFF);
 #else
       size_high = 0;
-      size_low = this->local_cb_.sh_.max_size_;
+      size_low = ACE_Utils::truncate_cast<DWORD> (this->local_cb_.sh_.max_size_);
 #endif
 
       object_handle_ =
@@ -381,5 +386,4 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 */
-
+#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */

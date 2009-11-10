@@ -17,7 +17,7 @@ ACE_URL_Property::ACE_URL_Property (const char *name, const char *value)
 
 ACE_INLINE
 ACE_URL_Property::ACE_URL_Property (const ACE_USHORT16 *name,
-				    const ACE_USHORT16 *value)
+                                    const ACE_USHORT16 *value)
   : name_ (name),
     value_ (value)
 {

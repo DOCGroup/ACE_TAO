@@ -265,7 +265,7 @@ public:
   // = error_ accessors
   int error (void) const;
   int error (int error_value,
-             const ACE_TCHAR *s = ACE_LIB_TEXT ("ACE_Filecache_Object"));
+             const ACE_TCHAR *s = ACE_TEXT ("ACE_Filecache_Object"));
 
   /// filename_ accessor
   const ACE_TCHAR *filename (void) const;
@@ -292,7 +292,7 @@ protected:
 private:
   /// Internal error logging method, no locking.
   int error_i (int error_value,
-               const ACE_TCHAR *s = ACE_LIB_TEXT ("ACE_Filecache_Object"));
+               const ACE_TCHAR *s = ACE_TEXT ("ACE_Filecache_Object"));
 
 public:
 

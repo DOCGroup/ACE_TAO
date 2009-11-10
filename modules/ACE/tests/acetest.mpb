@@ -7,7 +7,7 @@ project : aceexe {
   libs  += Test_Output
 
   Source_Files {
-    $(ACE_ROOT)/tests/Main.cpp
+    Main.cpp
   }
   Header_Files {
   }
@@ -16,5 +16,12 @@ project : aceexe {
   Documentation_Files {
   }
   Inline_Files {
+  }
+  Template_Files {
+  }
+  Build_Files {
+    tests.mpc
+    tests.mwc
+    acetest.mpb
   }
 }

@@ -148,7 +148,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::open_i
 
   this->free_list_->resize (prealloc + this->spoke_count_);
 
-  this->wheel_time_.msec (1 << (this->res_bits_ + this->spoke_bits_));
+  this->wheel_time_.msec (1 << (this->res_bits_));
 
   ACE_NEW (this->spokes_, ACE_Timer_Node_T<TYPE>* [this->spoke_count_]);
 
@@ -244,7 +244,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::find_node (long timer_id) const
 *
 * @return True if empty
 */
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+template <class TYPE, class FUNCTOR, class ACE_LOCK> bool
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::is_empty");
@@ -510,9 +510,11 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE& type, int skip_close)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   int num_canceled = 0; // Note : Technically this can overflow.
+  int cookie = 0;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   if (!this->is_empty ())
     {
@@ -548,7 +550,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE& type, int skip_c
     }
 
   // Call the close hooks.
-  int cookie = 0;
 
   // cancel_type() called once per <type>.
   this->upcall_functor ().cancel_type (*this,
@@ -694,15 +695,15 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG,
-    ACE_LIB_TEXT ("\nspoke_count_ = %d"), this->spoke_count_));
+    ACE_TEXT ("\nspoke_count_ = %d"), this->spoke_count_));
   ACE_DEBUG ((LM_DEBUG,
-    ACE_LIB_TEXT ("\nresolution_ = %d"), 1 << this->res_bits_));
+    ACE_TEXT ("\nresolution_ = %d"), 1 << this->res_bits_));
   ACE_DEBUG ((LM_DEBUG,
-    ACE_LIB_TEXT ("\nwheel_ = \n")));
+    ACE_TEXT ("\nwheel_ =\n")));
 
   for (u_int i = 0; i < this->spoke_count_; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%d\n"), i));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"), i));
       ACE_Timer_Node_T<TYPE>* root = this->spokes_[i];
       for (ACE_Timer_Node_T<TYPE>* n = root->get_next ();
            n != root;
@@ -811,9 +812,11 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value& cur_time)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::expire");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   int expcount = 0;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
   ACE_Timer_Node_T<TYPE>* n = this->remove_first_expired (cur_time);
 
   while (n != 0)
@@ -943,7 +946,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::goto_next (u_int start_spok
 /**
 * @return True when we there aren't any more items (when current_node_ == 0)
 */
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+template <class TYPE, class FUNCTOR, class ACE_LOCK> bool
 ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void) const
 {
   return this->current_node_ == 0;

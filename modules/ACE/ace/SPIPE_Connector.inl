@@ -4,12 +4,11 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE int
-ACE_SPIPE_Connector::reset_new_handle (ACE_HANDLE handle)
+ACE_INLINE bool
+ACE_SPIPE_Connector::reset_new_handle (ACE_HANDLE)
 {
-  ACE_UNUSED_ARG (handle);
   // Nothing to do here since the handle is not a socket
-  return 0;
+  return false;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

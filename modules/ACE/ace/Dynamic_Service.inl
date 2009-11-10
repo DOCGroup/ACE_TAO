@@ -34,7 +34,6 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* repo,
   return instance (repo, ACE_TEXT_CHAR_TO_TCHAR (name),no_global);
 }
 
-
 #endif  // ACE_USES_WCHAR
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -125,13 +125,13 @@ disable_signal (int sigmin, int sigmax)
 #ifndef ACE_WIN32
 
   sigset_t signal_set;
-  if (sigemptyset (&signal_set) == - 1)
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("sigemptyset failed")));
 
   for (int i = sigmin; i <= sigmax; i++)
-    sigaddset (&signal_set, i);
+    ACE_OS::sigaddset (&signal_set, i);
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
@@ -253,7 +253,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
 #  endif /* sun */
 
-#  if !defined(__Lynx__)
+#  if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
     case CB:
       ACE_NEW_RETURN (proactor_impl,
                       ACE_POSIX_CB_Proactor (max_op),
@@ -261,7 +261,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Create Proactor Type = CB\n")));
       break;
-#  endif /* __Lynx__ */
+#  endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
 
     default:
       ACE_DEBUG ((LM_DEBUG,
@@ -1104,8 +1104,8 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   if (this->open (1, 0, 1) != 0)
   {
      ACE_ERROR ((LM_ERROR,
-                 ACE_LIB_TEXT ("(%t) %p\n"),
-                 ACE_LIB_TEXT ("Connector::open failed")));
+                 ACE_TEXT ("(%t) %p\n"),
+                 ACE_TEXT ("Connector::open failed")));
      return rc;
   }
 
@@ -1809,11 +1809,11 @@ set_proactor_type (const ACE_TCHAR *ptype)
       proactor_type = SUN;
       return 1;
 #endif /* sun */
-#if !defined (__Lynx__)
+#if !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
      case 'C':
        proactor_type = CB;
        return 1;
-#endif /* __Lynx__ */
+#endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
     default:
       break;
     }
@@ -1839,6 +1839,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
   loglevel = 0;                   // log level : only errors and highlights
   // Default transfer limit 50 messages per Sender
   xfer_limit = 50 * ACE_OS::strlen (complete_message);
+
+  // Linux kernels up to at least 2.6.9 (RHEL 4) can't do full duplex aio.
+# if defined (linux)
+  duplex = 0;
+#endif
 
   if (argc == 1) // no arguments , so one button test
     return 0;

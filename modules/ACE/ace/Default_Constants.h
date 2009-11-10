@@ -18,13 +18,16 @@
 #define ACE_DEFAULT_CONSTANTS_H
 #include /**/ "ace/pre.h"
 
-// Included just keep compilers that see #pragma dierctive first
+// Included just keep compilers that see #pragma directive first
 // happy.
 #include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// For _POSIX_TIMER_MAX
+#include "ace/os_include/os_limits.h"
 
 // Define the default constants for ACE.  Many of these are used for
 // the ACE tests and applications.  You can change these values by
@@ -51,7 +54,7 @@
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_CHUNK */
 
 #if !defined (ACE_DEFAULT_PAGEFILE_POOL_NAME)
-#define ACE_DEFAULT_PAGEFILE_POOL_NAME ACE_LIB_TEXT ("Default_ACE_Pagefile_Memory_Pool")
+#define ACE_DEFAULT_PAGEFILE_POOL_NAME ACE_TEXT ("Default_ACE_Pagefile_Memory_Pool")
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_NAME */
 
 #if !defined (ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY)
@@ -61,6 +64,10 @@
 #if !defined (ACE_DEFAULT_SERVICE_REPOSITORY_SIZE)
 #define ACE_DEFAULT_SERVICE_REPOSITORY_SIZE 1024
 #endif /* ACE_DEFAULT_SERVICE_REPOSITORY_SIZE */
+
+#if !defined (ACE_DEFAULT_SERVICE_GESTALT_SIZE)
+#define ACE_DEFAULT_SERVICE_GESTALT_SIZE 1024
+#endif /* ACE_DEFAULT_SERVICE_GESTALT_SIZE */
 
 #if !defined (ACE_REACTOR_NOTIFICATION_ARRAY_SIZE)
 #define ACE_REACTOR_NOTIFICATION_ARRAY_SIZE 1024
@@ -124,7 +131,7 @@
 # endif /* ACE_DEFAULT_MAX_SOCKET_BUFSIZ */
 
 # if !defined (ACE_DEFAULT_SERVER_PORT_STR)
-#   define ACE_DEFAULT_SERVER_PORT_STR ACE_LIB_TEXT("20002")
+#   define ACE_DEFAULT_SERVER_PORT_STR ACE_TEXT("20002")
 # endif /* ACE_DEFAULT_SERVER_PORT_STR */
 
 // Used for the Service_Directory test
@@ -196,12 +203,12 @@
 #   define ACE_DEFAULT_TIME_SERVER_STR "ACE_TS_TIME"
 # endif /* ACE_DEFAULT_TIME_SERVER_STR */
 
-// Used by the FIFO tests and the Client_Logging_Handler netsvc.
+// Used by the FIFO tests
 # if !defined (ACE_DEFAULT_RENDEZVOUS)
 #   if defined (ACE_HAS_STREAM_PIPES)
-#     define ACE_DEFAULT_RENDEZVOUS ACE_LIB_TEXT("/tmp/fifo.ace")
+#     define ACE_DEFAULT_RENDEZVOUS ACE_TEXT("/tmp/fifo.ace")
 #   else
-#     define ACE_DEFAULT_RENDEZVOUS ACE_LIB_TEXT("localhost:20010")
+#     define ACE_DEFAULT_RENDEZVOUS ACE_TEXT("localhost:20010")
 #   endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 
@@ -210,26 +217,33 @@
 # define ACE_DEFAULT_SYSLOG_FACILITY LOG_USER
 # endif /* ACE_DEFAULT_SYSLOG_FACILITY */
 
-# if !defined (ACE_DEFAULT_LOGGER_KEY)
+# if !defined (ACE_HAS_STREAM_LOG_MSG_IPC)
+#   if defined (ACE_HAS_STREAM_PIPES)
+#     define ACE_HAS_STREAM_LOG_MSG_IPC 1
+#   else
+#     define ACE_HAS_STREAM_LOG_MSG_IPC 0
+#   endif /* ACE_HAS_STREAM_PIPES */
+# endif /* !ACE_HAS_STREAM_LOG_MSG_IPC */
 
-#     if defined (ACE_HAS_STREAM_PIPES)
-#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
-#     else
-#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("localhost:20012")
-#     endif /* ACE_HAS_STREAM_PIPES */
+# if !defined (ACE_DEFAULT_LOGGER_KEY)
+#   if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
+#     define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
+#   else
+#     define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("localhost:20012")
+#   endif /* ACE_HAS_STREAM_LOG_MSG_IPC==1 */
 # endif /* ACE_DEFAULT_LOGGER_KEY */
 
 // The way to specify the local host for loopback IP. This is usually
 // "localhost" but it may need changing on some platforms.
 # if !defined (ACE_LOCALHOST)
-#   define ACE_LOCALHOST ACE_LIB_TEXT ("localhost")
+#   define ACE_LOCALHOST ACE_TEXT ("localhost")
 # endif
 
 // This specification for an IPv6 localhost should work on all platforms
 // supporting IPv6
 # if defined (ACE_HAS_IPV6)
 #   if !defined (ACE_IPV6_LOCALHOST)
-#     define ACE_IPV6_LOCALHOST ACE_LIB_TEXT ("::1")
+#     define ACE_IPV6_LOCALHOST ACE_TEXT ("::1")
 #   endif /* ACE_IPV6_LOCALHOST*/
 #endif /* ACE_HAS_IPV6 */
 
@@ -237,7 +251,7 @@
 // supporting IPv6
 # if defined (ACE_HAS_IPV6)
 #   if !defined (ACE_IPV6_ANY)
-#     define ACE_IPV6_ANY ACE_LIB_TEXT ("::")
+#     define ACE_IPV6_ANY ACE_TEXT ("::")
 #   endif /* ACE_IPV6_ANY*/
 #endif /* ACE_HAS_IPV6 */
 
@@ -297,6 +311,10 @@
 // Default size of the ACE Map_Manager.
 # if !defined (ACE_DEFAULT_MAP_SIZE)
 #   define ACE_DEFAULT_MAP_SIZE 1024
+# endif /* ACE_DEFAULT_MAP_SIZE */
+
+# if defined (ACE_DEFAULT_MAP_SIZE) && (ACE_DEFAULT_MAP_SIZE == 0)
+#  error ACE_DEFAULT_MAP_SIZE should not be zero
 # endif /* ACE_DEFAULT_MAP_SIZE */
 
 // Defaults for ACE Timer Wheel
@@ -433,12 +451,16 @@
 #  define ACE_DIRECTORY_SEPARATOR_CHAR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_CHAR_A)
 #endif /* ACE_HAS_WCHAR */
 
-#define ACE_DIRECTORY_SEPARATOR_STR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
-#define ACE_DIRECTORY_SEPARATOR_CHAR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)
+#define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
+#define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)
 
 #if !defined (ACE_DEFAULT_THREAD_PRIORITY)
 #  define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
 #endif /* ACE_DEFAULT_THREAD_PRIORITY */
+
+#if !defined (ACE_DEFAULT_THREAD_STACKSIZE)
+#  define ACE_DEFAULT_THREAD_STACKSIZE 0
+#endif /* ACE_DEFAULT_THREAD_STACKSIZE */
 
 #if !defined (ACE_MAX_DEFAULT_PORT)
 #  define ACE_MAX_DEFAULT_PORT 65535
@@ -446,9 +468,13 @@
 
 // Default number of ACE_Event_Handlers supported by
 // ACE_Timer_Heap.
-# if !defined (ACE_DEFAULT_TIMERS)
-#   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
-# endif /* ACE_DEFAULT_TIMERS */
+#if !defined (ACE_DEFAULT_TIMERS) && defined (_POSIX_TIMER_MAX)
+#  define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
+#endif /* ACE_DEFAULT_TIMERS */
+
+#if !defined (ACE_DEFAULT_TIMERS) || (defined (ACE_DEFAULT_TIMERS) && (ACE_DEFAULT_TIMERS == 0))
+#error ACE_DEFAULT_TIMERS should be defined and not be zero
+#endif /* ACE_DEFAULT_TIMERS */
 
 #if defined (ACE_WIN32)
 #  define ACE_PLATFORM_A "Win32"
@@ -471,42 +497,40 @@
 #  define ACE_PLATFORM_EXE_SUFFIX_W ACE_TEXT_WIDE(ACE_PLATFORM_EXE_SUFFIX_A)
 #endif /* ACE_HAS_WCHAR */
 
-#define ACE_PLATFORM ACE_LIB_TEXT (ACE_PLATFORM_A)
-#define ACE_PLATFORM_EXE_SUFFIX ACE_LIB_TEXT (ACE_PLATFORM_EXE_SUFFIX_A)
+#define ACE_PLATFORM ACE_TEXT (ACE_PLATFORM_A)
+#define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT (ACE_PLATFORM_EXE_SUFFIX_A)
 
 #if defined (ACE_WIN32)
-#  define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
-#  define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (";")
-#  define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
-#  if defined (__MINGW32__)
-#    define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
-#  else /* __MINGW32__ */
-#    define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
-#  endif /* __MINGW32__ */
+#  define ACE_LD_SEARCH_PATH ACE_TEXT ("PATH")
+#  define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (";")
+#  define ACE_DLL_SUFFIX ACE_TEXT (".dll")
+#  if !defined (ACE_DLL_PREFIX)
+#    define ACE_DLL_PREFIX ACE_TEXT ("")
+#  endif /* !ACE_DLL_PREFIX */
 #else /* !ACE_WIN32 */
 #  if !defined (ACE_LD_SEARCH_PATH)
-#    define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
+#    define ACE_LD_SEARCH_PATH ACE_TEXT ("LD_LIBRARY_PATH")
 #  endif /* ACE_LD_SEARCH_PATH */
 #  if !defined (ACE_LD_SEARCH_PATH_SEPARATOR_STR)
-#    define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
+#    define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (":")
 #  endif /* ACE_LD_SEARCH_PATH_SEPARATOR_STR */
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_DLL_SUFFIX)
-#  define ACE_DLL_SUFFIX ACE_LIB_TEXT (".so")
+#  define ACE_DLL_SUFFIX ACE_TEXT (".so")
 #endif /* ACE_DLL_SUFFIX */
 
 #if !defined (ACE_DLL_PREFIX)
-#  define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
+#  define ACE_DLL_PREFIX ACE_TEXT ("lib")
 #endif /* ACE_DLL_PREFIX */
 
 #if defined (ACE_WIN32)
 // Used for dynamic linking
 #   if !defined (ACE_DEFAULT_SVC_CONF)
 #     if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
+#       define ACE_DEFAULT_SVC_CONF ACE_TEXT (".\\svc.conf")
 #     else
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf.xml")
+#       define ACE_DEFAULT_SVC_CONF ACE_TEXT (".\\svc.conf.xml")
 #     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 #endif /* ACE_WIN32 */
@@ -514,14 +538,14 @@
  // Used for dynamic linking.
 #if !defined (ACE_DEFAULT_SVC_CONF)
 #  if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#    define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
+#    define ACE_DEFAULT_SVC_CONF ACE_TEXT ("./svc.conf")
 #  else
-#    define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf.xml")
+#    define ACE_DEFAULT_SVC_CONF ACE_TEXT ("./svc.conf.xml")
 #  endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #endif /* ACE_DEFAULT_SVC_CONF */
 
 #if !defined (ACE_LOGGER_KEY)
-#  define ACE_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
+#  define ACE_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
 #endif /* ACE_LOGGER_KEY */
 
 // Theses defines are used by the ACE Name Server.
@@ -544,7 +568,7 @@
 #  if defined (ACE_HAS_WCHAR)
 #    define ACE_DEFAULT_NAMESPACE_DIR_W ACE_TEXT_WIDE(ACE_DEFAULT_NAMESPACE_DIR_A)
 #  endif /* ACE_HAS_WCHAR */
-#    define ACE_DEFAULT_NAMESPACE_DIR ACE_LIB_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
+#    define ACE_DEFAULT_NAMESPACE_DIR ACE_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
 #endif /* ACE_LEGACY_MODE */
 
 #if defined (ACE_HAS_WCHAR)
@@ -552,8 +576,16 @@
 #  define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)
 #endif /* ACE_HAS_WCHAR */
 
-#define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
-#define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
+#define ACE_DEFAULT_LOCALNAME ACE_TEXT (ACE_DEFAULT_LOCALNAME_A)
+#define ACE_DEFAULT_GLOBALNAME ACE_TEXT (ACE_DEFAULT_GLOBALNAME_A)
+
+#if !defined (ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS)
+# if defined (ACE_WIN32)
+#  define ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS ACE_DEFAULT_OPEN_PERMS
+# else
+#  define ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS (S_IRUSR | S_IWUSR)
+# endif /* ACE_WIN32 */
+#endif /* ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS */
 
 # if defined (ACE_WIN32)
     // The "null" device on Win32.

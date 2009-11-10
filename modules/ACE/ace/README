@@ -80,8 +80,6 @@ ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
                                         with ACE_HAS_GETPAGESIZE).
 ACE_REDEFINES_XTI_FUNCTIONS             Platform redefines the t_... names (UnixWare)
-ACE_SELECT_USES_INT                     Platform uses int for select()
-                                        rather than fd_set
 ACE_TEMPLATES_REQUIRE_PRAGMA            Compiler's template mechanism
                                         must use a pragma This is used
                                         for AIX's C++ compiler.
@@ -91,9 +89,9 @@ ACE_TEMPLATES_REQUIRE_SOURCE            Compiler's template mechanim
                                         GNU G++.
 ACE_TIMEPROBE_ASSERTS_FIXED_SIZE        If enabled then ACE_Timeprobe_Ex<>::timeprobe()
                                         will assert if the end of the
-                                        buffer is reached.  If disabled, the 
+                                        buffer is reached.  If disabled, the
                                         counter wraps around to start
-                                        at the beginning of the buffer.  
+                                        at the beginning of the buffer.
 ACE_TIMER_SKEW                          If a timed ::select () can return
                                         early, then ACE_TIMER_SKEW is the
                                         maximum adjustment, in microseconds,
@@ -141,9 +139,18 @@ ACE_HAS_ALT_CUSERID                     Use ACE's alternate cuserid()
                                         undefined and that the
                                         geteuid() system call exists.
 ACE_HAS_DINKUM_STL                      Using the Dinkum STL library
+ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
+                                        Non-C++ Complient compilers that automatically
+                                        provide storeage for class static const int
+                                        when their declaration is seen. I.e. they object
+                                        to explicit definitions being seen in the .cpp
+                                        file.
 ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with
                                         ACE_HAS_TSS_EMULATION _only_.
                                         Defaults to 64.
+ACE_DEFAULT_THREAD_STACKSIZE            Default stack size specified for the
+                                        ACE thread spawning methods. Defaults
+                                        to 0, which defers to OS defaults.
 ACE_DEFAULT_LD_SEARCH_PATH              Specify the platform default search
                                         paths.  This macro should only be
                                         defined on platforms that don't
@@ -201,10 +208,6 @@ ACE_HAS_STDARG_THR_DEST                 Platform has void (*)(...)
                                         prototype for
                                         pthread_key_create()
                                         destructor (e.g., LynxOS).
-ACE_HAS_STL_MAP_CONFLICT                Used when users want to
-                                        compile ACE with STL and STL
-                                        map class conflicts with
-                                        <net/if.h> map struct.
 ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS     Platform/compiler supports
                                         Win32 structural exceptions
 ACE_HAS_READ_TIMEDWAIT
@@ -244,16 +247,10 @@ ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         (e.g, VxWorks).
 ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS Compiler can't handle const char *
                                         as rvalue in conditional operator.
-ACE_HAS_BROKEN_CONVERSIONS              Compiler can't handle calls
-                                        like foo->operator T *()
-ACE_HAS_BROKEN_CTIME                    Compiler/platform uses macro
-                                        for ctime (e.g., MVS)
 ACE_HAS_BROKEN_DGRAM_SENDV              Platform sendv() does not work
                                         properly with datagrams,
                                         i.e. it fails when the iovec
                                         size is IOV_MAX.
-ACE_HAS_BROKEN_HPUX_TEMPLATES           Earlier versions of HP/UX C++
-                                        are damned...
 ACE_HAS_BROKEN_MAP_FAILED               Platform doesn't cast MAP_FAILED
                                         to a void *.
 ACE_HAS_BROKEN_MSG_H                    Platform headers don't support
@@ -304,10 +301,6 @@ ACE_HAS_CPLUSPLUS_HEADERS               Compiler/platform has
                                         files
 ACE_HAS_DIRENT                          Compiler/platform has Dirent
                                         iterator functions
-ACE_HAS_DLFCN_H_BROKEN_EXTERN_C         For platforms, e.g., RedHat
-                                        4.2/Linux 2.0.30/Alpha, that
-                                        don't declare dl* functions as
-                                        extern "C" in dlfcn.h.
 ACE_HAS_DLL                             Build ACE using the frigging
                                         PC DLL nonsense...
 ACE_HAS_EBCDIC                          Compile in the ACE code set classes
@@ -321,13 +314,6 @@ ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS    Compiler does not call
                                         thrown.  In particular, the
                                         exception specification is not
                                         respected.
-ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION Compiler's template
-                                        instantiation mechanism
-                                        supports the use of explicit
-                                        C++ specializations for all
-                                        used templates. This is also
-                                        used for GNU G++ if you don't
-                                        use the "repo" patches.
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT  When a base-class is a
                                         specialization of a class template
                                         then this class template must be
@@ -347,9 +333,6 @@ ACE_HAS_GETRUSAGE_PROTOTYPE             Platform has a getrusage ()
                                         prototype in sys/resource.h
                                         that differs from the one in
                                         ace/OS.i.
-ACE_HAS_GNU_CSTRING_H                   Denotes that GNU has cstring.h
-                                        as standard which redefines
-                                        memchr()
 ACE_HAS_GPERF                           The GPERF utility is compiled
                                         for this platform
 ACE_HAS_GETIFADDRS                      This platform has ifaddrs.h and
@@ -372,6 +355,8 @@ ACE_HAS_INLINED_OSCALLS                 Inline all the static class OS
                                         overhead
 ACE_HAS_IP_MULTICAST                    Platform supports IP multicast
 ACE_HAS_IPV6                            Platform supports IPv6.
+ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED   gethostbyaddr does not handle
+                                        IPv6-mapped-IPv4 addresses
 ACE_USES_IPV4_IPV6_MIGRATION            Enable IPv6 support in ACE on
                                         platforms that don't have IPv6
                                         turned on by default.
@@ -568,9 +553,6 @@ ACE_HAS_SIGINFO_T                       Platform supports SVR4
 ACE_HAS_SIGSUSPEND                      Platform supports sigsuspend()
 ACE_HAS_SIGISMEMBER_BUG                 Platform has bug with
                                         sigismember() (HP/UX 11).
-ACE_HAS_SIG_MACROS                      Platform/compiler has macros
-                                        for sig{empty,fill,add,del}set
-                                        (e.g., SCO and FreeBSD)
 ACE_HAS_SIGNAL_OBJECT_AND_WAIT          Platform supports the Win32
                                         SignalObjectAndWait() function
                                         (WinNT 4.0 and beyond).
@@ -604,6 +586,9 @@ ACE_HAS_STHREADS                        Platform supports Solaris
                                         threads
 ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
                                         Standard C++ Library
+ACE_HAS_STDCPP_STL_INCLUDES             Standard C++ headers can be
+                                        included in the standard way.
+                                        e.g. #include <vector>
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
 ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even
@@ -617,7 +602,6 @@ ACE_HAS_WCSDUP_EMULATION                Use ACE's wcsdup() emulation (even
 ACE_HAS_STRNLEN                         Platform supports strnlen(3).
 ACE_HAS_STREAMS                         Platform supports STREAMS
 ACE_HAS_STREAM_PIPES                    Platform supports STREAM pipes
-ACE_HAS_STRERROR                        Compiler/platform supports strerror ()
 ACE_HAS_STRICT                          Use the STRICT compilation mode on Win32.
 ACE_HAS_STRING_CLASS                    Platform/Compiler supports a
                                         String class (e.g., GNU or
@@ -643,21 +627,17 @@ ACE_HAS_SYSCALL_GETRUSAGE               HP/UX has an undefined syscall
                                         for GETRUSAGE...
 ACE_HAS_SYSENT_H                        Platform provides <sysent.h>
                                         header
-ACE_HAS_SYSINFO                         Platform supports system
+ACE_HAS_SYSV_SYSINFO                    Platform supports system
                                         configuration information
 ACE_HAS_SYSV_IPC                        Platform supports System V IPC
                                         (most versions of UNIX, but
                                         not Win32)
-ACE_HAS_SYS_ERRLIST                     Platform/compiler supports
-                                        _sys_errlist symbol
 ACE_HAS_SYS_FILIO_H                     Platform provides
                                         <sys/filio.h> header
 ACE_HAS_SYS_LOADAVG_H                   Compiler/platform contains the
                                         <sys/loadavg.h> file.
 ACE_HAS_SYS_PSTAT_H                     Compiler/platform contains the
                                         <sys/pstat.h> file.
-ACE_HAS_SYS_SIGLIST                     Compiler/platform supports
-                                        _sys_siglist array
 ACE_HAS_SYS_SOCKIO_H                    Compiler/platform provides the
                                         sockio.h file
 ACE_HAS_SYS_SYSCALL_H                   Compiler/platform contains the
@@ -669,8 +649,6 @@ ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA   Compiler's template
                                         Group compilers, e.g., SGI C++
                                         and Green Hills 1.8.8 and
                                         later, support this.
-ACE_HAS_TEMPLATE_SPECIALIZATION         Compiler implements template
-                                        specialization
 ACE_HAS_TEMPLATE_TYPEDEFS               Compiler implements templates
                                         that support typedefs inside
                                         of classes used as formal
@@ -714,6 +692,9 @@ ACE_HAS_TLI                             Platform supports TLI.  Also
                                         instead of this.
 ACE_HAS_TLI_PROTOTYPES                  Platform provides TLI function
                                         prototypes
+ACE_HAS_TR24731_2005_CRT                The platform provides an implementation
+                                        of C99 draft TR24731 (October 2005),
+                                        C run-time with more secure parameters.
 ACE_HAS_TSS_EMULATION                   ACE provides TSS emulation.
                                         See also
                                         ACE_DEFAULT_THREAD_KEYS.
@@ -1164,9 +1145,9 @@ ACE_LACKS_UTSNAME_T                     Platform lacks struct utsname
                                         (e.g., Win32 and VxWorks)
 ACE_LACKS_UNAME                         Platform lacks uname calls
 ACE_LACKS_WAIT                          The platform lacks wait
-ACE_LACKS_WILDCARD_BIND                 The bind() call will not
-                                        select the port if it's 0.
-ACE_LACKS_WIN32_MOVEFILEEX              The Windows platforms doesn't have
+ACE_LACKS_WIN32_GETPROCESSTIMES         The Windows platform doesn't have
+                                        GetProcessTimes().
+ACE_LACKS_WIN32_MOVEFILEEX              The Windows platform doesn't have
                                         MoveFileEx().
 ACE_LACKS_WIN32_SECURITY_DESCRIPTORS    The Windows platform doesn't have
                                         security descriptor support.
@@ -1568,25 +1549,6 @@ ACE_HAS_STREAM_PIPES:
      No sysV.4 streams.
 
 
-ACE_HAS_STRERROR:
------------------
-
-  Used in:
-     ace/OS.h
-
-  Notes:
-     if not defined, does a:
-     #define strerror(err) sys_errlist[err]
-
-  Solaris:
-     /usr/include/string.h
-
-  HPUX:
-     set it.
-     in /usr/include/sys/errno.h and string.h
-     extern char *strerror (int);
-
-
 ACE_HAS_SVR4_DYNAMIC_LINKING:
 -----------------------------
 
@@ -1715,27 +1677,6 @@ ACE_HAS_SYS_FILIO_H:
      <sgtty.h> defines some like FIOCLEX.
      some are never defined.
      use #ifdef HP-UX to modify sysincludes.h
-
-
-ACE_HAS_SYS_SIGLIST:
---------------------
-
-  Used in:
-     ace/OS.h
-     libsrc/Log_Msg/Log_Msg.C
-
-  Notes:
-     if not defined, does a:
-     extern const char **_sys_siglist;
-
-  Solaris:
-     This is an array holding signal descriptions.
-
-  HPUX:
-     don't set.
-     Some additional work is required.  In libsrc/Log_Msg/Log_Msg.C,
-     sys_siglist is used regardless of ACE_HAS_SYS_SIGLIST.
-     have to add #ifdefs to remove them.
 
 
 ACE_HAS_TEMPLATE_TYPEDEFS:

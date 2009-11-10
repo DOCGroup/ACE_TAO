@@ -25,9 +25,15 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+# if !defined (ACE_DOESNT_DEFINE_MAIN)
+
 # if defined (ACE_HAS_RTEMS)
 extern char* rtems_progname;
 # endif /* ACE_HAS_RTEMS */
+
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640) && defined (__RTP__)
+#  include <resolvLib.h>
+#endif
 
 # if !defined (ACE_MAIN)
 #   define ACE_MAIN main
@@ -73,9 +79,17 @@ typedef int (*ace_main_proc_ptr)(int, char *[]);
 
 extern ace_main_proc_ptr vx_ace_main_i_ptr;
 
+// Declare ACE_MAIN as extern C so that it can be retrieved
+// using symFindByName
+extern "C"
+{
+  int ACE_MAIN (int, char* []);
+}
+
 #     define main \
+ACE_MAIN (int, char *[]); /* forward decl to gobble up the 'int' if there is one */ \
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
-ace_os_main_i (int, char *[]); \
+int ace_os_main_i (int, char *[]); \
 ACE_END_VERSIONED_NAMESPACE_DECL \
 int ace_main_i(int, char *[]); \
 int \
@@ -90,8 +104,9 @@ ace_main_i
 #   elif defined (ACE_HAS_RTEMS)
 
 #     define main \
+ACE_MAIN (int, char *[]); /* forward decl to gobble up the 'int' if there is one */ \
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
-ace_os_main_i (int, char *[]); \
+int ace_os_main_i (int, char *[]); \
 ACE_END_VERSIONED_NAMESPACE_DECL \
 int \
 ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
@@ -105,18 +120,35 @@ ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
 int \
 ace_main_i
 
+#   elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640) && defined (__RTP__)
+
+#     define main \
+ACE_MAIN (int, char *[]); /* forward decl to gobble up the 'int' if there is one */ \
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
+int ace_os_main_i (int, char *[]); \
+ACE_END_VERSIONED_NAMESPACE_DECL \
+int \
+ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
+{ \
+  resolvInit(); \
+  return ace_os_main_i (argc, argv); /* what the user calls "main" */ \
+} \
+int \
+ace_main_i
+
 #   elif !defined (ACE_WIN32)
 
 #     define main \
+ACE_MAIN (int, char *[]); /* forward decl to gobble up the 'int' if there is one */ \
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
-ace_os_main_i (int, char *[]); \
+ACE_Export int ace_os_main_i (int, char *[]); \
 ACE_END_VERSIONED_NAMESPACE_DECL \
 int \
 ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
 { \
   return ace_os_main_i (argc, argv); /* what the user calls "main" */ \
 } \
-int \
+ACE_Proper_Export_Flag int \
 ace_main_i
 
 #   elif !defined (ACE_HAS_WINCE)
@@ -136,8 +168,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #       define wmain \
 ace_wmain_i (int, ACE_TCHAR *[]); \
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
 ACE_Export int ace_os_wmain_i (ACE_Main_Base&, int, ACE_TCHAR *[]); \
 class ACE_Main : public ACE_Main_Base {int run_i (int, ACE_TCHAR *[]);}; \
+ACE_END_VERSIONED_NAMESPACE_DECL \
 inline int ACE_Main::run_i (int argc, ACE_TCHAR *argv[])  \
 { \
   return ace_wmain_i (argc, argv); \
@@ -158,11 +192,23 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Main_Base
 {
 public:
+  ACE_Main_Base ();
+  virtual ~ACE_Main_Base ();
   int run (int, char *[]);
   virtual int run_i (int, char *[]) = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+/*
+** LabVIEW RT cannot directly use an executable. Need to build the program
+** as a DLL and call it from something else. The ACE test framework knows this
+** trick and uses a LabVIEW RT target-resident control program to load a
+** DLL, look up it's main() entrypoint, and call it.
+*/
+#       if defined (ACE_BUILD_LABVIEW_EXE_AS_DLL)
+extern "C" __declspec (dllexport) int main (int, char *[]);
+#       endif /* ACE_BUILD_LABVIEW_EXE_AS_DLL) */
 
 #       define main \
 ace_main_i (int, char *[]); \
@@ -178,7 +224,7 @@ int \
 ACE_MAIN (int argc, char *argv[]) /* user's entry point, e.g., wmain */ \
 { \
   ACE_Main m; \
-  return ace_os_main_i (m, argc, argv);   /* what the user calls "main" */ \
+  return m.run (argc, argv); /*ace_os_main_i (m, argc, argv);   what the user calls "main" */ \
 } \
 int \
 ace_main_i
@@ -192,6 +238,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Main_Base
 {
 public:
+  virtual ~ACE_Main_Base (void);
   int run (HINSTANCE, HINSTANCE, LPWSTR, int);
   virtual int run_i (int, ACE_TCHAR *[]) = 0;
 };
@@ -255,6 +302,8 @@ int ace_main_i
 
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+
+#endif /* ACE_DOESNT_DEFINE_MAIN */
 
 # include /**/ "ace/post.h"
 

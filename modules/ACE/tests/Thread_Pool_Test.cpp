@@ -72,11 +72,13 @@ public:
   // Allows the producer to pass messages to the <Thread_Pool>.
 
 private:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
   // Spawn the threads in the pool.
 
   virtual int close (u_long);
   // Close hook.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_Lock_Adapter<ACE_Thread_Mutex> lock_adapter_;
   // Serialize access to <ACE_Message_Block> reference count, which

@@ -19,8 +19,7 @@ namespace ACE_RMCast
   {
   }
 
-  void Reassemble::
-  recv (Message_ptr m)
+  void Reassemble::recv (Message_ptr m)
   {
     Map::ENTRY* e;
     Address from (

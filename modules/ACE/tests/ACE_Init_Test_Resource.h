@@ -3,8 +3,8 @@
 // Microsoft Visual C++ generated include file.
 // Used by ACE_INIT_TEST.RC
 //
-#define IDR_MAINFRAME					128
-#define IDD_ACE_INIT_TEST_DIALOG				102
+#define IDR_MAINFRAME                   128
+#define IDD_ACE_INIT_TEST_DIALOG        102
 
 // Next default values for new objects
 //

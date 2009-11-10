@@ -3,8 +3,6 @@
 #ifndef ACE_SERVER_LOGGING_HANDLERT_C
 #define ACE_SERVER_LOGGING_HANDLERT_C
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/config-all.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
@@ -26,12 +24,12 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::AC
    LMR const &receiver)
    // Initialize the CString to something that is not the empty string
    // to avoid problems when calling fast_rep()
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   : receiver_ (receiver, ACE_TString (ACE_TEXT(" "), 1))
 #else
   : receiver_ (receiver),
     host_name_ (ACE_TString (ACE_TEXT (" "), 1))
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 {
 }
 
@@ -48,11 +46,11 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> const ACE_TCHAR *
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::host_name (void)
 {
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   return this->receiver_.m_.fast_rep ();
 #else
   return this->host_name_.fast_rep ();
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 }
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
@@ -78,16 +76,15 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   ACE_CDR::Boolean byte_order;
   ACE_CDR::ULong length;
 
-  ssize_t count = ACE::recv_n (this->peer ().get_handle (), 
-			       header->wr_ptr (),
-			       8);
+  ssize_t count = ACE::recv_n (this->peer ().get_handle (),
+                               header->wr_ptr (),
+                               8);
   switch (count)
     {
       // Handle shutdown and error cases.
     default:
     case -1:
     case 0:
-
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("server logging daemon closing down at host %s\n"),
                   this->host_name ()));
@@ -107,14 +104,24 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
-  header_cdr >> ACE_InputCDR::to_boolean (byte_order);
+  if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract byte_order\n")));
+      return 0;
+    }
 
   // Set the byte-order on the stream...
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
-  header_cdr >> length;
-  
+  if (!(header_cdr >> length))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract length\n")));
+      return 0;
+    }
+
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
@@ -126,7 +133,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   // Use <recv_n> to obtain the contents.
   if (ACE::recv_n (this->peer ().get_handle (),
                    payload->wr_ptr (),
-                   length) <= 0) 
+                   length) <= 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
@@ -138,19 +145,23 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 
   ACE_InputCDR payload_cdr (payload.get ());
   payload_cdr.reset_byte_order (byte_order);
-  payload_cdr >> log_record;  // Finally extract the <ACE_log_record>.
+  if (!(payload_cdr >> log_record))  // Finally extract the <ACE_log_record>.
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Can't extract log_record\n")));
+      return 0;
+    }
 
   log_record.length (length);
 
   // Send the log record to the log message receiver for processing.
-  if (ACE_BIT_ENABLED (ACE_Log_Msg::instance ()->flags (),
-		       ACE_Log_Msg::STDERR))
-    receiver ().log_record (this->host_name (),
-			    log_record);
+  if (ACE_BIT_ENABLED (ACE_Log_Msg::instance ()->flags (), ACE_Log_Msg::STDERR))
+    receiver ().log_record (this->host_name (), log_record);
+
   ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
   receiver ().log_output (this->host_name (),
-			  log_record,
-			  orig_ostream);
+                          log_record,
+                          orig_ostream);
   return 0;
 
 #if 0
@@ -233,10 +244,10 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
         return n;
       }
     }
-#endif 
+#endif
 
   ACE_NOTREACHED (return -1;)
-    }
+}
 
 // Hook called by Server_Logging_Acceptor when connection is
 // established.
@@ -259,13 +270,13 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
                        ACE_TEXT ("get_remote_addr")),
                       -1);
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   this->receiver_.m_ =
     ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (client_addr.get_host_name ()));
 #else
   this->host_name_ =
     ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (client_addr.get_host_name ()));
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) accepted connection from host %C on fd %d\n"),
@@ -289,11 +300,11 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::receiver (void)
 template<class SLH, class LMR, class SST> SST &
 ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::scheduling_strategy (void)
 {
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   return receiver_.m_;
 #else
   return schedule_strategy_;
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 }
 
 template<class SLH, class LMR, class SST> int
@@ -345,7 +356,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, ACE_TCHAR *a
 
   int service_port = ACE_DEFAULT_SERVER_PORT;
 
-  ACE_LOG_MSG->open (ACE_TEXT ("Logging Service"));
+  ACE_LOG_MSG->open (ACE_TEXT ("Logging Service"), ACE_LOG_MSG->flags ());
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
 

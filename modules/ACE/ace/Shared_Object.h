@@ -34,7 +34,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Shared_Object
 {
 public:
+  /// Constructor
   ACE_Shared_Object (void);
+
+  /// Destructor
+  virtual ~ACE_Shared_Object (void);
 
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
@@ -45,7 +49,6 @@ public:
   /// Returns information on a service object.
   virtual int info (ACE_TCHAR **info_string, size_t length = 0) const;
 
-  virtual ~ACE_Shared_Object (void);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

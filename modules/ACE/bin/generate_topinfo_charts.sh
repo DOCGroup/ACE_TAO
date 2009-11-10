@@ -5,6 +5,7 @@
 
 gnuplot <<_EOF_ >/dev/null 2>&1
   set xdata time
+  set xtics rotate
   set timefmt '%Y/%m/%d-%H:%M'
   set xlabel 'Date (MM/DD)'
   set ylabel 'Size (KBytes) $4'

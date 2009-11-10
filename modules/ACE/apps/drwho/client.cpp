@@ -40,9 +40,9 @@ make_client (void)
                     0);
   return client;
 }
- 
+
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Options::set_options (argc, argv);
 
@@ -59,7 +59,7 @@ main (int argc, char *argv[])
                        "%p\n",
                        Options::program_name),
                       -1);
-    
+
   sm_client->process ();
 
   return 0;

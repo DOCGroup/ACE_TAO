@@ -37,8 +37,8 @@ Encryption is not supported.
 static int decrypt_byte(unsigned long* pkeys, const unsigned long* pcrc_32_tab)
 {
   unsigned temp;  /* POTENTIAL BUG:  temp*(temp^1) may overflow in an
-		   * unpredictable manner on 16-bit systems; not a problem
-		   * with any known compiler so far, though */
+                   * unpredictable manner on 16-bit systems; not a problem
+                   * with any known compiler so far, though */
 
   MINIZIP_UNUSED_ARG(pcrc_32_tab);
 
@@ -114,7 +114,7 @@ static int crypthead(passwd, buf, bufSize, pkeys, pcrc_32_tab, crcForCrypting)
    */
   if (++calls == 1)
     {
-      srand((unsigned)(time(NULL) ^ ZCR_SEED2));
+      srand((unsigned)(time(0) ^ ZCR_SEED2));
     }
   init_keys(passwd, pkeys, pcrc_32_tab);
   for (n = 0; n < RAND_HEAD_LEN-2; n++)

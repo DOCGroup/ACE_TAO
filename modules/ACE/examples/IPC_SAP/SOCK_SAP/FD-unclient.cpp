@@ -41,7 +41,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p"), ACE_TEXT ("recv")), -1);
   else if (n == 0)
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server shutdown (bug in kernel?)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server %*C shutdown\n"), n, buf));
 

@@ -28,6 +28,14 @@
 # include /**/ <stdarg.h>
 #endif /* !ACE_LACKS_STDARG_H */
 
+#if !defined (va_copy)
+#if defined (__va_copy)
+#define va_copy(d, s) __va_copy((d),(s))
+#else
+#define va_copy(d, s) memcpy((void *)&(d),(void *)&(s),sizeof(va_list))
+#endif
+#endif
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

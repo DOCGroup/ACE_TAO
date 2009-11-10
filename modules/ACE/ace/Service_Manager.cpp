@@ -65,7 +65,10 @@ ACE_Service_Manager::open (const ACE_INET_Addr &sia)
 
   // Reuse the listening address, even if it's already in use!
   if (this->acceptor_.open (sia, 1) == -1)
-    return -1;
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -77,17 +80,25 @@ ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
   ACE_TCHAR buf[BUFSIZ];
 
   if (this->acceptor_.get_local_addr (sa) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%d/%s %s"),
+                   ACE_TEXT ("%d/%s %s"),
                    sa.get_port_number (),
-                   ACE_LIB_TEXT ("tcp"),
-                   ACE_LIB_TEXT ("# lists all services in the daemon\n"));
+                   ACE_TEXT ("tcp"),
+                   ACE_TEXT ("# lists all services in the daemon\n"));
+
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strsncpy (*strp, buf, length);
+    {
+      ACE_OS::strsncpy (*strp, buf, length);
+    }
+
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -96,9 +107,12 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Manager::init");
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
-  ACE_Get_Opt getopt (argc, argv, ACE_LIB_TEXT ("dp:s:"), 0); // Start at argv[0]
+
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dp:s:"), 0); // Start at argv[0]
 
   for (int c; (c = getopt ()) != -1; )
+  //FUZZ: enable check_for_lack_ACE_OS
      switch (c)
        {
        case 'd':
@@ -116,15 +130,20 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 
   if (this->get_handle () == ACE_INVALID_HANDLE &&
       this->open (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")), -1);
+    }
   else if (ACE_Reactor::instance ()->register_handler
            (this,
             ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("registering service with ACE_Reactor\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("registering service with ACE_Reactor\n")),
+                        -1);
+    }
+
   return 0;
 }
 
@@ -141,15 +160,18 @@ ACE_Service_Manager::fini (void)
   ACE_TRACE ("ACE_Service_Manager::fini");
 
   int retv = 0;
+
   if (this->get_handle () != ACE_INVALID_HANDLE)
     {
-      retv = ACE_Reactor::instance ()->remove_handler
-        (this,
-         ACE_Event_Handler::ACCEPT_MASK |
-         ACE_Event_Handler::DONT_CALL);
+      retv =
+        ACE_Reactor::instance ()->remove_handler (
+          this,
+          ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
+
       this->handle_close (ACE_INVALID_HANDLE,
                           ACE_Event_Handler::NULL_MASK);
     }
+
   return retv;
 }
 
@@ -179,14 +201,14 @@ ACE_Service_Manager::list_services (void)
        sri.next (sr) != 0;
        sri.advance ())
     {
-      size_t len = ACE_OS::strlen (sr->name ()) + 11;
+      ssize_t len = static_cast<ssize_t> (ACE_OS::strlen (sr->name ())) + 11;
       ACE_TCHAR buf[BUFSIZ];
       ACE_TCHAR *p = buf + len;
 
       ACE_OS::strcpy (buf, sr->name ());
       ACE_OS::strcat (buf, (sr->active ()) ?
-                      ACE_LIB_TEXT (" (active) ") :
-                      ACE_LIB_TEXT (" (paused) "));
+                      ACE_TEXT (" (active) ") :
+                      ACE_TEXT (" (paused) "));
 
       p[-1] = ' ';
       p[0]  = '\0';
@@ -194,19 +216,24 @@ ACE_Service_Manager::list_services (void)
       len += sr->type ()->info (&p, sizeof buf - len);
 
       if (this->debug_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("len = %d, info = %s%s"),
-                    len,
-                    buf,
-                    buf[len - 1] == '\n' ? ACE_LIB_TEXT ("") : ACE_LIB_TEXT ("\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("len = %d, info = %s%s"),
+                      len,
+                      buf,
+                      buf[len - 1] == '\n' ? ACE_TEXT ("") : ACE_TEXT ("\n")));
+        }
 
       if (len > 0)
         {
           ssize_t n = this->client_stream_.send_n (buf, len);
+
           if (n <= 0 && errno != EPIPE)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("%p\n"),
-                        ACE_LIB_TEXT ("send_n")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("send_n")));
+            }
         }
     }
 
@@ -248,20 +275,29 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
   for (p = request;
        (*p != '\0') && (*p != '\r') && (*p != '\n');
        p++)
-    continue;
+    {
+      continue;
+    }
 
   *p = '\0';
 
-  if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("help")) == 0)
-    // Return a list of the configured services.
-    this->list_services ();
-  else if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("reconfigure") )== 0)
-    // Trigger a reconfiguration by re-reading the local <svc.conf> file.
-    this->reconfigure_services ();
+  if (ACE_OS::strcmp (request, ACE_TEXT ("help")) == 0)
+    {
+      // Return a list of the configured services.
+      this->list_services ();
+    }
+  else if (ACE_OS::strcmp (request, ACE_TEXT ("reconfigure") )== 0)
+    {
+      // Trigger a reconfiguration by re-reading the local <svc.conf> file.
+      this->reconfigure_services ();
+    }
   else
-    // Just process a single request passed in via the socket
-    // remotely.
-    ACE_Service_Config::process_directive (request);
+    {
+      // Just process a single request passed in via the socket
+      // remotely.
+      ACE_Service_Config_Guard guard (ACE_Service_Config::global ());
+      ACE_Service_Config::process_directive (request);
+    }
 
   // Additional management services may be handled here...
 }
@@ -279,7 +315,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int reset_new_handle =
+  bool reset_new_handle =
     ACE_Reactor::instance ()->uses_event_associations ();
 
   if (this->acceptor_.accept (this->client_stream_, // stream
@@ -288,20 +324,25 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
                               1, // restart
                               reset_new_handle  // reset new handler
                               ) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("client_stream fd = %d\n"),
+                  ACE_TEXT ("client_stream fd = %d\n"),
                  this->client_stream_.get_handle ()));
       ACE_INET_Addr sa;
+
       if (this->client_stream_.get_remote_addr (sa) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("accepted from host %s at port %d\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (sa.get_host_name ()),
+                  ACE_TEXT ("accepted from host %C at port %d\n"),
+                  sa.get_host_name (),
                   sa.get_port_number ()));
     }
 
@@ -320,19 +361,23 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   // contains an incomplete string.
 
   int error;
+
   do
     {
       result = client_stream_.recv (offset, remaining);
       error = errno;
+
       if (result == 0 && error != EWOULDBLOCK)
-        remaining = 0;
+        {
+          remaining = 0;
+        }
 
       if (result >= 0)
         {
           if ((remaining -= result) <= 0)
             {
               ACE_DEBUG ((LM_ERROR,
-                          ACE_LIB_TEXT ("Request buffer overflow.\n")));
+                          ACE_TEXT ("Request buffer overflow.\n")));
               result = 0;
               break;
             }
@@ -342,18 +387,23 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
           if (ACE_OS::strchr (request, '\r') != 0
               || ACE_OS::strchr (request, '\n') != 0)
-            remaining = 0;
+            {
+              remaining = 0;
+            }
         }
     }
-  while (result == -1 && error == EWOULDBLOCK || remaining > 0);
+  while ((result == -1 && error == EWOULDBLOCK) || remaining > 0);
 
   switch (result)
     {
     case -1:
       if (this->debug_)
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_LIB_TEXT ("%p\n"),
-                    ACE_LIB_TEXT ("recv")));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("recv")));
+        }
+
       break;
     case 0:
       return 0;
@@ -375,9 +425,12 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     }
 
   if (this->client_stream_.close () == -1 && this->debug_)
-    ACE_DEBUG ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("close")));
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("close")));
+    }
+
   return 0;
 }
 

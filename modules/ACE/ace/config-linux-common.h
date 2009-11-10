@@ -18,10 +18,6 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// #ifndef _XOPEN_SOURCE
-// #  define _XOPEN_SOURCE 600
-// #endif /* _XOPEN_SOURCE */
-
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 #include <features.h>
 
@@ -29,25 +25,15 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-#if (defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 199309L)
-#  if !defined (ACE_HAS_CLOCK_GETTIME)
-#    define ACE_HAS_CLOCK_GETTIME
-#    define ACE_HAS_CLOCK_SETTIME
-#  endif  /* !ACE_HAS_CLOCK_GETTIME */
-#endif  /* _POSIX_C_SOURCE >= 199309L */
+#if !defined (ACE_LACKS_LINUX_NPTL)
 
-#if defined (ACE_HAS_LINUX_NPTL)
 # include "ace/config-posix.h"
 
   // Temporary fix because NPTL kernels do have shm_open but there is a problem
-  // with shm_open/shm_unlink pairing in ACE which  needs to be fixed when I have time.
+  // with shm_open/shm_unlink pairing in ACE which needs to be fixed when I have time.
 # if defined (ACE_HAS_SHM_OPEN)
 #   undef ACE_HAS_SHM_OPEN
 # endif /* ACE_HAS_SHM_OPEN */
-
-# if !defined (ACE_LACKS_LINUX_VERSION_H)
-#  include <linux/version.h>
-# endif /* !ACE_LACKS_LINUX_VERSION_H */
 
 # if defined (ACE_USES_FIFO_SEM)
     // Don't use this for Linux NPTL since this has complete
@@ -62,15 +48,15 @@
 #     define ACE_HAS_POSIX_SEM_TIMEOUT
 #   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600)) */
 # endif /* ACE_HAS_POSIX_SEM */
-#endif /* ACE_HAS_LINUX_NPTL */
+#endif /* !ACE_LACKS_LINUX_NPTL */
 
 // First the machine specific part
 
-#if defined (__powerpc__)
+#if defined (__powerpc__) || defined (__x86_64__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
-#elif defined (__ia64) || defined (__x86_64__)
+#elif defined (__ia64)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 // Zero base address should work fine for Linux of IA-64: it just lets
 // the kernel to choose the right value.
@@ -81,9 +67,14 @@
 // Then glibc/libc5 specific parts
 
 #if defined(__GLIBC__)
-# define ACE_HAS_NONCONST_SETRLIMIT
-# define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
-# define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
+# if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1)
+#   define ACE_HAS_NONCONST_SETRLIMIT
+# endif
+# if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 3)
+#   define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
+#   define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
+#   define ACE_LACKS_ISCTYPE
+# endif
 # define ACE_HAS_SOCKLEN_T
 # define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
@@ -177,19 +168,15 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
-#define ACE_CC_NAME ACE_LIB_TEXT ("g++")
+#define ACE_CC_NAME ACE_TEXT ("g++")
 #define ACE_CC_MAJOR_VERSION __GNUC__
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 //#define ACE_CC_BETA_VERSION 0 /* ??? */
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
 # include "ace/config-cxx-common.h"
-#elif defined (__BORLANDC__)
-# undef ACE_HAS_LLSEEK
-# undef ACE_HAS_LSEEK64
-# undef ACE_LACKS_LLSEEK_PROTOTYPE
-# undef ACE_LACKS_LSEEK64_PROTOTYPE
-# include "ace/config-borland-common.h"
+#elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
+# include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
 # define ACE_HAS_CPLUSPLUS_HEADERS
@@ -198,7 +185,6 @@
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_LACKS_SWAB
-# undef ACE_HAS_CLOCK_GETTIME
 #elif defined (__GNUC__)
 /**
  * GNU C compiler.
@@ -208,7 +194,7 @@
  * (TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.{h,c}) that may indirectly
  * include this
  */
-#else  /* ! __GNUG__ && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
+#else  /* ! __GNUG__ && !__DECCXX && !__INTEL_COMPILER && && !__PGI */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-linux-common.h
 #  endif  /* __cplusplus */
@@ -217,11 +203,13 @@
 // Completely common part :-)
 
 // Platform/compiler has the sigwait(2) prototype
-# define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGWAIT
 
-# define ACE_HAS_SIGSUSPEND
+#define ACE_HAS_SIGSUSPEND
 
-# define ACE_HAS_UALARM
+#define ACE_HAS_UALARM
+
+#define ACE_HAS_STRSIGNAL
 
 #if __GLIBC__ >= 2
 #ifndef ACE_HAS_POSIX_REALTIME_SIGNALS
@@ -248,6 +236,7 @@
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_ISWASCII
 
 #if __GLIBC__ >= 2
 # define ACE_HAS_3_PARAM_WCSTOK
@@ -267,10 +256,20 @@
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
+#define ACE_HAS_SYS_SYSINFO_H
+#define ACE_HAS_LINUX_SYSINFO
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 #define ACE_HAS_GETRUSAGE_PROTOTYPE
+
+#define ACE_HAS_BYTESWAP_H
+#define ACE_HAS_BSWAP_16
+#define ACE_HAS_BSWAP_32
+
+#if defined __GNUC__ && __GNUC__ >= 2
+# define ACE_HAS_BSWAP_64
+#endif
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -300,6 +299,8 @@
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 
+#define ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE 1
+
 #define ACE_HAS_GETPAGESIZE 1
 
 #if (__GLIBC__  < 2)  ||  (__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)
@@ -320,13 +321,11 @@
 
 // Platform supplies scandir()
 #define ACE_HAS_SCANDIR
+#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10)
 // Although the scandir man page says otherwise, this setting is correct.
+// The setting was fixed in 2.10, so do not use the hack after that.
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
-
-//#define ACE_LACKS_STRRECVFD
-#define ACE_HAS_STRBUF_T
-
-//#define ACE_LACKS_MSYNC
+#endif
 
 // A conflict appears when including both <ucontext.h> and
 // <sys/procfs.h> with recent glibc headers.
@@ -341,11 +340,7 @@
 // Platform/compiler supports global timezone variable.
 #define ACE_HAS_TIMEZONE
 
-// Platform/compiler supports void * as second parameter to gettimeofday().
-#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
+#define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 // Don't define _XOPEN_SOURCE in ACE to make strptime() prototype
 // visible.  ACE shouldn't depend on feature test macros to make
@@ -367,12 +362,23 @@
 
 #define ACE_HAS_DIRENT
 
+// Starting with FC9 rawhide this file is not available anymore but
+// this define is set
+#if defined _XOPEN_STREAMS && _XOPEN_STREAMS == -1
+# define ACE_LACKS_STROPTS_H
+# define ACE_LACKS_STRRECVFD
+#endif
+
+#if !defined (ACE_LACKS_STROPTS_H)
+# define ACE_HAS_STRBUF_T
+#endif
+
 #if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
-# define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
-# define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
+# define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%lu"
+# define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "%ld"
+# define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 #endif /* __ia64 */
 
 #define ACE_SIZEOF_WCHAR 4
@@ -384,15 +390,28 @@
 #define ACE_HAS_TERMIOS
 
 // Linux implements sendfile().
-#define ACE_HAS_SENDFILE
+#define ACE_HAS_SENDFILE 1
 
 #define ACE_HAS_VOIDPTR_MMAP
+
+#define ACE_HAS_ICMP_SUPPORT 1
+
+#define ACE_HAS_VASPRINTF
+
+// According to man pages Linux uses different (compared to UNIX systems) types
+// for setting IP_MULTICAST_TTL and IPV6_MULTICAST_LOOP / IP_MULTICAST_LOOP
+// in setsockopt/getsockopt.
+#define ACE_HAS_IP_MULTICAST_TTL_AS_INT 1
+#define ACE_HAS_IPV6_MULTICAST_LOOP_AS_BOOL 1
+#define ACE_HAS_IP_MULTICAST_LOOP_AS_INT 1
 
 #if defined (ACE_LACKS_NETWORKING)
 # include "ace/config-posix-nonetworking.h"
 #else
 # define ACE_HAS_NETLINK
-# define ACE_HAS_GETIFADDRS
+# if (__GLIBC__  > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 2)
+#   define ACE_HAS_GETIFADDRS
+# endif
 #endif
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
@@ -408,6 +427,32 @@
 #    define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO 1
 #  endif  /* (LINUX_VERSION_CODE <= KERNEL_VERSION(2,5,47)) */
 #endif  /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
+
+#if defined (ACE_HAS_EVENT_POLL)
+// The sys_epoll interface was introduced in Linux kernel 2.5.45.
+// Don't support backported versions since they appear to be buggy.
+// The obsolete ioctl()-based interface is no longer supported.
+#if 0
+// linux/version.h may not be accurate. It's not for Fedora Core 2...
+# if !defined (ACE_LACKS_LINUX_VERSION_H)
+#   include <linux/version.h>
+# endif /* !ACE_LACKS_LINUX_VERSION_H */
+# if (LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45))
+#   undef ACE_HAS_EVENT_POLL
+#   error Disabling Linux epoll support.  Kernel used in C library is too old.
+#   error Linux kernel 2.5.45 or better is required.
+# endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45) */
+#endif  /* ACE_HAS_EVENT_POLL */
+#endif
+
+#if !defined (ACE_HAS_EVENT_POLL) && !defined (ACE_HAS_DEV_POLL)
+# if !defined (ACE_LACKS_LINUX_VERSION_H)
+#  include <linux/version.h>
+# endif /* !ACE_LACKS_LINUX_VERSION_H */
+# if (LINUX_VERSION_CODE > KERNEL_VERSION (2,6,0))
+#  define ACE_HAS_EVENT_POLL
+# endif
+#endif
 
 #include /**/ "ace/post.h"
 

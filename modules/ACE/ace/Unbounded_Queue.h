@@ -185,17 +185,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty, otherwise returns false.
   /**
    * Constant time check to see if the queue is empty.
    */
-  int is_empty (void) const;
+  bool is_empty (void) const;
 
   /// Returns 0.
   /**
    * The queue cannot be full, so it always returns 0.
    */
-  int is_full (void) const;
+  bool is_full (void) const;
 
   // = Classic queue operations.
 

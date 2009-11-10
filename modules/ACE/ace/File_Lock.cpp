@@ -26,30 +26,30 @@ ACE_File_Lock::dump (void) const
 }
 
 ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h,
-                              int unlink_in_destructor)
-  : removed_ (0),
+                              bool unlink_in_destructor)
+  : removed_ (false),
     unlink_in_destructor_ (unlink_in_destructor)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
   if (ACE_OS::flock_init (&this->lock_) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_File_Lock::ACE_File_Lock")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_File_Lock::ACE_File_Lock")));
   this->set_handle (h);
 }
 
 ACE_File_Lock::ACE_File_Lock (const ACE_TCHAR *name,
                               int flags,
                               mode_t perms,
-                              int unlink_in_destructor)
+                              bool unlink_in_destructor)
   : unlink_in_destructor_ (unlink_in_destructor)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
   if (this->open (name, flags, perms) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p %s\n"),
-                ACE_LIB_TEXT ("ACE_File_Lock::ACE_File_Lock"),
+                ACE_TEXT ("%p %s\n"),
+                ACE_TEXT ("ACE_File_Lock::ACE_File_Lock"),
                 name));
 }
 
@@ -59,7 +59,7 @@ ACE_File_Lock::open (const ACE_TCHAR *name,
                      mode_t perms)
 {
 // ACE_TRACE ("ACE_File_Lock::open");
-  this->removed_ = 0;
+  this->removed_ = false;
   return ACE_OS::flock_init (&this->lock_, flags, name, perms);
 }
 

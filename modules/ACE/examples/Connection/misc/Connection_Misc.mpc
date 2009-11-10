@@ -8,8 +8,7 @@ project (*Handler) : aceexe {
   }
 }
 
-project (*test_upipe) : aceexe {
-  avoids += ace_for_tao
+project (*test_upipe) : aceexe, avoids_ace_for_tao {
   exename = test_upipe
   Source_Files {
     test_upipe.cpp

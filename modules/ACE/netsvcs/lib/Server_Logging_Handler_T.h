@@ -28,9 +28,9 @@
 #include "ace/Atomic_Op.h"
 
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
 #include "Base_Optimizer.h"
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 
 /**
  * @class ACE_Server_Logging_Handler_T
@@ -68,7 +68,7 @@ protected:
   static COUNTER request_count_;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   /**
    * Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
    * in a optimized fashion.  The LOG_MESSAGE_RECEIVER class is often
@@ -78,7 +78,7 @@ protected:
 #else
   LOG_MESSAGE_RECEIVER receiver_;
   ACE_TString host_name_;
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
   /// Name of the host we are connected to.
   const ACE_TCHAR *host_name (void);
 
@@ -134,7 +134,7 @@ private:
   // to change how <LOG_MESSAGE_RECEIVER> are created without chaning the
   // ACE_Server_Logging_Acceptor_T code.
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   /**
    * Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
    * in a optimized fashion. The LOG_MESSAGE_RECEIVER class is often a
@@ -144,7 +144,7 @@ private:
 #else
   LOG_MESSAGE_RECEIVER receiver_;
   SCHEDULE_STRATEGY schedule_strategy_;
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 
   /// The scheduling strategy for the service.
   SCHEDULE_STRATEGY &scheduling_strategy (void);
@@ -158,7 +158,7 @@ private:
  *
  * @brief Product object created by a
  * <ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler> >.  An
- * <ACE_Server_Logging_Handler> receives, frames. The logging record
+ * ACE_Server_Logging_Handler receives, frames. The logging record
  * is then processed by the <LOG_MESSAGE_RECEIVER>
  *
  * All clients are handled in the same thread.
@@ -188,7 +188,7 @@ typedef u_long ACE_LOGGER_COUNTER;
  *
  * @brief Product object created by a
  * <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>
- * >.  An <ACE_Thr_Server_Logging_Handler> receives, frames. The
+ * >.  An ACE_Thr_Server_Logging_Handler receives, frames. The
  * logging record is then processed by the <LOG_MESSAGE_RECEIVER>
  *
  * Each client is handled in its own separate thread.

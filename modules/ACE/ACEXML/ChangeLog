@@ -1,3 +1,90 @@
+Tue Oct 13 09:37:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Svcconf_Handler.cpp:
+          Fixed compile problems with unicode enabled. Thanks to
+          Christian Freund <freund at wrz dot de> for reporting this. This
+          fixes bugzilla 3745.
+
+Mon Jul 30 08:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Svcconf_Handler.cpp:
+          Layout changes
+
+Mon Jul 16 10:19:51 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/svcconf/Svcconf_Handler.h:
+        * apps/svcconf/Svcconf_Handler.cpp:
+        * common/Attributes_Def_Builder.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/DefaultHandler.h:
+        * common/DefaultHandler.cpp:
+        * common/Element_Def_Builder.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Validator.h:
+        * common/XMLFilterImpl.h:
+        * common/XMLFilterImpl.cpp:
+        * common/XMLReader.h:
+        * examples/SAXPrint/Print_Handler.h:
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.h:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * parser/debug_validator/Debug_Attributes_Builder.h:
+        * parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * parser/debug_validator/Debug_Element_Builder.h:
+        * parser/debug_validator/Debug_Element_Builder.cpp:
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp:
+        * tests/ContentHandler_Test.cpp:
+
+          Fixed Fuzz warnings. Zap the usage of exception specification.
+
+Sun Jun  3 20:02:32 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * common/FileCharStream.cpp:
+          Replaced ungetc with ACE_OS::ungetc.
+
+Fri May 18 02:50:42 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * common/Mem_Map_Stream.cpp:
+
+          It makes no sense to have code after a return statement
+          (such as ACE_ERROR_RETURN). It causes some builds to have
+          "statement is unreachable" warning.
+
+        * examples/SAXPrint/main.cpp:
+
+          Enhanced the "#ifndef" macros used to avoid "statement is
+          unreachable" warning.
+
+Tue May 15 17:36:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * parser/parser/ParserInternals.h:
+          Removed msg_ member, it is not used at all. Thanks to Rajiv K. Shukla
+          <rajiv_shukla at yahoo dot com> for reporting this
+
+Tue Feb 27 21:15:23 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * common/FileCharStream.cpp (open):
+
+          s/ACE_Utils::Truncate/ACE_Utils::truncate_cast/g.  The former is
+          deprecated.
+
+Tue Feb 20 17:26:28 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * common/InputSource.cpp:
+        * parser/parser/ParserContext.h:
+        * parser/parser/ParserContext.inl:
+          Use std::swap instead of ACE_Swap
+
+Tue Feb 13 20:17:28 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * apps/svcconf/Svcconf_Handler.cpp:  Fixed a problem with
+          ACE_Module getting unloaded prematurely due to
+          ACEXML_Svcconf_Handler failing to register it with the service
+          repository.  Thanks to gzeleniy@gmail.com for providing the fix.
+
 Wed Jan 03 14:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * common/XML_Macros.h:
@@ -278,7 +365,7 @@ Tue Aug 17 19:07:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
           used with the "new (std::nothrow)" version of ACE_NEW_RETURN.
           Fortunately, the "struct" is unnecessary.
 
-Sat Feb 21 23:51:25 2004  .  <.@isis.vanderbilt.edu>
+Sat Feb 21 23:51:25 2004  Krishnakumar B  <kitty@isis.vanderbilt.edu>
 
         * common/Exception.h:
         * common/Exception.cpp:

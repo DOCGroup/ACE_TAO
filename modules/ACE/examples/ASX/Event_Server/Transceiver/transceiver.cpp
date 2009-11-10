@@ -47,7 +47,7 @@ Event_Transceiver::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %n [-CS] [-h host_name] [-p portnum] \n")),
+                           ACE_TEXT ("usage: %n [-CS] [-h host_name] [-p portnum]\n")),
                           -1);
         /* NOTREACHED */
         break;

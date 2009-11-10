@@ -14,10 +14,8 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
 #define ACE_LACKS_SUSECONDS_T
-#define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
@@ -48,9 +46,6 @@
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
-//Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
-#define ACE_HAS_SIG_MACROS
-
 //#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
@@ -59,9 +54,6 @@
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-
-//?
-#define ACE_LACKS_SIGSET
 
 #define ACE_NEEDS_SCHED_H
 
@@ -115,9 +107,6 @@
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SYS_SOCKIO_H
 
@@ -145,7 +134,6 @@
 # define ACE_HAS_THREADS
 // And they're even POSIX pthreads
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_PTHREAD_SCHEDPARAM
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #endif  /* ACE_MT_SAFE == 1 */
@@ -169,7 +157,6 @@
 #define ACE_HAS_GETIFADDRS
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
-#define ACE_LACKS_SIGVAL_T
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink
@@ -181,8 +168,8 @@
 // as of Dec 2002, if you use fink you will need to uncomment the next line
 //#define ACE_NEEDS_DL_UNDERSCORE
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
-#define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("DYLD_LIBRARY_PATH")
-#define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dylib")
+#define ACE_LD_SEARCH_PATH ACE_TEXT ("DYLD_LIBRARY_PATH")
+#define ACE_DLL_SUFFIX ACE_TEXT (".dylib")
 //#define ACE_LACKS_DLCLOSE
 
 // gperf seems to need this

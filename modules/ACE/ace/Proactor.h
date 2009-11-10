@@ -133,7 +133,7 @@ protected:
  */
 class ACE_Export ACE_Proactor
 {
-  // = Here are the private typedefs that the <ACE_Proactor> uses.
+  // = Here are the private typedefs that the ACE_Proactor uses.
 
   typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *,
     ACE_Proactor_Handle_Timeout_Upcall,
@@ -178,26 +178,26 @@ public:
   TIMER_QUEUE;
 
   /**
-   * Constructor. If <implementation> is 0, the correct implementation
-   * object will be created. <delete_implementation> flag determines
+   * Constructor. If @a implementation is 0, the correct implementation
+   * object will be created. @a delete_implementation flag determines
    * whether the implementation object should be deleted by the
-   * Proactor or not. If <tq> is 0, a new TIMER_QUEUE is created.
+   * Proactor or not. If @a tq is 0, a new TIMER_QUEUE is created.
    */
   ACE_Proactor (ACE_Proactor_Impl *implementation = 0,
-                int delete_implementation = 0,
+                bool delete_implementation = false,
                 TIMER_QUEUE *tq = 0);
 
   /// Destruction.
   ~ACE_Proactor (void);
 
-  /// Get pointer to a process-wide <ACE_Proactor>.  <threads> should
+  /// Get pointer to a process-wide ACE_Proactor.  @a threads should
   /// be part of another method.
   static ACE_Proactor *instance (size_t threads = 0);
 
-  /// Set pointer to a process-wide <ACE_Proactor> and return existing
+  /// Set pointer to a process-wide ACE_Proactor and return existing
   /// pointer.
   static ACE_Proactor *instance (ACE_Proactor * proactor,
-                                 int delete_proactor = 0);
+                                 bool delete_proactor = false);
 
   /// Delete the dynamically allocated Singleton.
   static void close_singleton (void);
@@ -221,7 +221,7 @@ public:
   /**
    * Run the event loop until the <ACE_Proactor::handle_events> method
    * returns -1, the <end_event_loop> method is invoked, or the
-   * <ACE_Time_Value> expires, in which case 0 is returned.
+   * ACE_Time_Value expires, in which case 0 is returned.
    */
   static int run_event_loop (ACE_Time_Value &tv);
 
@@ -277,7 +277,7 @@ public:
    * Run the event loop until the <ACE_Proactor::handle_events>
    * method returns -1, the
    * <end_proactor_event_loop> method is invoked,
-   * or the <ACE_Time_Value>
+   * or the ACE_Time_Value
    * expires, in which case a 0 is returned.
    */
   int proactor_run_event_loop (ACE_Time_Value &tv,
@@ -298,15 +298,15 @@ public:
   int proactor_reset_event_loop (void);
 
 
-  /// This method adds the <handle> to the I/O completion port. This
+  /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems and returns 0;
   int register_handle (ACE_HANDLE handle,
                        const void *completion_key);
 
   // = Timer management.
   /**
-   * Schedule a <handler> that will expire after <time>.  If it
-   * expires then <act> is passed in as the value to the <handler>'s
+   * Schedule a @a handler that will expire after <time>.  If it
+   * expires then @a act is passed in as the value to the @a handler's
    * <handle_timeout> callback method.  This method returns a
    * <timer_id>. This <timer_id> can be used to cancel a timer before
    * it expires.  The cancellation ensures that <timer_ids> are unique
@@ -323,8 +323,8 @@ public:
                                  const void *act,
                                  const ACE_Time_Value &interval);
 
-  // Same as above except <interval> it is used to reschedule the
-  // <handler> automatically.
+  // Same as above except @a interval it is used to reschedule the
+  // @a handler automatically.
 
   /// This combines the above two methods into one. Mostly for backward
   /// compatibility.
@@ -333,18 +333,18 @@ public:
                        const ACE_Time_Value &time,
                        const ACE_Time_Value &interval);
 
-  /// Cancel all timers associated with this <handler>.  Returns number
+  /// Cancel all timers associated with this @a handler.  Returns number
   /// of timers cancelled.
   int cancel_timer (ACE_Handler &handler,
                     int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single <ACE_Handler> that matches the <timer_id> value
-   * (which was returned from the <schedule> method).  If <act> is
+   * Cancel the single <ACE_Handler> that matches the @a timer_id value
+   * (which was returned from the <schedule> method).  If @a act is
    * non-NULL then it will be set to point to the ``magic cookie''
    * argument passed in when the <Handler> was registered.  This makes
    * it possible to free up the memory and avoid memory leaks.
-   * Returns 1 if cancellation succeeded and 0 if the <timer_id>
+   * Returns 1 if cancellation succeeded and 0 if the @a timer_id
    * wasn't found.
    */
   int cancel_timer (long timer_id,
@@ -562,7 +562,7 @@ public:
   /**
    * Create a timer result object which can be used with the Timer
    * mechanism of the Proactor.
-   * If <signal_number> is -1, <POSIX_SIG_Proactor> will create a
+   * If @a signal_number is -1, <POSIX_SIG_Proactor> will create a
    * Timer object with a meaningful signal number, choosing the
    * largest signal number from the signal mask of the Proactor.
    */
@@ -599,13 +599,13 @@ protected:
 
   /// Flag used to indicate whether we are responsible for cleaning up
   /// the implementation instance.
-  int delete_implementation_;
+  bool delete_implementation_;
 
-  /// Pointer to a process-wide <ACE_Proactor>.
+  /// Pointer to a process-wide ACE_Proactor.
   static ACE_Proactor *proactor_;
 
-  /// Must delete the <proactor_> if non-0.
-  static int delete_proactor_;
+  /// Must delete the <proactor_> if true.
+  static bool delete_proactor_;
 
   /// Handles timeout events.
   ACE_Proactor_Timer_Handler *timer_handler_;

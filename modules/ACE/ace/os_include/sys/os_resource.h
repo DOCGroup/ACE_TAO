@@ -31,9 +31,9 @@
 #  include /**/ <sys/resource.h>
 #endif /* !ACE_LACKS_SYS_RESOURCE_H */
 
-#if defined (ACE_HAS_SYSINFO)
+#if defined (ACE_HAS_SYS_SYSTEMINFO_H)
 #  include /**/ <sys/systeminfo.h>
-#endif /* ACE_HAS_SYS_INFO */
+#endif /* ACE_HAS_SYS_SYSTEMINFO_H */
 
 #if defined (ACE_HAS_SYS_SYSCALL_H)
 #  include /**/ <sys/syscall.h>
@@ -51,7 +51,7 @@ extern "C"
 #endif /* __cplusplus */
 
 // There must be a better way to do this...
-#if !defined (RLIMIT_NOFILE)
+#if !defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT_NOFILE)
 #  if defined (linux) || defined (AIX) || defined (SCO)
 #    if defined (RLIMIT_OFILE)
 #      define RLIMIT_NOFILE RLIMIT_OFILE

@@ -29,64 +29,90 @@ namespace {
 long
 single_cpu_increment (volatile long *value)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   long tmp = 1;
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp + 1;
-#elif defined (sun)
+#elif defined (sun) || \
+     (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_add_long (
            reinterpret_cast<volatile unsigned long*> (value), 1);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#elif defined(__GNUC__) && defined(PPC)
+  long tmp;
+  asm("lwz %0,%1" : "=r" (tmp) : "m" (*value) );
+  asm("addi %0,%0,1" : "+r" (tmp) );
+  asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
+  return tmp;
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
 single_cpu_decrement (volatile long *value)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   long tmp = -1;
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp - 1;
-#elif defined (sun)
+#elif defined (sun) || \
+     (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_add_long (
             reinterpret_cast<volatile unsigned long*> (value), -1);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#elif defined(__GNUC__) && defined(PPC)
+  long tmp;
+  asm("lwz %0,%1" : "=r" (tmp) : "m" (*value) );
+  asm("addi %0,%0,-1" : "+r" (tmp) );
+  asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
+  return tmp;
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
 single_cpu_exchange (volatile long *value, long rhs)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
-#elif defined (sun)
+#elif defined (sun) || \
+     (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_swap_long (
            reinterpret_cast<volatile unsigned long*> (value), rhs);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#elif defined(__GNUC__) && defined(PPC)
+  long tmp;
+  asm("lwz %0,%1" : "=r" (tmp) : "m" (rhs) );
+  asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
+  return tmp;
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
 single_cpu_exchange_add (volatile long *value, long rhs)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
-#elif defined (sun)
+#elif defined (sun) || \
+     (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_swap_add_long (
            reinterpret_cast<volatile unsigned long*> (value), rhs);
+#elif defined(__GNUC__) && defined(PPC)
+  long tmp;
+  asm("add %0,%1,%2" : "=r" (tmp) : "r" (*value), "r" (rhs) );
+  asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
+  return tmp;
 #elif defined (WIN32) && !defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
 # if defined (_MSC_VER)
   __asm
@@ -106,73 +132,77 @@ single_cpu_exchange_add (volatile long *value, long rhs)
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
 # endif /* _MSC_VER */
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
 multi_cpu_increment (volatile long *value)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   long tmp = 1;
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp + 1;
-#elif defined (sun)
+#elif defined (sun) || \
+     (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_add_long (
            reinterpret_cast<volatile unsigned long*> (value), 1);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
 multi_cpu_decrement (volatile long *value)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   long tmp = -1;
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp - 1;
-#elif defined (sun)
+#elif defined (sun) || \
+     (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_add_long (
            reinterpret_cast<volatile unsigned long*> (value), -1);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
 multi_cpu_exchange (volatile long *value, long rhs)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   // The XCHG instruction automatically follows LOCK semantics
   asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
-#elif defined (sun)
+#elif defined (sun) || \
+     (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_swap_long (
            reinterpret_cast<volatile unsigned long*> (value), rhs);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
 multi_cpu_exchange_add (volatile long *value, long rhs)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
-#elif defined (sun)
+#elif defined (sun) || \
+     (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_swap_add_long (
            reinterpret_cast<volatile unsigned long*> (value), rhs);
 #elif defined (WIN32) && !defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
@@ -194,11 +224,11 @@ multi_cpu_exchange_add (volatile long *value, long rhs)
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
 # endif /* _MSC_VER */
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 #if defined (_MSC_VER)
@@ -209,10 +239,10 @@ multi_cpu_exchange_add (volatile long *value, long rhs)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::increment_fn_) (volatile long *) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::decrement_fn_) (volatile long *) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_fn_) (volatile long *, long) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_add_fn_) (volatile long *, long) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::increment_fn_) (volatile long *) = multi_cpu_increment;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::decrement_fn_) (volatile long *) = multi_cpu_decrement;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_fn_) (volatile long *, long) = multi_cpu_exchange;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_add_fn_) (volatile long *, long) = multi_cpu_exchange_add;
 
 void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions (void)
@@ -242,10 +272,10 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::increment_fn_) (volatile long *) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::decrement_fn_) (volatile long *) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_fn_) (volatile long *, long) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_add_fn_) (volatile long *, long) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::increment_fn_) (volatile long *) = multi_cpu_increment;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::decrement_fn_) (volatile long *) = multi_cpu_decrement;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_fn_) (volatile long *, long) = multi_cpu_exchange;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_add_fn_) (volatile long *, long) = multi_cpu_exchange_add;
 
 void
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::init_functions (void)

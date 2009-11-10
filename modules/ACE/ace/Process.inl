@@ -10,6 +10,24 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_INLINE void
+ACE_Process_Options::enable_unicode_environment (void)
+{
+  this->use_unicode_environment_ = true;
+}
+
+ACE_INLINE void
+ACE_Process_Options::disable_unicode_environment (void)
+{
+  this->use_unicode_environment_ = false;
+}
+
+ACE_INLINE bool
+ACE_Process_Options::use_unicode_environment (void) const
+{
+  return this->use_unicode_environment_;
+}
+
 #if defined (ACE_WIN32)
 
 ACE_INLINE PROCESS_INFORMATION
@@ -101,11 +119,11 @@ ACE_Process::exit_code (ACE_exitcode code)
 ACE_INLINE u_long
 ACE_Process_Options::creation_flags (void) const
 {
-#if defined (UNICODE) && defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_USES_WCHAR) && defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   return creation_flags_ | CREATE_UNICODE_ENVIRONMENT;
 #else
   return creation_flags_;
-#endif /* UNICODE */
+#endif /* ACE_USES_WCHAR */
 }
 
 ACE_INLINE void
@@ -129,24 +147,15 @@ ACE_Process_Options::setgroup (pid_t pgrp)
 }
 
 ACE_INLINE int
-ACE_Process_Options::handle_inheritence (void)
+ACE_Process_Options::handle_inheritance (void)
 {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  return handle_inheritence_;
-#else
-  ACE_NOTSUP_RETURN (0);  // This is a benign error.
-#endif /* ACE_WIN32 && ! ACE_HAS_WINCE */
+  return handle_inheritance_;
 }
 
 ACE_INLINE void
-ACE_Process_Options::handle_inheritence (int hi)
+ACE_Process_Options::handle_inheritance (int hi)
 {
-#if defined (ACE_WIN32) &&  !defined (ACE_HAS_WINCE)
-  handle_inheritence_ = hi;
-#else
-  ACE_UNUSED_ARG (hi);
-  ACE_NOTSUP;
-#endif /* !ACE_HAS_WINCE */
+  handle_inheritance_ = hi;
 }
 
 ACE_INLINE int
@@ -234,14 +243,14 @@ ACE_Process_Options::get_stderr (void) const
   return stderr_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Process_Options::inherit_environment (void) const
 {
   return inherit_environment_;
 }
 
 ACE_INLINE void
-ACE_Process_Options::inherit_environment (int nv)
+ACE_Process_Options::inherit_environment (bool nv)
 {
   inherit_environment_ = nv;
 }

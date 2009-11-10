@@ -2,14 +2,14 @@
 #include "ace/OS.h"
 
 int
-main (void)
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   double sum = 0;
   double count = 0;
   int input;
   char buf[BUFSIZ];
 
-  while (::fgets (buf, sizeof (buf), stdin) != 0)
+  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != 0)
     {
       input = ACE_OS::atoi (buf);
       sum += input;

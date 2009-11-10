@@ -61,21 +61,21 @@ ACE_ATM_Stream::get_peer_name (void) const
   int nameSize = sizeof (name);
 
   if (ACE_OS::getpeername (this->get_handle (),
- (struct sockaddr *) &name,
-                          &nameSize) != 0) {
+                           (struct sockaddr *) &name,
+                           &nameSize) != 0) {
     return 0;
   }
 
   char buffer[256];
   for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; index++) {
     buffer[ index * 3 ] = '\0';
-    sprintf (buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
+    ACE_OS::sprintf (buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
   }
   buffer[ (ATM_ADDR_SIZE - 1) * 3 ] = '\0';
-  sprintf (buffer, "%s%02x.", buffer, 0);
+  ACE_OS::sprintf (buffer, "%s%02x.", buffer, 0);
   buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
   for (index = 0; index < ACE_OS::strlen (buffer); ++index)
-    buffer[index] = tolower (buffer[index]);
+    buffer[index] = ACE_OS::ace_tolower (buffer[index]);
 
   ifstream atm_hosts ("C:/WINNT/atmhosts");
   assert (atm_hosts.is_open ());
@@ -89,13 +89,13 @@ ACE_ATM_Stream::get_peer_name (void) const
     atm_hosts.getline (line, 256);
     // Convert the line to lower case to ease comparison
     for (index = 0; index < ACE_OS::strlen (line); ++index)
-      line[index] = tolower (line[index]);
+      line[index] = ACE_OS::ace_tolower (line[index]);
     if (ACE_OS::strstr (line, buffer) != 0)
       {
         char *strtok_p;
         // Grab the second token which is the host name
         ACE_OS::strtok_r (line, " \t", &strtok_p);
-        host_ptr = strtok (0, " \t", &strtok_p);
+        host_ptr = ACE_OS::strtok (0, " \t", &strtok_p);
         ACE_OS::strcpy (host_name, host_ptr);
         break;
       }
@@ -118,7 +118,7 @@ ACE_ATM_Stream::get_peer_name (void) const
   if ((total_len = atm2text (buffer,sizeof buffer,
  (struct sockaddr *) & (name.sockaddratmsvc),
                             A2T_PRETTY|A2T_NAME)) < 0) {
-    ACE_DEBUG ((LM_DEBUG,ACE_LIB_TEXT ("ACE_ATM_Stream (get_peer_name) :%d"),errno));
+    ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("ACE_ATM_Stream (get_peer_name) :%d"),errno));
     return 0;
   }
 
@@ -216,7 +216,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
 
   vpi = conn_prop.vpi;
   vci = conn_prop.vci;
-  return (0);
+  return 0;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   ATM_CONNECTION_ID connID;
   DWORD bytes = 0;
@@ -248,7 +248,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
                          reinterpret_cast<char*> (&mypvcaddr),
                          &addrpvclen) < 0) {
     ACE_DEBUG (LM_DEBUG,
-              ACE_LIB_TEXT ("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
+              ACE_TEXT ("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
               errno);
     return -1;
   }
@@ -264,7 +264,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
                          reinterpret_cast<char*> (&mypvcid),
                          &pvcidlen) < 0) {
     ACE_DEBUG (LM_DEBUG,
-              ACE_LIB_TEXT ("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
+              ACE_TEXT ("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
               errno);
     return -1;
   }
@@ -274,14 +274,14 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   return 0;
 #else
   ACE_DEBUG (LM_DEBUG,
-            ACE_LIB_TEXT ("ACE_ATM_Stream::get_vpi_vci: Not implemented in this ATM version. Update to >= 0.62\n Or patch 0.59"));
+            ACE_TEXT ("ACE_ATM_Stream::get_vpi_vci: Not implemented in this ATM version. Update to >= 0.62\n Or patch 0.59"));
   ACE_UNUSED_ARG (vci);
   ACE_UNUSED_ARG (vpi);
 
-  return (-1);
+  return -1;
 #endif /* SO_ATMPVC || SO_VCID */
 #else
-  return (-1);
+  return -1;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
 

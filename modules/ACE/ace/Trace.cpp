@@ -99,9 +99,9 @@ ACE_Trace::ACE_Trace (const ACE_TCHAR *n,
         {
           lm->trace_active (1);
           ACE_DEBUG ((LM_TRACE,
-                      ACE_LIB_TEXT ("%*s(%t) calling %s in file `%s' on line %d\n"),
+                      ACE_TEXT ("%*s(%t) calling %s in file `%s' on line %d\n"),
                       ACE_Trace::nesting_indent_ * lm->inc (),
-                      ACE_LIB_TEXT (""),
+                      ACE_TEXT (""),
                       this->name_,
                       file,
                       line));
@@ -125,9 +125,9 @@ ACE_Trace::~ACE_Trace (void)
         {
           lm->trace_active (1);
           ACE_DEBUG ((LM_TRACE,
-                      ACE_LIB_TEXT ("%*s(%t) leaving %s\n"),
+                      ACE_TEXT ("%*s(%t) leaving %s\n"),
                       ACE_Trace::nesting_indent_ * lm->dec (),
-                      ACE_LIB_TEXT (""),
+                      ACE_TEXT (""),
                       this->name_));
           lm->trace_active (0);
         }

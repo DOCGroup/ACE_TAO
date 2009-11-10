@@ -48,7 +48,9 @@ public:
                 int n_threads,
                 int n_iterations);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int close (u_long flags = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int svc (void);
   // Iterate <n_iterations> time printing off a message and "waiting"

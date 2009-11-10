@@ -85,16 +85,16 @@ public:
   /// Dump the state of the object.
   void dump (void) const;
 
-  /// send upto <n> bytes in <buf>.
+  /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;
 
-  /// Recv upto <n> bytes in <buf>.
+  /// Recv upto @a n bytes in @a buf.
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
   ssize_t send_n (const void *buf, size_t n) const;
 
-  /// Send all the <message_block>s chained through their <next> and
+  /// Send all the @a message_blocks chained through their <next> and
   /// <cont> pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
   ssize_t send_n (const ACE_Message_Block *message_block,
@@ -122,31 +122,31 @@ public:
    * This is an interface to ::readv, that doesn't use the struct
    * iovec explicitly.  The ... can be passed as an arbitrary number
    * of (char *ptr, int len) tuples.  However, the count N is the
-   * *total* number of trailing arguments, *not* a couple of the
+   * *total* number of trailing arguments, *not* a count of the
    * number of tuple pairs!
    */
   ssize_t recv (size_t n, ...) const;
 
-  /// Send <n> bytes via Win32 WriteFile using overlapped I/O.
+  /// Send @a n bytes via Win32 WriteFile using overlapped I/O.
   ssize_t send (const void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
-  /// Recv <n> bytes via Win32 ReadFile using overlapped I/O.
+  /// Recv @a n bytes via Win32 ReadFile using overlapped I/O.
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size <n> to the file.
+  /// Send an <iovec> of size @a n to the file.
   ssize_t sendv (const iovec iov[],
                  int n) const;
 
-  /// Send an <iovec> of size <n> to the file.  Will block until all
+  /// Send an @c iovec of size @a n to the file.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
                    int n) const;
 
-  /// Receive an <iovec> of size <n> to the file.
+  /// Receive an @c iovec of size @a n to the file.
   ssize_t recvv_n (iovec iov[],
                    int n) const;
 

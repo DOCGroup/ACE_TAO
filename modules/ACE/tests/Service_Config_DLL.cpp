@@ -263,7 +263,7 @@ Refuses_Init::info (ACE_TCHAR **info_string, size_t length) const
   ACE_TCHAR const *msg =
     ACE_TEXT ("Refuses_Init service, shouldn't be here!\n");
   if (*info_string == 0)
-    *info_string = ACE::strnew (msg);
+    *info_string = ACE_OS::strdup (msg);
   else
     ACE_OS::strncpy (*info_string, msg, length);
   ACE_ERROR ((LM_ERROR,

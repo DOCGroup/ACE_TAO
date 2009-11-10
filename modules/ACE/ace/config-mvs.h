@@ -13,7 +13,6 @@
 #define NSIG 44                 /* missing from Signal.h */
 #define MAXHOSTNAMELEN 256      /* missing form netdb.h */
 #define howmany __howmany       /* MVS uses different names than most others */
-#define fd_mask __fd_mask
 #define MAXNAMLEN  __DIR_NAME_MAX
 #if defined (log)               /* log is a macro in math.h */
 # undef log                     /* conflicts with log function in ACE */
@@ -22,7 +21,9 @@
 #define ACE_MVS
 
 // Preprocesor requires an extra argument
-#define ACE_CC_PREPROCESSOR_ARGS "-+ -E"
+#ifndef ACE_USING_MCPP_PREPROCESSOR
+# define ACE_CC_PREPROCESSOR_ARGS "-+ -E"
+#endif
 
 // See the README file in this directory
 // for a description of the following ACE_ macros
@@ -41,7 +42,6 @@
 #define ERRMAX __sys_nerr
 
 #define ACE_HAS_3_PARAM_WCSTOK
-#define ACE_HAS_BROKEN_CTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_DIRENT
@@ -56,7 +56,6 @@
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_DRAFT6
 #define ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP
 #define ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP
 #define ACE_HAS_SIGINFO_T
@@ -66,11 +65,9 @@
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STRERROR
 #define ACE_HAS_STRBUF_T
 #define ACE_HAS_STRINGS
 #define ACE_HAS_SYSV_IPC
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_HAS_THREADS
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
@@ -109,8 +106,9 @@
 #define ACE_LACKS_NETINET_TCP_H
 #define ACE_LACKS_TCP_H
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
-#define ACE_LACKS_THREAD_STACK_ADDR
+#define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
 #define ACE_LACKS_TIMESPEC_T
+#define ACE_LACKS_FD_MASK
 
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1

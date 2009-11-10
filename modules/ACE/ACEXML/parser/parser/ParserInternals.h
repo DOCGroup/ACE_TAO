@@ -79,8 +79,6 @@ public:
 
   static const ACEXML_Char base_char_table_[256];
 
-  static const ACEXML_Char* msg_[];
-
   static const ACEXML_Char* predef_ent_[];
 
   static const ACEXML_Char* predef_val_[];

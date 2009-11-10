@@ -15,7 +15,7 @@
 // Listing 1 code/ch08
 #include "ace/Asynch_IO.h"
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 class HA_Proactive_Service : public ACE_Service_Handler
 {
@@ -59,7 +59,7 @@ public:
 };
 // Listing 2
 
-#endif /* (ACE_WIN32 && != ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 
 #if 0
 // Listing 3 code/ch08

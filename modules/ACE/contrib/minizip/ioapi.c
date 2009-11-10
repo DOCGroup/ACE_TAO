@@ -69,8 +69,8 @@ int ZCALLBACK ferror_file_func OF((
 
 voidpf ZCALLBACK fopen_file_func ( voidpf opaque,const char* filename,int mode)
   {
-    FILE* file = NULL;
-    const char* mode_fopen = NULL;
+    FILE* file = 0;
+    const char* mode_fopen = 0;
     MINIZIP_UNUSED_ARG (opaque);
     if ((mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER)==ZLIB_FILEFUNC_MODE_READ)
         mode_fopen = "rb";
@@ -81,7 +81,7 @@ voidpf ZCALLBACK fopen_file_func ( voidpf opaque,const char* filename,int mode)
     if (mode & ZLIB_FILEFUNC_MODE_CREATE)
         mode_fopen = "wb";
 
-    if ((filename!=NULL) && (mode_fopen != NULL))
+    if ((filename != 0) && (mode_fopen !=  0))
         file = fopen(filename, mode_fopen);
     return file;
 }
@@ -165,5 +165,5 @@ void fill_fopen_filefunc (zlib_filefunc_def* pzlib_filefunc_def)
     pzlib_filefunc_def->zseek_file = fseek_file_func;
     pzlib_filefunc_def->zclose_file = fclose_file_func;
     pzlib_filefunc_def->zerror_file = ferror_file_func;
-    pzlib_filefunc_def->opaque = NULL;
+    pzlib_filefunc_def->opaque = 0;
 }

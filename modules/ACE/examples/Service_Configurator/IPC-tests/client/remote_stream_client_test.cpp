@@ -12,6 +12,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(client, remote_stream_client_test, "$Id$")
 
@@ -32,7 +33,7 @@ print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
               "usage: %s [-p portnum] [-h host_name] [-f file]\n",
-	     program_name));
+              program_name));
   ACE_OS::exit (1);
 }
 
@@ -46,17 +47,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'f':
-	file_name = get_opt.opt_arg ();
-	break;
+        file_name = get_opt.opt_arg ();
+        break;
       case 'h':
-	host_name = get_opt.opt_arg ();
-	break;
+        host_name = get_opt.opt_arg ();
+        break;
       case 'p':
-	port_number = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        port_number = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
       default:
-	print_usage_and_die ();
-	break;
+        print_usage_and_die ();
+        break;
       }
 }
 
@@ -83,7 +84,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   iov[0].iov_base = (char *) "filename: ";
   iov[0].iov_len  = 11;
   iov[1].iov_base = (char *) file_name;
-  iov[1].iov_len  = ACE_OS::strlen (file_name);
+  iov[1].iov_len  =
+    ACE_Utils::truncate_cast<u_long> (ACE_OS::strlen (file_name));
 
   if (dc.send (iov, 2) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -100,6 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        "connect"),
                       -1);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)
@@ -107,6 +110,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        "%p\n",
                        "mmap"),
                       -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Next, send the file's contents.
 

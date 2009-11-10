@@ -104,11 +104,11 @@ protected:
 
   /**
    * Flag indicating whether the ACE_Object_Manager was dynamically
-   * allocated by ACE.  (If is was dynamically allocated by the
+   * allocated by ACE. (If is was dynamically allocated by the
    * application, then the application is responsible for destroying
    * it.)
    */
-  unsigned int dynamically_allocated_;
+  bool dynamically_allocated_;
 
   /// Link to next Object_Manager, for chaining.
   ACE_Object_Manager_Base *next_;
@@ -136,13 +136,13 @@ public:
   virtual int fini (void);
 
   /**
-   * Returns 1 before the <ACE_OS_Object_Manager> has been
+   * Returns 1 before the ACE_OS_Object_Manager has been
    * constructed.  See <ACE_Object_Manager::starting_up> for more
    * information.
    */
   static int starting_up (void);
 
-  /// Returns 1 after the <ACE_OS_Object_Manager> has been destroyed.
+  /// Returns 1 after the ACE_OS_Object_Manager has been destroyed.
   /// See <ACE_Object_Manager::shutting_down> for more information.
   static int shutting_down (void);
 
@@ -171,7 +171,7 @@ public:
     };
 
   /// Accesses a default signal set used, for example, in
-  /// <ACE_Sig_Guard> methods.
+  /// ACE_Sig_Guard methods.
   static sigset_t *default_mask (void);
 
   /// Returns the current thread hook for the process.
@@ -205,7 +205,7 @@ public:
   static ACE_OS_Object_Manager *instance (void);
 
   /// For <ACE_OS::atexit> support.
-  int at_exit (ACE_EXIT_HOOK func);
+  int at_exit (ACE_EXIT_HOOK func, const char* name = 0);
 
 //private:
   /// Singleton instance pointer.

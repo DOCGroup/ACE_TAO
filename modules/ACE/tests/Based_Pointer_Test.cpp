@@ -27,20 +27,36 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/PI_Malloc.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Based_Pointer_T.h"
 
 ACE_RCSID (tests,
-	   Based_Pointer_Repository_Test,
-	   "$Id$")
+           Based_Pointer_Repository_Test,
+           "$Id$")
+
+class Foo
+{
+private:
+  Foo(const Foo &)
+  {
+  }
+public:
+  friend class ace_dewarn_gplusplus;
+  ~Foo ()
+  {
+  }
+};
+
+class Void_Pointer : public ACE_Based_Pointer<void>
+{
+};
 
 #ifdef ACE_HAS_POSITION_INDEPENDENT_POINTERS
 
-#if defined (ACE_WIN32) && defined (_MSC_VER) && defined (_DEBUG)
-# define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
-#elif defined (ACE_WIN32) && defined (__BORLANDC__)
+#if defined (ACE_LD_DECORATOR_STR)
 # define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
 #else
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
-#endif /* ACE_WIN32 && && _MSC_VER && _DEBUG */
+#endif /* ACE_LD_DECORATOR_STR */
 
 #if defined (ACE_WIN32) || defined (ACE_OPENVMS)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
@@ -109,21 +125,23 @@ int singleton_test (void)
        reinterpret_cast<Get_Bp_Repository_Inst> (tmp);
     if (get_bp_repository_inst == 0)
        ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       dll.error ()),
-                       -1);
+                          ACE_TEXT ("%p\n"),
+                          dll.error ()),
+                         -1);
 
     void* baddr_dll = get_bp_repository_inst ();
 
     dll.close ();
 
     if (baddr_dll != baddr1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ACE_Based_Pointer_Repository is not a singleton in DLL %x %x\n"), baddr_dll, baddr1),
-                        -1);
-    }
-
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("ACE_Based_Pointer_Repository is not a ")
+                           ACE_TEXT ("singleton in DLL <%@> <%@>\n"),
+                           baddr_dll,
+                           baddr1),
+                          -1);
+      }
 #endif /* ACE_HAS_DYNAMIC_LINKING */
 
     return 0;
@@ -161,8 +179,7 @@ mmap_map_test(void)
        void* ba = 0;
        if(ACE_BASED_POINTER_REPOSITORY::instance()->find(addr, ba) == -1)
         {
-           ACE_ERROR((LM_ERROR,
-               ACE_TEXT ("Unable to access repository\n")));
+           ACE_ERROR((LM_ERROR, ACE_TEXT ("Unable to access repository\n")));
            alloc->remove();
            delete alloc;
            return -1;
@@ -174,23 +191,22 @@ mmap_map_test(void)
        if(ba != addr)
          {
            ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (
-                           "MMAP pool mapping not present\n")),
-                        -1);
+                              ACE_TEXT ("MMAP pool mapping not present\n")),
+                             -1);
          }
 
        // Check Mapping is removed when object is deleted
-       if(ACE_BASED_POINTER_REPOSITORY::instance()->find(addr, ba) == -1)
+       if (ACE_BASED_POINTER_REPOSITORY::instance()->find(addr, ba) == -1)
          {
            ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Unable to access repository\n")),
-                        -1);
+                              ACE_TEXT ("Unable to access repository\n")),
+                             -1);
          }
        if(ba != 0)
          {
            ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("MMAP pool mapping not removed\n")),
-                        -1);
+                              ACE_TEXT ("MMAP pool mapping not removed\n")),
+                             -1);
          }
     }
     return 0;
@@ -344,7 +360,7 @@ mmap_remap_test(void)
       {
         ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("Unable to find base address after remap of segment\n")));
-  	for (i= 0; i<3; ++i)
+        for (i= 0; i<3; ++i)
           {
             alloc[ i ]->remove();
             delete alloc[ i ];
@@ -356,7 +372,7 @@ mmap_remap_test(void)
       {
         ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("New base address not mapped after MMAP remap\n")));
-	for (i= 0; i<3; ++i)
+        for (i= 0; i<3; ++i)
           {
             alloc[ i ]->remove();
             delete alloc[ i ];
@@ -411,6 +427,9 @@ run_main (int, ACE_TCHAR *[])
     retval += mmap_persistent_map_test();
     retval += mmap_remap_test();
 
+    ACE_Based_Pointer_Basic<Foo> Foo_Ptr;
+    ACE_UNUSED_ARG (Foo_Ptr);
+
     ACE_END_TEST;
     return retval == 0 ? 0 : 1;
 }
@@ -421,6 +440,8 @@ int
 run_main (int, ACE_TCHAR *[])
 {
     ACE_START_TEST (ACE_TEXT ("Based_Pointer_Test"));
+    ACE_Based_Pointer_Basic<Foo> Foo_Ptr;
+    ACE_UNUSED_ARG (Foo_Ptr);
     ACE_END_TEST;
     return 0;
 }

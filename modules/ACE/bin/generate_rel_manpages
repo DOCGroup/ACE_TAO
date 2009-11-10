@@ -24,13 +24,9 @@ my $status= 0;
 &can_run($perl_path.' -V') ||
   die "$0: perl path is incorrect, please fix the script\n";
 
-my $dot_path = '/usr/bin';
-&can_run($dot_path.'/dot -V') ||
-  die "$0: dot path is incorrect, please fix the script\n";
+my  $doxy_path = '/usr/local/bin';
 
-my  $doxy_path = '/usr/bin';
-
-my $doxy_version = '1.4.7-1';
+my $doxy_version = '1.6.1';
 
 &can_run($doxy_path.'/doxygen --version | grep '.$doxy_version.' >/dev/null') ||
   die "$0: doxygen path or version incorrect, please fix the script\n";
@@ -77,7 +73,7 @@ chomp ($release_files = `$make show_release_files`);
 ########
 ######## Main execution thread.
 ########
-&ex ("bin/generate_doxygen.pl -is_release -perl_path $perl_path -dot_path $dot_path")
+&ex ("bin/generate_doxygen.pl -is_release -perl_path $perl_path")
     && die "$0: failed to generate ACE man pages\n";
 
 my $build_command =
@@ -87,7 +83,10 @@ my $build_command =
    "$bzip -9 > ACE-html.tar.bz2 && ".
     "$find ./html $release_filter | $egrep -v $bin_files | " .
     "zip ACE-html.zip -q9@ &&" .
-    "$scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip $dest;";
+    "md5sum ACE-html.tar.gz > ACE-html.tar.gz.md5 &&" .
+    "md5sum ACE-html.tar.bz2 > ACE-html.tar.bz2.md5 &&" .
+    "md5sum ACE-html.zip > ACE-html.zip.md5 &&" .
+    "$scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 $dest;";
 
 &ex ($build_command)
     && die "$0: failed to move ACE man pages to $dest\n";

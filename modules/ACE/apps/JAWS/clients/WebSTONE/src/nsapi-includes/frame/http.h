@@ -116,12 +116,13 @@ int http_start_response(Session *sn, Request *rq);
 
 char **http_hdrs2env(pblock *pb);
 
-
+//FUZZ: disable check_for_NULL
 /*
  * http_status sets status to the code n, with reason string r. If r is
  * NULL, the server will attempt to find one for the given status code.
  * If it finds none, it will give "Because I felt like it."
  */
+//FUZZ: enable check_for_NULL
 
 #define protocol_status http_status
 void http_status(Session *sn, Request *rq, int n, char *r);

@@ -38,11 +38,12 @@ ACEXML_SAXException::ACEXML_SAXException (const ACEXML_SAXException &ex)
 ACEXML_SAXException&
 ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
 {
-  ACEXML_SAXException temp (src);
-  ACEXML_Char* message = this->message_;
-  this->exception_name_ = temp.exception_name_;
-  this->message_ = temp.message_;
-  temp.message_ = message;
+  if (this != &src)
+    {
+      ACE::strdelete (this->message_);
+      this->message_ = ACE::strnew (src.message_);
+    }
+
   return *this;
 }
 
@@ -54,6 +55,7 @@ ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
 
 ACEXML_SAXException::~ACEXML_SAXException (void)
 {
+  ACE::strdelete (this->message_);
 }
 
 ACEXML_Exception *
@@ -72,7 +74,7 @@ ACEXML_SAXException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXException::print (void)
+ACEXML_SAXException::print (void) const
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
@@ -130,7 +132,7 @@ ACEXML_SAXNotSupportedException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXNotSupportedException::print (void)
+ACEXML_SAXNotSupportedException::print (void) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
@@ -185,7 +187,7 @@ ACEXML_SAXNotRecognizedException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXNotRecognizedException::print (void)
+ACEXML_SAXNotRecognizedException::print (void) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
@@ -240,7 +242,7 @@ ACEXML_SAXParseException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXParseException::print (void)
+ACEXML_SAXParseException::print (void) const
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),

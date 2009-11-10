@@ -5,13 +5,9 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#include "ace/ARGV.h"
 #include "ace/Module.h"
 #include "ace/Stream.h"
 #include "ace/Service_Types.h"
-#include "ace/OS_NS_string.h"
-
-
 #include "ace/ace_wchar.h"
 
 ACE_RCSID (ace,
@@ -22,18 +18,32 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Prototypes.
 
-static ACE_Module_Type *ace_get_module (ACE_Service_Type const * sr,
-                                        ACE_Service_Type const * sv,
-                                        int & ace_yyerrno);
-
-static ACE_Module_Type *ace_get_module (ACE_Service_Type const * sr,
-                                        ACE_TCHAR const * svc_name,
-                                        int & ace_yyerrno);
+static ACE_Module_Type *
+  ace_get_module (ACE_Service_Type const * sr,
+                  ACE_TCHAR const * svc_name,
+                  int & ace_yyerrno);
 
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 
 // Force the pretty debugging code to compile.
 // #define YYDEBUG 1
+
+// Bison 2.3 template contains switch statement with a "default:", but
+// without a "case:" label. Suppressing a compiler warning for Visual
+// C++.
+#if defined (_MSC_VER)
+#   pragma warning ( disable : 4065 )
+#endif
+
+// Normalize the message literal's type to match yyerror() prototype
+#define YY_ ACE_TEXT
+
+// Prevent yacc(1) from declaring a trivial YYSTYPE just because
+// YYSTYPE is not a macro definition. On the other hand we want
+// YYSTYPE_IS_DECLARED to be as localized as possible to avoid
+// poluting the global namespace - there may be other yacc(1) parsers
+// that want to play nice with ACE
+#define YYSTYPE_IS_DECLARED
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -63,7 +73,7 @@ svc_config_entries
     {
       if ($2 != 0)
       {
-        $2->apply (ACE_SVC_CONF_PARAM->config, ACE_SVC_CONF_PARAM->yyerrno); 
+        $2->apply (ACE_SVC_CONF_PARAM->config, ACE_SVC_CONF_PARAM->yyerrno);
         delete $2;
       }
       ACE_SVC_CONF_PARAM->obstack.release ();
@@ -150,6 +160,7 @@ stream_modules
     }
    module_list '}'
     {
+      ACE_UNUSED_ARG ($2);
       $$ = $3;
     }
   | /* EMPTY */ { $$ = 0; }
@@ -170,31 +181,7 @@ module_list
 module
   : dynamic
     {
-      ACE_Static_Node *svc_type = $<static_node_>1;
-
-      if (svc_type != 0)
-        {
-          ACE_Static_Node *module = $<static_node_>-1;
-
-          ACE_ARGV args (svc_type->parameters ());
-          ACE_Module_Type *mt = ace_get_module (module->record (ACE_SVC_CONF_PARAM->config),
-                                                svc_type->record (ACE_SVC_CONF_PARAM->config),
-                                                ACE_SVC_CONF_PARAM->yyerrno);
-          ACE_Stream_Type *st =
-            dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (module->record (ACE_SVC_CONF_PARAM->config)->type ()));
-
-          if (!st
-              || !mt
-              || mt->init (args.argc (), args.argv ()) == -1
-              || st->push (mt) == -1)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("dynamic initialization failed for Module %s\n"),
-                          svc_type->name ()));
-              ACE_SVC_CONF_PARAM->yyerrno++;
             }
-        }
-    }
   | static
     {
       ACE_Static_Node *sn = $<static_node_>-1;
@@ -205,7 +192,7 @@ module
       if (((ACE_Stream_Type *) sn->record (ACE_SVC_CONF_PARAM->config)->type ())->push (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Problem with static\n")));
+                      ACE_TEXT ("Problem with static\n")));
           ACE_SVC_CONF_PARAM->yyerrno++;
         }
     }
@@ -240,7 +227,7 @@ module
       if (!st || (mt != 0 && st->remove (mt) == -1))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
+                      ACE_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
                       module->name (),
                       stream->name ()));
           ACE_SVC_CONF_PARAM->yyerrno++;
@@ -319,7 +306,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // messages.
 
 void
-yyerror (int yyerrno, int yylineno, const char *s)
+yyerror (int yyerrno, int yylineno, ACE_TCHAR const * s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (yyerrno);
@@ -328,10 +315,16 @@ yyerror (int yyerrno, int yylineno, const char *s)
 #endif /* ACE_NLOGGING */
 
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("[error %d] on line %d: %s\n"),
+              ACE_TEXT ("ACE (%P|%t) [error %d] on line %d: %C\n"),
               yyerrno,
               yylineno,
               s));
+}
+
+void
+yyerror (ACE_TCHAR const * s)
+{
+  yyerror (-1, -1, s);
 }
 
 // Note that SRC_REC represents left context, which is the STREAM *
@@ -352,73 +345,31 @@ ace_get_module (ACE_Service_Type const * sr,
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("cannot locate Module_Type %s ")
-                  ACE_LIB_TEXT ("in STREAM_Type %s\n"),
+                  ACE_TEXT ("cannot locate Module_Type %s ")
+                  ACE_TEXT ("in STREAM_Type %s\n"),
                   svc_name,
-                  (sr ? sr->name () : ACE_LIB_TEXT ("(nil)"))));
+                  (sr ? sr->name () : ACE_TEXT ("(nil)"))));
       ++yyerrno;
     }
 
   return const_cast<ACE_Module_Type *> (mt);
 }
 
-static ACE_Module_Type *
-ace_get_module (ACE_Service_Type const * sr,
-                ACE_Service_Type const * sv,
-                int & yyerrno)
-{
-  ACE_Stream_Type const * const st =
-    (sr == 0
-     ? 0
-     : static_cast<ACE_Stream_Type const *> (sr->type ()));
-  
-  ACE_Module_Type const * const mt =
-    static_cast <ACE_Module_Type const *> (sv->type ());
-
-  ACE_TCHAR const * const module_type_name =
-    (mt ? mt->name () : ACE_LIB_TEXT ("(nil)"));
-
-  if (sr == 0 || st == 0 || mt == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
-                  module_type_name,
-                  (sr ? sr->name () : ACE_LIB_TEXT ("(nil)"))));
-      ++yyerrno;
-    }
-
-  // Make sure that the Module has the same name as the
-  // Module_Type object from the svc.conf file.
-  ACE_Module<ACE_SYNCH> * const mp =
-    static_cast<ACE_Module<ACE_SYNCH> *> (mt ? mt->object () : 0);
-
-  if (mp && ACE_OS::strcmp (mp->name (), module_type_name) != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
-                  module_type_name,
-                  mp->name ()));
-      mp->name (module_type_name);
-    }
-
-  return const_cast<ACE_Module_Type *> (mt);
-}
-
-#if defined (DEBUGGING)
+#if defined (SVC_CONF_Y_DEBUGGING)
 // Main driver program.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Svc_Conf_Param param (stdin);
+  ACE_Svc_Conf_Param param (0, stdin);
 
   // Try to reopen any filename argument to use YYIN.
   if (argc > 1 && (yyin = freopen (argv[1], "r", stdin)) == 0)
-    (void) ACE_OS::fprintf (stderr, ACE_LIB_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
+    (void) ACE_OS::fprintf (stderr, ACE_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
 
   return ::yyparse (&param);
 }
-#endif /* DEBUGGING */
+#endif /* SVC_CONF_Y_DEBUGGING */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

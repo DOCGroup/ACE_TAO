@@ -38,7 +38,7 @@
 #endif
 
 #define ACE_HAS_ITOA
-
+#define ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 #define ACE_ITOA_EQUIVALENT ::_itoa
@@ -50,7 +50,6 @@
 #define ACE_HAS_EXCEPTIONS
 #endif /* ACE_HAS_WINCE */
 
-#define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
 
 #define ACE_HAS_SIG_ATOMIC_T
@@ -60,10 +59,6 @@
 
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-
-#define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
-#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
 
 // Platform provides ACE_TLI function prototypes.
 // For Win32, this is not really true, but saves a lot of hassle!
@@ -71,6 +66,11 @@
 
 // Platform support linebuffered streaming is broken
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
+
+#if !defined (ACE_HAS_WINCE) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 900))
+# define ACE_HAS_INTRINSIC_INTERLOCKED
+# define ACE_HAS_INTRINSIC_BYTESWAP
+#endif
 
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
@@ -111,7 +111,7 @@
 #pragma warning(disable:4231)
 
 // 'function' : unreferenced local function has been removed
-# pragma warning(disable:4505)
+#pragma warning(disable:4505)
 
 // A template can not be exported. Only an instantiation may be exported.
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

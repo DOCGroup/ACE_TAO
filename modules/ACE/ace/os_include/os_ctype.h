@@ -36,6 +36,9 @@ extern "C"
 
 // @todo move the is* and is* emulation methods in ACE_OS here
 // and let ACE_OS just call them.
+#if !defined (ACE_HAS_CTYPE_T)
+typedef int ctype_t;
+#endif
 
 #ifdef __cplusplus
 }

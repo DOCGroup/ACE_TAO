@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for HP
-// platforms running HP-UX 11.00 using aC++, CC, or gcc (2.95 and up).
+// platforms running HP-UX 11.00 using aC++ or gcc (2.95 and up).
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -19,69 +19,14 @@
 
 #  include "ace/config-g++-common.h"
 
-#  if __GLIBC__ >= 2
-     // glibc 2 and higher has wchar support
-#    define ACE_HAS_XPG4_MULTIBYTE_CHAR
-#  endif
-
-// gcc 2.95.2 supplies the ssize_t typedef.
-#  define ACE_HAS_SSIZE_T
-
-// gcc 3.0 claims to have wide character stuff, but (at least the version
-// built by HP) can't actually compile it. It refers to a wctype.h file
-// that's only available with aC++.
-
 #else
 
-// The following configuration section is designed to work for HP
-// platforms running HP/UX 11.x with either of the HP C++ compilers.
-// There isn't a predefined macro for all cases of the compilers that
-// can be used to tell them apart from other compilers
-// only to tell C++ from aC++, using the value of __cplusplus.
-//
-// NOTE - HP advises people on 11.x to use aC++ since the older C++ doesn't
-// support 64-bit or kernel threads.  So, though this file has the C++ info
-// in it, it's copied from the 10.x file and hasn't been verified.
-
-// There are 2 compiler-specific sections, plus a 3rd for common to both.
-// First is the HP C++ section...
-#  if __cplusplus < 199707L
-
-#    define ACE_HAS_BROKEN_HPUX_TEMPLATES
-
-// Compiler can't handle calls like foo->operator T *()
-#    define ACE_HAS_BROKEN_CONVERSIONS
-
-// Necessary with some compilers to pass ACE_TTY_IO as parameter to
-// DEV_Connector.
-#    define ACE_NEEDS_DEV_IO_CONVERSION
-
-// Compiler's template mechanism must see source code (i.e., .C files).
-#    define ACE_TEMPLATES_REQUIRE_SOURCE
-
-// Compiler's template mechanism requires the use of explicit C++
-// specializations for all used templates.
-#    define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
-// The HP/UX compiler doesn't support volatile!!!!
-#    define volatile
-
-#  else  // aC++ definitions
-
-// Parts of TAO (at least) use __HP_aCC to detect this compiler, but the
-// macro is not set until A.03.13. If it's not set, set it - it won't be an
-// HP-advertised value, but we don't check the value/version - just whether
-// it's set or not.
-#    if !defined (__HP_aCC)
-#      define __HP_aCC
-#    endif /* __HP_aCC */
+// aC++...
 
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
-#    define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
-
-// Compiler can't handle calls like foo->operator T *()
-#    define ACE_HAS_BROKEN_CONVERSIONS
-
+#    ifndef ACE_USING_MCPP_PREPROCESSOR
+#     define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
+#    endif
 // Compiler supports C++ exception handling. It's on by default. If the
 // +noeh compiler option is used to disable exceptions, the compiler defines
 // __HPACC_NOEH.
@@ -107,6 +52,9 @@
 #      endif /* RWSTD_NO_NAMESPACE */
 #    else
 #      define ACE_USES_OLD_IOSTREAMS
+       // There's no support in ACE's use of numeric_limits for those that
+       // aren't in std::
+#      define ACE_LACKS_NUMERIC_LIMITS
 #    endif /* _HP_NAMESPACE_STD */
 
 // Compiler implements templates that support typedefs inside of classes
@@ -133,17 +81,6 @@
 
 // Compiler's template mechanism must see source code (i.e., .C files).
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
-
-// Compiler supports template specialization.
-#    define ACE_HAS_TEMPLATE_SPECIALIZATION
-
-// Platform has XPG4 wide character support
-#    define ACE_HAS_XPG4_MULTIBYTE_CHAR
-
-#  endif /* __cplusplus < 199707L */
-
-// Compiler supports the ssize_t typedef.
-#  define ACE_HAS_SSIZE_T
 
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #  define ACE_LACKS_SIGNED_CHAR
@@ -248,6 +185,8 @@
 // Compiler/platform has Dirent iterator functions.
 #define ACE_HAS_DIRENT
 
+#define ACE_HAS_VSWPRINTF
+
 // Platform supports getpagesize() call
 #define ACE_HAS_GETPAGESIZE
 // But we define this just to be safe
@@ -329,6 +268,8 @@
 // Platform's sigaction() function takes const sigaction* as 2nd parameter.
 #define ACE_HAS_SIGACTION_CONSTP2
 
+#define ACE_HAS_SSIZE_T
+
 // Platform supports SVR4 extended signals
 #define ACE_HAS_SIGINFO_T
 
@@ -341,16 +282,12 @@
 /* Platform provides socklen_t type, such as Linux with glibc2. */
 #define ACE_HAS_SOCKLEN_T 1
 
-/* Platform/compiler supports _sys_errlist symbol */
-#define ACE_HAS_SYS_ERRLIST 1
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 #define ACE_HAS_UALARM
 
 // Platform supports ucontext_t (which is used in the extended signal API).
 #define ACE_HAS_UCONTEXT_T
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
 
 // Platform/compiler supports void * as second parameter to gettimeofday().
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
@@ -394,16 +331,28 @@
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_SYS_SYSCTL_H
 
+// @@ TODO: It looks like HP-UX provides strtoll, strtoull, wcstoll and
+//          wcstoull but some more work is needed to plug them in correctly.
+#define ACE_LACKS_STRTOLL
+#define ACE_LACKS_WCSTOLL
+#define ACE_LACKS_STRTOULL
+#define ACE_LACKS_WCSTOULL
+
+#define ACE_LACKS_ISWASCII
+
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
+
 // Shared library name/path components
 #if defined (__ia64)
-#  define ACE_DLL_SUFFIX  ACE_LIB_TEXT (".so")
+#  define ACE_DLL_SUFFIX  ACE_TEXT (".so")
 #else
-#  define ACE_DLL_SUFFIX  ACE_LIB_TEXT (".sl")
+#  define ACE_DLL_SUFFIX  ACE_TEXT (".sl")
 #endif  /* __ia64 */
 #if defined (__LP64__)
-#  define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
+#  define ACE_LD_SEARCH_PATH ACE_TEXT ("LD_LIBRARY_PATH")
 #else
-#  define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("SHLIB_PATH")
+#  define ACE_LD_SEARCH_PATH ACE_TEXT ("SHLIB_PATH")
 #endif  /* __LP64__ */
 
 #if defined (_INCLUDE__STDC_A1_SOURCE)
@@ -412,6 +361,7 @@
 
 #define ACE_HAS_3_PARAM_READDIR_R
 
+#define ACE_LACKS_STRUCT_LIFNUM
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -480,20 +430,22 @@
 // features (lacks thread priority inheritance and protection), so
 // config-posix.h doesn't get this one...
 #  define ACE_HAS_PTHREADS
-
-#  define ACE_HAS_PTHREADS_STD
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #  define ACE_HAS_PTHREAD_CONTINUE
 #  define ACE_HAS_PTHREAD_RESUME_NP
 #  define ACE_HAS_PTHREAD_SUSPEND
 #  define ACE_HAS_RECURSIVE_MUTEXES
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#  define ACE_LACKS_PTHREAD_ATTR_SETSTACK
 #endif /* ACE_HAS_THREADS */
 
 #define ACE_HAS_POSIX_SEM
 
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
+
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -39,7 +39,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID(asnmp, oid, "$Id$")
 
@@ -574,7 +574,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
         string++;
 
             // grab a digit token and convert it to a long int
-    while (isdigit(*string))
+    while (ACE_OS::ace_isdigit(*string))
       number=number*10 + *(string++)-'0';
 
                 // check for invalid chars

@@ -36,7 +36,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_Cached_Connect_Strategy_Ex
  *
  * @brief A connection strategy which caches connections to peers
- * (represented by <SVC_HANDLER> instances), thereby allowing
+ * (represented by SVC_HANDLER instances), thereby allowing
  * subsequent re-use of unused, but available, connections.
  *
  * <Cached_Connect_Strategy> is intended to be used as a
@@ -130,7 +130,7 @@ protected:
                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                     ACE_Time_Value *timeout,
                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                    int reuse_addr,
+                    bool reuse_addr,
                     int flags,
                     int perms,
                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
@@ -140,7 +140,7 @@ protected:
                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                     ACE_Time_Value *timeout,
                                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                    int reuse_addr,
+                                    bool reuse_addr,
                                     int flags,
                                     int perms,
                                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
@@ -150,7 +150,7 @@ protected:
                                      const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                      ACE_Time_Value *timeout,
                                      const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                     int reuse_addr,
+                                     bool reuse_addr,
                                      int flags,
                                      int perms,
                                      int &found);
@@ -168,11 +168,11 @@ protected:
                               const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                               ACE_Time_Value *timeout,
                               const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                              int reuse_addr,
+                              bool reuse_addr,
                               int flags,
                               int perms);
 
-  /// Table that maintains the cache of connected <SVC_HANDLER>s.
+  /// Table that maintains the cache of connected SVC_HANDLERs.
   CONNECTION_CACHE connection_cache_;
 };
 
@@ -185,7 +185,7 @@ protected:
  * @class ACE_Bounded_Cached_Connect_Strategy
  *
  * @brief A connection strategy which caches connections to peers
- *     (represented by <SVC_HANDLER> instances), thereby allowing
+ *     (represented by SVC_HANDLER instances), thereby allowing
  *     subsequent re-use of unused, but available, connections.
  *     This strategy should be used when the cache is bounded by
  *     maximum size.
@@ -235,7 +235,7 @@ protected:
                                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                             ACE_Time_Value *timeout,
                                             const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                            int reuse_addr,
+                                            bool reuse_addr,
                                             int flags,
                                             int perms,
                                             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>,

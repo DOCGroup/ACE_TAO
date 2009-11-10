@@ -41,7 +41,7 @@ do_child (ACE_FIFO_Recv &fifo_reader)
 
 static int
 do_parent (const ACE_TCHAR fifo_name[],
-	   ACE_TCHAR input_filename[])
+           ACE_TCHAR input_filename[])
 {
   ACE_FIFO_Send fifo_sender (fifo_name, O_WRONLY | O_CREAT);
   ssize_t len;

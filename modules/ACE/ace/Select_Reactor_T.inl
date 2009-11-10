@@ -116,12 +116,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler (int signum,
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN>
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations (void)
 {
   // Since the Select_Reactor does not do any event associations, this
-  // function always return 0.
-  return 0;
+  // function always return false.
+  return false;
 }
 
 // = The remaining methods in this file must be called with locks

@@ -18,7 +18,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_SPIPE_Acceptor peer_acceptor;
-  ACE_SPIPE_Stream	 new_stream;
+  ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
   int  n;
 

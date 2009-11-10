@@ -26,7 +26,7 @@ ACE_Shared_Memory_MM::dump (void) const
 // Creates a shared memory segment of SIZE bytes.
 
 ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (ACE_HANDLE handle,
-                                            int length,
+                                            size_t length,
                                             int prot,
                                             int share,
                                             char *addr,
@@ -37,7 +37,7 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (ACE_HANDLE handle,
 }
 
 ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
-                                            int len,
+                                            size_t len,
                                             int flags,
                                             int mode,
                                             int prot,
@@ -59,12 +59,12 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (void)
 
 // The overall size of the segment.
 
-int
+size_t
 ACE_Shared_Memory_MM::get_segment_size (void) const
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::get_segment_size");
   // This cast is legit since the original length in open() is an int.
-  return static_cast<int> (this->shared_memory_.size ());
+  return this->shared_memory_.size ();
 }
 
 // Unmaps the shared memory segment.

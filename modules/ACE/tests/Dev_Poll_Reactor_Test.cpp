@@ -53,7 +53,9 @@ public:
 
   Client (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int handle_output (ACE_HANDLE handle);
 
@@ -130,7 +132,7 @@ Client::handle_output (ACE_HANDLE)
         {
           if (errno == EWOULDBLOCK)
             return 0;  // Flow control kicked in.
-          else if (errno == EPIPE)
+          else if (errno == EPIPE || errno == ECONNRESET)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) Client::handle_output; server ")

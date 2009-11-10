@@ -69,7 +69,7 @@ int transaction::run()
 
   while (!done) {
 
-    if ((rc = send()) < 0)      // send pkt to agent
+    if ((rc = this->send()) < 0)      // send pkt to agent
         return rc;
     else {
       if (retry_counter++ > params_.get_retry())
@@ -110,7 +110,7 @@ int transaction::run(transaction_result * r)
     if (reactor->schedule_timer(this, 0, to, to) < 0)
         return SNMP_CLASS_INTERNAL_ERROR;
 
-    if ((rc = send()) < 0)      // send pkt to agent
+    if ((rc = this->send()) < 0)      // send pkt to agent
         return rc;
     return 0;
 }
@@ -139,7 +139,7 @@ int transaction::handle_input (ACE_HANDLE)
 int transaction::handle_timeout(const ACE_Time_Value &,
                                 const void *)
 {
-    if (send() < 0)      // send pkt to agent
+    if (this->send() < 0)      // send pkt to agent
         result_->result(this, 0);
     else
         if (retry_counter_++ > params_.get_retry())

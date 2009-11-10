@@ -58,7 +58,7 @@ void change_file_date(filename,dosdate,tmu_date)
   FILETIME ftm,ftLocal,ftCreate,ftLastAcc,ftLastWrite;
 
   hFile = CreateFile(filename,GENERIC_READ | GENERIC_WRITE,
-                      0,NULL,OPEN_EXISTING,0,NULL);
+                      0,0,OPEN_EXISTING,0,0);
   GetFileTime(hFile,&ftCreate,&ftLastAcc,&ftLastWrite);
   DosDateTimeToFileTime((WORD)(dosdate>>16),(WORD)dosdate,&ftLocal);
   LocalFileTimeToFileTime(&ftLocal,&ftm);
@@ -186,7 +186,7 @@ int do_list(uf)
         uLong ratio=0;
         const char *string_method;
         char charCrypt=' ';
-        err = unzGetCurrentFileInfo(uf,&file_info,filename_inzip,sizeof(filename_inzip),NULL,0,NULL,0);
+        err = unzGetCurrentFileInfo(uf,&file_info,filename_inzip,sizeof(filename_inzip),0,0,0,0);
         if (err!=UNZ_OK)
         {
             printf("error %d with zipfile in unzGetCurrentFileInfo\n",err);
@@ -250,13 +250,13 @@ int do_extract_currentfile(uf,popt_extract_without_path,popt_overwrite,password)
     char* filename_withoutpath;
     char* p;
     int err=UNZ_OK;
-    FILE *fout=NULL;
+    FILE *fout=0;
     void* buf;
     uInt size_buf;
 
     unz_file_info file_info;
     uLong ratio=0;
-    err = unzGetCurrentFileInfo(uf,&file_info,filename_inzip,sizeof(filename_inzip),NULL,0,NULL,0);
+    err = unzGetCurrentFileInfo(uf,&file_info,filename_inzip,sizeof(filename_inzip),0,0,0,0);
 
     if (err!=UNZ_OK)
     {
@@ -266,7 +266,7 @@ int do_extract_currentfile(uf,popt_extract_without_path,popt_overwrite,password)
 
     size_buf = WRITEBUFFERSIZE;
     buf = (void*)malloc(size_buf);
-    if (buf==NULL)
+    if (buf==0)
     {
         printf("Error allocating memory\n");
         return UNZ_INTERNALERROR;
@@ -309,7 +309,7 @@ int do_extract_currentfile(uf,popt_extract_without_path,popt_overwrite,password)
             char rep=0;
             FILE* ftestexist;
             ftestexist = fopen(write_filename,"rb");
-            if (ftestexist!=NULL)
+            if (ftestexist!=0)
             {
                 fclose(ftestexist);
                 do
@@ -342,7 +342,7 @@ int do_extract_currentfile(uf,popt_extract_without_path,popt_overwrite,password)
             fout=fopen(write_filename,"wb");
 
             /* some zipfile don't contain directory alone before file */
-            if ((fout==NULL) && ((*popt_extract_without_path)==0) &&
+            if ((fout==0) && ((*popt_extract_without_path)==0) &&
                                 (filename_withoutpath!=(char*)filename_inzip))
             {
                 char c=*(filename_withoutpath-1);
@@ -352,13 +352,13 @@ int do_extract_currentfile(uf,popt_extract_without_path,popt_overwrite,password)
                 fout=fopen(write_filename,"wb");
             }
 
-            if (fout==NULL)
+            if (fout==0)
             {
                 printf("error opening %s\n",write_filename);
             }
         }
 
-        if (fout!=NULL)
+        if (fout!=0)
         {
             printf(" extracting: %s\n",write_filename);
 
@@ -413,7 +413,7 @@ int do_extract(uf,opt_extract_without_path,opt_overwrite,password)
     uLong i;
     unz_global_info gi;
     int err;
-    FILE* fout=NULL;
+    FILE* fout=0;
 
     err = unzGetGlobalInfo (uf,&gi);
     if (err!=UNZ_OK)
@@ -467,9 +467,9 @@ int main(argc,argv)
     int argc;
     char *argv[];
 {
-    const char *zipfilename=NULL;
-    const char *filename_to_extract=NULL;
-    const char *password=NULL;
+    const char *zipfilename=0;
+    const char *filename_to_extract=0;
+    const char *password=0;
     char filename_try[MAXFILENAME+16] = "";
     int i;
     int opt_do_list=0;
@@ -477,8 +477,8 @@ int main(argc,argv)
     int opt_do_extract_withoutpath=0;
     int opt_overwrite=0;
     int opt_extractdir=0;
-    const char *dirname=NULL;
-    unzFile uf=NULL;
+    const char *dirname=0;
+    unzFile uf=0;
 
     do_banner();
     if (argc==1)
@@ -522,15 +522,15 @@ int main(argc,argv)
             }
             else
             {
-                if (zipfilename == NULL)
+                if (zipfilename == 0)
                     zipfilename = argv[i];
-                else if ((filename_to_extract==NULL) && (!opt_extractdir))
+                else if ((filename_to_extract==0) && (!opt_extractdir))
                         filename_to_extract = argv[i] ;
             }
         }
     }
 
-    if (zipfilename!=NULL)
+    if (zipfilename!=0)
     {
 
 #        ifdef USEWIN32IOAPI
@@ -547,7 +547,7 @@ int main(argc,argv)
 #        else
         uf = unzOpen(zipfilename);
 #        endif
-        if (uf==NULL)
+        if (uf==0)
         {
             strcat(filename_try,".zip");
 #            ifdef USEWIN32IOAPI
@@ -558,7 +558,7 @@ int main(argc,argv)
         }
     }
 
-    if (uf==NULL)
+    if (uf==0)
     {
         printf("Cannot open %s or %s.zip\n",zipfilename,zipfilename);
         return 1;
@@ -575,7 +575,7 @@ int main(argc,argv)
           exit(-1);
         }
 
-        if (filename_to_extract == NULL)
+        if (filename_to_extract == 0)
             return do_extract(uf,opt_do_extract_withoutpath,opt_overwrite,password);
         else
             return do_extract_onefile(uf,filename_to_extract,

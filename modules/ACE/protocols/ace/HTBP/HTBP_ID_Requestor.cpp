@@ -43,7 +43,7 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
       int sep = 0;
       if (host_start == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("ACE::HTBP::ID_Requestor::")
+                           ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
                            ACE_TEXT("connect_to_server: ")
                            ACE_TEXT("invalid URL: \"%s\"\n"),
                            url_.c_str()),
@@ -52,7 +52,7 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
       sep = url_.find (ACE_TEXT("/"),(size_t)host_start);
       if (sep == -1 || sep == host_start +1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("ACE::HTBP::ID_Requestor::")
+                           ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
                            ACE_TEXT("connect_to_server: ")
                            ACE_TEXT("invalid URL: \"%s\"\n"),
                            url_.c_str()),
@@ -70,7 +70,8 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
   if (con.connect (*cli_stream,
                    remote_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("ACE::HTBP::ID_Requestor::connect_to_server: ")
+                       ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
+                       ACE_TEXT("connect_to_server: ")
                        ACE_TEXT("%p\n"),
                        ACE_TEXT("socket connect")),
                       -1);
@@ -82,13 +83,14 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
 {
   char *buffer;
   ACE_NEW_RETURN (buffer, char[this->url_.length()+16],-1);
+  ACE_Auto_Array_Ptr<char> guard (buffer);
   ACE_OS::sprintf (buffer,"GET %s HTTP/1.0\n\n",
                    ACE_TEXT_ALWAYS_CHAR(url_.c_str()));
   int result = cli_stream->send_n (buffer,ACE_OS::strlen(buffer));
-  delete [] buffer;
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("ACE::HTBP::ID_Requestor::send_request %p\n"),
+                       ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
+                       ACE_TEXT("send_request %p\n"),
                        ACE_TEXT("socket send")), -1);
   return 0;
 }
@@ -112,7 +114,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
       this->send_request (&cli_stream) == -1)
     {
       ACE_Utils::UUID_Generator gen;
-      ACE_Utils::UUID *uuid = gen.generateUUID ();
+      ACE_Utils::UUID *uuid = gen.generate_UUID ();
       const ACE_CString *uuidstr = uuid->to_string();
       ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR (uuidstr->c_str());
       delete uuid;

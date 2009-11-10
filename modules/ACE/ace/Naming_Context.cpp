@@ -16,6 +16,10 @@
 
 ACE_RCSID(ace, Naming_Context, "$Id$")
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Naming_Context.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Make life easier later on...
@@ -35,9 +39,9 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t#%s\n"),
-                   ACE_LIB_TEXT ("ACE_Naming_Context"),
-                   ACE_LIB_TEXT ("Proxy for making calls to a Name Server"));
+                   ACE_TEXT ("%s\t#%s\n"),
+                   ACE_TEXT ("ACE_Naming_Context"),
+                   ACE_TEXT ("Proxy for making calls to a Name Server"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -51,7 +55,7 @@ ACE_Naming_Context::local (void)
 {
   ACE_TRACE ("ACE_Naming_Context::local");
   return ACE_OS::strcmp (this->netnameserver_host_,
-                         ACE_LIB_TEXT ("localhost")) == 0
+                         ACE_TEXT ("localhost")) == 0
     || ACE_OS::strcmp (this->netnameserver_host_,
                        this->hostname_) == 0;
 }
@@ -71,41 +75,43 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
   // Perform factory operation to select appropriate type of
   // Name_Space subclass.
 
-#if (defined (ACE_WIN32) && defined (UNICODE))
-// This only works on Win32 platforms when UNICODE is turned on
+#if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
+// This only works on Win32 platforms when ACE_USES_WCHAR is turned on
 
   if (this->name_options_->use_registry ())
     // Use ACE_Registry
     ACE_NEW_RETURN (this->name_space_,
                     ACE_Registry_Name_Space (this->name_options_),
                     -1);
-#endif /* ACE_WIN32 && UNICODE */
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
   if (!this->name_options_->use_registry ())
-    if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
-      {
-        // Use NET_LOCAL name space, set up connection with remote server.
-        ACE_NEW_RETURN (this->name_space_,
-                        ACE_Remote_Name_Space (this->netnameserver_host_,
-                                               (u_short) this->netnameserver_port_),
-                        -1);
-      }
-    else   // Use NODE_LOCAL or PROC_LOCAL name space.
-      {
-        if (lite)
+    {
+      if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
+        {
+          // Use NET_LOCAL name space, set up connection with remote server.
           ACE_NEW_RETURN (this->name_space_,
-                          LITE_LOCAL_NAME_SPACE (scope_in,
-                                                 this->name_options_),
+                          ACE_Remote_Name_Space (this->netnameserver_host_,
+                                                 (u_short) this->netnameserver_port_),
                           -1);
-        else
-          ACE_NEW_RETURN (this->name_space_,
-                          LOCAL_NAME_SPACE (scope_in,
-                                            this->name_options_),
-                          -1);
-      }
+        }
+      else   // Use NODE_LOCAL or PROC_LOCAL name space.
+        {
+          if (lite)
+            ACE_NEW_RETURN (this->name_space_,
+                            LITE_LOCAL_NAME_SPACE (scope_in,
+                                                   this->name_options_),
+                            -1);
+          else
+            ACE_NEW_RETURN (this->name_space_,
+                            LOCAL_NAME_SPACE (scope_in,
+                                              this->name_options_),
+                            -1);
+        }
+    }
 
   if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("NAME_SPACE::NAME_SPACE\n")),
+                       ACE_TEXT ("NAME_SPACE::NAME_SPACE\n")),
                       -1);
   return 0;
 }
@@ -156,8 +162,8 @@ ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
   // Initialize.
   if (this->open (scope_in, lite) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
 }
 
 ACE_Name_Options *
@@ -393,7 +399,7 @@ ACE_Naming_Context::init (int argc, ACE_TCHAR *argv[])
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE_Naming_Context::init\n")));
+                ACE_TEXT ("ACE_Naming_Context::init\n")));
   this->name_options_->parse_args (argc, argv);
   return this->open (this->name_options_->context ());
 }
@@ -403,15 +409,15 @@ ACE_Naming_Context::fini (void)
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE_Naming_Context::fini\n")));
+                ACE_TEXT ("ACE_Naming_Context::fini\n")));
   this->close_down ();
   return 0;
 }
 
 ACE_Name_Options::ACE_Name_Options (void)
-  : debugging_ (0),
-    verbosity_ (0),
-    use_registry_ (0),
+  : debugging_ (false),
+    verbosity_ (false),
+    use_registry_ (false),
     nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     process_name_ (0),
@@ -429,9 +435,9 @@ ACE_Name_Options::ACE_Name_Options (void)
   if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("Temporary path too long, ")
-                  ACE_LIB_TEXT ("defaulting to current directory\n")));
-      ACE_OS::strcpy (this->namespace_dir_, ACE_LIB_TEXT ("."));
+                  ACE_TEXT ("Temporary path too long, ")
+                  ACE_TEXT ("defaulting to current directory\n")));
+      ACE_OS::strcpy (this->namespace_dir_, ACE_TEXT ("."));
       ACE_OS::strcat (this->namespace_dir_, ACE_DIRECTORY_SEPARATOR_STR);
     }
 #endif /* ACE_DEFAULT_NAMESPACE_DIR */
@@ -536,48 +542,6 @@ ACE_Name_Options::context (ACE_Naming_Context::Context_Scope_Type context)
   this->context_ = context;
 }
 
-const ACE_TCHAR *
-ACE_Name_Options::process_name (void)
-{
-  ACE_TRACE ("ACE_Name_Options::process_name");
-  return this->process_name_;
-}
-
-const ACE_TCHAR *
-ACE_Name_Options::namespace_dir (void)
-{
-  ACE_TRACE ("ACE_Name_Options::namespace_dir");
-  return this->namespace_dir_;
-}
-
-int
-ACE_Name_Options::debug (void)
-{
-  ACE_TRACE ("ACE_Name_Options::debug");
-  return this->debugging_;
-}
-
-int
-ACE_Name_Options::use_registry (void)
-{
-  ACE_TRACE ("ACE_Name_Options::use_registry");
-  return this->use_registry_;
-}
-
-void
-ACE_Name_Options::use_registry (int x)
-{
-  ACE_TRACE ("ACE_Name_Options::use_registry");
-  this->use_registry_ = x;
-}
-
-int
-ACE_Name_Options::verbose (void)
-{
-  ACE_TRACE ("ACE_Name_Options::verbose");
-  return this->verbosity_;
-}
-
 void
 ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -600,26 +564,26 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
   // clean it up in the destructor).
   this->database (this->process_name ());
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("b:c:dh:l:P:p:s:T:vr"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("b:c:dh:l:P:p:s:T:vr"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'c':
         {
-          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("PROC_LOCAL")) == 0)
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("PROC_LOCAL")) == 0)
             this->context (ACE_Naming_Context::PROC_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("NODE_LOCAL")) == 0)
+          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NODE_LOCAL")) == 0)
             this->context (ACE_Naming_Context::NODE_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("NET_LOCAL")) == 0)
+          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NET_LOCAL")) == 0)
             this->context (ACE_Naming_Context::NET_LOCAL);
         }
         break;
       case 'd':
-        this->debugging_ = 1;
+        this->debugging_ = true;
         break;
       case 'r':
-        this->use_registry_ = 1;
+        this->use_registry_ = true;
         break;
       case 'h':
         this->nameserver_host (get_opt.opt_arg ());
@@ -642,14 +606,14 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'T':
 #if defined (ACE_HAS_TRACE)
-        if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("ON")) == 0)
+        if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("ON")) == 0)
           ACE_Trace::start_tracing ();
-        else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("OFF")) == 0)
+        else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("OFF")) == 0)
           ACE_Trace::stop_tracing ();
 #endif /* ACE_HAS_TRACE */
         break;
       case 'v':
-        this->verbosity_ = 1;
+        this->verbosity_ = true;
         break;
       default:
         ACE_OS::fprintf (stderr, "%s\n"
@@ -660,8 +624,8 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
                          "\t[-p nameserver port]\n"
                          "\t[-s database name]\n"
                          "\t[-b base address]\n"
-                         "\t[-v] (verbose) \n"
-                         "\t[-r] (use Win32 Registry) \n",
+                         "\t[-v] (verbose)\n"
+                         "\t[-r] (use Win32 Registry)\n",
                          argv[0]);
         /* NOTREACHED */
         break;
@@ -676,7 +640,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (ACE, ACE_Naming_Context)
 ACE_STATIC_SVC_DEFINE (ACE_Naming_Context,
-                       ACE_LIB_TEXT ("ACE_Naming_Context"),
+                       ACE_TEXT ("ACE_Naming_Context"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (ACE_Naming_Context),
                        ACE_Service_Type::DELETE_THIS |

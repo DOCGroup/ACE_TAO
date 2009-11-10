@@ -54,8 +54,10 @@ public:
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int send (const char *buf, size_t len);
   // Send the <buf> to the peer.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ACE_SOCK_CODgram endpoint_;
@@ -215,7 +217,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   port2));
 
       ACE_Process_Options options;
-      options.command_line ("%s %d %s %d %c",
+      options.command_line (ACE_TEXT("%s %d %s %d %c"),
                             argv[0],
                             port1,
                             remotehost,

@@ -117,7 +117,7 @@ public:
   /// Sorted Event Descriptions.
   ACE_Unbounded_Set<ACE_Event_Descriptions> &sorted_event_descriptions (void);
 
-  /// Find description of event \<i\>
+  /// Find description of event @a i
   const char *find_description_i (u_long i);
 
   /// Sort event descriptions
@@ -165,7 +165,6 @@ protected:
   /// drained.
   u_short report_buffer_full_;
 
-
 private:
    ALLOCATOR *   allocator_;
 };
@@ -177,7 +176,7 @@ private:
 //   // Initialize a ACE_Timeprobe with default size
 //   ACE_Timeprobe (ACE_Allocator *allocator = ACE_Allocator::instance());
 
-//   /// Create Timeprobes with <size> slots
+//   /// Create Timeprobes with @a size slots
 //   ACE_Timeprobe (ACE_Allocator *allocator = ACE_Allocator::instance(),
 //                  u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
 // };
@@ -193,8 +192,7 @@ class ACE_Function_Timeprobe
 {
 public:
   /// Constructor.
-  ACE_Function_Timeprobe (Timeprobe &timeprobe,
-                          u_long event);
+  ACE_Function_Timeprobe (Timeprobe &timeprobe, u_long event);
 
   /// Destructor.
   ~ACE_Function_Timeprobe (void);

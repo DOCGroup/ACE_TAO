@@ -43,7 +43,7 @@ public:
 
   /// Constructor.
   ACE_Shared_Memory_MM (ACE_HANDLE handle,
-                        int length = -1,
+                        size_t length = static_cast<size_t> (-1),
                         int prot = PROT_RDWR,
                         int share = ACE_MAP_PRIVATE,
                         char *addr = 0,
@@ -51,7 +51,7 @@ public:
 
   /// Constructor.
   ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
-                        int len = -1,
+                        size_t length = static_cast<size_t> (-1),
                         int flags = O_RDWR | O_CREAT,
                         int mode = ACE_DEFAULT_FILE_PERMS,
                         int prot = PROT_RDWR,
@@ -60,7 +60,7 @@ public:
 
   /// Open method.
   int open (ACE_HANDLE handle,
-            int length = -1,
+            size_t length = static_cast<size_t> (-1),
             int prot = PROT_RDWR,
             int share = ACE_MAP_PRIVATE,
             char *addr = 0,
@@ -68,7 +68,7 @@ public:
 
   /// Open method.
   int open (const ACE_TCHAR *file_name,
-            int len = -1,
+            size_t length = static_cast<size_t> (-1),
             int flags = O_RDWR | O_CREAT,
             int mode = ACE_DEFAULT_FILE_PERMS,
             int prot = PROT_RDWR,
@@ -86,7 +86,7 @@ public:
   virtual int remove (void);
 
   // = Allocation and deallocation methods.
-  /// Create a new chuck of memory containing <size> bytes.
+  /// Create a new chuck of memory containing @a size bytes.
   virtual void *malloc (size_t size = 0);
 
   /// Free a chuck of memory allocated by
@@ -94,7 +94,7 @@ public:
   virtual int free (void *p);
 
   /// Return the size of the shared memory segment.
-  virtual int get_segment_size (void) const;
+  virtual size_t get_segment_size (void) const;
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
   virtual ACE_HANDLE get_id (void) const;

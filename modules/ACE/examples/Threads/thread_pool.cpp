@@ -49,8 +49,10 @@ public:
   // This allows the producer to pass messages to the <Thread_Pool>.
 
 private:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int close (u_long);
   // Close hook.
+  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 int
@@ -62,7 +64,7 @@ Thread_Pool::close (u_long)
 }
 
 Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
-			  int n_threads)
+                          int n_threads)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr)
 {
   // Create the pool of worker threads.
@@ -109,19 +111,19 @@ Thread_Pool::svc (void)
                   count));
 
       if (this->getq (mb) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      "(%t) in iteration %d, got result -1, exiting\n",
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) in iteration %d, got result -1, exiting\n",
                       count));
           break;
-	}
+        }
 
       size_t length = mb->length ();
 
       if (length > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "(%t) in iteration %d, length = %d, text = \"%*s\"\n",
-		    count,
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) in iteration %d, length = %d, text = \"%*s\"\n",
+                    count,
                     length,
                     length - 1,
                     mb->rd_ptr ()));
@@ -130,12 +132,15 @@ Thread_Pool::svc (void)
       mb->release ();
 
       if (length == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%t) in iteration %d, got NULL message, exiting\n",
-		      count));
-	  break;
-	}
+        {
+          //FUZZ: disable check_for_NULL
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) in iteration %d, got NULL message, exiting\n",
+                      count));
+          //FUZZ: enable check_for_NULL
+
+          break;
+        }
     }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us
@@ -172,7 +177,7 @@ producer (Thread_Pool &thread_pool)
           ACE_OS::sprintf (mb->rd_ptr (),
                            "%d\n",
                            count);
-          n = ACE_OS::strlen (mb->rd_ptr ());
+          n = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mb->rd_ptr ()));
 
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
@@ -204,9 +209,11 @@ producer (Thread_Pool &thread_pool)
                 // Send a shutdown message to the waiting threads and exit.
           for (size_t i = thread_pool.thr_count (); i > 0; i--)
             {
+              //FUZZ: disable check_for_NULL
               ACE_DEBUG ((LM_DEBUG,
-              "(%t) EOF, enqueueing NULL block for thread = %d\n",
-              i));
+                          "(%t) EOF, enqueueing NULL block for thread = %d\n",
+                          i));
+              //FUZZ: enable check_for_NULL
 
               // Enqueue a NULL message to flag each consumer to
               // shutdown.
@@ -217,13 +224,13 @@ producer (Thread_Pool &thread_pool)
                       ACE_ERROR ((LM_ERROR,
                                   " (%t) %p\n",
                                   "put"));
-	    }
+            }
 
-	  ACE_DEBUG ((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                       "\n(%t) end loop\n"));
-	  // thread_pool.dump ();
+          // thread_pool.dump ();
           break;
-	}
+        }
     }
 }
 
@@ -250,8 +257,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               "(%t) waiting for threads to exit in Thread_Pool destructor...\n"));
   // Wait for all the threads to reach their exit point.
   if (thread_pool.wait () == -1)
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) wait() failed\n"),
                       1);
+    //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) destroying worker tasks and exiting...\n"));

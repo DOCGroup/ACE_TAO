@@ -74,9 +74,9 @@ public:
   int insert (ACE_Future<T> &future);
 
   /**
-   * Wait up to <tv> time to get the <value>.  Note that <tv> must be
+   * Wait up to @a tv time to get the @a value.  Note that @a tv must be
    * specified in absolute time rather than relative time.); get the
-   * next ACE_Future that is readable.  If <tv> = 0, the will block
+   * next ACE_Future that is readable.  If @a tv = 0, the will block
    * forever.
    *
    * If a readable future becomes available, then the input
@@ -128,7 +128,7 @@ private:
   ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_;
 
   /// Keeps track of whether we need to delete the message queue.
-  int delete_queue_;
+  bool delete_queue_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

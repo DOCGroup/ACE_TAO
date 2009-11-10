@@ -45,8 +45,6 @@
 #  quantify         Quantify all executables.  quantify must be in user's PATH!
 #  repo             Use GNU template repository (g++ with repo patches and
 #                   egcs only).
-#  rtti             Enable run-time type identification.  On some platforms,
-#                   it is enabled by default, so this is ignored.
 #  shared_libs      Build shared libraries. Ignored if static_libs_only is set.
 #  static_libs      Build static libraries. Ignored if shared_libs_only is set.
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
@@ -54,6 +52,8 @@
 #  static_libs_only Only build static libraries.
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
+#  symlinks         Make symbolic links (on appropriate platforms) in the lib
+#                   directory be either "absolute" or "relative".
 #  templates	    Type of template instantiation to perform. Can be one of
 #                   automatic, used. Defaults to automatic.
 #  threads          Build with thread support.
@@ -63,6 +63,7 @@
 #                   trio, see http://sourceforge.net/projects/ctrio/
 #  xt               Build with Xt (X11 Toolkit) support.
 #  fl               Build with FlTk (Fast Light Toolkit) support.
+#  fox              Build with Fox Toolkit support.
 #  tk               Build with Tk (Tcl/Tk) support.
 #  qt               Build with Qt (Trolltech Qt) support.
 #  ssl              Build with OpenSSL support.
@@ -71,12 +72,6 @@
 #  rwho             Build with rwho, this results in building apps/drwho
 #  pipes            Build with pipe support, resulting in adding -pipe to the
 #                   compiler options.
-#  split            Build the library by first splitting up the ACE source
-#                   to several files, with one object code entity for each
-#                   source file. This allows an application that is linked
-#                   with ACE to extract _exactly_ what it needs from the
-#                   library, resulting in a smaller executable.
-#                   Setting this to 1 overrides debug to 0.
 #  sctp             Build support for TAO SCIOP and for ACE SCTP
 #                   wrapper-facades. The sctp macro should be set to a string
 #                   value representing a particular SCTP implementation.
@@ -91,6 +86,9 @@
 #  wfmo             Build with wfmo support (Win32 only)
 #  winregistry      Build with windows registry support (Win32 only)
 #  winnt            Build WinNT-specific projects (Win32 only)
+#  link_groups      This indicates that statically linked executable library
+#                   names will be surrounded by -Wl,--start-group and
+#                   -Wl,--end-group for the GNU compiler only.
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -188,64 +186,6 @@
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
-# Set the cleanup targets.  These targets are used by realclean even if
-# the component isn't being built, i.e., the decision to build it was based
-# on components built in another makefile and written a file (that might no
-# longer be available) and accessed by $(ACE_ROOT)/bin/ace_components.
-#
-# If a component should always be built, just use the normal BIN, LIB, or
-# SHLIB variables.  If it's dependent on a component, use the BIN2 or
-# BIN_UNCHECKED variety, then assign that to BIN if the required component
-# is available.
-
-BIN_UNCHECKED ?=
-CLEANUP_BIN ?=
-ifdef BIN
-  CLEANUP_BIN = $(BIN)
-endif # !BIN
-ifdef BIN2
-  CLEANUP_BIN += $(BIN2)
-endif # !BIN2
-ifneq ($(BIN_UNCHECKED),)
-  CLEANUP_BIN += $(BIN_UNCHECKED)
-endif # !BIN_UNCHECKED
-
-LIB_UNCHECKED ?=
-CLEANUP_LIB ?=
-ifdef LIB
-  CLEANUP_LIB = $(LIB)
-endif # !LIB
-ifdef LIB2
-  CLEANUP_LIB += $(LIB2)
-endif # !LIB2
-ifneq ($(LIB_UNCHECKED),)
-  CLEANUP_LIB = $(LIB_UNCHECKED)
-endif # !LIB_UNCHECKED
-
-SHLIB_UNCHECKED ?=
-CLEANUP_SHLIB ?=
-ifdef SHLIB
-  CLEANUP_SHLIB = $(SHLIB)
-endif # !SHLIB
-ifdef SHLIB2
-  CLEANUP_SHLIB += $(SHLIB2)
-endif # SHLIB2
-ifneq ($(SHLIB_UNCHECKED),)
-  CLEANUP_SHLIB += $(SHLIB_UNCHECKED)
-endif # ! SHLIB_UNCHECKED
-
-SHLIBA_UNCHECKED ?=
-CLEANUP_SHLIBA ?=
-ifdef SHLIBA
-  CLEANUP_SHLIBA = $(SHLIBA)
-endif # SHLIBA
-ifdef SHLIBA2
-  CLEANUP_SHLIBA = $(SHLIBA2)
-endif # SHLIB2A
-ifneq ($(SHLIBA_UNCHECKED),)
-  CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
-endif # SHLIBA_UNCHECKED
-
 #### Default to building shared libraries only.  Set it here to give the
 #### platform a chance to override.
 ifndef shared_libs
@@ -271,7 +211,11 @@ SHR_FILTER ?=
 
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
-include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+ifneq ($(alternate_platform_macros),)
+  include $(alternate_platform_macros)
+else
+  include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif # alternate_platform_macros
 
 # Define some variables to silence warnings
 GHS ?=
@@ -290,15 +234,17 @@ ifeq ($(threads),0)
 endif # threads
 
 ####
-#### Defaults are exceptions on (1), fast off (0), rtti on (1), threads on (1)
+#### Defaults are exceptions on (1), fast off (0), threads on (1)
 #### and versioned_so on (1).
 ####
 exceptions ?= 1
 fast ?= 0
-rtti ?= 1
 versioned_so ?= 1
 use_dep_libs ?= 1
 threads ?= 1
+symlinks ?= relative
+link_groups ?= 0
+mcpp ?= 0
 
 SOVERSION ?=
 SONAME ?=
@@ -320,7 +266,15 @@ endif
 INCLDIRS ?=
 DEFFLAGS ?=
 
-CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
+ifeq ($(debug),0)
+  DEFFLAGS        += -DNDEBUG
+endif
+
+ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
+  INCLDIRS        += -I$(ACE_ROOT)
+endif
+
+CPPFLAGS          += $(DEFFLAGS) $(INCLDIRS)
 
 # Define default extensions for IDL-generated files
 IDL_CLIENT_HDR_EXT ?= C.h
@@ -332,20 +286,6 @@ IDL_SERVER_SRC_EXT ?= S.cpp
 IDL_SERVER_THDR_EXT ?= S_T.h
 IDL_SERVER_TINL_EXT ?= S_T.inl
 IDL_SERVER_TSRC_EXT ?= S_T.cpp
-
-ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
-  INCLDIRS        += -I$(ACE_ROOT)
-endif
-INSINC          ?= $(ACE_ROOT)/ace
-INSLIB          ?= $(ACE_ROOT)/lib
-INSMAN          ?= $(ACE_ROOT)/man
-
-ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
-  LDFLAGS         += -L$(ACE_ROOT)/ace -L./
-endif
-ifeq (,$(findstring -L$(INSLIB),$(LDFLAGS)))
-  LDFLAGS         += -L$(INSLIB)
-endif
 
 ifeq (default,$(origin LEX))
 LEX = flex
@@ -373,11 +313,134 @@ PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
 PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
 VAR             =
 
+# User-written makefiles that are not MPC-generated often use LIB to specify
+# what to build. This is in contrast to MPC-generated files that use
+# LIB_CHECKED for this purpose. LIB causes conflicts on Windows with gmake
+# and Visual Studio which uses the LIB environment variable as a search path
+# for libraries to link. So, to allow non-MPC makefiles to keep working, set
+# LIB_CHECKED based on LIB if the former is not set and the latter is.
+ifndef COMSPEC
+  LIB_CHECKED ?= $(LIB)
+endif # ! COMPSPEC (and, therefore, assumed !Windows
+
+# default to not using an architecture specific output directory
+ARCH        ?=
+ARCH_BIN     = $(BIN)
+ARCH_BIN2    = $(BIN2)
+ARCH_LIB     = $(LIB_CHECKED)
+ARCH_LIB2    = $(LIB2)
+ARCH_SHLIB   = $(SHLIB)
+ARCH_SHLIB2  = $(SHLIB2)
+ARCH_SHLIBA  = $(SHLIBA)
+ARCH_SHLIBA2 = $(SHLIBA2)
+
+INSINC      ?= $(ACE_ROOT)/ace
+INSLIB      ?= $(ACE_ROOT)/lib
+INSMAN      ?= $(ACE_ROOT)/man
+
+ifdef ARCH
+  INSLIB := $(INSLIB:%=%/$(ARCH))
+ifdef BIN
+  ARCH_BIN = $(ARCH)/$(BIN)
+endif
+ifdef BIN2
+  ARCH_BIN2 = $(ARCH)/$(BIN2)
+endif
+ifdef LIB_CHECKED
+  ARCH_LIB = $(ARCH)/$(LIB_CHECKED)
+endif
+ifdef LIB2
+  ARCH_LIB2 = $(ARCH)/$(LIB2)
+endif
+ifdef SHLIB
+  ARCH_SHLIB = $(ARCH)/$(SHLIB)
+endif
+ifdef SHLIB2
+  ARCH_SHLIB2 = $(ARCH)/$(SHLIB2)
+endif
+ifdef SHLIBA
+  ARCH_SHLIBA = $(ARCH)/$(SHLIBA)
+endif
+ifdef SHLIBA2
+  ARCH_SHLIBA2 = $(ARCH)/$(SHLIBA2)
+endif
+endif
+
+ifeq (,$(findstring -L$(INSLIB),$(LDFLAGS)))
+  LDFLAGS         += -L$(INSLIB)
+endif
+
+#ifdef ARCH
+#  LDFLAGS_ARCH := $(LDFLAGS:-L%=-L%/$(ARCH))
+#  LDFLAGS += $(LDFLAGS_ARCH)
+#endif
+
+# Set the cleanup targets.  These targets are used by realclean even if
+# the component isn't being built, i.e., the decision to build it was based
+# on components built in another makefile and written a file (that might no
+# longer be available) and accessed by $(ACE_ROOT)/bin/ace_components.
+#
+# If a component should always be built, just use the normal BIN, LIB, or
+# SHLIB variables.  If it's dependent on a component, use the BIN2 or
+# BIN_UNCHECKED variety, then assign that to BIN if the required component
+# is available.
+
+BIN_UNCHECKED ?=
+CLEANUP_BIN ?=
+ifdef BIN
+  CLEANUP_BIN = $(ARCH_BIN)
+endif # !BIN
+ifdef BIN2
+  CLEANUP_BIN += $(ARCH_BIN2)
+endif # !BIN2
+ifneq ($(BIN_UNCHECKED),)
+  CLEANUP_BIN += $(BIN_UNCHECKED)
+endif # !BIN_UNCHECKED
+
+LIB_UNCHECKED ?=
+CLEANUP_LIB ?=
+ifdef LIB_CHECKED
+  CLEANUP_LIB = $(ARCH_LIB)
+endif # !LIB_CHECKED
+ifdef LIB2
+  CLEANUP_LIB += $(ARCH_LIB2)
+endif # !LIB2
+ifneq ($(LIB_UNCHECKED),)
+  CLEANUP_LIB = $(LIB_UNCHECKED)
+endif # !LIB_UNCHECKED
+
+SHLIB_UNCHECKED ?=
+CLEANUP_SHLIB ?=
+ifdef SHLIB
+  CLEANUP_SHLIB = $(ARCH_SHLIB)
+endif # !SHLIB
+ifdef SHLIB2
+  CLEANUP_SHLIB += $(ARCH_SHLIB2)
+endif # SHLIB2
+ifneq ($(SHLIB_UNCHECKED),)
+  CLEANUP_SHLIB += $(SHLIB_UNCHECKED)
+endif # ! SHLIB_UNCHECKED
+
+SHLIBA_UNCHECKED ?=
+CLEANUP_SHLIBA ?=
+ifdef SHLIBA
+  CLEANUP_SHLIBA = $(ARCH_SHLIBA)
+endif # SHLIBA
+ifdef SHLIBA2
+  CLEANUP_SHLIBA = $(ARCH_SHLIBA2)
+endif # SHLIB2A
+ifneq ($(SHLIBA_UNCHECKED),)
+  CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
+endif # SHLIBA_UNCHECKED
+
 # Let users override the default VDIR directories
+ifdef ARCH
+VDIR          ?= $(ARCH)/.obj/
+VSHDIR        ?= $(ARCH)/.shobj/
+else
 VDIR          ?= .obj/
 VSHDIR        ?= .shobj/
-
-ACELIB ?= -lACE
+endif
 
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
@@ -392,6 +455,7 @@ endif
 OBJEXT ?= o
 SOEXT ?= so
 LIBEXT ?= a
+LIB_PREFIX ?= lib
 
 CC_OUTPUT_FLAG ?= -o
 SO_OUTPUT_FLAG ?= -o
@@ -409,19 +473,6 @@ ifneq ($(optimize),)
   CFLAGS  += $(OCFLAGS)
   CCFLAGS += $(OCCFLAGS)
 endif # optimize
-
-split ?= 0
-ifeq ($(split),0)
-  override split =
-endif # split
-
-ifneq ($(split),)
-  override split_target = SPLIT
-  override debug = 0
-  CPPFLAGS += -DACE_IS_SPLITTING
-else
-  override split_target =
-endif # split
 
 ifeq ($(debug),0)
   override debug =
@@ -548,6 +599,19 @@ ifneq ($(gtk_reactor),)
   ACE_MAKE_OPTIONS += gtk_reactor
 endif # gtk_reactor
 
+fox ?=
+ifeq ($(fox),0)
+  override fox =
+endif # fox
+
+ifneq ($(fox),)
+  override x11=1
+  override gl=1
+  override ace_foxreactor=1
+  override tao_foxresource=1
+  ACE_MAKE_OPTIONS += fox
+endif #fox
+
 QTDIR ?=
 ifneq ($(QTDIR),)
   MOC = ${QTDIR}/bin/moc
@@ -589,18 +653,18 @@ ifneq ($(gl),)
   ACE_MAKE_OPTIONS += gl
 endif # gl
 
-ssl ?=
+ssl ?= 0
 ifeq ($(ssl),0)
   override ssl =
 else
-  ifneq ($(SSL_ROOT),)
-    # Don't do a thing..
-  else
-    CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-    LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
-    LIBS     += $(PLATFORM_SSL_LIBS)
-    ACE_MAKE_OPTIONS += ssl
+  ifneq ($(SSL_ROOT), /usr)
+    ifneq ($(SSL_ROOT),)
+      PLATFORM_SSL_CPPFLAGS += -I$(SSL_ROOT)/include
+      PLATFORM_SSL_LDFLAGS  += -L$(SSL_ROOT)/lib
+    endif
   endif
+  PLATFORM_SSL_LIBS ?= -lssl -lcrypto
+  ACE_MAKE_OPTIONS  += ssl
 endif
 
 ## These are related to MPC.  When 'requires' is used in a project
@@ -705,7 +769,7 @@ else # ! shared_libs
   endif # static_libs
 endif # shared_libs
 
-VLDLIBS = $(LDLIBS) $(ACELIB) $(LIBS)
+VLDLIBS = $(LDLIBS) $(LIBS)
 
 probe ?=
 ifeq ($(probe),0)
@@ -751,12 +815,12 @@ ifdef quantify
   #### You might want to adjust the Quantify options below.
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
-  PRELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
-             -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
+  PURELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
+              -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
   CPPFLAGS += -DACE_HAS_QUANTIFY -I$(ACE_QUANTIFY_DIR)
 
   ifeq ($(shell uname -p),sparc)
-    PRELINK += -record-register-window-traps
+    PURELINK += -record-register-window-traps
   endif # sparc
 endif # quantify
 
@@ -819,7 +883,6 @@ ace_svcconf   ?= 1
 ace_uuid      ?= 1
 ace_filecache ?= 1
 acexml        ?= 1
-xerces        ?= 1
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
@@ -855,4 +918,8 @@ else
   LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
-SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+ifeq ($(SOLINK.cc),override)
+  SOLINK.cc = $(SOLINK.cc.override)
+else
+  SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+endif # SOLINK.cc.override

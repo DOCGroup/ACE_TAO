@@ -10,8 +10,6 @@
 // Include IRIX 6.[234] configuration
 #include "ace/config-irix6.x-sgic++.h"
 
-#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
 // Irix 6.5 man pages show that they exist
 #undef ACE_LACKS_CONDATTR_PSHARED
 #undef ACE_LACKS_MUTEXATTR_PSHARED

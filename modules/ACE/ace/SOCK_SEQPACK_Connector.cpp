@@ -243,8 +243,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
       if (error == EINPROGRESS || error == EWOULDBLOCK)
         {
           // This expression checks if we were polling.
-          if (timeout->sec () == 0
-              && timeout->usec () == 0)
+          if (*timeout == ACE_Time_Value::zero)
             error = EWOULDBLOCK;
           // Wait synchronously using timeout.
           else if (this->complete (new_association,
@@ -409,8 +408,8 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
 }
 
 // Multihomed version of same
@@ -436,8 +435,8 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

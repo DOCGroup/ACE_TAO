@@ -40,8 +40,9 @@ EntryExit ee (CNAME,MNAME,LOC)
 class EntryExit
 {
 public:
-  EntryExit (const ACE_TCHAR* class_name, const ACE_TCHAR *method_name
-       , void *location = 0)
+  EntryExit (const ACE_TCHAR* class_name,
+             const ACE_TCHAR *method_name,
+             void *location = 0)
   {
     class_name_ [20] = method_name_[20] = 0;
 
@@ -115,8 +116,7 @@ private:
 
     // Create a reactor which doesn't automatically restart
     // upon interruption
-    ACE_TP_Reactor tp_reactor (ACE_TP_Reactor::DEFAULT_SIZE
-             , 0);
+    ACE_TP_Reactor tp_reactor (ACE_TP_Reactor::DEFAULT_SIZE, 0);
 
     reactor_task_ready = true;
 
@@ -133,32 +133,44 @@ run_main (int, ACE_TCHAR *[])
 
   ReactorTask reactor_task;
 
-  if (reactor_task.activate () == -1) {
-    ACE_ERROR_RETURN ((LM_ERROR,
-           ACE_TEXT ("(%P|%t) Task activation failed.\n"))
-          , -1);
-  }
+  if (reactor_task.activate () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+             ACE_TEXT ("(%P|%t) Task activation failed.\n"))
+            , -1);
+    }
 
   ACE_Thread_Manager *thread_manager = reactor_task.thr_mgr ();
-  if (thread_manager == 0) {
-    ACE_ERROR_RETURN ((LM_ERROR,
-           ACE_TEXT ("(%P|%t) No Thread Manager found.\n"))
-          , -1);
-  }
+  if (thread_manager == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+             ACE_TEXT ("(%P|%t) No Thread Manager found.\n"))
+            , -1);
+    }
 
-  while (!reactor_task_ready) {
-    ACE_OS:: sleep (1);
-  }
+  while (!reactor_task_ready)
+    {
+      ACE_OS::sleep (1);
+    }
 
-  if (thread_manager->kill_all (SIGUSR1) == -1) {
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Task signalling failed.\n"))
-          , -1);
-  }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Signalling task.\n")));
 
-  if (reactor_task.wait () == -1) {
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Task wait failed.\n"))
-          , -1);
-  }
+  if (thread_manager->kill_all (SIGUSR1) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Task signalling failed.\n")),
+                        -1);
+    }
+
+  // Wait 5 seconds for the other thread to exit, if it didn't exit the
+  // wait return -1 and we return with an error
+  ACE_Time_Value timeout (5);
+  if (thread_manager->wait (&timeout, false, false) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Error, task wait failed.\n")),
+                        -1);
+      }
 
   ACE_END_TEST;
 

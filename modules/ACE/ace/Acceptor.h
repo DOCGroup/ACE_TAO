@@ -89,7 +89,7 @@ public:
    * @param use_select Affects behavior when called back by the reactor
    *                   when a connection can be accepted.  If non-zero,
    *                   this object will accept all pending connections,
-   *                   intead of just the one that triggered the reactor
+   *                   instead of just the one that triggered the reactor
    *                   callback.  Uses ACE_OS::select() internally to
    *                   detect any remaining acceptable connections.
    *                   The default is 1.
@@ -98,7 +98,7 @@ public:
    *                   OS allow reuse of the listen port.  The default is 1.
    */
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                ACE_Reactor * = ACE_Reactor::instance (),
+                ACE_Reactor *reactor = ACE_Reactor::instance (),
                 int flags = 0,
                 int use_select = 1,
                 int reuse_addr = 1);
@@ -128,7 +128,7 @@ public:
    * @param use_select Affects behavior when called back by the reactor
    *                   when a connection can be accepted.  If non-zero,
    *                   this object will accept all pending connections,
-   *                   intead of just the one that triggered the reactor
+   *                   instead of just the one that triggered the reactor
    *                   callback.  Uses ACE_OS::select() internally to
    *                   detect any remaining acceptable connections.
    *                   The default is 1.
@@ -160,6 +160,10 @@ public:
   /// Close down the Acceptor
   virtual int close (void);
 
+  /// In the event that an accept fails, this method will be called and
+  /// the return value will be returned from handle_input().
+  virtual int handle_accept_error (void);
+
   /// Dump the state of an object.
   void dump (void) const;
 
@@ -183,7 +187,7 @@ protected:
 
   /**
    * Bridge method for accepting the new connection into the
-   * <svc_handler>.  The default behavior delegates to the
+   * @a svc_handler.  The default behavior delegates to the
    * PEER_ACCEPTOR::accept.
    */
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
@@ -289,8 +293,6 @@ public:
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
   typedef ACE_Scheduling_Strategy<SVC_HANDLER> SCHEDULING_STRATEGY;
 
-
-
   /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
                          const ACE_TCHAR service_description[] = 0,
@@ -337,7 +339,7 @@ public:
    * @param use_select   Affects behavior when called back by the reactor
    *                     when a connection can be accepted.  If non-zero,
    *                     this object will accept all pending connections,
-   *                     intead of just the one that triggered the reactor
+   *                     instead of just the one that triggered the reactor
    *                     callback.  Uses ACE_OS::select() internally to
    *                     detect any remaining acceptable connections.
    *                     The default is 1.
@@ -459,30 +461,30 @@ protected:
   /// Creation strategy for an Acceptor.
   CREATION_STRATEGY *creation_strategy_;
 
-  /// 1 if {Acceptor} created the creation strategy and thus should
-  /// delete it, else 0.
-  int delete_creation_strategy_;
+  /// true if {Acceptor} created the creation strategy and thus should
+  /// delete it, else false.
+  bool delete_creation_strategy_;
 
   /// Accept strategy for an {Acceptor}.
   ACCEPT_STRATEGY *accept_strategy_;
 
-  /// 1 if {Acceptor} created the accept strategy and thus should delete
-  /// it, else 0.
-  int delete_accept_strategy_;
+  /// true if {Acceptor} created the accept strategy and thus should delete
+  /// it, else false.
+  bool delete_accept_strategy_;
 
   /// Concurrency strategy for an {Acceptor}.
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 
-  /// 1 if {Acceptor} created the concurrency strategy and thus should
-  /// delete it, else 0.
-  int delete_concurrency_strategy_;
+  /// true if {Acceptor} created the concurrency strategy and thus should
+  /// delete it, else false.
+  bool delete_concurrency_strategy_;
 
   /// Scheduling strategy for an {Acceptor}.
   SCHEDULING_STRATEGY *scheduling_strategy_;
 
-  /// 1 if {Acceptor} created the scheduling strategy and thus should
-  /// delete it, else 0.
-  int delete_scheduling_strategy_;
+  /// true if {Acceptor} created the scheduling strategy and thus should
+  /// delete it, else false.
+  bool delete_scheduling_strategy_;
 
   // = Service information objects.
 
@@ -564,8 +566,8 @@ public:
   virtual int accept (SVC_HANDLER * = 0,
                       ACE_PEER_ACCEPTOR_ADDR *remote_addr = 0,
                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-                      int restart = 1,
-                      int reset_new_handle = 0);
+                      bool restart = true,
+                      bool reset_new_handle = false);
 
   /// Cancel a oneshot acceptor that was started asynchronously.
   virtual int cancel (void);
@@ -601,8 +603,8 @@ protected:
   int shared_accept (SVC_HANDLER *svc_handler,
                      ACE_PEER_ACCEPTOR_ADDR *remote_addr,
                      ACE_Time_Value *timeout,
-                     int restart,
-                     int reset_new_handle);
+                     bool restart,
+                     bool reset_new_handle);
 
   // = Demultiplexing hooks.
   /// Returns the listening acceptor's {ACE_HANDLE}.
@@ -650,13 +652,13 @@ private:
    */
   int register_handler (SVC_HANDLER *svc_handler,
                         const ACE_Synch_Options &options,
-                        int restart);
+                        bool restart);
 
   /// Hold the svc_handler_ across asynchrony boundaries.
   SVC_HANDLER *svc_handler_;
 
   /// Hold the restart flag across asynchrony boundaries.
-  int restart_;
+  bool restart_;
 
   /// Factory that establishes connections passively.
   ACE_PEER_ACCEPTOR peer_acceptor_;
@@ -664,9 +666,9 @@ private:
   /// Concurrency strategy for an Acceptor.
   ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy_;
 
-  /// 1 if Acceptor created the concurrency strategy and thus should
-  /// delete it, else 0.
-  int delete_concurrency_strategy_;
+  /// true if Acceptor created the concurrency strategy and thus should
+  /// delete it, else false.
+  bool delete_concurrency_strategy_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

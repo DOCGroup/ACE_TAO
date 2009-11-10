@@ -110,18 +110,18 @@ public:
                             const ACE_Time_Value *timeout) = 0;
 
   /**
-   * Wait to to <timeout> amount of time to send <buf>.  If <send>
-   * times out a -1 is returned with <errno == ETIME>.  If it succeeds
+   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
                             const ACE_Time_Value *timeout) = 0;
 
-  /// request a buffer of size <size>.  Return 0 if the <shm_malloc_> is
+  /// request a buffer of size @a size.  Return 0 if the <shm_malloc_> is
   /// not initialized.
   ACE_MEM_SAP_Node *acquire_buffer (const ssize_t size);
 
-  /// release a buffer pointed by <buf>.  Return -1 if the <shm_malloc_>
+  /// release a buffer pointed by @a buf.  Return -1 if the <shm_malloc_>
   /// is not initialized.
   int release_buffer (ACE_MEM_SAP_Node *buf);
 

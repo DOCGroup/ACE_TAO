@@ -55,20 +55,21 @@ int check_type_consistency (const ACE_INET_Addr &addr)
   return 0;
 }
 
+struct Address {
+  const char* name;
+  bool loopback;
+};
 
-int run_main (int argc, ACE_TCHAR *argv[])
+int run_main (int, ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
   ACE_START_TEST (ACE_TEXT ("INET_Addr_Test"));
 
   int status = 0;     // Innocent until proven guilty
 
   const char *ipv4_addresses[] =
-  {
-    "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
-  };
+    {
+      "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
+    };
 
   ACE_INET_Addr addr;
   status |= check_type_consistency (addr);
@@ -93,7 +94,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
       if (addr.get_ip_address () != ACE_HTONL (addr32))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error: %s failed get_ip_address() check\n")
+                      ACE_TEXT ("Error: %C failed get_ip_address() check\n")
                       ACE_TEXT ("0x%x != 0x%x\n"),
                       ipv4_addresses[i],
                       addr.get_ip_address (),
@@ -101,11 +102,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
           status = 1;
         }
 
-      if (0 != ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]))
+      if (addr.get_host_addr () != 0 &&
+          ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr() check\n")
-                      ACE_TEXT ("%s != %s\n"),
+                      ACE_TEXT ("%C failed get_host_addr() check\n")
+                      ACE_TEXT ("%C != %C\n"),
                       ipv4_addresses[i],
                       addr.get_host_addr (),
                       ipv4_addresses[i]));
@@ -114,21 +116,22 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
       // Now we check the operation of get_host_addr(char*,int)
       const char* haddr = addr.get_host_addr (&hostaddr[0], sizeof(hostaddr));
-      if (0 != ACE_OS::strcmp (&hostaddr[0], haddr))
+      if (haddr != 0 &&
+          ACE_OS::strcmp (&hostaddr[0], haddr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr(char* buf,int) check\n")
-                      ACE_TEXT ("buf ['%s'] != return value ['%s']\n"),
+                      ACE_TEXT ("%C failed get_host_addr(char* buf,int) check\n")
+                      ACE_TEXT ("buf ['%C'] != return value ['%C']\n"),
                       ipv4_addresses[i],
                       &hostaddr[0],
                       haddr));
           status = 1;
         }
-      if (0 != ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]))
+      if (ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr(char*,int) check\n")
-                      ACE_TEXT ("buf ['%s'] != expected value ['%s']\n"),
+                      ACE_TEXT ("%C failed get_host_addr(char*,int) check\n")
+                      ACE_TEXT ("buf ['%C'] != expected value ['%C']\n"),
                       ipv4_addresses[i],
                       &hostaddr[0],
                       ipv4_addresses[i]));
@@ -149,11 +152,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
       addr.set (80, addr32, 0); // addr32 is already in network byte order
       status |= check_type_consistency(addr);
 
-      if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]))
+      if (addr.get_host_addr () != 0 &&
+          ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed second get_host_addr() check\n")
-                      ACE_TEXT ("return value ['%s'] != expected value ['%s']\n"),
+                      ACE_TEXT ("%C failed second get_host_addr() check\n")
+                      ACE_TEXT ("return value ['%C'] != expected value ['%C']\n"),
                       ipv4_addresses[i],
                       addr.get_host_addr (),
                       ipv4_addresses[i]));
@@ -207,7 +211,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
           if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv6_addresses[i]))
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("IPv6 get_host_addr failed: %s != %s\n"),
+                          ACE_TEXT ("IPv6 get_host_addr failed: %C != %C\n"),
                           addr.get_host_addr (),
                           ipv6_addresses[i]));
               status = 1;
@@ -216,6 +220,41 @@ int run_main (int argc, ACE_TCHAR *argv[])
     }
 
 #endif
+
+  struct Address loopback_addresses[] =
+    { {"127.0.0.1", true}, {"127.1.2.3", true}
+      , {"127.0.0.0", true}, {"127.255.255.255", true}
+      , {"126.255.255.255", false}, {"128.0.0.0", false}, {0, true}
+    };
+
+  for (int i=0; loopback_addresses[i].name != 0; i++)
+    {
+      struct in_addr addrv4;
+      ACE_UINT32 addr32 = 0;
+
+      ACE_OS::inet_pton (AF_INET, loopback_addresses[i].name, &addrv4);
+
+      ACE_OS::memcpy (&addr32, &addrv4, sizeof (addr32));
+
+      addr.set (80, loopback_addresses[i].name);
+
+      if (addr.is_loopback() != loopback_addresses[i].loopback)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ACE_INET_Addr::is_loopback() ")
+                      ACE_TEXT ("failed to distinguish loopback address. %C\n")
+                      , loopback_addresses[i].name));
+          status = 1;
+        }
+    }
+
+  if (addr.string_to_addr ("127.0.0.1:72000", AF_INET) != -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ACE_INET_Addr::string_to_addr() ")
+                  ACE_TEXT ("failed to detect port number overflow\n")));
+      status = 1;
+    }
 
   ACE_END_TEST;
 

@@ -39,7 +39,7 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l)
 }
 
 template <class ACE_LOCK> ACE_INLINE
-ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block)
+ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, bool block)
   : lock_ (&l),
     owner_ (0)
 {
@@ -50,11 +50,10 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block)
 }
 
 template <class ACE_LOCK> ACE_INLINE
-ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block, int become_owner)
+ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, bool /* block */, int become_owner)
   : lock_ (&l),
     owner_ (become_owner == 0 ? -1 : 0)
 {
-  ACE_UNUSED_ARG (block);
 }
 
 // Implicitly and automatically acquire (or try to acquire) the
@@ -66,7 +65,7 @@ ACE_Guard<ACE_LOCK>::~ACE_Guard (void)
   this->release ();
 }
 
-template <class ACE_LOCK> ACE_INLINE int
+template <class ACE_LOCK> ACE_INLINE bool
 ACE_Guard<ACE_LOCK>::locked (void) const
 {
   return this->owner_ != -1;
@@ -117,7 +116,7 @@ ACE_Write_Guard<ACE_LOCK>::tryacquire (void)
 
 template <class ACE_LOCK> ACE_INLINE
 ACE_Write_Guard<ACE_LOCK>::ACE_Write_Guard (ACE_LOCK &m,
-                                            int block)
+                                            bool block)
   : ACE_Guard<ACE_LOCK> (&m)
 {
   if (block)
@@ -159,7 +158,7 @@ ACE_Read_Guard<ACE_LOCK>::ACE_Read_Guard (ACE_LOCK &m)
 
 template <class ACE_LOCK> ACE_INLINE
 ACE_Read_Guard<ACE_LOCK>::ACE_Read_Guard (ACE_LOCK &m,
-                                          int block)
+                                          bool block)
   : ACE_Guard<ACE_LOCK> (&m)
 {
   if (block)

@@ -135,7 +135,9 @@
 # endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
 
 # if !defined (ACE_HAS_PROCESS_SPAWN)
-#   if !defined (ACE_LACKS_FORK) || defined (ACE_WIN32) || defined (ACE_WINCE) || defined (ACE_OPENVMS)
+#   if !defined (ACE_LACKS_FORK) || \
+       (defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)) || \
+       defined (ACE_WINCE) || defined (ACE_OPENVMS)
 #     define ACE_HAS_PROCESS_SPAWN 1
 #   endif
 # endif /* ACE_HAS_PROCESS_SPAWN */
@@ -344,31 +346,17 @@
   #   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
   #   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
 
-  #   if defined (ACE_LACKS_RTTI)
-  #     define ACE_dynamic_cast(TYPE, EXPR)                              static_cast<TYPE> (EXPR)
-  #     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    static_cast<TYPE<T1> *> (EXPR)
-  #     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> *> (EXPR)
-  #     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> *> (EXPR)
-  #     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-  #     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-  #     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    static_cast<TYPE<T1> &> (EXPR)
-  #     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> &> (EXPR)
-  #     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> &> (EXPR)
-  #     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-  #     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-  #   else  /* ! ACE_LACKS_RTTI */
-  #     define ACE_dynamic_cast(TYPE, EXPR)                              dynamic_cast<TYPE> (EXPR)
-  #     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> *> (EXPR)
-  #     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> *> (EXPR)
-  #     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> *> (EXPR)
-  #     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-  #     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-  #     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> &> (EXPR)
-  #     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> &> (EXPR)
-  #     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> &> (EXPR)
-  #     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-  #     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-  #   endif /* ! ACE_LACKS_RTTI */
+  #   define ACE_dynamic_cast(TYPE, EXPR)                              dynamic_cast<TYPE> (EXPR)
+  #   define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> *> (EXPR)
+  #   define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> *> (EXPR)
+  #   define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> *> (EXPR)
+  #   define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+  #   define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+  #   define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> &> (EXPR)
+  #   define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> &> (EXPR)
+  #   define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> &> (EXPR)
+  #   define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+  #   define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
 #endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 # if !defined (ACE_CAST_CONST)
@@ -389,21 +377,25 @@
 // should keep them quiet.
 // ============================================================================
 
-#if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
+#if !defined (ACE_UNUSED_ARG)
+# if defined (__GNUC__) && ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2)))
+#   define ACE_UNUSED_ARG(a) (void) (a)
+# elif defined (__GNUC__) || defined (ghs) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
 // such as with GreenHills (ghs) 1.8.8.
-# define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
-#elif defined (__DMC__)
-  #define ACE_UNUSED_ID(identifier)
-  template <class T>
-  inline void ACE_UNUSED_ARG(const T& ACE_UNUSED_ID(t)) { }
-#else /* ghs || __GNUC__ || ..... */
-# define ACE_UNUSED_ARG(a) (a)
-#endif /* ghs || __GNUC__ || ..... */
+#  define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
+# elif defined (__DMC__)
+   #define ACE_UNUSED_ID(identifier)
+   template <class T>
+   inline void ACE_UNUSED_ARG(const T& ACE_UNUSED_ID(t)) { }
+# else /* ghs || __GNUC__ || ..... */
+#  define ACE_UNUSED_ARG(a) (a)
+# endif /* ghs || __GNUC__ || ..... */
+#endif /* !ACE_UNUSED_ARG */
 
-#if defined (__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC >= 60500))
+#if defined (_MSC_VER) || defined(__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC < 40000 || __HP_aCC >= 60500))
 # define ACE_NOTREACHED(a)
 #else  /* __sgi || ghs || ..... */
 # define ACE_NOTREACHED(a) a
@@ -461,32 +453,30 @@
   while (0)
 
 #if defined (ACE_WIN32)
-#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x550)
-#   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
-  do { \
-    TYPE ace_result_; \
-    TYPE ace_local_result_ = (TYPE) X; \
-    ace_result_ = ace_local_result_; \
-    if (ace_result_ == FAILVALUE) \
-      ACE_OS::set_errno_to_last_error (); \
-    return ace_result_; \
-  } while (0)
-#   else
-#     define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
+# define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
     TYPE ace_result_ = (TYPE) X; \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
   } while (0)
-#   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x550) */
-#   define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
+# define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
     RESULT = (TYPE) X; \
     if (RESULT == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
   } while (0)
 #endif  /* ACE_WIN32 */
+
+// The C99 security-improved run-time returns an error value on failure;
+// 0 on success.
+#if defined (ACE_HAS_TR24731_2005_CRT)
+#  define ACE_SECURECRTCALL(X,TYPE,FAILVALUE,RESULT) \
+  do { \
+    errno_t ___ = X; \
+    if (___ != 0) { errno = ___; RESULT = FAILVALUE; } \
+  } while (0)
+#endif /* ACE_HAS_TR24731_2005_CRT */
 
 // ============================================================================
 // Fundamental types
@@ -516,8 +506,10 @@ typedef ACE_HANDLE ACE_SOCKET;
 # if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
+#define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
 # elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
+#define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
 # else
 typedef void* ACE_THR_FUNC_RETURN;
 # endif /* ACE_VXWORKS */
@@ -636,5 +628,23 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #define ACE_PREPROC_CONCATENATE_IMPL(A,B) A ## B
 #define ACE_PREPROC_CONCATENATE(A,B) ACE_PREPROC_CONCATENATE_IMPL(A,B)
 // -------------------------------------------------------------------
+
+/// If MPC is using a lib modifier this define will be set and this then
+/// is used by the service configurator framework
+#if defined MPC_LIB_MODIFIER && !defined (ACE_LD_DECORATOR_STR)
+#define ACE_LD_DECORATOR_STR ACE_TEXT( MPC_LIB_MODIFIER )
+#endif /* MPC_LIB_MODIFIER */
+
+#ifndef ACE_GCC_CONSTRUCTOR_ATTRIBUTE
+# define ACE_GCC_CONSTRUCTOR_ATTRIBUTE
+#endif
+
+#ifndef ACE_GCC_DESTRUCTOR_ATTRIBUTE
+# define ACE_GCC_DESTRUCTOR_ATTRIBUTE
+#endif
+
+#ifndef ACE_DEPRECATED
+# define ACE_DEPRECATED
+#endif
 
 #endif /* ACE_CONFIG_MACROS_H */

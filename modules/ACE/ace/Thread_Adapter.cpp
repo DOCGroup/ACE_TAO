@@ -5,6 +5,7 @@
 #include "ace/Thread_Exit.h"
 #include "ace/Thread_Hook.h"
 #include "ace/Object_Manager_Base.h"
+#include "ace/Service_Config.h"
 
 ACE_RCSID (ace,
            Thread_Adapter,
@@ -51,6 +52,8 @@ ACE_Thread_Adapter::invoke (void)
   // Inherit the logging features if the parent thread has an
   // ACE_Log_Msg instance in thread-specific storage.
   this->inherit_log_msg ();
+
+  ACE_Service_Config::current (ACE_Service_Config::global());
 
 #if !defined(ACE_USE_THREAD_MANAGER_ADAPTER)
   // NOTE: this preprocessor directive should match the one in above

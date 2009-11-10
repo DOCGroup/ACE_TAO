@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Gateway_Peer) : acelib {
+project(Gateway_Peer) :  ace_output, acelib {
   sharedname = Gateway_Peer
   Source_Files {
     Options.cpp

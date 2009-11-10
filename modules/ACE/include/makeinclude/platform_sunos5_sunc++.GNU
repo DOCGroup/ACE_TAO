@@ -42,26 +42,19 @@
 
 compat4 ?= 0
 debug ?= 1
-distrib ?= 0
+distrib ?= 1
 stdcpplib ?= 1
 threads ?= 1
 versioned_so ?= 1
 tk_reactor ?= 0
 ace_with_x11 ?= 0
+no_annotations ?= 1
 no_hidden_visibility ?= 1
 templates ?= automatic
 
 ## If you set this to 1 you will need to add -xarch=v8plus (or higher)
 ## to CFLAGS or the assembler code will not compile
 atomic_ops_sparc ?= 0
-
-PLATFORM_TK_CPPFLAGS=
-PLATFORM_TK_LIBS=-ltk -ltcl
-PLATFORM_TK_LDFLAGS=
-
-PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include
-PLATFORM_X11_LIBS =-lX11
-PLATFORM_X11_LDFLAGS=
 
 ifeq ($(threads),1)
   CFLAGS += -mt
@@ -79,13 +72,7 @@ ifeq (C++ 5.4,$(findstring C++ 5.4,$(CC_VERSION)))
   ACE_CC_PREPROCESSOR = cc
 endif
 
-ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
-  PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
-else
-  ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
-    PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
-  endif
-endif
+PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
 
 ifeq ($(atomic_ops_sparc),1)
   CFLAGS += -DACE_HAS_BUILTIN_ATOMIC_OP -DACE_INCLUDE_ATOMIC_OP_SPARC
@@ -111,105 +98,86 @@ ifeq (1,$(fast))
   DCCFLAGS =
   LDFLAGS += -fast
 endif # fast
+# Make sure we resolve all symbols at link time, see bugzilla 2710
+LDFLAGS         += -z now
 
-ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
-  #### CC 4.2, only, supports -features=castop
-  CCFLAGS      += $(CFLAGS) -features=castop
+ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
+  #### CC 5.0 or later
+  #### Inlining appears to cause link problems with early releases of
+  #### CC 5.0.
+  ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
+      inline = 0
+  else
+    ifeq (C++ 5.1 ,$(findstring C++ 5.1 ,$(CC_VERSION)))
+      inline = 0
+    else # ! 5.1
+      inline ?= 1
+      exceptions ?= 1
+    endif # 5.2 or greater
+  endif #! 5.0
 
-  #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
-  #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
-  #### this option.
-  ifeq (1,$(rtti))
+  CCFLAGS += $(CFLAGS)
+
+  #### If compat=4 is desired, set up for that. There are syntactic diffs
+  #### in the compatibility modes, but here all we need to be concerned with
+  #### is turning on -compat=4, and not trying to enable the new libraries.
+  ifeq ($(compat4),1)
+    CCFLAGS += -compat=4
     CCFLAGS += -features=rtti
-  else  # ! rtti
-    #### ACE_LACKS_RTTI is necessary with -features=castop, but
-    #### without -features=rtti, to convert dynamic_cast to static_cast.
-    CPPFLAGS += -DACE_LACKS_RTTI
-  endif # ! rtti
-
-  #### Create template repository to avoid compiler warning.
-  TEMPLATE_REPOSITORY = Templates.DB
-
-else  # ! 4.2
-  ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
-    #### CC 5.0 or later
-    #### Inlining appears to cause link problems with early releases of
-    #### CC 5.0.
+  else
+    #### Use old iostreams.
     ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-        inline = 0
-    else
-      ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
-        inline = 0
-      else # ! 5.1
-        inline ?= 1
-        exceptions ?= 1
-      endif # 5.2 or greater
-    endif #! 5.0
-
-    CCFLAGS += $(CFLAGS)
-
-    #### If compat=4 is desired, set up for that. There are syntactic diffs
-    #### in the compatibility modes, but here all we need to be concerned with
-    #### is turning on -compat=4, and not trying to enable the new libraries.
-    ifeq ($(compat4),1)
-      CCFLAGS += -compat=4
-
-      #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
-      #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
-      #### this option.
-      ifeq (1,$(rtti))
-        CCFLAGS += -features=rtti
-      else  # ! rtti
-        #### ACE_LACKS_RTTI is necessary with -features=castop, but
-        #### without -features=rtti, to convert dynamic_cast to static_cast.
-        CPPFLAGS += -DACE_LACKS_RTTI
-      endif # ! rtti
-    else
-      #### Support RTTI by default. And, use old iostreams.
-      ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-        ifeq (1,$(stdcpplib))
-          CCFLAGS += -library=Cstd
-        else
-          CCFLAGS += -library=iostream,no%Cstd
-          CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
-        endif # stdcpplib
+      ifeq (1,$(stdcpplib))
+        CCFLAGS += -library=Cstd
       else
-        ifeq (0,$(stdcpplib))
-          CCFLAGS += -library=iostream
-          CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
-        endif # stdcpplib
+        CCFLAGS += -library=iostream,no%Cstd
+        CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
+      endif # stdcpplib
+    else
+      ifeq (0,$(stdcpplib))
+        CCFLAGS += -library=iostream
+        CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
+      endif # stdcpplib
 
-        # If 64-bit build is desired, turn that on. If no code gen options
-        # are given to Forte 6, the default build is 32-bit, even when
-        # building on a 64-bit system. Specifying xarch=v9 generates code
-        # that runs on any Sparc v9 (64-bit) processor.
-        # Beginning at (I believe) Studio 10 (C++ 5.7) there's a
-        # -xarch=generic64 option that works for both Sparc and x86.
-        # If you want to tune this further, you should extract and insert
-        # from CCFLAGS in a private platform_macros.GNU file.
-        ifeq (64,$(buildbits))
-          ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+      # If 64-bit build is desired, turn that on. If no code gen options
+      # are given to Forte 6, the default build is 32-bit, even when
+      # building on a 64-bit system. Specifying xarch=v9 generates code
+      # that runs on any Sparc v9 (64-bit) processor.
+      # Beginning at (I believe) Studio 10 (C++ 5.7) there's a
+      # -xarch=generic64 option that works for both Sparc and x86.
+      # If you want to tune this further, you should extract and insert
+      # from CCFLAGS in a private platform_macros.GNU file.
+      ifeq (64,$(buildbits))
+        ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+          CFLAGS += -xarch=generic64
+          LDFLAGS += -xarch=generic64
+        else
+          ifeq (C++ 5.8,$(findstring C++ 5.8,$(CC_VERSION)))
             CFLAGS += -xarch=generic64
             LDFLAGS += -xarch=generic64
           else
-            ifeq (C++ 5.8,$(findstring C++ 5.8,$(CC_VERSION)))
-              CFLAGS += -xarch=generic64
-              LDFLAGS += -xarch=generic64
+            ifeq (C++ 5.9,$(findstring C++ 5.9,$(CC_VERSION)))
+              CFLAGS += -m64
+              LDFLAGS += -m64
             else
-              CFLAGS += -xarch=v9
-              LDFLAGS += -xarch=v9
-            endif # C++ 5.8
-          endif # C++ 5.7
-        endif # buildbits
-      endif # CC 5.0
-    endif # compat4 requested
-  endif # CC 5.0 or later
-endif # ! 4.2
-
+              ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
+                CFLAGS += -m64
+                LDFLAGS += -m64
+              else
+                CFLAGS += -xarch=v9
+                LDFLAGS += -xarch=v9
+              endif # C++ 5.10
+            endif # C++ 5.9
+          endif # C++ 5.8
+        endif # C++ 5.7
+      endif # buildbits
+    endif # CC 5.0
+  endif # compat4 requested
+endif # CC 5.0 or later
 
 CCFLAGS         += $(TEMPLATES_FLAG)
 
-#### Sun CC-specific "Pure virtual finction called" bug fix trigger.
+#### Sun CC-specific "Pure virtual function called" bug fix trigger.
 #### XXX: Shouldn't this go into a compiler version specific guard ???
 CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
 
@@ -234,8 +202,8 @@ endif # ! exceptions
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
 
-   # Sun Studio 8 or better has version greater than 5.3.
-    SUN_STUDIO_8_OR_BETTER := $(shell a=`echo $(CC_VERSION) | sed -e 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*$$/\1\2/g'`; if test "$$a" -gt 53; then echo 1; else echo 0; fi)
+   # Sun Studio 8 or better has version greater than 5.4 (Studio 8 == CC 5.5).
+    SUN_STUDIO_8_OR_BETTER := $(shell a=`echo $(CC_VERSION) | sed -e 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*$$/\1\2/g'`; if test "$$a" -gt 54; then echo 1; else echo 0; fi)
 
     # Take advantage of Sun Studio 8 (v5.5) symbol scopes to
     # generate improved shared library binaries.
@@ -254,15 +222,26 @@ ifeq ($(distrib),0)
   LDFLAGS       += -R $(ACE_ROOT)/lib -R./
 endif
 
-ifeq ($(shell /bin/uname -r),5.9)
-  # Solaris 9 puts sendfile() in a separate library.
-  LIBS          += -lsendfile
-endif
-ifeq ($(shell /bin/uname -r),5.10)
-  # Solaris 10 puts sendfile() in a separate library.
-  LIBS          += -lsendfile
-endif
+# Get common Solaris settings
+include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
+
 LIBS            += -lsocket -lrt -laio -ldl -lnsl -lgen -lposix4 -ladm
+
+# Sun Studio will not create a default dependency on libCrun and
+# libCstd when building a shared library with the -G option.
+stlport ?= 0
+ifeq ($(stlport),0)
+  LIBS          += -lCrun -lCstd
+endif
+
+### CC 5.10 enables annotation support by default; allow user to override
+### new behavior. This also provides a work around for 64-bit linker crashes,
+### see: http://defect.opensolaris.org/bz/show_bug.cgi?id=9720
+ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
+  ifeq ($(no_annotations),1)
+    LDFLAGS += -xannotate=no
+  endif
+endif
 
 LDFLAGS         += -xildoff
 

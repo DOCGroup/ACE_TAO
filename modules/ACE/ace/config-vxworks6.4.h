@@ -4,9 +4,10 @@
 // The following configuration file is designed to work for VxWorks
 // 6.4 platforms using one of these compilers:
 // 1) The GNU g++ compiler that is shipped with VxWorks 6.4
+// 2) The Diab compiler that is shipped with VxWorks 6.4
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_VXWORKS_6_4_H
+#define ACE_CONFIG_VXWORKS_6_4_H
 #include /**/ "ace/pre.h"
 
 #if ! defined (VXWORKS)
@@ -25,7 +26,6 @@
   #endif
 #endif
 
-
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -37,13 +37,13 @@
 # define ACE_LACKS_IOSTREAM_FX
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
-# if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
-  // GNU 3.3+ toolchain supports long long types but fails to define this so STL
-  // skips some definitions
-#   if !defined (_GLIBCPP_USE_LONG_LONG)
-#     define _GLIBCPP_USE_LONG_LONG
-#   endif
-# endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
+# if defined (__RTP__) && !defined (_HAS_C9X)
+// Workaround for the fact that under RTP the log2 method can't be used
+// without this define set, see TSR560446
+#  if !defined (_C99)
+#   define _C99
+#  endif
+# endif
 
 #elif defined (__DCC__)
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
@@ -70,11 +70,23 @@
   #endif
 #endif
 
+#if !defined __RTP__
+# if defined (TOOL) && (TOOL == gnu)
+#  if defined (CPU) && (CPU == PPC85XX || CPU == PPC604 || CPU == PPC603 || CPU == PPC32)
+// These PPC's do lack log2 in kernel mode
+#   define ACE_LACKS_LOG2
+#  endif
+# endif
+#endif
+
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_NONCONST_GETBY
+#define ACE_HAS_NONCONST_INET_ADDR
 #define ACE_HAS_NONCONST_SWAB
+#define ACE_USES_INETLIB_H
+#define ACE_USES_SELECTLIB_H
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
 #define ACE_DEFAULT_THREAD_KEYS 16
@@ -87,7 +99,6 @@
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_DIRENT
-#define ACE_HAS_DLL 0
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_MSG
 #define ACE_HAS_NONCONST_READV
@@ -96,12 +107,15 @@
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_REENTRANT_FUNCTIONS
+#define ACE_HAS_SIGACTION_CONSTP2
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_STRERROR
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 #define ACE_HAS_THREADS
 #define ACE_HAS_SYSCTL
+#define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_FILELOCKS
@@ -129,7 +143,6 @@
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_SIGINFO_H
-#define ACE_LACKS_SIGVAL_T
 #define ACE_LACKS_SI_ADDR
 #define ACE_LACKS_SOCKETPAIR
 #define ACE_LACKS_STRRECVFD
@@ -176,18 +189,24 @@
 #define ACE_LACKS_FCNTL
 
 // Some string things
-#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_STRTOLL
+#define ACE_LACKS_WCSTOLL
+#define ACE_LACKS_STRTOULL
+#define ACE_LACKS_WCSTOULL
 
 #define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_LACKS_SYMLINKS
+#define ACE_LACKS_ISCTYPE
 
 #if defined __RTP__
   // We are building for RTP mode
-  #define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #if !defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #endif
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
   #if defined ACE_HAS_PENTIUM
@@ -195,18 +214,24 @@
   #  define ACE_LACKS_PUTENV
   #endif
   #define ACE_HAS_SETENV
+  #define ACE_LACKS_STRCASECMP
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
   #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
-  #define ACE_HAS_AIO_CALLS
+  #if defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_AIO_CALLS
+  #endif
   // VxWorks seems to either not define this or define as zero up till now
   #if !defined (IOV_MAX) || (IOV_MAX == 0)
     #define ACE_IOV_MAX 16
   #endif
+  #define ACE_LACKS_ISASCII
 #else
   // We are building for kernel mode
+  #define ACE_LACKS_SETENV
+  #define ACE_LACKS_UNSETENV
   #define ACE_LACKS_SUSECONDS_T
   #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_INTTYPES_H
@@ -219,7 +244,6 @@
   #define ACE_LACKS_WAITPID
   #define ACE_LACKS_SYS_TIME_H
   #define ACE_LACKS_SYS_SELECT_H
-  #define ACE_LACKS_STRINGS_H
   #define ACE_MKDIR_LACKS_MODE
   #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_SEARCH_H
@@ -256,13 +280,19 @@
   #if !defined (ACE_MAIN)
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
+  #define ACE_LACKS_TZSET
+  #define ACE_LACKS_ISWCTYPE
+  #define ACE_LACKS_ISBLANK
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
 // to use this, we need some more defines
 #if defined ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
+# if !defined __RTP__
+#  define ACE_LACKS_PTHREAD_ATTR_SETSTACK
+# endif
+# define ACE_HAS_PTHREAD_ATTR_SETNAME
 # define ACE_HAS_POSIX_SEM
 # define ACE_LACKS_MUTEXATTR_PSHARED
 # define ACE_LACKS_CONDATTR_PSHARED
@@ -272,6 +302,7 @@
 #include "types/vxTypesOld.h"
 #else
 # define ACE_LACKS_PTHREAD_H
+# define ACE_HAS_VXTHREADS
 # if !defined __RTP__
 // Only when building for kernel mode we can use TSS emulation, in rtp mode
 // we can't use the WIND_TCB struct anymore
@@ -311,6 +342,9 @@
 #define ACE_USE_RCSID 0
 #endif /* !ACE_USE_RCSID */
 
-#include /**/ "ace/post.h"
-#endif /* ACE_CONFIG_H */
+#if defined (ACE_HAS_IP_MULTICAST)
+# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
+#endif /* ACE_HAS_IP_MULTICAST */
 
+#include /**/ "ace/post.h"
+#endif /* ACE_CONFIG_VXWORKS_6_4_H */

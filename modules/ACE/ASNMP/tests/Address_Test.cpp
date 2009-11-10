@@ -40,6 +40,7 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 #include "ace/OS_main.h"
+#include "ace/OS_NS_string.h"
 #include "asnmp/address.h"
 #include "test_config.h"
 
@@ -260,7 +261,7 @@ static void TestNetbiosAddress()
 
   n1 = n4;
   ACE_ASSERT(n1 == n4);
-  ACE_ASSERT(strcmp((const char *)n1, (const char *)n4) == 0);
+  ACE_ASSERT(ACE_OS::strcmp((const char *)n1, (const char *)n4) == 0);
 
   n1.set_service_type(nb_server);
   ACE_ASSERT(nb_server == n1.get_service_type());

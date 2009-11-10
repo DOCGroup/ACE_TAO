@@ -28,11 +28,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/config-lite.h"
-#include "ace/Assert.h"			// For ACE_ASSERT
+#include "ace/Assert.h" // For ACE_ASSERT
 
 // Start Global Macros
-# define ACE_BEGIN_DUMP ACE_LIB_TEXT ("\n====\n(%P|%t|%x)\n")
-# define ACE_END_DUMP ACE_LIB_TEXT ("====\n")
+# define ACE_BEGIN_DUMP ACE_TEXT ("\n====\n(%P|%t|%x)\n")
+# define ACE_END_DUMP ACE_TEXT ("====\n")
 
 # if defined (ACE_NDEBUG)
 #   define ACE_DB(X)
@@ -116,15 +116,24 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------
 
-# if defined (ACE_HAS_NO_THROW_SPEC)
-#   define ACE_THROW_SPEC(X)
-# else
-#  if defined (ACE_HAS_EXCEPTIONS)
-#    define ACE_THROW_SPEC(X) throw X
-#  else  /* ! ACE_HAS_EXCEPTIONS */
-#    define ACE_THROW_SPEC(X)
-#  endif /* ! ACE_HAS_EXCEPTIONS */
-# endif /*ACE_HAS_NO_THROW_SPEC*/
+//FUZZ: disable check_for_exception_sepc
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  #if defined (ACE_HAS_NO_THROW_SPEC)
+  #  define ACE_THROW_SPEC(X)
+  #else
+  #  if defined (ACE_HAS_EXCEPTIONS)
+  #    if defined (ACE_WIN32) && defined (_MSC_VER) && \
+          (_MSC_VER >= 1400) && (_MSC_VER <= 1500)
+  #      define ACE_THROW_SPEC(X) throw(...)
+  #    else
+  #      define ACE_THROW_SPEC(X) throw X
+  #    endif /* ACE_WIN32 && VC8 */
+  #  else  /* ! ACE_HAS_EXCEPTIONS */
+  #    define ACE_THROW_SPEC(X)
+  #  endif /* ! ACE_HAS_EXCEPTIONS */
+  #endif /*ACE_HAS_NO_THROW_SPEC*/
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
+//FUZZ: enable check_for_exception_sepc
 
 // ----------------------------------------------------------------
 
@@ -896,42 +905,25 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 
 // This is being placed here temporarily to help stablelize the builds, but will
 // be moved out along with the above macros as part of the subsetting.  dhinton
-//# if !defined (ACE_HAS_WINCE)
-#   if !defined (ACE_LACKS_NEW_H)
-#     if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#       include /**/ <new>
-#     else
-#       include /**/ <new.h>
-#     endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#   endif /* ! ACE_LACKS_NEW_H */
-//# endif /* !ACE_HAS_WINCE */
+#if !defined (ACE_LACKS_NEW_H)
+#  if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#    include /**/ <new>
+#  else
+#    include /**/ <new.h>
+#  endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#endif /* ! ACE_LACKS_NEW_H */
 
 # define ACE_NOOP(x)
 
-#if defined (ACE_WIN32)
-#   if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-#     define ACE_SEH_TRY if (1)
-#     define ACE_SEH_EXCEPT(X) while (0)
-#     define ACE_SEH_FINALLY if (1)
-#   elif defined(__BORLANDC__)
-#     define ACE_SEH_TRY try
-#     define ACE_SEH_EXCEPT(X) __except(X)
-#     define ACE_SEH_FINALLY __finally
-#   elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#     define ACE_SEH_TRY if (1)
-#     define ACE_SEH_EXCEPT(X) while (0)
-#     define ACE_SEH_FINALLY if (1)
-#   else
-#     define ACE_SEH_TRY __try
-#     define ACE_SEH_EXCEPT(X) __except(X)
-#     define ACE_SEH_FINALLY __finally
-#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-# else /* !ACE_WIN32 */
-#   define ACE_SEH_TRY if (1)
-#   define ACE_SEH_EXCEPT(X) while (0)
-#   define ACE_SEH_FINALLY if (1)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# define ACE_SEH_TRY __try
+# define ACE_SEH_EXCEPT(X) __except(X)
+# define ACE_SEH_FINALLY __finally
+#else /* !ACE_WIN32 */
+# define ACE_SEH_TRY if (1)
+# define ACE_SEH_EXCEPT(X) while (0)
+# define ACE_SEH_FINALLY if (1)
 #endif /* ACE_WIN32 */
-
 
 // These should probably be put into a seperate header.
 
@@ -1123,7 +1115,6 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #else
 # define ACE_STATIC_CONSTANT(TYPE, ASSIGNMENT) enum { ASSIGNMENT }
 #endif  /* !ACE_LACKS_STATIC_IN_CLASS_CONSTANTS */
-
 
 #include /**/ "ace/post.h"
 

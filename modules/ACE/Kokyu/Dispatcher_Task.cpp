@@ -51,7 +51,6 @@ Dispatcher_Task::initialize ()
 
     default:
       return -1;
-      break;
     }
 
   if (this->the_queue_ != 0)
@@ -99,12 +98,19 @@ Dispatcher_Task::svc (void)
   while (!done)
     {
       ACE_Message_Block *mb;
+      
       if (this->getq (mb) == -1)
-        if (ACE_OS::last_error () == ESHUTDOWN)
-          return 0;
-        else
-          ACE_ERROR ((LM_ERROR,
-                      "EC (%P|%t) getq error in Dispatching Queue\n"));
+        {
+          if (ACE_OS::last_error () == ESHUTDOWN)
+            {
+              return 0;
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "EC (%P|%t) getq error in Dispatching Queue\n"));
+            }
+        }
 
       //ACE_DEBUG ((LM_DEBUG, "(%t) : next command got from queue\n"));
 

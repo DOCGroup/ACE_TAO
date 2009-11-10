@@ -107,9 +107,6 @@
    the one in ace/OS.i. */
 #define ACE_HAS_GETRUSAGE_PROTOTYPE 1
 
-/* Denotes that GNU has cstring.h as standard which redefines memchr() */
-#define ACE_HAS_GNU_CSTRING_H
-
 /* The GPERF utility is compiled for this platform */
 #define ACE_HAS_GPERF 1
 
@@ -163,9 +160,6 @@
 
 /* Platform supports POSIX Threads */
 #define ACE_HAS_PTHREADS 1
-
-/* Platform supports POSIX.1c-1995 threads */
-#define ACE_HAS_PTHREADS_STD 1
 
 /* pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
    PTHREAD_PROCESS_SHARED values */
@@ -232,9 +226,6 @@
 /* Platform supports STREAM pipes */
 #define ACE_HAS_STREAM_PIPES 1
 
-/* Compiler/platform supports strerror () */
-#define ACE_HAS_STRERROR 1
-
 /* Platform/Compiler supports a String class (e.g., GNU or Win32). */
 #define ACE_HAS_STRING_CLASS 1
 
@@ -254,7 +245,8 @@
 #define ACE_HAS_SYS_SYSCALL_H 1
 
 /* Platform supports system configuration information */
-#define ACE_HAS_SYSINFO 1
+#define ACE_HAS_SYS_SYSTEMINFO_H
+#define ACE_HAS_SYSV_SYSINFO 1
 
 /* Platform supports System V IPC (most versions of UNIX, but not Win32) */
 #define ACE_HAS_SYSV_IPC 1
@@ -333,9 +325,6 @@
 /* Compile using multi-thread libraries */
 #define ACE_MT_SAFE 1
 
-/* Platform needs regexpr.h for regular expression support */
-#define ACE_NEEDS_REGEXPR_H 1
-
 /* Platform needs to #include <sched.h> to get thread scheduling defs. */
 #define ACE_NEEDS_SCHED_H 1
 
@@ -345,11 +334,6 @@
 /* Staller -> make 0 */
 // #undef ACE_TEMPLATES_REQUIRE_SOURCE
 
-/* Compiler's template instantiation mechanism supports the use of explicit
-   C++ specializations for all used templates. This is also used for GNU G++
-   if you don't use the "repo" patches. */
-/* Staller -> make 0 */
-// #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION 1
 /*********************************************************************/
 
 /* The OS/platform supports the poll() event demultiplexor */

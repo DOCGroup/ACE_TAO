@@ -16,7 +16,7 @@
  * The current implementation assumes that the host has 1-byte,
  * 2-byte and 4-byte integral types, and that it has single
  * precision and double precision IEEE floats.
- * Those assumptions are pretty good these days, with Crays beign
+ * Those assumptions are pretty good these days, with Crays being
  * the only known exception.
  *
  * Optimizations
@@ -51,15 +51,13 @@
 #include "ace/SStringfwd.h"
 #include "ace/Message_Block.h"
 
+#if defined (GEN_OSTREAM_OPS)
+#include "ace/streams.h"
+#endif /* GEN_OSTREAM_OPS */
 
-// Stuff used by the ACE CDR classes.
-#if defined ACE_LITTLE_ENDIAN
-#  define ACE_CDR_BYTE_ORDER 1
-// little endian encapsulation byte order has value = 1
-#else  /* ! ACE_LITTLE_ENDIAN */
-#  define ACE_CDR_BYTE_ORDER 0
-// big endian encapsulation byte order has value = 0
-#endif /* ! ACE_LITTLE_ENDIAN */
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+#include "Monitor_Size.h"
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -72,15 +70,16 @@ class ACE_InputCDR;
 /**
  * @class ACE_OutputCDR
  *
- * @brief A CDR stream for writing, i.e. for marshalling.
+ * @brief A CDR stream for marshalling data, most often for transmission to
+ * another system which may or may not have the same byte order.
  *
  * This class is based on the the CORBA spec for Java (98-02-29),
  * java class omg.org.CORBA.portable.OutputStream.  It diverts in
  * a few ways:
- * + Operations taking arrays don't have offsets, because in C++
- *   it is easier to describe an array starting from x+offset.
- * + Operations return an error status, because exceptions are
- *   not widely available in C++ (yet).
+ * @li Operations taking arrays don't have offsets, because in C++
+ *     it is easier to describe an array starting from x+offset.
+ * @li Operations return an error status, because exceptions are
+ *     not widely available in C++ (yet).
  */
 class ACE_Export ACE_OutputCDR
 {
@@ -94,23 +93,35 @@ public:
   friend class ACE_WChar_Codeset_Translator;
   friend class ACE_InputCDR;
 
-  /// Default constructor, allocates <size> bytes in the internal
-  /// buffer, if <size> == 0 it allocates the default size.
+  /**
+   * Default constructor; allows one to set byte ordering, allocators, and
+   * tuning information.
+   *
+   * @param size        Causes constructor to preallocate @a size bytes; if
+   *                    @a size is 0 it allocates the default size.
+   *
+   * @param byte_order  The byte order that data will have within this
+   *                    object. Unless otherwise specified, the byte order
+   *                    will be the order native to the hardware this is
+   *                    executed on. To force the marshalled data to have
+   *                    a specific order, specify one of the values defined
+   *                    in ACE_CDR::Byte_Order.
+   *                    @note The @c ACE_ENABLE_SWAP_ON_WRITE config macro
+   *                    must be set for any local byte swapping to occur
+   *                    as data is inserted into an ACE_OutputCDR object.
+   */
   ACE_OutputCDR (size_t size = 0,
-                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
-                 size_t memcpy_tradeoff =
-                 ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                 ACE_CDR::Octet major_version =
-                 ACE_CDR_GIOP_MAJOR_VERSION,
-                 ACE_CDR::Octet minor_version =
-                 ACE_CDR_GIOP_MINOR_VERSION);
+                 size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
-  /// <data>, since it did not allocated it.  It's important to be careful
-  /// with the alignment of <data>.
+  /// @a data, since it did not allocated it.  It's important to be careful
+  /// with the alignment of @a data.
   /**
    * Create an output stream from an arbitrary buffer, care must be
    * exercised with alignment, because this contructor will align if
@@ -121,16 +132,13 @@ public:
    */
   ACE_OutputCDR (char *data,
                  size_t size,
-                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
-                 size_t memcpy_tradeoff=
-                   ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                 ACE_CDR::Octet giop_major_version =
-                   ACE_CDR_GIOP_MAJOR_VERSION,
-                 ACE_CDR::Octet giop_minor_version =
-                   ACE_CDR_GIOP_MINOR_VERSION);
+                 size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial data block, it will *not* remove
   /// <data_block>, since it did not allocated it.  It's important to be
@@ -144,25 +152,19 @@ public:
    * pointer and use ACE_CDR::MAX_ALIGNMENT for the correct alignment.
    */
   ACE_OutputCDR (ACE_Data_Block *data_block,
-                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                  ACE_Allocator* message_block_allocator = 0,
-                 size_t memcpy_tradeoff=
-                 ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                 ACE_CDR::Octet giop_major_version =
-                 ACE_CDR_GIOP_MAJOR_VERSION,
-                 ACE_CDR::Octet giop_minor_version =
-                 ACE_CDR_GIOP_MINOR_VERSION);
+                 size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial Message_Block chain, it will
   /// *not* remove @a data, since it did not allocate it.
   ACE_OutputCDR (ACE_Message_Block *data,
-                 int byte_order = ACE_CDR_BYTE_ORDER,
-                 size_t memcpy_tradeoff =
-                   ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                 ACE_CDR::Octet giop_major_version =
-                   ACE_CDR_GIOP_MAJOR_VERSION,
-                 ACE_CDR::Octet giop_minor_version =
-                   ACE_CDR_GIOP_MINOR_VERSION);
+                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
+                 size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// destructor
   ~ACE_OutputCDR (void);
@@ -224,8 +226,10 @@ public:
   };
   //@}
 
-  // Return 0 on failure and 1 on success.
-  //@{ @name Write operations
+  /**
+   * @{ @name Write operations
+   * Return 0 on failure and 1 on success.
+   */
   ACE_CDR::Boolean write_boolean (ACE_CDR::Boolean x);
   ACE_CDR::Boolean write_char (ACE_CDR::Char x);
   ACE_CDR::Boolean write_wchar (ACE_CDR::WChar x);
@@ -240,11 +244,6 @@ public:
   ACE_CDR::Boolean write_double (const ACE_CDR::Double &x);
   ACE_CDR::Boolean write_longdouble (const ACE_CDR::LongDouble &x);
 
-  // Overwrite the stream at the specified location that is previously
-  // written as a long type placeholder. There is no alignment required
-  // since the alignment is done before writing the long type placeholder.
-  ACE_CDR::Boolean replace (ACE_CDR::Long x, char* loc);
-
   /// For string we offer methods that accept a precomputed length.
   ACE_CDR::Boolean write_string (const ACE_CDR::Char *x);
   ACE_CDR::Boolean write_string (ACE_CDR::ULong len,
@@ -255,8 +254,8 @@ public:
                                   const ACE_CDR::WChar *x);
   //@}
 
-  /// @note the portion written starts at <x> and ends
-  ///    at <x + length>.
+  /// @note the portion written starts at @a x and ends
+  ///    at @a x + @a length.
   /// The length is *NOT* stored into the CDR stream.
   //@{ @name Array write operations
   ACE_CDR::Boolean write_boolean_array (const ACE_CDR::Boolean *x,
@@ -289,6 +288,55 @@ public:
   /// Write an octet array contained inside a MB, this can be optimized
   /// to minimize copies.
   ACE_CDR::Boolean write_octet_array_mb (const ACE_Message_Block* mb);
+  //@}
+
+  /**
+   * @{ @name Placeholder/replace operations
+   * Facilitates writing a placeholder into a CDR stream to be replaced
+   * later with a different value.
+   *
+   * @note An example use for this facility is:
+   * @code
+        ACE_OutputCDR strm;
+        ...   // insert values...
+        char *pos = strm.write_long_placeholder ();
+        ...   // insert more values
+        ACE_CDR::Long real_val;       // Somehow assign the "correct" value
+        strm.replace (real_val, pos); // Replace earlier placeholder
+      @endcode
+  */
+
+  /**
+   * Write a placeholder into the stream. The placeholder's pointer
+   * is returned so it may later be passed as the @a loc argument to
+   * replace ().
+   * These methods align the stream's write pointer properly prior to
+   * writing the placeholder.
+   *
+   * @retval Pointer to the placeholder; 0 if there is not enough space
+   *         in the stream and memory could not be allocated.
+   */
+  char* write_long_placeholder (void);
+  char* write_short_placeholder (void);
+
+  /**
+   * Writes a new value into a specific location. This is commonly
+   * used to update a prior "placeholder" location in the stream.
+   * The specified location is assumed to have proper CDR alignment for the
+   * type to insert. This requirement is satisfied by using one of the
+   * placeholder-writing methods to align the stream for the anticipated
+   * value and obtain the correct location.
+   * Treatment of @a x with repect to byte swapping is the same as for when
+   * any value is inserted.
+   *
+   * @param x   The value to insert into the specified location.
+   * @param loc The location at which to insert @a x. @a loc must be a valid
+   *            position within the stream's current set of message blocks.
+   *
+   * @sa write_long_placeholder(), write_short_placeholder ()
+   */
+  ACE_CDR::Boolean replace (ACE_CDR::Long x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::Short x, char* loc);
   //@}
 
   /**
@@ -380,10 +428,10 @@ public:
 
   /// set the global size of serialized wchars. This may be different
   /// than the size of a wchar_t.
-  static void wchar_maxbytes (int );
+  static void wchar_maxbytes (size_t max_bytes);
 
   /// access the serialized size of wchars.
-  static int wchar_maxbytes (void);
+  static size_t wchar_maxbytes (void);
 
   /**
    * Return alignment of the wr_ptr(), with respect to the start of
@@ -392,10 +440,12 @@ public:
    */
   size_t current_alignment (void) const;
 
+  void current_alignment (size_t current_alignment);
+
   /**
-   * Returns (in <buf>) the next position in the buffer aligned to
-   * <size>, it advances the Message_Block wr_ptr past the data
-   * (i.e., <buf> + <size>). If necessary it grows the Message_Block
+   * Returns (in @a buf) the next position in the buffer aligned to
+   * @a size, it advances the Message_Block wr_ptr past the data
+   * (i.e., @a buf + @a size). If necessary it grows the Message_Block
    * buffer.  Sets the good_bit to false and returns a -1 on failure.
    */
   int adjust (size_t size,
@@ -407,12 +457,14 @@ public:
               size_t align,
               char *&buf);
 
-  /// If non-zero then this stream is writing in non-native byte order,
-  /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+  /// Returns true if this stream is writing in non-native byte order
+  /// and false otherwise. For example, it would be true if either
+  /// ACE_ENABLE_SWAP_ON_WRITE is defined or a specific byte order was
+  /// specified for this stream.
   bool do_byte_swap (void) const;
 
-  /// If <do_byte_swap> returns 0, this returns ACE_CDR_BYTE_ORDER else
-  /// it returns !ACE_CDR_BYTE_ORDER.
+  /// Returns the byte order this stream is marshaling data in. Will be one
+  /// of the values in ACE_CDR::Byte_Order.
   int byte_order (void) const;
 
   /// For use by a gateway, which creates the output stream for the
@@ -422,12 +474,16 @@ public:
   void reset_byte_order (int byte_order);
 
   /// set GIOP version info
-  int set_version (ACE_CDR::Octet major,
-                   ACE_CDR::Octet minor);
+  void set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor);
 
   /// Set the underlying GIOP version..
-  int get_version (ACE_CDR::Octet &major,
-                   ACE_CDR::Octet &minor);
+  void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  /// Register and unregister our buffer size monitor.
+  void register_monitor (const char* id);
+  void unregister_monitor (void);
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
 
@@ -446,7 +502,7 @@ private:
   ACE_CDR::Boolean write_16 (const ACE_CDR::LongDouble *x);
 
   /**
-   * write an array of <length> elements, each of <size> bytes and the
+   * write an array of @a length elements, each of @a size bytes and the
    * start aligned at a multiple of <align>. The elements are assumed
    * to be packed with the right alignment restrictions.  It is mostly
    * designed for buffers of the basic types.
@@ -468,8 +524,8 @@ private:
 
 
   /**
-   * Grow the CDR stream. When it returns <buf> contains a pointer to
-   * memory in the CDR stream, with at least <size> bytes ahead of it
+   * Grow the CDR stream. When it returns @a buf contains a pointer to
+   * memory in the CDR stream, with at least @a size bytes ahead of it
    * and aligned to an <align> boundary. It moved the <wr_ptr> to <buf
    * + size>.
    */
@@ -521,6 +577,10 @@ private:
   /// Break-even point for copying.
   size_t const memcpy_tradeoff_;
 
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  ACE::Monitor_Control::Size_Monitor *monitor_;
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
+
 protected:
   /// GIOP version information
   ACE_CDR::Octet major_version_;
@@ -539,7 +599,7 @@ protected:
    * or not having a native wchar codeset defined, the maxbytes is
    * set to zero, indicating no wchar data is allowed.
    */
-  static int wchar_maxbytes_;
+  static size_t wchar_maxbytes_;
 };
 
 
@@ -548,23 +608,23 @@ protected:
 /**
  * @class ACE_InputCDR
  *
- * @brief A CDR stream for reading, i.e. for demarshalling.
+ * @brief A CDR stream for demarshalling CDR-encoded data.
  *
  * This class is based on the the CORBA spec for Java (98-02-29),
  * java class omg.org.CORBA.portable.InputStream.  It diverts in a
  * few ways:
- * + Operations to retrieve basic types take parameters by
- * reference.
- * + Operations taking arrays don't have offsets, because in C++
- * it is easier to describe an array starting from x+offset.
- * + Operations return an error status, because exceptions are
- * not widely available in C++ (yet).
+ * @li Operations to retrieve basic types take parameters by
+ *     reference.
+ * @li Operations taking arrays don't have offsets, because in C++
+ *     it is easier to describe an array starting from x+offset.
+ * @li Operations return an error status, because exceptions are
+ *     not widely available in C++ (yet).
  */
 class ACE_Export ACE_InputCDR
 {
 public:
-  /// The translator need privileged access to efficiently demarshal
-  /// arrays and the such
+  // The translators need privileged access to efficiently demarshal
+  // arrays and such.
   friend class ACE_Char_Codeset_Translator;
   friend class ACE_WChar_Codeset_Translator;
 
@@ -577,45 +637,39 @@ public:
    */
   ACE_InputCDR (const char *buf,
                 size_t bufsiz,
-                int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an empty input stream. The caller is responsible for
   /// putting the right data and providing the right alignment.
   ACE_InputCDR (size_t bufsiz,
-                int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an input stream from an ACE_Message_Block
   /**
-   * The alignment of the @arg data block is carried into the new
+   * The alignment of the @a data block is carried into the new
    * ACE_InputCDR object. This constructor either increments the
-   * @arg data reference count, or copies the data (if it's a compound
+   * @a data reference count, or copies the data (if it's a compound
    * message block) so the caller can release the block immediately
    * upon return.
    */
   ACE_InputCDR (const ACE_Message_Block *data,
-                int byte_order = ACE_CDR_BYTE_ORDER,
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION,
                 ACE_Lock* lock = 0);
 
   /// Create an input stream from an ACE_Data_Block. The <flag>
-  /// indicates whether the <data> can be deleted by the CDR stream
+  /// indicates whether the @a data can be deleted by the CDR stream
   /// or not
   ACE_InputCDR (ACE_Data_Block *data,
                 ACE_Message_Block::Message_Flags flag = 0,
-                int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an input stream from an ACE_Data_Block. It also sets the
   /// read and write pointers at the desired positions. This would be
@@ -625,11 +679,9 @@ public:
                 ACE_Message_Block::Message_Flags flag,
                 size_t read_pointer_position,
                 size_t write_pointer_position,
-                int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /**
    * These make a copy of the current stream state, but do not copy
@@ -867,7 +919,7 @@ public:
    */
   void exchange_data_blocks (ACE_InputCDR &cdr);
 
-  /// Copy the data portion from the @c cdr to this cdr and return the
+  /// Copy the data portion from the @a cdr to this cdr and return the
   /// data content (ie. the ACE_Data_Block) from this CDR to the
   /// caller.
   /**
@@ -930,12 +982,16 @@ public:
               char *&buf);
 
   /// Set the underlying GIOP version..
-  int set_version (ACE_CDR::Octet major,
-                   ACE_CDR::Octet minor);
+  void set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor);
 
   /// Set the underlying GIOP version..
-  int get_version (ACE_CDR::Octet &major,
-                   ACE_CDR::Octet &minor);
+  void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  /// Register and unregister our buffer size monitor.
+  void register_monitor (const char* id);
+  void unregister_monitor (void);
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 protected:
 
@@ -958,6 +1014,10 @@ protected:
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
 
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  ACE::Monitor_Control::Size_Monitor *monitor_;
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
+
 private:
 
   ACE_CDR::Boolean read_1 (ACE_CDR::Octet *x);
@@ -974,7 +1034,7 @@ private:
   // operations using asignment.
 
   /**
-   * Read an array of <length> elements, each of <size> bytes and the
+   * Read an array of @a length elements, each of @a size bytes and the
    * start aligned at a multiple of <align>. The elements are assumed
    * to be packed with the right alignment restrictions.  It is mostly
    * designed for buffers of the basic types.
@@ -999,7 +1059,7 @@ private:
   ACE_CDR::Boolean read_wchar_array_i (ACE_CDR::WChar * x,
                                        ACE_CDR::ULong length);
 
-  /// Move the rd_ptr ahead by <offset> bytes.
+  /// Move the rd_ptr ahead by @a offset bytes.
   void rd_ptr (size_t offset);
 
   /// Points to the continuation field of the current message block.
@@ -1070,7 +1130,7 @@ protected:
   ACE_CDR::Boolean write_1 (ACE_OutputCDR& output,
                             const ACE_CDR::Octet *x);
 
-  /// Efficiently read <length> elements of size <size> each from
+  /// Efficiently read @a length elements of size @a size each from
   /// <input> into <x>; the data must be aligned to <align>.
   ACE_CDR::Boolean read_array (ACE_InputCDR& input,
                                void* x,
@@ -1079,7 +1139,7 @@ protected:
                                ACE_CDR::ULong length);
 
   /**
-   * Efficiently write <length> elements of size <size> from <x> into
+   * Efficiently write @a length elements of size @a size from <x> into
    * <output>. Before inserting the elements enough padding is added
    * to ensure that the elements will be aligned to <align> in the
    * stream.
@@ -1093,8 +1153,8 @@ protected:
   /**
    * Exposes the stream implementation of <adjust>, this is useful in
    * many cases to minimize memory allocations during marshaling.
-   * On success <buf> will contain a contiguous area in the CDR stream
-   * that can hold <size> bytes aligned to <align>.
+   * On success @a buf will contain a contiguous area in the CDR stream
+   * that can hold @a size bytes aligned to <align>.
    * Results
    */
   int adjust (ACE_OutputCDR& out,
@@ -1163,7 +1223,7 @@ protected:
   ACE_CDR::Boolean write_4 (ACE_OutputCDR& output,
                             const ACE_CDR::ULong *x);
 
-  /// Efficiently read <length> elements of size <size> each from
+  /// Efficiently read @a length elements of size @a size each from
   /// <input> into <x>; the data must be aligned to <align>.
   ACE_CDR::Boolean read_array (ACE_InputCDR& input,
                                void* x,
@@ -1172,7 +1232,7 @@ protected:
                                ACE_CDR::ULong length);
 
   /**
-   * Efficiently write <length> elements of size <size> from <x> into
+   * Efficiently write @a length elements of size @a size from <x> into
    * <output>. Before inserting the elements enough padding is added
    * to ensure that the elements will be aligned to <align> in the
    * stream.
@@ -1186,8 +1246,8 @@ protected:
   /**
    * Exposes the stream implementation of <adjust>, this is useful in
    * many cases to minimize memory allocations during marshaling.
-   * On success <buf> will contain a contiguous area in the CDR stream
-   * that can hold <size> bytes aligned to <align>.
+   * On success @a buf will contain a contiguous area in the CDR stream
+   * that can hold @a size bytes aligned to <align>.
    * Results
    */
   int adjust (ACE_OutputCDR& out,
@@ -1312,6 +1372,30 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
+
+#if defined (GEN_OSTREAM_OPS)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// ostream insertion operators for debugging code generated from IDL. All
+// but these below are either in generated code itself or are unambiguous
+// primitive types.
+
+ACE_Export std::ostream& operator<< (std::ostream &os,
+                                     ACE_OutputCDR::from_boolean x);
+
+ACE_Export std::ostream& operator<< (std::ostream &os,
+                                     ACE_OutputCDR::from_char x);
+
+ACE_Export std::ostream& operator<< (std::ostream &os,
+                                     ACE_OutputCDR::from_wchar x);
+
+ACE_Export std::ostream& operator<< (std::ostream &os,
+                                     ACE_OutputCDR::from_octet x);
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* GEN_OSTREAM_OPS */
 
 #include /**/ "ace/post.h"
 

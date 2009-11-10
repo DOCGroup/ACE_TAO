@@ -238,11 +238,13 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Priority_Reactor_Test"));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dc:l:m:t:"));
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
+  //FUZZ: enable check_for_lack_ACE_OS
       case 'd':
         opt_priority_reactor = 0;
         break;
@@ -375,7 +377,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Manager::instance ()->wait ();
-#elif !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
+#elif !defined (ACE_WIN32) && !defined (VXWORKS)
   for (i = 0; i < opt_nchildren; ++i)
     {
       pid_t pid = ACE_OS::wait();

@@ -35,8 +35,8 @@ ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
                                  flags,
                                  perms) == ACE_INVALID_HANDLE
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_ATM_Stream::ACE_ATM_Stream")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_ATM_Stream::ACE_ATM_Stream")));
 }
 
 // Try to complete a non-blocking connection.
@@ -96,7 +96,7 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
 
   return (result != ACE_INVALID_HANDLE);
 #elif defined (ACE_HAS_LINUX_ATM)
-  ACE_OS::printf("ATM_Connector(add_leaf): not yet implemented in Linux \n");
+  ACE_OS::printf("ATM_Connector(add_leaf): not yet implemented in Linux\n");
 
   ACE_UNUSED_ARG(current_stream);
   ACE_UNUSED_ARG(remote_sap);
@@ -114,7 +114,7 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
 }
 
 ACE_INLINE
-int
+bool
 ACE_ATM_Connector::reset_new_handle (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -124,7 +124,7 @@ ACE_ATM_Connector::reset_new_handle (ACE_HANDLE handle)
                            0);
 #else /* !defined ACE_HAS_WINSOCK2 */
   ACE_UNUSED_ARG (handle);
-  return 0;
+  return false;
 #endif /* ACE_WIN32 */
 }
 

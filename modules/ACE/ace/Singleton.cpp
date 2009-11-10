@@ -17,11 +17,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/Framework_Component.h"
 #include "ace/Guard_T.h"
+#include "ace/os_include/os_typeinfo.h"
 
 ACE_RCSID (ace,
            Singleton,
            "$Id$")
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,7 +32,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
               ACE_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
@@ -95,7 +95,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
               ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with ACE_Object_Manager.
-              ACE_Object_Manager::at_exit (singleton);
+              ACE_Object_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
@@ -108,8 +108,22 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
 template <class TYPE, class ACE_LOCK> void
 ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
 {
+  ACE_Object_Manager::remove_at_exit (this);
   delete this;
   ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+}
+
+template <class TYPE, class ACE_LOCK> void
+ACE_Singleton<TYPE, ACE_LOCK>::close (void)
+{
+  ACE_Singleton<TYPE, ACE_LOCK> *&singleton =
+    ACE_Singleton<TYPE, ACE_LOCK>::instance_i ();
+
+  if (singleton)
+    {
+      singleton->cleanup ();
+      ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+    }
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -128,7 +142,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
               ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
@@ -218,7 +232,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
               ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
@@ -282,7 +296,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
                               0);
 
               // Register for destruction with ACE_Object_Manager.
-              ACE_Object_Manager::at_exit (singleton);
+              ACE_Object_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
@@ -306,7 +320,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
               ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
@@ -412,7 +426,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("instance_ = %x"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
               ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */

@@ -16,14 +16,17 @@ if (defined $ENV{top_srcdir}) {
   use lib "$ENV{top_srcdir}/bin";
 }
 
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 use Cwd;
 use English;
 use Getopt::Std;
 use FileHandle;
+use File::Basename;
 
 $config_list = new PerlACE::ConfigList;
+
+PerlACE::add_lib_path("$ENV{ACE_ROOT}/tests");
 
 ################################################################################
 
@@ -57,10 +60,6 @@ sub check_for_more_configs ()
     if (!-x $P->Executable ()) {
         $config_list->add_one_config ('missing_netsvcs');
     }
-
-    if (defined $opt_v) {
-      $config_list->add_one_config ('VxWorks');
-    }
 }
 
 ################################################################################
@@ -85,133 +84,80 @@ sub check_resources
 {
     my($oh) = shift;
     if ($config_list->check_config ('CHECK_RESOURCES')) {
-        if (defined $opt_v) {
-            print $oh "memShow();\n";
-        }
-        else {
-            $end_test_resources=`ipcs | egrep $user`;
-
-            if ("$start_test_resources" ne "$end_test_resources") {
-                print STDERR "Warning: the ACE tests _may_ have leaked OS ".
-                             "resources!\n";
-                print STDERR "Warning: Before: $start_test_resources\n";
-                print STDERR "Warning: After:  $end_test_resources\n";
-            }
+        $end_test_resources=`ipcs | egrep $user`;
+         if ("$start_test_resources" ne "$end_test_resources") {
+            print STDERR "Warning: the ACE tests _may_ have leaked OS ".
+                         "resources!\n";
+            print STDERR "Warning: Before: $start_test_resources\n";
+            print STDERR "Warning: After:  $end_test_resources\n";
         }
     }
 }
 
 ################################################################################
 
-sub run_program ($)
+sub run_program ($@)
 {
-    my $program = shift;
+    my $target = shift;
+    my $path = shift;
+    my $arguments = shift;
+    if ($path =~ /^(\S*)\s*(.*)/ ) {
+        $path = $1;
+        $arguments = $2 . $arguments;
+    }
 
     ## Print it out before we check for the executable
     ## if the executable doesn't exist, the error will show
     ## up as part of the previous test.
-    print "auto_run_tests: tests/$program\n";
+    print "auto_run_tests: tests/$path $arguments\n";
 
+    my ($program, $dir, $suffix) = fileparse($path);
+    my $start_dir = getcwd ();
+    if ($dir ne "" && !chdir $dir) {
+        print STDERR "Error: Can\'t chdir to $dir for $path\n";
+        return;
+    }
     unlink <log/$program*.log>;
     unlink "core";
 
-    my $P;
+    my $P = $target->CreateProcess($program, $arguments);
 
     if ($config_list->check_config ('Valgrind')) {
-      $P = new PerlACE::Process ($program);
       $P->IgnoreExeSubDir(1);
     }
     else {
-      $P = new PerlACE::Process ($program);
-
       ### Try to run the program
-
-      if (! -x $P->Executable ()) {
+      if (! -e $P->Executable ()) {
           print STDERR "Error: " . $P->Executable () .
                        " does not exist or is not runnable\n";
+          chdir $start_dir;
           return;
        }
     }
 
     my $start_time = time();
-    $status = $P->SpawnWaitKill (400);
+    $status = $P->SpawnWaitKill (300 + $target->ProcessStartWaitInterval());
     my $time = time() - $start_time;
 
     ### Check for problems
 
     if ($status == -1) {
-        print STDERR "Error: $program FAILED (time out)\n";
+        print STDERR "Error: $program FAILED (time out after Time:$time"."s)\n";
         $P->Kill ();
         $P->TimedWait (1);
     }
     elsif ($status != 0) {
-        print STDERR "Error: $program FAILED with exit status $status\n";
+        print STDERR "Error: $program $arguments FAILED with exit status $status after Time:$time"."s\n";
     }
 
-    print "\nauto_run_tests_finished: test/$program Time:$time"."s Result:$status\n";
+    print "\nauto_run_tests_finished: tests/$program $arguments Time:$time"."s Result:$status\n";
 
     check_log ($program);
 
     if ($config_list->check_config ('Codeguard')) {
     	check_codeguard_log ($program);
     }
-}
-
-################################################################################
-
-sub run_vxworks_command ($)
-{
-    my $program = shift;
-
-    unlink <log/$program*.log>;
-    unlink "core";
-
-    my $P = new PerlACE::ProcessVX ($program);
-
-    ## check module existence
-    if (! -e $P->Executable ()) {
-        print STDERR "Error: " . $P->Executable() .
-                     " does not exist\n";
-        return;
-    }
-
-    print "auto_run_tests: tests/$program\n";
-    my $start_time = time();
-    $status = $P->SpawnWaitKill (400);
-    my $time = time() - $start_time;
-
-    ### Check for problems
-
-    if ($status == -1) {
-        print STDERR "Error: $program FAILED (time out)\n";
-        $P->Kill ();
-        $P->TimedWait (1);
-    }
-    elsif ($status != 0) {
-        print STDERR "Error: $program FAILED with exit status $status\n";
-    }
-
-    print "\nauto_run_tests_finished: test/$program Time:$time"."s Result:$status\n";
-
-    check_log ($program);
-}
-
-################################################################################
-
-sub output_vxworks_commands
-{
-  my($oh)      = shift;
-  my($program) = shift;
-  my($length)  = length($program) + 2;
-
-  if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
-    print $oh "memShow();\n";
-  }
-
-  print $oh "write(2, \"\\n$program\\n\", $length);\n" .
-            "ld 1,0, \"" . $program . ".out\"\n" .
-            "vx_execae ace_main\n" .
-            "unld \"" . $program . ".out\"\n";
+    chdir $start_dir;
 }
 
 ################################################################################
@@ -245,14 +191,12 @@ sub check_log ($)
     my $program = shift;
 
     ### Check the logs
-    local $log_suffix;
-    if (defined $ENV{"ACE_WINCE_TEST_CONTROLLER"}) {
-        $log_suffix = ".txt";
-    }
-    else {
-        $log_suffix = ".log";
-    }
-    local $log = "log/".$program.$log_suffix;
+    local $log_suffix = ".log";
+
+    # Support logs generated by tests in subdirectories, such as tests
+    # found in the SSL subdirectory.
+    local $the_program = basename($program);
+    local $log = "log/".$the_program.$log_suffix;
 
     if (-e "core") {
         print STDERR "Error: $program dumped core\n";
@@ -323,8 +267,12 @@ sub check_log ($)
             local $sublognames = "$program\-.*".$log_suffix;
             @sublogs = grep (/^$sublognames/, readdir (THISDIR));
             closedir (THISDIR);
+            my $saw_short_process_manager_child_log = 0;
             foreach $log (@sublogs) {
-                # Just like the main log, but no start/end check
+                # Just like the main log, but note that Process_Manager_Test
+                # kills (signal 9) one of its children so the log may get
+                # deleted, or it may be incomplete. So let this one go, but
+                # only once per Process_Manager_Test.
                 if (open (LOG, "<log/".$log) == 0) {
                     print STDERR "Error: Cannot open sublog file $log\n";
                 }
@@ -355,8 +303,15 @@ sub check_log ($)
                     }
 
                     if ($number_ending == 0) {
-                       print STDERR "Error ($log): no line with 'Ending'\n";
-                       $print_log = 1;
+                       if ($program eq 'Process_Manager_Test' &&
+                           $saw_short_process_manager_child_log == 0) {
+                           $saw_short_process_manager_child_log = 1;
+                           $number_ending = 1;
+                       }
+                       else {
+                           print STDERR "Error ($log): no line with 'Ending'\n";
+                           $print_log = 1;
+                       }
                     }
 
                     if ($number_starting != $number_ending) {
@@ -439,8 +394,6 @@ if (!getopts ('dhtvo:') || $opt_h) {
     print "    -d         Debug mode (do not run tests)\n";
     print "    -h         Display this help\n";
     print "    -t         Runs all the tests passed via the cmd line\n";
-    print "    -v         Generate commands for VxWorks\n";
-    print "    -o         Put VxWorks commands in <output file>\n";
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
@@ -460,10 +413,6 @@ if (!($tmp = $ENV{TMP}) && !($tmp = $ENV{TEMP})) {
 
 check_for_more_configs ();
 
-if (PerlACE::is_vxworks_test ()) {
-    $opt_v = 1;
-}
-
 @tests = ();
 
 if (defined $opt_t) {
@@ -481,46 +430,38 @@ if (defined $opt_d) {
 record_resources () if (!defined $opt_d);
 
 my($oh) = \*STDOUT;
-if (defined $opt_v && defined $opt_o) {
-  $oh = new FileHandle();
-  if ($opt_o != 1) {
-    if (!open($oh, ">$opt_o")) {
-      print STDERR "ERROR: Unable to write to $opt_o\n";
-      exit(1);
-    }
-  }
 
-  print $oh "#\n" .
-            "# ACE one-button test for VxWorks 5.x.\n" .
-            "# To use:  -> < run_test.vxworks > run_test.log\n" .
-            "#\n" .
-            "# NOTE: if you build with a shared ACE library, be sure to load\n" .
-            "# that first:\n" .
-            "#  -> ld < ../ace/libACE.so\n" .
-            "# and unld it after running the tests.\n" .
-            "#\n" .
-            "# The output logs can be checked from a Unix host:\n" .
-            "#    % ./run_tests.check log/*.log\n\n";
+my $target = PerlACE::TestTarget::create_target (1);
 
-  foreach $test (@tests) {
-    output_vxworks_commands ($oh, $test);
-  }
+# Put needed files in place for targets that require them.
+#
+# Service_Config_Test needs service config file.
+my $svc_conf_file = $target->LocalFile ("Service_Config_Test.conf");
+if ($target->PutFile ("Service_Config_Test.conf", $svc_conf_file) == -1) {
+    print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
 }
-else {
-  foreach $test (@tests) {
-    if (defined $opt_d) {
-      print "Would run test $test now\n";
-    }
-    elsif ($config_list->check_config ('Purify')) {
-      purify_program ($test);
-    }
-    if (defined $opt_v) {
-      run_vxworks_command ($test);
-    }
-    else {
-      run_program ($test);
-    }
+# Config_Test needs config ini file.
+my $conf_ini_file = $target->LocalFile ("Config_Test_Import_1.ini");
+if ($target->PutFile ("Config_Test_Import_1.ini", $conf_ini_file) == -1) {
+    print STDERR "WARNING: Cannot send $conf_ini_file to target\n";
+}
+# Service_Config_Stream_Test needs service config file.
+$svc_conf_file = $target->LocalFile ("Service_Config_Stream_Test.conf");
+if ($target->PutFile ("Service_Config_Stream_Test.conf", $svc_conf_file) == -1) {
+    print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
+}
+
+foreach $test (@tests) {
+  if (defined $opt_d) {
+    print "Would run test $test now\n";
   }
+  elsif ($config_list->check_config ('Purify')) {
+    purify_program ($test);
+  }
+  else {
+    run_program ($target, $test);
+  }
+  $target->GetStderrLog();
 }
 
 check_resources ($oh) if (!defined $opt_d);

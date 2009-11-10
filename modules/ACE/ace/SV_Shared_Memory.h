@@ -66,8 +66,7 @@ public:
                         int flags = 0);
 
   /// Attach this shared memory segment.
-  int  attach (void *virtual_addr = 0,
-               int flags =0);
+  int  attach (void *virtual_addr = 0, int flags = 0);
 
   /// Detach this shared memory segment.
   int  detach (void);

@@ -12,6 +12,7 @@
 #include "ace/Service_Types.h"
 #include "ace/DLL.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 #if defined (ACE_OPENVMS)
 # include "ace/Lib_Find.h"
 #endif
@@ -20,12 +21,12 @@ ACE_RCSID (ace,
            Service_Object,
            "$Id$")
 
-  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
-  ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
+ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 
-  void
+void
 ACE_Service_Type::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -50,12 +51,12 @@ ACE_Service_Type::dump (void) const
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
                                     const ACE_DLL &dll,
-                                    int active)
+                                    bool active)
   : name_ (0),
     type_ (t),
     dll_ (dll),
     active_ (active),
-    fini_already_called_ (0)
+    fini_already_called_ (false)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
   this->name (n);
@@ -64,15 +65,14 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
                                     ACE_SHLIB_HANDLE handle,
-                                    int active)
+                                    bool active)
   : name_ (0),
     type_ (t),
     active_ (active),
-    fini_already_called_ (0)
+    fini_already_called_ (false)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
-  ACE_DLL &dll = const_cast<ACE_DLL &> (this->dll_);
-  dll.set_handle (handle);
+  this->dll_.set_handle (handle);
   this->name (n);
 }
 
@@ -87,10 +87,16 @@ ACE_Service_Type::~ACE_Service_Type (void)
 int
 ACE_Service_Type::fini (void)
 {
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ACE (%P|%t) ST::fini - destroying name=%s, dll=%s\n"),
+                this->name_,
+                this->dll_.dll_name_));
+
   if (this->fini_already_called_)
     return 0;
 
-  this->fini_already_called_ = 1;
+  this->fini_already_called_ = true;
 
   if (this->type_ == 0)
     {
@@ -108,15 +114,15 @@ ACE_Service_Type::fini (void)
   // Ensure that closing the DLL is done after type_->fini() as it may
   // require access to the code for the service object destructor,
   // which resides in the DLL
-  return (ret | this->dll_.close());
 
+  return (ret | this->dll_.close ());
 }
 
 int
 ACE_Service_Type::suspend (void) const
 {
   ACE_TRACE ("ACE_Service_Type::suspend");
-  (const_cast<ACE_Service_Type *> (this))->active_ = 0;
+  (const_cast<ACE_Service_Type *> (this))->active_ = false;
   return this->type_->suspend ();
 }
 
@@ -124,7 +130,7 @@ int
 ACE_Service_Type::resume (void) const
 {
   ACE_TRACE ("ACE_Service_Type::resume");
-  (const_cast<ACE_Service_Type *> (this))->active_ = 1;
+  (const_cast<ACE_Service_Type *> (this))->active_ = true;
   return this->type_->resume ();
 }
 

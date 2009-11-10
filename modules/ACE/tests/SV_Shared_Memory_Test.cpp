@@ -142,11 +142,11 @@ run_main (int, ACE_TCHAR *[])
     !defined(ACE_LACKS_SYSV_SHMEM)
 
   // Check whether allocator was initialized.
-  if (myallocator ().bad ()) 
+  if (myallocator ().bad ())
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 ACE_TEXT ("Unable to initialize allocator\n")),
-			 -1);
+                         ACE_TEXT ("Unable to initialize allocator\n")),
+                         -1);
     }
 
   char *shm = reinterpret_cast<char *> (myallocator ().malloc (SHMSZ));

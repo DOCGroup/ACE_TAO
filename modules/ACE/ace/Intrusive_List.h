@@ -14,7 +14,7 @@
 #define ACE_INTRUSIVE_LIST_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -68,12 +68,12 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
-  int is_empty (void) const;
+  /// Returns true if the container is empty, otherwise returns false.
+  bool is_empty (void) const;
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty, otherwise returns false.
   /// @deprecated Use is_empty() instead.
-  int empty (void) const;
+  bool empty (void) const;
 
   /// Insert an element at the beginning of the list
   void push_front (T *node);
@@ -99,14 +99,17 @@ public:
    */
   void remove (T *node);
 
-private:
-  /// Remove a element from the list
+  /// Swap two lists
+  void swap(ACE_Intrusive_List<T> & rhs);
+
+  /// Remove a element from the list without checking
   /**
    * No attempts are performed to check if T* really belongs to the
    * list.  The effects of removing an invalid element are unspecified
    */
-  void remove_i (T *node);
+  void unsafe_remove (T *node);
 
+private:
   /** @name Disallow copying
    *
    */

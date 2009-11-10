@@ -34,8 +34,7 @@ class ACE_Export ACE_Addr
 public:
   // = Initialization and termination methods.
   /// Initializes instance variables.
-  ACE_Addr (int type = -1,
-            int size = -1);
+  ACE_Addr (int type = -1, int size = -1);
 
   /// Destructor.
   virtual ~ACE_Addr (void);

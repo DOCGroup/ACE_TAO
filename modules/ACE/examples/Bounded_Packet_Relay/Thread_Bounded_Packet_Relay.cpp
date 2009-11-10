@@ -143,9 +143,8 @@ Text_Output_Device_Wrapper::write_output_message (void *message)
 
       if (logging_ & Text_Output_Device_Wrapper::PRINT_MSGS_RCVD)
         ACE_DEBUG ((LM_DEBUG, "output message %d:\n[%s]\n",
-		            packet_count_,
-                    static_cast<ACE_Message_Block *> (message)->
-                      rd_ptr ()));
+                    packet_count_,
+                    static_cast<ACE_Message_Block *> (message)->rd_ptr ()));
 
       delete static_cast<ACE_Message_Block *> (message);
       return 0;
@@ -531,7 +530,7 @@ Send_Handler::~Send_Handler (void)
 
 int
 Send_Handler::handle_timeout (const ACE_Time_Value &,
-			      const void *)
+                              const void *)
 {
   switch (relay_.send_input ())
     {
@@ -691,8 +690,8 @@ Thread_Bounded_Packet_Relay_Driver::display_menu (void)
     "  Please enter your choice: ";
 
   ACE_DEBUG ((LM_DEBUG,
-	          menu,
-	          this->packet_count (),
+              menu,
+              this->packet_count (),
               this->arrival_period (),
               this->send_period (),
               this->duration_limit (),

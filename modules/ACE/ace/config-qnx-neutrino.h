@@ -29,9 +29,9 @@
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 #ifdef __GNUC__
-# define ACE_CC_NAME ACE_LIB_TEXT ("gcc")
+# define ACE_CC_NAME ACE_TEXT ("gcc")
 #else
-# define ACE_CC_NAME ACE_LIB_TEXT ("NTO compiler ??")
+# define ACE_CC_NAME ACE_TEXT ("NTO compiler ??")
 #endif
 
 // /usr/nto/include/float.h defines
@@ -68,7 +68,6 @@
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SELECT_H
@@ -76,10 +75,8 @@
 #define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_SIG_MACROS
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STRERROR
 #define ACE_HAS_STRINGS
 #define ACE_HAS_SVR4_GETTIMEOFDAY
 #define ACE_HAS_TERMIOS
@@ -107,7 +104,8 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_SO_SNDBUF
+#define ACE_LACKS_SO_RCVBUF
 #define ACE_LACKS_SOCKETPAIR
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_STREAM_MODULES

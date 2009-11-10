@@ -22,11 +22,6 @@
 
 #include "ace/Addr.h"
 
-#if defined(ACE_VXWORKS)
-   // Needed to get INET_ADDR_LEN
-#  include /**/ "inetLib.h"
-#endif /* ACE_VXWORKS */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -49,8 +44,8 @@ public:
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
   ACE_INET_Addr (const sockaddr_in *addr, int len);
 
-  /// Creates an ACE_INET_Addr from a <port_number> and the remote
-  /// <host_name>. The port number is assumed to be in host byte order.
+  /// Creates an ACE_INET_Addr from a @a port_number and the remote
+  /// @a host_name. The port number is assumed to be in host byte order.
   /// To set a port already in network byte order, please @see set().
   /// Use address_family to select IPv6 (PF_INET6) vs. IPv4 (PF_INET).
   ACE_INET_Addr (u_short port_number,
@@ -58,17 +53,18 @@ public:
                  int address_family = AF_UNSPEC);
 
   /**
-   * Initializes an ACE_INET_Addr from the <address>, which can be
+   * Initializes an ACE_INET_Addr from the @a address, which can be
    * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
-   * "128.252.166.57:1234").  If there is no ':' in the <address> it
+   * "128.252.166.57:1234").  If there is no ':' in the @a address it
    * is assumed to be a port number, with the IP address being
    * INADDR_ANY.
    */
-  explicit ACE_INET_Addr (const char address[]);
+  explicit ACE_INET_Addr (const char address[],
+                          int address_family = AF_UNSPEC);
 
   /**
-   * Creates an ACE_INET_Addr from a <port_number> and an Internet
-   * <ip_addr>.  This method assumes that <port_number> and <ip_addr>
+   * Creates an ACE_INET_Addr from a @a port_number and an Internet
+   * @a ip_addr.  This method assumes that @a port_number and @a ip_addr
    * are in host byte order. If you have addressing information in
    * network byte order, @see set().
    */
@@ -76,15 +72,15 @@ public:
                           ACE_UINT32 ip_addr = INADDR_ANY);
 
   /// Uses <getservbyname> to create an ACE_INET_Addr from a
-  /// <port_name>, the remote <host_name>, and the <protocol>.
+  /// <port_name>, the remote @a host_name, and the @a protocol.
   ACE_INET_Addr (const char port_name[],
                  const char host_name[],
                  const char protocol[] = "tcp");
 
   /**
    * Uses <getservbyname> to create an ACE_INET_Addr from a
-   * <port_name>, an Internet <ip_addr>, and the <protocol>.  This
-   * method assumes that <ip_addr> is in host byte order.
+   * <port_name>, an Internet @a ip_addr, and the @a protocol.  This
+   * method assumes that @a ip_addr is in host byte order.
    */
   ACE_INET_Addr (const char port_name[],
                  ACE_UINT32 ip_addr,
@@ -95,7 +91,8 @@ public:
                  const wchar_t host_name[],
                  int address_family = AF_UNSPEC);
 
-  explicit ACE_INET_Addr (const wchar_t address[]);
+  explicit ACE_INET_Addr (const wchar_t address[],
+                          int address_family = AF_UNSPEC);
 
   ACE_INET_Addr (const wchar_t port_name[],
                  const wchar_t host_name[],
@@ -117,8 +114,8 @@ public:
   int set (const ACE_INET_Addr &);
 
   /**
-   * Initializes an ACE_INET_Addr from a <port_number> and the
-   * remote <host_name>.  If <encode> is non-zero then <port_number> is
+   * Initializes an ACE_INET_Addr from a @a port_number and the
+   * remote @a host_name.  If @a encode is non-zero then @a port_number is
    * converted into network byte order, otherwise it is assumed to be
    * in network byte order already and are passed straight through.
    * address_family can be used to select IPv4/IPv6 if the OS has
@@ -145,28 +142,28 @@ public:
            int map = 0);
 
   /// Uses <getservbyname> to initialize an ACE_INET_Addr from a
-  /// <port_name>, the remote <host_name>, and the <protocol>.
+  /// <port_name>, the remote @a host_name, and the @a protocol.
   int set (const char port_name[],
            const char host_name[],
            const char protocol[] = "tcp");
 
   /**
    * Uses <getservbyname> to initialize an ACE_INET_Addr from a
-   * <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
-   * <ip_addr> is already in network byte order.
+   * <port_name>, an @a ip_addr, and the @a protocol.  This assumes that
+   * @a ip_addr is already in network byte order.
    */
   int set (const char port_name[],
            ACE_UINT32 ip_addr,
            const char protocol[] = "tcp");
 
   /**
-   * Initializes an ACE_INET_Addr from the <addr>, which can be
+   * Initializes an ACE_INET_Addr from the @a addr, which can be
    * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
-   * "128.252.166.57:1234").  If there is no ':' in the <address> it
+   * "128.252.166.57:1234").  If there is no ':' in the @a address it
    * is assumed to be a port number, with the IP address being
    * INADDR_ANY.
    */
-  int set (const char addr[]);
+  int set (const char addr[], int address_family = AF_UNSPEC);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
   int set (const sockaddr_in *,
@@ -186,7 +183,7 @@ public:
            ACE_UINT32 ip_addr,
            const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 
-  int set (const wchar_t addr[]);
+  int set (const wchar_t addr[], int address_family = AF_UNSPEC);
 #endif /* ACE_HAS_WCHAR */
 
   /// Return a pointer to the underlying network address.
@@ -201,11 +198,11 @@ public:
 
   /**
    * Transform the current ACE_INET_Addr address into string format.
-   * If <ipaddr_format> is non-0 this produces "ip-number:port-number"
-   * (e.g., "128.252.166.57:1234"), whereas if <ipaddr_format> is 0
+   * If @a ipaddr_format is ttrue this produces "ip-number:port-number"
+   * (e.g., "128.252.166.57:1234"), whereas if @a ipaddr_format is false
    * this produces "ip-name:port-number" (e.g.,
-   * "tango.cs.wustl.edu:1234").  Returns -1 if the <size> of the
-   * <buffer> is too small, else 0.
+   * "tango.cs.wustl.edu:1234").  Returns -1 if the @a size of the
+   * @a buffer is too small, else 0.
    */
   virtual int addr_to_string (ACE_TCHAR buffer[],
                               size_t size,
@@ -217,10 +214,11 @@ public:
    * "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
    * "ip-number:port-number" (e.g., "128.252.166.57:1234"), or
    * "ip-number:port-name" (e.g., "128.252.166.57:telnet").  If there
-   * is no ':' in the <address> it is assumed to be a port number,
+   * is no ':' in the @a address it is assumed to be a port number,
    * with the IP address being INADDR_ANY.
    */
-  virtual int string_to_addr (const char address[]);
+  virtual int string_to_addr (const char address[],
+                              int address_family = AF_UNSPEC);
 
 #if defined (ACE_HAS_WCHAR)
   /*
@@ -230,7 +228,7 @@ public:
 
   /**
    * Sets the port number without affecting the host name.  If
-   * <encode> is enabled then <port_number> is converted into network
+   * @a encode is enabled then @a port_number is converted into network
    * byte order, otherwise it is assumed to be in network byte order
    * already and are passed straight through.
    */
@@ -239,12 +237,12 @@ public:
 
   /**
    * Sets the address without affecting the port number.  If
-   * <encode> is enabled then <ip_addr> is converted into network
+   * @a encode is enabled then @a ip_addr is converted into network
    * byte order, otherwise it is assumed to be in network byte order
    * already and are passed straight through.  The size of the address
-   * is specified in the <len> parameter.
-   * If <map> is non-zero, IPv6 support has been compiled in, and
-   * <ip_addr> is an IPv4 address, then this address is set to the IPv4-mapped
+   * is specified in the @a len parameter.
+   * If @a map is non-zero, IPv6 support has been compiled in, and
+   * @a ip_addr is an IPv4 address, then this address is set to the IPv4-mapped
    * IPv6 address of it.
    */
   int set_address (const char *ip_addr,
@@ -265,9 +263,9 @@ public:
 
   /**
    * Return the character representation of the name of the host,
-   * storing it in the <hostname> (which is assumed to be
-   * <hostnamelen> bytes long).  This version is reentrant.  If
-   * <hostnamelen> is greater than 0 then <hostname> will be
+   * storing it in the @a hostname (which is assumed to be
+   * @a hostnamelen bytes long).  This version is reentrant.  If
+   * @a hostnamelen is greater than 0 then @a hostname will be
    * NUL-terminated even if -1 is returned.
    */
   int get_host_name (char hostname[],
@@ -290,8 +288,8 @@ public:
 
   /**
    * Return the "dotted decimal" Internet address representation of
-   * the hostname storing it in the <addr> (which is assumed to be
-   * <addr_size> bytes long).  This version is reentrant.
+   * the hostname storing it in the @a addr (which is assumed to be
+   * @a addr_size bytes long).  This version is reentrant.
    */
   const char *get_host_addr (char *addr, int addr_size) const;
 
@@ -344,6 +342,10 @@ public:
   /// Compare two addresses for inequality.
   bool operator != (const ACE_INET_Addr &SAP) const;
 
+  /// A variation of the equality operator, this method only compares the
+  /// IP address and ignores the port number.
+  bool is_ip_equal (const ACE_INET_Addr &SAP) const;
+
   /// Computes and returns hash value.
   virtual u_long hash (void) const;
 
@@ -376,10 +378,6 @@ private:
     sockaddr_in6 in6_;
 #endif /* ACE_HAS_IPV6 */
   } inet_addr_;
-
-#if defined (ACE_VXWORKS)
-  char buf_[INET_ADDR_LEN];
-#endif
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

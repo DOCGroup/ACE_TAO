@@ -101,6 +101,10 @@ ACEXML_Svcconf_Parser::parse_string (const ACE_TCHAR str[])
     }
   ACEXML_CATCH (ACEXML_SAXException, ex)
     {
+      // If there was a problem parsing the stream, set the errno
+      // to EINVAL to indicate to upper levels that the stream was
+      // invalid.
+      ACE_OS::last_error (EINVAL);
       ex.print ();
       return -1;
     }

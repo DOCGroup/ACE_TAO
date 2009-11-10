@@ -24,8 +24,8 @@ ACE_QoS_Manager::join_qos_session (ACE_QoS_Session *qos_session)
 {
   if (this->qos_session_set ().insert (qos_session) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Error in adding a new session to the ")
-                       ACE_LIB_TEXT ("socket session set\n")),
+                       ACE_TEXT ("Error in adding a new session to the ")
+                       ACE_TEXT ("socket session set\n")),
                       -1);
   return 0;
 }

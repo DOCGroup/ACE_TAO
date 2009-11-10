@@ -25,13 +25,11 @@
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
 
-#if defined (ACE_WIN32) && defined (_MSC_VER) && defined (_DEBUG)
-# define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
-#elif defined (ACE_WIN32) && defined (__BORLANDC__)
+#if defined (ACE_LD_DECORATOR_STR)
 # define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
 #else
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
-#endif /* ACE_WIN32 && && _MSC_VER && _DEBUG */
+#endif /* ACE_LD_DECORATOR_STR */
 
 #if defined (ACE_WIN32) || defined (ACE_OPENVMS)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
@@ -65,25 +63,16 @@ int handle_test (ACE_DLL &dll)
 
 int basic_test (ACE_DLL &dll)
 {
-#if defined (__KCC)
-  /* With KCC, turning on close-on-destruction will cause problems
-     when libKCC tries to call dtors. */
-  int retval = dll.open (ACE_TEXT (OBJ_PREFIX)
-                         ACE_TEXT ("DLL_Test_Lib")
-                         ACE_TEXT (OBJ_SUFFIX),
-                         ACE_DEFAULT_SHLIB_MODE,
-                         0);
-#else
   int retval = dll.open (OBJ_PREFIX
                          ACE_TEXT ("DLL_Test_Lib")
                          OBJ_SUFFIX);
-#endif /* __KCC */
 
   if (retval != 0)
     {
       ACE_TCHAR *dll_error = dll.error ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error in DLL Open: %s\n"),
+                         ACE_TEXT ("Error in DLL Open of <%s>: %s\n"),
+                         OBJ_PREFIX ACE_TEXT ("DLL_Test_Lib") OBJ_SUFFIX,
                          dll_error ? dll_error : ACE_TEXT ("unknown error")),
                         -1);
     }
@@ -91,9 +80,7 @@ int basic_test (ACE_DLL &dll)
   // Just because the ANSI C++ spec says you can no longer cast a
   // void* to a function pointer. Doesn't allow:
   // TC f = (Hello_Factory) dll.symbol ("get_hello");
-  void *foo;
-
-  foo = dll.symbol (ACE_TEXT ("get_hello"));
+  void *foo = dll.symbol (ACE_TEXT ("get_hello"));
 
   // Cast the void* to long first.
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
@@ -125,8 +112,6 @@ int basic_test (ACE_DLL &dll)
 
 int dynamic_cast_test (ACE_DLL &dll)
 {
-
-#if !defined (ACE_LACKS_RTTI)
   Child child;
   child.test();
 
@@ -148,9 +133,6 @@ int dynamic_cast_test (ACE_DLL &dll)
 
   if (pfnAcquire (&child) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dynamic_cast failed.\n")), -1);
-#else
-  ACE_UNUSED_ARG (dll);
-#endif /* !ACE_LACKS_RTTI */
 
   return 0;
 }

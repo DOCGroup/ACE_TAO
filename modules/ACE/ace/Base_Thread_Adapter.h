@@ -67,6 +67,11 @@ protected:
   long flags_;
 };
 
+
+
+class ACE_Service_Gestalt;
+
+
 /**
  * @class ACE_Base_Thread_Adapter
  *
@@ -165,11 +170,15 @@ protected:
 
   /// The ACE_Log_Msg attributes.
   ACE_OS_Log_Msg_Attributes log_msg_attributes_;
+
   /// That is usefull for gprof, define itimerval
 #ifdef ACE_USES_GPROF
   struct itimerval itimer_;
 #endif // ACE_USES_GPROF
 
+  /// Keep a reference to the configuration context that spawns the
+  /// thread so the child can inherit it.
+  ACE_Service_Gestalt * const ctx_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

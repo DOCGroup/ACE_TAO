@@ -86,8 +86,8 @@ ACEXML_NamespaceSupport::init (void)
   // @@ No way to tell if the new fails.
   ACE_NEW_RETURN (effective_context_, ACEXML_NS_CONTEXT(), -1);
 
-  ACEXML_String prefix (ACEXML_TABOO_NS_PREFIX, 0, 0);
-  ACEXML_String uri (ACEXML_XMLNS_URI_name, 0, 0);
+  ACEXML_String prefix (ACEXML_TABOO_NS_PREFIX, 0, false);
+  ACEXML_String uri (ACEXML_XMLNS_URI_name, 0, false);
   return this->effective_context_->bind (prefix, uri);
 }
 
@@ -109,8 +109,8 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
   if (ACE_OS::strcmp (ACEXML_TABOO_NS_PREFIX, prefix) == 0)
     return -1;
 
-  ACEXML_String ns_prefix (prefix, 0, 0);
-  ACEXML_String ns_uri (uri, 0, 0);
+  ACEXML_String ns_prefix (prefix, 0, false);
+  ACEXML_String ns_uri (uri, 0, false);
 
   return this->effective_context_->rebind (ns_prefix, ns_uri);
 }
@@ -141,7 +141,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    if (entry->int_id_ == ACEXML_String (uri, 0, 0))
+    if (entry->int_id_ == ACEXML_String (uri, 0, false))
       return entry->ext_id_.c_str ();
 
   return 0;                     // Nothing found.
@@ -173,8 +173,8 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    if (entry->int_id_ == ACEXML_String (uri, 0, 0) &&
-        entry->ext_id_ != ACEXML_String (ACEXML_DEFAULT_NS_PREFIX, 0, 0))
+    if (entry->int_id_ == ACEXML_String (uri, 0, false) &&
+        entry->ext_id_ != ACEXML_String (ACEXML_DEFAULT_NS_PREFIX, 0, false))
       prefixes.enqueue_tail (entry->ext_id_.c_str ());
     else
       continue;
@@ -190,7 +190,7 @@ ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
 
   ACEXML_NS_CONTEXT_ENTRY *entry = 0;
 
-  if (this->effective_context_->find (ACEXML_String (prefix, 0, 0),
+  if (this->effective_context_->find (ACEXML_String (prefix, 0, false),
                                       entry) == 0)
     return entry->int_id_.c_str ();
   return 0;
@@ -211,7 +211,7 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
         break;
       }
 
-  ACEXML_String prefix (ACE_TEXT(""),0,0);
+  ACEXML_String prefix (ACE_TEXT (""), 0, false);
   if (len == -1)
       name = qName;
   else

@@ -37,24 +37,24 @@ class ACE_Message_Block;
 /**
  * @class ACE_SOCK_SEQPACK_Association
  *
- * @brief Defines the methods in the <ACE_SOCK_SEQPACK_Association> abstraction.
+ * @brief Defines the methods in the ACE_SOCK_SEQPACK_Association abstraction.
  *
  * This adds additional wrapper methods atop the <ACE_SOCK_IO>
  * class.
  *
- * <buf> is the buffer to write from or receive into.
- * <len> is the number of bytes to transfer.
- * The <timeout> parameter in the following methods indicates how
- * long to blocking trying to transfer data.  If <timeout> == 0,
+ * @a buf is the buffer to write from or receive into.
+ * @a len is the number of bytes to transfer.
+ * The @a timeout parameter in the following methods indicates how
+ * long to blocking trying to transfer data.  If @a timeout == 0,
  * then the call behaves as a normal send/recv call, i.e., for
  * blocking sockets, the call will block until action is possible;
  * for non-blocking sockets, EWOULDBLOCK will be returned if no
  * action is immediately possible.
- * If <timeout> != 0, the call will wait for data to arrive no longer
- * than the relative time specified in *<timeout>.
+ * If @a timeout != 0, the call will wait for data to arrive no longer
+ * than the relative time specified in *@a timeout.
  * The "_n()" I/O methods keep looping until all the data has been
  * transferred.  These methods also work for sockets in non-blocking
- * mode i.e., they keep looping on EWOULDBLOCK.  <timeout> is used
+ * mode i.e., they keep looping on EWOULDBLOCK.  @a timeout is used
  * to make sure we keep making progress, i.e., the same timeout
  * value is used for every I/O operation in the loop and the timeout
  * is not counted down.
@@ -70,8 +70,8 @@ class ACE_Message_Block;
  * bytes transferred.
  * Methods with <iovec> parameter are I/O vector variants of the I/O
  * operations.
- * Methods with the extra <flags> argument will always result in
- * <send> getting called. Methods without the extra <flags> argument
+ * Methods with the extra @a flags argument will always result in
+ * <send> getting called. Methods without the extra @a flags argument
  * will result in <send> getting called on Win32 platforms, and
  * <write> getting called on non-Win32 platforms.
  */
@@ -90,32 +90,32 @@ public:
 
   /**
    * Return local endpoint addresses in the referenced array of
-   * ACE_INET_Addr, which should have the specified <size>.  If the
-   * number of local endpoint addresses is less than <size>, then
-   * <size> will be set to this number.  If successful, the method
+   * ACE_INET_Addr, which should have the specified @a size.  If the
+   * number of local endpoint addresses is less than @a size, then
+   * @a size will be set to this number.  If successful, the method
    * returns 0, otherwise returns -1.
    */
   int get_local_addrs (ACE_INET_Addr *addrs, size_t &size) const;
 
   /**
    * Return remote endpoint addresses in the referenced array of
-   * ACE_INET_Addr, which should have the specified <size>.  If the
-   * number of remote endpoint addresses is less than <size>, then
-   * <size> will be set to this number.  If successful, the method
+   * ACE_INET_Addr, which should have the specified @a size.  If the
+   * number of remote endpoint addresses is less than @a size, then
+   * @a size will be set to this number.  If successful, the method
    * returns 0, otherwise returns -1.
    */
   int get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const;
 
   // = I/O functions.
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout = 0,
@@ -127,20 +127,20 @@ public:
                    const ACE_Time_Value *timeout = 0,
                    size_t *bytes_transferred = 0) const;
 
-  /// Try to send exactly <len> bytes from <buf> to the connection socket.
+  /// Try to send exactly @a len bytes from @a buf to the connection socket.
   ssize_t send_n (const void *buf,
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Try to send exactly <len> bytes from <buf> to the connected socket.
+  /// Try to send exactly @a len bytes from @a buf to the connected socket.
   ssize_t send_n (const void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Send all the <message_block>s chained through their <next> and
+  /// Send all the @a message_blocks chained through their <next> and
   /// <cont> pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
   ssize_t send_n (const ACE_Message_Block *message_block,

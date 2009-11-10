@@ -54,30 +54,30 @@ cause_error (void)
 class Logger : public ACE_Log_Msg_Callback
 {
 public:
-  Logger (int be_recursive = 1);
+  Logger (bool be_recursive = true);
   // Constructor sets whether we're testing "recursive" callback
   // logging!
 
   void log (ACE_Log_Record &log_record);
   // Logging callback
 
-  void verbose (int be_verbose);
+  void verbose (bool be_verbose);
 
 private:
-  int verbose_logging_;
+  bool verbose_logging_;
   // Flag for testing verbose logging.
 
-  int recursive_;
+  bool recursive_;
   // Flag for testing recursive callback logging.
 };
 
 void
-Logger::verbose (int be_verbose)
+Logger::verbose (bool be_verbose)
 {
   this->verbose_logging_ = be_verbose;
 }
 
-Logger::Logger (int be_recursive)
+Logger::Logger (bool be_recursive)
   : recursive_ (be_recursive)
 {
 }
@@ -85,11 +85,11 @@ Logger::Logger (int be_recursive)
 void
 Logger::log (ACE_Log_Record &log_record)
 {
-  int use_log_msg = 0;
+  bool use_log_msg = false;
   if (this->recursive_)
     {
-      this->recursive_ = 0;
-      use_log_msg = 1;
+      this->recursive_ = false;
+      use_log_msg = true;
     }
 
   if (!this->verbose_logging_)
@@ -130,7 +130,7 @@ Logger::log (ACE_Log_Record &log_record)
 
   // Cleanup on the way out.
   if (use_log_msg)
-    this->recursive_ = 1;
+    this->recursive_ = true;
 }
 
 static void
@@ -230,11 +230,6 @@ test_log_msg_features (const ACE_TCHAR *program)
                 badname,
                 cleanup));
 
-// Don't try this on VxWorks, it will result in an overflow and end the test.
-// Platforms that define ACE_LACKS_VSNPRINTF are candidates to fail here.
-// This then proves that logging to big messages is problematic but on VxWorks
-// we know this and we want to rest of the test to continue
-#if !defined (VXWORKS)
   // Try a log operation that would overflow the logging buffer if not
   // properly guarded.
   ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
@@ -247,7 +242,6 @@ test_log_msg_features (const ACE_TCHAR *program)
       big[index] = alphabet[i % j];
     }
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big: %s\n"), big));
-#endif /* !VXWORKS */
 
   // Exercise many different combinations of OSTREAM.
 
@@ -393,10 +387,10 @@ test_ostream (void)
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
+  ACE_FILE_Addr file_addr (filename);
 
   // Open up the file.
-  if (connector.connect (file,
-                         ACE_FILE_Addr (filename)) == -1)
+  if (connector.connect (file, file_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("connect failed for %p\n"),
@@ -404,10 +398,16 @@ test_ostream (void)
                         1);
     }
 
+#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS > 0x670))
+# define TEST_CAN_UNLINK_IN_ADVANCE
+#endif
+
+#if defined (TEST_CAN_UNLINK_IN_ADVANCE)
   // Unlink this file right away so that it is automatically removed
   // when the process exits.Ignore error returns in case this operation
   // is not supported.
   ACE_OS::unlink(filename);
+#endif
 
   ACE_FILE_Info info;
   if (file.get_info (info) == -1)
@@ -445,6 +445,15 @@ test_ostream (void)
               ACE_TEXT ("%C"),
               buffer));
 
+#if !defined (TEST_CAN_UNLINK_IN_ADVANCE)
+  file.close ();
+  if (file.unlink () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("unlink failed for %p\n"),
+                       file_addr.get_path_name ()),
+                       1);
+#endif
+
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   // This message should show up in stderr and the ostream (without
@@ -465,7 +474,7 @@ test_ostream (void)
 class Log_Spec_Verify : public ACE_Log_Msg_Callback
 {
 public:
-  Log_Spec_Verify () : fail_ (0) {};
+  Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
   void log (ACE_Log_Record &log_record);
   // Logging callback
@@ -475,45 +484,104 @@ public:
 private:
   int fail_;
   // Count how many tests failed.
+
+  int tests_;
+  // Count how many tests we run
+
+  bool recursive_;
 };
 
 void
 Log_Spec_Verify::log (ACE_Log_Record &log_record)
 {
-  const ACE_TCHAR *b = log_record.msg_data ();
-  const ACE_TCHAR *expect = 0;
+  bool use_log_msg = false;
+  if (this->recursive_)
+    {
+      this->recursive_ = false;
+      use_log_msg = true;
+    }
 
-  if (ACE_OS::strncmp (b, ACE_TEXT ("l1:"), 3) == 0)
+  if (!use_log_msg)
     {
-      expect = ACE_TEXT ("42");
-      b += 4;  //3
-    }
-  else if (ACE_OS::strncmp (b, ACE_TEXT ("l2:"), 3) == 0)
-    {
-      expect = ACE_TEXT ("   42");
-      b += 3;
-    }
-  else if (ACE_OS::strncmp (b, ACE_TEXT ("l3N1:"), 4) == 0)
-    {
-      expect = ACE_TEXT ("0042,Log_Msg");
-      b += 4;
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+      *ace_file_stream::instance ()->output_file ()
+        << "Logger callback = "
+        << log_record.msg_data ()
+        << endl;
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Log_Spec_Verify, unrecognized test: %s\n"),
-                  b));
-      ++this->fail_;
+      const ACE_TCHAR *b = log_record.msg_data ();
+      const ACE_TCHAR *expect = 0;
+
+      ++this->tests_;
+
+      if (ACE_OS::strncmp (b, ACE_TEXT ("l1:"), 3) == 0)
+        {
+          expect = ACE_TEXT ("42");
+          b += 3;
+        }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l2:"), 3) == 0)
+        {
+          expect = ACE_TEXT ("   42");
+          b += 3;
+        }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l3N1:"), 4) == 0)
+        {
+          expect = ACE_TEXT ("0042,Log_Msg");
+          b += 5;
+        }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l4:"), 3) == 0)
+        {
+          b += 3;
+          // Check if we have a string, exact length could vary
+          if (b != log_record.msg_data () && ACE_OS::strlen (b) < 15)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test %s failed; expected %d\n"),
+                          log_record.msg_data (), ACE_OS::strlen (b)));
+              ++this->fail_;
+            }
+        }
+        else if (ACE_OS::strncmp (b, ACE_TEXT ("l5:"), 3) == 0)
+        {
+          b += 3;          
+          switch (log_record.type())
+          {
+            case (LM_SHUTDOWN): expect = ACE_TEXT("S"); break;
+            case (LM_TRACE): expect = ACE_TEXT("T"); break;
+            case (LM_DEBUG): expect = ACE_TEXT("D"); break;
+            case (LM_INFO): expect = ACE_TEXT("I"); break;
+            case (LM_NOTICE): expect = ACE_TEXT("N"); break;
+            case (LM_WARNING): expect = ACE_TEXT("W"); break;
+            case (LM_STARTUP): expect = ACE_TEXT("U"); break;
+            case (LM_ERROR): expect = ACE_TEXT("E"); break;
+            case (LM_CRITICAL): expect = ACE_TEXT("C"); break;
+            case (LM_ALERT): expect = ACE_TEXT("A"); break;
+            case (LM_EMERGENCY): expect = ACE_TEXT("!"); break;
+            default: expect = ACE_TEXT("?"); break;
+          }
+          
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Log_Spec_Verify, unrecognized test: %s\n"),
+                      b));
+          ++this->fail_;
+        }
+
+      if (b != log_record.msg_data () && expect && ACE_OS::strcmp (b, expect) != 0)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test %s failed; expected %s\n"),
+                      log_record.msg_data (), expect));
+          ++this->fail_;
+        }
     }
 
-  if (b != log_record.msg_data () && ACE_OS::strcmp (b, expect) != 0)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test %s failed; expected %s\n"),
-                  log_record.msg_data (), expect));
-      ++this->fail_;
-    }
-
-  return;
+  // Cleanup on the way out.
+  if (use_log_msg)
+    this->recursive_ = true;
 }
 
 int
@@ -524,29 +592,19 @@ Log_Spec_Verify::result (void)
   else
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
                 this->fail_));
+
+  if (this->tests_ != 15)
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 15!\n"),
+                this->tests_));
+    ++this->fail_;
+  }
   return this->fail_;
 }
 
 static int
 test_format_specs (void)
 {
-#if 0
-  Log_Spec_Verify  verifier;
-  ACE_Log_Msg      logger;
-
-  if (logger.open (ACE_TEXT ("Log_Msg_Test"), ACE_Log_Msg::MSG_CALLBACK) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("%T: test_format_specs open")),
-                      1);
-  logger.msg_callback (&verifier);
-
-  logger.linenum (42);
-  logger.file (ACE_TEXT ("Log_Msg_Test.cpp"));
-  logger.log (LM_DEBUG, ACE_TEXT ("l1:%l"));
-  logger.log (LM_DEBUG, ACE_TEXT ("l2:%5l"));
-  logger.log (LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N"), 4);
-  return verifier.result ();
-#else
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l1:%l\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l2:%5l\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N\n"), 4));
@@ -559,11 +617,59 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), ACE_TEXT_WIDE ("My string test\n")));
   ACE_TCHAR* nill_string = 0;
+  char* char_nill_string = 0;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), char_nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), nill_string));
   errno = ENOENT;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
-  return 0;
-#endif
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), SIGINT));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), ACE_NSIG));
+
+  Log_Spec_Verify  verifier;
+
+  ACE_LOG_MSG->msg_callback (&verifier);
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE);
+  ACE_LOG_MSG->linenum (42);
+  ACE_LOG_MSG->file ("Log_Msg_Test.cpp");
+
+  ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l1:%l"));
+  ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l2:%5l"));
+  ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N"), 4);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l4:%T")));  
+
+  ACE_LOG_MSG->priority_mask (LM_SHUTDOWN | 
+                              LM_TRACE | 
+                              LM_DEBUG | 
+                              LM_INFO | 
+                              LM_NOTICE | 
+                              LM_WARNING | 
+                              LM_STARTUP | 
+                              LM_ERROR | 
+                              LM_CRITICAL | 
+                              LM_ALERT | 
+                              LM_EMERGENCY,
+                              ACE_Log_Msg::PROCESS);
+  ACE_DEBUG ((LM_SHUTDOWN, ACE_TEXT ("l5:%.1M")));  
+  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_WARNING, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_STARTUP, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_ERROR, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_CRITICAL, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_ALERT, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_EMERGENCY, ACE_TEXT ("l5:%.1M")));
+  
+  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+  ACE_LOG_MSG->msg_callback (0);
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
+
+  return verifier.result ();
 }
 
 // Main function.
@@ -597,12 +703,17 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Test the format specifiers
 
   // Restore this mask so diags and the shutdown message will print correctly!
-  ACE_LOG_MSG->priority_mask (ACE_LOG_MSG->priority_mask () | LM_DEBUG,
+  ACE_LOG_MSG->priority_mask (ACE_LOG_MSG->priority_mask () | LM_DEBUG | LM_ERROR,
                               ACE_Log_Msg::PROCESS);
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("**** running format specifiers test\n")));
-  if (test_format_specs () != 0)
-    status = 1;
+
+  if (status += test_format_specs ())
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("logging specifier tests failed!\n")));
+      status = 1;
+    }
 
   ACE_END_TEST;
   return status;

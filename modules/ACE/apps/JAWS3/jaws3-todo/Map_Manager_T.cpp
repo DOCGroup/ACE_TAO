@@ -41,8 +41,9 @@ public:
   JAWS_Map_Manager (ACE_Allocator *alloc = 0);
   JAWS_Map_Manager (size_t size, ACE_Allocator *alloc = 0);
 
-  int open ( size_t size = ACE_DEFAULT_MAP_SIZE
-           , ACE_Allocator *alloc = 0);
+  //FUZZ: disable check_for_lack_ACE_OS
+  int open ( size_t size = ACE_DEFAULT_MAP_SIZE, 
+             ACE_Allocator *alloc = 0);
 
   int close (void);
 
@@ -53,6 +54,7 @@ public:
            , size_t size
            , JAWS_Cache_Map_Entry<EXT_ID> *&entry
            );
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int rebind ( const EXT_ID &key
              , const void * const &data
@@ -146,10 +148,12 @@ public:
   JAWS_LRU_Cache_Replacement (ACE_Allocator *alloc = 0);
   JAWS_LRU_Cache_Replacement (size_t max_entries, ACE_Allocator *alloc = 0);
 
-  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE
-           , ACE_Allocator *alloc = 0);
+  //FUZZ: disable check_for_lack_ACE_OS
+  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE, 
+             ACE_Allocator *alloc = 0);
 
   int close (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ~JAWS_LRU_Cache_Replacement (void);
 
@@ -261,10 +265,12 @@ public:
   JAWS_LFU_Cache_Replacement (ACE_Allocator *alloc = 0);
   JAWS_LFU_Cache_Replacement (size_t max_entries, ACE_Allocator *alloc = 0);
 
-  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE
-           , ACE_Allocator *alloc = 0);
+  //FUZZ: disable check_for_lack_ACE_OS
+  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE, 
+             ACE_Allocator *alloc = 0);
 
   int close (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ~JAWS_LFU_Cache_Replacement (void);
 
@@ -358,10 +364,12 @@ public:
   JAWS_FIFO_Cache_Replacement (ACE_Allocator *alloc = 0);
   JAWS_FIFO_Cache_Replacement (size_t max_entries, ACE_Allocator *alloc = 0);
 
-  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE
-           , ACE_Allocator *alloc = 0);
+  //FUZZ: disable check_for_lack_ACE_OS
+  int open ( size_t max_entries = ACE_DEFAULT_MAP_SIZE, 
+             ACE_Allocator *alloc = 0);
 
   int close (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ~JAWS_FIFO_Cache_Replacement (void);
 

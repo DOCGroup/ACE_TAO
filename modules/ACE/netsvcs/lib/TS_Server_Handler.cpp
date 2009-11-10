@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"

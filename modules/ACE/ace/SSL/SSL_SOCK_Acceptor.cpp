@@ -11,6 +11,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 #include "ace/Countdown_Time.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 #include "SSL_SOCK_Acceptor.inl"
@@ -175,8 +176,8 @@ int
 ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                ACE_Addr *remote_addr,
                                ACE_Time_Value *timeout,
-                               int restart,
-                               int reset_new_handle) const
+                               bool restart,
+                               bool reset_new_handle) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::accept");
 
@@ -213,8 +214,8 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                ACE_Accept_QoS_Params qos_params,
                                ACE_Addr *remote_addr,
                                ACE_Time_Value *timeout,
-                               int restart,
-                               int reset_new_handle) const
+                               bool restart,
+                               bool reset_new_handle) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::accept");
 

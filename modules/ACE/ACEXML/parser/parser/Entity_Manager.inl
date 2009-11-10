@@ -6,8 +6,8 @@ ACEXML_Entity_Manager::add_entity (const ACEXML_Char *ref,
 {
   if (!this->entities_ )
     ACE_NEW_RETURN (this->entities_, ACEXML_ENTITIES_MANAGER, -1);
-  ACEXML_String name (ref, 0, 0);
-  ACEXML_String value  (v, 0, 0);
+  ACEXML_String name (ref, 0, false);
+  ACEXML_String value  (v, 0, false);
   return this->entities_->bind (name, value);
 }
 
@@ -19,7 +19,7 @@ ACEXML_Entity_Manager::resolve_entity (const ACEXML_Char *ref)
 
   ACEXML_ENTITY_ENTRY *entry = 0;
 
-  if (this->entities_->find (ACEXML_String (ref, 0, 0),
+  if (this->entities_->find (ACEXML_String (ref, 0, false),
                             entry) == 0)
     return entry->int_id_.c_str();
   return 0;

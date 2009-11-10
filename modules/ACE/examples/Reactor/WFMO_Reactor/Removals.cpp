@@ -91,7 +91,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
     new Event_Handler (static_cast<int> (i), close_down);
 
   int result = 0;
+
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Time_Value time (1);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   while (1)
     {
       result = ACE_Reactor::instance ()->handle_events (time);

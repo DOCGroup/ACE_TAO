@@ -5,11 +5,12 @@
  * Date: 26-Jan-2006
  */
 
-#include <ace/streams.h>
-#include <ace/Time_Value.h>
-
 #include "common.h"
 #include "ReadHandler.h"
+
+#include <ace/streams.h>
+#include <ace/Time_Value.h>
+#include <ace/Log_Msg.h>
 
 /**
  * This macro is used to increase the invocation counter by one when entering
@@ -39,7 +40,7 @@ ReadHandler::~ReadHandler() {
 
     if (mStream.close() == -1)
       ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close socket. ")
-                 ACE_TEXT ("(errno = %i: %m)\n"), errno));
+                 ACE_TEXT ("(errno = %i: %m)\n"), ACE_ERRNO_GET));
 
     delete[] mData;
 }
@@ -77,7 +78,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         if (mStream.recv_n(&mDataSize, sizeof(mDataSize),
                 &connTimeout) != sizeof(mDataSize)) {
           ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to receive ")
-                     ACE_TEXT ("request. (errno = %i: %m)\n"), errno));
+                     ACE_TEXT ("request. (errno = %i: %m)\n"), ACE_ERRNO_GET));
             INVOCATION_RETURN(-1);
         }
 
@@ -100,7 +101,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         // allocation did not succeed)
         if (mStream.send_n(&response, sizeof(response), &connTimeout) != 1) {
           ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
-                     ACE_TEXT ("response. (errno = %i: %m)\n"), errno));
+                     ACE_TEXT ("response. (errno = %i: %m)\n"), ACE_ERRNO_GET));
             INVOCATION_RETURN(-1);
         }
 
@@ -122,7 +123,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         // receive the data from the client
         if (mStream.recv_n(mData, mDataSize, &connTimeout) != mDataSize) {
           ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to receive data.")
-                     ACE_TEXT ("(errno = %i: %m)\n"), errno));
+                     ACE_TEXT ("(errno = %i: %m)\n"), ACE_ERRNO_GET));
             INVOCATION_RETURN(-1);
         }
 
@@ -130,7 +131,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
 
         if (mStream.send_n(&response, 1, &connTimeout) != 1) {
           ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
-                     ACE_TEXT ("confirmation. (errno = %i: %m)\n"), errno));
+                     ACE_TEXT ("confirmation. (errno = %i: %m)\n"), ACE_ERRNO_GET));
             INVOCATION_RETURN(-1);
         }
 

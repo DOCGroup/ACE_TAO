@@ -17,6 +17,7 @@
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_Thread.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
@@ -34,6 +35,15 @@ ACE_RCSID (tests,
 static const u_int VARIETIES = 3;
 
 static u_int error = 0;
+
+class MyRepository : public ACE_Service_Repository
+{
+public:
+  array_type& array ()
+  {
+    return service_array_;
+  }
+};
 
 /**
  * @class Test_Singleton
@@ -65,10 +75,9 @@ private:
 u_short Test_Singleton::current_ = 0;
 
 extern "C" void
-test_singleton_cleanup (void *object, void *param)
+test_singleton_cleanup (void *object, void *)
 {
   // We can't reliably use ACE_Log_Msg in a cleanup hook.  Yet.
-  ACE_UNUSED_ARG (param);
   /* ACE_DEBUG ((LM_DEBUG, "cleanup %d\n", (u_short) param)); */
 
   delete (Test_Singleton *) object;
@@ -80,13 +89,16 @@ Test_Singleton::instance (u_short variety)
   static Test_Singleton *instances[VARIETIES] = { 0 };
 
   if (instances[variety] == 0)
-    ACE_NEW_RETURN (instances[variety],
-                    Test_Singleton (variety),
-                    0);
+    {
+      ACE_NEW_RETURN (instances[variety],
+                      Test_Singleton (variety),
+                      0);
+    }
 
   ACE_Object_Manager::at_exit (instances[variety],
                                test_singleton_cleanup,
-                               reinterpret_cast<void *> (static_cast<size_t> (variety)));
+                  reinterpret_cast<void *> (static_cast<size_t> (variety)),
+                  "Test_Singleton");
   return instances[variety];
 }
 
@@ -137,6 +149,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
   int error_count = 0;
   if ((error_count = ACE_Service_Config::process_directive (refuse_svc)) != 1)
     {
+      ++error;
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed init test should have returned 1; ")
                   ACE_TEXT ("returned %d instead\n"),
@@ -144,10 +157,11 @@ testFailedServiceInit (int, ACE_TCHAR *[])
     }
 
   // Try to find the service; it should not be there.
-  ACE_Service_Type const *svcp;
+  ACE_Service_Type const *svcp = 0;
   if (-1 != ACE_Service_Repository::instance ()->find (ACE_TEXT ("Refuses_Svc"),
                                                        &svcp))
     {
+      ++error;
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Found service repo entry for Refuses_Svc\n")));
       ACE_Service_Type_Impl const *svc_impl = svcp->type ();
@@ -197,25 +211,43 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   // Process the Service Configurator directives in this test's Making
   // sure we have more than one option with an argument, to capture
   // any errors caused by "reshuffling" of the options.
-  ACE_ASSERT (new_argv.add (argv) != -1
-              && new_argv.add (ACE_TEXT ("-d")) != -1
-              && new_argv.add (ACE_TEXT ("-k")) != -1
-              && new_argv.add (ACE_TEXT ("xxx")) != -1
-              && new_argv.add (ACE_TEXT ("-p")) != -1
-              && new_argv.add (ACE_TEXT ("Service_Config_Test.pid")) != -1
-              && new_argv.add (ACE_TEXT ("-f")) != -1
-              && new_argv.add (svc_conf) != -1);
+  if (new_argv.add (argv) == -1
+              || new_argv.add (ACE_TEXT ("-d")) == -1
+              || new_argv.add (ACE_TEXT ("-k")) == -1
+              || new_argv.add (ACE_TEXT ("xxx")) == -1
+              || new_argv.add (ACE_TEXT ("-p")) == -1
+              || new_argv.add (ACE_TEXT ("Service_Config_Test.pid")) == -1
+              || new_argv.add (ACE_TEXT ("-f")) == -1
+              || new_argv.add (svc_conf) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("new_argv.add")));
+      ++error;
+    }
 
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.
   ACE_Service_Config daemon;
 
-  ACE_ASSERT (daemon.open (new_argv.argc (),
-                           new_argv.argv ()) != -1 || errno == ENOENT);
+  if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1 &&
+      errno != ENOENT)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("daemon.open")));
+      ++error;
+    }
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
-  ACE_ASSERT (ACE_Reactor::instance()->run_reactor_event_loop (tv) == 0);
+  if (ACE_Reactor::instance()->run_reactor_event_loop (tv) == -1)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("run_reactor_event_loop")));
+    }
 
   // Wait for all threads to complete.
   ACE_Thread_Manager::instance ()->wait ();
@@ -255,27 +287,48 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 #endif  /* ACE_USES_WCHAR */
 
   // Process the Service Configurator directives in this test's
-  ACE_ASSERT (new_argv.add (argv) != -1
-              && new_argv.add (ACE_TEXT ("-f")) != -1
-              && new_argv.add (svc_conf) != -1);
+  if (new_argv.add (argv) == -1
+              || new_argv.add (ACE_TEXT ("-f")) == -1
+              || new_argv.add (svc_conf) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("new_argv.add")));
+      ++error;
+    }
 
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.
   ACE_Service_Config daemon;
 
-  ACE_ASSERT (daemon.open (new_argv.argc (),
-                           new_argv.argv ()) != -1 || errno == ENOENT);
+  if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1)
+    {
+      if (errno == ENOENT)
+        ACE_DEBUG ((LM_WARNING,
+                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                    svc_conf));
+      else
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                    ACE_TEXT ("error")));
+    }
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
-  ACE_ASSERT (ACE_Reactor::instance()->run_reactor_event_loop (tv) == 0);
+  if (ACE_Reactor::instance()->run_reactor_event_loop (tv) == -1)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("run_reactor_event_loop")));
+    }
 
   // Wait for all threads to complete.
   ACE_Thread_Manager::instance ()->wait ();
 }
 
 
-// @brief The size of a repository is pre-determined and can not be exceeded
+// @brief The size of a repository is unlimited and can be exceeded
 void
 testLimits (int , ACE_TCHAR *[])
 {
@@ -301,10 +354,9 @@ testLimits (int , ACE_TCHAR *[])
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-
   u_int error0 = error;
 
-  // Ensure enough room for one in a own
+  // Ensure enough room for one in a own, the repository can extend
   ACE_Service_Gestalt one (1, true);
 
   // Add two.
@@ -320,18 +372,135 @@ testLimits (int , ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the first service\n")));
     }
 
-  if (-1 != one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
+  if (-1 == one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
     {
       ++error;
-      ACE_ERROR ((LM_ERROR, ACE_TEXT("Being able to add more than 1 service was not expected\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the second service\n")));
+    }
+
+  ACE_Service_Repository_Iterator sri (*one.current_service_repository (), 0);
+
+  size_t index = 0;
+  for (const ACE_Service_Type *sr;
+       sri.next (sr) != 0;
+       sri.advance ())
+    {
+      if (index == 0 && ACE_OS::strcmp (sr->name(), ACE_TEXT ("Test_Object_1_More")) != 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT("Service 1 is wrong\n")));
+        }
+      if (index == 1 && ACE_OS::strcmp (sr->name(), ACE_TEXT ("Test_Object_2_More")) != 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT("Service 2 is wrong\n")));
+        }
+      ++index;
+    }
+
+  // Test close
+  one.current_service_repository ()->close();
+
+  if (one.current_service_repository ()->current_size () != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Size of repository should be 0\n")));
     }
 
   if (error == error0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test failed\n")));
+
 }
 
+void
+testrepository (int, ACE_TCHAR *[])
+{
+  MyRepository repository;
+  ACE_DLL handle;
+  ACE_Service_Type s0 (ACE_TEXT ("0"), 0, handle, false);
+  ACE_Service_Type s1 (ACE_TEXT ("1"), 0, handle, false);
+  ACE_Service_Type s2 (ACE_TEXT ("2"), 0, handle, false);
+  ACE_Service_Type s3 (ACE_TEXT ("3"), 0, handle, false);
+  ACE_Service_Type* result = 0;
+  repository.insert (&s0);
+  if (repository.current_size () != 1)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  repository.insert (&s1);
+  if (repository.current_size () != 2)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  repository.insert (&s2);
+  if (repository.current_size () != 3)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  if (repository.remove (ACE_TEXT ("1"), &result) != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Remove failed\n")));
+    }
+  if (repository.current_size () != 3)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  if (repository.array ()[1] != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Element 1 not zero\n"),
+                  repository.current_size ()));
+    }
+  repository.insert (&s3);
+  if (repository.current_size () != 4)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  repository.remove (ACE_TEXT ("0"), &result);
+  if (repository.remove (ACE_TEXT ("1"), &result) != -1)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Double remove didn't return -1\n")));
+    }
+  repository.remove (ACE_TEXT ("2"), &result);
+  repository.remove (ACE_TEXT ("3"), &result);
+  if (repository.current_size () != 4)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+  repository.close ();
+  if (repository.current_size () != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  repository.current_size ()));
+    }
+}
 
 // @brief ??
 void
@@ -350,6 +519,143 @@ testOrderlyInstantiation (int , ACE_TCHAR *[])
     }
 }
 
+// This test verifies that services loaded by a normal ACE startup can be
+// located from a thread spawned outside of ACE's control.
+//
+// To do this, we need a native thread entry and, thus, it needs special care
+// for each platform type. Feel free to add more platforms as needed here and
+// in main() where the test is called.
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
+#  if defined (ACE_HAS_WTHREADS)
+extern "C" unsigned int __stdcall
+#  else
+extern "C" ACE_THR_FUNC_RETURN
+#  endif
+nonacethreadentry (void *args)
+{
+  ACE_Log_Msg::inherit_hook (0, *(ACE_OS_Log_Msg_Attributes *)args);
+
+  if (ACE_Service_Config::instance()->find(ACE_TEXT("Test_Object_1_Thr")) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("In thr %t cannot find Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Config\n")));
+      ++error;
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                ACE_TEXT ("via ACE_Service_Config\n")));
+
+  if (0 != ACE_Service_Repository::instance()->find
+      (ACE_TEXT("Test_Object_1_Thr")))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("In thr %t cannot find Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Repository\n")));
+      ++error;
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                ACE_TEXT ("via ACE_Service_Repository\n")));
+
+  return 0;
+}
+
+void
+testNonACEThread ()
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Beginning non-ACE thread lookup test\n")));
+
+  static const ACE_TCHAR *svc_desc =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+    ACE_TEXT ("dynamic Test_Object_1_Thr Service_Object * ")
+    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_Thr\"")
+#else
+    ACE_TEXT ("<dynamic id=\"Test_Object_1_Thr\" type=\"Service_Object\">")
+    ACE_TEXT ("  <initializer init=\"_make_Service_Config_DLL\" path=\"Service_Config_DLL\" params=\"Test_Object_1_Thr\"/>")
+    ACE_TEXT ("</dynamic>")
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
+
+  static const ACE_TCHAR *svc_remove =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+    ACE_TEXT ("remove Test_Object_1_Thr")
+#else
+    ACE_TEXT ("<remove id=\"Test_Object_1_Thr\"/>")
+    ACE_TEXT ("</remove>")
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
+
+  if (-1 == ACE_Service_Config::process_directive (svc_desc))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Error loading service")));
+      ++error;
+      return;
+    }
+
+  // Allow the spawned thread to contribute to the logging output.
+  ACE_OS_Log_Msg_Attributes log_msg_attrs;
+  ACE_Log_Msg::init_hook (log_msg_attrs);
+
+  u_int errors_before = error;
+
+#if defined (ACE_HAS_WTHREADS) && !defined (ACE_HAS_WINCE)
+  HANDLE thr_h = (HANDLE)_beginthreadex (0,
+                                         0,
+                                         &nonacethreadentry,
+                                         &log_msg_attrs,
+                                         0,
+                                         0);
+  if (thr_h == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("_beginthreadex")));
+    }
+  else
+    {
+      WaitForSingleObject (thr_h, INFINITE);
+      CloseHandle (thr_h);
+    }
+#elif defined (ACE_HAS_PTHREADS_STD)
+  pthread_t thr_id;
+  int status = pthread_create (&thr_id, 0, nonacethreadentry, &log_msg_attrs);
+  if (status != 0)
+    {
+      errno = status;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pthread_create")));
+    }
+  else
+    {
+      pthread_join (thr_id, 0);
+    }
+#endif
+
+  if (error != errors_before)  // The test failed; see if we can still see it
+    {
+      if (0 != ACE_Service_Config::instance()->find
+          (ACE_TEXT ("Test_Object_1_Thr")))
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Main thr %t cannot find Test_Object_1_Thr\n")));
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
+    }
+
+  if (-1 == ACE_Service_Config::process_directive (svc_remove))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Error removing service")));
+      ++error;
+      return;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Non-ACE thread lookup test completed\n")));
+}
+#endif /* ACE_HAS_WTHREADS || ACE_HAS_PTHREADS_STD */
+
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
@@ -360,7 +666,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   testLoadingServiceConfFile (argc, argv);
   testLoadingServiceConfFileAndProcessNo (argc, argv);
   testLimits (argc, argv);
+  testrepository (argc, argv);
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
+  testNonACEThread();
+#endif
 
   ACE_END_TEST;
-  return error == 0 ? 0 : 1;
+  return error;
 }

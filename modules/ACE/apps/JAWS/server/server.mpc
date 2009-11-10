@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(JAWS) : acelib {
+project(JAWS) : ace_output, acelib {
   sharedname   = JAWS
   dynamicflags = ACE_BUILD_SVC_DLL
   requires    += ace_filecache
@@ -18,7 +18,7 @@ project(JAWS) : acelib {
     HTTP_Request.cpp
     HTTP_Response.cpp
     Parse_Headers.cpp
-    IO.cpp
+    JAWS_IO.cpp
   }
 }
 

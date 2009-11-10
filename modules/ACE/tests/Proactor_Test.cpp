@@ -125,13 +125,13 @@ disable_signal (int sigmin, int sigmax)
 #ifndef ACE_WIN32
 
   sigset_t signal_set;
-  if (sigemptyset (&signal_set) == - 1)
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("sigemptyset failed")));
 
   for (int i = sigmin; i <= sigmax; i++)
-    sigaddset (&signal_set, i);
+    ACE_OS::sigaddset (&signal_set, i);
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
@@ -253,7 +253,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
 #  endif /* sun */
 
-#  if !defined(__Lynx__)
+#  if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
     case CB:
       ACE_NEW_RETURN (proactor_impl,
                       ACE_POSIX_CB_Proactor (max_op),
@@ -261,7 +261,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Create Proactor Type = CB\n")));
       break;
-#  endif /* __Lynx__ */
+#  endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
 
     default:
       ACE_DEBUG ((LM_DEBUG,
@@ -331,7 +331,7 @@ MyTask::stop ()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Calling End Proactor event loop\n")));
 
-      ACE_Proactor::end_event_loop ();
+      this->proactor_->proactor_end_event_loop ();
     }
 
   if (this->wait () == -1)
@@ -670,8 +670,8 @@ Server::Server (TestData *tester, int id)
 Server::~Server (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Server %d dtor; %d sends (%d bytes); ")
-              ACE_TEXT ("%d recvs (%d bytes)\n"),
+              ACE_TEXT ("(%t) Server %d dtor; %d sends (%B bytes); ")
+              ACE_TEXT ("%d recvs (%B bytes)\n"),
               this->id_,
               this->total_w_, this->total_snd_,
               this->total_r_, this->total_rcv_));
@@ -871,7 +871,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("(%t) **** Server %d: handle_read_stream() ****\n"),
                     this->id_));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_to_read"),
                     result.bytes_to_read ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -879,7 +879,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -926,7 +926,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Server %d: read %d bytes\n"),
+                    ACE_TEXT ("(%t) Server %d: read %B bytes\n"),
                     this->id_,
                     result.bytes_transferred ()));
       }
@@ -971,7 +971,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("(%t) **** Server %d: handle_write_stream() ****\n"),
                     this->id_));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_to_write"),
                     result.bytes_to_write ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -979,7 +979,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1026,7 +1026,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Server %d: wrote %d bytes ok\n"),
+                    ACE_TEXT ("(%t) Server %d: wrote %B bytes ok\n"),
                     this->id_,
                     result.bytes_transferred ()));
       }
@@ -1104,8 +1104,8 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   if (this->open (1, 0, 1) != 0)
   {
      ACE_ERROR ((LM_ERROR,
-                 ACE_LIB_TEXT ("(%t) %p\n"),
-                 ACE_LIB_TEXT ("Connector::open failed")));
+                 ACE_TEXT ("(%t) %p\n"),
+                 ACE_TEXT ("Connector::open failed")));
      return rc;
   }
 
@@ -1145,8 +1145,8 @@ Client::Client (TestData *tester, int id)
 Client::~Client (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Client %d dtor; %d sends (%d bytes); ")
-              ACE_TEXT ("%d recvs (%d bytes)\n"),
+              ACE_TEXT ("(%t) Client %d dtor; %d sends (%B bytes); ")
+              ACE_TEXT ("%d recvs (%B bytes)\n"),
               this->id_,
               this->total_w_, this->total_snd_,
               this->total_r_, this->total_rcv_));
@@ -1467,7 +1467,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("(%t) **** Client %d: handle_write_stream() ****\n"),
                     this->id_));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_to_write"),
                     result.bytes_to_write ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1475,7 +1475,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1502,7 +1502,8 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
              (mb_i != 0) && (bytes_transferred > 0);
              mb_i = mb_i->cont ())
           {
-            // write 0 at string end for proper printout (if end of mb, it's 0 already)
+            // write 0 at string end for proper printout (if end of mb,
+            // it's 0 already)
             mb_i->rd_ptr()[0]  = '\0';
 
             size_t len = mb_i->rd_ptr () - mb_i->base ();
@@ -1561,7 +1562,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Client %d: wrote %d bytes ok\n"),
+                    ACE_TEXT ("(%t) Client %d: wrote %B bytes ok\n"),
                     this->id_,
                     result.bytes_transferred ()));
       }
@@ -1574,7 +1575,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         if (this->total_snd_ >= xfer_limit)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Client %d sent %d, limit %d\n"),
+                        ACE_TEXT ("(%t) Client %d sent %B, limit %B\n"),
                         this->id_, this->total_snd_, xfer_limit));
             this->close ();
           }
@@ -1610,7 +1611,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("(%t) **** Client %d: handle_read_stream() ****\n"),
                     this->id_));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_to_read"),
                     result.bytes_to_read ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1618,7 +1619,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1687,7 +1688,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Client %d: read %d bytes ok\n"),
+                    ACE_TEXT ("(%t) Client %d: read %B bytes ok\n"),
                     this->id_,
                     result.bytes_transferred ()));
       }
@@ -1769,11 +1770,11 @@ set_proactor_type (const ACE_TCHAR *ptype)
       proactor_type = SUN;
       return 1;
 #endif /* sun */
-#if !defined (__Lynx__)
+#if !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
      case 'C':
        proactor_type = CB;
        return 1;
-#endif /* __Lynx__ */
+#endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
     default:
       break;
     }
@@ -1795,6 +1796,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
   loglevel = 0;                   // log level : only errors and highlights
   // Default transfer limit 50 messages per Sender
   xfer_limit = 50 * ACE_OS::strlen (complete_message);
+
+  // Linux kernels up to at least 2.6.9 (RHEL 4) can't do full duplex aio.
+# if defined (linux)
+  duplex = 0;
+#endif
 
   if (argc == 1) // no arguments , so one button test
     return 0;

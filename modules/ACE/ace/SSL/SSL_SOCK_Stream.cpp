@@ -70,8 +70,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
   ssize_t bytes_sent = 0;
 
   ACE_Time_Value t;
-  ACE_Time_Value *timeout =
-    const_cast<ACE_Time_Value *> (max_wait_time);
+  ACE_Time_Value *timeout = const_cast<ACE_Time_Value *> (max_wait_time);
 
   if (max_wait_time != 0)
     {
@@ -86,7 +85,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
 
   for (size_t i = 0; i < n; ++i)
     {
-      const ssize_t result = this->send (iov[i].iov_base,
+      ssize_t const result = this->send (iov[i].iov_base,
                                          iov[i].iov_len,
                                          timeout);
 
@@ -110,7 +109,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
           // This avoids a subtle problem where "holes" in the data
           // stream would occur if partial sends of a given buffer in
           // the iovec array occured.
-          if (static_cast<size_t> (result) < iov[i].iov_len)
+          if (static_cast<size_t> (result) < static_cast<size_t> (iov[i].iov_len))
             break;
         }
 
@@ -135,10 +134,12 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
   io_vec->iov_base = 0;
 
   // Check the status of the current socket.
-  switch (ACE_OS::select (int (this->get_handle ()) + 1,
-                          handle_set,
-                          0, 0,
-                          timeout))
+  switch (
+    ACE_OS::select (int (this->get_handle ()) + 1,
+                    handle_set,
+                    0,
+                    0,
+                    timeout))
     {
     case -1:
       return -1;
@@ -195,7 +196,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
                                  val) == -1)
     return -1;
 
-  ssize_t bytes_transferred = this->send (buf, len, flags);
+  ssize_t const bytes_transferred = this->send (buf, len, flags);
 
   ACE::restore_non_blocking_mode (this->get_handle (), val);
 
@@ -219,7 +220,7 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  const size_t total_tuples = n / 2;
+  size_t const total_tuples = n / 2;
 
   va_list argp;
   va_start (argp, n);
@@ -233,9 +234,8 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
   //       scatter writes over SSL.
   for (size_t i = 0; i < total_tuples; ++i)
     {
-      const ssize_t data_len = va_arg (argp, ssize_t);
-      const ssize_t result = this->send (va_arg (argp, char *),
-                                         data_len);
+      ssize_t const data_len = va_arg (argp, ssize_t);
+      ssize_t const result = this->send (va_arg (argp, char *), data_len);
 
       if (result == -1)
         {
@@ -277,7 +277,7 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  const size_t total_tuples = n / 2;
+  size_t const total_tuples = n / 2;
 
   va_list argp;
   va_start (argp, n);
@@ -286,9 +286,8 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
 
   for (size_t i = 0; i < total_tuples; ++i)
     {
-      const ssize_t data_len = va_arg (argp, ssize_t);
-      const ssize_t result = this->recv (va_arg (argp, char *),
-                                         data_len);
+      ssize_t const data_len = va_arg (argp, ssize_t);
+      ssize_t const result = this->recv (va_arg (argp, char *), data_len);
 
       if (result == -1)
         {
@@ -298,7 +297,9 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
           // bytes_received.  This gives the caller an opportunity to
           // keep track of which data was actually received.
           if (bytes_recv > 0)
-            break;
+            {
+              break;
+            }
           else
             {
               va_end (argp);
@@ -315,8 +316,9 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
           // the data stream would occur if partial receives of a
           // given buffer in the varargs occured.
           if (result < data_len)
-            break;
-
+            {
+              break;
+            }
         }
     }
 
@@ -336,7 +338,9 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
 
   // No support for send flags in SSL.
   if (flags != 0)
-    ACE_NOTSUP_RETURN (-1);
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
 
   /* This code mimics ACE::send_n */
   // Total number of bytes written.
@@ -364,13 +368,17 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
               continue;
             }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else if (n == 0)
-        break;
+        {
+          break;
+        }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -384,8 +392,10 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
 
   if (flags != 0)
     {
-       if ((flags | MSG_PEEK) != MSG_PEEK)
-        ACE_NOTSUP_RETURN (-1);
+      if ((flags | MSG_PEEK) != MSG_PEEK)
+        {
+          ACE_NOTSUP_RETURN (-1);
+        }
     }
 
   size_t temp = 0;
@@ -411,13 +421,17 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
               continue;
             }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else if (n == 0)
-        break;
+        {
+          break;
+        }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -428,7 +442,9 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
   if (flags != 0)
     {
       if ((flags | MSG_PEEK) != MSG_PEEK)
-        ACE_NOTSUP_RETURN (-1);
+        {
+          ACE_NOTSUP_RETURN (-1);
+        }
     }
 
   ssize_t bytes_transferred = 0;
@@ -451,13 +467,17 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
               continue;
             }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else if (n == 0)
-        break;
+        {
+          break;
+        }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -467,7 +487,9 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
 
   // Send flags are unsupported in SSL
   if (flags != 0)
-    ACE_NOTSUP_RETURN (-1);
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
 
   /*  The following code mimics <ACE::send_n> */
   size_t bytes_transferred = 0;
@@ -490,13 +512,17 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
               continue;
             }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else if (n == 0)
-        break;
+        {
+          break;
+        }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -520,12 +546,18 @@ ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t iovcnt) const
           // This gives the caller an opportunity to keep track of
           // which data was actually sent.
           if (bytes_sent > 0)
-            break;
+            {
+              break;
+            }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else
-        bytes_sent += result;
+        {
+          bytes_sent += result;
+        }
     }
 
   return bytes_sent;
@@ -540,8 +572,8 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
 
   for (size_t i = 0; i < iovcnt; ++i)
     {
-      ssize_t result = this->recv_n (iov[i].iov_base,
-                                     iov[i].iov_len);
+      ssize_t const result = this->recv_n (iov[i].iov_base,
+                                           iov[i].iov_len);
 
       if (result == -1)
         {
@@ -551,12 +583,18 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
           // This gives the caller an opportunity to keep track of
           // which data was actually read.
           if (bytes_read > 0)
-            break;
+            {
+              break;
+            }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else
-        bytes_read += result;
+        {
+          bytes_read += result;
+        }
     }
 
   return bytes_read;
@@ -573,12 +611,18 @@ ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
   // get_remote_addr() would be misleading.
 
   if (SSL_is_init_finished (this->ssl_))
-    return this->ACE_SSL_SOCK::get_remote_addr (addr);
+    {
+      return this->ACE_SSL_SOCK::get_remote_addr (addr);
+    }
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
-    errno = EBADF;
+    {
+      errno = EBADF;
+    }
   else
-    errno = ENOTCONN;
+    {
+      errno = ENOTCONN;
+    }
 
   return -1;
 }

@@ -13,7 +13,7 @@ ACE_DLList_Node::ACE_DLList_Node (void)
 }
 
 ACE_INLINE
-ACE_DLList_Node::ACE_DLList_Node (void *&i,
+ACE_DLList_Node::ACE_DLList_Node (void *i,
                                   ACE_DLList_Node *n,
                                   ACE_DLList_Node *p)
   : item_ (i),

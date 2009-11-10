@@ -29,7 +29,7 @@ ACE_RCSID (tests, IOStream_Test, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #  include "ace/OS_NS_unistd.h"
-#  include "ace/os_include/os_ctype.h"  // Needed for isspace() function
+#  include "ace/OS_NS_ctype.h"  // Needed for isspace() function
 
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
@@ -108,19 +108,11 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
   // if we don't have a quote, append until we see space
   if (c != '"')
     for (*buf++ = c;
-#ifdef CHORUS
-         stream.get (c) && !isspace (c);
-#else
- (void *) stream.get (c) && !isspace (c);
-#endif /* CHORUS */
+         (void *) stream.get (c) && !ACE_OS::ace_isspace (c);
          *buf++ = c)
       continue;
   else
-#ifdef CHORUS
-    for (; stream.get (c) && c != '"'; *buf++ = c)
-#else
     for (; (void *) stream.get (c) && c != '"'; *buf++ = c)
-#endif /* CHORUS */
       if (c == '\\')
         {
           stream.get (c);
@@ -188,8 +180,8 @@ client (void *arg = 0)
 
   // Send a string to the server which it can interpret as a qchar[]
   const char *str = "\"This is a test     string.\"";
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) Client Sending: (%s)\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (str)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) Client Sending: (%C)\n"),
+              str));
   server << str << endl;
 
   // Allow the server to get the string and echo it to the user. (The
@@ -323,8 +315,8 @@ server (void *arg = 0)
   client_handler >> qbuf;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) Server Received: (\"%s\")\n"),
-              ACE_TEXT_CHAR_TO_TCHAR ((char *) qbuf)));
+              ACE_TEXT (" (%P|%t) Server Received: (\"%C\")\n"),
+              (char *) qbuf));
 
   // Give the client time to announce the next test to the user.
   ACE_OS::sleep (2);
@@ -364,8 +356,8 @@ server (void *arg = 0)
       if (! (client_handler >> buf))
         break;
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s "),
-                  ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                  ACE_TEXT ("%C "),
+                  buf));
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -383,7 +375,7 @@ server (void *arg = 0)
   ACE_OS::sleep (5);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n")));
+              ACE_TEXT (" (%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9\n")));
   client_handler << 1 << " ";
   client_handler << .12342134 << " ";
   client_handler << 666555444 << " ";

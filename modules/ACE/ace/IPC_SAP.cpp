@@ -25,8 +25,8 @@ ACE_IPC_SAP::dump (void) const
   ACE_TRACE ("ACE_IPC_SAP::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("handle_ = %d"), this->handle_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %d"), this->pid_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %d"), this->handle_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d"), this->pid_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -67,7 +67,7 @@ ACE_IPC_SAP::enable (int value) const
     default:
       ACE_NOTSUP_RETURN (-1);
     }
-#else  /* ! ACE_WIN32 && ! VXWORKS */
+#else  /* ! ACE_WIN32 && ! ACE_VXWORKS */
   switch (value)
     {
 #if defined (SIGURG)
@@ -114,7 +114,7 @@ ACE_IPC_SAP::enable (int value) const
       return -1;
     }
   return 0;
-#endif /* ! ACE_WIN32 && ! VXWORKS */
+#endif /* ! ACE_WIN32 && ! ACE_VXWORKS */
 
   /* NOTREACHED */
 }
@@ -139,7 +139,7 @@ ACE_IPC_SAP::disable (int value) const
     default:
       ACE_NOTSUP_RETURN (-1);
     }
-#else  /* ! ACE_WIN32 && ! VXWORKS */
+#else  /* ! ACE_WIN32 && ! ACE_VXWORKS */
   switch (value)
     {
 #if defined (SIGURG)
@@ -186,7 +186,7 @@ ACE_IPC_SAP::disable (int value) const
       return -1;
     }
   return 0;
-#endif /* ! ACE_WIN32 && ! VXWORKS */
+#endif /* ! ACE_WIN32 && ! ACE_VXWORKS */
   /* NOTREACHED */
 }
 

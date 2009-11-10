@@ -37,15 +37,13 @@ class ACE_Export ACE_Notification_Strategy
 {
 public:
   /// Constructor.
-  ACE_Notification_Strategy (ACE_Event_Handler *eh,
-                             ACE_Reactor_Mask mask);
+  ACE_Notification_Strategy (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
   /// Destructor.
   virtual ~ACE_Notification_Strategy (void);
 
   virtual int notify (void) = 0;
-  virtual int notify (ACE_Event_Handler *,
-                      ACE_Reactor_Mask mask) = 0;
+  virtual int notify (ACE_Event_Handler *, ACE_Reactor_Mask mask) = 0;
 
   /// Get the event handler.
   ACE_Event_Handler *event_handler (void);

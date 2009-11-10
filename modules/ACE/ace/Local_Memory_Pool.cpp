@@ -63,7 +63,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
 
   if (this->allocated_chunks_.insert (cp.get ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("(%P|%t) insertion into set failed\n")),
+                       ACE_TEXT ("(%P|%t) insertion into set failed\n")),
                       0);
 
   return cp.release ();

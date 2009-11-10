@@ -8,6 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 #include "ace/os_include/os_netdb.h"
 
@@ -27,9 +28,9 @@ PMS_Ruser::encode (char *packet, int &packet_length)
   Protocol_Record *prp;
   char *buf_ptr = packet;
 
-  sprintf (buf_ptr,
-           "Users   %d",
-           this->get_total_users ());
+  ACE_OS::sprintf (buf_ptr,
+                   "Users   %d",
+                   this->get_total_users ());
   buf_ptr += ACE_OS::strlen (buf_ptr) + 1;
 
   // We only send back info on hosts that we actually see.
@@ -98,7 +99,7 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
                                                     : ACE::strnew (pwent->pw_gecos)),
                                  ',');
       if (cp != 0)
-	*cp = '\0';
+        *cp = '\0';
     }
 
   if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
@@ -115,10 +116,10 @@ PMS_Ruser::handle_protocol_entries (char *buf_ptr,
 {
   for (; np != 0; np = np->next_)
     {
-      sprintf (buf_ptr,
-               "%d %d ",
-               np->get_inactive_count (),
-               np->get_active_count ());
+      ACE_OS::sprintf (buf_ptr,
+                       "%d %d ",
+                       np->get_inactive_count (),
+                       np->get_active_count ());
       buf_ptr += ACE_OS::strlen (buf_ptr);
 
       buf_ptr = ACE_OS::strecpy (ACE_OS::strecpy (buf_ptr,

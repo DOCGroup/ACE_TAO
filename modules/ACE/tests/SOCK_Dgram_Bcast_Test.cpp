@@ -47,7 +47,7 @@ int send_datagram (ACE_SOCK_Dgram_Bcast &socket, int datagram_no)
 {
     static char dgram_buffer[BUFSIZ];
 
-    ACE_OS::snprintf (dgram_buffer, sizeof(dgram_buffer) - 1,
+    ACE_OS::snprintf (dgram_buffer, sizeof(dgram_buffer),
                       "Datagram %d", datagram_no);
     if (socket.send (dgram_buffer,
                      ACE_OS::strlen (dgram_buffer) + 1,
@@ -112,11 +112,16 @@ int run_receiver ()
         return 0;
       }
     else
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("Cannot receive datagrams")), -1);
-
-  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                     ACE_TEXT ("Cannot open broadcast socket")), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("Cannot receive datagrams")), -1);
+      }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p: %d\n"),
+                         ACE_TEXT ("Cannot open broadcast socket on port"), dgram_port), -1);
+    }
 }
 
 #if !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS)
@@ -200,14 +205,14 @@ int run_auto_test (const ACE_TCHAR *prog_name)
 
 void print_usage (void)
 {
-    printf("Usage:SOCK_Dgram_Bast_Test [-p port] [-n dgrams_no] [-t timeout_ms] [-s] [-r]\n"
-        "\tp broadcast port [14521]\n"
-        "\tn number of datagrams to broadcast [30] (<0 infinite)\n"
-        "\tt timeout in seconds for receive [5] (<=0 infinite)\n"
-        "\ts send datagrams and exit\n"
-        "\tr receive one datagram and exit\n\n"
-        "\t  run auto-test when no r and s option is passed\n"
-        "\t  test failures are minifested by -1 exit value, otherwise 0\n");
+  ACE_OS::printf("Usage:SOCK_Dgram_Bast_Test [-p port] [-n dgrams_no] [-t timeout_ms] [-s] [-r]\n"
+                 "\tp broadcast port [14521]\n"
+                 "\tn number of datagrams to broadcast [30] (<0 infinite)\n"
+                 "\tt timeout in seconds for receive [5] (<=0 infinite)\n"
+                 "\ts send datagrams and exit\n"
+                 "\tr receive one datagram and exit\n\n"
+                 "\t  run auto-test when no r and s option is passed\n"
+                 "\t  test failures are minifested by -1 exit value, otherwise 0\n");
 }
 
 int run_main (int argc, ACE_TCHAR *argv[])
@@ -250,7 +255,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
         return -1;
       }
   ACE_START_TEST (ACE_TEXT ("SOCK_Dgram_Bcast_Test"));
-  result = run_auto_test (ACE_TEXT ("SOCK_Dgram_Bcast_Test"));
+  result = run_auto_test (argc > 0 ? argv[0] : ACE_TEXT ("SOCK_Dgram_Bcast_Test"));
   ACE_END_TEST;
   return result;
 }

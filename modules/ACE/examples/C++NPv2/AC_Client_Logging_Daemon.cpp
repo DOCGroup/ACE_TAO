@@ -17,6 +17,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Handle_Set.h"
 #include "ace/Log_Record.h"
+#include "ace/Truncate.h"
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
@@ -73,9 +74,11 @@ public:
     SSL_CTX_free (ssl_ctx_);
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Initialize the Connector.
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
                     int flags = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Re-establish a connection to the logging server.
   int reconnect ();
@@ -208,12 +211,13 @@ int AC_Output_Handler::svc () {
     if (message_index >= ACE_IOV_MAX ||
         (ACE_OS::gettimeofday () - time_of_last_send
          >= ACE_Time_Value(FLUSH_TIMEOUT))) {
-      if (send (chunk, message_index) == -1) break;
+      if (this->send (chunk, message_index) == -1) break;
       time_of_last_send = ACE_OS::gettimeofday ();
     }
   }
 
-  if (message_index > 0) send (chunk, message_index);
+  if (message_index > 0)
+    this->send (chunk, message_index);
   no_sigpipe.restore_action (SIGPIPE, original_action);
   return 0;
 }
@@ -225,9 +229,10 @@ int AC_Output_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
 
   for (iov_size = 0; iov_size < count; ++iov_size) {
     iov[iov_size].iov_base = chunk[iov_size]->rd_ptr ();
-    iov[iov_size].iov_len = chunk[iov_size]->length ();
+    iov[iov_size].iov_len =
+      ACE_Utils::truncate_cast<u_long> (chunk[iov_size]->length ());
   }
-  while (peer ().sendv_n (iov, iov_size) == -1)
+  while (peer ().sendv_n (iov, ACE_Utils::truncate_cast<int> (iov_size)) == -1)
     if (connector_->reconnect () == -1) {
       result = -1;
       break;
@@ -268,11 +273,19 @@ int AC_Input_Handler::handle_input (ACE_HANDLE handle) {
   Logging_Handler logging_handler (handle);
 
   if (logging_handler.recv_log_record (mblk) != -1)
-    if (output_handler_->put (mblk->cont ()) != -1) {
-      mblk->cont (0);
-      mblk->release ();
-      return 0; // Success return.
-    } else mblk->release ();
+    {
+      if (output_handler_->put (mblk->cont ()) != -1)
+        {
+          mblk->cont (0);
+          mblk->release ();
+          return 0; // Success return.
+        }
+      else
+        {
+          mblk->release ();
+        }
+    }
+    
   return -1; // Error return.
 }
 
@@ -372,7 +385,7 @@ int AC_CLD_Connector::reconnect () {
     ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT,
                                timeout);
     if (i > 0) ACE_OS::sleep (timeout);
-    if (connect (handler_, remote_addr_, options) == 0)
+    if (this->connect (handler_, remote_addr_, options) == 0)
       break;
     timeout *= 2; // Exponential backoff.
   }

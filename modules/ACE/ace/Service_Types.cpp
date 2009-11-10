@@ -16,7 +16,7 @@ ACE_RCSID (ace,
            Service_Types,
            "$Id$")
 
-  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
@@ -24,7 +24,7 @@ typedef ACE_Task<ACE_SYNCH> MT_Task;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type_Impl)
 
-  void
+void
 ACE_Service_Type_Impl::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -58,11 +58,6 @@ int
 ACE_Service_Type_Impl::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("destroying %s, flags = %d\n"),
-                this->name_,
-                this->flags_));
 
   delete [] const_cast <ACE_TCHAR *> (this->name_);
   (const_cast <ACE_Service_Type_Impl *> (this))->name_ = 0;
@@ -125,7 +120,7 @@ ACE_Service_Object_Type::fini (void) const
   // Call fini() if an only if, the object was successfuly
   // initialized, i.e. init() returned 0. This is necessary to
   // maintain the ctor/dtor-like semantics for init/fini.
-  if (so && initialized_ == 0)
+  if (so != 0 && this->initialized_ == 0)
       so->fini ();
 
   return ACE_Service_Type_Impl::fini ();
@@ -159,7 +154,7 @@ ACE_Service_Object_Type::info (ACE_TCHAR **str, size_t len) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Module_Type)
 
-  void
+void
 ACE_Module_Type::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -259,9 +254,9 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s"),
+                   ACE_TEXT ("%s\t %s"),
                    this->name (),
-                   ACE_LIB_TEXT ("# ACE_Module\n"));
+                   ACE_TEXT ("# ACE_Module\n"));
 
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -286,7 +281,7 @@ ACE_Module_Type::link (void) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Type)
 
-  void
+void
 ACE_Stream_Type::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -348,9 +343,9 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s"),
+                   ACE_TEXT ("%s\t %s"),
                    this->name (),
-                   ACE_LIB_TEXT ("# STREAM\n"));
+                   ACE_TEXT ("# STREAM\n"));
 
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -379,8 +374,8 @@ ACE_Stream_Type::fini (void) const
       m->fini ();
       m = t;
     }
-
   str->close ();
+
   return ACE_Service_Type_Impl::fini ();
 }
 
@@ -440,14 +435,14 @@ ACE_Stream_Type::push (ACE_Module_Type *new_module)
 }
 
 ACE_Module_Type *
-ACE_Stream_Type::find (const ACE_TCHAR *mod_name) const
+ACE_Stream_Type::find (const ACE_TCHAR *module_name) const
 {
   ACE_TRACE ("ACE_Stream_Type::find");
 
   for (ACE_Module_Type *m = this->head_;
        m != 0;
        m = m->link ())
-    if (ACE_OS::strcmp (m->name (), mod_name) == 0)
+    if (ACE_OS::strcmp (m->name (), module_name) == 0)
       return m;
 
   return 0;

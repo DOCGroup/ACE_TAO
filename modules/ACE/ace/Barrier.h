@@ -107,8 +107,9 @@ public:
   /// Block the caller until all @c count threads have called @c wait and
   /// then allow all the caller threads to continue in parallel.
   ///
-  /// @retval 0 after successfully waiting for all threads to wait. -1 if
-  /// an error occurs or the barrier is shut down (@sa shutdown ()).
+  /// @retval 0 after successfully waiting for all threads to wait.
+  /// @retval -1 if an error occurs or the barrier is shut
+  /// down (@sa shutdown ()).
   int wait (void);
 
   /// Shut the barrier down, aborting the wait of all waiting threads.
@@ -167,7 +168,7 @@ private:
 class ACE_Export ACE_Process_Barrier : public ACE_Barrier
 {
 public:
-  /// Create a Process_Barrier, passing in the optional <name>.
+  /// Create a Process_Barrier, passing in the optional @a name.
   ACE_Process_Barrier (unsigned int count, const ACE_TCHAR *name = 0);
 
   /// Dump the state of an object.

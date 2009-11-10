@@ -97,8 +97,7 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
     }
 
   // Enable non-blocking, if required.
-  if (timeout != 0
-      && new_stream.enable (ACE_NONBLOCK) == -1)
+  if (timeout != 0 && new_stream.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
     return 0;
@@ -119,9 +118,37 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
       if (error == EINPROGRESS || error == EWOULDBLOCK)
         {
           // This expression checks if we were polling.
-          if (timeout->sec () == 0
-              && timeout->usec () == 0)
-            error = EWOULDBLOCK;
+          if (*timeout == ACE_Time_Value::zero)
+            {
+#if defined(ACE_WIN32)
+              // In order to detect when the socket that has been
+              // bound to is in TIME_WAIT we need to do the connect
+              // (which will always return EWOULDBLOCK) and then do an
+              // ACE::handle_timed_complete() (with timeout==0,
+              // i.e. poll). This will do a select() on the handle
+              // which will immediately return with the handle in an
+              // error state. The error code is then retrieved with
+              // getsockopt(). Good sockets however will return from
+              // the select() with ETIME - in this case return
+              // EWOULDBLOCK so the wait strategy can complete the
+              // connection.
+              if(ACE::handle_timed_complete (new_stream.get_handle (),
+                                             timeout) == ACE_INVALID_HANDLE)
+                {
+                  int const tmp = errno;
+                  if (tmp != ETIME)
+                    {
+                      error = tmp;
+                    }
+                  else
+                    error = EWOULDBLOCK;
+                }
+              else
+                result = 0;
+#else  /* ACE_WIN32 */
+              error = EWOULDBLOCK;
+#endif /* ACE_WIN32 */
+            }
           // Wait synchronously using timeout.
           else if (this->complete (new_stream,
                                    0,
@@ -135,10 +162,18 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
   // EISCONN is treated specially since this routine may be used to
   // check if we are already connected.
   if (result != -1 || error == EISCONN)
-    // Start out with non-blocking disabled on the <new_stream>.
-    new_stream.disable (ACE_NONBLOCK);
+    {
+      // Start out with non-blocking disabled on the new_stream.
+      result = new_stream.disable (ACE_NONBLOCK);
+      if (result == -1)
+        {
+          new_stream.close ();
+        }
+    }
   else if (!(error == EWOULDBLOCK || error == ETIMEDOUT))
-    new_stream.close ();
+    {
+      new_stream.close ();
+    }
 
   return result;
 }
@@ -291,8 +326,8 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 
 #if !defined (ACE_HAS_WINCE)
@@ -322,8 +357,8 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 #endif  // ACE_HAS_WINCE
 

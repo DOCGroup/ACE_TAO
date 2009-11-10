@@ -45,7 +45,7 @@ public:
   /// Capture the Thread that will be cleaned up automatically.
   ACE_Thread_Exit (void);
 
-  /// Set the <ACE_Thread_Manager>.
+  /// Set the ACE_Thread_Manager.
   void thr_mgr (ACE_Thread_Manager *tm);
 
   /// Destructor calls the thread-specific exit hooks when a thread
@@ -61,7 +61,7 @@ public:
 
 private:
   /// Automatically add/remove the thread from the
-  /// <ACE_Thread_Manager>.
+  /// ACE_Thread_Manager.
   ACE_Thread_Control thread_control_;
 
   /**
@@ -71,7 +71,7 @@ private:
    * See bug #526.
    * We don't follow the singleton pattern due to dependency issues.
    */
-  static unsigned int is_constructed_;
+  static bool is_constructed_;
 };
 
 /**

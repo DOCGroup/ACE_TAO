@@ -4,6 +4,7 @@
 project(*-client) : aceexe {
   requires += rwho
   avoids += uses_wchar ace_for_tao
+  exename = client
   Source_Files {
     Comm_Manager.cpp
     Select_Manager.cpp
@@ -50,6 +51,7 @@ project(*-client) : aceexe {
 project(*-server) : aceexe {
   requires += rwho
   avoids += uses_wchar ace_for_tao
+  exename = server
   Source_Files {
     Comm_Manager.cpp
     Select_Manager.cpp

@@ -23,8 +23,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/String_Base_Const.h"
+#include <iterator>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward decl.
+template <class CHAR>
+class ACE_String_Base_Iterator;
+
+// Forward decl.
+template <class CHAR>
+class ACE_String_Base_Const_Iterator;
 
 /**
  * @class ACE_String_Base
@@ -41,7 +50,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * is not allocated new space.  Instead, its internal
  * representation is set equal to a global empty string.
  * CAUTION: in cases when ACE_String_Base is constructed from a
- * provided buffer with the release parameter set to 0,
+ * provided buffer with the release parameter set to false,
  * ACE_String_Base is not guaranteed to be '\0' terminated.
  *
  * \li Do not use a "@c -1" magic number to refer to the "no position"
@@ -58,8 +67,18 @@ template <class CHAR>
 class ACE_String_Base : public ACE_String_Base_Const
 {
 public:
-
   using ACE_String_Base_Const::size_type;
+
+  friend class ACE_String_Base_Iterator <CHAR>;
+  friend class ACE_String_Base_Const_Iterator <CHAR>;
+
+  // ACE-style iterators
+  typedef ACE_String_Base_Iterator <CHAR> ITERATOR;
+  typedef ACE_String_Base_Const_Iterator <CHAR> CONST_ITERATOR;
+
+  // STL-style iterators
+  typedef ACE_String_Base_Iterator <CHAR> iterator;
+  typedef ACE_String_Base_Const_Iterator <CHAR> const_iterator;
 
    /**
     *  Default constructor.
@@ -72,43 +91,43 @@ public:
   /**
    * Constructor that copies @a s into dynamically allocated memory.
    *
-   * if release == 1 then a new buffer is allocated internally, and
+   * if release == true then a new buffer is allocated internally, and
    *   s is copied to the internal buffer.
-   * if release == 0 then the s buffer is used directly. If s == 0
+   * if release == false then the s buffer is used directly. If s == 0
    *   then it will _not_ be used, and instead the internal buffer
    *   is set to NULL_String_.
    *
    * @param s Zero terminated input string
    * @param the_allocator ACE_Allocator associated with string
-   * @param release Allocator responsible(1)/not reponsible(0) for
+   * @param release Allocator responsible(true)/not reponsible(false) for
    *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR *s,
                    ACE_Allocator *the_allocator = 0,
-                   int release = 1);
+                   bool release = true);
 
   /**
    * Constructor that copies @a len CHARs of @a s into dynamically
    * allocated memory (will zero terminate the result).
    *
-   * if release == 1 then a new buffer is allocated internally.
+   * if release == true then a new buffer is allocated internally.
    *   s is copied to the internal buffer.
-   * if release == 0 then the s buffer is used directly. If s == 0
+   * if release == false then the s buffer is used directly. If s == 0
    *   then it will _not_ be used, and instead the internal buffer
    *   is set to NULL_String_.
    *
    * @param s Non-zero terminated input string
    * @param len Length of non-zero terminated input string
    * @param the_allocator ACE_Allocator associated with string
-   * @param release Allocator responsible(1)/not reponsible(0) for
+   * @param release Allocator responsible(true)/not reponsible(false) for
    *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR *s,
                    size_type len,
                    ACE_Allocator *the_allocator = 0,
-                   int release = 1);
+                   bool release = true);
 
   /**
    *  Copy constructor.
@@ -194,68 +213,68 @@ public:
   /**
    * Copy @a s into this @a ACE_String_Base.
    *
-   * If release == 1 then a new buffer is allocated internally if the
+   * If release == true then a new buffer is allocated internally if the
    *   existing one is not big enough to hold s. If the existing
    *   buffer is big enough, then it will be used. This means that
    *   set(*, 1) can be illegal when the string is constructed with a
-   *   const char*. (e.g. ACE_String_Base("test", 0, 0)).
+   *   const char*. (e.g. ACE_String_Base("test", 0, false)).
    *
-   * if release == 0 then the s buffer is used directly, and any
+   * if release == false then the s buffer is used directly, and any
    *   existing buffer is destroyed. If s == 0 then it will _not_ be
    *   used, and instead the internal buffer is set to NULL_String_.
    *
    * @param s Null terminated input string
-   * @param release Allocator responsible(1)/not reponsible(0) for
+   * @param release Allocator responsible(true)/not reponsible(false) for
    *    freeing memory.
    */
-  void set (const CHAR * s, int release = 1);
+  void set (const CHAR * s, bool release = true);
 
   /**
    *  Copy @a len bytes of @a s (will zero terminate the result).
    *
-   * If release == 1 then a new buffer is allocated internally if the
+   * If release == true then a new buffer is allocated internally if the
    *   existing one is not big enough to hold s. If the existing
    *   buffer is big enough, then it will be used. This means that
    *   set(*, *, 1) is illegal when the string is constructed with a
    *   non-owned const char*. (e.g. ACE_String_Base("test", 0, 0))
    *
-   * If release == 0 then the s buffer is used directly, and any
+   * If release == false then the s buffer is used directly, and any
    *   existing buffer is destroyed. If s == 0 then it will _not_ be
    *   used, and instead the internal buffer is set to NULL_String_.
    *
    *  @param s Non-zero terminated input string
    *  @param len Length of input string 's'
-   *  @param release Allocator responsible(1)/not reponsible(0) for
+   *  @param release Allocator responsible(true)/not reponsible(false) for
    *    freeing memory.
    */
-  void set (const CHAR * s, size_type len, int release);
+  void set (const CHAR * s, size_type len, bool release);
 
   /**
-   * Clear this string. Memory is _not_ freed if <release> is 0.
+   * Clear this string. Memory is _not_ freed if @a release is false.
    *
    * Warning: This method was incorrectly documented in the past, but
    * the current implementation has been changed to match the documented
    * behavior.
    *
-   * Warning: clear(0) behaves like fast_clear() below.
+   * Warning: clear(false) behaves like fast_clear() below.
    *
-   * @param release Memory is freed if 1 or not if 0.
+   * @param release Memory is freed if true, and not freed if false.
    */
-  void clear (int release = 0);
+  void clear (bool release = false);
 
   /**
    * A more specialized version of clear(): "fast clear". fast_clear()
    * resets the string to 0 length. If the string owns the buffer
-   * (@arg release_== 1):
+   * (@arg release_== true):
    *  - the string buffer is not freed
    *  - the first character of the buffer is set to 0.
    *
-   * If @arg release_ is 0 (this object does not own the buffer):
+   * If @arg release_ is false (this object does not own the buffer):
    *  - the buffer pointer is reset to the NULL_String_ and does not
    *    maintain a pointer to the caller-supplied buffer on return
    *  - the maximum string length is reset to 0.
    *
-   * Warning : Calling clear(0) or fast_clear() can have unintended
+   * Warning : Calling clear(false) or fast_clear() can have unintended
    *   side-effects if the string was constructed (or set()) with an
    *   external buffer. The string will be disassociated with the buffer
    *   and the next append() or +=() will cause a new buffer to be
@@ -516,7 +535,7 @@ public:
    *
    * fast_resize just adjusts the buffer if needed and sets the length,
    * it doesn't fill the buffer, so is much faster.
-   * 
+   *
    * @param len The number of CHARs to reserve
    * @param c The CHAR to use when filling the string.
    */
@@ -528,7 +547,13 @@ public:
    * @note This is non-throwing operation.
    */
   void swap (ACE_String_Base<CHAR> & str);
-  
+
+  iterator begin (void);
+  const_iterator begin (void) const;
+
+  iterator end (void);
+  const_iterator end (void) const;
+
   /**
    *  Declare the dynamic allocation hooks.
    */
@@ -559,12 +584,266 @@ protected:
   /**
    *  Flag that indicates if we own the memory
    */
-  int release_;
+  bool release_;
 
   /**
    *  Represents the "NULL" string to simplify the internal logic.
    */
   static CHAR NULL_String_;
+};
+
+/**
+ * @class ACE_String_Base_Iterator
+ *
+ * @brief Iterator class for the ACE_String_Base class.
+ *
+ * This class is an implementation of an iterator that allows client
+ * applications it iterator over the contents of a string. Currently,
+ * now this iterator fall under the std::bidirectional_iterator_tag
+ * category. Future versions of the class will support the operations
+ * of std::random_access_iterator_tag.
+ */
+template <class CHAR>
+class ACE_String_Base_Iterator
+{
+public:
+  // = std::iterator_traits typedefs/traits.
+  typedef std::bidirectional_iterator_tag iterator_category;
+  typedef CHAR                            value_type;
+  typedef CHAR &                          reference;
+  typedef CHAR *                          pointer;
+  typedef ptrdiff_t                       difference_type;
+
+  /**
+   * Initializing constructor
+   *
+   * @param[in]       str         Target string for iterator.
+   */
+  ACE_String_Base_Iterator (ACE_String_Base <CHAR> & str, int end = 0);
+
+  /**
+   * Copy constructor
+   *
+   * @param[in]       iter        Iterator to copy.
+   */
+  ACE_String_Base_Iterator (const ACE_String_Base_Iterator <CHAR> & iter);
+
+  /// Destructor.
+  ~ACE_String_Base_Iterator (void);
+
+  /**
+   * Test if the iterator has seen all characters.
+   *
+   * @retval          0         Characters still remain.
+   * @retval          1         All characters have been seen.
+   */
+  int done (void) const;
+
+  /**
+   * Get the current character.
+   *
+   * @param[out]     ch         The current character.
+   * @retval         0          All characters have been seen.
+   * @retval         1          Items still remain to be seen.
+   */
+  int next (CHAR * & ch) const;
+
+  /**
+   * Move to the next character in the string.
+   *
+   * @retval         0          All characters have been seen.
+   * @retval         1          Items still remain to be seen.
+   */
+  int advance (void);
+
+  /**
+   * Assignment operator
+   *
+   * @param[in]       iter      Right-hand side of operator.
+   * @return          Reference to self.
+   */
+  const ACE_String_Base_Iterator <CHAR> & operator = (const ACE_String_Base_Iterator <CHAR> & iter);
+
+  /**
+   * Dereference operator
+   *
+   * @return          Reference to current character seen by iterator.
+   */
+  CHAR & operator * (void);
+
+  /**
+   * Prefix operator
+   */
+  ACE_String_Base_Iterator <CHAR> & operator ++ (void);
+
+  /**
+   * Postfix operator
+   */
+  ACE_String_Base_Iterator <CHAR> operator ++ (int);
+
+  /**
+   * Prefix operator
+   */
+  ACE_String_Base_Iterator <CHAR> & operator -- (void);
+
+  /**
+   * Postfix operator
+   */
+  ACE_String_Base_Iterator <CHAR> operator -- (int);
+
+  /**
+   * Eqaulity comparison operator
+   *
+   * @param[in]       rhs       Right-hand side of operator.
+   */
+  bool operator == (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+
+  /**
+   * Ineqaulity comparison operator
+   *
+   * @param[in]       rhs       Right-hand side of operator.
+   */
+  bool operator != (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+
+  bool operator < (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+  bool operator > (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+
+  bool operator <= (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+  bool operator >= (const ACE_String_Base_Iterator <CHAR> & rhs) const;
+
+private:
+  /// Target string to iterate over.
+  ACE_String_Base <CHAR> * str_;
+
+  /// Current location in the string.
+  size_t index_;
+};
+
+/**
+ * @class ACE_String_Base_Const_Iterator
+ *
+ * @brief Const iterator class for the ACE_String_Base class.
+ *
+ * This class is an implementation of an iterator that allows client
+ * applications it iterator over the contents of a string. Currently,
+ * now this iterator fall under the std::bidirectional_iterator_tag
+ * category. Future versions of the class will support the operations
+ * of std::random_access_iterator_tag.
+ */
+template <class CHAR>
+class ACE_String_Base_Const_Iterator
+{
+public:
+  // = std::iterator_traits typedefs/traits.
+  typedef std::bidirectional_iterator_tag iterator_category;
+  typedef const CHAR                      value_type;
+  typedef const CHAR &                    reference;
+  typedef const CHAR *                    pointer;
+  typedef ptrdiff_t                       difference_type;
+
+  /**
+   * Initializing constructor
+   *
+   * @param[in]       str         Target string for iterator.
+   */
+  ACE_String_Base_Const_Iterator (const ACE_String_Base <CHAR> & str, int end = 0);
+
+  /**
+   * Copy constructor
+   *
+   * @param[in]       iter        Iterator to copy.
+   */
+  ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <CHAR> & iter);
+
+  /// Destructor.
+  ~ACE_String_Base_Const_Iterator (void);
+
+  /**
+   * Test if the iterator has seen all characters.
+   *
+   * @retval          0         Characters still remain.
+   * @retval          1         All characters have been seen.
+   */
+  int done (void) const;
+
+  /**
+   * Get the current character.
+   *
+   * @param[out]     ch         The current character.
+   * @retval         0          All characters have been seen.
+   * @retval         1          Items still remain to be seen.
+   */
+  int next (const CHAR * & ch) const;
+
+  /**
+   * Move to the next character in the string.
+   *
+   * @retval         0          All characters have been seen.
+   * @retval         1          Items still remain to be seen.
+   */
+  int advance (void);
+
+  /**
+   * Assignment operator
+   *
+   * @param[in]       iter      Right-hand side of operator.
+   * @return          Reference to self.
+   */
+  const ACE_String_Base_Const_Iterator <CHAR> & operator = (const ACE_String_Base_Const_Iterator <CHAR> & iter);
+
+  /**
+   * Dereference operator
+   *
+   * @return          Reference to current character seen by iterator.
+   */
+  const CHAR & operator * (void);
+
+  /**
+   * Prefix operator
+   */
+  ACE_String_Base_Const_Iterator <CHAR> & operator ++ (void);
+
+  /**
+   * Postfix operator
+   */
+  ACE_String_Base_Const_Iterator <CHAR> operator ++ (int);
+
+  /**
+   * Prefix operator
+   */
+  ACE_String_Base_Const_Iterator <CHAR> & operator -- (void);
+
+  /**
+   * Postfix operator
+   */
+  ACE_String_Base_Const_Iterator <CHAR> operator -- (int);
+
+  /**
+   * Eqaulity comparison operator
+   *
+   * @param[in]       rhs       Right-hand side of operator.
+   */
+  bool operator == (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+
+  /**
+   * Ineqaulity comparison operator
+   *
+   * @param[in]       rhs       Right-hand side of operator.
+   */
+  bool operator != (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+
+  bool operator < (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+  bool operator > (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+
+  bool operator <= (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+  bool operator >= (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const;
+
+private:
+  /// Target string to iterate over.
+  const ACE_String_Base <CHAR> * str_;
+
+  /// Current location in the string.
+  size_t index_;
 };
 
 template < class CHAR >

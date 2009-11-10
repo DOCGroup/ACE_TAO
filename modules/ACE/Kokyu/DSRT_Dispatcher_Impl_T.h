@@ -73,11 +73,11 @@ namespace Kokyu
         int rc = qos_comparator_ (item1->qos (), item2->qos ());
 
 #ifdef KOKYU_DSRT_LOGGING
-        ACE_DEBUG ((LM_DEBUG, 
-                    "(%t|%T): MoreEligible:: qos_comparator returned %d\n", 
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t|%T): MoreEligible:: qos_comparator returned %d\n",
                     rc));
 #endif
-        
+
         //more eligible
         if (rc == 1)
           return rc;
@@ -97,7 +97,7 @@ namespace Kokyu
     /**
      * Facilitates return of the generated function object adapter.
      */
-    typedef MoreEligible RET;
+    typedef MoreEligible RET_FUNC;
   };
 
   /**
@@ -116,7 +116,7 @@ namespace Kokyu
     typedef typename DSRT_Scheduler_Traits::Guid_t Guid_t;
     typedef typename DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
 
-    DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
+    DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                           int sched_scope);
 
     /// Configure the DSRT dispatcher.
@@ -163,7 +163,7 @@ namespace Kokyu
   protected:
     /// Generate the QoSComparator adapter.
     typedef typename
-    Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::RET
+    Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::RET_FUNC
     Queue_Item_Comparator_t;
 
     typedef Sched_Ready_Queue<DSRT_Scheduler_Traits,
@@ -189,7 +189,7 @@ namespace Kokyu
     ACE_SYNCH_RECURSIVE_MUTEX synch_lock_;
 
     ACE_hthread_t curr_scheduled_thr_handle_;
-    Guid_t curr_scheduled_guid_;    
+    Guid_t curr_scheduled_guid_;
   };
 
 } //end of namespace

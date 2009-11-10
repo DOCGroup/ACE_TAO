@@ -50,22 +50,22 @@ ACE_OS::ace_flock_t::dump (void) const
 
 # if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("handle_ = %u"), this->handle_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %u"), this->handle_));
 #   if defined (ACE_WIN32)
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nInternal = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternal = %d"),
               this->overlapped_.Internal));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nInternalHigh = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternalHigh = %d"),
               this->overlapped_.InternalHigh));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nOffsetHigh = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nOffsetHigh = %d"),
               this->overlapped_.OffsetHigh));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nhEvent = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhEvent = %d"),
               this->overlapped_.hEvent));
 #   else
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_whence = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_whence = %d"),
               this->lock_.l_whence));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_start = %d"), this->lock_.l_start));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_len = %d"), this->lock_.l_len));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_type = %d"), this->lock_.l_type));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_start = %d"), this->lock_.l_start));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_len = %d"), this->lock_.l_len));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_type = %d"), this->lock_.l_type));
 #   endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 # endif /* 0 */
@@ -74,42 +74,6 @@ ACE_OS::ace_flock_t::dump (void) const
 
 /*****************************************************************************/
 
-#if defined (ACE_USES_WCHAR)
-void ACE_OS::checkUnicodeFormat (FILE* fp)
-{
-  if (fp != 0)
-    {
-      // Due to the ACE_TCHAR definition, all default input files, such as
-      // svc.conf, have to be in Unicode format (small endian) on WinCE
-      // because ACE has all 'char' converted into ACE_TCHAR.
-      // However, for TAO, ASCII files, such as IOR file, can still be read
-      // and be written without any error since given buffers are all in 'char'
-      // type instead of ACE_TCHAR.  Therefore, it is user's reponsibility to
-      // select correct buffer type.
-
-      // At this point, check if the file is Unicode or not.
-      ACE_UINT16 first_two_bytes;
-      size_t numRead =
-        ACE_OS::fread(&first_two_bytes, sizeof (first_two_bytes), 1, fp);
-
-      if (numRead == 1)
-        {
-          if ((first_two_bytes != 0xFFFE) && // not a small endian Unicode file
-              (first_two_bytes != 0xFEFF))   // not a big endian Unicode file
-            {
-              // set file pointer back to the beginning
-#if defined (ACE_WIN32)
-              ACE_OS::fseek(fp, 0, FILE_BEGIN);
-#else
-              ACE_OS::fseek(fp, 0, SEEK_SET);
-#endif /* ACE_WIN32 */
-            }
-        }
-      // if it is a Unicode file, file pointer will be right next to the first
-      // two-bytes
-    }
-}
-#endif  // ACE_USES_WCHAR
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 namespace
@@ -121,14 +85,14 @@ namespace
   {
     switch (x)
       {
-      case ACE_LIB_TEXT ('r'):
+      case ACE_TEXT ('r'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_WRONLY);
             ACE_SET_BITS (hmode, _O_RDONLY);
           }
         break;
-      case ACE_LIB_TEXT ('w'):
+      case ACE_TEXT ('w'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_RDONLY);
@@ -136,7 +100,7 @@ namespace
           }
         ACE_SET_BITS (hmode, _O_CREAT | _O_TRUNC);
         break;
-      case ACE_LIB_TEXT ('a'):
+      case ACE_TEXT ('a'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_RDONLY);
@@ -144,15 +108,15 @@ namespace
           }
         ACE_SET_BITS (hmode, _O_CREAT | _O_APPEND);
         break;
-      case ACE_LIB_TEXT ('+'):
+      case ACE_TEXT ('+'):
         ACE_CLR_BITS (hmode, _O_RDONLY | _O_WRONLY);
         ACE_SET_BITS (hmode, _O_RDWR);
         break;
-      case ACE_LIB_TEXT ('t'):
+      case ACE_TEXT ('t'):
         ACE_CLR_BITS (hmode, _O_BINARY);
         ACE_SET_BITS (hmode, _O_TEXT);
         break;
-      case ACE_LIB_TEXT ('b'):
+      case ACE_TEXT ('b'):
         ACE_CLR_BITS (hmode, _O_TEXT);
         ACE_SET_BITS (hmode, _O_BINARY);
         break;
@@ -165,6 +129,11 @@ ACE_OS::fopen (const char *filename,
                const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
+#if defined (ACE_LACKS_FOPEN)
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (0);
+#else
   int hmode = _O_TEXT;
 
   // Let the chips fall where they may if the user passes in a NULL
@@ -186,20 +155,17 @@ ACE_OS::fopen (const char *filename,
 
       if (fd != -1)
         {
-#   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
+#   if defined (ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)
           FILE * const fp = ::_fdopen (fd, const_cast<ACE_TCHAR *> (mode));
-#   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#   elif defined (ACE_HAS_NONCONST_FDOPEN) && defined (ACE_USES_WCHAR)
           FILE * const fp = ::_wfdopen (fd, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (ACE_USES_WCHAR)
           FILE * const fp = ::_wfdopen (fd, mode);
 #   else
           FILE * const fp = ::fdopen (fd, mode);
-#   endif /* defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)) */
+#   endif /* defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {
-#   if defined (ACE_USES_WCHAR)
-            checkUnicodeFormat(fp);
-#   endif  // ACE_USES_WCHAR
             return fp;
           }
           ::_close (fd);
@@ -208,14 +174,34 @@ ACE_OS::fopen (const char *filename,
       ACE_OS::close (handle);
     }
   return 0;
+#endif
 }
 
 #if defined (ACE_HAS_WCHAR)
+FILE *
+ACE_OS::fopen (const char *filename,
+               const ACE_ANTI_TCHAR *mode)
+{
+  return ACE_OS::fopen (filename, ACE_TEXT_ANTI_TO_TCHAR (mode));
+}
+
+FILE *
+ACE_OS::fopen (const wchar_t *filename,
+               const ACE_ANTI_TCHAR *mode)
+{
+  return ACE_OS::fopen (filename, ACE_TEXT_ANTI_TO_TCHAR (mode));
+}
+
 FILE *
 ACE_OS::fopen (const wchar_t *filename,
                const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
+#if defined (ACE_LACKS_FOPEN)
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (0);
+#else
   int hmode = _O_TEXT;
 
   for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
@@ -230,20 +216,17 @@ ACE_OS::fopen (const wchar_t *filename,
 
       if (fd != -1)
         {
-#   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
+#   if defined (ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)
           FILE *fp = ::_fdopen (fd, const_cast<char *> (mode));
-#   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#   elif defined (ACE_HAS_NONCONST_FDOPEN) && defined (ACE_USES_WCHAR)
           FILE *fp = ::_wfdopen (fd, const_cast<wchar_t *> (mode));
 #   elif defined (ACE_USES_WCHAR)
           FILE *fp = ::_wfdopen (fd, mode);
 #   else
           FILE *fp = ::fdopen (fd, mode);
-#   endif /* defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)) */
+#   endif /* defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {
-#   if defined (ACE_USES_WCHAR)
-            checkUnicodeFormat(fp);
-#   endif  // ACE_USES_WCHAR
             return fp;
           }
           ::_close (fd);
@@ -252,19 +235,22 @@ ACE_OS::fopen (const wchar_t *filename,
       ACE_OS::close (handle);
     }
   return 0;
+#endif
 }
 #endif /* ACE_HAS_WCHAR */
 
 #endif /* ACE_WIN32 */
 
+// The following *printf functions aren't inline because
+// they use varargs.
+
 int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
-  ACE_OS_TRACE ("ACE_OS::fprintf");
-  int result = 0;
+  // ACE_OS_TRACE ("ACE_OS::fprintf");
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vfprintf (fp, format, ap), int, -1, result);
+  int const result = ACE_OS::vfprintf (fp, format, ap);
   va_end (ap);
   return result;
 }
@@ -273,96 +259,84 @@ ACE_OS::fprintf (FILE *fp, const char *format, ...)
 int
 ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
-  ACE_OS_TRACE ("ACE_OS::fprintf");
-
-# if !defined (ACE_HAS_VFWPRINTF)
-  ACE_UNUSED_ARG (fp);
-  ACE_UNUSED_ARG (format);
-  ACE_NOTSUP_RETURN (-1);
-
-# else
-  int result = 0;
+  // ACE_OS_TRACE ("ACE_OS::fprintf");
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (ACE_STD_NAMESPACE::vfwprintf (fp, format, ap), int, -1, result);
+  int const result = ACE_OS::vfprintf (fp, format, ap);
   va_end (ap);
   return result;
-
-# endif /* ACE_HAS_VFWPRINTF */
 }
 #endif /* ACE_HAS_WCHAR */
 
-
-// The following *printf functions aren't inline because
-// they use varargs.
-
 int
-ACE_OS::printf (const char *format, ...)
+ACE_OS::asprintf (char **bufp, const char *format, ...)
 {
-  // ACE_OS_TRACE ("ACE_OS::printf");
-  int result;
+  // ACE_OS_TRACE ("ACE_OS::asprintf");
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vprintf (format, ap), int, -1, result);
-  va_end (ap);
-  return result;
-}
-
-int
-ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
-{
-  // ACE_OS_TRACE ("ACE_OS::snprintf");
-  int result;
-  va_list ap;
-  va_start (ap, format);
-  result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
+  int const result = ACE_OS::vasprintf (bufp, format, ap);
   va_end (ap);
   return result;
 }
 
 #if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::asprintf (wchar_t **bufp, const wchar_t *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::asprintf");
+  va_list ap;
+  va_start (ap, format);
+  int const result = ACE_OS::vasprintf (bufp, format, ap);
+  va_end (ap);
+  return result;
+}
+#endif /* ACE_HAS_WCHAR */
 
+int
+ACE_OS::printf (const char *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::printf");
+  va_list ap;
+  va_start (ap, format);
+  int const result = ACE_OS::vprintf (format, ap);
+  va_end (ap);
+  return result;
+}
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::printf (const wchar_t *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::printf");
+  va_list ap;
+  va_start (ap, format);
+  int const result = ACE_OS::vprintf (format, ap);
+  va_end (ap);
+  return result;
+}
+#endif /* ACE_HAS_WCHAR */
+
+int
+ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::snprintf");
+  va_list ap;
+  va_start (ap, format);
+  int const result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
+  va_end (ap);
+  return result;
+}
+
+#if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::snprintf");
-# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
-     defined (ACE_WIN32)
-  int result;
   va_list ap;
   va_start (ap, format);
-#  if defined (ACE_WIN32)
-  // Microsoft's vswprintf() doesn't have the maxlen argument that
-  // XPG4/UNIX98 define. They do, however, recommend use of _vsnwprintf()
-  // as a substitute, which does have the same signature as the UNIX98 one.
-  ACE_OSCALL (::_vsnwprintf (buf, maxlen, format, ap), int, -1, result);
-  // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
-  if (result == static_cast <int> (maxlen))
-    result = -1;
-
-  // Win32 doesn't 0-terminate the string if it overruns maxlen.
-  if (result == -1)
-    buf[maxlen-1] = '\0';
-#  else
-  ACE_OSCALL (::vswprintf (buf, maxlen, format, ap), int, -1, result);
-#  endif /* ACE_WIN32 */
+  int const result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
   va_end (ap);
-  // In out-of-range conditions, C99 defines vsnprintf to return the number
-  // of characters that would have been written if enough space was available.
-  // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
-  // -1. This method follows the C99 standard, but needs to guess at the
-  // value; uses maxlen + 1.
-  if (result == -1)
-    result = static_cast <int> (maxlen + 1);
   return result;
-
-# else
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (maxlen);
-  ACE_UNUSED_ARG (format);
-  ACE_NOTSUP_RETURN (-1);
-# endif /* _XOPEN_SOURCE ...  */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -370,11 +344,9 @@ int
 ACE_OS::sprintf (char *buf, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::sprintf");
-
-  int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vsprintf (buf, format, ap), int, -1, result);
+  int const result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
 }
@@ -383,43 +355,72 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
 int
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
-  ACE_OS_TRACE ("ACE_OS::sprintf");
-
-# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
-     (defined ACE_HAS_DINKUM_STL) || defined (__DMC__)
-
-  // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
-  // maxlen argument. Since this method doesn't supply one, pass in
-  // a length that works (ULONG_MAX doesn't on all platform since some check
-  // to see if the operation will remain in bounds). If this isn't ok, use
-  // ACE_OS::snprintf().
-  int result;
+  // ACE_OS_TRACE ("ACE_OS::sprintf");
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (ACE_STD_NAMESPACE::vswprintf (buf, 4096, format, ap), int, -1, result);
+  int const result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
-
-# elif defined (ACE_WIN32)
-  // Windows has vswprintf, but the signature is from the older ISO C
-  // standard. Also see ACE_OS::snprintf() for more info on this.
-
-  int result;
-  va_list ap;
-  va_start (ap, format);
-  ACE_OSCALL (::vswprintf (buf, format, ap), int, -1, result);
-  va_end (ap);
-  return result;
-
-# else
-
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (format);
-  ACE_NOTSUP_RETURN (-1);
-
-# endif /* XPG5 || ACE_HAS_DINKUM_STL */
 }
+#endif /* ACE_HAS_WCHAR */
+
+#if !defined (ACE_HAS_VASPRINTF)
+int
+ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
+{
+  va_list ap;
+  va_copy (ap, argptr);
+  int size = ACE_OS::vsnprintf (0, 0, format, ap);
+  va_end (ap);
+
+  if (size != -1)
+    {
+      char *buf = reinterpret_cast<char*>(ACE_OS::malloc(size + 1));
+      if (!buf)
+        return -1;
+
+      va_list aq;
+      va_copy (aq, argptr);
+      size = ACE_OS::vsnprintf(buf, size + 1, format, aq);
+      va_end (aq);
+
+      if (size != -1)
+        *bufp = buf;
+    }
+
+  return size;
+}
+#endif /* !ACE_HAS_VASPRINTF */
+
+#if defined (ACE_HAS_WCHAR)
+#if !defined (ACE_HAS_VASWPRINTF)
+int
+ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argptr)
+{
+  va_list ap;
+  va_copy (ap, argptr);
+  int size = ACE_OS::vsnprintf(0, 0, format, ap);
+  va_end (ap);
+
+  if (size != -1)
+    {
+      wchar_t *buf = reinterpret_cast<wchar_t*>
+        (ACE_OS::malloc((size + 1) * sizeof(wchar_t)));
+      if (!buf)
+        return -1;
+
+      va_list aq;
+      va_copy (aq, argptr);
+      size = ACE_OS::vsnprintf(buf, size + 1, format, aq);
+      va_end (aq);
+
+      if (size != -1)
+        *bufp = buf;
+    }
+
+  return size;
+}
+#endif /* !ACE_HAS_VASWPRINTF */
 #endif /* ACE_HAS_WCHAR */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

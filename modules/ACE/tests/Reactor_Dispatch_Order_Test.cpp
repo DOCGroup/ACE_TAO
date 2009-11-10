@@ -22,6 +22,7 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
@@ -44,6 +45,8 @@ public:
 
   int handle_output (ACE_HANDLE fd);
 
+  ACE_HANDLE get_handle (void) const;
+
   // We need to add MSG_OOB data transfer to this test to check the
   // order of when <handle_exception> gets called.  I tried with
   // Windows 2000 but only one byte of the message came across as
@@ -58,44 +61,48 @@ public:
   ACE_Pipe pipe_;
 
   int dispatch_order_;
+  bool ok_;           // Constructed and initialized ok
 };
 
 Handler::Handler (ACE_Reactor &reactor)
   : ACE_Event_Handler (&reactor),
-    dispatch_order_ (1)
+    dispatch_order_ (1),
+    ok_ (false)
 {
   // Create the pipe.
-  bool ok = true;
   if (0 != this->pipe_.open ())
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
-      ok = false;
-    }
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
   else
     {
       // Register for all events.
       if (0 != this->reactor ()->register_handler
                  (this->pipe_.read_handle (),
                   this,
-                  ACE_Event_Handler::ALL_EVENTS_MASK))
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
-          ok = false;
-        }
+                  ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK))
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
+      else
+        this->ok_ = true;
     }
-  ACE_ASSERT (ok);
 }
+
 
 Handler::~Handler (void)
 {
   this->pipe_.close ();
 }
 
+
+ACE_HANDLE
+Handler::get_handle (void) const
+{
+  return this->pipe_.read_handle ();
+}
+
 int
 Handler::handle_timeout (const ACE_Time_Value &,
                          const void *)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
@@ -109,7 +116,7 @@ Handler::handle_timeout (const ACE_Time_Value &,
 int
 Handler::handle_output (ACE_HANDLE)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 2)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("handle_output should be #2; it's %d\n"),
@@ -117,13 +124,13 @@ Handler::handle_output (ACE_HANDLE)
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
 
-#if defined (__OpenBSD__) || defined (ACE_VXWORKS) || defined (__Lynx__)
+#if defined (__OpenBSD__) || defined (ACE_VXWORKS)
   // All that we need written has been written, so don't
   // call handle_output again.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
                               ACE_Event_Handler::WRITE_MASK,
                               ACE_Reactor::CLR_MASK);
-#endif /* __OpenBSD__ || ACE_VXWORKS || __Lynx__ */
+#endif /* __OpenBSD__ || ACE_VXWORKS */
 
   return 0;
 }
@@ -131,54 +138,130 @@ Handler::handle_output (ACE_HANDLE)
 int
 Handler::handle_input (ACE_HANDLE fd)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 3)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("handle_timeout should be #3; it's %d\n"),
+                ACE_TEXT ("handle_input should be #3; it's %d\n"),
                 me));
 
   char buffer[BUFSIZ];
   ssize_t result = ACE::recv (fd, buffer, sizeof buffer);
-
-  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
+  if (result != ssize_t (ACE_OS::strlen (message)))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
+                result, ACE_OS::strlen (message)));
   buffer[result] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_input: %C\n"), buffer));
 
-  ACE_ASSERT (ACE_OS::strcmp (buffer,
-                              message) == 0);
+  if (ACE_OS::strcmp (buffer, message) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Handler text mismatch; received \"%C\"; ")
+                ACE_TEXT ("expected \"%C\"\n"),
+                buffer, message));
 
   this->reactor ()->end_reactor_event_loop ();
 
   return 0;
 }
 
-static void
+static bool
 test_reactor_dispatch_order (ACE_Reactor &reactor)
 {
   Handler handler (reactor);
+  if (!handler.ok_)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error initializing test; abort.\n")));
+      return false;
+    }
+
+  bool ok_to_go = true;
 
   // This should trigger a call to <handle_input>.
   ssize_t result =
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
                  ACE_OS::strlen (message));
-  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
+  if (result != ssize_t (ACE_OS::strlen (message)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler sent %b bytes; should be %B\n"),
+                  result, ACE_OS::strlen (message)));
+      ok_to_go = false;
+    }
 
   // This should trigger a call to <handle_timeout>.
-  long retn =
-    reactor.schedule_timer (&handler,
-                            0,
-                            ACE_Time_Value (0));
-  ACE_ASSERT (retn != -1);
+  if (-1 == reactor.schedule_timer (&handler,
+                                    0,
+                                    ACE_Time_Value (0)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      ok_to_go = false;
+    }
 
-  reactor.run_reactor_event_loop ();
+  // Suspend the handlers - only the timer should be dispatched
+  ACE_Time_Value tv (1);
+  reactor.suspend_handlers ();
+  if (0 != reactor.run_reactor_event_loop (tv))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("run_reactor_event_loop")));
+      ok_to_go = false;
+    }
 
-  result =
-    reactor.remove_handler (handler.pipe_.read_handle (),
-                            ACE_Event_Handler::ALL_EVENTS_MASK |
-                            ACE_Event_Handler::DONT_CALL);
-  ACE_ASSERT (result == 0);
+  // only the timer should have fired
+  if (handler.dispatch_order_ != 2)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Incorrect number fired %d; expected 2\n"),
+                  handler.dispatch_order_));
+      ok_to_go = false;
+    }
+
+  // Reset the dispatch_order_ count and schedule another timer
+  handler.dispatch_order_ = 1;
+  if (-1 == reactor.schedule_timer (&handler,
+                                    0,
+                                    ACE_Time_Value (0)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      ok_to_go = false;
+    }
+
+  // Resume the handlers - things should work now
+  reactor.resume_handlers ();
+
+  if (ok_to_go)
+    {
+      if (0 != reactor.run_reactor_event_loop (tv))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("run_reactor_event_loop 2")));
+          ok_to_go = false;
+        }
+    }
+
+  if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
+                                   ACE_Event_Handler::ALL_EVENTS_MASK |
+                                   ACE_Event_Handler::DONT_CALL))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("remover_handler pipe")));
+
+  if (handler.dispatch_order_ != 4)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Incorrect number fired %d; expected 4\n"),
+                  handler.dispatch_order_));
+      ok_to_go = false;
+    }
+
+  int nr_cancelled = reactor.cancel_timer (&handler);
+  if (nr_cancelled > 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Finishing test with %d timers still scheduled\n"),
+                nr_cancelled));
+  return ok_to_go;
 }
 
 int
@@ -186,21 +269,25 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test"));
 
+  int result = 0;
   ACE_Select_Reactor select_reactor_impl;
   ACE_Reactor select_reactor (&select_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_Select_Reactor\n")));
-  test_reactor_dispatch_order (select_reactor);
+  if (!test_reactor_dispatch_order (select_reactor))
+    ++result;
 
-  // WinCE can't do the necessary Winsock 2 things for WFMO_Reactor.
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  // Winsock 2 things are needed for WFMO_Reactor.
+#if defined (ACE_WIN32) && \
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
   ACE_WFMO_Reactor wfmo_reactor_impl;
   ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_WFMO_Reactor\n")));
-  test_reactor_dispatch_order (wfmo_reactor);
+  if (!test_reactor_dispatch_order (wfmo_reactor))
+    ++result;
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
 
   ACE_END_TEST;
-  return 0;
+  return result;
 }

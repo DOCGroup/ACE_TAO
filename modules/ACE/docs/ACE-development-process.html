@@ -41,7 +41,7 @@ The ACE+TAO+CIAO development process looks like:<p>
 <ol>
   <li>Every change to ACE+TAO must have a bug report.  <em>Change</em>
     includes fixes, enhancements, updates, and so on.
-  <li><a href="http://deuce.doc.wustl.edu/bugzilla/index.cgi">Create a
+  <li><a href="http://bugzilla.dre.vanderbilt.edu/">Create a
 bug report</a>.
   <li>Accept the bug report if you are going to implement the change.
   <li>Implement the change in your workspace(s).
@@ -112,7 +112,7 @@ This role is briefly summarized below:<p>
   <li>Fix minor problems caused by compilation errors.  More complex
       problems should be fixed by the developers who caused them.  The
       build czar should help track down the guilty parties.
-  <li>Freeze the CVS repository when it's decided to no more
+  <li>Freeze the source repository when it's decided to no more
     non-critical changes will be accepted for the next kits.
     The build czar has the final say over when the freeze is
     implemented.  The tendency to implement a freeze sooner than
@@ -120,7 +120,7 @@ This role is briefly summarized below:<p>
     to do.
   <li>Verifies that the final round of builds/tests are clean.
   <li>Creates the kits.
-  <li>Unfreezes the CVS repository.
+  <li>Unfreezes the source repository.
   <li>Sends email to appropriate news groups announcing the new kits.
   <li>Passes the mantle on to the next build czar.<p>
 </ul>
@@ -144,34 +144,53 @@ we do not put out major or minor releases of ACE+TAO+CIAO until all the
 compilations and regression tests work successful on all the platform
 we support. <P>
 
-Between major/minor releases, we release betas periodically,
-<EM>e.g.,</EM> once a month, so that ACE+TAO+CIAO users can download
-and test our latest work in progress.  ACE+TAO+CIAO beta kits have
-three-digit  numbers, <EM>e.g.,</EM> 5.3.1.  Betas are often not as
-stable as the major or minor releases, but they often contain
-important fixes that aren't in the official releases.  Although we try
-to ensure the quality of betas, they may not compile cleanly on all
-platforms, nor will they necessarily pass all of the tests on all
-platforms.  They will, however, compile cleanly and pass most tests on
-most platforms. As usual, we endeavor to fix any problems that arise
-as quickly as possible.  Naturally, if you require 100% predictable
-stability and support, please contact one of the companies that
-provides <A
-HREF="http://www.cs.wustl.edu/~schmidt/commercial-support.html">
-commercial support</A> for ACE+TAO.<P> 
+Between major/minor releases, we release micro releases periodically,
+<EM>e.g.,</EM> 3-4 times per year, so that ACE+TAO+CIAO users can
+download and test our latest work in progress.  ACE+TAO+CIAO micro
+release kits have three-digit numbers, <EM>e.g.,</EM> 5.3.1.  Micro
+releases often contain important fixes that aren't in the major/minor
+releases and will compile cleanly and pass most tests on most
+platforms.  They are not, however, necessarily concerned with ensuring
+API compatibilities between micro releases, <EM>e.g.,</EM> new
+features may be changed or removed between the micro releases. <P>
 
-The first beta following a major/minor release is called a
-<EM>bug-fix-only</EM> (BFO) beta. As the name implies this beta will
-have only fixes for the major or minor releases just made. Types of
-fixes and checkins that are allowed to go in for the BFO include, bug
-fixes in the implementation, fixes to the build systems like
-Makefiles, project files, and MPC files, adding new tests and
-examples, fixes to the documentation etc. Fixes that are definitely
-not allowed include, changes to the public interface, refactoring
+The first micro release following a major/minor release is called the
+<EM>bug-fix-only</EM> (BFO) micro release. As the name implies, this
+micro release only has fixes for the most recent major/minor releases.
+Types of fixes and checkins that are allowed to go in for the BFO
+include bug fixes in the implementation; fixes to the build systems
+like Makefiles, project files, and MPC files; adding new tests and
+examples; fixes to the documentation, etc. Fixes that are definitely
+not allowed include changes to the public interface, refactoring
 implementations, removing files from the repository, adding new files
-into the repository etc. The idea is to allow commercial support
+into the repository, etc. The idea is to allow commercial support
 vendors to stabilize the major or minor release for their product
-offerings.  <p>
+offerings.  As always, if you require 100% predictable stability and
+support, please contact one of the companies that provides <A
+HREF="http://www.cs.wustl.edu/~schmidt/commercial-support.html">
+commercial support</A> for ACE+TAO.<P>
+
+<p><hr>
+<H3>Contributions from the Open-Source Community</H3>
+<P>
+
+Over the years, ACE+TAO+CIAO have benefitted significantly from
+contributions by <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-members.html">thousands</A>
+of developers in the open-source community.  To avoid fragmentation of
+the code base, by submitting comments, suggestions, code, code
+snippets, techniques (including that of usage) and algorithms
+(collectively ``Submissions''), submitters acknowledge that they have
+the right to do so, that any such Submissions are given freely and
+unreservedly, and that they waive any claims to copyright or
+ownership.  In addition, submitters acknowledge that any such
+Submission might become part of the copyright maintained on the
+overall body of code that comprises the open-source DOC Group
+software.  By making a Submission, submitter agree to these terms.
+Moreover, submitters acknowledge that the incorporation or
+modification of such Submissions is entirely at the discretion of the
+moderators of the open-source DOC software projects or their
+designees.
 
 <hr><p>
   <font size=-1>

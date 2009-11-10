@@ -30,7 +30,7 @@ template <class TYPE>
 ACE_TSS<TYPE>::~ACE_TSS (void)
 {
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
-  if (this->once_ != 0)
+  if (this->once_)
   {
     ACE_OS::thr_key_detach (this->key_, this);
     ACE_OS::thr_keyfree (this->key_);
@@ -71,9 +71,8 @@ ACE_TSS<TYPE>::dump (void) const
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->keylock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %d\n"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nonce_ = %d"), this->once_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %d\n"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nonce_ = %d\n"), this->once_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 #endif /* ACE_HAS_DUMP */
@@ -92,14 +91,14 @@ ACE_TSS<TYPE>::cleanup (void *ptr)
 }
 
 template <class TYPE> int
-ACE_TSS<TYPE>::ts_init (void) 
+ACE_TSS<TYPE>::ts_init (void)
 {
   // Ensure that we are serialized!
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
 
   // Use the Double-Check pattern to make sure we only create the key
   // once!
-  if (this->once_ == 0)
+  if (!this->once_)
     {
       if (ACE_Thread::keycreate (&this->key_,
 #if defined (ACE_HAS_THR_C_DEST)
@@ -112,7 +111,7 @@ ACE_TSS<TYPE>::ts_init (void)
       else
         {
           // This *must* come last to avoid race conditions!
-          this->once_ = 1;
+          this->once_ = true;
           return 0;
         }
     }
@@ -122,7 +121,7 @@ ACE_TSS<TYPE>::ts_init (void)
 
 template <class TYPE>
 ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
-  : once_ (0),
+  : once_ (false),
     key_ (ACE_OS::NULL_key)
 {
   // If caller has passed us a non-NULL TYPE *, then we'll just use
@@ -140,8 +139,8 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
           // What should we do if this call fails?!
 #if defined (ACE_HAS_WINCE)
           ::MessageBox (0,
-                        ACE_LIB_TEXT ("ACE_Thread::keycreate() failed!"),
-                        ACE_LIB_TEXT ("ACE_TSS::ACE_TSS"),
+                        ACE_TEXT ("ACE_Thread::keycreate() failed!"),
+                        ACE_TEXT ("ACE_TSS::ACE_TSS"),
                         MB_OK);
 #else
           ACE_OS::fprintf (stderr,
@@ -153,7 +152,7 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
 #if defined (ACE_HAS_THR_C_DEST)
       // Encapsulate a ts_obj and it's destructor in an
       // ACE_TSS_Adapter.
-      ACE_TSS_Adapter *tss_adapter;
+      ACE_TSS_Adapter *tss_adapter = 0;
       ACE_NEW (tss_adapter,
                ACE_TSS_Adapter ((void *) ts_obj,
                                 ACE_TSS<TYPE>::cleanup));
@@ -164,15 +163,15 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
         {
           delete tss_adapter;
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("ACE_Thread::setspecific() failed!")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific() failed!")));
         }
 #else
       if (ACE_Thread::setspecific (this->key_,
                                    (void *) ts_obj) != 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("%p\n"),
-                    ACE_LIB_TEXT ("ACE_Thread::setspecific() failed!")));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ACE_Thread::setspecific() failed!")));
 #endif /* ACE_HAS_THR_C_DEST */
     }
 }
@@ -180,7 +179,7 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
 template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_get (void) const
 {
-  if (this->once_ == 0)
+  if (!this->once_)
     {
       // Create and initialize thread-specific ts_obj.
       if (const_cast< ACE_TSS < TYPE > * >(this)->ts_init () == -1)
@@ -263,7 +262,7 @@ ACE_TSS<TYPE>::ts_get (void) const
 template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_object (void) const
 {
-  if (this->once_ == 0) // Return 0 if we've never been initialized.
+  if (!this->once_) // Return 0 if we've never been initialized.
     return 0;
 
   TYPE *ts_obj = 0;
@@ -302,7 +301,7 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
   // Note, we shouldn't hold the keylock at this point because
   // <ts_init> does it for us and we'll end up with deadlock
   // otherwise...
-  if (this->once_ == 0)
+  if (!this->once_)
     {
       // Create and initialize thread-specific ts_obj.
       if (this->ts_init () == -1)
@@ -338,12 +337,10 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
     }
 #else
   void *temp = ts_obj; // Need this temp to keep G++ from complaining.
-  if (ACE_Thread::getspecific (this->key_,
-                               &temp) == -1)
+  if (ACE_Thread::getspecific (this->key_, &temp) == -1)
     return 0; // This should not happen!
   ts_obj = static_cast <TYPE *> (temp);
-  if (ACE_Thread::setspecific (this->key_,
-                               (void *) new_ts_obj) == -1)
+  if (ACE_Thread::setspecific (this->key_, (void *) new_ts_obj) == -1)
     return ts_obj; // This should not happen!
 #endif /* ACE_HAS_THR_C_DEST */
 
@@ -359,8 +356,7 @@ ACE_TSS_Guard<ACE_LOCK>::dump (void) const
 // ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %d"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %d\n"), this->key_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -467,18 +463,18 @@ ACE_TSS_Guard<ACE_LOCK>::cleanup (void *ptr)
 }
 
 template <class ACE_LOCK>
-ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (ACE_LOCK &lock, int block)
+ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (ACE_LOCK &lock, bool block)
 {
 // ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard");
 
   this->init_key ();
-  ACE_Guard<ACE_LOCK> *guard;
+  ACE_Guard<ACE_LOCK> *guard = 0;
   ACE_NEW (guard,
            ACE_Guard<ACE_LOCK> (lock,
                                 block));
 
 #if defined (ACE_HAS_THR_C_DEST)
-  ACE_TSS_Adapter *tss_adapter;
+  ACE_TSS_Adapter *tss_adapter = 0;
   ACE_NEW (tss_adapter,
            ACE_TSS_Adapter ((void *) guard,
                             ACE_TSS_Guard<ACE_LOCK>::cleanup));
@@ -536,18 +532,18 @@ ACE_TSS_Guard<ACE_LOCK>::tryacquire (void)
 
 template <class ACE_LOCK>
 ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard (ACE_LOCK &lock,
-                                                    int block)
+                                                    bool block)
 {
 // ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard");
 
   this->init_key ();
-  ACE_Guard<ACE_LOCK> *guard;
+  ACE_Guard<ACE_LOCK> *guard = 0;
   ACE_NEW (guard,
            ACE_Write_Guard<ACE_LOCK> (lock,
                                       block));
 
 #if defined (ACE_HAS_THR_C_DEST)
-  ACE_TSS_Adapter *tss_adapter;
+  ACE_TSS_Adapter *tss_adapter = 0;
   ACE_NEW (tss_adapter,
            ACE_TSS_Adapter ((void *) guard,
                             ACE_TSS_Guard<ACE_LOCK>::cleanup));
@@ -629,12 +625,12 @@ ACE_TSS_Write_Guard<ACE_LOCK>::dump (void) const
 }
 
 template <class ACE_LOCK>
-ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard (ACE_LOCK &lock, int block)
+ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block)
 {
 // ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard");
 
   this->init_key ();
-  ACE_Guard<ACE_LOCK> *guard;
+  ACE_Guard<ACE_LOCK> *guard = 0;
   ACE_NEW (guard,
            ACE_Read_Guard<ACE_LOCK> (lock,
                                      block));

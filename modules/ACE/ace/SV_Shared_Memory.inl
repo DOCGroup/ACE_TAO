@@ -23,10 +23,10 @@ ACE_SV_Shared_Memory::open (key_t external_id, size_t sz, int create, int perms)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::open");
 #if defined (ACE_WIN32)
-        ACE_UNUSED_ARG(perms);
-        ACE_UNUSED_ARG(create);
-        ACE_UNUSED_ARG(sz);
-        ACE_UNUSED_ARG(external_id);
+  ACE_UNUSED_ARG(perms);
+  ACE_UNUSED_ARG(create);
+  ACE_UNUSED_ARG(sz);
+  ACE_UNUSED_ARG(external_id);
   ACE_NOTSUP_RETURN (-1);
 #else
   this->segment_ptr_ = 0;
@@ -45,8 +45,8 @@ ACE_SV_Shared_Memory::attach (void *virtual_addr, int flags)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::attach");
 #if defined (ACE_WIN32)
-        ACE_UNUSED_ARG(flags);
-        ACE_UNUSED_ARG(virtual_addr);
+  ACE_UNUSED_ARG(flags);
+  ACE_UNUSED_ARG(virtual_addr);
   ACE_NOTSUP_RETURN (-1);
 #else
   this->segment_ptr_ = ACE_OS::shmat (this->internal_id_, virtual_addr, flags);
@@ -61,10 +61,9 @@ ACE_SV_Shared_Memory::control (int cmd, void *buf)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::control");
 #if defined (ACE_WIN32)
-        ACE_UNUSED_ARG(cmd);
-        ACE_UNUSED_ARG(buf);
-
-        ACE_NOTSUP_RETURN (-1);
+  ACE_UNUSED_ARG(cmd);
+  ACE_UNUSED_ARG(buf);
+  ACE_NOTSUP_RETURN (-1);
 #else
   return ACE_OS::shmctl (this->internal_id_, cmd, (struct shmid_ds *) buf);
 #endif /* ACE_WIN32 */

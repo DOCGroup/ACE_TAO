@@ -21,7 +21,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/Reactor.h"
@@ -75,16 +75,19 @@ ACE_TMAIN (int, ACE_TCHAR*[])
   global_event_handler = &event_handler;
 
   event_handler.iterations_ = 5;
-  int result = ACE_Reactor::instance ()->register_handler (&event_handler,
-                                                           event_handler.handle_.handle ());
+  int result =
+    ACE_Reactor::instance ()->register_handler (&event_handler,
+                                                event_handler.handle_.handle ());
   ACE_ASSERT (result == 0);
 
   ACE_Time_Value timeout (1);
-  result = ::SetTimer (NULL,                         // handle of window for timer messages
-                       0,                            // timer identifier
-                       timeout.msec (),              // time-out value
-                       (TIMERPROC) &timer_callback   // address of timer procedure
-                       );
+  result = 
+    ACE_Utils::truncate_cast<int> (
+      ::SetTimer (0,                         // handle of window for timer messages
+                  0,                             // timer identifier
+                  timeout.msec (),               // time-out value
+                  (TIMERPROC) &timer_callback)); // address of timer procedure
+ 
   ACE_ASSERT (result != 0);
 
   ACE_Reactor::run_event_loop ();
@@ -97,4 +100,4 @@ ACE_TMAIN (int , ACE_TCHAR *[])
 {
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */

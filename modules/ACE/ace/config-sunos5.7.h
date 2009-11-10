@@ -12,28 +12,20 @@
 
 #include "ace/config-sunos5.6.h"
 
+// This may be true for earlier Solaris versions, but I can only verify
+// it for Solaris 7 and later.
+#define ACE_HAS_VFWPRINTF
+#if defined (ACE_HAS_SHM_OPEN)
+# define ACE_SHM_OPEN_REQUIRES_ONE_SLASH
+#endif
+
 // Sun began distributing <sys/loadavg.h> with SunOS 5.7
 #define ACE_HAS_SYS_LOADAVG_H
 
 // SunOS 5.7 has getloadavg()
 #undef ACE_LACKS_GETLOADAVG
 
-#if defined (__GNUG__)
-# if __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8
-    // Assume that later g++ were built on SunOS 5.7, so they don't
-    // have these problems . . .
-
-    // Disable the following, because g++ 2.7.2.3 can't handle it.
-    // Maybe later g++ versions can?
-#   undef ACE_HAS_XPG4_MULTIBYTE_CHAR
-
-    // The Solaris86 g++ 2.7.2.3 sys/types.h doesn't have these . . .
-    typedef long          t_scalar_t;  /* historical versions */
-    typedef unsigned long t_uscalar_t;
-    typedef void          *timeout_id_t;
-# endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
-
-#elif defined (ghs)
+#if defined (ghs)
   // SunOS 5.7's /usr/include/sys/procfs_isa.h needs uint64_t,
   // but /usr/include/sys/int_types.h doesn't #define it because
   // _NO_LONGLONG is #
@@ -79,5 +71,8 @@
 #else   /* XPG4 or XPG4v2 */
 # define ACE_HAS_3_PARAM_WCSTOK
 #endif
+
+// Solaris 7 started to support /dev/poll
+#define ACE_HAS_DEV_POLL
 
 #endif /* ACE_CONFIG_H */

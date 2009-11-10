@@ -69,25 +69,25 @@ public: // Should be protected:
 
   // = Enqueue and dequeue methods.
 
-  // For the following five method if <timeout> == 0, the caller will
+  // For the following five method if @a timeout == 0, the caller will
   // block until action is possible, else will wait until the
-  // <{absolute}> time specified in *<timeout> elapses).  These calls
+  // <{absolute}> time specified in *@a timeout elapses).  These calls
   // will return, however, when queue is closed, deactivated, when a
   // signal occurs, or if the time specified in timeout elapses, (in
   // which case errno = EWOULDBLOCK).
 
-  /// Insert message into the message queue.  Note that <timeout> uses
+  /// Insert message into the message queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
   int putq (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
 
   /**
    * Extract the first message from the queue (blocking).  Note that
-   * <timeout> uses <{absolute}> time rather than <{relative}> time.
+   * @a timeout uses <{absolute}> time rather than <{relative}> time.
    * Returns number of items in queue if the call succeeds or -1 otherwise.
    */
   int getq (ACE_Message_Block *&mb, ACE_Time_Value *timeout = 0);
 
-  /// Return a message to the queue.  Note that <timeout> uses
+  /// Return a message to the queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
   int ungetq (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
 
@@ -106,12 +106,16 @@ public: // Should be protected:
 
   /**
    * Transfer message to the adjacent ACE_Task in a ACE_Stream.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
+   * that @a timeout uses <{absolute}> time rather than <{relative}>
    * time.
    */
   int put_next (ACE_Message_Block *msg, ACE_Time_Value *timeout = 0);
 
-  /// Tests whether we can enqueue a message without blocking.
+  /**
+   * Tests whether we can enqueue a message without blocking.  
+   *
+   * @deprecated This method is deprecated and will go away in the future.
+   */
   int can_put (ACE_Message_Block *);
 
   // = ACE_Task utility routines to identify names et al.
@@ -149,8 +153,8 @@ public: // Should be protected:
   /// Queue of messages on the ACE_Task..
   ACE_Message_Queue<ACE_SYNCH_USE> *msg_queue_;
 
-  /// 1 if should delete Message_Queue, 0 otherwise.
-  int delete_msg_queue_;
+  /// true if should delete Message_Queue, false otherwise.
+  bool delete_msg_queue_;
 
   /// Back-pointer to the enclosing module.
   ACE_Module<ACE_SYNCH_USE> *mod_;

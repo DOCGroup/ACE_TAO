@@ -54,19 +54,19 @@ public:
    * Receive notification of a recoverable error.
    */
   virtual void error (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 
   /**
    * Receive notification of a non-recoverable error.
    */
   virtual void fatalError (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 
   /**
    * Receive notification of a warning.
    */
   virtual void warning (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 };
 
 

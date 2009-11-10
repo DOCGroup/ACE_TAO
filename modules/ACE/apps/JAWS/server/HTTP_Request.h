@@ -1,19 +1,15 @@
 /* -*- c++ -*- */
-// Hey, Emacs!  This is a C++ file!
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   jaws
-//
-// = FILENAME
-//    HTTP_Request.h
-//
-// = AUTHOR
-//    James Hu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    HTTP_Request.h
+ *
+ *  $Id$
+ *
+ *  @author James Hu
+ */
+//=============================================================================
+
 
 #ifndef HTTP_REQUEST_H
 #define HTTP_REQUEST_H
@@ -30,90 +26,92 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class HTTP_Request
+ *
+ * @brief This parses the client request of an HTTP transaction.
+ *
+ */
 class HTTP_Request
-  // = TITLE
-  //     This parses the client request of an HTTP transaction.
-  //
-  // = DESCRIPTION
 {
 public:
+  /// Default construction.
   HTTP_Request (void);
-  // Default construction.
 
+  /// Destructor.
   ~HTTP_Request (void);
-  // Destructor.
 
+  /// parse an incoming request
   int parse_request (ACE_Message_Block &mb);
-  // parse an incoming request
 
+  /// the first line of a request is the request line, which is of the
+  /// form: METHOD URI VERSION.
   void parse_request_line (char *const request_line);
-  // the first line of a request is the request line, which is of the
-  // form: METHOD URI VERSION.
 
+  /// Initialize the request object.  This will parse the buffer and
+  /// prepare for the accessors.
   int init (char *const buffer,
             int buflen);
-  // Initialize the request object.  This will parse the buffer and
-  // prepare for the accessors.
 
 public:
   // = The Accessors.
 
+  /// HTTP request method
   const char *method (void) const;
-  // HTTP request method
 
+  /// HTTP request uri
   const char *uri (void) const;
-  // HTTP request uri
 
+  /// HTTP request version
   const char *version (void) const;
-  // HTTP request version
 
+  /// The HTTP request uri translated into a server filename path
   const char *path (void) const;
-  // The HTTP request uri translated into a server filename path
 
+  /// TRUE of the request is a cgi request
   int cgi (void) const;
-  // TRUE of the request is a cgi request
 
+  /// The arguments to the cgi request
   const char *cgi_args (void) const;
-  // The arguments to the cgi request
 
+  /// The environment variables passed to the CGI request
   const char **cgi_env (void) const;
-  // The environment variables passed to the CGI request
 
+  /// The cgi request query string
   const char *query_string (void) const;
-  // The cgi request query string
 
+  /// The cgi request path information
   const char *path_info (void) const;
-  // The cgi request path information
 
+  /// The type of the HTTP request
   int type (void) const;
-  // The type of the HTTP request
 
+  /// The headers that were parsed from the request
   const Headers &headers (void) const;
-  // The headers that were parsed from the request
 
+  /// Header strings stored
   const char *header_strings (int index) const;
-  // Header strings stored
 
+  /// Values associated with the header strings
   const char *header_values (int index) const;
-  // Values associated with the header strings
 
+  /// The buffer into which request data is read
   char *data (void);
-  // The buffer into which request data is read
 
+  /// The length of the request data
   int data_length (void);
-  // The length of the request data
 
+  /// The length of incoming content if any
   int content_length (void);
-  // The length of incoming content if any
 
+  /// Current status of the incoming request
   int status (void);
-  // Current status of the incoming request
 
+  /// A string describing the state of the incoming request
   const char *status_string (void);
-  // A string describing the state of the incoming request
 
+  /// Dump the state of the request.
   void dump (void);
-  // Dump the state of the request.
 
   enum
   {
@@ -152,17 +150,17 @@ private:
   const char *version (const char *version_string);
   const char *path (const char *uri_string);
 
+  /// determine if the given URI is a CGI program.
   int cgi (char *uri_string);
-  // determine if the given URI is a CGI program.
 
+  /// determine if the given URI resides in a cgi-bin directory
   int cgi_in_path (char *uri_string, char *&extra_path_info);
-  // determine if the given URI resides in a cgi-bin directory
 
+  /// determine if the given URI contains a cgi extension
   int cgi_in_extension (char *uri_string, char *&extra_path_info);
-  // determine if the given URI contains a cgi extension
 
+  /// set the arguments and environment for the cgi program
   void cgi_args_and_env (char *&extra_path_info);
-  // set the arguments and environment for the cgi program
 
   int type (const char *type_string);
 

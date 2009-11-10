@@ -30,9 +30,9 @@
 #  include /**/ <sys/socket.h>
 #endif /* !ACE_LACKS_SYS_SOCKET_H */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
+#if defined (ACE_USES_SOCKLIB_H)
 #  include /**/ <sockLib.h>
-#endif /* ACE_VXWORKS */
+#endif /* ACE_USES_SOCKLIB_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -196,6 +196,10 @@ extern "C"
 #  define SO_ERROR 0x1007
 #endif /* SO_ERROR */
 
+#if !defined (SCM_RIGHTS)
+#  define SCM_RIGHTS 0x01
+#endif /* SCM_RIGHTS */
+
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
 #    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
@@ -208,6 +212,10 @@ extern "C"
 #  define ACE_ADDRESS_FAMILY_INET AF_INET
 #  define ACE_PROTOCOL_FAMILY_INET PF_INET
 #endif /* ACE_HAS_IPV6 */
+
+#if !defined (ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE)
+#define ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE SSIZE_MAX
+#endif /* ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE */
 
 #if defined (ACE_HAS_SOCKLEN_T)
 #  if defined (__hpux)
@@ -277,7 +285,7 @@ extern "C"
                           struct timespec *timeout);
 
   ssize_t sendmsg_timedwait (ACE_HANDLE handle,
-			     const struct msghdr *msg,
+                             const struct msghdr *msg,
                              int flags,
                              struct timespec *timeout);
 

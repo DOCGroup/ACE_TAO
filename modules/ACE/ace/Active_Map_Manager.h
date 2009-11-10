@@ -48,16 +48,16 @@ public:
   ACE_Active_Map_Manager_Key (ACE_UINT32 slot_index,
                               ACE_UINT32 slot_generation);
 
-  /// Get the <slot_index>.
+  /// Get the slot_index.
   ACE_UINT32 slot_index (void) const;
 
-  /// Set the <slot_index>.
+  /// Set the slot_index.
   void slot_index (ACE_UINT32 i);
 
-  /// Get the <slot_generation> number.
+  /// Get the slot_generation number.
   ACE_UINT32 slot_generation (void) const;
 
-  /// Set the <slot_generation> number.
+  /// Set the slot_generation number.
   void slot_generation (ACE_UINT32 g);
 
   /// Size required to store information about active key.
@@ -78,7 +78,7 @@ public:
   // = This really should be protected but because of template
   // friends, they are not.
 
-  /// Increment the <slot_generation> number.
+  /// Increment the slot_generation number.
   void increment_slot_generation_count (void);
 
 private:

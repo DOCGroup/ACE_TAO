@@ -42,7 +42,7 @@ public:
   {
     ACE_thread_t *tid =
       (ACE_thread_t*)this->tss_ctx_->get_attribute ("thread_id");
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) TSS TID: %d \n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) TSS TID: %d\n"),
                 *tid));
 
     // do work.

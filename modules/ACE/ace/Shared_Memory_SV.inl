@@ -8,7 +8,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Shared_Memory_SV::open (key_t id,
-                            int length,
+                            size_t length,
                             int create,
                             int perms,
                             void *addr,

@@ -31,10 +31,8 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
 #endif /* ACE_WIN32 */
 
       // Open the named pipe or file using non-blocking mode...
-      ACE_HANDLE handle = ACE_OS::open (name,
-                                        flags,
-                                        perms,
-                                        sa);
+      ACE_HANDLE const handle = ACE_OS::open (name, flags, perms, sa);
+
       if (handle == ACE_INVALID_HANDLE
           && (errno == EWOULDBLOCK
               && (timeout->sec () > 0 || timeout->usec () > 0)))

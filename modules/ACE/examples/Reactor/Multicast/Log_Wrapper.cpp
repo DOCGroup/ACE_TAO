@@ -3,10 +3,14 @@
 // client.C
 
 #include "Log_Wrapper.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID(Multicast, Log_Wrapper, "$Id$")
 
@@ -31,12 +35,7 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
   if (ACE_OS::uname (&host_data) < 0)
     return -1;
 
-#if defined (ACE_LACKS_UTSNAME_T)
-  if ((host_info = ACE_OS::gethostbyname
-       (ACE_TEXT_ALWAYS_CHAR(host_data.nodename))) == NULL)
-#else
-  if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == NULL)
-#endif
+  if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == 0)
     return -1;
   else
     ACE_OS::memcpy ((char *) &this->log_msg_.host,
@@ -46,8 +45,8 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
   // This starts out initialized to all zeros!
   server_ = ACE_INET_Addr (port, mcast_addr);
 
-  if (logger_.subscribe (server_) == -1)
-      perror("can't subscribe to multicast group"), exit(1);
+  if (logger_.join (server_) == -1)
+    ACE_OS::perror("can't join to multicast group"), ACE_OS::exit(1);
 
   // success.
   return 0;
@@ -63,9 +62,12 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   sequence_number_++;
 
   this->log_msg_.type = type;
-  this->log_msg_.time = time (0);
-  this->log_msg_.msg_length = ACE_OS::strlen(message)+1;
-  this->log_msg_.sequence_number = htonl(sequence_number_);
+  // Casting time() to long will start causing bad results sometime in 2038
+  // but the receiver isn't looking at the time, so who cares?
+  this->log_msg_.time = (long) ACE_OS::time (0);
+  this->log_msg_.msg_length =
+    ACE_Utils::truncate_cast<ACE_INT32> (ACE_OS::strlen (message) + 1);
+  this->log_msg_.sequence_number = ACE_HTONL(sequence_number_);
 
   iovec iovp[2];
   iovp[0].iov_base = reinterpret_cast<char*> (&log_msg_);

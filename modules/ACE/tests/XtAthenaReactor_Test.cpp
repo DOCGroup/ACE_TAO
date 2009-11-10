@@ -45,15 +45,21 @@ ACE_RCSID (tests,
 #include /**/ <X11/Intrinsic.h>
 #include /**/ <X11/Xatom.h>
 #include /**/ <X11/Shell.h>
-
-#include /**/ <X11/Xaw/Command.h>
-#include /**/ <X11/Xaw/Label.h>
-#include /**/ <X11/Xaw/Box.h>
 #include /**/ <X11/StringDefs.h>
+
+#if defined (ACE_HAS_ATHENA3D)
+#  include /**/ <X11/Xaw3d/Command.h>
+#  include /**/ <X11/Xaw3d/Label.h>
+#  include /**/ <X11/Xaw3d/Box.h>
+#else
+#  include /**/ <X11/Xaw/Command.h>
+#  include /**/ <X11/Xaw/Label.h>
+#  include /**/ <X11/Xaw/Box.h>
+#endif
 
 static void set_label(Widget w, const char *p)
 {
-    XtVaSetValues (w, XtNlabel, p, 0);
+    XtVaSetValues (w, XtNlabel, p, static_cast<void *>(0));
 }
 #define LABEL_WIDGET labelWidgetClass
 #define BUTTON_WIDGET commandWidgetClass
@@ -94,7 +100,7 @@ client (void *)
 
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connector;
-  sprintf (buf, "Client: the life was good!");
+  ACE_OS::sprintf (buf, "Client: the life was good!");
 
   mes_len = (int) htonl (ACE_OS::strlen (buf) + 1);
 
@@ -132,11 +138,11 @@ inc_count (Widget, XtPointer client_data, XtPointer)
 {
   char new_string[80];
 
-  sprintf (new_string,
-           "Events: [%d] [%d] [%d]",
-           count1++,
-           count2,
-           count3);
+  ACE_OS::sprintf (new_string,
+                   "Events: [%d] [%d] [%d]",
+                   count1++,
+                   count2,
+                   count3);
   set_label((Widget) client_data, new_string);
 }
 
@@ -149,11 +155,11 @@ inc_tmo (void *w,XtIntervalId *)
 
   if (count2 > 10)
     ACE_OS::exit (0);
-  sprintf (new_string,
-           "Events: [%d] [%d] [%d]",
-           count1,
-           count2++,
-           count3);
+  ACE_OS::sprintf (new_string,
+                   "Events: [%d] [%d] [%d]",
+                   count1,
+                   count2++,
+                   count3);
 
   set_label((Widget) w, new_string);
 
@@ -170,11 +176,11 @@ public:
                               const void *arg)
   {
     char new_string[80];
-    sprintf (new_string,
-             "Events: [%d] [%d] [%d]",
-             count1,
-             count2,
-             count3++);
+    ACE_OS::sprintf (new_string,
+                     "Events: [%d] [%d] [%d]",
+                     count1,
+                     count2,
+                     count3++);
     set_label((Widget) arg, new_string);
     return 0;
   }
@@ -183,8 +189,10 @@ public:
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
     char buf[100];
     int head;
     ssize_t ret = this->peer ().recv_n ((char *) &head,
@@ -233,7 +241,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                                 &argc,
                                 argv,
                                 0,
-                                0);
+                                static_cast<void *>(0));
 
   digits_rc = create_box(topLevel, "digits_rc");
 

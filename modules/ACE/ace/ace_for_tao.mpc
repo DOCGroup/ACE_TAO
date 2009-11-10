@@ -11,10 +11,9 @@
 // link.  This ACE_FOR_TAO subset library must remain as small as
 // possible.
 
-project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace, pkgconfig {
+project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace, pkgconfig, ace_output {
   macros      += ACE_LACKS_ACE_TOKEN
   requires     = ace_for_tao ace_svcconf
-  libout       = $(ACE_ROOT)/lib
   sharedname   = ACE_FOR_TAO
   dynamicflags = ACE_BUILD_DLL
 
@@ -48,6 +47,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Dirent_Selector.cpp
     Dump.cpp
     Dynamic.cpp
+    Dynamic_Message_Strategy.cpp
     Event.cpp
     Event_Handler.cpp
     FILE.cpp
@@ -85,8 +85,16 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Message_Block.cpp
     Message_Queue.cpp
     MMAP_Memory_Pool.cpp
+    Monitor_Admin.cpp
+    Monitor_Admin_Manager.cpp
+    Monitor_Base.cpp
+    Monitor_Point_Registry.cpp
+    Monitor_Size.cpp
+    Monitor_Control_Types.cpp
+    Monitor_Control_Action.cpp
     Mutex.cpp
     Notification_Strategy.cpp
+    Notification_Queue.cpp
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp
@@ -126,6 +134,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     OS_NS_time.cpp
     OS_NS_unistd.cpp
     OS_NS_wchar.cpp
+    OS_NS_wctype.cpp
     OS_QoS.cpp
     OS_Thread_Adapter.cpp
     OS_TLI.cpp
@@ -138,7 +147,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Reactor_Timer_Interface.cpp
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
-    Refcountable.cpp
     Rtems_init.c
     RW_Mutex.cpp
     RW_Thread_Mutex.cpp
@@ -161,6 +169,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     SPIPE_Addr.cpp
     SPIPE_Stream.cpp
     SString.cpp
+    Stack_Trace.cpp      // Required by Log_Msg.cpp
     Stats.cpp            // Required by orbsvcs/tests/Notify
     String_Base_Const.cpp
     Synch_Options.cpp
@@ -172,25 +181,21 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Thread_Hook.cpp
     Thread_Manager.cpp
     Thread_Mutex.cpp
+    Throughput_Stats.cpp
     Time_Value.cpp
     Timeprobe.cpp
-    Timer_Hash.cpp
-    Timer_Heap.cpp
-    Timer_List.cpp
-    Timer_Queue.cpp
-    Timer_Wheel.cpp
     Token.cpp
     TP_Reactor.cpp
     Trace.cpp
     TSS_Adapter.cpp
 
     // Dev_Poll_Reactor isn't available on Windows.
-    conditional(automake,make,gnuace) {
+    conditional(!prop:windows) {
       Dev_Poll_Reactor.cpp
     }
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
-    conditional(vc6,vc71,vc8,nmake,bmake,borland) {
+    conditional(prop:windows) {
       NT_Service.cpp // Required by ace_for_tao sponsors
       Semaphore.cpp
       Process_Mutex.cpp
@@ -245,6 +250,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Pair_T.cpp
     RB_Tree.cpp
     Reactor_Token_T.cpp
+    Refcountable_T.cpp
     Refcounted_Auto_Ptr.cpp
     Reverse_Lock_T.cpp
     Select_Reactor_T.cpp
@@ -265,6 +271,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Timer_Queue_Adapters.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
+    Tokenizer_T.cpp
     Typed_SV_Message.cpp
     Typed_SV_Message_Queue.cpp
     Unbounded_Queue.cpp
@@ -283,7 +290,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     OS_String.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
-    Swap.inl
     TSS_T.inl
     ace_wchar.inl
     MMAP_Memory_Pool.inl
@@ -328,13 +334,13 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Reactor_Timer_Interface.h
     Refcounted_Auto_Ptr.h
     Reverse_Lock_T.h
+    Select_Reactor.h
     SStringfwd.h
     Static_Object_Lock.h
     Strategies.h
     String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
-    Swap.h
     Synch.h
     Synch_Traits.h
     TSS_T.h
@@ -343,6 +349,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Value_Ptr.h
     Version.h
     ace_wchar.h
+    checked_iterator.h
     config-WinCE.h
     config-all.h
     config-borland-common.h
@@ -354,7 +361,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     config-win32-msvc-6.h
     config-win32-msvc-7.h
     config-win32-msvc.h
-    config-win32-visualage.h
     config-win32.h
     config.h
     iosfwd.h

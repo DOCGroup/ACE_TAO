@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 # $Id$
 
 package PerlACE::Process;
@@ -50,7 +51,15 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 }
 @ARGV = @new_argv;
 
-$PerlACE::Process::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
+$PerlACE::Process::WAIT_DELAY_FACTOR = (defined $ENV{"ACE_RUNTEST_DELAY"}) ? $ENV{"ACE_RUNTEST_DELAY"} : 1;
+
+# Set the process's target. If there's none, behavior falls back to pre-target
+# behavior.
+sub Target($)
+{
+    my $self = shift;
+    $self->{TARGET} = shift;
+}
 
 if ($OSNAME eq "MSWin32") {
 	require PerlACE::Process_Win32;

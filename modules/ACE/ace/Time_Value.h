@@ -41,6 +41,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // -------------------------------------------------------------------
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 /**
  * @class ACE_Time_Value
  *
@@ -51,18 +54,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  * ACE.  These time values are typically used in conjunction with OS
  * mechanisms like <select>, <poll>, or <cond_timedwait>.
  */
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-// Something is a bit brain-damaged here and I'm not sure what... this code
-// compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
-// complains that the operators that return ACE_Time_Value are C-linkage
-// functions that can't return a C++ class. The only way I've found to
-// defeat this is to wrap the whole class in extern "C++".
-//    - Steve Huston, 23-Aug-2004
-extern "C++" {
-#endif
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Export ACE_Time_Value
 {
 public:
@@ -119,7 +110,7 @@ public:
   void set (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
-  /// Converts from ACE_Time_Value format into milli-seconds format.
+  /// Converts from ACE_Time_Value format into milliseconds format.
   /**
    * @return Sum of second field (in milliseconds) and microsecond field
    *         (in milliseconds).  Note that this method can overflow if
@@ -132,7 +123,7 @@ public:
    */
   unsigned long msec (void) const;
 
-#if !defined (ACE_LACKS_LONGLONG_T)
+  /// Converts from ACE_Time_Value format into milliseconds format.
   /**
    * @return Sum of second field (in milliseconds) and microsecond field
    *         (in milliseconds) and return them via the @param ms parameter.
@@ -143,7 +134,16 @@ public:
    */
   void msec (ACE_UINT64 &ms) const;
 
-#endif /*ACE_LACKS_LONGLONG_T */
+  /// Converts from ACE_Time_Value format into milliseconds format.
+  /**
+   * @return Sum of second field (in milliseconds) and microsecond field
+   *         (in milliseconds) and return them via the @param ms parameter.
+   *
+   * @note The semantics of this method differs from the sec() and
+   *       usec() methods.  There is no analogous "millisecond"
+   *       component in an ACE_Time_Value.
+   */
+  void msec (ACE_UINT64 &ms) /* const */;
 
   /// Converts from milli-seconds format into ACE_Time_Value format.
   /**
@@ -152,6 +152,14 @@ public:
    *       component in an ACE_Time_Value.
    */
   void msec (long);
+
+  /// Converts from milli-seconds format into ACE_Time_Value format.
+  /**
+   * @note The semantics of this method differs from the sec() and
+   *       usec() methods.  There is no analogous "millisecond"
+   *       component in an ACE_Time_Value.
+   */
+  void msec (int);  // converted to long then calls above.
 
   /// Returns the value of the object as a timespec_t.
   operator timespec_t () const;
@@ -193,14 +201,11 @@ public:
   /// Set microseconds.
   void usec (suseconds_t usec);
 
-#if !defined (ACE_LACKS_LONGLONG_T)
   /**
    * @return Sum of second field (in microseconds) and microsecond field
    *         and return them via the @param usec parameter.
    */
   void to_usec (ACE_UINT64 &usec) const;
-
-#endif /*ACE_LACKS_LONGLONG_T */
 
   // = The following arithmetic methods operate on ACE_Time_Value's.
 
@@ -322,7 +327,23 @@ private:
   void normalize (void);
 
   /// Store the values as a timeval.
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+  // Windows' timeval is non-conformant, so swap in a struct that conforms
+  // to the proper data types to represent the entire time range that this
+  // class's API can accept.
+  // Also, since this class can supply a pointer to a timeval that things
+  // like select() expect, we need the OS-defined one as well. To make this
+  // available, use a real timeval called ext_tv_ and set it up when needed.
+  // Since this is most often for relative times that don't approach 32 bits
+  // in size, reducing a time_t to fit should be no problem.
+  struct {
+    time_t tv_sec;
+    suseconds_t tv_usec;
+  } tv_;
+  timeval ext_tv_;
+#else
   timeval tv_;
+#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -330,10 +351,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
 
 #if defined (__MINGW32__)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

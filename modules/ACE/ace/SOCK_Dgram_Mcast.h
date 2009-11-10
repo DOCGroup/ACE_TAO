@@ -201,7 +201,7 @@ public:
   /**
    * This method is optional; if not explicitly invoked, it is invoked by
    * the first <subscribe>, using the subscribed address/port# and network
-   * interface paramters.
+   * interface parameters.
    * The <mcast_addr> parameter defines the default send address/port# and
    * also the port# and, if the OPT_BINDADDR_YES option is used,
    * the multicast address that is bound to this socket.
@@ -211,7 +211,7 @@ public:
    * feature is not supported by the envriornment.)
    * The port# in <mcast_addr> may be 0, in which case a system-assigned
    * (ephemeral) port# is used for sending and receiving.
-   * If <reuse_addr> != 0, the SO_REUSEADDR option and, if it is supported,
+   * If @a reuse_addr != 0, the SO_REUSEADDR option and, if it is supported,
    * the SO_REUSEPORT option are enabled.
    *
    * Returns: -1 if the call fails.  Failure can occur due to problems with
@@ -247,21 +247,12 @@ public:
    * <ACE_Sock_Connect::get_ip_interfaces> is not implemented in this
    * environment.
    *
-   * Note that the optional <reuse_addr> parameter does not apply to
+   * Note that the optional @a reuse_addr parameter does not apply to
    * subscriptions; it is only used if <open> is implicitly invoked (see above).
    *
-   * @deprecated This method has been deprecated, please use join() instead.
-   * In addition, the following parameters have also been deprecated:
-   * <protocol_family> and <protocol> have no effect.
+   * Uses the mcast_addr to determine protocol_family, and protocol which
+   * we always pass as 0 anyway.
    */
-  int subscribe (const ACE_INET_Addr &mcast_addr,
-                 int reuse_addr = 1,               // (see above)
-                 const ACE_TCHAR *net_if = 0,
-                 int protocol_family = PF_INET,
-                 int protocol = 0);
-
-  // join() replaces subscribe() and uses the mcast_addr to determine
-  // protocol_family, and protocol which we always pass as 0 anyway.
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,               // (see above)
             const ACE_TCHAR *net_if = 0);
@@ -281,44 +272,21 @@ public:
    * implemented in this environment (_even if_ the <subscribe> specifies a
    * non- NULL <net_if>).
    *
-   * @deprecated This method has been deprecated.  Please use leave() instead.
-   * In addition, <protocol_family> and <protocol> have no effect.
+   * leave() replaces unsubscribe() and uses mcast_addr to determine
+   * protocol_family, and protocol which we always pass as 0 anyway.
    */
-  int unsubscribe (const ACE_INET_Addr &mcast_addr,
-                   const ACE_TCHAR *net_if = 0,
-                   int protocol_family = PF_INET,
-                   int protocol = 0);
-
-  // leave() replaces unsubscribe() and uses mcast_addr to determine
-  // protocol_family, and protocol which we always pass as 0 anyway.
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = 0);
 
-  /// Unsubscribe all current subscriptions.
-  /**
-   * Unsubscribe all active group/interface subscriptions (if any).
-   *
-   * Returns -1 if any unsubscribe failed, 0 if there are no errors or no
-   * current subscriptions.
-   *
-   * @deprecated This method has been deprecated.  Since a list of groups is
-   * not maintained (except when ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined),
-   * it isn't possible to unsubscribe to all the groups without closing
-   * the socket.  Therefore, if applications wish to unsubscribe to all
-   * groups without closing the socket, they much keep track of the
-   * subscriptions and call the above unsubscribe () for each.
-   */
-  int unsubscribe (void);
-
   // = Data transfer routines.
 
-  /// Send <n> bytes in <buf>, using the multicast address and network interface
+  /// Send @a n bytes in @a buf, using the multicast address and network interface
   /// defined by the first <open> or <subscribe>.
   ssize_t send (const void *buf,
                 size_t n,
                 int flags = 0) const;
 
-  /// Send <n> <iovecs>, using the multicast address and network interface
+  /// Send @a n <iovecs>, using the multicast address and network interface
   /// defined by the first <open> or <subscribe>.
   ssize_t send (const iovec iov[],
                 int n,
@@ -338,8 +306,7 @@ public:
    * @deprecated  This method has been deprecated since it cannot be used
    * easily with with IPv6 options. Use ACE_SOCK::set_option instead.
    */
-  int set_option (int option,
-                  char optval);
+  int set_option (int option, char optval);
 
   /// Dump the state of an object.
   /**

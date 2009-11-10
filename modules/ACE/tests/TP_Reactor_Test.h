@@ -95,7 +95,7 @@ public:
   void stop (void);
   int start (const ACE_INET_Addr & addr);
 
-  //	virtual from ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
+  // virtual from ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
   virtual int make_svc_handler (Receiver * & sh);
 
 private:
@@ -179,7 +179,7 @@ public:
   void stop ();
   int  start (const ACE_INET_Addr & addr , int num);
 
-  //	virtual from ACE_Connector<>
+  // virtual from ACE_Connector<>
   virtual int make_svc_handler (Sender * & sh);
 
 private:

@@ -64,16 +64,6 @@ struct netbuf { };
 #       include /**/ <xti.h>
 #     endif /* ACE_HAS_SYS_XTI_H */
 
-      // If the xti.h file redefines the function names, do it now, else
-      // when the function definitions are encountered, they won't match the
-      // declaration here.
-#     if defined (ACE_REDEFINES_XTI_FUNCTIONS)
-#       include /**/ <xti.h>
-#       if defined (UNIXWARE_2_0)         /* They apparently forgot one... */
-           extern "C" int _xti_error(char *);
-#       endif /* UNIXWARE_2_0 */
-#     endif /* ACE_REDEFINES_XTI_FUNCTIONS */
-
       // The XTI API for obtaining local/peer addresses is t_getprotaddr().
       // The ACE API was developed in TLI days and so uses t_getname().
       // t_getname() has a type argument that specifies which address is

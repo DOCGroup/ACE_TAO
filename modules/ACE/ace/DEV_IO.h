@@ -46,10 +46,10 @@ public:
   ACE_DEV_IO (void);
 
   // = Various send operations.
-  /// send upto <n> bytes in <buf>.
+  /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;
 
-  /// Recv upto <n> bytes in <buf>.
+  /// Recv upto @a n bytes in @a buf.
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
@@ -61,23 +61,23 @@ public:
    *
    * Notes on common parameters:
    *
-   * <buf> is the buffer to write from or receive into.
+   * @a buf is the buffer to write from or receive into.
    *
-   * <len> is the number of bytes to transfer.
+   * @a len is the number of bytes to transfer.
    *
-   * The <timeout> parameter in the following methods indicates how
-   * long to blocking trying to transfer data.  If <timeout> == 0,
+   * The @a timeout parameter in the following methods indicates how
+   * long to blocking trying to transfer data.  If @a timeout == 0,
    * then the call behaves as a normal send/recv call, i.e., for
    * blocking sockets, the call will block until action is possible;
    * for non-blocking sockets, EWOULDBLOCK will be returned if no
    * action is immediately possible.
    *
-   * If <timeout> != 0, the call will wait until the relative time
-   * specified in *<timeout> elapses.
+   * If @a timeout != 0, the call will wait until the relative time
+   * specified in *@a timeout elapses.
    *
    * The "_n()" I/O methods keep looping until all the data has been
    * transferred.  These methods also work for sockets in non-blocking
-   * mode i.e., they keep looping on EWOULDBLOCK.  <timeout> is used
+   * mode i.e., they keep looping on EWOULDBLOCK.  @a timeout is used
    * to make sure we keep making progress, i.e., the same timeout
    * value is used for every I/O operation in the loop and the timeout
    * is not counted down.
@@ -91,7 +91,7 @@ public:
    * - On EOF, 0 is returned, errno is irrelevant.
    *
    * On partial transfers, i.e., if any data is transferred before
-   * timeout/error/EOF, <bytes_transferred> will contain the number of
+   * timeout/error/EOF, @a bytes_transferred will contain the number of
    * bytes transferred.
    */
   ssize_t recv_n (void *buf,
@@ -117,7 +117,7 @@ public:
                 ACE_Str_Buf *data,
                 int *flags) const;
 
-  /// Send <cntl> and <data> via STREAM pipes.
+  /// Send @a cntl and @a data via STREAM pipes.
   ssize_t send (const ACE_Str_Buf *cntl,
                 const ACE_Str_Buf *data,
                 int flags = 0) const;
@@ -146,17 +146,17 @@ public:
    */
   ssize_t recv (size_t n, ...) const;
 
-  /// Send <n> bytes via Win32 WriteFile using overlapped I/O.
+  /// Send @a n bytes via Win32 WriteFile using overlapped I/O.
   ssize_t send (const void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
 
-  /// Recv <n> bytes via Win32 ReadFile using overlapped I/O.
+  /// Recv @a n bytes via Win32 ReadFile using overlapped I/O.
   ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
 
   /// Dump the state of an object.
   void dump (void) const;
 
   // = The following two methods are no-ops to keep the
-  // <ACE_Connector> happy.
+  // ACE_Connector happy.
   /// Return the local endpoint address.
   int get_local_addr (ACE_DEV_Addr &) const;
 

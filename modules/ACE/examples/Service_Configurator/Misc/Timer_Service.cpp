@@ -16,8 +16,8 @@ int
 Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("in Timer_Service::init, argv[0] = %s, argc == %d\n"),
-	      argv[0], argc));
+              ACE_TEXT ("in Timer_Service::init, argv[0] = %s, argc == %d\n"),
+              argv[0], argc));
 
   // Printout the <argv> values for sanity's sake.
   for (int i = 0; i < argc; i++)
@@ -35,7 +35,7 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
       interval = ACE_OS::atoi (argv[1]);
 
       if (interval == 0)
-	interval = Timer_Service_1::TIMEOUT;
+        interval = Timer_Service_1::TIMEOUT;
     }
 
   if (argc > 2)
@@ -45,7 +45,7 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
       this->max_timeouts_ = ACE_OS::atoi (argv[2]);
 
       if (this->max_timeouts_ == 0)
-	this->max_timeouts_ = Timer_Service_1::MAX_TIMEOUTS;
+        this->max_timeouts_ = Timer_Service_1::MAX_TIMEOUTS;
     }
 
   this->cur_timeouts_ = 0;
@@ -76,13 +76,13 @@ Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
                                  const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("(%x) in %s::handle_timeout sec = %d, usec = %d")
-	      ACE_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
+              ACE_TEXT ("(%x) in %s::handle_timeout sec = %d, usec = %d")
+              ACE_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
               this,
               this->name_,
-	      tv.sec (),
+              tv.sec (),
               tv.usec (),
-	      this->cur_timeouts_,
+              this->cur_timeouts_,
               this->max_timeouts_));
 
   this->cur_timeouts_++;
@@ -121,10 +121,10 @@ Timer_Service_3::Timer_Service_3 (void)
 
 // Define the object that describes the service.
 ACE_STATIC_SVC_DEFINE (Timer_Service_1,
-		       ACE_TEXT ("Timer_Service_1"),
+                       ACE_TEXT ("Timer_Service_1"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (Timer_Service_1),
-		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
 // The following are "Factories" used by the <ACE_Service_Config> and

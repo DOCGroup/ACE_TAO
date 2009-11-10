@@ -42,18 +42,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
-      case 'f':
-	file_name = get_opt.opt_arg ();
-	break;
-      case 'h':
-	host_name = get_opt.opt_arg ();
-	break;
-      case 'p':
-	port_number = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
-      default:
-	print_usage_and_die ();
-	break;
+        case 'f':
+          file_name = get_opt.opt_arg ();
+          break;
+        case 'h':
+          host_name = get_opt.opt_arg ();
+          break;
+        case 'p':
+          port_number = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
       }
 }
 
@@ -66,6 +66,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   void *cp = 0;
   ACE_INET_Addr sa (port_number, host_name);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)
@@ -73,6 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        "%p\n",
                        "mmap"),
                       -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Next, send the file's contents.
 
@@ -86,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else if (cc != (ssize_t) mmap.size ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
-		       "Not all the contents of mmap file are sent."),
+                       "Not all the contents of mmap file are sent."),
                       -1);
   return 0;
 }

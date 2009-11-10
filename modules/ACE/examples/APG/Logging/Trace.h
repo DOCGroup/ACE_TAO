@@ -118,38 +118,38 @@ private:
 #define ALERT_PREFIX       ACE_TEXT ("ALERT%I")
 #define EMERGENCY_PREFIX   ACE_TEXT ("EMERGENCY%I")
 
-#define MY_DEBUG(...)     \
+#define MY_DEBUG(X)     \
         ACE_DEBUG(( LM_DEBUG,  \
                     DEBUG_PREFIX \
-                    __VA_ARGS__))
-#define MY_INFO(...)     \
+                    X))
+#define MY_INFO(X)     \
         ACE_DEBUG(( LM_INFO,  \
                     INFO_PREFIX \
-                    __VA_ARGS__))
-#define MY_NOTICE(...)     \
+                    X))
+#define MY_NOTICE(X)     \
         ACE_DEBUG(( LM_NOTICE,  \
                     NOTICE_PREFIX \
-                    __VA_ARGS__))
-#define MY_WARNING(...)     \
+                    X))
+#define MY_WARNING(X)     \
         ACE_DEBUG(( LM_WARNING,  \
                     WARNING_PREFIX \
-                    __VA_ARGS__))
-#define MY_ERROR(...)     \
+                    X))
+#define MY_ERROR(X)     \
         ACE_DEBUG(( LM_ERROR,  \
                     ERROR_PREFIX \
-                    __VA_ARGS__))
-#define MY_CRITICAL(...)     \
+                    X))
+#define MY_CRITICAL(X)     \
         ACE_DEBUG(( LM_CRITICAL,  \
                     CRITICAL_PREFIX \
-                    __VA_ARGS__))
-#define MY_ALERT(...)     \
+                    X))
+#define MY_ALERT(X)     \
         ACE_DEBUG(( LM_ALERT,  \
                     ALERT_PREFIX \
-                    __VA_ARGS__))
-#define MY_EMERGENCY(...)     \
+                    X))
+#define MY_EMERGENCY(X)     \
         ACE_DEBUG(( LM_EMERGENCY,  \
                     EMERGENCY_PREFIX \
-                    __VA_ARGS__))
+                    X))
 // Listing 3
 
 #endif /* __GNUC__ */

@@ -29,7 +29,7 @@
 #if defined (ACE_WIN32)
    // Default semaphore key and mutex name
 #  if !defined (ACE_DEFAULT_SEM_KEY)
-#    define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
+#    define ACE_DEFAULT_SEM_KEY const_cast <char*>("ACE_SEM_KEY")
 #  endif /* ACE_DEFAULT_SEM_KEY */
 #else /* !defined (ACE_WIN32) */
    // Default semaphore key

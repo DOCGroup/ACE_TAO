@@ -32,13 +32,13 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
         // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Temporary path too long, ")
-                      ACE_LIB_TEXT ("defaulting to current directory\n")));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           this->poolname_[0] = 0;
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (this->poolname_, ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
+      ACE_OS::strcat (this->poolname_, ACE_TEXT ("ace-malloc-XXXXXX"));
 
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
@@ -85,7 +85,7 @@ ACE_System_Time::get_master_system_time (time_t &time_out)
   if (this->delta_time_ == 0)
     {
       // Try to find it
-      void * temp;
+      void * temp = 0;
       if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) == -1)
         {
           // No time entry in shared memory (meaning no Clerk exists)

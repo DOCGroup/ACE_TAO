@@ -11,7 +11,9 @@ ACE_RCSID(Web_Crawler, Options, "$Id$")
 int 
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("df:h:i:l:rt:u:vo:p:"));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_LOG_MSG->open (argv[0]);
 
@@ -28,9 +30,11 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   // The default is to make this limit as large as possible.
   this->handle_limit_ = -1;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   for (int c;
        (c = getopt ()) != EOF;
        )
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case ACE_TEXT ('d'):

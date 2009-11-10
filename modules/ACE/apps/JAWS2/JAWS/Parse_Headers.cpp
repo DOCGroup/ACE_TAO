@@ -83,7 +83,7 @@ JAWS_Parse_Headers::skipset (const char *set, char *start, char *end)
   char *p = start;
   while (p < end)
     {
-      if (ACE_OS::strchr (set, *p) != NULL)
+      if (ACE_OS::strchr (set, *p) != 0)
         break;
       p++;
     }
@@ -96,7 +96,7 @@ JAWS_Parse_Headers::skipcset (const char *set, char *start, char *end)
   char *p = start;
   while (p < end)
     {
-      if (ACE_OS::strchr (set, *p) == NULL)
+      if (ACE_OS::strchr (set, *p) == 0)
         break;
       p++;
     }

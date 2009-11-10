@@ -109,8 +109,10 @@ public:
   int svc (void);
   // Task event loop.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int signal (size_t index);
   // Signal an event.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ACE_Auto_Event *events_;
@@ -212,7 +214,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Task_Handler task (number_of_handles,
                      concurrent_threads);
 
-  ACE_OS::srand (ACE_OS::time (0L));
+  ACE_OS::srand ((u_int) ACE_OS::time (0L));
 
   for (int i = 1; i <= iterations; i++)
     {
@@ -255,7 +257,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 }
 #else /* !ACE_WIN32 */
 int
-ACE_TMAIN (int, ACE_TCHAR **)
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }

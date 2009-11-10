@@ -44,13 +44,12 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
   io_vec->iov_base = 0;
 
   // Check the status of the current socket.
-  int select_width;
 #  if defined (ACE_WIN32)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
-  select_width = 0;
+  int select_width = 0;
 #  else
-  select_width = int (this->get_handle ()) + 1;
+  int select_width = int (this->get_handle ()) + 1;
 #  endif /* ACE_WIN32 */
   switch (ACE_OS::select (select_width,
                           handle_set,
@@ -85,9 +84,9 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
       // don't want that value cast to unsigned and returned.
       ssize_t recv_len = this->recv (io_vec->iov_base, inlen);
       if (recv_len > 0)
-	// u_long is the Windows type; size_t is everyone else's. A u_long
-	// should go into a size_t anywhere without an issue.
-	io_vec->iov_len = static_cast<u_long> (recv_len);
+        // u_long is the Windows type; size_t is everyone else's. A u_long
+        // should go into a size_t anywhere without an issue.
+        io_vec->iov_len = static_cast<u_long> (recv_len);
       return recv_len;
     }
   else
@@ -110,7 +109,7 @@ ACE_SOCK_IO::send (size_t n, ...) const
   ACE_TRACE ("ACE_SOCK_IO::send");
 
   va_list argp;
-  int total_tuples = ACE_Utils::Truncate<size_t> (n / 2);
+  int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
   iovec *iovp = 0;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -128,9 +127,9 @@ ACE_SOCK_IO::send (size_t n, ...) const
       iovp[i].iov_len = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::sendv (this->get_handle (),
-                                  iovp,
-                                  total_tuples);
+  ssize_t const result = ACE_OS::sendv (this->get_handle (),
+                                        iovp,
+                                        total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -150,7 +149,7 @@ ACE_SOCK_IO::recv (size_t n, ...) const
   ACE_TRACE ("ACE_SOCK_IO::recv");
 
   va_list argp;
-  int total_tuples = ACE_Utils::Truncate<size_t> (n / 2);
+  int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -168,9 +167,9 @@ ACE_SOCK_IO::recv (size_t n, ...) const
       iovp[i].iov_len = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::recvv (this->get_handle (),
-                                  iovp,
-                                  total_tuples);
+  ssize_t const result = ACE_OS::recvv (this->get_handle (),
+                                        iovp,
+                                        total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */

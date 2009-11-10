@@ -4,7 +4,7 @@
  *
  * $Id$
  *
- * Test @c ACE_Utils::Truncate<> function template.
+ * Test @c ACE_Utils::truncate_cast<> function template.
  *
  * @author Ossama Othman <ossama_othman at symantec dot com>
  */
@@ -40,7 +40,7 @@ sizeof_from_lt_sizeof_to (void)
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
 
-    if (Truncate<to_type> (f) != static_cast<to_type> (f))
+    if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
       {
         success = false;
 
@@ -60,7 +60,7 @@ sizeof_from_lt_sizeof_to (void)
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
 
-    if (Truncate<to_type> (f) != static_cast<to_type> (f))
+    if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
       {
         success = false;
 
@@ -81,8 +81,8 @@ sizeof_from_lt_sizeof_to (void)
     from_type f2 =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
 
-    if (Truncate<to_type> (f1) != f1
-        || Truncate<to_type> (f2) != f2)
+    if (truncate_cast<to_type> (f1) != f1
+        || truncate_cast<to_type> (f2) != f2)
       {
         success = false;
 
@@ -102,7 +102,7 @@ sizeof_from_lt_sizeof_to (void)
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
 
-    if (Truncate<to_type> (f) != static_cast<to_type> (f))
+    if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
       {
         success = false;
 
@@ -140,8 +140,8 @@ sizeof_from_eq_sizeof_to (void)
     from_type f2 =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
 
-    if (static_cast<from_type> (Truncate<to_type> (f1)) != f1
-        || static_cast<from_type> (Truncate<to_type> (f2)) != f2)
+    if (static_cast<from_type> (truncate_cast<to_type> (f1)) != f1
+        || static_cast<from_type> (truncate_cast<to_type> (f2)) != f2)
       {
         success = false;
 
@@ -161,7 +161,7 @@ sizeof_from_eq_sizeof_to (void)
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
 
-    if (Truncate<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
       {
         success = false;
 
@@ -182,8 +182,8 @@ sizeof_from_eq_sizeof_to (void)
     from_type f2 =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
 
-    if (Truncate<to_type> (f1) != f1
-        || Truncate<to_type> (f2) != f2)
+    if (truncate_cast<to_type> (f1) != f1
+        || truncate_cast<to_type> (f2) != f2)
       {
         success = false;
 
@@ -203,7 +203,7 @@ sizeof_from_eq_sizeof_to (void)
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
 
-    if (Truncate<to_type> (f) != f)
+    if (truncate_cast<to_type> (f) != f)
       {
         success = false;
 
@@ -240,7 +240,7 @@ sizeof_from_gt_sizeof_to (void)
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
 
-    if (Truncate<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
       {
         success = false;
 
@@ -260,7 +260,7 @@ sizeof_from_gt_sizeof_to (void)
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
 
-    if (Truncate<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
       {
         success = false;
 
@@ -281,8 +281,8 @@ sizeof_from_gt_sizeof_to (void)
     from_type f2 =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
 
-    if (Truncate<to_type> (f1) != f1
-        || Truncate<to_type> (f2) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f1) != f1
+        || truncate_cast<to_type> (f2) != ACE_Numeric_Limits<to_type>::max ())
       {
         success = false;
 
@@ -302,7 +302,7 @@ sizeof_from_gt_sizeof_to (void)
     from_type f =
       ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
 
-    if (Truncate<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
       {
         success = false;
 

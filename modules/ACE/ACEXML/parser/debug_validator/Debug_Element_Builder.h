@@ -45,7 +45,6 @@ public:
   virtual int setElementName (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
                               const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
   /**
@@ -54,7 +53,6 @@ public:
    * @retval 0 if valid, -1 otherwise.
    */
   virtual int setContentType (CONTENT_TYPE type ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
   /**
@@ -63,7 +61,6 @@ public:
   virtual int insertMixedElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *localName,
                                   const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
   /**
@@ -104,7 +101,6 @@ public:
   virtual int insertElement  (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
                               const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
   /**

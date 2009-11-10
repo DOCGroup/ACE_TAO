@@ -25,7 +25,10 @@ static const int MAX_ITERATIONS = 100;
 class WFMO_Test : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int svc (void);
 
   // Use two handles here..
@@ -51,7 +54,7 @@ WFMO_Test::svc (void)
   while(1)
     {
       int result = ::WaitForMultipleObjects (2, this->sema_handles_,
-					     FALSE, INFINITE);
+                                             FALSE, INFINITE);
       if (result == WAIT_OBJECT_0)
         {
           // Signal the other semaphore just to see if we can get
@@ -60,12 +63,12 @@ WFMO_Test::svc (void)
           ACE_ASSERT (result != -1);
         }
       else if (result == WAIT_OBJECT_0 + 1)
-	;
+        ;
       else
-	{
-	  ACE_ERROR ((LM_ERROR, "Error in WaitForMultipleObejcts\n"));
-	  ACE_OS::exit (0);
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "Error in WaitForMultipleObejcts\n"));
+          ACE_OS::exit (0);
+        }
 
       // semaphore_count_ will be displayed by the "main" thread.
       // It's value must be 2.  Note that although this is a shared
@@ -114,9 +117,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Add one for the other thread that was signaled.
       ACE_DEBUG ((LM_DEBUG,
-		  "semaphore_count_ = %d  (should have been %d).\n",
-		  wfmo_test.semaphore_count_,
-		  2)); // Two semaphores should have been released.
+                  "semaphore_count_ = %d  (should have been %d).\n",
+                  wfmo_test.semaphore_count_,
+                  2)); // Two semaphores should have been released.
     }
 
   ACE_OS::exit (0);

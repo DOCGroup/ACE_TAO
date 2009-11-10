@@ -20,11 +20,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
 void
 ACE_Semaphore::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Semaphore::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Semaphore::ACE_Semaphore (unsigned int count,
@@ -32,7 +34,7 @@ ACE_Semaphore::ACE_Semaphore (unsigned int count,
                               const ACE_TCHAR *name,
                               void *arg,
                               int max)
-  : removed_ (0)
+  : removed_ (false)
 {
 // ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
 #if defined(ACE_LACKS_UNNAMED_SEMAPHORE)
@@ -48,8 +50,8 @@ ACE_Semaphore::ACE_Semaphore (unsigned int count,
                          name, arg, max) != 0)
 #endif
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Semaphore::ACE_Semaphore")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Semaphore::ACE_Semaphore")));
 }
 
 ACE_Semaphore::~ACE_Semaphore (void)

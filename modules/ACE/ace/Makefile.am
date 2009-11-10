@@ -16,7 +16,8 @@ ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
-	QoS \
+        ETCL \
+        Monitor_Control \
         SSL
 
 CLEANFILES =
@@ -90,6 +91,7 @@ libACE_la_SOURCES = \
   Dirent_Selector.cpp \
   Dump.cpp \
   Dynamic.cpp \
+  Dynamic_Message_Strategy.cpp \
   Dynamic_Service_Base.cpp \
   Dynamic_Service_Dependency.cpp \
   Encoding_Converter.cpp \
@@ -155,7 +157,16 @@ libACE_la_SOURCES = \
   Mem_Map.cpp \
   Message_Block.cpp \
   Message_Queue.cpp \
+  Message_Queue_NT.cpp \
+  Message_Queue_Vx.cpp \
   Method_Request.cpp \
+  Monitor_Admin.cpp \
+  Monitor_Admin_Manager.cpp \
+  Monitor_Base.cpp \
+  Monitor_Control_Action.cpp \
+  Monitor_Control_Types.cpp \
+  Monitor_Point_Registry.cpp \
+  Monitor_Size.cpp \
   Msg_WFMO_Reactor.cpp \
   Multihomed_INET_Addr.cpp \
   Mutex.cpp \
@@ -165,6 +176,7 @@ libACE_la_SOURCES = \
   Name_Space.cpp \
   Naming_Context.cpp \
   Netlink_Addr.cpp \
+  Notification_Queue.cpp \
   Notification_Strategy.cpp \
   OS_Errno.cpp \
   OS_Log_Msg_Attributes.cpp \
@@ -201,6 +213,7 @@ libACE_la_SOURCES = \
   OS_NS_time.cpp \
   OS_NS_unistd.cpp \
   OS_NS_wchar.cpp \
+  OS_NS_wctype.cpp \
   OS_QoS.cpp \
   OS_TLI.cpp \
   OS_Thread_Adapter.cpp \
@@ -234,7 +247,6 @@ libACE_la_SOURCES = \
   Read_Buffer.cpp \
   Recursive_Thread_Mutex.cpp \
   Recyclable.cpp \
-  Refcountable.cpp \
   Registry.cpp \
   Registry_Name_Space.cpp \
   Remote_Name_Space.cpp \
@@ -259,6 +271,7 @@ libACE_la_SOURCES = \
   SPIPE_Connector.cpp \
   SPIPE_Stream.cpp \
   SString.cpp \
+  Stack_Trace.cpp \
   SUN_Proactor.cpp \
   SV_Message.cpp \
   SV_Message_Queue.cpp \
@@ -307,14 +320,9 @@ libACE_la_SOURCES = \
   Thread_Manager.cpp \
   Thread_Mutex.cpp \
   Thread_Semaphore.cpp \
-  Time_Request_Reply.cpp \
+  Throughput_Stats.cpp \
   Time_Value.cpp \
   Timeprobe.cpp \
-  Timer_Hash.cpp \
-  Timer_Heap.cpp \
-  Timer_List.cpp \
-  Timer_Queue.cpp \
-  Timer_Wheel.cpp \
   Token.cpp \
   Token_Collection.cpp \
   Token_Invariants.cpp \
@@ -334,6 +342,7 @@ libACE_la_SOURCES = \
   WIN32_Proactor.cpp \
   XML_Svc_Conf.cpp \
   XTI_ATM_Mcast.cpp \
+  ace_wchar.cpp \
   gethrtime.cpp
 
 libACE_la_LDFLAGS = \
@@ -454,6 +463,7 @@ nobase_include_HEADERS += \
   Condition_Thread_Mutex.h \
   Condition_Thread_Mutex.inl \
   Configuration.h \
+  Configuration.inl \
   Configuration_Import_Export.h \
   Connection_Recycling_Strategy.h \
   Connector.cpp \
@@ -465,6 +475,7 @@ nobase_include_HEADERS += \
   Containers_T.inl \
   Copy_Disabled.h \
   Countdown_Time.h \
+  Countdown_Time.inl \
   DEV.h \
   DEV.inl \
   DEV_Addr.h \
@@ -489,6 +500,8 @@ nobase_include_HEADERS += \
   Dump_T.h \
   Dynamic.h \
   Dynamic.inl \
+  Dynamic_Message_Strategy.h \
+  Dynamic_Message_Strategy.inl \
   Dynamic_Service.cpp \
   Dynamic_Service.h \
   Dynamic_Service.inl \
@@ -590,6 +603,9 @@ nobase_include_HEADERS += \
   IPC_SAP.inl \
   If_Then_Else.h \
   Init_ACE.h \
+  Intrusive_Auto_Ptr.cpp \
+  Intrusive_Auto_Ptr.h \
+  Intrusive_Auto_Ptr.inl \
   Intrusive_List.cpp \
   Intrusive_List.h \
   Intrusive_List.inl \
@@ -622,6 +638,7 @@ nobase_include_HEADERS += \
   Lock_Adapter_T.h \
   Lock_Adapter_T.inl \
   Log_Msg.h \
+  Log_Msg.inl \
   Log_Msg_Backend.h \
   Log_Msg_Callback.h \
   Log_Msg_IPC.h \
@@ -674,14 +691,26 @@ nobase_include_HEADERS += \
   Message_Block_T.inl \
   Message_Queue.h \
   Message_Queue.inl \
+  Message_Queue_NT.h \
+  Message_Queue_NT.inl \
   Message_Queue_T.cpp \
   Message_Queue_T.h \
+  Message_Queue_Vx.h \
+  Message_Queue_Vx.inl \
   Method_Object.h \
   Method_Request.h \
   Min_Max.h \
   Module.cpp \
   Module.h \
   Module.inl \
+  Monitor_Admin.h \
+  Monitor_Admin_Manager.h \
+  Monitor_Base.h \
+  Monitor_Base.inl \
+  Monitor_Control_Action.h \
+  Monitor_Control_Types.h \
+  Monitor_Point_Registry.h \
+  Monitor_Size.h \
   Msg_WFMO_Reactor.h \
   Msg_WFMO_Reactor.inl \
   Multihomed_INET_Addr.h \
@@ -694,10 +723,13 @@ nobase_include_HEADERS += \
   Name_Request_Reply.h \
   Name_Space.h \
   Naming_Context.h \
+  Naming_Context.inl \
   Netlink_Addr.h \
   Netlink_Addr.inl \
   Node.cpp \
   Node.h \
+  Notification_Queue.h \
+  Notification_Queue.inl \
   Notification_Strategy.h \
   Notification_Strategy.inl \
   Null_Barrier.h \
@@ -778,6 +810,8 @@ nobase_include_HEADERS += \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_wchar.h \
+  OS_NS_wctype.h \
+  OS_NS_wctype.inl \
   OS_NS_wchar.inl \
   OS_QoS.h \
   OS_String.h \
@@ -848,7 +882,9 @@ nobase_include_HEADERS += \
   Recyclable.h \
   Recyclable.inl \
   Refcountable.h \
-  Refcountable.inl \
+  Refcountable_T.cpp \
+  Refcountable_T.h \
+  Refcountable_T.inl \
   Refcounted_Auto_Ptr.cpp \
   Refcounted_Auto_Ptr.h \
   Refcounted_Auto_Ptr.inl \
@@ -898,6 +934,7 @@ nobase_include_HEADERS += \
   SString.h \
   SString.inl \
   SStringfwd.h \
+  Stack_Trace.h \
   SUN_Proactor.h \
   SV_Message.h \
   SV_Message.inl \
@@ -914,6 +951,7 @@ nobase_include_HEADERS += \
   Sbrk_Memory_Pool.h \
   Sched_Params.h \
   Sched_Params.inl \
+  Select_Reactor.h \
   Select_Reactor_Base.h \
   Select_Reactor_Base.inl \
   Select_Reactor_T.cpp \
@@ -968,10 +1006,9 @@ nobase_include_HEADERS += \
   Svc_Conf.h \
   Svc_Conf_Lexer.h \
   Svc_Conf_Tokens.h \
+  Svc_Conf_Token_Table.h \
   Svc_Handler.cpp \
   Svc_Handler.h \
-  Swap.h \
-  Swap.inl \
   Synch.h \
   Synch_Options.h \
   Synch_T.cpp \
@@ -1016,33 +1053,35 @@ nobase_include_HEADERS += \
   Thread_Mutex.inl \
   Thread_Semaphore.h \
   Thread_Semaphore.inl \
-  Time_Request_Reply.h \
+  Throughput_Stats.h \
   Time_Value.h \
   Time_Value.inl \
   Timeprobe.h \
   Timeprobe.inl \
   Timeprobe_T.cpp \
   Timeprobe_T.h \
-  Timer_Hash.h \
   Timer_Hash_T.cpp \
   Timer_Hash_T.h \
-  Timer_Heap.h \
   Timer_Heap_T.cpp \
   Timer_Heap_T.h \
-  Timer_List.h \
   Timer_List_T.cpp \
   Timer_List_T.h \
-  Timer_Queue.h \
   Timer_Queue_Adapters.cpp \
   Timer_Queue_Adapters.h \
   Timer_Queue_Adapters.inl \
   Timer_Queue_T.cpp \
   Timer_Queue_T.h \
   Timer_Queue_T.inl \
-  Timer_Queuefwd.h \
-  Timer_Wheel.h \
   Timer_Wheel_T.cpp \
   Timer_Wheel_T.h \
+  Tokenizer_T.cpp \
+  Tokenizer_T.h \
+  Timer_Hash.h \
+  Timer_Heap.h \
+  Timer_List.h \
+  Timer_Queue.h \
+  Timer_Queuefwd.h \
+  Timer_Wheel.h \
   Token.h \
   Token.inl \
   Token_Collection.h \
@@ -1081,6 +1120,9 @@ nobase_include_HEADERS += \
   Unbounded_Set.cpp \
   Unbounded_Set.h \
   Unbounded_Set.inl \
+  Unbounded_Set_Ex.cpp \
+  Unbounded_Set_Ex.h \
+  Unbounded_Set_Ex.inl \
   Value_Ptr.h \
   Vector_T.cpp \
   Vector_T.h \
@@ -1096,9 +1138,9 @@ nobase_include_HEADERS += \
   XTI_ATM_Mcast.inl \
   ace_wchar.h \
   ace_wchar.inl \
+  checked_iterator.h \
   config-WinCE.h \
   config-all.h \
-  config-borland-common.h \
   config-lite.h \
   config-macros.h \
   config-minimal.h \
@@ -1108,7 +1150,6 @@ nobase_include_HEADERS += \
   config-win32-msvc-7.h \
   config-win32-msvc-8.h \
   config-win32-msvc.h \
-  config-win32-visualage.h \
   config-win32.h \
   config.h \
   iosfwd.h \
@@ -1118,6 +1159,7 @@ nobase_include_HEADERS += \
   os_include/netinet/os_tcp.h \
   os_include/os_aio.h \
   os_include/os_assert.h \
+  os_include/os_byteswap.h \
   os_include/os_complex.h \
   os_include/os_cpio.h \
   os_include/os_ctype.h \
@@ -1133,8 +1175,10 @@ nobase_include_HEADERS += \
   os_include/os_glob.h \
   os_include/os_grp.h \
   os_include/os_iconv.h \
+  os_include/os_intrin.h \
   os_include/os_inttypes.h \
   os_include/os_iso646.h \
+  os_include/os_kstat.h \
   os_include/os_langinfo.h \
   os_include/os_libgen.h \
   os_include/os_limits.h \
@@ -1145,6 +1189,8 @@ nobase_include_HEADERS += \
   os_include/os_ndbm.h \
   os_include/os_netdb.h \
   os_include/os_nl_types.h \
+  os_include/os_pdh.h \
+  os_include/os_pdhmsg.h \
   os_include/os_poll.h \
   os_include/os_pthread.h \
   os_include/os_pwd.h \
@@ -1170,6 +1216,7 @@ nobase_include_HEADERS += \
   os_include/os_tgmath.h \
   os_include/os_time.h \
   os_include/os_trace.h \
+  os_include/os_typeinfo.h \
   os_include/os_ucontext.h \
   os_include/os_ulimit.h \
   os_include/os_unistd.h \
@@ -1191,6 +1238,7 @@ nobase_include_HEADERS += \
   os_include/sys/os_stat.h \
   os_include/sys/os_statvfs.h \
   os_include/sys/os_sysctl.h \
+  os_include/sys/os_sysinfo.h \
   os_include/sys/os_time.h \
   os_include/sys/os_timeb.h \
   os_include/sys/os_times.h \

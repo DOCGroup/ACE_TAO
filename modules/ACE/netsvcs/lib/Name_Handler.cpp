@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
 #include "ace/Singleton.h"
@@ -13,11 +11,6 @@
 ACE_RCSID(lib,
           Name_Handler,
           "$Id$")
-
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX> *
-      ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 // Simple macro that does bitwise AND -- useful in table lookup
 #define ACE_TABLE_MAP(INDEX, MASK) (INDEX & MASK)
@@ -34,21 +27,17 @@ ACE_Name_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 
   ACE_LOG_MSG->open (ACE_TEXT ("Name Service"));
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
+  this->naming_context()->name_options()->parse_args( argc, argv );
+  service_port = this->naming_context()->name_options()->nameserver_port();
 
-  for (int c; (c = get_opt ()) != -1; )
-    {
-      switch (c)
-        {
-        case 'p':
-          service_port = ACE_OS::atoi (get_opt.opt_arg ());
-          break;
-        default:
+  // dont allow to connect to another name serever
+  if(this->naming_context()->name_options()->context() == ACE_Naming_Context::NET_LOCAL)
+        this->naming_context()->name_options()->nameserver_host(ACE_TEXT ("localhost"));
+
+  if (this->naming_context()->open( this->naming_context()->name_options()->context() ) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT ("%n:\n[-p server-port]\n")),
+                            ACE_TEXT ("%n:\n open naming context failed.\n")),
                            -1);
-        }
-    }
 
   this->service_addr_.set (service_port);
   return 0;
@@ -61,7 +50,11 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   // Use the options hook to parse the command line arguments and set
   // options.
-  this->parse_args (argc, argv);
+  if( this->parse_args (argc, argv) == -1 )
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ACE_Name_Acceptor::parse_args failed")),
+                      -1);
 
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
@@ -147,7 +140,7 @@ ACE_Name_Handler::ACE_Name_Handler (ACE_Thread_Manager *tm)
 // ACE_Name_Acceptor).
 
 /* VIRTUAL */ int
-ACE_Name_Handler::open (void *)
+ACE_Name_Handler::open (void * v)
 {
   ACE_TRACE (ACE_TEXT ("ACE_Name_Handler::open"));
 
@@ -157,6 +150,10 @@ ACE_Name_Handler::open (void *)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
                       -1);
+
+  ACE_Name_Acceptor* acceptor_ = static_cast<ACE_Name_Acceptor*>(v);
+  naming_context_ = acceptor_->naming_context();
+
   return 0;
 }
 
@@ -292,7 +289,7 @@ ACE_Name_Handler::recv_request (void)
     case sizeof (ACE_UINT32):
       {
         // Transform the length into host byte order.
-        ssize_t length = ntohl (this->name_request_.length ());
+        ssize_t length = ACE_NTOHL (this->name_request_.length ());
 
         // Do a sanity check on the length of the message.
         if (length > (ssize_t) sizeof this->name_request_)
@@ -372,9 +369,9 @@ ACE_Name_Handler::shared_bind (int rebind)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for BIND \n")));
+                  ACE_TEXT ("request for BIND\n")));
 #endif /* 0 */
-      result = NAMING_CONTEXT::instance ()->bind (a_name,
+      result = this->naming_context ()->bind (a_name,
                                                   a_value,
                                                   this->name_request_.type ());
     }
@@ -382,9 +379,9 @@ ACE_Name_Handler::shared_bind (int rebind)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for REBIND \n")));
+                  ACE_TEXT ("request for REBIND\n")));
 #endif /* 0 */
-      result = NAMING_CONTEXT::instance ()->rebind (a_name,
+      result = this->naming_context ()->rebind (a_name,
                                                     a_value,
                                                     this->name_request_.type ());
       if (result == 1)
@@ -401,7 +398,7 @@ ACE_Name_Handler::resolve (void)
 {
   ACE_TRACE (ACE_TEXT ("ACE_Name_Handler::resolve"));
 #if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for RESOLVE \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for RESOLVE\n")));
 #endif /* 0 */
   ACE_NS_WString a_name (this->name_request_.name (),
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
@@ -411,7 +408,7 @@ ACE_Name_Handler::resolve (void)
 
   ACE_NS_WString avalue;
   char *atype;
-  if (NAMING_CONTEXT::instance ()->resolve (a_name, avalue, atype) == 0)
+  if (this->naming_context ()->resolve (a_name, avalue, atype) == 0)
     {
       ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> avalue_urep (avalue.rep ());
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
@@ -434,12 +431,12 @@ ACE_Name_Handler::unbind (void)
 {
   ACE_TRACE (ACE_TEXT ("ACE_Name_Handler::unbind"));
 #if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for UNBIND \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for UNBIND\n")));
 #endif /* 0 */
   ACE_NS_WString a_name (this->name_request_.name (),
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
-  if (NAMING_CONTEXT::instance ()->unbind (a_name) == 0)
+  if (this->naming_context ()->unbind (a_name) == 0)
     return this->send_reply (0);
   else
     return this->send_reply (-1);
@@ -497,7 +494,7 @@ ACE_Name_Handler::lists (void)
   ACE_DEBUG ((LM_DEBUG, list_table_[index].description_));
 
   // Call the appropriate method
-  if ((NAMING_CONTEXT::instance ()->*list_table_[index].operation_) (set, pattern) != 0)
+  if ((this->naming_context ()->*list_table_[index].operation_) (set, pattern) != 0)
     {
       // None found so send blank request back
       ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
@@ -552,27 +549,27 @@ ACE_Name_Handler::lists_entries (void)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for LIST_NAME_ENTRIES \n")));
+                  ACE_TEXT ("request for LIST_NAME_ENTRIES\n")));
 #endif /* 0 */
-      result = NAMING_CONTEXT::instance ()->
+      result = this->naming_context ()->
         ACE_Naming_Context::list_name_entries (set, pattern);
     }
   else if (msg_type == ACE_Name_Request::LIST_VALUE_ENTRIES)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for LIST_VALUE_ENTRIES \n")));
+                  ACE_TEXT ("request for LIST_VALUE_ENTRIES\n")));
 #endif /* 0 */
-      result = NAMING_CONTEXT::instance ()->
+      result = this->naming_context ()->
         ACE_Naming_Context::list_value_entries (set, pattern);
     }
   else if (msg_type == ACE_Name_Request::LIST_TYPE_ENTRIES)
     {
 #if 0
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("request for LIST_TYPE_ENTRIES \n")));
+                  ACE_TEXT ("request for LIST_TYPE_ENTRIES\n")));
 #endif /* 0 */
-      result = NAMING_CONTEXT::instance ()->
+      result = this->naming_context ()->
         ACE_Naming_Context::list_type_entries (set, pattern);
     }
   else
@@ -618,6 +615,18 @@ ACE_Name_Handler::lists_entries (void)
     }
 
   return 0;
+}
+
+ACE_Naming_Context *
+ACE_Name_Handler::naming_context (void)
+{
+  return naming_context_;
+}
+
+ACE_Naming_Context *
+ACE_Name_Acceptor::naming_context (void)
+{
+  return &naming_context_;
 }
 
 ACE_Name_Handler::~ACE_Name_Handler (void)

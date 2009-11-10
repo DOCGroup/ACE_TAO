@@ -49,9 +49,11 @@ template <class DSRT_Scheduler_Traits,
 int Sched_Ready_Queue<DSRT_Scheduler_Traits,
                       More_Eligible_Comparator,
                       ACE_LOCK>::
-current_size ()
+current_size (void)
 {
-  return dispatch_items_prio_queue_.current_size ();
+  return
+    ACE_Utils::truncate_cast<int> (
+      dispatch_items_prio_queue_.current_size ());
 }
 
 template <class DSRT_Scheduler_Traits,
@@ -63,7 +65,9 @@ int Sched_Ready_Queue<DSRT_Scheduler_Traits,
 most_eligible (DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item)
 {
   if (dispatch_items_prio_queue_.current_size () == 0)
+    {
       return -1;
+    }
 
   PRIO_QUEUE_ITERATOR start = dispatch_items_prio_queue_.begin ();
   PRIO_QUEUE_ENTRY &ent = (*start);
@@ -87,12 +91,8 @@ find (Guid_t guid,
     {
       return -1;
     }
-  else
-    {
-      found_item = rb_tree_node->item ();
-      return 0;
-    }
 
+  found_item = rb_tree_node->item ();
   return 0;
 }
 

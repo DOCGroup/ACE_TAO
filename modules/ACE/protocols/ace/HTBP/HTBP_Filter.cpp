@@ -39,7 +39,7 @@ ACE::HTBP::Filter::header_complete (ACE::HTBP::Channel *ch)
       if (code && code < nl)
         {
           code += 9; // skip past "HTTP/1.1 "
-          this->http_code_ = strtol(code,0,10);
+          this->http_code_ = ACE_OS::strtol(code,0,10);
         }
     }
 

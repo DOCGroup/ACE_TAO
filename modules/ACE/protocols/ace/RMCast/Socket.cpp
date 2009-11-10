@@ -58,8 +58,9 @@ namespace ACE_RMCast
     get_handle_ ();
 
   private:
-    virtual void
-    recv (Message_ptr m);
+    //FUZZ: disable check_for_lack_ACE_OS
+    virtual void recv (Message_ptr m);
+    //FUZZ: enable check_for_lack_ACE_OS
 
   private:
     bool loop_;
@@ -287,8 +288,7 @@ namespace ACE_RMCast
     }
 
 
-  void Socket_Impl::
-    recv (Message_ptr m)
+  void Socket_Impl::recv (Message_ptr m)
     {
       if (m->find (Data::id) != 0 || m->find (NoData::id) != 0)
         {
@@ -308,7 +308,9 @@ namespace ACE_RMCast
           //if (queue_.size () != 0)
           //  cerr << "recv socket queue size: " << queue_.size () << endl;
 
+          //FUZZ: disable check_for_lack_ACE_OS
           bool signal (queue_.is_empty ());
+          //FUZZ: enable check_for_lack_ACE_OS
 
           queue_.enqueue_tail (m);
 
@@ -346,35 +348,30 @@ namespace ACE_RMCast
     {
     }
 
-  void Socket::
-    send (void const* buf, size_t s)
+  void Socket::send (void const* buf, size_t s)
     {
       impl_->send_ (buf, s);
     }
 
-  ssize_t Socket::
-    recv (void* buf, size_t s)
+  ssize_t Socket::recv (void* buf, size_t s)
     {
       return impl_->recv_ (buf, s, 0, 0);
     }
 
-  ssize_t Socket::
-    recv (void* buf, size_t s, ACE_INET_Addr& from)
+  ssize_t Socket::recv (void* buf, size_t s, ACE_INET_Addr& from)
     {
       return impl_->recv_ (buf, s, 0, &from);
     }
 
-  ssize_t Socket::
-    recv (void* buf, size_t s, ACE_Time_Value const& timeout)
+  ssize_t Socket::recv (void* buf, size_t s, ACE_Time_Value const& timeout)
     {
       return impl_->recv_ (buf, s, &timeout, 0);
     }
 
-  ssize_t Socket::
-    recv (void* buf,
-          size_t s,
-          ACE_Time_Value const& timeout,
-          ACE_INET_Addr& from)
+  ssize_t Socket::recv (void* buf,
+                        size_t s,
+                        ACE_Time_Value const& timeout,
+                        ACE_INET_Addr& from)
     {
       return impl_->recv_ (buf, s, &timeout, &from);
     }

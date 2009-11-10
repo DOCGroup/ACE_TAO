@@ -23,7 +23,6 @@
  *   -# TAO's IFR, it makes extensive use of ACE_Configuration
  *
  *  @todo Templatize this class with an ACE_LOCK to provide thread safety
- *
  */
 //=============================================================================
 
@@ -65,7 +64,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Implementations subclass this base class to represent a
  * section key.
- *
  */
 class ACE_Export ACE_Section_Key_Internal
 {
@@ -179,7 +177,7 @@ public:
   /**
    * @param key          Section key to remove the named section from.
    * @param sub_section  Name of the section to remove.
-   * @param recursive    If non zero, any subkeys below @a sub_section are
+   * @param recursive    If true, any subkeys below @a sub_section are
    *                     removed as well.
    *
    * @retval   0 for success.
@@ -187,7 +185,7 @@ public:
    */
   virtual int remove_section (const ACE_Configuration_Section_Key &key,
                               const ACE_TCHAR *sub_section,
-                              int recursive) = 0;
+                              bool recursive) = 0;
 
   /**
    * Enumerates through the values in a section.
@@ -349,7 +347,7 @@ public:
                             const ACE_TCHAR* name) = 0;
 
   /**
-   * Expands <path_in> to <key_out> from <key>.  If create is true,
+   * Expands @a path_in to @a key_out from @a key.  If create is true,
    * the subsections are created.  Returns 0 on success, non zero on
    * error The path consists of sections separated by the backslash
    * '\' or forward slash '/'.
@@ -380,14 +378,14 @@ public:
   /**
    * Determine if the contents of this object is the same as the
    * contents of the object on the right hand side.
-   * Returns 1 (True) if they are equal and 0 (False) if they are not equal
+   * Returns true if they are equal and false if they are not equal
    */
   bool operator==(const ACE_Configuration& rhs) const;
 
   /**
    * Determine if the contents of this object are different from the
    * contents of the object on the right hand side.
-   * Returns 0 (False) if they are equal and 1 (True) if they are not equal
+   * Returns false if they are equal and true if they are not equal
    */
   bool operator!=(const ACE_Configuration& rhs) const;
 
@@ -405,18 +403,18 @@ protected:
     (const ACE_Configuration_Section_Key& key);
 
   /**
-   * Tests to see if <name> is valid.  <name> must be < 255 characters
+   * Tests to see if @a name is valid.  @a name must be < 255 characters
    * and not contain the path separator '\', brackets [] or = (maybe
    * just restrict to alphanumeric?) returns non zero if name is not
    * valid.  The path separator is allowed, except for the first character,
-   * if <allow_path> is true.
+   * if @a allow_path is true.
    */
   int validate_name (const ACE_TCHAR* name, int allow_path = 0);
 
   /**
-   * Test to see if <name> is valid.  The default value for a key can be
-   * unnamed, which means either <name> is == 0 or <name> == '\0` is
-   * valid.  Otherwise, it calls validate_name() to test <name> for the
+   * Test to see if @a name is valid.  The default value for a key can be
+   * unnamed, which means either @a name is == 0 or @a name == '\0` is
+   * valid.  Otherwise, it calls validate_name() to test @a name for the
    * same rules that apply to keys.
    */
   int validate_value_name (const ACE_TCHAR* name);
@@ -429,7 +427,7 @@ protected:
   ACE_Configuration_Section_Key root_;
 };
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
 /**
  * @class ACE_Section_Key_Win32
@@ -485,7 +483,7 @@ public:
 
   virtual int remove_section (const ACE_Configuration_Section_Key& key,
                               const ACE_TCHAR* sub_section,
-                              int recursive);
+                              bool recursive);
 
   virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
                                 int index,
@@ -554,7 +552,7 @@ protected:
   ACE_Configuration_Win32Registry (const ACE_Configuration_Win32Registry& rhs);
   ACE_Configuration_Win32Registry& operator= (const ACE_Configuration_Win32Registry& rhs);
 };
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 
 // ACE_Allocator version
 
@@ -600,7 +598,7 @@ public:
   /// allocator name_ was created in
   void free (ACE_Allocator *alloc);
 
-  /// <hash> function is required in order for this class to be usable by
+  /// hash function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
   u_long hash  (void) const;
 
@@ -774,7 +772,7 @@ protected:
  * configuration database
  *
  * This class uses ACE's Allocators to manage a memory
- * representation of a configuraiton database. A persistent heap
+ * representation of a configuration database. A persistent heap
  * may be used to store configurations persistently
  *
  * @note Before using this class you must call one of the open methods.
@@ -793,12 +791,37 @@ public:
   /// Destructor
   virtual ~ACE_Configuration_Heap (void);
 
-  /// Opens a configuration based on a file name
+  /**
+   * Opens a configuration that allocates its memory from a memory-mapped file.
+   * This makes it possible to persist a configuration to permanent storage.
+   * This is not the same as exporting the configuration to a file; the
+   * memory-mapped file is not likely to be very readable by humans.
+   *
+   * @param file_name    Name of the file to map into memory.
+   *
+   * @param base_address Address to map the base of @a file_name to.
+   *
+   * @param default_map_size Starting size for the internal hash tables that
+   *                     contain configuration information.
+   *
+   * @retval 0 for success.
+   * @retval -1 for error, with errno set to indicate the cause. If open()
+   *            is called multiple times, errno will be @c EBUSY.
+   */
   int open (const ACE_TCHAR* file_name,
             void* base_address = ACE_DEFAULT_BASE_ADDR,
             size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
-  /// Opens a heap based configuration
+  /**
+   * Opens a configuration that allocates memory from the heap.
+   *
+   * @param default_map_size Starting size for the internal hash tables that
+   *                     contain configuration information.
+   *
+   * @retval 0 for success.
+   * @retval -1 for error, with errno set to indicate the cause. If open()
+   *            is called multiple times, errno will be @c EBUSY.
+   */
   int open (size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
   virtual int open_section (const ACE_Configuration_Section_Key& base,
@@ -807,7 +830,7 @@ public:
 
   virtual int remove_section (const ACE_Configuration_Section_Key& key,
                               const ACE_TCHAR* sub_section,
-                              int recursive);
+                              bool recursive);
 
   virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
                                 int index,
@@ -848,12 +871,12 @@ public:
                          const ACE_TCHAR* name,
                          VALUETYPE& type);
 
-  /// Removes the the value <name> from <key>.  returns non zero on error
+  /// Removes the the value @a name from @a key.  returns non zero on error
   virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name);
 
 private:
-  /// <sub_section> may not contain path separators
+  /// @a sub_section may not contain path separators
   int open_simple_section (const ACE_Configuration_Section_Key &base,
                             const ACE_TCHAR *sub_section,
                             int create, ACE_Configuration_Section_Key &result);
@@ -887,6 +910,10 @@ private:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "ace/Configuration.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIGURATION_H */

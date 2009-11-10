@@ -27,8 +27,8 @@ class My_Handler : public ACE_Event_Handler
 {
 public:
   virtual int handle_signal (int sig,
-			     siginfo_t *,
-			     ucontext_t *)
+                             siginfo_t *,
+                             ucontext_t *)
   {
     // @@ Note that this code is not portable to all OS platforms
     // since it uses print statements within signal handler context.
@@ -45,7 +45,7 @@ public:
   }
 
   virtual int handle_timeout (const ACE_Time_Value &,
-			      const void *arg)
+                              const void *arg)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "%s\n",
@@ -94,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (sig);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
+              "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
   // This call executes the reactor events until we're finished.
   int result = ACE_Reactor::run_event_loop ();

@@ -68,8 +68,7 @@ public:
    * otherwise it is assumed to be in network byte order already and
    * are passed straight through.
    */
-  int set (u_short port_number,
-           int encode = 1);
+  int set (u_short port_number, int encode = 1);
 
   /// Uses <getservbyname> to initialize an ACE_MEM_Addr from a
   /// <port_name>, the remote <host_name>, and the <protocol>.

@@ -47,6 +47,6 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "This test requires the platform to have threads\n"), -1);
+                     "This test requires the platform to have threads\n"), -1);
 }
 #endif /* ACE_HAS_THREADS */

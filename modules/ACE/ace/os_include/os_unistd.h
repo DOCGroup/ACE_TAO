@@ -27,18 +27,17 @@
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_inttypes.h"
 
-#if defined (__BORLANDC__)
-#  include "ace/os_include/os_fcntl.h"
-#endif /* __BORLANDC */
-
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_PROCESS_H)
 #  include /**/ <process.h>
-#  include /**/ <io.h>
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_HAS_PROCESS_H */
 
-#if defined (ACE_HAS_SYSINFO)
+#if defined (ACE_HAS_IO_H)
+#  include /**/ <io.h>
+#endif /* ACE_HAS_IO_H */
+
+#if defined (ACE_HAS_SYS_SYSTEMINFO_H)
 #  include /**/ <sys/systeminfo.h>
-#endif /* ACE_HAS_SYS_INFO */
+#endif /* ACE_HAS_SYS_SYSTEMINFO_H */
 
 #if !defined (ACE_LACKS_UNISTD_H)
 #  include /**/ <unistd.h>
@@ -59,6 +58,37 @@
 extern "C"
 {
 #endif /* __cplusplus */
+
+#if defined (ACE_WIN32)
+// The following are #defines and #includes that are specific to
+// WIN32.
+#  if defined (ACE_HAS_WINCE)
+#    define ACE_STDIN _fileno (stdin)
+#    define ACE_STDOUT _fileno (stdout)
+#    define ACE_STDERR _fileno (stderr)
+#  else
+#    define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
+#    define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
+#    define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
+#  endif  // ACE_HAS_WINCE
+// The following are #defines and #includes that are specific to UNIX.
+#else /* !ACE_WIN32 */
+#  if defined (STDIN_FILENO)
+#    define ACE_STDIN STDIN_FILENO
+#  else
+#    define ACE_STDIN 0
+#  endif
+#  if defined (STDOUT_FILENO)
+#    define ACE_STDOUT STDOUT_FILENO
+#  else
+#    define ACE_STDOUT 1
+#  endif
+#  if defined (STDERR_FILENO)
+#    define ACE_STDERR STDERR_FILENO
+#  else
+#    define ACE_STDERR 2
+#  endif
+#endif /* ACE_WIN32 */
 
 #if (!defined (_BSD_SOURCE) && \
     !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)) \
@@ -84,7 +114,12 @@ extern "C"
 # endif /* W_OK */
 
 # if !defined (X_OK)
-#   define X_OK    01      /* Test for eXecute permission. */
+#   if defined (ACE_WIN32)
+      /* Windows has no test for X_OK - use R_OK instead */
+#     define X_OK    R_OK      /* Test for eXecute permission. */
+#   else  /* ACE_WIN32 */
+#     define X_OK    01      /* Test for eXecute permission. */
+#   endif /* ACE_WIN32 */
 # endif /* X_OK */
 
 # if !defined (F_OK)
@@ -128,12 +163,6 @@ extern "C"
 #endif  /* _LARGEFILE64_SOURCE */
 
 #if defined (__BORLANDC__)
-#  if (__BORLANDC__ <= 0x540)
-#    define _getcwd getcwd
-#    define _chdir chdir
-#    undef _access
-#    define _access access
-#  endif
 #  define _isatty isatty
 #endif /* __BORLANDC__ */
 

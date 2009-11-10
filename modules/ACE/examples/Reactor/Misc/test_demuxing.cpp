@@ -33,7 +33,11 @@ public:
   Sig_Handler (void);
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int handle_signal (int signum, siginfo_t * = 0,
                              ucontext_t * = 0);
 
@@ -60,9 +64,7 @@ Sig_Handler::Sig_Handler (void)
   // event handler directly.  Instead, we use the signal handler to do
   // this.
   ACE_Reactor_Mask mask = ACE_Event_Handler::NULL_MASK;
-  if (ACE_Reactor::instance ()->register_handler
-      (this,
-       mask) == -1)
+  if (ACE_Reactor::instance ()->register_handler (this, mask) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n%a",
                 "register_handler",
@@ -143,18 +145,20 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
         (this->handle_,
          ACE_Event_Handler::READ_MASK,
          ACE_Reactor::ADD_MASK);
-#if defined (ACE_WIN32)
+#if defined (SIGTERM) && (SIGTERM != 0)
     case SIGTERM:
-#else
+      // This is coded thusly to avoid problems if SIGQUIT is a legit
+      // value but is not a preprocessor macro.
+#elif !defined (SIGQUIT) || (SIGQUIT != 0)
     case SIGQUIT:
-#endif /* ACE_WIN32 */
+#endif /* SIGTERM != 0 */
       ACE_Reactor::end_event_loop ();
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR, "invalid signal"), -1);
-      break;
       /* NOTREACHED */
     }
+
   return 0;
 }
 

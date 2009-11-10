@@ -6,6 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_Memory.h"
+#include "ace/Truncate.h"
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
 #  include "ace/OS_NS_unistd.h"
@@ -27,9 +28,8 @@ ACE_Pipe::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Pipe::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("handles_[0] = %d"), this->handles_[0]));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nhandles_[1] = %d"), this->handles_[1]));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handles_[0] = %d"), this->handles_[0]));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandles_[1] = %d\n"), this->handles_[1]));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -39,7 +39,7 @@ ACE_Pipe::open (int buffer_size)
 {
   ACE_TRACE ("ACE_Pipe::open");
 
-#if defined (ACE_LACKS_SOCKETPAIR) || defined (__Lynx__)
+#if defined (ACE_LACKS_SOCKETPAIR)
   ACE_INET_Addr my_addr;
   ACE_SOCK_Acceptor acceptor;
   ACE_SOCK_Connector connector;
@@ -96,9 +96,10 @@ ACE_Pipe::open (int buffer_size)
     }
 # endif /* ! ACE_LACKS_TCP_NODELAY */
 
-# if defined (ACE_LACKS_SOCKET_BUFSIZ)
+# if defined (ACE_LACKS_SO_RCVBUF) && defined (ACE_LACKS_SO_SNDBUF)
     ACE_UNUSED_ARG (buffer_size);
-# else  /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# endif
+# if !defined (ACE_LACKS_SO_RCVBUF)
   if (reader.set_option (SOL_SOCKET,
                          SO_RCVBUF,
                          reinterpret_cast <void *> (&buffer_size),
@@ -108,23 +109,25 @@ ACE_Pipe::open (int buffer_size)
       this->close ();
       return -1;
     }
-  else if (writer.set_option (SOL_SOCKET,
-                              SO_SNDBUF,
-                              reinterpret_cast <void *> (&buffer_size),
-                              sizeof (buffer_size)) == -1
+# endif /* !ACE_LACKS_SO_RCVBUF */
+# if !defined (ACE_LACKS_SO_SNDBUF)
+  if (writer.set_option (SOL_SOCKET,
+                         SO_SNDBUF,
+                         reinterpret_cast <void *> (&buffer_size),
+                         sizeof (buffer_size)) == -1
            && errno != ENOTSUP)
     {
       this->close ();
       return -1;
     }
-# endif /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# endif /* !ACE_LACKS_SO_SNDBUF */
 
 #elif defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
   ACE_UNUSED_ARG (buffer_size);
   if (ACE_OS::pipe (this->handles_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("pipe")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("pipe")),
                       -1);
 
 #if !defined(__QNX__)
@@ -141,8 +144,8 @@ ACE_Pipe::open (int buffer_size)
     {
       this->close ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("ioctl")), -1);
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ioctl")), -1);
     }
 #endif /* __QNX__ */
 
@@ -152,12 +155,13 @@ ACE_Pipe::open (int buffer_size)
                           0,
                           this->handles_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("socketpair")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("socketpair")),
                       -1);
-# if defined (ACE_LACKS_SOCKET_BUFSIZ)
+# if defined (ACE_LACKS_SO_SNDBUF) && defined (ACE_LACKS_SO_RCVBUF)
   ACE_UNUSED_ARG (buffer_size);
-# else  /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# endif
+# if !defined (ACE_LACKS_SO_RCVBUF)
   if (ACE_OS::setsockopt (this->handles_[0],
                           SOL_SOCKET,
                           SO_RCVBUF,
@@ -168,6 +172,8 @@ ACE_Pipe::open (int buffer_size)
       this->close ();
       return -1;
     }
+# endif
+# if !defined (ACE_LACKS_SO_SNDBUF)
   if (ACE_OS::setsockopt (this->handles_[1],
                           SOL_SOCKET,
                           SO_SNDBUF,
@@ -178,7 +184,22 @@ ACE_Pipe::open (int buffer_size)
       this->close ();
       return -1;
     }
-# endif /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# endif /* ! ACE_LACKS_SO_SNDBUF */
+# if defined (ACE_OPENVMS) && !defined (ACE_LACKS_TCP_NODELAY)
+  int one = 1;
+  // OpenVMS implements socketpair(AF_UNIX...) by returning AF_INET sockets.
+  // Since these are plagued by Nagle as any other INET socket we need to set
+  // TCP_NODELAY on the write handle.
+  if (ACE_OS::setsockopt (this->handles_[1],
+                          ACE_IPPROTO_TCP,
+                          TCP_NODELAY,
+                          reinterpret_cast <const char *> (&one),
+                          sizeof (one)) == -1)
+    {
+      this->close ();
+      return -1;
+    }
+# endif /* ACE_OPENVMS && !ACE_LACKS_TCP_NODELAY */
 #endif  /* ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
   // Point both the read and write HANDLES to the appropriate socket
   // HANDLEs.
@@ -217,7 +238,7 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
 
   if (this->open (handles) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Pipe::ACE_Pipe")));
+                ACE_TEXT ("ACE_Pipe::ACE_Pipe")));
 }
 
 ACE_Pipe::ACE_Pipe (ACE_HANDLE read,
@@ -260,7 +281,7 @@ ACE_Pipe::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_Pipe::send");
   va_list argp;
-  size_t total_tuples = n / 2;
+  int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -272,7 +293,7 @@ ACE_Pipe::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (size_t i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
@@ -306,7 +327,7 @@ ACE_Pipe::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_Pipe::recv");
   va_list argp;
-  size_t total_tuples = n / 2;
+  int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -318,20 +339,20 @@ ACE_Pipe::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (size_t i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
 #if defined (ACE_WIN32)
-  ssize_t result = ACE::recvv (this->read_handle (),
-                               iovp,
-                               total_tuples);
+  ssize_t const result = ACE::recvv (this->read_handle (),
+                                     iovp,
+                                     total_tuples);
 #else
-  ssize_t result = ACE_OS::readv (this->read_handle (),
-                                  iovp,
-                                  total_tuples);
+  ssize_t const result = ACE_OS::readv (this->read_handle (),
+                                        iovp,
+                                        total_tuples);
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_HAS_ALLOCA)

@@ -64,7 +64,7 @@ public:
   ACE_Based_Pointer_Basic (void);
 
   /**
-   * Initialize this object using the <initial> pointer.  This
+   * Initialize this object using the @a initial pointer.  This
    * constructor initializes the <base_offset_> by asking the
    * <ACE_BASED_POINTER_REPOSITORY> Singleton for the base address of
    * the memory region within which it is instantiated.  Three results
@@ -81,7 +81,7 @@ public:
    *    based-pointer uses its address as an offset to its base
    *    address 0.
    *
-   * 3. If <initial> is 0 then set the value of <target_> to -1, which
+   * 3. If @a initial is 0 then set the value of <target_> to -1, which
    *    indicates a "NULL" pointer.
    */
   ACE_Based_Pointer_Basic (CONCRETE *initial);
@@ -89,7 +89,7 @@ public:
   /// Copy constructor.
   ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic<CONCRETE> &);
 
-  /// Constructor for know base address. <o> is only used to
+  /// Constructor for know base address. @a o is only used to
   /// resolve overload ambiguity.
   ACE_Based_Pointer_Basic (const void *base_addr, int o);
 

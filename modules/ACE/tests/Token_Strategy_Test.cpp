@@ -37,7 +37,10 @@ public:
                        int threads = 5, int invocations = 10);
   ~Token_Strategy_Test (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void *a = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   int svc (void);
 
 private:

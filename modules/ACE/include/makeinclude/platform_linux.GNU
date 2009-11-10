@@ -4,123 +4,82 @@
 # According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
 # should allow ACE to be built on Linux.
 
-# We always include config-linux.h on Linux platforms.
-ACE_PLATFORM_CONFIG ?= config-linux.h
+include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
-exceptions ?= 1
-debug ?= 1
-optimize ?= 1
-threads ?= 1
-
-PLATFORM_XT_CPPFLAGS=
-PLATFORM_XT_LIBS=-lXt
-PLATFORM_XT_LDFLAGS=
-
-PLATFORM_FL_CPPFLAGS=
-PLATFORM_FL_LIBS=-lfltk -lfltk_forms -lfltk_gl
-PLATFORM_FL_LDFLAGS=
-
-PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
-PLATFORM_X11_LIBS=-lX11
-PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
-
-PLATFORM_GL_CPPFLAGS=-I/usr/X11R6/include
-PLATFORM_GL_LIBS    =-lGL
-PLATFORM_GL_LDFLAGS =-L/usr/X11R6/lib
-
-PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
-PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
-PLATFORM_GTK_LDFLAGS =
-
-# NOTE: we only support wxWindows over GTK
-PLATFORM_WX_CPPFLAGS= $(shell wx-config --cxxflags) $(PLATFORM_GTK_CPPFLAGS)
-PLATFORM_WX_LIBS    = $(shell wx-config --libs)     $(PLATFORM_GTK_LIBS)
-PLATFORM_WX_LDFLAGS = $(shell wx-config --ldflags)  $(PLATFORM_GTK_LDFLAGS)
-
-PLATFORM_BOOST_CPPFLAGS ?=
-PLATFORM_BOOST_LDLAGS ?=
-PLATFORM_BOOST_UTF_LIBS ?= -lboost_unit_test_framework
-
-PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
-PLATFORM_TCL_LIBS=-ltcl8.4
-PLATFORM_TCL_LDFLAGS=
-
-PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-PLATFORM_TK_LDFLAGS=
-
-PLATFORM_AIO_SUPPORT := \
-       $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
-
-ssl ?= 0
-ifeq ($(ssl),1)
-  # Some Linux OpenSSL installations compile in Kerberos support.  Add
-  # the Kerberos include path to preprocessor include path.
-  #
-  # We should probably also add the Kerberos libraries to
-  # PLATFORM_SSL_LIBS but we can't be sure if they are needed without
-  # a more sophisticated check.  This will only be a problem when
-  # statically linking the OpenSSL library.  The majority of
-  # installations use shared OpenSSL libraries so we should be okay,
-  # at least until we migrate to Autoconf.
-  PLATFORM_SSL_CPPFLAGS += -I/usr/kerberos/include
-endif # ssl
-
-insure ?= 0
-ifeq ($(insure),1)
-  CC  = insure
-  CXX = insure
-else
+ifeq ($(insure),0)
   CC  ?= gcc
   CXX ?= g++
+  CXX_FOR_VERSION_TEST ?= $(CXX)
+else
+  CXX_FOR_VERSION_TEST ?= g++
 endif
 
 # fix this
 pipes ?= 1
 
-CFLAGS  += -W -Wall -Wpointer-arith
+CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
+
+ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
+  ifeq (7.10, $(findstring 7.10,$(LSB_RELEASE_RELEASE)))
+    no_hidden_visibility ?= 1
+  endif
+  ifeq (7.04, $(findstring 7.04,$(LSB_RELEASE_RELEASE)))
+    no_hidden_visibility ?= 1
+  endif
+endif
+ifeq (Red Hat, $(findstring Red Hat,$(CXX_FULL_VERSION)))
+  ifeq (4.1.1, $(findstring 4.1.1,$(CXX_VERSION)))
+    gcc_template_instantiation_visibility ?= 1
+  endif
+  ifeq (4.1.2, $(findstring 4.1.2,$(CXX_VERSION)))
+    gcc_template_instantiation_visibility ?= 1
+  endif
+endif
+# Mandriva 2007
+ifeq (4.1.1-3mdk, $(findstring 4.1.1-3mdk,$(CXX_FULL_VERSION)))
+  gcc_template_instantiation_visibility ?= 1
+endif
+
+FLAGS_C_CC += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
 ifeq ($(buildbits),32)
-  CFLAGS   += -m32
-  LDFLAGS  += -m32
+  FLAGS_C_CC += -m32
+  LDFLAGS    += -m32
 endif
 ifeq ($(buildbits),64)
-  CFLAGS   += -m64
+  FLAGS_C_CC += -m64
+  LDFLAGS    += -m64
+  ifeq ($(SYSARCH),ppc64)
+    FLAGS_C_CC += -mminimal-toc
+  endif
 endif
 
 #
 # Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
 # instead of setting them directly here (older versions of gcc don't set it
-# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, etc...
+# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
 CPPFLAGS += -D_GNU_SOURCE
 
-DCFLAGS += -g
-DLD     = $(CXX)
-LD      = $(CXX)
-LIBS    += -ldl
+DCFLAGS  += -ggdb
+DCCFLAGS += -ggdb
+DLD      = $(CXX)
+LD       = $(CXX)
+LIBS     += -ldl
 
 ifeq ($(threads),1)
   LIBS += -lpthread
+  # look for the rt library in the usual places
+  LIBS += $(shell test "`ls -L /usr/lib*/librt.so* /lib*/librt.so*`" && echo -lrt)
 endif
-# look for the rt library in the usual places
-LIBS += $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -lrt)
 
 ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
 endif
 
-PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
-PLATFORM_QT_LIBS ?= -lqt-mt
-PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib
-
-OCFLAGS ?= -O3
-PIC     = -fPIC
-AR      = ar
-ARFLAGS = rsuv
-RANLIB  = @true
 SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
@@ -131,7 +90,18 @@ PRELIB  = @true
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+# TAO with GCC 4.0.2 and -O3 seems to result in runtime issues, for example
+# the ForwardRequest PI test will fail. For GCC 4.0.2 we default to -O2
+ifeq ($(CXX_VERSION),4.0.2)
+  OCFLAGS ?= -O2
+  OCCFLAGS ?=-O2
+else
+  OCFLAGS ?= -O3
+  OCCFLAGS ?= -O3
+endif
+
+CFLAGS  += $(FLAGS_C_CC)
+CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
 
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
@@ -141,21 +111,6 @@ ifeq ($(threads),1)
     ifndef PRELIB
        PRELIB = @true
     endif # ! PRELIB
-endif
-
-sctp ?=
-# support for OpenSS7 SCTP
-ifeq ($(sctp),openss7)
-  PLATFORM_SCTP_CPPFLAGS+= -DACE_HAS_OPENSS7_SCTP
-  PLATFORM_SCTP_LDFLAGS?=
-  PLATFORM_SCTP_LIBS?=
-endif
-
-# support for LKSCTP (Linux Kernel 2.5)
-ifeq ($(sctp),lksctp)
-  PLATFORM_SCTP_CPPFLAGS+= -DACE_HAS_LKSCTP
-  PLATFORM_SCTP_LDFLAGS?= -L/usr/local/lib
-  PLATFORM_SCTP_LIBS?= -lsctp
 endif
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,

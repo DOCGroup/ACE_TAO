@@ -485,7 +485,7 @@ u_char * asn1::parse_length( u_char *data,
     }
     // fixed
     ACE_OS::memcpy((char *)length, (char *)data + 1, (int)lengthbyte);
-    *length = ntohl(*length);
+    *length = ACE_NTOHL(*length);
     *length >>= (8 * ((sizeof *length) - lengthbyte));
     return data + lengthbyte + 1;
   } else { /* short asnlength */
@@ -1020,13 +1020,18 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
   struct variable_list *vars = 0;
 
   // if we don't have a vb list ,create one
-  if (pdu->variables == 0) {
-    ACE_NEW(pdu->variables, variable_list);
-    vars = pdu->variables;
-  }
+  if (pdu->variables == 0)
+    {
+      ACE_NEW(pdu->variables, variable_list);
+      vars = pdu->variables;
+    }
   else
     { // we have one, find the end
-      for(vars = pdu->variables; vars->next_variable; vars = vars->next_variable);
+      for (vars = pdu->variables; vars->next_variable; vars = vars->next_variable)
+        {
+          // Do nothing.
+        }
+        
       // create one
       ACE_NEW(vars->next_variable, variable_list);
       // bump ptr
@@ -1365,22 +1370,24 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                           sizeof(pdu->agent_addr.sin_addr.s_addr));
     if (cp == 0)
       return -1;
-
+    
+    long tmp (static_cast <long> (pdu->trap_type));
     // generic trap
     cp = asn1::build_int(cp,
-                       &length,
-               (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
-                       (long *)&pdu->trap_type,
-                       sizeof(pdu->trap_type));
+                         &length,
+                         (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
+                         &tmp,
+                         sizeof(pdu->trap_type));
     if (cp == 0)
       return -1;
-
+    
+    tmp = static_cast <long> (pdu->specific_type);
     // specific trap
     cp = asn1::build_int( cp,
-                       &length,
-               (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
-                       (long *)&pdu->specific_type,
-                       sizeof(pdu->specific_type));
+                          &length,
+                          (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
+                          &tmp,
+                          sizeof(pdu->specific_type));
     if (cp == 0)
       return -1;
 
@@ -1621,15 +1628,18 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                             &four);
     if (data == 0)
       return -1;
-
+    
+    long tmp (static_cast <long> (pdu->trap_type));
+    
     // get trap type
-    data = asn1::parse_int(data, &length, &type, (long *)&pdu->trap_type,
+    data = asn1::parse_int(data, &length, &type, &tmp,
                          sizeof(pdu->trap_type));
     if (data == 0)
       return -1;
 
     // trap type
-    data = asn1::parse_int(data, &length, &type, (long *)&pdu->specific_type,
+    tmp = static_cast <long> (pdu->specific_type);
+    data = asn1::parse_int(data, &length, &type, &tmp,
                          sizeof(pdu->specific_type));
     if (data == 0)
       return -1;

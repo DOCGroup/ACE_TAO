@@ -40,6 +40,7 @@
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(WFMO_Reactor, Registration, "$Id$")
 
@@ -162,7 +163,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 };
 #else /* !ACE_WIN32 */
 int
-ACE_TMAIN (int, ACE_TCHAR **)
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }

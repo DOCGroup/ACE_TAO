@@ -122,9 +122,9 @@ ACE_Blob_Reader::receive_reply (void)
   ssize_t len;
   char buf [MAX_HEADER_SIZE + 1];
   char *buf_ptr;
-  int bytes_read = 0;
-  int bytes_left = length_;
-  int offset_left = offset_;
+  size_t bytes_read = 0;
+  size_t bytes_left = this->length_;
+  size_t offset_left = this->offset_;
 
   // Receive the first MAX_HEADER_SIZE bytes to be able to strip off the
   // header. Note that we assume that the header will fit into the
@@ -143,7 +143,7 @@ ACE_Blob_Reader::receive_reply (void)
         buf_ptr = buf;
 
       // Determine number of data bytes read. This is equal to the
-      // total butes read minus number of header bytes.
+      // total bytes read minus number of header bytes.
       bytes_read = (buf + len) - buf_ptr;
     }
   else
@@ -167,7 +167,7 @@ ACE_Blob_Reader::receive_reply (void)
       // Determine how many data bytes are actually there. This is
       // basically the total number of data bytes we read minus any
       // offset we have.
-      int data_bytes = bytes_read - offset_left;
+      size_t data_bytes = bytes_read - offset_left;
 
       // Check for the case where the bytes read are enough to fulfill
       // our request (for length bytes). If this is the case, then we
@@ -202,14 +202,14 @@ ACE_Blob_Reader::receive_reply (void)
      offset_left -= bytes_read;
     }
 
-  // If we had any offset left, take care of that.
+  // If we ad any offset left, take care of that.
   while (offset_left > 0)
     {
       // MAX_HEADER_SIZE in which case we should do a receive of
       // offset bytes into a temporary buffer. Otherwise, we should
       // receive MAX_HEADER_SIZE bytes into temporary buffer and
       // decrement offset_left.
-      if (offset_left < (int) (sizeof buf))
+      if (offset_left < (sizeof buf))
         len = offset_left;
       else
         len = sizeof buf;
@@ -228,9 +228,10 @@ ACE_Blob_Reader::receive_reply (void)
 
   len = peer().recv_n (mb_->wr_ptr (), bytes_left);
 
-  if (len != bytes_left)
+  if (len < 0 || static_cast<size_t> (len) != bytes_left)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                       "ACE_Blob_Reader::receiveReply():Read error" ), -1);
+                       "ACE_Blob_Reader::receiveReply():Read error" ),
+                      -1);
 
   // Adjust the message buffer write pointer by number of bytes we
   // received.
@@ -267,22 +268,19 @@ ACE_Blob_Writer::send_request (void)
   // Determine the length of the header message we will be sending to
   // the server. Note that we add 32 for safety -- this corresponds to
   // the number of bytes needed for the length field.
-  u_short mesglen =
+  size_t mesglen =
     ACE_OS::strlen (request_prefix_)
     + ACE_OS::strlen (filename_)
     + ACE_OS::strlen (request_suffix_)
     + 32; // safety
 
   // Allocate a buffer to hold the header
-  char *mesg;
+  char *mesg = 0;
   ACE_NEW_RETURN (mesg, char [mesglen], -1);
 
   // Create the header, store the actual length in mesglen.
-  // NOTE! %lu is really what's wanted. ACE_SIZE_T_FORMAT_SPECIFIER is
-  // defined in terms of ACE_LIB_TEXT which is NOT what we want here.
-  mesglen = ACE_OS::sprintf (mesg, "%s /%s %s %lu\n\n",
-                             request_prefix_, filename_, request_suffix_,
-                             (unsigned long)length_);
+  mesglen = ACE_OS::sprintf (mesg, "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
+                             request_prefix_, filename_, request_suffix_, length_);
 
   // Send the header followed by the data
 
@@ -311,14 +309,15 @@ ACE_Blob_Writer::receive_reply (void)
   char buf[MAX_HEADER_SIZE];
 
   // Receive the reply from the server
-  ssize_t len = peer ().recv_n (buf, sizeof buf - 1); // reserve one byte to store the \0
+  size_t num_recvd = 0;
+  ssize_t len = peer ().recv_n (buf, sizeof buf - 1, 0, &num_recvd); // reserve one byte to store the \0
   if (len ==-1)
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error reading header"), -1);
 
-  buf [len] = 0;
+  buf [num_recvd] = 0;
 
   // Parse the header
-  char *lasts;
+  char *lasts = 0;
 
   // First check if this was a valid header -- HTTP/1.0
   char *token = ACE_OS::strtok_r (buf, " \t", &lasts);

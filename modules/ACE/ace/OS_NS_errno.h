@@ -41,7 +41,7 @@ namespace ACE_OS {
   int last_error (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void last_error (int);
+  void last_error (int error);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int set_errno_to_last_error (void);
@@ -55,10 +55,10 @@ namespace ACE_OS {
 /**
  * @class ACE_CE_Errno
  *
- * Some versions of CE don't support <errno> and some versions'
+ * Some versions of CE don't support @c errno and some versions'
  * implementations are busted.  So we implement our own.
  * Our implementation takes up one Tls key, however, it does not
- * allocate memory fromt the heap so there's no problem with cleanin
+ * allocate memory from the heap so there's no problem with cleaning
  * up the errno when a thread exit.
  */
 class ACE_Export ACE_CE_Errno
@@ -82,8 +82,10 @@ private:
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 #  define ACE_ERRNO_TYPE ACE_CE_Errno
+#  define ACE_ERRNO_GET ACE_CE_Errno::instance ()->operator int()
 #else
 #  define ACE_ERRNO_TYPE int
+#  define ACE_ERRNO_GET errno
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

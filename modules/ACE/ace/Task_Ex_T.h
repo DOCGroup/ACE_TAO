@@ -42,7 +42,7 @@ template <ACE_SYNCH_DECL> class ACE_Module;
  * template <ACE_SYNCH_DECL, ACE_MESSAGE_TYPE = ACE_Message_Block>
  * class ACE_Task : public ACE_Task_Base
  * {
- * 	// use here the code from ACE_Task_Ex using ACE_Message_Queue_Ex
+ *  // use here the code from ACE_Task_Ex using ACE_Message_Queue_Ex
  * };
  *
  * Now specialized version of ACE_Task with ACE_Message_Block as its
@@ -89,43 +89,46 @@ public: // Should be protected:
 
   // = Enqueue and dequeue methods.
 
-  // For the following five method if <timeout> == 0, the caller will
+  // For the following five method if @a timeout == 0, the caller will
   // block until action is possible, else will wait until the
-  // <{absolute}> time specified in *<timeout> elapses).  These calls
+  // <{absolute}> time specified in *@a timeout elapses).  These calls
   // will return, however, when queue is closed, deactivated, when a
   // signal occurs, or if the time specified in timeout elapses, (in
   // which case errno = EWOULDBLOCK).
 
-  /// Insert message into the message queue.  Note that <timeout> uses
+  /// Insert message into the message queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
   int putq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = 0);
 
   /**
    * Extract the first message from the queue (blocking).  Note that
-   * <timeout> uses <{absolute}> time rather than <{relative}> time.
+   * @a timeout uses <{absolute}> time rather than <{relative}> time.
    * Returns number of items in queue if the call succeeds or -1 otherwise.
    */
   int getq (ACE_MESSAGE_TYPE *&mb, ACE_Time_Value *timeout = 0);
 
-  /// Return a message to the queue.  Note that <timeout> uses
+  /// Return a message to the queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
   int ungetq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = 0);
 
   /**
    * Turn the message around and send it back down the Stream.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
+   * that @a timeout uses <{absolute}> time rather than <{relative}>
    * time.
    */
   int reply (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = 0);
 
   /**
    * Transfer message to the adjacent ACE_Task_Ex in a ACE_Stream.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
+   * that @a timeout uses <{absolute}> time rather than <{relative}>
    * time.
    */
   int put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *timeout = 0);
 
-  /// Tests whether we can enqueue a message without blocking.
+  /**
+   * Tests whether we can enqueue a message without blocking.
+   * @deprecated This method is deprecated and will go away in the future.
+   */
   int can_put (ACE_MESSAGE_TYPE *);
 
   // = ACE_Task utility routines to identify names et al.
@@ -162,8 +165,8 @@ public: // Should be protected:
   /// Queue of messages on the ACE_Task..
   MESSAGE_QUEUE_EX *msg_queue_;
 
-  /// 1 if should delete Message_Queue, 0 otherwise.
-  int delete_msg_queue_;
+  /// true if should delete Message_Queue, false otherwise.
+  bool delete_msg_queue_;
 
   /// Back-pointer to the enclosing module.
   ACE_Module<ACE_SYNCH_USE> *mod_;

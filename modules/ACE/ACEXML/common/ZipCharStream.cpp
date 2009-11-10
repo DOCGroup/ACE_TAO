@@ -56,10 +56,12 @@ ACEXML_ZipCharStream::determine_encoding (void)
   //     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
 //                   this->encoding_));
     }
+
   // Move over the byte-order-mark if present.
-  char ch;
+
   for (int j = 0; j < 3; ++j)
     {
+      ACEXML_Char ch;
       if ((ch = this->peekchar_i()) < 0)
         return -1;
       if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF' || ch == '\xBB' ||
@@ -68,6 +70,7 @@ ACEXML_ZipCharStream::determine_encoding (void)
       else
         break;
     }
+
   return 0;
 }
 

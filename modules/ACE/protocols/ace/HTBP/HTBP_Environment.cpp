@@ -3,8 +3,8 @@
 #include "HTBP_Environment.h"
 
 ACE_RCSID (HTBP,
-       	   ACE_HTBP_Environment,
-	   "$Id$")
+           ACE_HTBP_Environment,
+           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,7 +52,8 @@ ACE::HTBP::Environment::initialize (int use_registry,
       if (result != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("ACE::HTBP::Environment::initialize (): ")
+                             ACE_TEXT("(%P|%t) ACE::HTBP::Environment")
+                             ACE_TEXT("::initialize ")
                              ACE_TEXT("Open Config failed")),
                             -1);
         }
@@ -64,10 +65,10 @@ ACE::HTBP::Environment::initialize (int use_registry,
                   -1);
 
   if (this->config_->open_section (config_->root_section (),
-				   ACE_TEXT("htbp"), 1,
+                                   ACE_TEXT("htbp"), 1,
                                    this->htbp_key_) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("ACE::HTBP::Environment::initialize (). ")
+                       ACE_TEXT("(%P|%t) ACE::HTBP::Environment::initialize ")
                        ACE_TEXT("Open HTBP Section failed")),
                       -1);
   return 0;
@@ -76,7 +77,7 @@ ACE::HTBP::Environment::initialize (int use_registry,
 int
 ACE::HTBP::Environment::open_registry_config ()
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
   HKEY root =
     ACE_Configuration_Win32Registry::resolve_key
     (HKEY_LOCAL_MACHINE,ACE_TEXT("Software\\HTBP\\Environment"));
@@ -84,11 +85,12 @@ ACE::HTBP::Environment::open_registry_config ()
   ACE_NEW_RETURN (this->config_,
                   ACE_Configuration_Win32Registry (root),
                   -1);
+  this->own_config_ = true;
   return 0;
 #else
   errno = ENOTSUP;
   return -1;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 }
 
 int
@@ -100,12 +102,14 @@ ACE::HTBP::Environment::open_persistent_config (const ACE_TCHAR *persistent_file
                   -1);
   // do this before trying to open so it isn't leaked if the open fails.
   this->config_ = heap;
+  this->own_config_ = true;
   if (persistent_file == 0)
     heap->open();
   else
     if (heap->open (persistent_file) != 0)
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("ACE::HTBP::Environment::open_config: %p\n"),
+                          ACE_TEXT ("(%P|%t) ACE::HTBP::Environment::")
+                          ACE_TEXT ("open_config: %p\n"),
                           persistent_file),
                         -1 );
   return 0;

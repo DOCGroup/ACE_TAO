@@ -42,7 +42,7 @@ print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-d (don't close pipes)] ")
-              ACE_TEXT ("[-c (child process)] [-i (iterations)] \n")));
+              ACE_TEXT ("[-c (child process)] [-i (iterations)]\n")));
   ACE_OS::exit (1);
 }
 
@@ -76,7 +76,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 // Consolidate the ACE_Pipe initializations.
 
 static void
-open (ACE_Pipe &pipe,
+open_pipe (ACE_Pipe &pipe,
       const char *name)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opening %C\n"), name));
@@ -101,11 +101,11 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_APPEND_LOG (ACE_TEXT("Pipe_Test-children"));
       ACE_Pipe a, b, c, d, e;
 
-      open (a, "a");
-      open (b, "b");
-      open (c, "c");
-      open (d, "d");
-      open (e, "e");
+      open_pipe (a, "a");
+      open_pipe (b, "b");
+      open_pipe (c, "c");
+      open_pipe (d, "d");
+      open_pipe (e, "e");
 
       ACE_END_LOG;
     }
@@ -121,7 +121,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
       ACE_Process_Options options;
       options.command_line (cmdline_fmt,
-                            argv[0],
+                            argc > 0 ? argv[0] : ACE_TEXT ("Pipe_Test"),
                             close_pipe == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
 
       ACE_exitcode status = 0;

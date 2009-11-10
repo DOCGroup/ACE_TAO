@@ -6,6 +6,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Thread.h"
 #include "ace/Signal.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(Misc, notification, "$Id$")
 
@@ -53,7 +54,7 @@ public:
   // Print data from main thread.
 
   virtual int handle_timeout (const ACE_Time_Value &,
-			      const void *);
+                              const void *);
   // Handle timeout events in the main thread.
 
   virtual int handle_input (ACE_HANDLE);
@@ -112,7 +113,7 @@ Thread_Handler::~Thread_Handler (void)
 Thread_Handler::Thread_Handler (
         long delay,
         long interval,
-				size_t n_threads,
+        size_t n_threads,
         size_t max_iterations)
     : iterations_ (max_iterations)
 {
@@ -126,8 +127,8 @@ Thread_Handler::Thread_Handler (
   this->id_ = 0;
 
   if (ACE_Event_Handler::register_stdin_handler (this,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "register_stdin_handler"));
@@ -183,15 +184,15 @@ Thread_Handler::notify (ACE_Time_Value *timeout)
        timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t) %p\n",
-		       "notification::notify:exception"),
+                       "notification::notify:exception"),
                       -1);
   else if (ACE_Reactor::instance ()->notify
-	   (this,
+            (this,
             ACE_Event_Handler::WRITE_MASK,
             timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t) %p\n",
-		       "notification::notify:write"),
+                       "notification::notify:write"),
                       -1);
   return 0;
 }
@@ -209,21 +210,21 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "input to (%t) %*s",
-		  n,
+                  n,
                   buf));
 
       ACE_DEBUG ((LM_DEBUG,
                   "%d more input to kill\n",
-		  this->iterations_));
+                  this->iterations_));
 
       // Only wait up to 10 milliseconds to notify the Reactor.
       ACE_Time_Value timeout (0,
                               10 * 1000);
 
       if (this->notify (&timeout) == -1)
-	ACE_ERROR ((LM_DEBUG,
+        ACE_ERROR ((LM_DEBUG,
                     "(%t), %p\n",
-		    "notification::handle_input:notify"));
+                    "notification::handle_input:notify"));
       return 0;
     }
   else
@@ -236,11 +237,9 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
 int
 Thread_Handler::svc (void)
 {
-  ACE_Time_Value sleep_timeout (0,
-                                // Transform this into microseconds and divide by 2.
-                                (Thread_Handler::interval_.sec () * ACE_ONE_SECOND_IN_USECS) / 2);
+  ACE_Time_Value sleep_timeout (Thread_Handler::interval_.sec () / 2);
 
-  for (int i = this->iterations_;
+  for (int i = ACE_Utils::truncate_cast<int> (this->iterations_);
        i > 0;
        --i)
     {
@@ -254,7 +253,7 @@ Thread_Handler::svc (void)
       ACE_Time_Value timeout (0,
                               10 * 1000);
       if (this->notify (&timeout) == -1)
-	ACE_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     "(%t) %p\n",
                     "notify"));
     }
@@ -280,10 +279,14 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   switch (signum)
     {
     case SIGINT:
+      // This is coded thusly to avoid problems if SIGQUIT is a legit
+      // value but is not a preprocessor macro.
+#if !defined (SIGQUIT) || (SIGQUIT != 0)
     case SIGQUIT:
+#endif
       ACE_ERROR ((LM_ERROR,
-		  "(%t) ******************** shutting down %n on signal %S\n",
-		  signum));
+                  "(%t) ******************** shutting down %n on signal %S\n",
+                  signum));
       this->shutdown_ = 1;
       ACE_Reactor::end_event_loop();
     }
@@ -295,7 +298,7 @@ Thread_Handler::handle_timeout (const ACE_Time_Value &time, const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) received timeout at (%u, %u), iterations = %d\n",
-	      time.sec (),
+              time.sec (),
               time.usec (),
               this->iterations_));
 
@@ -312,8 +315,8 @@ int
 Thread_Handler::handle_exception (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) exception to id %d, iteration = %d\n",
-	      this->id_,
+              "(%t) exception to id %d, iteration = %d\n",
+              this->id_,
               this->iterations_));
   return 0;
 }
@@ -324,8 +327,8 @@ int
 Thread_Handler::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) output to id %d, iteration = %d\n",
-	      this->id_,
+              "(%t) output to id %d, iteration = %d\n",
+              this->id_,
               // This decrement must come last since
               // <handle_exception> is called before <handle_output>!
               this->iterations_--));
@@ -377,9 +380,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "threads must be supported to run this application\n"), -1);
+                     "threads must be supported to run this application\n"), -1);
 }
 #endif /* ACE_HAS_THREADS */

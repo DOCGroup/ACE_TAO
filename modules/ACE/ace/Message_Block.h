@@ -138,7 +138,7 @@ public:
    * responsibility to take care of the memory allocated for the
    * data_block
    */
-  ACE_Message_Block (ACE_Data_Block *,
+  ACE_Message_Block (ACE_Data_Block *data_block,
                      Message_Flags flags = 0,
                      ACE_Allocator *message_block_allocator = 0);
 
@@ -195,7 +195,7 @@ public:
    * the heap and does a copy of the data from the incoming message
    * block. As a final note, the alignment information is used to
    * align the data block if it is created afresh. If the incoming
-   * <mb> has a data block has a data block allocated from the heap,
+   * @a mb has a data block has a data block allocated from the heap,
    * then this constructor just duplicates (ie. a shallow copy) the
    * data block of the incoming @a mb.
    */
@@ -206,7 +206,7 @@ public:
    * Create a Message Block that assumes it has ownership of @a data,
    * but in reality it doesnt (i.e., cannot delete it since it didn't
    * malloc it!).  Note that the @c size of the Message_Block will
-   * be @a size, but the <length>  will be 0 until <wr_ptr> is set.
+   * be @a size, but the @a length  will be 0 until <wr_ptr> is set.
    */
   int init (const char *data,
             size_t size = 0);
@@ -214,15 +214,15 @@ public:
   /**
    * Create an initialized message of type @a type containing @a size
    * bytes.  The @a cont argument initializes the continuation field in
-   * the <Message_Block>.  If @a data == 0 then we create and own the
+   * the Message_Block.  If @a data == 0 then we create and own the
    * @a data, using @a allocator_strategy to get the data if it's non-0.  If
    * @a data != 0 we assume that we have ownership of the @a data till
    * this object ceases to exist  (and don't delete it during
    * destruction).  If @a locking_strategy is non-0 then this is used
    * to protect regions of code that access shared state (e.g.,
-   * reference counting) from race conditions.  Note that the <size>
-   * of the <Message_Block> will be @a size, but the <length> will be 0
-   * until  <wr_ptr> is set. The @a data_block_allocator is use to
+   * reference counting) from race conditions.  Note that the @a size
+   * of the Message_Block will be @a size, but the @a length will be 0
+   * until <wr_ptr> is set. The @a data_block_allocator is use to
    * allocate the data blocks while the @a allocator_strategy is used
    * to allocate the buffers contained by those.
    */
@@ -274,7 +274,7 @@ public:
   Message_Flags flags (void) const;
 
   // = Data Block flag accessors and mutators.
-  /// Bitwise-or the <more_flags> into the existing message flags and
+  /// Bitwise-or the @a more_flags into the existing message flags and
   /// return the new value.
   /* @todo: I think the following set of methods could not be used at
    *  all. May be they are useless. Let us have it so that we dont
@@ -320,7 +320,7 @@ public:
   /**
    * Return a "shallow" copy that increments our reference count by 1.
    * This is similar to CORBA's <_duplicate> method, which is useful
-   * if you want to eliminate lots of checks for NULL <mb> pointers
+   * if you want to eliminate lots of checks for NULL @a mb pointers
    * before calling <_duplicate> on them.
    */
   static ACE_Message_Block *duplicate (const ACE_Message_Block *mb);
@@ -356,9 +356,9 @@ public:
 
   /**
    * This behaves like the non-static method <release>, except that it
-   * checks if <mb> is 0.  This is similar to <CORBA::release>, which
+   * checks if @a mb is 0.  This is similar to <CORBA::release>, which
    * is useful if you want to eliminate lots of checks for NULL
-   * pointers before calling <release> on them.  Returns <mb>.
+   * pointers before calling <release> on them.  Returns @a mb.
    */
   static ACE_Message_Block *release (ACE_Message_Block *mb);
 
@@ -393,7 +393,7 @@ public:
    */
   int copy (const char *buf);
 
-  /// Normalizes data in the top-level <Message_Block> to align with the base,
+  /// Normalizes data in the top-level Message_Block to align with the base,
   /// i.e., it "shifts" the data pointed to by <rd_ptr> down to the <base> and
   /// then readjusts <rd_ptr> to point to <base> and <wr_ptr> to point
   /// to <base> + the length of the moved data.  Returns -1 and does
@@ -405,7 +405,7 @@ public:
   void reset (void);
 
   /// Access all the allocators in the message block.
-  /// @@todo: Not sure whether we would need finer control while
+  /// @todo Not sure whether we would need finer control while
   /// trying to access allocators ie. a method for every allocator.
   /**
    * This method returns the allocators only from the first message
@@ -425,7 +425,7 @@ public:
                           ACE_Allocator *&message_block_allocator);
 
   /// Reset all the allocators in the message block.
-  /// @@todo: Not sure whether we would need finer control while
+  /// @todo Not sure whether we would need finer control while
   /// trying to reset allocators ie. a method for every allocator.
   /**
    * This method resets the allocators in all the message blocks in
@@ -468,7 +468,7 @@ public:
   /// Set the write pointer to @a ptr.
   void wr_ptr (char *ptr);
 
-  /// Set the write pointer ahead <n> bytes.  This is used to compute
+  /// Set the write pointer ahead @a n bytes.  This is used to compute
   /// the <length> of a message.
   void wr_ptr (size_t n);
 
@@ -486,40 +486,40 @@ public:
   /// Set the length of the message
   void length (size_t n);
 
-  /// Get the length of the <Message_Block>s, including chained
-  /// <Message_Block>s.
+  /// Get the length of the Message_Blocks, including chained
+  /// Message_Blocks.
   size_t total_length (void) const;
 
-  /// Get the total number of bytes in all <Message_Block>s, including
-  /// chained <Message_Block>s.
+  /// Get the total number of bytes in all Message_Blocks, including
+  /// chained Message_Blocks.
   size_t total_size (void) const;
 
   /// Get the total number of bytes and total length in all
-  /// <Message_Block>s, including chained <Message_Block>s.
+  /// Message_Blocks, including chained Message_Blocks.
   void total_size_and_length (size_t &mb_size,
                               size_t &mb_length) const;
 
-  /// Get the number of bytes in the top-level <Message_Block> (i.e.,
-  /// does not consider the bytes in chained <Message_Block>s).
+  /// Get the number of bytes in the top-level Message_Block (i.e.,
+  /// does not consider the bytes in chained Message_Blocks).
   size_t size (void) const;
 
   /**
-   * Set the number of bytes in the top-level <Message_Block>,
-   * reallocating space if necessary.  However, the <rd_ptr_> and
-   * <wr_ptr_> remain at the original offsets into the buffer, even if
+   * Set the number of bytes in the top-level Message_Block,
+   * reallocating space if necessary.  However, the @c rd_ptr_ and
+   * @c wr_ptr_ remain at the original offsets into the buffer, even if
    * it is reallocated.  Returns 0 if successful, else -1.
    */
   int size (size_t length);
 
-  /// Get the number of allocated bytes in all <Message_Block>, including
-  /// chained <Message_Block>s.
+  /// Get the number of allocated bytes in all Message_Block, including
+  /// chained Message_Blocks.
   size_t total_capacity (void) const;
 
-  /// Get the number of allocated bytes in the top-level <Message_Block>.
+  /// Get the number of allocated bytes in the top-level Message_Block.
   size_t capacity (void) const;
 
   /// Get the number of bytes available after the <wr_ptr_> in the
-  /// top-level <Message_Block>.
+  /// top-level Message_Block.
   size_t space (void) const;
   //@}
 
@@ -552,14 +552,14 @@ public:
   /// Set the continuation field.
   void cont (ACE_Message_Block *);
 
-  // = Pointer to the <Message_Block> directly ahead in the ACE_Message_Queue.
+  // = Pointer to the Message_Block directly ahead in the ACE_Message_Queue.
   /// Get link to next message.
   ACE_Message_Block *next (void) const;
 
   /// Set link to next message.
   void next (ACE_Message_Block *);
 
-  // = Pointer to the <Message_Block> directly behind in the ACE_Message_Queue.
+  // = Pointer to the Message_Block directly behind in the ACE_Message_Queue.
   /// Get link to prev message.
   ACE_Message_Block *prev (void) const;
 
@@ -756,7 +756,7 @@ public:
   /**
    * Decrease the shared reference count by 1.  If the reference count
    * is > 0 then return this; else if reference count == 0 then delete
-   * <this> and <mb> and return 0.  Behavior is undefined if reference
+   * @c this and @a mb and return 0.  Behavior is undefined if reference
    * count < 0.
    */
   ACE_Data_Block *release (ACE_Lock *lock = 0);
@@ -802,7 +802,7 @@ protected:
   /**
    * Decrease the reference count, but don't delete the object.
    * Returns 0 if the object should be removed.
-   * If <lock> is equal to the locking strategy then we assume that
+   * If @a lock is equal to the locking strategy then we assume that
    * the lock is beign held by the current thread; this is used to
    * release all the data blocks in a chain while holding a single
    * lock.
@@ -856,186 +856,6 @@ private:
   // = Disallow these operations.
   ACE_Data_Block &operator= (const ACE_Data_Block &);
   ACE_Data_Block (const ACE_Data_Block &);
-};
-
-/**
- * @class ACE_Dynamic_Message_Strategy
- *
- * @brief An abstract base class which provides dynamic priority
- * evaluation methods for use by the ACE_Dynamic_Message_Queue
- * class or any other class which needs to manage the priorities
- * of a collection of ACE_Message_Block's dynamically.
- *
- * Methods for deadline and laxity based priority evaluation are
- * provided.  These methods assume a specific partitioning of
- * the message priority number into a higher order dynamic bit
- * field and a lower order static priority bit field.  The
- * default partitioning assumes an unsigned dynamic message
- * priority field of 22 bits and an unsigned static message
- * priority field of 10 bits.  This corresponds to the initial
- * values of the static class members.  To provide a different
- * partitioning, assign a different set of values to the static
- * class memebers before using the static member functions.
- */
-class ACE_Export ACE_Dynamic_Message_Strategy
-{
-public:
-
-  // = Message priority status
-
-  // Values are defined as bit flags so that status combinations may
-  // be specified easily.
-
-  enum Priority_Status
-  {
-    /// Message can still make its deadline
-    PENDING     = 0x01,
-    /// Message cannot make its deadline
-    LATE        = 0x02,
-    /// Message is so late its priority is undefined
-    BEYOND_LATE = 0x04,
-    /// Mask to match any priority status
-    ANY_STATUS  = 0x07
-  };
-
-  /// Constructor.
-  ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
-                                unsigned long static_bit_field_shift,
-                                unsigned long dynamic_priority_max,
-                                unsigned long dynamic_priority_offset);
-
-  /// Virtual destructor.
-  virtual ~ACE_Dynamic_Message_Strategy (void);
-
-  /// Updates the message's priority and returns its priority status.
-  Priority_Status priority_status (ACE_Message_Block &mb,
-                                   const ACE_Time_Value &tv);
-
-  /// Get static bit field mask.
-  unsigned long static_bit_field_mask (void) const;
-
-  /// Set static bit field mask.
-  void static_bit_field_mask (unsigned long);
-
-  /// Get left shift value to make room for static bit field.
-  unsigned long static_bit_field_shift (void) const;
-
-  /// Set left shift value to make room for static bit field.
-  void static_bit_field_shift (unsigned long);
-
-  /// Get maximum supported priority value.
-  unsigned long dynamic_priority_max (void) const;
-
-  /// Set maximum supported priority value.
-  void dynamic_priority_max (unsigned long);
-
-  /// Get offset to boundary between signed range and unsigned range.
-  unsigned long dynamic_priority_offset (void) const;
-
-  /// Set offset to boundary between signed range and unsigned range.
-  void dynamic_priority_offset (unsigned long);
-
-  /// Dump the state of the strategy.
-  virtual void dump (void) const;
-
-protected:
-  /// Hook method for dynamic priority conversion.
-  virtual void convert_priority (ACE_Time_Value &priority,
-                                 const ACE_Message_Block &mb) = 0;
-
-  /// This is a bit mask with all ones in the static bit field.
-  unsigned long static_bit_field_mask_;
-
-  /**
-   * This is a left shift value to make room for static bit field:
-   * this value should be the logarithm base 2 of
-   * (static_bit_field_mask_ + 1).
-   */
-  unsigned long static_bit_field_shift_;
-
-  /// Maximum supported priority value.
-  unsigned long dynamic_priority_max_;
-
-  /// Offset to boundary between signed range and unsigned range.
-  unsigned long dynamic_priority_offset_;
-
-  /// Maximum late time value that can be represented.
-  ACE_Time_Value max_late_;
-
-  /// Minimum pending time value that can be represented.
-  ACE_Time_Value min_pending_;
-
-  /// Time value by which to shift pending priority.
-  ACE_Time_Value pending_shift_;
-};
-
-/**
- * @class ACE_Deadline_Message_Strategy
- *
- * @brief Deadline based message priority strategy.
- *
- * Assigns dynamic message priority according to time to deadline.  The
- * message priority is divided into high and low order bit fields.  The
- * high order bit field is used for dynamic message priority, which is
- * updated whenever the convert_priority() method is called.  The
- * low order bit field is used for static message priority and is left
- * unchanged.  The partitioning of the priority value into high and low
- * order bit fields is done according to the arguments passed to the
- * strategy object's constructor.
- */
-class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Strategy
-{
-public:
-  /// Ctor, with all arguments defaulted.
-  ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
-                                 unsigned long static_bit_field_shift = 10,           // 10 low order bits
-                                 unsigned long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
-                                 unsigned long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
-
-  /// Virtual dtor.
-  virtual ~ACE_Deadline_Message_Strategy (void);
-
-  /// Dynamic priority conversion function based on time to deadline.
-  virtual void convert_priority (ACE_Time_Value &priority,
-                                 const ACE_Message_Block &mb);
-
-  /// Dump the state of the strategy.
-  virtual void dump (void) const;
-};
-
-/**
- * @class ACE_Laxity_Message_Strategy
- *
- * @brief Laxity based message priority strategy.
- *
- * Assigns dynamic message priority according to laxity (time to
- * deadline minus worst case execution time).  The message priority is
- * divided into high and low order bit fields.  The high order
- * bit field is used for dynamic message priority, which is
- * updated whenever the convert_priority() method is called.  The
- * low order bit field is used for static message priority and is left
- * unchanged.  The partitioning of the priority value into high and low
- * order bit fields is done according to the arguments passed to the
- * strategy object's constructor.
- */
-class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strategy
-{
-public:
-  /// Ctor, with all arguments defaulted.
-  ACE_Laxity_Message_Strategy (unsigned long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
-                               unsigned long static_bit_field_shift = 10,           // 10 low order bits
-                               unsigned long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
-                               unsigned long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
-
-  /// virtual dtor.
-  virtual ~ACE_Laxity_Message_Strategy (void);
-
-  /// Dynamic priority conversion function based on laxity.
-  virtual void convert_priority (ACE_Time_Value &priority,
-                                 const ACE_Message_Block &mb);
-
-  /// Dump the state of the strategy.
-  virtual void dump (void) const;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

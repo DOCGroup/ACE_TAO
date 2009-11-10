@@ -186,7 +186,8 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t thread_names[] = 0);
+                        ACE_thread_t thread_ids[] = 0,
+                        const char* thr_name[] = 0);
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 
@@ -221,7 +222,7 @@ private:
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  int delete_timer_queue_;
+  bool delete_timer_queue_;
 
   /// The mutual exclusion mechanism that is required to use the
   /// <condition_>.
@@ -236,7 +237,7 @@ private:
 
   /// When deactivate is called this variable turns to false and the
   /// dispatching thread is signalled, to terminate its main loop.
-  int active_;
+  bool active_;
 
   /// Thread id of our active object task.
   ACE_thread_t thr_id_;

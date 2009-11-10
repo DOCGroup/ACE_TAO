@@ -173,10 +173,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "Thread_Mutex\n"));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	      et.real_time, et.user_time, et.system_time));
+              et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-	      (et.real_time / double (iterations)) * 1000000));
+             (et.real_time / double (iterations)) * 1000000));
 
   // Test the thread mutex derived (which does use inheritance or
   // dynamic binding).  Note that we call this via an instance of the
@@ -197,10 +197,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "Thread_Mutex_Derived\n"));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	      et.real_time, et.user_time, et.system_time));
+             et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-	      (et.real_time / double (iterations)) * 1000000));
+             (et.real_time / double (iterations)) * 1000000));
 
   // Test the thread mutex derived (which does use inheritance or
   // dynamic binding).  Note that we call this via a pointer to the
@@ -222,10 +222,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "Mutex_Base\n"));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	      et.real_time, et.user_time, et.system_time));
+             et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-	      (et.real_time / double (iterations)) * 1000000));
+             (et.real_time / double (iterations)) * 1000000));
   return 0;
 }
 #else

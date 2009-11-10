@@ -55,36 +55,36 @@ public:
   ~ACE_Netlink_Addr (void);
 
   /**
-  *	@param naddr sets the nl_ member @see nl_
+   * @param naddr sets the nl_ member @see nl_
    */
   int set (const ACE_Netlink_Addr &naddr);
   /**
-  *	sets the pid and groups fields of member nl_  @see nl_
-  */
+   * sets the pid and groups fields of member nl_  @see nl_
+   */
   void set (int pid, int gid);
   /**
-   *	set nl_ to nl_  @see nl_
-  */
+   * set nl_ to nl_  @see nl_
+   */
   int set (const sockaddr_nl *, int len);
   /**
    * @return pid
-  */
+   */
   int get_pid (void) const;
   /**
-   *	@return the group id @see nl_
-  */
+   * @return the group id @see nl_
+   */
   int get_gid (void) const;
   /**
-   *	@return addr pointer @see nl_
-  */
+   * @return addr pointer @see nl_
+   */
   virtual void *get_addr (void) const;
   /**
-   *	@return nl_ member  @see nl_  size
-  */
+   * @return nl_ member  @see nl_  size
+   */
   int get_addr_size (void) const;
   /**
-   *	 Set a pointer to the address
-  */
+   * Set a pointer to the address
+   */
   virtual void set_addr (void *, int len= sizeof(sockaddr_nl) );
 
   /// Declare the dynamic allocation hooks.
@@ -97,8 +97,8 @@ private:
    * */
   int determine_type (void) const;
   /**
-  *	set nl_  @see nl_ to zero and sets address family to default value
-  */
+   * set nl_  @see nl_ to zero and sets address family to default value
+   */
   void reset (void);
 
   sockaddr_nl  nl_;

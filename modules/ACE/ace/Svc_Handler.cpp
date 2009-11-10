@@ -21,8 +21,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <PR_ST_1, ACE_SYNCH_DECL> void *
-ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t,
-                                                        void *p)
+ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t, void *p)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (NOOP, 2 parameters)");
   return p;
@@ -30,8 +29,7 @@ ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t,
 
 #if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <PR_ST_1, ACE_SYNCH_DECL> void
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *,
-                                                          void *)
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *, void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (NOOP, 2 parameters)");
   return;
@@ -112,7 +110,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void)
 
   // Only delete ourselves if we're not owned by a module and have
   // been allocated dynamically.
-  if (this->mod_ == 0 && this->dynamic_ && this->closing_ == 0)
+  if (this->mod_ == 0 && this->dynamic_ && this->closing_ == false)
     // Will call the destructor, which automatically calls <shutdown>.
     // Note that if we are *not* allocated dynamically then the
     // destructor will call <shutdown> automatically when it gets run
@@ -137,7 +135,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
                                                           ACE_Message_Queue<ACE_SYNCH_USE> *mq,
                                                           ACE_Reactor *reactor)
   : ACE_Task<ACE_SYNCH_USE> (tm, mq),
-    closing_ (0),
+    closing_ (false),
     recycler_ (0),
     recycling_act_ (0)
 {
@@ -154,7 +152,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
   // class.
   this->dynamic_ = ACE_Dynamic::instance ()->is_dynamic ();
 
-  if (this->dynamic_ != 0)
+  if (this->dynamic_)
     // Make sure to reset the flag.
     ACE_Dynamic::instance ()->reset ();
 }
@@ -172,16 +170,16 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
 
   if (this->peer_.get_remote_addr (client_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("get_remote_addr")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("get_remote_addr")),
                       -1);
   else if (client_addr.addr_to_string (buf, sizeof buf) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("can't obtain peer's address")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("can't obtain peer's address")),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("connected to %s on fd %d\n"),
+              ACE_TEXT ("connected to %s on fd %d\n"),
               buf,
               this->peer_.get_handle ()));
 #endif /* ACE_DEBUGGING */
@@ -190,8 +188,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("unable to register client handler")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("unable to register client handler")),
                       -1);
   return 0;
 }
@@ -287,12 +285,12 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Svc_Handler (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Svc_Handler");
 
-  if (this->closing_ == 0)
+  if (this->closing_ == false)
     {
       // We're closing down now, so make sure not to call ourselves
       // recursively via other calls to handle_close() (e.g., from the
       // Timer_Queue).
-      this->closing_ = 1;
+      this->closing_ = true;
 
       this->shutdown ();
     }
@@ -305,6 +303,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close (ACE_HANDLE,
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close");
 
   this->destroy ();
+
   return 0;
 }
 
@@ -324,11 +323,10 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::close (u_long)
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init (int argc, ACE_TCHAR *argv[])
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init (int /* argc */,
+                                               ACE_TCHAR * /* argv */[])
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init");
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
   return -1;
 }
 

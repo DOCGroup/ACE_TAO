@@ -82,10 +82,11 @@ ACE::HTBP::Addr::addr_to_string (ACE_TCHAR buffer[],
 }
 
 int
-ACE::HTBP::Addr::string_to_addr (const char address[])
+ACE::HTBP::Addr::string_to_addr (const char address[],
+                                 int address_family)
 {
   //  if (ACE_OS::strchr (address,':'))
-    return this->ACE_INET_Addr::string_to_addr(address);
+    return this->ACE_INET_Addr::string_to_addr(address, address_family);
     //  this->htid_ = address;
     //  return 0;
 }

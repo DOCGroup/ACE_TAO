@@ -2,13 +2,11 @@
 //
 // $Id$
 
-#include "ace/os_include/os_assert.h"
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_SYNCH_DECL> ACE_INLINE void
 ACE_Task<ACE_SYNCH_USE>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
-                                    size_t wm_size)
+                                      size_t wm_size)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::water_marks");
   if (cmd == ACE_IO_Cntl_Msg::SET_LWM)
@@ -28,8 +26,7 @@ template <ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Task<ACE_SYNCH_USE>::can_put (ACE_Message_Block *)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::can_put");
-  assert (!"not implemented");
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE int
@@ -63,7 +60,7 @@ ACE_Task<ACE_SYNCH_USE>::msg_queue (ACE_Message_Queue<ACE_SYNCH_USE> *mq)
   if (this->delete_msg_queue_)
     {
       delete this->msg_queue_;
-      this->delete_msg_queue_ = 0;
+      this->delete_msg_queue_ = false;
     }
   this->msg_queue_ = mq;
 }

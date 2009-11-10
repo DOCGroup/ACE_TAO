@@ -31,8 +31,7 @@
 #include "ace/POSIX_Proactor.h"
 #include "ace/OS_main.h"
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-     (defined (ACE_HAS_AIO_CALLS)) && !defined (ACE_POSIX_AIOCB_PROACTOR))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
@@ -49,14 +48,16 @@ public:
     : time_flag_ (0)
     {}
 
-
   virtual ~My_Task (void) {}
   // Destructor.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // If time_flag is zero do the eventloop indefinitely, otherwise do
   // it for finite amount of time (13secs!!!).
   int open (void *timed_event_loop)
     {
+  //FUZZ: enble check_for_lack_ACE_OS
+
       // Set the local variable.
       if (timed_event_loop == 0)
         this->time_flag_ = 0;
@@ -82,7 +83,7 @@ public:
       if (this->time_flag_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t):Going to do *timed* <run_event_loop> \n"));
+                      "(%P|%t):Going to do *timed* <run_event_loop>\n"));
 
           ACE_Time_Value run_time (13);
 
@@ -94,7 +95,7 @@ public:
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t):Going to do *indefinite* <run_event_loop> \n"));
+                      "(%P|%t):Going to do *indefinite* <run_event_loop>\n"));
 
           if (ACE_Proactor::instance ()->run_event_loop () == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t):%p.\n",
@@ -116,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   ACE_UNUSED_ARG (argv);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P | %t):Test starts \n"));
+              "(%P | %t):Test starts\n"));
 
   // Let us get the singleton proactor created here. This is very
   // important. This will mask the signal used in the Proactor masked
@@ -154,15 +155,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   return 0;
 }
 
-#else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
+#else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "This example cannot work with AIOCB_Proactor.\n"));
   return 1;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 

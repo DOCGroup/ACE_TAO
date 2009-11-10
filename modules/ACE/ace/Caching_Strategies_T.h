@@ -114,7 +114,7 @@ public:
 
   /// Constructor.
   ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = 0,
-                                int delete_implementation = 0);
+                                bool delete_implementation = false);
 
   /// Destructor.
   ~ACE_Caching_Strategy_Adapter (void);
@@ -170,7 +170,7 @@ private:
   IMPLEMENTATION *implementation_;
 
   /// Do we need to delete the implementation?
-  int delete_implementation_;
+  bool delete_implementation_;
 };
 
 //////////////////////////////////////////////////////////////////////////

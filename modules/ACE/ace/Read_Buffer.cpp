@@ -24,10 +24,10 @@ ACE_Read_Buffer::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Read_Buffer::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("size_ = %d"), this->size_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\noccurrences_ = %d"), this->occurrences_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nstream_ = %x"), this->stream_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nallocator_ = %x"), this->allocator_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d"), this->size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %d"), this->occurrences_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nstream_ = %x"), this->stream_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nallocator_ = %x"), this->allocator_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -48,7 +48,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
                                   bool close_on_delete,
                                   ACE_Allocator *alloc)
-  : stream_ (ACE_OS::fdopen (handle, ACE_LIB_TEXT ("r"))),
+  : stream_ (ACE_OS::fdopen (handle, ACE_TEXT ("r"))),
     close_on_delete_ (close_on_delete),
     allocator_ (alloc)
 {
@@ -107,12 +107,12 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // Read in the file char by char
   while (slot < BUFSIZ)
     {
-      c = getc (this->stream_);
+      c = ACE_OS::getc (this->stream_);
 
       // Don't insert EOF into the buffer...
       if (c == EOF)
         {
-          ungetc (c, this->stream_);
+          ACE_OS::ungetc (c, this->stream_);
           break;
         }
       else if (c == term)

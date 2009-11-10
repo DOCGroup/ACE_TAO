@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/Get_Opt.h"
 #include "TS_Clerk_Handler.h"
 #include "ace/Signal.h"
@@ -187,14 +185,14 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
   else
     {
       // Get current local time
-      ACE_UINT32 local_time = ACE_OS::time (0);
+      time_t local_time = ACE_OS::time (0);
 
       // Compure delta time (difference between current local time and
       // system time obtained from the server)
-      long t = reply.time () - local_time;
+      time_t t = reply.time () - local_time;
 
       // Compute round trip delay and adjust time accordingly
-      ACE_UINT32 one_way_time = (local_time - this->start_time_)/2;
+      time_t one_way_time = (local_time - this->start_time_)/2;
       t += one_way_time;
 
       // Now update time info (to be retrieved by Clerk_Processor)
@@ -334,24 +332,27 @@ ACE_TS_Clerk_Processor::alloc (void)
   ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::alloc"));
   ACE_NEW (this->shmem_, ALLOCATOR (this->poolname_));
 
+  void *temp = 0;
+
   // Only create the state if it doesn't already exist.
-  if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR) ==  -1)
+  if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) ==  -1)
     {
       // Allocate the space out of shared memory for the system time entry
-      void *temp = this->shmem_->malloc (sizeof (this->system_time_));
+      temp = (this->shmem_->malloc (2 * sizeof (time_t)));
 
       // Give it a name binding
       this->shmem_->bind (ACE_DEFAULT_TIME_SERVER_STR, temp);
-
-      // Set up pointers. Note that we add one to get to the second
-      // field in the structure
-      this->system_time_.delta_time_ = (long *) temp;
-      this->system_time_.last_local_time_ = ((long *) temp) + 1;
-
-      // Initialize
-      *(this->system_time_.delta_time_) = 0;
-      *(this->system_time_.last_local_time_) = ACE_OS::time (0);
     }
+
+  // Set up pointers. Note that we add one to get to the second
+  // field in the structure
+  time_t *time_p = (time_t *)temp;
+  this->system_time_.delta_time_ = time_p;
+  this->system_time_.last_local_time_ = time_p + 1;
+
+  // Initialize
+  *(this->system_time_.delta_time_) = 0;
+  *(this->system_time_.last_local_time_) = ACE_OS::time (0);
 }
 
 // Query the servers for the latest time
@@ -373,7 +374,7 @@ ACE_TS_Clerk_Processor::update_time ()
   this->cur_sequence_num_++;
 
   int count = 0;
-  long total_delta = 0;
+  time_t total_delta = 0;
   ACE_Time_Info time_info;
 
   //  Call send_request() on all handlers
@@ -421,7 +422,7 @@ ACE_TS_Clerk_Processor::update_time ()
   *(this->system_time_.last_local_time_) = ACE_OS::time (0);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Average delta time: %d\n"),
-              *(this->system_time_.delta_time_)));
+              (int)(*(this->system_time_.delta_time_))));
   return 0;
 }
 
@@ -496,7 +497,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
   // Now set up timer to receive updates from server
   // set the timer to go off after timeout value
   this->timer_id_ = ACE_Reactor::instance ()->schedule_timer (this,
-                                                              NULL,
+                                                              0,
                                                               ACE_Time_Value (this->timeout_),
                                                               ACE_Time_Value (this->timeout_));
   return 0;

@@ -55,7 +55,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #elif !defined (ACE_LACKS_PWD_FUNCTIONS)
 # if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
-#     if defined (ACE_HAS_PTHREADS_STD) && \
+#     if defined (ACE_HAS_PTHREADS) && \
       !defined (ACE_HAS_STHREADS) || \
       defined (HPUX_11)  || \
       defined (__USLC__) // Added by Roland Gigler for SCO UnixWare 7.
@@ -85,7 +85,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
     return pwent;
 #     else
   return ::getpwnam_r (name, pwent, buffer, buflen);
-#     endif /* ACE_HAS_PTHREADS_STD */
+#     endif /* ACE_HAS_PTHREADS */
 #   else
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (pwent);

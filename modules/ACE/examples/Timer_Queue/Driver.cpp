@@ -145,11 +145,11 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
       /* NOTREACHED */
 
     case 3: // Dump the existing timers.
-      return list_cmd_->execute (NULL);
+      return list_cmd_->execute (0);
       /* NOTREACHED */
 
     case 4: // Exit the program.
-      return shutdown_cmd_->execute (NULL);
+      return shutdown_cmd_->execute (0);
       /* NOTREACHED */
 
     default:

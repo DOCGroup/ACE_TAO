@@ -148,12 +148,10 @@ Peer_Handler<PR_ST_2>::handle_output (ACE_HANDLE)
 }
 
 template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::handle_signal (int signum,
+Peer_Handler<PR_ST_2>::handle_signal (int,
                                       siginfo_t *,
                                       ucontext_t *)
 {
-  ACE_UNUSED_ARG (signum);
-
   // @@ Note that this code is not portable to all OS platforms since
   // it uses print statements within signal handler context.
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in handle_signal\n")));

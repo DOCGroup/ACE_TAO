@@ -14,12 +14,9 @@
 // the SGI C++ compiler (7.1 or higher).
 
 // The following three should be enabled/disabled together.
-#if _COMPILER_VERSION >= 720
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#else
+#if _COMPILER_VERSION < 720
 #define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
-#endif /* _COMPILER_VERSION >= 720 */
+#endif /* _COMPILER_VERSION < 720 */
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_NEEDS_FUNC_DEFINITIONS
 
@@ -29,7 +26,7 @@
 // #define ACE_HAS_STREAM_PIPES
 
 #if defined (_COMPILER_VERSION)
-# define ACE_CC_NAME ACE_LIB_TEXT ("SGI/MIPSPro")
+# define ACE_CC_NAME ACE_TEXT ("SGI/MIPSPro")
 # define ACE_CC_MAJOR_VERSION (_COMPILER_VERSION / 100)
 # define ACE_CC_MINOR_VERSION (_COMPILER_VERSION % 100)
 # define ACE_CC_BETA_VERSION  (0)

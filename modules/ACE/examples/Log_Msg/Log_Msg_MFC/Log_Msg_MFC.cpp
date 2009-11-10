@@ -21,11 +21,11 @@ static char THIS_FILE[] = __FILE__;
 // CLog_Msg_MFCApp
 
 BEGIN_MESSAGE_MAP(CLog_Msg_MFCApp, CWinApp)
-	//{{AFX_MSG_MAP(CLog_Msg_MFCApp)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
+    //{{AFX_MSG_MAP(CLog_Msg_MFCApp)
+        // NOTE - the ClassWizard will add and remove mapping macros here.
+        //    DO NOT EDIT what you see in these blocks of generated code!
+    //}}AFX_MSG
+    ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -33,8 +33,8 @@ END_MESSAGE_MAP()
 
 CLog_Msg_MFCApp::CLog_Msg_MFCApp()
 {
-	// TODO: add construction code here,
-	// Place all significant initialization in InitInstance
+    // TODO: add construction code here,
+    // Place all significant initialization in InitInstance
 }
 
 /////////////////////////////////////////////////////////////////////////////

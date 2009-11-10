@@ -27,17 +27,14 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
+#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 ACE_RCSID(tests, CDR_File_Test, "$Id$")
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) | defined (ACE_HAS_WINCE)
-
-#if defined (ACE_HAS_WINCE)
-#include "CE_fostream.h"
-#endif  // ACE_HAS_WINCE
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 class CDR_Test
 {
@@ -87,9 +84,11 @@ operator << (ostream &os,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n"
                         "Char:               %c\n"
-      "Short:              %u\n"
+                        "Short:              %u\n"
                         "Long:               %d\n"),
-                    t.char_, t.word2_, t.word4_));
+              t.char_,
+              t.word2_,
+              t.word4_));
 
   ACE_CDR::ULongLong hi = (t.word8_ >> 32);
   ACE_CDR::ULongLong lo = (t.word8_ & 0xffffffff);
@@ -97,12 +96,13 @@ operator << (ostream &os,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n"
                         "ULongLong 1st half: %x\n"
-      "ULongLong 2nd half: %x\n"
+                        "ULongLong 2nd half: %x\n"
                         "Float:              %f\n"
                         "Double:             %f\n"),
-                        ACE_U64_TO_U32(hi),
-                        ACE_U64_TO_U32(lo),
-                        t.fpoint_, t.dprec_));
+              ACE_Utils::truncate_cast<ACE_UINT32> (hi),
+              ACE_Utils::truncate_cast<ACE_UINT32> (lo),
+              t.fpoint_,
+              t.dprec_));
 #else
   os << "Char:              " << t.char_ << endl
      << "Short:             " << t.word2_ << endl
@@ -113,11 +113,11 @@ operator << (ostream &os,
 
   os << "ULongLong 1st half: "
      << hex
-     << ACE_U64_TO_U32 (hi)
+     << ACE_Utils::truncate_cast<ACE_UINT32> (hi)
      << dec << endl
      << "ULongLong 2nd half: "
      << hex
-     << ACE_U64_TO_U32 (lo)
+     << ACE_Utils::truncate_cast<ACE_UINT32> (lo)
      << dec << endl
      << "Float:             " << t.fpoint_ << endl
      << "Double:            " << t.dprec_ << endl;
@@ -220,14 +220,7 @@ run_test (int write_file,
       output_cdr << cdr_test;
 
       // Output the data to cout.
-#if defined (ACE_HAS_WINCE) && defined (ACE_LACKS_IOSTREAM_TOTALLY)
-      // Since CE does not have ostream, ace_file_stream and output_file() cannot
-      // be used.  Just use 'hard-coded' file name here.
-      (*ACE_CE_OSTREAM::instance()).open(ACE_TEXT("\\Log\\CDR_File_Test.txt"));
-      (*ACE_CE_OSTREAM::instance()) << cdr_test;
-#else
       *ace_file_stream::instance ()->output_file () << cdr_test;
-#endif  // ACE_HAS_WINCE
 
       // Save the data.
       const ACE_Message_Block *output_mb =
@@ -319,13 +312,10 @@ run_test (int write_file,
       // <CDR_Test> object.
       input_cdr >> temp;
 
-#if defined (ACE_HAS_WINCE) && defined (ACE_LACKS_IOSTREAM_TOTALLY)
-      (*ACE_CE_OSTREAM::instance()) << temp;
-#else
       *ace_file_stream::instance ()->output_file () << temp;
-#endif  // ACE_HAS_WINCE
 
-      ACE_ASSERT (temp == cdr_test);
+      if (!(temp == cdr_test))
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Data mismatch across file\n")));
     }
 
   return 0;
@@ -399,29 +389,12 @@ run_main (int argc, ACE_TCHAR *argv[])
                          0,
                          ACE_Addr::sap_any,
                          0,
- ((writing) ? (O_RDWR | O_CREAT) : O_RDONLY),
+                         ((writing) ? (O_RDWR | O_CREAT) : O_RDONLY),
                          ACE_DEFAULT_FILE_PERMS) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("connect failed for %p\n"),
                        filename.get_path_name ()),
                       1);
-
-#if !defined (VXWORKS)
-# define TEST_CAN_UNLINK_IN_ADVANCE
-#endif
-
-#if defined (TEST_CAN_UNLINK_IN_ADVANCE)
-  if (fn == 0)
-    {
-      // Unlink this file right away so that it is automatically removed
-      // when the process exits.
-      if (file.unlink () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("unlink failed for %p\n"),
-                           filename.get_path_name ()),
-                          1);
-    }
-#endif
 
   CDR_Test cdr_test ('a',
                      0x00ff,
@@ -448,7 +421,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                 cdr_test);
     }
 
-#if !defined (TEST_CAN_UNLINK_IN_ADVANCE)
   if (fn == 0)
     {
       file.close ();
@@ -458,7 +430,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                            filename.get_path_name ()),
                           1);
     }
-#endif
 
   ACE_END_TEST;
   return 0;

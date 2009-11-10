@@ -1,8 +1,9 @@
 // $Id$
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdlib.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID (ace,
            OS_NS_string,
@@ -11,14 +12,6 @@ ACE_RCSID (ace,
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_string.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
-
-#if defined (ACE_HAS_WCHAR)
-#  include "ace/OS_NS_stdlib.h"
-#endif /* ACE_HAS_WCHAR */
-
-#if !defined (ACE_LACKS_STRERROR)
-#  include "ace/OS_NS_stdio.h"
-#endif /* ACE_LACKS_STRERROR */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +26,7 @@ ACE_OS::memchr_emulation (const void *s, int c, size_t len)
     if (((int) *t) == c)
       return t;
     else
-      t++;
+      ++t;
 
   return 0;
 }
@@ -119,13 +112,21 @@ ACE_OS::strerror (int errnum)
   // and set errno to EINVAL.
   ACE_Errno_Guard g (errno);
   errno = 0;
-  char *errmsg;
+  char *errmsg = 0;
 
-#if defined (ACE_WIN32)
-   if (errnum < 0 || errnum >= _sys_nerr)
-      errno = EINVAL;
+#if defined (ACE_HAS_TR24731_2005_CRT)
+  errmsg = ret_errortext;
+  ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof(ret_errortext), errnum),
+                     char *, 0, errmsg);
+  if (errnum < 0 || errnum >= _sys_nerr)
+    g = EINVAL;
+
+  return errmsg;
+#elif defined (ACE_WIN32)
+  if (errnum < 0 || errnum >= _sys_nerr)
+    errno = EINVAL;
 #endif /* ACE_WIN32 */
-   errmsg = ::strerror (errnum);
+  errmsg = ::strerror (errnum);
 
   if (errno == EINVAL || errmsg == 0 || errmsg[0] == 0)
     {
@@ -142,11 +143,47 @@ ACE_OS::strerror (int errnum)
  * Just returns "Unknown Error" all the time.
  */
 char *
-ACE_OS::strerror_emulation (int errnum)
+ACE_OS::strerror_emulation (int)
 {
-  return "Unknown Error";
+  return const_cast <char*> ("Unknown Error");
 }
 #endif /* ACE_LACKS_STRERROR */
+
+
+char *
+ACE_OS::strsignal (int signum)
+{
+  static char signal_text[128];
+#if defined (ACE_HAS_STRSIGNAL)
+  char *ret_val;
+
+# if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
+  if (signum < 0 || signum >= ACE_NSIG)
+    ret_val = 0;
+  else
+# endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
+  ret_val = ACE_STD_NAMESPACE::strsignal (signum);
+
+  if (ret_val <= reinterpret_cast<char *> (0))
+    {
+      ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
+      ret_val = signal_text;
+    }
+  return ret_val;
+#else
+  if (signum < 0 || signum >= ACE_NSIG)
+    {
+      ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
+      return signal_text;
+    }
+# if defined (ACE_SYS_SIGLIST)
+  return ACE_SYS_SIGLIST[signum];
+# else
+  ACE_OS::sprintf (signal_text, "Signal: %d", signum);
+  return signal_text;
+# endif /* ACE_SYS_SIGLIST */
+#endif /* ACE_HAS_STRSIGNAL */
+}
 
 const char *
 ACE_OS::strnchr (const char *s, int c, size_t len)
@@ -323,7 +360,8 @@ ACE_OS::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
   return dst;
 }
 
-#if !defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_LACKS_STRTOK_R)
+#if (!defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_LACKS_STRTOK_R)) \
+    && !defined (ACE_HAS_TR24731_2005_CRT)
 char *
 ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 {
@@ -352,22 +390,19 @@ ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
                             const ACE_WCHAR_T *tokens,
                             ACE_WCHAR_T **lasts)
 {
-  if (s == 0)
-    s = *lasts;
-  else
-    *lasts = s;
-  if (*s == 0)                  // We have reached the end
-    return 0;
-  int l_org = ACE_OS::strlen (s);
-  s = ACE_OS::strtok (s, tokens);
-  if (s == 0)
-    return 0;
-  const int l_sub = ACE_OS::strlen (s);
-  if (s + l_sub < *lasts + l_org)
-    *lasts = s + l_sub + 1;
-  else
-    *lasts = s + l_sub;
-  return s ;
+  ACE_WCHAR_T* sbegin = s ? s : *lasts;
+  sbegin += ACE_OS::strspn(sbegin, tokens);
+  if (*sbegin == 0)
+    {
+      static ACE_WCHAR_T empty[1] = { 0 };
+      *lasts = empty;
+      return 0;
+  }
+  ACE_WCHAR_T*send = sbegin + ACE_OS::strcspn(sbegin, tokens);
+  if (*send != 0)
+      *send++ = 0;
+  *lasts = send;
+  return sbegin;
 }
 # endif  /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOK */
 

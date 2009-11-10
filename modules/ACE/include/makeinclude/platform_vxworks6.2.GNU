@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 # VxWorks 6.2
 
@@ -16,33 +17,28 @@
 VXWORKS = 1
 CROSS-COMPILE = 1
 
-ifneq (,$(HOST_ROOT))
-  TAO_IDL ?= $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
-  TAO_IDL_DEP ?= $(TAO_IDL)
-  TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
-endif
-
-ifeq ("$(OS)", "Windows_NT")
-ifneq ($(MAKE_MODE), unix)
-vxworks_ntbuild = 1
-MKDIR_NTSTYLE = 1
-endif
-endif
-
 debug ?= 1
 optimize ?= 1
-rtti ?= 1
 threads ?= 1
 exceptions ?= 1
 rtp ?= 1
-pthread ?= 1
+ifeq ($(rtp),0)
+  pthread ?= 0
+else
+  pthread ?= 1
+endif
+xerces ?= 0
+aio ?= 0
+versioned_so ?= 0
 
 ifeq ($(static_libs),1)
   shared_libs = 0
 else
   static_libs = 0
 endif
-versioned_so ?= 0
+ifeq ($(static_libs_only),1)
+  shared_libs = 0
+endif
 
 # VxWorks doesn't have rwho
 rwho = 0
@@ -57,12 +53,29 @@ ifeq (,$(WIND_HOST_TYPE))
 	@ERROR: you must set your WIND_HOST_TYPE environment variable
 endif # WIND_HOST_TYPE
 
-ifeq ($(DIAB_HOST_TYPE),)
-ifeq ("$(OS)", "Windows_NT")
-  DIAB_HOST_TYPE = WIN32
+ifeq ("$(WIND_HOST_TYPE)","x86-win32")
+  vxworks_ntbuild ?= 0
+  mingw32 ?= 1
+  lacks_touch ?= 0
+  PWD=$(subst \,/,$(shell pwd))
+  ACE_ROOT:=$(subst \,/,$(ACE_ROOT))
+  TAO_ROOT:=$(subst \,/,$(TAO_ROOT))
+  CIAO_ROOT:=$(subst \,/,$(CIAO_ROOT))
+  HOST_ROOT:=$(subst \,/,$(HOST_ROOT))
+  override RM=rm -f
+endif # x86-win32
+
+ifneq (,$(HOST_ROOT))
+TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
+ifeq ("$(WIND_HOST_TYPE)","x86-win32")
+  TAO_IDL = $(HOST_ROOT)/bin/tao_idl.exe
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2.exe
 else
-  DIAB_HOST_TYPE = UNIX
+  TAO_IDL = $(HOST_ROOT)/bin/tao_idl
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
 endif
+TAO_IDL_DEP = $(TAO_IDL)
+TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
 endif
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
@@ -80,13 +93,22 @@ ifeq ($(TOOL),)
 else
   override TOOL := $(TOOL)
 endif
-override TOOL_FAMILY := $(TOOL)
+ifeq ($(TOOL_FAMILY),)
+  ifeq ($(findstring gnu,$(TOOL)),gnu)
+    override TOOL_FAMILY := gnu
+  else
+    override TOOL_FAMILY := diab
+  endif
+endif
 
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
   templates ?= automatic
 endif
 
 ifeq ($(rtp),0)
+  ifeq ($(findstring PPC, $(CPU)), PPC)
+    CPPFLAGS += -mlongcall
+  endif
   PRJ_TYPE = vxApp
 endif
 
@@ -137,7 +159,7 @@ endif
 
 ifneq ($(VX_LIB_BUILD),1)
   ifeq ($(rtp),0)
-    VXWORKSLINK = true
+    VXWORKSLINK = 1
   endif
   ifeq ($(VX_APP_BUILD),1)
     ## set variables for VxWorks linktarget identification
@@ -149,7 +171,6 @@ ifneq ($(VX_LIB_BUILD),1)
       EXEEXT = .vxe
       VXE_DIR := $(OUTPUT_DIRECTORY)
       EXE = $(BIN_UNCHECKED)
-      GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE)
     endif
     PRJ_DIR = .
     CLEANUP_OBJS := ctdt.c $(PRJ_DIR)/$(PRJ_FILE) $(CLEANUP_OBJS)
@@ -170,7 +191,19 @@ ifeq ($(rtp),1)
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
   LD := $(CPLUS)
   DLD := $(CPLUS)
-  LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
+
+  ifeq ($(SHARED_LIBS), 1))
+    ifeq ($(PRJ_TYPE),library)
+      PICDIR = /PIC
+    endif
+  endif
+
+  ifeq ($(findstring *sf,*$(TOOL)),*sf)
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/sfcommon$(PICDIR)
+  else
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common$(PICDIR)
+  endif
+
   LDLIBS += -ldl
 else
   include $(TGT_DIR)/h/make/defs.default
@@ -179,10 +212,25 @@ else
   include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 endif
 
-## make sure we don't use that stupid, crippled vxrm.bat script.
-override RM=rm -f
+no_cflags_ansi ?= 0
+ifeq ($(no_cflags_ansi), 1)
+  ifeq ("$(TOOL_FAMILY)","gnu")
+    CC_COMPILER := $(filter-out -ansi, $(CC_COMPILER))
+  else
+    CC_COMPILER := $(filter-out -Xansi, $(CC_COMPILER))
+  endif
+endif
 
-ifeq ("$(VXWORKSLINK)","true")
+no_ccflags_ansi ?= 0
+ifeq ($(no_ccflags_ansi), 1)
+  ifeq ("$(TOOL_FAMILY)","gnu")
+    C++_COMPILER := $(filter-out -ansi, $(C++_COMPILER))
+  else
+    C++_COMPILER := $(filter-out -Xansi, $(C++_COMPILER))
+  endif
+endif
+
+ifeq ($(VXWORKSLINK),1)
   # prevent possible clash with static LIB rules
   # in VxWorks make includes and rules.lib.GNU
   override ARCHIVE =
@@ -191,14 +239,14 @@ ifeq ("$(VXWORKSLINK)","true")
   ifeq ($(SHARED_LIBS),1)
     ##LD_PARTIAL += -L$(ACE_ROOT)/lib -L./ $(LDLIBPATH) $(LD_LINK_PATH)
     PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
-	ifeq ($(VX_SO_BUILD),1)
-	  ## Shared lib builds for VxWorks will also build 'import' libraries
+    ifeq ($(VX_SO_BUILD),1)
+      ## Shared lib builds for VxWorks will also build 'import' libraries
       LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
       CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
-	  REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
-	endif
+      REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
+    endif
   else
-    LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
+    LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH) $(LD_PARTIALFLAGS)
     PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(VLDLIBS) $(ACE_SHLIBS) $(LIBS)
   endif
   PRJ_OBJS_FOR_LD=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
@@ -226,14 +274,14 @@ ifeq ($(pthread),1)
   CPPFLAGS += -DACE_HAS_PTHREADS
 endif
 
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
-ifdef repo
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(repo),1)
+ifeq ($(VXWORKSLINK),1)
   ifeq ($(VX_APP_BUILD),1)
 	ifneq ($(SHARED_LIBS),1)
       LD_PARTIAL += -frepo
@@ -244,11 +292,11 @@ else
     ace_lib_prelink := 1
     LINK.cc          = override
     LINK.cc.override = $(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L$(INSLIB) -L./ $(LDLIBPATH) $(LD_LINK_PATH)
-    LDFLAGS          = $(ACE_SHLIBS)
+    ifneq ($(SHARED_LIBS),1)
+      LDFLAGS        = $(ACE_SHLIBS)
+    endif
   endif
 endif
-else
-  C++FLAGS += -fimplicit-templates
 endif
 endif
 
@@ -256,16 +304,16 @@ endif
 ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
   CPPFLAGS += $(TEMPLATES_FLAG)
 endif
-endif  # TOOL == gnu
+endif  # TOOL_FAMILY == gnu
 
-ifeq ("$(TOOL)","diab")
+ifeq ("$(TOOL_FAMILY)","diab")
 ifeq ($(exceptions),1)
   C++FLAGS += -Xexceptions
 else
   C++FLAGS += -Xexceptions-off
 endif
 else
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
 ifeq ($(exceptions),1)
   C++FLAGS += -fexceptions
 else
@@ -274,20 +322,11 @@ endif
 endif
 endif
 
-ifeq (0,$(rtti))
-C++FLAGS += -DACE_LACKS_RTTI
-ifeq ("$(TOOL)","gnu")
-  C++FLAGS += -fno-rtti
-else
-  C++FLAGS += -Xrtti-off
-endif
-endif # rtti
-
 ifneq ($(findstring $(VX_CPU_FAMILY),ppc arm),)
-ifeq ("$(TOOL)","diab")
+ifeq ("$(TOOL_FAMILY)","diab")
   C++FLAGS += -Xchar-signed
 else
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
   C++FLAGS += -fsigned-char
 endif
 endif
@@ -315,9 +354,9 @@ else
 endif
 endif
 
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(VXWORKSLINK),1)
 
-  ifdef repo
+  ifeq ($(repo),1)
     ifeq ($(SHARED_LIBS),1)
       BACKUP_RPO_RULE = for %f in ($(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS))) do if exist %f.rpo mv %f.rpo %f.rpobak $(ACE_NUL_STDERR)
       POST_BUILD_RULE = for %f in ($(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS))) do if exist %f.rpobak mv %f.rpobak %f.rpo $(ACE_NUL_STDERR)
@@ -327,7 +366,7 @@ ifeq ("$(VXWORKSLINK)","true")
 .PHONY: $(PRJ_DIR)/$(PRJ_FILE)
   ## special target to satisfy VxWorks dependencies for images
 $(PRJ_DIR)/$(PRJ_FILE):
-  ifdef repo
+  ifeq ($(repo),1)
     ifeq ($(SHARED_LIBS),1)
     #### execute prelink step to make compiler instantiate all needed
     #### templates; discard image and repo files (*.rpo) after linkstep

@@ -54,7 +54,7 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
                   if (sval > 0 || index != 0)
                     {
                       output[index] = sval + '0';
-                      index++;
+                      ++index;
                     }
                   bshift -= 3;
                 }
@@ -70,7 +70,7 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
                   if (sval > 0 || index != 0)
                     {
                       output[index] = sval + '0';
-                      index++;
+                      ++index;
                     }
                   bshift -= 3;
                 }
@@ -102,7 +102,7 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
           default:
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_LIB_TEXT ("Unsupported base = %u\n"), base));
+                          ACE_TEXT ("Unsupported base = %u\n"), base));
               output[0] = '\0';
             }
         }

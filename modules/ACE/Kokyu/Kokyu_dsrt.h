@@ -120,7 +120,7 @@ namespace Kokyu
     typedef typename QoSDesc::Importance_t Importance_t;
 
     int operator ()(const QoSDesc& qos1,
-		    const QoSDesc& qos2);
+                    const QoSDesc& qos2);
   };
 
   /**
@@ -137,7 +137,7 @@ namespace Kokyu
     typedef typename QoSDesc::Priority_t Priority_t;
 
     int operator ()(const QoSDesc& qos1,
-		    const QoSDesc& qos2);
+                    const QoSDesc& qos2);
   };
 
   /**
@@ -155,7 +155,7 @@ namespace Kokyu
     typedef typename QoSDesc::Time_t Time_t;
 
     int operator ()(const QoSDesc& qos1,
-		    const QoSDesc& qos2);
+                    const QoSDesc& qos2);
   };
 
 

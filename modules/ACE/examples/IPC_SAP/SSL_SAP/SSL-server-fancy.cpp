@@ -9,6 +9,7 @@
 #include "ace/Singleton.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_sys_select.h"
 
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
@@ -69,11 +70,13 @@ class Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
   // The factory has special permission. (to access svc ()).
 
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
   // Generic initialization method.
 
   virtual int close (u_long);
   // Close down and delete this.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
 
@@ -155,7 +158,7 @@ Options::verbose (void) const
 int
 Options::reply_message_len (void) const
 {
-  return this->reply_message_len_;
+  return ACE_Utils::truncate_cast<int> (this->reply_message_len_);
 }
 
 Options::~Options (void)
@@ -173,9 +176,11 @@ Options::Options (void)
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("p:r:v"), 1);
 
   for (int c; (c = getopt ()) != -1; )
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 'p':
@@ -220,7 +225,7 @@ Handler::open (void *)
                        0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) client %C connected from %d \n"),
+              ACE_TEXT ("(%P|%t) client %C connected from %d\n"),
               cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 

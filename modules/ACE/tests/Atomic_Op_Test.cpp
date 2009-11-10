@@ -23,9 +23,8 @@
 
 ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 
-#if defined (ACE_HAS_THREADS)
-
 #include "ace/Atomic_Op.h"
+#include "ace/Synch_Traits.h"
 
 enum { TEST_ITERATIONS = 1000000 };
 
@@ -34,7 +33,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Atomic_Op_Test"));
 
-  ACE_Atomic_Op <ACE_Thread_Mutex, long> foo (5);
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> foo (5);
 
   ACE_ASSERT (foo == 5);
 
@@ -64,6 +63,11 @@ run_main (int, ACE_TCHAR *[])
 
   foo = 7;
   ACE_ASSERT (foo == 7);
+
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> foo2 (5);
+  foo2 = foo;
+  ACE_ASSERT (foo == 7);
+  ACE_ASSERT (foo2 == 7);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> assignment %D\n")));
   int i;
@@ -116,7 +120,93 @@ run_main (int, ACE_TCHAR *[])
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> subtraction %D\n")));
 
-  ACE_Atomic_Op <ACE_Thread_Mutex, int> bar (5);
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> foo_unsigned (5);
+
+  ACE_ASSERT (foo_unsigned == 5);
+
+  unsigned long ul_result = ++foo_unsigned;
+  ACE_ASSERT (foo_unsigned == 6);
+  ACE_ASSERT (ul_result == 6);
+
+  ul_result = --foo_unsigned;
+  ACE_ASSERT (foo_unsigned == 5);
+  ACE_ASSERT (ul_result == 5);
+
+  ul_result = foo_unsigned++;
+  ACE_ASSERT (foo_unsigned == 6);
+  ACE_ASSERT (ul_result == 5);
+
+  ul_result = foo_unsigned--;
+  ACE_ASSERT (foo_unsigned == 5);
+  ACE_ASSERT (ul_result == 6);
+
+  ul_result = foo_unsigned += 10;
+  ACE_ASSERT (foo_unsigned == 15);
+  ACE_ASSERT (ul_result == 15);
+
+  ul_result = foo_unsigned -= 10;
+  ACE_ASSERT (foo_unsigned == 5);
+  ACE_ASSERT (ul_result == 5);
+
+  foo_unsigned = 7;
+  ACE_ASSERT (foo_unsigned == 7);
+
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> foo_unsigned2 (5);
+  foo_unsigned2 = foo_unsigned;
+  ACE_ASSERT (foo_unsigned == 7);
+  ACE_ASSERT (foo_unsigned2 == 7);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> assignment %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      foo_unsigned = 1;
+      foo_unsigned = 2;
+      foo_unsigned = 3;
+      foo_unsigned = 4;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> assignment %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> increment %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      ++foo_unsigned;
+      ++foo_unsigned;
+      ++foo_unsigned;
+      ++foo_unsigned;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> increment %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> decrement %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      --foo_unsigned;
+      --foo_unsigned;
+      --foo_unsigned;
+      --foo_unsigned;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> decrement %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> addition %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      foo_unsigned += 5;
+      foo_unsigned += 5;
+      foo_unsigned += 5;
+      foo_unsigned += 5;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> addition %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> subtraction %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      foo_unsigned -= 5;
+      foo_unsigned -= 5;
+      foo_unsigned -= 5;
+      foo_unsigned -= 5;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned long> subtraction %D\n")));
+
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> bar (5);
 
   ACE_ASSERT (bar == 5);
 
@@ -144,8 +234,13 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (bar == 5);
   ACE_ASSERT (result == 5);
 
-  bar = 5L;
-  ACE_ASSERT (bar == 5);
+  bar = 7L;
+  ACE_ASSERT (bar == 7);
+
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> bar2 (5L);
+  bar2 = bar;
+  ACE_ASSERT (bar == 7);
+  ACE_ASSERT (bar2 == 7);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> assignment %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)
@@ -197,20 +292,94 @@ run_main (int, ACE_TCHAR *[])
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> subtraction %D\n")));
 
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned int> unsigned_bar (5);
+
+  ACE_ASSERT (unsigned_bar == 5);
+
+  unsigned int ui_result = ++unsigned_bar;
+  ACE_ASSERT (unsigned_bar == 6);
+  ACE_ASSERT (ui_result == 6);
+
+  ui_result = --unsigned_bar;
+  ACE_ASSERT (unsigned_bar == 5);
+  ACE_ASSERT (ui_result == 5);
+
+  ui_result = unsigned_bar++;
+  ACE_ASSERT (unsigned_bar == 6);
+  ACE_ASSERT (ui_result == 5);
+
+  ui_result = unsigned_bar--;
+  ACE_ASSERT (unsigned_bar == 5);
+  ACE_ASSERT (ui_result == 6);
+
+  ui_result = unsigned_bar += 10;
+  ACE_ASSERT (unsigned_bar == 15);
+  ACE_ASSERT (ui_result == 15);
+
+  ui_result = unsigned_bar -= 10;
+  ACE_ASSERT (unsigned_bar == 5);
+  ACE_ASSERT (ui_result == 5);
+
+  unsigned_bar = 7L;
+  ACE_ASSERT (unsigned_bar == 7);
+
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned int> unsigned_bar2 (5L);
+  unsigned_bar2 = unsigned_bar;
+  ACE_ASSERT (unsigned_bar == 7);
+  ACE_ASSERT (unsigned_bar2 == 7);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> assignment %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      unsigned_bar = 1;
+      unsigned_bar = 2;
+      unsigned_bar = 3;
+      unsigned_bar = 4;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> assignment %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> increment %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      ++unsigned_bar;
+      ++unsigned_bar;
+      ++unsigned_bar;
+      ++unsigned_bar;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> increment %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> decrement %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      --unsigned_bar;
+      --unsigned_bar;
+      --unsigned_bar;
+      --unsigned_bar;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> decrement %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> addition %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      unsigned_bar += 5;
+      unsigned_bar += 5;
+      unsigned_bar += 5;
+      unsigned_bar += 5;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> addition %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> subtraction %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      unsigned_bar -= 5;
+      unsigned_bar -= 5;
+      unsigned_bar -= 5;
+      unsigned_bar -= 5;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> subtraction %D\n")));
+
+
   ACE_END_TEST;
   return 0;
 }
 
-#else
-int
-run_main (int, ACE_TCHAR *[])
-{
-  ACE_START_TEST (ACE_TEXT ("Atomic_Op_Test"));
-
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threads not supported on this platform\n")));
-
-  ACE_END_TEST;
-  return 0;
-}
-#endif /* ACE_HAS_THREADS */

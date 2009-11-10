@@ -9,7 +9,6 @@
  *  Declares the arrays required to convert between ISO8859 (aka
  *  Latin/1) and IBM1047 (aka EBCDIC).
  *
- *
  *  @author Jim Rogers (jrogers@viasoft.com)
  */
 //=============================================================================
@@ -68,10 +67,10 @@ public:
                                              const ACE_CDR::Char *,
                                              ACE_CDR::ULong);
 
-  /// return the native codeset ID as defined in the OSF code and character
+  /// Return the native codeset ID as defined in the OSF code and character
   /// set registry, 0x10020417
   virtual ACE_CDR::ULong ncs ();
-  /// return the translated codeset ID as defined in the OSF code and character
+  /// Return the translated codeset ID as defined in the OSF code and character
   /// set registry, 0x00010001
   virtual ACE_CDR::ULong tcs ();
 };
@@ -111,10 +110,10 @@ public:
                                              const ACE_CDR::Char *,
                                              ACE_CDR::ULong);
 
-  /// return the native codeset ID as defined in the OSF code and character
+  /// Return the native codeset ID as defined in the OSF code and character
   /// set registry, 0x00010001
   virtual ACE_CDR::ULong ncs ();
-  /// return the translated codeset ID as defined in the OSF code and character
+  /// Return the translated codeset ID as defined in the OSF code and character
   /// set registry, 0x10020417
   virtual ACE_CDR::ULong tcs ();
 };

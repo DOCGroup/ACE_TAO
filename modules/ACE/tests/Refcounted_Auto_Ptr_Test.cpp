@@ -11,7 +11,6 @@
  *  implementation of the Active Object pattern, which is available
  *  at <http://www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.
  *
- *
  *  @author Johnny Tucker <johnny_tucker@yahoo.com>
  */
 //=============================================================================
@@ -85,11 +84,13 @@ public:
   /// Constructor.
   Scheduler (Scheduler * = 0);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
   virtual int open (void *args = 0);
 
   /// Terminator.
   virtual int close (u_long flags = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   /// Destructor.
   virtual ~Scheduler (void);
@@ -344,7 +345,7 @@ static int test_reset_release (void)
   int errors = 0;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test copy constructor\n")));
-  Printer_Ptr bar = new Printer ("1");
+  Printer_Ptr bar(new Printer ("1"));
   Printer_Ptr fum = bar;
   if (!expect (ACE_TEXT ("bar"), bar, false, 1, 1))
     ++errors;
@@ -359,7 +360,7 @@ static int test_reset_release (void)
     ++errors;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test release\n")));
-  Printer_Ptr fie = new Printer ("3");
+  Printer_Ptr fie(new Printer ("3"));
   Printer_Ptr foe = fie;
   foe.release();
   if (!expect (ACE_TEXT ("fie"), fie, false, 3, 0))
@@ -368,7 +369,7 @@ static int test_reset_release (void)
     ++errors;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test assignment to null\n")));
-  Printer_Ptr fee = new Printer ("4");
+  Printer_Ptr fee(new Printer ("4"));
   Printer_Ptr eraser;
   fee = eraser;
   if (!expect (ACE_TEXT ("fee"), fee, true, 0, 0))
@@ -377,8 +378,8 @@ static int test_reset_release (void)
     ++errors;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test assignment to value\n")));
-  Printer_Ptr fix = new Printer ("5");
-  Printer_Ptr fax = new Printer ("6");
+  Printer_Ptr fix(new Printer ("5"));
+  Printer_Ptr fax(new Printer ("6"));
   fix = fax;
   if (!expect (ACE_TEXT ("fix"), fix, false, 6, 1))
     ++errors;
@@ -386,13 +387,62 @@ static int test_reset_release (void)
     ++errors;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test reset to null\n")));
-  Printer_Ptr fey = new Printer ("7");
+  Printer_Ptr fey(new Printer ("7"));
   Printer_Ptr flo = fey;
   flo.reset ();
   if (!expect (ACE_TEXT ("fey"), fey, false, 7, 0))
     ++errors;
   if (!expect (ACE_TEXT ("flo"), flo, true, 0, 0))
     ++errors;
+
+  return errors;
+}
+
+static int test_operator(void)
+{
+  int errors = 0;
+
+  // test null
+  Printer_Ptr printer_null;
+  if (!printer_null)
+    {
+    }
+  else
+    {
+      ++errors;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("!printer_null should be false\n")));
+    }
+  if (printer_null)
+    {
+      ++errors;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("printer_null should be false\n")));
+    }
+  else
+    {
+    }
+
+  // test not null
+  Printer_Ptr printer_not_null(new Printer("check not null"));
+  if (!printer_not_null)
+    {
+      ++errors;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("!printer_not_null should be false\n")));
+    }
+  else
+    {
+    }
+  if (printer_not_null)
+    {
+    }
+  else
+    {
+      ++errors;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("printer_not_null should be false\n")));
+    }
 
   return errors;
 }
@@ -491,6 +541,9 @@ run_main (int, ACE_TCHAR *[])
     }
 
 #endif /* ACE_HAS_THREADS */
+
+  test_errors += test_operator();
+
   ACE_END_TEST;
 
   return test_errors;

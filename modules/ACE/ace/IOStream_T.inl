@@ -60,7 +60,9 @@ ACE_SOCK_Dgram_SC<STREAM>::recv (char *buf,
                                  ssize_t len,
                                  ACE_Time_Value *tv)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   return recv (buf, len, 0, tv);
+  //FUZZ: enable check_for_lack_ACE_OS
 }
 
 template <class STREAM> ACE_INLINE ssize_t

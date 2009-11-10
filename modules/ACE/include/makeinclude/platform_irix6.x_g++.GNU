@@ -4,9 +4,6 @@
 
 include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 
-debug ?= 1
-optimize ?= 1
-
 CC              = gcc
 CXX             = g++
 CFLAGS          += $(DCFLAGS)

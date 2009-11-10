@@ -53,8 +53,8 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id,
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
   if (this->open_and_attach (external_id, sz, create,
                              perms, virtual_addr, flags) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
 }
 
 // The "do nothing" constructor.
@@ -81,8 +81,8 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (ACE_HANDLE int_id,
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
   if (this->attach (0, flags) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

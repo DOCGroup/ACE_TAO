@@ -41,8 +41,6 @@
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-
 #define ACE_HAS_SSIZE_T
 
 #define ACE_HAS_SYSV_IPC
@@ -52,22 +50,6 @@
 #define ACE_HAS_THREADS
 
 #define ACE_HAS_PTHREADS
-
-// UNICOS 10 and UNICOS/mk implement a small subset of POSIX Threads,
-// but the prototypes follow the POSIX.1c-1995 definitions.  Earlier
-// UNICOS versions sport Draft 7 threads.
-
-#if _UNICOS > 9
-# define ACE_HAS_PTHREADS_STD
-#else
-# define ACE_HAS_PTHREADS_DRAFT7
-# define ACE_LACKS_THREAD_STACK_SIZE
-# define ACE_LACKS_THREAD_STACK_ADDR
-  // UNICOS 9 doesn't have this, nor sched.h
-# define SCHED_OTHER 0
-# define SCHED_FIFO 1
-# define SCHED_RR 2
-#endif
 
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
@@ -99,11 +81,10 @@
 #define ACE_HAS_CHARPTR_SOCKOPT
 
 #define ACE_HAS_NONCONST_GETBY
+#define ACE_HAS_NONCONST_INET_ADDR
 
 // has man pages, but links with missing symbols and I can't find lib yet
 /* #define ACE_HAS_REGEX */
-
-#define ACE_HAS_SIG_MACROS
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -116,8 +97,6 @@
 #define ACE_HAS_SIGISMEMBER_BUG
 
 #define ACE_HAS_MSG
-
-#define ACE_HAS_STRERROR
 
 #define ACE_HAS_GPERF
 
@@ -208,8 +187,6 @@
 
 // Ones to check out at some point
 
-/* #define ACE_HAS_SYS_SIGLIST */
-
 // C++ Compiler stuff to verify
 /* #define ACE_NEW_THROWS_EXCEPTIONS */
 /* #define ACE_HAS_TEMPLATE_TYPEDEFS */
@@ -221,11 +198,8 @@
 /* #define ACE_HAS_TLI */
 /* #define ACE_HAS_TIUSER_H */
 /* #define ACE_HAS_TLI_PROTOTYPES */
-/* #define ACE_LACKS_T_ERRNO */
 
 /* #define ACE_LACKS_NAMED_POSIX_SEM */
-
-/* #define ACE_HAS_SYS_ERRLIST */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_CRAY_H */

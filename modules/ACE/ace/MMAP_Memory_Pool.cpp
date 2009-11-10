@@ -63,15 +63,14 @@ ACE_MMAP_Memory_Pool::sync (int flags)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::sync");
 
-  size_t const len = ACE_Utils::Truncate<size_t> (
+  size_t const len = ACE_Utils::truncate_cast<size_t> (
     ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END));
 
   return this->mmap_.sync (len, flags);
 }
 
-// Sync <len> bytes of the memory region to the backing store starting
-// at <addr_>.
-
+/// Sync @a len bytes of the memory region to the backing store starting
+/// at <addr_>.
 int
 ACE_MMAP_Memory_Pool::sync (void *addr, size_t len, int flags)
 {
@@ -96,7 +95,7 @@ ACE_MMAP_Memory_Pool::protect (int prot)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::protect");
 
-  size_t const len = ACE_Utils::Truncate<size_t> (
+  size_t const len = ACE_Utils::truncate_cast<size_t> (
     ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END));
 
   return this->mmap_.protect (len, prot);
@@ -119,10 +118,11 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
   : base_addr_ (0),
     use_fixed_addr_(0),
     flags_ (MAP_SHARED),
-    write_each_page_ (0),
+    write_each_page_ (false),
     minimum_bytes_ (0),
     sa_ (0),
-    file_mode_ (ACE_DEFAULT_FILE_PERMS)
+    file_mode_ (ACE_DEFAULT_FILE_PERMS),
+    install_signal_handler_ (true)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
@@ -156,6 +156,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
       if (options->sa_ != 0)
         this->sa_ = options->sa_;
       this->file_mode_ = options->file_mode_;
+      this->install_signal_handler_ = options->install_signal_handler_;
     }
 
   if (backing_store_name == 0)
@@ -172,14 +173,14 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
         // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Temporary path too long, ")
-                      ACE_LIB_TEXT ("defaulting to current directory\n")));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           this->backing_store_name_[0] = 0;
         }
 
       // Add the filename to the end
       ACE_OS::strcat (this->backing_store_name_,
-                      ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
+                      ACE_TEXT ("ace-malloc-XXXXXX"));
 
       // If requested an unique filename, use mktemp to get a random file.
       if (options && options->unique_)
@@ -192,9 +193,12 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
                       (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 
 #if !defined (ACE_WIN32)
-  if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n", this->backing_store_name_));
+  if (this->install_signal_handler_)
+    {
+      if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT("%p\n"), this->backing_store_name_));
+    }
 #endif /* ACE_WIN32 */
 }
 
@@ -210,6 +214,9 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::commit_backing_store_name");
 
+#if defined (__Lynx__)
+  map_size = rounded_bytes;
+#else
   size_t seek_len;
 
   if (this->write_each_page_)
@@ -229,7 +236,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
        cur_block += seek_len)
     {
       map_size =
-        ACE_Utils::Truncate<size_t> (
+        ACE_Utils::truncate_cast<size_t> (
           ACE_OS::lseek (this->mmap_.handle (),
                          static_cast<ACE_OFF_T> (seek_len - 1),
                          SEEK_END));
@@ -239,7 +246,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                             "",
                             1) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("(%P|%t) %p\n"),
                            this->backing_store_name_),
                           -1);
     }
@@ -250,7 +257,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 
   // Increment by one to put us at the beginning of the next chunk...
   ++map_size;
-
+#endif /* __Lynx__ */
   return 0;
 }
 
@@ -268,27 +275,30 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
   this->mmap_.unmap ();
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-  if(use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::NEVER_FIXED)
+  if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::NEVER_FIXED)
     this->base_addr_ = 0;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-  // Remap the file.
+  // Remap the file; try to stay at the same location as a previous mapping
+  // but do not force it with MAP_FIXED. Doing so will give the OS permission
+  // to map locations currently holding other things (such as the heap, or
+  // the C library) into the map file, producing very unexpected results.
   if (this->mmap_.map (map_size,
                        PROT_RDWR,
                        this->flags_,
                        this->base_addr_,
                        0,
                        this->sa_) == -1
-      || this->base_addr_ != 0
+      || (this->base_addr_ != 0
 #ifdef ACE_HAS_WINCE
-      && this->mmap_.addr () == 0)  // WinCE does not allow users to specify alloc addr.
+      && this->mmap_.addr () == 0))  // WinCE does not allow users to specify alloc addr.
 #else
-      && this->mmap_.addr () != this->base_addr_)
+      && this->mmap_.addr () != this->base_addr_))
 #endif  // ACE_HAS_WINCE
     {
 #if 0
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) addr = %u, base_addr = %u, map_size = %u, %p\n"),
+                  ACE_TEXT ("(%P|%t) addr = %@, base_addr = %@, map_size = %B, %p\n"),
                   this->mmap_.addr (),
                   this->base_addr_,
                   map_size,
@@ -300,8 +310,12 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
     {
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
       this->base_addr_ = this->mmap_.addr ();
-      if(obase_addr && this->base_addr_ != obase_addr)
-         ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (obase_addr);
+
+      if (obase_addr && this->base_addr_ != obase_addr)
+        {
+          ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (obase_addr);
+        }
+
       ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->base_addr_,
                                                        map_size);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
@@ -321,7 +335,7 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
   rounded_bytes = this->round_up (nbytes);
 
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquiring more chunks, nbytes =
-  // %d, rounded_bytes = %d\n", nbytes, rounded_bytes));
+  // %B, rounded_bytes = %B\n", nbytes, rounded_bytes));
 
   size_t map_size;
 
@@ -331,8 +345,8 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
   else if (this->map_file (map_size) == -1)
     return 0;
 
-  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquired more chunks, nbytes = %d,
-  // rounded_bytes = %d, map_size = %d\n", nbytes, rounded_bytes,
+  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquired more chunks, nbytes = %B,
+  // rounded_bytes = %B, map_size = %B\n", nbytes, rounded_bytes,
   // map_size));
 
   return (void *) ((char *) this->mmap_.addr () + (this->mmap_.size () - rounded_bytes));
@@ -358,7 +372,15 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
     {
       // First time in, so need to acquire memory.
       first_time = 1;
-      return this->acquire (nbytes, rounded_bytes);
+
+      void *result = this->acquire (nbytes, rounded_bytes);
+      // After the first time, reset the flag so that subsequent calls
+      // will use MAP_FIXED
+      if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::FIRSTCALL_FIXED)
+        {
+          ACE_SET_BITS (flags_, MAP_FIXED);
+        }
+      return result;
     }
   else if (errno == EEXIST)
     {
@@ -374,10 +396,15 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
                            0,
                            this->sa_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("MMAP_Memory_Pool::init_acquire, EEXIST")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("MMAP_Memory_Pool::init_acquire, EEXIST")),
                           0);
-
+      // After the first time, reset the flag so that subsequent calls
+      // will use MAP_FIXED
+      if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::FIRSTCALL_FIXED)
+        {
+          ACE_SET_BITS (flags_, MAP_FIXED);
+        }
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
       // Update the mapped segment information
       ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->mmap_.addr(),
@@ -388,8 +415,8 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("MMAP_Memory_Pool::init_acquire")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("MMAP_Memory_Pool::init_acquire")),
                       0);
 }
 
@@ -416,9 +443,9 @@ int
 ACE_MMAP_Memory_Pool::remap (void *addr)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("Remapping with fault address at: %X\n"), addr));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("Remapping with fault address at: %@\n"), addr));
   size_t const current_map_size =
-    ACE_Utils::Truncate<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
+    ACE_Utils::truncate_cast<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
   if (!(addr < (void *) ((char *) this->mmap_.addr () + current_map_size)
@@ -432,13 +459,14 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
 ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
   const void *base_addr,
   int use_fixed_addr,
-  int write_each_page,
+  bool write_each_page,
   size_t minimum_bytes,
   u_int flags,
-  int guess_on_fault,
+  bool guess_on_fault,
   LPSECURITY_ATTRIBUTES sa,
   mode_t file_mode,
-  bool unique)
+  bool unique,
+  bool install_signal_handler)
   : base_addr_ (base_addr),
     use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
@@ -447,7 +475,8 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
     guess_on_fault_ (guess_on_fault),
     sa_ (sa),
     file_mode_ (file_mode),
-    unique_ (unique)
+    unique_ (unique),
+    install_signal_handler_ (install_signal_handler)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
   // for backwards compatability
@@ -455,25 +484,17 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
     use_fixed_addr_ = FIRSTCALL_FIXED;
 }
 
-// Handle SIGSEGV and SIGBUS signals to remap memory properly.  When a
-// process reads or writes to non-mapped memory a signal (SIGBUS or
-// SIGSEGV) will be triggered.  At that point, the ACE_Sig_Handler
-// (which is part of the ACE_Reactor) will catch the signal and
-// dispatch the handle_signal() method defined here.  If the SIGSEGV
-// signal occurred due to the fact that the mapping wasn't uptodate
-// with respect to the backing store, the handler method below will
-// update the mapping accordingly.  When the signal handler returns,
-// the instruction should be restarted and the operation should work.
-
+#if !defined (ACE_WIN32)
 int
 ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
   if (signum != SIGSEGV)
     return -1;
+#if 0
   else
-    ; // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) received %S\n"), signum));
-
-  // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) new mapping address = %u\n"), (char *) this->base_addr_ + current_map_size));
+    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) received %S\n"), signum));
+#endif
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) new mapping address = %@\n"), (char *) this->base_addr_ + current_map_size));
 
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)
   // Make sure that the pointer causing the problem is within the
@@ -481,10 +502,10 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
   if (siginfo != 0)
     {
-      // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %@\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       if (this->remap ((void *) siginfo->si_addr) == -1)
         return -1;
-      // ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n",
+      // ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %@ out of range\n",
       // siginfo->si_addr), -1);
       return 0;
     }
@@ -501,7 +522,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
     {
       // Check if the current mapping is up to date.
       size_t const current_map_size =
-        ACE_Utils::Truncate<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
+        ACE_Utils::truncate_cast<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
 
       if (static_cast<size_t> (current_map_size) == this->mmap_.size ())
         {
@@ -519,6 +540,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   else
     return -1;
 }
+#endif
 
 void *
 ACE_MMAP_Memory_Pool::base_addr (void) const

@@ -30,7 +30,7 @@ handler (int)
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   char *username = ACE_OS::cuserid (static_cast<char *> (0));
   Message_Data msg_data ((int) ACE_OS::getpid (), username, "I received your message.");

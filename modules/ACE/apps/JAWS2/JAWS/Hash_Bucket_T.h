@@ -26,10 +26,10 @@ class JAWS_Hash_Bucket_Item
 {
 public:
   JAWS_Hash_Bucket_Item (const EXT_ID &ext_id, const INT_ID &int_id,
-                        JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = 0,
-                        JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = 0,
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
   JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = 0,
-                        JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
 
   ~JAWS_Hash_Bucket_Item (void);
   // Destructor.
@@ -170,7 +170,7 @@ public:
   // made to bind an existing entry, and returns -1 if failures occur.
 
   int rebind (const EXT_ID &ext_id, const INT_ID &int_id,
-	      EXT_ID &old_ext_id, INT_ID &old_int_id);
+              EXT_ID &old_ext_id, INT_ID &old_int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is not in the map
   // then behaves just like <bind>.  Otherwise, store the old values
   // of <ext_id> and <int_id> into the "out" parameters and rebind the

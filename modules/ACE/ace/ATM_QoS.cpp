@@ -118,7 +118,7 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
   qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
   if (qos_.ProviderSpecific.buf == 0) {
     ACE_ERROR((LM_ERROR,
-               ACE_LIB_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
+               ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
                size));
     return;
   }
@@ -298,7 +298,7 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
   qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
   if (qos_.ProviderSpecific.buf == 0) {
     ACE_ERROR((LM_ERROR,
-               ACE_LIB_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
+               ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
                size));
     return;
   }
@@ -451,7 +451,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (len);
-  return (0);
+  return 0;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
   struct t_opthdr *popt;
   char *buf;
@@ -468,7 +468,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
 
   if (buf == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Unable to allocate %d bytes for options\n"),
+                       ACE_TEXT ("Unable to allocate %d bytes for options\n"),
                        info.options),
                       0);
 
@@ -504,7 +504,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
         {
           ACE_OS::t_error("t_getname (local_address)");
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Can't get local address!\n")));
+                      ACE_TEXT ("Can't get local address!\n")));
           ACE_OS::free (buf);
           return 0;
         }
@@ -621,7 +621,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (flag);
   ACE_UNUSED_ARG (len);
-  return (0);
+  return 0;
 #endif /* ACE_HAS_FORE_ATM_WS2 */
 }
 

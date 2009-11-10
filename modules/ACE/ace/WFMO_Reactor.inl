@@ -19,7 +19,7 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */,
 {
   // This will get called when <WFMO_Reactor->wakeup_all_threads_> event
   // is signaled. There is nothing to be done here.
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) waking up to get updated handle set info\n")));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) waking up to get updated handle set info\n")));
   return 0;
 }
 
@@ -29,12 +29,12 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */,
 
 ACE_INLINE
 ACE_WFMO_Reactor_Handler_Repository::Common_Info::Common_Info (void)
-  : io_entry_ (0),
+  : io_entry_ (false),
     event_handler_ (0),
     io_handle_ (ACE_INVALID_HANDLE),
     network_events_ (0),
-    delete_event_ (0),
-    delete_entry_ (0),
+    delete_event_ (false),
+    delete_entry_ (false),
     close_masks_ (ACE_Event_Handler::NULL_MASK)
 {
 }
@@ -43,21 +43,21 @@ ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Common_Info::reset (void)
 {
   this->event_handler_ = 0;
-  this->io_entry_ = 0;
+  this->io_entry_ = false;
   this->io_handle_ = ACE_INVALID_HANDLE;
   this->network_events_ = 0;
-  this->delete_event_ = 0;
-  this->delete_entry_ = 0;
+  this->delete_event_ = false;
+  this->delete_entry_ = false;
   this->close_masks_ = ACE_Event_Handler::NULL_MASK;
 }
 
 ACE_INLINE void
-ACE_WFMO_Reactor_Handler_Repository::Common_Info::set (int io_entry,
+ACE_WFMO_Reactor_Handler_Repository::Common_Info::set (bool io_entry,
                                                        ACE_Event_Handler *event_handler,
                                                        ACE_HANDLE io_handle,
                                                        long network_events,
-                                                       int delete_event,
-                                                       int delete_entry,
+                                                       bool delete_event,
+                                                       bool delete_entry,
                                                        ACE_Reactor_Mask close_masks)
 {
   this->event_handler_ = event_handler;
@@ -84,31 +84,31 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("I/O Entry = %d\n"),
+              ACE_TEXT ("I/O Entry = %d\n"),
               this->io_entry_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Event Handler = %d\n"),
+              ACE_TEXT ("Event Handler = %d\n"),
               this->event_handler_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("I/O Handle = %d\n"),
+              ACE_TEXT ("I/O Handle = %d\n"),
               this->io_handle_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Network Events = %d\n"),
+              ACE_TEXT ("Network Events = %d\n"),
               this->network_events_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Delete Event = %d\n"),
+              ACE_TEXT ("Delete Event = %d\n"),
               this->delete_event_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Delete Entry = %d\n"),
+              ACE_TEXT ("Delete Entry = %d\n"),
               this->delete_entry_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Close Masks = %d\n"),
+              ACE_TEXT ("Close Masks = %d\n"),
               this->close_masks_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -119,19 +119,19 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump (void) const
 
 ACE_INLINE
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::Current_Info (void)
-  : suspend_entry_ (0)
+  : suspend_entry_ (false)
 {
 }
 
 ACE_INLINE void
-ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (int io_entry,
+ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (bool io_entry,
                                                         ACE_Event_Handler *event_handler,
                                                         ACE_HANDLE io_handle,
                                                         long network_events,
-                                                        int delete_event,
-                                                        int delete_entry,
+                                                        bool delete_event,
+                                                        bool delete_entry,
                                                         ACE_Reactor_Mask close_masks,
-                                                        int suspend_entry)
+                                                        bool suspend_entry)
 {
   this->suspend_entry_ = suspend_entry;
   Common_Info::set (io_entry,
@@ -145,7 +145,7 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (int io_entry,
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (Common_Info &common_info,
-                                                        int suspend_entry)
+                                                        bool suspend_entry)
 {
   this->suspend_entry_ = suspend_entry;
   Common_Info::set (common_info);
@@ -154,7 +154,7 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (Common_Info &common_info
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::reset (void)
 {
-  this->suspend_entry_ = 0;
+  this->suspend_entry_ = false;
   Common_Info::reset ();
 }
 
@@ -169,11 +169,11 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
   Common_Info::dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %d\n"),
               event_handle));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Suspend Entry = %d\n"),
+              ACE_TEXT ("Suspend Entry = %d\n"),
               this->suspend_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -187,20 +187,20 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
 ACE_INLINE
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::To_Be_Added_Info (void)
   : event_handle_ (ACE_INVALID_HANDLE),
-    suspend_entry_ (0)
+    suspend_entry_ (false)
 {
 }
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle,
-                                                            int io_entry,
+                                                            bool io_entry,
                                                             ACE_Event_Handler *event_handler,
                                                             ACE_HANDLE io_handle,
                                                             long network_events,
-                                                            int delete_event,
-                                                            int delete_entry,
+                                                            bool delete_event,
+                                                            bool delete_entry,
                                                             ACE_Reactor_Mask close_masks,
-                                                            int suspend_entry)
+                                                            bool suspend_entry)
 {
   this->event_handle_ = event_handle;
   this->suspend_entry_ = suspend_entry;
@@ -216,7 +216,7 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_han
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle,
                                                             Common_Info &common_info,
-                                                            int suspend_entry)
+                                                            bool suspend_entry)
 {
   this->event_handle_ = event_handle;
   this->suspend_entry_ = suspend_entry;
@@ -227,7 +227,7 @@ ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::reset (void)
 {
   this->event_handle_ = ACE_INVALID_HANDLE;
-  this->suspend_entry_ = 0;
+  this->suspend_entry_ = false;
   Common_Info::reset ();
 }
 
@@ -242,11 +242,11 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump (void) const
   Common_Info::dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %d\n"),
               this->event_handle_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Suspend Entry = %d\n"),
+              ACE_TEXT ("Suspend Entry = %d\n"),
               this->suspend_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -258,7 +258,7 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump (void) const
 ACE_INLINE
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::Suspended_Info (void)
   : event_handle_ (ACE_INVALID_HANDLE),
-    resume_entry_ (0)
+    resume_entry_ (false)
 {
 }
 
@@ -266,20 +266,20 @@ ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::reset (void)
 {
   this->event_handle_ = ACE_INVALID_HANDLE;
-  this->resume_entry_ = 0;
+  this->resume_entry_ = false;
   Common_Info::reset ();
 }
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handle,
-                                                          int io_entry,
+                                                          bool io_entry,
                                                           ACE_Event_Handler *event_handler,
                                                           ACE_HANDLE io_handle,
                                                           long network_events,
-                                                          int delete_event,
-                                                          int delete_entry,
+                                                          bool delete_event,
+                                                          bool delete_entry,
                                                           ACE_Reactor_Mask close_masks,
-                                                          int resume_entry)
+                                                          bool resume_entry)
 {
   this->event_handle_ = event_handle;
   this->resume_entry_ = resume_entry;
@@ -295,7 +295,7 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handl
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handle,
                                                           Common_Info &common_info,
-                                                          int resume_entry)
+                                                          bool resume_entry)
 {
   this->event_handle_ = event_handle;
   this->resume_entry_ = resume_entry;
@@ -313,11 +313,11 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump (void) const
   Common_Info::dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %d\n"),
               this->event_handle_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Resume Entry = %d\n"),
+              ACE_TEXT ("Resume Entry = %d\n"),
               this->resume_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -372,9 +372,9 @@ ACE_INLINE int
 ACE_WFMO_Reactor_Handler_Repository::scheduled_for_deletion (size_t slot) const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
-    return this->current_info_[slot].delete_entry_ == 1;
+    return this->current_info_[slot].delete_entry_ == true;
   else
-    return this->current_info_[slot + 1].delete_entry_ == 1;
+    return this->current_info_[slot + 1].delete_entry_ == true;
 }
 
 ACE_INLINE int
@@ -392,7 +392,7 @@ ACE_WFMO_Reactor_Handler_Repository::invalid_handle (ACE_HANDLE handle) const
     return 0;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_WFMO_Reactor_Handler_Repository::changes_required (void)
 {
   // Check if handles have be scheduled for additions or removal
@@ -432,7 +432,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_, -1);
 
-  int changes_required = 0;
+  bool changes_required = false;
   int const result = this->unbind_i (handle,
                                      mask,
                                      changes_required);
@@ -663,7 +663,7 @@ ACE_WFMO_Reactor::remove_handler (const ACE_Handle_Set &handles,
 {
   ACE_Handle_Set_Iterator handle_iter (handles);
   ACE_HANDLE h;
-  int changes_required = 0;
+  bool changes_required = false;
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
@@ -685,7 +685,7 @@ ACE_WFMO_Reactor::suspend_handler (ACE_HANDLE handle)
 {
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
-  int changes_required = 0;
+  bool changes_required = false;
   int const result =
     this->handler_rep_.suspend_handler_i (handle,
                                           changes_required);
@@ -709,7 +709,7 @@ ACE_WFMO_Reactor::suspend_handler (const ACE_Handle_Set &handles)
 {
   ACE_Handle_Set_Iterator handle_iter (handles);
   ACE_HANDLE h;
-  int changes_required = 0;
+  bool changes_required = false;
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
@@ -728,30 +728,46 @@ ACE_WFMO_Reactor::suspend_handler (const ACE_Handle_Set &handles)
 ACE_INLINE int
 ACE_WFMO_Reactor::suspend_handlers (void)
 {
-  int error = 0;
+  bool error = false;
   int result = 0;
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   // First suspend all current handles
-  int changes_required = 0;
+  bool changes_required = false;
 
-  for (size_t i = 0;
-       i < this->handler_rep_.max_handlep1_ && error == 0;
+  // Skip over the notify and wakeup_all_threads handles. These are registered
+  // by ACE_WFMO_Reactor::open(), not by users, and should not be suspended.
+  for (size_t i = 2;
+       i < this->handler_rep_.max_handlep1_ && !error;
        i++)
     {
       result =
         this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i],
                                               changes_required);
       if (result == -1)
-        error = 1;
+        error = true;
     }
 
-  if (!error)
-    // Then suspend all to_be_added_handles
-    for (size_t i = 0;
-         i < this->handler_rep_.handles_to_be_added_;
-         i++)
-      this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 1;
+  // Then suspend all to_be_added_handles
+  for (size_t i = 0;
+       i < this->handler_rep_.handles_to_be_added_ && !error;
+       i++)
+    {
+      if (this->handler_rep_.to_be_added_info_[i].io_entry_)
+        {
+          result =
+            this->handler_rep_.suspend_handler_i (this->handler_rep_.to_be_added_info_[i].io_handle_,
+                                                  changes_required);
+        }
+      else
+        {
+          result =
+            this->handler_rep_.suspend_handler_i (this->handler_rep_.to_be_added_info_[i].event_handle_,
+                                                  changes_required);
+        }
+      if (result == -1)
+        error = true;
+    }
 
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
@@ -765,10 +781,9 @@ ACE_WFMO_Reactor::resume_handler (ACE_HANDLE handle)
 {
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
-  int changes_required = 0;
+  bool changes_required = false;
   int result =
-    this->handler_rep_.resume_handler_i (handle,
-                                         changes_required);
+    this->handler_rep_.resume_handler_i (handle, changes_required);
 
   if (changes_required)
     // Wake up all threads in WaitForMultipleObjects so that they can
@@ -789,7 +804,7 @@ ACE_WFMO_Reactor::resume_handler (const ACE_Handle_Set &handles)
 {
   ACE_Handle_Set_Iterator handle_iter (handles);
   ACE_HANDLE h;
-  int changes_required = 0;
+  bool changes_required = false;
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
@@ -808,28 +823,42 @@ ACE_WFMO_Reactor::resume_handler (const ACE_Handle_Set &handles)
 ACE_INLINE int
 ACE_WFMO_Reactor::resume_handlers (void)
 {
-  int error = 0;
+  bool error = false;
   int result = 0;
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
-  int changes_required = 0;
+  bool changes_required = false;
   for (size_t i = 0;
-       i < this->handler_rep_.suspended_handles_ && error == 0;
+       i < this->handler_rep_.suspended_handles_ && !error;
        i++)
     {
       result =
         this->handler_rep_.resume_handler_i (this->handler_rep_.current_suspended_info_[i].event_handle_,
                                              changes_required);
       if (result == -1)
-        error = 1;
+        error = true;
     }
 
-  if (!error)
-    // Then resume all to_be_added_handles
-    for (size_t i = 0;
-         i < this->handler_rep_.handles_to_be_added_;
-         i++)
-      this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 0;
+  // Then resume all to_be_added_handles
+  for (size_t i = 0;
+        i < this->handler_rep_.handles_to_be_added_ && !error;
+        i++)
+    {
+      if (this->handler_rep_.to_be_added_info_[i].io_entry_)
+        {
+          result =
+            this->handler_rep_.resume_handler_i (this->handler_rep_.to_be_added_info_[i].io_handle_,
+                                                  changes_required);
+        }
+      else
+        {
+          result =
+           this->handler_rep_.resume_handler_i (this->handler_rep_.to_be_added_info_[i].event_handle_,
+                                                changes_required);
+        }
+      if (result == -1)
+        error = true;
+    }
 
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
@@ -838,12 +867,12 @@ ACE_WFMO_Reactor::resume_handlers (void)
   return error ? -1 : 0;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_WFMO_Reactor::uses_event_associations (void)
 {
   // Since the WFMO_Reactor does use event associations, this function
   // always return 1.
-  return 1;
+  return true;
 }
 
 ACE_INLINE int
@@ -1077,16 +1106,16 @@ ACE_WFMO_Reactor::requeue_position (void)
   ACE_NOTSUP_RETURN (-1);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_WFMO_Reactor::restart (void)
 {
-  return 0;
+  return false;
 }
 
-ACE_INLINE int
-ACE_WFMO_Reactor::restart (int)
+ACE_INLINE bool
+ACE_WFMO_Reactor::restart (bool)
 {
-  return 0;
+  return false;
 }
 
 ACE_INLINE int
@@ -1151,10 +1180,10 @@ ACE_WFMO_Reactor::size (void) const
   return this->handler_rep_.max_size_ - 2;
 }
 #else
-ACE_INLINE int
+ACE_INLINE bool
 ACE_WFMO_Reactor_Handler_Repository::changes_required (void)
 {
-  return 0;
+  return false;
 }
 
 ACE_INLINE int

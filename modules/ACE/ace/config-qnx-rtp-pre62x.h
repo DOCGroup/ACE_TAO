@@ -41,7 +41,6 @@
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SELECT_H
@@ -49,12 +48,10 @@
 #define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_SIG_MACROS
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
 // #define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STRERROR
 #define ACE_HAS_STRINGS
 #define ACE_HAS_SVR4_GETTIMEOFDAY
 #define ACE_HAS_TERMIOS
@@ -82,11 +79,11 @@
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-#define ACE_LACKS_RTTI
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_SO_SNDBUF
+#define ACE_LACKS_SO_RCVBUF
 #define ACE_LACKS_SOCKETPAIR
 // Even if the QNX RTP docs says that socket pair are
 // available, there is actually no implementation of
@@ -96,6 +93,7 @@
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_SYSV_SHMEM
+#define ACE_LACKS_ALPHASORT
 //#define ACE_LACKS_TCP_NODELAY  // Based on the  QNX RTP documentation, this option seems to
                                  // to be supported.
 #define ACE_LACKS_TELLDIR
@@ -106,6 +104,8 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_U_LONGLONG_T
+#define ACE_LACKS_FD_MASK
+#define ACE_LACKS_NFDBITS
 
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 
@@ -146,7 +146,6 @@
 #define ACE_LACKS_WCSPBRK
 #define ACE_LACKS_WCSRCHR
 
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_LACKS_ACE_IOSTREAM
 
 #include /**/ "ace/post.h"

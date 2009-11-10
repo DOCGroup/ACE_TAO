@@ -2,6 +2,7 @@
 //
 // $Id$
 
+#include <algorithm>
 
 ACEXML_INLINE
 ACEXML_Parser_Context::ACEXML_Parser_Context()
@@ -38,8 +39,8 @@ ACEXML_INLINE ACEXML_Parser_Context&
 ACEXML_Parser_Context::operator= (const ACEXML_Parser_Context& src)
 {
   ACEXML_Parser_Context tmp (src);
-  ACE_Swap<ACEXML_InputSource*>::swap (this->instream_, tmp.instream_);
-  ACE_Swap<ACEXML_LocatorImpl*>::swap (this->locator_, tmp.locator_);
+  std::swap (this->instream_, tmp.instream_);
+  std::swap (this->locator_, tmp.locator_);
   return *this;
 }
 

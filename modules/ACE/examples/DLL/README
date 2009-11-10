@@ -34,11 +34,11 @@ Compilation and Execution:
    to exercise the test.
 
 
-2. On NT or any Win32 platform:
+2. Win32 platforms:
 
-   Load Dll.dsw which contains Test_dll.dsp, Today.dsp and Newsweek.dsp.
+   Load DLL.sln which contains DLL_Main.vcproj, DLL_Today.vcproj and DLL_Newsweek.vcproj.
 
-   Build each dsp such that you build Test_dll.dsp last.
+   Build each vcproj such that you build DLL_Main.vcproj last.
    This is because the test_dll.exe will be using Today.dll and Newsweek.dll. 
 
    Execute test_dll

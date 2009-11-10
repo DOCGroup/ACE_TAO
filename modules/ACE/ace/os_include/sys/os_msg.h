@@ -27,14 +27,7 @@
 #include "ace/os_include/sys/os_ipc.h"
 
 #if !defined (ACE_LACKS_SYS_MSG_H)
-// OSF1 has problems with sys/msg.h and C++...
-#  if defined (ACE_HAS_BROKEN_MSG_H)
-#    define _KERNEL
-#  endif /* ACE_HAS_BROKEN_MSG_H */
-#  include /**/ <sys/msg.h>
-#  if defined (ACE_HAS_BROKEN_MSG_H)
-#    undef _KERNEL
-#  endif /* ACE_HAS_BROKEN_MSG_H */
+# include /**/ <sys/msg.h>
 #endif /* !ACE_LACKS_SYS_MSG_H */
 
 // Place all additions (especially function declarations) within extern "C" {}

@@ -120,7 +120,7 @@ Process_Strategy::activate_svc_handler (Counting_Service *svc_handler,
                                         void *arg)
 {
   // Call down to the base class
-  int result =
+  int const result =
     ACE_Process_Strategy<Counting_Service>::activate_svc_handler (svc_handler,
                                                                   arg);
   // Connection is now complete
@@ -163,7 +163,6 @@ Options::Options (void)
 Options::~Options (void)
 {
   delete this->concurrency_strategy_;
-  this->concurrency_strategy_ = 0;
 }
 
 int
@@ -250,13 +249,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                       -1);
       break;
 #else
-#  if defined (ACE_PSOS_DIAB)
-      // Workaround for compiler confusion with strings in assertions.
-      const int PROCESS_INVALID_ON_THIS_PLATFORM = 1;
-      ACE_ASSERT (PROCESS_INVALID_ON_THIS_PLATFORM == 0);
-#  else /* ! defined (ACE_PSOS_DIAB) */
       ACE_ASSERT ("PROCESS invalid on this platform" == 0);
-#  endif /* defined (ACE_PSOS_DIAB) */
 #endif /* !defined (ACE_LACKS_FORK) */
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)
@@ -502,7 +495,7 @@ client (void *arg)
   ACE_SOCK_Connector connector;
 
   char buf[BUFSIZ];
-  const char *command;
+  const char *command = 0;
   size_t command_len;
   size_t i;
 
@@ -543,9 +536,9 @@ client (void *arg)
                            ACE_TEXT ("recv")),
                           0);
 
-      //      ACE_DEBUG ((LM_DEBUG,
-      //                  ACE_TEXT ("(%P|%t) client iteration %d, buf = %s\n"),
-      //                  i, buf));
+      // ACE_DEBUG ((LM_DEBUG,
+      //             ACE_TEXT ("(%P|%t) client iteration %d, buf = %C\n"),
+      //             i, buf));
 
       if (stream.close () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -588,7 +581,13 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) count = %d\n"),
                   count));
       // Make sure that the count is correct.
-      ACE_ASSERT (count == ACE_MAX_ITERATIONS);
+      if (count != ACE_MAX_ITERATIONS) 
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Error: Count invalid, has %d expected %d\n"),
+                             count, ACE_MAX_ITERATIONS),
+                            0);
+        }
     }
 
   if (stream.close () == -1)

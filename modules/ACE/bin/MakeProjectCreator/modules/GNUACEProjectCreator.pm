@@ -59,8 +59,8 @@ sub fill_value {
             (defined $libs && $libs =~ /tao/i));
   }
   elsif ($name eq 'ciao') {
-      my($incs) = $self->get_assignment('includes');
-      my($libs) = $self->get_assignment('libpaths');
+    my($incs) = $self->get_assignment('includes');
+    my($libs) = $self->get_assignment('libpaths');
     return ((defined $incs && $incs =~ /ciao/i) ||
             (defined $libs && $libs =~ /ciao/i));
   }

@@ -16,7 +16,7 @@
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
-#include /**/ <Iphlpapi.h>
+#include /**/ <iphlpapi.h>
 #endif
 
 ACE_RCSID (ace,
@@ -60,13 +60,12 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 
   // Check the status of the current socket to make sure there's data
   // to recv (or time out).
-  int select_width;
 #  if defined (ACE_WIN32)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
-  select_width = 0;
+  int select_width = 0;
 #  else
-  select_width = int (this->get_handle ()) + 1;
+  int select_width = int (this->get_handle ()) + 1;
 #  endif /* ACE_WIN32 */
   switch (ACE_OS::select (select_width,
                           handle_set,
@@ -91,7 +90,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
-		     &inlen) == -1)
+                     &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
@@ -111,7 +110,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
         }
       else
         {
-          io_vec->iov_len = ACE_Utils::Truncate<size_t> (rcv_len);
+          io_vec->iov_len = ACE_Utils::truncate_cast<u_long> (rcv_len);
           addr.set_size (addr_len);
         }
       return rcv_len;
@@ -137,7 +136,7 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
                              int protocol_family)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
-  int error = 0;
+  bool error = false;
 
   if (local == ACE_Addr::sap_any)
     {
@@ -150,15 +149,15 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
           if (ACE::bind_port (this->get_handle (),
                               INADDR_ANY,
                               protocol_family) == -1)
-            error = 1;
+            error = true;
         }
     }
   else if (ACE_OS::bind (this->get_handle (),
                          reinterpret_cast<sockaddr *> (local.get_addr ()),
                          local.get_size ()) == -1)
-    error = 1;
+    error = true;
 
-  if (error != 0)
+  if (error)
     this->close ();
 
   return error ? -1 : 0;
@@ -234,8 +233,8 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   protocol,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Dgram")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Dgram")));
 }
 
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
@@ -255,8 +254,8 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   flags,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Dgram")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Dgram")));
 }
 
 #if defined (ACE_HAS_MSG)
@@ -350,16 +349,16 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
-#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))
-    // The iov_len is unsigned in Borland. If we go ahead and try the
-    // if, it will emit a warning.
+#if ! (defined(__BORLANDC__) || defined(linux) || defined(ACE_HAS_RTEMS))
+    // The iov_len is unsigned on Linux, RTEMS and with Borland. If we go
+    // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
     else
 #endif
       length += iov[i].iov_len;
 
-  char *buf;
+  char *buf = 0;
 
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
@@ -399,16 +398,16 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   int i;
 
   for (i = 0; i < n; i++)
-#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))
-    // The iov_len is unsigned in Borland. If we go ahead and try the
-    // if, it will emit a warning.
+#if ! (defined(__BORLANDC__) || defined(linux) || defined(ACE_HAS_RTEMS))
+    // The iov_len is unsigned on Linux, RTEMS and with Borland. If we go
+    // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
     else
 #endif
       length += iov[i].iov_len;
 
-  char *buf;
+  char *buf = 0;
 
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
@@ -459,13 +458,12 @@ ACE_SOCK_Dgram::recv (void *buf,
   handle_set.set_bit (this->get_handle ());
 
   // Check the status of the current socket.
-  int select_width;
 #if defined (ACE_WIN32)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
-  select_width = 0;
+  int select_width = 0;
 #else
-  select_width = int (this->get_handle ()) + 1;
+  int select_width = int (this->get_handle ()) + 1;
 #endif /* ACE_WIN32 */
   switch (ACE_OS::select (select_width,
                           handle_set,
@@ -498,13 +496,12 @@ ACE_SOCK_Dgram::send (const void *buf,
   handle_set.set_bit (this->get_handle ());
 
   // Check the status of the current socket.
-  int select_width;
 #if defined (ACE_WIN32)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
-  select_width = 0;
+  int select_width = 0;
 #else
-  select_width = int (this->get_handle ()) + 1;
+  int select_width = int (this->get_handle ()) + 1;
 #endif /* ACE_WIN32 */
   switch (ACE_OS::select (select_width,
                           0,
@@ -602,8 +599,8 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
   ACE_UNUSED_ARG (net_if);
   ACE_UNUSED_ARG (addr_family);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Send interface specification not ")
-              ACE_LIB_TEXT ("supported - IGNORED.\n")));
+              ACE_TEXT ("Send interface specification not ")
+              ACE_TEXT ("supported - IGNORED.\n")));
 #endif /* !IP_MULTICAST_IF */
 
   return 0;
@@ -687,7 +684,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       ULONG bufLen = 0;
       if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                               0,
-                                              NULL,
+                                              0,
                                               &tmp_addrs,
                                               &bufLen)) != ERROR_BUFFER_OVERFLOW)
         return -1; // With output bufferlength 0 this can't be right.
@@ -701,7 +698,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
       if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                               0,
-                                              NULL,
+                                              0,
                                               pAddrs,
                                               &bufLen)) != NO_ERROR)
         {
@@ -729,6 +726,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       delete[] buf; // clean up
     }
   else
+#else  /* ACE_WIN32 */
+    ACE_UNUSED_ARG(net_if);
 #endif /* ACE_WIN32 */
     lmreq.ipv6mr_interface = 0;
 

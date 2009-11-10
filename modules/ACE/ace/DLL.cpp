@@ -9,6 +9,8 @@
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_Thread.h"
 
+#include <algorithm>
+
 ACE_RCSID(ace, DLL, "$Id$")
 
   ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -16,7 +18,7 @@ ACE_RCSID(ace, DLL, "$Id$")
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
 
-ACE_DLL::ACE_DLL (int close_handle_on_destruction)
+ACE_DLL::ACE_DLL (bool close_handle_on_destruction)
   : open_mode_ (0),
     dll_name_ (0),
     close_handle_on_destruction_ (close_handle_on_destruction),
@@ -29,7 +31,7 @@ ACE_DLL::ACE_DLL (int close_handle_on_destruction)
 ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
   : open_mode_ (0),
     dll_name_ (0),
-    close_handle_on_destruction_ (0),
+    close_handle_on_destruction_ (false),
     dll_handle_ (0),
     error_ (0)
 {
@@ -42,7 +44,7 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
                      rhs.close_handle_on_destruction_) != 0
       && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
-    ACE_LIB_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
+    ACE_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
     this->error ()));
 }
 
@@ -53,21 +55,14 @@ ACE_DLL::operator= (const ACE_DLL &rhs)
 {
   ACE_TRACE ("ACE_DLL::operator= (const ACE_DLL &)");
 
-  open_mode_ = 0;
-  dll_name_ = 0;
-  close_handle_on_destruction_=0;
-  dll_handle_=0;
-  error_=0;
+  ACE_DLL tmp (rhs);
 
-  if (rhs.dll_name_
-      // This will automatically up the refcount and initialize *this
-      && this->open (rhs.dll_name_,
-                     rhs.open_mode_,
-                     rhs.close_handle_on_destruction_) != 0
-      && ACE::debug ())
-    ACE_ERROR ((LM_ERROR,
-    ACE_LIB_TEXT ("ACE_DLL::operator=: error: %s\n"),
-    this->error ()));
+  std::swap (this->open_mode_, tmp.open_mode_);
+  std::swap (this->dll_name_, tmp.dll_name_);
+  std::swap (this->close_handle_on_destruction_,
+             tmp.close_handle_on_destruction_);
+  std::swap (this->dll_handle_, tmp.dll_handle_);
+  std::swap (this->error_, tmp.error_);
 
   return *this;
 }
@@ -78,7 +73,7 @@ ACE_DLL::operator= (const ACE_DLL &rhs)
 
 ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
-                  int close_handle_on_destruction)
+                  bool close_handle_on_destruction)
   : open_mode_ (open_mode),
     dll_name_ (0),
     close_handle_on_destruction_ (close_handle_on_destruction),
@@ -90,7 +85,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
   if (this->open (dll_name, this->open_mode_, close_handle_on_destruction) != 0
       && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_DLL::open: error calling open: %s\n"),
+                ACE_TEXT ("ACE_DLL::open: error calling open: %s\n"),
                 this->error ()));
 }
 
@@ -125,7 +120,7 @@ ACE_DLL::~ACE_DLL (void)
 int
 ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
-               int close_handle_on_destruction)
+               bool close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::open");
 
@@ -135,7 +130,7 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 int
 ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
                  int open_mode,
-                 int close_handle_on_destruction,
+                 bool close_handle_on_destruction,
                  ACE_SHLIB_HANDLE handle)
 {
   ACE_TRACE ("ACE_DLL::open_i");
@@ -146,8 +141,8 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
     {
       if (ACE::debug ())
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
-                    this->dll_name_ == 0 ? ACE_LIB_TEXT ("(null)")
+                    ACE_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
+                    this->dll_name_ == 0 ? ACE_TEXT ("(null)")
         : this->dll_name_));
       return -1;
     }
@@ -216,7 +211,7 @@ ACE_DLL::close (void)
   this->dll_handle_ = 0;
   delete [] this->dll_name_;
   this->dll_name_ = 0;
-  this->close_handle_on_destruction_ = 0;
+  this->close_handle_on_destruction_ = false;
 
   return retval;
 }
@@ -228,8 +223,9 @@ ACE_DLL::error (void) const
 {
   ACE_TRACE ("ACE_DLL::error");
   if (this->error_)
-    return
-      const_cast<ACE_TCHAR *> (ACE_LIB_TEXT ("Error: check log for details."));
+    {
+      return ACE_OS::dlerror ();
+    }
 
   return 0;
 }
@@ -256,7 +252,7 @@ ACE_DLL::get_handle (int become_owner) const
 
 int
 ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
-                     int close_handle_on_destruction)
+                     bool close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::set_handle");
 

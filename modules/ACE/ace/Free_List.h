@@ -51,7 +51,7 @@ public:
   /// Returns the current size of the free list.
   virtual size_t size (void) = 0;
 
-  /// Resizes the free list to <newsize>.
+  /// Resizes the free list to @a newsize.
   virtual void resize (size_t newsize) = 0;
 };
 
@@ -71,10 +71,10 @@ class ACE_Locked_Free_List : public ACE_Free_List<T>
 public:
   // = Initialization and termination.
   /**
-   * Constructor takes a <mode> (i.e., ACE_FREE_LIST_WITH_POOL or
+   * Constructor takes a @a mode (i.e., ACE_FREE_LIST_WITH_POOL or
    * ACE_PURE_FREE_LIST), a count of the number of nodes to
-   * <prealloc>, a low and high water mark (<lwm> and <hwm>) that
-   * indicate when to allocate more nodes, an increment value (<inc>)
+   * @a prealloc, a low and high water mark (@a lwm and @a hwm) that
+   * indicate when to allocate more nodes, an increment value (@a inc)
    * that indicates how many nodes to allocate when the list must
    * grow.
    */

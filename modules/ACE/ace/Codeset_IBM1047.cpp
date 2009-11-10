@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Codeset_IBM1047.cpp
-//
-// = DESCRIPTION
-//    Defines the arrays required to convert between ISO8859 (aka
-//    Latin/1) and IBM1047 (aka EBCDIC).
-//
-// = AUTHOR
-//    Jim Rogers (jrogers@viasoft.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Codeset_IBM1047.cpp
+ *
+ *  $Id$
+ *
+ *  Defines the arrays required to convert between ISO8859 (aka
+ *  Latin/1) and IBM1047 (aka EBCDIC).
+ *
+ *
+ *  @author Jim Rogers (jrogers@viasoft.com)
+ */
+//=============================================================================
+
 
 #include "ace/Codeset_IBM1047.h"
 
@@ -309,7 +306,4 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#elif defined (__HP_aCC)
-// Make aC++ stop complaining about an empty translation unit
-static int const shut_up_aCC = 0;
 #endif /* ACE_HAS_EBCDIC */

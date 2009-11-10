@@ -13,12 +13,34 @@
 
 #define ACE_LACKS_STDINT_H
 
+// alphasort() is present on earlier Solaris versions but is marked as not for
+// use on non-BSD systems and not supported for use in applications that use
+// system libraries or with multiple threads. So it's mostly useless.
+#define ACE_LACKS_ALPHASORT
+
+// Solaris doesn't support log2()
+#define ACE_LACKS_LOG2
+
 // SunOS 5.5 does not provide getloadavg()
 #define ACE_LACKS_GETLOADAVG
+
+// Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
+// We need to be check if the user has manually defined the macro before
+// including <sys/feature_tests.h>.
+#if defined (_POSIX_PTHREAD_SEMANTICS)
+# define ACE_HAS_POSIX_PTHREAD_SEMANTICS
+#endif /* _POSIX_PTHREAD_SEMANTICS */
 
 // Before we do anything, we should include <sys/feature_tests.h> to
 // ensure that things are set up properly.
 #include <sys/feature_tests.h>
+
+// Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
+// We need to undef if the macro is set and not defined by the user.
+#if defined (_POSIX_PTHREAD_SEMANTICS) && \
+ !defined (ACE_HAS_POSIX_PTHREAD_SEMANTICS)
+# undef _POSIX_PTHREAD_SEMANTICS
+#endif /* _POSIX_PTHREAD_SEMANTICS && !ACE_HAS_POSIX_PTHREAD_SEMANTICS */
 
 // Sun has the posix defines so let this file sort out what Sun delivers
 #include "ace/config-posix.h"
@@ -55,7 +77,6 @@
 # define ACE_CAST_CONST const
 # define ACE_HAS_HI_RES_TIMER
 # define ACE_HAS_SIG_C_FUNC /* Sun CC 5.0 needs this, 4.2 doesn't mind. */
-# define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
@@ -109,10 +130,10 @@
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
+
 # include "ace/config-g++-common.h"
+
 # define ACE_HAS_HI_RES_TIMER
-  // Denotes that GNU has cstring.h as standard, to redefine memchr().
-# define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
@@ -183,7 +204,8 @@
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 // Platform supports system configuration information.
-#define ACE_HAS_SYSINFO
+#define ACE_HAS_SYS_SYSTEMINFO_H
+#define ACE_HAS_SYSV_SYSINFO
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
@@ -256,9 +278,6 @@
 // Platform supports STREAM pipes.
 #define ACE_HAS_STREAM_PIPES
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 
@@ -274,8 +293,7 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports sys_siglist array.
-#define ACE_HAS_SYS_SIGLIST
+#define ACE_HAS_STRSIGNAL
 
 // SunOS 5.5.x does not support mkstemp
 #define ACE_LACKS_MKSTEMP
@@ -314,12 +332,12 @@
 # endif /* ! _POSIX_PTHREAD_SEMANTICS */
 
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
   // . . . but only supports SCHED_OTHER scheduling policy
 # define ACE_HAS_ONLY_SCHED_OTHER
 # define ACE_HAS_SIGWAIT
 # define ACE_HAS_SIGTIMEDWAIT
 # define ACE_HAS_SIGSUSPEND
+# define ACE_LACKS_PTHREAD_ATTR_SETSTACK
 
   // Compiler/platform has thread-specific storage
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
@@ -334,7 +352,7 @@
           _POSIX_PTHREAD_SEMANTICS */
 #endif /* !ACE_MT_SAFE || ACE_MT_SAFE == 1 */
 
-# define ACE_HAS_PRIOCNTL
+#define ACE_HAS_PRIOCNTL
 
 // Platform supports ACE_TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H
@@ -353,20 +371,16 @@
 
 #define ACE_HAS_GETPAGESIZE 1
 
-#define ACE_HAS_STL_MAP_CONFLICT
-
-// Sieg - gcc 2.95.1 declares queue in stream.h.  Might want to change
-// the == to >= to allow for future versions
-#if !( __GNUG__ && (__GNUC__ == 2) && (__GNUC_MINOR__ == 95) )
-#define ACE_HAS_STL_QUEUE_CONFLICT
-#endif /* !( __GNUG__ && (__GNUC__ == 2) && (__GNUC_MINOR__ == 95) ) */
 #define ACE_HAS_IDTYPE_T
 
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
 
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_ISBLANK
+
 #if defined (__SUNPRO_CC)
-# define ACE_CC_NAME ACE_LIB_TEXT ("SunPro C++")
+# define ACE_CC_NAME ACE_TEXT ("SunPro C++")
 # define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)
 # define ACE_CC_MINOR_VERSION (__SUNPRO_CC & 0x00ff)
 # define ACE_CC_BETA_VERSION  (0)
@@ -375,9 +389,9 @@
 # define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 # define ACE_CC_BETA_VERSION  (0)
 # if __GNUC_MINOR__ >= 90
-#   define ACE_CC_NAME ACE_LIB_TEXT ("egcs")
+#   define ACE_CC_NAME ACE_TEXT ("egcs")
 # else
-#   define ACE_CC_NAME ACE_LIB_TEXT ("g++")
+#   define ACE_CC_NAME ACE_TEXT ("g++")
 # endif /* __GNUC_MINOR__ */
 #endif /* __GNUG__ */
 
@@ -385,7 +399,7 @@
 # define ACE_HAS_X86_STAT_MACROS
 #endif /* i386 && _FILE_OFFSET_BITS==32 */
 
-#define ACE_MALLOC_ALIGN 8
+#define ACE_MALLOC_ALIGN ((size_t)8)
 #define ACE_LACKS_SETREUID_PROTOTYPE
 #define ACE_LACKS_SETREGID_PROTOTYPE
 
@@ -394,6 +408,10 @@
 // library just for that function.  Just use the emulation in ACE that
 // has been used for years.
 #define ACE_LACKS_INET_ATON
+
+// Solaris doesn't have wcstoull
+#define ACE_LACKS_WCSTOLL
+#define ACE_LACKS_WCSTOULL
 
 #if defined (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
 #undef ACE_HAS_PROC_FS
@@ -404,7 +422,11 @@
 #  define ACE_HAS_3_PARAM_READDIR_R
 #endif
 
-#define ACE_LACKS_SIGVAL_T
+// Sum of the iov_len values can't be larger then SSIZE_MAX
+#define ACE_HAS_SOCK_BUF_SIZE_MAX
+
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

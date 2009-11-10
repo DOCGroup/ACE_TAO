@@ -20,7 +20,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     ACE_INET_Addr addr (argv[1]);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_RMCast::Socket socket (addr, false);
+    //FUZZ: enable check_for_lack_ACE_OS
 
     Message msg;
     msg.sn = 0;

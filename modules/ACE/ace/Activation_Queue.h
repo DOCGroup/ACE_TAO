@@ -116,8 +116,7 @@ public:
    * @retval    -1 if an error occurs; errno contains further information. If
    *            the specified timeout elapses, errno will be @c EWOULDBLOCK.
    */
-  int enqueue (ACE_Method_Request *new_method_request,
-               ACE_Time_Value *tv = 0);
+  int enqueue (ACE_Method_Request *new_method_request, ACE_Time_Value *tv = 0);
 
   /// Get the current number of method objects in the queue.
   size_t method_count (void) const;
@@ -152,7 +151,7 @@ protected:
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 
   /// Keeps track of whether we need to delete the queue.
-  int delete_queue_;
+  bool delete_queue_;
 
 private:
 

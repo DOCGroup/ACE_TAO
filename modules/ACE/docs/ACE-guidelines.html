@@ -145,6 +145,32 @@ bgcolor="#ffffff">
 
   </ul>
 
+  <li><strong>Coding Style</strong><p>
+  <ul>
+  <LI> When writing ACE, TAO, and CIAO class and method names make sure to use underscores ('_') to separate the parts of a name rather than intercaps.  For example, use
+
+        <pre>
+        class ACE_Monitor_Control
+        {
+        public:
+          int read_monitor (void);
+          // ...
+        };
+        </PRE>
+
+rather than
+
+        <pre>
+        class ACEMonitorControl
+        {
+        public:
+          int readMonitor (void);
+          // ...
+        };
+        </PRE>
+
+  </UL>
+
   <li><strong>Code Documentation</strong><p>
   <ul>
     <li>Use comments and whitespace (:-) liberally.  Comments
@@ -177,7 +203,36 @@ bgcolor="#ffffff">
         For an example header file using Doxygen-style comments,
         please refer to <a href="../ace/ACE.h">ACE.h</a>.<p>
 
-    <LI>All binary options for ACE and TAO should be specified in
+    <li>The header file comment should at least contain the following
+        entries:
+        <pre>
+        /**
+         * @file Foo.h
+         * @author Authors Name &lt;author@email.org&gt;
+         *
+         *  A few words describing the file.
+         */
+        </pre></p>
+
+    <li>A class should be commented this way:
+        <pre>
+        /**
+         * @class Foo_Impl
+         * @brief A brief description of the class
+         *
+         * A more detailed description.
+         */
+        </pre></p>
+
+     <li>The preferred way to document methods is:
+         <pre>
+         /// This function foos the bars
+         /// another line of documentation if necessary
+         /// @param bar The bar you want to foo
+         void foo (int bar);
+         </pre></p>
+
+    <li>All binary options for ACE and TAO should be specified in
         terms of the integral values 0 and 1, rather than "true" and
         "false" or "yes" and "no".  All TAO options should be
         documented in the <A HREF="../TAO/docs/Options.html">online
@@ -607,9 +662,11 @@ Foo::bar ()
         of <strong>NULL</strong> is implementation dependent, so it is
         difficult to use portably without casting.<p>
 
-    <li>Never cast a pointer to or from an <strong><code>int</code></strong>.
-        On all currently supported ACE platforms, it is safe to cast
-        a pointer to or from a <strong><code>long</code></strong>.<p>
+    <li>Never cast a pointer to or from an <strong><code>int</code></strong>
+        or a <strong><code>long</code></strong>.  On all currently supported
+        ACE platforms, it is safe to cast a pointer to or from
+        <strong><code>intptr_t</code></strong> or
+        <strong><code>uintptr_t</code></strong> (include ace/Basic_Types.h).<p>
 
     <li>Be very careful when selecting an integer type that must be a
         certain size, <em>e.g.</em>, 4 bytes.  <strong>long</strong> is
@@ -1038,7 +1095,7 @@ public:
           visibility)  singleton templates prior to typedefs that
           reference them.  This prevents g++ 4.0 from silently making
           their visibility hidden (see <a
-            href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2260">Bug 2260</a> for details).
+            href="http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2260">Bug 2260</a> for details).
         </p>
       </li>
       <li>
@@ -1203,7 +1260,7 @@ public:
     <li>Test your change on at least Windows and Linux before commiting.
       After commiting watch the scoreboard to catch errors your change
       may be related to on other platforms.
-    <li>An an entry to the appropriate ChangeLog.  TAO and some
+    <li>Add an entry to the appropriate ChangeLog.  TAO and some
       ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,
       <a href="../apps/JAWS">JAWS</a>, and
       <a href="../apps/gperf">gperf,</a> have their

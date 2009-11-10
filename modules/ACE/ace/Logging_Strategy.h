@@ -93,7 +93,7 @@ public:
 
   /**
    * Timeout handler which tests logfile size.  If the current logfile
-   * size exceeds <max_size_>, the current logfile is closed, saved to
+   * size exceeds @c max_size_, the current logfile is closed, saved to
    * logfile.old, and a new logfile is reopened.
    */
   virtual int handle_timeout (const ACE_Time_Value& tv,
@@ -110,13 +110,13 @@ public:
    * @arg '-n' Set the program name for the %n format specifier.
    * @arg '-N' The maximum number of logfiles that we want created.
    * @arg '-o' Specifies that we want the no standard logfiles ordering
-   *           (fastest processing in <handle_timeout>).  Default is not to
+   *           (fastest processing in handle_timeout()).  Default is not to
    *           order logfiles.
    * @arg '-p' Pass in the process-wide priorities to either enable (e.g.,
    *           DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
    *           EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
    *           ~NOTICE, ~ERROR, ~CRITICAL, ~ALERT, ~EMERGENCY).
-   * @arg '-s' Ensure that the OSTREAM flag is set and log to the <filename>.
+   * @arg '-s' Ensure that the OSTREAM flag is set and log to the @a filename.
    * @arg '-t' Pass in the thread-wide priorities to either enable (e.g.,
    *           DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
    *           EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
@@ -136,10 +136,10 @@ protected:
   void priorities (ACE_TCHAR *priority_string,
                    ACE_Log_Msg::MASK_TYPE mask);
 
-  /// Current thread's priority mask set by <priorities>
+  /// Current thread's priority mask set by @c priorities
   u_long thread_priority_mask_;
 
-  /// Process-wide priority mask set by <priorities>
+  /// Process-wide priority mask set by @c priorities
   u_long process_priority_mask_;
 
   /// Flags we keep track of.
@@ -171,7 +171,7 @@ protected:
   int count_;
 
   /// Tells us what is the maximum log file to write. We will write
-  /// <max_file_number_> + 1 files (includes the current log file).
+  /// @c max_file_number_ + 1 files (includes the current log file).
   /// Default value is 1, i.e., 2 files by default.
   int max_file_number_;
 
@@ -181,7 +181,7 @@ protected:
   u_long interval_;
 
   /// Maximum logfile size (in KB).  Default value is
-  /// <ACE_DEFAULT_MAX_LOGFILE_SIZE>.
+  /// ACE_DEFAULT_MAX_LOGFILE_SIZE.
   u_long max_size_;
 
   /// ACE_Log_Msg instance to work with

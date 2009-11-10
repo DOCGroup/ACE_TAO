@@ -25,7 +25,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       msg.len = ACE_OS::strlen (buf) + 1;
       if (client.send (ACE_OS::rand () % 11, &msg) == -1)
-	::perror ("send");
+        ACE_OS::perror ("send");
     }
 
   if (client.close () == -1)

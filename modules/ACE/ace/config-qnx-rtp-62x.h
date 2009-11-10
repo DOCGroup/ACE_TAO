@@ -15,23 +15,25 @@
 /////////////////////////////////////////////////////////////////
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_3_PARAM_WCSTOK
+#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
 // if you ACE to use it.
 //#define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
+#define ACE_HAS_ALT_CUSERID
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_DIRENT
 #define ACE_HAS_GETPAGESIZE
+#define ACE_HAS_GETIFADDRS
 // Enable gperf, this is a hosted configuration.
 #define ACE_HAS_GPERF
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 //#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
-#define ACE_HAS_INLINED_OSCALLS
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_MKTIME
@@ -41,7 +43,6 @@
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SELECT_H
@@ -50,11 +51,9 @@
 #define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_SIG_MACROS
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STRERROR
 #define ACE_HAS_STRINGS
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_GETTIMEOFDAY
@@ -85,9 +84,11 @@
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_LACKS_RWLOCK_T
-#define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_SO_SNDBUF
+#define ACE_LACKS_SO_RCVBUF
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_STRPTIME
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYS_MSG_H
@@ -96,6 +97,10 @@
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_T_ERRNO
 #define ACE_LACKS_U_LONGLONG_T
+#define ACE_LACKS_ALPHASORT
+#define ACE_LACKS_FD_MASK
+#define ACE_LACKS_NFDBITS
+#define ACE_LACKS_ISCTYPE
 
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 
@@ -116,7 +121,6 @@
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSDUP
-#define ACE_LACKS_CUSERID
 // The default value of FD_SETSIZE is 32, but actually x86 NTO
 // supports by default at least 1000 descriptors in fd_set.
 #if defined( FD_SETSIZE )

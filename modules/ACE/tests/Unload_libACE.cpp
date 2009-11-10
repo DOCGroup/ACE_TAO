@@ -19,6 +19,9 @@
 //
 // ============================================================================
 
+//FUZZ: disable check_for_lack_ACE_OS
+//FUZZ: disable check_for_improper_main_declaration
+
 #include <stdio.h>
 
 #undef UNLOAD_LIBACE_TEST
@@ -78,7 +81,7 @@ time_stamp (char date_and_time[], int date_and_timelen, int format)
       "Sat"
     };
 
-  char *ts = NULL;
+  char *ts = 0;
 
   if (date_and_timelen >= TIME_STAMP_FIELD_WIDTH)
     {
@@ -122,22 +125,22 @@ main (int, char **)
   char const *const program = "UnloadLibACE";
 
   int status = 0;
-  void *handle = NULL;
-  char *ace_root = NULL;
+  void *handle = 0;
+  char *ace_root = 0;
   char tbuf[BUFSIZ];
   char ybuf[BUFSIZ];
-  FILE *logfp = NULL;
+  FILE *logfp = 0;
 
-  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != NULL)
+  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != 0)
     {
-      setvbuf (logfp, NULL, _IONBF, 0);
+      setvbuf (logfp, 0, _IONBF, 0);
       // reassign stdout/stderr to log file
       int fdno = fileno (logfp);
 
       dup2 (fdno, fileno (stdout));
       dup2 (fdno, fileno (stderr));
-      setvbuf (stdout, NULL, _IONBF, 0);
-      setvbuf (stderr, NULL, _IONBF, 0);
+      setvbuf (stdout, 0, _IONBF, 0);
+      setvbuf (stderr, 0, _IONBF, 0);
       fflush (stdout);
       fflush (stderr);
 
@@ -145,7 +148,7 @@ main (int, char **)
               time_stamp (tbuf, BUFSIZ, 'T'),
               program, time_stamp (ybuf, BUFSIZ, 'Y'));
 
-      if ((ace_root = getenv ("ACE_ROOT")) != NULL)
+      if ((ace_root = getenv ("ACE_ROOT")) != 0)
         {
           char buf[BUFSIZ];
 
@@ -158,12 +161,14 @@ main (int, char **)
 #endif /* ACE_LIB_NAME */
 #if defined (__hpux) && !(defined (__ia64) && (__ia64 == 1))
           strcat (buf, ".sl");
+#elif defined (__APPLE__)
+          strcat (buf, ".dylib");
 #else
           strcat (buf, ".so");
 #endif /* (__hpux) */
 
           handle = dlopen (buf, RTLD_LAZY);
-          if (handle == NULL)
+          if (handle == 0)
             {
               // is it because of "No such file or directory" ?
               if (errno != ENOENT)
@@ -249,9 +254,9 @@ main (int, char **)
 {
   char const *const program = "UnloadLibACE";
 
-  FILE *logfp = NULL;
+  FILE *logfp = 0;
 
-  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != NULL)
+  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != 0)
     {
       fprintf (logfp, "@LM_DEBUG@ Starting %s test\n", program);
       fprintf (logfp, "@LM_DEBUG@ %s test not implemented for this platform\n",

@@ -16,8 +16,8 @@
 
 #include <windows.h>
 #include <errno.h>
-#include <winsock.h>		/* For definition of "timeval" structure */
-#include <sys/timeb.h>		/* For prototype of "_ftime()" */
+#include <winsock.h> /* For definition of "timeval" structure */
+#include <sys/timeb.h> /* For prototype of "_ftime()" */
 
 
 /*
@@ -34,9 +34,10 @@ int gettimeofday(curTimeP)
 {
 struct _timeb  localTime;
 
-    if (curTimeP == (struct timeval *) NULL) {
-	 errno = EFAULT;
-	 return (-1);
+    if (curTimeP == (struct timeval *) 0) 
+    {
+      errno = EFAULT;
+      return (-1);
     }
 
    /*

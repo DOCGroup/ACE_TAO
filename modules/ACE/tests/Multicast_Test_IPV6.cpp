@@ -1,5 +1,6 @@
 // $Id$
 // ============================================================================
+//FUZZ: disable check_for_lack_ACE_OS
 /**
  * @file Multicast_Test_IPV6.cpp
  *
@@ -31,6 +32,7 @@
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
 // ============================================================================
+//FUZZ: enable check_for_lack_ACE_OS
 
 #include "tests/test_config.h"
 #include "ace/Get_Opt.h"
@@ -49,7 +51,7 @@
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
 /*
- *  The 'finished' flag is used to break out of an infninite loop in the
+ *  The 'finished' flag is used to break out of an infinite loop in the
  *  task::svc () method.  The 'handler' will set the flag in respose to
  *  SIGINT (CTRL-C).
  */
@@ -112,7 +114,10 @@ public:
   ~MCT_Config (void)
     {}
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (int argc, ACE_TCHAR *argv[]);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   int debug (void) const { return this->debug_;}
   void dump (void) const;
   int groups (void) const { return this->groups_;}
@@ -120,7 +125,11 @@ public:
   u_long role (void) const { return this->role_;}
   int iterations (void) const { return this->iterations_;}
   int ttl (void) const { return this->ttl_;}
+
+  //FUZZ: disable check_for_lack_ACE_OS
   int wait (void) const { return this->wait_;}
+  //FUZZ: enable check_for_lack_ACE_OS
+
   ACE_SOCK_Dgram_Mcast::options options (void) const
   {
     return static_cast<ACE_SOCK_Dgram_Mcast::options> (this->sdm_opts_);
@@ -160,7 +169,9 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
   int retval = 0;
   int help = 0;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT (":?"), 1, 1);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   if (getopt.long_option (ACE_TEXT ("GroupStart"),
                           'g',
@@ -224,8 +235,11 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
 
   // Now, let's parse it...
   int c = 0;
+
+  //FUZZ: disable check_for_lack_ACE_OS
   while ((c = getopt ()) != EOF)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch (c)
         {
         case 0:
@@ -521,7 +535,7 @@ MCT_Event_Handler::find (const char *buf)
       local += this->address_vec_[i]->c_str ();
       local += "\n";
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s not in:\n%s"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C not in:\n%C"),
               buf, local.c_str ()));
 
   return -1;
@@ -533,18 +547,21 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                          int reuse_addr,
                          const ACE_TCHAR *net_if)
 {
-  if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("MCT_Event_Handler::join - %p\n"),
-                       ACE_TEXT ("Could not join group")),
-                      -1);
-
   char buf[MAX_STRING_SIZE];
   ACE_OS::sprintf (buf, "%s/%d",
                    mcast_addr.get_host_addr (),
                    mcast_addr.get_port_number ());
+
+  if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("MCT_Event_Handler::join %C %p\n"),
+                       buf,
+                       ACE_TEXT ("failed")),
+                      -1);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
+
   ACE_CString *str;
-  ACE_NEW_RETURN (str, ACE_CString (ACE::strnew (buf)), -1);
+  ACE_NEW_RETURN (str, ACE_CString (buf), -1);
   this->address_vec_.push_back (str);
   return 0;
 }
@@ -597,7 +614,7 @@ MCT_Event_Handler::handle_input (ACE_HANDLE /*handle*/)
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("MCT_Event_Handler::handle_input - ")
                   ACE_TEXT ("Received dgram for a group we didn't join ")
-                  ACE_TEXT ("(%s) \n"),
+                  ACE_TEXT ("(%s)\n"),
                   buf));
     }
   return 0;
@@ -642,9 +659,11 @@ public:
             ACE_Reactor *reactor = ACE_Reactor::instance ());
   ~MCT_Task (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
   virtual int open (void *args = 0);
   virtual int svc (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   const MCT_Config &config_;
@@ -766,8 +785,10 @@ int producer (MCT_Config &config)
 {
   int retval = 0;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
   ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // set the TTL or hop count based on the config.ttl () value
   if (config.ttl () > 1 && config.group_start().get_type() == AF_INET)
@@ -800,6 +821,22 @@ int producer (MCT_Config &config)
       else
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IPV6_MULTICAST_HOPS = %d\n"),
                     hops));
+    }
+
+  // Turn on multicast loopback since the test relies on it and the
+  // ACE_SOCK_Dgram_Mcast documents the loopback state as indeterminate.
+  int do_loopback = 1;
+  if (socket.set_option (IPPROTO_IPV6,
+                         IPV6_MULTICAST_LOOP,
+                         (void *)&do_loopback,
+                         sizeof (do_loopback)) == -1)
+    {
+      if (errno == ENOTSUP)
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("IPV6_MULTICAST_LOOP not supported\n")));
+      else
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("Can't set IPV6_MULTICAST_LOOP")));
     }
 #endif /* ACE_HAS_IPV6 */
 
@@ -897,8 +934,6 @@ int advance_addr (ACE_INET_Addr &addr)
                             -1);
 
         }
-
-      return 0;
     }
 #endif /* ACE_HAS_IPV6 */
 

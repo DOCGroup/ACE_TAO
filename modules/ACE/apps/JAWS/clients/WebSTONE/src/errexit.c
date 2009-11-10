@@ -1,13 +1,13 @@
 /* $Id$ */
 /**************************************************************************
- *									  *
- * 		 Copyright (C) 1995 Silicon Graphics, Inc.		  *
- *									  *
- *  These coded instructions, statements, and computer programs were	  *
- *  developed by SGI for public use.  If any changes are made to this code*
- *  please try to get the changes back to the author.  Feel free to make  *
- *  modifications and changes to the code and release it.		  *
- *									  *
+ *
+ *     Copyright (C) 1995 Silicon Graphics, Inc.
+ *
+ *  These coded instructions, statements, and computer programs were
+ *  developed by SGI for public use.  If any changes are made to this code
+ *  please try to get the changes back to the author.  Feel free to make
+ *  modifications and changes to the code and release it.
+ *
  **************************************************************************/
 
 /* errexit call for general error handling */
@@ -25,10 +25,10 @@
 #include "bench.h"
 
 #ifdef HAVE_VPRINTF
-#define	VPRINTF(stderr, format, args)	vfprintf((stderr), (format), (args))
+#define VPRINTF(stderr, format, args) vfprintf((stderr), (format), (args))
 #else
 #ifdef HAVE_DOPRNT
-#define VPRINTF(stderr, format, args)	_doprnt((format), (args), (stderr))
+#define VPRINTF(stderr, format, args) _doprnt((format), (args), (stderr))
 #endif /* HAVE_DOPRNT */
 #endif /* HAVE_VPRINTF */
 

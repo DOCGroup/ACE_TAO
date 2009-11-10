@@ -54,24 +54,23 @@ Handle_L_Pipe::init (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
-       {
-       case 'r':
-	 r = get_opt.opt_arg ();
-	 break;
-       default:
-	 break;
-       }
+    switch (c)
+      {
+      case 'r':
+        r = get_opt.opt_arg ();
+        break;
+      default:
+        break;
+      }
 
   ACE_OS::strncpy (this->rendezvous, r, MAXPATHLEN);
   ACE_OS::unlink (this->rendezvous);
   sup.set (this->rendezvous);
   if (this->open (sup) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
-  else if (ACE_Reactor::instance ()->register_handler
-	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
+  else if (ACE_Reactor::instance ()->register_handler (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-		       ACE_TEXT ("registering service with ACE_Reactor")), -1);
+                       ACE_TEXT ("registering service with ACE_Reactor")), -1);
   return 0;
 }
 

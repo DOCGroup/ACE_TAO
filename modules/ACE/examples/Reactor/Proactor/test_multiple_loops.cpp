@@ -27,7 +27,7 @@
 
 ACE_RCSID(Proactor, test_multiple_loops, "$Id$")
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 class Timeout_Handler : public ACE_Handler, public ACE_Event_Handler
 {
@@ -45,21 +45,21 @@ public:
     {
       // Print out when timeouts occur.
       ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
-		  ++count_,
-		  (char *) arg,
-		  tv.sec ()));
+                  ++count_,
+                  (char *) arg,
+                  tv.sec ()));
 
       // Since there is only one thread that can do the timeouts in
       // Reactor, lets keep the handle_timeout short for that
       // thread.
       if (ACE_OS::strcmp ((char *) arg, "Proactor") == 0)
-	// Sleep for a while
-	ACE_OS::sleep (1);
+      // Sleep for a while
+      ACE_OS::sleep (1);
     }
 
   // This method is declared in ACE_Event_Handler.
   virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg)
+                              const void *arg)
     {
       this->handle_time_out (tv, arg);
       return 0;
@@ -105,17 +105,17 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
   if (proactor.schedule_timer (handler,
-			       (void *) "Proactor",
-			       ACE_Time_Value::zero,
-			       foo_tv) == -1)
+                               (void *) "Proactor",
+                               ACE_Time_Value::zero,
+                               foo_tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
   if (ACE_Reactor::instance ()->schedule_timer (&handler,
-						(void *) "Reactor",
-						ACE_Time_Value::zero,
-						bar_tv) == -1)
+                                                (void *) "Reactor",
+                                                ACE_Time_Value::zero,
+                                                bar_tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   Worker worker;
@@ -133,8 +133,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */

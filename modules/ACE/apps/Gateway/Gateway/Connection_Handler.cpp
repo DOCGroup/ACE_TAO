@@ -133,7 +133,7 @@ Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                     const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-	     "(%t) attempting to reconnect Connection_Handler %d with timeout = %d\n",
+              "(%t) attempting to reconnect Connection_Handler %d with timeout = %d\n",
               this->connection_id (),
               this->timeout_));
 
@@ -149,9 +149,9 @@ int
 Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) shutting down %s Connection_Handler %d on handle %d\n",
-	      this->connection_role () == 'C' ? "Consumer" : "Supplier",
-	      this->connection_id (),
+              "(%t) shutting down %s Connection_Handler %d on handle %d\n",
+              this->connection_role () == 'C' ? "Consumer" : "Supplier",
+              this->connection_id (),
               this->get_handle ()));
 
   // Restart the connection, if possible.
@@ -181,8 +181,8 @@ int
 Connection_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) %s Connection_Handler's handle = %d\n",
-	      this->connection_role () == 'C' ? "Consumer" : "Supplier",
-	      this->peer ().get_handle ()));
+              this->connection_role () == 'C' ? "Consumer" : "Supplier",
+              this->peer ().get_handle ()));
 
   // Call back to the <Event_Channel> to complete our initialization.
   if (this->event_channel_->complete_connection_connection (this) == -1)
@@ -240,33 +240,32 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
     {
       // Create a threaded Consumer_Handler.
       if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
-			   Options::OUTPUT_MT))
-	ACE_NEW_RETURN (connection_handler,
-			Thr_Consumer_Handler (pci),
-			0);
+                           Options::OUTPUT_MT))
+        ACE_NEW_RETURN (connection_handler,
+                        Thr_Consumer_Handler (pci),
+                        0);
 
       // Create a reactive Consumer_Handler.
       else
-	ACE_NEW_RETURN (connection_handler,
-			Consumer_Handler (pci),
-			0);
+        ACE_NEW_RETURN (connection_handler,
+                        Consumer_Handler (pci),
+                        0);
     }
   else // connection_role == 'S', so configure a Supplier_Handler.
     {
       // Create a threaded Supplier_Handler.
       if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
-			   Options::INPUT_MT))
-	ACE_NEW_RETURN (connection_handler,
-			Thr_Supplier_Handler (pci),
-			0);
+                           Options::INPUT_MT))
+        ACE_NEW_RETURN (connection_handler,
+                        Thr_Supplier_Handler (pci),
+                        0);
 
       // Create a reactive Supplier_Handler.
       else
-	ACE_NEW_RETURN (connection_handler,
-			Supplier_Handler (pci),
-			0);
+        ACE_NEW_RETURN (connection_handler,
+                        Supplier_Handler (pci),
+                        0);
     }
 
   return connection_handler;
 }
-

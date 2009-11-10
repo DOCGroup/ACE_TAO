@@ -83,7 +83,7 @@ File_Parser<ENTRY>::readword (char buf[])
 
   // Skip over leading delimiters and get word.
 
-  while ((c = getc (this->infile_)) != EOF && c != '\n')
+  while ((c = ACE_OS::getc (this->infile_)) != EOF && c != '\n')
     if (this->delimiter (c))
       {
         // We've reached the end of a "word".
@@ -100,7 +100,7 @@ File_Parser<ENTRY>::readword (char buf[])
     // gets processed.
     if (wordlength > 0)
       {
-        ungetc (c, this->infile_);
+        ACE_OS::ungetc (c, this->infile_);
         return FPRT::RT_SUCCESS;
       }
     else
@@ -112,7 +112,7 @@ File_Parser<ENTRY>::readword (char buf[])
       // if the EOLINE is just a delimiter, don't return EOLINE
       // so that the word gets processed
       if (wordlength > 0)
-        ungetc (c, this->infile_);
+        ACE_OS::ungetc (c, this->infile_);
       else
         return FPRT::RT_EOLINE;
     }
@@ -148,7 +148,7 @@ File_Parser<ENTRY>::skipline (void)
 
   int c;
 
-  while ((c = getc (this->infile_)) != '\n' && c != EOF)
+  while ((c = ACE_OS::getc (this->infile_)) != '\n' && c != EOF)
     continue;
 
   return c;

@@ -86,8 +86,8 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
 
   if (tid == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("schedule_timer")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("schedule_timer")),
                       -1);
 
   if (this->schedule_ualarm () == -1)
@@ -112,8 +112,8 @@ ACE_Async_Timer_Queue_Adapter<TQ>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *m
 
   if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("register_handler")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("register_handler")));
 }
 
 // This is the signal handler function for the asynchronous timer
@@ -159,16 +159,16 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_M
                                                                     TQ* timer_queue)
   : ACE_Task_Base (tm),
     timer_queue_(timer_queue),
-    delete_timer_queue_(0),
+    delete_timer_queue_(false),
     condition_ (mutex_),
-    active_ (1), // Assume that we start in active mode.
+    active_ (true), // Assume that we start in active mode.
     thr_id_ (ACE_OS::NULL_thread)
 {
   if (timer_queue_ == 0)
     {
       ACE_NEW (this->timer_queue_,
                TQ);
-      this->delete_timer_queue_ = 1;
+      this->delete_timer_queue_ = true;
     }
 }
 
@@ -179,7 +179,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::~ACE_Thread_Timer_Queue_Adapter (void)
     {
       delete this->timer_queue_;
       this->timer_queue_ = 0;
-      this->delete_timer_queue_ = 0;
+      this->delete_timer_queue_ = false;
     }
 }
 
@@ -198,7 +198,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
-  long result = this->timer_queue_->schedule (handler, act, future_time, interval);
+  long const result = this->timer_queue_->schedule (handler, act, future_time, interval);
   this->condition_.signal ();
   return result;
 }
@@ -209,7 +209,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
-  int result = this->timer_queue_->cancel (timer_id, act);
+  int const result = this->timer_queue_->cancel (timer_id, act);
   condition_.signal ();
   return result;
 }
@@ -219,7 +219,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_);
 
-  this->active_ = 0;
+  this->active_ = false;
   this->condition_.signal ();
 }
 
@@ -263,16 +263,16 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
         {
           // Compute the remaining time, being careful not to sleep
           // for "negative" amounts of time.
-          const ACE_Time_Value tv_curr = this->timer_queue_->gettimeofday ();
-          const ACE_Time_Value tv_earl = this->timer_queue_->earliest_time ();
+          ACE_Time_Value const tv_curr = this->timer_queue_->gettimeofday ();
+          ACE_Time_Value const tv_earl = this->timer_queue_->earliest_time ();
 
           if (tv_earl > tv_curr)
             {
               // The earliest time on the Timer_Queue is in future, so
               // use ACE_OS::gettimeofday() to convert the tv to the
               // absolute time.
-              const ACE_Time_Value tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);
-              // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting until %u.%3.3u secs\n"),
+              ACE_Time_Value const tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);
+              // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting until %u.%3.3u secs\n"),
               // tv.sec(), tv.msec()));
               this->condition_.wait (&tv);
             }
@@ -297,21 +297,19 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
                                               long priority,
                                               int grp_id,
                                               ACE_Task_Base *task,
-                                              ACE_hthread_t thread_handles[],
+                                              ACE_hthread_t [],
                                               void *stack[],
                                               size_t stack_size[],
-                                              ACE_thread_t thread_names[])
+                                              ACE_thread_t thread_ids[],
+                                              const char* thr_name[])
 {
-  // Macros to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (thread_handles);
-
   // Make sure to set this flag in case we were deactivated earlier.
-  this->active_ = 1;
+  this->active_ = true;
 
   // Make sure that we only allow a single thread to be spawned for
   // our adapter.  Otherwise, too many weird things can happen.
   return ACE_Task_Base::activate (flags, 1, 0, priority, grp_id, task, 0,
-                                  stack, stack_size, thread_names);
+                                  stack, stack_size, thread_ids, thr_name);
 }
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)

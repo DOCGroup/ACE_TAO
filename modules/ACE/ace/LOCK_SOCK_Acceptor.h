@@ -26,7 +26,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_LOCK_SOCK_Acceptor
  *
- * @brief Specialize <ACE_SOCK_Acceptor> to lock around <accept>;
+ * @brief Specialize ACE_SOCK_Acceptor to lock around <accept>;
  *
  * This class is necessary since some OS platforms (e.g.,
  * Solaris 2.5) do not allow multiple threads/processes to
@@ -42,8 +42,8 @@ public:
   int accept (ACE_SOCK_Stream &new_stream,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0) const;
+              bool restart = true,
+              bool reset_new_handle = false) const;
 
   /// Return a reference to the lock.
   ACE_LOCK &lock (void);

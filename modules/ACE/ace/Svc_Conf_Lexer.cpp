@@ -49,6 +49,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #define ACE_NO_STATE -1
 #define ACE_COMMENT 0
 
+#if defined (_MSC_VER) && (_MSC_VER >= 1400)
+// Visual Studio .NET 2005 (VC8) issues warning C4351 for input_ in the
+// constructor initializer list below. Since we like the warned-of new
+// behavior (input_ elements will be default-initialized), squash the
+// warning here.
+#  pragma warning (push)
+#  pragma warning (disable:4351)
+#endif /* VC8 */
+
 struct ace_yy_buffer_state
 {
   ace_yy_buffer_state (void)
@@ -65,6 +74,9 @@ struct ace_yy_buffer_state
 #endif /* ACE_USES_WCHAR */
   {
   }
+#if defined (_MSC_VER) && (_MSC_VER >= 1400)
+#  pragma warning (pop)
+#endif /* VC8 */
 
   ~ace_yy_buffer_state (void)
   {
@@ -96,7 +108,7 @@ struct ace_yy_buffer_state
 // ******************************************************************
 
 int
-ace_yylex (ACE_YYSTYPE *ace_yylval, void *ACE_YYLEX_PARAM)
+ace_yylex (YYSTYPE *ace_yylval, void *YYLEX_PARAM)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                             ace_mon,
@@ -130,7 +142,7 @@ normalize (size_t length)
 // ******************************************************************
 
 int
-ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
+ACE_Svc_Conf_Lexer::yylex (YYSTYPE* ace_yylval,
                            ACE_Svc_Conf_Param* param)
 {
 #if defined (ACE_USES_WCHAR)
@@ -198,7 +210,7 @@ ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
           {
             ace_yyerror (++param->yyerrno,
                          param->yylineno,
-                         "Unable to convert input stream to UTF-8");
+                         ACE_TEXT ("Unable to convert input stream to UTF-8"));
             return ACE_NO_STATE;
           }
 #endif /* ACE_USES_WCHAR */
@@ -258,15 +270,15 @@ ACE_Svc_Conf_Lexer::input (ACE_Svc_Conf_Param* param,
     default:
       ace_yyerror (++param->yyerrno,
                    param->yylineno,
-                   "Invalid Service Configurator type in "
-                   "ACE_Svc_Conf_Lexer::input");
+                   ACE_TEXT ("Invalid Service Configurator type in ")
+                   ACE_TEXT ("ACE_Svc_Conf_Lexer::input"));
     }
 
   return result;
 }
 
 int
-ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
+ACE_Svc_Conf_Lexer::scan (YYSTYPE* ace_yylval,
                           ACE_Svc_Conf_Param* param)
 
 {
@@ -317,13 +329,16 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                 // Now, we need to move back in the string until we find the
                 // same character that started the string
                 bool string_end_found = false;
-                for(ssize_t i = (current - 1) - buffer->index_; i >= 0; i--)
+                if (current > buffer->index_)
                   {
-                    if (source[i] == buffer->string_start_)
+                    for (size_t i = current - buffer->index_; i-- != 0; )
                       {
-                        current = buffer->index_ + i + 1;
-                        string_end_found = true;
-                        break;
+                        if (source[i] == buffer->string_start_)
+                          {
+                            current = buffer->index_ + i + 1;
+                            string_end_found = true;
+                            break;
+                          }
                       }
                   }
 
@@ -331,7 +346,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                   {
                     ace_yyerror (++param->yyerrno,
                                  param->yylineno,
-                                 "Unable to find the end of the string");
+                                 ACE_TEXT ("Unable to find the end of the string"));
                     return ACE_NO_STATE;
                   }
 
@@ -348,7 +363,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                   {
                     ace_yyerror (++param->yyerrno,
                                  param->yylineno,
-                                 "Unable to convert string from UTF-8");
+                                 ACE_TEXT ("Unable to convert string from UTF-8"));
                     return ACE_NO_STATE;
                   }
                 amount = length;
@@ -488,8 +503,8 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                       {
                         ace_yyerror (++param->yyerrno,
                                      param->yylineno,
-                                     "Unable to convert "
-                                     "identifier from UTF-8");
+                                     ACE_TEXT ("Unable to convert ")
+                                     ACE_TEXT ("identifier from UTF-8"));
                         return ACE_NO_STATE;
                       }
                     amount = length;
@@ -526,7 +541,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
           default:
             ace_yyerror (++param->yyerrno,
                          param->yylineno,
-                         "Unexpected state in ACE_Svc_Conf_Lexer::scan");
+                         ACE_TEXT ("Unexpected state in ACE_Svc_Conf_Lexer::scan"));
             return ACE_NO_STATE;
         }
     }

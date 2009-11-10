@@ -57,10 +57,10 @@ public:
   /// Close down the named pipe.
   int close (void);
 
-  /// Recv <buf> of up to <len> bytes.
+  /// Recv @a buf of up to @a len bytes.
   ssize_t recv (void *buf, size_t len);
 
-  /// Recv <buf> of exactly <len> bytes (block until done).
+  /// Recv @a buf of exactly @a len bytes (block until done).
   ssize_t recv_n (void *buf, size_t len);
 
   /// Dump the state of an object.

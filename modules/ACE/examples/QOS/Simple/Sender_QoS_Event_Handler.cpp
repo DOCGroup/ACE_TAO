@@ -16,6 +16,7 @@
 
 #include "Sender_QoS_Event_Handler.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
 
 // Constructor.
@@ -120,7 +121,8 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
   char* msg = "Hello sent on a QoS enabled session !!\n";
   iovec iov[1];
   iov[0].iov_base = msg;
-  iov[0].iov_len = ACE_OS::strlen(msg);
+  iov[0].iov_len =
+    ACE_Utils::truncate_cast<u_long> (ACE_OS::strlen (msg));
 
   size_t bytes_sent = 0;
 

@@ -25,20 +25,16 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_errno.h"
 #include "ace/Basic_Types.h"
 #include "ace/os_include/os_time.h"
+#include "ace/OS_NS_errno.h"
+
 #include /**/ "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
-
-# if defined (ACE_HAS_BROKEN_R_ROUTINES)
-#   undef ctime_r
-#   undef asctime_r
-# endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -47,12 +43,7 @@ static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 
-#if defined (ACE_HAS_WINCE) && (defined (_MSC_VER) && (_MSC_VER < 1400))
-// WinCE prior to Visual Studio 2005 integration doesn't have most of
-// the standard C library time functions. It also doesn't define struct tm.
-// SYSTEMTIME has pretty much the same info though, so we can map it when
-// needed. Define struct tm here and use it when needed. This is taken
-// from the standard C library.
+#if defined (ACE_LACKS_STRUCT_TM)
 struct tm {
   int tm_sec;
   int tm_min;
@@ -64,7 +55,7 @@ struct tm {
   int tm_yday;      // Day in the year
   int tm_isdst;     // >0 if dst in effet; 0 if not; <0 if unknown
 };
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_STRUCT_TM */
 
 /// Helper for the ACE_OS::timezone() function
 /**
@@ -77,17 +68,10 @@ struct tm {
  */
 inline long ace_timezone()
 {
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   TIME_ZONE_INFORMATION tz;
   GetTimeZoneInformation (&tz);
   return tz.Bias * 60;
-#elif defined (ACE_WIN32) && !defined (ACE_HAS_DINKUM_STL)
-  return _timezone;  // For Win32.
-#elif defined (ACE_WIN32) && defined (ACE_HAS_DINKUM_STL)
-  time_t tod = time(0);   // get current time
-  time_t t1 = mktime(gmtime(&tod));   // convert without timezone
-  time_t t2 = mktime(localtime(&tod));   // convert with timezone
-  return difftime(t1, t2); // compute difference in seconds
 #elif defined (ACE_HAS_TIMEZONE)
   // The XPG/POSIX specification requires that tzset() be called to
   // set the global variable <timezone>.
@@ -110,6 +94,16 @@ inline long ace_timezone()
 
 
 #if !defined (ACE_LACKS_DIFFTIME)
+# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T) \
+    && defined (_MSC_VER)
+    // The WinCE 6.0 SDK ships with a diff_time that uses __time32_t as type
+    // not time_t. This resolves in compilation warnings because time_t
+    // can be 64bit. Disable at this momemt the warning for just this method
+    // else we get two compile warnings on each source file that includes
+    // this file.
+#   pragma warning (push)
+#   pragma warning (disable: 4244)
+# endif
 /// Helper for the ACE_OS::difftime() function
 /**
  * We moved the difftime code that used to be in ACE_OS::difftime()
@@ -123,6 +117,10 @@ inline double ace_difftime(time_t t1, time_t t0)
 {
   return difftime (t1, t0);
 }
+# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T) \
+    && defined (_MSC_VER)
+#   pragma warning (pop)
+# endif
 #endif /* !ACE_LACKS_DIFFTIME */
 
 # if defined (ACE_WIN32)
@@ -148,11 +146,11 @@ typedef long long ACE_hrtime_t;
 #   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
 # endif /* ACE_WIN32 */
 
-# if defined (ACE_HRTIME_T_IS_BASIC_TYPE)
-#   define ACE_HRTIME_CONVERSION(VAL) (VAL)
+# if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+#   define ACE_HRTIME_CONVERSION(VAL) ACE_U64_TO_U32(VAL)
 #   define ACE_HRTIME_TO_U64(VAL) ACE_U_LongLong(VAL)
 # else
-#   define ACE_HRTIME_CONVERSION(VAL) ACE_U64_TO_U32(VAL)
+#   define ACE_HRTIME_CONVERSION(VAL) (VAL)
 #   define ACE_HRTIME_TO_U64(VAL) (VAL)
 # endif
 
@@ -192,10 +190,6 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif
   ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
-
-# if defined (difftime)
-#   undef difftime
-# endif /* difftime */
 
 #if !defined (ACE_LACKS_DIFFTIME)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -242,12 +236,16 @@ namespace ACE_OS
                    const char *format,
                    const struct tm *timeptr);
 
+  /**
+   * strptime wrapper. Note that the struct @a tm will always be set to
+   * zero
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strptime (const char *buf,
                   const char *format,
                   struct tm *tm);
 
-# if defined (ACE_LACKS_STRPTIME) && !defined (ACE_REFUSE_STRPTIME_EMULATION)
+# if defined (ACE_LACKS_STRPTIME)
   extern ACE_Export
   char *strptime_emulation (const char *buf,
                             const char *format,
@@ -256,14 +254,10 @@ namespace ACE_OS
   extern ACE_Export
   int strptime_getnum (const char *buf, int *num, int *bi,
                        int *fi, int min, int max);
-# endif /* ACE_LACKS_STRPTIME && !ACE_REFUSE_STRPTIME_EMULATION */
+# endif /* ACE_LACKS_STRPTIME  */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   time_t time (time_t *tloc = 0);
-
-# if defined (timezone)
-#   undef timezone
-# endif /* timezone */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long timezone (void);

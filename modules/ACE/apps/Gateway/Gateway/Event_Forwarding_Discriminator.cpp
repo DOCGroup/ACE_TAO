@@ -10,8 +10,8 @@ ACE_RCSID(Gateway, Event_Forwarding_Discriminator, "$Id$")
 // Bind the Event_Key to the INT_ID.
 
 int
-Event_Forwarding_Discriminator::bind (Event_Key event_addr, 
-				      Consumer_Dispatch_Set *cds)
+Event_Forwarding_Discriminator::bind (Event_Key event_addr,
+                Consumer_Dispatch_Set *cds)
 {
   return this->map_.bind (event_addr, cds);
 }
@@ -19,8 +19,8 @@ Event_Forwarding_Discriminator::bind (Event_Key event_addr,
 // Find the Consumer_Dispatch_Set corresponding to the Event_Key.
 
 int
-Event_Forwarding_Discriminator::find (Event_Key event_addr, 
-				      Consumer_Dispatch_Set *&cds)
+Event_Forwarding_Discriminator::find (Event_Key event_addr,
+                Consumer_Dispatch_Set *&cds)
 {
   return this->map_.find (event_addr, cds);
 }
@@ -36,7 +36,7 @@ Event_Forwarding_Discriminator::unbind (Event_Key event_addr)
   return result;
 }
 
-Event_Forwarding_Discriminator_Iterator::Event_Forwarding_Discriminator_Iterator 
+Event_Forwarding_Discriminator_Iterator::Event_Forwarding_Discriminator_Iterator
   (Event_Forwarding_Discriminator &rt)
     : map_iter_ (rt.map_)
 {

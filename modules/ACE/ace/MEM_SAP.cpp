@@ -24,7 +24,7 @@ ACE_MEM_SAP::dump (void) const
   if (this->shm_malloc_ != 0)
     this->shm_malloc_->dump ();
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_MEM_SAP uninitialized.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_MEM_SAP uninitialized.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

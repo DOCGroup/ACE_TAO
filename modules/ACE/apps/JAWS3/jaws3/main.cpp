@@ -9,13 +9,13 @@
 #include "jaws3/Signal_Task.h"
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_REACTOR_INSTANCE_INIT;
 
   JAWS_Signal_Task::instance ();
 
-  if (ACE_Service_Config::open (argc, argv) == -1 
+  if (ACE_Service_Config::open (argc, argv) == -1
       && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

@@ -179,7 +179,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Fortran or Ada support
 #     define VX_UNBREAKABLE        0x0002  /* breakpoints ignored */
 #     if !defined (VX_FP_TASK)
-#       define VX_FP_TASK            0x0008  /* floating point coprocessor */
+#       define VX_FP_TASK          0x0008  /* floating point coprocessor */
 #     endif
 #     define VX_PRIVATE_ENV        0x0080  /* private environment support */
 #     define VX_NO_STACK_FILL      0x0100  /* do not stack fill for
@@ -224,7 +224,7 @@ typedef struct
   char *name_;
 } ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
-typedef char * ACE_thread_t;
+typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
@@ -239,10 +239,6 @@ typedef u_int ACE_OS_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-      // Marker for ACE_Thread_Manager to indicate that it allocated
-      // an ACE_thread_t.  It is placed at the beginning of the ID.
-#     define ACE_THR_ID_ALLOCATED '\022'
 
 #   elif defined (ACE_HAS_WTHREADS)
 
@@ -279,7 +275,7 @@ typedef HANDLE ACE_sema_t;
 class ACE_Export ACE_sema_t
 {
 public:
-  /// Serializes access to <count_>.
+  /// Serializes access to @c count_.
   ACE_thread_mutex_t lock_;
 
   /// This event is signaled whenever the count becomes non-zero.
@@ -308,6 +304,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_DAEMON              0          /* ignore in most places */
 #     define THR_JOINABLE            0          /* ignore in most places */
 #     define THR_SUSPENDED   CREATE_SUSPENDED
+#     if !defined (STACK_SIZE_PARAM_IS_A_RESERVATION)
+#       define STACK_SIZE_PARAM_IS_A_RESERVATION  0x00010000
+#     endif /* STACK_SIZE_PARAM_IS_A_RESERVATION */
 #     define THR_USE_AFX             0x01000000
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0
@@ -318,10 +317,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_SCOPE_SYSTEM        0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS **********/
 
-// If we're using PACE then we don't want this class (since PACE
-// takes care of it) unless we're on Windows. Win32 mutexes, semaphores,
-// and condition variables are not yet supported in PACE.
-#   if defined (ACE_LACKS_COND_T)
+#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+
+typedef CONDITION_VARIABLE ACE_cond_t;
+
+#   elif defined (ACE_LACKS_COND_T)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -373,6 +373,14 @@ public:
   size_t was_broadcast_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#   endif /* ACE_LACKS_COND_T */
+
+#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE) || defined (ACE_LACKS_COND_T)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 struct ACE_Export ACE_condattr_t
 {
   int type;
@@ -385,7 +393,7 @@ struct ACE_Export ACE_mutexattr_t
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#   endif /* ACE_LACKS_COND_T */
+#   endif /* ACE_HAS_WTHREADS_CONDITION_VARIABLE || ACE_LACKS_COND_T */
 
 #   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 
@@ -425,7 +433,7 @@ public:
   int ref_count_;
 
   /// Indicate that a reader is trying to upgrade
-  int important_writer_;
+  bool important_writer_;
 
   /// Condition for the upgrading reader
   ACE_cond_t waiting_important_writer_;
@@ -870,18 +878,9 @@ private:
   static ACE_OS_thread_key_t native_tss_key_;
 
   // Used to indicate if native tss key has been allocated
-  static int key_created_;
+  static bool key_created_;
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 };
-
-# else   /* ! ACE_HAS_TSS_EMULATION */
-    // allow user to define its own ACE_DEFAULT_THREAD_KEYS in Windows,
-    // where The MSSDK defines only 64 entries
-#   if defined (TLS_MINIMUM_AVAILABLE) && !defined (ACE_DEFAULT_THREAD_KEYS)
-    // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
-#     define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
-#   endif /* TSL_MINIMUM_AVAILABLE */
-
 # endif /* ACE_HAS_TSS_EMULATION */
 
 // moved ACE_TSS_Ref, ACE_TSS_Info, and ACE_TSS_Keys class
@@ -1088,19 +1087,11 @@ namespace ACE_OS {
   void cleanup_tss (const u_int main_thread);
 
   //@{ @name A set of wrappers for condition variables.
-#if defined (ACE_LACKS_COND_T)
-  extern ACE_Export
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T */
   int condattr_init (ACE_condattr_t &attributes,
                      int type = ACE_DEFAULT_SYNCH_TYPE);
 
-#if defined (ACE_LACKS_COND_T)
-  extern ACE_Export
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T */
   int condattr_destroy (ACE_condattr_t &attributes);
 
 #if defined (ACE_LACKS_COND_T)
@@ -1169,7 +1160,7 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_COND_T */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_mutex_t *m,
-                      ACE_Time_Value *);
+                      ACE_Time_Value *timeout);
 
 #if defined (ACE_LACKS_COND_T)
   extern ACE_Export
@@ -1180,20 +1171,12 @@ namespace ACE_OS {
                  ACE_mutex_t *m);
 
 # if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
-#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
-#   else
-  ACE_NAMESPACE_INLINE_FUNCTION
-#   endif /* ACE_LACKS_COND_T */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_thread_mutex_t *m,
-                      ACE_Time_Value *);
+                      ACE_Time_Value *timeout);
 
-#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
-#   else
-  ACE_NAMESPACE_INLINE_FUNCTION
-#   endif /* ACE_LACKS_COND_T */
   int cond_wait (ACE_cond_t *cv,
                  ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
@@ -1303,7 +1286,7 @@ namespace ACE_OS {
    * If <timeout> == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
    * this method attempts to acquire a lock, but gives up if the lock
    * has not been acquired by the given time, in which case it returns
-   * -1 with an <ETIME> errno on platforms that actually support timed
+   * -1 with an @c ETIME errno on platforms that actually support timed
    * mutexes.  The timeout should be an absolute time.  Note that the
    * mutex should not be a recursive one, i.e., it should only be a
    * standard mutex or an error checking mutex since some
@@ -1334,7 +1317,7 @@ namespace ACE_OS {
 
   //@}
 
-  /// Low-level interface to <priocntl>(2).
+  /// Low-level interface to @c priocntl(2).
   /**
    * Can't call the following priocntl, because that's a macro on
    * Solaris.
@@ -1471,7 +1454,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_wait (ACE_sema_t *s,
                  ACE_Time_Value *tv);
-
   //@}
 
   //@{ @name A set of wrappers for System V semaphores.
@@ -1492,7 +1474,7 @@ namespace ACE_OS {
              size_t nsops);
   //@}
 
-  /// Friendly interface to <priocntl>(2).
+  /// Friendly interface to @c priocntl(2).
   extern ACE_Export
   int set_scheduling_params (const ACE_Sched_Params &,
                              ACE_id_t id = ACE_SELF);
@@ -1523,14 +1505,14 @@ namespace ACE_OS {
   int thr_continue (ACE_hthread_t target_thread);
 
   /*
-   * Creates a new thread having <flags> attributes and running <func>
-   * with <args> (if <thread_adapter> is non-0 then <func> and <args>
-   * are ignored and are obtained from <thread_adapter>).  <thr_id>
-   * and <t_handle> are set to the thread's ID and handle (?),
-   * respectively.  The thread runs at <priority> priority (see
+   * Creates a new thread having @a flags attributes and running @a func
+   * with @a args (if @a thread_adapter is non-0 then @a func and @a args
+   * are ignored and are obtained from @a thread_adapter).  @a thr_id
+   * and @a t_handle are set to the thread's ID and handle (?),
+   * respectively.  The thread runs at @a priority priority (see
    * below).
    *
-   * The <flags> are a bitwise-OR of the following:
+   * The @a flags are a bitwise-OR of the following:
    * = BEGIN<INDENT>
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
@@ -1539,18 +1521,22 @@ namespace ACE_OS {
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
    * = END<INDENT>
    *
-   * By default, or if <priority> is set to
+   * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
-   * the given scheduling policy (specified in <flags}>, e.g.,
-   * <THR_SCHED_DEFAULT>) is used.  This value is calculated
+   * the given scheduling policy (specified in @a flags, e.g.,
+   * @c THR_SCHED_DEFAULT) is used.  This value is calculated
    * dynamically, and is the median value between the minimum and
    * maximum priority values for the given policy.  If an explicit
    * value is given, it is used.  Note that actual priority values are
    * EXTREMEMLY implementation-dependent, and are probably best
    * avoided.
    *
-   * Note that <thread_adapter> is always deleted by <thr_create>,
+   * Note that @a thread_adapter is always deleted by @c thr_create,
    * therefore it must be allocated with global operator new.
+   *
+   * At the moment for @a thr_name a valid string is passed then this
+   * will be used on VxWorks to set the task name. If we just pass a pointer
+   * the name of the task is returned
    */
   extern ACE_Export
   int thr_create (ACE_THR_FUNC func,
@@ -1560,8 +1546,9 @@ namespace ACE_OS {
                   ACE_hthread_t *t_handle = 0,
                   long priority = ACE_DEFAULT_THREAD_PRIORITY,
                   void *stack = 0,
-                  size_t stacksize = 0,
-                  ACE_Base_Thread_Adapter *thread_adapter = 0);
+                  size_t stacksize = ACE_DEFAULT_THREAD_STACKSIZE,
+                  ACE_Base_Thread_Adapter *thread_adapter = 0,
+                  const char** thr_name = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_equal (ACE_thread_t t1,
@@ -1586,26 +1573,26 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   /// for internal use only.  Applications should call thr_getspecific
   int thr_getspecific_native (ACE_OS_thread_key_t key,
-                       void **data);
+                              void **data);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getspecific (ACE_thread_key_t key,
                        void **data);
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
   int thr_join (ACE_hthread_t waiter_id,
                 ACE_THR_FUNC_RETURN *status);
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
   int thr_join (ACE_thread_t waiter_id,
                 ACE_thread_t *thr_id,
                 ACE_THR_FUNC_RETURN *status);
@@ -1622,7 +1609,7 @@ namespace ACE_OS {
    * thread to the "CPU 0", etc
    */
   extern ACE_Export
-  int thr_get_affinity (ACE_hthread_t id,
+  int thr_get_affinity (ACE_hthread_t thr_id,
                         size_t cpu_set_size,
                         cpu_set_t * cpu_mask);
 
@@ -1685,7 +1672,7 @@ namespace ACE_OS {
 # endif /* ACE_HAS_THR_C_DEST */
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  /// @internal  applications should call thr_keyfree instead
+  /// @internal Applications should call thr_keyfree instead
   extern ACE_Export
   int thr_keyfree_native (ACE_OS_thread_key_t key);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
@@ -1705,6 +1692,9 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void thr_self (ACE_hthread_t &);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  const char* thr_name (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setcancelstate (int new_state,
@@ -1792,9 +1782,9 @@ namespace ACE_OS {
    * This method uses process id and object pointer to come up with a
    * machine wide unique name.  The process ID will provide uniqueness
    * between processes on the same machine. The "this" pointer of the
-   * <object> will provide uniqueness between other "live" objects in
+   * @a object will provide uniqueness between other "live" objects in
    * the same process. The uniqueness of this name is therefore only
-   * valid for the life of <object>.
+   * valid for the life of @a object.
    */
   extern ACE_Export
   void unique_name (const void *object,
@@ -1845,8 +1835,8 @@ extern "C"
      * The semantics of auto events forces us to introduce this extra
      * variable to ensure that the thread is not woken up
      * spuriously. Please see event_wait and event_timedwait () to see
-     * how this is used for auto_events. Theoretically this is a hack
-     * that needs revisiting after x.4
+     * how this is used for auto_events.
+     * @todo This is a hack that needs revisiting after x.4
      */
     bool auto_event_signaled_;
 

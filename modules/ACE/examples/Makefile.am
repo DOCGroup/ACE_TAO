@@ -25,11 +25,13 @@ SUBDIRS = \
         Map_Manager \
         Mem_Map \
         Misc \
+        Monitor \
         NT_Service \
         Naming \
         OS \
         Reactor \
         Registry \
+        Semaphores \
         Service_Configurator \
         Shared_Malloc \
         Shared_Memory \

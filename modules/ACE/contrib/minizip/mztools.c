@@ -39,7 +39,7 @@ uLong* bytesRecovered;
   FILE* fpZip = fopen(file, "rb");
   FILE* fpOut = fopen(fileOut, "wb");
   FILE* fpOutCD = fopen(fileOutTmp, "wb");
-  if (fpZip != NULL &&  fpOut != NULL) {
+  if (fpZip != 0 &&  fpOut != 0) {
     int entries = 0;
     uLong totalBytes = 0;
     char header[30];
@@ -113,7 +113,7 @@ uLong* bytesRecovered;
           }
           if (dataSize > 0) {
             char* data = malloc(dataSize);
-            if (data != NULL) {
+            if (data != 0) {
               if ((int)fread(data, 1, dataSize, fpZip) == dataSize) {
                 if ((int)fwrite(data, 1, dataSize, fpOut) == dataSize) {
                   offset += dataSize;
@@ -246,7 +246,7 @@ uLong* bytesRecovered;
     fclose(fpOutCD);
     if (err == Z_OK) {
       fpOutCD = fopen(fileOutTmp, "rb");
-      if (fpOutCD != NULL) {
+      if (fpOutCD != 0) {
         int nRead;
         char buffer[8192];
         while ( (nRead = (int)fread(buffer, 1, sizeof(buffer), fpOutCD)) > 0) {
@@ -268,10 +268,10 @@ uLong* bytesRecovered;
     
     /* Number of recovered entries */
     if (err == Z_OK) {
-      if (nRecovered != NULL) {
+      if (nRecovered != 0) {
         *nRecovered = entries;
       }
-      if (bytesRecovered != NULL) {
+      if (bytesRecovered != 0) {
         *bytesRecovered = totalBytes;
       }
     }

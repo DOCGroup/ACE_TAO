@@ -54,7 +54,7 @@ ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
     }
 
   // We got the token and so let us mark ourselves as owner
-  this->owner_ = 1;
+  this->owner_ = true;
 
   return result;
 }
@@ -92,7 +92,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
     }
 
   // We got the token and so let us mark ourselves as owner
-  this->owner_ = 1;
+  this->owner_ = true;
 
   return result;
 }
@@ -100,7 +100,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
 
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
-                                int mask_signals,
+                                bool mask_signals,
                                 int s_queue)
   : ACE_Select_Reactor (sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, 0, mask_signals, s_queue)
 {
@@ -109,10 +109,10 @@ ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
 }
 
 ACE_TP_Reactor::ACE_TP_Reactor (size_t max_number_of_handles,
-                                int restart,
+                                bool restart,
                                 ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
-                                int mask_signals,
+                                bool mask_signals,
                                 int s_queue)
   : ACE_Select_Reactor (max_number_of_handles, restart, sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, 0, mask_signals, s_queue)
 {
@@ -170,20 +170,18 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // Update the countdown to reflect time waiting for the token.
   countdown.update ();
 
-  return this->dispatch_i (max_wait_time,
-                           guard);
+  return this->dispatch_i (max_wait_time, guard);
 }
 
 int
 ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
                             ACE_TP_Token_Guard &guard)
 {
-  int event_count =
-    this->get_event_for_dispatching (max_wait_time);
+  int event_count = this->get_event_for_dispatching (max_wait_time);
 
   // We use this count to detect potential infinite loops as described
   // in bug 2540.
-  int initial_event_count = event_count;
+  int const initial_event_count = event_count;
 
   int result = 0;
 
@@ -205,8 +203,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       // now is not the right thing...
       //
       // @@ We need to do better..
-      return this->handle_signals (event_count,
-                                   guard);
+      return this->handle_signals (event_count, guard);
     }
 #endif // #if 0
 
@@ -221,8 +218,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   // need to do that. In the future we *may* have the timers also
   // returned through the <event_count>. Just passing that along for
   // that day.
-  result = this->handle_timer_events (event_count,
-                                      guard);
+  result = this->handle_timer_events (event_count, guard);
 
   if (result > 0)
     return result;
@@ -234,8 +230,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       // Next dispatch the notification handlers (if there are any to
       // dispatch).  These are required to handle multiple-threads
       // that are trying to update the <Reactor>.
-      result = this->handle_notify_events (event_count,
-                                           guard);
+      result = this->handle_notify_events (event_count, guard);
 
       if (result > 0)
         return result;
@@ -246,17 +241,15 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   if (event_count > 0)
     {
       // Handle socket events
-      result = this->handle_socket_events (event_count,
-                                           guard);
+      result = this->handle_socket_events (event_count, guard);
     }
 
-  if (event_count != 0
-      && event_count == initial_event_count)
+  if (event_count != 0 && event_count == initial_event_count)
     {
       this->state_changed_ = true;
     }
 
-  return 0;
+  return result;
 }
 
 
@@ -314,7 +307,7 @@ int
 ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
                                      ACE_TP_Token_Guard &guard)
 {
-  if (this->timer_queue_->is_empty())
+  if (this->timer_queue_ == 0 || this->timer_queue_->is_empty())
     { // Empty timer queue so cannot have any expired timers.
       return 0;
     }
@@ -327,27 +320,21 @@ ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
   // time.
   ACE_Timer_Node_Dispatch_Info info;
 
-  if (this->timer_queue_->dispatch_info (cur_time,
-                                         info))
+  if (this->timer_queue_->dispatch_info (cur_time, info))
     {
       const void *upcall_act = 0;
 
       // Preinvoke.
-      this->timer_queue_->preinvoke (info,
-                                     cur_time,
-                                     upcall_act);
+      this->timer_queue_->preinvoke (info, cur_time, upcall_act);
 
       // Release the token before dispatching notifies...
       guard.release_token ();
 
       // call the functor
-      this->timer_queue_->upcall (info,
-                                  cur_time);
+      this->timer_queue_->upcall (info, cur_time);
 
       // Postinvoke
-      this->timer_queue_->postinvoke (info,
-                                      cur_time,
-                                      upcall_act);
+      this->timer_queue_->postinvoke (info, cur_time, upcall_act);
 
       // We have dispatched a timer
       return 1;
@@ -361,8 +348,7 @@ ACE_TP_Reactor::handle_notify_events (int & /*event_count*/,
                                       ACE_TP_Token_Guard &guard)
 {
   // Get the handle on which notify calls could have occured
-  ACE_HANDLE notify_handle =
-    this->get_notify_handle ();
+  ACE_HANDLE notify_handle = this->get_notify_handle ();
 
   int result = 0;
 
@@ -379,8 +365,7 @@ ACE_TP_Reactor::handle_notify_events (int & /*event_count*/,
 
   // Keep reading notifies till we empty it or till we have a
   // dispatchable buffer
-  while (this->notify_handler_->read_notify_pipe (notify_handle,
-                                                  buffer) > 0)
+  while (this->notify_handler_->read_notify_pipe (notify_handle, buffer) > 0)
     {
       // Just figure out whether we can read any buffer that has
       // dispatchable info. If not we have just been unblocked by
@@ -488,8 +473,7 @@ ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
       this->ready_set_.ex_mask_.sync (this->ready_set_.ex_mask_.max_set ());
     }
 
-  return this->wait_for_multiple_events (this->ready_set_,
-                                         max_wait_time);
+  return this->wait_for_multiple_events (this->ready_set_, max_wait_time);
 }
 
 int
@@ -619,17 +603,30 @@ ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
       if (!guard.is_owner ())
         return result;
 
-      if (status < 0)
-        {
-          result =
-            this->remove_handler_i (dispatch_info.handle_, dispatch_info.mask_);
-        }
+      // A different event handler may have been registered during the
+      // upcall if the handle was closed and then reopened, for
+      // example.  Make sure we're removing and/or resuming the event
+      // handler used during the upcall.
+      ACE_Event_Handler const * const eh =
+        this->handler_rep_.find (dispatch_info.handle_);
 
-      // Resume handler if required.
-      if (dispatch_info.event_handler_ != this->notify_handler_ &&
-          dispatch_info.resume_flag_ ==
-            ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
-        this->resume_i (dispatch_info.handle_);
+      // Only remove or resume the event handler used during the
+      // upcall.
+      if (eh == dispatch_info.event_handler_)
+        {
+          if (status < 0)
+            {
+              result =
+                this->remove_handler_i (dispatch_info.handle_,
+                                        dispatch_info.mask_);
+            }
+
+          // Resume handler if required.
+          if (dispatch_info.event_handler_ != this->notify_handler_ &&
+              dispatch_info.resume_flag_ ==
+              ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
+            this->resume_i (dispatch_info.handle_);
+        }
     }
 
   // Call remove_reference() if needed.
@@ -659,8 +656,8 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
                                ACE_EH_PTMF)
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("ACE_TP_Reactor::notify_handle: ")
-              ACE_LIB_TEXT ("Wrong version of notify_handle() got called \n")));
+              ACE_TEXT ("ACE_TP_Reactor::notify_handle: ")
+              ACE_TEXT ("Wrong version of notify_handle() got called\n")));
 
   ACE_ASSERT (eh == 0);
   ACE_UNUSED_ARG (eh);

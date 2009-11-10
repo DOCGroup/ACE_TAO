@@ -32,7 +32,7 @@ ACE_RCSID(tests, Get_Opt_Test, "$Id$")
  * total error count.
  */
 
-static const ACE_TString empty (ACE_TEXT (""));
+static const ACE_TString empty_string (ACE_TEXT (""));
 
 static int
 parse_args (int test_number,
@@ -40,7 +40,7 @@ parse_args (int test_number,
             const ACE_TCHAR *test_args,
             int skip_argv = 1,
             int report_errors = 1,
-            const ACE_TString &opt_prefix = empty)
+            const ACE_TString &opt_prefix = empty_string)
 {
   ACE_TString test;
   ACE_TString optstring (opt_prefix);
@@ -77,37 +77,37 @@ parse_args (int test_number,
                            'f',
                            ACE_Get_Opt::NO_ARG) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'f' \n")), 1);
+                       ACE_TEXT ("  Unable to add long option 'f'\n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("requires_arg"),
                            'r',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'r' \n")), 1);
+                       ACE_TEXT ("  Unable to add long option 'r'\n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("optional_arg"),
                            'o',
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'o' \n")), 1);
+                       ACE_TEXT ("  Unable to add long option 'o'\n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("long_option"),
                            'l',
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'l' \n")), 1);
+                       ACE_TEXT ("  Unable to add long option 'l'\n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("long_only"),
                            -11,
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option ")
-                       ACE_TEXT ("\"long_only\" \n")), 1);
+                       ACE_TEXT ("\"long_only\"\n")), 1);
 
   if (get_opt.long_option (ACE_TEXT ("long_no_arg")) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option ")
-                       ACE_TEXT ("\"long_no_arg\" \n")), 1);
+                       ACE_TEXT ("\"long_no_arg\"\n")), 1);
 
   // This is the special case of providing a non-alpha numeric corresponding
   // short option.  This lets you use the corresponding short option in a
@@ -118,7 +118,7 @@ parse_args (int test_number,
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option ")
-                       ACE_TEXT ("\"non_alpha_short\" \n")), 1);
+                       ACE_TEXT ("\"non_alpha_short\"\n")), 1);
 
   // We print out the optstring here because adding long_options that
   // have corresponding short options that aren't yet present, are added.

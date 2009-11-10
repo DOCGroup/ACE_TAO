@@ -9,6 +9,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+#if defined (ACE_HAS_PRUSAGE_T)
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
+#endif
+
 ACE_RCSID(ace, Profile_Timer, "$Id$")
 
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
@@ -45,7 +50,7 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
   this->proc_handle_ = ACE_OS::open (buf, O_RDONLY, 0);
   if (this->proc_handle_ == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
+                ACE_TEXT ("%p\n"),
                 buf));
 #  elif defined (ACE_HAS_GETRUSAGE)
   ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
@@ -61,7 +66,7 @@ ACE_Profile_Timer::~ACE_Profile_Timer (void)
 #  if defined (ACE_HAS_PRUSAGE_T)
   if (ACE_OS::close (this->proc_handle_) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Profile_Timer::~ACE_Profile_Timer")));
+                ACE_TEXT ("ACE_Profile_Timer::~ACE_Profile_Timer")));
 #  endif /* ACE_HAS_PRUSAGE_T */
 }
 

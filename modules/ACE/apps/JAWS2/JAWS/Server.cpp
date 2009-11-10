@@ -11,7 +11,7 @@
 #include "JAWS/Server.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Concurrency.h"
-#include "JAWS/IO.h"
+#include "JAWS/Jaws_IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
 #include "JAWS/Pipeline_Tasks.h"
@@ -61,18 +61,18 @@ JAWS_Server::init (int argc, char *argv[])
       this->policy_.concurrency (JAWS_Thread_Pool_Singleton::instance ());
     }
 
-#if !(defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS))
+#if !(defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   this->dispatch_ = 0;
-#endif /* !defined (ACE_WIN32) */
+#endif /* !(ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS) */
 
   if (this->dispatch_ == 1)
     {
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
       this->policy_.io (JAWS_Asynch_IO_Singleton::instance ());
       this->policy_.ioh_factory
         (JAWS_Asynch_IO_Handler_Factory_Singleton::instance ());
       this->policy_.acceptor (JAWS_IO_Asynch_Acceptor_Singleton::instance ());
-#endif /* defined (ACE_WIN32) */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
     }
   else
     {
@@ -82,7 +82,10 @@ JAWS_Server::init (int argc, char *argv[])
       this->policy_.acceptor (JAWS_IO_Synch_Acceptor_Singleton::instance ());
     }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_INET_Addr inet_addr (this->port_);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   this->policy_.acceptor ()->open (inet_addr);
 }
 
@@ -112,7 +115,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
   // prime the acceptor if appropriate
   if (this->dispatch_ == 1)
     {
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
       int n = this->nthreads_;
       if (this->concurrency_ == 1)
@@ -121,7 +124,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
       for (int i = 0; i < n * this->ratio_ - n; i++)
         db->task ()->put (db);
 
-#endif /* defined (ACE_WIN32) */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
     }
 
   // The message block should contain an INET_Addr, and call the
@@ -137,13 +140,15 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 }
 
 void
-JAWS_Server::parse_args (int argc, char *argv[])
+JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
   int c;
   int t = 0;
 
-  ACE_Get_Opt getopt (argc, argv, "t" "p:c:d:n:m:f:r:");
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("t" "p:c:d:n:m:f:r:"));
   while ((c = getopt ()) != -1)
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 't':

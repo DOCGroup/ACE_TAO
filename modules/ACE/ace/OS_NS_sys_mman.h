@@ -75,7 +75,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE shm_open (const ACE_TCHAR *filename,
                        int mode,
-                       int perms = 0,
+                       mode_t perms = 0,
                        LPSECURITY_ATTRIBUTES sa = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION

@@ -260,9 +260,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Parse args
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("swmc"), 1);
+
   for (int c; (c = getopt ()) != -1; )
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 's':
@@ -323,8 +326,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Note that handle_output will get called automatically since the
   // pipe is writable!
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Run for three seconds
   ACE_Time_Value time (3);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   reactor->run_reactor_event_loop (time);
 
   ACE_DEBUG ((LM_DEBUG, "\nClosing down the application\n\n"));

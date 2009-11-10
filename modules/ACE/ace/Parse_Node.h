@@ -25,6 +25,7 @@
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
 #include "ace/DLL.h"
+#include "ace/SString.h"
 #include "ace/Svc_Conf.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -210,7 +211,6 @@ class ACE_Dynamic_Node : public ACE_Static_Node
 public:
   ACE_Dynamic_Node (ACE_Service_Type_Factory const *, ACE_TCHAR *params);
 
-  //  ACE_Dynamic_Node (const ACE_Service_Type *, ACE_TCHAR *params);
   virtual ~ACE_Dynamic_Node (void);
 
   //  virtual const ACE_Service_Type *record (void) const;
@@ -476,9 +476,9 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&))
 };
 
-// A helper class used to safely register dynamic services, which may contains
-// subordinate static services. It is used to capture the necessary data during
-// the parsing, but perform the actuall instantiation later.
+/// A helper class used to safely register dynamic services, which may contains
+/// subordinate static services. It is used to capture the necessary data during
+/// the parsing, but perform the actuall instantiation later.
 class ACE_Service_Type_Factory
 {
 public:

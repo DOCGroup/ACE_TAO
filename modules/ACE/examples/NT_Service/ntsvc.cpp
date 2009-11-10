@@ -21,6 +21,8 @@
 #include "ace/Reactor.h"
 #include "ntsvc.h"
 
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
+
 Service::Service (void)
 {
   // Remember the Reactor instance.
@@ -111,3 +113,4 @@ Service::svc (void)
   return 0;
 }
 
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */

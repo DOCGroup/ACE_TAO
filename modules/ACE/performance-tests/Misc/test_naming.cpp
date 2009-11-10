@@ -34,9 +34,12 @@ static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
 
+//FUZZ: disable check_for_lack_ACE_OS
 void
 bind (ACE_Naming_Context *ns_context, int result)
 {
+//FUZZ: enable check_for_lack_ACE_OS
+
   // do the binds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
     {
@@ -130,7 +133,7 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
           ACE_ASSERT (w_value == val);
           if (type_out)
             {
-              ACE_ASSERT (::strcmp (type_out, temp_type) == 0);
+              ACE_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
               delete[] type_out;
             }
         }
@@ -165,7 +168,10 @@ void do_testing (int argc, ACE_TCHAR *argv[], int light)
   ACE_DEBUG ((LM_DEBUG, "Binding\n"));
 
   timer.start ();
+
+  //FUZZ: disable check_for_lack_ACE_OS
   bind (&ns_context, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_DEBUG ((LM_DEBUG, "Unbinding\n"));
   unbind (&ns_context, 0);

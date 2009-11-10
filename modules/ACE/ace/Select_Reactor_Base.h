@@ -27,7 +27,7 @@
 #include "ace/Reactor_Impl.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-# include "ace/Unbounded_Queue.h"
+# include "ace/Notification_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 #ifdef ACE_WIN32
@@ -97,8 +97,7 @@ public:
   ACE_Event_Tuple (void);
 
   /// Constructor.
-  ACE_Event_Tuple (ACE_Event_Handler *eh,
-                   ACE_HANDLE h);
+  ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
 
   /// Equality operator.
   bool operator== (const ACE_Event_Tuple &rhs) const;
@@ -175,16 +174,21 @@ public:
   virtual ACE_HANDLE notify_handle (void);
 
   /// Handle one of the notify call on the @c handle. This could be
-  /// because of a thread trying to unblock the <Reactor_Impl>
+  /// because of a thread trying to unblock the Reactor_Impl
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 
   /// Read one of the notify call on the @a handle into the
   /// @a buffer. This could be because of a thread trying to unblock
-  /// the <Reactor_Impl>
+  /// the Reactor_Impl
+  ///
+  /// Return value semantics for this are:
+  /// -1: nothing read, fatal, unrecoverable error
+  ///  0: nothing read at all
+  ///  1: complete buffer read
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
 
-  /// Verify whether the buffer has dispatchable info  or not.
+  /// Verify whether the buffer has dispatchable info or not.
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
 
   /// Called back by the ACE_Select_Reactor when a thread wants to
@@ -193,9 +197,9 @@ public:
 
   /**
    * Set the maximum number of times that the
-   * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
-   * notify pipe before breaking out of its <recv> loop.  By default,
+   * ACE_Select_Reactor_Notify::handle_input() method will iterate and
+   * dispatch the ACE_Event_Handlers that are passed in via the
+   * notify pipe before breaking out of its @c recv loop.  By default,
    * this is set to -1, which means "iterate until the pipe is empty."
    * Setting this to a value like "1 or 2" will increase "fairness"
    * (and thus prevent starvation) at the expense of slightly higher
@@ -205,9 +209,9 @@ public:
 
   /**
    * Get the maximum number of times that the
-   * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
-   * notify pipe before breaking out of its <recv> loop.
+   * ACE_Select_Reactor_Notify::handle_input() method will iterate and
+   * dispatch the ACE_Event_Handlers that are passed in via the
+   * notify pipe before breaking out of its recv loop.
    */
   virtual int max_notify_iterations (void);
 
@@ -232,7 +236,7 @@ protected:
   /**
    * Keep a back pointer to the ACE_Select_Reactor.  If this value
    * if NULL then the ACE_Select_Reactor has been initialized with
-   * <disable_notify_pipe>.
+   * disable_notify_pipe.
    */
   ACE_Select_Reactor_Impl *select_reactor_;
 
@@ -245,32 +249,26 @@ protected:
 
   /**
    * Keeps track of the maximum number of times that the
-   * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
-   * notify pipe before breaking out of its <recv> loop.  By default,
+   * ACE_Select_Reactor_Notify::handle_input() method will iterate and
+   * dispatch the ACE_Event_Handlers that are passed in via the
+   * notify pipe before breaking out of its recv loop.  By default,
    * this is set to -1, which means "iterate until the pipe is empty."
    */
   int max_notify_iterations_;
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  // = This configuration queues up notifications in separate buffers that
-  //   are in user-space, rather than stored in a pipe in the OS
-  //   kernel.  The kernel-level notifications are used only to trigger
-  //   the Reactor to check its notification queue.  This enables many
-  //   more notifications to be stored than would otherwise be the case.
-
-  /// Keeps track of allocated arrays of type
-  /// ACE_Notification_Buffer.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
-
-  /// Keeps track of all pending notifications.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_queue_;
-
-  /// Keeps track of all free buffers.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_queue_;
-
-  /// Synchronization for handling of queues.
-  ACE_SYNCH_MUTEX notify_queue_lock_;
+  /**
+   * @brief A user-space queue to store the notifications.
+   *
+   * The notification pipe has OS-specific size restrictions.  That
+   * is, no more than a certain number of bytes may be stored in the
+   * pipe without blocking.  This limit may be too small for certain
+   * applications.  In this case, ACE can be configured to store all
+   * the events in user-space.  The pipe is still needed to wake up
+   * the reactor thread, but only one event is sent through the pipe
+   * at a time.
+   */
+  ACE_Notification_Queue notification_queue_;
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 };
 
@@ -365,7 +363,7 @@ public:
   // is within the range of legal handles (i.e., >= 0 && < max_size_).
   bool invalid_handle (ACE_HANDLE handle);
 
-  // Check the @c handle to make sure it's a valid @c ACE_HANDLE that
+  // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
   // within the range of currently registered handles (i.e., >= 0 && <
   // @c max_handlep1_).
   bool handle_in_range (ACE_HANDLE handle);
@@ -424,7 +422,7 @@ public:
     ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
 
   // = Initialization method.
-  ACE_Select_Reactor_Handler_Repository_Iterator (
+  explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
 
   // = Iteration methods.
@@ -509,7 +507,7 @@ protected:
   /// appropriate point specified by <requeue_position_>.
   virtual void renew (void) = 0;
 
-  /// Check to see if the <Event_Handler> associated with @a handle is
+  /// Check to see if the Event_Handler associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
   virtual int is_suspended_i (ACE_HANDLE handle) = 0;
 
@@ -561,7 +559,7 @@ protected:
 
   /// Restart the <handle_events> event-loop method automatically when
   /// <select> is interrupted via <EINTR>.
-  int restart_;
+  bool restart_;
 
   /**
    * Position that the main ACE_Select_Reactor thread is requeued in
@@ -577,14 +575,14 @@ protected:
 
   /**
    * True if state has changed during dispatching of
-   * <ACE_Event_Handlers>, else false.  This is used to determine
+   * ACE_Event_Handlers, else false.  This is used to determine
    * whether we need to make another trip through the
    * <Select_Reactor>'s <wait_for_multiple_events> loop.
    */
   bool state_changed_;
 
   /**
-   * If 0 then the Reactor will not mask the signals during the event
+   * If false then the Reactor will not mask the signals during the event
    * dispatching.  This is useful for applications that do not
    * register any signal handlers and want to reduce the overhead
    * introduce by the kernel level locks required to change the mask.
@@ -595,7 +593,6 @@ protected:
   /// Select_Reactor's token or not.
   int supress_notify_renew (void);
   void supress_notify_renew (int sr);
-
 
 private:
 

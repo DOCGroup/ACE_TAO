@@ -60,10 +60,10 @@ static const ACE_TCHAR *rendezvous = ACE_TEXT ("127.0.0.1:10010");
 static size_t svr_thrno = ACE_MAX_THREADS;
 
 
-#if defined (CHORUS) \
-	|| defined (ACE_VXWORKS) 	// default network parameters (MAX_BINDS and system buffers) are too small for full test
-		 // Add platforms that can't handle too many
-         // connection simultaneously here.
+// Default network parameters (MAX_BINDS and system buffers) are too small
+// for full test on some platforms; add platforms that can't handle too many
+// connection simultaneously here.
+#if defined (CHORUS) || defined (ACE_VXWORKS) || defined (ACE_HAS_PHARLAP)
 #define ACE_LOAD_FACTOR /2
 #else
 #define ACE_LOAD_FACTOR
@@ -84,12 +84,14 @@ static int req_delay = 50;
 static void
 parse_arg (int argc, ACE_TCHAR *argv[])
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("r:s:c:d:i:n:"));
 
   int c;
 
   while ((c = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch (c)
         {
         case 'r':                   // hostname:port
@@ -161,7 +163,7 @@ int
 Request_Handler::resume_handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) resume_handler () called \n")));
+              ACE_TEXT ("(%t) resume_handler () called\n")));
   return 1;
 }
 
@@ -194,8 +196,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Errno is %d  and result is %d\n",
-                  errno, result));
+                  "(%t) Errno is %d and result is %d\n",
+                  ACE_ERRNO_GET, result));
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Request_Handler: 0x%x peer closed (0x%x)\n",
                   this, fd));
@@ -212,7 +214,7 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
-               "(%t) Handler 0x%x: Expected %d messages; got %d\n",
+               ACE_TEXT ("(%t) Handler 0x%x: Expected %d messages; got %d\n"),
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));
@@ -238,8 +240,8 @@ svr_worker (void *)
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "Error handling events"),
+                       ACE_TEXT ("(%t) %p\n"),
+                       ACE_TEXT ("Error handling events")),
                       0);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -263,8 +265,8 @@ cli_worker (void *arg)
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%t) %p\n",
-                      "connect"));
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("connect")));
           continue;
         }
 
@@ -278,8 +280,8 @@ cli_worker (void *arg)
                              (len + 1) * sizeof (ACE_TCHAR)) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          "(%t) %p\n",
-                          "send_n"));
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("send_n")));
               continue;
             }
           ACE_OS::sleep (delay);
@@ -319,8 +321,8 @@ worker (void *)
 
   if (connect.connect (stream, addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p Error while connecting\n",
-                "connect"));
+                ACE_TEXT ("(%t) %p Error while connecting\n"),
+                ACE_TEXT ("connect")));
 
   const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
 
@@ -330,8 +332,8 @@ worker (void *)
 
   if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "send_n"));
+                ACE_TEXT ("(%t) %p\n"),
+                ACE_TEXT ("send_n")));
 
   ACE_DEBUG ((LM_DEBUG,
               "Sent message of length  = %d\n",

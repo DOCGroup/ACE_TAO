@@ -35,6 +35,19 @@ static int debug = 0;
 static const char *one_second_timeout = "one second timeout";
 static const char *two_second_timeout = "two second timeout";
 
+namespace
+{
+  inline void WAIT_FOR_NEXT_EVENT (ACE_Timer_Queue &timer_queue)
+  {
+    ACE_Time_Value const earliest_time = timer_queue.earliest_time ();
+    ACE_Time_Value const time_of_day =   timer_queue.gettimeofday ();
+    if (earliest_time > time_of_day)
+      {
+        ACE_OS::sleep (earliest_time - time_of_day);
+      }
+  }
+}
+
 class Reference_Counted_Event_Handler : public ACE_Event_Handler
 {
 public:
@@ -111,7 +124,6 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
 void
 cancellation (ACE_Timer_Queue &timer_queue,
               int repeat_timer,
-              int cancel_timers,
               int cancel_handler,
               int second_timer,
               int dont_call_handle_close)
@@ -120,21 +132,11 @@ cancellation (ACE_Timer_Queue &timer_queue,
 
   int expected_number_of_handle_close_calls = -1;
 
-  if (cancel_timers)
+  if (!dont_call_handle_close)
     {
-      if (!dont_call_handle_close)
-        {
-          if (cancel_handler)
-            expected_number_of_handle_close_calls = 1;
-          else if (second_timer)
-            expected_number_of_handle_close_calls = 2;
-          else
-            expected_number_of_handle_close_calls = 1;
-        }
-    }
-  else
-    {
-      if (second_timer)
+      if (cancel_handler)
+        expected_number_of_handle_close_calls = 1;
+      else if (second_timer)
         expected_number_of_handle_close_calls = 2;
       else
         expected_number_of_handle_close_calls = 1;
@@ -175,9 +177,6 @@ cancellation (ACE_Timer_Queue &timer_queue,
                               ACE_Time_Value (2));
       ACE_ASSERT (second_timer_id != -1);
     }
-
-  if (!cancel_timers)
-    return;
 
   if (cancel_handler)
     {
@@ -223,39 +222,23 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
               "\nCancellation test for %C\n\n",
               timer_queue_type));
 
-  int configs[][5] = {
-    { 0, 0, 0, 0, 0, },
-    { 0, 0, 0, 0, 1, },
-    { 0, 0, 0, 1, 0, },
-    { 0, 0, 0, 1, 1, },
-    { 0, 0, 1, 0, 0, },
-    { 0, 0, 1, 0, 1, },
-    { 0, 0, 1, 1, 0, },
-    { 0, 0, 1, 1, 1, },
-    { 0, 1, 0, 0, 0, },
-    { 0, 1, 0, 0, 1, },
-    { 0, 1, 0, 1, 0, },
-    { 0, 1, 0, 1, 1, },
-    { 0, 1, 1, 0, 0, },
-    { 0, 1, 1, 0, 1, },
-    { 0, 1, 1, 1, 0, },
-    { 0, 1, 1, 1, 1, },
-    { 1, 0, 0, 0, 0, },
-    { 1, 0, 0, 0, 1, },
-    { 1, 0, 0, 1, 0, },
-    { 1, 0, 0, 1, 1, },
-    { 1, 0, 1, 0, 0, },
-    { 1, 0, 1, 0, 1, },
-    { 1, 0, 1, 1, 0, },
-    { 1, 0, 1, 1, 1, },
-    { 1, 1, 0, 0, 0, },
-    { 1, 1, 0, 0, 1, },
-    { 1, 1, 0, 1, 0, },
-    { 1, 1, 0, 1, 1, },
-    { 1, 1, 1, 0, 0, },
-    { 1, 1, 1, 0, 1, },
-    { 1, 1, 1, 1, 0, },
-    { 1, 1, 1, 1, 1, },
+  int configs[][4] = {
+    { 0, 0, 0, 0, },
+    { 0, 0, 0, 1, },
+    { 0, 0, 1, 0, },
+    { 0, 0, 1, 1, },
+    { 0, 1, 0, 0, },
+    { 0, 1, 0, 1, },
+    { 0, 1, 1, 0, },
+    { 0, 1, 1, 1, },
+    { 1, 0, 0, 0, },
+    { 1, 0, 0, 1, },
+    { 1, 0, 1, 0, },
+    { 1, 0, 1, 1, },
+    { 1, 1, 0, 0, },
+    { 1, 1, 0, 1, },
+    { 1, 1, 1, 0, },
+    { 1, 1, 1, 1, },
   };
 
   for (int i = 0;
@@ -268,8 +251,7 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
                     configs[i][0],
                     configs[i][1],
                     configs[i][2],
-                    configs[i][3],
-                    configs[i][4]);
+                    configs[i][3]);
     }
 }
 
@@ -337,7 +319,7 @@ expire (ACE_Timer_Queue &timer_queue,
                           ACE_Time_Value (1));
   ACE_ASSERT (timer_id != -1);
 
-  timer_id =
+  result =
     timer_queue.schedule (handler,
                           two_second_timeout,
                           ACE_Time_Value (2) + timer_queue.gettimeofday ());
@@ -347,21 +329,7 @@ expire (ACE_Timer_Queue &timer_queue,
 
   for (int i = 0; i < events;)
     {
-      ACE_Time_Value sleep_time;
-
-      ACE_Time_Value earliest_time =
-        timer_queue.earliest_time ();
-
-      ACE_Time_Value time_of_day =
-        timer_queue.gettimeofday ();
-
-      if (earliest_time > time_of_day)
-        sleep_time =
-          earliest_time - time_of_day;
-      else
-        sleep_time = ACE_Time_Value::zero;
-
-      ACE_OS::sleep (sleep_time);
+      WAIT_FOR_NEXT_EVENT (timer_queue);
 
       result =
         expire_function (timer_queue);
@@ -370,6 +338,8 @@ expire (ACE_Timer_Queue &timer_queue,
 
       i += result;
     }
+
+  timer_queue.cancel (timer_id, 0, 0);
 }
 
 template<class TIMER_QUEUE>
@@ -472,12 +442,13 @@ simple (ACE_Timer_Queue &timer_queue)
 {
   int events = 0;
   int result = 0;
+  long timer_id = -1;
 
   {
     Simple_Event_Handler *handler =
       new Simple_Event_Handler;
 
-    long timer_id =
+    timer_id =
       timer_queue.schedule (handler,
                             one_second_timeout,
                             ACE_Time_Value (1) + timer_queue.gettimeofday (),
@@ -485,9 +456,9 @@ simple (ACE_Timer_Queue &timer_queue)
     ACE_ASSERT (timer_id != -1);
 
     result =
-    timer_queue.cancel (timer_id,
-                        0,
-                        0);
+      timer_queue.cancel (timer_id,
+                          0,
+                          0);
     ACE_ASSERT (result == 1);
   }
 
@@ -495,7 +466,7 @@ simple (ACE_Timer_Queue &timer_queue)
     Simple_Event_Handler *handler =
       new Simple_Event_Handler;
 
-    long timer_id =
+    timer_id =
       timer_queue.schedule (handler,
                             one_second_timeout,
                             ACE_Time_Value (1) + timer_queue.gettimeofday (),
@@ -507,8 +478,7 @@ simple (ACE_Timer_Queue &timer_queue)
 
   for (int i = 0; i < events;)
     {
-      ACE_OS::sleep (timer_queue.earliest_time () -
-                     timer_queue.gettimeofday ());
+      WAIT_FOR_NEXT_EVENT (timer_queue);
 
       result =
         timer_queue.expire ();
@@ -517,6 +487,8 @@ simple (ACE_Timer_Queue &timer_queue)
 
       i += result;
     }
+
+  timer_queue.cancel (timer_id, 0, 0);
 }
 
 template <class TIMER_QUEUE>
@@ -542,6 +514,7 @@ static int heap = 1;
 static int list = 1;
 static int hash = 1;
 static int wheel = 1;
+static int hashheap = 1;
 static int test_cancellation = 1;
 static int test_expire = 1;
 static int test_one_upcall = 1;
@@ -550,7 +523,7 @@ static int test_simple = 1;
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:d:l:m:n:o:z:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:d:e:l:m:n:o:z:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -568,6 +541,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'd':
           wheel = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'e':
+          hashheap = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'l':
           test_cancellation = ACE_OS::atoi (get_opt.opt_arg ());
@@ -591,6 +567,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("\t[-b list]  (defaults to %d)\n")
                       ACE_TEXT ("\t[-c hash]  (defaults to %d)\n")
                       ACE_TEXT ("\t[-d wheel] (defaults to %d)\n")
+                      ACE_TEXT ("\t[-e hashheap] (defaults to %d)\n")
                       ACE_TEXT ("\t[-l test_cancellation] (defaults to %d)\n")
                       ACE_TEXT ("\t[-m test_expire] (defaults to %d)\n")
                       ACE_TEXT ("\t[-n test_one_upcall] (defaults to %d)\n")
@@ -602,6 +579,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       list,
                       hash,
                       wheel,
+                      hashheap,
                       test_cancellation,
                       test_expire,
                       test_one_upcall,
@@ -634,6 +612,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (list)  { cancellation_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
       if (hash)  { cancellation_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
       if (wheel) { cancellation_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
+      if (hashheap) { cancellation_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_expire)
@@ -645,6 +624,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (list)  { expire_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
       if (hash)  { expire_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
       if (wheel) { expire_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
+      if (hashheap) { expire_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_one_upcall)
@@ -656,6 +636,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (list)  { upcall_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
       if (hash)  { upcall_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
       if (wheel) { upcall_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
+      if (hashheap) { upcall_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_simple)
@@ -667,6 +648,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (list)  { simple_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
       if (hash)  { simple_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
       if (wheel) { simple_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
+      if (hashheap) { simple_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
     }
 
   ACE_END_TEST;

@@ -57,7 +57,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   ACE_ERROR_RETURN((LM_ERROR,
                     ACE_TEXT ("SCTP was NOT installed/accessible when this binary was compiled.\n")),
                    1);
-#endif
+#else
 
   // check that valid options were specified
   if (optsMgr._error) {
@@ -107,6 +107,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     ACE_SCTP::report();
 
   return 0;
+#endif /* ACE_HAS_SCTP */
 }
 
 // create a histogram to store test results
@@ -118,8 +119,8 @@ ACE_SCTP::HIST createHistogram(ACE_CDR::ULong messageSize){
   // memory leak.
   char * histName = (char *) malloc(200);
 
-  sprintf(histName, "%s Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size %u, Message Type octet)",
-          "ACE", messageSize);
+  ACE_OS::sprintf(histName, "%s Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size %u, Message Type octet)",
+                  "ACE", messageSize);
 
   // actually create the histogram
   ACE_SCTP::HIST createdHist = ACE_SCTP::histogram(histName,

@@ -53,13 +53,13 @@ static const  int RECEIVERS = 2;
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
-static ACE_TCHAR *host = ACE_LOCALHOST;
+static const ACE_TCHAR *host = ACE_LOCALHOST;
 
 // File that we're sending.
-static ACE_TCHAR *input_file = ACE_TEXT("Proactor_Scatter_Gather_Test.cpp");
+static const ACE_TCHAR *input_file = ACE_TEXT("Proactor_Scatter_Gather_Test.cpp");
 
 // Name of the output file.
-static ACE_TCHAR *output_file = ACE_TEXT("output");
+static const ACE_TCHAR *output_file = ACE_TEXT("output");
 
 static int client_only = 0;
 static int server_only = 0;
@@ -279,9 +279,12 @@ public:
   Receiver  (Acceptor *acceptor = 0, int index = -1);
   virtual ~Receiver (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
+  //FUZZ: enable check_for_lack_ACE_OS
+
 protected:
   /// This is called by the framework when asynchronous <read> operation from the
   /// socket completes.
@@ -319,7 +322,9 @@ public:
   Writer (void);
   virtual ~Writer (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void open (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // this is *not* a callback from the framework
   int handle_read_chunks_chain (ACE_Message_Block *mb,
@@ -918,9 +923,11 @@ public:
 
   virtual ~Sender (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been established.
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // This is called by the framework when asynchronous reads from the
   // file complete.

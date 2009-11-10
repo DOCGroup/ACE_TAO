@@ -37,7 +37,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
       // Accept a client connection.
       if (acceptor.accept (new_stream, 0) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("accept")),
                           1);
@@ -46,21 +46,21 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
                   ACE_TEXT ("Accepted connection\n")));
 
       while ((n = new_stream.recv (buf, sizeof buf)) > 0)
-	{
+        {
           ACE_OS::fprintf (stderr,
                            "%s\n",
                            buf);
-	  ACE_OS::write (ACE_STDOUT,
+          ACE_OS::write (ACE_STDOUT,
                          buf,
                          n);
-	}
+        }
 
       if (n == -1)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("End of connection. Closing handle\n")));
-	  new_stream.close ();
-	}
+          new_stream.close ();
+        }
     }
 
   ACE_NOTREACHED(return 0);

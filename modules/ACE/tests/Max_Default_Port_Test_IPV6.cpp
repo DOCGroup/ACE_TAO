@@ -75,7 +75,7 @@ My_Accept_Handler::handle_input (ACE_HANDLE)
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("My_Accept_Handler::handle_input \n")));
+              ACE_TEXT ("My_Accept_Handler::handle_input\n")));
 
   // Close the opened stream, else it'll leak a handle. Don't close
   // the acceptor here, though, because get_handle() needs it to

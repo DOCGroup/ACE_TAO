@@ -40,19 +40,12 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_utsname uname;
   ACE_OS::uname (&uname);
-#if defined (ACE_LACKS_UTSNAME_T)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Machine: %s running on %s\n"),
-              uname.nodename, uname.machine ));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Platform: %s, %s, %s\n"),
-              uname.sysname, uname.release, uname.version ));
-#else
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Machine: %C running on %C\n"),
               uname.nodename, uname.machine ));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Platform: %C, %C, %C\n"),
               uname.sysname, uname.release, uname.version ));
-#endif /* ACE_LACKS_UTSNAME_T */
 
-  ACE_INET_Addr *the_addr_array;
+  ACE_INET_Addr *the_addr_array = 0;
   size_t how_many = 0;
 
   int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
@@ -77,8 +70,8 @@ run_main (int, ACE_TCHAR *[])
           else if (the_addr_array[i].get_type() == AF_INET6)
             ++num_ipv6;
 #endif /* ACE_HAS_IPV6 */
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%s\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (the_addr_array[i].get_host_addr ())));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%C\n"),
+                    the_addr_array[i].get_host_addr ()));
         }
 
       delete [] the_addr_array;

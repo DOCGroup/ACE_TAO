@@ -25,7 +25,6 @@ ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 
 #define ace_signal_handler_dispatcher ACE_SignalHandler(ace_sig_handler_dispatch)
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 extern "C" void
 ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
@@ -34,14 +33,11 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 }
 
 #define ace_signal_handlers_dispatcher ACE_SignalHandler(ace_sig_handlers_dispatch)
-#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #else
 #define ace_signal_handler_dispatcher ACE_SignalHandler(ACE_Sig_Handler::dispatch)
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #define ace_signal_handlers_dispatcher ACE_SignalHandler(ACE_Sig_Handlers::dispatch)
-#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 
@@ -152,8 +148,7 @@ ACE_Sig_Handler::register_handler_i (int signum,
   if (ACE_Sig_Handler::in_range (signum))
     {
       ACE_Sig_Action sa; // Define a "null" action.
-      ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum,
-                                                          new_sh);
+      ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum, new_sh);
 
       // Return a pointer to the old <ACE_Sig_Handler> if the user
       // asks for this.
@@ -166,9 +161,6 @@ ACE_Sig_Handler::register_handler_i (int signum,
         new_disp = &sa;
 
       new_disp->handler (ace_signal_handler_dispatcher);
-#if !defined (ACE_HAS_LYNXOS_SIGNALS)
-      new_disp->flags (new_disp->flags () | SA_SIGINFO);
-#endif /* ACE_HAS_LYNXOS_SIGNALS */
       return new_disp->register_action (signum, old_disp);
     }
   else
@@ -286,7 +278,6 @@ ACE_Sig_Handler::dispatch (int signum,
 
 // There are bugs with HP/UX's C++ compiler that prevents this stuff
 // from compiling...
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #define ACE_MAX_SIGNAL_HANDLERS ((size_t) 20)
 
 // Keeps track of the id that uniquely identifies each registered
@@ -294,9 +285,9 @@ ACE_Sig_Handler::dispatch (int signum,
 // <remove_handler> method.
 int ACE_Sig_Handlers::sigkey_ = 0;
 
-// If this is > 0 then a 3rd party library has registered a
+// If this is true then a 3rd party library has registered a
 // handler...
-int ACE_Sig_Handlers::third_party_sig_handler_ = 0;
+bool ACE_Sig_Handlers::third_party_sig_handler_ = false;
 
 // Make life easier by defining typedefs...
 typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_SET;
@@ -381,7 +372,7 @@ ACE_Sig_Handlers::register_handler (int signum,
             return -1;
 
           // Note that we've seen a 3rd party handler...
-          ACE_Sig_Handlers::third_party_sig_handler_ = 1;
+          ACE_Sig_Handlers::third_party_sig_handler_ = true;
 
           // Create a new 3rd party disposition, remembering its
           // preferred signal blocking etc...;
@@ -405,7 +396,10 @@ ACE_Sig_Handlers::register_handler (int signum,
       // Add the ACE signal handler to the set of handlers for this
       // signal (make sure it goes before the external one if there is
       // one of these).
-      if (ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter) == -1)
+
+      int result = ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter);
+
+      if (result == -1)
         {
           // We couldn't reinstall our handler, so let's pretend like
           // none of this happened...
@@ -434,7 +428,6 @@ ACE_Sig_Handlers::register_handler (int signum,
 
           // Default is to restart signal handlers.
           new_disp->flags (new_disp->flags () | SA_RESTART);
-          new_disp->flags (new_disp->flags () | SA_SIGINFO);
 
           // Finally install (possibly reinstall) the ACE signal
           // handler disposition with the SA_RESTART mode enabled.
@@ -488,7 +481,7 @@ ACE_Sig_Handlers::remove_handler (int signum,
 
       for (ACE_Event_Handler **eh;
            handler_iterator.next (eh) != 0;
-           handler_iterator.advance ())
+           )
         {
           // Type-safe downcast would be nice here...
           ACE_Sig_Adapter *sh = (ACE_Sig_Adapter *) *eh;
@@ -556,14 +549,12 @@ ACE_Sig_Handlers::dispatch (int signum,
 
   for (ACE_Event_Handler **eh = 0;
        handler_iterator.next (eh) != 0;
-       handler_iterator.advance ())
-    {
-      if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
-        {
-          handler_set->remove (*eh);
-          delete *eh;
-        }
-    }
+       )
+    if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
+      {
+        handler_set->remove (*eh);
+        delete *eh;
+      }
 }
 
 // Return the first item in the list of handlers.  Note that this will
@@ -606,7 +597,7 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   // ... and then insert the new signal handler into the beginning of
   // the set (note, this is a bit too tied up in the implementation of
   // ACE_Unbounded_Set...).
-  ACE_Sig_Adapter *temp;
+  ACE_Sig_Adapter *temp = 0;
 
   ACE_NEW_RETURN (temp,
                   ACE_Sig_Adapter (new_sh,
@@ -615,7 +606,5 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   handler_set->insert (temp);
   return *eh;
 }
-
-#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

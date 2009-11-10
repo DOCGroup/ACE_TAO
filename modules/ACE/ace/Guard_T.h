@@ -32,7 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief This data structure is meant to be used within a method or
  * function...  It performs automatic aquisition and release of
- * a parameterized synchronization object <ACE_LOCK>.
+ * a parameterized synchronization object ACE_LOCK.
  *
  * The <ACE_LOCK> class given as an actual parameter must provide at
  * the very least the <acquire>, <tryacquire>, <release>, and
@@ -49,14 +49,14 @@ public:
   /// Implicitly and automatically acquire (or try to acquire) the
   /// lock.  If @a block is non-0 then <acquire> the <ACE_LOCK>, else
   /// <tryacquire> it.
-  ACE_Guard (ACE_LOCK &l, int block);
+  ACE_Guard (ACE_LOCK &l, bool block);
 
   /// Initialise the guard without implicitly acquiring the lock. The
-  /// <become_owner> parameter indicates whether the guard should release
-  /// the lock implicitly on destruction. The <block> parameter is
+  /// @a become_owner parameter indicates whether the guard should release
+  /// the lock implicitly on destruction. The @a block parameter is
   /// ignored and is used here to disambiguate with the preceding
   /// constructor.
-  ACE_Guard (ACE_LOCK &l, int block, int become_owner);
+  ACE_Guard (ACE_LOCK &l, bool block, int become_owner);
 
   /// Implicitly release the lock.
   ~ACE_Guard (void);
@@ -77,9 +77,9 @@ public:
   void disown (void);
 
   // = Utility methods.
-  /// 1 if locked, 0 if couldn't acquire the lock
+  /// true if locked, false if couldn't acquire the lock
   /// (errno will contain the reason for this).
-  int locked (void) const;
+  bool locked (void) const;
 
   /// Explicitly remove the lock.
   int remove (void);
@@ -93,7 +93,7 @@ public:
 protected:
 
   /// Helper, meant for subclass only.
-  ACE_Guard (ACE_LOCK *lock): lock_ (lock) {}
+  ACE_Guard (ACE_LOCK *lock): lock_ (lock), owner_ (0) {}
 
   /// Pointer to the ACE_LOCK we're guarding.
   ACE_LOCK *lock_;
@@ -126,7 +126,7 @@ public:
 
   /// Implicitly and automatically acquire (or try to acquire) a write
   /// lock.
-  ACE_Write_Guard (ACE_LOCK &m, int block);
+  ACE_Write_Guard (ACE_LOCK &m, bool block);
 
   // = Lock accessors.
 
@@ -170,7 +170,7 @@ public:
 
   /// Implicitly and automatically acquire (or try to acquire) a read
   /// lock.
-  ACE_Read_Guard (ACE_LOCK &m, int block);
+  ACE_Read_Guard (ACE_LOCK &m, bool block);
 
   // = Lock accessors.
 
@@ -220,7 +220,7 @@ public:
   // = Initialization and termination methods.
 
   /// Implicitly and automatically acquire the thread-specific lock.
-  ACE_TSS_Guard (ACE_LOCK &lock, int block = 1);
+  ACE_TSS_Guard (ACE_LOCK &lock, bool block = true);
 
   /// Implicitly release the thread-specific lock.
   ~ACE_TSS_Guard (void);
@@ -281,7 +281,7 @@ public:
   // = Initialization method.
 
   /// Implicitly and automatically acquire the thread-specific write lock.
-  ACE_TSS_Write_Guard (ACE_LOCK &lock, int block = 1);
+  ACE_TSS_Write_Guard (ACE_LOCK &lock, bool block = true);
 
   // = Lock accessors.
 
@@ -320,7 +320,7 @@ class ACE_TSS_Read_Guard : public ACE_TSS_Guard<ACE_LOCK>
 public:
   // = Initialization method.
   /// Implicitly and automatically acquire the thread-specific read lock.
-  ACE_TSS_Read_Guard (ACE_LOCK &lock, int block = 1);
+  ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block = true);
 
   // = Lock accessors.
   /// Explicitly acquire the thread-specific read lock.

@@ -4,41 +4,33 @@ ACE_RCSID (ace,
            Time_Value,
            "$Id$")
 
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Numeric_Limits.h"
+#include "ace/If_Then_Else.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Static constant representing `zero-time'.
-// Note: this object requires static construction.
+/// Static constant representing `zero-time'.
+/// Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::zero;
 
-// Constant for maximum time representable.  Note that this time
-// is not intended for use with select () or other calls that may
-// have *their own* implementation-specific maximum time representations.
-// Its primary use is in time computations such as those used by the
-// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
-// Note: this object requires static construction.
-// Note: On Win64, time_t is 64 bits, yet the timeval members used
-// internally to ACE_Time_Value are still long. This makes time values
-// outside the LONG_MAX, LONG_MIN range very broken.
+/// Constant for maximum time representable.  Note that this time
+/// is not intended for use with select () or other calls that may
+/// have *their own* implementation-specific maximum time representations.
+/// Its primary use is in time computations such as those used by the
+/// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
+/// Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::max_time (
-#if !defined (ACE_WIN64)
   ACE_Numeric_Limits<time_t>::max (),
-#else
-  LONG_MAX,
-#endif
   ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 
-// Increment microseconds (the only reason this is here is to allow
-// the use of ACE_Atomic_Op with ACE_Time_Value).
-
+/// Increment microseconds (the only reason this is here is to allow
+/// the use of ACE_Atomic_Op with ACE_Time_Value).
 ACE_Time_Value
 ACE_Time_Value::operator ++ (int)
 {
@@ -57,9 +49,8 @@ ACE_Time_Value::operator ++ (void)
   return *this;
 }
 
-// Decrement microseconds (the only reason this is here is / to allow
-// the use of ACE_Atomic_Op with ACE_Time_Value).
-
+/// Decrement microseconds (the only reason this is here is / to allow
+/// the use of ACE_Atomic_Op with ACE_Time_Value).
 ACE_Time_Value
 ACE_Time_Value::operator -- (int)
 {
@@ -79,13 +70,13 @@ ACE_Time_Value::operator -- (void)
 }
 
 #if defined (ACE_WIN32)
-// Static constant to remove time skew between FILETIME and POSIX
-// time.  POSIX and Win32 use different epochs (Jan. 1, 1970 v.s.
-// Jan. 1, 1601).  The following constant defines the difference
-// in 100ns ticks.
-//
-// In the beginning (Jan. 1, 1601), there was no time and no computer.
-// And Bill said: "Let there be time," and there was time....
+/// Static constant to remove time skew between FILETIME and POSIX
+/// time.  POSIX and Win32 use different epochs (Jan. 1, 1970 v.s.
+/// Jan. 1, 1601).  The following constant defines the difference
+/// in 100ns ticks.
+///
+/// In the beginning (Jan. 1, 1601), there was no time and no computer.
+/// And Bill said: "Let there be time," and there was time....
 # if defined (ACE_LACKS_LONGLONG_T)
 const ACE_U_LongLong ACE_Time_Value::FILETIME_to_timval_skew =
 ACE_U_LongLong (0xd53e8000, 0x19db1de);
@@ -94,8 +85,7 @@ const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
 ACE_INT64_LITERAL (0x19db1ded53e8000);
 # endif
 
-//  Initializes the ACE_Time_Value object from a Win32 FILETIME
-
+///  Initializes the ACE_Time_Value object from a Win32 FILETIME
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
   // // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
@@ -128,8 +118,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   this->normalize ();
 }
 
-// Returns the value of the object as a Win32 FILETIME.
-
+/// Returns the value of the object as a Win32 FILETIME.
 ACE_Time_Value::operator FILETIME () const
 {
   FILETIME file_time;
@@ -165,8 +154,8 @@ ACE_Time_Value::dump (void) const
   // ACE_OS_TRACE ("ACE_Time_Value::dump");
 #if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
 #endif /* ACE_HAS_DUMP */
@@ -220,19 +209,29 @@ ACE_Time_Value::normalize (void)
 ACE_Time_Value &
 ACE_Time_Value::operator *= (double d)
 {
-  // double is long enough (16 digits) to not lose the accuracy.
-  double time_total =
+  // The floating type to be used in the computations.  It should be
+  // large enough to hold a time_t.  We actually want a floating type
+  // with enough digits in its mantissa to hold a time_t without
+  // losing precision.  For example, if FLT_RADIX is 2 and
+  // LDBL_MANT_DIG is 64, a long double has a 64 bit wide mantissa,
+  // which would be sufficient to hold a 64 bit time_t value without
+  // losing precision.
+  //
+  // For now we'll simply go with long double if it is larger than
+  // time_t.  We're hosed if long double isn't large enough.
+  typedef ACE::If_Then_Else<(sizeof (double) > sizeof (time_t)),
+                            double,
+                            long double>::result_type float_type;
+
+  float_type time_total =
     (this->sec ()
-     + static_cast<double> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
+     + static_cast<float_type> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
   // shall we saturate the result?
-#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
-  static const double max_int = std::numeric_limits<time_t>::max () + 0.999999;
-  static const double min_int = std::numeric_limits<time_t>::min () - 0.999999;
-#else
-  static const double max_int = LONG_MAX + 0.999999;
-  static const double min_int = LONG_MIN - 0.999999;
-#endif
+  static const float_type max_int =
+    ACE_Numeric_Limits<time_t>::max () + 0.999999;
+  static const float_type min_int =
+    ACE_Numeric_Limits<time_t>::min () - 0.999999;
 
   if (time_total > max_int)
     time_total = max_int;

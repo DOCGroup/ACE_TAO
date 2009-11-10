@@ -63,16 +63,17 @@ public:
     NEVER_FIXED = 2
   };
 
-  // = Initialization method.
+  /// Constructor
   ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
                                 int use_fixed_addr = ALWAYS_FIXED,
-                                int write_each_page = 1,
+                                bool write_each_page = true,
                                 size_t minimum_bytes = 0,
                                 u_int flags = 0,
-                                int guess_on_fault = 1,
+                                bool guess_on_fault = true,
                                 LPSECURITY_ATTRIBUTES sa = 0,
                                 mode_t file_mode = ACE_DEFAULT_FILE_PERMS,
-                                bool unique_ = false);
+                                bool unique_ = false,
+                                bool install_signal_handler = true);
 
   /// Base address of the memory-mapped backing store.
   const void *base_addr_;
@@ -93,7 +94,7 @@ public:
 
   /// Should each page be written eagerly to avoid surprises later
   /// on?
-  int write_each_page_;
+  bool write_each_page_;
 
   /// What the minimim bytes of the initial segment should be.
   size_t minimum_bytes_;
@@ -116,6 +117,9 @@ public:
 
   /// Do we want an unique backing store name?
   bool unique_;
+
+  /// Should we install a signal handler
+  bool install_signal_handler_;
 
 private:
   // Prevent copying
@@ -166,22 +170,22 @@ public:
 
   /// Sync the memory region to the backing store starting at
   /// @c this->base_addr_.  Will sync as much as the backing file
-  /// allows. 
+  /// allows.
   virtual int sync (int flags = MS_SYNC);
-  
+
   /// Sync the memory region to the backing store starting at @a addr.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
-   * Change the protection of the pages of the mapped region to <prot>
-   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * Change the protection of the pages of the mapped region to @a prot
+   * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (size_t len, int prot = PROT_RDWR);
 
   /**
-   * Change the protection of all the pages of the mapped region to <prot>
-   * starting at <this->base_addr_>.
+   * Change the protection of all the pages of the mapped region to @a prot
+   * starting at @c this->base_addr_.
    */
   virtual int protect (int prot = PROT_RDWR);
 
@@ -238,12 +242,25 @@ protected:
   /// Memory map the file up to @a map_size bytes.
   virtual int map_file (size_t map_size);
 
-  /// Handle SIGSEGV and SIGBUS signals to remap shared memory
-  /// properly.
+#if !defined (ACE_WIN32)
+  /**
+   * Handle SIGSEGV and SIGBUS signals to remap memory properly.  When a
+   * process reads or writes to non-mapped memory a signal (SIGBUS or
+   * SIGSEGV) will be triggered.  At that point, the ACE_Sig_Handler
+   * (which is part of the ACE_Reactor) will catch the signal and
+   * dispatch the handle_signal() method defined here.  If the SIGSEGV
+   * signal occurred due to the fact that the mapping wasn't uptodate
+   * with respect to the backing store, the handler method below will
+   * update the mapping accordingly.  When the signal handler returns,
+   * the instruction should be restarted and the operation should work.
+   */
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+#endif
 
+#if !defined (ACE_WIN32)
   /// Handles SIGSEGV.
   ACE_Sig_Handler signal_handler_;
+#endif
 
   /// Memory-mapping object.
   ACE_Mem_Map mmap_;
@@ -258,12 +275,12 @@ protected:
   /// Must we use the @c base_addr_ or can we let mmap(2) select it?
   int use_fixed_addr_;
 
-  /// Flags passed into <ACE_OS::mmap>.
+  /// Flags passed into ACE_OS::mmap().
   int flags_;
 
   /// Should we write a byte to each page to forceably allocate memory
   /// for this backing store?
-  int write_each_page_;
+  bool write_each_page_;
 
   /// What the minimum bytes of the initial segment should be.
   size_t minimum_bytes_;
@@ -283,6 +300,9 @@ protected:
 
   /// Protection mode for mmaped file.
   mode_t file_mode_;
+
+  /// Should we install a signal handler
+  bool install_signal_handler_;
 };
 
 /**
@@ -292,7 +312,7 @@ protected:
  *
  * This implementation allows memory to be shared between
  * processes.  However, unlike the ACE_MMAP_Memory_Pool
- * the <sync> methods are no-ops, which means that we don't pay
+ * the @c sync methods are no-ops, which means that we don't pay
  * for the price of flushing the memory to the backing store on
  * every update.  Naturally, this trades off increased
  * performance for less reliability if the machine crashes.

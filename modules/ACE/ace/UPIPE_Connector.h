@@ -45,9 +45,9 @@ public:
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
-   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
+   * returned with @c errno == EWOULDBLOCK.  If *timeout > {0, 0} then
    * this is the maximum amount of time to wait before timing out.  If the
-   * time expires before the connection is made <errno == ETIME>.  The
+   * time expires before the connection is made @c errno == ETIME.  The
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
@@ -70,9 +70,9 @@ public:
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
-   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
+   * returned with @c errno == EWOULDBLOCK.  If *timeout > {0, 0} then
    * this is the maximum amount of time to wait before timing out.  If the
-   * time expires before the connection is made <errno == ETIME>.  The
+   * time expires before the connection is made @c errno == ETIME.  The
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
@@ -89,7 +89,7 @@ public:
                int perms = 0);
 
   /// Resets any event associations on this handle
-  int reset_new_handle (ACE_HANDLE handle);
+  bool reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
   typedef ACE_UPIPE_Addr PEER_ADDR;

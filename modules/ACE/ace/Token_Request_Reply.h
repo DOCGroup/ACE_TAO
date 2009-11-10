@@ -246,8 +246,8 @@ private:
 
     /// Indicates why error occurred if <this->type_> == <FAILURE>.
     /// Typical reasons include:
-    ///   <EWOULDBLOCK> (if client requested a non-blocking check for the token).
-    ///   <ETIME> (if the client timed out after waiting for the token).
+    ///   @c EWOULDBLOCK (if client requested a non-blocking check for the token).
+    ///   @c ETIME (if the client timed out after waiting for the token).
     ///   <ENOLCK> (if the token lock was removed out from underneath a waiter).
     ///   <EACCES> (attempt to renew a token that isn't owned by the client).
     ACE_UINT32 errno_;

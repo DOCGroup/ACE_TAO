@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 # $Id$
 
 use PerlACE::Run_Test;
@@ -38,11 +39,13 @@ sub new
     my $class = ref ($proto) || $proto;
     my $self = {};
 
-    $self->{RUNNING} = 0;
-    $self->{IGNOREEXESUBDIR} = 0;
-    $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
+    $self->{TARGET} = undef;
+    $self->{RUNNING} = 0;
+    $self->{IGNOREEXESUBDIR} = 0;
+    $self->{IGNOREHOSTROOT} = 0;
+    $self->{PROCESS} = undef;
     $self->{PURIFY_CMD} = $ENV{"ACE_RUN_PURIFY_CMD"};
     $self->{PURIFY_OPT} = $ENV{"ACE_RUN_PURIFY_OPT"};
     if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
@@ -70,18 +73,25 @@ sub DESTROY
     }
 }
 
+
 ###############################################################################
 
 ### Some Accessors
 
-sub Normalize_Executable_Name
+sub Normalize_Executable_Name($)
 {
+    my $self = shift;
     my $executable = shift;
-
     my $basename = basename ($executable);
     my $dirname = dirname ($executable). '/';
-
-    $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".EXE";
+    my $subdir;
+    if (defined $self->{TARGET}) {
+        $subdir = $self->{TARGET}->ExeSubDir();
+    }
+    else {
+        $subdir = $PerlACE::Process::ExeSubDir;
+    }
+    $executable = $dirname.$subdir.$basename.".EXE";
 
     ## Installed executables do not conform to the ExeSubDir
     if (! -x $executable && -x $dirname.$basename.'.EXE') {
@@ -103,21 +113,32 @@ sub Executable
     }
 
     my $executable = $self->{EXECUTABLE};
-
-    if (PerlACE::is_vxworks_test()) {
-        $executable = PerlACE::VX_HostFile ($executable);
+    # If the target's config has a different ACE_ROOT, rebase the executable
+    # from $ACE_ROOT to the target's root.
+    if (defined $self->{TARGET} &&
+        $self->{TARGET}->ACE_ROOT() ne $ENV{"ACE_ROOT"}) {
+        $executable = File::Spec->rel2abs($executable);
+        $executable = File::Spec->abs2rel($executable, $ENV{"ACE_ROOT"});
+        $executable = $self->{TARGET}->ACE_ROOT() . "/$executable";
     }
-    
+
+    # After VxWorks adopts the TARGET scheme, can do away with this block.
+    if ($self->{IGNOREHOSTROOT} == 0) {
+      if (PerlACE::is_vxworks_test()) {
+          $executable = PerlACE::VX_HostFile ($executable);
+      }
+    }
+
     if ($self->{IGNOREEXESUBDIR} == 0) {
-        $executable = PerlACE::Process::Normalize_Executable_Name ($executable);
+        $executable = $self->Normalize_Executable_Name ($executable);
     }
     else {
-        if ($executable !~ m/.EXE$/i) {
+        if ($executable !~ m/\.(BAT|EXE)$/i) {
             $executable = $executable.".EXE";
         }
         $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
     }
-    
+
     return $executable;
 }
 
@@ -137,6 +158,7 @@ sub CommandLine ()
     my $self = shift;
 
     my $commandline = $self->Executable ();
+    $commandline = '"' . $commandline . '"' if $commandline =~ /\s/;
 
     if (defined $self->{ARGUMENTS}) {
         $commandline .= ' '.$self->{ARGUMENTS};
@@ -154,6 +176,17 @@ sub IgnoreExeSubDir
     }
 
     return $self->{IGNOREEXESUBDIR};
+}
+
+sub IgnoreHostRoot
+{
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{IGNOREHOSTROOT} = shift;
+    }
+
+    return $self->{IGNOREHOSTROOT};
 }
 
 ###############################################################################
@@ -213,7 +246,6 @@ sub Spawn ()
                 "/InUseAtExit ".
                 "/LeaksAtExit ";
         }
-        my $basename = basename ($self->{EXECUTABLE});
         $cmdline =
             "purify " .
             "$PurifyOptions ".
@@ -265,18 +297,14 @@ sub Spawn ()
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print "$executable $cmdline\n";
     }
-    Win32::Process::Create ($self->{PROCESS},
-                            $executable,
-                            $cmdline,
-                            0,
-                            $state,
-                            '.');
+    my $status = Win32::Process::Create ($self->{PROCESS},
+                                         $executable,
+                                         $cmdline,
+                                         ($state == 0 ? 1 : 0),
+                                         $state,
+                                         '.');
 
-    my $status = 0;
-
-    Win32::Process::GetExitCode ($self->{PROCESS}, $status);
-
-    if ($status != $STILL_ACTIVE) {
+    if ($status == 0) {
         print STDERR "ERROR: Spawn failed for <", $self->CommandLine (), ">\n";
         return -1;
     }

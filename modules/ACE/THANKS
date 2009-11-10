@@ -70,6 +70,7 @@ Emre Turkay <turkaye at dre dot vanderbilt dot edu>
 Nanbor Wang <nanbor at cs dot wustl dot edu>
 Seth Widoff <sbw1 at cs dot wustl dot edu>
 Jules White <jules at dre dot vanderbilt dot edu>
+Friedhelm Wolf <fwolf at dre dot vanderbilt dot edu>
 Torben Worm <tworm at cs dot wustl dot edu>
 Ming Xiong <xiongm at isis dot vanderbilt dot edu>
 
@@ -110,7 +111,7 @@ Giang Hoang Nguyen <yang at titan dot com>
 Carlos Garcia Braschi <cgarcia at caramba dot tid dot es>
 Jam Hamidi <jh1 at osi dot com>
 Eric Vaughan <evaughan at arinc dot com>
-Karlheinz Dorn <Karlheinz dot Dorn at med dot siemens dot de>,
+Karlheinz Dorn <Karlheinz dot Dorn at med dot siemens dot de>
 Gerhard Lenzer <Gerhard dot Lenzer at med dot siemens dot de>
 Steve Ritter <ritter at titan dot com>
 Chandra Venkatapathy <cvenkat at develop dot bsis dot com>
@@ -513,7 +514,7 @@ Mark De Jong <mdj at intervu dot net>
 Knut Johannessen <knutj at funcom dot com>
 Leif Jakobsmeier <leif at informatik dot uni-frankfurt dot de>
 Jon Lindgren <jlindgren at SLK dot com>
-Steve Vinoski <vinoski at iona dot com>
+Steve Vinoski <vinoski at gmail dot com>
 Christian Mueffling <cvm at aiss dot de>
 Victor Yu <victor dot yu at computechnics dot com dot au>
 Jeff Donner <JDonner at schedsys dot com>
@@ -854,7 +855,7 @@ Miroslav Koncar <mkoncar at mail dot com>
 Extern Chatterji <Extern dot Chatterji at kmweg dot de>
 Zach Frey <zfrey at bright dot net>
 Ruibiao Qiu <ruibiao at arl dot wustl dot edu>
-Marcelo Matus <mmatus at dinha dot acms dot arizona dot edu>
+Marcelo Matus <mmatus at atdesk dot com>
 R Seshardi <rseshadri at lucent dot com>
 Stephan Kulow <coolo at kde dot org>
 Alexander Belopolsky <belopolsky at my-deja dot com>
@@ -915,7 +916,7 @@ Alex Chachanashvili <achacha at panix dot com>
 Gilbert Grosdidier <Gilbert dot Grosdidier at in2p3 dot fr>
 James Briggs <James dot Briggs at dsto dot defence dot gov dot au>
 Herbert Wang <herb at nowsol dot com>
-Anders Olsson <epkanol at s1 dot epk dot ericsson dot se>x
+Anders Olsson <epkanol at s1 dot epk dot ericsson dot se>
 Sergey Gnilitsky <SGnilitsky at telesens dot com dot ua>
 David Wicks <wicks at swbell dot net>
 Girish Birajdar <birajdar at lucent dot com>
@@ -1139,7 +1140,7 @@ Mike Anderson <manderson at sonusnet dot com>
 David Singer <David_P_Singer at res dot raytheon dot com>
 Nick Lin <nicklin at vantech dot com dot tw>
 Ron Hashimshony <Ron at bandwiz dot com>
-Max Khon <mkhon at swsoft dot com>
+Max Khon <mkhon at parallels dot com>
 Jonas Nordin <jonas dot nordin at syncom dot se>
 Jonathan Stockdale <Jonathan dot Stockdale at locusdialogue dot com>
 Jean-Francois Daune <Daune at IBA dot be>
@@ -1206,7 +1207,7 @@ Brian Gilmer <Brian dot Gilmer at jhuapl dot edu>
 James Dunham <James dot Dunham at esecurityinc dot com>
 Juergen Pfreundt <Juergen dot Pfreundt at gft dot com>
 Joel Sherrill <joel at OARcorp dot com>
-Jules Colding <colding at omesc dot com>
+Jules Colding <colding at 42tools dot com>
 Stephane Pion <PION_Stephane at stna dot dgac dot fr>
 Raghu Narayan <raghu_narayan at non dot hp dot com>
 Richard Goold <rgoold at inexum dot com>
@@ -1309,7 +1310,7 @@ Ted Krovetz <ted at digitalfountain dot com>
 Grzegorz Sikora <GSikora1 at era dot pl>
 Fabris <fabris65 at my-deja dot com>
 Christina Junru <junruli at lucent dot com>
-Patrick Rabau <Patrick dot Rabau at htc dot com>
+Patrick Rabau <Patrick dot Rabau at htc dot com> <pr2345 at gmail dot com>
 Hyman Rosen <hyrosen at mail dot com>
 Torbjorn Backstrom <torbjorn dot k dot backstrom at volvo dot com>
 Robert Burke <rburke2002 at yahoo dot com>
@@ -1346,7 +1347,7 @@ Alain Totouom <atotouom at gmx dot de>
 Tushar Nair <ntushar at yahoo dot com>
 Sunny Leung <sleung at opentext dot com>
 Bonifides Bautista <earlboy at my-deja dot com>
-Brad Hoskins <BHoskins at slo dot newport dot com
+Brad Hoskins <BHoskins at slo dot newport dot com>
 Donald Acton <acton at opentext dot com>
 Hagen Ulrich <ulrich dot hagen at siemens dot com>
 Adrian Mercieca <adrian at anvilmalta dot com>
@@ -1481,7 +1482,6 @@ Val Dumiterscu <val dot dumitrescu at am-beo dot com>
 Oleg Kraynov <olegvkr at yahoo dot com>
 Stephan Gudmundson <stephang at netacquire dot com>
 Frank Kuhlman <kuhlmann at materna dot de>
-Sorin Iordachescu <sorin dot iordachescu at am-beo dot com>
 Denis Otchenashko <oko at bank dot gov dot ua>
 Marc M Adkins <Marc dot M dot Adkins at doorways dot org>
 Jon Lambert <jlsysinc at ix dot netcom dot com>
@@ -1514,7 +1514,7 @@ Andy Alvarez <andy_alvarez at baxter dot com>
 Soeren Gerlach <soeren dot gerlach at gmx dot de>
 Vitaly Prapirny <marl at mebius dot net>
 Sasha Agranov <sagranov at COMGATES dot co dot il>
-Ru Gunatilleke  <ru at ociweb dot com>
+Ruwanganie Gunatilleke  <ru at ociweb dot com>
 Peter Kullmann <P dot Kullmann at rog dot de>
 Lyn Headley <headley at wolve dot com>
 Jeff Adams <Jeff dot Adams at gd-ais dot com>
@@ -1544,7 +1544,7 @@ Adee Ran <adeeran at yahoo dot com>
 <rjgebis at hotmailer dot com>
 Davide Pasetto <dipo at sis dot it>
 Michael Hornok <Michael dot Hornok at alcatel dot com>
-W.M. van den Boogaard <wim dot vd dot boogaard at meco dot nl>
+Wim van den Boogaard <wim dot van dot den dot boogaard at varianinc dot com>
 Carol Hunsicker <carol dot hunsicker at lmco dot com>
 Joseph Sarbak <joseph dot sarbak at csfb dot com>
 Ruslan Zasukhin <sunshine at public dot kherson dot ua>
@@ -1597,7 +1597,7 @@ Yuanfang Zhang <yfzhang at cse dot wustl dot edu>
 Jonathan Franklin <jfranklin at dctd dot saic dot com>
 Cristian Ungureanu <cristian dot ungureanu at amdocs dot com>
 Tommy Persson <tpe at ida dot lie dot se>
-Christian Barheine <cbarheine at sympatec dot com
+Christian Barheine <cbarheine at sympatec dot com>
 Ole Husgaard <osh at sparre dot dk>
 Victor Kirk <vkirk at technology dot serco dot com>
 Sandeep Neema <neemask at corvette dot vuse dot vanderbilt dot edu>
@@ -1790,7 +1790,7 @@ Andre Kostur <Andre at incognito dot com>
 Markus Stenberg <markus dot stenberg at conformiq dot com>
 Jonathan Pollack <pollack_j at ociweb dot com>
 Si Mong Park <si dot mong dot park at lmco dot com>
-Hakim Souami <hakim dot souami at fr dot thalesgroup dot com>
+Hakim Souami <hakim dot souami at thalesatm dot com>
 Paul Morrison <epm at prismtechnologies dot com>
 John Poplett <John_Poplett at 3com dot com>
 Heiko Bachmann <h dot bachmann at unicontrol dot de>
@@ -1902,7 +1902,7 @@ J. Abelardo Gutierrez <jabelardo at cantv dot net>
 Roger Sala <Roger dot Sala at gd-ais dot com>
 Razi Ben-Yehuda <raziebe at gmail dot com>
 Geo Sebastian <geosebastian at onmobile dot com>
-Simon Massey <simon dot massey at prismtechnologies dot com>
+Simon Massey <sma at prismtech dot com>
 Rich Shapiro <rshapiro at bbn dot com>
 Ramiro Morales <rm0 at gmx dot net>
 Andrew Athan <aathan-ace-bugs-1524 at cloakmail dot com>
@@ -1911,7 +1911,7 @@ Matthew Townsend <mtownsen at harris dot com>
 Rick Robinson <rick at oyarsa dot com>
 John D. Robertson <john at rrci dot com>
 Paul Lew <paullew at cisco dot com>
-Eider Oliveira <eider at oliveira dot gmail at com>
+Eider Oliveira <eider dot oliveira at gmail dot com>
 Jeff Jones <jjones at zonetrading dot com>
 Jean-Christophe Cota <jean-christophe dot cota at eurocontrol dot int>
 Paul <paul at reeder dot cs>
@@ -2007,7 +2007,6 @@ Steven T. Hatton <hattons at globalsymmetry dot com>
 Yevgen Galchenko <yevgeng at softcomputer dot com>
 Timothy Wayne Gomez <gomezt at saic dot com>
 Ventimiglia Chere <Ventimiglia_Chere at emc dot com>
-Friedhelm Wolf <friedhelm dot wolf at homag dot de>
 Frederick Heckel <fwph at cse dot wustl dot edu>
 Ian Zagorskih <ianzag at megasignal dot com>
 Olivier Guérin <guerin35 at hotmail dot com>
@@ -2055,7 +2054,7 @@ Alan Stokes <alan at alanstokes dot org dot uk>
 Rick Taylor <rick at tropicalstormsoftware dot com>
 Tobias Herzke <tobias dot herzke at uni-oldenburg dot de>
 Paul Felix <pef at fluent dot com>
-Jan Ohlenburg <jan dot ohlenburg at fit dot fraunhofer dot de>.
+Jan Ohlenburg <jan dot ohlenburg at fit dot fraunhofer dot de>
 Eric Tiangang <tgliu at utstar dot com>
 David Hawkins <dwh at ovro dot caltech dot edu>
 Michael Klein <michael dot klein at fazi dot de>
@@ -2104,7 +2103,7 @@ David White <david dot white dot 7 at gmail dot com>
 Jason Zhang <zzm9981 at 163.com>
 Mark Paulus <mark dot paulus at mci dot com>
 Willie Chen <wchen12 at ucla dot edu>
-Martin Cornelius <Martin at Cornelius at smiths-heimann dot com>
+Martin Cornelius <Martin dot Cornelius at smiths-heimann dot com>
 Mohit Kapoor <Mohit dot Kapoor at siemens dot com>
 David Gibbs <David dot Gibbs at igindex dot co do uk>
 Gary Fernandez <gary dot fernandez at ironmountain dot com>
@@ -2122,7 +2121,6 @@ Popeye Cai <popeye dot cai at utstar dot com>
 David Highley <dhighley at highley-recommended dot com>
 Sonicfly Zhou <zhoucn at txsec dot com>
 Phil Billingham <phil_billingham at ml dot com>
-David Giovannini <giovannd at ociweb dot com>
 Paul Daugherty <Paul at nextalk dot com>
 Robert Schwebel <robert at schwebel dot de>
 William Cote <William dot Cote at hp dot com>
@@ -2147,7 +2145,6 @@ Andy Salnikov <a_salnikov at yahoo dot com>
 Hieu Ngyuen <hieu dot t dot nguyen at vanderbilt dot edu>
 Andriy Gapon <avg at icyb dot net dot ua>
 Andy Wang <ypwangandy at gmail dot com>
-Aleksandar Vukajlovic <vukajlo at finsoft dot co dot yu>
 Zhamak Dehghani <zhamakd at gmail dot com>
 Charles Calkins <calkinsc at ociweb dot com>
 Manuel Traut <manut dot de at googlemail dot com>
@@ -2170,7 +2167,144 @@ Pavel Zaichenko <zpf at ivl dot ua>
 Paul Riley <paul at riley dot net>
 Nelson Filipe Ferreira Gonçalves <ngoncalves at isr dot ist dot utl dot pt>
 Harry Goldschmitt <harry at hgac dot com>
-<sailzeng at tencent dot com>
+Sail Zeng <sailzeng at tencent dot com>
+Markus Henschel <m dot henschel at bally-wulff dot de>
+Asif Lodhi <asif dot lodhi at gmail dot com>
+Andrew Schnable <andrew_schnable at symantec dot com>
+Grigoriy Zeleniy <gzeleniy at gmail dot com>
+Yves Alloyer <alloyer at ipanematech dot com>
+Waba <waba-ace at waba dot be>
+Scott Mark <sjm at pobox dot com>
+Bjoern Rasmussen <bjoern.d.rasmussen at gmail dot com>
+Ian C White <Ian_C_White at raytheond dot com>
+Dennis Chernoivanov <cdi at tbricks dot com>
+Werner Burger <werner dot burger at siemens dot com>
+Andres Hurtis <andrej100 at gmail dot com>
+Joe French <JFrench at Soneticom dot com>
+M. Arshad Khan <khan dot m dot arshad at gmail dot com>
+Hans van't Hag <hans dot vanthag at prismtech dot com>
+Roland Sun <rolandsun at gmail dot com>
+Vance Maverick <vmaverick at pgp dot com>
+John McCabe <JGMCCABE at qinetiq dot com>
+Andres Oportus <andres dot oportus at gmail dot com>
+Olof Granered <Olof dot Granered at mobitex dot com>
+Eric Hughes <eh at narthex dot us>
+Zhenghao Shi <Zhenghao dot Shi at alcatel dot com>
+Alexander Kornienko <alexfh at gmail dot com>
+Ben Mohlenhoff <Benjamin_A_Mohlenhoff at raytheon dot com>
+Bill Bruns <bruns dot bill at gmail dot com>
+Dmitriy Nikitinskiy <nick at bel dot ru>
+Ravi Kanth <kanth dot ravi at wipro dot com>
+Ian Roberts  <ir at prismtech dot com>
+Patrick Spiering <pspiering at aweta dot nl>
+Duane Beck <duane dot beck at lmco dot com>
+Kanghee Yoon <propar at gmail dot com>
+Xu Liang <lxu4net at gmail dot com>
+Leo Lei <nsinit at 163 dot com>
+Jules d'Entremont <Jules dot dEntremont at SolaceSystems dot com>
+Rajiv K. Shukla <rajiv_shukla at yahoo dot com>
+Haibin Zhang <dragzhb at yahoo dot com dot cn>
+Vikram Karandikar <softking at gmail dot com>
+Kim J. Schmock <KJS at capres dot com>
+Venkat Forums <venkat dot forums at gmail dot com>
+James Marsh <jmarsh at cs dot man dot ac dot uk>
+Shaolong Xiang <cwengc at gmail dot com>
+Christoph Hofmann <Christoph dot Hofmann at zwick dot de>
+Vladimir Zykov <vladimir dot zykov at prismtech dot com>
+Daniel de Angelis Cordeiro <dcordeiro at gmail dot com>
+Hal Black <hal dot black at gmail dot com>
+Peter Korf <peter at niendo dot de>
+Norbert Thoden <thoden at rheinmetall-de dot com>
+Premkumar P <kumaran dot prem at gmail dot com>
+David Beck <davidbeck at acm dot org>
+Hayim Shaul <hayim at iportent dot com>
+Erman Balcik <erman dot balcik at siemens dot com>
+Torsten Saliwada <sally at gmx dot net>
+Nathan Glasser <nglasser at cantata dot com>
+Grégor Boirie <gregor dot boirie at free dot fr>
+Alex Solan <alex dot solan at gmail dot com>
+Venkat Sidhabathuni <venkats at idengines dot com>
+Nathan Ernst <Nathan dot Ernst at citadelgroup dot com>
+Kun Niu <haoniukun at gmail dot com>
+Karl-Heinz Wind <wind at itq dot de>
+Oliver Spang <oliver dot spang at nsn dot com>
+Hu Yi <huyi dot zg at gmail dot com>
+Joe Seward <joseph dot f dot seward at saic dot com>
+Tom Callaway <tcallawa at redhat dot com>
+Alick Nie <alick_nie at 163 dot com>
+Douglas Atique <tellmebout-corba at yahoo dot com>
+Nayeem Khan <d dot nayeem dot khan at gmail dot com>
+Sorin Voicu-Comendant <sorinvc at gmail dot com>
+Andi Heusser <aheusser at gmail dot com>
+Paul Carter <pcarter at scires dot com>
+Michael Carter <mcarter at swri dot org>
+Alain Kocelniak <alain at corys dot fr>
+Alvaro Vega Garcia <avega at tid dot es>
+Fernando C. Jeronymo <fernando dot fcavalcanti at gmail.com>
+Stephen Mouring <stephen dot mouring at lmco dot com>
+Tim <tim at burmair dot com>
+Thomas Brownridge <thomas dot brownridge at lmco dot com>
+June Fang <june dot fang at gmail dot com>
+Bill Kendall <wkendall at sgi dot com>
+Ittehad Shaikh <ishaikh at verivue dot com>
+Michael Doubez <michael dot doubez at gmail dot com>
+Namrata Gandhi <...>
+Michael Guntli <michael dot guntli at leica-geosystems dot com>
+Frank Förster <F dot Forster at herts dot ac dot uk>
+Roger Leblanc <rog dot leblanc at gmail dot com>
+Bob Fiske <Robert dot Fiske at ironmountain dot com>
+Julien Vintrou <vintrouj at gmail dot com>
+Jonathan Brannan <jbrannan at atdesk dot com>
+antred <NutJob at gmx dot net>
+Nathalie D'Amours <nathalie at bearsontheloose dot com>
+Mele Giovanni <giovanni dot mele at nagra dot com>
+Philipp Thomas <pth at suse dot de>
+Mark Hebbel <Mark dot Hebbel at baslerweb dot com>
+Tim Pollock <pollockt at ociweb dot com>
+Jack Lavender <jack dot lavender at seconcepts dot com>
+Alexandre Skrzyniarz <alexandre dot skrzyniarz at fr dot thalesgroup dot com>
+E Vahala <erkki dot vahala at pp dot inet dot fi>
+Christian Fromme <kaner dot strace dot org>
+Daniel Lang <danial dot lang at alphagate dot at>
+Greg Bothe <ace at netrats dot net>
+Anand Kumar <anandkumar95 at gmail dot com>
+Joe Pallas <pallas at cs dot stanford dot edu>
+Marcel Smit <msmit at remedy dot nl>
+Florent Vial <florent dot vial at gmail dot com>
+Pan Kai Luna <pan dot kai dot luna at gmail dot com>
+Jesus Martinez <jmcruz at lcc dot uma dot es>
+Martin Gaus <Gaus at gmx dot de>
+Steve Stallion <stallions at ociweb dot com>
+Ron van Hoof <rvhoof27 at gmail dot com>
+Joe Lihn <joelihn at hotmail dot com>
+Jani Hakala <jahakala at iki dot fi>
+Marcus Monaghan <marcus dot monaghan at wins dot co dot uk>
+Kashif Khan <kashif_khan198227 at yahoo dot com>
+JD Robertson <JD.Robertson at ni dot com>
+Andreas Drescher <ace at anticat dot ch>
+Alon Diamant <diamant at alon at gmail dot com>
+Igor Rayak <igor dot rayak at gmail dot com>
+Shai Kedem <shai_kedem at hotmail dot com>
+Steve Ramsay <steve dot ramsay at caris dot com>
+<moyyo at freetekno dot cz>
+Skrzyniarz Alexandre <alexandre dot skrzyniarz at fr dot thalesgroup dot com>
+Rob Beekmans <r dot a dot beekmans at philips dot com>
+Steven Hartmann <shartmann at militho dot com>
+Dicky <qianchendi at gmail dot com>
+Boyan Kasarov <bkasarov at gmail dot com>
+Brendan Murphy <brendan dot murphy at euro dot apple dot com>
+Ryan Carmichael <RCarmichael at drs-tem dot com>
+Koh Onishi <k_onishi at mtj dot biglobe dot ne dot jp>
+Markus Gaugusch <markus at gaugusch dot at>
+Annette Wilson <awilson at raytheonvtc dot com>
+Sharon Mizrahi <sharon dot mizrahi at gmail dot com>
+William Glenn <wglenn at scires dot com>
+Christian Ehrlicher <Ch dot Ehrlicher at gmx dot de>
+Hui Zhang <zhanghui9527 at gmail dot com>
+Marijke Hengstmengel <mhengstmengel at remedy dot nl>
+Christian Freund <freund at wrz dot de>
+Chris Shaw <google at cshaw-tech dot co dot uk>
+Matthew Carter <r_q_einstein-acetaobugs at yahoo dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
@@ -2182,7 +2316,7 @@ Finally, I'd also like to thank Todd L. Montgomery <tmont at cs.wvu.edu>,
 fellow heavy metal head, for fulfilling his quest to get ACE to
 compile with GCC!
 
-In conclusion, our goal is to see ACE+TAO continue to evolve and
+In conclusion, our goal is to see ACE+TAO+CIAO continue to evolve and
 become a more comprehensive, robust, and well-documented C++ class
 library that is freely available to researchers and developers.  If
 you have any improvements, suggestions, and or comments, we'd like to
@@ -2190,6 +2324,7 @@ hear about it.  Please see the instructions in
 
 $ACE_ROOT/PROBLEM-REPORT-FORM
 $TAO_ROOT/PROBLEM-REPORT-FORM
+$CIAO_ROOT/PROBLEM-REPORT-FORM
 
 for instructions on submitting suggestions or fixes.
 

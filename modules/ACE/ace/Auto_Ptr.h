@@ -181,9 +181,7 @@ public:
 
 
 /**
- * @function
- *
- * @brief
+ * @brief Reset given @c auto_ptr element to new element.
  *
  * Some platforms have an older version of auto_ptr support, which
  * lacks reset, and cannot be disabled easily.  Portability to these

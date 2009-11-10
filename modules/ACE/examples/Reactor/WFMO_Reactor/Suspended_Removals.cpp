@@ -61,7 +61,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Event_Handler handler;
   ACE_WFMO_Reactor reactor;
   ACE_Reactor base_reactor (&reactor);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Time_Value time (1);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int result =
     reactor.register_handler (&handler);

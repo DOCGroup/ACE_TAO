@@ -28,9 +28,9 @@
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 #ifdef __GNUC__
-# define ACE_CC_NAME ACE_LIB_TEXT ("gcc")
+# define ACE_CC_NAME ACE_TEXT ("gcc")
 #else
-# define ACE_CC_NAME ACE_LIB_TEXT ("QNX-RTP compiler ??")
+# define ACE_CC_NAME ACE_TEXT ("QNX-RTP compiler ??")
 #endif
 
 // /usr/nto/include/float.h defines
@@ -41,6 +41,10 @@
 //  These macros are:
 #define ACE_SIZEOF_DOUBLE   8
 #define ACE_SIZEOF_FLOAT    4
+
+// At least qnx 6.3.2 uses a void return for unsetenv
+// This assumes that older versions do too.
+#define ACE_HAS_VOID_UNSETENV
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_QNX_RTP_COMMON_H */

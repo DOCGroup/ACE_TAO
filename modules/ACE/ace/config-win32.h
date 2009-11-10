@@ -35,10 +35,10 @@
 #    include "ace/config-win32-borland.h"
 #elif defined (_MSC_VER)
 #    include "ace/config-win32-msvc.h"
-#elif defined (__IBMCPP__)
-#    include "ace/config-win32-visualage.h"
 #elif defined (ghs)
 #    include "ace/config-win32-ghs.h"
+#elif defined (ACE_HAS_CEGCC) //need to be prior to MINGW32
+#    include "ace/config-win32-cegcc.h"
 #elif defined (__MINGW32__)
 #    include "ace/config-win32-mingw.h"
 #elif defined (__DMC__)
@@ -47,5 +47,9 @@
 #    error Compiler is not supported
 #endif
 
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_H */
+

@@ -21,6 +21,8 @@
 
 #include "ace/Get_Opt.h"
 #include "ntsvc.h"
+
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #include "ace/OS_NS_errno.h"
@@ -254,3 +256,15 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   return PROCESS::instance ()->run (argc, argv);
 }
 
+#else
+
+#include "ace/OS_main.h"
+
+int
+ACE_TMAIN (int, ACE_TCHAR*[])
+{
+  // This program needs Windows services.
+  return 0;
+}
+
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */

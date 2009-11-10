@@ -305,7 +305,7 @@ ACE_UTF16_Encoding_Converter::encoded (const ACE_Byte* source,
   static const size_t converted = begin * 4;
 
   ACE_Byte target[converted];
-  ACE_UTF16_Encoding_Converter* converter;
+  ACE_UTF16_Encoding_Converter* converter = 0;
   ACE_NEW_RETURN (converter,
                   ACE_UTF16_Encoding_Converter (false),
                   0);

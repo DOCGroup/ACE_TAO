@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 # $Id$
 sub uniqueid
 {

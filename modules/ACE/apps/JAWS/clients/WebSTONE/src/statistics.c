@@ -1,13 +1,13 @@
 /* $Id$ */
 /**************************************************************************
- *									  *
- * 		 Copyright (C) 1995 Silicon Graphics, Inc.		  *
- *									  *
- *  These coded instructions, statements, and computer programs were	  *
- *  developed by SGI for public use.  If any changes are made to this code*
- *  please try to get the changes back to the author.  Feel free to make  *
- *  modifications and changes to the code and release it.		  *
- *									  *
+ *
+ *  Copyright (C) 1995 Silicon Graphics, Inc.
+ *
+ *  These coded instructions, statements, and computer programs were
+ *  developed by SGI for public use.  If any changes are made to this code
+ *  please try to get the changes back to the author.  Feel free to make
+ *  modifications and changes to the code and release it.
+ *
  **************************************************************************/
 
 /* FUZZ: disable check_for_math_include */
@@ -34,16 +34,16 @@ mean(const double sum, const int n)
 double
 variance(const double sum, const double sumofsquares, const int n)
 {
-	double	meanofsum;
+    double meanofsum;
 
-	meanofsum = mean(sum, n);
+    meanofsum = mean(sum, n);
 
-	return (mean(sumofsquares,n) - (meanofsum * meanofsum));
+    return (mean(sumofsquares,n) - (meanofsum * meanofsum));
 }
 
 
 double
 stddev(const double sum, const double sumofsquares, const int n)
 {
-	return(sqrt(fabs(variance(sum, sumofsquares, n))));
+    return(sqrt(fabs(variance(sum, sumofsquares, n))));
 }

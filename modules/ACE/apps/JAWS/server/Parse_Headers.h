@@ -1,19 +1,15 @@
 /* -*- c++ -*- */
-// Hey, Emacs!  This is a C++ file!
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    jaws
-//
-// = FILENAME
-//    Parse_Headers.h
-//
-// = AUTHOR
-//    James Hu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Parse_Headers.h
+ *
+ *  $Id$
+ *
+ *  @author James Hu
+ */
+//=============================================================================
+
 
 #ifndef PARSE_HEADERS_H
 #define PARSE_HEADERS_H
@@ -47,10 +43,13 @@ private:
   const char *value_;
 };
 
+/**
+ * @class Headers_Map
+ *
+ * @brief Map textual headings to header values (e.g. "Subject:" maps to
+ * "Re: My left foot"
+ */
 class Headers_Map
-  // = TITLE
-  //     Map textual headings to header values (e.g. "Subject:" maps to
-  //     "Re: My left foot"
 {
 public:
   Headers_Map (void);
@@ -78,14 +77,16 @@ private:
   int num_headers_;
 };
 
+/**
+ * @class Headers
+ *
+ * @brief A general mechanism to parse headers of Internet text headers.
+ *
+ * Allow interesting headers to be inserted and later associated
+ * with values.  This implementation assumes the parsing of headers
+ * will be done from ACE_Message_Blocks.
+ */
 class Headers
-  // = TITLE
-  //     A general mechanism to parse headers of Internet text headers.
-  //
-  // = DESCRIPTION
-  //     Allow interesting headers to be inserted and later associated
-  //     with values.  This implementation assumes the parsing of headers
-  //     will be done from ACE_Message_Blocks.
 {
 public:
   Headers (void);
@@ -95,10 +96,12 @@ public:
 
   void parse_header_line (char *const header_line);
 
+  /**
+   * -1 -> end of line but not complete header line
+   *  0 -> no end of line marker
+   *  1 -> complete header line
+   */
   int complete_header_line (char *const header_line);
-  // -1 -> end of line but not complete header line
-  //  0 -> no end of line marker
-  //  1 -> complete header line
 
   int end_of_headers (void) const;
 

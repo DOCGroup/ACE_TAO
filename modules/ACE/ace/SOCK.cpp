@@ -123,8 +123,8 @@ ACE_SOCK::ACE_SOCK (int type,
                   protocol,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK::ACE_SOCK")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK::ACE_SOCK")));
 }
 
 int
@@ -178,8 +178,8 @@ ACE_SOCK::ACE_SOCK (int type,
                   flags,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK::ACE_SOCK")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK::ACE_SOCK")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

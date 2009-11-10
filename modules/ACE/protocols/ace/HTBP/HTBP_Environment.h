@@ -98,7 +98,7 @@ namespace ACE
       ACE_Ini_ImpExp *imp_exp_;
 
       /// We created the config instance, so we must clean it up
-      int own_config_;
+      bool own_config_;
 
     };
   }

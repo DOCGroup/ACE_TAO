@@ -41,7 +41,7 @@ typedef void *CRITICAL;
 #ifdef USE_NSPR
 #define crit_init() PR_NewMonitor(0)
 #else
-#define crit_init() (NULL)
+#define crit_init() (0)
 #endif
 
 /*

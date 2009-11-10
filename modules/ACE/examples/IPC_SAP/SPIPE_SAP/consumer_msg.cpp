@@ -18,10 +18,10 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_SPIPE_Acceptor peer_acceptor;
-  ACE_SPIPE_Stream	 new_stream;
-  char		 buf[BUFSIZ];
-  ACE_Str_Buf	 buffer (buf, 0, sizeof buf);
-  int		 flags = 0;
+  ACE_SPIPE_Stream new_stream;
+  char buf[BUFSIZ];
+  ACE_Str_Buf buffer (buf, 0, sizeof buf);
+  int flags = 0;
 
   if (argc > 1)
     rendezvous = argv[1];

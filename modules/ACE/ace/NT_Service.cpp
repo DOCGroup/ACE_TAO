@@ -1,8 +1,7 @@
 // $Id$
 
 #include "ace/config-all.h"
-#if defined (ACE_WIN32) && \
-   !defined (ACE_HAS_PHARLAP) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include "ace/NT_Service.h"
 
@@ -183,7 +182,8 @@ ACE_NT_Service::insert (DWORD start_type,
                         LPDWORD tag_id,
                         const ACE_TCHAR *dependencies,
                         const ACE_TCHAR *account_name,
-                        const ACE_TCHAR *password)
+                        const ACE_TCHAR *password,
+                        DWORD desired_access)
 {
   ACE_TCHAR this_exe[MAXPATHLEN + 2];
 
@@ -195,8 +195,8 @@ ACE_NT_Service::insert (DWORD start_type,
       if (ACE_TEXT_GetModuleFileName (0, this_exe + 1, MAXPATHLEN) == 0)
         return -1;
       // Make sure that this_exe is quoted
-      this_exe[0] = ACE_LIB_TEXT ('\"');
-      ACE_OS::strcat (this_exe, ACE_LIB_TEXT ("\""));
+      this_exe[0] = ACE_TEXT ('\"');
+      ACE_OS::strcat (this_exe, ACE_TEXT ("\""));
       exe_path = this_exe;
     }
 
@@ -209,7 +209,7 @@ ACE_NT_Service::insert (DWORD start_type,
   SC_HANDLE sh = ACE_TEXT_CreateService (sc_mgr,
                                          this->name (),
                                          this->desc (),
-                                         SERVICE_ALL_ACCESS,
+                                         desired_access,
                                          this->svc_status_.dwServiceType,
                                          start_type,
                                          error_control,
@@ -434,7 +434,7 @@ ACE_NT_Service::state (DWORD *pstate,
     return -1;
 
   if (wait_hint != 0)
-    wait_hint->msec (this->svc_status_.dwWaitHint);
+    wait_hint->msec (static_cast<long> (this->svc_status_.dwWaitHint));
 
   *pstate = this->svc_status_.dwCurrentState;
   this->svc_status_.dwControlsAccepted = controls_accepted;
@@ -615,4 +615,4 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */

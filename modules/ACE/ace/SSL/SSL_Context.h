@@ -131,8 +131,7 @@ public:
    *       been set since key verification is performed against the
    *       certificate, among other things.
    */
-  int private_key (const char *file_name,
-                   int type = SSL_FILETYPE_PEM);
+  int private_key (const char *file_name, int type = SSL_FILETYPE_PEM);
 
   /// Verify that the private key is valid.
   /**
@@ -170,11 +169,11 @@ public:
    *  copy of the file and path name of the most recently added
    *  @a ca_file or @a ca_path.
    *
-   *  @param[in] ca_file           CA file pathname. Passed to 
+   *  @param[in] ca_file           CA file pathname. Passed to
    *                               @c SSL_CTX_load_verify_locations() if not
    *                               0. If 0, behavior depends on the value of
    *                               @a use_env_defaults.
-   *  @param[in] ca_dir            CA directory pathname. Passed to 
+   *  @param[in] ca_dir            CA directory pathname. Passed to
    *                               @c SSL_CTX_load_verify_locations() if not
    *                               0. If 0, behavior depends on the value of
    *                               @a use_env_defaults.
@@ -263,10 +262,7 @@ public:
    *  Note that this method overrides the use of the
    *  default_verify_mode() method.
    */
-  void set_verify_peer (int strict = 0,
-                        int once = 1,
-                        int depth = 0);
-
+  void set_verify_peer (int strict = 0, int once = 1, int depth = 0);
 
   /// TODO: a implementation that will lookup the CTX table for the list
   /// of files and paths etc.
@@ -275,8 +271,6 @@ public:
   // const char* ca_file_name(void) const;
   // const char* ca_dir_name(void) const;
 
-
-
   /**
    * Set and query the default verify mode for this context, it is
    * inherited by all the ACE_SSL objects created using the context.
@@ -284,6 +278,14 @@ public:
    */
   void default_verify_mode (int mode);
   int default_verify_mode (void) const;
+
+  /**
+   * Set and query the default verify callback for this context, it is
+   * inherited by all the ACE_SSL objects created using the context.
+   * It can be overriden on a per-ACE_SSL object.
+   */
+  void default_verify_callback (int (*callback) (int, X509_STORE_CTX *));
+  int (*default_verify_callback(void) const) (int,X509_STORE_CTX *);
 
   /**
    * @name OpenSSL Random Number Generator Seed Related Methods
@@ -359,13 +361,16 @@ private:
   /// Cache the mode so we can answer fast
   int mode_;
 
-  /// The private key, certificate, and Diffie-Hellman paramters files
+  /// The private key, certificate, and Diffie-Hellman parameters files
   ACE_SSL_Data_File private_key_;
   ACE_SSL_Data_File certificate_;
   ACE_SSL_Data_File dh_params_;
 
   /// The default verify mode.
   int default_verify_mode_;
+
+  /// The default verify callback.
+  int (*default_verify_callback_)(int, X509_STORE_CTX *);
 
   /// count of successful CA load attempts
   int have_ca_;

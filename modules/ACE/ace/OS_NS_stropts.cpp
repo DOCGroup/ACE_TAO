@@ -47,7 +47,6 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 # endif /* ACE_HAS_WINSOCK2 */
 }
 
-#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
 int
 ACE_OS::ioctl (ACE_HANDLE socket,
                unsigned long io_control_code,
@@ -90,51 +89,51 @@ ACE_OS::ioctl (ACE_HANDLE socket,
       // Query for the buffer size.
       int result = ::WSAIoctl ((ACE_SOCKET) socket,
                                 io_control_code,
-                                NULL,
+                                0,
                                 0,
                                 &dwBufferLen,
                                 sizeof (dwBufferLen),
                                 bytes_returned,
-                                NULL,
-                                NULL);
+                                0,
+                                0);
 
 
       if (result == SOCKET_ERROR)
-          {
-                unsigned long dwErr = ::WSAGetLastError ();
+        {
+          unsigned long dwErr = ::WSAGetLastError ();
 
-                if (dwErr == WSAEWOULDBLOCK)
-                {
-                        errno = dwErr;
-                        return -1;
-                }
-                else
-                        if (dwErr != WSAENOBUFS)
-                        {
-                                errno = dwErr;
-                                return -1;
-                        }
+          if (dwErr == WSAEWOULDBLOCK)
+            {
+              errno = dwErr;
+              return -1;
+            }
+          else
+            if (dwErr != WSAENOBUFS)
+              {
+                errno = dwErr;
+                return -1;
+              }
           }
 
-    char *qos_buf;
-        ACE_NEW_RETURN (qos_buf,
-                                        char [dwBufferLen],
-                                        -1);
+    char *qos_buf = 0;
+    ACE_NEW_RETURN (qos_buf,
+                    char [dwBufferLen],
+                    -1);
 
-        QOS *qos = reinterpret_cast<QOS*> (qos_buf);
+    QOS *qos = reinterpret_cast<QOS*> (qos_buf);
 
-        result = ::WSAIoctl ((ACE_SOCKET) socket,
-                                   io_control_code,
-                       NULL,
+    result = ::WSAIoctl ((ACE_SOCKET) socket,
+                       io_control_code,
+                       0,
                        0,
                        qos,
                        dwBufferLen,
                        bytes_returned,
-                       NULL,
-                       NULL);
+                       0,
+                       0);
 
     if (result == SOCKET_ERROR)
-                return result;
+      return result;
 
     ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
                                     qos->SendingFlowspec.TokenBucketSize,
@@ -190,6 +189,5 @@ ACE_OS::ioctl (ACE_HANDLE socket,
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_WINSOCK2 */
 }
-#endif /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

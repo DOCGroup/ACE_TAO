@@ -150,7 +150,7 @@ private:
 
   /**
    * "Magic cookie" always passed in as an argument to the ACE_Reactor's
-   * <schedule_timer> method.  Used to communicate values for
+   * schedule_timer() method.  Used to communicate values for
    * asynchronous programming.
    */
   const void *arg_;

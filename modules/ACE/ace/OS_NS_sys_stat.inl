@@ -24,8 +24,6 @@ namespace ACE_OS
 #endif /* ACE_WIN32 */
   }
 
-#if !defined (ACE_WIN32)
-
   ACE_INLINE int
   fstat (ACE_HANDLE handle, ACE_stat *stp)
   {
@@ -36,22 +34,6 @@ namespace ACE_OS
     // causes compile and runtime problems.
     ACE_OSCALL_RETURN (::_fxstat (_STAT_VER, handle, stp), int, -1);
 #elif defined (ACE_WIN32)
-    ACE_OSCALL_RETURN (::_fstat (handle, stp), int, -1);
-#else
-# if defined (ACE_OPENVMS)
-    ::fsync(handle);
-# endif
-    ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
-# endif /* !ACE_HAS_X86_STAT_MACROS */
-  }
-
-#else /* ACE_WIN32 */
-
-  ACE_INLINE int
-  fstat (ACE_HANDLE handle, ACE_stat *stp)
-  {
-    ACE_OS_TRACE ("ACE_OS::fstat");
-# if 1
     BY_HANDLE_FILE_INFORMATION fdata;
 
     if (::GetFileInformationByHandle (handle, &fdata) == FALSE)
@@ -77,20 +59,15 @@ namespace ACE_OS
           (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? S_IFDIR : S_IFREG);
       }
     return 0;
-# else /* 1 */
-    // This implementation close the handle.
-    int retval = -1;
-    int fd = ::_open_osfhandle ((long) handle, 0);
-    if (fd != -1)
-      retval = ::_fstat (fd, stp);
-
-    ::_close (fd);
-    // Remember to close the file handle.
-    return retval;
-# endif /* 1 */
+#else
+# if defined (ACE_OPENVMS)
+    //FUZZ: disable check_for_lack_ACE_OS
+    ::fsync(handle);
+    //FUZZ: enable check_for_lack_ACE_OS
+ #endif
+    ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
+# endif /* !ACE_HAS_X86_STAT_MACROS */
   }
-
-#endif /* WIN32 */
 
   // This function returns the number of bytes in the file referenced by
   // FD.
@@ -115,7 +92,8 @@ namespace ACE_OS
 # endif  /* _FILE_OFFSET_BITS == 64 */
 #else /* !ACE_WIN32 */
     ACE_stat sb;
-    return ACE_OS::fstat (handle, &sb) == -1 ? -1 : sb.st_size;
+    return ACE_OS::fstat (handle, &sb) == -1 ?
+                    static_cast<ACE_OFF_T> (-1) : sb.st_size;
 #endif
   }
 
@@ -166,10 +144,7 @@ namespace ACE_OS
   ACE_INLINE int
   mkdir (const char *path, mode_t mode)
   {
-#if defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-    ACE_UNUSED_ARG (mode);
-    ACE_OSCALL_RETURN (::_mkdir (const_cast <char *> (path)), int, -1);
-#elif defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
     ACE_UNUSED_ARG (mode);
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_CHAR_TO_TCHAR (path), 0),
                                             ace_result_),
@@ -239,10 +214,11 @@ namespace ACE_OS
       }
     else
       {
-        stp->st_mode = static_cast<unsigned short>(fdata.dwFileAttributes);
+        stp->st_mode = static_cast<mode_t>(fdata.dwFileAttributes);
         stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
+        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
+        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
       }
     return 0;
 #elif defined (ACE_HAS_X86_STAT_MACROS)
@@ -277,14 +253,15 @@ namespace ACE_OS
       }
     else
       {
-        stp->st_mode = static_cast<unsigned short>(fdata.dwFileAttributes);
+        stp->st_mode = static_cast<mode_t>(fdata.dwFileAttributes);
         stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
+        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
+        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
       }
     return 0;
 #elif defined (__BORLANDC__) \
-      || (defined (_MSC_VER) && _MSC_VER >= 1300) \
+      || defined (_MSC_VER) \
       || defined (__MINGW32__)
     ACE_OSCALL_RETURN (ACE_WSTAT_FUNC_NAME (file, stp), int, -1);
 #else /* ACE_HAS_WINCE */
@@ -301,6 +278,11 @@ namespace ACE_OS
 # if defined (ACE_LACKS_UMASK)
     ACE_UNUSED_ARG (cmask);
     ACE_NOTSUP_RETURN ((mode_t)-1);
+# elif defined (ACE_HAS_TR24731_2005_CRT)
+    int old_mode;
+    int new_mode = static_cast<int> (cmask);
+    ACE_SECURECRTCALL (_umask_s (new_mode, &old_mode), mode_t, -1, old_mode);
+    return static_cast<mode_t> (old_mode);
 # elif defined (ACE_WIN32) && !defined (__BORLANDC__)
     ACE_OSCALL_RETURN (::_umask (cmask), mode_t, -1);
 # else

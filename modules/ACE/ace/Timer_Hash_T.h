@@ -27,6 +27,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward declaration.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 class ACE_Timer_Hash_T;
+template <typename TYPE>
+class Hash_Token;
 
 /**
  * @class ACE_Timer_Hash_Upcall
@@ -110,7 +112,7 @@ private:
 /**
  * @class ACE_Timer_Hash_Iterator_T
  *
- * @brief Iterates over an <ACE_Timer_Hash_T>.
+ * @brief Iterates over an ACE_Timer_Hash_T.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it doesn't transverse
@@ -130,7 +132,7 @@ public:
   virtual void next (void);
 
   /// Returns true when there are no more nodes in the sequence
-  virtual int isdone (void) const;
+  virtual bool isdone (void) const;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE> *item (void);
@@ -149,7 +151,7 @@ protected:
 /**
  * @class ACE_Timer_Hash_T
  *
- * @brief Provides a hash table of <BUCKET>s as an implementation for
+ * @brief Provides a hash table of BUCKETs as an implementation for
  * a timer queue.
  *
  * This implementation uses a hash table of BUCKETs.  The hash
@@ -172,9 +174,9 @@ public:
 
   // = Initialization and termination methods.
   /**
-   * Default constructor. <table_size> determines the size of the
-   * hash table.  <upcall_functor> is the instance of the FUNCTOR
-   * to be used by the buckets. If <upcall_functor> is 0, a default
+   * Default constructor. @a table_size determines the size of the
+   * hash table.  @a upcall_functor is the instance of the FUNCTOR
+   * to be used by the buckets. If @a upcall_functor is 0, a default
    * FUNCTOR will be created.
    */
   ACE_Timer_Hash_T (size_t table_size,
@@ -182,9 +184,9 @@ public:
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
 
   /**
-   * Default constructor. <upcall_functor> is the instance of the
-   * FUNCTOR to be used by the queue. If <upcall_functor> is 0, Timer
-   * Hash will create a default FUNCTOR.  <freelist> the freelist of
+   * Default constructor. @a upcall_functor is the instance of the
+   * FUNCTOR to be used by the queue. If @a upcall_functor is 0, Timer
+   * Hash will create a default FUNCTOR.  @a freelist the freelist of
    * timer nodes.  If 0, then a default freelist will be created.  The default
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
@@ -194,38 +196,42 @@ public:
   virtual ~ACE_Timer_Hash_T (void);
 
   /// True if queue is empty, else false.
-  virtual int is_empty (void) const;
+  virtual bool is_empty (void) const;
 
   /// Returns the time of the earlier node in the <ACE_Timer_Hash>.
   /// Must be called on a non-empty queue.
   virtual const ACE_Time_Value &earliest_time (void) const;
 
   /**
-   * Resets the interval of the timer represented by <timer_id> to
-   * <interval>, which is specified in relative time to the current
-   * <gettimeofday>.  If <interval> is equal to
-   * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+   * Resets the interval of the timer represented by @a timer_id to
+   * @a interval, which is specified in relative time to the current
+   * <gettimeofday>.  If @a interval is equal to
+   * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_interval (long timer_id,
                               const ACE_Time_Value &interval);
 
   /**
-   * Cancel all timer associated with <type>.  If <dont_call> is 0
+   * Cancel all timer associated with @a type.  If <dont_call> is 0
    * then the <functor> will be invoked.  Returns number of timers
-   * cancelled.
+   * cancelled. If any valid timer is not cancelled before destruction
+   * of this instance of ACE_Timer_Hash_T then user will get a memory
+   * leak.
    */
   virtual int cancel (const TYPE &type,
                       int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single timer that matches the <timer_id> value (which
+   * Cancel the single timer that matches the @a timer_id value (which
    * was returned from the <schedule> method).  If act is non-NULL
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If <dont_call> is
    * 0 then the <functor> will be invoked.  Returns 1 if cancellation
-   * succeeded and 0 if the <timer_id> wasn't found.
+   * succeeded and 0 if the @a timer_id wasn't found.  If any valid
+   * timer is not cancelled before destruction of this instance of
+   * ACE_Timer_Hash_T then user will get a memory leak.
    */
   virtual int cancel (long timer_id,
                       const void **act = 0,
@@ -239,7 +245,7 @@ public:
   virtual int expire (void);
 
   /**
-   * Run the <functor> for all timers whose values are <= <cur_time>.
+   * Run the <functor> for all timers whose values are <= @a current_time.
    * This does not account for <timer_skew>.  Returns the number of
    * timers canceled.
    */
@@ -257,13 +263,17 @@ public:
   /// Reads the earliest node from the queue and returns it.
   virtual ACE_Timer_Node_T<TYPE> *get_first (void);
 
+protected:
+  /// Factory method that frees a previously allocated node.
+  virtual void free_node (ACE_Timer_Node_T<TYPE> *);
+
 private:
 
   /**
-   * Schedule <type> that will expire at <future_time>,
-   * which is specified in absolute time.  If it expires then <act> is
-   * passed in as the value to the <functor>.  If <interval> is != to
-   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
+   * Schedule @a type that will expire at @a future_time,
+   * which is specified in absolute time.  If it expires then @a act is
+   * passed in as the value to the <functor>.  If @a interval is != to
+   * ACE_Time_Value::zero then it is used to reschedule the @a type
    * automatically, using relative time to the current <gettimeofday>.
    * This method returns a <timer_id> that is a pointer to a token
    * which stores information about the event. This <timer_id> can be
@@ -279,7 +289,7 @@ private:
   virtual int dispatch_info_i (const ACE_Time_Value &current_time,
                                ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
-  /// Reschedule an "interval" <ACE_Timer_Node>.
+  /// Reschedule an "interval" ACE_Timer_Node.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 
   /// Finds the earliest node
@@ -309,6 +319,10 @@ private:
   ptrdiff_t pointer_base_;
 #endif
 
+  /// Hash_Token is usually allocated in schedule but its
+  /// deallocation is problematic and token_list_ helps with this.
+  ACE_Locked_Free_List<Hash_Token<TYPE>, ACE_Null_Mutex> token_list_;
+
   // = Don't allow these operations for now.
   ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
@@ -316,9 +330,9 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HAS_BROKEN_HPUX_TEMPLATES)
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Hash_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE  */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_Hash_T.cpp")

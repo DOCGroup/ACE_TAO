@@ -2,11 +2,24 @@
 //
 // $Id$
 
+#if defined (ACE_HAS_INTRINSIC_BYTESWAP)
+// Take advantage of MSVC++ byte swapping compiler intrinsics (found
+// in <stdlib.h>).
+# pragma intrinsic (_byteswap_ushort, _byteswap_ulong, _byteswap_uint64)
+#endif  /* ACE_HAS_INTRINSIC_BYTESWAP */
+
+#if defined (ACE_HAS_BSWAP_16) || defined (ACE_HAS_BSWAP_32) || defined (ACE_HAS_BSWAP_64)
+# include "ace/os_include/os_byteswap.h"
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //
 // The ACE_CDR::swap_X and ACE_CDR::swap_X_array routines are broken
-// in 4 cases for optimization:
+// in 5 cases for optimization:
+//
+// * MSVC++ 7.1 or better
+//   => Compiler intrinsics
 //
 // * AMD64 CPU + gnu g++
 //   => gcc amd64 inline assembly.
@@ -52,7 +65,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 ACE_CDR::swap_2 (const char *orig, char* target)
 {
-#if (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
+#if defined (ACE_HAS_INTRINSIC_BYTESWAP)
+  // Take advantage of MSVC++ compiler intrinsic byte swapping
+  // function.
+  *reinterpret_cast<unsigned short *> (target) =
+    _byteswap_ushort (*reinterpret_cast<unsigned short const *> (orig));
+#elif defined (ACE_HAS_BSWAP16)
+  *reinterpret_cast<uint16_t *> (target) =
+    bswap16 (*reinterpret_cast<uint16_t const *> (orig));
+#elif defined (ACE_HAS_BSWAP_16)
+  *reinterpret_cast<uint16_t *> (target) =
+    bswap_16 (*reinterpret_cast<uint16_t const *> (orig));
+#elif defined(ACE_HAS_INTEL_ASSEMBLY)
   unsigned short a =
     *reinterpret_cast<const unsigned short*> (orig);
   asm( "rolw $8, %0" : "=r" (a) : "0" (a) );
@@ -75,7 +99,18 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_4 (const char* orig, char* target)
 {
-#if (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
+#if defined (ACE_HAS_INTRINSIC_BYTESWAP)
+  // Take advantage of MSVC++ compiler intrinsic byte swapping
+  // function.
+  *reinterpret_cast<unsigned long *> (target) =
+    _byteswap_ulong (*reinterpret_cast<unsigned long const *> (orig));
+#elif defined (ACE_HAS_BSWAP32)
+  *reinterpret_cast<uint32_t *> (target) =
+    bswap32 (*reinterpret_cast<uint32_t const *> (orig));
+#elif defined (ACE_HAS_BSWAP_32)
+  *reinterpret_cast<uint32_t *> (target) =
+    bswap_32 (*reinterpret_cast<uint32_t const *> (orig));
+#elif defined(ACE_HAS_INTEL_ASSEMBLY)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   register unsigned int j =
     *reinterpret_cast<const unsigned int*> (orig);
@@ -93,13 +128,24 @@ ACE_CDR::swap_4 (const char* orig, char* target)
   register ACE_UINT32 x = * reinterpret_cast<const ACE_UINT32*> (orig);
   x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
   * reinterpret_cast<ACE_UINT32*> (target) = x;
-#endif
+#endif /* ACE_HAS_INTRINSIC_BYTESWAP */
 }
 
 ACE_INLINE void
 ACE_CDR::swap_8 (const char* orig, char* target)
 {
-#if defined(__amd64__) && defined(__GNUG__)
+#if defined (ACE_HAS_INTRINSIC_BYTESWAP)
+  // Take advantage of MSVC++ compiler intrinsic byte swapping
+  // function.
+  *reinterpret_cast<unsigned __int64 *> (target) =
+    _byteswap_uint64 (*reinterpret_cast<unsigned __int64 const *> (orig));
+#elif defined (ACE_HAS_BSWAP64)
+  *reinterpret_cast<uint64_t *> (target) =
+    bswap64 (*reinterpret_cast<uint64_t const *> (orig));
+#elif defined (ACE_HAS_BSWAP_64)
+  *reinterpret_cast<uint64_t *> (target) =
+    bswap_64 (*reinterpret_cast<uint64_t const *> (orig));
+#elif (defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__)
   register unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
   asm ("bswapq %1" : "=r" (x) : "0" (x));
@@ -144,7 +190,7 @@ ACE_CDR::swap_8 (const char* orig, char* target)
   y = (y << 24) | ((y & 0xff00) << 8) | ((y & 0xff0000) >> 8) | (y >> 24);
   * reinterpret_cast<ACE_UINT32*> (target) = y;
   * reinterpret_cast<ACE_UINT32*> (target + 4) = x;
-#endif
+#endif /* ACE_HAS_INTRINSIC_BYTESWAP */
 }
 
 ACE_INLINE void
@@ -187,8 +233,7 @@ ACE_CDR::first_size (size_t minsize)
 ACE_INLINE size_t
 ACE_CDR::next_size (size_t minsize)
 {
-  size_t newsize =
-    ACE_CDR::first_size (minsize);
+  size_t newsize = ACE_CDR::first_size (minsize);
 
   if (newsize == minsize)
     {

@@ -11,7 +11,7 @@ ACE_RCSID(TLI_SAP, CPP_ATM_client, "$Id$")
 
 /* ACE_XTI/ATM Client */
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -106,7 +106,7 @@ int main (int argc, char *argv[])
                    &optbuf) == -1)
     {
       if (errno != EWOULDBLOCK)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "connection failed"),
                           1);
@@ -121,14 +121,14 @@ int main (int argc, char *argv[])
       if (con.complete (cli_stream,
                         &remote_addr,
                         &tv) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "connection failed"),
                           1);
       else
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "connected to %s\n",
-		    remote_addr.addr_to_string ()));
+                    remote_addr.addr_to_string ()));
     }
 
   // Send data to server (correctly handles "incomplete writes").
@@ -156,7 +156,7 @@ int main (int argc, char *argv[])
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "your platform isn't configured to support XTI/ATM\n"),
+                     "your platform isn't configured to support XTI/ATM\n"),
                     1);
 }
 #endif /* ACE_HAS_TLI */

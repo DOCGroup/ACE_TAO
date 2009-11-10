@@ -42,8 +42,8 @@
 #include "test_config.h"
 
 ACE_RCSID (tests,
-	QtReactor_Test,
-	"$Id$")
+           QtReactor_Test,
+           "$Id$")
 
 #include <assert.h>
 #include <qapplication.h>
@@ -68,13 +68,15 @@ ACE_RCSID (tests,
 
 QTestApplication::QTestApplication (int argc, char *argv[]):
   QApplication (argc, argv, FALSE) /* do not enable GUI */
- {
-	connect (&finishTimer_, SIGNAL (timeout ()), this, SLOT (finishTest ()));
+{
+  //FUZZ: disable check_for_lack_ACE_OS
+  connect (&finishTimer_, SIGNAL (timeout ()), this, SLOT (finishTest ()));
+  //FUZZ: enable check_for_lack_ACE_OS
 }
 
 void QTestApplication::finishTest ()
 {
-  exit ();
+  ACE_OS::exit ();
 }
 
 void QTestApplication::exec (int msec)
@@ -116,9 +118,9 @@ const int TCPClientPings = 16;
 const int TCPTotalBytesToSend = TCPClientPings * TCPBytesToSend;
 
 /**
-	\class DgramHandler
-	\brief Simple event handler that receives and counts datagrams
-	as well as sends dgrams using timeouts.
+  \class DgramHandler
+  \brief Simple event handler that receives and counts datagrams
+  as well as sends dgrams using timeouts.
 */
 class DgramHandler: public ACE_Event_Handler
 {
@@ -126,10 +128,13 @@ public:
   DgramHandler (ACE_Reactor *p_reactor = 0);
   virtual ~DgramHandler ();
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int  open (const ACE_INET_Addr &local,
              int protocol_family=ACE_PROTOCOL_FAMILY_INET,
              int protocol=0,
              int reuse_addr=0);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close_mask);
@@ -148,8 +153,8 @@ private:
 };
 
 /**
-	\class TCPConnectionHandler
-	\brief TCP stream handler for both sides of connection.
+  \class TCPConnectionHandler
+  \brief TCP stream handler for both sides of connection.
 */
 class TCPConnectionHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
@@ -162,7 +167,10 @@ public:
   virtual int handle_output (ACE_HANDLE handle);
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close_mask);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int scheduleSend (ACE_Message_Block *);
   int sendBuffers ();
@@ -225,11 +233,11 @@ private:
 */
 
 DgramHandler::DgramHandler (ACE_Reactor *p_reactor):
-	ACE_Event_Handler (p_reactor),
-	dgramsSent_ (0),
-	dgramsReceived_ (0),
-	timeoutsTriggered_ (0),
-	expectedTriggers_ (0)
+  ACE_Event_Handler (p_reactor),
+  dgramsSent_ (0),
+  dgramsReceived_ (0),
+  timeoutsTriggered_ (0),
+  expectedTriggers_ (0)
 {
   reference_counting_policy ().value (Reference_Counting_Policy::ENABLED);
 }
@@ -240,16 +248,16 @@ DgramHandler::~DgramHandler ()
 }
 
 int  DgramHandler::open (const ACE_INET_Addr &local,
-	int protocol_family,
-	int protocol,
-	int reuse_addr)
+  int protocol_family,
+  int protocol,
+  int reuse_addr)
 {
   if (0 > peer_.open (local,
                       protocol_family,
                       protocol,
                       reuse_addr))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p \n"),
+                       ACE_TEXT (" (%P) %p\n"),
                        ACE_TEXT ("Cannot oper dgram socket")),
                       -1);
 
@@ -272,7 +280,7 @@ int DgramHandler::handle_input (ACE_HANDLE handle)
 
   if (0 >= result)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p \n"),
+                       ACE_TEXT (" (%P) %p\n"),
                        ACE_TEXT ("While reading datagram from socket"))
                       , -1);
   else
@@ -291,12 +299,11 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
     reactor ()->cancel_timer (this, 1);
 
   ACE_SOCK_Dgram socket;
-  if (-1 == socket.open (
-			 ACE_INET_Addr (static_cast< u_short > (0),
+  if (-1 == socket.open (ACE_INET_Addr (static_cast< u_short > (0),
                                         static_cast< ACE_UINT32 > (INADDR_ANY)),
-			 ACE_PROTOCOL_FAMILY_INET, 0, 1))
+                                        ACE_PROTOCOL_FAMILY_INET, 0, 1))
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT (" (%P) %p \n"),
+                ACE_TEXT (" (%P) %p\n"),
                 ACE_TEXT ("Cannot open socket for sending Qt dgrams")));
 
   ACE_INET_Addr peerAddr;
@@ -305,7 +312,7 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
   if (sizeof (sendBuffer) != socket.send (&sendBuffer,
                                           sizeof (sendBuffer), peerAddr))
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT (" (%P) %p \n"),
+                ACE_TEXT (" (%P) %p\n"),
                 ACE_TEXT ("Cannot send dgram")));
   else
     ++dgramsSent_;
@@ -360,11 +367,11 @@ int DgramHandler::expectedTriggers () const
 */
 
 TCPConnectionHandler::TCPConnectionHandler (bool p_serverSide):
-	buffers_ (0),
-	totalReceived_ (0),
-	totalSent_ (0),
-	serverSide_ (p_serverSide),
-	pingsNo_ (TCPClientPings)
+  buffers_ (0),
+  totalReceived_ (0),
+  totalSent_ (0),
+  serverSide_ (p_serverSide),
+  pingsNo_ (TCPClientPings)
 {
   reference_counting_policy ().value (Reference_Counting_Policy::ENABLED);
 }
@@ -389,7 +396,7 @@ int TCPConnectionHandler::handle_input (ACE_HANDLE handle)
           int result = scheduleSend (buffer);
           if (0 > result)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT (" (%P) %p \n"),
+                               ACE_TEXT (" (%P) %p\n"),
                                ACE_TEXT ("Cannot schedule TCP reply")),
                               -1);
         }
@@ -439,7 +446,7 @@ int TCPConnectionHandler::open (void * )
   if (!serverSide_)
     {
       ACE_Message_Block *buffer = new ACE_Message_Block (TCPBytesToSend);
-      char *bufferData = 	buffer->wr_ptr ();
+      char *bufferData = buffer->wr_ptr ();
       int i;
 
       for (i = buffer->size () - 1; i >= 0; --i)
@@ -469,7 +476,7 @@ int TCPConnectionHandler::scheduleSend (ACE_Message_Block * buffer)
 
   if (0 > sendBuffers ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p \n"),
+                       ACE_TEXT (" (%P) %p\n"),
                        ACE_TEXT ("Cannot schedule TCP send.")),
                       -1);
   return 0;
@@ -531,8 +538,8 @@ int TCPConnectionHandler::totalSent () const
 */
 
 HandlersRegister::HandlersRegister (ACE_Reactor *p_reactor):
-	reactor_ (p_reactor),
-	TCPServersNo_ (0)
+  reactor_ (p_reactor),
+  TCPServersNo_ (0)
 {
   int i;
 
@@ -608,7 +615,7 @@ int HandlersRegister::scheduleTimers (const ACE_Time_Value &p_TestTime)
                                           ACE_Time_Value::zero,
                                           p_TestTime * (0.5 / DgramsToSend)))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P) %p \n"),
+                           ACE_TEXT (" (%P) %p\n"),
                            ACE_TEXT ("Cannot schedule ACE timer")),
                           -1);
 
@@ -630,7 +637,7 @@ int HandlersRegister::registerDgramHandlers ()
                                                         ACE_TEXT ("127.0.0.1"),
                                                         ACE_PROTOCOL_FAMILY_INET)))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%P) %p \n"),
+                         ACE_TEXT (" (%P) %p\n"),
                          ACE_TEXT ("Cannot open dgram handler")),
                         -1);
 
@@ -639,7 +646,7 @@ int HandlersRegister::registerDgramHandlers ()
     if (-1 == reactor_->register_handler (DgramHandlers_[ i ],
                                           ACE_Event_Handler::READ_MASK))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%P) %p \n"),
+                         ACE_TEXT (" (%P) %p\n"),
                          ACE_TEXT ("Cannot register dgram handler")),
                         -1);
   return 0;
@@ -651,7 +658,7 @@ int HandlersRegister::registerTCPHandlers ()
 
   if (-1 == acceptor_->open (addr, reactor_, 1))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p \n"),
+                       ACE_TEXT (" (%P) %p\n"),
                        ACE_TEXT ("Cannot open acceptor port")),
                       -1);
 
@@ -814,7 +821,7 @@ int HandlersRegister::analyzeTCP () const
 */
 
 TCPAcceptorHandler::TCPAcceptorHandler (HandlersRegister *p_handlersRegister):
-	handlersRegister_ (p_handlersRegister)
+  handlersRegister_ (p_handlersRegister)
 {
   reference_counting_policy ().value (Reference_Counting_Policy::ENABLED);
 }

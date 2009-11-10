@@ -60,7 +60,7 @@ typedef HINSTANCE DLHANDLE; /* WIN32 */
 #define dll_open(libfn) dlopen(libfn, DLL_DLOPEN_FLAGS)
 
 #elif defined(DLL_HPSHL)
-#define dll_open(libfn) shl_load((libfn), BIND_IMMEDIATE, NULL)
+#define dll_open(libfn) shl_load((libfn), BIND_IMMEDIATE, 0)
 
 #elif defined(DLL_WIN32)
 DLHANDLE dll_open(char *libfn);

@@ -4,7 +4,7 @@
 
 ACE_RCSID(Caching, test_URL, "$Id$")
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
@@ -18,7 +18,7 @@ int main (int argc, char *argv[])
   ouch1[1].value ("value 2");
   ouch1[2].name ("name 3");
   ouch1[2].value ("value 3");
- 
+
   original.url_query (1, ouch1, 3);
 
   original.dump ();

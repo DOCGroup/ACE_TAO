@@ -27,8 +27,8 @@
 #include "ace/Free_List.h"
 
 ACE_RCSID (tests,
-	   Message_Block_Test,
-	   "$Id$")
+           Message_Block_Test,
+           "$Id$")
 
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;
@@ -65,8 +65,10 @@ public:
   // Allows the producer to pass messages to the <Message_Block>.
 
 private:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int close (u_long);
   // Close hook.
+  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 int
@@ -103,9 +105,10 @@ Worker_Task::svc (void)
     {
       ACE_Message_Block *mb = 0;
 
-      int dequeue_results = this->msg_queue ()->dequeue_head (mb);
-
-      ACE_ASSERT (dequeue_results != -1);
+      if (-1 == this->msg_queue ()->dequeue_head (mb))
+        ACE_ERROR_BREAK ((LM_ERROR,
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("Worker_Task dequeue_head")));
 
       size_t length = mb->length ();
 
@@ -116,18 +119,24 @@ Worker_Task::svc (void)
       // of the header and reference counts the data.
       if (this->next () != 0)
         {
-          int duplicate_result = this->put_next (mb->duplicate ());
-        ACE_ASSERT (duplicate_result != -1);
+          if (-1 == this->put_next (mb->duplicate ()))
+            ACE_ERROR_BREAK ((LM_ERROR,
+                              ACE_TEXT ("(%t) %p\n"),
+                              ACE_TEXT ("Worker_Task put_next")));
         }
 
       // If there's no next() Task to send to, then we'll consume the
       // message here.
       else if (length > 0)
         {
-          int current_count = ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (mb->rd_ptr ()));
+          int current_count = ACE_OS::atoi ((ACE_TCHAR *)(mb->rd_ptr ()));
           int i;
 
-          ACE_ASSERT (count == current_count);
+          if (count != current_count)
+            ACE_ERROR_BREAK ((LM_ERROR,
+                              ACE_TEXT ("(%t) count from block should be %d ")
+                              ACE_TEXT ("but is %d\n"),
+                              count, current_count));
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) enqueueing %d duplicates\n"),
@@ -154,7 +163,11 @@ Worker_Task::svc (void)
                            // Don't block indefinitely if we flow control...
                            (ACE_Time_Value *) &ACE_Time_Value::zero);
 
-              ACE_ASSERT (enqueue_prio_result != -1);
+              if (enqueue_prio_result == -1)
+                ACE_ERROR_BREAK ((LM_ERROR,
+                                  ACE_TEXT ("(%t) Pass %d %p\n"),
+                                  i,
+                                  ACE_TEXT ("Worker_Task enqueue_prio")));
             }
 
           ACE_DEBUG ((LM_DEBUG,
@@ -164,20 +177,42 @@ Worker_Task::svc (void)
           // Dequeue the same <current_count> duplicates.
           for (i = current_count; i > 0; i--)
             {
-              int deqresult = this->msg_queue ()->dequeue_head (dup);
-              ACE_ASSERT (deqresult != -1);
-              ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (dup->rd_ptr ())));
-              ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
-              ACE_ASSERT (dup->msg_priority () == ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
+              if (-1 == this->msg_queue ()->dequeue_head (dup))
+                ACE_ERROR_BREAK ((LM_ERROR,
+                                  ACE_TEXT ("(%t) Dup %d, %p\n"),
+                                  i,
+                                  ACE_TEXT ("Worker_Task dequeue dups")));
+              if (count != ACE_OS::atoi ((ACE_TCHAR *)(dup->rd_ptr ())))
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("(%t) line %l, Dup %d, block's count ")
+                            ACE_TEXT ("is %d but should be %d\n"),
+                            i,
+                            ACE_OS::atoi ((ACE_TCHAR *)(dup->rd_ptr ())),
+                            count));
+              if (0 != ACE_OS::strcmp ((ACE_TCHAR *)mb->rd_ptr (),
+                                       (ACE_TCHAR *)dup->rd_ptr ()))
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("(%t) Dup %d text is %s; ")
+                            ACE_TEXT ("should be %s\n"),
+                            i,
+                            dup->rd_ptr (),
+                            mb->rd_ptr ()));
+              if (dup->msg_priority () != ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1)
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("(%t) Dup %d block priority is %u; ")
+                            ACE_TEXT ("should be %u\n"),
+                            i,
+                            (unsigned int)dup->msg_priority (),
+                            (unsigned int)(ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1)));
               dup->release ();
             }
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, length = %d, prio = %d, text = \"%*s\"\n"),
+                      ACE_TEXT ("(%t) in iteration %d, length = %B, prio = %d, text = \"%*s\"\n"),
                       count,
                       length,
                       mb->msg_priority (),
-                      length - 2, // remove the trailing "\n\0"
+                      (int)(length - 2), // remove the trailing "\n\0"
                       mb->rd_ptr ()));
         }
 
@@ -186,9 +221,11 @@ Worker_Task::svc (void)
 
       if (length == 0)
         {
+          //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, got NULL message, exiting\n"),
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, got NULL message, exiting\n"),
                       count, this->msg_queue ()->message_count ()));
+          //FUZZ: enable check_for_NULL
           break;
         }
     }
@@ -212,6 +249,7 @@ produce (Worker_Task &worker_task,
          ACE_Allocator *alloc_strategy)
 {
   ACE_Message_Block *mb;
+  int status;
 
   // Send <n_iteration> messages through the pipeline.
   for (size_t count = 0; count < n_iterations; count++)
@@ -232,9 +270,36 @@ produce (Worker_Task &worker_task,
                                          ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY), // priority
                       -1);
 
+      // Try once to copy in more than the block will hold; should yield an
+      // error with ENOSPC.
+      if (count == 0)
+        {
+          status = mb->copy ((char *) buf, n + 1);
+          if (status != -1)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT (" (%t) Copy %B bytes into %B byte block ")
+                        ACE_TEXT ("should fail but didn't\n"),
+                        n + 1,
+                        n));
+          else if (errno != ENOSPC)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%t) Copy into too-small block failed ")
+                          ACE_TEXT ("but with %p; should be ENOSPC\n"),
+                          ACE_TEXT ("wrong error")));
+            }
+          else
+            ACE_DEBUG ((LM_INFO,
+                        ACE_TEXT (" (%t) Copy too-long test succeeded\n")));
+        }
       // Copy buf into the Message_Block and update the wr_ptr ().
-      mb->copy ((char *) buf, n);
-
+      status = mb->copy ((char *) buf, n);
+      if (status != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%t) Copy to block should be good but %p\n"),
+                      ACE_TEXT ("failed")));
+        }
       // Pass the message to the Worker_Task.
       if (worker_task.put (mb,
                            // Don't block indefinitely if we flow control...
@@ -246,7 +311,7 @@ produce (Worker_Task &worker_task,
 
   // Send a shutdown message to the waiting threads and exit.
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n(%t) sending shutdown message\n")));
+              ACE_TEXT (" (%t) sending shutdown message\n")));
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (0,
@@ -263,7 +328,7 @@ produce (Worker_Task &worker_task,
                 ACE_TEXT ("put")));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n(%t) end producer\n")));
+              ACE_TEXT (" (%t) end producer\n")));
   return 0;
 }
 

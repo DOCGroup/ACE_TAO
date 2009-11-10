@@ -50,7 +50,6 @@ sub usage
               . " \n --protocol-spl=<iiop>"
               . " \n --wait-strategy-spl=<rw, lf>"
               . " \n --output-prefix=<output path>"
-              . " \n --messaging-spl=<giop>"
               . " \n --context-specific-optimizations=<dispatch>"
               . " \n ]"
               . "\n";
@@ -91,7 +90,6 @@ my %specialization_table  = (
  "select-mt", $spl_prefix_path . "specializations/Reactor_Family/Select_Reactor_MT.spl",
  "select-st", $spl_prefix_path . "specializations/Reactor_Family/Select_Reactor_ST.spl",
  "tp-reactor",$spl_prefix_path . "specializations/Reactor_Family/TP_Reactor.spl",
- "giop", $spl_prefix_path . "specializations/Messaging_Strategy/GIOP.spl",
  "iiop", $spl_prefix_path . "specializations/Protocol_Family/IIOP/iiop.spl",
  "rw",   $spl_prefix_path . "specializations/Wait_Strategy/Wait_On_Read.spl",
  "lf",   $spl_prefix_path . "specializations/Wait_Strategy/Wait_On_Leader_Follower.spl",
@@ -101,7 +99,6 @@ my %specialization_table  = (
 my $ret = GetOptions ("prefix-path=s"   => \$prefix_path,
                       "reactor-spl=s"   => \$reactor_type,
                       "protocol-spl=s"  => \$protocol_type,
-                      "messaging-spl=s" => \$messaging_type,
                       "wait-strategy-spl=s" => \$wait_strat_type,
                       "output-prefix:s" => \$output_prefix,
                       "context-specific-optimizations=s" => \$context_opt);
@@ -165,21 +162,6 @@ if ($wait_strat_type)
   if (! spl_file)
   {
     print "Invalid specialization for the Wait strategy \n";
-    usage;
-    exit 1;
-  }
-
-  # specialize the wait strategy
-  FOCUSParser::Specialize_Components ($prefix_path, $spl_file, $output_prefix);
-}
-
-#Messaging specialization
-if ($messaging_type)
-{
-  my $spl_file = $specialization_table {$messaging_type};
-  if (! spl_file)
-  {
-    print "Invalid specialization for Messaging strategy \n";
     usage;
     exit 1;
   }

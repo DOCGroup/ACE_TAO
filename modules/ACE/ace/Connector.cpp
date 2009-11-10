@@ -30,6 +30,9 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler
 
   this->reference_counting_policy ().value
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+
+  if (this->svc_handler_ != 0)
+    this->svc_handler_->add_reference ();
 }
 
 template <class SVC_HANDLER> SVC_HANDLER *
@@ -60,8 +63,8 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump (void) const
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("svc_handler_ = %x"), this->svc_handler_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ntimer_id_ = %d"), this->timer_id_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("svc_handler_ = %x"), this->svc_handler_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ntimer_id_ = %d"), this->timer_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -129,6 +132,9 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
     svc_handler->handle_close (svc_handler->get_handle (),
                                ACE_Event_Handler::TIMER_MASK);
 
+  if (svc_handler != 0)
+    svc_handler->remove_reference ();
+
   return retval;
 }
 
@@ -145,7 +151,11 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
 
   // Close Svc_Handler.
   if (svc_handler != 0)
-    svc_handler->close (0);
+    {
+      svc_handler->close (NORMAL_CLOSE_OPERATION);
+
+      svc_handler->remove_reference ();
+    }
 
   return retval;
 }
@@ -162,7 +172,11 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   if (svc_handler != 0)
-    connector.initialize_svc_handler (handle, svc_handler);
+    {
+      connector.initialize_svc_handler (handle, svc_handler);
+
+      svc_handler->remove_reference ();
+    }
 
   return retval;
 }
@@ -189,7 +203,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump (void) const
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nflags_ = %d"), this->flags_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags_ = %d"), this->flags_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -233,7 +247,9 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::activate_svc_handler (SVC_HAND
     {
       // Make sure to close down the <svc_handler> to avoid descriptor
       // leaks.
-      svc_handler->close (0);
+      // The connection was already made; so this close is a "normal"
+      // close operation.
+      svc_handler->close (NORMAL_CLOSE_OPERATION);
       return -1;
     }
   else
@@ -431,10 +447,10 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_i
       if (sh_copy == 0)
         {
           if (sh)
-            sh->close (0);
+            sh->close (CLOSE_DURING_NEW_CONNECTION);
         }
       else if (*sh_copy)
-        (*sh_copy)->close (0);
+        (*sh_copy)->close (CLOSE_DURING_NEW_CONNECTION);
     }
 
   return -1;
@@ -571,7 +587,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::nonblocking_connect
  reactor_registration_failure:
   // Close the svc_handler
 
-  sh->close (0);
+  sh->close (CLOSE_DURING_NEW_CONNECTION);
 
   return -1;
 }
@@ -591,7 +607,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::initialize_svc_handler
 {
   // Try to find out if the reactor uses event associations for the
   // handles it waits on. If so we need to reset it.
-  int reset_new_handle =
+  bool reset_new_handle =
     this->reactor ()->uses_event_associations ();
 
   if (reset_new_handle)
@@ -617,7 +633,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::initialize_svc_handler
         this->activate_svc_handler (svc_handler);
       else // do the svc handler close below...
 #endif /* ACE_WIN32 */
-        svc_handler->close (0);
+        svc_handler->close (NORMAL_CLOSE_OPERATION);
     }
 }
 
@@ -656,7 +672,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
   while (1)
     {
       ACE_Unbounded_Set_Iterator<ACE_HANDLE>
-	iterator (this->non_blocking_handles ());
+        iterator (this->non_blocking_handles ());
       if (!iterator.next (handle))
         break;
 
@@ -665,7 +681,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
       if (handler == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%t: Connector::close h %d, no handler\n"),
+                      ACE_TEXT ("%t: Connector::close h %d, no handler\n"),
                       *handle));
           // Remove handle from the set of non-blocking handles.
           this->non_blocking_handles ().remove (*handle);
@@ -678,8 +694,8 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
       if (nbch == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%t: Connector::close h %d handler %@ ")
-                      ACE_LIB_TEXT ("not a legit handler\n"),
+                      ACE_TEXT ("%t: Connector::close h %d handler %@ ")
+                      ACE_TEXT ("not a legit handler\n"),
                       *handle,
                       handler));
           // Remove handle from the set of non-blocking handles.
@@ -692,7 +708,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
       this->cancel (svc_handler);
 
       // Close the associated Svc_Handler.
-      svc_handler->close (0);
+      svc_handler->close (NORMAL_CLOSE_OPERATION);
     }
 
   return 0;
@@ -736,9 +752,9 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::info (ACE_TCHAR **strp, size_t
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s"),
-                   ACE_LIB_TEXT ("ACE_Connector"),
-                   ACE_LIB_TEXT ("# connector factory\n"));
+                   ACE_TEXT ("%s\t %s"),
+                   ACE_TEXT ("ACE_Connector"),
+                   ACE_TEXT ("# connector factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -775,12 +791,12 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
 
   // First we decide if we need to clean up.
   if (this->creation_strategy_ != 0 &&
-      this->delete_creation_strategy_ != 0 &&
+      this->delete_creation_strategy_ &&
       cre_s != 0)
     {
       delete this->creation_strategy_;
       this->creation_strategy_ = 0;
-      this->delete_creation_strategy_ = 0;
+      this->delete_creation_strategy_ = false;
     }
 
   if (cre_s != 0)
@@ -790,19 +806,19 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
       ACE_NEW_RETURN (this->creation_strategy_,
                       CREATION_STRATEGY,
                       -1);
-      this->delete_creation_strategy_ = 1;
+      this->delete_creation_strategy_ = true;
     }
 
 
   // Initialize the accept strategy.
 
   if (this->connect_strategy_ != 0 &&
-      this->delete_connect_strategy_ != 0 &&
+      this->delete_connect_strategy_ &&
       conn_s != 0)
     {
       delete this->connect_strategy_;
       this->connect_strategy_ = 0;
-      this->delete_connect_strategy_ = 0;
+      this->delete_connect_strategy_ = false;
     }
 
   if (conn_s != 0)
@@ -812,18 +828,18 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
       ACE_NEW_RETURN (this->connect_strategy_,
                       CONNECT_STRATEGY,
                       -1);
-      this->delete_connect_strategy_ = 1;
+      this->delete_connect_strategy_ = true;
     }
 
   // Initialize the concurrency strategy.
 
   if (this->concurrency_strategy_ != 0 &&
-      this->delete_concurrency_strategy_ != 0 &&
+      this->delete_concurrency_strategy_ &&
       con_s != 0)
     {
       delete this->concurrency_strategy_;
       this->concurrency_strategy_ = 0;
-      this->delete_concurrency_strategy_ = 0;
+      this->delete_concurrency_strategy_ = false;
     }
 
   if (con_s != 0)
@@ -833,7 +849,7 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
       ACE_NEW_RETURN (this->concurrency_strategy_,
                       CONCURRENCY_STRATEGY,
                       -1);
-      this->delete_concurrency_strategy_ = 1;
+      this->delete_concurrency_strategy_ = true;
     }
 
   return 0;
@@ -847,16 +863,16 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Strategy_Connecto
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
  int flags)
   : creation_strategy_ (0),
-    delete_creation_strategy_ (0),
+    delete_creation_strategy_ (false),
     connect_strategy_ (0),
-    delete_connect_strategy_ (0),
+    delete_connect_strategy_ (false),
     concurrency_strategy_ (0),
-    delete_concurrency_strategy_ (0)
+    delete_concurrency_strategy_ (false)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Strategy_Connector");
 
   if (this->open (reactor, cre_s, conn_s, con_s, flags) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
@@ -873,17 +889,17 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
 {
   if (this->delete_creation_strategy_)
     delete this->creation_strategy_;
-  this->delete_creation_strategy_ = 0;
+  this->delete_creation_strategy_ = false;
   this->creation_strategy_ = 0;
 
   if (this->delete_connect_strategy_)
     delete this->connect_strategy_;
-  this->delete_connect_strategy_ = 0;
+  this->delete_connect_strategy_ = false;
   this->connect_strategy_ = 0;
 
   if (this->delete_concurrency_strategy_)
     delete this->concurrency_strategy_;
-  this->delete_concurrency_strategy_ = 0;
+  this->delete_concurrency_strategy_ = false;
   this->concurrency_strategy_ = 0;
 
   return SUPER::close ();

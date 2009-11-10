@@ -62,7 +62,7 @@ public:
 
   /// @a toConnect = 1 - makes connect to remote address
   int send_echo_check (ACE_INET_Addr & remote_addr,
-                       int to_connect = 0);
+                       bool to_connect = false);
 
   /// To receive @c ICMP_ECHOREPLY. To be called after successfully
   /// sending @c ICMP_ECHO.
@@ -70,7 +70,7 @@ public:
 
   /// @a toConnect = 1 - makes connect to remote address
   int make_echo_check (ACE_INET_Addr & remote_addr,
-                       int to_connect = 0,
+                       bool to_connect = false,
                        ACE_Time_Value const * timeout = &time_default_);
 
   char * icmp_recv_buff (void);
@@ -102,8 +102,7 @@ private:
 
   ACE_UINT16 sequence_number_;
 
-  int connected_socket_;
-
+  bool connected_socket_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

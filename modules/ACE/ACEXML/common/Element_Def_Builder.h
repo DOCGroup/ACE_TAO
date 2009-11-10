@@ -63,7 +63,7 @@ public:
   virtual int setElementName (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
                               const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 
   /**
    * Define the content type of the element.
@@ -71,7 +71,7 @@ public:
    * @retval 0 if valid, -1 otherwise.
    */
   virtual int setContentType (CONTENT_TYPE type ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 
   /**
    * Insert one more element into Mixed definition.
@@ -79,7 +79,7 @@ public:
   virtual int insertMixedElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *localName,
                                   const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 
   /**
    * Start a new group of children.
@@ -119,7 +119,7 @@ public:
   virtual int insertElement  (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
                               const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 
   /**
    * Dump the content of the attribute definition.

@@ -41,7 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *        (i.e. O(n)) search times.
  *
  * Map implementation that focuses on small footprint and fast
- * iteration.  Search times are, however, linear (O(n)) meaning that
+ * iteration. Search times are, however, linear (O(n)) meaning that
  * this map isn't suitable for large data sets that will be searched
  * in performance critical areas of code.  Iteration over large data
  * sets, however, is faster than linked list-based maps, for example,
@@ -159,7 +159,7 @@ public:
   /// Return @c true if the map is empty, else @c false.
   bool is_empty (void) const;  // ACE style
 
-  /** 
+  /**
    * Return @c true if the map is empty, else @c false.  We recommend
    * using @c is_empty() instead since it's more consistent with the
    * ACE container naming conventions.

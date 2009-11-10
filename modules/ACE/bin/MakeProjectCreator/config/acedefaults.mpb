@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: ipv6 {
+project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode {
   staticflags += ACE_AS_STATIC_LIBS
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
@@ -9,7 +9,7 @@ project: ipv6 {
   // Support the alternative Borland Make project type
   specific(bmake) {
     unicode_flags += -DACE_USES_WCHAR
-    macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(ILIBMODIFIER)\\")
+    macros += MPC_LIB_MODIFIER=\\"$(LIBMODIFIER)$(ULIBMODIFIER)\\"
     debug_macros += ACE_NO_INLINE=1
   }
 
@@ -19,8 +19,7 @@ project: ipv6 {
     libpaths -= $(ACE_ROOT)/lib
   }
 
-  specific(vc8) {
-    // Enable structured exception handling
-    ExceptionHandling = 2
+  specific(prop:microsoft) {
+    macro_for_lib_modifier=1
   }
 }

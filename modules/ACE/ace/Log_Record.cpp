@@ -8,6 +8,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/CDR_Stream.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Log_Record.inl"
@@ -31,38 +32,38 @@ namespace
   // Symbolic names for the <ACE_Log_Priority> enumerators.
   ACE_TCHAR const * ace_priority_names[] =
     {
-      ACE_LIB_TEXT ("LM_SHUTDOWN"),
-      ACE_LIB_TEXT ("LM_TRACE"),
-      ACE_LIB_TEXT ("LM_DEBUG"),
-      ACE_LIB_TEXT ("LM_INFO"),
-      ACE_LIB_TEXT ("LM_NOTICE"),
-      ACE_LIB_TEXT ("LM_WARNING"),
-      ACE_LIB_TEXT ("LM_STARTUP"),
-      ACE_LIB_TEXT ("LM_ERROR"),
-      ACE_LIB_TEXT ("LM_CRITICAL"),
-      ACE_LIB_TEXT ("LM_ALERT"),
-      ACE_LIB_TEXT ("LM_EMERGENCY"),
-      ACE_LIB_TEXT ("LM_UNK(04000)"),
-      ACE_LIB_TEXT ("LM_UNK(010000)"),
-      ACE_LIB_TEXT ("LM_UNK(020000)"),
-      ACE_LIB_TEXT ("LM_UNK(040000)"),
-      ACE_LIB_TEXT ("LM_UNK(0100000)"),
-      ACE_LIB_TEXT ("LM_UNK(0200000)"),
-      ACE_LIB_TEXT ("LM_UNK(0400000)"),
-      ACE_LIB_TEXT ("LM_UNK(01000000)"),
-      ACE_LIB_TEXT ("LM_UNK(02000000)"),
-      ACE_LIB_TEXT ("LM_UNK(04000000)"),
-      ACE_LIB_TEXT ("LM_UNK(010000000)"),
-      ACE_LIB_TEXT ("LM_UNK(020000000)"),
-      ACE_LIB_TEXT ("LM_UNK(040000000)"),
-      ACE_LIB_TEXT ("LM_UNK(0100000000)"),
-      ACE_LIB_TEXT ("LM_UNK(0200000000)"),
-      ACE_LIB_TEXT ("LM_UNK(0400000000)"),
-      ACE_LIB_TEXT ("LM_UNK(01000000000)"),
-      ACE_LIB_TEXT ("LM_UNK(02000000000)"),
-      ACE_LIB_TEXT ("LM_UNK(04000000000)"),
-      ACE_LIB_TEXT ("LM_UNK(010000000000)"),
-      ACE_LIB_TEXT ("LM_UNK(020000000000)")
+      ACE_TEXT ("LM_SHUTDOWN"),
+      ACE_TEXT ("LM_TRACE"),
+      ACE_TEXT ("LM_DEBUG"),
+      ACE_TEXT ("LM_INFO"),
+      ACE_TEXT ("LM_NOTICE"),
+      ACE_TEXT ("LM_WARNING"),
+      ACE_TEXT ("LM_STARTUP"),
+      ACE_TEXT ("LM_ERROR"),
+      ACE_TEXT ("LM_CRITICAL"),
+      ACE_TEXT ("LM_ALERT"),
+      ACE_TEXT ("LM_EMERGENCY"),
+      ACE_TEXT ("LM_UNK(04000)"),
+      ACE_TEXT ("LM_UNK(010000)"),
+      ACE_TEXT ("LM_UNK(020000)"),
+      ACE_TEXT ("LM_UNK(040000)"),
+      ACE_TEXT ("LM_UNK(0100000)"),
+      ACE_TEXT ("LM_UNK(0200000)"),
+      ACE_TEXT ("LM_UNK(0400000)"),
+      ACE_TEXT ("LM_UNK(01000000)"),
+      ACE_TEXT ("LM_UNK(02000000)"),
+      ACE_TEXT ("LM_UNK(04000000)"),
+      ACE_TEXT ("LM_UNK(010000000)"),
+      ACE_TEXT ("LM_UNK(020000000)"),
+      ACE_TEXT ("LM_UNK(040000000)"),
+      ACE_TEXT ("LM_UNK(0100000000)"),
+      ACE_TEXT ("LM_UNK(0200000000)"),
+      ACE_TEXT ("LM_UNK(0400000000)"),
+      ACE_TEXT ("LM_UNK(01000000000)"),
+      ACE_TEXT ("LM_UNK(02000000000)"),
+      ACE_TEXT ("LM_UNK(04000000000)"),
+      ACE_TEXT ("LM_UNK(010000000000)"),
+      ACE_TEXT ("LM_UNK(020000000000)")
     };
 }
 
@@ -108,13 +109,15 @@ ACE_Log_Record::dump (void) const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("length_ = %d\n"), this->length_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntype_ = %u\n"), this->type_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->secs_, this->usecs_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %u\n"), this->pid_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %d\n"), this->length_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %u\n"), this->type_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%:, %d)\n"),
+              this->secs_, this->usecs_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %u\n"), this->pid_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
               this->msg_data_, this->msg_data_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_size_ = ") ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n"), this->msg_data_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_size_ = %B\n"),
+              this->msg_data_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -138,7 +141,7 @@ ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
-                                long ts_sec,
+                                time_t ts_sec,
                                 long p)
   : length_ (0),
     type_ (ACE_UINT32 (lp)),
@@ -162,7 +165,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
                                 long p)
   : length_ (0),
     type_ (ACE_UINT32 (lp)),
-    secs_ ((ACE_UINT32) ts.sec ()),
+    secs_ (ts.sec ()),
     usecs_ ((ACE_UINT32) ts.usec ()),
     pid_ (ACE_UINT32 (p)),
     msg_data_ (0),
@@ -220,13 +223,13 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   // The sprintf format needs to be different for Windows and POSIX
   // in the wide-char case.
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *time_fmt =         ACE_LIB_TEXT ("%s.%03ld %s");
-  const ACE_TCHAR *verbose_fmt =      ACE_LIB_TEXT ("%s@%s@%u@%s@%s");
-  const ACE_TCHAR *verbose_lite_fmt = ACE_LIB_TEXT ("%s@%s@%s");
+  const ACE_TCHAR *time_fmt =         ACE_TEXT ("%s.%03ld %s");
+  const ACE_TCHAR *verbose_fmt =      ACE_TEXT ("%s@%s@%u@%s@%s");
+  const ACE_TCHAR *verbose_lite_fmt = ACE_TEXT ("%s@%s@%s");
 #else
-  const ACE_TCHAR *time_fmt = ACE_LIB_TEXT ("%ls.%03ld %ls");
-  const ACE_TCHAR *verbose_fmt = ACE_LIB_TEXT ("%ls@%ls@%u@%ls@%ls");
-  const ACE_TCHAR *verbose_lite_fmt = ACE_LIB_TEXT ("%ls@%ls@%ls");
+  const ACE_TCHAR *time_fmt = ACE_TEXT ("%ls.%03ld %ls");
+  const ACE_TCHAR *verbose_fmt = ACE_TEXT ("%ls@%ls@%u@%ls@%ls");
+  const ACE_TCHAR *verbose_lite_fmt = ACE_TEXT ("%ls@%ls@%ls");
 #endif
 
   if (ACE_BIT_ENABLED (verbose_flag,
@@ -237,7 +240,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       time_t const now = this->secs_;
       ACE_TCHAR ctp[26]; // 26 is a magic number...
 
-      if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
+      if (ACE_OS::ctime_r (&now, ctp, sizeof ctp / sizeof (ACE_TCHAR)) == 0)
         return -1;
 
       /* 01234567890123456789012345 */
@@ -257,7 +260,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                        ACE_Log_Msg::VERBOSE))
     {
       const ACE_TCHAR *lhost_name = ((host_name == 0)
-                                      ? ACE_LIB_TEXT ("<local_host>")
+                                      ? ACE_TEXT ("<local_host>")
                                       : host_name);
       ACE_OS::sprintf (verbose_msg,
                        verbose_fmt,
@@ -288,19 +291,23 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
       ACE_TCHAR *verbose_msg = 0;
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 
-      int result = this->format_msg (host_name,
-                                     verbose_flag,
-                                     verbose_msg);
+      int result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
       if (result == 0)
         {
           if (fp != 0)
             {
-              int verbose_msg_len =
+              int const verbose_msg_len =
                 static_cast<int> (ACE_OS::strlen (verbose_msg));
-              int fwrite_result = ACE_OS::fprintf (fp,
-                                                   ACE_LIB_TEXT ("%s"),
-                                                   verbose_msg);
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+              int const fwrite_result = ACE_OS::fprintf (fp,
+                                                         ACE_TEXT ("%ls"),
+                                                         verbose_msg);
+#else
+              int const fwrite_result = ACE_OS::fprintf (fp,
+                                                         ACE_TEXT ("%s"),
+                                                         verbose_msg);
+#endif
               // We should have written everything
               if (fwrite_result != verbose_msg_len)
                 result = -1;
@@ -321,17 +328,21 @@ int
 operator<< (ACE_OutputCDR &cdr,
             const ACE_Log_Record &log_record)
 {
-  size_t msglen = log_record.msg_data_len ();
+  // The written message length can't be more than 32 bits (ACE_CDR::ULong)
+  // so reduce it here if needed.
+  ACE_CDR::ULong u_msglen =
+    ACE_Utils::truncate_cast<ACE_CDR::ULong> (log_record.msg_data_len ());
+
   // Insert each field from <log_record> into the output CDR stream.
   cdr << ACE_CDR::Long (log_record.type ());
   cdr << ACE_CDR::Long (log_record.pid ());
-  cdr << ACE_CDR::Long (log_record.time_stamp ().sec ());
+  cdr << ACE_CDR::LongLong (log_record.time_stamp ().sec ());
   cdr << ACE_CDR::Long (log_record.time_stamp ().usec ());
-  cdr << ACE_CDR::ULong (msglen);
+  cdr << u_msglen;
 #if defined (ACE_USES_WCHAR)
-  cdr.write_wchar_array (log_record.msg_data (), msglen);
+  cdr.write_wchar_array (log_record.msg_data (), u_msglen);
 #else
-  cdr.write_char_array (log_record.msg_data (), msglen);
+  cdr.write_char_array (log_record.msg_data (), u_msglen);
 #endif /* ACE_USES_WCHAR */
   return cdr.good_bit ();
 }
@@ -342,7 +353,8 @@ operator>> (ACE_InputCDR &cdr,
 {
   ACE_CDR::Long type;
   ACE_CDR::Long pid;
-  ACE_CDR::Long sec, usec;
+  ACE_CDR::LongLong sec;
+  ACE_CDR::Long usec;
   ACE_CDR::ULong buffer_len;
 
   // Extract each field from input CDR stream into <log_record>.
@@ -353,7 +365,8 @@ operator>> (ACE_InputCDR &cdr,
     auto_ptr<ACE_TCHAR> log_msg_p (log_msg);
     log_record.type (type);
     log_record.pid (pid);
-    log_record.time_stamp (ACE_Time_Value (sec, usec));
+    log_record.time_stamp (ACE_Time_Value (ACE_Utils::truncate_cast<time_t> (sec),
+                                           usec));
 #if defined (ACE_USES_WCHAR)
     cdr.read_wchar_array (log_msg, buffer_len);
 #else

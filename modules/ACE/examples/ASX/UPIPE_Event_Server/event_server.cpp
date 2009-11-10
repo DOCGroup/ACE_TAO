@@ -7,6 +7,7 @@
 #include "ace/Service_Config.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -68,8 +69,8 @@ consumer (void *)
   ACE_UPIPE_Addr c_addr (ACE_TEXT ("/tmp/conupipe"));
 
   int verb = options.verbose ();
-  int msiz = options.message_size ();
-  int secs, par1, par2;
+  int msiz = ACE_Utils::truncate_cast<int> (options.message_size ());
+  time_t secs, par1, par2;
   time_t currsec;
 
   if (verb)
@@ -88,7 +89,7 @@ consumer (void *)
   int cnt = 0;
   ACE_OS::time (&currsec);
 
-  par1= (time_t) currsec;
+  par1 = currsec;
 
   while (done == 0
          && (c_stream.recv (mb_p) != -1))
@@ -109,15 +110,17 @@ consumer (void *)
       }
 
     ACE_OS::time (&currsec);
-    par2 = (time_t) currsec;
+    par2 = currsec;
 
     secs = par2 - par1;
 
     if (secs <= 0)
       secs=1;
 
-    cout << "consumer got " << cnt << " messages of size " << msiz
-         << "within " << secs << " seconds" << endl;
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("consumer got %d messages of size %d ")
+                ACE_TEXT ("within %: seconds\n"),
+                cnt, msiz, secs));
 
     ACE_OS::sleep (2);
     cout << "consumer terminating " << endl;
@@ -131,9 +134,9 @@ supplier (void *dummy)
   ACE_UPIPE_Addr serv_addr (ACE_TEXT ("/tmp/supupipe"));
   ACE_UPIPE_Connector con;
 
-  int iter = options.iterations ();
+  int iter = ACE_Utils::truncate_cast<int> (options.iterations ());
   int verb = options.verbose ();
-  int msiz = options.message_size ();
+  int msiz = ACE_Utils::truncate_cast<int> (options.message_size ());
   cout << "supplier starting connect" << endl;
 
   if (con.connect (s_stream, serv_addr) == -1)
@@ -147,7 +150,7 @@ supplier (void *dummy)
   while (n < iter)
     {
       mb_p = new ACE_Message_Block (msiz);
-      strcpy (mb_p->rd_ptr (), (char *) dummy);
+      ACE_OS::strcpy (mb_p->rd_ptr (), (char *) dummy);
       mb_p->length (msiz);
       if (verb)
         cout << "supplier sending 1 message_block" << endl;
@@ -228,13 +231,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Set the high and low water marks appropriately.
 
-  int wm = options.low_water_mark ();
+  int wm = ACE_Utils::truncate_cast<int> (options.low_water_mark ());
 
   if (event_server.control (ACE_IO_Cntl_Msg::SET_LWM, &wm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (setting low watermark)")), -1);
 
-  wm = options.high_water_mark ();
+  wm = ACE_Utils::truncate_cast<int> (options.high_water_mark ());
+  
   if (event_server.control (ACE_IO_Cntl_Msg::SET_HWM, &wm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (setting high watermark)")), -1);

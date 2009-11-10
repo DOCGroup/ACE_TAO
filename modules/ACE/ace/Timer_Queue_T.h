@@ -188,7 +188,7 @@ public:
   virtual void next (void) = 0;
 
   /// Returns true when there are no more nodes in the sequence
-  virtual int isdone (void) const = 0;
+  virtual bool isdone (void) const = 0;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE> *item (void) = 0;
@@ -212,9 +212,9 @@ public:
 
   // = Initialization and termination methods.
   /**
-   * Default constructor. <upcall_functor> is the instance of the
-   * FUNCTOR to be used by the queue. If <upcall_functor> is 0, Timer
-   * Queue will create a default FUNCTOR.  <freelist> the freelist of
+   * Default constructor. @a upcall_functor is the instance of the
+   * FUNCTOR to be used by the queue. If @a upcall_functor is 0, Timer
+   * Queue will create a default FUNCTOR.  @a freelist the freelist of
    * timer nodes.  If 0, then a default freelist will be created.
    */
   ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0,
@@ -225,20 +225,20 @@ public:
   virtual ~ACE_Timer_Queue_T (void);
 
   /// True if queue is empty, else false.
-  virtual int is_empty (void) const = 0;
+  virtual bool is_empty (void) const = 0;
 
   /// Returns the time of the earlier node in the Timer_Queue.  Must
   /// be called on a non-empty queue.
   virtual const ACE_Time_Value &earliest_time (void) const = 0;
 
   /**
-   * Schedule <type> that will expire at <future_time>, which is
-   * specified in absolute time.  If it expires then <act> is passed
-   * in as the value to the <functor>.  If <interval> is != to
-   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
+   * Schedule @a type that will expire at @a future_time, which is
+   * specified in absolute time.  If it expires then @a act is passed
+   * in as the value to the <functor>.  If @a interval is != to
+   * ACE_Time_Value::zero then it is used to reschedule the @a type
    * automatically, using relative time to the current <gettimeofday>.
    * This method returns a <timer_id> that uniquely identifies the the
-   * <type> entry in an internal list.  This <timer_id> can be used to
+   * @a type entry in an internal list.  This <timer_id> can be used to
    * cancel the timer before it expires.  The cancellation ensures
    * that <timer_ids> are unique up to values of greater than 2
    * billion timers.  As long as timers don't stay around longer than
@@ -252,18 +252,18 @@ public:
                          const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /**
-   * Resets the interval of the timer represented by <timer_id> to
-   * <interval>, which is specified in relative time to the current
-   * <gettimeofday>.  If <interval> is equal to
-   * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+   * Resets the interval of the timer represented by @a timer_id to
+   * @a interval, which is specified in relative time to the current
+   * <gettimeofday>.  If @a interval is equal to
+   * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_interval (long timer_id,
                               const ACE_Time_Value &interval) = 0;
 
   /**
-   * Cancel all timer associated with <type>.  If
-   * <dont_call_handle_close> is 0 then the <functor> will be invoked,
+   * Cancel all timer associated with @a type.  If
+   * @a dont_call_handle_close is 0 then the <functor> will be invoked,
    * which typically invokes the <handle_close> hook.  Returns number
    * of timers cancelled.
    */
@@ -271,30 +271,30 @@ public:
                       int dont_call_handle_close = 1) = 0;
 
   /**
-   * Cancel the single timer that matches the <timer_id> value (which
+   * Cancel the single timer that matches the @a timer_id value (which
    * was returned from the <schedule> method).  If act is non-NULL
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If
-   * <dont_call_handle_close> is 0 then the <functor> will be invoked,
+   * @a dont_call_handle_close is 0 then the <functor> will be invoked,
    * which typically calls the <handle_close> hook.  Returns 1 if
-   * cancellation succeeded and 0 if the <timer_id> wasn't found.
+   * cancellation succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
                       const void **act = 0,
                       int dont_call_handle_close = 1) = 0;
 
   /**
-   * Run the <functor> for all timers whose values are <= <cur_time>.
+   * Run the <functor> for all timers whose values are <= @a current_time.
    * This does not account for <timer_skew>.  Returns the number of
    * timers canceled.
    */
   virtual int expire (const ACE_Time_Value &current_time);
 
   /**
-   * Get the dispatch information for a timer whose value is <= <cur_time>.
+   * Get the dispatch information for a timer whose value is <= @a current_time.
    * This does not account for <timer_skew>. Returns 1 if
-   * there is a node whose value <= <cur_time> else returns a 0.
+   * there is a node whose value <= @a current_time else returns a 0.
    *
    */
   virtual int dispatch_info (const ACE_Time_Value &current_time,
@@ -350,13 +350,13 @@ public:
   /// of day.
   void gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 
-  /// Determine the next event to timeout.  Returns <max> if there are
+  /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
   /// This method acquires a lock internally since it modifies internal state.
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
 
   /**
-   * Determine the next event to timeout.  Returns <max> if there are
+   * Determine the next event to timeout.  Returns @a max if there are
    * no pending timers or if all pending timers are longer than max.
    * <the_timeout> should be a pointer to storage for the timeout value,
    * and this value is also returned.  This method does not acquire a
@@ -418,7 +418,7 @@ protected:
                            const ACE_Time_Value &future_time,
                            const ACE_Time_Value &interval) = 0;
 
-  /// Reschedule an "interval" <ACE_Timer_Node>.
+  /// Reschedule an "interval" ACE_Timer_Node.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *) = 0;
 
   /// Factory method that allocates a new node.
@@ -445,10 +445,10 @@ protected:
   FUNCTOR *upcall_functor_;
 
   /// To delete or not to delete is the question?
-  int delete_upcall_functor_;
+  bool const delete_upcall_functor_;
 
   /// Flag to delete only if the class created the <free_list_>
-  int delete_free_list_;
+  bool const delete_free_list_;
 
 private:
 
@@ -550,9 +550,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Timer_Queue_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Queue_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_Queue_T.cpp")

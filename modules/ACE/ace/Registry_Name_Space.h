@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (defined (ACE_WIN32) && defined (UNICODE))
-// This only works on Win32 platforms when UNICODE is turned on
+#if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
+// This only works on Win32 platforms when ACE_USES_WCHAR is turned on
 
 #include "ace/Registry.h"
 #include "ace/Naming_Context.h"
@@ -133,7 +133,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && UNICODE */
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
 
 #include /**/ "ace/post.h"
 

@@ -192,8 +192,10 @@ protected:
   }
 
 private:
+  //FUZZ: disable check_for_lack_ACE_OS
   int write (ACE_FILE_IO &file, const char *str)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
     return file.send (str, ACE_OS::strlen (str));
   }
 };
@@ -233,13 +235,15 @@ public:
   { }
 // Listing 10
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Listing 1000 code/ch18
   virtual int open (void *arg,
                     Module *head = 0, Module *tail = 0)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
     if (tail == 0)
       ACE_NEW_RETURN (tail,
-                      Module (ACE_TEXT ("End Module"), new EndTask ()),
+                      Module (ACE_TEXT ("End Module"), new TheEndTask ()),
                       -1);
     this->inherited::open (arg, head, tail);
     // Listing 1000
@@ -399,5 +403,5 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   // Listing 3
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }

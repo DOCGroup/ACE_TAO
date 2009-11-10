@@ -134,11 +134,14 @@ const char * TimeTicks::to_string()
   hseconds = tt;
 
   if ( days ==0)
-    sprintf( output_buffer,"%ld:%02ld:%02ld.%02ld", hours, minutes,seconds,hseconds);
+    ACE_OS::sprintf( output_buffer,"%ld:%02ld:%02ld.%02ld", hours, 
+                     minutes,seconds,hseconds);
   else if ( days==1)
-    sprintf( output_buffer,"1 day %ld:%02ld:%02ld.%02ld", hours, minutes,seconds,hseconds);
+    ACE_OS::sprintf( output_buffer,"1 day %ld:%02ld:%02ld.%02ld", hours, 
+                     minutes,seconds,hseconds);
   else
-    sprintf( output_buffer,"%ld days, %ld:%02ld:%02ld.%02ld", days,hours, minutes,seconds,hseconds);
+    ACE_OS::sprintf( output_buffer,"%ld days, %ld:%02ld:%02ld.%02ld", 
+                     days,hours, minutes,seconds, hseconds);
 
   return output_buffer;
 }

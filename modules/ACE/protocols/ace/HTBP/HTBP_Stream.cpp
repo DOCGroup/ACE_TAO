@@ -48,15 +48,18 @@ ACE::HTBP::Stream::dump (void) const
 /// Recv an <n> byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recv (void *buf,
-                 size_t n,
-                 int flags,
-                 const ACE_Time_Value *timeout) const
+                         size_t n,
+                         int flags,
+                         const ACE_Time_Value *timeout) const
 {
   if (this->session_->inbound() == 0)
     {
       errno = EWOULDBLOCK;
-      ACE_ERROR_RETURN ((LM_ERROR,"recv(buf,n,flags) called, but no "
-                         "inbound channel connected to stream\n"),-1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("ACE::HTBP::Stream::")
+                         ACE_TEXT("recv(buf,n,flags) called, but no ")
+                         ACE_TEXT("inbound channel connected to stream\n")),
+                        -1);
     }
   return this->session_->inbound()->recv(buf,n,flags,timeout);
 }
@@ -64,14 +67,17 @@ ACE::HTBP::Stream::recv (void *buf,
   /// Recv an <n> byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recv (void *buf,
-                 size_t n,
-                 const ACE_Time_Value *timeout) const
+                         size_t n,
+                         const ACE_Time_Value *timeout) const
 {
   if (this->session_->inbound() == 0)
     {
       errno = EWOULDBLOCK;
-      ACE_ERROR_RETURN ((LM_ERROR,"recv(buf,n) called, but no "
-                         "inbound channel connected to stream\n"),-1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("ACE::HTBP::Stream::")
+                         ACE_TEXT("recv(buf,n) called, but no ")
+                         ACE_TEXT("inbound channel connected to stream\n")),
+                        -1);
     }
   return this->session_->inbound()->recv(buf,n,timeout);
 }
@@ -85,8 +91,11 @@ ACE::HTBP::Stream::recvv (iovec iov[],
   if (this->session_->inbound() == 0)
     {
       errno = EWOULDBLOCK;
-      ACE_ERROR_RETURN ((LM_ERROR,"recv(iov,iovcnt) called, but no "
-                         "inbound channel connected to stream\n"),-1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("ACE::HTBP::Stream::")
+                         ACE_TEXT("recv(iov,iovcnt) called, but no ")
+                         ACE_TEXT("inbound channel connected to stream\n")),
+                        -1);
     }
   return this->session_->inbound()->recvv(iov,iovcnt,timeout);
 }
@@ -98,8 +107,11 @@ ACE::HTBP::Stream::recvv (iovec *io_vec,
   if (this->session_->inbound() == 0)
     {
       errno = EWOULDBLOCK;
-      ACE_ERROR_RETURN ((LM_ERROR,"recv(io_vec) called, but no "
-                         "inbound channel connected to stream\n"),-1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("ACE::HTBP::Stream::")
+                         ACE_TEXT("recv(io_vec) called, but no ")
+                         ACE_TEXT("inbound channel connected to stream\n")),
+                        -1);
     }
   return this->session_->inbound()->recvv(io_vec,timeout);
 }
@@ -110,7 +122,9 @@ ACE::HTBP::Stream::recv (void *,
                  ACE_OVERLAPPED *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: Asynch recv not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: Asynch ")
+                     ACE_TEXT("recv not supported\n")),-1);
 }
 
 ssize_t
@@ -173,7 +187,10 @@ ACE::HTBP::Stream::send (const void *,
                  ACE_OVERLAPPED *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: Asynch send not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: Asynch ")
+                     ACE_TEXT("send not supported\n")),
+                    -1);
 }
 
 ssize_t
@@ -184,7 +201,9 @@ ACE::HTBP::Stream::recv_n (void *,
                    size_t *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: recv_n not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: recv_n not supported\n")),
+                    -1);
 }
 
   /// Try to recv exactly <len> bytes into <buf> from the connected socket.
@@ -195,7 +214,9 @@ ACE::HTBP::Stream::recv_n (void *,
                    size_t *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: recv_n not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: recv_n not supported\n")),
+                    -1);
 }
 
   /// Receive an <iovec> of size <iovcnt> from the connected socket.
@@ -206,7 +227,9 @@ ACE::HTBP::Stream::recvv_n (iovec [],
                    size_t *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: recvv_n not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: recvv_n not supported\n")),
+                    -1);
 }
 
   /// Try to send exactly <len> bytes from <buf> to the connection socket.
@@ -218,7 +241,9 @@ ACE::HTBP::Stream::send_n (const void *,
                    size_t *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: send_n not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: send_n not supported\n")),
+                    -1);
 }
 
   /// Try to send exactly <len> bytes from <buf> to the connected socket.
@@ -229,7 +254,9 @@ ACE::HTBP::Stream::send_n (const void *,
                    size_t *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: send_n not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: send_n not supported\n")),
+                    -1);
 }
 
   /// Send all the <message_block>s chained through their <next> and
@@ -241,7 +268,9 @@ ACE::HTBP::Stream::send_n (const ACE_Message_Block *,
                    size_t *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: send_n not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: send_n not supported\n")),
+                    -1);
 }
 
   /// Send an <iovec> of size <iovcnt> to the connected socket.
@@ -252,7 +281,9 @@ ACE::HTBP::Stream::sendv_n (const iovec [],
                     size_t *) const
 {
   errno = ENOTSUP;
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE::HTBP::Stream: sendv_n not supported\n"),-1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT("ACE::HTBP::Stream: sendv_n not supported\n")),
+                    -1);
 }
 
 int

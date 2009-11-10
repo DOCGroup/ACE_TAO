@@ -114,15 +114,15 @@ CM_Client::send (void)
           ACE_DEBUG ((LM_DEBUG,
                       "sending to server host %s (%s)\n",
                       np->h_name,
-                      inet_ntoa (this->sin_.sin_addr)));
+                      ACE_OS::inet_ntoa (this->sin_.sin_addr)));
         }
 
-      if (sendto (Comm_Manager::sokfd_,
-                  this->send_packet_,
-                  packet_length,
-                  0,
-                  reinterpret_cast<sockaddr *> (&this->sin_),
-                  sizeof this->sin_) < 0)
+      if (ACE_OS::sendto (Comm_Manager::sokfd_,
+                         this->send_packet_,
+                         packet_length,
+                         0,
+                         reinterpret_cast<sockaddr *> (&this->sin_),
+                         sizeof this->sin_) < 0)
         return -1;
     }
   return 1;

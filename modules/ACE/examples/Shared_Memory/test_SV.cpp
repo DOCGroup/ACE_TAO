@@ -25,8 +25,9 @@ client (void)
 static void
 server (void)
 {
-  ACE_Shared_Memory_SV shm_server (SHM_KEY, SHMSZ,
-				   ACE_Shared_Memory_SV::ACE_CREATE);
+  ACE_Shared_Memory_SV shm_server (SHM_KEY,
+                                   SHMSZ,
+                                   ACE_Shared_Memory_SV::ACE_CREATE);
   char *shm = (char *) shm_server.malloc ();
   char *s   = shm;
 

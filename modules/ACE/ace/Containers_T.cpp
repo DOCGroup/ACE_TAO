@@ -254,7 +254,7 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
                          ACE_Node<T> (new_item, this->head_->next_),
                          -1);
   this->head_->next_ = temp;
-  this->cur_size_++;
+  ++this->cur_size_;
   return 0;
 }
 
@@ -275,7 +275,7 @@ ACE_Unbounded_Stack<T>::pop (T &item)
                              this->allocator_->free,
                              ACE_Node,
                              <T>);
-      this->cur_size_--;
+      --this->cur_size_;
       return 0;
     }
 }
@@ -329,7 +329,7 @@ ACE_Unbounded_Stack<T>::remove (const T &item)
       ACE_Node<T> *temp = curr->next_;
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
-      this->cur_size_--;
+      --this->cur_size_;
       ACE_DES_FREE_TEMPLATE (temp,
                              this->allocator_->free,
                              ACE_Node,
@@ -443,7 +443,7 @@ template <class T> void
 ACE_Double_Linked_List_Iterator_Base<T>::dump_i (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("current_ = %x"), this->current_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("current_ = %x"), this->current_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -481,7 +481,7 @@ ACE_Double_Linked_List_Iterator<T>::advance (void)
 }
 
 template <class T> T*
-ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
+ACE_Double_Linked_List_Iterator<T>::advance_and_remove (bool dont_remove)
 {
   T* item = 0;
   if (dont_remove)
@@ -586,11 +586,13 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::advance (void)
 }
 
 template <class T> T*
-ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (int dont_remove)
+ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (bool dont_remove)
 {
   T* item = 0;
   if (dont_remove)
-    this->do_retreat ();
+    {
+      this->do_retreat ();
+    }
   else
     {
       item = this->next ();
@@ -739,12 +741,10 @@ ACE_Double_Linked_List<T>::insert_head (T *new_item)
 template <class T> T *
 ACE_Double_Linked_List<T>::delete_head (void)
 {
-  T *temp;
-
   if (this->is_empty ())
     return 0;
 
-  temp = static_cast<T *> (this->head_->next_);
+  T *temp = static_cast<T *> (this->head_->next_);
   // Detach it from the list.
   this->remove_element (temp);
   return temp;
@@ -753,12 +753,10 @@ ACE_Double_Linked_List<T>::delete_head (void)
 template <class T> T *
 ACE_Double_Linked_List<T>::delete_tail (void)
 {
-  T *temp;
-
   if (this->is_empty ())
     return 0;
 
-  temp = static_cast <T *> (this->head_->prev_);
+  T *temp = static_cast <T *> (this->head_->prev_);
   // Detach it from the list.
   this->remove_element (temp);
   return temp;
@@ -883,7 +881,7 @@ ACE_Double_Linked_List<T>::insert_element (T *new_item,
   new_item->next_->prev_ = new_item;
   new_item->prev_ = old_item;
   old_item->next_ = new_item;
-  this->size_++;
+  ++this->size_;
   return 0;                     // Well, what will cause errors here?
 }
 
@@ -900,7 +898,7 @@ ACE_Double_Linked_List<T>::remove_element (T *item)
   item->prev_->next_ = item->next_;
   item->next_->prev_ = item->prev_;
   item->next_ = item->prev_ = 0; // reset pointers to prevent double removal.
-  this->size_--;
+  --this->size_;
   return 0;
 }
 
@@ -1000,7 +998,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
           return 1;
       }
     else
-      first_free = i;
+      first_free = static_cast<ssize_t> (i);
 
   // If we found a free spot let's reuse it.
 
@@ -1573,7 +1571,7 @@ ACE_Ordered_MultiSet<T>::insert (const T &item)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert");
 
-  return  this->insert_from (item, this->head_, 0);
+  return this->insert_from (item, this->head_, 0);
 }
 
 template <class T> int
@@ -1607,7 +1605,7 @@ ACE_Ordered_MultiSet<T>::remove (const T &item)
       else
         tail_ = node->prev_;
 
-      this->cur_size_--;
+      --this->cur_size_;
 
       ACE_DES_FREE_TEMPLATE (node,
                              this->allocator_->free,
@@ -1625,7 +1623,7 @@ ACE_Ordered_MultiSet<T>::find (const T &item,
 {
   // search an occurance of item, using iterator's current position as a hint
   ACE_DNode<T> *node = iter.current_;
-  int result = locate (item, node, node);
+  int const result = locate (item, node, node);
 
   // if we found the node, update the iterator and indicate success
   if (node && (result == 0))
@@ -1654,9 +1652,9 @@ ACE_Ordered_MultiSet<T>::dump (void) const
   //  ACE_TRACE ("ACE_Ordered_MultiSet<T>::dump");
   //
   //  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nhead_ = %u"), this->head_));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
   //
   //  T *item = 0;
   //  size_t count = 1;
@@ -1664,7 +1662,7 @@ ACE_Ordered_MultiSet<T>::dump (void) const
   //  for (ACE_Ordered_MultiSet_Iterator<T> iter (*(ACE_Ordered_MultiSet<T> *) this);
   //       iter.next (item) != 0;
   //       iter.advance ())
-  //    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("count = %d\n"), count++));
+  //    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %d\n"), count++));
   //
   //  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -1677,7 +1675,7 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert_from");
 
   // create a new node
-  ACE_DNode<T> *temp;
+  ACE_DNode<T> *temp = 0;
   ACE_NEW_MALLOC_RETURN (temp,
                          static_cast<ACE_DNode<T>*> (this->allocator_->malloc (sizeof (ACE_DNode<T>))),
                          ACE_DNode<T> (item),
@@ -1742,7 +1740,7 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
       this->tail_ = temp;
     }
 
-  this->cur_size_++;
+  ++this->cur_size_;
   if (new_position)
     *new_position = temp;
 
@@ -1852,7 +1850,7 @@ ACE_Ordered_MultiSet_Iterator<T>::operator* (void)
   //ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::operator*");
   T *retv = 0;
 
-  int result = this->next (retv);
+  int const result = this->next (retv);
   ACE_ASSERT (result != 0);
   ACE_UNUSED_ARG (result);
 
@@ -1864,26 +1862,23 @@ ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Node)
 template <class T> T *
 ACE_DLList<T>::insert_tail (T *new_item)
 {
-  ACE_DLList_Node *temp1, *temp2;
-  void *temp = new_item;
+  ACE_DLList_Node *temp1 = 0;
   ACE_NEW_MALLOC_RETURN (temp1,
                          static_cast<ACE_DLList_Node *> (this->allocator_->malloc (sizeof (ACE_DLList_Node))),
-                         ACE_DLList_Node (temp),
+                         ACE_DLList_Node (new_item),
                          0);
-  temp2 = ACE_DLList_Base::insert_tail (temp1);
+  ACE_DLList_Node *temp2 = ACE_DLList_Base::insert_tail (temp1);
   return (T *) (temp2 ? temp2->item_ : 0);
 }
 
 template <class T> T *
 ACE_DLList<T>::insert_head (T *new_item)
 {
-  ACE_DLList_Node *temp1;
-  void *temp = new_item;
+  ACE_DLList_Node *temp1 = 0;
   ACE_NEW_MALLOC_RETURN (temp1,
                          (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
-                         ACE_DLList_Node (temp), 0);
-  ACE_DLList_Node *temp2 =
-    ACE_DLList_Base::insert_head (temp1);
+                         ACE_DLList_Node (new_item), 0);
+  ACE_DLList_Node *temp2 = ACE_DLList_Base::insert_head (temp1);
   return (T *) (temp2 ? temp2->item_ : 0);
 }
 

@@ -65,14 +65,16 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
 
 #if defined (ACE_USES_WCHAR)
 int
-ACEXML_URL_Addr::string_to_addr (const char* s)
+ACEXML_URL_Addr::string_to_addr (const char* s,
+                                 int address_family)
 {
-  return this->string_to_addr (ACE_TEXT_CHAR_TO_TCHAR (s));
+  return this->string_to_addr (ACE_TEXT_CHAR_TO_TCHAR (s), address_family);
 }
 #endif /* ACE_USES_WCHAR */
 
 int
-ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s)
+ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
+                                 int /*address_family */)
 {
   if (s == 0)
     return -1;
@@ -174,4 +176,3 @@ ACEXML_URL_Addr::~ACEXML_URL_Addr (void)
   ACE_OS::free (this->addr_string_);
   this->path_name_ = 0;
 }
-

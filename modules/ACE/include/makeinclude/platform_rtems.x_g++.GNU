@@ -7,13 +7,19 @@ CROSS-COMPILE = 1
 debug ?= 1
 optimize ?= 1
 exceptions ?= 1
-rtti ?= 1
 threads ?= 1
 pipes ?= 1
 
 shared_libs =
 static_libs = 1
 rwho = 0
+
+ifneq (,$(HOST_ROOT))
+  TAO_IDL = $(HOST_ROOT)/bin/tao_idl
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2
+  TAO_IDL_DEP = $(TAO_IDL)
+  TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+endif
 
 ifeq (,$(RTEMS_MAKEFILE_PATH))
   default:
@@ -37,9 +43,6 @@ endif
 
 CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
-ifeq (0,$(rtti))
-  CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
-endif # rtti
 DCFLAGS         += -g
 DCCFLAGS        += -g
 DLD             = $(LD)

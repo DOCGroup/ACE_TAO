@@ -33,17 +33,16 @@ ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
                      opt) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_TLI_Stream::ACE_TLI_Stream")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_TLI_Stream::ACE_TLI_Stream")));
 }
 
 ACE_INLINE
-int
-ACE_TLI_Connector::reset_new_handle (ACE_HANDLE handle)
+bool
+ACE_TLI_Connector::reset_new_handle (ACE_HANDLE)
 {
-  ACE_UNUSED_ARG (handle);
   // Nothing to do here since the handle is not a socket
-  return 0;
+  return false;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

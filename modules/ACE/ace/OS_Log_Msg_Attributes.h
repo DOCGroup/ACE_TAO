@@ -50,6 +50,7 @@ protected:
 
   /// Ostream where the new TSS Log_Msg will use.
   ACE_OSTREAM_TYPE *ostream_;
+  void *ostream_refcount_;
 
   /// Priority_mask to be used in new TSS Log_Msg.
   unsigned long priority_mask_;
@@ -59,7 +60,7 @@ protected:
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
-  int restart_;
+  bool restart_;
 
   /// Depth of the nesting for printing traces.
   int trace_depth_;

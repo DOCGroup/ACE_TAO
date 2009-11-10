@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(JAWS2) : acelib {
+project(JAWS2) : ace_output, acelib {
     sharedname = JAWS2
     dynamicflags += JAWS_BUILD_DLL
     avoids += uses_wchar ace_for_tao
@@ -21,7 +21,7 @@ project(JAWS2) : acelib {
         FILE.cpp
         Filecache.cpp
         Headers.cpp
-        IO.cpp
+        Jaws_IO.cpp
         IO_Acceptor.cpp
         IO_Handler.cpp
         Parse_Headers.cpp

@@ -29,19 +29,19 @@ ACE_RW_Mutex::dump (void) const
 // ACE_TRACE ("ACE_RW_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
 ACE_RW_Mutex::ACE_RW_Mutex (int type, const ACE_TCHAR *name, void *arg)
-  : removed_ (0)
+  : removed_ (false)
 {
 // ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
   if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_RW_Mutex::ACE_RW_Mutex")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_RW_Mutex::ACE_RW_Mutex")));
 }
 
 ACE_RW_Mutex::~ACE_RW_Mutex (void)

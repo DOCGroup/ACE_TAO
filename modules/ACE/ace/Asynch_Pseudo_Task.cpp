@@ -25,8 +25,8 @@ ACE_Asynch_Pseudo_Task::start (void)
 {
   if (this->reactor_.initialized () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:%p\n"),
-                       ACE_LIB_TEXT ("start reactor is not initialized")),
+                       ACE_TEXT ("%N:%l:%p\n"),
+                       ACE_TEXT ("start reactor is not initialized")),
                        -1);
 
   return this->activate () == -1 ? -1 : 0;   // If started, return 0
@@ -59,8 +59,8 @@ ACE_Asynch_Pseudo_Task::svc (void)
 
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &RT_signals, 0) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("Error:(%P | %t):%p\n"),
-                ACE_LIB_TEXT ("pthread_sigmask")));
+                ACE_TEXT ("Error:(%P | %t):%p\n"),
+                ACE_TEXT ("pthread_sigmask")));
 #endif
 
   reactor_.owner (ACE_Thread::self ());
@@ -90,8 +90,8 @@ ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,
     {
       ACE_ERROR
         ((LM_ERROR,
-          ACE_LIB_TEXT ("%N:%l:%p\n"),
-          ACE_LIB_TEXT ("register_io_handler (suspended)")));
+          ACE_TEXT ("%N:%l:%p\n"),
+          ACE_TEXT ("register_io_handler (suspended)")));
       this->reactor_.remove_handler (handle, ACE_Event_Handler::ALL_EVENTS_MASK
                                      | ACE_Event_Handler::DONT_CALL);
       return -1;

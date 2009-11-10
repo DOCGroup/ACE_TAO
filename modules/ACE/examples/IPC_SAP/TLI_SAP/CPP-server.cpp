@@ -11,7 +11,7 @@ ACE_RCSID(TLI_SAP, CPP_server, "$Id$")
 // ACE_TLI Server
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
   ACE_Time_Value timeout (argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_TIMEOUT);
@@ -45,14 +45,14 @@ main (int argc, char *argv[])
       // Create a new ACE_TLI_Stream endpoint (note automatic restart
       // if errno == EINTR).
       if (peer_acceptor.accept (new_stream,
-				&addr,
+                                &addr,
                                 &timeout) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-                      "%p\n",
-                      "accept"));
-	  continue;
-	}
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "accept"));
+        continue;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "client %s connected\n",
@@ -60,18 +60,17 @@ main (int argc, char *argv[])
 
       // Read data from client (terminate on error).
 
-      for (int r_bytes;
-	   (r_bytes = new_stream.recv (buf, sizeof buf)) > 0; )
+      for (int r_bytes; (r_bytes = new_stream.recv (buf, sizeof buf)) > 0; )
         if (ACE_OS::write (ACE_STDOUT,
                            buf,
                            r_bytes) != r_bytes)
-	  ACE_ERROR ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       "%p\n",
                       "ACE::send_n"));
 
-	// Close new endpoint (listening endpoint stays open).
+       // Close new endpoint (listening endpoint stays open).
       if (new_stream.close () == -1)
-	ACE_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "close"));
 

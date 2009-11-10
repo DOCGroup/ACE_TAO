@@ -6,7 +6,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID(server, Parse_Headers, "$Id$")
 
@@ -56,9 +56,9 @@ Headers::parse_header_line (char * const header_line)
   ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line [%s]\n",
              header ? header : "<empty>"));
 
-  if (header != NULL && this->map_.mapped (header))
+  if (header != 0 && this->map_.mapped (header))
     {
-      while (isspace (*value))
+      while (ACE_OS::ace_isspace (*value))
         value++;
 
       this->map_[header] = value;
@@ -112,7 +112,7 @@ Headers::complete_header_line (char *const header_line)
           return 1;
 
         default:
-          if (isalpha (ptr[offset]))
+          if (ACE_OS::ace_isalpha (ptr[offset]))
             return 1;
           else
             return -1;
@@ -147,7 +147,7 @@ Headers::end_of_line (char *&line, int &offset) const
   char *old_line = line;
   char *ptr = ACE_OS::strchr (old_line, '\n');
 
-  if (ptr == NULL)
+  if (ptr == 0)
     return 0;
 
   line = ptr;
@@ -190,7 +190,7 @@ Headers_Map_Item::~Headers_Map_Item (void)
 
 // Headers_Map_Item::operator const char * (void) const
 // {
-//   return this->value_ == NULL ? this->no_value_ : this->value_;
+//   return this->value_ == 0 ? this->no_value_ : this->value_;
 // }
 
 Headers_Map_Item &
@@ -238,7 +238,7 @@ Headers_Map::operator[] (const char * const header)
 
   item_ptr = this->find (header);
 
-  if (item_ptr == NULL)
+  if (item_ptr == 0)
     item_ptr = this->place (header);
 
   return *item_ptr;
@@ -252,7 +252,7 @@ Headers_Map::operator[] (const char * const header) const
 
   item_ptr = this->find (header);
 
-  if (item_ptr == NULL)
+  if (item_ptr == 0)
     item_ptr = mutable_this->place (header);
 
   return *item_ptr;
@@ -261,7 +261,7 @@ Headers_Map::operator[] (const char * const header) const
 int
 Headers_Map::mapped (const char * const header) const
 {
-  int result = this->find (header) != NULL;
+  int result = this->find (header) != 0;
 
   return result;
 }
@@ -274,11 +274,11 @@ Headers_Map::find (const char * const header) const
   mutable_this->garbage_.header_ = header;
 #if 0
   Headers_Map_Item *mi_ptr = (Headers_Map_Item *)
-    ::bsearch (&this->garbage_,
-               this->map_,
-               this->num_headers_,
-               sizeof (Headers_Map_Item),
-               Headers_Map::compare);
+    ACE_OS::bsearch (&this->garbage_,
+                     this->map_,
+                     this->num_headers_,
+                     sizeof (Headers_Map_Item),
+                     Headers_Map::compare);
 #else
   int i = 0;
   int j = this->num_headers_;

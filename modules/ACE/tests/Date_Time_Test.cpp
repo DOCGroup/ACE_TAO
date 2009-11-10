@@ -116,7 +116,11 @@ run_main (int, ACE_TCHAR *[])
                   static_dt.hour (), hour));
       error = 1;
     }
-  if (static_dt.minute () != minute)
+
+  // There's a rare instance where the starting seconds is 59 and the
+  // minute roles over during the test run.
+  if (!(static_dt.minute () == minute ||
+       (static_dt.minute () + 1 == minute && static_dt.second () > seconds)))
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Static minute (%d) doesn't match %d\n"),

@@ -20,8 +20,10 @@ class HTTP_Sink_Svc_Handler
 {
 public:
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void *)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
     ACE_Reactor::instance ()
     ->register_handler (this, ACE_Event_Handler::WRITE_MASK);
     return 0;
@@ -47,9 +49,9 @@ public:
   int handle_output (ACE_HANDLE handle)
   {
     int random_number;
-    random_number  = (int) ((::rand () / (1.0 + RAND_MAX)) * number_of_urls);
+    random_number  = (int) ((ACE_OS::rand () / (1.0 + RAND_MAX)) * number_of_urls);
     const char *random_request = requests[random_number];
-    size_t random_request_length = ::strlen (random_request);
+    size_t random_request_length = ACE_OS::strlen (random_request);
     ssize_t result = 0;
     result = this->peer ().send_n (random_request, random_request_length);
     ACE_Reactor::instance ()
@@ -161,7 +163,7 @@ typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>
         ACE_Select_NULL_LOCK_Reactor;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Select_NULL_LOCK_Reactor *select_reactor;
   select_reactor = new ACE_Select_NULL_LOCK_Reactor;
@@ -173,7 +175,7 @@ main (int argc, char *argv[])
   ACE_Reactor::instance ()->register_handler (SIGINT, signal_handler);
   ACE_OS::signal (SIGPIPE, SIG_IGN);
 
-  ACE_Get_Opt options (argc, argv, "f:r:n:w:");
+  ACE_Get_Opt options (argc, argv, ACE_TEXT("f:r:n:w:"));
 
   // f -- file list
   // r -- request rate in requests per second
@@ -194,7 +196,7 @@ main (int argc, char *argv[])
           filelist_name = options.optarg;
           break;
         case 'r':
-          request_rate = ::atof (options.optarg);
+          request_rate = ACE_OS::atof (options.optarg);
           if (request_rate == 0.0)
             request_rate = 1.0;
           break;
@@ -210,7 +212,7 @@ main (int argc, char *argv[])
     }
 
   if (filelist_name == 0)
-    ::abort ();
+    ACE_OS::abort ();
 
   double rq_interval_sec;
   double rq_interval_usec;
@@ -219,28 +221,28 @@ main (int argc, char *argv[])
 
   // Scan file for number of lines.
 
-  FILE *fp = ::fopen (filelist_name, "r+b");
-  while ((c = ::fgetc (fp)) != EOF)
+  FILE *fp = ACE_OS::fopen (filelist_name, "r+b");
+  while ((c = ACE_OS::fgetc (fp)) != EOF)
     {
       if (c == '\n')
         number_of_urls++;
     }
-  ::fclose (fp);
+  ACE_OS::fclose (fp);
 
-  requests = (char **) ::malloc (number_of_urls * sizeof (char *));
+  requests = (char **) ACE_OS::malloc (number_of_urls * sizeof (char *));
 
   // Read in the file list and create requests
 
   int i = 0;
   static char buf[BUFSIZ];
-  fp = ::fopen (filelist_name, "r+b");
-  while (::fgets (buf, sizeof (buf), fp) != NULL)
+  fp = ACE_OS::fopen (filelist_name, "r+b");
+  while (ACE_OS::fgets (buf, sizeof (buf), fp) != 0)
     {
       static char rq[BUFSIZ];
-      sprintf (rq, "GET /%s\r\n", buf);
-      requests[i++] = ::strdup (rq);
+      ACE_OS::sprintf (rq, "GET /%s\r\n", buf);
+      requests[i++] = ACE_OS::strdup (rq);
     }
-  ::fclose (fp);
+  ACE_OS::fclose (fp);
 
   // Create a series of requests
 
@@ -253,8 +255,8 @@ main (int argc, char *argv[])
   // Cleanup
 
   for (i = 0; i < number_of_urls; i++)
-    ::free (requests[i]);
-  ::free (requests);
+    ACE_OS::free (requests[i]);
+  ACE_OS::free (requests);
 
   return 0;
 }

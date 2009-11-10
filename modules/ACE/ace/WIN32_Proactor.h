@@ -56,7 +56,7 @@ class ACE_Export ACE_WIN32_Proactor : public ACE_Proactor_Impl
 public:
   /// A do nothing constructor.
   ACE_WIN32_Proactor (size_t number_of_threads = 0,
-                      int used_with_reactor_event_loop = 0);
+                      bool used_with_reactor_event_loop = false);
 
   /// Virtual destruction.
   virtual ~ACE_WIN32_Proactor (void);
@@ -274,7 +274,7 @@ protected:
 
   /// Flag that indicates whether we are used in conjunction with
   /// Reactor.
-  int used_with_reactor_event_loop_;
+  bool const used_with_reactor_event_loop_;
 
   /// Handler to handle the wakeups. This works in conjunction with the
   /// ACE_Proactor::run_event_loop().
@@ -290,7 +290,7 @@ protected:
  *
  * @brief This class is posted to the completion port when a timer
  * expires. When the complete method of this object is
- * called, the <handler>'s handle_timeout method will be
+ * called, the @a handler's handle_timeout method will be
  * called.
  */
 class ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
@@ -308,7 +308,7 @@ protected:
                           int priority = 0,
                           int signal_number = 0);
 
-  /// This method calls the <handler>'s handle_timeout method.
+  /// This method calls the @a handler's handle_timeout method.
   virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,

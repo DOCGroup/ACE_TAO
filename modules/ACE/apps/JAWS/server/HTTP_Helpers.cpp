@@ -44,9 +44,9 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   do
     {
       if (*ptr1 == ' ')
-	*ptr2++ = ';';
+        *ptr2++ = ';';
       else
-	*ptr2++ = *ptr1;
+        *ptr2++ = *ptr1;
     }
   while (*ptr1++ != '\0');
 
@@ -56,9 +56,9 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   // rfc850-date    = weekday "," SP dd-month-yy SP hh:mm:ss SP "GMT"
   // asctime-date   = wkday SP month dd SP hh:mm:ss SP yyyy
 
-  static const char rfc1123_date[] = "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT";
-  static const char rfc850_date[]  = "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT";
-  static const char asctime_date[] = "%3s;%3s;%2d;%2d:%2d:%2d;%4d";
+  // static const char rfc1123_date[] = "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT";
+  // static const char rfc850_date[]  = "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT";
+  // static const char asctime_date[] = "%3s;%3s;%2d;%2d:%2d:%2d;%4d";
 
   // Should also support other versions (such as from NNTP and SMTP)
   // for robustness, but it should be clear how to extend this.
@@ -67,23 +67,23 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   char month[4];
   char weekday[10];
 
-  if (::sscanf(buf, rfc1123_date,
+  if (::sscanf(buf, "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT", // RFC-1123 date format
                weekday,
                &tms.tm_mday,
-	       month,
-	       &tms.tm_year,
+               month,
+               &tms.tm_year,
                &tms.tm_hour,
-	       &tms.tm_min,
-	       &tms.tm_sec) == 7)
+               &tms.tm_min,
+               &tms.tm_sec) == 7)
     ;
-  else if (::sscanf(buf, rfc850_date,
+  else if (::sscanf(buf, "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT", // RFC-850 date format
                     weekday,
                     &tms.tm_mday, month, &tms.tm_year,
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec) == 7)
     {
       weekday[3] = '\0';
     }
-  else if (::sscanf(buf, asctime_date,
+  else if (::sscanf(buf, "%3s;%3s;%2d;%2d:%2d:%2d;%4d", // ASCTIME date format.
                     weekday,
                     month, &tms.tm_mday,
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec,
@@ -148,7 +148,7 @@ HTTP_Helper::HTTP_date (char *s)
   char * date_string = s;
 
   if (ACE_OS::time (&tloc) != (time_t) -1
-      && ACE_OS::gmtime_r (&tloc, &tms) != NULL)
+      && ACE_OS::gmtime_r (&tloc, &tms) != 0)
   {
     ACE_OS::sprintf (date_string,
                      "%s, %2.2d %s %4.4d %2.2d:%2.2d:%2.2d GMT",
@@ -192,14 +192,14 @@ HTTP_Helper::HTTP_decode_string (char *path)
   for (i = j = 0; path[i] != '\0'; i++, j++)
     {
       if (path[i] == '%')
-	{
-	  percentcode[0] = path[++i];
-	  percentcode[1] = path[++i];
-	  percentcode[2] = '\0';
-	  path[j] = (char) ACE_OS::strtol (percentcode, (char **) 0, 16);
-	}
+        {
+          percentcode[0] = path[++i];
+          percentcode[1] = path[++i];
+          percentcode[2] = '\0';
+          path[j] = (char) ACE_OS::strtol (percentcode, (char **) 0, 16);
+        }
       else
-	path[j] = path[i];
+        path[j] = path[i];
     }
 
   path[j] = path[i];
@@ -248,7 +248,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
           char_count = 0;
         }
       else
-	bits <<= 6;
+        bits <<= 6;
     }
 
   if (c == '\0')
@@ -360,23 +360,23 @@ HTTP_Helper::fixyear (int year)
       time_t tloc;
 
       if (ACE_OS::time (&tloc) != (time_t) -1)
-	{
-	  ACE_OS::gmtime_r (&tloc, &tms);
+        {
+          ACE_OS::gmtime_r (&tloc, &tms);
 
-	  if (tms.tm_year % 100 == year)
-	    year = tms.tm_year;
+          if (tms.tm_year % 100 == year)
+            year = tms.tm_year;
 
           // The last two cases check boundary conditions, in case the
           // year just changed at the moment we checked to see if we
           // need to fix it.
-	  if ((year+1) % 100 == tms.tm_year % 100)
-	    year = tms.tm_year - 1;
+          if ((year+1) % 100 == tms.tm_year % 100)
+            year = tms.tm_year - 1;
 
-	  if (year == (tms.tm_year + 1) % 100)
-	    year = tms.tm_year + 1;
+          if (year == (tms.tm_year + 1) % 100)
+            year = tms.tm_year + 1;
 
-	  // What to do if none of the above?
-	}
+          // What to do if none of the above?
+        }
     }
 
   return year;
@@ -390,50 +390,50 @@ HTTP_Status_Code::instance (void)
       ACE_MT (ACE_Guard<ACE_SYNCH_MUTEX> g (lock_));
 
       if (HTTP_Status_Code::instance_ == 0)
-	{
-	  for (size_t i = 0;
-	       i < HTTP_Status_Code::MAX_STATUS_CODE + 1;
-	       i++)
-	    {
-	      switch (i)
-		{
-		case STATUS_OK:
-		  HTTP_Status_Code::Reason[i] = "OK"; break;
-		case STATUS_CREATED:
-		  HTTP_Status_Code::Reason[i] = "Created"; break;
-		case STATUS_ACCEPTED:
-		  HTTP_Status_Code::Reason[i] = "Accepted"; break;
-		case STATUS_NO_CONTENT:
-		  HTTP_Status_Code::Reason[i] = "No Content"; break;
-		case STATUS_MOVED_PERMANENTLY:
-		  HTTP_Status_Code::Reason[i] = "Moved Permanently"; break;
-		case STATUS_MOVED_TEMPORARILY:
-		  HTTP_Status_Code::Reason[i] = "Moved Temporarily"; break;
-		case STATUS_NOT_MODIFIED:
-		  HTTP_Status_Code::Reason[i] = "Not Modified"; break;
-		case STATUS_BAD_REQUEST:
-		  HTTP_Status_Code::Reason[i] = "Bad Request"; break;
-		case STATUS_UNAUTHORIZED:
-		  HTTP_Status_Code::Reason[i] = "Unauthorized"; break;
-		case STATUS_FORBIDDEN:
-		  HTTP_Status_Code::Reason[i] = "Forbidden"; break;
-		case STATUS_NOT_FOUND:
-		  HTTP_Status_Code::Reason[i] = "Not Found"; break;
-		case STATUS_INTERNAL_SERVER_ERROR:
-		  HTTP_Status_Code::Reason[i] = "Internal Server Error"; break;
-		case STATUS_NOT_IMPLEMENTED:
-		  HTTP_Status_Code::Reason[i] = "Not Implemented"; break;
-		case STATUS_BAD_GATEWAY:
-		  HTTP_Status_Code::Reason[i] = "Bad Gateway"; break;
-		case STATUS_SERVICE_UNAVAILABLE:
-		  HTTP_Status_Code::Reason[i] = "Service Unavailable"; break;
-		default:
-		  HTTP_Status_Code::Reason[i] = "Unknown";
-		}
-	    }
+        {
+          for (size_t i = 0;
+               i < HTTP_Status_Code::MAX_STATUS_CODE + 1;
+               i++)
+            {
+              switch (i)
+                {
+                case STATUS_OK:
+                  HTTP_Status_Code::Reason[i] = "OK"; break;
+                case STATUS_CREATED:
+                  HTTP_Status_Code::Reason[i] = "Created"; break;
+                case STATUS_ACCEPTED:
+                  HTTP_Status_Code::Reason[i] = "Accepted"; break;
+                case STATUS_NO_CONTENT:
+                  HTTP_Status_Code::Reason[i] = "No Content"; break;
+                case STATUS_MOVED_PERMANENTLY:
+                  HTTP_Status_Code::Reason[i] = "Moved Permanently"; break;
+                case STATUS_MOVED_TEMPORARILY:
+                  HTTP_Status_Code::Reason[i] = "Moved Temporarily"; break;
+                case STATUS_NOT_MODIFIED:
+                  HTTP_Status_Code::Reason[i] = "Not Modified"; break;
+                case STATUS_BAD_REQUEST:
+                  HTTP_Status_Code::Reason[i] = "Bad Request"; break;
+                case STATUS_UNAUTHORIZED:
+                  HTTP_Status_Code::Reason[i] = "Unauthorized"; break;
+                case STATUS_FORBIDDEN:
+                  HTTP_Status_Code::Reason[i] = "Forbidden"; break;
+                case STATUS_NOT_FOUND:
+                  HTTP_Status_Code::Reason[i] = "Not Found"; break;
+                case STATUS_INTERNAL_SERVER_ERROR:
+                  HTTP_Status_Code::Reason[i] = "Internal Server Error"; break;
+                case STATUS_NOT_IMPLEMENTED:
+                  HTTP_Status_Code::Reason[i] = "Not Implemented"; break;
+                case STATUS_BAD_GATEWAY:
+                  HTTP_Status_Code::Reason[i] = "Bad Gateway"; break;
+                case STATUS_SERVICE_UNAVAILABLE:
+                  HTTP_Status_Code::Reason[i] = "Service Unavailable"; break;
+                default:
+                  HTTP_Status_Code::Reason[i] = "Unknown";
+                }
+            }
 
-	  HTTP_Status_Code::instance_ = 1;
-	}
+          HTTP_Status_Code::instance_ = 1;
+        }
 
       // GUARD released
     }

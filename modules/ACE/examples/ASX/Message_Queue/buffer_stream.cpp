@@ -17,6 +17,7 @@
 #include "ace/Stream.h"
 #include "ace/Module.h"
 #include "ace/Task.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(Message_Queue, buffer_stream, "$Id$")
 
@@ -32,9 +33,12 @@ class Common_Task : public MT_Task
 {
 public:
   Common_Task (void) {}
+
+  //FUZZ: disable check_for_lack_ACE_OS
   // ACE_Task hooks
   virtual int open (void * = 0);
   virtual int close (u_long = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 // Define the Producer interface.
@@ -145,22 +149,22 @@ Producer::svc (void)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("put_next")));
-	  break;
+          break;
         }
 
       // Send the message to the other thread.
       else
-	{
-	  mb->wr_ptr (n);
-	  // NUL-terminate the string (since we use strlen() on it
-	  // later).
+        {
+          mb->wr_ptr (n);
+          // NUL-terminate the string (since we use strlen() on it
+          // later).
           mb->rd_ptr ()[n] = '\0';
 
-	  if (this->put_next (mb) == -1)
-	    ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("put_next")));
-	}
+          if (this->put_next (mb) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("put_next")));
+        }
     }
 
   return 0;
@@ -200,7 +204,7 @@ Consumer::svc (void)
       if (result == -1)
         break;
 
-      int length = mb->length ();
+      int length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
         ACE_OS::write (ACE_STDOUT,
@@ -210,14 +214,14 @@ Consumer::svc (void)
       mb->release ();
 
       if (length == 0)
-	break;
+        break;
     }
 
   if (result == -1 && errno == EWOULDBLOCK)
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("(%t) %p\n%a"),
-		ACE_TEXT ("timed out waiting for message"),
-		1));
+                ACE_TEXT ("(%t) %p\n%a"),
+                ACE_TEXT ("timed out waiting for message"),
+                1));
   return 0;
 }
 
@@ -302,7 +306,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("threads not supported on this platform\n")));

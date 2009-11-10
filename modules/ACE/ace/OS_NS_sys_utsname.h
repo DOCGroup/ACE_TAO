@@ -42,11 +42,11 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 struct ACE_utsname
 {
-  ACE_TCHAR sysname[_SYS_NMLN];
-  ACE_TCHAR nodename[_SYS_NMLN];
-  ACE_TCHAR release[_SYS_NMLN];
-  ACE_TCHAR version[_SYS_NMLN];
-  ACE_TCHAR machine[_SYS_NMLN];
+  char sysname[_SYS_NMLN];
+  char nodename[_SYS_NMLN];
+  char release[_SYS_NMLN];
+  char version[_SYS_NMLN];
+  char machine[_SYS_NMLN];
 };
 ACE_END_VERSIONED_NAMESPACE_DECL
 # else

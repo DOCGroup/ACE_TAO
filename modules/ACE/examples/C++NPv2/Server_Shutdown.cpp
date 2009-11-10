@@ -25,7 +25,6 @@
 
 
 class Quit_Handler : public ACE_Event_Handler {
-  friend class ace_dewarn_gplusplus;
 public:
   Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
 
@@ -37,9 +36,9 @@ public:
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   { delete this; return 0; }
 
-private:
+protected:
 
-  // Private destructor ensures dynamic allocation.
+  // Protected destructor ensures dynamic allocation.
   virtual ~Quit_Handler () {}
 };
 
@@ -55,7 +54,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
                             defined (ACE_USES_OLD_IOSTREAMS))
   for (;;) {
     char user_input[80];
-    fgets (user_input, sizeof (user_input), stdin);
+    ACE_OS::fgets (user_input, sizeof (user_input), stdin);
     if (ACE_OS::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;

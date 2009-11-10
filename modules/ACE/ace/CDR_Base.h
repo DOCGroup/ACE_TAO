@@ -41,6 +41,16 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+// Stuff used by the ACE CDR classes. Watch these values... they're also used
+// in the ACE_CDR Byte_Order enum below.
+#if defined ACE_LITTLE_ENDIAN
+#  define ACE_CDR_BYTE_ORDER 1
+// little endian encapsulation byte order has value = 1
+#else  /* ! ACE_LITTLE_ENDIAN */
+#  define ACE_CDR_BYTE_ORDER 0
+// big endian encapsulation byte order has value = 0
+#endif /* ! ACE_LITTLE_ENDIAN */
+
 class ACE_Message_Block;
 
 /**
@@ -100,6 +110,22 @@ public:
   };
 
   /**
+   * @enum Byte_Order
+   *
+   * Defines values for the byte_order argument to ACE_OutputCDR and
+   * ACE_InputCDR.
+   */
+  enum Byte_Order
+  {
+    /// Use big-endian order (also known as network byte order).
+    BYTE_ORDER_BIG_ENDIAN = 0,
+    /// Use little-endian order.
+    BYTE_ORDER_LITTLE_ENDIAN = 1,
+    /// Use whichever byte order is native to this machine.
+    BYTE_ORDER_NATIVE = ACE_CDR_BYTE_ORDER
+  };
+
+  /**
    * Do byte swapping for each basic IDL type size.  There exist only
    * routines to put byte, halfword (2 bytes), word (4 bytes),
    * doubleword (8 bytes) and quadword (16 byte); because those are
@@ -151,10 +177,14 @@ public:
    */
   static int grow (ACE_Message_Block *mb, size_t minsize);
 
-  /// Copy a message block chain into a single message block,
-  /// preserving the alignment of the first message block of the
-  /// original stream, not the following message blocks.
-  static void consolidate (ACE_Message_Block *dst,
+  /**
+   * Copy a message block chain into a single message block,
+   * preserving the alignment of the first message block of the
+   * original stream, not the following message blocks.
+   * @retval -1 Failure
+   * @retval 0 Success.
+   */
+  static int consolidate (ACE_Message_Block *dst,
                           const ACE_Message_Block *src);
 
   static size_t total_length (const ACE_Message_Block *begin,
@@ -267,15 +297,66 @@ public:
 #    if   ACE_SIZEOF_LONG_DOUBLE == 16
        typedef long double      LongDouble;
 #      define   ACE_CDR_LONG_DOUBLE_INITIALIZER 0
+#      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS = RHS
 #    else
 #      define NONNATIVE_LONGDOUBLE
 #      define   ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
+#      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS.assign (RHS)
        struct ACE_Export LongDouble
        {
+       // VxWorks' compiler (gcc 2.96) gets confused by the operator long
+       // double, so we avoid using long double as the NativeImpl.
+       // Linux's x86 long double format (12 or 16 bytes) is incompatible
+       // with Windows, Solaris, AIX, MacOS X and HP-UX (and probably others)
+       // long double format (8 or 16 bytes).  If you need 32-bit Linux to
+       // inter-operate with 64-bit Linux you will want to define this
+       // macro to 0 so that "long double" is used.  Otherwise, do not define
+       // this macro.
+#      if defined (ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE) && \
+          (ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE == 1)
+         typedef double NativeImpl;
+#      else
+         typedef long double NativeImpl;
+#      endif /* ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE==1 */
+
          char ld[16];
+
+         LongDouble& assign (const NativeImpl& rhs);
+         LongDouble& assign (const LongDouble& rhs);
+
          bool operator== (const LongDouble &rhs) const;
          bool operator!= (const LongDouble &rhs) const;
-         // @@ also need other comparison operators.
+
+         LongDouble& operator*= (const NativeImpl rhs) {
+           return this->assign (static_cast<NativeImpl> (*this) * rhs);
+         }
+         LongDouble& operator/= (const NativeImpl rhs) {
+           return this->assign (static_cast<NativeImpl> (*this) / rhs);
+         }
+         LongDouble& operator+= (const NativeImpl rhs) {
+           return this->assign (static_cast<NativeImpl> (*this) + rhs);
+         }
+         LongDouble& operator-= (const NativeImpl rhs) {
+           return this->assign (static_cast<NativeImpl> (*this) - rhs);
+         }
+         LongDouble& operator++ () {
+           return this->assign (static_cast<NativeImpl> (*this) + 1);
+         }
+         LongDouble& operator-- () {
+           return this->assign (static_cast<NativeImpl> (*this) - 1);
+         }
+         LongDouble operator++ (int) {
+           LongDouble ldv = *this;
+           this->assign (static_cast<NativeImpl> (*this) + 1);
+           return ldv;
+         }
+         LongDouble operator-- (int) {
+           LongDouble ldv = *this;
+           this->assign (static_cast<NativeImpl> (*this) - 1);
+           return ldv;
+         }
+
+         operator NativeImpl () const;
        };
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 

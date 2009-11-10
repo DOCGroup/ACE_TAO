@@ -52,8 +52,8 @@ ACE_SOCK_Netlink::ACE_SOCK_Netlink (ACE_Netlink_Addr &local,
                   protocol_family,
                   protocol)  == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Netlink")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Netlink")));
 }
 
 ssize_t

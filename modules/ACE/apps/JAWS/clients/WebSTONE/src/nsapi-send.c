@@ -48,7 +48,7 @@
 #define HEADERS  "HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n"
 
 #ifdef WIN32
-__declspec(dllexport) 
+__declspec(dllexport)
 #endif
 
 int nsapi_send(pblock *pb, Session *sn, Request *rq)
@@ -63,9 +63,9 @@ int nsapi_send(pblock *pb, Session *sn, Request *rq)
      * file size was specified.
      */
     if ( !(query_string = pblock_findval("query", rq->reqpb)) )
-	filesize = FILE_SIZE;
+        filesize = FILE_SIZE;
     else {
-	filesize = atoi(&(query_string[5]));
+        filesize = atoi(&(query_string[5]));
     }
 
     memcpy(&buffer, HEADERS, sizeof(HEADERS)-1);
@@ -73,16 +73,16 @@ int nsapi_send(pblock *pb, Session *sn, Request *rq)
     /* Generate the output */
     maxindex = sizeof(HEADERS) + filesize;
     for (index=sizeof(HEADERS); index < (maxindex); index++)
-	/* generate random characters from A-Z */
+        /* generate random characters from A-Z */
 #ifdef IRIX
-	buffer[index] = rand_r() % 26 + 63;
+        buffer[index] = rand_r() % 26 + 63;
 #else
         buffer[index] = rand() %26 + 63;
 #endif
 
     /* Send the output */
     if (net_write(sn->csd, buffer, sizeof(HEADERS)-1+filesize, 0) == IO_ERROR)
-	return REQ_EXIT;
+        return REQ_EXIT;
 
     return REQ_PROCEED;
 }

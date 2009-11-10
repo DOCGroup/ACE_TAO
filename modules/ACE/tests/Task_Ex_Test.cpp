@@ -44,8 +44,10 @@ const ACE_INT32 NUMBER_OF_MSGS=2000;
 class Consumer : public ACE_Task_Ex<ACE_MT_SYNCH, User_Defined_Msg>
 {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   /// activate/spawn the threads.
   int open (void*);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   /// svc thread entry point
   virtual int svc (void);

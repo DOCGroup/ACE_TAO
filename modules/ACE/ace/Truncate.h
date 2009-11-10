@@ -7,8 +7,8 @@
  * $Id$
  *
  * @author Steve Huston  <shuston@riverace.com>
- * @author Ossama Othman <ossama_othman at symantec dot com>
- * @author Russell Mora  <russell_mora at symantec dot com>
+ * @author Ossama Othman <ossama_othman@symantec.com>
+ * @author Russell Mora  <russell_mora@symantec.com>
  */
 //=============================================================================
 
@@ -27,17 +27,14 @@
 #include "ace/If_Then_Else.h"
 #include "ace/Numeric_Limits.h"
 
-#if defined (__BORLANDC__) && __BORLANDC__ <= 0x590
+#if defined (ACE_LACKS_LONGLONG_T)
 # include "ace/Basic_Types.h"
-#endif  /* __BORLANDC__ <= 0x590 */
+#endif  /* ACE_LACKS_LONGLONG_T */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_Utils
 {
-
-#if !defined (__BORLANDC__) || __BORLANDC__ > 0x590
-
   template<typename T> struct Sign_Check;
 
   // Specialize the unsigned signed cases.
@@ -45,13 +42,15 @@ namespace ACE_Utils
   template<> struct Sign_Check<unsigned short> { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
   template<> struct Sign_Check<unsigned int>   { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
   template<> struct Sign_Check<unsigned long>  { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
-#ifndef ACE_LACKS_LONGLONG_T
+#if !(defined(ACE_LACKS_LONGLONG_T) || defined(ACE_LACKS_UNSIGNEDLONGLONG_T))
 # ifdef __GNUC__
   // Silence g++ "-pedantic" warnings regarding use of "long long"
   // type.
   __extension__
 # endif  /* __GNUC__ */
   template<> struct Sign_Check<unsigned long long> { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
+#else
+  template<> struct Sign_Check<ACE_U_LongLong> { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
 #endif  /* !ACE_LACKS_LONGLONG_T */
 
   // Specialize the signed cases.
@@ -111,7 +110,7 @@ namespace ACE_Utils
     unsigned_type operator() (unsigned_type x) { return x; }
   };
 
-#ifndef ACE_LACKS_LONGLONG_T
+#if !(defined(ACE_LACKS_LONGLONG_T) || defined(ACE_LACKS_UNSIGNEDLONGLONG_T))
 # ifdef __GNUC__
   // Silence g++ "-pedantic" warnings regarding use of "long long"
   // type.
@@ -121,6 +120,14 @@ namespace ACE_Utils
   struct To_Unsigned<unsigned long long>
   {
     typedef unsigned long long unsigned_type;
+
+    unsigned_type operator() (unsigned_type x) { return x; }
+  };
+#else
+  template<>
+  struct To_Unsigned<ACE_U_LongLong>
+  {
+    typedef ACE_U_LongLong unsigned_type;
 
     unsigned_type operator() (unsigned_type x) { return x; }
   };
@@ -176,7 +183,7 @@ namespace ACE_Utils
     }
   };
 
-#ifndef ACE_LACKS_LONGLONG_T
+#if !(defined(ACE_LACKS_LONGLONG_T) || defined(ACE_LACKS_UNSIGNEDLONGLONG_T))
 # ifdef __GNUC__
   // Silence g++ "-pedantic" warnings regarding use of "long long"
   // type.
@@ -431,6 +438,29 @@ namespace ACE_Utils
     }
   };
 
+
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+  // Partial specialization for the case where we're casting from
+  // ACE_U_LongLong to a smaller integer.  We assume that we're always
+  // truncating from ACE_U_LongLong to a smaller type.  The partial
+  // specialization above handles the case where both the FROM and TO
+  // types are ACE_U_LongLong.
+  template<typename TO>
+  struct Truncator<ACE_U_LongLong, TO>
+  {
+    TO operator() (ACE_U_LongLong const & val)
+    {
+      // If val less than or equal to ACE_Numeric_Limits<TO>::max(),
+      // val.lo() must be less than or equal to
+      // ACE_Numeric_Limits<TO>::max (), as well.
+      return
+        (val > ACE_Numeric_Limits<TO>::max ()
+         ? ACE_Numeric_Limits<TO>::max ()
+         : static_cast<TO> (val.lo ()));
+    }
+  };
+#endif /* ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T */
+
   // -----------------------------------------------------
   /**
    * @struct Noop_Truncator
@@ -452,7 +482,7 @@ namespace ACE_Utils
   // -----------------------------------------------------
 
   /**
-   * @class Truncate
+   * @class truncate_cast
    *
    * @brief Helper function to truncate an integral value to the
    *        maximum  value of the given type.
@@ -465,7 +495,7 @@ namespace ACE_Utils
    * @internal Internal use only.
    */
   template<typename TO, typename FROM>
-  inline TO Truncate (FROM val)
+  inline TO truncate_cast (FROM val)
   {
     // If the size of FROM is less than the size of TO, "val" will
     // never be greater than the maximum "TO" value, so there is no
@@ -477,425 +507,6 @@ namespace ACE_Utils
 
     return truncator() (val);
   }
-
-#else
-
-  // Borland can't handle the template meta-programming above so
-  // provide explicit specializations for a few types.  More will be
-  // added if necessary.
-
-  /**
-   * @deprecated Borland ACE_Utils::Truncator<> specializations should
-   *             be removed.
-   */
-
-  template<typename FROM, typename TO> struct Truncator;
-
-  //----------------------------------------------------------
-  // sizeof(FROM) >  sizeof(TO)
-  //----------------------------------------------------------
-
-  template<>
-  struct Truncator<ACE_INT32, ACE_INT8>
-  {
-    ACE_INT8 operator() (ACE_INT32 val)
-    {
-      return
-        (val > ACE_Numeric_Limits<ACE_INT8>::max ()
-         ? ACE_Numeric_Limits<ACE_INT8>::max ()
-         : static_cast<ACE_INT8> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT32, ACE_UINT8>
-  {
-    ACE_UINT8 operator() (ACE_UINT32 val)
-    {
-      return
-        (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_UINT8>::max ())
-         ? ACE_Numeric_Limits<ACE_UINT8>::max ()
-         : static_cast<ACE_UINT8> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_INT32, ACE_UINT8>
-  {
-    ACE_UINT8 operator() (ACE_INT32 val)
-    {
-      return
-        (val > static_cast<ACE_INT32> (ACE_Numeric_Limits<ACE_UINT8>::max ())
-         ? ACE_Numeric_Limits<ACE_UINT8>::max ()
-         : static_cast<ACE_UINT8> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT32, ACE_INT8>
-  {
-    ACE_INT8 operator() (ACE_UINT32 val)
-    {
-      return
-        (val > static_cast<ACE_UINT32> (ACE_Numeric_Limits<ACE_INT8>::max ())
-         ? ACE_Numeric_Limits<ACE_INT8>::max ()
-         : static_cast<ACE_INT8> (val));
-    }
-  };
-
-#if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG < 8
-  template<>
-  struct Truncator<ACE_INT64, signed long>
-  {
-    signed long operator() (ACE_INT64 val)
-    {
-      return
-        (val > ACE_Numeric_Limits<signed long>::max ()
-         ? ACE_Numeric_Limits<signed long>::max ()
-         : static_cast<signed long> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_INT64, unsigned long>
-  {
-    unsigned long operator() (ACE_INT64 val)
-    {
-      return
-        (val > static_cast<ACE_INT64> (ACE_Numeric_Limits<unsigned long>::max ())
-         ? ACE_Numeric_Limits<unsigned long>::max ()
-         : static_cast<unsigned long> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT64, unsigned long>
-  {
-    unsigned long operator() (ACE_UINT64 val)
-    {
-      return
-        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<unsigned long>::max ())
-         ? ACE_Numeric_Limits<unsigned long>::max ()
-         : static_cast<unsigned long> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT64, signed long>
-  {
-    signed long operator() (ACE_UINT64 val)
-    {
-      return
-        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<signed long>::max ())
-         ? ACE_Numeric_Limits<signed long>::max ()
-         : static_cast<signed long> (val));
-    }
-  };
-
-#endif  /* ACE_SIZEOF_LONG < 8 */
-
-#if defined (ACE_SIZEOF_INT) && ACE_SIZEOF_INT < 8
-  template<>
-  struct Truncator<ACE_INT64, signed int>
-  {
-    ACE_INT32 operator() (ACE_INT64 val)
-    {
-      return
-        (val > ACE_Numeric_Limits<signed int>::max ()
-         ? ACE_Numeric_Limits<signed int>::max ()
-         : static_cast<signed int> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_INT64, unsigned int>
-  {
-    ACE_UINT32 operator() (ACE_INT64 val)
-    {
-      return
-        (val > static_cast<ACE_INT64> (ACE_Numeric_Limits<unsigned int>::max ())
-         ? ACE_Numeric_Limits<unsigned int>::max ()
-         : static_cast<unsigned int> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT64, unsigned int>
-  {
-    ACE_UINT32 operator() (ACE_UINT64 val)
-    {
-      return
-        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<unsigned int>::max ())
-         ? ACE_Numeric_Limits<unsigned int>::max ()
-         : static_cast<unsigned int> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT64, signed int>
-  {
-    signed int operator() (ACE_UINT64 val)
-    {
-      return
-        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<signed int>::max ())
-         ? ACE_Numeric_Limits<signed int>::max ()
-         : static_cast<signed int> (val));
-    }
-  };
-
-#endif  /* ACE_SIZEOF_INT < 8 */
-
-  //----------------------------------------------------------
-  // sizeof(FROM) == sizeof(TO)
-  //----------------------------------------------------------
-
-  template<>
-  struct Truncator<signed int, unsigned int>
-  {
-    unsigned int operator() (signed int val)
-    {
-      return static_cast<unsigned int> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<unsigned int, signed int>
-  {
-    signed int operator() (unsigned int val)
-    {
-      return
-        (val > static_cast<unsigned int> (ACE_Numeric_Limits<signed int>::max ())
-         ? ACE_Numeric_Limits<signed int>::max ()
-         : static_cast<signed int> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<signed long, unsigned long>
-  {
-    unsigned long operator() (signed long val)
-    {
-      return static_cast<unsigned long> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<unsigned long, signed long>
-  {
-    signed long operator() (unsigned long val)
-    {
-      return
-        (val > static_cast<unsigned long> (ACE_Numeric_Limits<signed long>::max ())
-         ? ACE_Numeric_Limits<signed long>::max ()
-         : static_cast<signed long> (val));
-    }
-  };
-
-#if defined (ACE_SIZEOF_INT) && defined (ACE_SIZEOF_LONG) \
-    && ACE_SIZEOF_INT == ACE_SIZEOF_LONG
-
-  template<>
-  struct Truncator<signed int, unsigned long>
-  {
-    unsigned long operator() (signed int val)
-    {
-      return static_cast<unsigned long> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<unsigned long, signed int>
-  {
-    signed int operator() (unsigned long val)
-    {
-      return
-        (val > static_cast<unsigned long> (ACE_Numeric_Limits<signed int>::max ())
-         ? ACE_Numeric_Limits<signed int>::max ()
-         : static_cast<signed int> (val));
-    }
-  };
-
-  template<>
-  struct Truncator<signed long, unsigned int>
-  {
-    unsigned int operator() (signed long val)
-    {
-      return static_cast<unsigned int> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<unsigned int, signed long>
-  {
-    signed long operator() (unsigned int val)
-    {
-      return
-        (val > static_cast<unsigned int> (ACE_Numeric_Limits<signed long>::max ())
-         ? ACE_Numeric_Limits<signed long>::max ()
-         : static_cast<signed long> (val));
-    }
-  };
-
-#endif  /* ACE_SIZEOF_INT == ACE_SIZEOF_LONG */
-
-  template<>
-  struct Truncator<ACE_INT64, ACE_UINT64>
-  {
-    ACE_UINT64 operator() (ACE_INT64 val)
-    {
-      return static_cast<ACE_UINT64> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT64, ACE_INT64>
-  {
-    ACE_INT64 operator() (ACE_UINT64 val)
-    {
-      return
-        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_INT64>::max ())
-         ? ACE_Numeric_Limits<ACE_INT64>::max ()
-         : static_cast<ACE_INT64> (val));
-    }
-  };
-
-  //----------------------------------------------------------
-  // sizeof(FROM) <  sizeof(TO)
-  //----------------------------------------------------------
-
-  template<>
-  struct Truncator<ACE_INT8, ACE_INT32>
-  {
-    ACE_INT32 operator() (ACE_INT8 val)
-    {
-      return static_cast<ACE_INT32> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT8, ACE_UINT32>
-  {
-    ACE_UINT32 operator() (ACE_UINT8 val)
-    {
-      return static_cast<ACE_UINT32> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_UINT8, ACE_INT32>
-  {
-    ACE_INT32 operator() (ACE_UINT8 val)
-    {
-      return static_cast<ACE_INT32> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<ACE_INT8, ACE_UINT32>
-  {
-    ACE_UINT32 operator() (ACE_INT8 val)
-    {
-      return static_cast<ACE_UINT32> (val);
-    }
-  };
-
-#if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG < 8
-  template<>
-  struct Truncator<signed long, ACE_INT64>
-  {
-    ACE_INT64 operator() (signed long val)
-    {
-      return static_cast<ACE_INT64> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<signed long, ACE_UINT64>
-  {
-    ACE_UINT64 operator() (signed long val)
-    {
-      return static_cast<ACE_UINT64> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<unsigned long, ACE_UINT64>
-  {
-    ACE_UINT64 operator() (unsigned long val)
-    {
-      return static_cast<ACE_UINT64> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<unsigned long, ACE_INT64>
-  {
-    ACE_INT64 operator() (unsigned long val)
-    {
-      return static_cast<ACE_INT64> (val);
-    }
-  };
-#endif  /* ACE_SIZEOF_LONG < 8 */
-
-#if defined (ACE_SIZEOF_INT) && ACE_SIZEOF_INT < 8
-  template<>
-  struct Truncator<signed int, ACE_INT64>
-  {
-    ACE_INT64 operator() (signed int val)
-    {
-      return static_cast<ACE_INT64> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<signed int, ACE_UINT64>
-  {
-    ACE_UINT64 operator() (signed int val)
-    {
-      return static_cast<ACE_UINT64> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<unsigned int, ACE_UINT64>
-  {
-    ACE_UINT64 operator() (unsigned int val)
-    {
-      return static_cast<ACE_UINT64> (val);
-    }
-  };
-
-  template<>
-  struct Truncator<unsigned int, ACE_INT64>
-  {
-    ACE_INT64 operator() (unsigned int val)
-    {
-      return static_cast<ACE_INT64> (val);
-    }
-  };
-#endif  /* ACE_SIZEOF_INT < 8 */
-
-  // Partial specialization for the case where the types are the same.
-  // No truncation is necessary.
-  template<typename T>
-  struct Truncator<T, T>
-  {
-    T operator() (T val)
-    {
-      return val;
-    }
-  };
-
-  // -------------------------------------
-  template<typename TO, typename FROM>
-  inline TO Truncate (FROM val)
-  {
-    typedef Truncator<FROM, TO> truncator;
-
-    return truncator() (val);
-  }
-
-#endif  /* !__BORLANDC__ || __BORLANDC__ > 0x590 */
 
 } // namespace ACE_Utils
 

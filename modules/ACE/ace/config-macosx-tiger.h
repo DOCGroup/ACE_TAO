@@ -10,16 +10,6 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#if defined (__GNUG__)
-# include "ace/config-g++-common.h"
-#endif /* __GNUG__ */
-
-// #undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
-#define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
-
 #if !defined (ACE_SIZEOF_LONG_DOUBLE)
 # if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
    // Size of long double in GCC 3.3 is 8.
@@ -29,6 +19,14 @@
 #  define ACE_SIZEOF_LONG_DOUBLE 16
 # endif // GCC 3.3
 #endif // ACE_SIZEOF_LONG_DOUBLE
+
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#endif /* __GNUG__ */
+
+#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #if !defined (__i386__)
 # if defined (ACE_HAS_PENTIUM)
@@ -45,13 +43,11 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_POSIX_SEM
 
-//#define ACE_HAS_SVR4_TLI
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
 
 #define ACE_LACKS_STROPTS_H
 
 // Wcharness....
-//#define ACE_LACKS_WCHAR_H
 #define ACE_HAS_WCHAR
 #define ACE_SIZEOF_WCHAR 4
 
@@ -61,7 +57,6 @@
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSDUP
-// #define ACE_LACKS_WCSLEN
 
 // Mac lacks the following pthread features
 #define ACE_LACKS_MUTEXATTR_PSHARED
@@ -81,10 +76,6 @@
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
-//Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
-#define ACE_HAS_SIG_MACROS
-
-//#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 
@@ -92,9 +83,6 @@
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-
-//?
-#define ACE_LACKS_SIGSET
 
 #define ACE_NEEDS_SCHED_H
 
@@ -131,9 +119,6 @@
 // Compiler/platform correctly calls init()/fini() for shared libraries.
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
-// Explicit dynamic linking permits "lazy" symbol resolution
-//#define ACE_HAS_RTLD_LAZY_V
-
 // platform supports POSIX O_NONBLOCK semantics
 #define ACE_HAS_POSIX_NONBLOCK
 
@@ -146,9 +131,6 @@
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
 
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SYS_SOCKIO_H
@@ -180,7 +162,6 @@
 # define ACE_HAS_THREADS
 // And they're even POSIX pthreads
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_PTHREAD_SCHEDPARAM
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #endif  /* ACE_MT_SAFE == 1 */
@@ -204,7 +185,6 @@
 #define ACE_HAS_GETIFADDRS
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
-#define ACE_LACKS_SIGVAL_T
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink
@@ -216,12 +196,15 @@
 // as of Dec 2002, if you use fink you will need to uncomment the next line
 // #define ACE_NEEDS_DL_UNDERSCORE
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
-#define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("DYLD_LIBRARY_PATH")
-#define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dylib")
+#define ACE_LD_SEARCH_PATH ACE_TEXT ("DYLD_LIBRARY_PATH")
+#define ACE_DLL_SUFFIX ACE_TEXT (".dylib")
 //#define ACE_LACKS_DLCLOSE
 
 // gperf seems to need this
 //#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+
+#define ACE_LACKS_UNSETENV
+#define ACE_LACKS_ISCTYPE
 
 #if defined(__APPLE_CC__) && (__APPLE_CC__ < 1173)
 #error "Compiler must be upgraded, see http://developer.apple.com"

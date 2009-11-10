@@ -29,7 +29,7 @@
 /* All of the implementations currently use int as the semaphore type */
 #ifdef SEM_WIN32
 typedef HANDLE SEMAPHORE;
-#define SEM_ERROR NULL
+#define SEM_ERROR 0
 /* That oughta hold them (I hope) */
 #define SEM_MAXVALUE 32767
 

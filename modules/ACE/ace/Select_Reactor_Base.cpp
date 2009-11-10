@@ -411,6 +411,18 @@ ACE_Select_Reactor_Handler_Repository_Iterator::ACE_Select_Reactor_Handler_Repos
     : rep_ (s),
       current_ (s->event_handlers_.begin ())
 {
+#ifndef ACE_WIN32
+  // Don't use ACE_Array_Base::end() since it may be larger than
+  // event_handlers[max_handlep1_].
+  const_base_iterator const end =
+    &this->rep_->event_handlers_[this->rep_->max_handlep1 ()];
+
+  // Advance to the next element containing a non-zero event handler.
+  // There's no need to do this for the Windows case since the hash
+  // map will only contain non-zero event handlers.
+  while (this->current_ != end && (*(this->current_) == 0))
+    ++this->current_;
+#endif
 }
 
 // Pass back the <next_item> that hasn't been seen in the Set.
@@ -469,12 +481,12 @@ ACE_Select_Reactor_Handler_Repository_Iterator::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository_Iterator::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("rep_ = %u"), this->rep_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("rep_ = %u"), this->rep_));
 # ifdef ACE_WIN32
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_ = ")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("current_ = ")));
   this->current_.dump ();
 # else
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_ = %@"), this->current_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("current_ = %@"), this->current_));
 # endif  /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -487,20 +499,20 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::dump");
 
 # ifdef ACE_WIN32
-#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_LIB_TEXT("%@")
-#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_LIB_TEXT("%u")
+#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("%@")
+#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_TEXT("%u")
 # else
-#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_LIB_TEXT("%d")
-#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_LIB_TEXT("%d")
+#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("%d")
+#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_TEXT("%d")
 # endif  /* ACE_WIN32 */
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("max_handlep1_ = ")
+              ACE_TEXT ("max_handlep1_ = ")
               ACE_MAX_HANDLEP1_FORMAT_SPECIFIER
-              ACE_LIB_TEXT ("\n"),
+              ACE_TEXT ("\n"),
               this->max_handlep1 ()));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("[")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("[")));
 
   ACE_Event_Handler *event_handler = 0;
 
@@ -508,14 +520,14 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
        iter.next (event_handler) != 0;
        iter.advance ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT (" (event_handler = %@,")
-                ACE_LIB_TEXT (" event_handler->handle_ = ")
+                ACE_TEXT (" (event_handler = %@,")
+                ACE_TEXT (" event_handler->handle_ = ")
                 ACE_HANDLE_FORMAT_SPECIFIER
-                ACE_LIB_TEXT ("\n"),
+                ACE_TEXT ("\n"),
                 event_handler,
                 event_handler->get_handle ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" ]\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -561,84 +573,7 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
-
-  if (this->notify_queue_.is_empty ())
-    return 0;
-
-  ACE_Notification_Buffer *temp = 0;
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> local_queue;
-
-  size_t queue_size = this->notify_queue_.size ();
-  int number_purged = 0;
-  size_t i;
-  for (i = 0; i < queue_size; ++i)
-    {
-      if (-1 == this->notify_queue_.dequeue_head (temp))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("dequeue_head")),
-                          -1);
-
-      // If this is not a Reactor notify (it is for a particular handler),
-      // and it matches the specified handler (or purging all),
-      // and applying the mask would totally eliminate the notification, then
-      // release it and count the number purged.
-      if ((0 != temp->eh_) &&
-          (0 == eh || eh == temp->eh_) &&
-          ACE_BIT_DISABLED (temp->mask_, ~mask)) // the existing notificationmask
-                                                 // is left with nothing when
-                                                 // applying the mask
-      {
-        if (-1 == this->free_queue_.enqueue_head (temp))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%p\n"),
-                             ACE_LIB_TEXT ("enqueue_head")),
-                            -1);
-
-        ACE_Event_Handler *event_handler = temp->eh_;
-        event_handler->remove_reference ();
-
-        ++number_purged;
-      }
-      else
-      {
-        // To preserve it, move it to the local_queue.
-        // But first, if this is not a Reactor notify (it is for a particularhandler),
-        // and it matches the specified handler (or purging all), then
-        // apply the mask
-        if ((0 != temp->eh_) &&
-            (0 == eh || eh == temp->eh_))
-          ACE_CLR_BITS(temp->mask_, mask);
-        if (-1 == local_queue.enqueue_head (temp))
-          return -1;
-      }
-    }
-
-  if (this->notify_queue_.size ())
-    { // should be empty!
-      ACE_ASSERT (0);
-      return -1;
-    }
-
-  // now put it back in the notify queue
-  queue_size = local_queue.size ();
-  for (i = 0; i < queue_size; ++i)
-    {
-      if (-1 == local_queue.dequeue_head (temp))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("dequeue_head")),
-                          -1);
-
-      if (-1 == this->notify_queue_.enqueue_head (temp))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("enqueue_head")),
-                          -1);
-    }
-
-  return number_purged;
+  return notification_queue_.purge_pending_notifications(eh, mask);
 
 #else /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
   ACE_UNUSED_ARG (eh);
@@ -654,7 +589,7 @@ ACE_Select_Reactor_Notify::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("select_reactor_ = %x"), this->select_reactor_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("select_reactor_ = %x"), this->select_reactor_));
   this->notification_pipe_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -686,22 +621,10 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 #endif /* F_SETFD */
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-      ACE_Notification_Buffer *temp = 0;
-
-      ACE_NEW_RETURN (temp,
-                      ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
-                      -1);
-
-      if (this->alloc_queue_.enqueue_head (temp) == -1)
+      if (notification_queue_.open() == -1)
         {
-          delete [] temp;
           return -1;
         }
-
-      for (size_t i = 0; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; ++i)
-        if (free_queue_.enqueue_head (temp + i) == -1)
-          return -1;
-
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
       // There seems to be a Win32 bug with this...  Set this into
@@ -728,20 +651,26 @@ ACE_Select_Reactor_Notify::close (void)
   ACE_TRACE ("ACE_Select_Reactor_Notify::close");
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  // Free up the dynamically allocated resources.
-  ACE_Notification_Buffer **b = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Buffer *> alloc_iter (this->alloc_queue_);
-       alloc_iter.next (b) != 0;
-       alloc_iter.advance ())
+  notification_queue_.reset();
+#else
+  if (this->notification_pipe_.read_handle() != ACE_INVALID_HANDLE)
     {
-      delete [] *b;
-      *b = 0;
+      // Please see Bug 2820, if we just close the pipe then we break
+      // the reference counting rules.  Basically, all the event
+      // handlers "stored" in the pipe had their reference counts
+      // increased.  We need to decrease them before closing the
+      // pipe....
+      ACE_Notification_Buffer b;
+      for (int r = read_notify_pipe(notification_pipe_.read_handle(), b);
+           r > 0;
+           r = read_notify_pipe(notification_pipe_.read_handle(), b))
+        {
+          if (b.eh_ != 0)
+            {
+              b.eh_->remove_reference();
+            }
+        }
     }
-
-  this->alloc_queue_.reset ();
-  this->notify_queue_.reset ();
-  this->free_queue_.reset ();
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
   return this->notification_pipe_.close ();
@@ -767,58 +696,21 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
   ACE_Notification_Buffer buffer (event_handler, mask);
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  // Artificial scope to limit the duration of the mutex.
-  {
-    bool notification_required = false;
+  int const notification_required =
+    notification_queue_.push_new_notification(buffer);
 
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
-
-    // No pending notifications.
-    if (this->notify_queue_.is_empty ())
-      notification_required = true;
-
-    ACE_Notification_Buffer *temp = 0;
-
-    if (free_queue_.dequeue_head (temp) == -1)
-      {
-        // Grow the queue of available buffers.
-        ACE_Notification_Buffer *temp1 = 0;
-
-        ACE_NEW_RETURN (temp1,
-                        ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
-                        -1);
-
-        if (this->alloc_queue_.enqueue_head (temp1) == -1)
-          {
-            delete [] temp1;
-            return -1;
-          }
-
-        // Start at 1 and enqueue only
-        // (ACE_REACTOR_NOTIFICATION_ARRAY_SIZE - 1) elements since
-        // the first one will be used right now.
-        for (size_t i = 1;
-             i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE;
-             ++i)
-          this->free_queue_.enqueue_head (temp1 + i);
-
-        temp = temp1;
-      }
-
-    ACE_ASSERT (temp != 0);
-    *temp = buffer;
-
-    if (notify_queue_.enqueue_tail (temp) == -1)
+  if (notification_required == -1)
+    {
       return -1;
+    }
 
-    if (!notification_required)
-      {
-        // No failures.
-        safe_handler.release ();
+  if (notification_required == 0)
+    {
+      // No failures, the handler is now owned by the notification queue
+      safe_handler.release ();
 
-        return 0;
-      }
-  }
+      return 0;
+    }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
   ssize_t const n = ACE::send (this->notification_pipe_.write_handle (),
@@ -880,12 +772,15 @@ ACE_Select_Reactor_Notify::is_dispatchable (ACE_Notification_Buffer &buffer)
   // appropriate handle_* method on the <ACE_Event_Handler>
   // pointer we've been passed.
   if (buffer.eh_ != 0)
-    return 1;
-
+    {
+      return 1;
+    }
+  else
+    {
+      // has no dispatchable buffer
+      return 0;
+    }
 #endif /*ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
-
-  // has no dispatchable buffer
-  return 0;
 }
 
 int
@@ -897,45 +792,24 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   // Dispatch one message from the notify queue, and put another in
   // the pipe if one is available.  Remember, the idea is to keep
   // exactly one message in the pipe at a time.
-  {
-    // We acquire the lock in a block to make sure we're not
-    // holding the lock while delivering callbacks...
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
-    ACE_Notification_Buffer *temp = 0;
+  bool more_messages_queued = false;
+  ACE_Notification_Buffer next;
 
-    if (notify_queue_.is_empty ())
-      return 0;
-    else if (notify_queue_.dequeue_head (temp) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("dequeue_head")),
-                        -1);
-    buffer = *temp;
-    if (free_queue_.enqueue_head (temp) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("enqueue_head")),
-                        -1);
+  result = notification_queue_.pop_next_notification(buffer,
+                                                     more_messages_queued,
+                                                     next);
 
-    bool write_next_buffer = false;
-    ACE_Notification_Buffer ** next = 0;
+  if (result == 0 || result == -1)
+    {
+      return result;
+    }
 
-    if(!this->notify_queue_.is_empty())
-      {
-        // The queue is not empty, need to queue another message.
-        this->notify_queue_.get (next, 0);
-        write_next_buffer = true;
-      }
-
-    if(write_next_buffer)
-      {
-        (void) ACE::send(
-                         this->notification_pipe_.write_handle(),
-            (char *)*next, sizeof(ACE_Notification_Buffer));
-      }
-  }
-
+  if(more_messages_queued)
+    {
+      (void) ACE::send(this->notification_pipe_.write_handle(),
+            (char *)&next, sizeof(ACE_Notification_Buffer));
+    }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
   // If eh == 0 then another thread is unblocking the
@@ -945,8 +819,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   // we've been passed.
   if (buffer.eh_ != 0)
     {
-      ACE_Event_Handler *event_handler =
-        buffer.eh_;
+      ACE_Event_Handler *event_handler = buffer.eh_;
 
       bool const requires_reference_counting =
         event_handler->reference_counting_policy ().value () ==
@@ -973,7 +846,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
         default:
           // Should we bail out if we get an invalid mask?
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("invalid mask = %d\n"),
+                      ACE_TEXT ("invalid mask = %d\n"),
                       buffer.mask_));
         }
 
@@ -996,6 +869,25 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::read_notify_pipe");
 
+  // This is kind of a weird, fragile beast.  We first read with a
+  // regular read.  The read side of this socket is non-blocking, so
+  // the read may end up being short.
+  //
+  // If the read is short, then we do a recv_n to insure that we block
+  // and read the rest of the buffer.
+  //
+  // Now, you might be tempted to say, "why don't we just replace the
+  // first recv with a recv_n?"  I was, too.  But that doesn't work
+  // because of how the calling code in handle_input() works.  In
+  // handle_input, the event will only be dispatched if the return
+  // value from read_notify_pipe() is > 0.  That means that we can't
+  // return zero from this func unless it's an EOF condition.
+  //
+  // Thus, the return value semantics for this are:
+  // -1: nothing read, fatal, unrecoverable error
+  // 0: nothing read at all
+  // 1: complete buffer read
+
   ssize_t const n = ACE::recv (handle, (char *) &buffer, sizeof buffer);
 
   if (n > 0)
@@ -1009,9 +901,9 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
           // doesn't work we're in big trouble since the input stream
           // won't be aligned correctly.  I'm not sure quite what to
           // do at this point.  It's probably best just to return -1.
-          if (ACE::recv (handle,
-                         ((char *) &buffer) + n,
-                         remainder) != remainder)
+          if (ACE::recv_n (handle,
+                           ((char *) &buffer) + n,
+                           remainder) != remainder)
             return -1;
         }
 
@@ -1038,6 +930,9 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
   int result = 0;
   ACE_Notification_Buffer buffer;
 
+  // If there is only one buffer in the pipe, this will loop and call
+  // read_notify_pipe() twice.  The first time will read the buffer, and
+  // the second will read the fact that the pipe is empty.
   while ((result = this->read_notify_pipe (handle, buffer)) > 0)
     {
       // Dispatch the buffer

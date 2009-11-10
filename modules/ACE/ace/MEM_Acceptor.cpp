@@ -59,7 +59,7 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                   backlog,
                   protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_MEM_Acceptor::ACE_MEM_Acceptor")));
+                ACE_TEXT ("ACE_MEM_Acceptor::ACE_MEM_Acceptor")));
 }
 
 int
@@ -82,8 +82,8 @@ int
 ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                           ACE_MEM_Addr *remote_sap,
                           ACE_Time_Value *timeout,
-                          int restart,
-                          int reset_new_handle)
+                          bool restart,
+                          bool reset_new_handle)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::accept");
 
@@ -119,9 +119,8 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
       if (remote_sap != 0)
         {
-          ACE_INET_Addr temp (reinterpret_cast<sockaddr_in *> (addr),
-                              len);
-          remote_sap->set_port_number(temp.get_port_number ());
+          ACE_INET_Addr temp (&inet_addr, len);
+          remote_sap->set_port_number (temp.get_port_number ());
         }
     }
 
@@ -141,7 +140,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (this->mmap_prefix_ != 0)
     {
       ACE_OS::sprintf (buf,
-                       ACE_LIB_TEXT ("%s_%d_"),
+                       ACE_TEXT ("%s_%d_"),
                        this->mmap_prefix_,
                        local_addr.get_port_number ());
     }
@@ -152,13 +151,13 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
       if (ACE::get_temp_dir (buf, MAXPATHLEN - 24) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Temporary path too long, ")
-                      ACE_LIB_TEXT ("defaulting to current directory\n")));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           buf[0] = 0;
         }
 
       ACE_OS::sprintf (name,
-                       ACE_LIB_TEXT ("MEM_Acceptor_%d_"),
+                       ACE_TEXT ("MEM_Acceptor_%d_"),
                        local_addr.get_port_number ());
       ACE_OS::strcat (buf, name);
     }
@@ -186,14 +185,15 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (ACE::send (new_handle, &client_signaling,
                  sizeof (ACE_INT16)) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_LIB_TEXT ("ACE_MEM_Acceptor::accept error sending strategy\n")),
+                       ACE_TEXT ("ACE_MEM_Acceptor::accept error sending strategy\n")),
                       -1);
 
   //   Now we get the signaling strategy the client support.
   if (ACE::recv (new_handle, &client_signaling,
                  sizeof (ACE_INT16)) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_LIB_TEXT ("ACE_MEM_Acceptor::%p error receiving strategy\n"), ACE_LIB_TEXT ("accept")),
+                       ACE_TEXT ("ACE_MEM_Acceptor::%p error receiving strategy\n"),
+                       ACE_TEXT ("accept")),
                       -1);
 
   // Ensure minimum buffer size
@@ -226,7 +226,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 int
 ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
                                         int in_blocking_mode,
-                                        int reset_new_handle) const
+                                        bool reset_new_handle) const
 {
   ACE_TRACE ("ACE_MEM_Acceptor::shared_accept_finish ()");
 

@@ -6,6 +6,7 @@
 #include "ace/OS_main.h"
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(file_reverse, file_reverse, "$Id$")
 
@@ -54,6 +55,6 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
                       -1);
 
   print_array_in_reverse ((char *) mmap.addr (),
-                          mmap.size ());
+                          ACE_Utils::truncate_cast<int> (mmap.size ()));
   return 0;
 }

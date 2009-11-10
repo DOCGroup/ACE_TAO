@@ -42,8 +42,7 @@ public:
 
   virtual int notify (void);
 
-  virtual int notify (ACE_Event_Handler *,
-                      ACE_Reactor_Mask mask);
+  virtual int notify (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
   /// Get the reactor
   ACE_Reactor *reactor (void);

@@ -57,7 +57,7 @@ public:
   ACE_Service_Manager (void);
 
   /// Destructor.
-  ~ACE_Service_Manager (void);
+  virtual ~ACE_Service_Manager (void);
 
 protected:
   // = Perform the various meta-services.

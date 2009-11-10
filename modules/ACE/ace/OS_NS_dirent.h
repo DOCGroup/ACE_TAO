@@ -54,6 +54,28 @@ extern "C" {
   typedef int (*ACE_SCANDIR_SELECTOR)(const ACE_DIRENT *filename);
 }
 
+/*
+ * We inline and undef some functions that may be implemented
+ * as macros on some platforms. This way macro definitions will
+ * be usable later as there is no way to save the macro definition
+ * using the pre-processor.
+ *
+ */
+
+#if !defined (ACE_LACKS_REWINDDIR)
+#  if !defined (ACE_HAS_WREWINDDIR) || !defined (ACE_USES_WCHAR)
+inline void ace_rewinddir_helper (ACE_DIR *dir)
+{
+#    if defined (rewinddir)
+   rewinddir (dir);
+#    undef rewinddir
+#    else
+  ::rewinddir (dir);
+#    endif /* defined (rewinddir) */
+}
+#  endif /* !defined (ACE_HAS_WREWINDDIR) && !defined (ACE_USES_WCHAR) */
+#endif /* ACE_LACKS_REWINDDIR */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
@@ -80,6 +102,9 @@ namespace ACE_OS {
                struct ACE_DIRENT **namelist[],
                ACE_SCANDIR_SELECTOR selector,
                ACE_SCANDIR_COMPARATOR comparator);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int alphasort (const void *, const void *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void seekdir (ACE_DIR *,

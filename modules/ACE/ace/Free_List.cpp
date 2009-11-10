@@ -115,11 +115,17 @@ ACE_Locked_Free_List<T, ACE_LOCK>::resize (size_t newsize)
 
   // Check if we are allowed to resize
   if (this->mode_ != ACE_PURE_FREE_LIST)
-    // Check to see if we grow or shrink
-    if (newsize < this->size_)
-      this->dealloc (this->size_ - newsize);
-    else
-      this->alloc (newsize - this->size_);
+    {
+      // Check to see if we grow or shrink
+      if (newsize < this->size_)
+        {
+          this->dealloc (this->size_ - newsize);
+        }
+      else
+        {
+          this->alloc (newsize - this->size_);
+        }
+    }
 }
 
 // Allocates <n> extra nodes for the freelist

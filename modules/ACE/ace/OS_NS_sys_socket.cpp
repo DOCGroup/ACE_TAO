@@ -14,7 +14,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 int ACE_OS::socket_initialized_;
 #endif /* ACE_WIN32 */
 
-#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
 ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle,
                 struct sockaddr *addr,
@@ -95,7 +94,6 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 # endif /* ACE_HAS_WINSOCK2 */
 }
-#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
 int
 ACE_OS::socket_init (int version_high, int version_low)
@@ -110,10 +108,10 @@ ACE_OS::socket_init (int version_high, int version_low)
       if (error != 0)
 #   if defined (ACE_HAS_WINCE)
         {
-          ACE_TCHAR fmt[] = ACE_LIB_TEXT ("%s failed, WSAGetLastError returned %d");
+          ACE_TCHAR fmt[] = ACE_TEXT ("%s failed, WSAGetLastError returned %d");
           ACE_TCHAR buf[80];  // @@ Eliminate magic number.
-          ACE_OS::sprintf (buf, fmt, ACE_LIB_TEXT ("WSAStartup"), error);
-          ::MessageBox (0, buf, ACE_LIB_TEXT ("WSAStartup failed!"), MB_OK);
+          ACE_OS::sprintf (buf, fmt, ACE_TEXT ("WSAStartup"), error);
+          ::MessageBox (0, buf, ACE_TEXT ("WSAStartup failed!"), MB_OK);
         }
 #   else
       ACE_OS::fprintf (stderr,
@@ -141,10 +139,10 @@ ACE_OS::socket_fini (void)
         {
           int error = ::WSAGetLastError ();
 #   if defined (ACE_HAS_WINCE)
-          ACE_TCHAR fmt[] = ACE_LIB_TEXT ("%s failed, WSAGetLastError returned %d");
+          ACE_TCHAR fmt[] = ACE_TEXT ("%s failed, WSAGetLastError returned %d");
           ACE_TCHAR buf[80];  // @@ Eliminate magic number.
-          ACE_OS::sprintf (buf, fmt, ACE_LIB_TEXT ("WSACleanup"), error);
-          ::MessageBox (0, buf , ACE_LIB_TEXT ("WSACleanup failed!"), MB_OK);
+          ACE_OS::sprintf (buf, fmt, ACE_TEXT ("WSACleanup"), error);
+          ::MessageBox (0, buf , ACE_TEXT ("WSACleanup failed!"), MB_OK);
 #   else
           ACE_OS::fprintf (stderr,
                            "ACE_OS::socket_fini; WSACleanup failed, "

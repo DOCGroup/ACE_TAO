@@ -1,0 +1,3 @@
+usr/lib/libACE_XtReactor.so
+usr/include/ace/XtReactor
+usr/lib/pkgconfig/ACE_XtReactor.pc

@@ -83,13 +83,11 @@ public:
   int destroy (void);
   // Destroy the <Command_Processor>.
 
-private:
-  friend class ACE_Shutup_GPlusPlus;
-  // Turn off g++ warning
-
+protected:
   ~Command_Processor (void);
   // Ensure dynamic allocation.
 
+private:
   // @@ You fill in here...
   ACE_Unbounded_Queue<Command *> url_queue_;
 };

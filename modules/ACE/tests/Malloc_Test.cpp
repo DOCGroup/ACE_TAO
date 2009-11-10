@@ -82,7 +82,8 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 # define CHILD_ADDR_DELTA 0
 #endif /* CHILD_ADDR_DELTA */
 
-static const void *CHILD_BASE_ADDR = CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR;
+static const void *CHILD_BASE_ADDR =
+  (const void *)(CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR);
 
 // Shared memory allocator.  Hide the allocator inside this function
 // so that it doesn't get constructed until after the
@@ -99,6 +100,7 @@ myallocator (const void *base_addr = 0)
 
 #if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
       // WinCE cannot do fixed base, ever.
+      ACE_UNUSED_ARG (base_addr);
       ACE_MMAP_Memory_Pool_Options options
         (0,
          ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
@@ -125,13 +127,16 @@ init_test (const void *base_addr = 0)
   // file from the previous crash.
 #if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
   // WinCE cannot do fixed base, ever.
+  ACE_UNUSED_ARG (base_addr);
   ACE_MMAP_Memory_Pool_Options options
     (0,
      ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
 #else
   ACE_MMAP_Memory_Pool_Options options (base_addr);
 #endif /* ACE_HAS_WINCE */
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   size_t rbyte = 0;
   int ft = 0;
@@ -150,7 +155,7 @@ initialize (MALLOC *allocator)
   *temp = 5.0;
   allocator->free (temp);
 
-  void *ptr;
+  void *ptr = 0;
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         0);
@@ -231,7 +236,7 @@ print (const char *process_name,
   for (Test_Data *t = data; t != 0; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
+                  ACE_TEXT ("<<<< (%P) %C\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
                   process_name,
                   t->i1_,
                   t->i2_,
@@ -282,7 +287,7 @@ parent (Test_Data *data)
 static int
 child (void)
 {
-  void *bar;
+  void *bar = 0;
   // Perform "busy waiting" here until the parent stores data under a
   // new name called "bar" in <ACE_Malloc>.  This isn't a good design
   // -- it's just to test that synchronization is working across
@@ -331,7 +336,7 @@ get_base_addrs (void)
 #endif /* defined (ACE_WIN32) */
 
 int
-run_main (int argc, ACE_TCHAR *[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
 #if defined (ACE_WIN32)
   get_base_addrs();
@@ -352,16 +357,14 @@ run_main (int argc, ACE_TCHAR *[])
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
 
-      options.command_line (EXE_LOCATION
-                            ACE_TEXT ("Malloc_Test")
-                            ACE_PLATFORM_EXE_SUFFIX
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+      static const ACE_TCHAR* format = ACE_TEXT ("%ls%ls%ls");
+#else
+      static const ACE_TCHAR* format = ACE_TEXT ("%s%s%s");
+#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
+      options.command_line (format, EXE_LOCATION,
+                            argc > 0 ? argv[0] : ACE_TEXT ("Malloc_Test"),
                             ACE_TEXT (" run_as_test"));
-
-#ifdef ACE_HAS_WINCE
-      // \Windows\Start Menu is where Malloc_Test.exe will be downloaded to.
-      // Check project setting for the directory information if needs to be changed.
-      options.process_name(ACE_TEXT("\\Windows\\Start Menu\\Malloc_Test.exe"));
-#endif
 
       MALLOC *myalloc = myallocator (PARENT_BASE_ADDR);
 

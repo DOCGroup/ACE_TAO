@@ -14,18 +14,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 inline void
 ACE_Handle_Gobbler::close_remaining_handles (void)
 {
-  HANDLE_SET::iterator iterator =
-    this->handle_set_.begin ();
-
-  HANDLE_SET::iterator end =
-    this->handle_set_.end ();
-
-  for (;
-       iterator != end;
-       ++iterator)
-    {
-      ACE_OS::close (*iterator);
-    }
+  ACE_Handle_Set_Iterator iter (this->handle_set_);
+  for (ACE_HANDLE h = iter (); h != ACE_INVALID_HANDLE; h = iter ())
+    ACE_OS::close (h);
 }
 
 inline
@@ -37,20 +28,11 @@ ACE_Handle_Gobbler::~ACE_Handle_Gobbler (void)
 inline int
 ACE_Handle_Gobbler::free_handles (size_t n_handles)
 {
-  HANDLE_SET::iterator iterator =
-    this->handle_set_.begin ();
-
-  HANDLE_SET::iterator end =
-    this->handle_set_.end ();
-
-  for (;
-       iterator != end && n_handles > 0;
-       ++iterator, --n_handles)
-    {
-      int result = ACE_OS::close (*iterator);
-      if (result != 0)
-        return result;
-    }
+  ACE_Handle_Set_Iterator iter (this->handle_set_);
+  for (ACE_HANDLE h = iter ();
+       h != ACE_INVALID_HANDLE && n_handles > 0;
+       --n_handles, h = iter ())
+    ACE_OS::close (h);
 
   return 0;
 }
@@ -83,10 +65,9 @@ ACE_Handle_Gobbler::consume_handles (size_t n_handles_to_keep_available)
               break;
             }
         }
-
-      result = this->handle_set_.insert (handle);
-      if (result == -1)
+      if (handle >= static_cast<ACE_HANDLE>(FD_SETSIZE))
         break;
+      this->handle_set_.set_bit (handle);
     }
 
 #endif /* ACE_WIN32 */

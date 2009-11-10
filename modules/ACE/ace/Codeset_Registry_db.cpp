@@ -17,12 +17,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Codeset_Registry::registry_entry const
 ACE_Codeset_Registry::registry_db_[] =
 {
-  {"ISO 8859-1:1987; Latin Alphabet No. 1","ASCII",0x00010001,1,{0x0011},1},
+  {"ISO/IEC 10646-1:1993; UCS-2, Level 1","UCS-2",0x00010100,1,{0x1000},2},
+  {"ISO 8859-1:1987; Latin Alphabet No. 1","ISO8859_1",0x00010001,1,{0x0011},1},
   {"IBM-1047 (CCSID 01047); Latin-1 Open System","EBCDIC",0x10020417,1,{0x0011},1},
   {"ISO/IEC 10646-1:1993; UCS-4, Level 1","UCS-4",0x00010104,1,{0x1000},4},
-  {"ISO/IEC 10646-1:1993; UTF-16, UCS Transformation Format 16-bit form","Unicode",0x00010109,1,{0x1000},2}
+  {"ISO/IEC 10646-1:1993; UTF-16, UCS Transformation Format 16-bit form","UTF-16",0x00010109,1,{0x1000},2},
+  {"X/Open UTF-8; UCS Transformation Format 8 (UTF-8)","UTF-8",0x05010001,1,{0x1000},6},
+  {"ISO/IEC 8859-5:1988; Latin-Cyrillic Alphabet","ISO-8859-5",0x00010005,1,{0x0015},1},
+  {"IBM-1251 (CCSID 01251); MS Windows Cyrillic","CP1251",0x100204e3,1,{0x0015},1},
+  {"IBM-855 (CCSID 04951); Cyrillic Personal Computer","CP855",0x10021357,1,{0x0015},1}
 };
 
-size_t const ACE_Codeset_Registry::num_registry_entries_ = 4;
+size_t const ACE_Codeset_Registry::num_registry_entries_ = 9;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

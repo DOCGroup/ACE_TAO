@@ -90,7 +90,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   HA_Device_Repository rep;
   ACE_Thread_Mutex rep_mutex;
+
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Condition<ACE_Thread_Mutex> wait (rep_mutex);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   HA_CommandHandler handler1 (rep, wait, rep_mutex);
   HA_CommandHandler handler2 (rep, wait, rep_mutex);

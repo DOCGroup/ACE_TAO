@@ -266,6 +266,21 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    AC_DEFINE([ACE_HAS_POSITION_INDEPENDENT_POINTERS])
   ])
 
+ AC_ARG_ENABLE([posix-sem-timeout-emulation],
+  AS_HELP_STRING(--enable-posix-sem-timeout-emulation,enable POSIX semaphore timeout emulation [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      AC_DEFINE([ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION])
+      ;;
+    no)
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-posix-sem-timeout-emulation])
+      ;;
+   esac
+  ],)
+
  AC_ARG_ENABLE([probe],
   AS_HELP_STRING(--enable-probe,enable ACE_Timeprobes [[[no]]]),
   [
@@ -337,6 +352,25 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
     ace_user_enable_pthreads=yes
   ])
 
+ AC_ARG_ENABLE([aio],
+  AS_HELP_STRING(--enable-aio,enable aio support [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_aio=yes
+      ;;
+    no)
+      ace_user_enable_aio=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-aio])
+      ;;
+   esac
+  ],
+  [
+    ace_user_enable_aio=yes
+  ])
+
  AC_ARG_ENABLE([uithreads],
   AS_HELP_STRING(--enable-uithreads,enable UNIX International thread support [[[no]]]),
   [
@@ -382,6 +416,26 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
       ;;
    esac
   ],)
+
+ AC_ARG_ENABLE([rcsid],
+  AS_HELP_STRING(--enable-rcsid,compile RCS id strings into object files [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_rcsid=yes
+      ;;
+    no)
+      ace_user_enable_rcsid=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-rcsid])
+      ;;
+   esac
+  ])
+ if test X$ace_user_enable_rcsid = Xyes; then
+   AC_DEFINE(ACE_USE_RCSID, 1,
+             [Define to 1 to embed RCS ID strings into compiled object files.])
+ fi
 
  dnl The ace/config-all.h file defaults ACE_NTRACE properly, so only emit
  dnl something if the user specifies this option.
@@ -486,10 +540,12 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_QT_REACTOR
  ACE_ENABLE_TK_REACTOR
  ACE_ENABLE_XT_REACTOR
+ ACE_ENABLE_FOX_REACTOR
 
  # placeholder for WxWindows/wxWidgets support
  AM_CONDITIONAL([BUILD_WXWINDOWS], false)
 
+ ACE_PATH_BZIP2
  ACE_PATH_ZLIB
  ACE_PATH_ZZIP
 
@@ -518,8 +574,8 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
      AC_MSG_WARN([gperf program already exists])
      AC_MSG_WARN([existing gperf may be overwritten during installation])
     ],[])
- fi 
- AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_enable_gperf = Xyes])
+ fi
+ AM_CONDITIONAL([BUILD_GPERF], [test X$ace_user_enable_gperf = Xyes])
 
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
@@ -630,6 +686,37 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_WCSDUP_EMULATION
 ])
 
+AC_DEFUN([ACE_CHECK_LIB64],
+[
+    AC_ARG_ENABLE(libsuffix,
+        AC_HELP_STRING([--enable-libsuffix],
+            [/lib directory suffix (64,32,none,auto[=default])]),
+            acelibsuff=$enableval, acelibsuff="auto")
+
+    if test "$acelibsuff" = "auto"; then
+
+cat > conftest.cpp << _ACEOF
+#include <iostream>
+int main(int, char **) {
+ return 0;
+}
+_ACEOF
+        acelibsuff=`$CXX conftest.cpp -o conftest.out; ldd conftest.out |sed -ne '/libc.so/{
+    s,.*/lib\([[^\/]]*\)/.*,\1,
+    p
+}'`
+	rm -rf conftest.*
+    fi
+
+    if test "$acelibsuff" = "no" || test "$acelibsuff" = "none"; then
+       acelibsuff=
+    fi
+    if test -z "$acelibsuff"; then
+        AC_MSG_RESULT([not using lib directory suffix])
+    else
+        AC_MSG_RESULT([using lib directory suffix $acelibsuff])
+    fi
+])
 
 dnl Macros that add ACE compilation options to a `configure' script.
 dnl ACE_COMPILATION_OPTIONS
@@ -644,7 +731,6 @@ AC_DEFUN([ACE_COMPILATION_OPTIONS],
       ;;
     no)
       AC_DEFINE([ACE_NDEBUG])
-      AC_DEFINE([ACE_USE_RCSID],[0])
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-debug])
@@ -698,6 +784,22 @@ dnl    fi
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-fast])
+      ;;
+   esac
+  ],)
+
+ AC_ARG_ENABLE([ipo],
+  AS_HELP_STRING(--enable-ipo,enable -ipo flag (e.g. Intel C++) [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ACE_CXXFLAGS="$ACE_CXXFLAGS -ipo"
+      ACE_CFLAGS="$ACE_CFLAGS -ipo"
+      ;;
+    no)
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ipo])
       ;;
    esac
   ],)
@@ -863,38 +965,6 @@ dnl    fi
    ace_user_enable_repo=no
   ])
 
- AC_ARG_ENABLE([rtti],
-  AS_HELP_STRING(--enable-rtti,enable run-time type identification [[[yes]]]),
-  [
-   case "${enableval}" in
-    yes)
-      if test "$GXX" = no; then
-        case "$host" in
-          *solaris*)
-               ace_user_enable_rtti=yes
-               ;;
-          *aix*)
-               ace_user_enable_rtti=yes
-               ;;
-          *)
-               ;;
-        esac
-      else
-        AC_MSG_WARN([We do not know if rtti needs enabling for this compiler.])
-      fi
-      ;;
-    no)
-      ace_user_enable_rtti=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-rtti])
-      ;;
-   esac
-  ],
-  [
-   ace_user_enable_rtti=yes
-  ])
-
  AC_ARG_ENABLE([stdcpplib],
   AS_HELP_STRING([--enable-stdcpplib],[enable standard C++ library [[yes]]]),
   [
@@ -920,18 +990,18 @@ dnl    fi
                [case "${enableval}" in
                  yes)
                   AC_DEFINE([ACE_USES_WCHAR])
-                  ace_user_enable_wide_char=yes
+                  ace_cv_user_enable_wide_char=yes
                   ;;
                  no)
-                  ace_user_enable_wide_char=no
+                  ace_cv_user_enable_wide_char=no
                   ;;
                  *)
                   AC_MSG_ERROR([bad value ${enableval} for --enable-uses-wchar])
                   ;;
                 esac])
  AC_CACHE_CHECK([whether to use wide characters internally],
-                [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
- AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
+                [ace_cv_user_enable_wide_char], [ace_cv_user_enable_wide_char=no])
+ AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_cv_user_enable_wide_char = Xyes])
 
 ])
 
@@ -1092,18 +1162,18 @@ AC_DEFUN([ACE_ENABLE_QOS],
 			      [compile/use the ACE_QoS library [[no]]]),
 	       [case "${enableval}" in
 		 yes)
-		  ace_user_enable_qos=yes
+		  ace_cv_user_enable_qos=yes
 		  ;;
 		 no)
-		  ace_user_enable_qos=no
+		  ace_cv_user_enable_qos=no
 		  ;;
 		 *)
 		  AC_MSG_ERROR(bad value ${enableval} for --enable-qos)
 		  ;;
 		esac])
 AC_CACHE_CHECK([whether to compile/use the ACE_QoS library],
-               [ace_user_enable_qos],[ace_user_enable_qos=no])
-AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_enable_qos = Xyes])
+               [ace_cv_user_enable_qos],[ace_cv_user_enable_qos=no])
+AM_CONDITIONAL([BUILD_QOS], [test X$ace_cv_user_enable_qos = Xyes])
 ])
 
 AC_DEFUN([ACE_ENABLE_SSL],
@@ -1113,18 +1183,18 @@ AC_ARG_ENABLE([ssl],
 			      [compile/use the ACE_SSL library [[yes]]]),
 	       [case "${enableval}" in
 		 yes)
-		  ace_user_enable_ssl=yes
+		  ace_cv_user_enable_ssl=yes
 		  ;;
 		 no)
-		  ace_user_enable_ssl=no
+		  ace_cv_user_enable_ssl=no
 		  ;;
 		 *)
 		  AC_MSG_ERROR(bad value ${enableval} for --enable-ssl)
 		  ;;
 		esac])
 AC_CACHE_CHECK([whether to compile/use the ACE_SSL library],
-               [ace_user_enable_ssl], [ace_user_enable_ssl=yes])
-AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_enable_ssl = Xyes])
+               [ace_cv_user_enable_ssl], [ace_cv_user_enable_ssl=yes])
+AM_CONDITIONAL([BUILD_SSL], [test X$ace_cv_user_enable_ssl = Xyes])
 ])
 
 AC_DEFUN([ACE_ENABLE_ACEXML],
@@ -1133,21 +1203,21 @@ AC_DEFUN([ACE_ENABLE_ACEXML],
 			      [compile/use the ACEXML library [[yes]]]),
 	       [case "${enableval}" in
 		 yes)
-		  ace_user_enable_acexml=yes
+		  ace_cv_user_enable_acexml=yes
 		  ;;
 		 no)
-		  ace_user_enable_acexml=no
+		  ace_cv_user_enable_acexml=no
 		  ;;
 		 *)
 		  AC_MSG_ERROR(bad value ${enableval} for --enable-acexml)
 		  ;;
 		esac],
 		[
-		 ace_user_enable_acexml=yes
+		 ace_cv_user_enable_acexml=yes
 		])
 AC_CACHE_CHECK([whether to compile/use the ACEXML library],
-               [ace_user_enable_acexml], [ace_user_enable_acexml=yes])
-AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_enable_acexml = Xyes])
+               [ace_cv_user_enable_acexml], [ace_cv_user_enable_acexml=yes])
+AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_cv_user_enable_acexml = Xyes])
 ])
 
 
@@ -1215,23 +1285,37 @@ AC_DEFUN([ACE_PATH_QT],
 # ACE_PATH_TCL
 #---------------------------------------------------------------------------
 # Find Tcl Libraries, flags, etc.
-AC_DEFUN([ACE_PATH_TCL], 
-[AC_ARG_WITH([tclconfig],
+AC_DEFUN([ACE_PATH_TCL],
+[AC_REQUIRE([ACE_CHECK_LIB64])
+ AC_ARG_WITH([tclconfig],
  AS_HELP_STRING([--with-tclconfig=DIR],
                 [path to tclConfig.sh [[automatic]]]),
  [ ac_tclconfig_dir="${withval}" ])
+
  if test X"${ac_tclconfig_dir}" = X; then
-   AC_PATH_PROG([TCLCONFIG], [tclConfig.sh], [],
-                [${PATH}:/usr/local/lib:/usr/pkg/lib:/usr/lib/tcl8.4:/usr/lib/tcl8.3:/usr/lib])
- else
-  AC_MSG_CHECKING([whether tclConfig.sh exists in ${ac_tclconfig_dir}])
-   if test -f "${ac_tclconfig_dir}/tclConfig.sh"; then
-     TCLCONFIG="${ac_tclconfig_dir}/tclConfig.sh"
-     AC_MSG_RESULT([yes])
-   else
-     AC_MSG_RESULT([no])
-   fi
+   for i in `ls -d ${exec_prefix}/lib${acelibsuff} 2>/dev/null` \
+           `ls -d ${prefix}/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/local/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/contrib/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/pkg/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/lib${acelibsuff}/tcl8.[[43]]* 2>/dev/null` \
+           ; do
+       if test -f "$i/tclConfig.sh" ; then
+           ac_tclconfig_dir=`(cd $i; pwd)`
+           break
+       fi
+   done
  fi
+
+ AC_MSG_CHECKING([whether tclConfig.sh exists in ${ac_tclconfig_dir}])
+ if test -f "${ac_tclconfig_dir}/tclConfig.sh"; then
+   TCLCONFIG="${ac_tclconfig_dir}/tclConfig.sh"
+   AC_MSG_RESULT([yes])
+ else
+   AC_MSG_RESULT([no])
+ fi
+
  if test X"${TCLCONFIG}" != X; then
    . ${TCLCONFIG}
 
@@ -1247,24 +1331,40 @@ AC_DEFUN([ACE_PATH_TCL],
 # ACE_PATH_TK
 #---------------------------------------------------------------------------
 # Find Tk Libraries, flags, etc.
-AC_DEFUN([ACE_PATH_TK], 
+AC_DEFUN([ACE_PATH_TK],
 [AC_REQUIRE([ACE_PATH_TCL])
  AC_ARG_WITH([tkconfig],
  AS_HELP_STRING([--with-tkconfig=DIR],
                 [path to tkConfig.sh [[automatic]]]),
  [ ac_tkconfig_dir="${withval}" ])
  if test X"${ac_tkconfig_dir}" = X; then
-   AC_PATH_PROG([TKCONFIG], [tkConfig.sh], [],
-                [${PATH}:/usr/local/lib:/usr/pkg/lib:/usr/lib/tk8.4:/usr/lib/tk8.3:/usr/lib])
- else
-   AC_MSG_CHECKING([whether tkConfig.sh exists in ${ac_tkconfig_dir}])
-   if test -f "${ac_tkconfig_dir}/tkConfig.sh"; then
-     TKCONFIG="${ac_tkconfig_dir}/tkConfig.sh"
-     AC_MSG_RESULT([yes])
+   if test X"${ac_tclconfig_dir}" != X && test -f ${ac_tclconfig_dir}/tkConfig.sh; then
+     ac_tkconfig_dir=$ac_tclconfig_dir;
    else
-     AC_MSG_RESULT([no])
+     for i in `ls -d ${exec_prefix}/lib${acelibsuff} 2>/dev/null` \
+             `ls -d ${prefix}/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/local/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/contrib/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/pkg/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/lib${acelibsuff}/tk8.[[43]]* 2>/dev/null` \
+             ; do
+         if test -f "$i/tkConfig.sh" ; then
+             ac_tkconfig_dir=`(cd $i; pwd)`
+             break
+         fi
+     done
    fi
  fi
+
+ AC_MSG_CHECKING([whether tkConfig.sh exists in ${ac_tkconfig_dir}])
+ if test -f "${ac_tkconfig_dir}/tkConfig.sh"; then
+   TKCONFIG="${ac_tkconfig_dir}/tkConfig.sh"
+   AC_MSG_RESULT([yes])
+ else
+   AC_MSG_RESULT([no])
+ fi
+
  if test X"${TKCONFIG}" != X; then
    . ${TKCONFIG}
 
@@ -1317,6 +1417,60 @@ AM_CONDITIONAL([BUILD_X11], [test X$no_x != Xyes])
 ])
 
 
+# ACE_PATH_BZIP2
+#---------------------------------------------------------------------------
+# Find bzip2 Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_BZIP2],
+[
+ACE_BZIP2_CPPFLAGS=""
+ACE_BZIP2_LDFLAGS=""
+
+dnl TODO: default to false, at least until we add a check to see if
+dnl the bzip2 library is usable.
+AC_ARG_WITH([bzip2],
+  AS_HELP_STRING([--with-bzip2@<:@=DIR@:>@],
+		 [root directory of bzip2 installation]),
+  [
+  ace_with_bzip2="${withval}"
+  if test "${ace_with_bzip2}" != yes; then
+       ace_bzip2_include="${ace_with_bzip2}/include"
+       ace_bzip2_libdir="${ace_with_bzip2}/lib"
+  fi
+  ],[ace_with_bzip2=no])
+
+dnl TODO: let's wait and see before adding options to specify header
+dnl and library location separately.
+dnl
+dnl AC_ARG_WITH([bzip2_include],
+dnl   AS_HELP_STRING([--with-bzip2-include=DIR],
+dnl 		 [specify exact include dir for bzip2 headers]),
+dnl   [ace_bzip2_include="$withval"])
+dnl
+dnl AC_ARG_WITH([bzip2_libdir],
+dnl   AS_HELP_STRING([--with-bzip2-libdir=DIR],
+dnl 		 [specify exact include dir for bzip2 libraries]),
+dnl   [ace_bzip2_libdir="$withval"])
+
+if test "${ace_bzip2_include}"; then
+  ACE_BZIP2_CPPFLAGS="-I$ace_bzip2_include"
+fi
+
+if test "${ace_bzip2_libdir}"; then
+  ACE_BZIP2_LDFLAGS="-L$ace_bzip2_libdir"
+fi
+
+ACE_BZIP2_CPPFLAGS="${ACE_BZIP2_CPPFLAGS} -DBZIP2"
+
+if test "${ace_with_bzip2}" != no; then
+  ACE_BZIP2_LIBS="-lbz2"
+  AC_SUBST(ACE_BZIP2_CPPFLAGS)
+  AC_SUBST(ACE_BZIP2_LDFLAGS)
+  AC_SUBST(ACE_BZIP2_LIBS)
+fi
+AM_CONDITIONAL([BUILD_BZIP2], test "${ace_with_bzip2}" != no)
+])
+
+
 # ACE_PATH_ZLIB
 #---------------------------------------------------------------------------
 # Find zlib Libraries, flags, etc.
@@ -1345,7 +1499,7 @@ dnl AC_ARG_WITH([zlib_include],
 dnl   AS_HELP_STRING([--with-zlib-include=DIR],
 dnl 		 [specify exact include dir for zlib headers]),
 dnl   [ace_zlib_include="$withval"])
-dnl 
+dnl
 dnl AC_ARG_WITH([zlib_libdir],
 dnl   AS_HELP_STRING([--with-zlib-libdir=DIR],
 dnl 		 [specify exact include dir for zlib libraries]),
@@ -1400,7 +1554,7 @@ dnl AC_ARG_WITH([zzip_include],
 dnl   AS_HELP_STRING([--with-zzip-include=DIR],
 dnl 		 [specify exact include dir for zzip headers]),
 dnl   [ace_zzip_include="$withval"])
-dnl 
+dnl
 dnl AC_ARG_WITH([zzip_libdir],
 dnl   AS_HELP_STRING([--with-zzip-libdir=DIR],
 dnl 		 [specify exact include dir for zzip libraries]),
@@ -1424,7 +1578,6 @@ if test "${ace_with_zzip}" != no; then
 fi
 AM_CONDITIONAL([BUILD_ZZIP], test "${ace_with_zzip}" != no)
 ])
-
 
 # ACE_ENABLE_FL_REACTOR
 #---------------------------------------------------------------------------
@@ -1560,4 +1713,58 @@ AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
                [test X$ace_user_enable_xt_reactor = Xyes])
 ])
 
+# ACE_PATH_FOX
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_PATH_FOX],
+[AC_ARG_WITH([fox-config],
+ AS_HELP_STRING([--with-fox-config=DIR],
+                [path to fox-config [[automatic]]]),
+ [ ac_fox_config_dir="${withval}" ])
+ if test X"${ac_fox_config_dir}" = X; then
+   AC_PATH_PROG([FOXCONFIG], [fox-config], [], [])
+ else
+  AC_MSG_CHECKING([whether fox-config exists in ${ac_fox_config_dir}])
+   if test -f "${ac_fox_config_dir}/fox-config"; then
+     FOXCONFIG="${ac_fox_config_dir}/fox-config"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${FOXCONFIG}" != X; then
+   ACE_FOX_CPPFLAGS=`$FOXCONFIG --cflags 2>/dev/null`
+   ACE_FOX_LIBS=`$FOXCONFIG --libs 2>/dev/null`
+   AC_SUBST(ACE_FOX_CPPFLAGS)
+   AC_SUBST(ACE_FOX_LIBS)
+ fi
+])
 
+# ACE_ENABLE_FOX_REACTOR
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_FOX_REACTOR],
+[AC_REQUIRE([ACE_PATH_FOX])
+AC_ARG_ENABLE([fox-reactor],
+               AS_HELP_STRING([--enable-fox-reactor],
+                              [build support for the FoxReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+                   AS_IF([test X"${FOXCONFIG}" != X],
+                         [ace_user_enable_fox_reactor=yes],
+                         [AC_MSG_ERROR([ACE_FoxReactor cannot be enabled: fox-config not found.])])
+                   ;;
+                 no)
+                   ace_user_enable_fox_reactor=no
+                   ;;
+                 *)
+                   AC_MSG_ERROR([bad value ${enableval} for --enable-fox-reactor])
+                  ;;
+              esac],
+               [
+                 ace_user_enable_fox_reactor=no
+               ])
+AM_CONDITIONAL([BUILD_FOX], [test X$ace_user_enable_fox_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_FOXREACTOR],
+               [test X$ace_user_enable_fox_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_FOXRESOURCE],
+               [test X$ace_user_enable_fox_reactor = Xyes])
+])

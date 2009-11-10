@@ -49,9 +49,9 @@ public:
 
 
 private:
-	// change a value for value change test
+  // change a value for value change test
   int change_one (ACE_Configuration &l, u_int a = 101);
-	
+
   void get_section_string (ACE_Configuration&             config,
                            ACE_Configuration_Section_Key& SectionKey,
                            const ACE_TCHAR*               pszName,

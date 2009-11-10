@@ -44,7 +44,7 @@ struct cancel_state
  * This class provides a common interface that is mapped onto
  * POSIX Pthreads, Solaris threads, Win32 threads, VxWorks
  * threads, or pSoS threads.  Note, however, that it is
- * generally a better idea to use the <ACE_Thread_Manager>
+ * generally a better idea to use the ACE_Thread_Manager
  * programming API rather than the <ACE_Thread> API since the
  * thread manager is more powerful.
  */
@@ -52,14 +52,14 @@ class ACE_Export ACE_Thread
 {
 public:
   /**
-   * Creates a new thread having <flags> attributes and running <func>
-   * with <args> (if <thread_adapter> is non-0 then <func> and <args>
+   * Creates a new thread having @a flags attributes and running @a func
+   * with <args> (if <thread_adapter> is non-0 then @a func and <args>
    * are ignored and are obtained from <thread_adapter>).  <thr_id>
    * and <t_handle> are set to the thread's ID and handle (?),
-   * respectively.  The thread runs at <priority> priority (see
+   * respectively.  The thread runs at @a priority priority (see
    * below).
    *
-   * The <flags> are a bitwise-OR of the following:
+   * The @a flags are a bitwise-OR of the following:
    * = BEGIN<INDENT>
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
@@ -68,7 +68,7 @@ public:
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
    * = END<INDENT>
    *
-   * By default, or if <priority> is set to
+   * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
    * the given scheduling policy (specified in <flags}>, e.g.,
    * <THR_SCHED_DEFAULT>) is used.  This value is calculated
@@ -88,8 +88,9 @@ public:
                     ACE_hthread_t *t_handle = 0,
                     long priority = ACE_DEFAULT_THREAD_PRIORITY,
                     void *stack = 0,
-                    size_t stack_size = 0,
-                    ACE_Thread_Adapter *thread_adapter = 0);
+                    size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE,
+                    ACE_Thread_Adapter *thread_adapter = 0,
+                    const char** thr_name = 0);
 
   /**
    * Spawn N new threads, which execute @a func with argument @a arg (if
@@ -98,7 +99,7 @@ public:
    * assumed to be an array of @a n pointers to the base of the stacks
    * to use for the threads being spawned.  Likewise, if @a stack_size
    * != 0 it is assumed to be an array of @a n values indicating how
-   * big each of the corresponding <stack>s are.  Returns the number
+   * big each of the corresponding @a stacks are.  Returns the number
    * of threads actually spawned (if this doesn't equal the number
    * requested then something has gone wrong and @c errno will
    * explain...).
@@ -112,22 +113,23 @@ public:
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack[] = 0,
                          size_t stack_size[] = 0,
-                         ACE_Thread_Adapter *thread_adapter = 0);
+                         ACE_Thread_Adapter *thread_adapter = 0,
+                         const char* thr_name[] = 0);
 
   /**
-   * Spawn <n> new threads, which execute <func> with argument <arg>
-   * (if <thread_adapter> is non-0 then <func> and <args> are ignored
-   * and are obtained from <thread_adapter>).  The thread_ids of
+   * Spawn @a n new threads, which execute @a func with argument @a arg
+   * (if @a thread_adapter is non-0 then @a func and @a args are ignored
+   * and are obtained from @a thread_adapter).  The thread_ids of
    * successfully spawned threads will be placed into the <thread_ids>
-   * buffer (which must be the same size as <n>).  If <stack> != 0 it
-   * is assumed to be an array of <n> pointers to the base of the
-   * stacks to use for the threads being spawned.  If <stack_size> !=
-   * 0 it is assumed to be an array of <n> values indicating how big
-   * each of the corresponding <stack>s are.  If <thread_handles> != 0
-   * it is assumed to be an array of <n> thread_handles that will be
+   * buffer (which must be the same size as @a n).  If @a stack != 0 it
+   * is assumed to be an array of @a n pointers to the base of the
+   * stacks to use for the threads being spawned.  If @a stack_size !=
+   * 0 it is assumed to be an array of @a n values indicating how big
+   * each of the corresponding @a stacks are.  If @a thread_handles != 0
+   * it is assumed to be an array of @a n thread_handles that will be
    * assigned the values of the thread handles being spawned.  Returns
    * the number of threads actually spawned (if this doesn't equal the
-   * number requested then something has gone wrong and <errno> will
+   * number requested then something has gone wrong and @c errno will
    * explain...).
    *
    * @see spawn()
@@ -141,7 +143,8 @@ public:
                          void *stack[] = 0,
                          size_t stack_size[] = 0,
                          ACE_hthread_t thread_handles[] = 0,
-                         ACE_Thread_Adapter *thread_adapter = 0);
+                         ACE_Thread_Adapter *thread_adapter = 0,
+                         const char* thr_name[] = 0);
 
   /**
    * Wait for one or more threads to exit and reap their exit status.

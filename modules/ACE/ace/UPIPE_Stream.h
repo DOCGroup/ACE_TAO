@@ -85,7 +85,7 @@ public:
                   size_t n,
                   ACE_Time_Value *timeout = 0);
 
-  /// Recv a buffer of exactly <n> bytes from the message queue.
+  /// Recv a buffer of exactly @a n bytes from the message queue.
   /// Returns -1 on error, else the number of bytes read.
   ssize_t recv_n (char *buffer,
                   size_t n,
@@ -118,8 +118,7 @@ private:
   /// @c UPIPE_Connector to link together two UPIPE_Streams.
   MT_Stream stream_;
 
-  /// Keep track of whether the sender and receiver have both shut
-  /// down.
+  /// Keep track of whether the sender and receiver have both shutdown.
   int reference_count_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

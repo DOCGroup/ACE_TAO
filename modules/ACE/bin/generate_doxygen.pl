@@ -9,16 +9,36 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 require POSIX;
 require File::Path;
 
+use Cwd;
+use File::Spec;
+use Env qw(ACE_ROOT TAO_ROOT CIAO_ROOT DDS_ROOT);
+
 # Configuration and default values
+
+if (!defined $TAO_ROOT) {
+    $TAO_ROOT = "$ACE_ROOT/TAO";
+}
+if (!defined $CIAO_ROOT) {
+    $CIAO_ROOT = "$TAO_ROOT/CIAO";
+}
 
 $is_release = 0;
 $exclude_ace = 0;
-$exclude_tao = 0;
-$exclude_ciao = 0;
+$exclude_tao = !-r "$TAO_ROOT/VERSION";
+$exclude_ciao = !-r "$CIAO_ROOT/VERSION";
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
-$dot_path = '/usr/local/bin';
 $html_output_dir = '.';
+
+$dds = 0;
+if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
+    $dds_path = Cwd::abs_path($DDS_ROOT);
+    $cwd_path = Cwd::abs_path(getcwd());
+    if ($dds_path eq $cwd_path) {
+        $dds = $exclude_ace = $exclude_tao = $exclude_ciao = 1;
+    }
+}
+
 @ACE_DOCS = ('ace',
              'ace_man',
              'ace_rmcast',
@@ -38,6 +58,7 @@ $html_output_dir = '.';
              ,'tao_dynamicinterface'
              ,'tao_iormanip'
              ,'tao_iortable'
+             ,'tao_ziop'
              ,'tao_esf'
              ,'tao_rtevent'
              ,'tao_cosevent'
@@ -56,21 +77,28 @@ $html_output_dir = '.';
              ,'tao_ifr');
 @CIAO_DOCS = ('ciao_config_handlers'
              ,'ciao_DAnCE'
+             ,'ciao_dds4ccm'
              ,'ciao');
+@DDS_DOCS = ('dds');
 
 # Modify defaults using the command line arguments
 &parse_args ();
 
-open(CONFIG_H, ">ace/config.h")
-  || die "Cannot create config file\n";
-print CONFIG_H "#include \"ace/config-doxygen.h\"\n";
-close (CONFIG_H);
+$wrote_configh = 0;
+if (!-r "$ACE_ROOT/ace/config.h") {
+    open(CONFIG_H, ">$ACE_ROOT/ace/config.h")
+        || die "Cannot create config file\n";
+    print CONFIG_H "#include \"ace/config-doxygen.h\"\n";
+    close(CONFIG_H);
+    $wrote_configh = 1;
+}
 
-&generate_doxy_files ('ACE',          'VERSION', @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',      'TAO/VERSION', @TAO_DOCS) if (!$exclude_tao);
-&generate_doxy_files ('CIAO','TAO/CIAO/VERSION', @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('ACE',  "$ACE_ROOT", @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',  "$TAO_ROOT", @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('CIAO', "$CIAO_ROOT", @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('DDS',  "$DDS_ROOT", @DDS_DOCS) if $dds;
 
-unlink "ace/config.h";
+unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 
 exit 0;
 
@@ -87,13 +115,12 @@ sub parse_args {
       $exclude_tao = 1;
     } elsif ($ARGV[0] eq "-exclude_ciao") {
       $exclude_ciao = 1;
+    } elsif ($ARGV[0] eq "-include_dds") {
+      $dds = 1;
     } elsif ($ARGV[0] eq "-verbose") {
       $verbose = 1;
     } elsif ($ARGV[0] eq "-perl_path" && $#ARGV >= 1) {
       $perl_path = $ARGV[1];
-      shift;
-    } elsif ($ARGV[0] eq "-dot_path" && $#ARGV >= 1) {
-      $dot_path = $ARGV[1];
       shift;
     } elsif ($ARGV[0] eq "-html_output" && $#ARGV >= 1) {
       $html_output_dir = $ARGV[1];
@@ -106,15 +133,30 @@ sub parse_args {
   @ARGV = @ARGS;
 }
 
+#is $arg1 the same path as "$arg2/$arg3"?
+sub same_dir {
+  my $lhs = shift;
+  my $rhs_base = shift;
+  my $rhs_dir = shift;
+  my $rhs = File::Spec->catdir($rhs_base, $rhs_dir);
+  return File::Spec->canonpath($lhs) eq File::Spec->canonpath($rhs);
+}
+
 sub generate_doxy_files {
 
   my $KIT = shift;
-  my $VERSION_FILE = shift;
+  my $ROOT_DIR = shift;
   my @DOCS = @_;
+  my $VERSION_FILE = "$ROOT_DIR/VERSION";
 
   my $VERSION = 'Snapshot ('.
     POSIX::strftime("%Y/%m/%d-%H:%M", localtime)
       .')';
+
+  my $KIT_path = ($KIT eq 'CIAO') ? 'TAO/CIAO' : $KIT;
+  my $translate_paths =
+    ($KIT eq 'TAO' && !same_dir($TAO_ROOT, $ACE_ROOT, 'TAO')) ||
+    ($KIT eq 'CIAO' && !same_dir($CIAO_ROOT, $TAO_ROOT, 'CIAO'));
 
   foreach my $i (@DOCS) {
     if ($is_release) {
@@ -122,7 +164,7 @@ sub generate_doxy_files {
       $VERSION = $major.'.'.$minor.'.'.$beta;
     }
 
-    my $input = "etc/".$i.".doxygen";
+    my $input = "$ROOT_DIR/etc/".$i.".doxygen";
     my $output = "/tmp/".$i.".".$$.".doxygen";
 
     open(DOXYINPUT, $input)
@@ -141,9 +183,6 @@ sub generate_doxy_files {
       } elsif (/^PERL_PATH /) {
 	print DOXYOUTPUT "PERL_PATH = $perl_path\n";
 	next;
-      } elsif (/^DOT_PATH /) {
-	print DOXYOUTPUT "DOT_PATH = $dot_path\n";
-	next;
       } elsif (/^QUIET / && $verbose) {
 	print DOXYOUTPUT "QUIET = NO\n";
 	next;
@@ -156,12 +195,6 @@ sub generate_doxy_files {
       } elsif (/^VERBATIM_HEADERS/ && $is_release) {
 	print DOXYOUTPUT "VERBATIM_HEADERS = NO\n";
 	next;
-#      } elsif (/^INCLUDE_GRAPH/ && $is_release) {
-#	print DOXYOUTPUT "INCLUDE_GRAPH = NO\n";
-#	next;
-#      } elsif (/^INCLUDED_BY_GRAPH/ && $is_release) {
-#	print DOXYOUTPUT "INCLUDED_BY_GRAPH = NO\n";
-#	next;
       } elsif (/^GENERATE_MAN/ && /= YES/) {
         $generate_man = 1;
       } elsif (/^GENERATE_HTML/ && /= YES/) {
@@ -181,12 +214,37 @@ sub generate_doxy_files {
 	  print DOXYOUTPUT "GENERATE_TAGFILE = $html_out_dir\n";
 	  next;
         }
-      } elsif ($generate_html && /^MAN_OUTPUT/) {
+      } elsif ($generate_html && /^TAGFILES\s*=\s*(.*)$/) {
+        my $value = $1;
+        while ($value =~ /\\$/) {
+          chop $value; #removes trailing \
+          my $line = <DOXYINPUT>;
+          chomp $line;
+          $value .= ' ' . $line;
+	}
+	my @values = split(' ', $value);
+	map {$_ = $html_output_dir . '/' . $_; } @values;
+	print DOXYOUTPUT 'TAGFILES = ' . join(' ', @values) . "\n";
+	next;
+      } elsif ($generate_man && /^MAN_OUTPUT/) {
         my @field = split(' = ');
         if ($#field >= 1) {
           push @output_dirs, $field[1];
         }
+      } elsif ($translate_paths && /^(INPUT|INCLUDE_PATH)\s*=\s*(.*)$/) {
+	my $keyword = $1;
+        my $value = $2;
+        while ($value =~ /\\$/) {
+          chop $value; #removes trailing \
+          my $line = <DOXYINPUT>;
+          chomp $line;
+          $value .= ' ' . $line;
+        }
+        $value =~ s/$KIT_path/${"${KIT}_ROOT"}/g;
+        print DOXYOUTPUT "$keyword = $value\n";
+        next;
       }
+
       print DOXYOUTPUT $_, "\n";
     }
     close (DOXYOUTPUT);
@@ -201,16 +259,18 @@ sub generate_doxy_files {
     unlink $output;
   }
 
-  open(FIND, "find man -type f -print |") or die "Can't run find\n";
-  while (<FIND>) {
-    chop;
-    my $name_with_whitespace = $_;
-    next unless ($name_with_whitespace =~ /\s/);
-    my $name_without_whitespace = $name_with_whitespace;
-    $name_without_whitespace =~ s/\s+//g;
-    rename $name_with_whitespace, $name_without_whitespace;
+  if ($generate_man) {
+    open(FIND, "find man -type f -print |") or die "Can't run find\n";
+    while (<FIND>) {
+      chomp;
+      my $name_with_whitespace = $_;
+      next unless ($name_with_whitespace =~ /\s/);
+      my $name_without_whitespace = $name_with_whitespace;
+      $name_without_whitespace =~ s/\s+//g;
+      rename $name_with_whitespace, $name_without_whitespace;
+    }
+    close FIND;
   }
-  close FIND;
 }
 
 sub run_doxy {

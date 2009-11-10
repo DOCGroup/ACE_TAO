@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : acelib, ace_qt {
+project : acelib, ace_qt3 {
   requires += ace_qtreactor
   after    += ACE_QtReactor
   libs     += ACE_QtReactor

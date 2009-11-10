@@ -14,7 +14,7 @@ Options *
 Options::instance (void)
 {
 
-  if (Options::instance_ == 0) 
+  if (Options::instance_ == 0)
     Options::instance_ = new Options;
 
   return Options::instance_;
@@ -61,15 +61,16 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       }
   if (this->hostname_ == 0 || this->filename_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
-		  "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n", 
-		  argv[0]));
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n",
+                  argv[0]));
+
       ACE_OS::exit (1);
     }
 
 }
 
-Options::Options (void) 
+Options::Options (void)
   : hostname_ (0),
     port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
     filename_ (0),

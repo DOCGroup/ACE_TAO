@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Hash_Multi_Map_Manager_T.cpp
-//
-// = AUTHOR
-//    Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Hash_Multi_Map_Manager_T.cpp
+ *
+ *  $Id$
+ *
+ *  @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_Hash_Multi_Map_Manager_T_CPP
 #define ACE_Hash_Multi_Map_Manager_T_CPP
@@ -75,8 +72,8 @@ ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("next_ = %d"), this->next_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("prev_ = %d"), this->prev_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %d"), this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("prev_ = %d"), this->prev_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -86,8 +83,8 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::du
 {
 #if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("total_size_ = %d"), this->total_size_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ncur_size_ = %d"), this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %d"), this->total_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d"), this->cur_size_));
   this->table_allocator_->dump ();
   this->entry_allocator_->dump ();
   this->lock_.dump ();
@@ -465,8 +462,8 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
   ACE_TRACE ("ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("index_ = %d "), this->index_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("next_ = %x"), this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %x"), this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -539,8 +536,8 @@ ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, A
   ACE_TRACE ("ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("index_ = %d "), this->index_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("next_ = %x"), this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %x"), this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

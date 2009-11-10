@@ -9,12 +9,17 @@
 #define ACE_CONFIG_QNX_RTP_H
 #include /**/ "ace/pre.h"
 
-#if !defined(ACE_NTO_VERS)
-#    error "Correct ACE_NTO_VERS in include/makeinclude/platform_qnx_rtp_gcc.GNU"
-#elif ACE_NTO_VERS < 620
-#    include /**/ "ace/config-qnx-rtp-pre62x.h"
+#include <sys/neutrino.h>
+#if !defined(_NTO_VERSION)
+#  error "Could not detect QNX version from macro _NTO_VERSION"
 #else
+#  define ACE_NTO_VERS _NTO_VERSION
+#  if ACE_NTO_VERS < 620
+#    include /**/ "ace/config-qnx-rtp-pre62x.h"
+#  else
 #    include /**/ "ace/config-qnx-rtp-62x.h"
+#  endif
 #endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_QNX_RTP_H */

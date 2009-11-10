@@ -27,8 +27,8 @@ ACE_RCSID(tests, Sigset_Ops_Test, "$Id$")
 void
 siglistset (sigset_t x, int *sigset, int can_miss = 0)
 {
-  int empty = 1 ;
-  int result = 0 ;
+  bool empty = true;
+  int result = 0;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal (s) in the set = %08x:\n"), x)) ;
 
@@ -39,7 +39,7 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
       if (result > 0)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %d\n"), i)) ;
-          empty = 0 ;
+          empty = false;
         }
       else if (can_miss)
         {
@@ -140,7 +140,7 @@ run_main (int, ACE_TCHAR *[])
   // that fall into this catagory, please let me know.  Thanks.
   ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Now testing invalid sigset.  If your platform gets a \nsegmentation fault, then it doesn't check the error properly.\n"))) ;
 
-  ACE_ASSERT (ACE_OS::sigfillset (NULL) < 0 && ACE_OS::last_error () == EFAULT) ;
+  ACE_ASSERT (ACE_OS::sigfillset (0) < 0 && ACE_OS::last_error () == EFAULT) ;
   */
 
   ACE_END_TEST;

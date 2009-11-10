@@ -51,7 +51,7 @@ public:
   Concrete *operator->() const;
 
 private:
-  /// Pointer to <this> of <class Concrete>.
+  /// Pointer to @c this of <class Concrete>.
   const Concrete *this_;
 };
 

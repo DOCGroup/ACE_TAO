@@ -23,10 +23,6 @@
 #include "ace/os_include/sys/os_select.h"
 #include "ace/os_include/os_limits.h"
 
-#if defined (__QNX__)
-   typedef long fd_mask;
-#endif /* __QNX__ */
-
 // Default size of the ACE Reactor.
 #if defined (FD_SETSIZE)
    int const ACE_FD_SETSIZE = FD_SETSIZE;
@@ -43,12 +39,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Handle_Set
  *
- * @brief C++ wrapper facade for the socket <fd_set> abstraction.
+ * @brief C++ wrapper facade for the socket @c fd_set abstraction.
  *
  * This abstraction is a very efficient wrapper facade over
- * <fd_set>.  In particular, no range checking is performed, so
+ * @c fd_set.  In particular, no range checking is performed, so
  * it's important not to set or clear bits that are outside the
- * <ACE_DEFAULT_SELECT_REACTOR_SIZE>.
+ * @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
  */
 class ACE_Export ACE_Handle_Set
 {
@@ -68,28 +64,26 @@ public:
 
   /**
    * Constructor, initializes the handle set from a given mask.
-   * <ACE_FD_SET_TYPE> is a <typedef> based on the platform's native
-   * type used for masks passed to <select>.
    */
-  ACE_Handle_Set (const ACE_FD_SET_TYPE &mask);
+  ACE_Handle_Set (const fd_set &mask);
 
   // = Methods for manipulating bitsets.
   /// Initialize the bitmask to all 0s and reset the associated fields.
   void reset (void);
 
   /**
-   * Checks whether <handle> is enabled.  No range checking is
-   * performed so <handle> must be less than
-   * <ACE_DEFAULT_SELECT_REACTOR_SIZE>.
+   * Checks whether @a handle is enabled.  No range checking is
+   * performed so @a handle must be less than
+   * @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
    */
   int is_set (ACE_HANDLE handle) const;
 
-  /// Enables the <handle>.  No range checking is performed so <handle>
-  /// must be less than <ACE_DEFAULT_SELECT_REACTOR_SIZE>.
+  /// Enables the @a handle.  No range checking is performed so @a handle
+  /// must be less than @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
   void set_bit (ACE_HANDLE handle);
 
-  /// Disables the <handle>.  No range checking is performed so
-  /// <handle> must be less than <ACE_DEFAULT_SELECT_REACTOR_SIZE>.
+  /// Disables the @a handle.  No range checking is performed so
+  /// @a handle must be less than @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
   void clr_bit (ACE_HANDLE handle);
 
   /// Returns a count of the number of enabled bits.
@@ -99,19 +93,19 @@ public:
   ACE_HANDLE max_set (void) const;
 
   /**
-   * Rescan the underlying <fd_set> up to handle <max> to find the new
+   * Rescan the underlying @c fd_set up to handle @a max to find the new
    * <max_handle> (highest bit set) and <size> (how many bits set) values.
    * This is useful for evaluating the changes after the handle set has
    * been manipulated in some way other than member functions; for example,
-   * after <select> modifies the <fd_set>.
+   * after <select> modifies the @c fd_set.
    */
   void sync (ACE_HANDLE max);
 
-  /// Returns a pointer to the underlying <fd_set>.  Returns 0 if
+  /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
   /// there are no handle bits set (<size_> == 0).
   operator fd_set *();
 
-  /// Returns a pointer to the underlying <fd_set>.  Returns 0 if
+  /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
   /// there are no handle bits set (<size_> == 0).
   fd_set *fdset (void);
 

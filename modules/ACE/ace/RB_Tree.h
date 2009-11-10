@@ -332,7 +332,7 @@ public:
   int find (const EXT_ID &ext_id,
             INT_ID &int_id);
 
-  /// Locate @a ext_id and pass out parameter via <entry>.  If found,
+  /// Locate @a ext_id and pass out parameter via @a entry.  If found,
   /// return 0, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
@@ -570,7 +570,7 @@ private:
 
   // = Private members.
 
-  /// Synchronization variable for the MT_SAFE <ACE_RB_Tree>.
+  /// Synchronization variable for the MT_SAFE ACE_RB_Tree.
   ACE_LOCK lock_;
 
   /// The root of the tree.
@@ -593,6 +593,9 @@ class ACE_RB_Tree_Iterator_Base
 {
 
 public:
+
+  /// Copy constructor.
+  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
   /// Assignment operator: copies both the tree reference and the position in the tree.
   void operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
@@ -652,9 +655,6 @@ protected:
    */
   ACE_RB_Tree_Iterator_Base (const EXT_ID& key,
                              ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS,ACE_LOCK> &tree);
-
-  /// Copy constructor.
-  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
   /// Destructor.
   ~ACE_RB_Tree_Iterator_Base (void);

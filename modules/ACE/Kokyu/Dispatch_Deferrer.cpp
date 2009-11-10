@@ -40,21 +40,21 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
   ACE_Time_Value tv;
   tv = ACE_OS::gettimeofday() + qitem->qos_info().deadline_;
   long timer_id = this->react_.schedule_timer(this,
-					      0, //NULL arg
-					      tv);
+                                              0, //NULL arg
+                                              tv);
   if (timer_id < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT ("EC (%P|%t) cannot schedule Release Guard timer.")
-	ACE_TEXT ("ACE_Reactor.schedule_timer() returned -1\n")),
-             -1);
+                  ACE_TEXT ("EC (%P|%t) cannot schedule Release Guard timer.")
+                  ACE_TEXT ("ACE_Reactor.schedule_timer() returned -1\n")),
+                  -1);
     }
   //else valid timer_id
   this->timers_.bind(qitem,timer_id);
 
   //@BT INSTRUMENT with event ID: EVENT_DEFERRED_ENQUEUE Measure time
   //between release and enqueue into dispatch queue because of RG
-  DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, timer_id, 0, NULL);
+  DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, timer_id, 0, 0);
 
   //buffer until timer expires
   return this->rgq_.enqueue_deadline(qitem,&tv);
@@ -68,8 +68,8 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
   //get all expired Dispatch_Queue_Items
   ACE_Message_Block *begin,*end;
   this->rgq_.remove_messages(begin,end,
-			     (u_int) (ACE_Dynamic_Message_Strategy::LATE
-			     | ACE_Dynamic_Message_Strategy::BEYOND_LATE));
+                             (u_int) (ACE_Dynamic_Message_Strategy::LATE | 
+                                      ACE_Dynamic_Message_Strategy::BEYOND_LATE));
 
   //dispatch them back to Dispatcher_Impl
   while (begin <= end)
@@ -87,19 +87,19 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
       //remove timer for each enqueued qitem from reactor
       long timer_id;
       if (this->timers_.find(qitem,timer_id) < 0)
-	{
+        {
             ACE_ERROR_RETURN ((LM_ERROR,
              ACE_TEXT ("Could not cancel Release Guard timer.")
              ACE_TEXT ("Unknown timer ID\n")),
              -1);
-	}
+        }
       //else got timer_id
       this->react_.cancel_timer(timer_id);
 
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED_DEQUEUE Measure
       //time between release and enqueue into dispatch queue because
       //of RG
-      DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, timer_id, 0, NULL);
+      DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, timer_id, 0, 0);
 
       this->task_->enqueue(qitem);
 

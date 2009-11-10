@@ -15,6 +15,7 @@ ACE_RCSID (ace,
 #include "ace/OS_Memory.h"
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_ctype.h"
 
 #if defined (ACE_LACKS_MKTEMP) \
     || defined (ACE_LACKS_MKSTEMP) \
@@ -27,6 +28,7 @@ ACE_RCSID (ace,
 # include "ace/OS_NS_fcntl.h"
 # include "ace/OS_NS_ctype.h"
 # include "ace/OS_NS_sys_time.h"
+# include "ace/OS_NS_Thread.h"
 # include "ace/Numeric_Limits.h"
 #endif  /* ACE_LACKS_MKSTEMP */
 
@@ -59,17 +61,11 @@ ACE_OS::exit (int status)
     (*exit_hook_) ();
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-#if !defined (ACE_HAS_WINCE)
-# if defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   ::ExitProcess ((UINT) status);
-# else
-  ::exit (status);
-# endif /* ACE_WIN32 */
 #else
-  // @@ This is not exactly the same as ExitProcess.  But this is the
-  // closest one I can get.
-  ::TerminateProcess (::GetCurrentProcess (), status);
-#endif /* ACE_HAS_WINCE */
+  ::exit (status);
+#endif /* ACE_WIN32 */
 }
 
 void
@@ -90,7 +86,7 @@ ACE_OS::free (void *ptr)
 ACE_TCHAR *
 ACE_OS::getenvstrings (void)
 {
-#if defined (ACE_LACKS_ENV)
+#if defined (ACE_LACKS_GETENVSTRINGS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
@@ -114,18 +110,18 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
 #if defined (ACE_HAS_WINCE)
   // WinCE doesn't have environment variables so we just skip it.
   return ACE_OS::strdup (str);
-#elif defined (ACE_LACKS_ENV)
+#elif defined (ACE_LACKS_STRENVDUP)
   ACE_UNUSED_ARG (str);
   ACE_NOTSUP_RETURN (0);
 #else
   const ACE_TCHAR * start = 0;
-  if ((start = ACE_OS::strchr (str, ACE_LIB_TEXT ('$'))) != 0)
+  if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != 0)
     {
       ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
       size_t var_len = ACE_OS::strcspn (&start[1],
-        ACE_LIB_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
+        ACE_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
       ACE_OS::strncpy (buf, &start[1], var_len);
-      buf[var_len++] = ACE_LIB_TEXT ('\0');
+      buf[var_len++] = ACE_TEXT ('\0');
 #  if defined (ACE_WIN32)
       // Always use the ACE_TCHAR for Windows.
       ACE_TCHAR *temp = ACE_OS::getenv (buf);
@@ -163,7 +159,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
         {
           ACE_OS::strncpy (p, start, var_len);
           p += var_len;
-          *p = ACE_LIB_TEXT ('\0');
+          *p = ACE_TEXT ('\0');
         }
       ACE_OS::strcpy (p, &start[var_len]);
       return (buf_p == buf) ? ACE_OS::strdup (buf) : buf_p;
@@ -295,14 +291,14 @@ ACE_OS::mktemp (ACE_TCHAR *s)
     return 0;
   else
     {
-      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_LIB_TEXT ("XXXXXX"));
+      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
 
       if (xxxxxx == 0)
         // the template string doesn't contain "XXXXXX"!
         return s;
       else
         {
-          ACE_TCHAR unique_letter = ACE_LIB_TEXT ('a');
+          ACE_TCHAR unique_letter = ACE_TEXT ('a');
           ACE_stat sb;
 
           // Find an unused filename for this process.  It is assumed
@@ -312,20 +308,20 @@ ACE_OS::mktemp (ACE_TCHAR *s)
           // template).  This appears to match the behavior of the
           // SunOS 5.5 mktemp().
           ACE_OS::sprintf (xxxxxx,
-                           ACE_LIB_TEXT ("%05d%c"),
+                           ACE_TEXT ("%05d%c"),
                            ACE_OS::getpid (),
                            unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
-              if (++unique_letter <= ACE_LIB_TEXT ('z'))
+              if (++unique_letter <= ACE_TEXT ('z'))
                 ACE_OS::sprintf (xxxxxx,
-                                 ACE_LIB_TEXT ("%05d%c"),
+                                 ACE_TEXT ("%05d%c"),
                                  ACE_OS::getpid (),
                                  unique_letter);
               else
                 {
                   // maximum of 26 unique files per template, per process
-                  ACE_OS::sprintf (xxxxxx, ACE_LIB_TEXT ("%s"), ACE_LIB_TEXT (""));
+                  ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%s"), ACE_TEXT (""));
                   return s;
                 }
             }
@@ -341,7 +337,7 @@ ACE_OS::realloc (void *ptr, size_t nbytes)
   return ACE_REALLOC_FUNC (ACE_MALLOC_T (ptr), nbytes);
 }
 
-#if defined (ACE_LACKS_REALPATH) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_REALPATH)
 char *
 ACE_OS::realpath (const char *file_name,
                   char *resolved_name)
@@ -512,7 +508,7 @@ ACE_OS::realpath (const char *file_name,
 
   return rpath;
 }
-#endif /* ACE_LACKS_REALPATH && !ACE_HAS_WINCE */
+#endif /* ACE_LACKS_REALPATH */
 
 #if defined (ACE_LACKS_STRTOL)
 long
@@ -531,7 +527,7 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
    */
   do {
     c = *s++;
-  } while (isspace(c));
+  } while (ACE_OS::ace_isspace(c));
   if (c == '-') {
     neg = 1;
     c = *s++;
@@ -567,10 +563,10 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
   cutlim = cutoff % (unsigned long)base;
   cutoff /= (unsigned long)base;
   for (acc = 0, any = 0;; c = *s++) {
-    if (isdigit(c))
+    if (ACE_OS::ace_isdigit(c))
       c -= '0';
-    else if (isalpha(c))
-      c -= isupper(c) ? 'A' - 10 : 'a' - 10;
+    else if (ACE_OS::ace_isalpha(c))
+      c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
     else
       break;
     if (c >= base)
@@ -594,6 +590,74 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
 }
 #endif /* ACE_LACKS_STRTOL */
 
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOL)
+long
+ACE_OS::wcstol_emulation (const wchar_t *nptr,
+        wchar_t **endptr,
+        int base)
+{
+  register const wchar_t *s = nptr;
+  register unsigned long acc;
+  register int c;
+  register unsigned long cutoff;
+  register int neg = 0, any, cutlim;
+
+  /*
+   * Skip white space and pick up leading +/- sign if any.
+   * If base is 0, allow 0x for hex and 0 for octal, else
+   * assume decimal; if base is already 16, allow 0x.
+   */
+  do {
+    c = *s++;
+  } while (ACE_OS::ace_isspace(c));
+  if (c == L'-') {
+    neg = 1;
+    c = *s++;
+  } else if (c == L'+')
+    c = *s++;
+  if ((base == 0 || base == 16) &&
+    c == '0' && (*s == L'x' || *s == L'X')) {
+    c = s[1];
+    s += 2;
+    base = 16;
+  }
+  if (base == 0)
+    base = c == L'0' ? 8 : 10;
+
+  /*
+   * See strtol for comments as to the logic used.
+   */
+  cutoff = neg ? -(unsigned long)LONG_MIN : LONG_MAX;
+  cutlim = cutoff % (unsigned long)base;
+  cutoff /= (unsigned long)base;
+  for (acc = 0, any = 0;; c = *s++) {
+    if (ACE_OS::ace_isdigit(c))
+      c -= L'0';
+    else if (ACE_OS::ace_isalpha(c))
+      c -= ACE_OS::ace_isupper(c) ? L'A' - 10 : L'a' - 10;
+    else
+      break;
+    if (c >= base)
+      break;
+    if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+      any = -1;
+    else {
+      any = 1;
+      acc *= base;
+      acc += c;
+    }
+  }
+  if (any < 0) {
+    acc = neg ? LONG_MIN : LONG_MAX;
+    errno = ERANGE;
+  } else if (neg)
+    acc = -acc;
+  if (endptr != 0)
+    *endptr = any ? (wchar_t *)s - 1 : (wchar_t *)nptr;
+  return (acc);
+}
+#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOL */
+
 #if defined (ACE_LACKS_STRTOUL)
 unsigned long
 ACE_OS::strtoul_emulation (const char *nptr,
@@ -611,7 +675,7 @@ ACE_OS::strtoul_emulation (const char *nptr,
    */
   do
     c = *s++;
-  while (isspace(c));
+  while (ACE_OS::ace_isspace(c));
   if (c == '-')
     {
       neg = 1;
@@ -633,10 +697,10 @@ ACE_OS::strtoul_emulation (const char *nptr,
 
   for (acc = 0, any = 0;; c = *s++)
     {
-      if (isdigit(c))
+      if (ACE_OS::ace_isdigit(c))
         c -= '0';
-      else if (isalpha(c))
-        c -= isupper(c) ? 'A' - 10 : 'a' - 10;
+      else if (ACE_OS::ace_isalpha(c))
+        c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
       else
         break;
       if (c >= base)
@@ -654,7 +718,8 @@ ACE_OS::strtoul_emulation (const char *nptr,
     {
       acc = ULONG_MAX;
       errno = ERANGE;
-    } else if (neg)
+    }
+  else if (neg)
     acc = -acc;
   if (endptr != 0)
     *endptr = any ? (char *) s - 1 : (char *) nptr;
@@ -662,6 +727,352 @@ ACE_OS::strtoul_emulation (const char *nptr,
 }
 #endif /* ACE_LACKS_STRTOUL */
 
+
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOUL)
+unsigned long
+ACE_OS::wcstoul_emulation (const wchar_t *nptr,
+         wchar_t **endptr,
+         int base)
+{
+  register const wchar_t *s = nptr;
+  register unsigned long acc;
+  register int c;
+  register unsigned long cutoff;
+  register int neg = 0, any, cutlim;
+
+  /*
+   * See strtol for comments as to the logic used.
+   */
+  do
+    c = *s++;
+  while (ACE_OS::ace_isspace(c));
+  if (c == L'-')
+    {
+      neg = 1;
+      c = *s++;
+    }
+  else if (c == L'+')
+    c = *s++;
+  if ((base == 0 || base == 16) &&
+      c == L'0' && (*s == L'x' || *s == L'X'))
+    {
+      c = s[1];
+      s += 2;
+      base = 16;
+    }
+  if (base == 0)
+    base = c == L'0' ? 8 : 10;
+  cutoff = (unsigned long) ULONG_MAX / (unsigned long) base;
+  cutlim = (unsigned long) ULONG_MAX % (unsigned long) base;
+
+  for (acc = 0, any = 0;; c = *s++)
+    {
+      if (ACE_OS::ace_isdigit(c))
+        c -= L'0';
+      else if (ACE_OS::ace_isalpha(c))
+        c -= ACE_OS::ace_isupper(c) ? L'A' - 10 : L'a' - 10;
+      else
+        break;
+      if (c >= base)
+        break;
+      if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+        any = -1;
+      else
+        {
+          any = 1;
+          acc *= base;
+          acc += c;
+        }
+    }
+  if (any < 0)
+    {
+      acc = ULONG_MAX;
+      errno = ERANGE;
+    }
+  else if (neg)
+    acc = -acc;
+  if (endptr != 0)
+    *endptr = any ? (wchar_t *) s - 1 : (wchar_t *) nptr;
+  return (acc);
+}
+#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOUL */
+
+#if defined (ACE_LACKS_STRTOLL)
+ACE_INT64
+ACE_OS::strtoll_emulation (const char *nptr,
+         char **endptr,
+         register int base)
+{
+  register const char *s = nptr;
+  register ACE_UINT64 acc;
+  register int c;
+  register ACE_UINT64 cutoff;
+  register int neg = 0, any, cutlim;
+
+  /*
+   * Skip white space and pick up leading +/- sign if any.
+   * If base is 0, allow 0x for hex and 0 for octal, else
+   * assume decimal; if base is already 16, allow 0x.
+   */
+  do {
+    c = *s++;
+  } while (ACE_OS::ace_isspace(c));
+  if (c == '-') {
+    neg = 1;
+    c = *s++;
+  } else if (c == '+')
+    c = *s++;
+  if ((base == 0 || base == 16) &&
+    c == '0' && (*s == 'x' || *s == 'X')) {
+    c = s[1];
+    s += 2;
+    base = 16;
+  }
+  if (base == 0)
+    base = c == '0' ? 8 : 10;
+
+  /*
+   * See strtol for comments as to the logic used.
+   */
+  cutoff = neg ? -(ACE_UINT64)ACE_INT64_MIN : ACE_INT64_MAX;
+  cutlim = cutoff % (ACE_UINT64)base;
+  cutoff /= (ACE_UINT64)base;
+  for (acc = 0, any = 0;; c = *s++) {
+    if (ACE_OS::ace_isdigit(c))
+      c -= '0';
+    else if (ACE_OS::ace_isalpha(c))
+      c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
+    else
+      break;
+    if (c >= base)
+      break;
+    if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+      any = -1;
+    else {
+      any = 1;
+      acc *= base;
+      acc += c;
+    }
+  }
+  if (any < 0) {
+    acc = neg ? ACE_INT64_MIN : ACE_INT64_MAX;
+    errno = ERANGE;
+  } else if (neg)
+    acc = -acc;
+  if (endptr != 0)
+    *endptr = any ? (char *)s - 1 : (char *)nptr;
+  return (acc);
+}
+#endif /* ACE_LACKS_STRTOLL */
+
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOLL)
+ACE_INT64
+ACE_OS::wcstoll_emulation (const wchar_t *nptr,
+         wchar_t **endptr,
+         int base)
+{
+  register const wchar_t *s = nptr;
+  register ACE_UINT64 acc;
+  register int c;
+  register ACE_UINT64 cutoff;
+  register int neg = 0, any, cutlim;
+
+  /*
+   * Skip white space and pick up leading +/- sign if any.
+   * If base is 0, allow 0x for hex and 0 for octal, else
+   * assume decimal; if base is already 16, allow 0x.
+   */
+  do {
+    c = *s++;
+  } while (ACE_OS::ace_isspace(c));
+  if (c == L'-') {
+    neg = 1;
+    c = *s++;
+  } else if (c == L'+')
+    c = *s++;
+  if ((base == 0 || base == 16) &&
+    c == L'0' && (*s == L'x' || *s == L'X')) {
+    c = s[1];
+    s += 2;
+    base = 16;
+  }
+  if (base == 0)
+    base = c == L'0' ? 8 : 10;
+
+  /*
+   * See strtol for comments as to the logic used.
+   */
+  cutoff = neg ? -(ACE_UINT64)ACE_INT64_MIN : ACE_INT64_MAX;
+  cutlim = cutoff % (ACE_UINT64)base;
+  cutoff /= (ACE_UINT64)base;
+  for (acc = 0, any = 0;; c = *s++) {
+    if (ACE_OS::ace_isdigit(c))
+      c -= L'0';
+    else if (ACE_OS::ace_isalpha(c))
+      c -= ACE_OS::ace_isupper(c) ? L'A' - 10 : L'a' - 10;
+    else
+      break;
+    if (c >= base)
+      break;
+    if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+      any = -1;
+    else {
+      any = 1;
+      acc *= base;
+      acc += c;
+    }
+  }
+  if (any < 0) {
+    acc = neg ? ACE_INT64_MIN : ACE_INT64_MAX;
+    errno = ERANGE;
+  } else if (neg)
+    acc = -acc;
+  if (endptr != 0)
+    *endptr = any ? (wchar_t *)s - 1 : (wchar_t *)nptr;
+  return (acc);
+}
+#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOLL */
+
+
+#if defined (ACE_LACKS_STRTOULL)
+ACE_UINT64
+ACE_OS::strtoull_emulation (const char *nptr,
+                            char **endptr,
+                            register int base)
+{
+  register const char *s = nptr;
+  register ACE_UINT64 acc;
+  register int c;
+  register ACE_UINT64 cutoff;
+  register int neg = 0, any, cutlim;
+
+  /*
+   * See strtol for comments as to the logic used.
+   */
+  do
+    c = *s++;
+  while (ACE_OS::ace_isspace(c));
+  if (c == '-')
+    {
+      neg = 1;
+      c = *s++;
+    }
+  else if (c == '+')
+    c = *s++;
+  if ((base == 0 || base == 16) &&
+      c == '0' && (*s == 'x' || *s == 'X'))
+    {
+      c = s[1];
+      s += 2;
+      base = 16;
+    }
+  if (base == 0)
+    base = c == '0' ? 8 : 10;
+
+  cutoff = (ACE_UINT64) ACE_UINT64_MAX / (ACE_UINT64) base;
+  cutlim = (ACE_UINT64) ACE_UINT64_MAX % (ACE_UINT64) base;
+
+  for (acc = 0, any = 0;; c = *s++)
+    {
+      if (ACE_OS::ace_isdigit(c))
+        c -= '0';
+      else if (ACE_OS::ace_isalpha(c))
+        c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
+      else
+        break;
+      if (c >= base)
+        break;
+      if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+        any = -1;
+      else
+        {
+          any = 1;
+          acc *= base;
+          acc += c;
+        }
+    }
+  if (any < 0)
+    {
+      acc = ACE_UINT64_MAX;
+      errno = ERANGE;
+    }
+  else if (neg)
+    acc = -acc;
+  if (endptr != 0)
+    *endptr = any ? (char *) s - 1 : (char *) nptr;
+  return (acc);
+}
+#endif /* ACE_LACKS_STRTOULL */
+
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOULL)
+ACE_UINT64
+ACE_OS::wcstoull_emulation (const wchar_t *nptr,
+          wchar_t **endptr,
+          int base)
+{
+  register const wchar_t *s = nptr;
+  register ACE_UINT64 acc;
+  register int c;
+  register ACE_UINT64 cutoff;
+  register int neg = 0, any, cutlim;
+
+  /*
+   * See strtol for comments as to the logic used.
+   */
+  do
+    c = *s++;
+  while (ACE_OS::ace_isspace(c));
+  if (c == L'-')
+    {
+      neg = 1;
+      c = *s++;
+    }
+  else if (c == L'+')
+    c = *s++;
+  if ((base == 0 || base == 16) &&
+      c == L'0' && (*s == L'x' || *s == L'X'))
+    {
+      c = s[1];
+      s += 2;
+      base = 16;
+    }
+  if (base == 0)
+    base = c == L'0' ? 8 : 10;
+
+  cutoff = (ACE_UINT64) ACE_UINT64_MAX / (ACE_UINT64) base;
+  cutlim = (ACE_UINT64) ACE_UINT64_MAX % (ACE_UINT64) base;
+
+  for (acc = 0, any = 0;; c = *s++)
+    {
+      if (ACE_OS::ace_isdigit(c))
+        c -= L'0';
+      else if (ACE_OS::ace_isalpha(c))
+        c -= ACE_OS::ace_isupper(c) ? L'A' - 10 : L'a' - 10;
+      else
+        break;
+      if (c >= base)
+        break;
+      if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+        any = -1;
+      else
+        {
+          any = 1;
+          acc *= base;
+          acc += c;
+        }
+    }
+  if (any < 0)
+    {
+      acc = ACE_UINT64_MAX;
+      errno = ERANGE;
+    }
+  else if (neg)
+    acc = -acc;
+  if (endptr != 0)
+    *endptr = any ? (wchar_t *) s - 1 : (wchar_t *) nptr;
+  return (acc);
+}
+#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOULL */
 
 #if defined (ACE_LACKS_MKSTEMP)
 ACE_HANDLE
@@ -674,7 +1085,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
     }
 
   // The "XXXXXX" template to be filled in.
-  ACE_TCHAR * const t  = ACE_OS::strstr (s, ACE_LIB_TEXT ("XXXXXX"));
+  ACE_TCHAR * const t  = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
 
   if (t == 0)
     {
@@ -685,8 +1096,23 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   static unsigned int const NUM_RETRIES = 50;
   static unsigned int const NUM_CHARS   = 6;  // Do not change!
 
-  ACE_RANDR_TYPE seed =
-    static_cast<ACE_RANDR_TYPE> (ACE_OS::gettimeofday ().msec ());
+  // Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
+  // ACE_Time_Value::msec(void) to avoid truncation.
+  ACE_UINT64 msec;
+
+  // Use a const ACE_Time_Value to resolve ambiguity between
+  // ACE_Time_Value::msec (long) and ACE_Time_Value::msec(ACE_UINT64&) const.
+  ACE_Time_Value const now = ACE_OS::gettimeofday();
+  now.msec (msec);
+
+  // Add the process and thread ids to ensure uniqueness.
+  msec += ACE_OS::getpid();
+  msec += (size_t) ACE_OS::thr_self();
+
+  // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
+  // we need to use a C-style cast as a catch-all in order to use a
+  // static_cast<> to an integral type.
+  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (msec);
 
   // We only care about UTF-8 / ASCII characters in generated
   // filenames.  A UTF-16 or UTF-32 character could potentially cause
@@ -694,7 +1120,12 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // greatly slowing down this mkstemp() implementation.  It is more
   // practical to limit the search space to UTF-8 / ASCII characters
   // (i.e. 127 characters).
-  static float const MAX_VAL =
+  //
+  // Note that we can't make this constant static since the compiler
+  // may not inline the return value of ACE_Numeric_Limits::max(),
+  // meaning multiple threads could potentially initialize this value
+  // in parallel.
+  float const MAX_VAL =
     static_cast<float> (ACE_Numeric_Limits<char>::max ());
 
   // Use high-order bits rather than low-order ones (e.g. rand() %
@@ -706,7 +1137,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // e.g.: MAX_VAL * rand() / (RAND_MAX + 1.0)
 
   // Factor out the constant coefficient.
-  static float const coefficient =
+  float const coefficient =
     static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
 
   // @@ These nested loops may be ineffecient.  Improvements are
@@ -721,8 +1152,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
           // selection to work for EBCDIC, as well.
           do
             {
-              r =
-                static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
+              r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
             }
           while (!ACE_OS::ace_isalnum (r));
 
@@ -753,5 +1183,29 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   return ACE_INVALID_HANDLE;
 }
 #endif /* ACE_LACKS_MKSTEMP */
+
+#if !defined (ACE_HAS_GETPROGNAME) && !defined (ACE_HAS_SETPROGNAME)
+static const char *__progname = "";
+#endif /* !ACE_HAS_GETPROGNAME && !ACE_HAS_SETPROGNAME */
+
+#if !defined (ACE_HAS_GETPROGNAME)
+const char*
+ACE_OS::getprogname_emulation ()
+{
+    return __progname;
+}
+#endif /* !ACE_HAS_GETPROGNAME */
+
+#if !defined (ACE_HAS_SETPROGNAME)
+void
+ACE_OS::setprogname_emulation (const char* progname)
+{
+  const char *p = ACE_OS::strrchr (progname, '/');
+  if (p != 0)
+    __progname = p + 1;
+  else
+    __progname = progname;
+}
+#endif /* !ACE_HAS_SETPROGNAME */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

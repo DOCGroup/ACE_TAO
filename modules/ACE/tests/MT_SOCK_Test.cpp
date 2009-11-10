@@ -56,12 +56,8 @@ client (void *arg)
   ACE_INET_Addr client_addr;
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
-#if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
-  ACE_Time_Value *timeout = 0;
-#else
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value *timeout = &tv;
-#endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client: Connecting...\n")));
   // Initiate timed connection with server.
@@ -101,10 +97,12 @@ client (void *arg)
       {
         // This is, I believe, more of an issue with WinXP-64 _server_
         // side, but we can trap it here since we know we're connecting
-        // to localhost. It appears, though I haven't found documentation
-        // stating, that WinXP-64 will appear to accept connections at the
-        // TCP level past the listen backlog but if data arrives before the
-        // actual application-level accept() occurs, the connection is reset.
+        // to localhost. Some Windows versions will appear to accept
+        // connections at the TCP level past the listen backlog but if
+        // data arrives before the actual application-level accept() occurs,
+        // the connection is reset. This is caused when we trip the Windows
+        // SYN attack prevention (http://technet2.microsoft.com/WindowsServer/
+        // en/library/910c8482-e5e5-4e2c-9ea4-11301ddfc4661033.mspx?mfr=true)
         // So, if we get a reset on the first send, don't flag the error -
         // just note it and act like the connection was refused.
         if (c == ACE_ALPHABET && errno == ECONNRESET) // First byte sent
@@ -117,7 +115,7 @@ client (void *arg)
           }
 
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) (errno %d) %p\n"), errno,
+                    ACE_TEXT ("(%P|%t) (errno %d) %p\n"), ACE_ERRNO_GET,
                     ACE_TEXT ("client: send_n")));
         ACE_ERROR ((LM_ERROR, "client: Closing stream.\n"));
         cli_stream.close();

@@ -46,8 +46,7 @@ namespace ACE_RMCast
     Element::out_stop ();
   }
 
-  void Retransmit::
-  send (Message_ptr m)
+  void Retransmit::send (Message_ptr m)
   {
     if (m->find (Data::id) != 0)
     {
@@ -60,8 +59,7 @@ namespace ACE_RMCast
     out_->send (m);
   }
 
-  void Retransmit::
-  recv (Message_ptr m)
+  void Retransmit::recv (Message_ptr m)
   {
     if (NAK const* nak = static_cast<NAK const*> (m->find (NAK::id)))
     {
@@ -135,9 +133,12 @@ namespace ACE_RMCast
         }
       }
 
+      //FUZZ: disable check_for_lack_ACE_OS
       // Go to sleep but watch for "manual cancellation" request.
       //
       ACE_Time_Value time (ACE_OS::gettimeofday ());
+      //FUZZ: enable check_for_lack_ACE_OS
+
       time += params_.tick ();
 
       while (!stop_)

@@ -108,7 +108,7 @@ Read_Handler::handle_input (ACE_HANDLE handle)
           else
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("handle_input: %p (errno: %d)\n"),
-                          ACE_TEXT ("recv"), errno));
+                          ACE_TEXT ("recv"), ACE_ERRNO_GET));
 
               // This will cause handle_close to get called.
               return -1;
@@ -260,10 +260,10 @@ create_reactor (void)
 
   if (opt_wfmo_reactor)
     {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 1)
       ACE_NEW (impl,
                ACE_WFMO_Reactor);
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WINSOCK2 == 1 */
     }
   else if (opt_select_reactor)
     ACE_NEW (impl,
@@ -315,8 +315,10 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Performance_Test"));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dswc:l:"), 1);
   for (int c; (c = getopt ()) != -1; )
+  //FUZZ: enble check_for_lack_ACE_OS
     switch (c)
       {
       case 's':

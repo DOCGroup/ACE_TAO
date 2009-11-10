@@ -132,7 +132,7 @@ if ($infile eq "") {
 if ($outfile eq "") {
     $outfile = "$infile.xml";
 }
-print "OUTFILE = $outfile \n";
+print "OUTFILE = $outfile \n" if ($verbose);
 
 open (OUT, "> $outfile") or die "Unable to open $outfile\n";
 

@@ -61,7 +61,7 @@ public:
    */
   ACE_Log_Record (void);
   ACE_Log_Record (ACE_Log_Priority lp,
-                  long time_stamp,
+                  time_t time_stamp,
                   long pid);
   ACE_Log_Record (ACE_Log_Priority lp,
                   const ACE_Time_Value &time_stamp,
@@ -72,7 +72,7 @@ public:
 
 
   /// Write the contents of the logging record to the appropriate
-  /// <FILE> iff the corresponding type is enabled.
+  /// <FILE> if the corresponding type is enabled.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
 #if !defined (ACE_HAS_WINCE)
@@ -83,7 +83,7 @@ public:
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   /// Write the contents of the logging record to the appropriate
-  /// <ostream> iff the corresponding type is enabled.
+  /// @a stream if the corresponding type is enabled.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
              ACE_OSTREAM_TYPE &stream);
@@ -95,20 +95,26 @@ public:
 
   /**
    * Returns a character array with the string form of the
-   * <ACE_Log_Priority> parameter.  This is used for the verbose
+   * ACE_Log_Priority parameter.  This is used for the verbose
    * printing format.
    */
   static const ACE_TCHAR *priority_name (ACE_Log_Priority p);
 
-  // IMPORTANT: <name> must be a statically allocated const ACE_TCHAR*
+  /// IMPORTANT: @a name must be a statically allocated const ACE_TCHAR*
   static void priority_name (ACE_Log_Priority p,
                              const ACE_TCHAR *name);
 
   // = Marshall/demarshall
-  /// Encode the <Log_Record> for transmission on the network.
+  /// Encode the @c Log_Record for transmission on the network.
+  /// @deprecated The encode() and decode() metods are deprecated; please use
+  /// the CDR insertion and extraction operators to properly encode and decode
+  /// ACE_Log_Record objects.
   void encode (void);
 
-  /// Decode the <Log_Record> received from the network.
+  /// Decode the @c Log_Record received from the network.
+  /// @deprecated The encode() and decode() metods are deprecated; please use
+  /// the CDR insertion and extraction operators to properly encode and decode
+  /// ACE_Log_Record objects.
   void decode (void);
 
   // = Set/get methods
@@ -130,7 +136,7 @@ public:
   /// power of 2, as defined by the enums in <ACE_Log_Priority>).
   void priority (u_long num);
 
-  /// Get the total length of the <Log_Record>, which includes the 
+  /// Get the total length of the <Log_Record>, which includes the
   /// size of the various data member fields.
   long length (void) const;
 
@@ -184,7 +190,7 @@ private:
   ACE_UINT32 type_;
 
   /// Time that the logging record was generated.
-  ACE_UINT32 secs_;
+  time_t secs_;
   ACE_UINT32 usecs_;
 
   /// Id of process that generated the logging record.
@@ -192,7 +198,13 @@ private:
 
   /// Logging record data
   ACE_TCHAR *msg_data_;   // Heap-allocated text message area
-  size_t msg_data_size_;  // Allocated size of msg_data_ in ACE_TCHARs
+
+  /// Allocated size of msg_data_ in ACE_TCHARs
+  size_t msg_data_size_;
+
+  /// disallow copying...
+  ACE_Log_Record (const ACE_Log_Record& rhs);
+  ACE_Log_Record& operator= (const ACE_Log_Record& rhs);
 };
 
 // Forward decls.

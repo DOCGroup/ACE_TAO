@@ -38,7 +38,6 @@ ACEXML_Debug_Attribute_Builder::getName (void)
 int
 ACEXML_Debug_Attribute_Builder::setAttType (const ATT_TYPE type
                                             ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->type_ == ERROR_TYPE)
     {
@@ -52,7 +51,6 @@ ACEXML_Debug_Attribute_Builder::setAttType (const ATT_TYPE type
 int
 ACEXML_Debug_Attribute_Builder::insertList (const ACEXML_Char *n
                                             ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_String str (n, 0, 0);
 
@@ -64,7 +62,6 @@ int
 ACEXML_Debug_Attribute_Builder::setDefault (const DEFAULT_DECL def,
                                             const ACEXML_Char *value
                                             ACEXML_ENV_ARG_DECL_NOT_USED)
-   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->default_decl_ = def;
   this->default_value_.set (value, 0);
@@ -163,7 +160,6 @@ int
 ACEXML_Debug_Attributes_Builder::setElement (const ACEXML_Char *,
                                              const ACEXML_Char *,
                                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->element_name_.set (qName, 0);
   return 0;

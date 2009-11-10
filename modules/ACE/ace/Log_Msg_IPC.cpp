@@ -3,6 +3,7 @@
 #include "ace/Log_Msg_IPC.h"
 #include "ace/Log_Record.h"
 #include "ace/CDR_Stream.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(ace, Log_Msg_IPC, "$Id$")
 
@@ -43,33 +44,44 @@ ACE_Log_Msg_IPC::close (void)
   return this->message_queue_.close ();
 }
 
-int
+ssize_t
 ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
 {
   // Serialize the log record using a CDR stream, allocate enough
   // space for the complete <ACE_Log_Record>.
-  const size_t max_payload_size =
-    4 // type()
-    + 8 // timestamp
-    + 4 // process id
-    + 4 // data length
-    + ACE_Log_Record::MAXLOGMSGLEN // data
-    + ACE_CDR::MAX_ALIGNMENT; // padding;
+  size_t const max_payload_size =
+    4    // type
+    + 4  // pid
+    + 12 // timestamp
+    + 4  // process id
+    + 4  // data length
+#if defined (ACE_USES_WCHAR)
+    + (log_record.msg_data_len () * ACE_OutputCDR::wchar_maxbytes())  // message
+#else
+    + log_record.msg_data_len () // message
+#endif
+    + ACE_CDR::MAX_ALIGNMENT;     // padding;
 
   // Insert contents of <log_record> into payload stream.
   ACE_OutputCDR payload (max_payload_size);
-  payload << log_record;
+  if (!(payload << log_record))
+    return -1;
 
-  // Get the number of bytes used by the CDR stream.
-  ACE_CDR::ULong length = payload.total_length ();
+  // Get the number of bytes used by the CDR stream. If it becomes desireable
+  // to support payloads more than 4GB, this field will need to be changed
+  // to a 64-bit value.
+  ACE_CDR::ULong const length =
+    ACE_Utils::truncate_cast<ACE_CDR::ULong> (payload.total_length ());
 
   // Send a header so the receiver can determine the byte order and
   // size of the incoming CDR stream.
   ACE_OutputCDR header (ACE_CDR::MAX_ALIGNMENT + 8);
-  header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
+  if (!(header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER)))
+   return -1;
 
   // Store the size of the payload that follows
-  header << ACE_CDR::ULong (length);
+  if (!(header << ACE_CDR::ULong (length)))
+   return -1;
 
   // Use an iovec to send both buffer and payload simultaneously.
   iovec iov[2];
@@ -78,7 +90,7 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   iov[1].iov_base = payload.begin ()->rd_ptr ();
   iov[1].iov_len  = length;
 
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
   // Use the <putpmsg> API if supported to ensure correct message
   // queueing according to priority.
 
@@ -96,7 +108,7 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   // We're running over sockets, so send header and payload
   // efficiently using "gather-write".
   return this->message_queue_.sendv_n (iov, 2);
-#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_HAS_STREAM_LOG_MSG_IPC */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

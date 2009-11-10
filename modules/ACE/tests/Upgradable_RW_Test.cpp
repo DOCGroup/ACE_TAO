@@ -194,8 +194,8 @@ Reader_Task::svc (void)
           }
       }
 
-      if (result == -1 && errno == EBUSY // we tried and failed
-          || !use_try_upgrade)           // we did not try at all
+      if ((result == -1 && errno == EBUSY) // we tried and failed
+          || !use_try_upgrade)             // we did not try at all
         {
 #if defined (RW_MUTEX)
           ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
@@ -207,9 +207,11 @@ Reader_Task::svc (void)
           find_last ();
         }
       else if (result == -1 && errno != EBUSY)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT (" (%t) failure in upgrading to write lock!\n"),
-                    1));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%t) failure in upgrading to write lock!\n"),
+                      1));
+        }
     }
 
   // Stop the timer.
@@ -297,9 +299,9 @@ Time_Calculation ::print_stats (void)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\n")
-                  ACE_TEXT ("\treal_time\t = %0.06f ms, \n")
-                  ACE_TEXT ("\tuser_time\t = %0.06f ms, \n")
-                  ACE_TEXT ("\tsystem_time\t = %0.06f ms, \n")
+                  ACE_TEXT ("\treal_time\t = %0.06f ms,\n")
+                  ACE_TEXT ("\tuser_time\t = %0.06f ms,\n")
+                  ACE_TEXT ("\tsystem_time\t = %0.06f ms,\n")
                   ACE_TEXT ("\t%0.00f calls/second\n"),
                   elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
                   elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
@@ -436,7 +438,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (not_upgraded != 0 || upgraded != 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("upgraded to not upgraded ratio = %f \n"),
+                ACE_TEXT ("upgraded to not upgraded ratio = %f\n"),
                 (float) upgraded / (float) (not_upgraded + upgraded)));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -455,7 +457,7 @@ run_main (int argc, ACE_TCHAR *argv[])
        i < n_entries;
        i++)
     {
-      if ((element_ptr = linked_list_ptr->delete_head ()))
+      if (0 != (element_ptr = linked_list_ptr->delete_head ()))
         {
           cString_ptr = element_ptr->value ();
           delete cString_ptr;

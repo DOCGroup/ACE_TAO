@@ -15,6 +15,11 @@ ACE_RCSID (ACE_SSL,
 
 #include "ace/OS_NS_string.h"
 #include "ace/Proactor.h"
+#include "ace/Truncate.h"
+
+#if !defined(__ACE_INLINE__)
+#include "SSL_Asynch_Stream.inl"
+#endif /* __ACE_INLINE__ */
 
 #include <openssl/err.h>
 
@@ -92,13 +97,13 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   ACE_SSL_Asynch_Stream::Stream_Type s_type,
   ACE_SSL_Context * context)
   : type_         (s_type),
-    handle_       (ACE_INVALID_HANDLE),
     proactor_     (0),
     ext_handler_  (0),
     ext_read_result_ (0),
     ext_write_result_(0),
     flags_        (0),
     ssl_          (0),
+    handshake_complete_(false),
     bio_          (0),
     bio_istream_  (),
     bio_inp_msg_  (),
@@ -189,7 +194,9 @@ ACE_SSL_Asynch_Stream::cancel (void)
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((flags_ & SF_STREAM_OPEN) == 0) // not open
-    return 1;   //   AIO_ALLDONE
+    {
+      return 1;   //   AIO_ALLDONE
+    }
 
   // attempt to cancel internal, i.e. user's read/write
   int rc_r_int = bio_istream_.cancel();
@@ -199,17 +206,23 @@ ACE_SSL_Asynch_Stream::cancel (void)
   int rc_r_ext = notify_read (0, ERR_CANCELED);
   int rc_w_ext = notify_write (0, ERR_CANCELED);
 
-  if (rc_r_int < 0  || rc_w_int < 0
-      && rc_r_ext < 0  || rc_w_ext < 0)
-    return -1;  // at least one error
+  if ((rc_r_int < 0 || rc_w_int < 0)
+      && (rc_r_ext < 0 || rc_w_ext < 0))
+    {
+      return -1;  // at least one error
+    }
 
   if (rc_r_int == 1 && rc_w_int == 1
       && rc_r_ext == 1 && rc_w_ext == 1)
-    return 1;  // AIO_ALLDONE
+    {
+      return 1;  // AIO_ALLDONE
+    }
 
-  if (rc_r_int == 2 || rc_w_int == 2
-      && rc_r_ext == 2 || rc_w_ext == 2)
-    return 2;  // AIO_NOT_CANCELED , at least one not canceled
+  if ((rc_r_int == 2 || rc_w_int == 2)
+      && (rc_r_ext == 2 || rc_w_ext == 2))
+    {
+      return 2;  // AIO_NOT_CANCELED , at least one not canceled
+    }
 
   return 0;    // AIO_CANCELED, at least will be one notification
 }
@@ -251,7 +264,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
   // Get a proactor for/from the user.
   this->proactor_    = this->get_proactor (proactor, handler);
   this->ext_handler_ = & handler;
-  this->handle_      = handle;
+  this->handle (handle);
 
   // Open internal input stream
   if (this->bio_istream_.open (*this,   // real callbacks to this
@@ -333,7 +346,7 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
   ACE_NEW_RETURN (this->ext_read_result_,
                   ACE_SSL_Asynch_Read_Stream_Result (
                     *this->ext_handler_,
-                    this->handle_,
+                    this->handle (),
                     message_block,
                     bytes_to_read,
                     act,
@@ -376,7 +389,7 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
   ACE_NEW_RETURN (this->ext_write_result_,
                   ACE_SSL_Asynch_Write_Stream_Result (
                     *this->ext_handler_,
-                    this->handle_,
+                    this->handle (),
                     message_block,
                     bytes_to_write,
                     act,
@@ -482,7 +495,18 @@ int
 ACE_SSL_Asynch_Stream::do_SSL_handshake (void)
 {
   if (SSL_is_init_finished (this->ssl_))
-    return 1;
+    {
+      if (!handshake_complete_)
+        {
+          handshake_complete_ = true;
+
+          if (!post_handshake_check ())
+            {
+              return -1;
+            }
+        }
+      return 1;  
+    }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
     return -1;
@@ -532,6 +556,13 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake (void)
   return 1;
 }
 
+
+bool
+ACE_SSL_Asynch_Stream::post_handshake_check (void)
+{
+  return true;
+}
+
 // ************************************************************
 // Perform SSL_read call if necessary and notify user
 // ************************************************************
@@ -539,7 +570,9 @@ int
 ACE_SSL_Asynch_Stream::do_SSL_read (void)
 {
   if (this->ext_read_result_ == 0)  // nothing to do
-    return 0;
+    {
+      return 0;
+    }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
     {
@@ -550,11 +583,14 @@ ACE_SSL_Asynch_Stream::do_SSL_read (void)
   ACE_Message_Block & mb = this->ext_read_result_->message_block ();
   size_t bytes_req = this->ext_read_result_->bytes_to_read ();
 
-  const int bytes_trn = ::SSL_read (this->ssl_,
-                                    mb.wr_ptr (),
-                                    bytes_req);
+  ERR_clear_error ();
 
-  int status = ::SSL_get_error (this->ssl_, bytes_trn);
+  const int bytes_trn =
+    ::SSL_read (this->ssl_,
+                mb.wr_ptr (),
+                ACE_Utils::truncate_cast<int> (bytes_req));
+
+  int const status = ::SSL_get_error (this->ssl_, bytes_trn);
 
   switch (status)
     {
@@ -596,7 +632,9 @@ int
 ACE_SSL_Asynch_Stream::do_SSL_write (void)
 {
   if (this->ext_write_result_ == 0)  // nothing to do
-    return 0;
+    {
+      return 0;
+    }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
     {
@@ -607,11 +645,14 @@ ACE_SSL_Asynch_Stream::do_SSL_write (void)
   ACE_Message_Block & mb = this->ext_write_result_->message_block ();
   size_t       bytes_req = this->ext_write_result_->bytes_to_write ();
 
-  const int bytes_trn = ::SSL_write (this->ssl_,
-                                     mb.rd_ptr (),
-                                     bytes_req);
+  ERR_clear_error ();
 
-  int status = ::SSL_get_error (this->ssl_, bytes_trn);
+  const int bytes_trn =
+    ::SSL_write (this->ssl_,
+                 mb.rd_ptr (),
+                 ACE_Utils::truncate_cast<int> (bytes_req));
+
+  int const status = ::SSL_get_error (this->ssl_, bytes_trn);
 
   switch (status)
     {
@@ -749,7 +790,7 @@ ACE_SSL_Asynch_Stream::print_error (int err_ssl,
                                     const ACE_TCHAR * pText)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "SSL-error:%d %s\n" ,
+              ACE_TEXT("SSL-error:%d %s\n"),
               err_ssl,
               pText));
 
@@ -762,7 +803,7 @@ ACE_SSL_Asynch_Stream::print_error (int err_ssl,
     {
       ERR_error_string_n (lerr, buf, sizeof buf);
 
-      ACE_DEBUG ((LM_DEBUG, "%s\n", buf));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", buf));
     }
 #endif  /* OPENSSL_VERSION_NUMBER */
 }
@@ -790,13 +831,15 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
       const char * rd_ptr = this->bio_inp_msg_.rd_ptr ();
 
       if (cur_len > len)
-        cur_len = len;
+        {
+          cur_len = len;
+        }
 
       ACE_OS::memcpy (buf, rd_ptr, cur_len);
 
       this->bio_inp_msg_.rd_ptr (cur_len); // go ahead
 
-      return cur_len;
+      return ACE_Utils::truncate_cast<int> (cur_len);
     }
 
   if (this->bio_inp_errno_ != 0)     // if was error - it is permanent !
@@ -806,12 +849,16 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
     }
 
   if (this->bio_inp_flag_ & BF_EOS)  // End of stream
-    return 0;
+    {
+      return 0;
+    }
 
   errval = EINPROGRESS;          // SSL will try later
 
   if (this->bio_inp_flag_ & BF_AIO)  // we are busy
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->bio_inp_msg_.size (len) != 0)
     {
@@ -928,7 +975,7 @@ ACE_SSL_Asynch_Stream::ssl_bio_write (const char * buf,
   this->bio_out_flag_ |= BF_AIO;  // AIO is active
   errval = 0;               // Ok, go ahead
 
-  return len;
+  return ACE_Utils::truncate_cast<int> (len);
 }
 
 // ************************************************************
@@ -951,7 +998,7 @@ ACE_SSL_Asynch_Stream::handle_write_stream (
   size_t len       = bytes_req - bytes_trn;
 
   if (errval != 0)                    // error ?
-    this->bio_out_errno_ = errval;    // save error code
+    this->bio_out_errno_ = errval;    // save err code
   else if (len > 0)                   // TCP/IP overloaded ?
     {                                 // continue, rd_ptr at right place
       if (this->bio_ostream_.write (
@@ -992,7 +1039,7 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
   u_long errval    = result.error ();
 
   if (errval != 0)                     // error ?
-     this->bio_inp_errno_ = errval;    // save error code
+     this->bio_inp_errno_ = errval;    // save err code
   else if (bytes_trn == 0)             // end of stream ?
      this->bio_inp_flag_ |= BF_EOS;    // set flag EOS
 

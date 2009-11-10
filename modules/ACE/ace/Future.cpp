@@ -1,4 +1,4 @@
-// $Id$
+ // $Id$
 
 #ifndef ACE_FUTURE_CPP
 #define ACE_FUTURE_CPP
@@ -54,15 +54,17 @@ ACE_Future_Rep<T>::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
               "ref_count_ = %d\n",
  (int) this->ref_count_));
-  ACE_DEBUG ((LM_INFO,"value_: \n"));
+  ACE_DEBUG ((LM_INFO,"value_:\n"));
   if (this->value_)
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (NON-NULL)\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NON-NULL)\n")));
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (NULL)\n")));
+    //FUZZ: disable check_for_NULL
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NULL)\n")));
+    //FUZZ: enable check_for_NULL
 
-  ACE_DEBUG ((LM_INFO,"value_ready_: \n"));
+  ACE_DEBUG ((LM_INFO,"value_ready_:\n"));
   this->value_ready_.dump ();
-  ACE_DEBUG ((LM_INFO,"value_ready_mutex_: \n"));
+  ACE_DEBUG ((LM_INFO,"value_ready_mutex_:\n"));
   this->value_ready_mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -146,7 +148,7 @@ template <class T>
 ACE_Future_Rep<T>::ACE_Future_Rep (void)
   : value_ (0),
     ref_count_ (0),
-    value_ready_ (this->value_ready_mutex_)
+    value_ready_ (value_ready_mutex_)
 {
 }
 
@@ -326,8 +328,7 @@ template <class T> int
 ACE_Future<T>::cancel (const T &r)
 {
   this->cancel ();
-  return this->future_rep_->set (r,
-                                 *this);
+  return this->future_rep_->set (r, *this);
 }
 
 template <class T> int
@@ -344,8 +345,7 @@ template <class T> int
 ACE_Future<T>::set (const T &r)
 {
   // Give the pointer to the result to the ACE_Future_Rep.
-  return this->future_rep_->set (r,
-                                 *this);
+  return this->future_rep_->set (r, *this);
 }
 
 template <class T> int

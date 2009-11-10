@@ -26,9 +26,9 @@ ACE_Obstack_T<CHAR>::dump (void) const
   ACE_TRACE ("ACE_Obstack_T<CHAR>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("size_ = %d\n"), this->size_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("head_ = %x\n"), this->head_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("curr_ = %x\n"), this->curr_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d\n"), this->size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ = %x\n"), this->head_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("curr_ = %x\n"), this->curr_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -110,7 +110,7 @@ ACE_Obstack_T<CHAR>::new_chunk (void)
 {
   ACE_TRACE ("ACE_Obstack_T<CHAR>::new_chunk");
 
-  ACE_Obchunk *temp;
+  ACE_Obchunk *temp = 0;
 
   ACE_NEW_MALLOC_RETURN (temp,
                          static_cast<ACE_Obchunk *> (this->allocator_strategy_->malloc
@@ -124,7 +124,9 @@ template <class CHAR>
 ACE_Obstack_T<CHAR>::ACE_Obstack_T (size_t size,
                                     ACE_Allocator *allocator_strategy)
   : allocator_strategy_ (allocator_strategy),
-    size_ (size)
+    size_ (size),
+    head_ (0),
+    curr_ (0)
 {
   ACE_TRACE ("ACE_Obstack_T<CHAR>::ACE_Obstack");
 
@@ -179,9 +181,7 @@ ACE_Obstack_T<CHAR>::unwind (void* obj)
 template <class CHAR> void
 ACE_Obstack_T<CHAR>::unwind_i (void* obj)
 {
-  ACE_Obchunk* curr;
-
-  curr = this->head_;
+  ACE_Obchunk* curr = this->head_;
   while (curr != 0 && (curr->contents_ > obj || curr->end_ < obj))
       curr = curr->next_;
   if (curr)
@@ -191,7 +191,7 @@ ACE_Obstack_T<CHAR>::unwind_i (void* obj)
     }
   else if (obj != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("Deletion of non-existent object.\n%a")));
+                ACE_TEXT ("Deletion of non-existent object.\n%a")));
 }
 
 template <class CHAR> void

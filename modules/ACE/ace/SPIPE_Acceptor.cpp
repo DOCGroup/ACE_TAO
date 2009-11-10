@@ -91,9 +91,9 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
                           I_PUSH,
                           module) == -1)
     return -1;
-  else if (-1 == ACE_OS::fattach
-	           (spipe[0],
-		    ACE_TEXT_ALWAYS_CHAR (this->local_addr_.get_path_name ())))
+  else if (-1 == ACE_OS::fattach(spipe[0],
+                                 ACE_TEXT_ALWAYS_CHAR (
+                                   this->local_addr_.get_path_name ())))
     return -1;
 
   this->set_duplex_handle (spipe[0]);
@@ -238,8 +238,8 @@ ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
 
   if (this->open (local_sap, reuse_addr, perms, sa, pipe_mode) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SPIPE_Acceptor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SPIPE_Acceptor")));
 }
 
 // General purpose routine for accepting new connections.
@@ -248,8 +248,8 @@ int
 ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
                             ACE_SPIPE_Addr *remote_addr,
                             ACE_Time_Value *timeout,
-                            int restart,
-                            int reset_new_handle)
+                            bool restart,
+                            bool reset_new_handle)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::accept");
   ACE_UNUSED_ARG (reset_new_handle);

@@ -59,7 +59,7 @@ public:
     M_DELETE = 3,
 
     /// Indicates that <close> should not delete any Tasks.
-    M_DELETE_NONE = 4,
+    M_DELETE_NONE = 4
   };
 };
 
@@ -72,7 +72,7 @@ public:
  * which contains a pair of Tasks, one for handling upstream
  * processing, one for handling downstream processing.  In
  * general, you shouldn't subclass from this class, but instead
- * subclass from the <ACE_Task>.
+ * subclass from the ACE_Task.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Module : public ACE_Module_Base
@@ -94,8 +94,8 @@ public:
               int flags = M_DELETE);
 
   /**
-   * Initialize the module with <module_name> as its identity
-   * and <reader> and <writer> as its tasks.  Previously register
+   * Initialize the module with @a module_name as its identity
+   * and @a reader> and @a writer as its tasks.  Previously register
    * reader or writers or closed down and deleted according to the
    * value of flags_.  Should not be called from within
    * <ACE_Task::module_closed>.
@@ -109,7 +109,7 @@ public:
   /**
    * Close down the module and its tasks.  The flags argument can be
    * used to override the default behaviour, which depends on previous
-   * <flags> values in calls to c'tor, <open>, <reader>, and <writer>.
+   * @a flags values in calls to c'tor, <open>, <reader>, and <writer>.
    * A previous value M_DELETE[_XXX] can not be overridden.  Should
    * not be called from within <ACE_Task::module_closed>.
    */
@@ -174,7 +174,7 @@ public:
 
 private:
   /// Implements the close operation for either the reader or the
-  /// writer task (depending on <which>).
+  /// writer task (depending on @a which).
   int close_i (int which, int flags);
 
   /// Pair of Tasks that form the "read-side" and "write-side" of the

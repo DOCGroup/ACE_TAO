@@ -45,37 +45,40 @@
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
 #elif defined (ACE_WIN32)
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
+# define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("log\\")
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
 #else
+# define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("log/")
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log/")
 # define MAKE_PIPE_NAME(X) ACE_TEXT (X)
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_HAS_WINCE)
-#define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".txt")
-#else
+#if !defined (ACE_DEFAULT_TEST_DIR)
+# define ACE_DEFAULT_TEST_DIR ACE_TEXT ("")
+#endif
+
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
-#endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_WINCE) || defined (ACE_HAS_PHARLAP)
-const size_t ACE_MAX_CLIENTS = 4;
+size_t const ACE_MAX_CLIENTS = 4;
 #else
-const size_t ACE_MAX_CLIENTS = 30;
+size_t const ACE_MAX_CLIENTS = 30;
 #endif /* ACE_HAS_WINCE */
 
-const size_t ACE_NS_MAX_ENTRIES = 1000;
-const size_t ACE_DEFAULT_USECS = 1000;
-const size_t ACE_MAX_TIMERS = 4;
-const size_t ACE_MAX_DELAY = 10;
-const size_t ACE_MAX_INTERVAL = 0;
-const size_t ACE_MAX_ITERATIONS = 10;
-const size_t ACE_MAX_PROCESSES = 10;
-const size_t ACE_MAX_THREADS = 4;
+size_t const ACE_NS_MAX_ENTRIES = 1000;
+size_t const ACE_DEFAULT_USECS = 1000;
+size_t const ACE_MAX_TIMERS = 4;
+size_t const ACE_MAX_DELAY = 10;
+size_t const ACE_MAX_INTERVAL = 0;
+size_t const ACE_MAX_ITERATIONS = 10;
+size_t const ACE_MAX_PROCESSES = 10;
+size_t const ACE_MAX_THREADS = 4;
 
 #ifndef ACE_START_TEST
 #define ACE_START_TEST(NAME) \
   const ACE_TCHAR *program = NAME; \
-  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
+  if (ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE) != 0) \
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open log_msg failed")), -1); \
   if (ace_file_stream::instance()->set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
@@ -91,7 +94,8 @@ const size_t ACE_MAX_THREADS = 4;
 
 #define ACE_APPEND_LOG(NAME) \
   const ACE_TCHAR *program = NAME; \
-  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
+  if (ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE) != 0) \
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open log_msg failed")), -1); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
@@ -123,11 +127,6 @@ const size_t ACE_MAX_THREADS = 4;
       ACE_OS::unlink (temp); \
     }
 
-#if defined (ghs)
-# // Rename main to ace_main for compatibility with run_tests.vxworks.
-# undef ACE_MAIN
-# define ACE_MAIN ace_main
-#endif /* ghs */
 #else /* ! VXWORKS */
 #  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
 #    define ACE_INIT_LOG_FMT ACE_TEXT ("%ls%ls%ls")
@@ -172,7 +171,5 @@ private:
 };
 
 typedef ACE_Test_Output ace_file_stream;
-
-Test_Output_Export void randomize (int array[], size_t size);
 
 #endif /* ACE_TEST_CONFIG_H */

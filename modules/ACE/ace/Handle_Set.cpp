@@ -24,11 +24,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 #  define ACE_MSB_MASK (~((fd_mask) 1 << (NFDBITS - 1)))
 #endif /* ! ACE_WIN32 */
 
-#if defined (__BORLANDC__) && !defined (ACE_WIN32)
-// The Borland C++ compiler on Linux also doesn't have fds_bits, but has __fds_bits.
-#define fds_bits __fds_bits
-#endif
-
 #if defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !defined (_XOPEN_SOURCE)
   // XPG4.2 requires the fds_bits member name, so it is not enabled by
   // default on Linux/glibc-2.1.x systems.  Instead use "__fds_bits."
@@ -44,20 +39,20 @@ ACE_Handle_Set::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize_ = %d"), this->size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmax_handle_ = %d"), this->max_handle_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n[ ")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d"), this->size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmax_handle_ = %d"), this->max_handle_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n[ ")));
 
 #if defined (ACE_WIN32)
   for (size_t i = 0; i < (size_t) this->mask_.fd_count + 1; i++)
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" %x "), this->mask_.fd_array[i]));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %x "), this->mask_.fd_array[i]));
 #else /* !ACE_WIN32 */
   for (ACE_HANDLE i = 0; i < this->max_handle_ + 1; i++)
     if (this->is_set (i))
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" %d "), i));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %d "), i));
 #endif /* ACE_WIN32 */
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" ]\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -101,7 +96,7 @@ ACE_Handle_Set::ACE_Handle_Set (void)
   this->reset ();
 }
 
-ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
+ACE_Handle_Set::ACE_Handle_Set (const fd_set &fd_mask)
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();
@@ -269,12 +264,12 @@ ACE_Handle_Set_Iterator::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined(ACE_WIN32) || !defined(ACE_HAS_BIG_FD_SET)
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nhandle_index_ = %d"), this->handle_index_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandle_index_ = %d"), this->handle_index_));
 #elif defined(ACE_HAS_BIG_FD_SET)
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nword_max_ = %d"), this->word_max_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nword_val_ = %d"), this->word_val_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nword_max_ = %d"), this->word_max_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nword_val_ = %d"), this->word_val_));
 #endif
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nword_num_ = %d"), this->word_num_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nword_num_ = %d"), this->word_num_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

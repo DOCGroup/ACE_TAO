@@ -31,7 +31,6 @@
 #endif
 #define ACE_NEW_THROWS_EXCEPTIONS
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 #define TAO_USE_SEQUENCE_TEMPLATES
@@ -48,8 +47,7 @@
 
 /***** ANSI defines *****/
 #define ACE_LACKS_TEMPNAM /* believe it or not, this is ANSI C */
-#define ACE_HAS_STRERROR
-
+#define ACE_LACKS_PUTENV_PROTOTYPE
 
 #define ACE_LACKS_SENDMSG
 
@@ -75,7 +73,6 @@
 #define ACE_HAS_THREADS
 
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
 /***** End Threading Defines *****/
 
 /***** Hardware Defines *****/
@@ -187,8 +184,6 @@ extern "C"
 #ifdef ppc
 #define ACE_HAS_POWERPC_TIMER
 #endif
-
-typedef union sigval sigval_t;
 
 /* MIKEC Addtions */
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL

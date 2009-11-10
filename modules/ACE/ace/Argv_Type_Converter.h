@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief To convert 'char' input/command line parameter to 'wchar_t'.
  *
- * This class is to convert 'char' type command line paramter to
+ * This class is to convert 'char' type command line parameter to
  * wide-character (wchar_t) format and stores the copy of it.
  * This is useful for all classes that use 'char**' argv but cannot
  * be converted into 'ACE_TCHAR**' version.
@@ -54,7 +54,7 @@ public:
   /// Returns the pointer of ASCII (char) command line.
   char** get_ASCII_argv (void);
 
-  /// Returns the number of sub paramters (argc).
+  /// Returns the number of sub parameters (argc).
   int& get_argc (void);
 
 private:
@@ -83,7 +83,7 @@ private:
 #endif  // ACE_USES_WCHAR
 
 private:
-  /// Original number of input paramter, same as 'argc'.
+  /// Original number of input parameter, same as 'argc'.
   int &saved_argc_;
 
   /// Data member pointer that contains converted argv in ACE_ANTI_TCHAR.
@@ -96,15 +96,15 @@ private:
   /// argc value before any argv has been passed.
   int before_pass_argc_;
 
-  /// FALSE represents original argv passed in is char, and TRUE
+  /// false represents original argv passed in is char, and true
   /// represents wchar_t.
-  const int original_type_;
+  bool const original_type_;
 
-  /// TRUE indicates wchar_t type argv has been passed.
-  int wchar_passed_;
+  /// true indicates wchar_t type argv has been passed.
+  bool wchar_passed_;
 
-  /// TRUE indicates char type argv has been passed.
-  int char_passed_;
+  /// true indicates char type argv has been passed.
+  bool char_passed_;
 #endif  /* ACE_USES_WCHAR */
 };
 

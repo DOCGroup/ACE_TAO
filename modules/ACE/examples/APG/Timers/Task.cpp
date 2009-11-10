@@ -40,7 +40,7 @@ private:
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("the main thread %t has started \n")));
+              ACE_TEXT ("the main thread %t has started\n")));
 
   // Create an "active" timer and start its thread.
   ActiveTimer atimer;

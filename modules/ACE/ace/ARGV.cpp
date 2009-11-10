@@ -28,8 +28,8 @@ ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::dump (void) const
   ACE_TRACE ("ACE_ARGV_Queue_Entry_T::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("arg_ = %s"), this->arg_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("quote_arg_ = %d"), (int)this->quote_arg_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("arg_ = %s"), this->arg_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("quote_arg_ = %d"), (int)this->quote_arg_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -42,18 +42,18 @@ ACE_ARGV_T<CHAR_TYPE>::dump (void) const
   ACE_TRACE ("ACE_ARGV_T::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("argc_ = %d"), this->argc_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("argc_ = %d"), this->argc_));
 
   ACE_ARGV *this_obj = const_cast<ACE_ARGV *> (this);
 
   for (int i = 0; i < this->argc_; i++)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("\nargv_[%i] = %s"),
+                ACE_TEXT ("\nargv_[%i] = %s"),
                 i,
                 this_obj->argv ()[i]));
 
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nbuf = %s\n"), this->buf_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nbuf = %s\n"), this->buf_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -99,8 +99,8 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (const CHAR_TYPE buf[],
   // Create this->argv_.
   if (this->string_to_argv () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("string_to_argv")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("string_to_argv")));
 }
 
 template <typename CHAR_TYPE>
@@ -125,6 +125,29 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *argv[],
                                         substitute_env_args,
                                         quote_arg);
 }
+
+template <typename CHAR_TYPE>
+ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (int argc,
+                                   CHAR_TYPE *argv[],
+                                   bool substitute_env_args,
+                                   bool quote_arg)
+  : substitute_env_args_ (substitute_env_args),
+    iterative_ (false),
+    argc_ (0),
+    argv_ (0),
+    buf_ (0),
+    length_ (0),
+    queue_ ()
+{
+  ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T int,CHAR_TYPE*[] to CHAR_TYPE[]");
+
+  this->argc_ = ACE_OS::argv_to_string (argc,
+                                        argv,
+                                        this->buf_,
+                                        substitute_env_args,
+                                        quote_arg);
+}
+
 
 template <typename CHAR_TYPE>
 ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
@@ -229,10 +252,10 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
   // Put the new argument at the end of the queue.
   if (this->queue_.enqueue_tail (ACE_ARGV_Queue_Entry_T<CHAR_TYPE> (next_arg, quote_arg)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Can't add more to ARGV queue")),
+                       ACE_TEXT ("Can't add more to ARGV queue")),
                       -1);
 
-  this->argc_++;
+  ++this->argc_;
 
   // Wipe argv_ and buf_ away so that they will be recreated if the
   // user calls argv () or buf ().
@@ -314,10 +337,11 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue (void)
           *ptr++ = '"';
           if (ACE_OS::strchr (arg->arg_, '"') != 0)
             {
+              CHAR_TYPE prev = 0;
               for (const CHAR_TYPE * p = arg->arg_; *p != '\0'; ++p)
                 {
-                  if (*p == '"') *ptr++ = '\\';
-                  *ptr++ = *p;
+                  if (*p == '"' && prev != '\\') *ptr++ = '\\';
+                  prev = *ptr++ = *p;
                 }
             }
           else

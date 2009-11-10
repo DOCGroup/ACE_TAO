@@ -37,7 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * inheritance hierarchy but also would like to integrate with
  * the ACE_Reactor.  Rather than adopt a "mixin" approach, it is
  * often cleaner to define a template as a subclass of
- * ACE_Event_Handler and paramterize it with an operation
+ * ACE_Event_Handler and parameterize it with an operation
  * dispatcher type.
  * When constructing an instantiation of the ACE_Event_Handler_T
  * object, a set of pointers to member functions must be

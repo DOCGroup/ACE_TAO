@@ -21,7 +21,7 @@ ACE_FIFO_Recv::dump (void) const
   ACE_TRACE ("ACE_FIFO_Recv::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_FIFO::dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("aux_handle_ = %d"), this->aux_handle_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %d"), this->aux_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -82,7 +82,7 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (const ACE_TCHAR *fifo_name,
                                  perms,
                                  persistent,
                                  sa) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_FIFO_Recv")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Recv")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

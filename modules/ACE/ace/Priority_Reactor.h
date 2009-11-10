@@ -39,13 +39,13 @@ class ACE_Export ACE_Priority_Reactor : public ACE_Select_Reactor
 public:
   // = Initialization and termination methods.
 
-  /// Initialize <ACE_Priority_Reactor> with the default size.
+  /// Initialize ACE_Priority_Reactor with the default size.
   ACE_Priority_Reactor (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0);
 
-  /// Initialize <ACE_Priority_Reactor> with size <size>.
+  /// Initialize ACE_Priority_Reactor with size @a size.
   ACE_Priority_Reactor (size_t size,
-                        int restart = 0,
+                        bool restart = false,
                         ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0);
 
@@ -74,8 +74,9 @@ private:
   /// A small helper to initialize the bucket.
   void init_bucket (void);
 
-  /// Build the bucket from the given dispatch_mask
-  void build_bucket (ACE_Handle_Set& dispatch_mask,
+  /// Build the bucket from the given dispatch_mask.  Return -1 on
+  /// failure, 0 otherwise.
+  int build_bucket (ACE_Handle_Set& dispatch_mask,
                      int &min_priority,
                      int &max_priority);
 

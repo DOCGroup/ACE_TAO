@@ -37,18 +37,10 @@
 #  include /**/ <ioLib.h>
 // for remCurIdGet()
 #  include /**/ <remLib.h>
-#  if defined (__RTP__) && ((ACE_VXWORKS == 0x620) || (ACE_VXWORKS == 0x630) || (ACE_VXWORKS == 0x640))
+#  if defined (__RTP__) && ((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x650))
 #    define L_cuserid       _PARM_L_cuserid
 #  endif
 #endif /* ACE_VXWORKS */
-
-// Undefine "functions" that may be implemented as macros.
-#ifdef fgetc
-#undef fgetc
-#endif
-#ifdef fputc
-#undef fputc
-#endif
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -61,33 +53,18 @@ extern "C"
 # elif defined (ACE_WIN32)
 #   define ACE_MAX_USERID 32
 # else
-#  define ACE_MAX_USERID L_cuserid
-#endif /* INTEGRITY */
+#  if defined (_POSIX_SOURCE) && defined (L_cuserid)
+#   define ACE_MAX_USERID L_cuserid
+#  else
+#   define ACE_MAX_USERID 9
+#  endif
+# endif /* INTEGRITY */
 
 #if defined (BUFSIZ)
 #  define ACE_STREAMBUF_SIZE BUFSIZ
 #else
 #  define ACE_STREAMBUF_SIZE 1024
 #endif /* BUFSIZ */
-
-#if defined (ACE_WIN32)
-// The following are #defines and #includes that are specific to
-// WIN32.
-#  if defined (ACE_HAS_WINCE)
-#    define ACE_STDIN  _fileno (stdin)
-#    define ACE_STDOUT _fileno (stdout)
-#    define ACE_STDERR _fileno (stderr)
-#  else
-#    define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
-#    define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
-#    define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
-#  endif  // ACE_HAS_WINCE
-// The following are #defines and #includes that are specific to UNIX.
-#else /* !ACE_WIN32 */
-#  define ACE_STDIN 0
-#  define ACE_STDOUT 1
-#  define ACE_STDERR 2
-#endif /* ACE_WIN32 */
 
 #if defined (ACE_WIN32)
   typedef OVERLAPPED ACE_OVERLAPPED;

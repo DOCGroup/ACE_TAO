@@ -71,7 +71,7 @@ public:
    *                    amount of time passes before the connection is made,
    *                    this method returns -1 and errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attmpted that TCP times out - in the latter
+   *                    connect is attempted that TCP times out - in the latter
    *                    case, errno will be ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
@@ -83,10 +83,6 @@ public:
    * @param perms       Ignored.
    * @param protocol    (optional) If value is 0, default SOCK_STREAM
    *                    protocol is selected by kernel (typically TCP).
-   *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                       const ACE_Addr &remote_sap,
@@ -125,7 +121,7 @@ public:
    *                    amount of time passes before the connection is made,
    *                    this method returns -1 and errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attmpted that TCP times out - in the latter
+   *                    connect is attempted that TCP times out - in the latter
    *                    case, errno will be ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
@@ -135,10 +131,6 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
-   *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                       const ACE_Addr &remote_sap,
@@ -176,7 +168,7 @@ public:
    *                    amount of time passes before the connection is made,
    *                    this method returns -1 and errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attmpted that TCP times out - in the latter
+   *                    connect is attempted that TCP times out - in the latter
    *                    case, errno will be ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
@@ -230,7 +222,7 @@ public:
    *                    amount of time passes before the connection is made,
    *                    this method returns -1 and errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attmpted that TCP times out - in the latter
+   *                    connect is attempted that TCP times out - in the latter
    *                    case, errno will be ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
@@ -278,7 +270,7 @@ public:
                 const ACE_Time_Value *timeout = 0);
 
   /// Resets any event associations on this handle
-  int reset_new_handle (ACE_HANDLE handle);
+  bool reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;

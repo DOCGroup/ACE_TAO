@@ -205,9 +205,9 @@ int Counter64::valid() const
 const char * Counter64::to_string()
 {
   if ( high() != 0 )
-    sprintf(output_buffer, "0x%X%08X",
-            (unsigned int)high(), (unsigned int)low());
+    ACE_OS::sprintf(output_buffer, "0x%X%08X",
+                    (unsigned int)high(), (unsigned int)low());
   else
-    sprintf(output_buffer, "%d", (int) low());
+    ACE_OS::sprintf(output_buffer, "%d", (int) low());
   return output_buffer;
 }

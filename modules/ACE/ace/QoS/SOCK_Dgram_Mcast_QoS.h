@@ -81,7 +81,7 @@ public:
 
   // = Data transfer routines.
 
-  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
+  /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
   /// I/O (uses <WSASentTo>).  Returns 0 on success.
   ssize_t send (const iovec buffers[],
                 int buffer_count,
@@ -91,7 +91,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
+  /// Send an @a n byte @a buf to the datagram socket (uses <WSASentTo>).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,

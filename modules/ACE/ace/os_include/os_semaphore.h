@@ -56,16 +56,16 @@ extern "C"
      /// this->sema_ doesn't always get created dynamically if a platform
      /// doesn't support named posix semaphores.  We use this flag to
      /// remember if we need to delete <sema_> or not.
-     int new_sema_;
+     bool new_sema_;
 #  endif /* ACE_LACKS_NAMED_POSIX_SEM */
 
-#  if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && defined (ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION)
+#  if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
      /// Serialize access to internal state.
      ACE_mutex_t lock_;
 
      /// Block until there are no waiters.
      ACE_cond_t count_nonzero_;
-#  endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION */
+#  endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && !ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION */
    } ACE_sema_t;
 #endif /* ACE_HAS_POSIX_SEM */
 

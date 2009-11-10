@@ -11,9 +11,10 @@
 #include "ace/Proactor_Impl.h"
 #include "ace/Object_Manager.h"
 #include "ace/Task_T.h"
+
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
-#  endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
+#endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
 
 
 ACE_RCSID (ace,
@@ -45,7 +46,7 @@ ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
 /// Controls whether the Proactor is deleted when we shut down (we can
 /// only delete it safely if we created it!)
-int ACE_Proactor::delete_proactor_ = 0;
+bool ACE_Proactor::delete_proactor_ = false;
 
 /**
  * @class ACE_Proactor_Timer_Handler
@@ -111,7 +112,7 @@ ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
   this->timer_event_.signal ();
 
   // Wait for the Timer Handler thread to exit.
-  this->thr_mgr ()->wait_grp (this->grp_id ());
+  this->wait ();
 }
 
 int
@@ -159,8 +160,8 @@ ACE_Proactor_Timer_Handler::svc (void)
             default:
               // Error.
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("%N:%l:(%P | %t):%p\n"),
-                                 ACE_LIB_TEXT ("ACE_Proactor_Timer_Handler::svc:wait failed")),
+                                 ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                                 ACE_TEXT ("ACE_Proactor_Timer_Handler::svc:wait failed")),
                                 -1);
             }
         }
@@ -214,8 +215,8 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &,
 {
   if (this->proactor_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
-                       ACE_LIB_TEXT (" no completion port to post timeout to?!@\n")),
+                       ACE_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
+                       ACE_TEXT (" no completion port to post timeout to?!@\n")),
                       -1);
 
   // Create the Asynch_Timer.
@@ -229,9 +230,9 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &,
 
   if (asynch_timer == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:(%P | %t):%p\n"),
-                       ACE_LIB_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
-                       ACE_LIB_TEXT ("create_asynch_timer failed")),
+                       ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                       ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
+                       ACE_TEXT ("create_asynch_timer failed")),
                       -1);
 
   auto_ptr<ACE_Asynch_Result_Impl> safe_asynch_timer (asynch_timer);
@@ -240,8 +241,8 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &,
   if (-1 == safe_asynch_timer->post_completion
       (this->proactor_->implementation ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Failure in dealing with timers: ")
-                       ACE_LIB_TEXT ("PostQueuedCompletionStatus failed\n")),
+                       ACE_TEXT ("Failure in dealing with timers: ")
+                       ACE_TEXT ("PostQueuedCompletionStatus failed\n")),
                       -1);
 
   // The completion has been posted.  The proactor is now responsible
@@ -290,15 +291,15 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE_Proactor_Handle_Timeout_Upcall is only suppose")
-                       ACE_LIB_TEXT (" to be used with ONE (and only one) Proactor\n")),
+                       ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall is only suppose")
+                       ACE_TEXT (" to be used with ONE (and only one) Proactor\n")),
                       -1);
 }
 
 // *********************************************************************
 
 ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
-                            int delete_implementation,
+                            bool delete_implementation,
                             TIMER_QUEUE *tq)
   : implementation_ (0),
     delete_implementation_ (delete_implementation),
@@ -318,8 +319,8 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
 #  elif defined (ACE_POSIX_SIG_PROACTOR)
       ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
-#  else /* Default order: CB (but not Lynx), SIG, AIOCB */
-#    if !defined (__Lynx) && !defined (__FreeBSD__)
+#  else /* Default order: CB, SIG, AIOCB */
+#    if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
       ACE_NEW (implementation, ACE_POSIX_CB_Proactor);
 #    else
 #      if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
@@ -327,7 +328,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
 #      else
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
 #      endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
-#    endif /* !__Lynx && !__FreeBSD__ */
+#    endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
 #  endif /* ACE_POSIX_AIOCB_PROACTOR */
 #elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       // WIN_Proactor.
@@ -335,7 +336,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
                ACE_WIN32_Proactor);
 #endif /* ACE_HAS_AIO_CALLS */
       this->implementation (implementation);
-      this->delete_implementation_ = 1;
+      this->delete_implementation_ = true;
     }
 
   // Set the timer queue.
@@ -346,10 +347,10 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
            ACE_Proactor_Timer_Handler (*this));
 
   // Activate <timer_handler>.
-  if (this->timer_handler_->activate (THR_NEW_LWP) == -1)
+  if (this->timer_handler_->activate () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%N:%l:(%P | %t):%p\n"),
-                ACE_LIB_TEXT ("Task::activate:could not create thread\n")));
+                ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                ACE_TEXT ("Task::activate:could not create thread\n")));
 }
 
 ACE_Proactor::~ACE_Proactor (void)
@@ -375,7 +376,7 @@ ACE_Proactor::instance (size_t /* threads */)
                           ACE_Proactor,
                           0);
 
-          ACE_Proactor::delete_proactor_ = 1;
+          ACE_Proactor::delete_proactor_ = true;
           ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Proactor, ACE_Proactor::proactor_);
         }
     }
@@ -383,7 +384,7 @@ ACE_Proactor::instance (size_t /* threads */)
 }
 
 ACE_Proactor *
-ACE_Proactor::instance (ACE_Proactor * r, int delete_proactor)
+ACE_Proactor::instance (ACE_Proactor * r, bool delete_proactor)
 {
   ACE_TRACE ("ACE_Proactor::instance");
 
@@ -409,23 +410,22 @@ ACE_Proactor::close_singleton (void)
 
   if (ACE_Proactor::delete_proactor_)
     {
-
       delete ACE_Proactor::proactor_;
       ACE_Proactor::proactor_ = 0;
-      ACE_Proactor::delete_proactor_ = 0;
+      ACE_Proactor::delete_proactor_ = false;
     }
 }
 
 const ACE_TCHAR *
 ACE_Proactor::dll_name (void)
 {
-  return ACE_LIB_TEXT ("ACE");
+  return ACE_TEXT ("ACE");
 }
 
 const ACE_TCHAR *
 ACE_Proactor::name (void)
 {
-  return ACE_LIB_TEXT ("ACE_Proactor");
+  return ACE_TEXT ("ACE_Proactor");
 }
 
 int
@@ -603,10 +603,9 @@ ACE_Proactor::close (void)
 {
   // Close the implementation.
   if (this->implementation ()->close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:(%P | %t):%p\n"),
-                       ACE_LIB_TEXT ("ACE_Proactor::close:implementation couldnt be closed")),
-                      -1);
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                ACE_TEXT ("ACE_Proactor::close: implementation close")));
 
   // Delete the implementation.
   if (this->delete_implementation_)

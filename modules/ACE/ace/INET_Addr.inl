@@ -88,15 +88,13 @@ ACE_INLINE u_short
 ACE_INET_Addr::get_port_number (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_port_number");
-#if defined (ACE_LACKS_NTOHS)
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_IPV6)
+#if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
-    return ntohs (this->inet_addr_.in4_.sin_port);
+    return ACE_NTOHS (this->inet_addr_.in4_.sin_port);
   else
-    return ntohs (this->inet_addr_.in6_.sin6_port);
+    return ACE_NTOHS (this->inet_addr_.in6_.sin6_port);
 #else
-  return ntohs (this->inet_addr_.in4_.sin_port);
+  return ACE_NTOHS (this->inet_addr_.in4_.sin_port);
 #endif /* ACE_HAS_IPV6 */
 }
 
@@ -177,9 +175,9 @@ ACE_INET_Addr::set (const wchar_t port_name[],
 }
 
 ACE_INLINE int
-ACE_INET_Addr::set (const wchar_t addr[])
+ACE_INET_Addr::set (const wchar_t addr[], int address_family)
 {
-  return this->set (ACE_Wide_To_Ascii (addr).char_rep ());
+  return this->set (ACE_Wide_To_Ascii (addr).char_rep (), address_family);
 }
 
 #endif /* ACE_HAS_WCHAR */
@@ -205,7 +203,8 @@ ACE_INET_Addr::is_loopback (void) const
       return IN6_IS_ADDR_LOOPBACK (&this->inet_addr_.in6_.sin6_addr);
 #endif /* ACE_HAS_IPV6 */
 
-  return (this->get_ip_address () == INADDR_LOOPBACK);
+  // RFC 3330 defines loopback as any address with 127.x.x.x
+  return ((this->get_ip_address () & 0XFF000000) == (INADDR_LOOPBACK & 0XFF000000));
 }
 
 // Return @c true if the IP address is IPv4/IPv6 multicast address.

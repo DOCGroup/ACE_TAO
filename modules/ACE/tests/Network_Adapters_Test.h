@@ -171,7 +171,11 @@ private:
 class Stop_Handler : public ACE_Event_Handler
 {
 public:
+#ifdef ACE_HAS_THREADS
   typedef ACE_Atomic_Op<ACE_Mutex, long> counter_sig;
+#else
+  typedef long counter_sig;
+#endif
 
   // Constructor.
   Stop_Handler (ACE_Reactor * const reactor = ACE_Reactor::instance ());
@@ -251,20 +255,6 @@ private:
 
   // counts repeats
   unsigned long counter_;
-};
-
-
-/*
- * TODO comment
- */
-class Fini_Guard
-{
-public:
-  // Constructor
-  Fini_Guard (void);
-
-  // Destructor - calls for fini
-  ~Fini_Guard (void);
 };
 
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */

@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_IO_SAP
  *
  * @brief Defines the methods for the base class of the ACE_IO_SAP
- * abstraction, which includes <ACE_FILE> and <ACE_DEV>.
+ * abstraction, which includes ACE_FILE and ACE_DEV.
  */
 class ACE_Export ACE_IO_SAP
 {
@@ -51,14 +51,14 @@ public:
   /**
    * Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
    * non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
-   * which is passed as the <value>.
+   * which is passed as the @a value.
    */
   int enable (int value) const;
 
   /**
    * Disable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
    * non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
-   * which is passed as the <value>.
+   * which is passed as the @a value.
    */
   int disable (int value) const;
 

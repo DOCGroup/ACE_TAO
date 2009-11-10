@@ -78,7 +78,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
   typedef VALUE mapped_type;
 
   // = Initialization and termination methods.
-  /// Initialize a <Hash_Cache_Map_Manager> with <size> entries.
+  /// Initialize a <Hash_Cache_Map_Manager> with @a size entries.
   ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
                               size_t size = ACE_DEFAULT_MAP_SIZE,
                               ACE_Allocator *alloc = 0);
@@ -88,7 +88,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
   ~ACE_Hash_Cache_Map_Manager (void);
 
   /**
-   * Associate <key> with <value>.  If <key> is already in the
+   * Associate @a key with @a value.  If @a key is already in the
    * MAP then the ENTRY is not changed.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an attempt is made to bind an
    * existing entry, and returns -1 if failures occur.
@@ -109,7 +109,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
   int find (const KEY &key,
             VALUE &value);
 
-  /// Is <key> in the cache?
+  /// Is @a key in the cache?
   int find (const KEY &key);
 
   /// Obtain the entry when the find succeeds.
@@ -117,7 +117,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
             CACHE_ENTRY *&entry);
 
   /**
-   * Reassociate the <key> with <value>. If the <key> already exists
+   * Reassociate the @a key with @a value. If the @a key already exists
    * in the cache then returns 1, on a new bind returns 0 and returns
    * -1 in case of any failures.
    */
@@ -125,22 +125,22 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
               const VALUE &value);
 
   /**
-   * Reassociate <key> with <value>, storing the old value into the
-   * "out" parameter <old_value>.  The function fails if <key> is not
+   * Reassociate @a key with @a value, storing the old value into the
+   * "out" parameter @a old_value.  The function fails if @a key is not
    * in the cache for caches that do not allow user specified keys.
    * However, for caches that allow user specified keys, if the key is
-   * not in the cache, a new <key>/<value> association is created.
+   * not in the cache, a new @a key / @a value association is created.
    */
   int rebind (const KEY &key,
               const VALUE &value,
               VALUE &old_value);
 
   /**
-   * Reassociate <key> with <value>, storing the old key and value
-   * into the "out" parameters <old_key> and <old_value>.  The
-   * function fails if <key> is not in the cache for caches that do not
+   * Reassociate @a key with @a value, storing the old key and value
+   * into the "out" parameters @a old_key and @a old_value.  The
+   * function fails if @a key is not in the cache for caches that do not
    * allow user specified keys.  However, for caches that allow user
-   * specified keys, if the key is not in the cache, a new <key>/<value>
+   * specified keys, if the key is not in the cache, a new @a key / @a value
    * association is created.
    */
   int rebind (const KEY &key,
@@ -158,10 +158,10 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
               CACHE_ENTRY *&entry);
 
   /**
-   * Associate <key> with <value> if and only if <key> is not in the
-   * cache.  If <key> is already in the cache, then the <value> parameter
+   * Associate @a key with @a value if and only if @a key is not in the
+   * cache.  If @a key is already in the cache, then the @a value parameter
    * is overwritten with the existing value in the cache. Returns 0 if a
-   * new <key>/<value> association is created.  Returns 1 if an
+   * new @a key / @a value association is created.  Returns 1 if an
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
@@ -177,11 +177,11 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
                VALUE &value,
                CACHE_ENTRY *&entry);
 
-  /// Remove <key> from the cache.
+  /// Remove @a key from the cache.
   int unbind (const KEY &key);
 
-  /// Remove <key> from the cache, and return the <value> associated with
-  /// <key>.
+  /// Remove @a key from the cache, and return the @a value associated with
+  /// @a key.
   int unbind (const KEY &key,
               VALUE &value);
 

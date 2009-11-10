@@ -84,7 +84,10 @@ ACE_Message_Block::copy (const char *buf, size_t n)
   size_t len = this->space ();
 
   if (len < n)
-    return -1;
+    {
+      errno = ENOSPC;
+      return -1;
+    }
   else
     {
       (void) ACE_OS::memcpy (this->wr_ptr (),
@@ -107,7 +110,10 @@ ACE_Message_Block::copy (const char *buf)
   size_t buflen = ACE_OS::strlen (buf) + 1;
 
   if (len < buflen)
-    return -1;
+    {
+      errno = ENOSPC;
+      return -1;
+    }
   else
     {
       (void) ACE_OS::memcpy (this->wr_ptr (),
@@ -143,15 +149,15 @@ ACE_Data_Block::dump (void) const
   ACE_TRACE ("ACE_Data_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("-----( Data Block )-----\n")
-              ACE_LIB_TEXT ("type_ = %d\n")
-              ACE_LIB_TEXT ("cur_size_ = %u\n")
-              ACE_LIB_TEXT ("max_size_ = %u\n")
-              ACE_LIB_TEXT ("flags_ = %u\n")
-              ACE_LIB_TEXT ("base_ = %u\n")
-              ACE_LIB_TEXT ("locking_strategy_ = %u\n")
-              ACE_LIB_TEXT ("reference_count_ = %u\n")
-              ACE_LIB_TEXT ("---------------------------\n"),
+              ACE_TEXT ("-----( Data Block )-----\n")
+              ACE_TEXT ("type_ = %d\n")
+              ACE_TEXT ("cur_size_ = %u\n")
+              ACE_TEXT ("max_size_ = %u\n")
+              ACE_TEXT ("flags_ = %u\n")
+              ACE_TEXT ("base_ = %@\n")
+              ACE_TEXT ("locking_strategy_ = %u\n")
+              ACE_TEXT ("reference_count_ = %u\n")
+              ACE_TEXT ("---------------------------\n"),
               this->type_,
               this->cur_size_,
               this->max_size_,
@@ -171,14 +177,14 @@ ACE_Message_Block::dump (void) const
   ACE_TRACE ("ACE_Message_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("-----( Message Block )-----\n")
-              ACE_LIB_TEXT ("priority_ = %d\n")
-              ACE_LIB_TEXT ("next_ = %u\n")
-              ACE_LIB_TEXT ("prev_ = %u\n")
-              ACE_LIB_TEXT ("cont_ = %u\n")
-              ACE_LIB_TEXT ("rd_ptr_ = %u\n")
-              ACE_LIB_TEXT ("wr_ptr_ = %u\n")
-              ACE_LIB_TEXT ("---------------------------\n"),
+              ACE_TEXT ("-----( Message Block )-----\n")
+              ACE_TEXT ("priority_ = %d\n")
+              ACE_TEXT ("next_ = %@\n")
+              ACE_TEXT ("prev_ = %@\n")
+              ACE_TEXT ("cont_ = %@\n")
+              ACE_TEXT ("rd_ptr_ = %@\n")
+              ACE_TEXT ("wr_ptr_ = %@\n")
+              ACE_TEXT ("---------------------------\n"),
               this->priority_,
               this->next_,
               this->prev_,
@@ -358,11 +364,25 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
                    ACE_Allocator::instance ());
 
   if (msg_data == 0)
-    ACE_ALLOCATOR (this->base_,
-                   (char *) this->allocator_strategy_->malloc (size));
-    // ACE_ALLOCATOR returns on alloc failure...
+    {
+      ACE_ALLOCATOR (this->base_,
+                     (char *) this->allocator_strategy_->malloc (size));
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
+      (void) ACE_OS::memset (this->base_,
+                             '\0',
+                             size);
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
+    }
 
-  // The memory is legit, whether passed in or allocated, so set the size.
+  // ACE_ALLOCATOR returns on alloc failure but we cant throw, so setting
+  // the size to 0 (i.e. "bad bit") ...
+  if (this->base_ == 0)
+    {
+      size = 0;
+    }
+
+  // The memory is legit, whether passed in or allocated, so set
+  // the size.
   this->cur_size_ = this->max_size_ = size;
 }
 
@@ -388,7 +408,7 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                     0,  // data_block allocator
                     0) == -1) // message_block allocator
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
@@ -411,7 +431,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
                     0, // data_block allocator
                     message_block_allocator) == -1) // message_block allocator
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (size_t size,
@@ -444,7 +464,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     data_block_allocator,
                     message_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 int
@@ -531,7 +551,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     data_block_allocator,
                     message_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
@@ -556,7 +576,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
                     data_block->data_block_allocator (),
                     message_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
@@ -583,7 +603,7 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
                         mb.data_block ()->data_block_allocator (),
                         mb.message_block_allocator_) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE_Message_Block")));
+                    ACE_TEXT ("ACE_Message_Block")));
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // Align ourselves
       char *start = ACE_ptr_align_binary (this->base (),
@@ -613,7 +633,7 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
                         mb.data_block ()->data_block_allocator (),
                         mb.message_block_allocator_) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE_Message_Block")));
+                    ACE_TEXT ("ACE_Message_Block")));
 
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // Align ourselves
@@ -716,14 +736,22 @@ ACE_Message_Block::init_i (size_t size,
                                              data_block_allocator),
                              -1);
       ACE_TIMEPROBE (ACE_MESSAGE_BLOCK_INIT_I_DB_CTOR);
+
+      // Message block initialization may fail, while the construction
+      // succeds.  Since ACE may throw no exceptions, we have to do a
+      // separate check and clean up, like this:
+      if (db != 0 && db->size () < size)
+        {
+          db->ACE_Data_Block::~ACE_Data_Block();  // placement destructor ...
+          data_block_allocator->free (db); // free ...
+          errno = ENOMEM;
+          return -1;
+        }
     }
 
   // Reset the data_block_ pointer.
   this->data_block (db);
-  // If the data alloc failed, the ACE_Data_Block ctor can't relay
-  // that directly. Therefore, need to check it explicitly.
-  if (db->size () < size)
-    return -1;
+
   return 0;
 }
 
@@ -787,8 +815,10 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
     }
   // This is the case when no lock was passed in
   else
-    // Lock to be used is our lock
-    lock_to_be_used = this->locking_strategy_;
+    {
+      // Lock to be used is our lock
+      lock_to_be_used = this->locking_strategy_;
+    }
 
   // If there's a locking strategy then we need to acquire the lock
   // before decrementing the count.
@@ -799,7 +829,9 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
       result = this->release_i ();
     }
   else
-    result = this->release_i ();
+    {
+      result = this->release_i ();
+    }
 
   return result;
 }
@@ -850,7 +882,7 @@ ACE_Message_Block::release (void)
           // One guard for all
           ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, 0);
 
-          // Call non-guarded release with <lock>
+          // Call non-guarded release with @a lock
           destroy_dblock = this->release_i (lock);
         }
       // This is the case when we have a valid data block but no lock
@@ -952,6 +984,7 @@ ACE_Message_Block::~ACE_Message_Block (void)
 
   this->prev_ = 0;
   this->next_ = 0;
+  this->cont_ = 0;
 }
 
 ACE_Data_Block *
@@ -1104,13 +1137,15 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask,
   const ACE_Message_Block::Message_Flags always_clear =
     ACE_Message_Block::DONT_DELETE;
 
+  const size_t newsize =
+    max_size == 0 ? this->max_size_ : max_size;
+
   ACE_Data_Block *nb = 0;
 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Data_Block*> (
                            this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
-                         ACE_Data_Block (max_size == 0 ?
-                                           this->max_size_ : max_size, // size
+                         ACE_Data_Block (newsize, // size
                                          this->type_,     // type
                                          0,               // data
                                          this->allocator_strategy_, // allocator
@@ -1118,6 +1153,17 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask,
                                          this->flags_,  // flags
                                          this->data_block_allocator_),
                          0);
+
+  // Message block initialization may fail while the construction
+  // succeds.  Since as a matter of policy, ACE may throw no
+  // exceptions, we have to do a separate check like this.
+  if (nb != 0 && nb->size () < newsize)
+    {
+      nb->ACE_Data_Block::~ACE_Data_Block();  // placement destructor ...
+      this->data_block_allocator_->free (nb); // free ...
+      errno = ENOMEM;
+      return 0;
+    }
 
 
   // Set new flags minus the mask...
@@ -1228,146 +1274,5 @@ ACE_Data_Block::base (char *msg_data,
   this->base_ = msg_data;
   this->flags_ = msg_flags;
 }
-
-// ctor
-
-ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
-                                                            unsigned long static_bit_field_shift,
-                                                            unsigned long dynamic_priority_max,
-                                                            unsigned long dynamic_priority_offset)
-  : static_bit_field_mask_ (static_bit_field_mask),
-    static_bit_field_shift_ (static_bit_field_shift),
-    dynamic_priority_max_ (dynamic_priority_max),
-    dynamic_priority_offset_ (dynamic_priority_offset),
-    max_late_ (0, dynamic_priority_offset - 1),
-    min_pending_ (0, dynamic_priority_offset),
-    pending_shift_ (0, dynamic_priority_max)
-{
-}
-
-// dtor
-
-ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy (void)
-{
-}
-
-// Dump the state of the strategy.
-
-void
-ACE_Dynamic_Message_Strategy::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Dynamic_Message_Strategy::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("static_bit_field_mask_ = %u\n")
-              ACE_LIB_TEXT ("static_bit_field_shift_ = %u\n")
-              ACE_LIB_TEXT ("dynamic_priority_max_ = %u\n")
-              ACE_LIB_TEXT ("dynamic_priority_offset_ = %u\n")
-              ACE_LIB_TEXT ("max_late_ = [%d sec, %d usec]\n")
-              ACE_LIB_TEXT ("min_pending_ = [%d sec, %d usec]\n")
-              ACE_LIB_TEXT ("pending_shift_ = [%d sec, %d usec]\n"),
-              this->static_bit_field_mask_,
-              this->static_bit_field_shift_,
-              this->dynamic_priority_max_,
-              this->dynamic_priority_offset_,
-              this->max_late_.sec (),
-              this->max_late_.usec (),
-              this->min_pending_.sec (),
-              this->min_pending_.usec (),
-              this->pending_shift_.sec (),
-              this->pending_shift_.usec ()));
-
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
-}
-
-ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask,
-                                                               unsigned long static_bit_field_shift,
-                                                               unsigned long dynamic_priority_max,
-                                                               unsigned long dynamic_priority_offset)
-  : ACE_Dynamic_Message_Strategy (static_bit_field_mask,
-                                  static_bit_field_shift,
-                                  dynamic_priority_max,
-                                  dynamic_priority_offset)
-{
-}
-
-ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy (void)
-{
-}
-
-void
-ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
-                                                 const ACE_Message_Block & mb)
-{
-  // Convert absolute time passed in tv to negative time
-  // to deadline of mb with respect to that absolute time.
-  priority -= mb.msg_deadline_time ();
-}
-  // dynamic priority conversion function based on time to deadline
-
-void
-ACE_Deadline_Message_Strategy::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Deadline_Message_Strategy::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
-  this->ACE_Dynamic_Message_Strategy::dump ();
-
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nderived class: ACE_Deadline_Message_Strategy\n")));
-
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
-}
-
-ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_bit_field_mask,
-                                                          unsigned long static_bit_field_shift,
-                                                          unsigned long dynamic_priority_max,
-                                                          unsigned long dynamic_priority_offset)
-  : ACE_Dynamic_Message_Strategy (static_bit_field_mask,
-                                  static_bit_field_shift,
-                                  dynamic_priority_max,
-                                  dynamic_priority_offset)
-{
-}
-
-ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy (void)
-{
-}
-
-void
-ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
-                                               const ACE_Message_Block & mb)
-{
-  // Convert absolute time passed in tv to negative
-  // laxity of mb with respect to that absolute time.
-  priority += mb.msg_execution_time ();
-  priority -= mb.msg_deadline_time ();
-}
-  // dynamic priority conversion function based on laxity
-
-void
-ACE_Laxity_Message_Strategy::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Laxity_Message_Strategy::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
-  this->ACE_Dynamic_Message_Strategy::dump ();
-
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nderived class: ACE_Laxity_Message_Strategy\n")));
-
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
-}
-  // Dump the state of the strategy.
 
 ACE_END_VERSIONED_NAMESPACE_DECL

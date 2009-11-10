@@ -32,7 +32,7 @@ print_usage_and_die (void)
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %s [-r rendezvous_dgram] ")
               ACE_TEXT ("[-c rendezvous_codgram] [-f file]\n"),
-	      program_name));
+              program_name));
   ACE_OS::exit (1);
 }
 

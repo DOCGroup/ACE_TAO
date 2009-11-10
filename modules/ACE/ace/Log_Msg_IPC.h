@@ -20,10 +20,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Default_Constants.h"
+
 // IPC conduit between sender and client daemon.  This should be
 // included in the ACE_Log_Msg class, but due to "order of include"
 // problems it can't be...
-#if defined (ACE_HAS_STREAM_PIPES)
+#if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
 # include "ace/SPIPE_Connector.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SPIPE_Stream ACE_LOG_MSG_IPC_STREAM;
@@ -57,9 +59,17 @@ public:
 
   /// Open a new connection
   virtual int open (const ACE_TCHAR *logger_key);
+
+  /**
+   * Reset the backend.  When changing the logging destination the
+   * backend may need to properly disconnect from the remote logging
+   * daemon and reclaim some local resources.  But we try to reduce
+   * the number of local allocations/deallocations.
+   */
   virtual int reset (void);
+
   virtual int close (void);
-  virtual int log (ACE_Log_Record &log_record);
+  virtual ssize_t log (ACE_Log_Record &log_record);
 
 private:
   ACE_LOG_MSG_IPC_STREAM message_queue_;

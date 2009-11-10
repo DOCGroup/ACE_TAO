@@ -577,10 +577,10 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ncurrent_size_ = %d\n"), this->current_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_size_ = %d\n"), this->current_size_));
   this->allocator_->dump ();
   this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nDumping nodes from root\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nDumping nodes from root\n")));
   this->dump_i (this->root_);
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

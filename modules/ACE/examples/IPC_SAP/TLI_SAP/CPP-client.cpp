@@ -39,7 +39,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                    1) == -1)
     {
       if (errno != EWOULDBLOCK)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("connection failed")),
                           1);
@@ -53,14 +53,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (con.complete (cli_stream,
                         &remote_addr,
                         &tv) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("connection failed")),
                           1);
       else
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("connected to %s\n"),
-		    remote_addr.get_host_name ()));
+                    remote_addr.get_host_name ()));
     }
 
   // Send data to server (correctly handles "incomplete writes").
@@ -88,7 +88,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     ACE_TEXT ("your platform isn't configured to support TLI\n")),
+                     ACE_TEXT ("your platform isn't configured to support TLI\n")),
                     1);
 }
 #endif /* ACE_HAS_TLI */

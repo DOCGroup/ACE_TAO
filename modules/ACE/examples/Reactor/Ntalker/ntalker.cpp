@@ -29,9 +29,9 @@ class Handler : public ACE_Event_Handler
 public:
   // = Initialization and termination methods.
   Handler (u_short udp_port,
-	   const char *ip_addr,
-      const ACE_TCHAR *a_interface,
-	   ACE_Reactor & );
+           const char *ip_addr,
+           const ACE_TCHAR *a_interface,
+           ACE_Reactor & );
   // Constructor.
 
   ~Handler (void);
@@ -46,6 +46,9 @@ public:
 private:
   ACE_SOCK_Dgram_Mcast mcast_;
   // Multicast wrapper.
+
+  ACE_INET_Addr sockmc_addr_;
+  // Address to multicast to.
 };
 
 ACE_HANDLE
@@ -64,14 +67,14 @@ Handler::handle_input (ACE_HANDLE h)
       ssize_t result = ACE_OS::read (h, buf, BUFSIZ);
 
       if (result > 0)
-	{
-	  if (this->mcast_.send (buf, result) != result)
+        {
+          if (this->mcast_.send (buf, result) != result)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p\n",
                                "send error"),
                               -1);
-	  return 0;
-	}
+          return 0;
+        }
       else if (result == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p\n",
@@ -93,17 +96,17 @@ Handler::handle_input (ACE_HANDLE h)
                                           remote_addr);
 
       if (result != -1)
-	{
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "received datagram from host %s on port %d bytes = %d\n",
                       remote_addr.get_host_name (),
                       remote_addr.get_port_number (),
                       result));
-	  ACE_OS::write (ACE_STDERR, buf, result);
+          ACE_OS::write (ACE_STDERR, buf, result);
           ACE_DEBUG ((LM_DEBUG,
                       "\n"));
-	  return 0;
-	}
+          return 0;
+        }
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
@@ -134,29 +137,28 @@ Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
 
 Handler::~Handler (void)
 {
-  if (this->mcast_.unsubscribe () == -1)
+  if (this->mcast_.leave (sockmc_addr_) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "unsubscribe fails"));
+                "leave fails"));
 }
 
 Handler::Handler (u_short udp_port,
-		  const char *ip_addr,
-        const ACE_TCHAR *a_interface,
-		  ACE_Reactor &reactor)
+                  const char *ip_addr,
+                  const ACE_TCHAR *a_interface,
+                  ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
 
-  ACE_INET_Addr sockmc_addr (udp_port, ip_addr);
+  this->sockmc_addr_ = ACE_INET_Addr (udp_port, ip_addr);
 
   // subscribe to multicast group.
 
-  if (this->mcast_.subscribe (sockmc_addr, 1, a_interface) == -1)
-  {
-  	  ACE_ERROR ((LM_ERROR,
+  if (this->mcast_.join (sockmc_addr_, 1, a_interface) == -1)
+    ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "can't subscribe to multicast group"));
-  }
+
   // Disable loopbacks.
   // if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
   //   ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
@@ -170,11 +172,11 @@ Handler::Handler (u_short udp_port,
                 "can't register with Reactor\n"));
   // Register the STDIN handler.
   else if (ACE_Event_Handler::register_stdin_handler (this,
-                                        		ACE_Reactor::instance (),
-                                        		ACE_Thread_Manager::instance ()) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "register_stdin_handler"));
+                                                      ACE_Reactor::instance (),
+                                                      ACE_Thread_Manager::instance ()) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "register_stdin_handler"));
 }
 
 static void
@@ -188,15 +190,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-	INTERFACE = get_opt.opt_arg ();
-	break;
+        INTERFACE = get_opt.opt_arg ();
+        break;
       case 'u':
-	// Usage fallthrough.
+        // Usage fallthrough.
       default:
         ACE_DEBUG ((LM_DEBUG,
                     "%s -i interface\n",
                     argv[0]));
-	ACE_OS::exit (1);
+        ACE_OS::exit (1);
       }
 }
 

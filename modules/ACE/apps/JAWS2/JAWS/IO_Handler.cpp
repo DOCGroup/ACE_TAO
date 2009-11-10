@@ -3,8 +3,9 @@
 #include "ace/Proactor.h"
 #include "ace/Filecache.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_socket.h"
 
-#include "JAWS/IO.h"
+#include "JAWS/Jaws_IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
 #include "JAWS/Data_Block.h"
@@ -60,7 +61,7 @@ JAWS_IO_Handler::~JAWS_IO_Handler (void)
   this->task_ = 0;
   this->factory_ = 0;
 
-  ACE_OS::close (this->handle_);
+  ACE_OS::closesocket (this->handle_);
   this->handle_ = ACE_INVALID_HANDLE;
 }
 
@@ -231,7 +232,7 @@ JAWS_IO_Handler::release (void)
 {
 }
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 JAWS_Asynch_IO_Handler_Factory::~JAWS_Asynch_IO_Handler_Factory (void)
 {
@@ -498,5 +499,4 @@ JAWS_Asynch_Handler::handler (void)
   return this->ioh_;
 }
 
-#endif /* ACE_WIN32 */
-
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

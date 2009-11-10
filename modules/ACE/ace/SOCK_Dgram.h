@@ -49,7 +49,7 @@ public:
 
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
-   * will accept datagrams at the <local> address.  The <qos_params>
+   * will accept datagrams at the <local> address.  The @a qos_params
    * are passed to <ACE_OS::join_leaf>.
    */
   ACE_SOCK_Dgram (const ACE_Addr &local,
@@ -69,7 +69,7 @@ public:
 
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
-   * will accept datagrams at the <local> address.  The <qos_params>
+   * will accept datagrams at the <local> address.  The @a qos_params
    * are passed to <ACE_OS::join_leaf>.
    */
   int open (const ACE_Addr &local,
@@ -84,13 +84,13 @@ public:
   ~ACE_SOCK_Dgram (void);
 
   // = Data transfer routines.
-  /// Send an <n> byte <buf> to the datagram socket (uses <sendto(3)>).
+  /// Send an @a n byte @a buf to the datagram socket (uses <sendto(3)>).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
 
-  /// Receive an <n> byte <buf> from the datagram socket (uses
+  /// Receive an @a n byte @a buf from the datagram socket (uses
   /// <recvfrom(3)>).
   ssize_t recv (void *buf,
                 size_t n,
@@ -110,14 +110,14 @@ public:
                 int flags = 0,
                 const ACE_Time_Value *timeout = 0) const;
 
-  /// Send an <iovec> of size <n> to the datagram socket (uses
+  /// Send an <iovec> of size @a n to the datagram socket (uses
   /// <sendmsg(3)>).
   ssize_t send (const iovec iov[],
                 int n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
 
-  /// Recv an <iovec> of size <n> to the datagram socket (uses
+  /// Recv an <iovec> of size @a n to the datagram socket (uses
   /// <recvmsg(3)>).
   ssize_t recv (iovec iov[],
                 int n,
@@ -125,12 +125,12 @@ public:
                 int flags = 0) const;
 
   /**
-   * Wait up to <timeout> amount of time to receive a datagram into
-   * <buf>.  The <ACE_Time_Value> indicates how long to blocking
-   * trying to receive.  If <timeout> == 0, the caller will block
+   * Wait up to @a timeout amount of time to receive a datagram into
+   * @a buf.  The ACE_Time_Value indicates how long to blocking
+   * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
-   * specified in *<timeout> elapses).  If <recv> times out a -1 is
-   * returned with <errno == ETIME>.  If it succeeds the number of
+   * specified in *@a timeout elapses).  If <recv> times out a -1 is
+   * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes received is returned.
    */
   ssize_t recv (void *buf,
@@ -140,12 +140,12 @@ public:
                 const ACE_Time_Value *timeout) const;
 
   /**
-   * Wait up to <timeout> amount of time to send a datagram to
-   * <buf>.  The <ACE_Time_Value> indicates how long to blocking
-   * trying to receive.  If <timeout> == 0, the caller will block
+   * Wait up to @a timeout amount of time to send a datagram to
+   * @a buf.  The ACE_Time_Value indicates how long to blocking
+   * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
-   * specified in *<timeout> elapses).  If <send> times out a -1 is
-   * returned with <errno == ETIME>.  If it succeeds the number of
+   * specified in *@a timeout elapses).  If <send> times out a -1 is
+   * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes sent is returned.
    */
   ssize_t send (const void *buf,
@@ -154,7 +154,7 @@ public:
                 int flags,
                 const ACE_Time_Value *timeout) const;
 
-  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
+  /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
   /// I/O (uses <WSASendTo>).  Returns 0 on success.
   ssize_t send (const iovec buffers[],
                 int buffer_count,
@@ -164,7 +164,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Recv <buffer_count> worth of <buffers> from <addr> using
+  /// Recv <buffer_count> worth of @a buffers from @a addr using
   /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
   ssize_t recv (iovec buffers[],
                 int buffer_count,
@@ -174,7 +174,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an <n> byte <buf> to the datagram socket (uses <WSASendTo>).
+  /// Send an @a n byte @a buf to the datagram socket (uses <WSASendTo>).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
@@ -182,7 +182,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Receive an <n> byte <buf> from the datagram socket (uses
+  /// Receive an @a n byte @a buf from the datagram socket (uses
   /// <WSARecvFrom>).
   ssize_t recv (void *buf,
                 size_t n,

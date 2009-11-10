@@ -167,7 +167,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
                                                          25,
                                                          1)))
     {
-    case 1 : 
+    case 1 :
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind the new flow spec\n"
                          "The Flow Spec name already exists\n"),

@@ -20,17 +20,16 @@ ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
                      reuse_addr, flags, perms) == ACE_IO_SAP::INVALID_HANDLE
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("address %s, %p\n"),
+                ACE_TEXT ("address %s, %p\n"),
                 remote_sap.get_path_name (),
-                ACE_LIB_TEXT ("ACE_FILE_IO")));
+                ACE_TEXT ("ACE_FILE_IO")));
 }
 
-ACE_INLINE int
-ACE_FILE_Connector::reset_new_handle (ACE_HANDLE handle)
+ACE_INLINE bool
+ACE_FILE_Connector::reset_new_handle (ACE_HANDLE)
 {
-  ACE_UNUSED_ARG (handle);
   // Nothing to do here since the handle is not a socket
-  return 0;
+  return false;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

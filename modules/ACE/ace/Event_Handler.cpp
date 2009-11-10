@@ -34,11 +34,6 @@ ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
 ACE_Event_Handler::~ACE_Event_Handler (void)
 {
   // ACE_TRACE ("ACE_Event_Handler::~ACE_Event_Handler");
-  if (this->reactor_ != 0)
-    {
-      ACE_Errno_Guard guard (errno);     // purge may get ENOTSUP
-      this->reactor_->purge_pending_notifications (this);
-    }
 }
 
 // Gets the file descriptor associated with this I/O device.
@@ -189,7 +184,7 @@ ACE_Event_Handler::reactor_timer_interface (void) const
 ACE_Event_Handler::Reference_Count
 ACE_Event_Handler::add_reference (void)
 {
-  int reference_counting_required =
+  bool const reference_counting_required =
     this->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
@@ -202,7 +197,7 @@ ACE_Event_Handler::add_reference (void)
 ACE_Event_Handler::Reference_Count
 ACE_Event_Handler::remove_reference (void)
 {
-  int reference_counting_required =
+  bool const reference_counting_required =
     this->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
@@ -248,8 +243,6 @@ ACE_Event_Handler::reference_counting_policy (void)
 {
   return this->reference_counting_policy_;
 }
-
-//#if !defined (ACE_HAS_WINCE)
 
 ACE_THR_FUNC_RETURN
 ACE_Event_Handler::read_adapter (void *args)
@@ -303,8 +296,6 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
                                   ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
 }
-
-//#endif /* ACE_HAS_WINCE */
 
 // ---------------------------------------------------------------------
 
@@ -386,6 +377,8 @@ ACE_Event_Handler_var::reset (ACE_Event_Handler *p)
 // ---------------------------------------------------------------------
 
 ACE_Notification_Buffer::ACE_Notification_Buffer (void)
+  : eh_ (0),
+    mask_ (ACE_Event_Handler::NULL_MASK)
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
 }

@@ -4,6 +4,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
 
 const char *UPTIME = "uptime";
 const char *HUMIDITY = "humidity";
@@ -63,7 +64,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       size_t wc = receive[i].iov_len;
       if (static_cast<size_t> (bc) < wc)
         wc = static_cast<size_t> (bc);
-      write (1, receive[i].iov_base, wc);
+      ACE_OS::write (ACE_STDOUT, receive[i].iov_base, wc);
       bc -= receive[i].iov_len;
       delete []
         (reinterpret_cast<char *> (receive[i].iov_base));
@@ -74,7 +75,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   peer.send_n ("uptime\n", 7);
   iovec response;
   peer.recvv (&response);
-  write (1, response.iov_base, response.iov_len);
+  ACE_OS::write (ACE_STDOUT, response.iov_base, response.iov_len);
   delete [] reinterpret_cast<char *> (response.iov_base);
   // Listing 5
 

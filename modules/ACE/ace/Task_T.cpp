@@ -24,14 +24,14 @@ ACE_Task<ACE_SYNCH_USE>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nthr_mgr_ = %x"), this->thr_mgr_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_mgr_ = %x"), this->thr_mgr_));
   this->msg_queue_->dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("delete_msg_queue_ = %d\n"), this->delete_msg_queue_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nflags = %x"), this->flags_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nmod_ = %x"), this->mod_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nnext_ = %x"), this->next_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nthr_count_ = %d"), this->thr_count_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("delete_msg_queue_ = %d\n"), this->delete_msg_queue_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags = %x"), this->flags_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmod_ = %x"), this->mod_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnext_ = %x"), this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_count_ = %d"), this->thr_count_));
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->lock_.dump ();
 #endif /* ACE_MT_SAFE */
@@ -48,7 +48,7 @@ ACE_Task<ACE_SYNCH_USE>::ACE_Task (ACE_Thread_Manager *thr_man,
                                    ACE_Message_Queue<ACE_SYNCH_USE> *mq)
   : ACE_Task_Base (thr_man),
     msg_queue_ (0),
-    delete_msg_queue_ (0),
+    delete_msg_queue_ (false),
     mod_ (0),
     next_ (0)
 {
@@ -58,7 +58,7 @@ ACE_Task<ACE_SYNCH_USE>::ACE_Task (ACE_Thread_Manager *thr_man,
     {
       ACE_NEW (mq,
                ACE_Message_Queue<ACE_SYNCH_USE>);
-      this->delete_msg_queue_ = 1;
+      this->delete_msg_queue_ = true;
     }
 
   this->msg_queue_ = mq;
@@ -73,7 +73,7 @@ ACE_Task<ACE_SYNCH_USE>::~ACE_Task (void)
 
   // These assignments aren't strickly necessary but they help guard
   // against odd race conditions...
-  this->delete_msg_queue_ = 0;
+  this->delete_msg_queue_ = false;
 }
 
 template<ACE_SYNCH_DECL> ACE_Task<ACE_SYNCH_USE> *

@@ -44,14 +44,13 @@
 static ACE_Atomic_Op <ACE_SYNCH_MUTEX, size_t> Completions_To_Go;
 
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-     defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
 #if defined (ACE_HAS_AIO_CALLS)
 #define RESULT_CLASS ACE_POSIX_Asynch_Result
-#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#elif defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 #define RESULT_CLASS ACE_WIN32_Asynch_Result
 #endif /* ACE_HAS_AIO_CALLS */
 
@@ -148,8 +147,10 @@ public:
   virtual ~My_Task (void) {}
   // Destructor.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void *proactor)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       // Store the proactor.
       this->proactor_ = (ACE_Proactor *) proactor;
 
@@ -185,7 +186,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P | %t):Test starts \n"));
+              "(%P | %t):Test starts\n"));
 
   // = Get two POSIX_SIG_Proactors, one with SIGRTMIN and one with
   //   SIGRTMAX.
@@ -202,14 +203,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Signal set that we want to mask.
 
   // Clear the signal set.
-  if (sigemptyset (&signal_set) == -1)
+  if (ACE_OS::sigemptyset (&signal_set) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p\n",
                        "sigemptyset failed"),
                       1);
 
   // Add the SIGRTMAX to the signal set.
-  if (sigaddset (&signal_set, ACE_SIGRTMAX) == -1)
+  if (ACE_OS::sigaddset (&signal_set, ACE_SIGRTMAX) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p\n",
                        "sigaddset failed"),
@@ -292,15 +293,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return status;
 }
 
-#else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
+#else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "This example cannot work with AIOCB_Proactor.\n"));
   return 1;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 

@@ -22,7 +22,7 @@ template <class CHAR> ACE_INLINE ACE_String_Base<CHAR> &
 ACE_String_Base<CHAR>::assign_nocopy (const ACE_String_Base<CHAR> &s)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::assign_nocopy");
-  this->set (s.rep_, s.len_, 0);
+  this->set (s.rep_, s.len_, false);
   return *this;
 }
 
@@ -141,6 +141,308 @@ ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
   ACE_TRACE ("ACE_String_Base<CHAR>::strstr");
   return this->find (s.rep_);
 }
+
+template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::iterator
+ACE_String_Base<CHAR>::begin (void)
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::begin");
+  return iterator (*this);
+}
+
+template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::const_iterator
+ACE_String_Base<CHAR>::begin (void) const
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::begin");
+  return const_iterator (*this);
+}
+
+template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::iterator
+ACE_String_Base<CHAR>::end (void)
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::end");
+  return iterator (*this, 1);
+}
+
+template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::const_iterator
+ACE_String_Base<CHAR>::end (void) const
+{
+  ACE_TRACE ("ACE_String_Base<CHAR>::end");
+  return const_iterator (*this, 1);
+}
+
+// ----------------------------------------------
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Iterator <CHAR>::
+ACE_String_Base_Iterator (ACE_String_Base <CHAR> & str, int end)
+: str_ (&str),
+  index_ (0 == end ? 0 : str.length ())
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::ACE_String_Base_Iterator");
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Iterator <CHAR>::
+ACE_String_Base_Iterator (const ACE_String_Base_Iterator <CHAR> & iter)
+: str_ (iter.str_),
+  index_ (iter.index_)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::ACE_String_Base_Iterator");
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Iterator <CHAR>::~ACE_String_Base_Iterator (void)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::~ACE_String_Base_Iterator");
+}
+
+template <class CHAR> ACE_INLINE
+int ACE_String_Base_Iterator <CHAR>::done (void) const
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::done");
+
+  return this->index_ >= this->str_->length () ? 1 : 0;
+}
+
+template <class CHAR> ACE_INLINE
+CHAR & ACE_String_Base_Iterator <CHAR>::operator * (void)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::operator *");
+
+  return this->str_->rep_[this->index_];
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Iterator <CHAR> &
+ACE_String_Base_Iterator <CHAR>::operator ++ (void)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::operator ++");
+
+  if (0 == this->done ())
+    ++ this->index_;
+
+  return *this;
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Iterator <CHAR>
+ACE_String_Base_Iterator <CHAR>::operator ++ (int)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::operator ++ (int)");
+
+  ACE_String_Base_Iterator <CHAR> temp (*this);
+
+  if (0 == this->done ())
+    ++ this->index_;
+
+  return temp;
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Iterator <CHAR> &
+ACE_String_Base_Iterator <CHAR>::operator -- (void)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::operator --");
+
+  if (0 < this->index_)
+    -- this->index_;
+
+  return *this;
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Iterator <CHAR>
+ACE_String_Base_Iterator <CHAR>::operator -- (int)
+{
+  ACE_TRACE ("ACE_String_Base_Iterator<CHAR>::operator -- (int)");
+
+  ACE_String_Base_Iterator <CHAR> temp (*this);
+
+  if (0 < this->index_)
+    -- this->index_;
+
+  return temp;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Iterator <CHAR>::
+operator == (const ACE_String_Base_Iterator <CHAR> & rhs) const
+{
+  return this->index_ == rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Iterator <CHAR>::
+operator != (const ACE_String_Base_Iterator <CHAR> & rhs) const
+{
+  return this->index_ != rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Iterator <CHAR>::
+operator < (const ACE_String_Base_Iterator <CHAR> & rhs) const
+{
+  return this->index_ < rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Iterator <CHAR>::
+operator > (const ACE_String_Base_Iterator <CHAR> & rhs) const
+{
+  return this->index_ > rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Iterator <CHAR>::
+operator >= (const ACE_String_Base_Iterator <CHAR> & rhs) const
+{
+  return this->index_ >= rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Iterator <CHAR>::
+operator <= (const ACE_String_Base_Iterator <CHAR> & rhs) const
+{
+  return this->index_ <= rhs.index_;
+}
+
+// ----------------------------------------------
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Const_Iterator <CHAR>::
+ACE_String_Base_Const_Iterator (const ACE_String_Base <CHAR> & str, int end)
+: str_ (&str),
+  index_ (0 == end ? 0 : str.length ())
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::ACE_String_Base_Const_Iterator");
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Const_Iterator <CHAR>::
+ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <CHAR> & iter)
+: str_ (iter.str_),
+  index_ (iter.index_)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::ACE_String_Base_Const_Iterator");
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Const_Iterator <CHAR>::~ACE_String_Base_Const_Iterator (void)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::~ACE_String_Base_Const_Iterator");
+}
+
+template <class CHAR> ACE_INLINE
+int ACE_String_Base_Const_Iterator <CHAR>::done (void) const
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::done");
+
+  return this->index_ >= this->str_->length () ? 1 : 0;
+}
+
+template <class CHAR> ACE_INLINE
+const CHAR & ACE_String_Base_Const_Iterator <CHAR>::operator * (void)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::operator *");
+
+  return this->str_->rep_[this->index_];
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Const_Iterator <CHAR> &
+ACE_String_Base_Const_Iterator <CHAR>::operator ++ (void)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::operator ++");
+
+  if (0 == this->done ())
+    ++ this->index_;
+
+  return *this;
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Const_Iterator <CHAR>
+ACE_String_Base_Const_Iterator <CHAR>::operator ++ (int)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::operator ++ (int)");
+
+  ACE_String_Base_Const_Iterator <CHAR> temp (*this);
+
+  if (0 == this->done ())
+    ++ this->index_;
+
+  return temp;
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Const_Iterator <CHAR> &
+ACE_String_Base_Const_Iterator <CHAR>::operator -- (void)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::operator --");
+
+  if (0 < this->index_)
+    -- this->index_;
+
+  return *this;
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base_Const_Iterator <CHAR>
+ACE_String_Base_Const_Iterator <CHAR>::operator -- (int)
+{
+  ACE_TRACE ("ACE_String_Base_Const_Iterator<CHAR>::operator -- (int)");
+
+  ACE_String_Base_Const_Iterator <CHAR> temp (*this);
+
+  if (0 < this->index_)
+    -- this->index_;
+
+  return temp;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Const_Iterator <CHAR>::
+operator == (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const
+{
+  return this->index_ == rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Const_Iterator <CHAR>::
+operator != (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const
+{
+  return this->index_ != rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Const_Iterator <CHAR>::
+operator < (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const
+{
+  return this->index_ < rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Const_Iterator <CHAR>::
+operator > (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const
+{
+  return this->index_ > rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Const_Iterator <CHAR>::
+operator >= (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const
+{
+  return this->index_ >= rhs.index_;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base_Const_Iterator <CHAR>::
+operator <= (const ACE_String_Base_Const_Iterator <CHAR> & rhs) const
+{
+  return this->index_ <= rhs.index_;
+}
+
+// ----------------------------------------------
 
 template <class CHAR> ACE_INLINE bool
 operator== (const CHAR *s,

@@ -26,10 +26,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   while ((n = server.recv (&band, &msg, (ACE_Str_Buf *) 0, &flags)) >= 0)
     {
       if (msg.len == 0)
-	break;
+        break;
       else
-	ACE_DEBUG ((LM_DEBUG, "%4d (%4d): %*s",
-		    msg.len, band, msg.len, msg.buf));
+        ACE_DEBUG ((LM_DEBUG, "%4d (%4d): %*s",
+                    msg.len, band, msg.len, msg.buf));
       flags = MSG_ANY;
       band = 0;
     }

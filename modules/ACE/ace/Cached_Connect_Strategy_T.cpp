@@ -34,8 +34,8 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::ACE_Cached_Connect_Strategy_Ex
 {
   if (this->open (cre_s, con_s, rec_s) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Cached_Connect_Strategy_Ex<ACE_T2>\n")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Cached_Connect_Strategy_Ex<ACE_T2>\n")));
 }
 
 template <ACE_T1>
@@ -51,7 +51,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::check_hint_i
  const ACE_PEER_CONNECTOR_ADDR &remote_addr,
  ACE_Time_Value *timeout,
  const ACE_PEER_CONNECTOR_ADDR &local_addr,
- int reuse_addr,
+ bool reuse_addr,
  int flags,
  int perms,
  ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
@@ -141,7 +141,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find_or_create_svc_handler_i
  const ACE_PEER_CONNECTOR_ADDR &remote_addr,
  ACE_Time_Value *timeout,
  const ACE_PEER_CONNECTOR_ADDR &local_addr,
- int reuse_addr,
+ bool reuse_addr,
  int flags,
  int perms,
  ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
@@ -256,7 +256,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cached_connect (SVC_HANDLER *&sh,
                                                         const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                                         ACE_Time_Value *timeout,
                                                         const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                                        int reuse_addr,
+                                                        bool reuse_addr,
                                                         int flags,
                                                         int perms)
 {
@@ -319,7 +319,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::connect_svc_handler_i
  const ACE_PEER_CONNECTOR_ADDR &remote_addr,
  ACE_Time_Value *timeout,
  const ACE_PEER_CONNECTOR_ADDR &local_addr,
- int reuse_addr,
+ bool reuse_addr,
  int flags,
  int perms,
  int& found)
@@ -587,7 +587,7 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
  const ACE_PEER_CONNECTOR_ADDR &remote_addr,
  ACE_Time_Value *timeout,
  const ACE_PEER_CONNECTOR_ADDR &local_addr,
- int reuse_addr,
+ bool reuse_addr,
  int flags,
  int perms,
  ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>,
@@ -645,9 +645,9 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
           ACE_ASSERT (0); // just to see it coming
 
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("(%t)ACE_Bounded_Cached_Connect_Strategy<>::")
-                      ACE_LIB_TEXT ("find_or_create_svc_handler_i - ")
-                      ACE_LIB_TEXT ("error polling server socket state.\n")));
+                      ACE_TEXT ("(%t)ACE_Bounded_Cached_Connect_Strategy<>::")
+                      ACE_TEXT ("find_or_create_svc_handler_i - ")
+                      ACE_TEXT ("error polling server socket state.\n")));
 
           return -1;
         }

@@ -76,7 +76,7 @@ ACE_SSL_SOCK_Acceptor::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::close ()");
 
-  int result = this->acceptor_.close ();
+  int const result = this->acceptor_.close ();
   this->set_handle (ACE_INVALID_HANDLE);
 
   return result;

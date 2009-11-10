@@ -194,10 +194,11 @@ template<class T> int
 ACE_Array_Base<T>::size (typename ACE_Array_Base<T>::size_type new_size)
 {
   int const r = this->max_size (new_size);
-  if (r != 0)
-    return r;
-  this->cur_size_ = new_size;
-  return 0;
+
+  if (r == 0)
+    this->cur_size_ = new_size;
+
+  return r;
 }
 
 template<class T>

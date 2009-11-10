@@ -61,8 +61,8 @@ static ACE_thread_t shared_data;
 static ACE_RW_Thread_Mutex rw_mutex;
 
 // Count of the number of readers and writers.
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers;
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_writers;
+static ACE_Atomic_Op<ACE_Thread_Mutex, long> current_readers;
+static ACE_Atomic_Op<ACE_Thread_Mutex, long> current_writers;
 
 // Explain usage and exit.
 static void
@@ -136,8 +136,8 @@ reader (void *)
 
       if (result == 0)
         {
-          current_readers--;
-          current_writers++;
+          --current_readers;
+          ++current_writers;
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) upgraded to write lock!\n")));
@@ -156,12 +156,12 @@ reader (void *)
                             shared_data));
             }
 
-          current_writers--;
+          --current_writers;
           // we were a writer
         }
       else if (result == -1 && errno == EBUSY)
         {
-          current_readers--;
+          --current_readers;
           // we were still a reader
 
           ACE_DEBUG ((LM_DEBUG,
@@ -215,7 +215,7 @@ writer (void *)
 
       ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 
-      current_writers++;
+      ++current_writers;
 
       if (current_writers > 1)
         ACE_DEBUG ((LM_DEBUG,
@@ -239,7 +239,7 @@ writer (void *)
                         shared_data));
         }
 
-      current_writers--;
+      --current_writers;
 
       ACE_DEBUG((LM_DEBUG, ACE_TEXT (" (%t) write %d done at %T\n"), iterations));
     }

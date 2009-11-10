@@ -35,7 +35,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   // SunOS4 does not automatically call _fini()!
   void *ptr;
 
-  ACE_OSCALL (::dlsym (handle, ACE_LIB_TEXT ("_fini")), void *, 0, ptr);
+  ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, 0, ptr);
 
   if (ptr != 0)
     (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
@@ -78,7 +78,7 @@ ACE_OS::dlerror (void)
 {
   ACE_OS_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-  const char *err;
+  const char *err = 0;
 #   if defined(_M_UNIX)
   ACE_OSCALL (::_dlerror (), const char *, 0, err);
 #   else /* _M_UNIX */
@@ -95,7 +95,9 @@ ACE_OS::dlerror (void)
   return const_cast <char *> (err);
 #   endif /* ACE_USES_WCHAR */
 # elif defined (__hpux) || defined (ACE_VXWORKS)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
 #   if defined (ACE_HAS_PHARLAP)
@@ -140,7 +142,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
       // Some systems (e.g., SunOS4) do not automatically call _init(), so
       // we'll have to call it manually.
 
-      ACE_OSCALL (::dlsym (handle, ACE_LIB_TEXT ("_init")), void *, 0, ptr);
+      ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_init")), void *, 0, ptr);
 
       if (ptr != 0 && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
         {
@@ -254,7 +256,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
 # elif defined (__hpux)
 
-  void *value;
+  void *value = 0;
   int status;
   shl_t _handle = handle;
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
@@ -266,11 +268,11 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // which resolves the most recently loaded symbols .. which resolve mostly what we want..
   ACE_UNUSED_ARG (handle);
   SYM_TYPE symtype;
-  void *value = 0;
+  char *value = 0;
   STATUS status;
-  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, (char **)&value, &symtype), int, -1, status);
+  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, -1, status);
 
-  return status == OK ? value : 0;
+  return status == OK ? reinterpret_cast <void*>(value) : 0;
 
 # else
 

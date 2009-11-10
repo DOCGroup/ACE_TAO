@@ -37,7 +37,6 @@
 
 # include "ace/config-g++-common.h"
 
-# define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_REENTRANT_FUNCTIONS
 #elif defined (__DECCXX)
 
@@ -52,54 +51,22 @@
 
     // Exceptions are enabled by platform_osf1_4.0_rcc.GNU.
 # define ACE_HAS_STDCPP_STL_INCLUDES
-# define ACE_HAS_TEMPLATE_SPECIALIZATION
 #else
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #   error unsupported compiler on Digital Unix
 #  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ */
 
-#if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199506L)
-  // cxx with POSIX 1003.1c-1995 threads (pthreads) . . .
-# define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-# define ACE_HAS_BROKEN_IF_HEADER
-# define ACE_HAS_BROKEN_R_ROUTINES
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#define ACE_HAS_BROKEN_IF_HEADER
 #if (ACE_MT_SAFE != 0)
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #endif /* ACE_MT_SAFE != 0 */
-# define ACE_LACKS_T_ERRNO
-# if !defined (DIGITAL_UNIX)
-#   define DIGITAL_UNIX 0x400
-# endif /* ! DIGITAL_UNIX */
-  // DJT removed this due to some minor issues related to the
-  // definitions of timestruc_t and tid_t in procfs.h not sure what
-  // functionality is lost?  Platform supports <sys/procfs.h>
-  //#define ACE_HAS_PROC_FS
-#else /* _POSIX_C_SOURCE < 199506L */
-  // cxx with DCE threads . . .
-  // This ACE configuration is only supported with cxx; it has not been
-  // test with g++.
-# define ACE_HAS_BROKEN_MSG_H
-# define ACE_HAS_BROKEN_POSIX_TIME
-#if (ACE_MT_SAFE != 0)
-# define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_DRAFT4
-# define ACE_HAS_THREAD_SELF
-# define ACE_LACKS_THREAD_PROCESS_SCOPING
-# define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-# define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-#endif
-# define ACE_HAS_GETPAGESIZE
-# define ACE_HAS_PROC_FS
-# define ACE_HAS_SETKIND_NP
-# define ACE_LACKS_CONST_TIMESPEC_PTR
-# define ACE_LACKS_READDIR_R
-# define ACE_LACKS_SETSCHED
-# define ACE_LACKS_SIGNED_CHAR
-# define ACE_LACKS_SYSV_MSQ_PROTOS
-#endif /* _POSIX_C_SOURCE < 199506L */
+#define ACE_LACKS_T_ERRNO
+#if !defined (DIGITAL_UNIX)
+#  define DIGITAL_UNIX 0x400
+#endif /* ! DIGITAL_UNIX */
 
 #define ACE_SIZEOF_LONG 8
 
@@ -133,7 +100,6 @@
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STRBUF_T
 #define ACE_HAS_STREAMS
-#define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_SIGNAL_T
@@ -145,7 +111,7 @@
 #else  /* ACE_MT_SAFE != 0 */
 #define ACE_HAS_THREADS
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_LACKS_THREAD_STACK_ADDR
+#define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
 #endif  /* ACE_MT_SAFE != 0 */
 #define ACE_HAS_TIUSER_H
 #define ACE_HAS_XTI
@@ -177,6 +143,9 @@
 #if (DIGITAL_UNIX >= 0x400) && (DIGITAL_UNIX < 0x500)
 #define ACE_LACKS_PREAD_PROTOTYPE
 #endif /* (DIGITAL_UNIX >= 0x400) && (DIGITAL_UNIX < 0x500) */
+
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_TRU64_H */

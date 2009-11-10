@@ -6,6 +6,8 @@
 #	Common targets
 #----------------------------------------------------------------------------
 
+.PHONY: __prebuild__
+
 all:              __prebuild__ all.nested all.local
 debug:	          debug.nested debug.local
 profile:          profile.nested profile.local

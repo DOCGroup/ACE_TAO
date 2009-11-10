@@ -9,6 +9,7 @@
 #include "ace/SPIPE_Connector.h"
 #include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
 #include "SPIPE-connector.h"
 
@@ -32,16 +33,21 @@ Peer_Handler::open (void *)
   if (iterations_ == 0)
     {
       this->display_menu ();
-      if (ACE_Event_Handler::register_stdin_handler
-          (this,
-           ACE_Reactor::instance (),
-           ACE_Thread_Manager::instance ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("register_stdin_handler")),
-                          -1);
+      
+      if (ACE_Event_Handler::register_stdin_handler (
+            this,
+            ACE_Reactor::instance (),
+            ACE_Thread_Manager::instance ()) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("register_stdin_handler")),
+                            -1);
+        }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
   else // If iterations_ has been set, send iterations_ buffers.
     {
@@ -52,12 +58,13 @@ Peer_Handler::open (void *)
         "Where seldom is heard\n"
         "A discouraging word,\n"
         "And the skies are not cloudy all day.\n";
-      int length = ACE_OS::strlen (buffer);
+      int length = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buffer));
 
       while (iterations_-- > 0
-             && this->peer ().send_n (buffer,
-                                      length) == length)
-        continue;
+             && this->peer ().send_n (buffer, length) == length)
+        {
+          continue;
+        }
 
       this->peer ().close ();
       ACE_Reactor::instance ()->end_reactor_event_loop();
@@ -75,22 +82,32 @@ Peer_Handler::handle_input (ACE_HANDLE)
                             sizeof buf);
 
   if (n > 0)
-    if (this->peer ().send (buf, n) != n)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("write failed")),
-                        -1);
-    else if (n == 0) // Explicitly close the connection.
-      {
-        if (this->peer ().close () == -1)
+    {
+      if (this->peer ().send (buf, n) != n)
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("close")),
-                            1);
-        return -1;
-      }
-    else
-      this->display_menu ();
+                             ACE_TEXT ("write failed")),
+                            -1);
+        }
+      else if (n == 0) // Explicitly close the connection.
+        {
+          if (this->peer ().close () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("close")),
+                                1);
+            }
+            
+          return -1;
+        }
+      else
+        {
+          this->display_menu ();
+        }
+    }
+      
   return 0;
 }
 
@@ -207,7 +224,6 @@ IPC_Client::parse_args (int argc, ACE_TCHAR *argv[])
                              ACE_TEXT ("usage: %n -i <iterations>\n")
                              ACE_TEXT ("-r <rendezvous>\n")),
                             -1);
-          break;
         }
     }
 

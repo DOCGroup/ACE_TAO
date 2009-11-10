@@ -43,7 +43,7 @@ public:
 };
 
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
-                                        int used_with_reactor_event_loop)
+                                        bool used_with_reactor_event_loop)
   : completion_port_ (0),
     // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE !!!
     number_of_threads_ (static_cast<DWORD> (number_of_threads)),
@@ -56,8 +56,8 @@ ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                                      this->number_of_threads_);
   if (this->completion_port_ == 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("CreateIoCompletionPort")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("CreateIoCompletionPort")));
 
   this->get_asynch_pseudo_task ().start ();
 }
@@ -135,8 +135,8 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
           if (ACE::debug ())
             {
               ACE_DEBUG ((LM_ERROR,
-                          ACE_LIB_TEXT ("%p\n"),
-                          ACE_LIB_TEXT ("CreateIoCompletionPort")));
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("CreateIoCompletionPort")));
             }
           return -1;
         }
@@ -589,12 +589,12 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
         default:
           if (ACE::debug ())
             ACE_DEBUG ((LM_ERROR,
-                        ACE_LIB_TEXT ("%p\n"),
-                        ACE_LIB_TEXT ("GetQueuedCompletionStatus")));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("GetQueuedCompletionStatus")));
           return -1;
         }
     }
-  else
+  else if (overlapped != 0)
     {
       // Narrow the result.
       ACE_WIN32_Asynch_Result *asynch_result = (ACE_WIN32_Asynch_Result *) overlapped;
@@ -690,8 +690,8 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("PostQueuedCompletionStatus failed")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("PostQueuedCompletionStatus failed")));
         }
       return -1;
     }

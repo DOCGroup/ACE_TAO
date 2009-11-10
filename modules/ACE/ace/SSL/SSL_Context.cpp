@@ -11,6 +11,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Truncate.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
@@ -111,6 +112,7 @@ ACE_SSL_Context::ACE_SSL_Context (void)
   : context_ (0),
     mode_ (-1),
     default_verify_mode_ (SSL_VERIFY_NONE),
+    default_verify_callback_ (0),
     have_ca_ (0)
 {
   ACE_SSL_Context::ssl_library_init ();
@@ -130,7 +132,7 @@ ACE_SSL_Context::~ACE_SSL_Context (void)
 ACE_SSL_Context *
 ACE_SSL_Context::instance (void)
 {
-  return ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
+  return ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
 }
 
 void
@@ -180,15 +182,15 @@ ACE_SSL_Context::ssl_library_init (void)
         (void) this->egd_file (egd_socket_file);
 #endif  /* OPENSSL_VERSION_NUMBER */
 
-      const char *rand_file =
-        ACE_OS::getenv (ACE_SSL_RAND_FILE_ENV);
+      const char *rand_file = ACE_OS::getenv (ACE_SSL_RAND_FILE_ENV);
 
       if (rand_file != 0)
-        (void) this->seed_file (rand_file);
+        {
+          (void) this->seed_file (rand_file);
+        }
 
       // Initialize the mutexes that will be used by the SSL and
       // crypto library.
-
     }
 
   ++ssl_library_init_count;
@@ -204,6 +206,9 @@ ACE_SSL_Context::ssl_library_fini (void)
   --ssl_library_init_count;
   if (ssl_library_init_count == 0)
     {
+      // Explicitly close the singleton
+      ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::close();
+
       ::ERR_free_strings ();
       ::EVP_cleanup ();
 
@@ -231,7 +236,11 @@ ACE_SSL_Context::set_mode (int mode)
   if (this->context_ != 0)
     return -1;
 
+#if OPENSSL_VERSION_NUMBER >= 0x10000002
+  const SSL_METHOD *method = 0;
+#else
   SSL_METHOD *method = 0;
+#endif
 
   switch (mode)
     {
@@ -304,16 +313,20 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
     {
       // Use the default environment settings.
       ca_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
+#ifdef ACE_DEFAULT_SSL_CERT_FILE
       if (ca_file == 0)
         ca_file = ACE_DEFAULT_SSL_CERT_FILE;
+#endif
     }
 
   if (ca_dir == 0 && use_env_defaults)
     {
       // Use the default environment settings.
       ca_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
+#ifdef ACE_DEFAULT_SSL_CERT_DIR
       if (ca_dir == 0)
         ca_dir = ACE_DEFAULT_SSL_CERT_DIR;
+#endif
     }
 
   // NOTE: SSL_CTX_load_verify_locations() returns 0 on error.
@@ -342,7 +355,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
       // the CTX; any changes to it by way of these function calls will
       // change the CTX directly.
-      STACK_OF (X509_NAME) * cert_names;
+      STACK_OF (X509_NAME) * cert_names = 0;
       cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
       bool error = false;
 
@@ -378,6 +391,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // this comparison if so.
 #if defined (OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x0090801fL)
 #  if !defined (OPENSSL_SYS_VMS) && !defined (OPENSSL_SYS_MACINTOSH_CLASSIC)
+#    if !defined (OPENSSL_SYS_WIN32) || (OPENSSL_VERSION_NUMBER > 0x0090807fL)
 
       if (ca_dir != 0)
         {
@@ -398,6 +412,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
               return -1;
             }
         }
+#    endif /* !OPENSSL_SYS_WIN32 || OPENSSL_VERSION_NUMBER >= 0x0090807fL */
 #  endif /* !OPENSSL_SYS_VMS && !OPENSSL_SYS_MACINTOSH_CLASSIC */
 #endif /* OPENSSL_VERSION_NUMBER >= 0.9.8a release */
 
@@ -509,7 +524,8 @@ ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
 int
 ACE_SSL_Context::random_seed (const char * seed)
 {
-  ::RAND_seed (seed, ACE_OS::strlen (seed));
+  int len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (seed));
+  ::RAND_seed (seed, len);
 
 #if OPENSSL_VERSION_NUMBER >= 0x00905100L
   // RAND_status() returns 1 if the PRNG has enough entropy.
@@ -562,7 +578,12 @@ ACE_SSL_Context::report_error (unsigned long error_code)
 
   char error_string[256];
 
+// OpenSSL < 0.9.6a doesn't have ERR_error_string_n() function.
+#if OPENSSL_VERSION_NUMBER >= 0x0090601fL
+  (void) ::ERR_error_string_n (error_code, error_string, sizeof error_string);
+#else /* OPENSSL_VERSION_NUMBER >= 0x0090601fL */
   (void) ::ERR_error_string (error_code, error_string);
+#endif /* OPENSSL_VERSION_NUMBER >= 0x0090601fL */
 
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE_SSL (%P|%t) error code: %u - %C\n"),
@@ -573,9 +594,9 @@ ACE_SSL_Context::report_error (unsigned long error_code)
 void
 ACE_SSL_Context::report_error (void)
 {
-  unsigned long error = ::ERR_get_error ();
-  ACE_SSL_Context::report_error (error);
-  ACE_OS::last_error (error);
+  unsigned long err = ::ERR_get_error ();
+  ACE_SSL_Context::report_error (err);
+  ACE_OS::last_error (err);
 }
 
 int
@@ -598,13 +619,13 @@ ACE_SSL_Context::dh_params (const char *file_name,
     DH * ret=0;
     BIO * bio = 0;
 
-    if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == NULL)
+    if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == 0)
       {
         this->dh_params_ = ACE_SSL_Data_File ();
         return -1;
       }
 
-    ret = PEM_read_bio_DHparams (bio, NULL, NULL, NULL);
+    ret = PEM_read_bio_DHparams (bio, 0, 0, 0);
     BIO_free (bio);
 
     if (ret == 0)

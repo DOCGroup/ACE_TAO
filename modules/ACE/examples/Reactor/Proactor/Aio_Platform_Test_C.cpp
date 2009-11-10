@@ -45,7 +45,7 @@ int query_aio_completions (void);
 int setup_signal_delivery (void);
 int do_sysconf (void);
 int have_asynchio (void);
-  
+
 int
 do_sysconf (void)
 {
@@ -59,8 +59,8 @@ do_sysconf (void)
   printf ("Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
           sysconf(_SC_AIO_LISTIO_MAX),
           errno);
-#endif  
-  
+#endif
+
   errno = 0;
   printf ("Runtime value of AIO_MAX is %d, errno = %d\n",
           sysconf (_SC_AIO_MAX),
@@ -78,13 +78,13 @@ do_sysconf (void)
 
   errno = 0;
   printf ("Runtime value of RTSIG_MAX %d, Errno = %d\n",
-          sysconf (_SC_RTSIG_MAX), 
+          sysconf (_SC_RTSIG_MAX),
           errno);
-  
+
   errno = 0;
   printf ("Runtime value of SIGQUEUE_MAX %d, Errno = %d\n",
           sysconf (_SC_SIGQUEUE_MAX),
-          errno); 
+          errno);
   return 0;
 }
 
@@ -103,12 +103,12 @@ have_asynchio (void)
   printf ("_POSIX_ASYNC_IO = %d\n ASYNCH IO is supported FULLY\n",
           _POSIX_ASYNC_IO);
 #endif /* _POSIX_ASYNC_IO == -1 */
-  
+
 #else  /* Not defined  _POSIX_ASYNC_IO */
   printf ("_POSIX_ASYNC_IO is not defined.\n");
   printf ("AIO might *not* be supported on some paths\n");
 #endif /* _POSIX_ASYNC_IO */
-  
+
   // System defined POSIX Values.
   printf ("System claims to have  POSIX_ASYNCHRONOUS_IO\n");
 
@@ -117,17 +117,17 @@ have_asynchio (void)
 
   // Check and print the run time values.
   do_sysconf ();
-  
+
   return 0;
-  
+
 #else /* Not _POSIX_ASYNCHRONOUS_IO */
   printf ("No support._POSIX_ASYNCHRONOUS_IO itself is not defined\n");
   return -1;
-#endif /* _POSIX_ASYNCHRONOUS_IO */  
+#endif /* _POSIX_ASYNCHRONOUS_IO */
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (have_asynchio () == 0)
     printf ("Test successful\n");

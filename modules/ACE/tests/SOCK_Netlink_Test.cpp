@@ -31,6 +31,7 @@
 #include "ace/SOCK_Netlink.h"
 
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_time.h"
 
 #include <linux/rtnetlink.h>
 
@@ -210,11 +211,13 @@ public:
   // Destructor
   virtual ~Secondary_Ipaddr_Handler (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Initialization. Schedules a timer to run start the business.
   //
   int open (ACE_Reactor *const reactor,
             char* const ip_slash_mask,
             const char *const if_name);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Returns reference to netlink socket. Necessary for reactor.
   virtual ACE_HANDLE get_handle (void) const;
@@ -264,11 +267,13 @@ public:
 
 protected:
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // De-registers the handler from the reactor,
   // other cleanup jobs
   virtual int close ();
 
   ACE_SOCK_Netlink& socket ();
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
 
@@ -356,7 +361,7 @@ Secondary_Ipaddr_Handler::Secondary_Ipaddr_Handler ()
 Secondary_Ipaddr_Handler::~Secondary_Ipaddr_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Secondary_Ipaddr_Handler::~Secondary_Ipaddr_Handler \n")));
+              ACE_TEXT ("(%P|%t) Secondary_Ipaddr_Handler::~Secondary_Ipaddr_Handler\n")));
   this->close ();
 }
 int
@@ -369,7 +374,7 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
       !if_name || !ACE_OS::strlen (if_name))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open: error ")
-                       ACE_TEXT("zero pointers or zero length strings used as input. \n")),
+                       ACE_TEXT("zero pointers or zero length strings used as input.\n")),
                       -1);
 
   this->reactor (reactor);
@@ -382,10 +387,12 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
   if (this->socket ().open (this->address_,
                             ACE_PROTOCOL_FAMILY_NETLINK,
                             NETLINK_ROUTE) == -1)
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open: - failed \n")
-                       ACE_TEXT("to initialize netlink socket bu open (). \n")),
+                       ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open: - failed\n")
+                       ACE_TEXT("to initialize netlink socket bu open ().\n")),
                       -1);
+    //FUZZ: enable check_for_lack_ACE_OS
 
   // register with the reactor for input
   if (this->reactor ()->register_handler (this,
@@ -403,7 +410,7 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
                        ACE_TEXT("can't schedule timer with reactor.\n")),
                       -1);
 
-  this->seq_ = time (NULL);
+  this->seq_ = ACE_OS::time (0);
 
   ACE_OS::strncpy (this->ip_buff_,
                    ip_slash_mask,
@@ -426,7 +433,7 @@ int
 Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  entered \n")));
+              ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  entered\n")));
 
   nlmsghdr *hdr = 0;
   iovec iov;
@@ -478,7 +485,7 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
       if (static_cast <int> (hdr->nlmsg_pid) != this->address_.get_pid () || hdr->nlmsg_seq != this->seq_)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - ")
-                           ACE_TEXT("process id or message sequence is different \n")),
+                           ACE_TEXT("process id or message sequence is different\n")),
                           -1);
 
       if (hdr->nlmsg_type == NLMSG_ERROR)
@@ -490,16 +497,16 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
             {
               this->on_command_success ();
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  command success \n")));
+                          ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  command success\n")));
               return 0;
             }
 
           this->on_command_error ();
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  command informs about error \n")));
+                      ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  command informs about error\n")));
 
           // some error message
-          perror("rtnetlink error message: ");
+          ACE_OS::perror("rtnetlink error message: ");
 
           return 0;
         }
@@ -512,7 +519,7 @@ Secondary_Ipaddr_Handler::handle_timeout (ACE_Time_Value const &,
                                           void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_timeout - entered \n")));
+              ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_timeout - entered\n")));
 
   if (this->command_status_ != COMMAND_SUCCESS &&
       (this->command_status_ != COMMAND_ERROR &&
@@ -587,7 +594,7 @@ Secondary_Ipaddr_Handler::handle_close (ACE_HANDLE,
                                         ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::handle_close \n")));
+              ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::handle_close\n")));
   this->close ();
   return 0;
 }
@@ -596,7 +603,7 @@ int
 Secondary_Ipaddr_Handler::close ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Secondary_Ipaddr_Handler::close \n")));
+              ACE_TEXT("(%P) Secondary_Ipaddr_Handler::close\n")));
 
   if (this->reactor ())
     {
@@ -661,7 +668,7 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
           else
             *dot = '\0';
         }
-      int num = atoi (to_search);
+      int num = ACE_OS::atoi (to_search);
       if (num < 0 || num > 255)
         return -1;
       else
@@ -789,7 +796,7 @@ Secondary_Ipaddr_Handler::init_netlink_request (
   if (get_if_index (if_name,
                     interface_index) == -1 || interface_index < 0)
     {
-      fprintf (stderr, "get_if_index () - failed\n");
+      ACE_OS::fprintf (stderr, "get_if_index () - failed\n");
       return -1;
     }
   net_req.ifa_.ifa_index = interface_index;
@@ -799,7 +806,7 @@ Secondary_Ipaddr_Handler::init_netlink_request (
   if (fill_inet_prefix (local_prefix,
                         ip_slash_netmask) == -1)
     {
-      fprintf (stderr, "fill_inet_prefix () - failed\n");
+      ACE_OS::fprintf (stderr, "fill_inet_prefix () - failed\n");
       return -1;
     }
 
@@ -894,7 +901,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   if ((ip_len == 0 && if_len) || (ip_len && if_len == 0))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT("%s - error: both options -a and -i should be provided. \n"),
+                         ACE_TEXT("%s - error: both options -a and -i should be provided.\n"),
                          ACE_TEXT("SOCK_Netlink_Test")),
                         -1);
     }
@@ -914,7 +921,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("SOCK_Netlink_Test"));
 
-  if (::geteuid ())
+  if (ACE_OS::geteuid ())
     {
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("Process has no superuser priveleges. ")

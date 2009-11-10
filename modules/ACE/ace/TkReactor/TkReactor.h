@@ -63,7 +63,7 @@ class ACE_TkReactor_Export ACE_TkReactor : public ACE_Select_Reactor
 public:
   // = Initialization and termination methods.
   ACE_TkReactor (size_t size = DEFAULT_SIZE,
-                 int restart = 0,
+                 bool restart = false,
                  ACE_Sig_Handler * = 0);
 
   virtual ~ACE_TkReactor (void);
@@ -83,7 +83,7 @@ public:
 
 protected:
   // = Register timers/handles with Tk.
-  /// Register a single <handler>.
+  /// Register a single @a handler.
   virtual int register_handler_i (ACE_HANDLE handle,
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
@@ -93,7 +93,7 @@ protected:
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
 
-  /// Remove the <handler> associated with this <handle>.
+  /// Remove the @a handler associated with this @a handle.
   virtual int remove_handler_i (ACE_HANDLE handle,
                                 ACE_Reactor_Mask mask);
 

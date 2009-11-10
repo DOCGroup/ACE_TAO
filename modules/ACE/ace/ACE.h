@@ -28,26 +28,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_NS_math.h"
 #include "ace/Flag_Manip.h"
 #include "ace/Handle_Ops.h"
 #include "ace/Lib_Find.h"
 #include "ace/Init_ACE.h"
 #include "ace/Sock_Connect.h"
 #include "ace/Default_Constants.h"
-
-#if defined (CYGWIN32) || defined (ACE_HAS_RTEMS)
-// Include math.h. math.h defines a macro log2 that conflicts with ACE::log2()
-// which seems to only cause a problem on cygwin and rtems.  Insuring that math.h is
-// included first solves it since we define acelog2 as log2, then
-// undefines log2.
-# include "ace/os_include/os_math.h"
-#endif
-
-// When log2 is defined as macro redefine it as acelog2
-#if defined (log2)
-# define acelog2 log2
-# undef log2
-#endif /* log2 */
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -103,7 +90,13 @@ namespace ACE
 
   /// Simple wildcard matching function supporting '*' and '?'
   /// return true if string s matches pattern.
-  extern ACE_Export bool wild_match(const char* s, const char* pattern, bool case_sensitive = true);
+  /// If character_classes is true, '[' is treated as a wildcard character
+  /// as described in the fnmatch() POSIX API.  The following POSIX "bracket
+  /// expression" features are not implemented: collating symbols, equivalence
+  /// class expressions, and character class expressions.  The POSIX locale is
+  /// assumed.
+  extern ACE_Export bool wild_match(const char* s, const char* pattern,
+    bool case_sensitive = true, bool character_classes = false);
 
   /**
    * @name I/O operations
@@ -367,7 +360,7 @@ namespace ACE
    */
   extern ACE_Export int handle_timed_accept (ACE_HANDLE listener,
                                              ACE_Time_Value *timeout,
-                                             int restart);
+                                             bool restart);
 
   /**
    * Wait up to @a timeout amount of time to complete an actively
@@ -397,7 +390,6 @@ namespace ACE
   extern ACE_Export int max_handles (void);
 
   // = String functions
-#if !defined (ACE_HAS_WINCE)
   /**
    * Return a dynamically allocated duplicate of @a str, substituting
    * the environment variable if @c str[0] @c == @c '$'.  Note that
@@ -405,7 +397,6 @@ namespace ACE
    * by @c ACE_OS::free.
    */
   extern ACE_Export ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
-#endif /* ACE_HAS_WINCE */
 
   /// Returns a pointer to the "end" of the string, i.e., the character
   /// past the '\0'.
@@ -427,6 +418,9 @@ namespace ACE
   /// @c ACE_OS::malloc to allocate the new string.
   extern ACE_Export char *strnnew (const char *str, size_t n);
 
+  /// Determine if a specified pathname is "dot dir" (ie. "." or "..").
+  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const char *s);
+
 #if defined (ACE_HAS_WCHAR)
   extern ACE_Export const wchar_t *strend (const wchar_t *s);
 
@@ -437,6 +431,8 @@ namespace ACE
   extern ACE_Export wchar_t *strndup (const wchar_t *str, size_t n);
 
   extern ACE_Export wchar_t *strnnew (const wchar_t *str, size_t n);
+
+  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const wchar_t *s);
 
 #endif /* ACE_HAS_WCHAR */
 
@@ -489,9 +485,8 @@ namespace ACE
    * the time portion.
    */
   extern ACE_Export ACE_TCHAR *timestamp (ACE_TCHAR date_and_time[],
-                                          int time_len,
-                                          int return_pointer_to_first_digit =
-                                            0);
+                                          size_t time_len,
+                                          bool return_pointer_to_first_digit = false);
 
   /**
    * if @a avoid_zombies == 0 call @c ACE_OS::fork directly, else
@@ -503,7 +498,7 @@ namespace ACE
    * needs to be fixed).
    */
   extern ACE_Export pid_t fork (
-    const ACE_TCHAR *program_name = ACE_LIB_TEXT ("<unknown>"),
+    const ACE_TCHAR *program_name = ACE_TEXT ("<unknown>"),
     int avoid_zombies = 0);
 
   /**
@@ -513,9 +508,9 @@ namespace ACE
    * closed.
    */
   extern ACE_Export int daemonize (
-    const ACE_TCHAR pathname[] = ACE_LIB_TEXT ("/"),
-    int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
-    const ACE_TCHAR program_name[] = ACE_LIB_TEXT ("<unknown>"));
+    const ACE_TCHAR pathname[] = ACE_TEXT ("/"),
+    bool close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
+    const ACE_TCHAR program_name[] = ACE_TEXT ("<unknown>"));
 
   // = Miscellaneous functions.
   /// Rounds the request to a multiple of the page size.
@@ -632,7 +627,7 @@ namespace ACE
   ACE_NAMESPACE_INLINE_FUNCTION u_long log2 (u_long num);
 
   /// Hex conversion utility.
-  ACE_NAMESPACE_INLINE_FUNCTION ACE_TCHAR nibble2hex (u_int n);
+  extern ACE_Export ACE_TCHAR nibble2hex (u_int n);
 
   /// Convert a hex character to its byte representation.
   ACE_NAMESPACE_INLINE_FUNCTION u_char hex2byte (ACE_TCHAR c);
@@ -832,10 +827,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/ACE.inl"
 #endif /* __ACE_INLINE__ */
-
-#if defined (acelog2)
-# define log2 acelog2
-#endif /* acelog2 */
 
 #include /**/ "ace/post.h"
 

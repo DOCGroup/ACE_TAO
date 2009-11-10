@@ -10,6 +10,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(Message_Queue, priority_buffer, "$Id$")
 
@@ -40,7 +41,7 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       if (msg_queue->dequeue_head (mb) == -1)
         break;
 
-      int length = mb->length ();
+      int length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
         ACE_OS::puts (mb->rd_ptr ());
@@ -81,7 +82,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
           // Send a 0-sized shutdown message to the other thread and
           // exit.
 
-	  ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), 0);
+          ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), 0);
 
           if (msg_queue->enqueue_tail (mb) == -1)
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
@@ -93,16 +94,17 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
         {
           // Allocate a new message, but have it "borrow" its memory
           // from the buffer.
-	  ACE_NEW_RETURN (mb, ACE_Message_Block (rb.size (),
-						 ACE_Message_Block::MB_DATA,
-						 0,
-						 buffer),
-			  0);
-          mb->msg_priority (rb.size ());
+          ACE_NEW_RETURN (mb,
+                          ACE_Message_Block (rb.size (),
+                          ACE_Message_Block::MB_DATA,
+                          0,
+                          buffer),
+                          0);
+          mb->msg_priority (ACE_Utils::truncate_cast<unsigned long> (rb.size ()));
           mb->wr_ptr (rb.size ());
 
           ACE_DEBUG ((LM_DEBUG,
-		      "enqueueing message of size %d\n",
+                      "enqueueing message of size %d\n",
                       mb->msg_priority ()));
 
           // Enqueue in priority order.

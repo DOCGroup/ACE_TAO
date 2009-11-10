@@ -145,7 +145,7 @@ class ACEXML_Export ACEXML_AttributesImpl
 {
 public:
   /**
-   * Initialize an AttributesImpl that holds <size> attributes.
+   * Initialize an AttributesImpl that holds @a size attributes.
    */
   ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
   ACEXML_AttributesImpl (const ACEXML_AttributesImpl &attrs);
@@ -170,7 +170,7 @@ public:
                               const ACEXML_Char *qName);
   /**
    * Remove an attribute from the array.  Notice that this
-   * operation can invalidate previously acquired <index>
+   * operation can invalidate previously acquired @a index
    * value.  (It will repack the array.)
    */
   virtual int removeAttribute (size_t index);
@@ -262,36 +262,36 @@ public:
                             const ACEXML_Char *value);
 
   /**
-   * Set the localName of the attribute at <index>.
-   * return -1 if <index> is out of range.
+   * Set the localName of the attribute at @a index.
+   * return -1 if @a index is out of range.
    */
   virtual int setLocalName (size_t index,
                             const ACEXML_Char *localName);
 
   /**
-   * Set the qName of the attribute at <index>.
-   * return -1 if <index> is out of range.
+   * Set the qName of the attribute at @a index.
+   * return -1 if @a index is out of range.
    */
   virtual int setQName (size_t index,
                         const ACEXML_Char *qName);
 
   /**
-   * Set the URI of the attribute at <index>.
-   * return -1 if <index> is out of range.
+   * Set the URI of the attribute at @a index.
+   * return -1 if @a index is out of range.
    */
   virtual int setURI (size_t index,
                       const ACEXML_Char *uri);
 
   /**
-   * Set the type of the attribute at <index>.
-   * return -1 if <index> is out of range.
+   * Set the type of the attribute at @a index.
+   * return -1 if @a index is out of range.
    */
   virtual int setType (size_t index,
                        const ACEXML_Char *type);
 
   /**
-   * Set the value of the attribute at <index>.
-   * return -1 if <index> is out of range.
+   * Set the value of the attribute at @a index.
+   * return -1 if @a index is out of range.
    */
   virtual int setValue (size_t index,
                         const ACEXML_Char *value);

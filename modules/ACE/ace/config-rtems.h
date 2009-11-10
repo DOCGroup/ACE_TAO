@@ -31,7 +31,7 @@
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #   error unsupported compiler in ace/config-rtems.h
 #  endif  /* __cplusplus */
-#endif /* ! __GNUG__ && ! __KCC */
+#endif /* ! __GNUG__ */
 
 #include "ace/config-posix.h"
 
@@ -39,6 +39,7 @@
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
+#define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_DLFCN_H
@@ -58,6 +59,7 @@
 #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_TEMPNAM
+#define ACE_LACKS_TZSET
 
 // Temporarily, enabling this results in compile errors with
 // rtems 4.6.6.
@@ -70,7 +72,6 @@
 #if ACE_MT_SAFE
 # define ACE_HAS_THREADS
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 # define ACE_HAS_PTHREAD_SCHEDPARAM
 # define ACE_LACKS_THREAD_PROCESS_SCOPING
@@ -97,9 +98,7 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STRERROR
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
-#define ACE_HAS_SYS_ERRLIST
 #define ACE_HAS_SYS_FILIO_H
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 #define ACE_LACKS_EXEC
@@ -125,7 +124,6 @@
 #define ACE_LACKS_SETREUID_PROTOTYPE
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREGID_PROTOTYPE
-#define ACE_LACKS_SIGVAL_T
 #define ACE_LACKS_STRPTIME
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SI_ADDR
@@ -145,7 +143,7 @@
 #if (__RTEMS_MAJOR__ > 4) || (__RTEMS_MAJOR__ == 4 && __RTEMS_MINOR__ > 6)
 # define ACE_HAS_UALARM
 #else
-# define ACE_HAS_BROKEN_SC_PAGESIZE
+# define ACE_HAS_NOTSUP_SC_PAGESIZE
 # define ACE_LACKS_SUSECONDS_T
 # define ACE_LACKS_INTPTR_T
 # undef ACE_HAS_SHM_OPEN

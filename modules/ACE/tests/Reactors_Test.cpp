@@ -42,10 +42,12 @@ public:
   Test_Task (void);
   ~Test_Task (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
   virtual int svc (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // = Event Handler hooks.
   virtual int handle_input (ACE_HANDLE handle);
@@ -250,7 +252,7 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) all threads are finished \n")));
+              ACE_TEXT ("(%t) all threads are finished\n")));
 
 #else
   ACE_ERROR ((LM_INFO,

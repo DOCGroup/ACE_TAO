@@ -55,19 +55,19 @@ public:
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Send <buf> of up to <len> bytes.
+  /// Send @a buf of up to @a len bytes.
   ssize_t send (const ACE_Str_Buf &msg);
 
-  /// Send <buf> of exactly <len> bytes (block until done).
+  /// Send @a buf of exactly @a len bytes (block until done).
   ssize_t send (const void *buf, size_t len);
 
 #if defined (ACE_HAS_STREAM_PIPES)
-  /// Send <data> and <cntl> message via Stream pipes.
+  /// Send @a data and @a cntl message via Stream pipes.
   ssize_t send (const ACE_Str_Buf *data,
                 const ACE_Str_Buf *cntl = 0,
                 int flags = 0);
 
-  /// Send <data> and <cntl> message via Stream pipes in "band" mode.
+  /// Send @a data and @a cntl message via Stream pipes in "band" mode.
   ssize_t send (int band,
                 const ACE_Str_Buf *data,
                 const ACE_Str_Buf *cntl = 0,

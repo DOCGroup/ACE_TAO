@@ -28,8 +28,8 @@ class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Worker_Task (ACE_Thread_Manager *thr_mgr,
-	       int n_threads,
-	       int inp_serialize = 1);
+               int n_threads,
+               int inp_serialize = 1);
 
   virtual int producer (void);
   // produce input for workers
@@ -51,10 +51,13 @@ private:
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // = Not needed for this test.
   virtual int open (void *) { return 0; }
   virtual int close (u_long)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
+
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) in close of worker\n"));
     return 0;
@@ -70,8 +73,8 @@ private:
 
 template <class BARRIER>
 Worker_Task<BARRIER>::Worker_Task (ACE_Thread_Manager *thr_mgr,
-				   int n_threads,
-				   int inp_serialize)
+                                   int n_threads,
+                                   int inp_serialize)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
     barrier_ (n_threads)
 {
@@ -106,7 +109,7 @@ Worker_Task<BARRIER>::put (ACE_Message_Block *mb,
       result = this->service (mb, iter++);
 
       if (this->output (mb) < 0)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "(%t) output not connected!\n"));
 
       mb->release ();
@@ -154,25 +157,25 @@ Worker_Task<BARRIER>::svc (void)
       int result = this->getq (mb);
 
       if (result == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      "(%t) in iteration %d\n",
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) in iteration %d\n",
                       "error waiting for message in iteration",
                       iter));
-	  break;
-	}
+          break;
+        }
 
       size_t length = mb->length ();
       this->service (mb,iter);
 
       if (length == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       "(%t) in iteration %d got quit, exit!\n",
                       iter));
-	  mb->release ();
-	  break;
-	}
+                      mb->release ();
+          break;
+        }
 
       this->barrier_.wait ();
       this->output (mb);
@@ -201,7 +204,7 @@ Worker_Task<BARRIER>::producer (void)
                       -1);
 
       if (this->input (mb) == -1)
-	return -1;
+        return -1;
     }
 
   ACE_NOTREACHED (return 0);
@@ -246,25 +249,25 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
       // this->msg_queue ()->dump ();
 
       for (int i = 0; i < nt_; i++)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       "(%t) eof, sending block for thread=%d\n",
                       i + 1));
 
-	  ACE_NEW_RETURN (mb1,
+          ACE_NEW_RETURN (mb1,
                           ACE_Message_Block (2),
                           -1);
-	  mb1->length (0);
+          mb1->length (0);
 
-	  if (this->put (mb1) == -1)
-	    ACE_ERROR ((LM_ERROR,
+          if (this->put (mb1) == -1)
+            ACE_ERROR ((LM_ERROR,
                         "(%t) %p\n",
                         "put"));
 #if defined (delay_put)
           // this sleep helps to shutdown correctly -> was an error!
-	  ACE_OS::sleep (1);
+          ACE_OS::sleep (1);
 #endif /* delay_put */
-	}
+        }
       return -1;
     }
   else
@@ -274,7 +277,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
       mb->wr_ptr (n);
 
       if (this->put (mb) == -1)
-	ACE_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     "(%t) %p\n",
                     "put"));
     }

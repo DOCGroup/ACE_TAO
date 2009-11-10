@@ -85,19 +85,26 @@ public:
 Handler::Handler (ACE_Reactor &reactor)
   : ACE_Event_Handler (&reactor),
     number_of_messages_read_ (0),
-    shutdown_ (0)
+    shutdown_ (1)
 {
   // Create the pipe.
-  int result
-    = this->pipe_.open ();
-  ACE_ASSERT (result == 0);
-
-  // Register for input events.
-  result =
-    this->reactor ()->register_handler (this->pipe_.read_handle (),
-                                        this,
-                                        ACE_Event_Handler::READ_MASK);
-  ACE_ASSERT (result == 0);
+  int result = this->pipe_.open ();
+  if (result != 0)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe open")));
+  else
+    {
+      // Register for input events.
+      result =
+        this->reactor ()->register_handler (this->pipe_.read_handle (),
+                                            this,
+                                            ACE_Event_Handler::READ_MASK);
+      if (result != 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("Can't register pipe for READ")));
+      else
+        this->shutdown_ = 0;
+    }
 }
 
 int
@@ -198,13 +205,22 @@ void
 test_reactor_upcall (ACE_Reactor &reactor)
 {
   Handler handler (reactor);
+  if (handler.shutdown_)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error initializing test; abort.\n")));
+      return;
+    }
+
   Event_Loop_Task event_loop_task (reactor);
 
   // Start up the event loop threads.
   int result =
     event_loop_task.activate (THR_NEW_LWP | THR_JOINABLE,
                               number_of_event_loop_threads);
-  ACE_ASSERT (result == 0);
+  if (result != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("test_reactor_upcall, activate")));
 
   // Data message.
   Message data_message;
@@ -336,13 +352,15 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
 
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
+  dev_poll_reactor_impl.restart (true);
   ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
 
   test_reactor_upcall (dev_poll_reactor);
 
 #endif /* ACE_HAS_EVENT_POLL */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && \
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing WFMO Reactor\n")));
 
@@ -351,7 +369,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   test_reactor_upcall (wfmo_reactor);
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
 
 #else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG(argc);

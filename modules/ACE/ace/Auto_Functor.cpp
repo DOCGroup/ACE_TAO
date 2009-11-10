@@ -13,14 +13,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename X, typename Functor>
 ACE_Utils::Auto_Functor<X,Functor>::~Auto_Functor()
-  ACE_THROW_SPEC (())
 {
   reset(0);
 }
 
 template<typename X, typename Functor> void
 ACE_Utils::Auto_Functor<X,Functor>::reset(X * p)
-  ACE_THROW_SPEC (())
 {
   if(p_ != 0)
   {
@@ -31,7 +29,6 @@ ACE_Utils::Auto_Functor<X,Functor>::reset(X * p)
 
 template<typename X, typename Functor>void
 ACE_Utils::Auto_Functor<X,Functor>::reset(X * p, Functor f)
-  ACE_THROW_SPEC (())
 {
   reset(p);
   f_ = f;

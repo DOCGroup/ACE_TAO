@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
@@ -67,12 +67,15 @@ public:
   ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                             const OPTIONS *options = 0);
 
+  /// Destructor
+  virtual ~ACE_Pagefile_Memory_Pool (void);
+
   /// Ask system for initial chunk of shared memory.
   void *init_acquire (size_t nbytes,
                       size_t &rounded_bytes,
                       int &first_time);
 
-  /// Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
+  /// Acquire at least @a nbytes from the memory pool.  <rounded_bytes>
   /// is the actual number of bytes allocated.
   void *acquire (size_t nbytes,
                  size_t &rounded_bytes);
@@ -88,7 +91,7 @@ public:
   virtual int seh_selector (void *);
 
   /**
-   * Try to extend the virtual address space so that <addr> is now
+   * Try to extend the virtual address space so that @a addr is now
    * covered by the address mapping.  The method succeeds and returns
    * 0 if the backing store has adequate memory to cover this address.
    * Otherwise, it returns -1.  This method is typically called by an
@@ -191,7 +194,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Pagefile_Memory_Pool.inl"

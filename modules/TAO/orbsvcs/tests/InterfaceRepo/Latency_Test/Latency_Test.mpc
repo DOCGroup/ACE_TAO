@@ -1,4 +1,0 @@
-// $Id$
-project: ifr_client {
-  avoids += ace_for_tao
-}

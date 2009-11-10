@@ -163,7 +163,7 @@ Event_Handler::run (void)
   {
     ACE_ERROR ((LM_ERROR,
                ACE_TEXT ("Test %C failed due to timeout ")
-               ACE_TEXT (" sent=%d,recv=%d \n"),
+               ACE_TEXT (" sent=%d,recv=%d\n"),
                test_name_,
                notifications_sent_,
                notifications_recv_));

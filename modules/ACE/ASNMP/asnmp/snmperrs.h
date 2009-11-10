@@ -90,7 +90,7 @@
 
 // extras
 #define SNMP_CLASS_SHUTDOWN               -23 // used for back door shutdown
-#define SNMP_INVALID_ARGS                 -24  // invalid args passed
+#define SNMP_INVALID_ARGS                 -24 // invalid args passed
 
 #ifdef INCLUDE_SNMP_ERR_STRINGS_
 
@@ -121,6 +121,7 @@ static const char * pErrs[] = {
   "SNMP: Cannot perform operation, Authorization Error",      // 16
   "SNMP: Cannot create/set variable, Not Writable",           // 17
   "SNMP: Cannot create variable, Inconsistent Name",          // 18
+  "SNMP: Unknown error code",                                 // Always last
 };
 
 
@@ -202,7 +203,7 @@ static const char * nErrs[] = {
   "ASNMP: Blocked Mode Shutdown",
 
   // unknown error code
-  "Unknown error code",
+  "ASNMP: Unknown error code",
 };
 
 #endif //INCLUDE_SNMP_ERR_STRINGS_

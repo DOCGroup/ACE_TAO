@@ -54,7 +54,7 @@ namespace ACE
       virtual int init (int argc, ACE_TCHAR *argv[]);
 
       //
-      Filter *get_filter (int inside);
+      static Filter *get_filter (int inside);
     };
   }
 }

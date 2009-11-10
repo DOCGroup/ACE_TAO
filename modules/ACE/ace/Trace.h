@@ -42,7 +42,7 @@ public:
   /// N, the LINE, and the ACE_FILE as the function is entered.
   ACE_Trace (const ACE_TCHAR *n,
              int line = 0,
-             const ACE_TCHAR *file = ACE_LIB_TEXT (""));
+             const ACE_TCHAR *file = ACE_TEXT (""));
 
   /// Perform the second part of the trace, which prints out the NAME
   /// as the function is exited.

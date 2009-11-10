@@ -110,7 +110,7 @@ run_main (int, ACE_TCHAR *[])
   // --------------------------------------------------------
 
 
-  int result = load_config ();
+  int const result = load_config ();
 
   ACE_OS::unlink (config);
 

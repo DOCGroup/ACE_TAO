@@ -2,18 +2,17 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
+#include "ace/OS_NS_time.h"
 #include "Simulator.h"
 
 namespace ACE_RMCast
 {
-  Simulator::
-  Simulator ()
+  Simulator::Simulator ()
   {
-    srand (time (0));
+    ACE_OS::srand ((unsigned int)ACE_OS::time (0));
   }
 
-  void Simulator::
-  send (Message_ptr m)
+  void Simulator::send (Message_ptr m)
   {
     // Note: Simulator may work in unpredictable ways mainly due
     // to the "reliable loopback" mechanism.

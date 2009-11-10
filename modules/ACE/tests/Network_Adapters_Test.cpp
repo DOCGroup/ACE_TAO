@@ -32,14 +32,13 @@
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_signal.h"
 
 #include "Network_Adapters_Test.h"
-
 
 ACE_RCSID (tests,
            Network_Adapters_Test,
            "$Id$")
-
 
 /**
  * There are two major uses of the functionality:
@@ -145,12 +144,12 @@ Echo_Handler::open (ACE_Reactor * const    reactor,
   if (this->reactor ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: ")
-                       ACE_TEXT ("reactor is already set. \n")),
+                       ACE_TEXT ("reactor is already set.\n")),
                       -1);
   if (!reactor)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Echo_Handler::open - failed : ")
-                       ACE_TEXT ("NULL pointer to reactor provided. \n")),
+                       ACE_TEXT ("NULL pointer to reactor provided.\n")),
                       -1);
 
   this->reactor (reactor);
@@ -222,11 +221,13 @@ Echo_Handler::open (ACE_Reactor * const reactor,
                        ACE_TEXT ("reactor is already set.\n")),
                       -1);
 
+  //FUZZ: disable check_for_NULL
   if (!reactor)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: NULL ")
                        ACE_TEXT ("pointer to reactor provided.\n")),
                       -1);
+  //FUZZ: enable check_for_NULL
 
   this->reactor (reactor);
   this->reply_wait_ = reply_wait;
@@ -288,11 +289,22 @@ Echo_Handler::open (ACE_Reactor * const reactor,
   this->max_attempts_num_ = max_attempts_num;
   this->current_attempt_ = this->max_attempts_num_;
 
+  // If this process doesn't have privileges to open a raw socket, log
+  // a warning instead of an error.
   if (this->ping_socket ().open (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
-                       ACE_TEXT ("ping_socket_")),
-                      -1);
+    {
+      if (errno == EPERM || errno == EACCES)
+        ACE_ERROR_RETURN ((LM_WARNING,
+                           ACE_TEXT ("(%P|%t) Echo_Handler::open: ")
+                           ACE_TEXT ("ping_socket_: insufficient privs to ")
+                           ACE_TEXT ("run this test\n")),
+                          -1);
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) Echo_Handler::open: %p\n"),
+                           ACE_TEXT ("ping_socket_")),
+                          -1);
+    }
 
   // register with the reactor for input
   if (this->reactor ()->register_handler (this,
@@ -434,8 +446,7 @@ Echo_Handler::handle_input (ACE_HANDLE)
         {
           for (size_t k = 0; k <this->number_remotes_; ++k)
             {
-              if (addr.get_ip_address () ==
-                  this->remote_addrs_[k].get_ip_address ())
+              if (addr.is_ip_equal (this->remote_addrs_[k]))
                 {
                   if (addr.addr_to_string (buf, sizeof buf) == -1)
                     {
@@ -553,25 +564,29 @@ int
 Stop_Handler::open (void)
 {
   // Register the signal handler object to catch the signals.
+#if (SIGINT != 0)
   if (this->reactor ()->register_handler (SIGINT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGINT")),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                       ACE_TEXT ("register_handler for SIGINT"), SIGINT),
                       -1);
+#endif /* SIGINT != 0 */
 
+#if (SIGTERM != 0)
   if (this->reactor ()->register_handler (SIGTERM, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGTERM")),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                       ACE_TEXT ("register_handler for SIGTERM"), SIGTERM),
                       -1);
+#endif /* SIGTERM != 0 */
 
-#if ! defined (ACE_WIN32)
+#if (SIGQUIT != 0)
   if (this->reactor ()->register_handler (SIGQUIT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
-                       ACE_TEXT ("register_handler for SIGQUIT")),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
+                       ACE_TEXT ("register_handler for SIGQUIT"), SIGQUIT),
                       -1);
-#endif /* #if ! defined (ACE_WIN32) */
+#endif /* SIGQUIT != 0 */
   return 0;
 }
 
@@ -809,7 +824,7 @@ Repeats_Handler::handle_timeout (ACE_Time_Value const &,
   this->counter_++ ;
   if (one_button_test && this->counter_ > 3)
     {
-      ::raise (SIGINT);
+      ACE_OS::raise (SIGINT);
     }
   if (this->check_handler_)
     {
@@ -836,7 +851,7 @@ extern "C"
 }
 #endif /* #if defined (ACE_HAS_SIG_C_FUNC) */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 BOOL CtrlHandler(DWORD fdwCtrlType)
 {
   switch (fdwCtrlType)
@@ -846,7 +861,7 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
     case CTRL_SHUTDOWN_EVENT:
     case CTRL_CLOSE_EVENT:
     case CTRL_LOGOFF_EVENT:
-      ::raise (SIGINT);
+      ACE_OS::raise (SIGINT);
       return TRUE;
 
       // Pass other signals to the next handler.
@@ -856,23 +871,12 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
 }
 #endif /* #if defined (ACE_WIN32) */
 
-
-Fini_Guard::Fini_Guard (void)
-{
-}
-
-Fini_Guard::~Fini_Guard (void)
-{
-  ACE::fini ();
-}
-
-
 #define MAX_NUMBER_OF_PING_POINTS   16
 
 static int number_of_ping_points  = 0;
 static char ping_points_ips [MAX_NUMBER_OF_PING_POINTS][16];
 static ACE_INET_Addr ping_points_addrs [MAX_NUMBER_OF_PING_POINTS];
-static ACE_TCHAR local_ip_to_bind [16];
+static char local_ip_to_bind [16];
 
 static int wait_echo_reply_timer = 500; // 500 ms to wait is the default
 static int repeats_seconds_timer = 60; // 60 seconds between repeats
@@ -880,7 +884,7 @@ static int repeats_seconds_timer = 60; // 60 seconds between repeats
 static int
 is_ip_address_local (char const * const ip_to_bind)
 {
-  ACE_INET_Addr *the_addr_array;
+  ACE_INET_Addr *the_addr_array = 0;
   size_t how_many = 0;
   int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
 
@@ -949,7 +953,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
         case 'b':     // ip-address of the interface to bind to
           ACE_OS::strncpy (local_ip_to_bind,
-                           get_opt.optarg,
+                           ACE_TEXT_ALWAYS_CHAR (get_opt.optarg),
                            sizeof local_ip_to_bind);
 
           if (!ACE_OS::strlen (local_ip_to_bind) ||
@@ -1023,13 +1027,10 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Network_Adapters_Test"));
 
-  ACE::init ();
-
-  // to call for ACE::fini () in its destructor
-  Fini_Guard fg;
-
 #if defined (ACE_WIN32)
+#if !defined (ACE_HAS_WINCE)
   SetConsoleCtrlHandler((PHANDLER_ROUTINE) CtrlHandler, TRUE);
+#endif
 #else /* #if defined (ACE_WIN32) */
   // Set a handler for SIGSEGV signal to call for abort.
   ACE_Sig_Action sa1 ((ACE_SignalHandler) sigsegv_handler, SIGSEGV);
@@ -1072,7 +1073,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   milliseconds =  wait_echo_reply_timer % 1000;
   ACE_Time_Value const wait_timer (seconds, milliseconds);
 
-  Echo_Handler *ping_handler;
+  Echo_Handler *ping_handler = 0;
   ACE_NEW_RETURN (ping_handler, Echo_Handler, -1);
 
   if (ACE_OS::strlen (local_ip_to_bind))
@@ -1090,10 +1091,23 @@ run_main (int argc, ACE_TCHAR *argv[])
                               2,  // max_attempts_number
                               local_adapter) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n"),
-                      ACE_TEXT ("main() - ping_handler->open")));
-          ACE_OS::exit (-4);
+          // If this process doesn't have privileges to open a raw socket, log
+          // a warning instead of an error.
+          if (errno == EPERM || errno == EACCES)
+            {
+              ACE_ERROR ((LM_WARNING,
+                          ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
+                          ACE_TEXT ("insufficient privs to run this test\n")));
+              ACE_END_TEST;
+              return 0;
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %p\n"),
+                          ACE_TEXT ("main() - ping_handler->open")));
+              return -4;
+            }
         }
     }
   else
@@ -1108,14 +1122,25 @@ run_main (int argc, ACE_TCHAR *argv[])
                               ping_status,
                               2) == -1)   // max_attempts_number
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n"),
-                      ACE_TEXT ("main() - ping_handler->open ()")));
-          ACE_OS::exit (-4);
+          if (errno == EPERM || errno == EACCES)
+            {
+              ACE_ERROR ((LM_WARNING,
+                          ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
+                          ACE_TEXT ("insufficient privs to run this test\n")));
+              ACE_END_TEST;
+              return 0;
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %p\n"),
+                          ACE_TEXT ("main() - ping_handler->open")));
+              return -4;
+            }
         }
     }
 
-  Repeats_Handler *repeats_handler;
+  Repeats_Handler *repeats_handler = 0;
   ACE_NEW_RETURN (repeats_handler, Repeats_Handler, -1);
   if (repeats_handler->open (ping_handler,
                              main_reactor,

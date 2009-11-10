@@ -149,7 +149,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
                   "(%t|%T):curr scheduled thr handle = %d\n",
                   this->curr_scheduled_thr_handle_));
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):most eligible thr handle = %d \n",
+                  "(%t|%T):most eligible thr handle = %d\n",
                   most_eligible_thr_handle));
 #endif
 
@@ -181,7 +181,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
           this->curr_scheduled_thr_handle_ = most_eligible_thr_handle;
           this->curr_scheduled_guid_ = item_var->guid ();
         }
-	/*change all threads in blocked_prio_ to inactive_prio_*/
+          /*change all threads in blocked_prio_ to inactive_prio_*/
           this->ready_queue_.change_prio(this->blocked_prio_, this->inactive_prio_,this->sched_policy_);
     }
 

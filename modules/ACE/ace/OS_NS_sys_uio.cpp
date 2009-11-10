@@ -94,7 +94,7 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
 
   for (int i = 0; i < n; ++i)
     {
-      const ssize_t result =
+      ssize_t const result =
         ACE_OS::write (handle, iov[i].iov_base, iov[i].iov_len);
 
       if (result == -1)

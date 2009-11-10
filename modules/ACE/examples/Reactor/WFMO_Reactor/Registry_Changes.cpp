@@ -20,7 +20,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY) && !defined (ACE_LACKS_REGNOTIFYCHANGEKEYVALUE)
 
 #include "ace/Reactor.h"
 #include "ace/Registry.h"
@@ -139,8 +139,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 #else /* !ACE_WIN32 */
 int
-ACE_TMAIN (int, ACE_TCHAR **)
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */

@@ -10,23 +10,7 @@ ifneq ($(mingw32),1)
   endif
 endif
 
-# debug = 1
-# optimize = 1
-# exceptions = 0
-
-GNUWIN32_DLL_ALLOW_EXECP = 0
-
 GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
-#exceptions across dll boundries are ok in gcc 3+
-ifeq (2.95,$(findstring 2.95,$(GNUWIN32_CXX_VERSION)))
-  GNUWIN32_DLL_ALLOW_EXECP = 0
-else
-  ifeq (3.,$(findstring 3.,$(GNUWIN32_CXX_VERSION)))
-    GNUWIN32_DLL_ALLOW_EXECP = 1
-  else
-    GNUWIN32_DLL_ALLOW_EXECP = 0
-  endif
-endif
 
 winsock2 ?= 1
 exceptions ?= 1
@@ -35,23 +19,42 @@ optimize ?= 1
 threads ?= 1
 pipes ?= 1
 
+# When building shared libraries
+ifeq ($(shared_libs), 1)
+  ifneq ($(static_libs_only), 1)
+    inline ?= 0
+  endif
+endif
+
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
+CC      = ${COMPARCH}gcc
+CXX     = ${COMPARCH}g++
+RC      = ${COMPARCH}windres
+DLLTOOL = ${COMPARCH}dlltool
 
-CC      = gcc
-CXX     = g++
-RC      = windres
+RC_OUTPUT_FLAG = -o
 
-ifeq (3.4,$(findstring 3.4,$(GNUWIN32_CXX_VERSION)))
-  MODEL_FLAGS += -mtune=$(TCPU)
+ifeq (2.9,$(findstring 2.9,$(GNUWIN32_CXX_VERSION)))
+  cpumodelflag ?= 1
+  tunemodelflag ?= 0
 else
+  cpumodelflag ?= 0
+  tunemodelflag ?= 1
+endif
+
+ifeq ($(tunemodelflag),1)
+  MODEL_FLAGS += -mtune=$(TCPU)
+endif
+
+ifeq ($(cpumodelflag),1)
   MODEL_FLAGS += -mcpu=$(TCPU)
 endif
 
-CFLAGS  += -W -Wall -Wpointer-arith
+CFLAGS += -Wpointer-arith
 ifeq ($(threads),1)
-        MODEL_FLAGS += -mthreads
+  CFLAGS += -mthreads
 endif # threads
 
 CFLAGS += $(MODEL_FLAGS)
@@ -71,9 +74,9 @@ endif
 
 OCFLAGS += -O3
 PIC        =
-AR         = ar
+AR         = ${COMPARCH}ar
 ARFLAGS    = rsuv
-RANLIB     = ranlib
+RANLIB     = ${COMPARCH}ranlib
 SOEXT      = dll
 SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
@@ -94,7 +97,7 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 # to workaround to a bug in ld.
 SHLIBBUILD = \
   $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def; \
-  dlltool --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
+  $(DLLTOOL) --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
     $(VSHOBJS) \
   && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
   && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
@@ -102,18 +105,27 @@ SHLIBBUILD = \
     -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
     $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
 
-ifneq ($(GNUWIN32_DLL_ALLOW_EXECP), 1)
-  ifeq ($(exceptions),1)
-    SHLIBBUILD += \
-     ;echo "Warning: exceptions fail when mixing DLL and non DLL calls."
-  endif
-endif
-
 PRELIB  = @true
 
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+ifeq ($(GXX_4_OR_BETTER), 1)
+  no_attributes ?= 1
+  wall ?= 1
+else
+  no_attributes ?= 0
+  wall ?= 0
+endif
+
+ifeq ($(no_attributes), 1)
+  CFLAGS += -Wno-attributes
+endif
+
+ifeq ($(wall),1)
+  CFLAGS += -Wall -W
+endif
 
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)

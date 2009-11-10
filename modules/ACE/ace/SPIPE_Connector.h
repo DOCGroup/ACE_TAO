@@ -27,7 +27,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_SPIPE_Connector
  *
- * @brief Defines an active connection factory for <ACE_SPIPE_Stream>.
+ * @brief Defines an active connection factory for ACE_SPIPE_Stream.
  * On Windows this is mapped to Named Pipes, whereas on UNIX it is
  * mapped to STREAM pipes.
  */
@@ -40,20 +40,20 @@ public:
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
-   * The <remote_sap> is the address that we are trying to connect
-   * with.  The <timeout> is the amount of time to wait to connect.
+   * The @a remote_sap is the address that we are trying to connect
+   * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
-   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
+   * returned with @c errno == EWOULDBLOCK.  If *timeout > {0, 0} then
    * this is the maximum amount of time to wait before timing out.  If the
-   * time expires before the connection is made <errno == ETIME>.  The
-   * <local_sap> is the value of local address to bind to.  If it's
-   * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * time expires before the connection is made @c errno == ETIME.  The
+   * @a local_sap is the value of local address to bind to.  If it's
+   * the default value of ACE_Addr::sap_any then the user is letting
+   * the OS do the binding.  If @a reuse_addr == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The <flags> and <perms> arguments are passed down to the <open>
-   * method.  The <pipe_mode> argument is only used in NT and is used to
+   * The @a flags and @a perms arguments are passed down to the <open>
+   * method.  The @a pipe_mode argument is only used in NT and is used to
    * establish the NT pipe mode.
    */
   ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
@@ -68,20 +68,20 @@ public:
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
-   * The <remote_sap> is the address that we are trying to connect
-   * with.  The <timeout> is the amount of time to wait to connect.
+   * The @a remote_sap is the address that we are trying to connect
+   * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
-   * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
+   * returned with @c errno == EWOULDBLOCK.  If *timeout > {0, 0} then
    * this is the maximum amount of time to wait before timing out.  If the
-   * time expires before the connection is made <errno == ETIME>.  The
-   * <local_sap> is the value of local address to bind to.  If it's
-   * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * time expires before the connection is made @c errno == ETIME.  The
+   * @a local_sap is the value of local address to bind to.  If it's
+   * the default value of ACE_Addr::sap_any then the user is letting
+   * the OS do the binding.  If @a reuse_addr == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The <flags> and <perms> arguments are passed down to the <open>
-   * method.  The <pipe_mode> argument is only used in NT and is used to
+   * The @a flags and @a perms arguments are passed down to the <open>
+   * method.  The @a pipe_mode argument is only used in NT and is used to
    * establish the NT pipe mode.
    */
   int connect (ACE_SPIPE_Stream &new_io,
@@ -95,7 +95,7 @@ public:
                int pipe_mode = PIPE_READMODE_MESSAGE | PIPE_WAIT);
 
   /// Resets any event associations on this handle
-  int reset_new_handle (ACE_HANDLE handle);
+  bool reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
   typedef ACE_SPIPE_Addr PEER_ADDR;

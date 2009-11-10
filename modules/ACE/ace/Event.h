@@ -44,7 +44,8 @@ public:
              int initial_state = 0,
              int type = USYNC_THREAD,
              const ACE_TCHAR *name = 0,
-             void *arg = 0);
+             void *arg = 0,
+             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Implicitly destroy the event variable.
   ~ACE_Event (void);
@@ -124,7 +125,7 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// <remove> on the same object, which is a bad idea anyway...
-  int removed_;
+  bool removed_;
 
 private:
   // = Prevent copying.

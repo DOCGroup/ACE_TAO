@@ -84,7 +84,7 @@ DC_Singleton::instance (void)
 
       // Perform the Double-Check.
       if (DC_Singleton::instance_ == 0)
-	ACE_NEW_RETURN (DC_Singleton::instance_, DC_Singleton, 0);
+        ACE_NEW_RETURN (DC_Singleton::instance_, DC_Singleton, 0);
     }
 
   return DC_Singleton::instance_;
@@ -117,10 +117,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "ACE_Singleton\n"));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	    et.real_time, et.user_time, et.system_time));
+              et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-	      (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / double (iterations)) * 1000000));
 
   // Test the hand-coded Singleton performance (which uses
   // Double-Checked Locking).
@@ -136,10 +136,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "DC_Singleton\n"));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	      et.real_time, et.user_time, et.system_time));
+              et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-	      (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / double (iterations)) * 1000000));
 
   // Test the Mutex_Singleton implementation (which does not use
   // Double-Checked Locking).
@@ -155,10 +155,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "Mutex_Singleton\n"));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	      et.real_time, et.user_time, et.system_time));
+              et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-	      (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / double (iterations)) * 1000000));
 
   return 0;
 }

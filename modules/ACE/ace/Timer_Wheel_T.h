@@ -29,7 +29,7 @@ class ACE_Timer_Wheel_T;
 /**
  * @class ACE_Timer_Wheel_Iterator_T
  *
- * @brief Iterates over an <ACE_Timer_Wheel>.
+ * @brief Iterates over an ACE_Timer_Wheel.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it doesn't traverse
@@ -56,7 +56,7 @@ public:
   virtual void next (void);
 
   /// Returns true when there are no more nodes in the sequence
-  virtual int isdone (void) const;
+  virtual bool isdone (void) const;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE>* item (void);
@@ -115,9 +115,9 @@ public:
   virtual ~ACE_Timer_Wheel_T (void);
 
   /// True if queue is empty, else false.
-  virtual int is_empty (void) const;
+  virtual bool is_empty (void) const;
 
-  /// Returns the time of the earlier node in the <ACE_Timer_Wheel>.
+  /// Returns the time of the earlier node in the ACE_Timer_Wheel.
   /// Must be called on a non-empty queue.
   virtual const ACE_Time_Value& earliest_time (void) const;
 
@@ -126,8 +126,8 @@ public:
   virtual int reset_interval (long timer_id,
                               const ACE_Time_Value& interval);
 
-  /// Cancel all timer associated with <type>.  If <dont_call> is 0
-  /// then the <functor> will be invoked.  Returns number of timers
+  /// Cancel all timer associated with @a type.  If @a dont_call_handle_close is
+  /// 0 then the <functor> will be invoked.  Returns number of timers
   /// cancelled.
   virtual int cancel (const TYPE& type,
                       int dont_call_handle_close = 1);
@@ -144,10 +144,10 @@ public:
   /// the number of timers canceled.
   virtual int expire (void);
 
-  // Run the <functor> for all timers whose values are <= <cur_time>.
+  // Run the <functor> for all timers whose values are <= @a current_time.
   // This does not account for <timer_skew>.  Returns the number of
   // timers canceled.
-  int expire (const ACE_Time_Value&);
+  int expire (const ACE_Time_Value& current_time);
 
   /// Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>& iter (void);
@@ -215,9 +215,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Wheel_T.cpp"
-#endif /* !ACE_HAS_BROKEN_HPUX_TEMPLATES */
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

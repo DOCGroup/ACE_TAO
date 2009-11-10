@@ -21,6 +21,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "STL_algorithm_Test_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
@@ -197,7 +198,7 @@ run_test (void)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p failed for %s \n"),
+                         ACE_TEXT ("%p failed for %s\n"),
                          ACE_TEXT ("bind"),
                          string_table[i].key_), -1);
 
@@ -312,13 +313,19 @@ run_test (void)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) != 0)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p failed for %s \n"),
+                         ACE_TEXT ("%p failed for %s\n"),
                          ACE_TEXT ("bind"),
                          string_table[i].key_), -1);
 
   ace_test_allocator.dump ();
 
   test_two_allocators();
+
+  // Run the STL algorithm test on the hash map.
+  const HASH_STRING_MAP & chash = hash;
+
+  test_STL_algorithm (hash);
+  test_STL_algorithm (chash);
 
   return 0;
 }

@@ -7,10 +7,14 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Dev_Poll_Event_Tuple::ACE_Dev_Poll_Event_Tuple (void)
-  : event_handler (0),
-    mask (ACE_Event_Handler::NULL_MASK),
-    suspended (0)
+ACE_Dev_Poll_Reactor::Event_Tuple::Event_Tuple (ACE_Event_Handler *eh,
+                                                ACE_Reactor_Mask m,
+                                                bool is_suspended,
+                                                bool is_controlled)
+  : event_handler (eh),
+    mask (m),
+    suspended (is_suspended),
+    controlled (is_controlled)
 {
 }
 
@@ -27,69 +31,10 @@ ACE_Dev_Poll_Ready_Set::ACE_Dev_Poll_Ready_Set (void)
 
 // ---------------------------------------------------------------------
 
-ACE_INLINE void
-ACE_Dev_Poll_Reactor_Handler_Repository::mask (ACE_HANDLE handle,
-                                               ACE_Reactor_Mask mask)
-{
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::mask");
-
-  // Only bother to search for the handle if it's in range.
-  if (this->handle_in_range (handle))
-    this->handlers_[handle].mask = mask;
-}
-
-ACE_INLINE ACE_Reactor_Mask
-ACE_Dev_Poll_Reactor_Handler_Repository::mask (ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::mask");
-
-  ACE_Reactor_Mask mask = ACE_Event_Handler::NULL_MASK;
-
-  // Only bother to search for the handle if it's in range.
-  if (this->handle_in_range (handle))
-    mask = this->handlers_[handle].mask;
-
-  if (mask == ACE_Event_Handler::NULL_MASK)
-    errno = ENOENT;
-
-  return mask;
-}
-
-ACE_INLINE void
-ACE_Dev_Poll_Reactor_Handler_Repository::suspend (ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::suspend");
-
-  // Only bother to search for the handle if it's in range.
-  if (this->handle_in_range (handle))
-    this->handlers_[handle].suspended = 1;
-}
-
-ACE_INLINE void
-ACE_Dev_Poll_Reactor_Handler_Repository::resume (ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::resume");
-
-  // Only bother to search for the handle if it's in range.
-  if (this->handle_in_range (handle))
-    this->handlers_[handle].suspended = 0;
-}
-
-ACE_INLINE int
-ACE_Dev_Poll_Reactor_Handler_Repository::suspended (ACE_HANDLE handle) const
-{
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::suspended");
-
-  if (this->handle_in_range (handle))
-    return this->handlers_[handle].suspended;
-
-  return -1;
-}
-
 ACE_INLINE size_t
-ACE_Dev_Poll_Reactor_Handler_Repository::size (void) const
+ACE_Dev_Poll_Reactor::Handler_Repository::size (void) const
 {
-  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::size");
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::size");
 
   return this->max_size_;
 }
@@ -172,7 +117,8 @@ ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
 {
   // If the handler returns positive value (requesting a reactor
   // callback) just call back as many times as the handler requests
-  // it.  Other threads are off handling other things.
+  // it.  The handler is suspended internally and other threads are off
+  // handling other things.
   int status = 0;
 
   do

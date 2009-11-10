@@ -16,6 +16,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08
@@ -126,7 +127,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
           if(ret2 == -1){
             ACE_DEBUG((LM_DEBUG, "send error: %m\n"));
           }
-          printf("opt: %u dscp: %u, %s,  setsockopt returned: %d, send returned: %d\n", opt, opt >> 2, dscp_char[i], ret, ret2);
+          ACE_OS::printf("opt: %u dscp: %u, %s,  setsockopt returned: %d, send returned: %d\n", opt, opt >> 2, dscp_char[i], ret, ret2);
           ACE_OS::sleep(1);
         }
     }

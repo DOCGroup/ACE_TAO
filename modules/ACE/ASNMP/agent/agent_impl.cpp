@@ -45,12 +45,12 @@ int agent_impl::handle_get( Pdu &pdu, UdpTarget &target)
   for (int i = 0; (i < pdu.get_vb_count()) && !fdone; i++) {
     Vb vb;
     pdu.get_vb(vb, i);
-    if (get_response(vb)) {	// set a value for the oid if we can else
+    if (get_response(vb)) { // set a value for the oid if we can else
       set_error_status(&pdu, SNMP_ERROR_NO_SUCH_NAME); // these ought to be member
-      set_error_index(&pdu, i);	// functions but are not yet...
-      fdone++;			// trigger flag to exit loop early
+      set_error_index(&pdu, i); // functions but are not yet...
+      fdone++; // trigger flag to exit loop early
     }
-    else			// failed, return noSuch error
+    else // failed, return noSuch error
       pdu.set_vb(vb, i);
   }
 

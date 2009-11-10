@@ -80,7 +80,7 @@ HTTP_Config_Info::document_root (const char *dr_string)
     {
       this->document_root_ = ACE_OS::getenv ("JAWS_DOCUMENT_ROOT");
       if (!this->document_root_)
-	this->document_root_ = ".";
+        this->document_root_ = ".";
     }
 
   return this->document_root_;
@@ -96,7 +96,7 @@ HTTP_Config_Info::cgi_path (const char *cp_string)
       this->cgi_path_ = ACE_OS::getenv ("JAWS_CGI_PATH");
 
       if (!this->cgi_path_)
-	this->cgi_path_ = "cgi-bin";
+        this->cgi_path_ = "cgi-bin";
     }
 
   return this->cgi_path_;
@@ -111,7 +111,7 @@ HTTP_Config_Info::user_dir (const char *ud_string)
     {
       this->user_dir_ = ACE_OS::getenv ("JAWS_USER_DIR");
       if (!this->user_dir_)
-	this->user_dir_ = ".www";
+        this->user_dir_ = ".www";
     }
 
   return this->user_dir_;
@@ -126,7 +126,7 @@ HTTP_Config_Info::dir_index (const char *di_string)
     {
       this->dir_index_ = ACE_OS::getenv ("JAWS_DIR_INDEX");
       if (!this->dir_index_)
-	this->dir_index_ = "index.html";
+        this->dir_index_ = "index.html";
     }
 
   return this->dir_index_;

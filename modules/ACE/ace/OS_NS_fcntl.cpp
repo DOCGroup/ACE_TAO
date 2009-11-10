@@ -18,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_HANDLE
 ACE_OS::open (const char *filename,
               int mode,
-              int perms,
+              mode_t perms,
               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::open");
@@ -139,7 +139,7 @@ ACE_OS::open (const char *filename,
 ACE_HANDLE
 ACE_OS::open (const wchar_t *filename,
               int mode,
-              int perms,
+              mode_t perms,
               LPSECURITY_ATTRIBUTES sa)
 {
 #if defined (ACE_WIN32)

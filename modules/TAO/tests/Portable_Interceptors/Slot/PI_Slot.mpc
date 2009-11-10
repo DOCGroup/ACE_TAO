@@ -1,7 +1,0 @@
-// $Id$
-
-project(*driver): orbsvcsexe, pi_server, interceptors {
-  Source_Files {
-    driver.cpp
-  }
-}

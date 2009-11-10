@@ -333,7 +333,6 @@ namespace ACE_TMCast
     }
 
     GroupImpl (ACE_INET_Addr const& addr, char const* id)
-      throw (Group::Failed)
         : send_cond_ (mutex_),
           recv_cond_ (mutex_),
           failed_ (false),
@@ -354,10 +353,11 @@ namespace ACE_TMCast
       in_control_.subscribe (recv_cond_);
     }
 
-    void
-    send (void const* msg, size_t size)
-      throw (Group::InvalidArg, Group::Failed, Group::Aborted)
+    //FUZZ: disable check_for_lack_ACE_OS
+    void send (void const* msg, size_t size)
     {
+    //FUZZ: enable check_for_lack_ACE_OS
+
       if (size > Protocol::MAX_PAYLOAD_SIZE) throw InvalidArg ();
 
       // Note the potential deadlock if I lock mutex_ and out_data_ in
@@ -407,11 +407,11 @@ namespace ACE_TMCast
       }
     }
 
-
-
-    size_t
-    recv (void* msg, size_t size) throw (Group::Failed, Group::InsufficienSpace)
+    //FUZZ: disable check_for_lack_ACE_OS
+    size_t recv (void* msg, size_t size)
     {
+    //FUZZ: enable check_for_lack_ACE_OS
+
       AutoLock lock (mutex_);
 
       while (true)
@@ -429,9 +429,10 @@ namespace ACE_TMCast
           {
             Recv* data = dynamic_cast<Recv*> (m.get ());
 
-            if (size < data->size ()) throw Group::InsufficienSpace ();
+            if (size < data->size ()) 
+              throw Group::InsufficienSpace ();
 
-            memcpy (msg, data->payload (), data->size ());
+            ACE_OS::memcpy (msg, data->payload (), data->size ());
 
             return data->size ();
           }
@@ -481,7 +482,6 @@ namespace ACE_TMCast
   //
   Group::
   Group (ACE_INET_Addr const& addr, char const* id)
-    throw (Group::Failed)
       : pimpl_ (new GroupImpl (addr, id))
   {
   }
@@ -492,13 +492,13 @@ namespace ACE_TMCast
   }
 
   void
-  Group::send (void const* msg, size_t size) throw (Group::InvalidArg, Group::Failed, Group::Aborted)
+  Group::send (void const* msg, size_t size)
   {
     pimpl_->send (msg, size);
   }
 
   size_t
-  Group::recv (void* msg, size_t size) throw (Group::Failed, Group::InsufficienSpace)
+  Group::recv (void* msg, size_t size)
   {
     return pimpl_->recv (msg, size);
   }

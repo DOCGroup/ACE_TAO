@@ -32,7 +32,7 @@ class ACE_Timer_Heap_T;
 /**
  * @class ACE_Timer_Heap_Iterator_T
  *
- * @brief Iterates over an <ACE_Timer_Heap_T>.
+ * @brief Iterates over an ACE_Timer_Heap_T.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it doesn't transverse
@@ -55,7 +55,7 @@ public:
   virtual void next (void);
 
   /// Returns true when there are no more nodes in the sequence
-  virtual int isdone (void) const;
+  virtual bool isdone (void) const;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE> *item (void);
@@ -125,38 +125,38 @@ public:
   virtual ~ACE_Timer_Heap_T (void);
 
   /// True if heap is empty, else false.
-  virtual int is_empty (void) const;
+  virtual bool is_empty (void) const;
 
   /// Returns the time of the earliest node in the Timer_Queue.
   /// Must be called on a non-empty queue.
   virtual const ACE_Time_Value &earliest_time (void) const;
 
   /**
-   * Resets the interval of the timer represented by <timer_id> to
-   * <interval>, which is specified in relative time to the current
-   * <gettimeofday>.  If <interval> is equal to
-   * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+   * Resets the interval of the timer represented by @a timer_id to
+   * @a interval, which is specified in relative time to the current
+   * <gettimeofday>.  If @a interval is equal to
+   * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_interval (long timer_id,
                               const ACE_Time_Value &interval);
 
   /**
-   * Cancel all timers associated with <type>.  If <dont_call> is 0
-   * then the <functor> will be invoked.  Returns number of timers
+   * Cancel all timers associated with @a type.  If @a dont_call_handle_close
+   * is 0 then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */
   virtual int cancel (const TYPE &type,
                       int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single timer that matches the <timer_id> value (which
+   * Cancel the single timer that matches the @a timer_id value (which
    * was returned from the <schedule> method).  If act is non-NULL
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
-   * to free up the memory and avoid memory leaks.  If <dont_call> is
-   * 0 then the <functor> will be invoked.  Returns 1 if cancellation
-   * succeeded and 0 if the <timer_id> wasn't found.
+   * to free up the memory and avoid memory leaks. If @a dont_call_handle_close
+   * is 0 then the <functor> will be invoked.  Returns 1 if cancellation
+   * succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
                       const void **act = 0,
@@ -185,13 +185,13 @@ protected:
 
   /**
    * Schedule a timer that may optionally auto-reset.
-   * Schedule <type> that will expire at <future_time>,
-   * which is specified in absolute time.  If it expires then <act> is
-   * passed in as the value to the <functor>.  If <interval> is != to
-   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
+   * Schedule @a type that will expire at @a future_time,
+   * which is specified in absolute time.  If it expires then @a act is
+   * passed in as the value to the <functor>.  If @a interval is != to
+   * ACE_Time_Value::zero then it is used to reschedule the @a type
    * automatically, using relative time to the current <gettimeofday>.
    * This method returns a <timer_id> that uniquely identifies the the
-   * <type> entry in an internal list.  This <timer_id> can be used to
+   * @a type entry in an internal list.  This <timer_id> can be used to
    * cancel the timer before it expires.  The cancellation ensures
    * that <timer_ids> are unique up to values of greater than 2
    * billion timers.  As long as timers don't stay around longer than
@@ -204,7 +204,7 @@ protected:
                            const ACE_Time_Value &future_time,
                            const ACE_Time_Value &interval);
 
-  /// Reschedule an "interval" <ACE_Timer_Node>.
+  /// Reschedule an "interval" ACE_Timer_Node.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 
   /// Factory method that allocates a new node (uses operator new if
@@ -219,7 +219,7 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
 private:
-  /// Remove and return the <slot>th <ACE_Timer_Node> and restore the
+  /// Remove and return the @a sloth ACE_Timer_Node and restore the
   /// heap property.
   ACE_Timer_Node_T<TYPE> *remove (size_t slot);
 
@@ -233,18 +233,18 @@ private:
    */
   void grow_heap (void);
 
-  /// Restore the heap property, starting at <slot>.
+  /// Restore the heap property, starting at @a slot.
   void reheap_up (ACE_Timer_Node_T<TYPE> *new_node,
                   size_t slot,
                   size_t parent);
 
-  /// Restore the heap property, starting at <slot>.
+  /// Restore the heap property, starting at @a slot.
   void reheap_down (ACE_Timer_Node_T<TYPE> *moved_node,
                     size_t slot,
                     size_t child);
 
-  /// Copy <moved_node> into the <slot> slot of <heap_> and move
-  /// <slot> into the corresponding slot in the <timer_id_> array.
+  /// Copy @a moved_node into the @a slot slot of <heap_> and move
+  /// @a slot into the corresponding slot in the <timer_id_> array.
   void copy (size_t slot, ACE_Timer_Node_T<TYPE> *moved_node);
 
   /**
@@ -258,7 +258,7 @@ private:
   /// Pops and returns a new timer id from the freelist.
   long pop_freelist (void);
 
-  /// Pushes <old_id> onto the freelist.
+  /// Pushes @a old_id onto the freelist.
   void push_freelist (long old_id);
 
   /// Maximum size of the heap.
@@ -276,16 +276,16 @@ private:
 
   /**
    * Current contents of the Heap, which is organized as a "heap" of
-   * <ACE_Timer_Node> *'s.  In this context, a heap is a "partially
+   * ACE_Timer_Node *'s.  In this context, a heap is a "partially
    * ordered, almost complete" binary tree, which is stored in an
    * array.
    */
   ACE_Timer_Node_T<TYPE> **heap_;
 
   /**
-   * An array of "pointers" that allows each <ACE_Timer_Node> in the
+   * An array of "pointers" that allows each ACE_Timer_Node in the
    * <heap_> to be located in O(1) time.  Basically, <timer_id_[i]>
-   * contains the slot in the <heap_> array where an <ACE_Timer_Node>
+   * contains the slot in the <heap_> array where an ACE_Timer_Node
    * * with timer id \<i\> resides.  Thus, the timer id passed back from
    * <schedule> is really a slot into the <timer_ids> array.  The
    * <timer_ids_> array serves two purposes: negative values are
@@ -305,7 +305,7 @@ private:
 
   /**
    * If this is non-0, then we preallocate <max_size_> number of
-   * <ACE_Timer_Node> objects in order to reduce dynamic allocation
+   * ACE_Timer_Node objects in order to reduce dynamic allocation
    * costs.  In auto-growing implementation, this points to the
    * last array of nodes allocated.
    */
@@ -326,9 +326,9 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HAS_BROKEN_HPUX_TEMPLATES)
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Heap_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_Heap_T.cpp")

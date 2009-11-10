@@ -4,7 +4,7 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_Thread.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_sys_socket.h"
 
 // Open versioned namespace, if enabled by the user.
@@ -284,6 +284,22 @@ ACE::strdelete (wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
+ACE_INLINE bool
+ACE::isdotdir (const char *s)
+{
+  return (s[0] == '.' && 
+          ((s[1] == 0) || (s[1] == '.' && s[2] == 0)));
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE bool
+ACE::isdotdir (const wchar_t *s)
+{
+  return (s[0] == ACE_TEXT ('.') && 
+          ((s[1] == 0) || (s[1] == ACE_TEXT ('.') && s[2] == 0)));
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE void
 ACE::unique_name (const void *object,
                   ACE_TCHAR *name,
@@ -303,33 +319,29 @@ ACE::log2 (u_long num)
   return log;
 }
 
-ACE_INLINE ACE_TCHAR
-ACE::nibble2hex (u_int n)
+ACE_INLINE int
+ACE::map_errno (int error)
 {
-  // Hexadecimal characters.
-#if defined (ACE_VXWORKS) && !defined (__DCPLUSPLUS__)
-  // temporary solution to prevent Windriver GNU toolchains from spewing
-  // loads of warnings when inlining.
-  // problem (incorrect warning leftover from older GNU) has been reported as
-  // TSR to Windriver.
-  const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
-#else
-  static const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
-#endif
+#if defined (ACE_WIN32)
+  switch (error)
+    {
+    case WSAEWOULDBLOCK:
+      return EAGAIN; // Same as UNIX errno EWOULDBLOCK.
+    }
+#endif /* ACE_WIN32 */
 
-  // @@ UNICODE does this work?
-  return hex_chars[n & 0x0f];
+  return error;
 }
 
 ACE_INLINE u_char
 ACE::hex2byte (ACE_TCHAR c)
 {
-  if (isdigit (c))
-    return (u_char) (c - ACE_LIB_TEXT ('0'));
-  else if (islower (c))
-    return (u_char) (10 + c - ACE_LIB_TEXT ('a'));
+  if (ACE_OS::ace_isdigit (c))
+    return (u_char) (c - ACE_TEXT ('0'));
+  else if (ACE_OS::ace_islower (c))
+    return (u_char) (10 + c - ACE_TEXT ('a'));
   else
-    return (u_char) (10 + c - ACE_LIB_TEXT ('A'));
+    return (u_char) (10 + c - ACE_TEXT ('A'));
 }
 
 // Close versioned namespace, if enabled by the user.

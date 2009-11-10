@@ -24,168 +24,11 @@
 
 ACE_RCSID(tests, Time_Value_Test, "$Id$")
 
-// Force test of ACE_U_LongLong class on Solaris.
-#if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
-# include <limits.h>
-# undef ULLONG_MAX
-
-# if defined (ACE_HAS_HI_RES_TIMER)
-#   undef ACE_HAS_HI_RES_TIMER
-# endif /* ACE_HAS_HI_RES_TIMER */
-
-# define ACE_LACKS_LONGLONG_T
-
-  // Force inlining, in case ACE_U_LongLong member function
-  // definitions are not in libACE.
-# if !defined (__ACE_INLINE__)
-#   define __ACE_INLINE__
-# endif /* ! __ACE_INLINE__ */
-# if defined (ACE_NO_INLINE)
-#   undef ACE_NO_INLINE
-# endif /* ACE_NO_INLINE */
-#endif /* sun && ! ACE_LACKS_LONGLONG_T */
-
 #include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
 
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
-// some platforms pollute the namespace by defining max() and min() macros
-#ifdef max
-#undef max
-#endif
-#ifdef min
-#undef min
-#endif
-#include <limits>
-#endif /* ACE_LACKS_NUMERIC_LIMITS */
-
-#if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
-static
-u_long
-check_ace_u_longlong (const ACE_TCHAR *const name,
-                      const ACE_U_LongLong ull,
-                      const u_long hi,
-                      const u_long lo)
-{
-  if (ull.hi () == hi  &&  ull.lo () == lo)
-    return 0;
-  else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s; hi: %x, should be %x; ")
-                       ACE_TEXT ("lo: %x, should be %x.\n"),
-                       name, ull.hi (), hi, ull.lo (), lo),
-                      1);
-}
-
-static
-u_long
-test_ace_u_longlong (void)
-{
-  u_long errors = 0;
-
-  ACE_U_LongLong ull1 (0x21,1);
-  errors += check_ace_u_longlong (ACE_TEXT ("ull1"), ull1, 1, 0x21);
-
-  ACE_U_LongLong ull2 (0x20,2);
-  errors += check_ace_u_longlong (ACE_TEXT ("ull2"), ull2, 2, 0x20);
-
-  ull2 -= ull1;
-  errors += check_ace_u_longlong (ACE_TEXT ("ull2"), ull2, 0, 0xfffffffful);
-
-  ull2 += ull1;
-  errors += check_ace_u_longlong (ACE_TEXT ("ull2"), ull2, 2, 0x20);
-
-  ACE_U_LongLong ull3 = ull1 + ull1;
-  errors += check_ace_u_longlong (ACE_TEXT ("ull3"), ull3, 2, 0x42);
-
-  ACE_U_LongLong ull4 = ACE_U_LongLong (0x1111, 0) -
-                        ACE_U_LongLong (0x1112, 0);
-  errors += check_ace_u_longlong (ACE_TEXT ("ull4"), ull4, 0xfffffffful, 0xfffffffful);
-
-  ACE_U_LongLong ull5 = ACE_U_LongLong (0x1111, 1) -
-                        ACE_U_LongLong (0x1112, 0);
-  errors += check_ace_u_longlong (ACE_TEXT ("ull5"), ull5, 0, 0xfffffffful);
-
-  ++ull5;
-  errors += check_ace_u_longlong (ACE_TEXT ("ull5"), ull5, 1, 0);
-
-  ACE_U_LongLong ull6 = ull2 + ACE_U_LongLong (0, 1);
-  errors += check_ace_u_longlong (ACE_TEXT ("ull6"), ull6, 3, 0x20);
-
-  ull6 += ACE_U_LongLong (0xffffffff, 0xfff0);
-  errors += check_ace_u_longlong (ACE_TEXT ("ull6"), ull6, 0xfff4, 0x1f);
-
-  ++ull6;
-  errors += check_ace_u_longlong (ACE_TEXT ("ull6"), ull6, 0xfff4, 0x20);
-
-  // The hi part of ull6 will be lost in the following, because
-  // the quotient has only 32 bits.
-  errors += check_ace_u_longlong (ACE_TEXT ("ull6 / 1"),
-                                  (ACE_U_LongLong) (ull6 / 1u),
-                                  0, 0x20);
-
-  // There's apparently a small loss in precision in
-  // ACE_U_LongLong::operator/.  It calculates
-  // ull6 / 0xd0000 as 0x13b013b4 instead of 0x13b04ec4.
-  errors += check_ace_u_longlong (ACE_TEXT ("ull6 / 0x10000 / 0xd"),
-                                  (ACE_U_LongLong) (ull6 / 0x10000u / 0xd),
-                                  0, 0x13b04ec4);
-
-  errors += check_ace_u_longlong (ACE_TEXT ("ull6 % 5"),
-                                  (ACE_U_LongLong) (ull6 % 5),
-                                  0, 1);
-
-  errors += check_ace_u_longlong (ACE_TEXT ("ull6 % 0x20007"),
-                                  (ACE_U_LongLong) (ull6 % 0x20007),
-                                  0, 0x3f63);
-
-  ACE_U_LongLong ull7 (12);
-  ull7 *= 3125;
-  errors += check_ace_u_longlong (ACE_TEXT ("12 * 3125"),
-                                  ull7,
-                                  0, 37500);
-
-  ull7 *= 100;
-  errors += check_ace_u_longlong (ACE_TEXT ("37500 * 100"),
-                                  ull7,
-                                  0, 3750000);
-
-  errors += check_ace_u_longlong (ACE_TEXT ("3750000 << 16"),
-                                  ull7 << 16 ,
-                                  0x39, 0x38700000);
-
-  errors += check_ace_u_longlong (ACE_TEXT ("3750000 >> 16"),
-                                  ull7 >> 16,
-                                  0, 0x39);
-
-  ull7 <<= 32;
-  errors += check_ace_u_longlong (ACE_TEXT ("3750000 <<= 32"),
-                                  ull7,
-                                  3750000, 0);
-
-  ull7 >>= 12;
-  errors += check_ace_u_longlong (ACE_TEXT ("3750000 <<= 32 >>= 15"),
-                                  ull7,
-                                  0x393, 0x87000000);
-
-  ACE_U_LongLong ull8 (0x0f0f, 0xf0f0);
-  ACE_U_LongLong ull9 (0xf0f0, 0xf0f0);
-  ull8 |= ull9;
-  errors += check_ace_u_longlong (ACE_TEXT ("ull8 |= ull9"),
-                                  ull8,
-                                  0xf0f0, 0xffff);
-
-  ull9.lo (0x5678);
-  ull9.hi (0x1234);
-  ull8 &= ull9;
-  errors += check_ace_u_longlong (ACE_TEXT ("ull8 &= 0x12345678"),
-                                  ull9,
-                                  0x1234, 0x5678);
-
-  return errors;
-}
-#endif /* sun && ! ACE_LACKS_LONGLONG_T */
+#include "ace/Numeric_Limits.h"
 
 
 int
@@ -236,54 +79,61 @@ run_main (int, ACE_TCHAR *[])
   tv1.set (1, 1);
   tv2.set (2, 2);
   tv1 *= 2.0;
-  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  ACE_ASSERT (tv1 == tv2);
   tv1.set (1, 1);
-  tv2.set (-2, -2);
+  tv2.set (static_cast<time_t> (-2), static_cast<suseconds_t> (-2));
   tv1 *= -2.0;
-  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  ACE_ASSERT (tv1 == tv2);
 
   // test usec shift
   tv1.set (1, 999999);
   tv2.set (19, 999990);
   tv1 *= 10.0;
-  ACE_ASSERT ( tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  ACE_ASSERT ( tv1 == tv2);
   tv1.set (1, 999999);
-  tv2.set (-19, -999990);
+  tv2.set (static_cast<time_t> (-19), -999990);
   tv1 *= -10.0;
-  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  ACE_ASSERT (tv1 == tv2);
 
-#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
-  const time_t max_time_t = std::numeric_limits<time_t>::max ();
-  const time_t min_time_t = std::numeric_limits<time_t>::min ();
-#else
-  const time_t max_time_t = LONG_MAX;
-  const time_t min_time_t = LONG_MIN;
-#endif
+  const time_t max_time_t = ACE_Numeric_Limits<time_t>::max ();
+  const time_t min_time_t = ACE_Numeric_Limits<time_t>::min ();
 
   // test results near limits
   tv1.set ((max_time_t >> 1), 499999);
   tv2.set ((-(max_time_t >> 1) << 1), -999998);
   tv1 *= -2.0;
-  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  ACE_ASSERT (tv1 == tv2);
   tv1.set (max_time_t >> 1, 499999);
   tv2.set (((max_time_t >> 1) << 1), 999998);
   tv1 *= 2.0;
-  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  ACE_ASSERT (tv1 == tv2);
 
   // test saturated result
   tv1.set (max_time_t - 1, 499999);
-  tv2.set (max_time_t, 999999);
-  tv1 *= max_time_t;
-  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  tv2.set (max_time_t, 999999);  // ACE_Time_Value::max_time
+  tv1 *= 10.0;
+  ACE_ASSERT (tv1 == tv2);
   tv1.set (max_time_t - 1, 499999);
   tv2.set (min_time_t, -999999);
-  tv1 *= min_time_t;
-  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  tv1 *= -10.0;
+  ACE_ASSERT (tv1 == tv2);
 
-#if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
-  if (test_ace_u_longlong () != 0)
-    ++ret;
-#endif /* sun && ! ACE_LACKS_LONGLONG_T */
+  // Test correct msec() convert; also checks for compile error reported in
+  // Bugzilla 3336.
+  ACE_Time_Value msec_test (42, 555000);
+  ACE_UINT64 ms = 0;
+  msec_test.msec (ms);
+  if (ms != 42555)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("msec test failed: %Q should be 42555\n"),
+                ms));
+  const ACE_Time_Value msec_test2 (42, 555000);
+  ms = 0;
+  msec_test2.msec (ms);
+  if (ms != 42555)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("msec const test failed: %Q should be 42555\n"),
+                ms));
 
   ACE_END_TEST;
 

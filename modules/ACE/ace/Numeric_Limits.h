@@ -37,7 +37,7 @@
 # include "ace/Basic_Types.h"
 #else
 
-# ifdef __MINGW32__
+# if defined __MINGW32__
 // Windows defines min/max macros that interfere with the
 // numeric_limits::min/max() traits.  Undefine those macros before
 // including <limits>.
@@ -51,6 +51,11 @@
 #  undef min
 #  undef max
 # endif  /* __MINGW32__ */
+
+# if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+// For ACE_U_LongLong.
+#  include "ace/Basic_Types.h"
+# endif  /* ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T */
 
 # include <limits>
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
@@ -220,7 +225,8 @@ struct ACE_Numeric_Limits
   static T max (void) { return std::numeric_limits<T>::max (); }
 };
 
-# if defined (ACE_WIN64) && defined (_MSC_VER) && _MSC_VER <= 1310
+# if (defined (ACE_WIN64) && defined (_MSC_VER) && _MSC_VER <= 1310) \
+    || defined (ACE_LACKS_NUMERIC_LIMITS_64_BIT_TYPES)
 // The Microsoft Platform SDK does not provide std::numeric_limits<>
 // specializations for 64 bit integers so we need to explicitly provide
 // ACE_Numeric_Limits<> specializations to compensate for this
@@ -234,19 +240,28 @@ struct ACE_Numeric_Limits
 template<>
 struct ACE_Numeric_Limits<LONGLONG>
 {
-   static LONGLONG min (void) { return _I64_MIN; }
-   static LONGLONG max (void) { return _I64_MAX; }
+  static LONGLONG min (void) { return _I64_MIN; }
+  static LONGLONG max (void) { return _I64_MAX; }
 };
 
 template<>
 struct ACE_Numeric_Limits<ULONGLONG>
 {
-   static ULONGLONG min (void) { return 0; }
-   static ULONGLONG max (void) { return _UI64_MAX; }
+  static ULONGLONG min (void) { return 0; }
+  static ULONGLONG max (void) { return _UI64_MAX; }
 };
 # endif  /* ACE_WIN64 && _MSC_VER <= 1310 */
 
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
+
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+template<>
+struct ACE_Numeric_Limits<ACE_U_LongLong>
+{
+  static ACE_U_LongLong min (void) { return ACE_U_LongLong (); /* 0 */ }
+  static ACE_U_LongLong max (void) { return ACE_UINT64_MAX; }
+};
+#endif  /* ACE_LACKS_LONGLONG_T || defined ACE_LACKS_UNSIGNEDLONGLONG_T */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

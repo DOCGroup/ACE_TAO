@@ -38,7 +38,7 @@
 #endif /* _WIN64 || WIN64 */
 
 #if !defined (_WIN32_WINNT)
-# define _WIN32_WINNT 0x0400
+# define _WIN32_WINNT 0x0501 // pretend it's at least Windows XP or Win2003
 #endif
 
 // If the invoking procedure turned off debugging by setting NDEBUG, then
@@ -92,6 +92,17 @@
 # define ACE_MT_SAFE 1
 #endif
 
+// On winCE these classes do not exist. If they are
+// introduced in the future, no changes need to be made
+#if defined (ABOVE_NORMAL_PRIORITY_CLASS) && \
+  defined (BELOW_NORMAL_PRIORITY_CLASS) && \
+  defined (HIGH_PRIORITY_CLASS) && \
+  defined (IDLE_PRIORITY_CLASS) && \
+  defined (NORMAL_PRIORITY_CLASS) && \
+  defined (REALTIME_PRIORITY_CLASS)
+#define ACE_HAS_WIN32_PRIORITY_CLASS
+#endif
+
 // Build ACE services as DLLs.  If you write a library and want it to
 // use ACE_Svc_Export, this will cause those macros to build dlls.  If
 // you want your ACE service to be a static library, comment out this
@@ -103,8 +114,8 @@
 //  #endif
 
 // Define the special export macros needed to export symbols outside a dll
-#if !defined(__BORLANDC__) && !defined(__IBMCPP__)
-#define ACE_HAS_CUSTOM_EXPORT_MACROS
+#if !defined(__BORLANDC__) && !defined (ACE_HAS_CUSTOM_EXPORT_MACROS)
+#define ACE_HAS_CUSTOM_EXPORT_MACROS 1
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)
 #define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
@@ -191,7 +202,15 @@
 
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
-# define ACE_HAS_P_READ_WRITE
+# define ACE_HAS_WTOF
+#endif /* ! ACE_HAS_WINCE */
+
+#define ACE_HAS_P_READ_WRITE
+
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_DIRECT_H
+# define ACE_HAS_PROCESS_H
+# define ACE_HAS_IO_H
 #endif /* ! ACE_HAS_WINCE */
 
 #if !defined (__MINGW32__)
@@ -264,6 +283,21 @@
 #define ACE_LACKS_UNAME
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_IOVEC
+#define ACE_LACKS_LOG2
+#define ACE_LACKS_CADDR_T
+#if !defined(__MINGW32__) && !defined (__BORLANDC__)
+# define ACE_LACKS_MODE_T
+#endif
+#if !defined (__BORLANDC__)
+# define ACE_LACKS_NLINK_T
+# define ACE_LACKS_UID_T
+# define ACE_LACKS_GID_T
+#endif
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
+
+#define ACE_HAS_PDH_H
+#define ACE_HAS_PDHMSG_H
 
 #define ACE_HAS_VFWPRINTF
 
@@ -273,13 +307,13 @@
 // Green Hills Native x86 does not support __int64 keyword
 // Neither does mingw32.
 #if !defined (ACE_LACKS_LONGLONG_T) && !defined (__MINGW32__)
-#define ACE_INT64_TYPE		signed __int64
-#define ACE_UINT64_TYPE		unsigned __int64
+#define ACE_INT64_TYPE  signed __int64
+#define ACE_UINT64_TYPE unsigned __int64
 #endif /* (ghs) */
 
 #if defined (__MINGW32__)
-#define ACE_INT64_TYPE		signed long long
-#define ACE_UINT64_TYPE		unsigned long long
+#define ACE_INT64_TYPE  signed long long
+#define ACE_UINT64_TYPE unsigned long long
 #endif
 
 // Optimize ACE_Handle_Set for select().
@@ -288,6 +322,8 @@
 // Win32 has wide-char support. Use of the compiler-defined wchar_t type
 // is controlled in compiler configs since it's a compiler switch.
 #define ACE_HAS_WCHAR
+#define ACE_HAS_WTOI
+#define ACE_HAS_WTOL
 
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
@@ -311,9 +347,6 @@
 // Platform provides <sys/filio.h> header.
 //define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports sys_siglist array.
-//define ACE_HAS_SYS_SIGLIST
-
 // Platform supports ACE_TLI timod STREAMS module.
 //define ACE_HAS_TIMOD_H
 
@@ -334,7 +367,10 @@
 #define ACE_LACKS_WRITEV
 #define ACE_LACKS_READV
 
-#define ACE_LACKS_COND_T
+#if !defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+# define ACE_LACKS_COND_T
+#endif
+
 #define ACE_LACKS_RWLOCK_T
 
 #define ACE_LACKS_KEY_T
@@ -342,9 +378,10 @@
 // No system support for replacing any previous mappings.
 #define ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
-// If you want to use highres timers, ensure that
-// Build.Settings.C++.CodeGeneration.Processor is
-// set to Pentium !
+// ACE_HAS_PENTIUM is used to optimize some CDR operations; it's used for
+// some other time-related things using g++, but not for VC. Current VC
+// compilers set _M_IX86 > 400 by default so if you're not using a Pentium
+// class CPU, set the project code generation options appropriately.
 #if !defined(ACE_HAS_PENTIUM) && (_M_IX86 > 400)
 # define ACE_HAS_PENTIUM
 #endif
@@ -408,9 +445,6 @@
 #  include /**/ <afxwin.h>   /* He is doing MFC */
 // Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
 // #define      _INC_WINDOWS  // Prevent winsock.h from including windows.h
-#  if defined (ACE_HAS_WINCE)
-#    include /**/ <wce.h>
-#  endif /* ACE_HAS_WINCE */
 #elif defined (ACE_HAS_WINCE)
 #  include /**/ <windows.h>
 #endif
@@ -431,15 +465,20 @@
 #if !defined(ACE_HAS_WINSOCK2)
 # define ACE_HAS_WINSOCK2 1
 #endif /* !defined(ACE_HAS_WINSOCK2) */
+// Not use WS1 by default
+#if !defined(ACE_HAS_WINSOCK1)
+# define ACE_HAS_WINSOCK1 0
+#endif /* !defined(ACE_HAS_WINSOCK1) */
 
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# define ACE_HAS_ICMP_SUPPORT 1
 # if !defined (_WINSOCK2API_)
 // will also include windows.h, if not present
 #  include /**/ <winsock2.h>
 // WinCE 4 doesn't define the Exxx values without the WSA prefix, so do that
 // here. This is all lifted from the #if 0'd out part of winsock2.h.
-#  if defined (UNDER_CE)
+#  if defined (_WIN32_WCE) && (_WIN32_WCE < 0x600)
 #    define EWOULDBLOCK             WSAEWOULDBLOCK
 #    define EINPROGRESS             WSAEINPROGRESS
 #    define EALREADY                WSAEALREADY
@@ -477,7 +516,7 @@
 #    define EDQUOT                  WSAEDQUOT
 #    define ESTALE                  WSAESTALE
 #    define EREMOTE                 WSAEREMOTE
-#  endif /* UNDER_CE */
+#  endif /* (_WIN32_WCE) && (_WIN32_WCE < 0x600) */
 # endif /* _WINSOCK2API */
 
 # if defined (ACE_HAS_FORE_ATM_WS2)
@@ -495,6 +534,9 @@
 #  else
 #    pragma comment(lib, "ws2_32.lib")
 #    pragma comment(lib, "mswsock.lib")
+#    if defined (ACE_HAS_IPV6)
+#      pragma comment(lib, "iphlpapi.lib")
+#    endif
 #  endif /* ACE_HAS_WINCE */
 # endif /* _MSC_VER */
 
@@ -507,7 +549,7 @@
 
 // PharLap ETS has its own winsock lib, so don't grab the one
 // supplied with the OS.
-# if defined (_MSC_VER) && !defined (UNDER_CE) && !defined (ACE_HAS_PHARLAP)
+# if defined (_MSC_VER) && !defined (_WIN32_WCE) && !defined (ACE_HAS_PHARLAP)
 #  pragma comment(lib, "wsock32.lib")
 # endif /* _MSC_VER */
 
@@ -524,8 +566,8 @@
 # define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
-#if !defined (ACE_HAS_WINCE) || defined (PPC)   /* CE only on some CPUs */
-#  define ACE_HAS_INTERLOCKED_EXCHANGEADD
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_INTERLOCKED_EXCHANGEADD
 #endif
 #define ACE_HAS_WIN32_TRYLOCK
 
@@ -536,7 +578,7 @@
 # define ACE_HAS_CANCEL_IO
 # define ACE_HAS_WIN32_OVERLAPPED_IO
 # define ACE_HAS_WIN32_NAMED_PIPES
-#endif /* !defined (ACE_USES_WINCE_SEMA_SIMULATION) && !ACE_HAS_PHARLAP */
+#endif /* !defined (ACE_HAS_WINCE) && !ACE_HAS_PHARLAP */
 
 #if !defined (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION)
 # define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH
@@ -565,6 +607,7 @@
 #define ACE_LACKS_OPENDIR
 #define ACE_LACKS_CLOSEDIR
 #define ACE_LACKS_READDIR
+#define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_LSTAT
 // Looks like Win32 has a non-const swab function
@@ -607,6 +650,50 @@
 #   pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
 #  endif
 # endif /* !ACE_HAS_WINCE */
+
+#if !defined (WINVER)
+# define WINVER 0x0400 // pretend it's at least WinNT 4.0
+#endif
+
+///////////////////////////////////////
+// windows version-specific definitions
+// see: http://msdn2.microsoft.com/en-us/library/aa383745.aspx
+//
+// For TSS information
+// see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dllproc/base/thread_local_storage.asp
+
+#if (WINVER>=0x0600)
+// Windows Server 2008 definitions go here
+// Windows Vista defintions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 1088
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#elif (WINVER>=0x0502)
+  // Windows Server 2003 SP1 definitions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 1088
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#elif (WINVER>=0x0501)
+// Windows XP definitions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 1088
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#elif (WINVER>=0x0500)
+// Windows 2000 definitions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 1088
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#elif (WINVER>=0x0410)
+// Windows 98 definitions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 80
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#else
+// antique windows
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 64
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#endif
 
 #if !defined (ACE_DEFAULT_BACKLOG)
 #  define ACE_DEFAULT_BACKLOG SOMAXCONN

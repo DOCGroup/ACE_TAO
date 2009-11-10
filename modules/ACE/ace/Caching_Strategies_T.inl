@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
 ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation,
-                                                                                                         int delete_implementation)
+                                                                                                         bool delete_implementation)
   : implementation_ (implementation),
     delete_implementation_ (delete_implementation)
 {
@@ -18,7 +18,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_C
     {
       ACE_NEW (this->implementation_,
                IMPLEMENTATION);
-      this->delete_implementation_ = 1;
+      this->delete_implementation_ = true;
     }
 }
 
@@ -28,7 +28,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_
   if (this->delete_implementation_)
     {
       delete this->implementation_;
-      this->delete_implementation_ = 0;
+      this->delete_implementation_ = false;
       this->implementation_ = 0;
     }
 }
@@ -135,11 +135,10 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double per
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
-                                                                    const ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (
+  int result,
+  const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   if (result == 0)
     ++this->timer_;
 
@@ -147,8 +146,9 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
-                                                                    ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (
+  int result,
+  ATTRIBUTES &attr)
 {
   if (result == 0)
     {
@@ -160,28 +160,26 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
-                                                                      const ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (
+  int result,
+  const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int result,
-                                                                       ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (
+  int result,
+  ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
-                                                                      const ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (
+  int result,
+  const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   if (result == 0)
     ++this->timer_;
 
@@ -201,7 +199,7 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
   ACE_TRACE ("ACE_LRU_Caching_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("timer_ = %d "), this->timer_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("timer_ = %d "), this->timer_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -228,9 +226,8 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double per
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
-                                                                    const ATTRIBUTES &attr)
+                                                                    const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
 
   return result;
 }
@@ -247,28 +244,22 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int result,
-                                                                       ATTRIBUTES &attr)
+                                                                       ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
-                                                                      const ATTRIBUTES &attr)
+                                                                      const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
-                                                                      const ATTRIBUTES &attr)
+                                                                      const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   return result;
 }
 
@@ -373,7 +364,7 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
   ACE_TRACE ("ACE_FIFO_Caching_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("order_ = %d "), this->order_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("order_ = %d "), this->order_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

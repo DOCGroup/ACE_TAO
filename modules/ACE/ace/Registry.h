@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32)
-// This only works on Win32 platforms
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+// This only works on registry-capable Win32 platforms.
 
 #include "ace/Containers.h"
 #include "ace/SString.h"
@@ -193,7 +193,7 @@ public:
     /// Empty constructor: keys will be NULL
     Naming_Context (void);
 
-    /// Constructor: key_ will be set to <key>
+    /// Constructor: key_ will be set to @a key
     Naming_Context (const HKEY &key);
 
     /// Destructor will call <Naming_Context::close>.
@@ -226,36 +226,36 @@ public:
               const Object &object);
 
     /**
-     * Insert or update <object> with <name> into <this> context
-     * This will not fail if <name> already exists
+     * Insert or update <object> with @a name into @c this context
+     * This will not fail if @a name already exists
      * (String version)
      */
     int bind (const ACE_TString &name,
               const Object &object);
 
-    /// Update <object> with <name> in <this> context
+    /// Update <object> with @a name in @c this context
     /// (Name version)
     int rebind (const Name &name,
                 const Object &object);
 
-    /// Update <object> with <name> in <this> context
+    /// Update <object> with @a name in @c this context
     int rebind (const ACE_TString &name,
                 const Object &object);
 
-    /// Find <object> with <name> in <this> context
+    /// Find <object> with @a name in @c this context
     /// (Name version)
     int resolve (const Name &name,
                  Object &object);
 
-    /// Find <object> with <name> in <this> context
+    /// Find <object> with @a name in @c this context
     int resolve (const ACE_TString &name,
                  Object &object);
 
-    /// Delete object with <name> in <this> context
+    /// Delete object with @a name in @c this context
     /// (Name version)
     int unbind (const Name &name);
 
-    /// Delete object with <name> in <this> context
+    /// Delete object with @a name in @c this context
     int unbind (const ACE_TString &name);
 
 
@@ -265,8 +265,8 @@ public:
     int new_context (Naming_Context &naming_context);
 
     /**
-     * Insert <naming_context> with <name> relative to <this> context
-     * This will fail if <name> already exists
+     * Insert <naming_context> with @a name relative to @c this context
+     * This will fail if @a name already exists
      * (Name version)
      */
     int bind_new_context (const Name &name,
@@ -275,8 +275,8 @@ public:
                           u_long security_access = KEY_ALL_ACCESS,
                           LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Insert <naming_context> with <name> relative to <this> context
-    /// This will fail if <name> already exists
+    /// Insert <naming_context> with @a name relative to @c this context
+    /// This will fail if @a name already exists
     int bind_new_context (const ACE_TString &name,
                           Naming_Context &naming_context,
                           u_long persistence = REG_OPTION_NON_VOLATILE,
@@ -284,8 +284,8 @@ public:
                           LPSECURITY_ATTRIBUTES security_attributes = 0);
 
     /**
-     * Insert or update <naming_context> with <name> relative to <this> context
-     * This will not fail if <name> already exists
+     * Insert or update <naming_context> with @a name relative to @c this context
+     * This will not fail if @a name already exists
      * (Name version)
      */
     int bind_context (const Name &name,
@@ -294,48 +294,48 @@ public:
                       u_long security_access = KEY_ALL_ACCESS,
                       LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Insert or update <naming_context> with <name> relative to <this> context
-    /// This will not fail if <name> already exists
+    /// Insert or update <naming_context> with @a name relative to @c this context
+    /// This will not fail if @a name already exists
     int bind_context (const ACE_TString &name,
                       /* const */ Naming_Context &naming_context,
                       u_long persistence = REG_OPTION_NON_VOLATILE,
                       u_long security_access = KEY_ALL_ACCESS,
                       LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Rename <naming_context> to <name>
+    /// Rename <naming_context> to @a name
     /// (Name version)
     int rebind_context (const Name &name,
                         /* const */ Naming_Context &naming_context);
 
-    /// Rename <naming_context> to <name>
+    /// Rename <naming_context> to @a name
     int rebind_context (const ACE_TString &name,
                         /* const */ Naming_Context &naming_context);
 
-    /// Find <naming_context> with <name> in <this> context
+    /// Find <naming_context> with @a name in @c this context
     /// (Name version)
     int resolve_context (const Name &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
-    /// Find <naming_context> with <name> in <this> context
+    /// Find <naming_context> with @a name in @c this context
     int resolve_context (const ACE_TString &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
-    /// Remove naming_context with <name> from <this> context
+    /// Remove naming_context with @a name from @c this context
     /// (Name version)
     int unbind_context (const Name &name);
 
-    /// Remove naming_context with <name> from <this> context
+    /// Remove naming_context with @a name from @c this context
     int unbind_context (const ACE_TString &name);
 
-    /// Same as <unbind_context> with <this> as naming_context
+    /// Same as <unbind_context> with @c this as naming_context
     int destroy (void);
 
     /**
      * listing function: iterator creator
      * This is useful when there are many objects and contexts
-     * in <this> context and you only want to look at a few entries
+     * in @c this context and you only want to look at a few entries
      * at a time
      */
     int list (u_long how_many,
@@ -343,7 +343,7 @@ public:
               Binding_Iterator &iterator);
 
     /// listing function: iterator creator
-    /// This gives back a listing of all entries in <this> context.
+    /// This gives back a listing of all entries in @c this context.
     int list (Binding_List &list);
 
     // Some other necessary functions which are
@@ -460,7 +460,13 @@ public:
       {
       public:
         /// Constructor
-        Iteration_State (Binding_Iterator &iterator);
+        Iteration_State (void);
+
+        /// Destructor
+        virtual ~Iteration_State (void);
+
+        /// Set the iterator reference.
+        void iterator (Binding_Iterator *iterator);
 
         /// Next <how_many> entries
         virtual int next_n (u_long how_many,
@@ -479,9 +485,6 @@ public:
   private:
     class ACE_Export Object_Iteration : public Iteration_State
       {
-      public:
-        Object_Iteration (Binding_Iterator &iterator);
-
         /// Next <how_many> entries
         int next_n (u_long how_many,
                     Binding_List &list);
@@ -490,8 +493,6 @@ public:
     class ACE_Export Context_Iteration : public Iteration_State
       {
       public:
-        Context_Iteration (Binding_Iterator &iterator);
-
         /// Next @a how_many entries
         int next_n (u_long how_many,
                     Binding_List &list);
@@ -500,8 +501,6 @@ public:
     class ACE_Export Iteration_Complete : public Iteration_State
       {
       public:
-        Iteration_Complete (Binding_Iterator &iterator);
-
         /// Next @a how_many entries
         int next_n (u_long how_many,
                     Binding_List &list);
@@ -558,6 +557,6 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 #include /**/ "ace/post.h"
 #endif /* ACE_REGISTRY_H */

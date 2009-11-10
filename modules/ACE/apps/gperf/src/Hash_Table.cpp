@@ -1,25 +1,27 @@
 // -*- C++ -*-
 
-// $Id$
-
-// Copyright (C) 1989 Free Software Foundation, Inc.
-// written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
-
-// This file is part of GNU GPERF.
-
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+/**
+ * $Id$
+ *
+ * Copyright (C) 1989 Free Software Foundation, Inc.
+ * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ *
+ * This file is part of GNU GPERF.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 
 #include "Hash_Table.h"
 
@@ -95,17 +97,21 @@ Hash_Table::find (List_Node *item,
   // of 2...
   size_t size = this->size_ - 1;
   size_t probe;
-  size_t increment = (hash_val ^ (ignore_length == 0 ? item->length : 0) | 1) & size;
+  size_t increment = ((hash_val ^ (ignore_length == 0 ? item->length : 0)) | 1) & size;
 
   for (probe = hash_val & size;
        this->table_[probe]
          && (ACE_OS::strcmp (this->table_[probe]->keysig, item->keysig) != 0
              || (ignore_length == 0 && this->table_[probe]->length != item->length));
-       probe = probe + increment & size)
-    this->collisions_++;
+       probe = (probe + increment) & size)
+    {
+      ++this->collisions_;
+    }
 
   if (this->table_[probe])
-    return this->table_[probe];
+    {
+      return this->table_[probe];
+    }
   else
     {
       this->table_[probe] = item;

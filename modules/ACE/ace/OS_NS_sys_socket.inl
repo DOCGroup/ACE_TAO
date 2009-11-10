@@ -103,6 +103,19 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (addrlen);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640)
+  // VxWorks clears the sin_port member after a succesfull bind when
+  // sin_addr != INADDR_ANY, so after the bind we do retrieve the
+  // original address so that user code can safely check the addr
+  // after the bind. See bugzilla 3107 for more details
+  int result;
+  ACE_SOCKCALL (::bind ((ACE_SOCKET) handle,
+                        addr,
+                        (ACE_SOCKET_LEN) addrlen), int, -1, result);
+  if (result == -1)
+    return -1;
+  else
+    return ACE_OS::getsockname (handle, addr, &addrlen);
 #else
   ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
                                addr,
@@ -122,7 +135,9 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::close (handle), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_WIN32 */
 }
 
@@ -379,7 +394,16 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
         return -1;
     }
   else
-    return result;
+    {
+#  if defined (ACE_HAS_PHARLAP)
+      // Pharlap ETS (at least to v13) returns a legit address but doesn't
+      // include the sin_zero[8] bytes in the count. Correct for this here.
+      if (addrlen != 0 && addr != 0 &&
+          *addrlen == 8 && addr->sa_family == AF_INET)
+        *addrlen = sizeof(sockaddr_in);
+#  endif /* ACE_HAS_PHARLAP */
+      return result;
+    }
 #else /* non Win32 */
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle,
                                    buf,
@@ -496,15 +520,12 @@ ACE_OS::recvv (ACE_HANDLE handle,
                       0,
                       0);
 # else
-  int i, chunklen;
-  char *chunkp = 0;
-
   // Step through the buffers requested by caller; for each one, cycle
   // through reads until it's filled or an error occurs.
-  for (i = 0; i < n && result > 0; ++i)
+  for (int i = 0; i < n && result > 0; ++i)
     {
-      chunkp = buffers[i].iov_base;     // Point to part of chunk being read
-      chunklen = buffers[i].iov_len;    // Track how much to read to chunk
+      char *chunkp = buffers[i].iov_base;     // Point to part of chunk being read
+      int chunklen = buffers[i].iov_len;    // Track how much to read to chunk
       while (chunklen > 0 && result > 0)
         {
           result = ::recv ((SOCKET) handle, chunkp, chunklen, 0);
@@ -729,7 +750,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
   // Winsock 2 has WSASend and can do this directly, but Winsock 1
   // needs to do the sends one-by-one.
-# if (ACE_HAS_WINSOCK2 != 0)
+# if (ACE_HAS_WINSOCK2 != 0) && !defined (ACE_DONT_USE_WSASEND)
   result = ::WSASend ((SOCKET) handle,
                       (WSABUF *) buffers,
                       n,
@@ -792,9 +813,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
       local_iov[i].iov_len  = buffers[i].iov_len;
 
       new_total = total + buffers[i].iov_len;
-      if ( new_total >= SSIZE_MAX )
+      if (new_total >= ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE)
         {
-          local_iov[i].iov_len = SSIZE_MAX - total;
+          local_iov[i].iov_len = ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE - total;
           n = i+1;
           break;
         }
@@ -854,7 +875,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                 -1,
                 result);
 #if defined (WSAEOPNOTSUPP)
-  if (result == -1 && errno == WSAEOPNOTSUPP)
+  if (result == -1 && (errno == WSAEOPNOTSUPP || errno == WSAENOPROTOOPT))
 #else
   if (result == -1)
 #endif /* WSAEOPNOTSUPP */

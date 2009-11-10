@@ -1,7 +1,9 @@
 // -*- C++ -*-
 //
 // $Id$
+
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +57,9 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   if (this->shm_malloc_ == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   ssize_t retv = 0;
 
@@ -64,7 +68,7 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
       buf =
         reinterpret_cast<ACE_MEM_SAP_Node *> (
           static_cast<char *> (this->shm_malloc_->base_addr ()) + off);
-      retv = buf->size ();
+      retv = ACE_Utils::truncate_cast<ssize_t> (buf->size ());
     }
   ACE_SEH_EXCEPT (this->shm_malloc_->memory_pool ().seh_selector (GetExceptionInformation ()))
     {
@@ -125,12 +129,21 @@ ACE_MEM_IO::send (const void *buf,
                   const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::send");
+  
   if (this->deliver_strategy_ == 0)
-    return 0;
+    {
+      return 0;
+    }
 
-  ACE_MEM_SAP_Node *sbuf = this->deliver_strategy_->acquire_buffer (len);
+  ACE_MEM_SAP_Node *sbuf =
+    this->deliver_strategy_->acquire_buffer (
+      ACE_Utils::truncate_cast<ssize_t> (len));
+  
   if (sbuf == 0)
-    return -1;                  // Memory buffer not initialized.
+    {
+      return -1;                  // Memory buffer not initialized.
+    }
+    
   ACE_OS::memcpy (sbuf->data (), buf, len);
 
   ///
@@ -152,29 +165,30 @@ ACE_MEM_IO::recv (void *buf,
 
   size_t count = 0;
 
-//    while (len > 0)
-//      {
-      size_t buf_len = this->buf_size_ - this->cur_offset_;
-      if (buf_len == 0)
+  size_t buf_len = this->buf_size_ - this->cur_offset_;
+  
+  if (buf_len == 0)
+    {
+      ssize_t blen =         // Buffer length
+        this->fetch_recv_buf (flags, timeout);
+        
+      if (blen <= 0)
         {
-          ssize_t blen =         // Buffer length
-            this->fetch_recv_buf (flags, timeout);
-          if (blen <= 0)
-            return blen;
-          buf_len = this->buf_size_;
+          return blen;
         }
+        
+      buf_len = this->buf_size_;
+    }
 
-      size_t length = (len > buf_len ? buf_len : len);
+  size_t length = (len > buf_len ? buf_len : len);
 
-      ACE_OS::memcpy ((char *) buf + count,
-                      (char *) this->recv_buffer_->data () + this->cur_offset_,
-                      length);
-      this->cur_offset_ += length;
-//        len -= length;
-      count += length;
-//      }
+  ACE_OS::memcpy ((char *) buf + count,
+                  (char *) this->recv_buffer_->data () + this->cur_offset_,
+                  length);
+  this->cur_offset_ += ACE_Utils::truncate_cast<ssize_t> (length);
+  count += length;
 
-  return count;
+  return ACE_Utils::truncate_cast<ssize_t> (count);
 }
 
 ACE_INLINE ssize_t

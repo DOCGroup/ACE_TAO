@@ -4,6 +4,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -27,7 +28,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Listing 3 code/ch06
   peer.send_n ("uptime\n", 7);
   bc = peer.recv (buf, sizeof(buf));
-  write (1, buf, bc);
+  ACE_OS::write (ACE_STDOUT, buf, bc);
   peer.close ();
   // Listing 3
 

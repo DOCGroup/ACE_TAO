@@ -17,8 +17,8 @@
 //    to zero on that platform.
 //
 //    In this test, the event handler is started at the port value
-//    USHRT_MAX and decremented for 300 port values and tested if the
-//    highest port number used agrees with ACE_MAX_DEFAULT_PORT value.
+//    USHRT_MAX and decremented for 'ports_to_test' port values and tested
+//    if the highest port number used agrees with ACE_MAX_DEFAULT_PORT value.
 //
 //
 // = AUTHOR
@@ -87,7 +87,7 @@ My_Accept_Handler::handle_input (ACE_HANDLE)
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("My_Accept_Handler::handle_input \n")));
+              ACE_TEXT ("My_Accept_Handler::handle_input\n")));
 
   // Close the opened stream, else it'll leak a handle. Don't close
   // the acceptor here, though, because get_handle() needs it to
@@ -129,25 +129,25 @@ client (void *arg)
                    &timeout) == -1)
     {
 #if defined (ACE_VXWORKS)
-	  if (errno == ETIME)
-	  {
-		if ( ++retry_port_<6 )
-		{
-  		  ACE_DEBUG ((LM_DEBUG,
-  		   	         ACE_TEXT ("(%P|%t) Going to retry port %d\n"),
-                     server_addr.get_port_number()));
-		}
-	  }
-	  if ( retry_port_>5 )
-	  {
-		retry_port_ = 0;
+      if (errno == ETIME)
+        {
+          if ( ++retry_port_<6 )
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) Going to retry port %d\n"),
+                        server_addr.get_port_number()));
+          }
+        }
+      if ( retry_port_>5 )
+        {
+          retry_port_ = 0;
 #endif
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("connection failed")));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("connection failed")));
 
 #if defined (ACE_VXWORKS)
-	  }
+        }
 #endif
       return 0;
     }
@@ -179,15 +179,23 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   u_short max_listened_port = 0;
 
+#if defined (__Lynx__)
+  // LynxOS can handle only 80 test iterations.
+  // This needs to be investigated further -- olli 12.11.2007
+  const u_short ports_to_test = 80;
+#else
+  const u_short ports_to_test = 300;
+#endif
+
   //Ports beyond 65279 were said to bad on NT sp 3.
-  for (u_short idx = USHRT_MAX; idx != USHRT_MAX - 300; --idx)
+  for (u_short idx = USHRT_MAX; idx != USHRT_MAX - ports_to_test; --idx)
     {
 #if defined (ACE_VXWORKS)
-	  if (retry_port_>0)
-	  {
-	  	++idx;
-        ACE_OS::sleep (ACE_Time_Value (2*ACE_DEFAULT_TIMEOUT));
-	  }
+      if (retry_port_>0)
+        {
+          ++idx;
+          ACE_OS::sleep (ACE_Time_Value (2*ACE_DEFAULT_TIMEOUT));
+        }
 #endif
 
       ACE_INET_Addr addr (idx);

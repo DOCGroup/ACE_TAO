@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(HTTPU) : acelib {
+project(HTTPU) : ace_output, acelib {
     sharedname = HTTPU
     dynamicflags += HTTPU_BUILD_DLL
     avoids += uses_wchar ace_for_tao

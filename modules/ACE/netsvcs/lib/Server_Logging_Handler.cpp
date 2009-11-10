@@ -3,8 +3,6 @@
 #if !defined (ACE_SERVER_LOGGING_HANDLER_C)
 #define ACE_SERVER_LOGGING_HANDLER_C
 
-#define ACE_BUILD_SVC_DLL
-
 #include "Server_Logging_Handler.h"
 
 ACE_RCSID(lib, Server_Logging_Handler, "$Id$")
@@ -17,10 +15,7 @@ ACE_SVC_FACTORY_DEFINE (ACE_Server_Logging_Acceptor)
 ACE_SVC_FACTORY_DEFINE (ACE_Thr_Server_Logging_Acceptor)
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM,
-                                      u_long,
-                                      ACE_NULL_SYNCH,
-                                      Null_Synch_Static_Receiver> *
+template u_long
   ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM,
                                u_long,
                                ACE_NULL_SYNCH,

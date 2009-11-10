@@ -38,7 +38,7 @@ class HA_CommandHandler : public ACE_Task_Base
 public:
   virtual int svc (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up \n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));
 
     // Do something.
 

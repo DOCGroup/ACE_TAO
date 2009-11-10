@@ -13,11 +13,6 @@
 
 #undef ACE_WCHAR_IN_STD_NAMESPACE
 
-// This may be true for earlier Solaris versions, but I can only verify it
-// for Solaris 8 and later.
-#define ACE_HAS_VFWPRINTF
-#define ACE_SHM_OPEN_REQUIRES_ONE_SLASH
-
 // This may be true for versions prior to Solaris 8 as well, but I don't
 // have any to try it on.
 #if !defined (ACE_HAS_TIMEZONE)
@@ -34,5 +29,11 @@
 #   undef ACE_LACKS_RWLOCK_T
 #  endif /* ACE_LACKS_RWLOCK_T */
 # endif /* _POSIX_PTHREAD_SEMANTICS */
+
+// This is no longer the case for Sun 5.9 onwards
+# undef ACE_HAS_X86_STAT_MACROS
+
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
 
 #endif /* ACE_CONFIG_H */

@@ -133,7 +133,7 @@ ACE_Token_Request::token_name (const ACE_TCHAR *token_name,
   // Set up pointers and copy token_name and client_id into request.
   token_name_ = this->transfer_.data_;
   client_id_  = &this->token_name_[token_name_length + 1]; // Add 1 for ':';
-  client_id_[-1] = ACE_LIB_TEXT (':'); // Insert the ':' before this->clientId_.
+  client_id_[-1] = ACE_TEXT (':'); // Insert the ':' before this->clientId_.
 
   (void) ACE_OS::memcpy (this->token_name_,
                          token_name,
@@ -147,7 +147,7 @@ ACE_Token_Request::token_name (const ACE_TCHAR *token_name,
 
   // ... then add in the amount of the variable-sized portion.
   len += token_name_length + client_id_length + 1;
-  this->length (ACE_Utils::Truncate<ACE_UINT32> (len));
+  this->length (ACE_Utils::truncate_cast<ACE_UINT32> (len));
 }
 
 // = Set/get the id of the client.

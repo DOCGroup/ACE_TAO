@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "randomize.h"
 #include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
@@ -33,6 +34,13 @@ static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
 
+void
+initialize_array (int * array, int size)
+{
+  for (int n = 0; n < size; ++n)
+    array[n] = n;
+}
+
 static void
 print_time (ACE_Profile_Timer &timer,
             const char *test)
@@ -41,7 +49,7 @@ print_time (ACE_Profile_Timer &timer,
   timer.stop ();
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("     *****  %C  *****     \n"), test));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("     *****  %C  *****    \n"), test));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time, et.user_time, et.system_time));
@@ -53,7 +61,9 @@ static void
 test_bind (ACE_Naming_Context &ns_context)
 {
   int array [ACE_NS_MAX_ENTRIES];
-  randomize (array, sizeof array / sizeof (int));
+
+  initialize_array (array, sizeof (array) / sizeof (array[0]));
+  randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the binds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
@@ -90,7 +100,9 @@ static void
 test_rebind (ACE_Naming_Context &ns_context)
 {
   int array [ACE_NS_MAX_ENTRIES];
-  randomize (array, sizeof array / sizeof (int));
+
+  initialize_array (array, sizeof (array) / sizeof (array[0]));
+  randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the rebinds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
@@ -111,7 +123,9 @@ static void
 test_unbind (ACE_Naming_Context &ns_context)
 {
   int array [ACE_NS_MAX_ENTRIES];
-  randomize (array, sizeof array / sizeof (int));
+
+  initialize_array (array, sizeof (array) / sizeof (array[0]));
+  randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the unbinds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
@@ -130,7 +144,9 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   char temp_type[BUFSIZ];
 
   int array [ACE_NS_MAX_ENTRIES];
-  randomize (array, sizeof array / sizeof (int));
+
+  initialize_array (array, sizeof (array) / sizeof (array[0]));
+  randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the finds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
@@ -198,10 +214,22 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Name_Options *name_options = ns_context->name_options ();
 
   name_options->parse_args (argc, argv);
-
-  int unicode = 0;
+  /*
+  ** NOTE! This is an experimental value and is not magic in any way. It
+  ** works for me, on one system. It's needed because in the particular
+  ** case here where the underlying mmap will allocate a small area and
+  ** then try to grow it, it always moves it to a new location, which
+  ** totally screws things up. I once tried forcing the realloc to do
+  ** MAP_FIXED but that's not a good solution since it may overwrite other
+  ** mapped areas of memory, like the heap, or the C library, and get very
+  ** unexpected results.    (Steve Huston, 24-August-2007)
+  */
+# if defined (linux) && defined (__x86_64__)
+  name_options->base_address ((char*)0x3c00000000);
+#endif
+  bool unicode = false;
 #if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
-  unicode = 1;
+  unicode = true;
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
   if (unicode && name_options->use_registry () == 1)
     {
@@ -210,24 +238,28 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
   else
     {
+      const ACE_TCHAR* pname = ACE::basename (name_options->process_name (),
+                                              ACE_DIRECTORY_SEPARATOR_CHAR);
       // Allow the user to determine where the context file will be
       // located just in case the current directory is not suitable for
       // locking.  We don't just set namespace_dir () on name_options
       // because that is not sufficient to work around locking problems
       // for Tru64 when the current directory is NFS mounted from a
       // system that does not properly support locking.
-      const char* temp_envs[] = { "TMPDIR", "TEMP", "TMP", 0 };
-      for(const char** temp_env = temp_envs; *temp_env != 0; ++temp_env)
+      ACE_TCHAR temp_dir [MAXPATHLEN];
+      if (ACE::get_temp_dir (temp_dir, MAXPATHLEN - 15) == -1)
+        // -15 for ace-file-XXXXXX
         {
-          char* temp_dir = ACE_OS::getenv(*temp_env);
-          if (temp_dir != 0)
-            {
-              ACE_OS::chdir (temp_dir);
-              break;
-            }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Temporary path too long, ")
+                             ACE_TEXT ("defaulting to current directory\n")),
+                             -1);
         }
-      ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
-                                                ACE_DIRECTORY_SEPARATOR_CHAR));
+      else
+        {
+          ACE_OS::chdir (temp_dir);
+        }
+      ACE_OS::strcpy (temp_file, pname);
       ACE_OS::strcat (temp_file, ACE_TEXT ("XXXXXX"));
 
       // Set the database name using mktemp to generate a unique file name
@@ -237,8 +269,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                  "ERROR: Naming_Test - ns_context->open () failed.\n"),
-                  -1);
+                         ACE_TEXT ("ns_context->open (PROC_LOCAL) %p\n"),
+                         ACE_TEXT ("failed")),
+                        -1);
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time to test %d iterations using %s\n"),

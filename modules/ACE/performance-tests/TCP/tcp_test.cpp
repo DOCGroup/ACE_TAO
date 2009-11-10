@@ -30,6 +30,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_arpa_inet.h"
@@ -83,7 +84,7 @@ usage (void)
               "  [-m message size]\n"
               "  [-i iterations]\n"
               "  [-I usdelay]\n"
-              "  [-b socket bufsz] \n"
+              "  [-b socket bufsz]\n"
               "  [-p port]\n"
               "  [-s]\n"
               "  [-c]\n"
@@ -92,7 +93,7 @@ usage (void)
               "  [-a to use the ACE Select reactor]\n"
               "  [-x to use the ACE TP reactor]\n"
               "  [-w to use the ACE WFMO reactor]\n"
-              "  targethost \n"));
+              "  targethost\n"));
 }
 
 // ****************************************************************
@@ -110,8 +111,10 @@ public:
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int send (const char *buf, size_t len);
   // Send the <buf> to the server.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int get_response (char *buf, size_t len);
   // Wait for the response.
@@ -119,8 +122,10 @@ public:
   int run (void);
   // Send messages to server and record statistics.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int shutdown (void);
   // Send shutdown message to server.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ACE_SOCK_Stream endpoint_;
@@ -335,7 +340,7 @@ Server::Server (const ACE_INET_Addr &addr)
                     "ACE_Reactor::register_handler: Server\n"));
     }
 
-#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
+#if !defined (ACE_LACKS_SO_SNDBUF)
   if (so_bufsz != 0)
     {
       if (this->endpoint_.set_option (SOL_SOCKET,
@@ -343,17 +348,26 @@ Server::Server (const ACE_INET_Addr &addr)
                                       (void *) &so_bufsz,
                                       sizeof (so_bufsz)) == -1
           && errno != ENOTSUP)
-        ACE_ERROR ((LM_ERROR, "Server::Server: SO_SNDBUF %p\n",
-                    "set_option failed"));
-      else if (this->endpoint_.set_option (SOL_SOCKET,
-                                           SO_RCVBUF,
-                                           (void *) &so_bufsz,
-                                           sizeof (so_bufsz)) == -1
-               && errno != ENOTSUP)
-        ACE_ERROR ((LM_ERROR, "Server::Server: SO_RCVBUF %p\n",
-                    "set_option failed"));
+        {
+          ACE_ERROR ((LM_ERROR, "Server::Server: SO_SNDBUF %p\n",
+                      "set_option failed"));
+        }
     }
-#endif /* !ACE_LACKS_SOCKET_BUFSIZ */
+#endif /* ACE_LACKS_SO_SNDBUF */
+#if !defined (ACE_LACKS_SO_RCVBUF)
+  if (so_bufsz != 0)
+    {
+      if (this->endpoint_.set_option (SOL_SOCKET,
+                                      SO_RCVBUF,
+                                      (void *) &so_bufsz,
+                                      sizeof (so_bufsz)) == -1
+               && errno != ENOTSUP)
+        {
+          ACE_ERROR ((LM_ERROR, "Server::Server: SO_RCVBUF %p\n",
+                      "set_option failed"));
+        }
+    }
+#endif /* !ACE_LACKS_SO_RCVBUF */
   if (acceptor.close () == -1)
     ACE_ERROR ((LM_ERROR, "Server::Server %p\n",
                 "close failed"));
@@ -527,11 +541,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
 
   while ((c = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch ((char) c)
         {
         case 'v':
@@ -632,7 +647,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if (getopt.opt_ind () >= argc && client || argc == 1)
+  if ((getopt.opt_ind () >= argc && client != 0) || argc == 1)
     {
       usage ();
       return 1;
@@ -641,13 +656,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr addr (dstport);
 
   if (server)
-    return run_server (addr);
+    {
+      return run_server (addr);
+    }
 
   if ((u_int) bufsz < sizeof (ACE_hrtime_t))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "\nbufsz must be >= %d\n",
-                       sizeof (ACE_hrtime_t)),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "\nbufsz must be >= %d\n",
+                         sizeof (ACE_hrtime_t)),
+                        1);
+    }
 
   ACE_INET_Addr remote_addr;
 

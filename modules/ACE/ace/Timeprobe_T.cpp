@@ -27,11 +27,13 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
     allocator_ (0)
 {
   ACE_timeprobe_t *temp;
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
                         malloc (this->max_size_*sizeof(ACE_timeprobe_t)),
                         ACE_timeprobe_t,
                         this->max_size_);
+  //FUZZ: enable check_for_lack_ACE_OS
   this->timeprobes_ = temp;
 
 }
@@ -48,11 +50,13 @@ ACE_Timeprobe_Ex (ALLOCATOR *allocator,
     allocator_ (allocator)
 {
   ACE_timeprobe_t *temp = 0;
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
                         malloc (this->max_size_*sizeof(ACE_timeprobe_t)),
                         ACE_timeprobe_t,
                         this->max_size_);
+  //FUZZ: enable check_for_lack_ACE_OS
   this->timeprobes_ = temp;
 
 }
@@ -65,7 +69,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<
   //
 
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("ACE_NOTSUP: %N, line %l\n")));
+              ACE_TEXT ("ACE_NOTSUP: %N, line %l\n")));
   errno = ENOTSUP;
 }
 
@@ -143,12 +147,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
   if (size > this->max_size_)
     {
       ACE_timeprobe_t *temp = 0;
+      //FUZZ: disable check_for_lack_ACE_OS
       ACE_NEW_MALLOC_ARRAY (temp,
                             (ACE_timeprobe_t *) this->allocator ()->
                             malloc (this->max_size_
                                     * sizeof (ACE_timeprobe_t)),
                             ACE_timeprobe_t,
                             size);
+      //FUZZ: enable check_for_lack_ACE_OS
 
       if (this->max_size_ > 0)
         {
@@ -290,8 +296,8 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
                   time_difference));
 
       j = i;
-      i = (i + 1) % this->max_size_; 
-    } 
+      i = (i + 1) % this->max_size_;
+    }
   while (i != this->current_size_);
 
   static bool inversion_warning_printed = false;
@@ -345,14 +351,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
 
       // Modulus increment: loops around at the end.
       i = (i + 1) % this->max_size_;
-    } 
+    }
   while (i != this->current_size_);
 }
 
 template <class ACE_LOCK, class ALLOCATOR> const char *
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 {
-  if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING) 
+  if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING)
     return this->timeprobes_[i].event_.event_description_;
   else
     {

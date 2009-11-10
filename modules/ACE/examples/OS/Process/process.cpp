@@ -28,6 +28,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 #include "ace/SString.h"
+#include "ace/Truncate.h"
+#include "ace/Tokenizer_T.h"
 
 ACE_RCSID(Process, process, "$Id$")
 
@@ -109,7 +111,6 @@ parse_args (int argc, ACE_TCHAR **argv)
                            ACE_TEXT ("-w test wait functions\n")
                            ACE_TEXT ("-a run all (d,l,e \"running\")\n")),
                           -1);
-        break;
       }
     }
 
@@ -230,21 +231,28 @@ test_wait (void)
   int result;
   ACE_exitcode status;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%T] New process sleeping 10; try wait(2)\n")));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   result = process1.wait (ACE_Time_Value (2), &status);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%T] wait(2) returns %d(%d)...now try regular wait\n"),
               result,
               status));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   result = process1.wait (&status);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%T] wait() returns %d(%d)\n"),
               result,
               status));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_Process process2;
   if (process2.spawn (options) == -1)
@@ -256,16 +264,20 @@ test_wait (void)
                   error));
     }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%T] New process sleeping 10; try wait(12)\n"),
               status));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   result = process2.wait (ACE_Time_Value (12), &status);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%T] wait(12) returns %d(%d)...now try regular wait\n"),
               result,
               status));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   result = process2.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
@@ -310,11 +322,11 @@ win32_test_ls (void)
   BOOL fork_result =
     ACE_TEXT_CreateProcess (ACE_TEXT ("c:\\Utils\\bin\\ls.exe"),
                             ACE_TEXT ("-a"),
-                            NULL, // No process attributes.
-                            NULL, // No thread attributes.
+                            0, // No process attributes.
+                            0, // No thread attributes.
                             TRUE, // Allow handle inheritance.
                             0, // CREATE_NEW_CONSOLE, // Create a new console window.
-                            NULL,
+                            0,
                             0, // Current directory to start in.
                             &startup_info,
                             &process_info);
@@ -408,7 +420,9 @@ win32_spawn_environment_process (void)
 
   int size = 0;
   while (existing_environment[size] != '\0')
-    size += ACE_OS::strlen (existing_environment + size) + 1;
+    size +=
+      ACE_Utils::truncate_cast<int> (
+        ACE_OS::strlen (existing_environment + size) + 1);
 
   ACE_OS::memcpy (environment + (ACE_OS::strlen (environment) + 1),
                   existing_environment,
@@ -419,8 +433,8 @@ win32_spawn_environment_process (void)
   BOOL fork_result =
     ACE_TEXT_CreateProcess (ACE_TEXT ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe"),
                             ACE_TEXT ("process -g"),
-                            NULL, // No process attributes.
-                            NULL, // No thread attributes.
+                            0, // No process attributes.
+                            0, // No thread attributes.
                             TRUE, // Allow handle inheritance.
                             0, // CREATE_NEW_CONSOLE, // Create a new console window.
                             environment, // Environment.

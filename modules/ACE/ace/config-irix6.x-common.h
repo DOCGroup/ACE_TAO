@@ -60,6 +60,8 @@
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_MUTEXATTR_PSHARED
 
+#define ACE_LACKS_SUSECONDS_T
+
 // Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIGTIMEDWAIT
@@ -116,9 +118,6 @@
 
 // Platform supports STREAMS.
 #define ACE_HAS_STREAMS
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
 
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
@@ -179,7 +178,8 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_STDINT_H
 #define ACE_HAS_SYSENT_H
-#define ACE_HAS_SYSINFO
+#define ACE_HAS_SYSV_SYSINFO
+#define ACE_HAS_SYS_SYSTEMINFO_H
 
 // Platform has support for multi-byte character support compliant
 // with the XPG4 Worldwide Portability Interface wide-character
@@ -238,7 +238,6 @@
 
 // IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE

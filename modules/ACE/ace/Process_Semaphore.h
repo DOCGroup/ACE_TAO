@@ -49,13 +49,6 @@ public:
                          int max = 0x7FFFFFFF);
 
   /**
-   * This method is a no-op, i.e., it doesn't remove the semaphore.
-   * If you want to remove the semaphore, you must call the <remove>
-   * method explicitly.
-   */
-  // ~ACE_Process_Semaphore (void);
-
-  /**
    * Explicitly destroy the semaphore.  Note that only one thread
    * should call this method since it doesn't protect against race
    * conditions.
@@ -79,24 +72,24 @@ public:
 
   /**
    * Acquire semaphore ownership.  This calls <acquire> and is only
-   * here to make the <ACE_Process_Semaphore> interface consistent
+   * here to make the ACE_Process_Semaphore interface consistent
    * with the other synchronization APIs.
    */
   int acquire_read (void);
 
   /**
    * Acquire semaphore ownership.  This calls <acquire> and is only
-   * here to make the <ACE_Process_Semaphore> interface consistent
+   * here to make the ACE_Process_Semaphore interface consistent
    * with the other synchronization APIs.
    */
   int acquire_write (void);
 
   /**
    * Conditionally acquire semaphore (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the <ACE_Process_Semaphore>
+   * <tryacquire> and is only here to make the ACE_Process_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (void);
 
@@ -105,7 +98,7 @@ public:
    * <tryacquire> and is only here to make the ACE_Process_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write (void);
 
@@ -142,8 +135,6 @@ protected:
 template <class T> class ACE_Malloc_Lock_Adapter_T;
 
 /**
- * @class ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
- *
  * @brief Template specialization of ACE_Malloc_Lock_Adapter_T for
  * ACE_Process_Semaphore.
  *

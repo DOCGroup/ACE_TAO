@@ -1,9 +1,8 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig {
+project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig, support_ostream {
   avoids       = ace_for_tao
-  libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
 
@@ -11,6 +10,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     ACE.cpp
     ACE_crc_ccitt.cpp
     ACE_crc32.cpp
+    ace_wchar.cpp
     Activation_Queue.cpp
     Active_Map_Manager.cpp
     Addr.cpp
@@ -60,6 +60,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Dirent_Selector.cpp
     Dump.cpp
     Dynamic.cpp
+    Dynamic_Message_Strategy.cpp
     Event.cpp
     Event_Handler.cpp
     FIFO.cpp
@@ -118,13 +119,23 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     MEM_Stream.cpp
     Message_Block.cpp
     Message_Queue.cpp
+    Message_Queue_NT.cpp
+    Message_Queue_Vx.cpp
     Method_Request.cpp
     MMAP_Memory_Pool.cpp
     Msg_WFMO_Reactor.cpp
+    Monitor_Admin.cpp
+    Monitor_Admin_Manager.cpp
+    Monitor_Base.cpp
+    Monitor_Point_Registry.cpp
+    Monitor_Size.cpp
+    Monitor_Control_Types.cpp
+    Monitor_Control_Action.cpp
     Multihomed_INET_Addr.cpp
     Mutex.cpp
     Netlink_Addr.cpp
     Notification_Strategy.cpp
+    Notification_Queue.cpp
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp
@@ -164,6 +175,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     OS_NS_time.cpp
     OS_NS_unistd.cpp
     OS_NS_wchar.cpp
+    OS_NS_wctype.cpp
     OS_QoS.cpp
     OS_Thread_Adapter.cpp
     OS_TLI.cpp
@@ -190,7 +202,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
     Recyclable.cpp
-    Refcountable.cpp
     Registry.cpp
     Rtems_init.c
     RW_Mutex.cpp
@@ -228,6 +239,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     SPIPE_Connector.cpp
     SPIPE_Stream.cpp
     SString.cpp
+    Stack_Trace.cpp
     Stats.cpp
     String_Base_Const.cpp
     SUN_Proactor.cpp
@@ -247,14 +259,9 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Thread_Manager.cpp
     Thread_Mutex.cpp
     Thread_Semaphore.cpp
-    Time_Request_Reply.cpp
+    Throughput_Stats.cpp
     Time_Value.cpp
     Timeprobe.cpp
-    Timer_Hash.cpp
-    Timer_Heap.cpp
-    Timer_List.cpp
-    Timer_Queue.cpp
-    Timer_Wheel.cpp
     TLI.cpp
     TLI_Acceptor.cpp
     TLI_Connector.cpp
@@ -311,6 +318,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Hash_Multi_Map_Manager_T.cpp
     Hash_Map_With_Allocator_T.cpp
     IOStream_T.cpp
+    Intrusive_Auto_Ptr.cpp
     Intrusive_List.cpp
     Intrusive_List_Node.cpp
     LOCK_SOCK_Acceptor.cpp
@@ -322,12 +330,14 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Map_T.cpp
     Message_Block_T.cpp
     Message_Queue_T.cpp
+    Metrics_Cache_T.cpp
     Module.cpp
     Node.cpp
     Obstack_T.cpp
     Pair_T.cpp
     RB_Tree.cpp
     Reactor_Token_T.cpp
+    Refcountable_T.cpp
     Refcounted_Auto_Ptr.cpp
     Reverse_Lock_T.cpp
     Select_Reactor_T.cpp
@@ -338,6 +348,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     String_Base.cpp
     Svc_Handler.cpp
     Synch_T.cpp
+    Refcountable_T.cpp
     TSS_T.cpp
     Task_Ex_T.cpp
     Task_T.cpp
@@ -349,10 +360,12 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Timer_Queue_Adapters.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
+    Tokenizer_T.cpp
     Typed_SV_Message.cpp
     Typed_SV_Message_Queue.cpp
     Unbounded_Queue.cpp
     Unbounded_Set.cpp
+    Unbounded_Set_Ex.cpp
     Vector_T.cpp
   }
 
@@ -361,20 +374,27 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Condition_T.inl
     Guard_T.inl
     Handle_Gobbler.inl
+    Intrusive_Auto_Ptr.inl
     Lock_Adapter_T.inl
+    Metrics_Cache_T.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
-    Swap.inl
     TSS_T.inl
     ace_wchar.inl
     OS.inl
   }
 
   Header_Files {
+    // Set recurse so that everything from os_include is pulled in
+    recurse = 1
+
     ACE_export.h
     Array.h
     Bound_Ptr.h
+    CE_Screen_Output.h
+    Codeset_Symbols.h
     CORBA_macros.h
+    Codeset_Symbols.h
     Condition_T.h
     Default_Constants.h
     Exception_Macros.h
@@ -384,10 +404,14 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
+    Intrusive_Auto_Ptr.h
     Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h
+    Map.h
     Method_Object.h
+    Metrics_Cache.h
+    Metrics_Cache_T.h
     Memory_Pool.h
     Min_Max.h
     Netlink_Addr.h
@@ -402,52 +426,48 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     OS_NS_macros.h
     OS_String.h
     OS_Thread_Adapter.h
+    Obstack.h
     Object_Manager_Base.h
+    Obstack.h
     Pair.h
     Proactor_Impl.h
     Reactor_Impl.h
     Reactor_Timer_Interface.h
+    Refcountable.h
     Refcounted_Auto_Ptr.h
     Reverse_Lock_T.h
+    Select_Reactor.h
+    Service_Templates.h
     SOCK_Netlink.h
     SStringfwd.h
+    Stack_Trace.h
     Static_Object_Lock.h
     Strategies.h
     String_Base_Const.h
     Svc_Conf.h
+    Svc_Conf_Param.h
     Svc_Conf_Tokens.h
-    Swap.h
+    Svc_Conf_Token_Table.h
     Synch.h
     Synch_Traits.h
     TSS_T.h
+    Timer_Hash.h
+    Timer_Heap.h
+    Timer_List.h
+    Timer_Queue.h
     Timer_Queuefwd.h
+    Timer_Wheel.h
     Truncate.h
     UPIPE_Addr.h
     Value_Ptr.h
     Version.h
     Versioned_Namespace.h
     ace_wchar.h
-    config-WinCE.h
-    config-all.h
-    config-borland-common.h
-    config-lite.h
-    config-macros.h
-    config-minimal.h
-    config-win32-borland.h
-    config-win32-common.h
-    config-win32-ghs.h
-    config-win32-msvc-7.h
-    config-win32-msvc-8.h
-    config-win32-msvc.h
-    config-win32-visualage.h
-    config-win32.h
+    checked_iterator.h
+    config-*.h
     config.h
     iosfwd.h
     os_include
-    os_include/arpa
-    os_include/net
-    os_include/netinet
-    os_include/sys
     post.h
     pre.h
     streams.h

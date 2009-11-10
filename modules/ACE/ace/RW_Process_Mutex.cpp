@@ -29,8 +29,8 @@ ACE_RW_Process_Mutex::unique_name (void)
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (const ACE_TCHAR *name,
                                             int flags,
-                                                mode_t mode )
-  : lock_ (name ? name : this->unique_name (), flags, mode)
+                                            mode_t mode )
+  : lock_ (name ? name : unique_name (), flags, mode)
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
 }

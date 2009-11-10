@@ -24,7 +24,7 @@
 #include "ACEXML/common/Encoding.h"
 
 /**
- * @class ACEXML_FileCharStream FileCharStream.h "ACEXML/common/FileCharStream.h"
+ * @class ACEXML_FileCharStream
  *
  * An implementation of ACEXML_CharStream for reading input from a file.
  */

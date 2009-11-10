@@ -130,7 +130,7 @@ ACE_OS::gethostbyname (const char *name)
   if (0 == name || '\0' == name[0])
     return 0;
 
-  ACE_OSCALL (::hostGetByName ((char *) name), int, -1, first_addr);
+  ACE_OSCALL (::hostGetByName (const_cast <char *> (name)), int, -1, first_addr);
   if (first_addr == -1)
     return 0;
 
@@ -167,7 +167,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   else
     {
       int addr;
-      ACE_OSCALL (::hostGetByName ((char *) name), int, -1, addr);
+      ACE_OSCALL (::hostGetByName (const_cast <char *> (name)), int, -1, addr);
 
       if (addr == -1)
         {
@@ -276,7 +276,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 # else
 #   if defined (ACE_HAS_PHARLAP_RT)
       DEVHANDLE ip_dev = (DEVHANDLE)0;
-      EK_TCPIPCFG *devp;
+      EK_TCPIPCFG *devp = 0;
       size_t i;
       ACE_TCHAR dev_name[16];
 

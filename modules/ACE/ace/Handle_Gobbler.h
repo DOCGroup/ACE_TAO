@@ -16,7 +16,7 @@
 #define ACE_HANDLE_GOBBLER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Unbounded_Set.h"
+#include "ace/Handle_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,8 +54,7 @@ public:
   inline void close_remaining_handles (void);
 
 private:
-
-  typedef ACE_Unbounded_Set<ACE_HANDLE> HANDLE_SET;
+  typedef ACE_Handle_Set HANDLE_SET;
 
   /// The container which holds the open descriptors.
   HANDLE_SET handle_set_;

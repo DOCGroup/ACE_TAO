@@ -60,8 +60,11 @@ public:
   Scheduler (const char *, Scheduler * = 0);
   virtual ~Scheduler (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int svc (void);
 
   ACE_Future<u_long> work (u_long param, int count = 1);

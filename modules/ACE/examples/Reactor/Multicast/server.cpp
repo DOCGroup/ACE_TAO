@@ -91,10 +91,10 @@ Server_Events::Server_Events (u_short port,
                 "%p\n",
                 "hostname"));
 
-  else if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
+  else if (this->mcast_dgram_.join (this->mcast_addr_) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "subscribe"));
+                "join"));
   else
     {
       // Point to NULL so that we block in the beginning.
@@ -109,7 +109,7 @@ Server_Events::Server_Events (u_short port,
 
 Server_Events::~Server_Events (void)
 {
-  this->mcast_dgram_.unsubscribe ();
+  this->mcast_dgram_.leave (this->mcast_addr_);
 
   ACE_DEBUG ((LM_DEBUG,
               "total bytes received = %d after %d second\n",
@@ -171,7 +171,7 @@ Server_Events::handle_input (ACE_HANDLE)
       total_messages_received_++;
       total_bytes_received_ += retcode;
       last_sequence_number_ =
-        ntohl (log_record_->sequence_number);
+        ACE_NTOHL (log_record_->sequence_number);
 
       for (char *message_end = this->message_ + ACE_OS::strlen (this->message_) - 1;
            ACE_OS::strchr ("\r\n \t", *message_end) != 0;
@@ -238,7 +238,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 #else
 int
-main (int, char *argv[])
+ACE_TMAIN(int, ACE_TCHAR *argv[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "error: %s must be run on a platform that support IP multicast\n",

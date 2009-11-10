@@ -24,7 +24,7 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "usage: %n [-t n_threads] [-n iteration_count]\n"));
+              "usage: %n [-t n_threads] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
 
@@ -41,39 +41,39 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'n':
-	n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
       case 't':
-	n_threads = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        n_threads = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
       default:
-	print_usage_and_die ();
-	break;
+        print_usage_and_die ();
+        break;
       }
 }
 
 static void
 recursive_worker (size_t nesting_level,
-		  ACE_Recursive_Thread_Mutex *rm)
+                  ACE_Recursive_Thread_Mutex *rm)
 {
   if (nesting_level < n_iterations)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) = trying to acquire, nesting = %d, thread id = %u\n",
-		  rm->get_nesting_level (), rm->get_thread_id ()));
+                  "(%P|%t) = trying to acquire, nesting = %d, thread id = %u\n",
+      rm->get_nesting_level (), rm->get_thread_id ()));
       {
-	// This illustrates the use of the ACE_Guard<LOCK> with an
-	// ACE_Recursive_Thread_Mutex.
-	ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *rm);
-	ACE_DEBUG ((LM_DEBUG,
-		    "(%P|%t) = acquired, nesting = %d, thread id = %u\n",
-		    rm->get_nesting_level (), rm->get_thread_id ()));
+        // This illustrates the use of the ACE_Guard<LOCK> with an
+        // ACE_Recursive_Thread_Mutex.
+        ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *rm);
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) = acquired, nesting = %d, thread id = %u\n",
+        rm->get_nesting_level (), rm->get_thread_id ()));
 
-	recursive_worker (nesting_level + 1, rm);
+        recursive_worker (nesting_level + 1, rm);
       }
       ACE_DEBUG ((LM_DEBUG,
-      		  "(%P|%t) = released, nesting = %d, thread id = %u\n",
-		  rm->get_nesting_level (), rm->get_thread_id ()));
+                  "(%P|%t) = released, nesting = %d, thread id = %u\n",
+      rm->get_nesting_level (), rm->get_thread_id ()));
     }
 }
 
@@ -96,8 +96,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Recursive_Thread_Mutex rm;
 
   ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-					   ACE_THR_FUNC (worker),
-					   (void *) &rm);
+                                            ACE_THR_FUNC (worker),
+                                            (void *) &rm);
 
   ACE_Thread_Manager::instance ()->wait ();
   return 0;
@@ -107,7 +107,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "ACE doesn't support support process mutexes on this platform (yet)\n"),
-		    -1);
+                     "ACE doesn't support support process mutexes on this platform (yet)\n"),
+                    -1);
 }
 #endif /* ACE_WIN32 */

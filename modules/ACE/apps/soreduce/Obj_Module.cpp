@@ -181,20 +181,31 @@ Obj_Module::populate_sig_list (Sig_List &siglist,
 {
   char *c;
   ACE_CString temp;
-  for (int i = 0; i < lines; i++) {
-    for (c = buf->rd_ptr();
-         c != buf->wr_ptr() && *c != '\n'; c++);
-    temp += ACE_CString(buf->rd_ptr(),(c - buf->rd_ptr()));
-    buf->rd_ptr(c+1);
-    if (*c == '\n') {
-      //      ACE_DEBUG ((LM_DEBUG, "%s\n",temp.c_str()));
-      siglist.add (temp);
-      temp.clear();
-    } else {
-      buf = buf->cont();
-      if (buf == 0) {
-        siglist.add (temp);
-      }
+  
+  for (int i = 0; i < lines; i++)
+    {
+      for (c = buf->rd_ptr (); c != buf->wr_ptr () && *c != '\n'; ++c)
+        {
+          // No action.
+        }
+        
+      temp += ACE_CString (buf->rd_ptr (), (c - buf->rd_ptr ()));
+      buf->rd_ptr (c + 1);
+      
+      if (*c == '\n')
+        {
+          //      ACE_DEBUG ((LM_DEBUG, "%s\n",temp.c_str()));
+          siglist.add (temp);
+          temp.clear ();
+        }
+      else
+        {
+          buf = buf->cont ();
+          
+          if (buf == 0)
+            {
+              siglist.add (temp);
+            }
+        }
     }
-  }
 }

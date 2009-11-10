@@ -35,8 +35,7 @@ endif # versioned_so
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
-LIB ?=
-VLIB = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+VLIB = $(ARCH_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VLIB to VLIBS if building static_libs.
@@ -46,13 +45,14 @@ endif
 
 SHLIB ?=
 # Setup shared library variables, including versions.
-VSHLIB_NO_VER = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
+VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
 CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
+SHLIB_WITH_VER = $(SHLIB:%=%$(SOVERSION))
 
 SHLIBA ?=
-VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+VSHLIBA = $(ARCH_SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VSHLIB if we're building shared_libs.
 ifdef shared_libs
@@ -90,18 +90,27 @@ ifneq ($(IDL_SRC),)
   $(VLOBJS) $(VSHOBJS): $(IDL_SRC)
 endif
 
+# Since INSLIB already has the ARCH dir appended, if appropriate, ARCH
+# needs to be stripped from V[SH]LIB on the way over to INSLIB. To avoid
+# an extra '/' which confuses the relative link calculation, ensure the
+# '/' after ARCH is stripped if it's an ARCH build.
+ARCHDIR ?=
+ifdef ARCH
+  ARCHDIR = $(ARCH)/
+endif
+
 ifdef static_libs
-  LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
+  LIB_INSTALL += $(VLIB:$(ARCHDIR)%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VLIB:$(ARCHDIR)%=$(INSLIB)/%)
 endif # static_libs
 
 ifdef shared_libs
-  LIB_INSTALL += $(VSHLIB:%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VSHLIB:%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:%=$(INSLIB)/%*)
+  LIB_INSTALL += $(VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:$(ARCHDIR)%=$(INSLIB)/%*)
   ifdef SHLIBA
-    LIB_INSTALL += $(VSHLIBA:%=$(INSLIB)/%)
-    CLEANUP_INSTALL += $(CLEANUP_SHLIBA:%=$(INSLIB)/%)
+    LIB_INSTALL += $(VSHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
+    CLEANUP_INSTALL += $(CLEANUP_SHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
   endif
 endif # shared_libs
 
@@ -156,7 +165,16 @@ $(VLIB): $(VLOBJS)
         #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
   endif # ace_lib_prelink
-	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+  ifeq (1,$(ACE_OPENVMS))
+	find $(TMPINCDIR:%=%) -name "*.o" -or -name "*.obj" | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+  else
+    ifneq (,$(AR.cc.override))
+	$(AR.cc.override)
+    else
+	([ "`echo $(TMPINCDIR:%=%/*.o)`" != "$(TMPINCDIR:%=%/*.o)" ] && echo $(TMPINCDIR:%=%/*.o); \
+	echo $(filter %.o, $?)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+    endif
+  endif
   ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
 # templates.
@@ -186,7 +204,7 @@ shr.o: $(VSHOBJS)
 .INTERMEDIATE: shr.o
 endif # aix_build
 
-ifeq ($(VXWORKSLINK),true)
+ifeq ($(VXWORKSLINK),1)
 $(VSHLIB): $(basename $(notdir $(PRJ_FILE))).out
 	-$(RM) $@
 	-$(LN_S)  $(PROJECT_OUT) $@
@@ -228,17 +246,21 @@ $(VSHLIB): $(VSHOBJS)
           #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $^ $(LDFLAGS) $(ACE_NUL_STDERR)
           endif # ace_lib_prelink
-          ifeq ($(split),1)
-	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-          else # ! split
+          ifneq ($(SOLINK.cc.override),)
+	$(SOLINK.cc.override)
+          else
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-          endif  # split
+          endif #override
       endif  # ibmcxx_build
     endif  # SHLIBBUILD
   endif  # aix_build
 endif # VXWORKSLINK
 ifneq ($(SOVERSION),)
+# This carefully works with both ARCH (where VSHLIB_* refer to the ARCH
+# subdir, but SHLIB does not) and non-ARCH builds (where VSHLIB_* and SHLIB
+# refer to the same place). SHLIB_WITH_VER should be the same as $@ but
+# without the ARCH subdir.
 	-$(RM) $(VSHLIB_NO_VER)
-	-$(LN_S) $@ $(VSHLIB_NO_VER)
+	-$(LN_S) $(SHLIB_WITH_VER) $(VSHLIB_NO_VER)
 endif
 	-chmod a+rx $@

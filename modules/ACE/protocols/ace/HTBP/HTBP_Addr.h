@@ -72,7 +72,8 @@ namespace ACE
       int addr_to_string (ACE_TCHAR buffer[],
                           size_t size,
                           int ipaddr_format = 1) const;
-      int string_to_addr (const char address[]);
+      int string_to_addr (const char address[],
+                          int address_facmily = AF_UNSPEC);
 
       int set_htid(const char *htid);
       const char *get_htid (void) const;

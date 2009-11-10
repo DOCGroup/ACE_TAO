@@ -67,9 +67,10 @@ class getapp {
 
 
 // main entry point
-int main( int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  getapp get(argc, argv);
+  ACE_Argv_Type_Converter atc (argc, argv);
+  getapp get (atc.get_argc (), atc.get_ASCII_argv ());
   if (get.valid())
      return get.run();
   else
@@ -141,8 +142,8 @@ void getapp::usage()
 {
   cout << "Usage:\n";
   cout << "get [options] dotted-quad | DNSName[:port]\n";
-  cout << "      -o OID defaults to 1.3.6.1.2.1.1.1.0 (mibII sysDescr.0) \n";
-  cout << "      -c Community_name, default is 'public' \n";
+  cout << "      -o OID defaults to 1.3.6.1.2.1.1.1.0 (mibII sysDescr.0)\n";
+  cout << "      -c Community_name, default is 'public'\n";
   cout << "      -r N  retries default is N = 1 retry\n";
   cout << "      -t N  timeout in seconds default is 1 second" << endl;
 }
@@ -171,7 +172,11 @@ int getapp::run()
    const char *name = address_.resolve_hostname(rc);
 
    cout << "Device: " << address_ << " ";
+
+   //FUZZ: disable check_for_lack_ACE_OS
    cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
+   //FUZZ: enable check_for_lack_ACE_OS
+
    cout << "[ Retries=" << target_.get_retry() << " \
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;
@@ -186,8 +191,8 @@ int getapp::run()
       else {
         VbIter iter(pdu_);
         while (iter.next(vb)) {
- 	  cout << "\tOid = " << vb.to_string_oid() << "\n";
- 	  cout << "\tValue = " << vb.to_string_value() << "\n";
+          cout << "\tOid = " << vb.to_string_oid() << "\n";
+          cout << "\tValue = " << vb.to_string_value() << "\n";
        }
      }
    }

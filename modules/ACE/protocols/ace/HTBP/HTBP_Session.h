@@ -82,10 +82,10 @@ namespace ACE
                const Addr& local,
                ACE_UINT32 sid = 0,
                ACE_INET_Addr *proxy = 0,
-               int take_proxy = 0);
+               bool take_proxy = false);
       Session (const Session_Id_t &id,
                ACE_INET_Addr *proxy = 0,
-               int take_proxy = 0);
+               bool take_proxy = false);
 
       Session (const Session &other);
       Session& operator= (const Session &other);
@@ -155,8 +155,8 @@ namespace ACE
       /// the reference passed in, so that it may be used inline for
       /// the inboundor outbound methods
 
-      void reconnect ();
-      void reconnect_i (Channel *);
+      void reconnect () const;
+      void reconnect_i (Channel *) const;
 
       typedef ACE_Hash_Map_Manager<Session_Id_t, Session*,
                                    ACE_SYNCH_MUTEX> Session_Map;
@@ -173,10 +173,7 @@ namespace ACE
       Channel *inbound_;
       Channel *outbound_;
 
-      Filter *inbound_filter_;
-      Filter *outbound_filter_;
-
-      int closed_;
+      bool closed_;
 
       ACE_Event_Handler *handler_;
       ACE_Reactor *reactor_;

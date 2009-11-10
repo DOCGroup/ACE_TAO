@@ -59,22 +59,18 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("ACE_Naming_Context")),
                               1);
-
-          so = ACE_SVC_INVOKE (Client_Test);
-
-          if (so->init (0,
-                        args.argv ()) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "%p\n%a",
-                        "Client_Test",
-                        1));
         }
     }
+
+  Client_Test test_body;
+  if (test_body.open () == -1)
+    return 1;
 
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.
 
-  ACE_Reactor::run_event_loop ();
+  ACE_Reactor::instance ()->run_reactor_event_loop ();
+  test_body.close ();
 
   return 0;
 }

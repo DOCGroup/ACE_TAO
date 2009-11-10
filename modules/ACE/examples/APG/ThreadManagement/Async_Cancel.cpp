@@ -23,6 +23,10 @@ public:
         // Put this thread in a compute loop.. no
         // cancellation points are available.
       }
+#if defined (__HP_aCC) 
+    // This is only to workaround a warning on HP-UX compiler.
+    return 0;
+#endif /* __HP_aCC */ 
   }
 
   int set_cancel_mode (void)
@@ -56,7 +60,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 #else  /* ACE_HAS_PTHREADS */
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  puts ("This example works on Pthreads platforms.\n");
+  ACE_OS::puts ("This example works on Pthreads platforms.\n");
   return 0;
 }
 #endif /* ACE_HAS_PTHREADS */

@@ -30,9 +30,9 @@ ACE_Guard<ACE_LOCK>::dump (void) const
 // ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("mutex_ = %x\n"), this->lock_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("owner_ = %d\n"), this->owner_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("mutex_ = %x\n"), this->lock_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("owner_ = %d\n"), this->owner_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP, this));
 #endif /* ACE_HAS_DUMP */
 }
 

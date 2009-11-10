@@ -36,25 +36,25 @@ class ACE_Export ACE_File_Lock
 {
 public:
   /**
-   * Set the <handle_> of the File_Lock to <handle>.  Note that this
-   * constructor assumes ownership of the <handle> and will close it
-   * down in <remove>.  If you want the <handle> to stay open when
-   * <remove> is called make sure to call <dup> on the <handle>.
+   * Set the <handle_> of the File_Lock to @a handle.  Note that this
+   * constructor assumes ownership of the @a handle and will close it
+   * down in <remove>.  If you want the @a handle to stay open when
+   * <remove> is called make sure to call <dup> on the @a handle.
    * If you don't want the file unlinked in the destructor pass a
    * zero value for <unlink_in_destructor>.
    */
   ACE_File_Lock (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-                 int unlink_in_destructor = 1);
+                 bool unlink_in_destructor = true);
 
-  /// Open the <filename> with <flags> and <mode> and set the result
+  /// Open the @a filename with @a flags and @a mode and set the result
   /// to <handle_>.  If you don't want the file unlinked in the
-  /// destructor pass a zero value for <unlink_in_destructor>.
+  /// destructor pass a false value for @a unlink_in_destructor.
   ACE_File_Lock (const ACE_TCHAR *filename,
                  int flags,
                  mode_t mode = 0,
-                 int unlink_in_destructor = 1);
+                 bool unlink_in_destructor = true);
 
-  /// Open the <filename> with <flags> and <mode> and set the result to
+  /// Open the @a filename with @a flags and @a mode and set the result to
   /// <handle_>.
   int open (const ACE_TCHAR *filename,
             int flags,
@@ -64,8 +64,8 @@ public:
   ~ACE_File_Lock (void);
 
   /// Remove a File lock by releasing it and closing down the
-  /// <handle_>.  If <unlink_file> is non-0 then we unlink the file.
-  int remove (int unlink_file = 1);
+  /// <handle_>.  If @a unlink_file is true then we unlink the file.
+  int remove (bool unlink_file = true);
 
   /**
    * Note, for interface uniformity with other synchronization
@@ -78,8 +78,8 @@ public:
    * Note, for interface uniformity with other synchronization
    * wrappers we include the <tryacquire> method.  This is implemented
    * as a write-lock to be on the safe-side...  Returns -1 on failure.
-   * If we "failed" because someone else already had the lock, <errno>
-   * is set to <EBUSY>.
+   * If we "failed" because someone else already had the lock, @c errno
+   * is set to @c EBUSY.
    */
   int tryacquire (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
@@ -93,14 +93,14 @@ public:
   /**
    * Conditionally acquire a write lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
    * Conditionally upgrade to a write lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write_upgrade (short whence = 0,
                                 ACE_OFF_T start = 0,
@@ -109,14 +109,14 @@ public:
   /**
    * Acquire a read lock, but block if a writer hold the lock.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int acquire_read (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
    * Conditionally acquire a read lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
@@ -125,10 +125,10 @@ public:
 
   /**
    * Set underlying ACE_HANDLE.  Note that this method assumes
-   * ownership of the <handle> and will close it down in <remove>.  If
-   * you want the <handle> to stay open when <remove> is called make
-   * sure to call <dup> on the <handle> before closing it. You are
-   * responsible for the closing the existing <handle> before
+   * ownership of the @a handle and will close it down in <remove>.  If
+   * you want the @a handle to stay open when <remove> is called make
+   * sure to call <dup> on the @a handle before closing it. You are
+   * responsible for the closing the existing @a handle before
    * overwriting it.
    */
   void set_handle (ACE_HANDLE);
@@ -148,11 +148,11 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// <remove> on the same object, which is a bad idea anyway...
-  int removed_;
+  bool removed_;
 
   /// Keeps track of whether to unlink the underlying file in the
   /// destructor.
-  int unlink_in_destructor_;
+  bool const unlink_in_destructor_;
 
 private:
   // = Prevent assignment and initialization.

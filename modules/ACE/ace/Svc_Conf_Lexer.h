@@ -36,13 +36,13 @@ public:
   /// This is similar to the C function, ace_yylex, which a bison
   /// generated parser expects.  It returns information in the ace_yylval
   /// parameter and uses input stored in the param parameter.
-  static int yylex (ACE_YYSTYPE* ace_yylval,
+  static int yylex (YYSTYPE* ace_yylval,
                     ACE_Svc_Conf_Param* param);
 
 private:
   static size_t input(ACE_Svc_Conf_Param* param, char* buf, size_t max_size);
 
-  static int scan (ACE_YYSTYPE* ace_yylval, ACE_Svc_Conf_Param* param);
+  static int scan (YYSTYPE* ace_yylval, ACE_Svc_Conf_Param* param);
 
 #if defined (ACE_USES_WCHAR)
   static bool convert_to_utf8 (

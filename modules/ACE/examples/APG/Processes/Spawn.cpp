@@ -7,6 +7,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_pwd.h"
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
 
@@ -160,7 +161,7 @@ public:
   {
     ACE_TRACE ("Slave::showWho");
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
-    passwd *pw = ::getpwuid (::geteuid ());
+    passwd *pw = ::getpwuid (ACE_OS::geteuid ());
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) Running this process as:%s\n"),
                 pw->pw_name));

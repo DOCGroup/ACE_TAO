@@ -30,31 +30,25 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_String.h"
-
+#include "ace/SString.h"
 
 ACE_RCSID (tests,
            Dirent_Test,
            "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
 
-
 #if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
-#define TEST_DIR "log"
-#define DIR_DOT "."
-#define DIR_DOT_DOT ".."
-#define TEST_ENTRY ".."
+#  define TEST_DIR "log"
+#  define TEST_ENTRY ".."
 #else
-#  define TEST_DIR "../tests"
-#  if defined (ACE_LACKS_STRUCT_DIR) || !defined (ACE_HAS_SCANDIR)
-#    define DIR_DOT ACE_TEXT (".")
-#    define DIR_DOT_DOT ACE_TEXT ("..")
+#  if defined (ACE_HAS_TCHAR_DIRENT)
 #    define TEST_ENTRY ACE_TEXT ("run_test.lst")
 #  else
-#    define DIR_DOT "."
-#    define DIR_DOT_DOT ".."
 #    define TEST_ENTRY "run_test.lst"
-#  endif /* ACE_LACKS_STRUCT_DIR */
+#  endif /* ACE_HAS_TCHAR_DIRENT */
 #endif /* ACE_VXWORKS < 0x600 */
 
+// Directory to scan - we need to figure it out based on environment.
+static ACE_TString TestDir;
 static const int RECURSION_INDENT = 3;
 
 // Number of entries in the directory.
@@ -71,7 +65,7 @@ selector (const ACE_DIRENT *d)
 static int
 comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
 {
-  return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
+  return ACE_OS::alphasort (d1, d2);
 }
 
 } /* extern "C" */
@@ -79,59 +73,130 @@ comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
 static int
 dirent_selector_test (void)
 {
-  int status;
   int n;
-
+  int error = 0;
+  const ACE_TCHAR *test_dir = TestDir.c_str ();
   ACE_Dirent_Selector sds;
 
   // Pass in functions that'll specify the selection criteria.
-  status = sds.open (ACE_TEXT (TEST_DIR), selector, comparator);
-  ACE_ASSERT (status != -1);
+  int status = sds.open (test_dir, selector, comparator);
+  if (status == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%s, %p\n"),
+                       test_dir,
+                       ACE_TEXT ("open")),
+                      -1);
 
   // We should only have located ourselves!
-  ACE_ASSERT (sds.length () == 1);
+  if (sds.length () != 1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("selected %d entries in %s, should be 1\n"),
+                  sds.length (),
+                  test_dir));
+      error = 1;
+    }
 
   for (n = 0; n < sds.length (); ++n)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Sorted: %d: %C\n"),
-                n,
-                sds[n]->d_name));
+    {
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Sorted: %d: %s\n"),
+                  n,
+                  sds[n]->d_name));
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Sorted: %d: %C\n"),
+                  n,
+                  sds[n]->d_name));
+#endif
+    }
 
   status = sds.close ();
-  ACE_ASSERT (status != -1);
+  if (status == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("after selecting, %p\n"),
+                  ACE_TEXT ("close")));
+      error = 1;
+    }
 
   ACE_Dirent_Selector ds;
 
   // Don't specify any selection criteria.
-  status = ds.open (ACE_TEXT (TEST_DIR));
-  ACE_ASSERT (status != -1);
+  status = ds.open (test_dir);
+  if (status == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%s w/o selection criteria; %p\n"),
+                  test_dir,
+                  ACE_TEXT ("open")));
+      error = 1;
+    }
 
-  ACE_ASSERT (entrycount == ds.length ());
+  // We counted the entries earlier by hand; should be the same here.
+  if (entrycount != ds.length ())
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Counted %d entries in %s but selector says %d\n"),
+                  entrycount,
+                  test_dir,
+                  ds.length ()));
+      error = 1;
+    }
 
   for (n = 0; n < ds.length (); ++n)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Entry %d: %C\n"),
-                n,
-                ds[n]->d_name));
+    {
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Entry %d: %s\n"),
+                  n,
+                  ds[n]->d_name));
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Entry %d: %C\n"),
+                  n,
+                  ds[n]->d_name));
+#endif
+    }
 
-  status = ds.close ();
-  ACE_ASSERT (status != -1);
+  if (ds.close () == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("w/o selection criteria; %p\n"),
+                  ACE_TEXT ("close")));
+      error = 1;
+    }
 
-  return status;
+  return error ? -1 : 0;
 }
 
 static int
 dirent_test (void)
 {
-  ACE_Dirent dir (ACE_TEXT (TEST_DIR));
+  ACE_Dirent dir;
 
-  for (ACE_DIRENT *directory;
+   if (dir.open (TestDir.c_str ()) == -1)
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
+
+  for (ACE_DIRENT *directory = 0;
        (directory = dir.read ()) != 0;
        entrycount++)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Entry %d: %C\n"),
-                entrycount,
-                directory->d_name));
+    {
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Entry %d: %s\n"),
+                  entrycount,
+                  directory->d_name));
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Entry %d: %C\n"),
+                  entrycount,
+                  directory->d_name));
+#endif
+    }
+
   switch (entrycount)
     {
     case 0:
@@ -163,7 +228,7 @@ dirent_count (const ACE_TCHAR *dir_path,
 # if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
   // VxWorks only allows full paths (incl. device spec if applicable) to be specified
   ACE_TCHAR full_path[MAXPATHLEN];
-  if (ACE_OS::getcwd (full_path, sizeof(full_path)) == NULL)
+  if (ACE_OS::getcwd (full_path, sizeof(full_path)) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("getcwd: failed\n")),
                       -1);
@@ -184,14 +249,19 @@ dirent_count (const ACE_TCHAR *dir_path,
                        dir_path),
                       -1);
 # endif
+#else
+  ACE_UNUSED_ARG (dir_path);
 #endif /* !ACE_LACKS_CHDIR */
 
-  ACE_Dirent dir (ACE_TEXT ("."));
+  ACE_Dirent dir;
+   if (dir.open (ACE_TEXT (".")) == -1)
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_TEXT ("open of dir . failed\n")), -1);
 
   // Since the dir struct d_name type changes depending on the setting
   // of ACE_LACKS_STRUCT_DIR, copy each name into a neutral format
   // array to work on it.
-  const size_t maxnamlen = MAXNAMLEN;
+  size_t const maxnamlen = MAXNAMLEN;
   ACE_TCHAR tname[maxnamlen + 1];
 
   int entry_count = 0;
@@ -199,17 +269,16 @@ dirent_count (const ACE_TCHAR *dir_path,
   for (ACE_DIRENT *directory; (directory = dir.read ()) != 0;)
     {
       // Skip the ".." and "." files.
-      if (ACE_OS::strcmp (directory->d_name, DIR_DOT) == 0
-          || ACE_OS::strcmp (directory->d_name, DIR_DOT_DOT) == 0)
+      if (ACE::isdotdir(directory->d_name) == true)
         continue;
       ++entry_count;
 
-#if !defined (ACE_LACKS_STRUCT_DIR) && !defined (__BORLANDC__)
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_OS::strncpy (tname, directory->d_name, maxnamlen);
+#else
       ACE_OS::strncpy (tname,
                        ACE_TEXT_CHAR_TO_TCHAR (directory->d_name),
                        maxnamlen);
-#else
-      ACE_OS::strncpy (tname, directory->d_name, maxnamlen);
 #endif /* ACE_LACKS_STRUCT_DIR */
 
       int local_file_count = 0;
@@ -282,7 +351,7 @@ dirent_count (const ACE_TCHAR *dir_path,
           break;
 
         default: // Must be some other type of file (PIPE/FIFO/device)
-          file_count++;
+          ++file_count;
           break;
         }
     }
@@ -295,22 +364,23 @@ dirent_recurse_test (void)
 {
   int total_dirs = 0;
   int total_files = 0;
+  const ACE_TCHAR *test_dir = TestDir.c_str ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting directory recursion test for %s\n"),
-              ACE_TEXT (TEST_DIR)));
+              test_dir));
 
-  if (dirent_count (ACE_TEXT (TEST_DIR),
+  if (dirent_count (test_dir,
                     total_dirs,
                     total_files,
                     1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Directory recursion test failed for %s\n"),
-                       ACE_TEXT (TEST_DIR)),
+                       test_dir),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Directory recursion test succeeded for %s, read %d files %d dirs\n"),
-              ACE_TEXT (TEST_DIR),
+              test_dir,
               total_files,
               total_dirs));
   return 0;
@@ -321,15 +391,39 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dirent_Test"));
 
+  // First, find out where to run most of the scans. If a platform has a
+  // compiled-in setting in TEST_DIR, honor that. Else, look for:
+  //   $top_srcdir/tests: The ACE_wrappers dir for autoconf builds
+  //   $ACE_ROOT/tests: The ACE_wrappers dir for most other builds
+  //   ../test: Last-chance try to hit the right place
+#if defined (TEST_DIR)
+  TestDir = TEST_DIR;
+#else
+  const char *root = ACE_OS::getenv ("top_srcdir");
+  if (root == 0)
+    root = ACE_OS::getenv ("ACE_ROOT");
+  if (root != 0)
+    {
+      TestDir = ACE_TEXT_CHAR_TO_TCHAR (root);
+      TestDir += ACE_DIRECTORY_SEPARATOR_STR;
+      TestDir += ACE_TEXT ("tests");
+    }
+  else
+    {
+      TestDir = ACE_TEXT ("../tests");
+    }
+#endif /* TEST_DIR */
+
   int status = 0;
 
-  status = dirent_test ();
+  if (-1 == dirent_test ())
+    status = -1;
 
-  if (status != -1)
-    status = dirent_selector_test ();
+  if (-1 == dirent_selector_test ())
+    status = -1;
 
-  if (status != -1)
-    status = dirent_recurse_test ();
+  if (-1 == dirent_recurse_test ())
+    status = -1;
 
   ACE_END_TEST;
   return status;

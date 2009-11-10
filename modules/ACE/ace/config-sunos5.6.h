@@ -12,11 +12,6 @@
 
 #include "ace/config-sunos5.5.h"
 
-#if defined(__GNUC__) && __GNUC__ >= 2 && __GNUC_MINOR__ >= 95
-// gcc-2.95 fixes this problem for us!
-#undef ACE_HAS_STL_QUEUE_CONFLICT
-#endif /* __GNUC__ */
-
 #if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE > 2) || \
     defined (__EXTENSIONS__)
 // The asctime_r/ctime_r parameters change at POSIX.1c-1995
@@ -77,9 +72,6 @@
 #ifndef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB   1
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#ifndef ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_TEMPLATE_SPECIALIZATION         1
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #ifndef ACE_LACKS_IOSTREAM_FX
 #define ACE_LACKS_IOSTREAM_FX                   1
 #endif /* ACE_LACKS_IOSTREAM_FX */

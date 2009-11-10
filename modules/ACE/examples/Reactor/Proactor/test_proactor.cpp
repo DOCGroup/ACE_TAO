@@ -32,6 +32,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
@@ -39,7 +40,7 @@
 
 ACE_RCSID(Proactor, test_proactor, "$Id$")
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
 
@@ -197,9 +198,9 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 #if 0
@@ -253,9 +254,9 @@ Receiver::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 
@@ -263,7 +264,8 @@ Receiver::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 
   if (result.success ())
     // Write successful:  Increment file offset
-    this->file_offset_ += result.bytes_transferred ();
+    this->file_offset_ +=
+      ACE_Utils::truncate_cast<u_long> (result.bytes_transferred ());
 
   // This code is not robust enough to deal with short file writes
   // (which hardly ever happen) ;-)
@@ -279,8 +281,12 @@ class Sender : public ACE_Handler
 public:
   Sender (void);
   ~Sender (void);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host,
             u_short port);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   ACE_HANDLE handle (void) const;
   void handle (ACE_HANDLE);
 
@@ -467,9 +473,9 @@ Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_per_send", result.bytes_per_send ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "flags", result.flags ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 
@@ -515,9 +521,9 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   //ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
@@ -529,7 +535,9 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
       // Therefore, we do not delete this buffer because it is handled
       // in <handle_write_stream>.
 
-      this->file_offset_ += result.bytes_transferred ();
+      this->file_offset_ +=
+        ACE_Utils::truncate_cast<u_long> (result.bytes_transferred ());
+      
       if (this->ws_.write (result.message_block (),
                            result.bytes_transferred ()) == -1)
         {
@@ -561,9 +569,9 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 #if 0
@@ -573,7 +581,10 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   if (result.success ())
     {
       // Partial write to socket
-      int unsent_data = result.bytes_to_write () - result.bytes_transferred ();
+      int unsent_data =
+        ACE_Utils::truncate_cast<int> (
+          result.bytes_to_write () - result.bytes_transferred ());
+      
       if (unsent_data != 0)
         {
           // Reset pointers
@@ -666,7 +677,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+#else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -676,4 +687,4 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 1;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

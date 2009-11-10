@@ -183,7 +183,12 @@ Library::~Library ()
 {
   delete mpcfile_;
   int i;
-  for (i = 0; i < num_modules_; delete modules_[i++]);
+  
+  for (i = 0; i < num_modules_; delete modules_[i++])
+    {
+      // No action.
+    }
+  
   delete [] modules_;
 }
 
@@ -191,7 +196,7 @@ void
 Library::set_path (const char *p)
 {
   char abspath[1000];
-  memset (abspath,0,1000);
+  ACE_OS::memset (abspath,0,1000);
   ssize_t abspathlen = ACE_OS::readlink(p,abspath,999);
   ACE_CString path (p);
   if (abspathlen > 0) {

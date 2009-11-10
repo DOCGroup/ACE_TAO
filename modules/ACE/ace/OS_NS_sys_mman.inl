@@ -75,10 +75,14 @@ ACE_OS::mmap (void *addr,
 
   if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
-#  if !defined(ACE_HAS_WINCE)
+#  if defined(ACE_HAS_WINCE)
+      // PAGE_WRITECOPY is not avaible on CE, but this should be the same
+      // as PAGE_READONLY according to MSDN
+      nt_flags = FILE_MAP_ALL_ACCESS;
+#  else
       prot = PAGE_WRITECOPY;
-#  endif  // ACE_HAS_WINCE
       nt_flags = FILE_MAP_COPY;
+#  endif  // ACE_HAS_WINCE
     }
   else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
     {
@@ -93,7 +97,7 @@ ACE_OS::mmap (void *addr,
     {
       SECURITY_ATTRIBUTES sa_buffer;
       SECURITY_DESCRIPTOR sd_buffer;
-      const LPSECURITY_ATTRIBUTES attr =
+      LPSECURITY_ATTRIBUTES const attr =
         ACE_OS::default_win32_security_attributes_r (sa,
                                                      &sa_buffer,
                                                      &sd_buffer);
@@ -102,7 +106,7 @@ ACE_OS::mmap (void *addr,
                                                   attr,
                                                   prot,
                                                   0,
-                                                  0,
+                                                  (file_handle == ACE_INVALID_HANDLE) ? len : 0,
                                                   file_mapping_name);
     }
 
@@ -116,20 +120,20 @@ ACE_OS::mmap (void *addr,
   DWORD low_off  = ACE_LOW_PART (off);
   DWORD high_off = ACE_HIGH_PART (off);
 
-#  if !defined (ACE_HAS_WINCE)
+#  if defined (ACE_HAS_WINCE)
+  void *addr_mapping = ::MapViewOfFile (*file_mapping,
+                                        nt_flags,
+                                        high_off,
+                                        low_off,
+                                        len);
+#  else
   void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
                                           nt_flags,
                                           high_off,
                                           low_off,
                                           len,
                                           addr);
-#  else
-  void *addr_mapping = ::MapViewOfFile (*file_mapping,
-                                        nt_flags,
-                                        high_off,
-                                        low_off,
-                                        len);
-#  endif /* ! ACE_HAS_WINCE */
+#  endif /* ACE_HAS_WINCE */
 
   // Only close this down if we used the temporary.
   if (file_mapping == &local_handle)
@@ -147,8 +151,11 @@ ACE_OS::mmap (void *addr,
 #  endif /* ACE_OS_EXTRA_MMAP_FLAGS */
   ACE_UNUSED_ARG (file_mapping);
 #  if defined (ACE_OPENVMS)
+  //FUZZ: disable check_for_lack_ACE_OS
   ::fsync(file_handle);
+  //FUZZ: enable check_for_lack_ACE_OS
 #  endif
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr,
                                       len,
                                       prot,
@@ -156,6 +163,7 @@ ACE_OS::mmap (void *addr,
                                       file_handle,
                                       off),
                      void *, MAP_FAILED);
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -200,12 +208,7 @@ ACE_OS::msync (void *addr, size_t len, int sync)
 
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FlushViewOfFile (addr, len), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MSYNC)
-# if !defined (ACE_HAS_BROKEN_NETBSD_MSYNC)
   ACE_OSCALL_RETURN (::msync ((ACE_MMAP_TYPE) addr, len, sync), int, -1);
-# else
-  ACE_OSCALL_RETURN (::msync ((ACE_MMAP_TYPE) addr, len), int, -1);
-  ACE_UNUSED_ARG (sync);
-# endif /* ACE_HAS_BROKEN_NETBSD_MSYNC */
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -234,31 +237,65 @@ ACE_OS::munmap (void *addr, size_t len)
 ACE_INLINE ACE_HANDLE
 ACE_OS::shm_open (const ACE_TCHAR *filename,
                   int mode,
-                  int perms,
+                  mode_t perms,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::shm_open");
-# if defined (ACE_HAS_SHM_OPEN)
+#if defined (ACE_HAS_SHM_OPEN)
   ACE_UNUSED_ARG (sa);
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670)
+  // With VxWorks the file should just start with / and no other
+  // slashes, so replace all other / by _
+  ACE_TCHAR buf [MAXPATHLEN + 1];
+  ACE_OS::sprintf (buf,
+                   ACE_TEXT ("%s"),
+                   filename);
+  for (size_t i = 1; i < MAXPATHLEN + 1; i++)
+    {
+      if (buf[i] == '/')
+        {
+          buf[i] = '_';
+        }
+    }
+  filename = buf;
+#endif
   ACE_OSCALL_RETURN (::shm_open (ACE_TEXT_ALWAYS_CHAR(filename), mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
-# elif defined (ACE_OPENVMS)
+#elif defined (ACE_OPENVMS)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd")), ACE_HANDLE, ACE_INVALID_HANDLE);
-# else  /* ! ACE_HAS_SHM_OPEN */
+  //FUZZ: enable check_for_lack_ACE_OS
+#else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
   return ACE_OS::open (filename, mode, perms, sa);
-# endif /* ACE_HAS_SHM_OPEN */
+#endif /* ACE_HAS_SHM_OPEN */
 }
 
 ACE_INLINE int
 ACE_OS::shm_unlink (const ACE_TCHAR *path)
 {
   ACE_OS_TRACE ("ACE_OS::shm_unlink");
-# if defined (ACE_HAS_SHM_OPEN)
+#if defined (ACE_HAS_SHM_OPEN)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670)
+  // With VxWorks the file should just start with / and no other
+  // slashes, so replace all other / by _
+  ACE_TCHAR buf [MAXPATHLEN + 1];
+  ACE_OS::sprintf (buf,
+                   ACE_TEXT ("%s"),
+                   path);
+  for (size_t i = 1; i < MAXPATHLEN + 1; i++)
+    {
+      if (buf[i] == '/')
+        {
+          buf[i] = '_';
+        }
+    }
+  path = buf;
+#endif
   ACE_OSCALL_RETURN (::shm_unlink (ACE_TEXT_ALWAYS_CHAR(path)), int, -1);
-# else  /* ! ACE_HAS_SHM_OPEN */
+#else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::unlink.
   return ACE_OS::unlink (path);
-# endif /* ACE_HAS_SHM_OPEN */
+#endif /* ACE_HAS_SHM_OPEN */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 #include "URL_Visitor.h"
 #include "Command_Processor.h"
 
@@ -71,7 +72,8 @@ HTTP_Header_Processing_Strategy::execute (void)
       if (i == 0)
         {
           // Assuming that the status-no is a space away.
-          int status_index = line.find ("HTTP", 0);
+          int status_index =
+            ACE_Utils::truncate_cast<int> (line.find ("HTTP", 0));
           ACE_CString status = line.substring (status_index + 9, //HTTP/1.1 200
                                                3);
 
@@ -122,7 +124,9 @@ HTML_Body_Validation_Strategy::execute (void)
   prev_location.set (ACE_TEXT_ALWAYS_CHAR (this->url_.url_addr ().get_path_name ()),
                      ACE_OS::strlen (this->url_.url_addr ().get_path_name ()),
                      1);
-  int index = prev_location.rfind ('/', prev_location.length ());
+  int index =
+    ACE_Utils::truncate_cast<int> (
+      prev_location.rfind ('/', prev_location.length ()));
   ACE_CString str = prev_location.substring (0, index + 1);
   prev_location.set (str.c_str (), 1);
 
@@ -144,7 +148,9 @@ HTML_Body_Validation_Strategy::execute (void)
           if (url[0] == '.' && url[1] == '.')
            {
              url.set (&url[3], 1);
-             int i = prev_location.rfind ('/', prev_location.length () - 1);
+             int i =
+               ACE_Utils::truncate_cast<int> (
+                 prev_location.rfind ('/', prev_location.length () - 1));
              prev_location = prev_location.substring (0, i+1);
            }
           if (url[0] == '.' && url[1] == '/')

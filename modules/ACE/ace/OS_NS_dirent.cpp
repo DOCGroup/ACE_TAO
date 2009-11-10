@@ -41,7 +41,11 @@ ACE_DIR *
 ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
 {
 #if defined (ACE_WIN32)
-  ACE_DIR *dir;
+#  if !defined (INVALID_FILE_ATTRIBUTES)
+#    define INVALID_FILE_ATTRIBUTES 0xFFFFFFFF
+#  endif
+
+  ACE_DIR *dir = 0;
   ACE_TCHAR extra[3] = {0,0,0};
 
    // Check if filename is a directory.
@@ -68,15 +72,15 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
   Phil Mesnier
 */
 
-  size_t lastchar = ACE_OS::strlen (filename);
+  size_t const lastchar = ACE_OS::strlen (filename);
   if (lastchar > 0)
     {
       if (filename[lastchar-1] != '*')
         {
           if (filename[lastchar-1] != '/' && filename[lastchar-1] != '\\')
-            ACE_OS::strcpy (extra, ACE_LIB_TEXT ("/*"));
+            ACE_OS::strcpy (extra, ACE_TEXT ("/*"));
           else
-            ACE_OS::strcpy (extra, ACE_LIB_TEXT ("*"));
+            ACE_OS::strcpy (extra, ACE_TEXT ("*"));
         }
     }
 
@@ -118,8 +122,7 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
     }
   else
     {
-      int retval = ACE_TEXT_FindNextFile (d->current_handle_,
-                                          &d->fdata_);
+      int const retval = ACE_TEXT_FindNextFile (d->current_handle_, &d->fdata_);
       if (retval == 0)
         {
           // Make sure to close the handle explicitly to avoid a leak!
