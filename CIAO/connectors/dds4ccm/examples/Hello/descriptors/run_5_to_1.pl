@@ -18,7 +18,7 @@ $ns_running = 0;
 
 $daemons = 2;
 @ports = ( 60001, 60002 );
-@iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
+@iorfiles = ( "Sender.ior", "Receiver.ior" );
 @nodenames = ( "SenderNode", "ReceiverNode" );
 
 $status = 0;

@@ -9,20 +9,20 @@
   <!-- Implementations declarations -->
 
   <!-- Home implementation -->
-  <implementation xmi:id="Hello_SenderHomeImplementation">
-    <name>Hello_SenderHomeImplementation</name>
+  <implementation xmi:id="Hello_ReceiverComponentImplementation">
+    <name>ReceiverComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Sender_ExecArtifact" />
-    <artifact xmi:idref="Hello_Sender_SvntArtifact" />
+    <artifact xmi:idref="Receiver_ExecArtifact" />
+    <artifact xmi:idref="Receiver_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>home factory</name>
+      <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_SenderHome_Impl</string>
+          <string>create_Hello_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -33,7 +33,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_SenderHome_Servant</string>
+          <string>create_Hello_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -44,7 +44,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Sender_svnt</string>
+          <string>Receiver_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -55,27 +55,26 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Sender_exec</string>
+          <string>Receiver_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
-
-
-  <implementation xmi:id="Hello_SenderConnectorHomeImplementation">
-    <name>Hello_SenderConnectorHomeImplementation</name>
+  
+  <implementation xmi:id="Hello_ConnectorComponentImplementation">
+    <name>Hello_ConnectorComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_SenderConnector_ExecArtifact" />
-    <artifact xmi:idref="Hello_SenderConnector_SvntArtifact" />
+    <artifact xmi:idref="Hello_Connector_ExecArtifact" />
+    <artifact xmi:idref="Hello_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>home factory</name>
+      <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_SenderConnectorHome_Impl</string>
+          <string>create_Hello_Hello_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -86,7 +85,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_SenderConnectorHome_Servant</string>
+          <string>create_Hello_Hello_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -97,7 +96,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderConnector_svnt</string>
+          <string>Hello_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -108,323 +107,62 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_SenderConnector_exec</string>
+          <string>Hello_Connector_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
-
   <implementation xmi:id="Hello_SenderComponentImplementation">
-    <name>Hello_SenderComponentImplementation</name>
+    <name>SenderComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Sender_ExecArtifact" />
-    <artifact xmi:idref="Hello_Sender_SvntArtifact" />
+    <artifact xmi:idref="Sender_ExecArtifact" />
+    <artifact xmi:idref="Sender_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
-
-
-  <implementation xmi:id="Hello_SenderConnectorComponentImplementation">
-    <name>Hello_SenderConnectorComponentImplementation</name>
-    <source/>
-    <artifact xmi:idref="Hello_SenderConnector_ExecArtifact" />
-    <artifact xmi:idref="Hello_SenderConnector_SvntArtifact" />
-  </implementation>
-
-  <instance xmi:id="Hello_SenderHomeInstance1">
-    <name>Hello_SenderHome1</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome1.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_SenderHomeInstance2">
-    <name>Hello_SenderHome2</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome2.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_SenderHomeInstance3">
-    <name>Hello_SenderHome3</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome3.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_SenderHomeInstance4">
-    <name>Hello_SenderHome4</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome4</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_SenderHomeInstance5">
-    <name>Hello_SenderHome5</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome5</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_SenderConnectorHomeInstance1">
-    <name>Hello_SenderConnectorHome1</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome1.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_SenderConnectorHomeInstance2">
-    <name>Hello_SenderConnectorHome2</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome2.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-  <instance xmi:id="Hello_SenderConnectorHomeInstance3">
-    <name>Hello_SenderConnectorHome3</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome3.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-  <instance xmi:id="Hello_SenderConnectorHomeInstance4">
-    <name>Hello_SenderConnectorHome4</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome4.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-  <instance xmi:id="Hello_SenderConnectorHomeInstance5">
-    <name>Hello_SenderConnectorHome5</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome5.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
 
   <instance xmi:id="Hello_SenderComponentInstanceOne">
     <name>Hello_SenderComponentOne</name>
@@ -432,17 +170,6 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderHome1</string>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -476,6 +203,28 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>100</long>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderConnectorComponentInstanceOne">
@@ -483,18 +232,7 @@
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_SenderConnectorComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderConnectorHome1</string>
-        </value>
-      </value>
-    </configProperty>
+    <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -519,24 +257,12 @@
     </configProperty>
   </instance>
 
-
   <instance xmi:id="Hello_SenderComponentInstanceTwo">
     <name>Hello_SenderComponentTwo</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderHome2</string>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -570,6 +296,28 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>100</long>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderConnectorComponentInstanceTwo">
@@ -577,18 +325,7 @@
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_SenderConnectorComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderConnectorHome2</string>
-        </value>
-      </value>
-    </configProperty>
+    <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -620,17 +357,6 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderHome3</string>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -664,6 +390,28 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>100</long>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderConnectorComponentInstanceThree">
@@ -671,18 +419,7 @@
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_SenderConnectorComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderConnectorHome3</string>
-        </value>
-      </value>
-    </configProperty>
+    <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -714,17 +451,6 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderHome4</string>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -758,25 +484,37 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>100</long>
+        </value>
+      </value>
+    </configProperty>
   </instance>
+
 
   <instance xmi:id="Hello_SenderConnectorComponentInstanceFour">
     <name>Hello_SenderConnectorComponentFour</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_SenderConnectorComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderConnectorHome4</string>
-        </value>
-      </value>
-    </configProperty>
+    <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -808,17 +546,6 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderHome5</string>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -852,6 +579,28 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>100</long>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="Hello_SenderConnectorComponentInstanceFive">
@@ -859,18 +608,7 @@
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_SenderConnectorComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderConnectorHome5</string>
-        </value>
-      </value>
-    </configProperty>
+    <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -896,189 +634,134 @@
   </instance>
 
   <connection>
-    <name>string_writer_connection1</name>
+    <name>info_write_dataOne</name>
     <internalEndpoint>
-      <portName>push_data_data</portName>
+      <portName>info_in_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderComponentInstanceOne" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>sender_data</portName>
+      <portName>info_in_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceOne" />
     </internalEndpoint>
   </connection>
-
   <connection>
-    <name>dds_data_writer_connection1</name>
+    <name>info_write_dataTwo</name>
     <internalEndpoint>
-      <portName>push_data_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_SenderComponentInstanceOne" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>sender_dds_entity</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello_SenderConnectorComponentInstanceOne" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>string_writer_connection2</name>
-    <internalEndpoint>
-      <portName>push_data_data</portName>
+      <portName>info_in_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderComponentInstanceTwo" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>sender_data</portName>
+      <portName>info_in_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceTwo" />
     </internalEndpoint>
   </connection>
-
   <connection>
-    <name>dds_data_writer_connection2</name>
+    <name>info_write_dataThree</name>
     <internalEndpoint>
-      <portName>push_data_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_SenderComponentInstanceTwo" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>sender_dds_entity</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello_SenderConnectorComponentInstanceTwo" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>string_writer_connection3</name>
-    <internalEndpoint>
-      <portName>push_data_data</portName>
+      <portName>info_in_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderComponentInstanceThree" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>sender_data</portName>
+      <portName>info_in_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceThree" />
     </internalEndpoint>
   </connection>
-
   <connection>
-    <name>dds_data_writer_connection3</name>
+    <name>info_write_dataFour</name>
     <internalEndpoint>
-      <portName>push_data_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_SenderComponentInstanceThree" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>sender_dds_entity</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello_SenderConnectorComponentInstanceThree" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>string_writer_connection4</name>
-    <internalEndpoint>
-      <portName>push_data_data</portName>
+      <portName>info_in_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderComponentInstanceFour" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>sender_data</portName>
+      <portName>info_in_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceFour" />
     </internalEndpoint>
   </connection>
-
   <connection>
-    <name>dds_data_writer_connection4</name>
+    <name>info_write_dataFive</name>
     <internalEndpoint>
-      <portName>push_data_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_SenderComponentInstanceFour" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>sender_dds_entity</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello_SenderConnectorComponentInstanceFour" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>string_writer_connection5</name>
-    <internalEndpoint>
-      <portName>push_data_data</portName>
+      <portName>info_in_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_SenderComponentInstanceFive" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>sender_data</portName>
+      <portName>info_in_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceFive" />
     </internalEndpoint>
   </connection>
 
-  <connection>
-    <name>dds_data_writer_connection5</name>
-    <internalEndpoint>
-      <portName>push_data_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_SenderComponentInstanceFive" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>sender_dds_entity</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello_SenderConnectorComponentInstanceFive" />
-    </internalEndpoint>
-  </connection>
-
-  <artifact xmi:id="Hello_Sender_ExecArtifact">
-    <name>Hello_Sender_exec</name>
+  <artifact xmi:id="Sender_ExecArtifact">
+    <name>Sender_exec</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Sender_exec</location>
+    <location>Sender_exec</location>
   </artifact>
-  <artifact xmi:id="Hello_Sender_SvntArtifact">
-    <name>Hello_Sender_svnt</name>
+  <artifact xmi:id="Sender_SvntArtifact">
+    <name>Sender_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Sender_svnt</location>
+    <location>Sender_svnt</location>
   </artifact>
-
-  <artifact xmi:id="Hello_SenderConnector_ExecArtifact">
-    <name>Hello_SenderConnector_exec</name>
+  <artifact xmi:id="Sender_StubArtifact">
+    <name>Sender_stub</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Sender_Connector_exec</location>
+    <location>Sender_stub</location>
   </artifact>
-  <artifact xmi:id="Hello_SenderConnector_SvntArtifact">
-    <name>Hello_SenderConnector_svnt</name>
+  <artifact xmi:id="Hello_Connector_ExecArtifact">
+    <name>Hello_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Sender_Connector_svnt</location>
+    <location>DDS_Hello_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="Hello_Connector_SvntArtifact">
+    <name>Hello_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>DDS_Hello_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="Hello_Connector_StubArtifact">
+    <name>Hello_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>DDS_Hello_Connector_stub</location>
+  </artifact>
+  <artifact xmi:id="Receiver_ExecArtifact">
+    <name>Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Receiver_exec</location>
+  </artifact>
+  <artifact xmi:id="Receiver_SvntArtifact">
+    <name>Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Receiver_svnt</location>
+  </artifact>
+  <artifact xmi:id="Receiver_StubArtifact">
+    <name>Receiver_stub</name>
+    <source/>
+    <node/>
+    <location>Receiver_stub</location>
   </artifact>
 
 </Deployment:DeploymentPlan>
