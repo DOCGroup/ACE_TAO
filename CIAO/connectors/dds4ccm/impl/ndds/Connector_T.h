@@ -41,11 +41,11 @@ public:
 
   virtual typename CCM_TYPE::updater_type::_ptr_type get_info_update_data (void);
 
-  virtual typename CCM_TYPE::getter_type::_ptr_type get_info_get_out_data (void);
+  virtual typename CCM_TYPE::getter_type::_ptr_type get_info_out_get_data (void);
 
   virtual typename CCM_TYPE::reader_type::_ptr_type get_info_out_data (void);
 
-  virtual ::CCM_DDS::CCM_ListenerControl_ptr get_info_out_control (void);
+  virtual ::CCM_DDS::CCM_ListenerControl_ptr get_info_out_data_control (void);
 
   virtual ::DDS::CCM_DataReader_ptr get_info_out_dds_entity (void);
 

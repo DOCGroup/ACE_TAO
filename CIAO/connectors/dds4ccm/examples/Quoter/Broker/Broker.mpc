@@ -12,7 +12,7 @@ project(DDS_Broker_idl_gen) : componentidldefaults , connectoridldefaults  {
               -Wb,exec_export_include=Broker_exec_export.h -I..
 
   IDL_Files {
-    Broker.idl3
+    Broker.idl
   }
 }
 

@@ -13,7 +13,7 @@ project(DDS_Distributor_idl_gen) : connectoridldefaults, componentidldefaults   
               -I ..
 
   IDL_Files {
-    Distributor.idl3
+    Distributor.idl
   }
 }
 

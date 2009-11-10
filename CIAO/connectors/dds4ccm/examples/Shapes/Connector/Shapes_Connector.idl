@@ -110,8 +110,8 @@ module CCM_DDS
   porttype DDS_Listen {
     uses CCM_DDS::ShapeType_Reader data;
     uses CCM_DDS::ShapeType_Getter get_data;
-    uses CCM_DDS::ListenerControl control;
-    provides CCM_DDS::ShapeType_RawListener listener;
+    uses CCM_DDS::ListenerControl data_control;
+    provides CCM_DDS::ShapeType_RawListener data_listener;
     uses DDS::DataReader dds_entity;
     provides CCM_DDS::PortStatusListener status;
   };
@@ -137,12 +137,7 @@ module Shapes
     mirrorport CCM_DDS::DDS_Update info_update;
 
     // @from DDS_RawListen for ShapeType
-    provides CCM_DDS::ShapeType_Reader info_out_data;
-    provides CCM_DDS::ShapeType_Getter info_get_out_data;
-    provides CCM_DDS::ListenerControl info_out_control;
-    uses CCM_DDS::ShapeType_RawListener info_out_listener;
-    provides DDS::DataReader info_out_dds_entity;
-    uses CCM_DDS::PortStatusListener info_out_status;
+    mirrorport CCM_DDS::DDS_Listen info_out;
   };
 };
 

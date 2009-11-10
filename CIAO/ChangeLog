@@ -1,3 +1,37 @@
+Tue Nov 10 10:04:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl3p
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.mpc
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl3p
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl3
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl3p
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.idl
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp
+          Use the new idl3+ porttype/port/mirrorport. Moved all idl from idl3 to
+          regular idl files. Updated some code because some of the idl methods
+          now get their correct name
+
 Tue Nov 10 09:22:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.idl:
