@@ -1,3 +1,8 @@
+Tue Nov 10 12:40:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Fixed this plan
+
 Tue Nov 10 12:11:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
