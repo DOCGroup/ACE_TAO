@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*) : aceexe {
-  exename = Transceiver
-  Source_Files {
-    transceiver.cpp
-  }
-}
