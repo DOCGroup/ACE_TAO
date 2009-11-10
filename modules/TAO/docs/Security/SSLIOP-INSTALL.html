@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+  <head>
+    <title>TAO's SSLIOP Protocol - Installation</title>
+    <!-- $Id$ -->
+  </head>
+
+  <BODY text = "#000000"
+    link="#000fff"
+    vlink="#ff0f0f"
+    bgcolor="#ffffff">
+
+    <H1>TAO's SSLIOP Pluggable Protocol - Installation</H1>
+
+
+<p>The first step for all platforms is to build and install the <A HREF="http://www.openssl.org/">OpenSSL</A>
+  distribution. Then the TAO SSLIOP pluggable protocol library must be built according
+  to the instructions below. Refer to the <a href="SSLIOP.html">TAO SSLIOP usage
+  instructions</a> for details about how to use the SSLIOP pluggable protocol. 
+  See the <a href="../../../ACE-INSTALL.html#sslinstall">ACE 
+  installation notes</A> for how to build ACE_SSL after you have build OpenSSL.
+</p>
+<h3>UNIX</h3>
+<OL>
+  <LI>Make sure the OpenSSL header file directory is in your compiler's include
+    path, and that OpenSSL libraries are in your library link/load path (e.g.
+    <font face="Courier New, Courier, mono">LD_LIBRARY_PATH</font>). If you installed
+    OpenSSL into a set of directories unknown by the compiler, then set the following
+    variables in your <font face="Courier New, Courier, mono">platform_macros.GNU</font>
+    file:</LI>
+
+    <table width="75%" border="0" align="center">
+      <tr>
+        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_CPPFLAGS</font></td>
+        <td>Platform preprocessor options for OpenSSL (e.g. -I...)</td>
+      </tr>
+      <tr>
+        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_LDFLAGS</font></td>
+        <td>Platform linker options for OpenSSL (e.g. -L...)</td>
+      </tr>
+      <tr>
+        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_LIBS</font></td>
+        <td>Platform libraries required with OpenSSL</td>
+      </tr>
+    </table>
+    <br>
+
+  <LI>Build ACE and TAO as described in the <A HREF="../../../ACE-INSTALL.html">ACE
+    installation</A> instructions and the <A HREF="../../../TAO/TAO-INSTALL.html">TAO
+    installation</A> instructions, respectively. When building ACE and TAO, add
+    &quot;<font face="Courier New, Courier, mono">ssl=1</font>&quot; to your <font face="Courier New, Courier, mono">make</font>
+    command line invocation, or add it to your <font face="Courier New, Courier, mono">platform_macros.GNU</font>
+    file.</LI>
+  <li>Build the SSLIOP pluggable protocol library in the <TT>$TAO_ROOT/orbsvcs/orbsvcs/SSLIOP</TT>
+    directory. (<TT>ACE_ROOT</TT> environment variable should be set prior
+    to this point), by invoking <font face="Courier New, Courier, mono">make</font>
+    with <font face="Courier New, Courier, mono">TAO_ORBSVCS=SSLIOP</font>.</li>
+</OL>
+<h3>Microsoft Visual Studio</h3>
+<ol>
+  <li>Set the OpenSSL include/header directory path under the <b><i>Directories</i></b>
+    tab - <i><b>Include Files</b></i> setting in the <i><b>Tools-&gt;Options</b></i>
+    dialog. A typical value would be something like: <code>openssl-0.9.6\inc32</code></li>
+  <li>Set the OpenSSL library directory path under the <b><i>Directories</i></b>
+    tab - <i><b>Library Files</b></i> setting in the <i><b>Tools-&gt;Options</b></i>
+    dialog. A typical value would be something like: <code>openssl-0.9.6\out32dll</code></li>
+  <li>Open the <code>TAOACE.dsw</code> workspace, and refer to the <a href="../../../ACE-INSTALL.html">ACE
+    installation</a> and the <a href="../../../TAO/TAO-INSTALL.html">TAO
+    installation</a> instructions for details on creating a <code>config.h</code>
+    configuration header for this platform. Once the config.h file has been created,
+    build <code>SSLIOP</code> project. All project dependencies are already set,
+    so those projects that SSLIOP depends on will be automatically built. </li>
+</ol>
+<h3>Borland C++</h3>
+    <p>Note: You will need perl installed on your system and available on
+      the path to be able to build OpenSSL.
+      <ol>
+      <li>Obtain and unpack OpenSSL.
+      <li><p>Apply this <A HREF="http://www.tenermerx.com/programming/corba/tao_bcb/openssl-0.9.6h-bcbpatch.tgz">patch</A>.
+        <p>This will enable OpenSSL to build DLLs that can be used by
+          ACE+TAO.  If you will only be doing a static build of
+          ACE+TAO you do not need to apply this patch.
+      <li>Open a command prompt and change to the OpenSSL directory.</li>
+      <li>Configure OpenSSL to build by executing the command:
+        <p><code>ms\bcb4.bat</code></li>
+      <li>If you want to use SSL in a dynamic library build of
+        ACE+TAO, run the command:
+        <p><code>make -f bcbdll.mak</code></li>
+      <li>If you want to use SSL in a static build of ACE+TAO, run the
+        command:
+        <p><code>make -f bcb.mak</code>
+      <li><p>To enable SSL support in ACE+TAO you simply need to set the
+          <code>SSL_ROOT</code> environment variable to point to the
+          location of OpenSSL. For example:
+        <p><code>set SSL_ROOT=c:\openssl-0.9.6h</code>
+    </ol>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
