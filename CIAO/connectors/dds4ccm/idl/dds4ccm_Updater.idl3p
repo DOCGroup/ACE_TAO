@@ -8,15 +8,15 @@
 #ifndef DDS4CCM_UPDATER_IDL3P
 #define DDS4CCM_UPDATER_IDL3P
 
-#include "dds4ccm/idl/dds4ccm_Base.idl3"
+#include "connectors/dds4ccm/idl/dds4ccm_Base.idl3"
 
 module CCM_DDS
 {
   interface Updater<typename T> {
-    void create (in T an_instance) 
+    void create (in T an_instance)
       raises (AlreadyCreated,
               InternalError);
-    void update (in T an_instance) 
+    void update (in T an_instance)
       raises (NonExistent,
               InternalError);
     void delete (in T an_instance)

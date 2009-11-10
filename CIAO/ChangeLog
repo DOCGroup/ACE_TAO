@@ -1,3 +1,46 @@
+Tue Nov 10 14:32:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.mpc
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.mpc
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.mpc
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.mpc
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Base.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Connector_Event.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Connector_State.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3
+        * connectors/dds4ccm/idl/dds4ccm_Getter.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_ListenerControl.idl3
+        * connectors/dds4ccm/idl/dds4ccm_MultiListener.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_MultiUpdater.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_MultiWriter.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_Get.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiListen.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiUpdate.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_MultiWrite.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_Update.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_Write.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3
+        * connectors/dds4ccm/idl/dds4ccm_RawListener.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Reader.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_StateListener.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Updater.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p
+          Fixed mpc files, do full includes related to CIAO_ROOT
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Unicode fix
+
 Tue Nov 10 14:12:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp

@@ -11,13 +11,13 @@
 #define SHAPES_CONNECTOR_IDL_
 
 #include  <Components.idl>
-#include "dds4ccm/idl/dds4ccm_ListenerControl.idl3"
-#include "dds4ccm/idl/dds4ccm_ListenerControlE.idl"
-#include "dds4ccm/idl/dds4ccm_PortStatusListener.idl3"
-#include "dds4ccm/idl/dds4ccm_PortStatusListenerE.idl"
-#include "dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3"
-#include "dds4ccm/idl/dds4ccm_ListenerControl.idl3"
-#include "dds4ccm/idl/dds_rtf2_dcpsE.idl"
+#include "connectors/dds4ccm/idl/dds4ccm_ListenerControl.idl3"
+#include "connectors/dds4ccm/idl/dds4ccm_ListenerControlE.idl"
+#include "connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3"
+#include "connectors/dds4ccm/idl/dds4ccm_PortStatusListenerE.idl"
+#include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3"
+#include "connectors/dds4ccm/idl/dds4ccm_ListenerControl.idl3"
+#include "connectors/dds4ccm/idl/dds_rtf2_dcpsE.idl"
 #include "Base/Shapes_Base.idl"
 
 module CCM_DDS
