@@ -18,6 +18,9 @@ module Hello
     uses CCM_DDS::ListenerControl           info_out_control;
     provides CCM_DDS::DDSHello_RawListener  info_out_listener;
     provides CCM_DDS::PortStatusListener    info_out_status;
+    
+    attribute string name;
+    attribute unsigned long expected_samples;
   };
 };
 
