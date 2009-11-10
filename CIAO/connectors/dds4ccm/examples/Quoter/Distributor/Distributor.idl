@@ -1,14 +1,14 @@
 // $Id$
 
 /**
- * @file Distributor.idl3
+ * @file Distributor.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * by-hand idl3 translation of distributor components.
  */
 
-#ifndef DDS_DISTRIBUTOR_IDL3
-#define DDS_DISTRIBUTOR_IDL3
+#ifndef DDS_DISTRIBUTOR_IDL
+#define DDS_DISTRIBUTOR_IDL
 
 #include "Connector/Quoter_Connector.idl"
 #include "Connector/Quoter_ConnectorE.idl"

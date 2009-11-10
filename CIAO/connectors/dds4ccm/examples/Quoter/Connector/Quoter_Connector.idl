@@ -1,14 +1,14 @@
 // $Id$
 
 /**
- * @file Quoter_Connector.idl3
+ * @file Quoter_Connector.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * by-hand translation of the idl3p.
  */
 
-#ifndef QUOTER_CONNECTOR_IDL3_
-#define QUOTER_CONNECTOR_IDL3_
+#ifndef QUOTER_CONNECTOR_IDL_
+#define QUOTER_CONNECTOR_IDL_
 
 #include  <Components.idl>
 #include "dds4ccm/idl/dds4ccm_ListenerControl.idl3"
