@@ -5,7 +5,7 @@
                           xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Hello_Depl_1</label>
   <UUID>Hello_Depl_1</UUID>
-  
+
   <implementation xmi:id="Hello_ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
     <source/>
@@ -57,7 +57,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <implementation xmi:id="Hello_ConnectorComponentImplementation">
     <name>Hello_ConnectorComponentImplementation</name>
     <source/>
@@ -160,7 +160,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
   <instance xmi:id="Hello_ReceiverComponentInstanceOne">
     <name>Hello_ReceiverComponentOne</name>
     <node>ReceiverNode</node>
@@ -201,7 +201,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceOne">
     <name>Hello_ReceiverConnectorComponentOne</name>
     <node>ReceiverNode</node>
@@ -242,8 +242,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="Hello_ReceiverComponentInstanceTwo">
     <name>Hello_ReceiverComponentTwo</name>
     <node>ReceiverNode</node>
@@ -284,7 +284,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceTwo">
     <name>Hello_ReceiverConnectorComponentTwo</name>
     <node>ReceiverNode</node>
@@ -325,8 +325,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="Hello_ReceiverComponentInstanceThree">
     <name>Hello_ReceiverComponentThree</name>
     <node>ReceiverNode</node>
@@ -367,7 +367,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceThree">
     <name>Hello_ReceiverConnectorComponentThree</name>
     <node>ReceiverNode</node>
@@ -408,8 +408,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="Hello_ReceiverComponentInstanceFour">
     <name>Hello_ReceiverComponentFour</name>
     <node>ReceiverNode</node>
@@ -450,7 +450,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceFour">
     <name>Hello_ReceiverConnectorComponentFour</name>
     <node>ReceiverNode</node>
@@ -491,8 +491,8 @@
       </value>
     </configProperty>
   </instance>
-  
-  
+
+
   <instance xmi:id="Hello_ReceiverComponentInstanceFive">
     <name>Hello_ReceiverComponentFive</name>
     <node>ReceiverNode</node>
@@ -533,7 +533,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="Hello_ReceiverConnectorComponentInstanceFive">
     <name>Hello_ReceiverConnectorComponentFive</name>
     <node>ReceiverNode</node>
@@ -574,9 +574,9 @@
       </value>
     </configProperty>
   </instance>
-  
-  
-  
+
+
+
   <instance xmi:id="Hello_SenderConnectorComponentInstance">
     <name>Hello_SenderConnectorComponent</name>
     <node>ReceiverNode</node>
@@ -646,7 +646,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <connection>
     <name>info_write_data</name>
     <internalEndpoint>
@@ -662,17 +662,17 @@
       <instance xmi:idref="Hello_SenderConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>_listenercontrolOne</name>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceOne" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceOne" />
@@ -681,13 +681,13 @@
   <connection>
     <name>_listenercontrolTwo</name>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceTwo" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceTwo" />
@@ -696,13 +696,13 @@
   <connection>
     <name>_listenercontrolThree</name>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceThree" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceThree" />
@@ -711,13 +711,13 @@
   <connection>
     <name>_listenercontrolFour</name>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceFour" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceFour" />
@@ -726,22 +726,22 @@
   <connection>
     <name>_listenercontrolFive</name>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceFive" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceFive" />
     </internalEndpoint>
   </connection>
-  
-  
-  
-  
+
+
+
+
   <connection>
     <name>_portstatuslistenerOne</name>
     <internalEndpoint>
@@ -817,20 +817,20 @@
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceFive" />
     </internalEndpoint>
   </connection>
-  
-  
-  
-  
+
+
+
+
   <connection>
     <name>_rawlistnerOne</name>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceOne" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceOne" />
@@ -839,13 +839,13 @@
   <connection>
     <name>_rawlistnerTwo</name>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceTwo" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceTwo" />
@@ -854,13 +854,13 @@
   <connection>
     <name>_rawlistnerThree</name>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceThree" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceThree" />
@@ -869,13 +869,13 @@
   <connection>
     <name>_rawlistnerFour</name>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceFour" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceFour" />
@@ -884,19 +884,19 @@
   <connection>
     <name>_rawlistnerFive</name>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_ReceiverComponentInstanceFive" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello_ReceiverConnectorComponentInstanceFive" />
     </internalEndpoint>
   </connection>
-  
+
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>
