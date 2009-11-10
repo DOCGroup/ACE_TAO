@@ -41,7 +41,7 @@ namespace CIAO_Hello_Receiver_Impl
         int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
         if (sec_rec != now.second ())
           usec_rec += 10000000;
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("<%s> received <%s> - <%d>. difference <%d>\n"),
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("<%C> received <%C> - <%d>. difference <%d>\n"),
                     this->name_.c_str (),
                     an_instance.hello.in (),
                     an_instance.iterator,
@@ -49,14 +49,14 @@ namespace CIAO_Hello_Receiver_Impl
       }
     else
     {
-      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT("<%s> received <%s> - <%d>.\n"),
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT("<%C> received <%C> - <%d>.\n"),
       this->name_.c_str (),
       an_instance.hello.in (),
       an_instance.iterator));
     }
 /*
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DDSHello_RawListener: ")
-            ACE_TEXT ("received hello for <%s> - iterator <%d>\n"),
+            ACE_TEXT ("received hello for <%C> - iterator <%d>\n"),
             an_instance.hello.in (),
             an_instance.iterator));
 */
