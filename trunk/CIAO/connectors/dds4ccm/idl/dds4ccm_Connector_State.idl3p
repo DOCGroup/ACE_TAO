@@ -8,10 +8,10 @@
 #ifndef DDS4CCM_CONNECTOR_STATE_IDL3P
 #define DDS4CCM_CONNECTOR_STATE_IDL3P
 
-#include "dds4ccm/idl/dds4ccm_Port_Update.idl3p"
-#include "dds4ccm/idl/dds4ccm_Port_Read.idl3p"
-#include "dds4ccm/idl/dds4ccm_Port_Get.idl3p"
-#include "dds4ccm/idl/dds4ccm_Port_StateListen.idl3p"
+#include "connectors/dds4ccm/idl/dds4ccm_Port_Update.idl3p"
+#include "connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p"
+#include "connectors/dds4ccm/idl/dds4ccm_Port_Get.idl3p"
+#include "connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p"
 
 module CCM_DDS
 {

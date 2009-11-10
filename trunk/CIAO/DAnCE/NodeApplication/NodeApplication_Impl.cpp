@@ -1095,15 +1095,15 @@ NodeApplication_Impl::ColocationMap
 NodeApplication_Impl::create_colocation_groups (void)
 {
   DANCE_TRACE ("NodeApplication_impl::create_colocation_groups");
-  
+
   ColocationMap  retval;
   size_t num_servers (0);
-  
+
   for (CORBA::ULong i = 0; i < this->plan_.instance.length (); ++i)
     {
       retval [this->plan_.instance[i].name.in ()] = -1;
     }
-  
+
   for (CORBA::ULong i = 0; i < this->plan_.localityConstraint.length (); ++i)
     {
       if (this->plan_.localityConstraint[i].constraint != ::Deployment::PlanSameProcess)
@@ -1113,25 +1113,25 @@ NodeApplication_Impl::create_colocation_groups (void)
                         i));
           continue;
         }
-      
+
       const ::CORBA::ULongSeq &instances = this->plan_.localityConstraint[i].constrainedInstanceRef;
-      
+
       for (CORBA::ULong j = 0; j < instances.length (); ++j)
         {
           std::string id = this->plan_.instance[instances[j]].name.in ();
-          
+
           DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
                         ACE_TEXT ("Instance <%s> allocated to component server %u\n"),
                         id.c_str (), num_servers));
-          
+
           retval[id] = num_servers;
         }
-      
+
       ++num_servers;
     }
-  
+
   bool create_default_server (false);
-  
+
   for (ColocationMap::iterator i = retval.begin ();
        i != retval.end (); ++i)
     {
@@ -1143,21 +1143,21 @@ NodeApplication_Impl::create_colocation_groups (void)
                             ACE_TEXT ("Creating default colocation group.\n")));
               create_default_server = true;
             }
-          
+
           DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
                         ACE_TEXT ("Assigning instance <%s> to default colocation group.\n"),
                         i->first.c_str ()));
           i->second = num_servers;
         }
     }
-  
+
   if (create_default_server) ++num_servers;
-  
+
   this->servers_.size (num_servers);
-  
+
   return retval;
 }
-  
+
 void
 NodeApplication_Impl::init_components()
 {
@@ -1170,16 +1170,16 @@ NodeApplication_Impl::init_components()
 
   if (this->plan_.instance.length () == 0)
     return;
-  
+
   ColocationMap colocation_map = this->create_colocation_groups ();
 
   // @@TODO:  For the moment, we are only going to support a single container per server.
-  // in the future, we will need to determine how many containers we need per server.  
+  // in the future, we will need to determine how many containers we need per server.
   for (size_t i = 0; i < this->servers_.size (); ++i)
     {
       this->servers_[i].containers.size (1);
     }
-  
+
 
   for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
     {
@@ -1199,7 +1199,7 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home\n"),
                               this->plan_.instance[i].name.in ()));
-                size_t svr = colocation_map[this->plan_.instance[i].name.in ()];                
+                size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t pos = this->servers_[svr].containers[0].homes.size ();
                 this->servers_[svr].containers[0].homes.size (pos + 1);
                 this->servers_[svr].containers[0].homes[pos] = Instance (eHome,
@@ -1948,7 +1948,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
               catch (::Deployment::StartError &ex)
                 {
                   DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
-                                ACE_TEXT("Intercepted StartError exception while configuring %C conneciton, rethrowing\n"),
+                                ACE_TEXT("Intercepted StartError exception while configuring %C connection, rethrowing\n"),
                                 name.c_str ()));
                   ex.name = name.c_str ();
                   throw;
@@ -1956,7 +1956,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
               catch (::Deployment::InvalidConnection &ex)
                 {
                   DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
-                                ACE_TEXT("Intercepted InvalidConnection exception while configuring %C conneciton, rethrowing\n"),
+                                ACE_TEXT("Intercepted InvalidConnection exception while configuring %C connection, rethrowing\n"),
                                 name.c_str ()));
                   ex.name = name.c_str ();
                   throw;
