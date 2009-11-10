@@ -15,6 +15,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 class TAO_Notify_MC_Ext_Export TAO_MonitorProxyPushSupplier
   : public TAO_MonitorProxySupplier_T<TAO_Notify_ProxyPushSupplier>
 {
@@ -22,6 +24,8 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorProxyPushSupplier
   // we're just mixing in the MonitorProxySupplier
 };
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif // TAO_HAS_MONITOR_FRAMEWORK == 1
 
 #include /**/ "ace/post.h"
 #endif /* MONITORPROXYPUSHSUPPLIER_H */

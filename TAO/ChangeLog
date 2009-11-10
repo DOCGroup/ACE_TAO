@@ -1,3 +1,12 @@
+Tue Nov 10 20:14:12 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorStructuredProxyPushSupplier.h:
+
+          Added TAO_HAS_MONITOR_FRAMEWORK==1 guard so it won't be compiled when
+          monitor framework is disabled.
+
 Tue Nov 10 19:07:43 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
@@ -33,7 +42,7 @@ Tue Nov 10 18:15:44 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
           Added TAO_HAS_MONITOR_FRAMEWORK==1 guard so it won't be compiled when
           monitor framework is disabled.
-          
+
 Tue Nov 10 13:37:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/run_test.pl:
