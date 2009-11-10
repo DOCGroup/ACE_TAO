@@ -1,0 +1,29 @@
+// $Id$
+
+#if !defined (CCM_CCMEXCEPTION_IDL)
+#define CCM_CCMEXCEPTION_IDL
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  enum CCMExceptionReason
+  {
+    SYSTEM_ERROR,
+    CREATE_ERROR,
+    REMOVE_ERROR,
+    DUPLICATE_KEY,
+    FIND_ERROR,
+    OBJECT_NOT_FOUND,
+    NO_SUCH_ENTITY,
+    QOS_ERROR,
+    REGISTRATION_ERROR,
+    SERVICE_INSTALLATION_ERROR
+  };
+
+  exception CCMException
+  {
+    CCMExceptionReason reason;
+  };
+};
+#endif /* CCM_CCMEXCEPTION_IDL */
