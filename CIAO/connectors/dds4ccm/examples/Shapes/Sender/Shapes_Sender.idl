@@ -17,8 +17,7 @@ module Shapes
 {
   component Sender
   {
-    uses CCM_DDS::ShapeType_Updater info_update_data;
-//port CCM_DDS::DDS_Update info_update;
+    port CCM_DDS::DDS_Update info_update;
     attribute unsigned long rate;
     attribute unsigned short max_x;
     attribute unsigned short max_y;
