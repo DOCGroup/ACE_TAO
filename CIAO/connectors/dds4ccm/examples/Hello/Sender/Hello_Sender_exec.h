@@ -62,16 +62,21 @@ namespace CIAO_Hello_Sender_Impl
     void tick ();
     
     // Component attributes.
+    virtual ::CORBA::ULong iterations (void);
+
+    virtual void iterations (CORBA::ULong iterations);
+
+    virtual char * message (void);
+
+    virtual void message (const char *message);
+
+    virtual ::CORBA::Boolean log_time (void);
+
+    virtual void log_time (::CORBA::Boolean log_time);
+
+    virtual ::CORBA::ULong rate (void);
     
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual ::CORBA::ULong
-    rate (void);
-    
-    virtual void
-    rate (
-      ::CORBA::ULong rate);
+    virtual void rate (::CORBA::ULong rate);
 
     // Port operations.
     
@@ -89,11 +94,15 @@ namespace CIAO_Hello_Sender_Impl
   
   private:
     ::Hello::CCM_Sender_Context_var context_;
-    
     CCM_DDS::DDSHello_Writer_var writer_;
     pulse_Generator * ticker_;
     CORBA::ULong rate_;
-    CORBA::Short iteration_;
+    CORBA::ULong iteration_, iterations_;
+    CORBA::Boolean log_time_;
+    ACE_CString msg_;
+    
+    ACE_CString create_message (
+          const ACE_CString &msg);
   };
   
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
