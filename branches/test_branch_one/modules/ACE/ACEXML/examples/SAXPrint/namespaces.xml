@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="iso8859-1"?>
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns="http://purl.org/rss/1.0/">
+
+<channel rdf:about="http://primates.ximian.com/~ravi/BoozeLog/">
+<title>Vignesh Blogs Here</title>
+<link>http://primates.ximian.com/~ravi/BoozeLog/</link>
+<description></description>
+<language>en-us</language>
+<webMaster></webMaster>
+<lastBuildDate>2002-10-11T00:50:42-06:00</lastBuildDate>
+<pubDate>2002-10-12T20:19:57-06:00</pubDate>
+<admin:generatorAgent rdf:resource="http://www.movabletype.org/?v=2.21" />
+
+<items>
+<rdf:Seq><rdf:li rdf:resource="http://primates.ximian.com/~ravi/BoozeLog/archives/000025.html" />
+<rdf:li rdf:resource="http://primates.ximian.com/~ravi/BoozeLog/archives/000024.html" />
+<rdf:li rdf:resource="http://primates.ximian.com/~ravi/BoozeLog/archives/000023.html" />
+<rdf:li rdf:resource="http://primates.ximian.com/~ravi/BoozeLog/archives/000020.html" />
+<rdf:li rdf:resource="http://primates.ximian.com/~ravi/BoozeLog/archives/000013.html" />
+<rdf:li rdf:resource="http://primates.ximian.com/~ravi/BoozeLog/archives/000012.html" />
+<rdf:li rdf:resource="http://primates.ximian.com/~ravi/BoozeLog/archives/000011.html" />
+<rdf:li rdf:resource="http://primates.ximian.com/~ravi/BoozeLog/archives/000008.html" />
+</rdf:Seq>
+</items>
+
+</channel>
+
+<item rdf:about="http://primates.ximian.com/~ravi/BoozeLog/archives/000025.html">
+<title>Happy Birthday Vidya</title>
+<description>Today is Vidya's birthday ! Happy Birthday Vidya! We had a midnight party,as usual, at Swapna's place, though I dont...</description>
+<link>http://primates.ximian.com/~ravi/BoozeLog/archives/000025.html</link>
+<dc:subject>Blog entry</dc:subject>
+<dc:creator>Booze</dc:creator>
+<dc:date>2002-10-11T00:50:42-06:00</dc:date>
+</item>
+<item rdf:about="http://primates.ximian.com/~ravi/BoozeLog/archives/000024.html">
+<title>Way to go, Shaastra!</title>
+<description>On Flash Back mode now: Shaastra is the technical festival at my alma mater, IIT Madras, that replaced the old,...</description>
+<link>http://primates.ximian.com/~ravi/BoozeLog/archives/000024.html</link>
+<dc:subject>Blog entry</dc:subject>
+<dc:creator>Booze</dc:creator>
+<dc:date>2002-10-10T11:52:02-06:00</dc:date>
+</item>
+<item rdf:about="http://primates.ximian.com/~ravi/BoozeLog/archives/000023.html">
+<title>Back and Forth in Time</title>
+<description>The blog is going to be a little skewed in time for the next coupla days.. Inspite of my laziness,...</description>
+<link>http://primates.ximian.com/~ravi/BoozeLog/archives/000023.html</link>
+<dc:subject>Blog entry</dc:subject>
+<dc:creator>Booze</dc:creator>
+<dc:date>2002-10-09T23:47:19-06:00</dc:date>
+</item>
+<item rdf:about="http://primates.ximian.com/~ravi/BoozeLog/archives/000020.html">
+<title>Frisco Rocks!</title>
+<description>If there be any reason the blog hasnt been updated,it is simply because I am enjoying my trip to San...</description>
+<link>http://primates.ximian.com/~ravi/BoozeLog/archives/000020.html</link>
+<dc:subject>Blog entry</dc:subject>
+<dc:creator>Booze</dc:creator>
+<dc:date>2002-10-03T23:53:16-06:00</dc:date>
+</item>
+<item rdf:about="http://primates.ximian.com/~ravi/BoozeLog/archives/000013.html">
+<title>Think but not make thoughts your aim</title>
+<description>A line from Rudyard Kipling's IF : would sum up my feelings for today, a lot of thinking from morning...</description>
+<link>http://primates.ximian.com/~ravi/BoozeLog/archives/000013.html</link>
+<dc:subject>Blog entry</dc:subject>
+<dc:creator>Booze</dc:creator>
+<dc:date>2002-09-28T22:48:09-06:00</dc:date>
+</item>
+<item rdf:about="http://primates.ximian.com/~ravi/BoozeLog/archives/000012.html">
+<title>New ARM but...</title>
+<description>ARM stands for Advanced Recording Model, a simulation software that I use for my work, and I have been tinkering...</description>
+<link>http://primates.ximian.com/~ravi/BoozeLog/archives/000012.html</link>
+<dc:subject>Blog entry</dc:subject>
+<dc:creator>Booze</dc:creator>
+<dc:date>2002-09-27T22:36:28-06:00</dc:date>
+</item>
+<item rdf:about="http://primates.ximian.com/~ravi/BoozeLog/archives/000011.html">
+<title>A much needed break</title>
+<description>Slowly got over the hangover of Sandhya's departure and moved to more mundane things in life : assignments, submissions and...</description>
+<link>http://primates.ximian.com/~ravi/BoozeLog/archives/000011.html</link>
+<dc:subject>Blog entry</dc:subject>
+<dc:creator>Booze</dc:creator>
+<dc:date>2002-09-26T23:05:46-06:00</dc:date>
+</item>
+<item rdf:about="http://primates.ximian.com/~ravi/BoozeLog/archives/000008.html">
+<title>Here we go !</title>
+<description>My first attempts at Blogging, the idea was introduced to me by Ravi Pratap. MoveableType really makes it easy and...</description>
+<link>http://primates.ximian.com/~ravi/BoozeLog/archives/000008.html</link>
+<dc:subject>Blog entry</dc:subject>
+<dc:creator>Booze</dc:creator>
+<dc:date>2002-09-25T19:27:22-06:00</dc:date>
+</item>
+
+
+</rdf:RDF>
