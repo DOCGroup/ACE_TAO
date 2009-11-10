@@ -1,0 +1,17 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 17-protect-mpc-path.dpatch by Thomas Girard <thomas.g.girard@free.fr>
+##
+## DP: disable pattern metacharacters in path
+
+@DPATCH@
+--- ACE_wrappers.orig/MPC/modules/AutomakeWorkspaceCreator.pm
++++ ACE_wrappers/MPC/modules/AutomakeWorkspaceCreator.pm
+@@ -618,7 +618,7 @@
+   my($start) = $self->getstartdir();
+ 
+   ## Take off the starting directory
+-  $value =~ s/$start//;
++  $value =~ s/\Q$start\E//;
+   return $value;
+ }
+ 
