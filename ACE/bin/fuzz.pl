@@ -1443,6 +1443,18 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using ACE_RUN_VX_TGTHOST, use TestTarget::HostName");
                     }
 
+                    if (m/SpawnWaitKill\s*\(\d+\)/) {
+                        print_error ("$file:$.: uses hardcoded timeout for SpawnWaitKill");
+                    }
+
+                    if (m/Spawn\s*\(\d+\)/) {
+                        print_error ("$file:$.: uses hardcoded timeout for Spawn");
+                    }
+
+                    if (m/Kill\s*\(\d+\)/) {
+                        print_error ("$file:$.: uses hardcoded timeout for Kill");
+                    }
+
                     if (m/unlink/) {
                         print_error ("$file:$.: using unlink");
                     }
