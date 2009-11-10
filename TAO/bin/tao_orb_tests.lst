@@ -280,14 +280,14 @@ TAO/tests/POA/Loader/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STAT
 TAO/tests/POA/RootPOA/run_test.pl:
 TAO/tests/DiffServ/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/IORManipulation/run_test.pl:
-TAO/tests/IORManipulation/filter/run_test.pl: !LabVIEW_RT !WinCE !FUZZ
+TAO/tests/IORManipulation/filter/run_test.pl: !LabVIEW_RT !WinCE
 TAO/tests/Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/MT_Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !OpenVMS_IA64Crash !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Single_Read/run_test.pl: !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Connection_Timeout/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
-#TAO/tests/Connection_Failure/run_test.pl ! Timesout for good reasons !LabVIEW_RT !WinCE !FUZZ
+#TAO/tests/Connection_Failure/run_test.pl ! Timesout for good reasons !LabVIEW_RT !WinCE
 TAO/tests/MProfile_Connection_Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LabVIEW_RT !WinCE !FUZZ
 TAO/tests/Codec/run_test.pl
 TAO/tests/Bug_1693_Test/run_test.pl
@@ -371,7 +371,7 @@ TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORB
 TAO/tests/Sequence_Iterators/run_test.pl:
 TAO/tests/Sequence_Unit_Tests/run_test.pl:
 TAO/tests/Typedef_String_Array/run_test.pl:
-TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT !WinCE !FUZZ !VxWorks_RTP
+TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT !WinCE !VxWorks_RTP
 TAO/tests/CodeSets/simple/run_test.pl: !GIOP10 !STATIC
 TAO/tests/Hang_Shutdown/run_test.pl: !ST !ACE_FOR_TAO
 TAO/tests/Any/Recursive/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO

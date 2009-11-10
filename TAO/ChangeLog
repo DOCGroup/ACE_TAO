@@ -1,3 +1,25 @@
+Tue Nov 10 12:36:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/IORManipulation/filter/run_test.pl
+        * tests/Connection_Failure/run_test.pl
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Server/run_test.pl
+        * orbsvcs/tests/unit/Notify/MC/Statistic/run_test.pl
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/run_test.pl
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/run_test.pl
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/run_test.pl
+        * orbsvcs/tests/unit/Notify/MC/Control/run_test.pl
+        * orbsvcs/tests/unit/Trading/Interpreter/run_test.pl
+        * orbsvcs/tests/Bug_2074_Regression/run_test.pl
+        * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl
+        * tests/Optimized_Connection/run_test.pl
+        * performance-tests/Latency/Collocation/run_test.pl
+        * performance-tests/POA/Object_Creation_And_Registration/run_test.pl
+        * orbsvcs/tests/Bug_2137_Regression/run_test.pl
+        * orbsvcs/tests/Bug_2377_Regression/run_test.pl
+        * orbsvcs/tests/Bug_2377_Regression/run_test_ipv6.pl
+
+          Simple porting to new test framework.
+
 Mon Nov  9 19:21:53 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_field.h:
