@@ -1,3 +1,9 @@
+Tue Nov 10 13:37:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/run_test.pl:
+        * tests/Abstract_Interface/run_test.pl:
+          Don't use hardcoded timeouts
+
 Tue Nov 10 12:36:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * tests/IORManipulation/filter/run_test.pl
@@ -24,24 +30,24 @@ Mon Nov  9 19:21:53 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_field.h:
         * TAO_IDL/be/be_field.cpp:
-        
+
           Added flag to check whether a provides or uses port's
           name has already been prefixed with an extended port
           or mirrorport name.
-          
+
         * TAO_IDL/be/be_visitor_component\context_ex_idl.cpp:
-        
+
           When visiting a component, changed the call to visit_scope()
           to visit_component_scope() to take advantage of special
           properties in the visitor base class.
-          
+
         * TAO_IDL/be/be_visitor_component_scope.cpp:
-        
+
           Fixed a bug in the prefixing of uses or provides port's
           name with the extended port or mirror port's name.
-          
+
         * TAO_IDL/be/be_interface.cpp:
-        
+
           Disable code generation of release() and is_nil() overrides
           for children of abstract interfaces if the child itself is
           included from another IDL file, avoiding possible multiple
@@ -51,11 +57,11 @@ Mon Nov  9 14:58:34 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
         * TAO_IDL/driver/drv_args.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/tao_idl.cpp:
-        
+
           Added the (optional) behavior of creating a new IDL file
           containing #includes of the individual IDL files on the
           command line, or in the directory tree specified by -r
@@ -64,10 +70,10 @@ Mon Nov  9 14:58:34 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
           processing multiple IDL files, especially if they include
           Components.idl, since all the middleware IDL is then
           processed only once.
-          
+
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/include/idl_global.h:
-        
+
           Added a flag to toggle the above behavior, set by a
           backend (currently only idl_to_picml) that processes
           multiple IDL files into one output.
