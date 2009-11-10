@@ -43,12 +43,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
-#include "ace/Reactor.h"
 
 namespace CIAO_Hello_Receiver_Impl
 {
-  typedef ACE_Atomic_Op <ACE_Thread_Mutex, CORBA::ULong > Atomic_ULong;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
 
   class HELLO_RECEIVER_EXEC_Export DDSHello_RawListener_exec_i
     : public virtual ::CCM_DDS::CCM_DDSHello_RawListener,
