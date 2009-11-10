@@ -9,6 +9,8 @@
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 #include "ace/Monitor_Base.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -160,5 +162,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::overflow_stat_name(void)
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif // TAO_HAS_MONITOR_FRAMEWORK == 1
 
 #endif // MONITORPROXYSUPPLIER_T_CPP
