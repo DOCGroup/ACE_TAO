@@ -18,7 +18,7 @@ $ns_running = 0;
 
 $daemons = 2;
 @ports = ( 60001, 60002 );
-@iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
+@iorfiles = ( "Sender.ior", "Receiver.ior" );
 @nodenames = ( "SenderNode", "ReceiverNode" );
 
 $status = 0;
@@ -41,8 +41,26 @@ sub delete_ior_files {
         unlink $iorfiles[$i];
     }
     unlink PerlACE::LocalFile ("EM.ior");
-    unlink PerlACE::LocalFile ("Receiver.ior");
-    unlink PerlACE::LocalFile ("Sender.ior");
+    unlink PerlACE::LocalFile ("ReceiverOne.ior");
+    unlink PerlACE::LocalFile ("ReceiverTwo.ior");
+    unlink PerlACE::LocalFile ("ReceiverThree.ior");
+    unlink PerlACE::LocalFile ("ReceiverFour.ior");
+    unlink PerlACE::LocalFile ("ReceiverFive.ior");
+    unlink PerlACE::LocalFile ("SenderOne.ior");
+    unlink PerlACE::LocalFile ("SenderTwo.ior");
+    unlink PerlACE::LocalFile ("SenderThree.ior");
+    unlink PerlACE::LocalFile ("SenderFour.ior");
+    unlink PerlACE::LocalFile ("SenderFive.ior");
+    unlink PerlACE::LocalFile ("ReceiverConnectorOne.ior");
+    unlink PerlACE::LocalFile ("ReceiverConnectorTwo.ior");
+    unlink PerlACE::LocalFile ("ReceiverConnectorThree.ior");
+    unlink PerlACE::LocalFile ("ReceiverConnectorFour.ior");
+    unlink PerlACE::LocalFile ("ReceiverConnectorFive.ior");
+    unlink PerlACE::LocalFile ("SenderConnectorOne.ior");
+    unlink PerlACE::LocalFile ("SenderConnectorTwo.ior");
+    unlink PerlACE::LocalFile ("SenderConnectorThree.ior");
+    unlink PerlACE::LocalFile ("SenderConnectorFour.ior");
+    unlink PerlACE::LocalFile ("SenderConnectorFive.ior");
     unlink PerlACE::LocalFile ("DAM.ior");
     unlink PerlACE::LocalFile ("ns.ior");
 }
