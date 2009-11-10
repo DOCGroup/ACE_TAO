@@ -9,6 +9,14 @@ use strict;
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
+
 my($prog) = 'MonitorManager';
 
 ## Avoid code duplication by determining the process type and
@@ -16,7 +24,7 @@ my($prog) = 'MonitorManager';
 my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
                                           'PerlACE::Process');
 
-my $SV = $class->new($prog);
+my $SV = $class->new($prog, "-ORBdebuglevel $debug_level");
 my $server = $SV->Spawn();
 
 if ($server != 0) {

@@ -1,28 +1,26 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
-use strict;
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+$status = 0;
 
 my($prog) = 'Statistic';
 
-## Avoid code duplication by determining the process type and
-## storing it as a string for use later.
-my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
-                                          'PerlACE::Process');
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-my $SV = $class->new($prog);
-my $server = $SV->SpawnWaitKill(10);
+$SV = $server->CreateProcess ($prog);
 
-my $status = 0;
-if ($server != 0) {
-  print STDERR "ERROR: $prog returned $server\n";
-  $status = 1;
+$status_server = $SV->SpawnWaitKill (10);
+
+if ($status_server != 0) {
+    print STDERR "ERROR: $prog returned $status_server\n";
+    $status = 1;
 }
 
-exit($status);
+exit $status;

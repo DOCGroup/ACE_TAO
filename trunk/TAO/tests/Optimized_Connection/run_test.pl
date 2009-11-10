@@ -6,31 +6,35 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$baseior = "oc.ior";
-$iorfile = PerlACE::LocalFile ($baseior);
 $status = 0;
+$debug_level = '0';
 
-if (PerlACE::is_vxworks_test()) {
-$CL_ALT_IIOP = new PerlACE::ProcessVX ("client", " -k file://$baseior " .
-                                     "-orbsvcconf oc_svc.conf");
-}
-else {
-$CL_ALT_IIOP = new PerlACE::Process ("client", " -k file://$iorfile " .
-                                     "-orbsvcconf oc_svc.conf");
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
 }
 
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+my $iorbase = "oc.ior";
+my $client_iorfile = $client->LocalFile ($iorbase);
+
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile ".
+					"-orbsvcconf oc_svc.conf");
+
+if ($client->WaitForFileTimed ($iorbase,
+                           $client->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$client_iorfile>\n";
     exit 1;
 }
 
-$client = $CL_ALT_IIOP->SpawnWaitKill (30);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 

@@ -6,17 +6,24 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
+$debug_level = '0';
 
-$SV = new PerlACE::Process ("Collocated_Test");
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
-$server = $SV->SpawnWaitKill (60);
+my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+$T = $test->CreateProcess ("Collocated_Test", "-ORBdebuglevel $debug_level");
+$test_status = $T->SpawnWaitKill (60);
 
-if ($server != 0) {
-    print STDERR "ERROR: Collocated_Test returned $server \n";
-    $status = 1;
+if ($test_status != 0) {
+    print STDERR "ERROR: Collocated_Test returned $test_status\n";
+    exit 1;
 }
 
 exit $status;
