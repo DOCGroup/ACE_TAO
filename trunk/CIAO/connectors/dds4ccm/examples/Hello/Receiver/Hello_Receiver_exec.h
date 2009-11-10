@@ -48,8 +48,8 @@
 
 namespace CIAO_Hello_Receiver_Impl
 {
-  typedef ACE_Atomic_Op <ACE_Thread_Mutex, CORBA::ULong > Atomic_ULong; 
-  
+  typedef ACE_Atomic_Op <ACE_Thread_Mutex, CORBA::ULong > Atomic_ULong;
+
   class HELLO_RECEIVER_EXEC_Export DDSHello_RawListener_exec_i
     : public virtual ::CCM_DDS::CCM_DDSHello_RawListener,
       public virtual ::CORBA::LocalObject
@@ -58,12 +58,12 @@ namespace CIAO_Hello_Receiver_Impl
     DDSHello_RawListener_exec_i (Atomic_ULong &,
                                   const ACE_CString &);
     virtual ~DDSHello_RawListener_exec_i (void);
-    
+
     // Operations and attributes from ::CCM_DDS::DDSHello_RawListener
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void
     on_data (
       const DDSHello & an_instance,
@@ -80,20 +80,20 @@ namespace CIAO_Hello_Receiver_Impl
   public:
     PortStatusListener_exec_i (Atomic_ULong &);
     virtual ~PortStatusListener_exec_i (void);
-    
+
     // Operations and attributes from ::CCM_DDS::PortStatusListener
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void
     on_requested_deadline_missed (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::RequestedDeadlineMissedStatus & status);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void
     on_sample_lost (
       ::DDS::DataReader_ptr the_reader,
@@ -109,34 +109,34 @@ namespace CIAO_Hello_Receiver_Impl
   public:
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
-    
+
     // Supported operations and attributes.
     // Port operations.
-    
+
     virtual ::CORBA::ULong expected_samples (void);
     virtual void expected_samples (::CORBA::ULong expected_samples);
-    
+
     virtual char * name (void);
     virtual void name (const char *name);
-    
+
     virtual ::CCM_DDS::CCM_DDSHello_RawListener_ptr
-    get_info_out_listener (void);
-    
+    get_info_out_data_listener (void);
+
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
-    
+
     // Operations from Components::SessionComponent.
-    
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
-  
+
   private:
     ::Hello::CCM_Receiver_Context_var context_;
     CORBA::ULong expected_;
@@ -144,7 +144,7 @@ namespace CIAO_Hello_Receiver_Impl
     Atomic_ULong lost_;
     ACE_CString name_;
   };
-  
+
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_Receiver_Impl (void);
 }

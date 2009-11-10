@@ -1,16 +1,16 @@
 // $Id$
 
-/** 
+/**
  * @file Distributor.idl3
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * by-hand idl3 translation of distributor components.
  */
 
 #ifndef DDS_DISTRIBUTOR_IDL3
 #define DDS_DISTRIBUTOR_IDL3
 
-#include "Connector/Quoter_Connector.idl3"
+#include "Connector/Quoter_Connector.idl"
 #include "Connector/Quoter_ConnectorE.idl"
 
 module Quoter
@@ -22,14 +22,28 @@ module Quoter
     void start ();
     void stop ();
   };
-  
+
   component Distributor supports Trigger
   {
-    uses CCM_DDS::Stock_Info_Writer info_in_data;
-    uses CCM_DDS::Stock_Info_Updater info_update_data;
-    uses ::DDS::DataWriter info_in_dds_entity;
+    port CCM_DDS::DDS_Update info_update;
+    port CCM_DDS::DDS_Write info_in;
     attribute unsigned long rate;
   };
 };
 
 #endif
+
+/*
+#ifndef DDS_DISTRIBUTOR_IDL3P
+#define DDS_DISTRIBUTOR_IDL3P
+
+module Quoter
+{
+  component Distributor
+  {
+    port CCM_DDS::DDS_Write <Stock_Info> info;
+  };
+};
+
+ */
+

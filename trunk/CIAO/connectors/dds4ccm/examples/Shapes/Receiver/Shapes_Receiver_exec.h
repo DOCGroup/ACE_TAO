@@ -109,7 +109,7 @@ namespace CIAO_Shapes_Receiver_Impl
 
     // Port operations.
     virtual ::CCM_DDS::CCM_ShapeType_RawListener_ptr
-    get_info_out_listener (void);
+    get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);

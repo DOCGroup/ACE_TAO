@@ -266,7 +266,7 @@ namespace CIAO_Shapes_Receiver_Impl
 
   // Port operations.
   ::CCM_DDS::CCM_ShapeType_RawListener_ptr
-  Receiver_exec_i::get_info_out_listener (void)
+  Receiver_exec_i::get_info_out_data_listener (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new ShapeType RAW listener\n")));
     return new ShapeType_RawListener_exec_i ();
@@ -301,7 +301,7 @@ namespace CIAO_Shapes_Receiver_Impl
       }
     if (this->get_data ())
       {
-        this->getter_ = this->context_->get_connection_info_get_out_data();
+        this->getter_ = this->context_->get_connection_info_out_get_data();
       }
   }
   
@@ -309,7 +309,7 @@ namespace CIAO_Shapes_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::ListenerControl_var lc = 
-    this->context_->get_connection_info_out_control ();
+    this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
       {

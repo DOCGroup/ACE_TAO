@@ -13,7 +13,7 @@ project(DDS_Quoter_Connector_idl_gen) : connectoridldefaults, componentidldefaul
               -I ..
 
   IDL_Files {
-    Quoter_Connector.idl3
+    Quoter_Connector.idl
   }
 }
 

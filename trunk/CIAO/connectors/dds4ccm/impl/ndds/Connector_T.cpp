@@ -313,7 +313,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::getter_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_get_out_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_get_data (void)
 {
   CIAO_TRACE ("get_info_get_out_data");
 
@@ -337,7 +337,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_ListenerControl_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_control (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_data_control (void)
 {
   CIAO_TRACE ("get_info_out_control");
   return new CCM_DDS_ListenerControl_i (
@@ -379,7 +379,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
-  if (!CORBA::is_nil (this->context_->get_connection_info_out_listener ()) ||
+  if (!CORBA::is_nil (this->context_->get_connection_info_out_data_listener ()) ||
      (!CORBA::is_nil (this->context_->get_connection_info_out_status () )))
     {
       this->configure_port_info_out_ (false);

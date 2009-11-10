@@ -415,7 +415,7 @@ namespace CIAO_Quoter_Broker_Impl
   // Port operations.
 
   ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
-  Broker_exec_i::get_info_out_listener (void)
+  Broker_exec_i::get_info_out_data_listener (void)
   {
     printf ("*************** out listener\n");
     return new Stock_Info_RawListener_exec_i ();
@@ -482,7 +482,7 @@ namespace CIAO_Quoter_Broker_Impl
   {
     std::cerr << ">>> Broker_exec_i::ccm_activate" << endl;
     ::CCM_DDS::ListenerControl_var lc =
-    this->context_->get_connection_info_out_control ();
+    this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
       {
