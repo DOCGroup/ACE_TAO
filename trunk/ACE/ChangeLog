@@ -1,3 +1,16 @@
+Tue Nov 10 06:31:33  2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue_T.cpp (enqueue_*): When enqueuing blocks, grab the
+          notifier pointer before releasing the guard; check it and do any
+          needed notify() outside the lock scope. Avoids dereferencing 'this'
+          when the message queue is deleted between the time the guard is
+          released and the notify is checked. User is still responsible for
+          ensuring the lifetime of a notifier the user supplies.
+          Also, moved the monitor updates out of notify() and into the
+          enqueue_* methods, inside the guard scope since they refer to
+          object state; rely on the Monitor docs that say the updates are
+          well-behaved.
+
 Tue Nov 10 00:35:52 UTC 2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp: Some changes extraneous to those in
