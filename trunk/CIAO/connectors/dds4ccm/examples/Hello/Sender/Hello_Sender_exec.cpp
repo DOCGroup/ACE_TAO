@@ -5,6 +5,8 @@
 #include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
+#include "ace/Date_Time.h"
+#include "ace/OS_NS_unistd.h"
 
 namespace CIAO_Hello_Sender_Impl
 {
@@ -36,7 +38,10 @@ namespace CIAO_Hello_Sender_Impl
 
   Sender_exec_i::Sender_exec_i (void)
     : rate_ (1),
-      iteration_ (0)
+      iteration_ (0),
+      iterations_ (1000),
+      log_time_ (false),
+      msg_ ("Hello World!")
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -46,16 +51,36 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   // Supported operations and attributes.
-
+  ACE_CString Sender_exec_i::create_message (const ACE_CString &msg)
+  {
+    if (!this->log_time_)
+      return msg;
+    char timestamp[16];
+    ACE_Date_Time now;
+    ACE_OS::sprintf (timestamp,
+                      "%02d.%d",
+                      now.second(),
+                      now.microsec ());
+    ACE_CString ret (timestamp);
+    ret = ret + " " + msg;
+    return ret.c_str ();
+  }
+  
   void
   Sender_exec_i::tick ()
   {
-    DDSHello * new_msg = new DDSHello();
-
-    new_msg->hello = "Hello, world!";
-    new_msg->iterator = ++this->iteration_;
-    printf ("TICK\n");
-    this->writer_->write (*new_msg);
+    if (this->iteration_ < this->iterations_)
+      {
+        DDSHello * new_msg = new DDSHello();
+        ACE_CString msg = create_message (this->msg_);
+        new_msg->hello = msg.c_str ();
+        new_msg->iterator = ++this->iteration_;
+        this->writer_->write (*new_msg);
+      }
+    else
+      { //we're done
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+      }
   }
 
   void
@@ -84,14 +109,48 @@ namespace CIAO_Hello_Sender_Impl
 
   // Component attributes.
   ::CORBA::ULong
+  Sender_exec_i::iterations (void)
+  {
+    return this->iterations_;
+  }
+  
+  void
+  Sender_exec_i::iterations (::CORBA::ULong iterations)
+  {
+    this->iterations_ = iterations;
+  }
+  
+  char *
+  Sender_exec_i::message (void)
+  {
+    return CORBA::string_dup (this->msg_.c_str());
+  }
+  void
+  Sender_exec_i::message (const char *msg)
+  {
+    this->msg_ = msg;
+  }
+
+  ::CORBA::Boolean
+  Sender_exec_i::log_time (void)
+  {
+    return this->log_time_;
+  }
+
+  void
+  Sender_exec_i::log_time (::CORBA::Boolean log_time)
+  {
+    this->log_time_ = log_time;
+  }
+
+  ::CORBA::ULong
   Sender_exec_i::rate (void)
   {
     return this->rate_;
   }
 
   void
-  Sender_exec_i::rate (
-    ::CORBA::ULong rate)
+  Sender_exec_i::rate (::CORBA::ULong rate)
   {
     this->rate_ = rate;
   }

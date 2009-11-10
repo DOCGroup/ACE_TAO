@@ -20,6 +20,9 @@ module Hello
     uses CCM_DDS::DDSHello_Writer info_write_data;
     //port CCM_DDS::DDS_Update info_update;
     attribute unsigned long rate;
+    attribute unsigned long iterations;
+    attribute string message;
+    attribute boolean log_time;
   };
 };
 

@@ -1,7 +1,26 @@
+Tue Nov 10 08:30:30 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
+          Removed DDS key since we only write.
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Debug message in stead of error message.
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Added attributes (log_time, message, #iterations.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+          Added values for introduced attributes.
+
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+          Resolved compiler warning.
+
 Mon Nov  9 19:34:21 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Cornucopia/Cornucopia.idl:
-        
+
           Added an abstract interface and concrete child to the
           test IDL, to test a multiple-definition code generation
           bug across the stub and LEM header files. Thanks to
