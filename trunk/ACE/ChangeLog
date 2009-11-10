@@ -1,3 +1,10 @@
+Tue Nov 10 21:03:25 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/sets-manager.py:
+
+          bugfix for windows.  note that cleaning up the temp directory doesn't
+          work on windows, that will need to be done by hand. 
+
 Tue Nov 10 12:17:33  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
