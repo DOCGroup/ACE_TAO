@@ -13,6 +13,8 @@
 #include "orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_MC_Ext_Export TAO_MonitorSequenceProxyPushSupplier
@@ -22,6 +24,8 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorSequenceProxyPushSupplier
   // we're just mixing in the MonitorProxySupplier
 };
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif // TAO_HAS_MONITOR_FRAMEWORK == 1
 
 #include /**/ "ace/post.h"
 #endif /* MONITORSEQUENCEPROXYPUSHSUPPLIER_H */
