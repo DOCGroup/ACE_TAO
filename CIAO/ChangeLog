@@ -1,3 +1,9 @@
+Tue Nov 10 13:25:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+          First updates after introducing the IDL3+ ports
+
 Tue Nov 10 12:56:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl:
