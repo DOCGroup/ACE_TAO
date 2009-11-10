@@ -48,12 +48,15 @@
 
 namespace CIAO_Hello_Receiver_Impl
 {
+  typedef ACE_Atomic_Op <ACE_Thread_Mutex, CORBA::ULong > Atomic_ULong; 
+  
   class HELLO_RECEIVER_EXEC_Export DDSHello_RawListener_exec_i
     : public virtual ::CCM_DDS::CCM_DDSHello_RawListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    DDSHello_RawListener_exec_i (void);
+    DDSHello_RawListener_exec_i (Atomic_ULong &,
+                                  const ACE_CString &);
     virtual ~DDSHello_RawListener_exec_i (void);
     
     // Operations and attributes from ::CCM_DDS::DDSHello_RawListener
@@ -65,6 +68,9 @@ namespace CIAO_Hello_Receiver_Impl
     on_data (
       const DDSHello & an_instance,
       const ::CCM_DDS::ReadInfo & info);
+  private:
+    Atomic_ULong &received_;
+    const ACE_CString &name_;
   };
 
   class HELLO_RECEIVER_EXEC_Export PortStatusListener_exec_i
@@ -72,7 +78,7 @@ namespace CIAO_Hello_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    PortStatusListener_exec_i (void);
+    PortStatusListener_exec_i (Atomic_ULong &);
     virtual ~PortStatusListener_exec_i (void);
     
     // Operations and attributes from ::CCM_DDS::PortStatusListener
@@ -92,6 +98,8 @@ namespace CIAO_Hello_Receiver_Impl
     on_sample_lost (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::SampleLostStatus & status);
+  private:
+    Atomic_ULong &lost_;
   };
 
   class HELLO_RECEIVER_EXEC_Export Receiver_exec_i
@@ -104,6 +112,12 @@ namespace CIAO_Hello_Receiver_Impl
     
     // Supported operations and attributes.
     // Port operations.
+    
+    virtual ::CORBA::ULong expected_samples (void);
+    virtual void expected_samples (::CORBA::ULong expected_samples);
+    
+    virtual char * name (void);
+    virtual void name (const char *name);
     
     virtual ::CCM_DDS::CCM_DDSHello_RawListener_ptr
     get_info_out_listener (void);
@@ -125,6 +139,10 @@ namespace CIAO_Hello_Receiver_Impl
   
   private:
     ::Hello::CCM_Receiver_Context_var context_;
+    CORBA::ULong expected_;
+    Atomic_ULong received_;
+    Atomic_ULong lost_;
+    ACE_CString name_;
   };
   
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

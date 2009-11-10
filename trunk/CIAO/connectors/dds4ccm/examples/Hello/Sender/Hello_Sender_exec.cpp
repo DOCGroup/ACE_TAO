@@ -58,7 +58,7 @@ namespace CIAO_Hello_Sender_Impl
     char timestamp[16];
     ACE_Date_Time now;
     ACE_OS::sprintf (timestamp,
-                      "%02d.%d",
+                      "%02d.%06d",
                       now.second(),
                       now.microsec ());
     ACE_CString ret (timestamp);
@@ -69,6 +69,8 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::tick ()
   {
+    if (this->iteration_ == 0)
+      ACE_OS::sleep (1);
     if (this->iteration_ < this->iterations_)
       {
         DDSHello * new_msg = new DDSHello();

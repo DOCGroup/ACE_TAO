@@ -1,3 +1,17 @@
+Tue Nov 10 09:23:47 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Added attributes name and expected_samples.
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Timestamp always the same text length.
+          Sleep one second before starting to send messages.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+          Added Receiver attributes (name and expected_samples).
+
 Tue Nov 10 08:30:30 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
