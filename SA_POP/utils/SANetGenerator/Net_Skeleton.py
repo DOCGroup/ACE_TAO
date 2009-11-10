@@ -34,7 +34,9 @@ for each in range(0,Nconds+1):
 
 #Choose function to generate from
 if rGen == 1:
-	SANet = RS.erdosGen(SANet, tasks, conds, inDegree, outDegree)		
+	SANet = RS.erdosGen(SANet, tasks, conds, inDegree, outDegree)
+	
+			
 
 #Print out the graph currently into something resembling an SANet, for GraphViz to render			
 for each in tasks:
