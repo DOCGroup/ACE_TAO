@@ -144,8 +144,11 @@ be_visitor_context_svs::visit_component (be_component *node)
 int
 be_visitor_context_svs::visit_uses (be_uses *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   AST_Type *obj = node->uses_type ();
-  const char *port_name = node->local_name ()->get_string ();
   bool is_multiple = node->is_multiple ();
 
   if (is_multiple)

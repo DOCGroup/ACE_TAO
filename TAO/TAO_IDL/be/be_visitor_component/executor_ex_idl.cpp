@@ -167,9 +167,13 @@ be_visitor_executor_ex_idl::visit_provides (
 
   const char *global = (sname_str == "" ? "" : "::");
 
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   os_ << be_nl
       << global << sname << "::CCM_" << lname << " get_"
-      << node->local_name ()->get_string () << " ();";
+      << port_name << " ();";
       
   return 0;
 }

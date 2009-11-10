@@ -57,13 +57,6 @@ public:
   // Swaps uses for provides members and vice versa.S 
   int visit_porttype_scope_mirror (be_porttype *node);
   
-  // This override is used to prefix a provides or uses
-  // node's local name with the name of the port or
-  // mirrorport node that may contain reference the
-  // containing porttype.
-  // TODO - support nested ports, if they are allowed.
-  virtual int pre_process (be_decl *);
-  
 protected:
   void gen_svnt_entrypoint_decl (void);
   void gen_svnt_entrypoint_defn (void);
@@ -76,9 +69,7 @@ protected:
   ACE_CString export_macro_;
   bool swapping_;
   bool static_config_;
-  
-private:
-  ACE_CString current_port_name_;
+  ACE_CString port_prefix_;
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_SCOPE_H_ */

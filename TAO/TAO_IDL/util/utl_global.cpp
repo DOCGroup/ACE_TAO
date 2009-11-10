@@ -1610,9 +1610,17 @@ IDL_GlobalData::fini (void)
 
 void
 IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
-                                            AST_Uses *u)
+                                            AST_Uses *u,
+                                            const char *port_prefix)
 {
-  ACE_CString struct_name (u->local_name ()->get_string ());
+  ACE_CString struct_name (port_prefix);
+  
+  if (!struct_name.empty ())
+    {
+      struct_name += '_';
+    }
+    
+  struct_name += u->local_name ()->get_string ();
   struct_name += "Connection";
   Identifier struct_id (struct_name.c_str ());
   UTL_ScopedName sn (&struct_id, 0);
@@ -1673,8 +1681,8 @@ IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
                                          0,
                                          0);
 
-  ACE_CString seq_string (u->local_name ()->get_string ());
-  seq_string += "Connections";
+  ACE_CString seq_string (struct_name);
+  seq_string += 's';
   Identifier seq_id (seq_string.c_str ());
   UTL_ScopedName seq_name (&seq_id,
                            0);

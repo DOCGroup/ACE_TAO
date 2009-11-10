@@ -6564,7 +6564,10 @@ non_template_port_decl
                       AST_Component *c =
                         AST_Component::narrow_from_scope (s);
                         
-                      idl_global->create_uses_multiple_stuff (c, u);
+                      idl_global->create_uses_multiple_stuff (
+                        c,
+                        u,
+                        id.get_string ());
                     }
                 }
             }

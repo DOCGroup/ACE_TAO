@@ -259,9 +259,12 @@ be_visitor_servant_svs::visit_attribute (be_attribute *node)
 int
 be_visitor_servant_svs::visit_provides (be_provides *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   AST_Type *obj = node->provides_type ();
   const char *obj_name = obj->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
@@ -360,8 +363,11 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
 int
 be_visitor_servant_svs::visit_uses (be_uses *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   const char *obj_name = node->uses_type ()->full_name ();
-  const char *port_name = node->local_name  ()->get_string ();
   bool is_multiple = node->is_multiple ();
 
   os_ << be_nl << be_nl
@@ -1255,8 +1261,9 @@ int
 be_visitor_facet_executor_block::visit_provides (
   be_provides *node)
 {
-  const char *port_name =
-    node->local_name ()->get_string ();
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
 
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (name, \"" << port_name
@@ -1284,8 +1291,11 @@ be_visitor_connect_block::~be_visitor_connect_block (void)
 int
 be_visitor_connect_block::visit_uses (be_uses *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   const char *obj_name = node->uses_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
   bool is_multiple = node->is_multiple ();
 
   os_ << be_nl << be_nl
@@ -1357,7 +1367,10 @@ be_visitor_disconnect_block::~be_visitor_disconnect_block (
 int
 be_visitor_disconnect_block::visit_uses (be_uses *node)
 {
-  const char *port_name = node->local_name ()->get_string ();
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   bool is_multiple = node->is_multiple ();
 
   os_ << be_nl << be_nl
@@ -1399,8 +1412,11 @@ be_visitor_receptacle_desc::~be_visitor_receptacle_desc (
 int
 be_visitor_receptacle_desc::visit_uses (be_uses *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   AST_Type *obj = node->uses_type ();
-  const char *port_name = node->local_name ()->get_string ();
   bool is_multiple = node->is_multiple ();
 
   os_ << be_nl << be_nl;
@@ -1704,9 +1720,13 @@ int
 be_visitor_populate_port_tables::visit_provides (
   be_provides *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   os_ << be_nl
       << "obj_var = this->provide_"
-      << node->local_name ()->get_string () << "_i ();";
+      << port_name << "_i ();";
 
   return 0;
 }

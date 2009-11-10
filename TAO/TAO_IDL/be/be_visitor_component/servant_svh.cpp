@@ -125,8 +125,10 @@ be_visitor_servant_svh::visit_attribute (be_attribute *node)
 int
 be_visitor_servant_svh::visit_provides (be_provides *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix +=node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
   const char *obj_name = node->provides_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
 
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
@@ -149,8 +151,10 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
 int
 be_visitor_servant_svh::visit_uses (be_uses *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix +=node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
   const char *obj_name = node->uses_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
   bool is_multiple = node->is_multiple ();
 
   os_ << be_uidt_nl << be_nl

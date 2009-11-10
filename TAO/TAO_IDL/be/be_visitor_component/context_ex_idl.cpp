@@ -93,7 +93,9 @@ be_visitor_context_ex_idl::visit_uses (
   os_ << be_nl
       << "::";
       
-  const char *lname = node->local_name ()->get_string ();
+  ACE_CString port_name (this->port_prefix_);
+  port_name += node->local_name ()->get_string ();
+  const char *lname = port_name.c_str ();
 
   // Note that we don't strip off the possible '_cxx_' when
   // adding the 'Connections' suffix. The front end will
