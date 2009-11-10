@@ -1,3 +1,8 @@
+Tue Nov 10 12:17:33  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check for hardcoded timeouts, thanks to Chad for assisting with this
+
 Tue Nov 10 12:10:33  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
