@@ -143,8 +143,11 @@ be_visitor_executor_exh::visit_component (be_component *node)
 int
 be_visitor_executor_exh::visit_provides (be_provides *node)
 {
+  ACE_CString prefix (this->port_prefix_);
+  prefix += node->local_name ()->get_string ();
+  const char *port_name = prefix.c_str ();
+  
   be_type *impl = node->provides_type ();
-  const char *port_name = node->local_name ()->get_string ();
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
   ACE_CString sname_str (scope->full_name ());

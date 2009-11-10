@@ -60,18 +60,30 @@ int
 be_visitor_component_scope::visit_extended_port (
   be_extended_port *node)
 {
-  
   AST_Decl::NodeType nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
   
   // Store this to prefix to contained provides or uses node name.  
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
-      this->current_port_name_ = node->local_name ()->get_string ();
-      this->current_port_name_ += '_';
+      this->port_prefix_ = node->local_name ()->get_string ();
+      this->port_prefix_ += '_';
     }
     
-  return this->visit_porttype_scope (node->port_type ());
+  int status =
+    this->visit_porttype_scope (node->port_type ());
+    
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_scope")
+                         ACE_TEXT ("::visit_extended_port - ")
+                         ACE_TEXT ("visit_porttype_scope failed\n")),
+                        -1);
+    }
+  
+  this->port_prefix_ = "";
+  return 0;
 }
 
 int
@@ -84,11 +96,25 @@ be_visitor_component_scope::visit_mirror_port (
   // Store this to prefix to contained provides or uses node name.  
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
-      this->current_port_name_ = node->local_name ()->get_string ();
-      this->current_port_name_ += '_';
+      this->port_prefix_ = node->local_name ()->get_string ();
+      this->port_prefix_ += '_';
     }
     
-  return this->visit_porttype_scope_mirror (node->port_type ());
+  int status =
+    this->visit_porttype_scope_mirror (node->port_type ());
+    
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_scope")
+                         ACE_TEXT ("::visit_extended_port - ")
+                         ACE_TEXT ("visit_porttype_scope")
+                         ACE_TEXT ("_mirror failed\n")),
+                        -1);
+    }
+  
+  this->port_prefix_ = "";
+  return 0;
 }
 
 int
@@ -129,8 +155,6 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
     {
       be_decl *d = be_decl::narrow_from_decl (si.item ());
       
-      (void) this->pre_process (d);
-
       switch (d->node_type ())
         {
           case AST_Decl::NT_provides:
@@ -176,36 +200,6 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
             }
           default:
             return d->accept (this);
-        }
-    }
-    
-  return 0;
-}
-
-int
-be_visitor_component_scope::pre_process (be_decl *node)
-{
-  AST_Decl::NodeType nt = node->node_type ();
-  
-  if (nt == AST_Decl::NT_provides || nt == AST_Decl::NT_uses)
-    {
-      AST_Decl *s = ScopeAsDecl (node->defined_in ());
-      AST_Decl::NodeType snt = s->node_type ();
-      be_field *f = be_field::narrow_from_decl (node);
-      
-      if (snt == AST_Decl::NT_porttype && !f->port_name_prefixed ())
-        {
-          ACE_CString new_name = current_port_name_;
-          new_name += node->local_name ()->get_string ();
-          
-          Identifier *i = node->name ()->last_component ();
-          i->replace_string (new_name.c_str ());
-          
-          // And replace the local name string as well.
-          i = node->local_name ();
-          i->replace_string (new_name.c_str ());
-          
-          f->port_name_prefixed (true);
         }
     }
     

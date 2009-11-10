@@ -612,7 +612,9 @@ public:
   void fini (void);
   // Do final cleanup just before process exits.
 
-  void create_uses_multiple_stuff (AST_Component *c, AST_Uses *u);
+  void create_uses_multiple_stuff (AST_Component *c,
+                                   AST_Uses *u,
+                                   const char *port_prefix = "");
   // We must do this in the front end since the executor
   // mapping IDL will have these data types.
 
