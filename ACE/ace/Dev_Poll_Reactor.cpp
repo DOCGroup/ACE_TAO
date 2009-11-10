@@ -1269,7 +1269,13 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
       // With epoll, events are registered with oneshot, so the handle is
       // effectively suspended; future calls to epoll_wait() will select
       // the next event, so they're not managed here.
+      // The hitch to this is that the notify handler must always be resumed
+      // immediately, before letting go of the guard. Else it's possible to
+      // get into a state where all handles, including the notify pipe, are
+      // suspended and that means the wait thread can't be interrupted.
       info->suspended = true;
+      if (eh == this->notify_handler_)
+        this->resume_handler_i (handle);
 #endif /* ACE_HAS_DEV_POLL */
 
       int status = 0;   // gets callback status, below.
@@ -1298,17 +1304,12 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         if (info != 0 && info->event_handler == eh)
           {
             if (status < 0)
-              {
-                this->remove_handler_i (handle, disp_mask);
-                // Handler may be gone now; reset info w/ current status.
-                info = this->handler_rep_.find (handle);
-              }
+              this->remove_handler_i (handle, disp_mask);
 
 #ifdef ACE_HAS_EVENT_POLL
             // epoll-based effectively suspends handlers around the upcall.
             // If the handler must be resumed here, do it now.
-            if (info != 0 && info->event_handler == eh &&
-                info->suspended &&
+            if (info->suspended &&
                 (eh->resume_handler () ==
                  ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER))
               this->resume_handler_i (handle);
@@ -1859,7 +1860,7 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
   if (mask == ACE_Event_Handler::NULL_MASK)
     {
       info->suspended = false;
-      return 0;   // Nothing to do
+      return 0;
     }
 
   // Place the handle back in to the "interest set."
