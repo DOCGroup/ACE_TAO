@@ -1,0 +1,43 @@
+# $Id$
+
+	Basic tests for the real-time event channel.
+
+This directory contains several tests to exercise the real-time event
+channel features, debug it and stress test it. The tests are as simple 
+as possible, but not simpler.
+
+	Here are some canonical test configurations:
+
+# Connect 100 suppliers, 100 consumers. Then disconnect and connect
+# one particular consumer, 100. Then do the same for one supplier
+
+$ Reconnect -verbose -suppliers 100 -consumers 100 -d 100
+
+# Same as above, but instead of disconnecting and connecting again
+# simply reconnect. Should be faster
+$ Reconnect -verbose -suppliers 100 -consumers 100 -d 100 -c -s
+
+# Connect 10 suppliers, 10 consumers and then shutdown the EC
+$ Shutdown -verbose -suppliers 5 -consumer 5
+
+# Create 4 event channels, connect all of them using IIOP gateways,
+# then attach 5 consumers and 2 supplier to each, next generate 10000
+# events (each supplier on its own thread).  It randomly connect and
+# disconnects the consumers, hence the gateways also do.
+
+$ Observer -ORBsvcconf observer.conf \
+  -consumer_tshift 0 -supplier_tshift 0 \
+  -suppliers 2 -consumers 5 \
+  -channels 4 -burstsize 1000 -burstcount 10 \
+  -burstpause 0 -busyhwm 1024 -maxwritedelay 1024
+
+# Create an event channel in a configuration that informs the
+# scheduler of the dependencies between consumers and suppliers.
+# THIS IS WORK IN PROGRESS
+
+$ Schedule -ORBsvcconf sched.conf -suppliers 5 -consumers 5
+
+NOTES
+
+	Don't worry about the "incomplete data" warning, it is a
+deffect in the test.
