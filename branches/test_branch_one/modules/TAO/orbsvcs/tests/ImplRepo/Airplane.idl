@@ -1,0 +1,7 @@
+// $Id$
+
+interface Paper_Airplane_Server
+{
+  string get_plane ();
+  // Returns the plane of the moment.
+};
