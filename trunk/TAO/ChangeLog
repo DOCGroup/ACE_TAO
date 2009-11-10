@@ -1,3 +1,31 @@
+Tue Nov 10 19:07:43 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          When adding uses multiple related constructs to the
+          AST, we now use the instantiating port name (if any)
+          as a prefix to the constructed type names.
+
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be_include/be_visitor_component_scope.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+
+          Fixed bugs in the handling of the port name when
+          it is used in the construction of facet and
+          receptacle operation names.
+
 Tue Nov 10 18:15:44 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.h:

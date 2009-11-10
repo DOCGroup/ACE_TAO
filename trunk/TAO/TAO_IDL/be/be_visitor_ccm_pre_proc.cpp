@@ -162,10 +162,15 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
                          "store_port_interface failed\n"),
                         -1);
     }
-    
+ 
+  // If this facet comes from a porttype, the instantiated
+  // port/mirrorport name is prefixed to the facet name.
+  ACE_CString prefix ("provide_");
+  prefix += this->port_prefix_;
+  
   AST_Operation *provides_op = 0;
   UTL_ScopedName *op_name =
-    this->create_scoped_name ("provide_",
+    this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
                               0,
                               comp_);
@@ -327,28 +332,6 @@ be_visitor_ccm_pre_proc::visit_consumes (be_consumes *node)
                         -1);
     }
 
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::visit_extended_port (be_extended_port *node)
-{
-  be_porttype *pt =
-    be_porttype::narrow_from_decl (node->port_type ());
-    
-  // Set the working args to match with the porttype's
-  // template args and allow generation of concrete stuff.  
-  this->porttype_args_ = node->template_args ();
-  
-  if (this->gen_extended_port (pt) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_ccm_pre_proc::"
-                         "visit_extended_port - "
-                         "gen_extended_port failed\n"),
-                        -1);
-    }
-    
   return 0;
 }
 
@@ -576,8 +559,13 @@ be_visitor_ccm_pre_proc::gen_implicit_ops (be_home *node,
 int
 be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
 {
+  // If this facet comes from a porttype, the instantiated
+  // port/mirrorport name is prefixed to the receptacle name.
+  ACE_CString prefix ("connect_");
+  prefix += this->port_prefix_;
+  
   UTL_ScopedName *op_full_name =
-    this->create_scoped_name ("connect_",
+    this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
                               0,
                               comp_);
@@ -627,8 +615,13 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
 int
 be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
 {
+  // If this facet comes from a porttype, the instantiated
+  // port/mirrorport name is prefixed to the receptacle name.
+  ACE_CString prefix ("disconnect_");
+  prefix += this->port_prefix_;
+  
   UTL_ScopedName *op_full_name =
-    this->create_scoped_name ("disconnect_",
+    this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
                               0,
                               comp_);
@@ -661,8 +654,13 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
 int
 be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
 {
+  // If this facet comes from a porttype, the instantiated
+  // port/mirrorport name is prefixed to the receptacle name.
+  ACE_CString prefix ("get_connection_");
+  prefix += this->port_prefix_;
+  
   UTL_ScopedName *op_full_name =
-    this->create_scoped_name ("get_connection_",
+    this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
                               0,
                               comp_);
@@ -689,8 +687,13 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
 int
 be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
 {
+  // If this facet comes from a porttype, the instantiated
+  // port/mirrorport name is prefixed to the receptacle name.
+  ACE_CString prefix ("connect_");
+  prefix += this->port_prefix_;
+  
   UTL_ScopedName *op_full_name =
-    this->create_scoped_name ("connect_",
+    this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
                               0,
                               comp_);
@@ -740,8 +743,13 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
 int
 be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
 {
+  // If this facet comes from a porttype, the instantiated
+  // port/mirrorport name is prefixed to the receptacle name.
+  ACE_CString prefix ("disconnect_");
+  prefix += this->port_prefix_;
+  
   UTL_ScopedName *op_full_name =
-    this->create_scoped_name ("disconnect_",
+    this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
                               0,
                               comp_);
@@ -785,16 +793,23 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
 int
 be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
 {
+  // If this facet comes from a porttype, the instantiated
+  // port/mirrorport name is prefixed to the receptacle name.
+  ACE_CString prefix ("get_connections_");
+  prefix += this->port_prefix_;
+  
   UTL_ScopedName *op_full_name =
-    this->create_scoped_name ("get_connections_",
+    this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
                               0,
                               comp_);
 
   // Look up the implied IDL typedef created in the front end.
-  // It will be the return type of the created operation.
-  ACE_CString connections_string (
-    node->local_name ()->get_string ());
+  // It will be the return type of the created operation. The
+  // sequence was originally created with the port prefix (if
+  // any) in its name, so we must use it here.
+  ACE_CString connections_string (this->port_prefix_);
+  connections_string += node->local_name ()->get_string ();
   connections_string += "Connections";
   Identifier connections_id (connections_string.c_str ());
   UTL_ScopedName connections_name (&connections_id,
