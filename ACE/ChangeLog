@@ -1,3 +1,8 @@
+Tue Nov 10 12:10:33  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          ACE_RUN_VX_TGTHOST shouldn't be used in a test script
+
 Tue Nov 10 06:31:33  2009  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue_T.cpp (enqueue_*): When enqueuing blocks, grab the
@@ -24,8 +29,8 @@ Mon Nov  9 12:20:05 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Message_Queue_Test.cpp:
 
-           Modified to use rand_r, which is actually thread safe. 
-        
+           Modified to use rand_r, which is actually thread safe.
+
 Mon Nov  9 03:41:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Message_Queue_Test.cpp:
