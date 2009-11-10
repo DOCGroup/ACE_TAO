@@ -1,0 +1,23 @@
+/**
+
+@page Sequence Unit Tests
+
+Implement unit tests for the TAO CORBA sequence implementation.
+
+The correctness of CORBA sequences is a fundamental building block for
+many TAO applications, however, these classes are very complex
+specially when their underlying type is not self-managed, such as
+strings and object references.  This directory contains unit tests for
+all these classes, i.e. tests that do not require external components
+(or processes!)
+
+Some of the tests depend on the boost::unit_test_framework
+(www.boost.org)  Any other "tests" simply verify that the code
+compiles.  Therefore you should install boost and configure this
+feature in your build if any reasonable coverage is desired.
+
+To run the tests use the run_test.pl script:
+
+$ ./run_test.pl
+
+*/
