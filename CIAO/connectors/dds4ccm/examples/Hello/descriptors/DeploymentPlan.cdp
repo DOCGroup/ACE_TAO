@@ -166,6 +166,28 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>expected_samples</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>100</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver1</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Hello_ConnectorComponentInstance">
     <name>Hello_ConnectorComponent</name>
@@ -249,7 +271,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>false</boolean>
+          <boolean>true</boolean>
         </value>
       </value>
     </configProperty>
