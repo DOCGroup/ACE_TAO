@@ -9,7 +9,7 @@
 #define HELLO_BASE_IDL
 
 struct DDSHello {
-  string hello; //@key
+  string hello;
   short iterator;
 };
 

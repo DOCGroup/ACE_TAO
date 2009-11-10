@@ -27,7 +27,7 @@ namespace CIAO_Hello_Receiver_Impl
     const DDSHello & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("DDSHello_RawListener: ")
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DDSHello_RawListener: ")
             ACE_TEXT ("received hello for <%s> - iterator <%d>\n"),
             an_instance.hello.in (),
             an_instance.iterator));
