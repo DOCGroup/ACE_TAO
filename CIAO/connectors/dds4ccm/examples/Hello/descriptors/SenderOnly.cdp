@@ -8,21 +8,20 @@
 
   <!-- Implementations declarations -->
 
-  <!-- Home implementation -->
-  <implementation xmi:id="Hello_SenderHomeImplementation">
-    <name>Hello_SenderHomeImplementation</name>
+  <implementation xmi:id="Hello_SenderConnectorComponentImplementation">
+    <name>Hello_ConnectorComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Sender_ExecArtifact" />
-    <artifact xmi:idref="Hello_Sender_SvntArtifact" />
+    <artifact xmi:idref="Hello_Connector_ExecArtifact" />
+    <artifact xmi:idref="Hello_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>home factory</name>
+      <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_SenderHome_Impl</string>
+          <string>create_Hello_Hello_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -33,7 +32,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_SenderHome_Servant</string>
+          <string>create_Hello_Hello_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -44,7 +43,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Sender_svnt</string>
+          <string>Hello_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -55,140 +54,62 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Sender_exec</string>
+          <string>Hello_Connector_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
-
-
-  <implementation xmi:id="Hello_SenderConnectorHomeImplementation">
-    <name>Hello_SenderConnectorHomeImplementation</name>
-    <source/>
-    <artifact xmi:idref="Hello_SenderConnector_ExecArtifact" />
-    <artifact xmi:idref="Hello_SenderConnector_SvntArtifact" />
-    <execParameter>
-      <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>home factory</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_Hello_DDS_SenderConnectorHome_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_Hello_DDS_SenderConnectorHome_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderConnector_svnt</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderConnector_exec</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation>
-
   <implementation xmi:id="Hello_SenderComponentImplementation">
     <name>Hello_SenderComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Sender_ExecArtifact" />
-    <artifact xmi:idref="Hello_Sender_SvntArtifact" />
+    <artifact xmi:idref="Sender_ExecArtifact" />
+    <artifact xmi:idref="Sender_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
-
-
-  <implementation xmi:id="Hello_SenderConnectorComponentImplementation">
-    <name>Hello_SenderConnectorComponentImplementation</name>
-    <source/>
-    <artifact xmi:idref="Hello_SenderConnector_ExecArtifact" />
-    <artifact xmi:idref="Hello_SenderConnector_SvntArtifact" />
-  </implementation>
-
-  <instance xmi:id="Hello_SenderHomeInstance">
-    <name>Hello_SenderHome</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-
-  <instance xmi:id="Hello_SenderConnectorHomeInstance">
-    <name>Hello_SenderConnectorHome</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderConnectorHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
 
   <instance xmi:id="Hello_SenderComponentInstance">
     <name>Hello_SenderComponent</name>
@@ -196,17 +117,6 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderHome</string>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -238,17 +148,6 @@
     <source/>
     <implementation xmi:idref="Hello_SenderConnectorComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
         <type>
@@ -273,31 +172,15 @@
   </instance>
 
   <connection>
-    <name>string_writer_connection</name>
+    <name>info_write_data</name>
     <internalEndpoint>
-      <portName>push_data_data</portName>
+      <portName>info_in_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_SenderComponentInstance" />
+      <instance xmi:idref="Hello_SenderComponentImplementation" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>sender_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello_SenderConnectorComponentInstance" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>dds_data_writer_connection</name>
-    <internalEndpoint>
-      <portName>push_data_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_SenderComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>sender_dds_entity</portName>
+      <portName>info_in_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstance" />
@@ -305,30 +188,29 @@
   </connection>
 
   <!-- Artifacts declarations -->
-  <artifact xmi:id="Hello_Sender_ExecArtifact">
-    <name>Hello_Sender_exec</name>
+  <artifact xmi:id="Sender_ExecArtifact">
+    <name>Sender_exec</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Sender_exec</location>
+    <location>Sender_exec</location>
   </artifact>
-  <artifact xmi:id="Hello_Sender_SvntArtifact">
-    <name>Hello_Sender_svnt</name>
+  <artifact xmi:id="Sender_SvntArtifact">
+    <name>Sender_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Sender_svnt</location>
+    <location>Sender_svnt</location>
   </artifact>
-
-  <artifact xmi:id="Hello_SenderConnector_ExecArtifact">
-    <name>Hello_SenderConnector_exec</name>
+  <artifact xmi:id="Hello_Connector_ExecArtifact">
+    <name>Hello_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Sender_Connector_exec</location>
+    <location>DDS_Hello_Connector_exec</location>
   </artifact>
-  <artifact xmi:id="Hello_SenderConnector_SvntArtifact">
-    <name>Hello_SenderConnector_svnt</name>
+  <artifact xmi:id="Hello_Connector_SvntArtifact">
+    <name>Hello_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Sender_Connector_svnt</location>
+    <location>DDS_Hello_Connector_svnt</location>
   </artifact>
 
 </Deployment:DeploymentPlan>

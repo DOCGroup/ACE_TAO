@@ -9,20 +9,20 @@
   <!-- Implementations declarations -->
 
   <!-- Home implementation -->
-  <implementation xmi:id="Hello_ReceiverHomeImplementation">
-    <name>Hello_ReceiverHomeImplementation</name>
+  <implementation xmi:id="ReceiverComponentImplementation">
+    <name>ReceiverComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Receiver_ExecArtifact" />
-    <artifact xmi:idref="Hello_Receiver_SvntArtifact" />
+    <artifact xmi:idref="Receiver_ExecArtifact" />
+    <artifact xmi:idref="Receiver_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>home factory</name>
+      <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_ReceiverHome_Impl</string>
+          <string>create_Hello_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -33,7 +33,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_ReceiverHome_Servant</string>
+          <string>create_Hello_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -44,7 +44,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Receiver_svnt</string>
+          <string>Receiver_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -55,26 +55,26 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Receiver_exec</string>
+          <string>Receiver_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
-
-  <implementation xmi:id="Hello_ReceiverConnectorHomeImplementation">
-    <name>Hello_ReceiverConnectorHomeImplementation</name>
+  
+  <implementation xmi:id="Hello_ConnectorComponentImplementation">
+    <name>Hello_ConnectorComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_ReceiverConnector_ExecArtifact" />
-    <artifact xmi:idref="Hello_ReceiverConnector_SvntArtifact" />
+    <artifact xmi:idref="Hello_Connector_ExecArtifact" />
+    <artifact xmi:idref="Hello_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>home factory</name>
+      <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_ReceiverConnectorHome_Impl</string>
+          <string>create_Hello_Hello_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -85,7 +85,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_DDS_ReceiverConnectorHome_Servant</string>
+          <string>create_Hello_Hello_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -96,7 +96,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_ReceiverConnector_svnt</string>
+          <string>Hello_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -107,276 +107,141 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_ReceiverConnector_exec</string>
+          <string>Hello_Connector_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
-
-  <implementation xmi:id="Hello_ReceiverComponentImplementation">
-    <name>Hello_ReceiverComponentImplementation</name>
-    <source/>
-    <artifact xmi:idref="Hello_Receiver_ExecArtifact" />
-    <artifact xmi:idref="Hello_Receiver_SvntArtifact" />
-  </implementation>
-
-
-  <implementation xmi:id="Hello_ReceiverConnectorComponentImplementation">
-    <name>Hello_ReceiverConnectorComponentImplementation</name>
-    <source/>
-    <artifact xmi:idref="Hello_ReceiverConnector_ExecArtifact" />
-    <artifact xmi:idref="Hello_ReceiverConnector_SvntArtifact" />
-  </implementation>
-
-  <instance xmi:id="Hello_ReceiverHomeInstance">
-    <name>Hello_ReceiverHome</name>
+  <instance xmi:id="ReceiverComponentInstance">
+    <name>ReceiverComponent</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_ReceiverHomeImplementation" />
+    <implementation xmi:idref="ReceiverComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <name>expected_samples</name>
       <value>
         <type>
-          <kind>tk_string</kind>
+          <kind>tk_long</kind>
         </type>
         <value>
-          <string>ReceiverHome.ior</string>
+          <long>100</long>
         </value>
       </value>
     </configProperty>
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <name>name</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ReceiverHome</string>
+          <string>Receiver1</string>
         </value>
       </value>
     </configProperty>
   </instance>
-
-
-  <instance xmi:id="Hello_ReceiverConnectorHomeInstance">
-    <name>Hello_ReceiverConnectorHome</name>
+  <instance xmi:id="Hello_ConnectorComponentInstance">
+    <name>Hello_ConnectorComponent2</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_ReceiverConnectorHomeImplementation" />
+    <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <name>topic_name</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ReceiverConnectorHome.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_ReceiverComponentInstance">
-    <name>Hello_ReceiverComponent</name>
-    <node>ReceiverNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_ReceiverComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_ReceiverHome</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Receiver.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Receiver</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-
-  <instance xmi:id="Hello_ReceiverConnectorComponentInstance">
-    <name>Hello_ReceiverConnectorComponent</name>
-    <node>ReceiverNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_ReceiverConnectorComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_ReceiverConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverConnector.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverConnector</string>
+          <string>Hello</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
   <connection>
-    <name>ccm_dds_string_reader</name>
+    <name>_listenercontrol</name>
     <internalEndpoint>
-      <portName>read_message_data</portName>
+      <portName>info_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
+      <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>receiver_data</portName>
+      <portName>info_out_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
+      <instance xmi:idref="Hello_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-
   <connection>
-    <name>ccm_dds_listenercontrol</name>
+    <name>_portstatuslistener</name>
     <internalEndpoint>
-      <portName>read_message_control</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>receiver_control</portName>
+      <portName>info_out_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>info_out_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-
   <connection>
-    <name>ccm_dds_string_rawlistner</name>
+    <name>_rawlistner</name>
     <internalEndpoint>
-      <portName>read_message_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
+      <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>receiver_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>dds_datareader</name>
-    <internalEndpoint>
-      <portName>read_message_dds_entity</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>receiver_dds_entity</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>ccm_dds_portstatuslistener</name>
-    <internalEndpoint>
-      <portName>read_message_status</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>receiver_status</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiverConnectorComponentInstance" />
+      <instance xmi:idref="Hello_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
   <!-- Artifacts declarations -->
-  <artifact xmi:id="Hello_Receiver_ExecArtifact">
-    <name>Hello_Receiver_exec</name>
+  <artifact xmi:id="Hello_Connector_ExecArtifact">
+    <name>Hello_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Receiver_exec</location>
+    <location>DDS_Hello_Connector_exec</location>
   </artifact>
-  <artifact xmi:id="Hello_Receiver_SvntArtifact">
-    <name>Hello_Receiver_svnt</name>
+  <artifact xmi:id="Hello_Connector_SvntArtifact">
+    <name>Hello_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Receiver_svnt</location>
+    <location>DDS_Hello_Connector_svnt</location>
   </artifact>
-
-  <artifact xmi:id="Hello_ReceiverConnector_ExecArtifact">
-    <name>Hello_ReceiverConnector_exec</name>
+  <artifact xmi:id="Hello_Connector_StubArtifact">
+    <name>Hello_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Receiver_Connector_exec</location>
+    <location>DDS_Hello_Connector_stub</location>
   </artifact>
-  <artifact xmi:id="Hello_ReceiverConnector_SvntArtifact">
-    <name>Hello_ReceiverConnector_svnt</name>
+  <artifact xmi:id="Receiver_ExecArtifact">
+    <name>Receiver_exec</name>
     <source/>
     <node/>
-    <location>DDS_Hello_Receiver_Connector_svnt</location>
+    <location>Receiver_exec</location>
+  </artifact>
+  <artifact xmi:id="Receiver_SvntArtifact">
+    <name>Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Receiver_svnt</location>
+  </artifact>
+  <artifact xmi:id="Receiver_StubArtifact">
+    <name>Receiver_stub</name>
+    <source/>
+    <node/>
+    <location>Receiver_stub</location>
   </artifact>
 
 </Deployment:DeploymentPlan>

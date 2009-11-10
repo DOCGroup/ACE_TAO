@@ -1,3 +1,14 @@
+Tue Nov 10 20:00:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp:
+          Made deployable again.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+          Improved cleanup of ior files.
+
 Tue Nov 10 19:03:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
