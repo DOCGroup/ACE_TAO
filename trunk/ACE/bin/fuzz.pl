@@ -1439,6 +1439,10 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using PerlACE::TestConfig");
                     }
 
+                    if (m/ACE_RUN_VX_TGTHOST/) {
+                        print_error ("$file:$.: using ACE_RUN_VX_TGTHOST, use TestTarget::HostName");
+                    }
+
                     if (m/unlink/) {
                         print_error ("$file:$.: using unlink");
                     }
