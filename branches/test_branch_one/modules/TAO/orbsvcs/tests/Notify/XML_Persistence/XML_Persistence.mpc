@@ -1,5 +1,0 @@
-// $Id$
-
-project : orbsvcsexe, portableserver, notify_serv {
-  exename = main
-}
