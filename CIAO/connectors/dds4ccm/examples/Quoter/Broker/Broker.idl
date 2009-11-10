@@ -1,14 +1,25 @@
 // $Id$
 
 /**
- * @file Broker.idl3p
+ * @file Broker.idl3
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 
-#ifndef BROKER_IDL3P
-#define BROKER_IDL3P
+#ifndef BROKER_IDL3
+#define BROKER_IDL3
 
+#include "Connector/Quoter_Connector.idl"
+#include "Connector/Quoter_ConnectorE.idl"
+
+module Quoter
+{
+  component Broker
+  {
+    port CCM_DDS::DDS_Listen info_out;
+  };
+};
+
+/*
 #include <dds4ccm/idl/dds4ccm_Connector_Base.idl3p>
 #include <dds4ccm/idl/dds4ccm_Port_RawListen.idl3p>
 
@@ -20,4 +31,5 @@ module Quoter
   };
 };
 
-#endif /* BROKER_IDL3P */
+ */
+#endif

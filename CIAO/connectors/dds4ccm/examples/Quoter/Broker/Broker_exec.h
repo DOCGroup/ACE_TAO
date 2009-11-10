@@ -108,12 +108,12 @@ namespace CIAO_Quoter_Broker_Impl
   public:
     Stock_Info_RawListener_exec_i (void);
     virtual ~Stock_Info_RawListener_exec_i (void);
-    
+
     // Operations and attributes from ::CCM_DDS::Stock_Info_RawListener
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void
     on_data (
       const ::Quoter::Stock_Info & an_instance,
@@ -126,20 +126,20 @@ namespace CIAO_Quoter_Broker_Impl
   public:
     PortStatusListener_exec_i (void);
     virtual ~PortStatusListener_exec_i (void);
-    
+
     // Operations and attributes from ::CCM_DDS::PortStatusListener
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void
     on_requested_deadline_missed (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::RequestedDeadlineMissedStatus & status);
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void
     on_sample_lost (
       ::DDS::DataReader_ptr the_reader,
@@ -154,54 +154,50 @@ class BROKER_EXEC_Export ConnectorStatusListener_exec_i
   public:
     ConnectorStatusListener_exec_i (void);
     virtual ~ConnectorStatusListener_exec_i (void);
-    
+
     virtual
-      void on_inconsistent_topic( ::DDS::Topic_ptr the_topic, 
+      void on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
                                 const DDS::InconsistentTopicStatus & status);
     virtual
     void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
                                         const DDS::RequestedIncompatibleQosStatus & status);
     virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr the_reader, 
+    void on_sample_rejected( ::DDS::DataReader_ptr the_reader,
                              const DDS::SampleRejectedStatus & status);
     virtual
       void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
                                      const DDS::OfferedDeadlineMissedStatus & status);
     virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
+    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
       void on_unexpected_status( ::DDS::Entity_ptr the_entity,
        ::DDS::StatusKind  status_kind);
-  
+
   };
-  
+
 
   class BROKER_EXEC_Export Broker_exec_i
     : public virtual Broker_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
-
-
-
-
     Broker_exec_i (void);
     virtual ~Broker_exec_i (void);
-    
+
     // Supported operations and attributes.
-    
+
     // Component attributes.
-    
+
     // Port operations.
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_out_connector_status (void);
 
- 
-    
+
+
     virtual ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
-    get_info_out_listener (void);
-    
+    get_info_out_data_listener (void);
+
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
     void read_one (void);
@@ -209,29 +205,29 @@ class BROKER_EXEC_Export ConnectorStatusListener_exec_i
     void read_all(void);
     void read_all_history(void);
     // Operations from Components::SessionComponent.
-     
-     
+
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
-    
+
     virtual void configuration_complete (void);
-    
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
     virtual void start (void);
     virtual void stop (void);
-    
- 
-  
+
+
+
   private:
     ::Quoter::CCM_Broker_Context_var context_;
     read_action_Generator * ticker_;
     ::CCM_DDS::Stock_Info_Reader_var reader_;
     ::CCM_DDS::Stock_Info_Getter_var getter_;
   };
-  
+
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Quoter_Broker_Impl (void);
 }

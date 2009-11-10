@@ -260,7 +260,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>10</long>
+          <long>25</long>
         </value>
       </value>
     </configProperty>

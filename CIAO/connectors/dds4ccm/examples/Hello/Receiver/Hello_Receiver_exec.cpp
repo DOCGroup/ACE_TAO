@@ -12,20 +12,20 @@ namespace CIAO_Hello_Receiver_Impl
   //============================================================
   // Facet Executor Implementation Class: DDSHello_RawListener_exec_i
   //============================================================
-  
+
   DDSHello_RawListener_exec_i::DDSHello_RawListener_exec_i (Atomic_ULong &received,
                                                             const ACE_CString &name)
       : received_ (received),
         name_ (name)
   {
   }
-  
+
   DDSHello_RawListener_exec_i::~DDSHello_RawListener_exec_i (void)
   {
   }
-  
+
   // Operations from ::CCM_DDS::DDSHello_RawListener
-  
+
   void
   DDSHello_RawListener_exec_i::on_data (
     const DDSHello & an_instance ,
@@ -64,18 +64,18 @@ namespace CIAO_Hello_Receiver_Impl
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
   //============================================================
-  
+
   PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_ULong &lost)
     : lost_ (lost)
   {
   }
-  
+
   PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
   {
   }
-  
+
   // Operations from ::CCM_DDS::PortStatusListener
-  
+
   void
   PortStatusListener_exec_i::on_requested_deadline_missed (
     ::DDS::DataReader_ptr /* the_reader */,
@@ -83,7 +83,7 @@ namespace CIAO_Hello_Receiver_Impl
   {
     /* Your code here. */
   }
-  
+
   void
   PortStatusListener_exec_i::on_sample_lost (
     ::DDS::DataReader_ptr /* the_reader */,
@@ -92,22 +92,22 @@ namespace CIAO_Hello_Receiver_Impl
     ++this->lost_;
     CIAO_DEBUG ((LM_ERROR, ACE_TEXT("port status listener::on_sample_lost\n")));
   }
-  
+
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iDDSHello_RawListener_exec_i ();
   //============================================================
-  
+
   Receiver_exec_i::Receiver_exec_i (void)
     : expected_ (100),
       received_ (0),
       lost_ (0)
   {
   }
-  
+
   Receiver_exec_i::~Receiver_exec_i (void)
   {
   }
-  
+
   ::CORBA::ULong
   Receiver_exec_i::expected_samples (void)
   {
@@ -119,7 +119,7 @@ namespace CIAO_Hello_Receiver_Impl
   {
     this->expected_ = expected_samples;
   }
-  
+
   char *
   Receiver_exec_i::name (void)
   {
@@ -134,19 +134,19 @@ namespace CIAO_Hello_Receiver_Impl
 
   // Port operations.
   ::CCM_DDS::CCM_DDSHello_RawListener_ptr
-  Receiver_exec_i::get_info_out_listener (void)
+  Receiver_exec_i::get_info_out_data_listener (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new DDSHello RAW listener\n")));
     return new DDSHello_RawListener_exec_i (this->received_, this->name_);
   }
-  
+
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i (this->lost_);
   }
-  
+
   // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
@@ -159,17 +159,17 @@ namespace CIAO_Hello_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Receiver_exec_i::configuration_complete (void)
   {
   }
-  
+
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::ListenerControl_var lc = 
-    this->context_->get_connection_info_out_control ();
+    ::CCM_DDS::ListenerControl_var lc =
+    this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
       {
@@ -178,12 +178,12 @@ namespace CIAO_Hello_Receiver_Impl
       }
     lc->enabled (true);
   }
-  
+
   void
   Receiver_exec_i::ccm_passivate (void)
   {
   }
-  
+
   void
   Receiver_exec_i::ccm_remove (void)
   {
@@ -197,7 +197,7 @@ namespace CIAO_Hello_Receiver_Impl
         this->expected_, this->received_.value ()));
       }
   }
-  
+
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_Receiver_Impl (void)
   {
