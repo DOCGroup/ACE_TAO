@@ -1,4 +1,12 @@
-Tue Nov 10 12:40:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Tue Nov 10 12:56:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl:
+          Added missin provices
+
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+          Corrected this plan
+
+Tue Nov 10 12:40:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
           Fixed this plan

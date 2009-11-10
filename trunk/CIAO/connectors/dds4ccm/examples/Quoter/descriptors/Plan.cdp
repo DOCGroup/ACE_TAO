@@ -207,15 +207,15 @@
   </connection>
 
   <connection>
-    <name>info_get_out_data</name>
+    <name>info_out_get_data</name>
     <internalEndpoint>
-      <portName>info_get_out_data</portName>
+      <portName>info_out_get_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_get_out_data</portName>
+      <portName>info_out_get_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
@@ -225,13 +225,13 @@
   <connection>
     <name>_listenercontrol</name>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_control</portName>
+      <portName>info_out_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
@@ -241,13 +241,13 @@
   <connection>
     <name>_rawlistner</name>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_listener</portName>
+      <portName>info_out_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
@@ -295,7 +295,7 @@
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_connector_status</portName>
+      <portName>error_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
