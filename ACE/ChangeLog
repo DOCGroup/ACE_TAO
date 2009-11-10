@@ -1,3 +1,12 @@
+Tue Nov 10 00:35:52 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp: Some changes extraneous to those in
+          Wed Nov  4 00:07:49 UTC 2009  Steve Huston  <shuston@riverace.com>
+          got checked in by accident; these screwed up the handle resuming
+          and are now reverted. The changes/fix mentioned in
+          Wed Nov  4 00:07:49 UTC 2009  Steve Huston  <shuston@riverace.com>
+          are now the only ones included.
+
 Mon Nov  9 12:20:05 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Message_Queue_Test.cpp:
