@@ -70,7 +70,7 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::tick ()
   {
     if (this->iteration_ == 0)
-      ACE_OS::sleep (5);
+      ACE_OS::sleep (1);
     if (this->iteration_ < this->iterations_)
       {
         DDSHello * new_msg = new DDSHello();
