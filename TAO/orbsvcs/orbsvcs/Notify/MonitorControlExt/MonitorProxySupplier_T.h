@@ -14,6 +14,8 @@
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 #include "orbsvcs/Notify/SupplierAdmin.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -85,5 +87,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #pragma implementation ("MonitorProxySupplier_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#endif // TAO_HAS_MONITOR_FRAMEWORK == 1
+
 #include /**/ "ace/post.h"
 #endif /* MONITORPROXYSUPPLIER_H */
+

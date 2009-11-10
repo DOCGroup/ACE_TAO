@@ -1,3 +1,11 @@
+Tue Nov 10 18:15:44 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp:
+
+          Added TAO_HAS_MONITOR_FRAMEWORK==1 guard so it won't be compiled when
+          monitor framework is disabled.
+          
 Tue Nov 10 13:37:57 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/run_test.pl:
