@@ -1,3 +1,23 @@
+Tue Nov 10 12:11:00 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+          Resolved fuzz error.
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+          Debug logging (instead of error logging).
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Sleep 5 seconds before start sending.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+          Changed to meet the last status of this example.
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl:
+          Resolved minor fuzz error.
+
 Tue Nov 10 10:41:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/*:

@@ -1,12 +1,12 @@
 // $Id$
 
 /**
- * @file Broker.idl3
+ * @file Broker.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
 
-#ifndef BROKER_IDL3
-#define BROKER_IDL3
+#ifndef BROKER_IDL
+#define BROKER_IDL
 
 #include "Connector/Quoter_Connector.idl"
 #include "Connector/Quoter_ConnectorE.idl"

@@ -41,7 +41,7 @@ namespace CIAO_Hello_Receiver_Impl
         int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
         if (sec_rec != now.second ())
           usec_rec += 10000000;
-        CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("<%s> received <%s> - <%d>. difference <%d>\n"),
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("<%s> received <%s> - <%d>. difference <%d>\n"),
                     this->name_.c_str (),
                     an_instance.hello.in (),
                     an_instance.iterator,
@@ -49,7 +49,7 @@ namespace CIAO_Hello_Receiver_Impl
       }
     else
     {
-      CIAO_DEBUG ((LM_ERROR, ACE_TEXT("<%s> received <%s> - <%d>.\n"),
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT("<%s> received <%s> - <%d>.\n"),
       this->name_.c_str (),
       an_instance.hello.in (),
       an_instance.iterator));
@@ -211,4 +211,7 @@ namespace CIAO_Hello_Receiver_Impl
     return retval;
   }
 }
+
+
+
 
