@@ -15,7 +15,7 @@ module Hello
 {
   component Receiver
   {
-    port CCM_DDS::DDS_Listen info_out;
+    port CCM_DDS::Hello::DDS_Listen info_out;
 
     attribute string name;
     attribute unsigned long expected_samples;

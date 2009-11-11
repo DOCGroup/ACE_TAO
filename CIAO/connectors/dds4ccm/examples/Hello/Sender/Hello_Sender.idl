@@ -17,7 +17,7 @@ module Hello
 {
   component Sender
   {
-    port CCM_DDS::DDS_Write info_in;
+    port CCM_DDS::Hello::DDS_Write info_write;
     attribute unsigned long rate;
     attribute unsigned long iterations;
     attribute string message;

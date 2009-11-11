@@ -414,7 +414,7 @@ namespace CIAO_Quoter_Broker_Impl
 
   // Port operations.
 
-  ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
+  ::CCM_DDS::Quoter::CCM_RawListener_ptr
   Broker_exec_i::get_info_out_data_listener (void)
   {
     printf ("*************** out listener\n");

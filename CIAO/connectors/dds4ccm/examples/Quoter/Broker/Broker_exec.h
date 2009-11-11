@@ -96,29 +96,22 @@ namespace CIAO_Quoter_Broker_Impl
 
     /// Maintains a handle that actually process the event
     Broker_exec_i &pulse_callback_;
-
   };
 
-
-
   class BROKER_EXEC_Export Stock_Info_RawListener_exec_i
-    : public virtual ::CCM_DDS::CCM_Stock_Info_RawListener,
+    : public virtual ::CCM_DDS::Quoter::CCM_RawListener,
       public virtual ::CORBA::LocalObject
   {
   public:
     Stock_Info_RawListener_exec_i (void);
     virtual ~Stock_Info_RawListener_exec_i (void);
 
-    // Operations and attributes from ::CCM_DDS::Stock_Info_RawListener
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
     virtual void
     on_data (
       const ::Quoter::Stock_Info & an_instance,
       const ::CCM_DDS::ReadInfo & info);
   };
+
   class BROKER_EXEC_Export PortStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_PortStatusListener,
       public virtual ::CORBA::LocalObject
@@ -127,18 +120,10 @@ namespace CIAO_Quoter_Broker_Impl
     PortStatusListener_exec_i (void);
     virtual ~PortStatusListener_exec_i (void);
 
-    // Operations and attributes from ::CCM_DDS::PortStatusListener
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
     virtual void
     on_requested_deadline_missed (
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::RequestedDeadlineMissedStatus & status);
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual void
     on_sample_lost (
@@ -176,7 +161,6 @@ class BROKER_EXEC_Export ConnectorStatusListener_exec_i
 
   };
 
-
   class BROKER_EXEC_Export Broker_exec_i
     : public virtual Broker_Exec,
       public virtual ::CORBA::LocalObject
@@ -195,7 +179,7 @@ class BROKER_EXEC_Export ConnectorStatusListener_exec_i
 
 
 
-    virtual ::CCM_DDS::CCM_Stock_Info_RawListener_ptr
+    virtual ::CCM_DDS::Quoter::CCM_RawListener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -204,9 +188,8 @@ class BROKER_EXEC_Export ConnectorStatusListener_exec_i
     void read_one_history (void);
     void read_all(void);
     void read_all_history(void);
+
     // Operations from Components::SessionComponent.
-
-
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -219,13 +202,11 @@ class BROKER_EXEC_Export ConnectorStatusListener_exec_i
     virtual void start (void);
     virtual void stop (void);
 
-
-
   private:
     ::Quoter::CCM_Broker_Context_var context_;
     read_action_Generator * ticker_;
-    ::CCM_DDS::Stock_Info_Reader_var reader_;
-    ::CCM_DDS::Stock_Info_Getter_var getter_;
+    ::CCM_DDS::Quoter::Reader_var reader_;
+    ::CCM_DDS::Quoter::Getter_var getter_;
   };
 
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr
