@@ -459,7 +459,7 @@ sub check_for_lack_ACE_OS ()
 
     $OS_NS_stdlib_symbols = "_exit|abort|atexit|atof|atol|atoi|atop|bsearch|calloc|exit|free|getenv|getenvstrings|itoa|itoa_emulation|itow_emulation|malloc|mkstemp|mkstemp_emulation|mktemp|setenv|unsetenv|putenv|qsort|rand|rand_r|realloc|realpath|set_exit_hook|srand|strenvdup|strtod|strtol|strtol_emulation|strtoul|strtoul_emulation|strtoll|strtoll_emulation|strtoull|strtoull_emulation|system|getprogname|setprogname";
 
-    $OS_NS_string_symbols = "memchr|memchr_emulation|memcmp|memcpy|fast_memcpy|memmove|memset|strcat|strchr|strcmp|strcpy|strcspn|strdup|strdup_emulation|strecpy|strerror|strerror_emulation|strlen|strncat|strnchr|strncmp|strncpy|strnlen|strnstr|strpbrk|strrchr|strrchr_emulation|strsncpy|strspn|strstr|strtok|strtok_r|strtok_r_emulation";
+    $OS_NS_string_symbols = "memchr|memchr_emulation|memcmp|memcpy|fast_memcpy|memmove|memset|strcat|strchr|strcmp|strcpy|strcspn|strdup|strdup_emulation|strecpy|strerror|strerror_emulation|strsignal|strlen|strncat|strnchr|strncmp|strncpy|strnlen|strnstr|strpbrk|strrchr|strrchr_emulation|strsncpy|strspn|strstr|strtok|strtok_r|strtok_r_emulation";
 
     $OS_NS_strings_symbols = "strcasecmp|strncasecmp|strcasecmp_emulation";
 
