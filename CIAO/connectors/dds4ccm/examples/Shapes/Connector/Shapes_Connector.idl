@@ -18,12 +18,8 @@ TYPED_MODULE( ::ShapeType, ::ShapeType_Seq, ShapeType)
 
 module Shapes
 {
-  component Shapes_Connector : ::CCM_DDS::ShapeType::DDS_MonoConnector
+  connector Shapes_Connector : ::CCM_DDS::ShapeType::DDS_MonoConnector
   {
-    uses CCM_DDS::ConnectorStatusListener error_listener;
-    mirrorport CCM_DDS::ShapeType::DDS_Write info_in;
-    mirrorport CCM_DDS::ShapeType::DDS_Update info_update;
-    mirrorport CCM_DDS::ShapeType::DDS_Listen info_out;
   };
 };
 

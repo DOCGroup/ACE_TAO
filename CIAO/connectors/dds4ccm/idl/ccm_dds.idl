@@ -13,6 +13,8 @@
 #include "connectors/dds4ccm/idl/dds4ccm_ListenerControl.idl3"
 #include "connectors/dds4ccm/idl/dds_rtf2_dcpsE.idl"
 
+#define connector component
+
 #define TYPED_MODULE(TYPE, TYPE_SEQ, TYPE_MODULE) \
 module CCM_DDS \
 { \
@@ -96,11 +98,15 @@ module CCM_DDS \
           uses DDS::DataReader dds_entity; \
           provides CCM_DDS::PortStatusListener status; \
         }; \
-        component DDS_MonoConnector { \
+        connector DDS_MonoConnector { \
           attribute string topic_name; \
           readonly attribute DDS::StringSeq key_fields; \
           attribute DDS::DomainId_t domain_id; \
           attribute string qos_profile; \
+          uses CCM_DDS::ConnectorStatusListener error_listener; \
+          mirrorport DDS_Write info_in; \
+          mirrorport DDS_Update info_update; \
+          mirrorport DDS_Listen info_out; \
         }; \
     }; \
 }; \
