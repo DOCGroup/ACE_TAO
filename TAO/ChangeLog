@@ -1,3 +1,14 @@
+Wed Nov 11 15:33:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        
+          Removed ancestors from scope visitation for the LEM IDL
+          context classes. This closes [BUGID:3761].
+          
+        * TAO_IDL/ast/ast_template_interface.cpp:
+        
+          Cosmetic changes.
+
 Tue Nov 10 20:14:12 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxyPushSupplier.h:
@@ -33,7 +44,7 @@ Tue Nov 10 19:07:43 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Fixed bugs in the handling of the port name when
           it is used in the construction of facet and
-          receptacle operation names.
+          receptacle operation names. This fix closes [BUGID:3760].
 
 Tue Nov 10 18:15:44 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
@@ -96,7 +107,7 @@ Mon Nov  9 19:21:53 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
           Disable code generation of release() and is_nil() overrides
           for children of abstract interfaces if the child itself is
           included from another IDL file, avoiding possible multiple
-          defintions of these methods.
+          defintions of these methods. This item closes [BUGID:3759].
 
 Mon Nov  9 14:58:34 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
