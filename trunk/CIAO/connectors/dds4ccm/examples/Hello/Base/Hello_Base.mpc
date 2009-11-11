@@ -30,6 +30,10 @@ project(DDS_Hello_Base_NDDS_TS) : nddslib, taolib {
   sharedname = DDS_Hello_Base_NDDS_TS
   dynamicflags = NDDS_USER_DLL_EXPORT
 
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
   Source_Files {
     Hello_Base.cxx
     Hello_BasePlugin.cxx
