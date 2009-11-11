@@ -131,7 +131,7 @@ Message_Queue_Test_Ex: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
 Naming_Test: !NO_OTHER !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
-Network_Adapters_Test: !LynxOS !ACE_FOR_TAO
+Network_Adapters_Test: !ACE_FOR_TAO
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
 Notification_Queue_Unit_Test
@@ -225,7 +225,7 @@ Multihomed_INET_Addr_Test_IPV6: !nsk !ACE_FOR_TAO
 Proactor_Test_IPV6: !nsk !ACE_FOR_TAO !BAD_AIO
 SOCK_Send_Recv_Test_IPV6
 SOCK_Dgram_Test: !NO_NETWORK
-SOCK_Dgram_Bcast_Test: !LynxOS !ACE_FOR_TAO
+SOCK_Dgram_Bcast_Test: !ACE_FOR_TAO
 SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk
 Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
