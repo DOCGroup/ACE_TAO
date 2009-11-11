@@ -25,8 +25,8 @@ module Quoter
 
   component Distributor supports Trigger
   {
-    port CCM_DDS::DDS_Update info_update;
-    port CCM_DDS::DDS_Write info_in;
+    port CCM_DDS::Quoter::DDS_Update info_update;
+    port CCM_DDS::Quoter::DDS_Write info_in;
     attribute unsigned long rate;
   };
 };

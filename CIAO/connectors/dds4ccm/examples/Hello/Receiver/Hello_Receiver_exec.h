@@ -49,7 +49,7 @@ namespace CIAO_Hello_Receiver_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
 
   class HELLO_RECEIVER_EXEC_Export DDSHello_RawListener_exec_i
-    : public virtual ::CCM_DDS::CCM_DDSHello_RawListener,
+    : public virtual ::CCM_DDS::Hello::CCM_RawListener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -117,7 +117,7 @@ namespace CIAO_Hello_Receiver_Impl
     virtual char * name (void);
     virtual void name (const char *name);
 
-    virtual ::CCM_DDS::CCM_DDSHello_RawListener_ptr
+    virtual ::CCM_DDS::Hello::CCM_RawListener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

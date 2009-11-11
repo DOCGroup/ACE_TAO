@@ -34,12 +34,12 @@ namespace CIAO_Hello_Hello_Connector_Impl
   typedef Connector_Traits <
     ::CIAO_Hello_Hello_Connector_Impl::Hello_Connector_Exec,
     DDSHello_Seq,
-    ::CCM_DDS::CCM_DDSHello_Writer,
-    ::CCM_DDS::CCM_DDSHello_Updater,
-    ::CCM_DDS::CCM_DDSHello_Getter,
-    ::CCM_DDS::CCM_DDSHello_Reader,
+    ::CCM_DDS::Hello::CCM_Writer,
+    ::CCM_DDS::Hello::CCM_Updater,
+    ::CCM_DDS::Hello::CCM_Getter,
+    ::CCM_DDS::Hello::CCM_Reader,
     ::Hello::CCM_Hello_Connector_Context,
-    ::CCM_DDS::DDSHello_RawListener,
+    ::CCM_DDS::Hello::RawListener,
     ::CCM_DDS::ConnectorStatusListener> DDSHello_Connector_Traits;
 
   class HELLO_CONNECTOR_EXEC_Export Hello_Connector_exec_i :

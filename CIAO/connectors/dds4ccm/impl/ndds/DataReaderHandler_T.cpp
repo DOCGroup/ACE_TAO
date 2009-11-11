@@ -13,7 +13,7 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T
       : context_ (CCM_TYPE::context_type::_duplicate (context)),
         reader_ (reader)
 {
-  listener_ = this->context_->get_connection_info_out_data_listener ();
+  listener_ = CCM_TYPE::rawlistener_type::_duplicate (this->context_->get_connection_info_out_data_listener ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

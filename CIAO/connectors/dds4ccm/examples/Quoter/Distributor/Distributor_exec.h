@@ -176,8 +176,8 @@ namespace CIAO_Quoter_Distributor_Impl
     typedef std::map<ACE_CString, Quoter::Stock_Info_var> Stock_Table;
     Stock_Table stocks_;
     CORBA::ULong rate_;
-    CCM_DDS::Stock_Info_Writer_var writer_;
-    CCM_DDS::Stock_Info_Updater_var updater_;
+    CCM_DDS::Quoter::Writer_var writer_;
+    CCM_DDS::Quoter::Updater_var updater_;
   };
   
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

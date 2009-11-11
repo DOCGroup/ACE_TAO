@@ -80,6 +80,27 @@ enum Color
   BLUE
 };
 
+module T2 
+{
+  interface Write 
+  {
+  };
+  
+  porttype MyPort
+  {
+    uses Write writer;
+  };
+  
+  component Base 
+  {
+    port MyPort usage;
+  };
+  
+  component Derived : Base
+  {
+  };
+};
+
 module DerivedMod
 {
   porttype CombinedPort
@@ -108,6 +129,7 @@ module DerivedMod
     publishes pubtype pubtype_publisher;
     emits emittype emittype_emitter;
     consumes eattype eattype_consumer;
+    uses IfConcr ccre_user;
   };
 };
 
