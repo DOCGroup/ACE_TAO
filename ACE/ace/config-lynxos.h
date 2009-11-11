@@ -180,7 +180,7 @@
 #  define ACE_SYS_SIGLIST __sys_siglist
 #else
 // LynxOS 5.0 Removals
-#  define ACE_HAS_LYNXOS_SIGNALS
+#  define ACE_HAS_LYNXOS4_SIGNALS
 #  define ACE_HAS_SEMUN
 #  define ACE_HAS_STRBUF_T
 #  define ACE_HAS_SYSV_IPC
