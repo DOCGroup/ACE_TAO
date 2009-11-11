@@ -34,12 +34,12 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
   typedef Connector_Traits <
     ::CIAO_Shapes_Shapes_Connector_Impl::Shapes_Connector_Exec,
     ShapeType_Seq,
-    ::CCM_DDS::CCM_ShapeType_Writer,
-    ::CCM_DDS::CCM_ShapeType_Updater,
-    ::CCM_DDS::CCM_ShapeType_Getter,
-    ::CCM_DDS::CCM_ShapeType_Reader,
+    ::CCM_DDS::ShapeType::CCM_Writer,
+    ::CCM_DDS::ShapeType::CCM_Updater,
+    ::CCM_DDS::ShapeType::CCM_Getter,
+    ::CCM_DDS::ShapeType::CCM_Reader,
     ::Shapes::CCM_Shapes_Connector_Context,
-    ::CCM_DDS::ShapeType_RawListener,
+    ::CCM_DDS::ShapeType::RawListener,
     ::CCM_DDS::ConnectorStatusListener> ShapeType_Connector_Traits;
 
   class SHAPES_CONNECTOR_EXEC_Export Shapes_Connector_exec_i :

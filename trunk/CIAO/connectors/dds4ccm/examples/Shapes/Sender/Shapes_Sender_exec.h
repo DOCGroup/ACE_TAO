@@ -79,7 +79,7 @@ namespace CIAO_Shapes_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::ShapeType_Updater_var updater_;
+    CCM_DDS::ShapeType::Updater_var updater_;
 
     pulse_Generator * ticker_;
     ::Shapes::CCM_Sender_Context_var context_;

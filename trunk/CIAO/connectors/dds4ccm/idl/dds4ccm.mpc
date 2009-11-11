@@ -13,12 +13,12 @@ project (DDS4CCM_idl_gen) : ciaoidldefaults, anytypecode {
     dds4ccm_Base.idl3
   }
 
-
   IDL_Files {
     dds_rtf2_dcps.idl
     dds4ccm_PortStatusListener.idl3
     dds4ccm_ListenerControl.idl3
     dds4ccm_ConnectorStatusListener.idl3
+//    ccm_dds.idl
   }
 }
 

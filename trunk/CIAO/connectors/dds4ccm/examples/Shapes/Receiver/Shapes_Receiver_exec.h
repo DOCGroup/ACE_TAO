@@ -44,7 +44,7 @@ namespace CIAO_Shapes_Receiver_Impl
   };
 
   class RECEIVER_EXEC_Export ShapeType_RawListener_exec_i
-    : public virtual ::CCM_DDS::CCM_ShapeType_RawListener,
+    : public virtual ::CCM_DDS::ShapeType::CCM_RawListener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -108,7 +108,7 @@ namespace CIAO_Shapes_Receiver_Impl
     virtual void raw_listen (::CORBA::Boolean raw_listen);
 
     // Port operations.
-    virtual ::CCM_DDS::CCM_ShapeType_RawListener_ptr
+    virtual ::CCM_DDS::ShapeType::CCM_RawListener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -127,8 +127,8 @@ namespace CIAO_Shapes_Receiver_Impl
 
   private:
     ::Shapes::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::ShapeType_Reader_var reader_;
-    ::CCM_DDS::ShapeType_Getter_var getter_;
+    ::CCM_DDS::ShapeType::Reader_var reader_;
+    ::CCM_DDS::ShapeType::Getter_var getter_;
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;

@@ -34,14 +34,13 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
   typedef Connector_Traits <
     ::CIAO_Quoter_Quoter_Connector_Impl::Quoter_Connector_Exec,
     ::Quoter::Stock_Info_Seq,
-    ::CCM_DDS::CCM_Stock_Info_Writer,
-    ::CCM_DDS::CCM_Stock_Info_Updater,
-    ::CCM_DDS::CCM_Stock_Info_Getter,
-    ::CCM_DDS::CCM_Stock_Info_Reader,
+    ::CCM_DDS::Quoter::CCM_Writer,
+    ::CCM_DDS::Quoter::CCM_Updater,
+    ::CCM_DDS::Quoter::CCM_Getter,
+    ::CCM_DDS::Quoter::CCM_Reader,
     ::Quoter::CCM_Quoter_Connector_Context,
-    ::CCM_DDS::Stock_Info_RawListener,
+    ::CCM_DDS::Quoter::RawListener,
     ::CCM_DDS::ConnectorStatusListener> Stock_Info_Connector_Traits;
-    
 
   class QUOTER_CONNECTOR_EXEC_Export Quoter_Connector_exec_i :
     public Connector_T <Stock_Info_DDS_Traits, Stock_Info_Connector_Traits>

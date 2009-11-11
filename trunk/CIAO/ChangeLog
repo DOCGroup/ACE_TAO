@@ -1,3 +1,42 @@
+Wed Nov 11 09:41:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl:
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.idl:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.idl:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+        * connectors/dds4ccm/idl/ccm_ddsC.h:
+        * connectors/dds4ccm/idl/ccm_ddsS.h:
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Updater_T.h:
+          Introduced the concept as templated modules, but implemented using a
+          macro. If you want to have a templated module, include ccm_dds.idl
+          and add the following line
+
+          TYPED_MODULE( ::ShapeType, ::ShapeType_Seq, ShapeType)
+
+          First argument is the IDL data type, second the IDL datatype of a sequence
+          of the first, third is the name of the module that gets created inside the
+          CCM_DDS module.
+
 Tue Nov 10 20:00:17 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp:

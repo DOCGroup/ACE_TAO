@@ -22,10 +22,10 @@ namespace CIAO
         private ACE_Copy_Disabled
       {
       public:
-        // Constructor
+        /// Constructor
         Updater_T (::DDS::DataWriter_ptr dw);
 
-        // Destructor
+        /// Destructor
         virtual ~Updater_T (void);
 
         virtual void create (const typename DDS_TYPE::value_type& an_instance);
