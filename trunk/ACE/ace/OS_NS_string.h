@@ -183,11 +183,9 @@ namespace ACE_OS {
   wchar_t *strecpy (wchar_t *s, const wchar_t *t);
 #endif /* ACE_HAS_WCHAR */
 
-  /*
-  ** Returns a system error message. If the supplied errnum is out of range,
-  ** a string of the form "Unknown error %d" is used to format the string
-  ** whose pointer is returned and errno is set to EINVAL.
-  */
+  /// Returns a system error message. If the supplied errnum is out of range,
+  /// a string of the form "Unknown error %d" is used to format the string
+  /// whose pointer is returned and errno is set to EINVAL.
   extern ACE_Export
   char *strerror (int errnum);
 
@@ -197,12 +195,11 @@ namespace ACE_OS {
   char *strerror_emulation (int errnum);
 #endif /* ACE_LACKS_STRERROR */
 
-  /*
-  ** Returns a string describing the signal number passed in the
-  ** argument signum. If the supplied signal number is out of range,
-  ** a string of the form "Unknown signal %d" is used to format the string
-  ** whose pointer is returned and errno is set to EINVAL.
-  */
+
+  /// Returns a string describing the signal number passed in the
+  /// argument signum. If the supplied signal number is out of range,
+  /// a string of the form "Unknown signal %d" is used to format the string
+  /// whose pointer is returned.
   extern ACE_Export
   char *strsignal (int signum);
 
