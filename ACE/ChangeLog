@@ -1,3 +1,8 @@
+Wed Nov 11 13:49:11 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-freebsd.h:
+          Added ACE_HAS_SIGISMEMBER_BUG.
+
 Wed Nov 11 12:07:36 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * bin/fuzz.pl:
