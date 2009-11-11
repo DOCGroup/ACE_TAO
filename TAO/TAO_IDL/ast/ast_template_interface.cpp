@@ -10,10 +10,6 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_template_interface,
-           "$Id$")
-
 AST_Template_Interface::AST_Template_Interface (
       UTL_ScopedName *n,
       AST_Interface **ih,
