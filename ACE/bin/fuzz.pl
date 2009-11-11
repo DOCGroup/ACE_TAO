@@ -211,6 +211,9 @@ sub check_for_id_string ()
                 if (/\$id\$/) {
                     print_error ("$file:$.: Incorrect \$id\$ found (correct casing)");
                 }
+                if (/\$Id:\$/) {
+                    print_error ("$file:$.: Incorrect \$Id:\$ found (remove colon)");
+                }
             }
             close (FILE);
             if ($found == 0) {
