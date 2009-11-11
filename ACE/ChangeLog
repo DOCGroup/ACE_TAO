@@ -1,9 +1,14 @@
+Wed Nov 11 09:36:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended Id check to detect Id:
+
 Wed Nov 11 03:07:32 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * include/makeinclude/platform_macosx_snowleopard.GNU:
-        
-          Add support for building 32 bits. 
-        
+
+          Add support for building 32 bits.
+
 Tue Nov 10 21:03:25 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/sets-manager.py:
