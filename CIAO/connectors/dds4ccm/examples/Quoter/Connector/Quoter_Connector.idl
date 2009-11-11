@@ -18,12 +18,8 @@ TYPED_MODULE( ::Quoter::Stock_Info, ::Quoter::Stock_Info_Seq, Quoter)
 
 module Quoter
 {
-  component Quoter_Connector : ::CCM_DDS::Quoter::DDS_MonoConnector
+  connector Quoter_Connector : ::CCM_DDS::Quoter::DDS_MonoConnector
   {
-    uses CCM_DDS::ConnectorStatusListener error_listener;
-    mirrorport CCM_DDS::Quoter::DDS_Write info_in;
-    mirrorport CCM_DDS::Quoter::DDS_Update info_update;
-    mirrorport CCM_DDS::Quoter::DDS_Listen info_out;
   };
 };
 

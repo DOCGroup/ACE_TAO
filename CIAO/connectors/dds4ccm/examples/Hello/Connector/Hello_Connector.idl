@@ -18,12 +18,8 @@ TYPED_MODULE( ::DDSHello, ::DDSHello_Seq, Hello)
 
 module Hello
 {
-  component Hello_Connector : ::CCM_DDS::Hello::DDS_MonoConnector
+  connector Hello_Connector : ::CCM_DDS::Hello::DDS_MonoConnector
   {
-    uses CCM_DDS::ConnectorStatusListener error_listener;
-    mirrorport CCM_DDS::Hello::DDS_Write info_in;
-    mirrorport CCM_DDS::Hello::DDS_Update info_update;
-    mirrorport CCM_DDS::Hello::DDS_Listen info_out;
   };
 };
 

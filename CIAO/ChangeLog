@@ -1,3 +1,15 @@
+Wed Nov 11 15:13:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+          Added connector as define which is then component. That way we can use
+          connector as keyword. Added uses/provides to the DDS monolotic connector,
+          can be done now a bug in the IDL compiler has been fixed
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+          Simplified these connectors
+
 Wed Nov 11 09:41:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl:
