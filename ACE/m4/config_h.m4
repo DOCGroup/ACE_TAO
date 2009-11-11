@@ -74,7 +74,7 @@ AH_TEMPLATE([ACE_HAS_STDEXCEPT_NO_H],[Platform provides C++ <stdexcept> header])
 dnl Deprecated! (or soon to be?)
 AH_TEMPLATE([ACE_HAS_OSF1_GETTIMEOFDAY],
 [timezone* 2nd parameter & no prototype])
-AH_TEMPLATE([ACE_HAS_LYNXOS_SIGNALS],[])
+AH_TEMPLATE([ACE_HAS_LYNXOS4_SIGNALS],[])
 AH_TEMPLATE([ACE_HAS_TANDEM_SIGNALS],[])
 
 AH_TEMPLATE([PTHREAD_STACK_MIN],[])

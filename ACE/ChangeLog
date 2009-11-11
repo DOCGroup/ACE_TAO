@@ -1,3 +1,13 @@
+Wed Nov 11 11:36:26 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_signal.inl:
+        * ace/config-lynxos.h:
+        * ace/os_include/os_signal.h:
+        * configure.ac:
+        * m4/config_h.m4:
+        * m4/platform.m4:
+          Renamed ACE_HAS_LYNXOS_SIGNALS to ACE_HAS_LYNXOS4_SIGNALS.
+
 Wed Nov 11 09:36:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
