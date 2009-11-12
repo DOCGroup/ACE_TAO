@@ -207,24 +207,6 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="Hello_ConnectorComponentInstance2">
-    <name>Hello_ConnectorComponent2</name>
-    <node>ReceiverNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_ConnectorComponentImplementation" />
-    <configProperty>
-      <name>topic_name</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
@@ -278,9 +260,9 @@
   </instance>
 
   <connection>
-    <name>info_write_data</name>
+    <name>writer_connection</name>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>info_write_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SenderComponentInstance" />
@@ -289,7 +271,7 @@
       <portName>info_in_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ConnectorComponentInstance2" />
+      <instance xmi:idref="Hello_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -304,7 +286,7 @@
       <portName>info_out_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_ConnectorComponentInstance2" />
+      <instance xmi:idref="Hello_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -319,7 +301,7 @@
       <portName>info_out_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ConnectorComponentInstance2" />
+      <instance xmi:idref="Hello_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -334,7 +316,7 @@
       <portName>info_out_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ConnectorComponentInstance2" />
+      <instance xmi:idref="Hello_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
