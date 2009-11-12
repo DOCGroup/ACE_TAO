@@ -20,8 +20,8 @@ my $service = PerlACE::TestTarget::create_target (1) || die "Create target 1 fai
 
 $CS = $service->CreateProcess ("NamingMessenger", "-ORBdebuglevel $debug_level");
 
-if ($CS->SpawnWaitKill(10) != 0) {
+if ($CS->SpawnWaitKill($service->ProcessStartWaitInterval()) != 0) {
    exit 1;
 }
 
-exit $status;
+exit 0;

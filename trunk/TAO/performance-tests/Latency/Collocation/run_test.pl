@@ -19,7 +19,7 @@ foreach $i (@ARGV) {
 
 my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 $T = $test->CreateProcess ("Collocated_Test", "-ORBdebuglevel $debug_level");
-$test_status = $T->SpawnWaitKill (60);
+$test_status = $T->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
 
 if ($test_status != 0) {
     print STDERR "ERROR: Collocated_Test returned $test_status\n";
