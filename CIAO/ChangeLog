@@ -1,26 +1,7 @@
-Thu Nov 12 15:23:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+Thu Nov 12 17:44:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * bin/ciao_tests.lst:
-          Added Double_Inherited_Component test.
-
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
-        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
-          Added ConnectorStatusListener.
-
-        * tests/IDL_Test/Double_Inherited_Component:
-        * tests/IDL_Test/Double_Inherited_Component/ComponentC.cdp:
-        * tests/IDL_Test/Double_Inherited_Component/ComponentC_exec.h:
-        * tests/IDL_Test/Double_Inherited_Component/ComponentC_exec.cpp:
-        * tests/IDL_Test/Double_Inherited_Component/Inherited_components.idl:
-        * tests/IDL_Test/Double_Inherited_Component/Inherited_components.mpc:
-        * tests/IDL_Test/Double_Inherited_Component/run_test.pl:
-          Test to test setting an attribute on a parent component.
-
-Thu Nov 12 11:59:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
-
-        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
-          Resolved compiler error.
+        * docs/CIAO.pdf:
+          Regenerated from framemaker
 
 Thu Nov 12 10:23:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -217,6 +198,28 @@ Tue Nov 10 14:32:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
         * connectors/dds4ccm/idl/dds4ccm_Port_MultiListen.idl3p
         * connectors/dds4ccm/idl/dds4ccm_Port_MultiUpdate.idl3p
         * connectors/dds4ccm/idl/dds4ccm_Port_MultiWrite.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_Update.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Port_Write.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl3
+        * connectors/dds4ccm/idl/dds4ccm_RawListener.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Reader.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_StateListener.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Updater.idl3p
+        * connectors/dds4ccm/idl/dds4ccm_Writer.idl3p
+          Fixed mpc files, do full includes related to CIAO_ROOT
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Unicode fix
+
+Tue Nov 10 14:12:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp
+connectors/dds4ccm/idl/dds4ccm_Port_MultiWrite.idl3p
         * connectors/dds4ccm/idl/dds4ccm_Port_RawListen.idl3p
         * connectors/dds4ccm/idl/dds4ccm_Port_Read.idl3p
         * connectors/dds4ccm/idl/dds4ccm_Port_StateListen.idl3p
