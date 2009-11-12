@@ -1,3 +1,8 @@
+Thu Nov 12 11:59:59 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Resolved compiler error.
+
 Thu Nov 12 10:23:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/ccm_dds.idl
