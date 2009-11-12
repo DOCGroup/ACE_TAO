@@ -118,17 +118,6 @@
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Sender.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>
@@ -147,17 +136,6 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Hello_SenderConnectorComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderConnector.ior</string>
-        </value>
-      </value>
-    </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
