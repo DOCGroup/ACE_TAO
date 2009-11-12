@@ -1485,9 +1485,20 @@ be_interface::traverse_inheritance_graph (
           AST_Home *base =
             AST_Home::narrow_from_decl (intf)->base_home ();
 
-          if (base != 0)
+          while (base != 0)
             {
               (void) this->insert_non_dup (base);
+              
+              long const n_supports = base->n_supports ();
+              AST_Interface **supports = base->supports ();
+
+              for (long j = 0; j < n_supports; ++j)
+                {
+                  (void) this->insert_non_dup (supports[j],
+                                               abstract_paths_only);
+                }
+                
+              base = base->base_home ();
             }
         }
 
@@ -1502,7 +1513,7 @@ be_interface::traverse_inheritance_graph (
           AST_Component *base =
             AST_Component::narrow_from_decl (intf)->base_component ();
 
-          if (base != 0)
+          while (base != 0)
             {
               (void) this->insert_non_dup (base);
 
@@ -1514,6 +1525,8 @@ be_interface::traverse_inheritance_graph (
                   (void) this->insert_non_dup (supports[j],
                                                abstract_paths_only);
                 }
+                
+              base = base->base_component ();
             }
         }
 
