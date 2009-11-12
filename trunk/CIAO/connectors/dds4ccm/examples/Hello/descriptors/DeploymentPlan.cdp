@@ -262,7 +262,7 @@
   <connection>
     <name>writer_connection</name>
     <internalEndpoint>
-      <portName>info_write_data</portName>
+      <portName>info_in_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SenderComponentInstance" />
