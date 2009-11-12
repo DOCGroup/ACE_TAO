@@ -45,8 +45,8 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (120);
-$server_status = $SV->TerminateWaitKill (5);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$server_status = $SV->TerminateWaitKill ($server->ProcessStartWaitInterval());
 
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
