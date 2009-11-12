@@ -32,8 +32,8 @@ project(DDS_Hello_Connector_lem_gen) : ciaoidldefaults {
 }
 
 project(DDS_Hello_Connector_lem_stub) : ccm_svnt, dds4ccm_base   {
-  after += DDS_Hello_Connector_lem_gen DDS_Hello_Connector_stub DDS_Hello_Base_stub
-  libs  += DDS_Hello_Base_stub DDS_Hello_Connector_stub
+  after += DDS_Hello_Connector_lem_gen DDS_Hello_Connector_stub DDS_Hello_Base_stub DDS4CCM_lem_stub
+  libs  += DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..

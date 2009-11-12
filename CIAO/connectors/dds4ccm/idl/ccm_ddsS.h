@@ -44,6 +44,7 @@
 #include "connectors/dds4ccm/idl/dds4ccm_ListenerControlS.h"
 #include "connectors/dds4ccm/idl/dds4ccm_PortStatusListenerS.h"
 #include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListenerS.h"
+#include "connectors/dds4ccm/idl/dds4ccm_ConnectorS.h"
 
 #include /**/ "dds4ccm_skel_export.h"
 

@@ -9,6 +9,8 @@
 
 #include "dds_rtf2_dcps.idl"
 
+#define connector component
+
 module CCM_DDS
 {
   typedef sequence<unsigned long> InstanceNumberSeq;
@@ -21,10 +23,11 @@ module CCM_DDS
   };
 
   exception InternalError{
-    unsigned long error_code; // DDS codes that are relevant:
-    //ERROR (1); UNSUPPORTED (2); OUT_OF_RESOURCE (5)
+    DDS::ReturnCode_t error_code;
     unsigned long index; // of the erroneaous
   };
+
+  exception NonChangeable {};
 
   exception BadParameter {};
 
@@ -37,6 +40,12 @@ module CCM_DDS
     INSTANCE_CREATED,
     INSTANCE_UPDATED,
     INSTANCE_DELETED
+  };
+
+  enum ListenerMode {
+    NOT_ENABLED,
+    ONE_BY_ONE,
+    MANY_BY_MANY
   };
 
   struct ReadInfo {
