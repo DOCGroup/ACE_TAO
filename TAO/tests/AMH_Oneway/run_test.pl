@@ -56,13 +56,13 @@ if ($client_status != 0) {
 
 # Clean up.
 
-$client_status = $CL->WaitKill (30);
+$client_status = $CL->WaitKill ($client->ProcessStopWaitInterval() + 15);
 if ($client_status != 0) {
     print STDERR "ERROR: Client returned $client_status\n";
     $status = 1;
 }
 
-$amhserver= $AMH->WaitKill (60);
+$amhserver= $AMH->WaitKill ($server->ProcessStopWaitInterval());
 if ($amhserver != 0) {
     print STDERR "ERROR: AMH Server returned $amhserver\n";
     $status = 1;
