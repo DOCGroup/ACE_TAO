@@ -34,3 +34,4 @@ TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl: !STATIC !M
 TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ NDDS
 TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ
 TAO/CIAO/connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !FUZZ NDDS
+TAO/CIAO/connectors/dds4ccm/examples/tests/KeyedSamples/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
