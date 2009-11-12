@@ -58,7 +58,7 @@ if ($server_status != 0) {
 
 print "Restarting Client to provoke TRANSIENT exception\n";
 
-$client_status = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($server->ProcessStartWaitInterval() + 45);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
