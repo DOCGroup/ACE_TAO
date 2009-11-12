@@ -47,7 +47,7 @@ if ($client_status != 0) {
     $status = 1;
 }
 
-$server_status = $SV->WaitKill (25);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 10);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server\n";
@@ -56,7 +56,7 @@ if ($server_status != 0) {
 
 print STDERR "\n\n==== Octet sequence performance test\n";
 
-$test = $T->SpawnWaitKill (60);
+$test = $T->SpawnWaitKill ($t3->ProcessStartWaitInterval() + 45);
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
