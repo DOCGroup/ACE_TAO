@@ -1,3 +1,10 @@
+Thu Nov 12 06:54:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+        * ace/OS_NS_fcntl.h:
+        * ace/RW_Process_Mutex.h:
+          Moved all constants to Default_Constants.h
+
 Wed Nov 11 14:57:15 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/run_test.lst:
