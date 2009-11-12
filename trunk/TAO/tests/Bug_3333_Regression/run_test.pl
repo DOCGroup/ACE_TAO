@@ -68,7 +68,7 @@ if ($server->PutFile ($forward_forever) == -1) {
 }
 
 print "Spawn client\n";
-$client_status = $CL->SpawnWaitKill (60); # 60= 20x the actual roundtrip timeout policy value of 3sec, just to be sure.
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45); # 60= 20x the actual roundtrip timeout policy value of 3sec, just to be sure.
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $SHUTDOWN = $client->CreateProcess ("Bug3333_Client", " -k file://$server_iorfile -s");
@@ -77,7 +77,7 @@ if ($client_status != 0) {
 }
 
 print "Wait for server to finish\n";
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval()+10);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 10);
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
