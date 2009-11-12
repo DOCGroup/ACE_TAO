@@ -61,6 +61,8 @@
 #include "connectors/dds4ccm/idl/dds4ccm_PortStatusListenerEC.h"
 #include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
 #include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListenerEC.h"
+#include "connectors/dds4ccm/idl/dds4ccm_ConnectorC.h"
+#include "connectors/dds4ccm/idl/dds4ccm_ConnectorEC.h"
 #include "connectors/dds4ccm/idl/dds_rtf2_dcpsEC.h"
 #include "dds_rtf2_dcpsC.h"
 

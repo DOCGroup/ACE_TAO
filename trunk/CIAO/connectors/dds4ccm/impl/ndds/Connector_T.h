@@ -27,6 +27,8 @@ public:
 
   virtual ::DDS::StringSeq *key_fields (void);
 
+  virtual void key_fields (const ::DDS::StringSeq & key_fields);
+
   virtual ::DDS::DomainId_t domain_id (void);
 
   virtual void domain_id (::DDS::DomainId_t domain_id);

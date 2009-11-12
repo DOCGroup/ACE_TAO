@@ -48,6 +48,14 @@ Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
+void
+Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (const ::DDS::StringSeq & key_fields)
+{
+  ACE_UNUSED_ARG (key_fields);
+  // @todo
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StringSeq *
 Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
 {
