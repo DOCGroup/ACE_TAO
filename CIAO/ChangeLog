@@ -1,3 +1,11 @@
+Thu Nov 12 20:44:49 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Double_Inherited_Component/Inherited_components.mpc:
+        
+          Fixed export macros/includes so that the *idl_gen exec export
+          macro/include matches the *lem_gen stub export macro/include
+          and the *lem_stub dynamic flag.
+
 Thu Nov 12 17:44:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/CIAO.pdf:
