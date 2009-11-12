@@ -1,12 +1,26 @@
+Thu Nov 12 07:13:51 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/PortableInterceptors/AdvSlot/run_test.pl
+        * tests/PortableInterceptors/AdvSlotDblCpy/run_test.pl
+        * tests/PortableInterceptors/Bug_2133/run_test.pl
+        * tests/PortableInterceptors/Bug_2510_Regression/run_test.pl
+        * tests/PortableInterceptors/Bug_3080/run_test.pl
+        * tests/PortableInterceptors/Bug_3582/run_test.pl
+        * tests/PortableInterceptors/Dynamic/run_test.pl
+        * tests/PortableInterceptors/IORInterceptor/run_test.pl
+        * tests/PortableInterceptors/ORB_Shutdown/run_test.pl
+        * tests/PortableInterceptors/PICurrent/run_test.pl
+          Fixed fuzz errors
+
 Wed Nov 11 15:33:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
-        
+
           Removed ancestors from scope visitation for the LEM IDL
           context classes. This closes [BUGID:3761].
-          
+
         * TAO_IDL/ast/ast_template_interface.cpp:
-        
+
           Cosmetic changes.
 
 Tue Nov 10 20:14:12 UTC 2009  Yan Dai  <dai_y@ociweb.com>
