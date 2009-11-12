@@ -182,17 +182,6 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverOne.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>
@@ -245,17 +234,6 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverConnectorOne.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>
@@ -283,17 +261,6 @@
         </type>
         <value>
           <string>Hello_ReceiverHome</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverTwo.ior</string>
         </value>
       </value>
     </configProperty>
@@ -350,17 +317,6 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverConnectorTwo.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>
@@ -388,17 +344,6 @@
         </type>
         <value>
           <string>Hello_ReceiverHome</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverThree.ior</string>
         </value>
       </value>
     </configProperty>
@@ -455,17 +400,6 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverConnectorThree.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>
@@ -493,17 +427,6 @@
         </type>
         <value>
           <string>Hello_ReceiverHome</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverFour.ior</string>
         </value>
       </value>
     </configProperty>
@@ -560,17 +483,6 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverConnectorFour.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
       <value>
         <type>
@@ -598,17 +510,6 @@
         </type>
         <value>
           <string>Hello_ReceiverHome</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverFive.ior</string>
         </value>
       </value>
     </configProperty>
@@ -661,17 +562,6 @@
         </type>
         <value>
           <string>Hello_ReceiverConnectorHome</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverConnectorFive.ior</string>
         </value>
       </value>
     </configProperty>

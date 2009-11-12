@@ -1,3 +1,26 @@
+Thu Nov 12 10:50:50 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Running labViewRT, WinCE and fuzz for some more DDS4CCM examples.
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+          Changed name of writer port in order to match the other examples.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp:
+          Don't need ior files.
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+          Adapted to the new framework.
+
 Thu Nov 12 10:04:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.idl:
