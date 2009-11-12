@@ -124,7 +124,7 @@ module CCM_DDS {
         // Connector bases
         // ---------------
         connector DDS_Base {
-                uses ConnectorStatusListener            error_listener
+                uses ConnectorStatusListener            error_listener;
                 attribute DDS::DomainId_t                       domain_id
                         setraises (NonChangeable);
                 attribute string                                        qos_profile     // File URL or XML string

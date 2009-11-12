@@ -1,3 +1,19 @@
+Thu Nov 12 10:23:50 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/docs/ccm_dds.idl
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc
+        * connectors/dds4ccm/idl/ccm_dds.idl
+        * connectors/dds4ccm/idl/ccm_ddsC.h
+        * connectors/dds4ccm/idl/ccm_ddsS.h
+        * connectors/ds4ccm/idl/dds4ccm.mpc
+        * connectors/dds4ccm/idl/dds4ccm_Base.idl3
+        * connectors/dds4ccm/idl/dds4ccm_Connector.idl
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+          Added default connectors into the dds4ccm library
+
 Thu Nov 12 10:50:50 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
