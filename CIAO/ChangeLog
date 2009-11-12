@@ -1,3 +1,8 @@
+Thu Nov 12 10:04:48 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.idl:
+          Resolved fuzz error.
+
 Thu Nov 12 09:54:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
