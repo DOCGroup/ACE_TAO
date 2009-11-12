@@ -44,7 +44,7 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
