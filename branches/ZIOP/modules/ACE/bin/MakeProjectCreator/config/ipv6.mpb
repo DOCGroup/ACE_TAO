@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(ipv6) {
-  specific(vc6, vc7, vc71, vc8, nmake, borland, bmake, cbx) {
-    lit_libs += iphlpapi
-  }
-  macros += ACE_HAS_IPV6
-}

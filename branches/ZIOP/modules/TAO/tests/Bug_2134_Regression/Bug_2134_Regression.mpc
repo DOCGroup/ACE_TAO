@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project (*Test) : taoserver, iortable, minimum_corba {
-  Source_Files {
-    Hello.cpp
-  }
-}

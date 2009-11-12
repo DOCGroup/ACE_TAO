@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : aceexe, taodefaults, taoidldefaults, core_minimum_corba, corba_e_compact, corba_e_micro {
-  after += TAO Codeset
-  libs  += TAO
-}

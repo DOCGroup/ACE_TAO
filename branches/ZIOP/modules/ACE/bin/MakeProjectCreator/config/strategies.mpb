@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-project : taolib, anytypecode {
-  avoids  += ace_for_tao     // Requires Unix domain sockets and MEM stuff
-  after   += Strategies
-  libs    += TAO_Strategies
-}

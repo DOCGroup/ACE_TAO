@@ -1,4 +1,0 @@
-//$Id$
-project : taoserver, minimum_corba {
-  exename = NewPOA
-}

@@ -1,5 +1,0 @@
-// $Id$
-
-project: namingexe, iortable, core, dseventlogadmin_serv, valuetype {
-  exename   = Event_Logging_Service
-}

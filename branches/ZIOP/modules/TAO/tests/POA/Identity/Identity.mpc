@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(POA*): taoserver {
-  exename = Identity
-}
