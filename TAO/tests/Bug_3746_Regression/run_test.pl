@@ -55,7 +55,7 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 print "Starting Client\n";
-$client_status = $CL->SpawnWaitKill (30); #$client->ProcessStartWaitInterval());
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 15);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
