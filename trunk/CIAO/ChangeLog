@@ -1,3 +1,8 @@
+Thu Nov 12 08:51:53 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added KeyedSamples test to the test framework
+
 Thu Nov 12 08:45:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
