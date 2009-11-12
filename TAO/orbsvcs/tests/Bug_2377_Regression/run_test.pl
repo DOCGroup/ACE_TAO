@@ -20,15 +20,15 @@ foreach $i (@ARGV) {
 my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 $T = $test->CreateProcess("uipmc_test",
-    			"-ORBdebuglevel $debug_level ".
-    			"-u corbaloc:miop:1.0\@1.0-cdmwftdomain-1/225.1.1.8:5555 " .
-    			"-c corbaloc:miop:1.0\@1.0-cdmwftdomain-1/225.1.1.7:5555");
+                          "-ORBdebuglevel $debug_level ".
+                          "-u corbaloc:miop:1.0\@1.0-cdmwftdomain-1/225.1.1.8:5555 " .
+                          "-c corbaloc:miop:1.0\@1.0-cdmwftdomain-1/225.1.1.7:5555");
 
 
-$test_status = $T->SpawnWaitKill (20);
+$test_status = $T->SpawnWaitKill ($test->ProcessStartWaitInterval());
 
 if ($test_status != 0) {
-    print STDERR "ERROR: uipmc_test returned $prog\n";
+    print STDERR "ERROR: uipmc_test returned $test_status\n";
     $status = 1;
 }
 

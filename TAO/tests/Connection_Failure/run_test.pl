@@ -21,7 +21,7 @@ my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 
 $CL = $client->CreateProcess ("client", "-ORBdebuglevel $debug_level");
 
-$client_status = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 50);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";

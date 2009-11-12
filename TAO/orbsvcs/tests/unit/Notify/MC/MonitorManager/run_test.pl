@@ -1,14 +1,14 @@
-eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
-     & eval 'exec perl -w -S $0 $argv:q'
-     if 0;
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
-use strict;
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
+$status = 0;
 $debug_level = '0';
 
 foreach $i (@ARGV) {
@@ -17,34 +17,32 @@ foreach $i (@ARGV) {
     }
 }
 
-my($prog) = 'MonitorManager';
+my($prog_server) = 'MonitorManager';
+my($prog_client) = 'MonitorClient';
 
-## Avoid code duplication by determining the process type and
-## storing it as a string for use later.
-my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
-                                          'PerlACE::Process');
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-my $SV = $class->new($prog, "-ORBdebuglevel $debug_level");
-my $server = $SV->Spawn();
+$SV = $server->CreateProcess ($prog_server, "-ORBdebuglevel $debug_level");
+$CL = $client->CreateProcess ($prog_client);
 
-if ($server != 0) {
-  print STDERR "ERROR: $prog returned $server\n";
-  exit(1);
+$status_server = $SV->Spawn();
+
+
+sleep($server->ProcessStartWaitInterval()/3);
+
+$status_client = $CL->SpawnWaitKill ($server->ProcessStartWaitInterval() + 10);
+
+if ($status_client != 0) {
+    print STDERR "ERROR: $prog_server returned $status_server\n";
+    $status = 1;
 }
 
-sleep($PerlACE::wait_interval_for_process_creation / 3);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
-$prog = 'MonitorClient';
-my $CL = new PerlACE::Process($prog);
-my $client = $CL->SpawnWaitKill(20);
-
-my $status = 0;
-if ($client != 0) {
-  print STDERR "ERROR: $prog returned $client\n";
-  $SV->Kill();
-  $status = 1;
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $status = 1;
 }
 
-$SV->WaitKill(10);
-
-exit($status);
+exit $status;
