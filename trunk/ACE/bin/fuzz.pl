@@ -1446,11 +1446,11 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using ACE_RUN_VX_TGTHOST, use TestTarget::HostName");
                     }
 
-                    if (m/SpawnWaitKill\s*\(\d+\)/) {
-                        print_error ("$file:$.: uses hardcoded timeout for SpawnWaitKill");
+                    if (m/Spawn(Wait(Kill)?)?\s*\(.+\->ProcessStop\)/) {
+                        print_error ("$file:$.: uses Stop together with Spawn");
                     }
 
-                    if (m/Spawn\s*\(\d+\)/) {
+                    if (m/Spawn(Wait(Kill)?)?\s*\(\d+\)/) {
                         print_error ("$file:$.: uses hardcoded timeout for Spawn");
                     }
 
