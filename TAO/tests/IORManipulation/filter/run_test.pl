@@ -7,7 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use Sys::Hostname;
 
 my $status = 0;
 $debug_level = '0';
@@ -18,16 +17,15 @@ foreach $i (@ARGV) {
     }
 }
 
-my $host = hostname();
-
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
+my $hostname = $server->HostName();
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-ORBUseSharedProfiles 0 " .
                               "-ORBEndpoint iiop://localhost " .
-                              "-ORBEndpoint iiop://${host}");
+                              "-ORBEndpoint iiop://$hostname");
     
 $server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 

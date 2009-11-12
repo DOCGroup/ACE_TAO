@@ -10,7 +10,6 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
-$TARGETHOSTNAME = '127.0.0.1';
 $port = PerlACE::uniqueid () + 12000;
 $endien = (pack('L', 0x41424344) eq 'ABCD' ? '_be' : '');
 
@@ -21,16 +20,15 @@ foreach $i (@ARGV) {
 }
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
+my $hostname = $server->HostName();
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess (	"server",
-	                        "-ORBEndpoint " .
-                             	"iiop://$TARGETHOSTNAME" . ":$port " .
-                             	"-ORBDebugLevel $debug_level");
-			
+$SV = $server->CreateProcess ("server",
+                              "-ORBEndpoint iiop://$hostname:$port " .
+                              "-ORBDebugLevel $debug_level");
+
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
@@ -47,7 +45,7 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
-my($CL) = system("$^X dribble.pl --host=$TARGETHOSTNAME --port=$port " .
+my($CL) = system("$^X dribble.pl --host=$hostname --port=$port " .
                  "--stream=giop1.2_fragments$endien.dat " .
                  "--layout=giop1.2_fragments$endien.layout");
 if ($CL != 0) {
