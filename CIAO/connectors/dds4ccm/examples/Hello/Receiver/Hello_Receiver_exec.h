@@ -100,6 +100,38 @@ namespace CIAO_Hello_Receiver_Impl
     Atomic_ULong &lost_;
   };
 
+  class HELLO_RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
+    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
+      public virtual ::CORBA::LocalObject
+  {
+  public:
+    ConnectorStatusListener_exec_i (void);
+    virtual ~ConnectorStatusListener_exec_i (void);
+
+    virtual
+      void on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
+                                    const DDS::InconsistentTopicStatus & status);
+    virtual
+    void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
+                                    const DDS::RequestedIncompatibleQosStatus & status);
+    virtual
+    void on_sample_rejected( ::DDS::DataReader_ptr the_reader,
+                                    const DDS::SampleRejectedStatus & status);
+    virtual
+      void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
+                                    const DDS::OfferedDeadlineMissedStatus & status);
+    virtual
+    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
+                                    const DDS::OfferedIncompatibleQosStatus & status);
+    virtual
+    void on_unexpected_status( ::DDS::Entity_ptr the_entity,
+                                    ::DDS::StatusKind  status_kind);
+    virtual
+    void on_subscription_matched (::DDS::DataReader_ptr the_reader,
+                                    const ::DDS::SubscriptionMatchedStatus & status);
+
+  };
+
   class HELLO_RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
@@ -122,6 +154,9 @@ namespace CIAO_Hello_Receiver_Impl
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
+    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+    get_info_out_connector_status (void);
+    
 
     // Operations from Components::SessionComponent.
 

@@ -93,6 +93,71 @@ namespace CIAO_Hello_Receiver_Impl
     CIAO_DEBUG ((LM_ERROR, ACE_TEXT("port status listener::on_sample_lost\n")));
   }
 
+
+  //============================================================
+  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  //============================================================
+
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+
+  }
+
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr /*the_topic*/,
+     const DDS::InconsistentTopicStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+    ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::SampleRejectedStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind  /*status_kind*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+  }
+  
+  void ConnectorStatusListener_exec_i::on_subscription_matched (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const ::DDS::SubscriptionMatchedStatus & /*status*/)
+  {
+    printf ("##$@##$@#$@#$@#$@#$@#$@#$\n");
+  }
+  
+
   //============================================================
   // Component Executor Implementation Class: Receiver_exec_iDDSHello_RawListener_exec_i ();
   //============================================================
@@ -145,6 +210,13 @@ namespace CIAO_Hello_Receiver_Impl
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i (this->lost_);
+  }
+
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Receiver_exec_i::get_info_out_connector_status (void)
+  {
+    printf ("*************** out connector status************************\n");
+    return new ConnectorStatusListener_exec_i ();
   }
 
   // Operations from Components::SessionComponent.
