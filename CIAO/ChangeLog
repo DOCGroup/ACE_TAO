@@ -1,3 +1,31 @@
+Thu Nov 12 07:58:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests:
+        * connectors/dds4ccm/tests/KeyedSamples:
+        * connectors/dds4ccm/tests/KeyedSamples/Base:
+        * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.mpc:
+        * connectors/dds4ccm/tests/KeyedSamples/Connector:
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+          Added keyed test as a starter for DDS4CCM tests.
+
 Wed Nov 11 15:13:17 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
