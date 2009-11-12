@@ -1,3 +1,14 @@
+Thu Nov 12 12:12:51 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/AMI_Timeouts/run_test.pl:
+        * tests/Portable_Interceptors/AdvSlot/run_test.pl:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/run_test.pl:
+        * tests/Portable_Interceptors/Bug_2133/run_test.pl:
+        * tests/Portable_Interceptors/Bug_3080/run_test.pl:
+        * tests/Portable_Interceptors/Bug_3582/run_test.pl:
+          Fixed fuzz
+
 Thu Nov 12 08:24:00 UTC 2009  Denis Budko <denis.budko@remedy.nl>
 
         * tests/IORManipulation/filter/run_test.pl
