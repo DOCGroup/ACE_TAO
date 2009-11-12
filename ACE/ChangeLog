@@ -1,6 +1,12 @@
+Thu Nov 12 15:53:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Exteded perl fuzz checks
+
 Thu Nov 12 08:31:00 UTC 2009  Denis Budko <denis.budko@remedy.nl>
+
         * docs/run_test.txt
-        Added description of TestTarget::HostName() function usage
+          Added description of TestTarget::HostName() function usage
 
 Thu Nov 12 06:54:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
