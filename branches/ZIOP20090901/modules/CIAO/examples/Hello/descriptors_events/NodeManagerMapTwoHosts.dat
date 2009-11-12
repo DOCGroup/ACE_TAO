@@ -1,2 +1,0 @@
-SenderNode      corbaloc:iiop:localhost:60001/NodeManager
-ReceiverNode    corbaloc:iiop:129.59.129.181:60002/NodeManager
