@@ -1,3 +1,8 @@
+Thu Nov 12 08:45:14 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+          Adapted to the new test framework.
+
 Thu Nov 12 07:58:41 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests:
