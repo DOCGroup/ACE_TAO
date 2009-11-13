@@ -1,3 +1,10 @@
+Fri Nov 13 20:28:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactoryQos.h
+        * connectors/dds4ccm/impl/ndds/DurabilityServiceQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/HistoryQosPolicy.h
+          New QoS conversions
+
 Fri Nov 13 19:36:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/EntityFactoryQosPolicy.h
