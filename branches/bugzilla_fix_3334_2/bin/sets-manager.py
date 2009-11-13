@@ -63,12 +63,19 @@ def svn_copy (source, dest):
     execute (command)
 
 def svn_propset (path, prop, value):
+    temp = open ("sets_manager_props.tmp", 'w')
+    temp.write (value)
+    temp.close ()
+
     command = " ".join ([opts.svn,
                         "propset",
                         prop,
-                        "'" + value + "'",
+                        "-F sets_manager_props.tmp",
                         path])
     execute (command)
+    
+    os.unlink ("sets_manager_props.tmp")
+        
 
 def svn_mkdir (path):
     command = " ".join ([opts.svn,

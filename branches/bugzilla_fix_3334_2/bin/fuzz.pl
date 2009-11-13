@@ -33,6 +33,7 @@ use PerlACE::Run_Test;
 ###### END TODO
 
 # Lists of all the files
+@files_cdp = ();
 @files_cpp = ();
 @files_inl = ();
 @files_h = ();
@@ -140,6 +141,9 @@ sub store_file ($)
     elsif ($name =~ /\.(icc|ncb|zip)$/i) {
         push @files_noncvs, ($name);
     }
+    elsif ($name =~ /\.(cdp)$/i) {
+        push @files_cdp, ($name);
+    }
 }
 
 ##############################################################################
@@ -206,6 +210,9 @@ sub check_for_id_string ()
                 }
                 if (/\$id\$/) {
                     print_error ("$file:$.: Incorrect \$id\$ found (correct casing)");
+                }
+                if (/\$Id:\$/) {
+                    print_error ("$file:$.: Incorrect \$Id:\$ found (remove colon)");
                 }
             }
             close (FILE);
@@ -398,7 +405,7 @@ sub check_for_ACE_Thread_Mutex ()
 sub check_for_tab ()
 {
     print "Running tabs check\n";
-    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl) {
+    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl, @files_cdp) {
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
@@ -452,7 +459,7 @@ sub check_for_lack_ACE_OS ()
 
     $OS_NS_stdlib_symbols = "_exit|abort|atexit|atof|atol|atoi|atop|bsearch|calloc|exit|free|getenv|getenvstrings|itoa|itoa_emulation|itow_emulation|malloc|mkstemp|mkstemp_emulation|mktemp|setenv|unsetenv|putenv|qsort|rand|rand_r|realloc|realpath|set_exit_hook|srand|strenvdup|strtod|strtol|strtol_emulation|strtoul|strtoul_emulation|strtoll|strtoll_emulation|strtoull|strtoull_emulation|system|getprogname|setprogname";
 
-    $OS_NS_string_symbols = "memchr|memchr_emulation|memcmp|memcpy|fast_memcpy|memmove|memset|strcat|strchr|strcmp|strcpy|strcspn|strdup|strdup_emulation|strecpy|strerror|strerror_emulation|strlen|strncat|strnchr|strncmp|strncpy|strnlen|strnstr|strpbrk|strrchr|strrchr_emulation|strsncpy|strspn|strstr|strtok|strtok_r|strtok_r_emulation";
+    $OS_NS_string_symbols = "memchr|memchr_emulation|memcmp|memcpy|fast_memcpy|memmove|memset|strcat|strchr|strcmp|strcpy|strcspn|strdup|strdup_emulation|strecpy|strerror|strerror_emulation|strsignal|strlen|strncat|strnchr|strncmp|strncpy|strnlen|strnstr|strpbrk|strrchr|strrchr_emulation|strsncpy|strspn|strstr|strtok|strtok_r|strtok_r_emulation";
 
     $OS_NS_strings_symbols = "strcasecmp|strncasecmp|strcasecmp_emulation";
 
@@ -1403,6 +1410,10 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using \$EXE_EXT");
                     }
 
+                    if (m/Sys::Hostname/) {
+                        print_error ("$file:$.: using Sys::Hostname");
+                    }
+
                     if (m/\$PerlACE::wait_interval_for_process_creation/) {
                         print_error ("$file:$.: using \$PerlACE::wait_interval_for_process_creation");
                     }
@@ -1433,6 +1444,22 @@ sub check_for_bad_run_test ()
 
                     if (m/PerlACE::TestConfig/) {
                         print_error ("$file:$.: using PerlACE::TestConfig");
+                    }
+
+                    if (m/ACE_RUN_VX_TGTHOST/) {
+                        print_error ("$file:$.: using ACE_RUN_VX_TGTHOST, use TestTarget::HostName");
+                    }
+
+                    if (m/Spawn(Wait(Kill)?)?\s*\(.+\->ProcessStop\)/) {
+                        print_error ("$file:$.: uses Stop together with Spawn");
+                    }
+
+                    if (m/Spawn(Wait(Kill)?)?\s*\(\d+\)/) {
+                        print_error ("$file:$.: uses hardcoded timeout for Spawn");
+                    }
+
+                    if (m/Kill\s*\(\d+\)/) {
+                        print_error ("$file:$.: uses hardcoded timeout for Kill");
                     }
 
                     if (m/unlink/) {

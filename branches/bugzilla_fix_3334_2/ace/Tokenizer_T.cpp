@@ -204,11 +204,17 @@ ACE_Tokenizer_T<CHAR>::next (void)
           goto EXIT_LABEL;
         }
 
-      // A preserve designator signifies the end of this token.
+      // A preserve designator is NESTED inside this token
+      // We can't strip such preserve designators, just skip
+      // over them so that delimiters nested within arn't seen.
       if (this->is_preserve_designator (buffer_[index_],
                                         stop,
                                         strip))
-        goto EXIT_LABEL;
+        {
+          ++index_; // Skip starting preserve_designator
+          while (('\0' != buffer_[index_]) && (stop != buffer_[index_]))
+            ++index_; // Skip enclosed character
+        }
 
       // Check for end of string.
       if (buffer_[index_] == '\0')

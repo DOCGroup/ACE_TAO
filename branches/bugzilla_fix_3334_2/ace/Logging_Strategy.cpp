@@ -563,4 +563,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // svc.conf file to dynamically initialize the state of the
 // Logging_Strategy.
 
+ACE_STATIC_SVC_DEFINE (ACE_Logging_Strategy,
+                       ACE_TEXT ("Logging_Strategy"),
+                       ACE_Service_Type::SERVICE_OBJECT,
+                       &ACE_SVC_NAME (ACE_Logging_Strategy),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
+
 ACE_FACTORY_DEFINE (ACE, ACE_Logging_Strategy)

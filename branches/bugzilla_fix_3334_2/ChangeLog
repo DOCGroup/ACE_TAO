@@ -1,3 +1,250 @@
+Fri Nov 13 19:38:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Sys::Hostname shouldn't be used in a test script, use HostName on
+          the test target instead
+
+Fri Nov 13 01:54:01 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_snowleopard.GNU:
+
+          Added support for buildbits=universal for building 32/64 bit
+          universal binaries with GCC.
+
+Fri Nov 13 01:12:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_macosx_common.GNU:
+
+          Fixed 32 bit support.
+
+Fri Nov 13 00:33:49 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Logging_Strategy.h:
+        * ace/Logging_Strategy.cpp:
+
+          Added static service declaration and definition to fix loading
+          issue in TAO Service (e.g Notify) in static builds.
+
+Thu Nov 12 15:53:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Exteded perl fuzz checks
+
+Thu Nov 12 08:31:00 UTC 2009  Denis Budko <denis.budko@remedy.nl>
+
+        * docs/run_test.txt
+          Added description of TestTarget::HostName() function usage
+
+Thu Nov 12 06:54:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+        * ace/OS_NS_fcntl.h:
+        * ace/RW_Process_Mutex.h:
+          Moved all constants to Default_Constants.h
+
+Wed Nov 11 14:57:15 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/run_test.lst:
+          Run Network_Adapters_Test and SOCK_Dgram_Bcast_Test on LynxOS.
+
+Wed Nov 11 13:49:11 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-freebsd.h:
+          Added ACE_HAS_SIGISMEMBER_BUG.
+
+Wed Nov 11 12:07:36 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * bin/fuzz.pl:
+          Added strsignal to functions that is checked
+          for the lack of ACE_OS.
+
+Wed Nov 11 11:45:23 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_string.h:
+          Doxygen updates.
+
+Wed Nov 11 11:36:26 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_signal.inl:
+        * ace/config-lynxos.h:
+        * ace/os_include/os_signal.h:
+        * configure.ac:
+        * m4/config_h.m4:
+        * m4/platform.m4:
+          Renamed ACE_HAS_LYNXOS_SIGNALS to ACE_HAS_LYNXOS4_SIGNALS.
+
+Wed Nov 11 09:36:32 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended Id check to detect Id:
+
+Wed Nov 11 03:07:32 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_macosx_snowleopard.GNU:
+
+          Add support for building 32 bits.
+
+Tue Nov 10 21:03:25 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/sets-manager.py:
+
+          bugfix for windows.  note that cleaning up the temp directory doesn't
+          work on windows, that will need to be done by hand.
+
+Tue Nov 10 12:17:33  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check for hardcoded timeouts, thanks to Chad for assisting with this
+
+Tue Nov 10 12:10:33  2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          ACE_RUN_VX_TGTHOST shouldn't be used in a test script
+
+Tue Nov 10 06:31:33  2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue_T.cpp (enqueue_*): When enqueuing blocks, grab the
+          notifier pointer before releasing the guard; check it and do any
+          needed notify() outside the lock scope. Avoids dereferencing 'this'
+          when the message queue is deleted between the time the guard is
+          released and the notify is checked. User is still responsible for
+          ensuring the lifetime of a notifier the user supplies.
+          Also, moved the monitor updates out of notify() and into the
+          enqueue_* methods, inside the guard scope since they refer to
+          object state; rely on the Monitor docs that say the updates are
+          well-behaved.
+
+Tue Nov 10 00:35:52 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp: Some changes extraneous to those in
+          Wed Nov  4 00:07:49 UTC 2009  Steve Huston  <shuston@riverace.com>
+          got checked in by accident; these screwed up the handle resuming
+          and are now reverted. The changes/fix mentioned in
+          Wed Nov  4 00:07:49 UTC 2009  Steve Huston  <shuston@riverace.com>
+          are now the only ones included.
+
+Mon Nov  9 12:20:05 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Message_Queue_Test.cpp:
+
+           Modified to use rand_r, which is actually thread safe.
+
+Mon Nov  9 03:41:21 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Message_Queue_Test.cpp:
+
+          Another attempt at fixing this problem on Snow Leopard, hopefully
+          less disruptive than the last attempt.
+
+Sat Nov  7 08:32:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Fix long double for ppc64
+
+Fri Nov  6 11:41:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Reverted the change to check all perl scripts
+
+Fri Nov  6 10:13:00 UTC 2009  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Tokenizer_T.cpp:
+
+          Allow tokens to have embedded quotes so that
+          tao_idl, which generates parameters such as
+          -I"directory with spaces", actually works.
+
+          I.E. Only remove surrounding quotes. With
+          embedded quotes; the original code simply
+          returned the token when the quote character
+          was detected, without inserting a token splitting
+          null at the quote character (which if it had,
+          would then mess up the next quoted token
+          processing). This ment that the parameters got
+          repeated many times over as they are inserted
+          and interpreted again and again.
+
+Fri Nov  6 08:30:47 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check cdp files for tabs
+
+Thu Nov  5 20:13:47 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+        * ace/ACE.inl:
+        * ace/ACE.cpp:
+          Moved nibble2hex from .inl to .cpp file to avoid static
+          data in inline function.
+
+Thu Nov  5 13:58:25 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+          Another fix for platforms that define ACE_STRTOLL_EQUIVALENT or
+          ACE_STRTOULL_EQUIVALENT.
+
+Thu Nov  5 13:46:34 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+          Fix for platforms that lack strtoll or strtoull.
+
+Thu Nov  5 11:56:13 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+          Added ace_strtoll_helper and ace_strtoull_helper to fix compile
+          errors if strtoll or strtoull is macro.
+
+Thu Nov  5 11:32:07 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+        * ace/os_include/os_signal.h:
+          Use ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES instead of
+          ACE_HAS_LYNXOS50_SIGNALS.
+
+Wed Nov  4 20:57:08 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Set notify_monitor_control default value be 0.
+
+Wed Nov  4 17:50:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Queue_Test.cpp:
+          Improved portability
+
+Wed Nov  4 14:51:00 UTC 2009  Olli Savia  <ops@iki.fi>
+
+        * tests/Bug_3758_Regression_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Moved regression test for 3758 to its own file.
+
+Wed Nov  4 11:39:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/index.html:
+          Updated description for DDS4CCM documentation
+
+Wed Nov  4 00:07:49 UTC 2009  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (resume_handler_i): If asked to resume a
+          handler without any bits currently set, just note the handler has
+          been resumed, don't fail it. Prevents orphaned handle if a
+          auto-suspended handler's callback clears the lone bit set.
+
+Mon Nov  2 13:45:05 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/RW_Process_Mutex.h:
+        * ace/Default_Constants.h:
+          Added ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS with which the end user
+          can override the default permissions
+
+        * ace/Addr.inl:
+        * ace/MMAP_Memory_Pool.cpp:
+          Doxygen changes
+
 Mon Nov  2 08:52:05 UTC 2009  Olli Savia  <ops@iki.fi>
 
         * tests/OS_Test.cpp:

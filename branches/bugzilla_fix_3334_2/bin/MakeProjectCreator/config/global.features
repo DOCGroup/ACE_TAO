@@ -47,6 +47,7 @@ uses_wchar    = 0  // i.e. unicode
 gen_ostream   = 0
 ziparchive    = 0
 negotiate_codesets  = 0
+notify_monitor_control = 0
 versioned_namespace = 0
 vcl           = 0
 stl           = 0
