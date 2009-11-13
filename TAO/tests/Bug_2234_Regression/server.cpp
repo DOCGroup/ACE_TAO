@@ -13,12 +13,41 @@
 // It is also manifested by the result() call in the same way.
 
 #include "TestS.h"
+#include "ace/Get_Opt.h"
 #include "ace/IOStream.h"
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/LocalObject.h"
+
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 CORBA::ORB_ptr orb;
 
@@ -776,6 +805,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POAManager_var
       rootPOAMgr = rootPOA->the_POAManager( );
 
+    if (parse_args (argc, argv) != 0)
+      return 1;
+
     FooImpl
       phooey;
     PortableServer::ObjectId_var
@@ -784,7 +816,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       phooeyObj= rootPOA->id_to_reference( phooeyId.in() );
     CORBA::String_var
       stringifiedObj= orb->object_to_string( phooeyObj.in() );
-    ofstream file( "server.ior" );
+    ofstream file( ior_output_file );
     file << stringifiedObj;
     file.close();
 
