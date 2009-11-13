@@ -1,3 +1,9 @@
+Fri Nov 13 10:17:33 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/run_test.pl:
+          
+       Warring in fuzz build was fixed.
+
 Fri Nov 13 09:18:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Bug_3486_Regression/run_test.pl:
