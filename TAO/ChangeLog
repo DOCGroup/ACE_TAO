@@ -1,3 +1,10 @@
+Fri Nov 13 00:33:49 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+          Added ACE_STATIC_SVC_REQUIRE for ACE_Logging_Stragey service
+          to fix loading issue in static builds.
+
 Thu Nov 12 20:39:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
