@@ -132,35 +132,6 @@ namespace CIAO_Quoter_Broker_Impl
   };
 
 
-class BROKER_EXEC_Export ConnectorStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    ConnectorStatusListener_exec_i (void);
-    virtual ~ConnectorStatusListener_exec_i (void);
-
-    virtual
-      void on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
-                                const DDS::InconsistentTopicStatus & status);
-    virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
-                                        const DDS::RequestedIncompatibleQosStatus & status);
-    virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr the_reader,
-                             const DDS::SampleRejectedStatus & status);
-    virtual
-      void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
-                                     const DDS::OfferedDeadlineMissedStatus & status);
-    virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
-                                      const DDS::OfferedIncompatibleQosStatus & status);
-    virtual
-      void on_unexpected_status( ::DDS::Entity_ptr the_entity,
-       ::DDS::StatusKind  status_kind);
-
-  };
-
   class BROKER_EXEC_Export Broker_exec_i
     : public virtual Broker_Exec,
       public virtual ::CORBA::LocalObject
@@ -174,10 +145,6 @@ class BROKER_EXEC_Export ConnectorStatusListener_exec_i
     // Component attributes.
 
     // Port operations.
-    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_out_connector_status (void);
-
-
 
     virtual ::CCM_DDS::Quoter::CCM_RawListener_ptr
     get_info_out_data_listener (void);

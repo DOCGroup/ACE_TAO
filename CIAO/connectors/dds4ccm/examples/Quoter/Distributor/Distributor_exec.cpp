@@ -152,6 +152,63 @@ namespace CIAO_Quoter_Distributor_Impl
 
     return 0;
   }
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+
+  }
+
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
+     ::DDS::Topic_ptr /*the_topic*/,
+     const DDS::InconsistentTopicStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_inconsistent_topic\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+    ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected(
+     ::DDS::DataReader_ptr /*the_reader*/,
+     const DDS::SampleRejectedStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_sample_rejected\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_offered_deadline_missed\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+     ::DDS::DataWriter_ptr /*the_writer*/,
+     const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n");
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind  /*status_kind*/)
+  {
+    printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
+  }
+    
+  void ConnectorStatusListener_exec_i::on_publication_matched ( ::DDS::DataWriter_ptr ,
+                                      const DDS::PublicationMatchedStatus & )
+  {
+    printf ("ConnectorStatusListener_exec_i::on_publication_matched\n");
+  }
 
   Distributor_exec_i::Distributor_exec_i (void)
     : rate_ (1)
@@ -321,6 +378,12 @@ namespace CIAO_Quoter_Distributor_Impl
   // Port operations.
 
   // Operations from Components::SessionComponent.
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Distributor_exec_i::get_info_out_connector_status (void)
+  {
+    printf ("*************** DIST out connector status************************\n");
+    return new ConnectorStatusListener_exec_i ();
+  }
 
   void
   Distributor_exec_i::set_session_context (
