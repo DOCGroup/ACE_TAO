@@ -1,3 +1,15 @@
+Fri Nov 13 19:49:54 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be/be_interface.cpp:
+        
+          Added 2 private methods, called from traverse_inheritance_graph(),
+          to enqueue base components or base homes. Making these steps
+          into method calls allows them to be done tail-recursively
+          rather than iteratively, so the chain of parents can be
+          enqueued in the correct order for generating copy constructors
+          and the like.
+
 Fri Nov 13 10:17:33 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/FaultTolerance/IOGRManipulation/run_test.pl:
