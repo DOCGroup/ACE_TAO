@@ -1410,6 +1410,10 @@ sub check_for_bad_run_test ()
                         print_error ("$file:$.: using \$EXE_EXT");
                     }
 
+                    if (m/Sys::Hostname/) {
+                        print_error ("$file:$.: using Sys::Hostname");
+                    }
+
                     if (m/\$PerlACE::wait_interval_for_process_creation/) {
                         print_error ("$file:$.: using \$PerlACE::wait_interval_for_process_creation");
                     }
