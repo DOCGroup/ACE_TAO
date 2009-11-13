@@ -1,9 +1,17 @@
+Fri Nov 13 01:54:01 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_snowleopard.GNU:
+
+          Added support for buildbits=universal for building 32/64 bit
+          universal binaries with GCC.
+        
 Fri Nov 13 01:12:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * include/makeinclude/platform_macosx_common.GNU:
 
           Fixed 32 bit support.
-        
+
 Fri Nov 13 00:33:49 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Logging_Strategy.h:
