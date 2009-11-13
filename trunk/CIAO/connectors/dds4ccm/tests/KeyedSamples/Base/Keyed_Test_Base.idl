@@ -16,4 +16,3 @@ struct KeyedTest {
 typedef sequence<KeyedTest> KeyedTest_Seq;
 
 #endif
-
