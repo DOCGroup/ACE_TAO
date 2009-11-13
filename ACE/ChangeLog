@@ -1,3 +1,9 @@
+Fri Nov 13 19:38:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Sys::Hostname shouldn't be used in a test script, use HostName on
+          the test target instead
+
 Fri Nov 13 01:54:01 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * include/makeinclude/platform_macosx_common.GNU:
@@ -5,7 +11,7 @@ Fri Nov 13 01:54:01 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Added support for buildbits=universal for building 32/64 bit
           universal binaries with GCC.
-        
+
 Fri Nov 13 01:12:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * include/makeinclude/platform_macosx_common.GNU:
