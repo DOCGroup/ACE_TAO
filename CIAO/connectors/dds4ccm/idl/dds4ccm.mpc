@@ -9,7 +9,7 @@ project (DDS4CCM_idl_gen) : ciaoidldefaults, anytypecode {
               -I$(CIAO_ROOT)/connectors -Glem
 
   IDL_Files {
-    idlflags += -Gxhst -Gxhsk -Glem -Glfa
+    idlflags += -Gxhst -Gxhsk -Glem -Glfa -SS
     dds4ccm_Base.idl3
   }
 
@@ -118,7 +118,6 @@ project (DDS4CCM_skel) : ciaolib_with_idl, ciao_output, taolib, anytypecode, por
   }
 
   Source_Files {
-    dds4ccm_BaseS.cpp
     dds4ccm_PortStatusListenerS.cpp
     dds4ccm_ListenerControlS.cpp
     dds4ccm_ConnectorStatusListenerS.cpp

@@ -1,3 +1,14 @@
+Fri Nov 13 14:13:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+          Added missing include
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.mpc:
+          Added missing lib
+
+        * connectors/dds4ccm/idl/dds4ccm.mpc:
+          Reduced files being generated
+
 Fri Nov 13 13:27:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl:
