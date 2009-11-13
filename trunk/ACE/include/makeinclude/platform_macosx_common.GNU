@@ -28,7 +28,6 @@ with_ld = macosx
 pipes ?= 1
 
 CFLAGS  += $(FLAGS_C_CC)
-CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
 
 CC              = gcc
 CXX             = g++
