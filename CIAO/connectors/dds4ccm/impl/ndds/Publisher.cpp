@@ -8,6 +8,7 @@
 #include "Utils.h"
 #include "Duration_t.h"
 #include "InstanceHandle_t.h"
+#include "DataWriterListener.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -35,7 +36,7 @@ namespace CIAO
       ::DDS::DataWriter_ptr
       RTI_Publisher_i::create_datawriter (::DDS::Topic_ptr a_topic,
                                           const ::DDS::DataWriterQos & /*qos*/,
-                                          ::DDS::DataWriterListener_ptr /*a_listener*/,
+                                          ::DDS::DataWriterListener_ptr a_listener,
                                           ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("RTI_Publisher_i::create_datawriter");
@@ -51,9 +52,10 @@ namespace CIAO
 
         DDSTopic *rti_topic = topic->get_topic ();
 
+        DDSDataWriterListener *rti_drl = new RTI_DataWriterListener_i (a_listener);
         DDSDataWriter *rti_dw = this->impl_->create_datawriter (rti_topic,
                                                                DDS_DATAWRITER_QOS_DEFAULT,
-                                                               0,
+                                                               rti_drl,
                                                                mask);
 
         if (rti_dw == 0)
