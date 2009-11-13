@@ -1479,55 +1479,21 @@ be_interface::traverse_inheritance_graph (
                             -1);
         }
 
-      // If we are doing a home, we check for a parent.
+      // If we are doing a home or component, we check for a parent.
       if (intf->node_type () == AST_Decl::NT_home)
         {
-          AST_Home *base =
-            AST_Home::narrow_from_decl (intf)->base_home ();
-
-          while (base != 0)
-            {
-              (void) this->insert_non_dup (base);
-              
-              long const n_supports = base->n_supports ();
-              AST_Interface **supports = base->supports ();
-
-              for (long j = 0; j < n_supports; ++j)
-                {
-                  (void) this->insert_non_dup (supports[j],
-                                               abstract_paths_only);
-                }
-                
-              base = base->base_home ();
-            }
+          this->enqueue_base_home_r (
+            AST_Home::narrow_from_decl (intf));
         }
-
-      // If we are doing a component, we check for a parent.
-      if (intf->node_type () == AST_Decl::NT_component)
+      else if (intf->node_type () == AST_Decl::NT_component)
         {
           if (add_ccm_object)
             {
               (void) this->insert_non_dup (be_global->ccmobject ());
             }
 
-          AST_Component *base =
-            AST_Component::narrow_from_decl (intf)->base_component ();
-
-          while (base != 0)
-            {
-              (void) this->insert_non_dup (base);
-
-              long const n_supports = base->n_supports ();
-              AST_Interface **supports = base->supports ();
-
-              for (long j = 0; j < n_supports; ++j)
-                {
-                  (void) this->insert_non_dup (supports[j],
-                                               abstract_paths_only);
-                }
-                
-              base = base->base_component ();
-            }
+          this->enqueue_base_component_r (
+            AST_Component::narrow_from_decl (intf));
         }
 
       (void) this->insert_non_dup (intf, abstract_paths_only);
@@ -2703,6 +2669,52 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
   this->gen_nesting_close (os);
 
   this->ex_idl_facet_gen (true);
+}
+
+void
+be_interface::enqueue_base_component_r (AST_Component *node)
+{
+  AST_Component *base = node->base_component ();
+    
+  if (base == 0)
+    {
+      return;
+    }
+    
+  this->enqueue_base_component_r (base);
+
+  (void) this->insert_non_dup (base);
+
+  long const n_supports = base->n_supports ();
+  AST_Interface **supports = base->supports ();
+
+  for (long j = 0; j < n_supports; ++j)
+    {
+      (void) this->insert_non_dup (supports[j]);
+    }
+}
+
+void
+be_interface::enqueue_base_home_r (AST_Home *node)
+{
+  AST_Home *base = node->base_home ();
+    
+  if (base == 0)
+    {
+      return;
+    }
+    
+  this->enqueue_base_home_r (base);
+
+  (void) this->insert_non_dup (base);
+  
+  long const n_supports = base->n_supports ();
+  AST_Interface **supports = base->supports ();
+
+  for (long j = 0; j < n_supports; ++j)
+    {
+      (void) this->insert_non_dup (supports[j]);
+    }
 }
 
 // =================================================================
