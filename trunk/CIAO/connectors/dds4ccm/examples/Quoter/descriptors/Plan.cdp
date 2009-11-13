@@ -287,18 +287,18 @@
   </connection>
 
   <connection>
-    <name>_connectorstatuslistener</name>
+    <name>_connectorstatuslistener_distributor</name>
     <internalEndpoint>
       <portName>info_out_connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="BrokerComponentInstance" />
+      <instance xmi:idref="DistributorComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>error_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
+      <instance xmi:idref="Quoter_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
