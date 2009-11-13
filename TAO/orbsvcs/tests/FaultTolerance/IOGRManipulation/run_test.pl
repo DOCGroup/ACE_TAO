@@ -24,7 +24,7 @@ $SV = $server->CreateProcess ("IOGRTest", "-ORBdebuglevel $debug_level");
 $status_server = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval() + 50);
 
 if ($status_server != 0) {
-    print STDERR "ERROR: $prog returned $status_server\n";
+    print STDERR "ERROR: server returned $status_server\n";
     $status = 1;
 }
 
