@@ -6,31 +6,33 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
-$file = PerlACE::LocalFile ("test.ior");
+$debug_level = '0';
 
-unlink $file;
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "");
-}
-else {
-    $SV = new PerlACE::Process ("server", "");
-}
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $iorbase = "test.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level");
 
 print STDERR "\n\n==== Running bug 3646d regression test\n";
 
-$SV->Spawn ();
+$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval() + 185);
 
-$collocated = $SV->WaitKill (200);
-
-if ($collocated != 0) {
-    print STDERR "ERROR: Bug_3646d_Regression returned $collocated\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: Bug_3646d_Regression returned $server_status\n";
     $status = 1;
 }
 
-unlink $file;
+$server->DeleteFile($iorbase);
 
 exit $status;

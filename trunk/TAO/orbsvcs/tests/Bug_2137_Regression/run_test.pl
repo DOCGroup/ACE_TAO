@@ -30,6 +30,4 @@ if ($client_status != 0) {
     $status = 1;
 }
 
-print STDERR "SUCCESS: Bug_2137_Regression test returned $test\n";
-
 exit $status;
