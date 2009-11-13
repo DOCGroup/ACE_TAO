@@ -1,3 +1,9 @@
+Fri Nov 13 01:12:33 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_macosx_common.GNU:
+
+          Fixed 32 bit support.
+        
 Fri Nov 13 00:33:49 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Logging_Strategy.h:
