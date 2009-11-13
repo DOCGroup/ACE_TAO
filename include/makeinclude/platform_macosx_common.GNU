@@ -27,6 +27,8 @@ with_ld = macosx
 
 pipes ?= 1
 
+CFLAGS  += $(FLAGS_C_CC)
+
 CC              = gcc
 CXX             = g++
 CFLAGS          += -Wall -Wpointer-arith 

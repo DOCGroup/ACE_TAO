@@ -901,7 +901,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   if LDBL_MAX_EXP == 128
 #     define ACE_SIZEOF_LONG_DOUBLE 4
 #   elif LDBL_MAX_EXP == 1024
-#     if defined (__ppc64)
+#     if defined (__powerpc64__)
 #       define ACE_SIZEOF_LONG_DOUBLE 16
 #     else
 #       define ACE_SIZEOF_LONG_DOUBLE 8

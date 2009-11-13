@@ -163,6 +163,13 @@ ACE::compiler_beta_version (void)
 #endif
 }
 
+ACE_TCHAR
+ACE::nibble2hex (u_int n)
+{
+  // Yes, this works for UNICODE
+  return ACE_TEXT ("0123456789abcdef")[n & 0x0f];
+}
+
 bool
 ACE::debug (void)
 {

@@ -561,7 +561,7 @@ ACE_OS::strtoll (const char *s, char **ptr, int base)
 #elif defined (ACE_STRTOLL_EQUIVALENT)
   return ACE_STRTOLL_EQUIVALENT (s, ptr, base);
 #else
-  return ::strtoll (s, ptr, base);
+  return ace_strtoll_helper (s, ptr, base);
 #endif /* ACE_LACKS_STRTOLL */
 }
 
@@ -587,7 +587,7 @@ ACE_OS::strtoull (const char *s, char **ptr, int base)
 #elif defined (ACE_STRTOULL_EQUIVALENT)
   return ACE_STRTOULL_EQUIVALENT (s, ptr, base);
 #else
-  return ::strtoull (s, ptr, base);
+  return ace_strtoull_helper (s, ptr, base);
 #endif /* ACE_LACKS_STRTOULL */
 }
 
