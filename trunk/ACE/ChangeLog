@@ -1,3 +1,11 @@
+Fri Nov 13 00:33:49 UTC 2009  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Logging_Strategy.h:
+        * ace/Logging_Strategy.cpp:
+
+          Added static service declaration and definition to fix loading
+          issue in TAO Service (e.g Notify) in static builds.
+
 Thu Nov 12 15:53:15 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:

@@ -779,3 +779,8 @@ ACE_STATIC_SVC_REQUIRE(TAO_MC_Notify_Service)
 ACE_STATIC_SVC_REQUIRE(TAO_MonitorAndControl)
 #endif
 
+
+#if defined (TAO_AS_STATIC_LIBS)
+ACE_STATIC_SVC_REQUIRE(ACE_Logging_Strategy)
+#endif
+
