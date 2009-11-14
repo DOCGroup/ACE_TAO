@@ -1,3 +1,8 @@
+Sat Nov 14 10:28:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.mpc:
+          Define Keyed_Test_Base_stub_build_dll should be in capitals.
+
 Fri Nov 13 20:28:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipantFactoryQos.h
