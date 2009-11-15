@@ -97,10 +97,6 @@ project(DDS_Hello_Connector_exec) : ciao_executor, dds4ccm_skel, nddslib {
 
   Source_Files {
     Hello_Connector_exec.cpp
-    ../Base/Hello_Base.cxx
-    ../Base/Hello_BasePlugin.cxx
-    ../Base/Hello_BaseSupport.cxx
-
   }
 
   Header_Files {

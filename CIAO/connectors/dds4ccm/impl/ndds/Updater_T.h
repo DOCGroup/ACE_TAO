@@ -36,6 +36,10 @@ namespace CIAO
 
         virtual bool is_lifecycle_checked ();
 
+        virtual ::DDS::InstanceHandle_t register_instance (const typename DDS_TYPE::value_type & datum);
+
+        virtual void unregister_instance (const typename DDS_TYPE::value_type & datum, const ::DDS::InstanceHandle_t & instance_handle);
+
       private:
         typename DDS_TYPE::data_writer *impl_;
         bool is_lifecycle_checked_;

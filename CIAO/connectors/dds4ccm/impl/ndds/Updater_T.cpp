@@ -101,3 +101,22 @@ CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::_cxx_delete (const typename D
     }
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE >
+::DDS::InstanceHandle_t
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::register_instance (const typename DDS_TYPE::value_type & datum)
+{
+  ::DDS_InstanceHandle_t const handle = this->impl_->register_instance (datum);
+  ::DDS::InstanceHandle_t dds_handle;
+  dds_handle <<= handle;
+  return dds_handle;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE >
+void
+CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE>::unregister_instance (const typename DDS_TYPE::value_type & datum, const ::DDS::InstanceHandle_t & instance_handle)
+{
+  ::DDS_InstanceHandle_t handle;
+  handle <<= instance_handle;
+  this->impl_->unregister_instance (datum, handle);
+}
+
