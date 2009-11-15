@@ -13,23 +13,24 @@
 
 module CCM_DDS
 {
-  typedef sequence<unsigned long> InstanceNumberSeq;
+  typedef unsigned long DataNumber_t;   // count or index of data
+  typedef sequence<DataNumber_t> DataNumberSeq;
+  const DataNumber_t UNLIMITED = 0;
+
   exception AlreadyCreated {
-    InstanceNumberSeq indexes; // of the erroneous
+    DataNumberSeq indexes; // of the erroneous
   };
 
   exception NonExistent{
-    InstanceNumberSeq indexes; // of the erroneous
+    DataNumberSeq indexes; // of the erroneous
   };
 
   exception InternalError{
     DDS::ReturnCode_t error_code;
-    unsigned long index; // of the erroneaous
+    DataNumber_t index; // of the erroneaous
   };
 
   exception NonChangeable {};
-
-  exception BadParameter {};
 
   enum AccessStatus {
     FRESH_INFO,
@@ -38,7 +39,9 @@ module CCM_DDS
 
   enum InstanceStatus {
     INSTANCE_CREATED,
+    INSTANCE_FILTERED_IN,
     INSTANCE_UPDATED,
+    INSTANCE_FILTERED_OUT,
     INSTANCE_DELETED
   };
 
@@ -49,10 +52,10 @@ module CCM_DDS
   };
 
   struct ReadInfo {
-    AccessStatus  access_status;
-    InstanceStatus  instance_status;
-    DDS::Time_t timestamp;
-    unsigned long instance_rank;
+    DDS::InstanceHandle_t instance_handle;
+    DDS::Time_t source_timestamp;
+    AccessStatus access_status;
+    InstanceStatus instance_status;
   };
   typedef sequence<ReadInfo> ReadInfoSeq;
 

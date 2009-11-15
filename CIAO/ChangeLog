@@ -1,3 +1,33 @@
+Sun Nov 15 19:05:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dds4ccm/examples/Hello/Connector/Hello_Connector.mpc
+        * dds4ccm/examples/Quoter/Broker/Broker_exec.cpp
+        * dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp
+        * dds4ccm/idl/ccm_dds.idl
+        * dds4ccm/idl/dds4ccm_Base.idl3
+        * dds4ccm/idl/dds4ccm_Connector_Base.idl3p
+        * dds4ccm/idl/dds4ccm_Connector_Event.idl3p
+        * dds4ccm/idl/dds4ccm_Connector_State.idl3p
+        * dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl3
+        * dds4ccm/impl/ndds/Connector_T.cpp
+        * dds4ccm/impl/ndds/DataWriterQos.h
+        * dds4ccm/impl/ndds/DomainParticipant.cpp
+        * dds4ccm/impl/ndds/GroupDataQosPolicy.h
+        * dds4ccm/impl/ndds/PartitionQosPolicy.h
+        * dds4ccm/impl/ndds/PresentationQosPolicy.h
+        * dds4ccm/impl/ndds/PublisherQos.h
+        * dds4ccm/impl/ndds/Reader_T.cpp
+        * dds4ccm/impl/ndds/SampleInfo.h
+        * dds4ccm/impl/ndds/SubscriberQos.h
+        * dds4ccm/impl/ndds/TopicQos.h
+        * dds4ccm/impl/ndds/Updater_T.cpp
+        * dds4ccm/impl/ndds/Updater_T.h
+        * dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.mpc
+        * dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp
+        * dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.mpc
+        * dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp
+          Added more QoS conversions, some updates for beta 2
+
 Sat Nov 14 10:28:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.mpc:

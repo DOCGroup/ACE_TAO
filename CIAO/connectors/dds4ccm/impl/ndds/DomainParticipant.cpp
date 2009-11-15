@@ -11,6 +11,8 @@
 #include "Duration_t.h"
 #include "Time_t.h"
 #include "InstanceHandleSeq.h"
+#include "PublisherListener.h"
+#include "PublisherQos.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -36,8 +38,8 @@ namespace CIAO
       }
 
       ::DDS::Publisher_ptr
-      RTI_DomainParticipant_i::create_publisher (const ::DDS::PublisherQos & /*qos*/,
-                                                 ::DDS::PublisherListener_ptr /*a_listener*/,
+      RTI_DomainParticipant_i::create_publisher (const ::DDS::PublisherQos & qos,
+                                                 ::DDS::PublisherListener_ptr a_listener,
                                                  ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_publisher");
@@ -45,9 +47,12 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher - "
                      "Creating Publisher\n"));
 
+        DDS_PublisherQos rti_qos;
+        rti_qos <<= qos;
+        RTI_PublisherListener_i *rti_pl = new RTI_PublisherListener_i (a_listener);
         DDSPublisher * rti_pub =
-          this->impl_->create_publisher (DDS_PUBLISHER_QOS_DEFAULT,
-                                         0,
+          this->impl_->create_publisher (rti_qos,
+                                         rti_pl,
                                          mask);
 
         if (!rti_pub)
