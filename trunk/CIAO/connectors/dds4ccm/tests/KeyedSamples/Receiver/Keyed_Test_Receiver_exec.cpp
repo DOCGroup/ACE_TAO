@@ -56,7 +56,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   {
     ++this->received_;
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("KeyedTest_RawListener: ")
-            ACE_TEXT ("received keyed_test_info for <%s> at %u\n"),
+            ACE_TEXT ("received keyed_test_info for <%C> at %u\n"),
             an_instance.key.in (),
             an_instance.iteration));
   }
@@ -128,16 +128,16 @@ namespace CIAO_Keyed_Test_Receiver_Impl
             ::CCM_DDS::ReadInfo readinfo;
             this->reader_->read_one (keyedtest_info, readinfo );
             ++this->received_;
-            time_t tim = readinfo.timestamp.sec;
+            time_t tim = readinfo.source_timestamp.sec;
             tm* time = localtime(&tim);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
                       ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
                                 time->tm_hour,
                                 time->tm_min,
                                 time->tm_sec,
-                                readinfo.timestamp.nanosec));
+                                readinfo.source_timestamp.nanosec));
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE keyed test info : ")
-                ACE_TEXT ("received keyedtest_info for <%s> at %u\n"),
+                ACE_TEXT ("received keyedtest_info for <%C> at %u\n"),
                 keyedtest_info.key.in (),
                 keyedtest_info.iteration));
           }
@@ -157,19 +157,19 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     this->reader_->read_all(keyedtest_infos.out(), readinfoseq.out());
     for(unsigned int i = 0; i < readinfoseq->length(); ++i)
       {
-        time_t tim = readinfoseq[i].timestamp.sec;
+        time_t tim = readinfoseq[i].source_timestamp.sec;
         tm* time = localtime(&tim);
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
             ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,
                             time->tm_min,
                             time->tm_sec,
-                            readinfoseq[i].timestamp.nanosec));
+                            readinfoseq[i].source_timestamp.nanosec));
       }
     for(CORBA::ULong i = 0; i < keyedtest_infos->length(); ++i)
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
-              ACE_TEXT ("Number <%d> : received keyedtest_info for <%s> at %u\n"),
+              ACE_TEXT ("Number <%d> : received keyedtest_info for <%C> at %u\n"),
             i,
             keyedtest_infos[i].key.in (),
             keyedtest_infos[i].iteration));
@@ -187,16 +187,16 @@ namespace CIAO_Keyed_Test_Receiver_Impl
       {
         if (this->getter_->get_one (keyedtest_info, readinfo ))
           {
-            time_t tim = readinfo.timestamp.sec;
+            time_t tim = readinfo.source_timestamp.sec;
             tm* time = localtime(&tim);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
                                    ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
                                 time->tm_hour,
                                 time->tm_min,
                                 time->tm_sec,
-                                readinfo.timestamp.nanosec));
+                                readinfo.source_timestamp.nanosec));
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE KeyedTest : ")
-                                   ACE_TEXT ("received keyedtest_info for <%s> at %u\n"),
+                                   ACE_TEXT ("received keyedtest_info for <%C> at %u\n"),
                 keyedtest_info.key.in (),
                 keyedtest_info.iteration));
           }

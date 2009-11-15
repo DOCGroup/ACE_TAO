@@ -135,7 +135,7 @@ namespace CIAO_Quoter_Broker_Impl
     try
       {
         this->reader_->read_one (stock_info, readinfo );
-        time_t tim = readinfo.timestamp.sec;
+        time_t tim = readinfo.source_timestamp.sec;
         printf("Read_Info. -> date = %s",ctime(&tim));
         printf ("Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
             stock_info.symbol.in (),
@@ -162,8 +162,8 @@ namespace CIAO_Quoter_Broker_Impl
         int nr_of_infos = readinfoseq->length();
         for(int i = 0; i < nr_of_infos; i ++)
           {
-            time_t tim = readinfoseq[i].timestamp.sec;
-            printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+            time_t tim = readinfoseq[i].source_timestamp.sec;
+            printf("Read_Info.source_timestamp -> date = %s",ctime(&tim));
           }
       }
     if(stock_infos->length()!= 0)
@@ -192,8 +192,8 @@ namespace CIAO_Quoter_Broker_Impl
         int nr_of_infos = readinfoseq->length();
         for(int i = 0; i < nr_of_infos; i ++)
           {
-            time_t tim = readinfoseq[i].timestamp.sec;
-            printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+            time_t tim = readinfoseq[i].source_timestamp.sec;
+            printf("Read_Info.source_timestamp -> date = %s",ctime(&tim));
           }
       }
     if(stock_infos->length()!= 0)
@@ -228,8 +228,8 @@ namespace CIAO_Quoter_Broker_Impl
             int nr_of_infos = readinfoseq->length();
             for(int i = 0; i < nr_of_infos; i ++)
               {
-                time_t tim = readinfoseq[i].timestamp.sec;
-                printf("Read_Info.timestamp -> date = %s",ctime(&tim));
+                time_t tim = readinfoseq[i].source_timestamp.sec;
+                printf("Read_Info.source_timestamp -> date = %s",ctime(&tim));
               }
           }
         if(stock_infos->length()!= 0)

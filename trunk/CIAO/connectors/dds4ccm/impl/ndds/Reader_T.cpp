@@ -91,7 +91,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
           {
             if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
               {
-                sample_info[i].reception_timestamp >>= infoseq[ix].timestamp;
+                sample_info[i].source_timestamp >>= infoseq[ix].source_timestamp;
                 inst_seq[ix] = data[i];
                 ++ix;
               }
@@ -156,7 +156,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all_history (
             {
                 if(sample_info[i].valid_data)
                   {
-                    sample_info[i].reception_timestamp >>= infoseq[ix].timestamp;
+                    sample_info[i].source_timestamp >>= infoseq[ix].source_timestamp;
                     inst_seq[ix] = data[i];
                     ++ix;
                   }
@@ -227,7 +227,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one (
           {
             an_instance = data[number_of_samples-1];
             //info <<= sample_info;
-            sample_info[number_of_samples-1].reception_timestamp >>= info.timestamp;
+            sample_info[number_of_samples-1].source_timestamp >>= info.source_timestamp;
           }
         //else   ?? What to do ?
 
@@ -314,7 +314,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_history (
 
         for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
           {
-            sample_info[i].reception_timestamp >>= infoseq[ix].timestamp;
+            sample_info[i].source_timestamp >>= infoseq[ix].source_timestamp;
             inst_seq[ix] = data[i];
             ++ix;
           }

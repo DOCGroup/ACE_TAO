@@ -12,7 +12,6 @@
 
 module CCM_DDS
 {
-
   interface ConnectorStatusListener {
     // status that are relevant system-wide
     void on_inconsistent_topic(in DDS::Topic the_topic,
@@ -28,7 +27,6 @@ module CCM_DDS
     void on_unexpected_status (in DDS::Entity the_entity,
                                in DDS::StatusKind status_kind);
   };
-
 };
 
 #endif

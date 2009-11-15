@@ -19,7 +19,7 @@
 module CCM_DDS \
 { \
   module TYPE_MODULE { \
-        interface InstanceHandleManager { \
+        abstract interface InstanceHandleManager { \
           DDS::InstanceHandle_t register_instance (in TYPE datum); \
           void unregister_instance (in TYPE datum, in DDS::InstanceHandle_t instance_handle); \
         }; \
@@ -30,7 +30,7 @@ module CCM_DDS \
           void write_many (in TYPE_SEQ an_instance) \
             raises (InternalError); \
         }; \
-        interface Updater \
+        interface Updater : InstanceHandleManager \
         { \
           void create (in TYPE an_instance) \
               raises (AlreadyCreated, \
@@ -60,7 +60,7 @@ module CCM_DDS \
           boolean get_next (out TYPE an_instance, out ReadInfo info) \
                   raises (InternalError); \
           attribute QueryFilter filter \
-                  setraises (BadParameter); \
+                  setraises (InternalError); \
           attribute DDS::Duration_t time_out; \
         }; \
         interface Reader \
@@ -77,7 +77,7 @@ module CCM_DDS \
             raises (NonExistent, \
                     InternalError); \
           attribute QueryFilter filter \
-            setraises (BadParameter); \
+            setraises (InternalError); \
         }; \
         interface RawListener \
         { \

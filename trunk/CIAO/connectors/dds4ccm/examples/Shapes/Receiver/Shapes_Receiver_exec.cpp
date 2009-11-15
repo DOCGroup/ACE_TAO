@@ -54,7 +54,7 @@ namespace CIAO_Shapes_Receiver_Impl
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_RawListener: ")
-            ACE_TEXT ("received shape_info for <%s> at %u:%u:%u\n"),
+            ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
             an_instance.color.in (),
             an_instance.x,
             an_instance.y,
@@ -119,16 +119,16 @@ namespace CIAO_Shapes_Receiver_Impl
     try
       {
         this->reader_->read_one (shape_info, readinfo );
-        time_t tim = readinfo.timestamp.sec;
+        time_t tim = readinfo.source_timestamp.sec;
         tm* time = localtime(&tim);
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
                   ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,
                             time->tm_min,
                             time->tm_sec,
-                            readinfo.timestamp.nanosec));
+                            readinfo.source_timestamp.nanosec));
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON shape info : ")
-            ACE_TEXT ("received shape_info for <%s> at %u:%u:%u\n"),
+            ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
             shape_info.color.in (),
             shape_info.x,
             shape_info.y,
@@ -149,19 +149,19 @@ namespace CIAO_Shapes_Receiver_Impl
     this->reader_->read_all(shape_infos.out(), readinfoseq.out());
     for(unsigned int i = 0; i < readinfoseq->length(); ++i)
       {
-        time_t tim = readinfoseq[i].timestamp.sec;
+        time_t tim = readinfoseq[i].source_timestamp.sec;
         tm* time = localtime(&tim);
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
             ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,
                             time->tm_min,
                             time->tm_sec,
-                            readinfoseq[i].timestamp.nanosec));
+                            readinfoseq[i].source_timestamp.nanosec));
       }
     for(CORBA::ULong i = 0; i < shape_infos->length(); ++i)
       {
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
-              ACE_TEXT ("Number <%d> : received shape_info for <%s> at %u:%u:%u\n"),
+              ACE_TEXT ("Number <%d> : received shape_info for <%C> at %u:%u:%u\n"),
             i,
             shape_infos[i].color.in (),
             shape_infos[i].x,
@@ -181,16 +181,16 @@ namespace CIAO_Shapes_Receiver_Impl
       {
         if (this->getter_->get_one (shape_info, readinfo ))
           {
-            time_t tim = readinfo.timestamp.sec;
+            time_t tim = readinfo.source_timestamp.sec;
             tm* time = localtime(&tim);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
                                    ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
                                 time->tm_hour,
                                 time->tm_min,
                                 time->tm_sec,
-                                readinfo.timestamp.nanosec));
+                                readinfo.source_timestamp.nanosec));
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType : ")
-                                   ACE_TEXT ("received shape_info for <%s> at %u:%u:%u\n"),
+                                   ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
                 shape_info.color.in (),
                 shape_info.x,
                 shape_info.y,

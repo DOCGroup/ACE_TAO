@@ -5,7 +5,7 @@ project(DDS_Keyed_Test_Base_idl_gen) : taoidldefaults, anytypecode {
   custom_only = 1
   idlflags -= -St -Sa
   idlflags += -SS -Gxhst \
-              -Wb,stub_export_macro=Keyed_Test_BASE_STUB_Export \
+              -Wb,stub_export_macro=KEYED_TEST_BASE_STUB_Export \
               -Wb,stub_export_include=Keyed_Test_Base_stub_export.h
 
   IDL_Files {
