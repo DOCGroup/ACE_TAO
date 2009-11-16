@@ -15,6 +15,7 @@ ACE_RCSID (Messaging, Messaging_Loader, "$Id$")
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Messaging_Loader::TAO_Messaging_Loader (void)
+  : initialized_ (false)
 {
 }
 
@@ -28,11 +29,10 @@ TAO_Messaging_Loader::init (int,
 {
   ACE_TRACE ("TAO_Messaging_Loader::init");
 
-  static bool called_once = false;
-
-  if (called_once == true)
+  if (this->initialized_)
     return 0;
-  called_once = true;
+
+  this->initialized_ = true;
 
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();

@@ -16,6 +16,7 @@ ACE_RCSID (CSD_Framework,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CSD_Framework_Loader::TAO_CSD_Framework_Loader (void)
+  : initialized_ (false)
 {
 }
 
@@ -43,13 +44,11 @@ TAO_CSD_Framework_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_CSD_Framework_Loader::init");
 
-  static bool initialized = false;
-
   // Only allow initialization once.
-  if (initialized)
+  if (this->initialized_)
     return 0;
 
-  initialized = true;
+  this->initialized_ = true;
 
   // Register the ORB initializer.
   try

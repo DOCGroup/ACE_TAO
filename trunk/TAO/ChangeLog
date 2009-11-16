@@ -1,3 +1,27 @@
+Mon Nov 16 15:52:21 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Bug 3755 marked as fixed.
+
+        * tao/PI_Server/PI_Server_Loader.cpp:
+        * tao/PI_Server/PI_Server_Loader.h:
+        * tao/Messaging/Messaging_Loader.h:
+        * tao/Messaging/Messaging_Loader.cpp:
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/BiDir_GIOP/BiDirGIOP.h:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.h:
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h:
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+        * tao/CSD_Framework/CSD_Framework_Loader.h:
+        * tao/RTCORBA/RT_ORB_Loader.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+          Fixed bug 3755. Now library initialization guard is moved
+          to a loader which does the initialization. Since the loader is
+          unique per gestalt then the initialization is executed once per
+          gestalt and not once per process.
+
 Mon Nov 16 15:44:30 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3748_Regression/run_test.pl:
