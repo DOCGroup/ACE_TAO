@@ -4,6 +4,7 @@
 #include "StatusCondition.h"
 #include "InstanceHandle_t.h"
 #include "InconsistentTopicStatus.h"
+#include "TopicQos.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -24,15 +25,20 @@ namespace CIAO
       }
 
       ::DDS::ReturnCode_t
-      RTI_Topic_i::set_qos (const ::DDS::TopicQos & /*qos*/)
+      RTI_Topic_i::set_qos (const ::DDS::TopicQos &qos)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS_TopicQos ddsqos;
+        ddsqos <<= qos;
+        return this->impl_->set_qos (ddsqos);
       }
 
       ::DDS::ReturnCode_t
-      RTI_Topic_i::get_qos (::DDS::TopicQos & /*qos*/)
+      RTI_Topic_i::get_qos (::DDS::TopicQos &qos)
       {
-        throw CORBA::NO_IMPLEMENT ();
+        ::DDS_TopicQos ddsqos;
+        ::DDS_ReturnCode_t const retval = this->impl_->get_qos (ddsqos);
+        qos <<= ddsqos;
+        return retval;
       }
 
       ::DDS::ReturnCode_t
