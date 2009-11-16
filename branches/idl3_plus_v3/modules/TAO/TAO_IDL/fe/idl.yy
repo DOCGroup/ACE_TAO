@@ -257,12 +257,11 @@ AST_Decl *tao_enum_constant_decl = 0;
 %token          IDL_MANAGES
                 /* Extended ports tokens  */
 %token          IDL_TYPENAME
-%token          IDL_PRIMITIVE
 %token          IDL_PORT
 %token          IDL_MIRRORPORT
 %token          IDL_PORTTYPE
 %token          IDL_CONNECTOR
-%token          IDL_CONCAT
+%token          IDL_ALIAS
 
 %token <ival>   IDL_INTEGER_LITERAL
 %token <uival>  IDL_UINTEGER_LITERAL
@@ -5857,28 +5856,15 @@ type_classifier
 //        IDL_STRUCT
           $<ntval>$ = AST_Decl::NT_struct;
         }
+        | IDL_UNION
+        {
+//        IDL_UNION
+          $<ntval>$ = AST_Decl::NT_union;
+        }
         | IDL_EVENTTYPE
         {
 //        IDL_EVENTTYPE
           $<ntval>$ = AST_Decl::NT_eventtype;
-        }
-        | IDL_PRIMITIVE
-        {
-//        IDL_PRIMITIVE
-          $<ntval>$ = AST_Decl::NT_pre_defined;
-        }
-        | IDL_FIXED
-        {
-//        IDL_FIXED
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("error in %C line %d:\n")
-                      ACE_TEXT ("Fixed types not supported ")
-                      ACE_TEXT ("in TAO.\n"),
-                      idl_global->filename ()->get_string (),
-                      idl_global->lineno ()));
-
-          // Caught and handled later.
-          $<ntval>$ = AST_Decl::NT_fixed;
         }
         | IDL_SEQUENCE
         {
