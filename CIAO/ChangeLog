@@ -1,3 +1,8 @@
+Mon Nov 16 15:02:31 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.mpc:
+          Macros property named.
+
 Mon Nov 16 13:59:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
