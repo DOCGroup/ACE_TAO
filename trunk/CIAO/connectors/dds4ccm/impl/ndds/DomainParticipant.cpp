@@ -47,8 +47,8 @@ namespace CIAO
         CIAO_DEBUG ((LM_TRACE, CLINFO "RTI_DomainParticipant_i::create_publisher - "
                      "Creating Publisher\n"));
 
-        DDS_PublisherQos rti_qos;
-        //rti_qos <<= qos;
+        DDS_PublisherQos rti_qos = DDS_PUBLISHER_QOS_DEFAULT;
+        rti_qos <<= qos;
         RTI_PublisherListener_i *rti_pl = new RTI_PublisherListener_i (a_listener);
         DDSPublisher * rti_pub =
           this->impl_->create_publisher (rti_qos,
@@ -58,7 +58,7 @@ namespace CIAO
         if (!rti_pub)
           {
             CIAO_ERROR ((LM_ERROR, CLINFO "RTI_DomainParticipant_i::create_publisher - "
-                         "Error: Unable to create Participant\n"));
+                         "Error: Unable to create Publisher\n"));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
           }
 
