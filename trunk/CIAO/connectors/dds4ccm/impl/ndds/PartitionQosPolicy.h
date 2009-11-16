@@ -9,6 +9,8 @@
 #ifndef CIAO_RTI_PARTITIONQOSPOLICY_H
 #define CIAO_RTI_PARTITIONQOSPOLICY_H
 
+/// @todo
+
 inline void
 operator<<= (::DDS::PartitionQosPolicy &ddsqos, const ::DDS_PartitionQosPolicy & qos)
 {
