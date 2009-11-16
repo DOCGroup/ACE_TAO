@@ -1,3 +1,10 @@
+Mon Nov 16 20:22:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Started adding new production rules for template modules.
+
 Mon Nov 16 15:28:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
