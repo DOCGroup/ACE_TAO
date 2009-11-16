@@ -1,0 +1,10 @@
+# -- E X A M P L E conf. file --
+
+# Note! priority values are for Linux
+
+static RT_ORB_Loader "-ORBSchedPolicy SCHED_OTHER -ORBScopePolicy PROCESS -ORBPriorityMapping continuous"
+
+#static MIF_DT_Creator "-DT_Count 4 -DT_Task -Importance 4 -Start_Time 0 -Load 1000 -DT_Task -Importance 5 -Start_Time 20 -Load 100 -DT_Task -Importance 8 -Start_Time 60 -Load 1000 -DT_Task -Importance 10 -Start_Time 100 -Load 100"
+
+static MIF_DT_Creator "-GuidSeed 10 -POA_Count 1 -POA poa1 -PriorityModel SERVER_DECLARED 0 -ThreadPool 2 0 0 -Job_Count 2 -Job job_10 poa1 -Job job_80 poa1 -DT_Count 2 -DT_Task -Importance 2 -Start_Time 0 -Iter 15 -Load 50 -DT_Task -Importance 15 -Start_Time 0 -Iter 10 -Load 50 -OutFile schedule_server.dat -LogFile log_file_server"
+
