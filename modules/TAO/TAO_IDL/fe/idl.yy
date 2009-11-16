@@ -291,8 +291,8 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <idlist>  home_inheritance_spec primary_key_spec
 
 %type <slval>   opt_context at_least_one_string_literal
-%type <slval>   string_literals template_param_refs
-%type <slval>   at_least_one_template_param_ref
+%type <slval>   string_literals formal_parameter_names
+%type <slval>   at_least_one_formal_parameter_name
 
 %type <nlval>   at_least_one_scoped_name scoped_names inheritance_spec
 %type <nlval>   opt_raises opt_getraises opt_setraises supports_spec
@@ -338,14 +338,14 @@ AST_Decl *tao_enum_constant_decl = 0;
 %type <idval>   event_header event_plain_header event_custom_header
 %type <idval>   event_abs_header
 
-%type <ntval>   type_classifier
+%type <ntval>   formal_parameter_type
 
-%type <pival>   template_param
+%type <pival>   formal_parameter
 
-%type <plval>   template_params at_least_one_template_param
+%type <plval>   formal_parameters at_least_one_formal_parameter
 %type <plval>   opt_template_params
 
-%type <sval>    template_param_ref
+%type <sval>    formal_parameter_name
 
 %type <trval>   template_ref
 
@@ -370,9 +370,34 @@ definitions
         ;
 
 definition
+        : fixed_definition
+        | template_module
+        {
+        }
+        ';'
+        {
+        }
+        | template_module_inst
+        {
+        }
+        ';'
+        {
+        }
+        ;
+
+at_least_one_fixed_definition
+        : fixed_definitions fixed_definition
+        ;
+
+fixed_definitions
+        : fixed_definitions fixed_definition
+        | /* EMPTY */
+        ;
+
+fixed_definition
         : type_dcl
         {
-// definition : type_dcl
+// fixed_definition : type_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeDeclSeen);
         }
           ';'
@@ -440,9 +465,9 @@ definition
 //      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-        | module
+        | fixed_module
         {
-//      | module
+//      | fixed_module
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleDeclSeen);
         }
           ';'
@@ -523,7 +548,8 @@ definition
         }
         ;
 
-module  : IDL_MODULE
+module_header
+        : IDL_MODULE
           {
 // module  : IDL_MODULE
             idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSeen);
@@ -554,14 +580,20 @@ module  : IDL_MODULE
              */
             idl_global->scopes ().push (m);
           }
+          ;
+
+fixed_module
+          : module_header
+          {
+          }
           '{'
           {
 //        '{'
             idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSqSeen);
           }
-          definitions
+          at_least_one_fixed_definition
           {
-//        definitions
+//        at_least_one_fixed_definition
             idl_global->set_parse_state (IDL_GlobalData::PS_ModuleBodySeen);
           }
           '}'
@@ -574,6 +606,62 @@ module  : IDL_MODULE
             idl_global->scopes ().pop ();
           }
           ;
+
+template_module
+        : module_header
+        {
+        }
+        at_least_one_formal_parameter
+        {
+        }
+        '{'
+        {
+        }
+        at_least_one_tpl_definition
+        {
+        }
+        '}'
+        {
+        }
+        ;
+
+at_least_one_tpl_definition
+        : tpl_definition tpl_definitions
+        ;
+
+tpl_definitions
+        : tpl_definitions tpl_definition
+        | /* EMPTY */
+        ;
+
+tpl_definition
+        : fixed_definition
+        | template_module_ref ';'
+        ;
+
+template_module_ref
+        : IDL_ALIAS
+        {
+        }
+        scoped_name
+        {
+        }
+        '<' at_least_one_formal_parameter_name '>'
+        {
+        }
+        IDENTIFIER
+        {
+        }
+        ;
+
+template_module_inst
+        : IDL_MODULE
+        {
+        }
+        template_inst
+        {
+        }
+        ;
 
 interface_def
         : interface
@@ -5845,10 +5933,10 @@ event_header
         }
         ;
 
-type_classifier
+formal_parameter_type
         : IDL_TYPENAME
         {
-// type_classifier : IDL_TYPENAME
+// formal_parameter_type : IDL_TYPENAME
           $<ntval>$ = AST_Decl::NT_type;
         }
         | IDL_STRUCT
@@ -5881,6 +5969,23 @@ type_classifier
 //        IDL_VALUETYPE
           $<ntval>$ = AST_Decl::NT_valuetype;
         }
+        | IDL_EXCEPTION
+        {
+//        IDL_EXCEPTION
+          $<ntval>$ = AST_Decl::NT_except;
+        }
+        | IDL_CONST const_type
+        {
+//        IDL_CONST const_type
+          $<ntval>$ = AST_Decl::NT_const;
+        }
+        | sequence_param
+        {
+        }
+        ;
+
+sequence_param
+        : IDL_SEQUENCE '<' IDENTIFIER '>'
         ;
 
 template_interface_def
@@ -5930,9 +6035,9 @@ template_interface_def
         ;
 
 template_interface_header
-        : interface_decl at_least_one_template_param template_inheritance_spec
+        : interface_decl at_least_one_formal_parameter template_inheritance_spec
         {
-// template_interface_header : interface_decl at_least_one_template_param template_inheritance_spec
+// template_interface_header : interface_decl at_least_one_formal_parameter template_inheritance_spec
           UTL_ScopedName *n = 0;
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ($1, 0),
@@ -5946,15 +6051,15 @@ template_interface_header
         }
         ;
 
-at_least_one_template_param
+at_least_one_formal_parameter
         : '<'
         {
-// at_least_one_template_param : '<'
+// at_least_one_formal_parameter : '<'
           idl_global->set_parse_state (IDL_GlobalData::PS_TmplInterfaceSqSeen);
         }
-        template_param template_params
+        formal_parameter formal_parameters
         {
-//        template_param template_params
+//        formal_parameter formal_parameters
           if ($4 == 0)
             {
               ACE_NEW_RETURN ($4,
@@ -5974,15 +6079,15 @@ at_least_one_template_param
         }
         ;
 
-template_params
-        : template_params ','
+formal_parameters
+        : formal_parameters ','
         {
-// template_params : template_params ','
+// formal_parameters : formal_parameters ','
           // Maybe add a new parse state to set here.
         }
-        template_param
+        formal_parameter
         {
-//        template_param
+//        formal_parameter
           if ($1 == 0)
             {
               ACE_NEW_RETURN ($1,
@@ -6003,10 +6108,10 @@ template_params
         }
         ;
 
-template_param
-        : type_classifier IDENTIFIER
+formal_parameter
+        : formal_parameter_type IDENTIFIER
         {
-// template_param : type_classifier IDENTIFIER
+// formal_parameter : formal_parameter_type IDENTIFIER
 
           ACE_NEW_RETURN ($$,
                           FE_Utils::T_Param_Info,
@@ -6074,19 +6179,19 @@ template_refs
         ;
 
 template_ref
-        : scoped_name '<' at_least_one_template_param_ref '>'
+        : scoped_name '<' at_least_one_formal_parameter_name '>'
         {
-// template_ref : scoped_name '<' at_least_one_template_param_ref '>'
+// template_ref : scoped_name '<' at_least_one_formal_parameter_name '>'
           ACE_NEW_RETURN ($$,
                           FE_Utils::T_Ref_Info ($1, $3),
                           1);
         }
         ;
 
-at_least_one_template_param_ref
-        : template_param_ref template_param_refs
+at_least_one_formal_parameter_name
+        : formal_parameter_name formal_parameter_names
         {
-// at_least_one_template_param_ref : template_param_ref template_param_refs
+// at_least_one_formal_parameter_name : formal_parameter_name formal_parameter_names
           ACE_NEW_RETURN ($$,
                           UTL_StrList ($1,
                                        $2),
@@ -6094,10 +6199,10 @@ at_least_one_template_param_ref
         }
         ;
 
-template_param_refs
-        : template_param_refs ',' template_param_ref
+formal_parameter_names
+        : formal_parameter_names ',' formal_parameter_name
         {
-// template_param_refs : template_param_refs ',' template_param_ref
+// formal_parameter_names : formal_parameter_names ',' formal_parameter_name
           if ($1 == 0)
             {
               ACE_NEW_RETURN ($1,
@@ -6125,10 +6230,10 @@ template_param_refs
         }
         ;
 
-template_param_ref
+formal_parameter_name
         : IDENTIFIER
         {
-// template_param_ref : IDENTIFIER
+// formal_parameter_name : IDENTIFIER
           ACE_NEW_RETURN ($$,
                           UTL_String ($1),
                           1);
@@ -6188,9 +6293,9 @@ porttype_decl
         ;
 
 opt_template_params
-        : at_least_one_template_param
+        : at_least_one_formal_parameter
         {
-// opt_template_params : at_least_one_template_param
+// opt_template_params : at_least_one_formal_parameter
           $$ = $1;
         }
         | /* EMPTY */
@@ -6507,7 +6612,7 @@ non_template_port_decl
               else
                 {
                   FE_Utils::T_PARAMLIST_INFO *p_list =
-                    pt->template_params ();
+                    pt->formal_parameters ();
 
                   if (p_list != 0 && p_list->size () != 0)
                     {
@@ -6534,7 +6639,7 @@ non_template_port_decl
                   0);
 
               (void) s->fe_add_extended_port (ep);
-              
+
               // Create (in the AST) the struct(s) and sequence(s)
               // needed for multiplex uses ports, if any.
               for (UTL_ScopeActiveIterator i (pt, UTL_Scope::IK_decls);
@@ -6542,14 +6647,14 @@ non_template_port_decl
                    i.next ())
                 {
                   d = i.item ();
-                  
+
                   AST_Uses *u = AST_Uses::narrow_from_decl (d);
-                  
+
                   if (u != 0 && u->is_multiple ())
                     {
                       AST_Component *c =
                         AST_Component::narrow_from_scope (s);
-                        
+
                       idl_global->create_uses_multiple_stuff (
                         c,
                         u,
@@ -6589,7 +6694,7 @@ non_template_port_decl
                else
                  {
                    FE_Utils::T_PARAMLIST_INFO *p_list =
-                     pt->template_params ();
+                     pt->formal_parameters ();
 
                    if (p_list != 0 && p_list->size () != 0)
                      {
@@ -6625,14 +6730,29 @@ non_template_port_decl
         ;
 
 template_inst
-        : scoped_name '<' at_least_one_scoped_name '>'
+        : scoped_name '<' at_least_one_actual_parameter '>'
         {
-// template_inst : scoped_name '<' at_least_one_scoped_name '>'
-          ACE_NEW_RETURN ($<tival>$,
-                          FE_Utils::T_Inst_Info ($1,
-                                                 $3),
-                          1);
+// template_inst : scoped_name '<' at_least_one_actual_parameter '>'
+//          ACE_NEW_RETURN ($<tival>$,
+//                          FE_Utils::T_Inst_Info ($1,
+//                                                 $3),
+//                          1);
+          $<tival>$ = 0;
         }
+        ;
+
+at_least_one_actual_parameter
+        : actual_parameter actual_parameters
+        ;
+
+actual_parameters
+        : actual_parameters ',' actual_parameter
+        | /* EMPTY */
+        ;
+
+actual_parameter
+        : scoped_name
+        | expression
         ;
 
 connector_decl
