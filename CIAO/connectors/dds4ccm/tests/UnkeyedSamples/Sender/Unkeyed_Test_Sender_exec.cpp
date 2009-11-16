@@ -47,31 +47,12 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   void
   Sender_exec_i::tick ()
   {
-    if (this->last_key->second->iteration == 0)
-      {
-        try
-          {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Create key <%C>\n"),
-                    this->last_key->first.c_str ()));
-            this->updater_->create (this->last_key->second);
-          }
-        catch (CCM_DDS::AlreadyCreated& )
-          {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("keyedtest_info for <%C> already created.\n"),
-                        this->last_key->first.c_str ()));
-          }
-        catch (CCM_DDS::InternalError& )
-          {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating keyedtest_info for <%C>.\n"),
-                        this->last_key->first.c_str ()));
-          }
-      }
     if (this->last_key != this->ktests_.end ())
       {
         try
           {
             ++this->last_key->second->iteration;
-            this->updater_->update (this->last_key->second);
+            this->writer_->write (this->last_key->second);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updated key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
@@ -96,25 +77,6 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
           {
             if (this->last_key->second->iteration == this->iterations_)
               {
-                //we're done with this one -> unregister it.
-                try
-                  {
-                    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting key <%C> with <%d>\n"),
-                            this->last_key->first.c_str (),
-                            this->last_key->second->iteration));
-                    this->updater_->_cxx_delete (this->last_key->second);
-                  }
-                catch (CCM_DDS::NonExistent& )
-                  {
-                    CIAO_ERROR ((LM_ERROR,
-                                ACE_TEXT ("keyedtest_info for <%C> not deleted: <%C> didn't exist.\n"),
-                                this->last_key->first.c_str (), this->last_key->first.c_str ()));
-                  }
-                catch (CCM_DDS::InternalError& )
-                  {
-                    CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while deleting keyedtest_info for <%C>.\n"),
-                                this->last_key->first.c_str ()));
-                  }
                 //next key
                 ++this->last_key;
               }
@@ -201,7 +163,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->updater_ = this->context_->get_connection_info_update_data ();
+    this->writer_ = this->context_->get_connection_info_in_data ();
   }
 
   void
