@@ -14,7 +14,7 @@ namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
   {
   }
 
-  extern "C" KEYED_TEST_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" UNKEYED_TEST_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Unkeyed_Test_Unkeyed_Test_Connector_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
