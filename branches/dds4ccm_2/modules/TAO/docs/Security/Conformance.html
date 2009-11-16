@@ -1,0 +1,401 @@
+<html>
+<!-- $Id$ -->
+<!-- #BeginTemplate "/Templates/TAO_Security.dwt" -->
+<head>
+<!-- #BeginEditable "doctitle" -->
+<title>TAO -- CORBA Security</title>
+<!-- #EndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript">
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v3.0
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document); return x;
+}
+
+function MM_nbGroup(event, grpName) { //v3.0
+  var i,img,nbArr,args=MM_nbGroup.arguments;
+  if (event == "init" && args.length > 2) {
+    if ((img = MM_findObj(args[2])) != null && !img.MM_init) {
+      img.MM_init = true; img.MM_up = args[3]; img.MM_dn = img.src;
+      if ((nbArr = document[grpName]) == null) nbArr = document[grpName] = new Array();
+      nbArr[nbArr.length] = img;
+      for (i=4; i < args.length-1; i+=2) if ((img = MM_findObj(args[i])) != null) {
+        if (!img.MM_up) img.MM_up = img.src;
+        img.src = img.MM_dn = args[i+1];
+        nbArr[nbArr.length] = img;
+    } }
+  } else if (event == "over") {
+    document.MM_nbOver = nbArr = new Array();
+    for (i=1; i < args.length-1; i+=3) if ((img = MM_findObj(args[i])) != null) {
+      if (!img.MM_up) img.MM_up = img.src;
+      img.src = (img.MM_dn && args[i+2]) ? args[i+2] : args[i+1];
+      nbArr[nbArr.length] = img;
+    }
+  } else if (event == "out" ) {
+    for (i=0; i < document.MM_nbOver.length; i++) {
+      img = document.MM_nbOver[i]; img.src = (img.MM_dn) ? img.MM_dn : img.MM_up; }
+  } else if (event == "down") {
+    if ((nbArr = document[grpName]) != null)
+      for (i=0; i < nbArr.length; i++) { img=nbArr[i]; img.src = img.MM_up; img.MM_dn = 0; }
+    document[grpName] = nbArr = new Array();
+    for (i=2; i < args.length-1; i+=2) if ((img = MM_findObj(args[i])) != null) {
+      if (!img.MM_up) img.MM_up = img.src;
+      img.src = img.MM_dn = args[i+1];
+      nbArr[nbArr.length] = img;
+  } }
+}
+//-->
+</script>
+</head>
+
+<body bgcolor="#FFFFFF" onLoad="MM_preloadImages('fireworks/nav_bar_r02_c2_f3.gif','fireworks/nav_bar_r02_c2_f2.gif','fireworks/nav_bar_r04_c2_f3.gif','fireworks/nav_bar_r04_c2_f2.gif','fireworks/nav_bar_r04_c2_f4.gif','fireworks/nav_bar_r06_c2_f3.gif','fireworks/nav_bar_r06_c2_f2.gif','fireworks/nav_bar_r06_c2_f4.gif','fireworks/nav_bar_r08_c2_f3.gif','fireworks/nav_bar_r08_c2_f2.gif','fireworks/nav_bar_r08_c2_f4.gif','fireworks/nav_bar_r10_c2_f3.gif','fireworks/nav_bar_r10_c2_f2.gif','fireworks/nav_bar_r10_c2_f4.gif','fireworks/nav_bar_r12_c2_f3.gif','fireworks/nav_bar_r12_c2_f2.gif','fireworks/nav_bar_r12_c2_f4.gif','fireworks/nav_bar_r02_c2_f4.gif')">
+<div id="Layer2" style="position:absolute; left:89px; top:32px; width:792px; height:125px; z-index:2">
+  <h1 align="center"><img src="images/CORBA_Security.jpg" width="500" height="131" align="middle"></h1>
+</div>
+<div id="Layer3" style="position:absolute; left:257px; top:199px; width:625px; height:1px; z-index:3"><!-- #BeginEditable "Body" -->
+  <p align="center"><font size="5">CORBA Security Conformance Statement</font></p>
+  <p align="center">28 November, 2000</p>
+  <p align="center">TAO (The ACE ORB)</p>
+  <p align="center">Center for Distributed Object Computing, Washington University<br>
+    Distributed Object Computing Laboratory, University of California at Irvine</p>
+  <ul>
+    <li><a href="#Introduction">Introduction</a>
+      <ul>
+        <li><a href="#Introduction_1">Summary of Security Conformance</a></li>
+        <li><a href="#Introduction_2">Scope of Product</a></li>
+        <li><a href="#Introduction_3">Security Overview</a></li>
+      </ul>
+    </li>
+    <li><a href="#Security_Conformance">Security Conformance</a>
+      <ul>
+        <li><a href="#Security_Conformance_1">Main Security Functionality Level</a></li>
+        <li><a href="#Security_Conformance_2">Security Functionality Options</a></li>
+        <li><a href="#Security_Conformance_3">Security Replaceability</a></li>
+        <li><a href="#Security_Conformance_4">Secure Interoperability</a></li>
+        <li><a href="#Security_Conformance_5">Level of Interoperability</a></li>
+        <li><a href="#Security_Conformance_6">Mechanism Profiles</a></li>
+      </ul>
+    </li>
+    <li><a href="#Assurance">Assurance</a>
+      <ul>
+        <li><a href="#Assurance_1">Philosophy of Protection</a></li>
+        <li><a href="#Assurance_2">Threats</a> </li>
+        <li><a href="#Assurance_3">Security Policies</a></li>
+        <li><a href="#Assurance_4">Security Protection Mechanisms</a></li>
+        <li><a href="#Assurance_5">Environmental Support</a></li>
+        <li><a href="#Assurance_6">Configuration Constraints</a></li>
+        <li><a href="#Assurance_7">Security Policy Extensions</a></li>
+      </ul>
+    </li>
+    <li><a href="#Supplemental">Supplemental Product Information</a></li>
+  </ul>
+  <h2>1. Introduction<a name="Introduction"></a> </h2>
+  <p>The security features that TAO provides are introduced in this section. Detailed
+    descriptions are available in later major sections. </p>
+  <h3>1.1 Summary of Security Conformance<a name="Introduction_1"></a></h3>
+  <p>This section summarizes the CORBA Security Service features that TAO provides.</p>
+  <table width="100%" border="1" align="center">
+    <tr bgcolor="#CCCCFF">
+      <td colspan="5">
+        <div align="center"><b>CORBA Security Functionality Checklist</b></div>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2" width="26%">
+        <div align="center">
+          <p><b>Main Functionality</b></p>
+          <p><b> (Level 1 or Level 2)</b></p>
+        </div>
+      </td>
+      <td rowspan="2" width="22%">
+        <div align="center">
+          <p><b>Functionality Options</b></p>
+          <p><b>(Non-Repudiation)</b></p>
+        </div>
+      </td>
+      <td colspan="3">
+        <div align="center"><b>Security Replaceability</b></div>
+      </td>
+    </tr>
+    <tr>
+      <td width="16%">
+        <div align="center"><b>ORB Services</b></div>
+      </td>
+      <td width="18%">
+        <div align="center"><b>Security Services</b></div>
+      </td>
+      <td width="18%">
+        <div align="center"><b>Security Ready</b></div>
+      </td>
+    </tr>
+    <tr>
+      <td width="26%" bgcolor="#3333FF">&nbsp;</td>
+      <td width="22%">&nbsp;</td>
+      <td width="16%">&nbsp;</td>
+      <td width="18%" bgcolor="#3333FF">&nbsp;</td>
+      <td width="18%">&nbsp;</td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <table width="100%" border="1" align="center">
+    <tr bgcolor="#CCCCFF">
+      <td height="2" colspan="9">
+        <div align="center"><b>CORBA Secure Interoperability Checklist</b></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div align="center"><b>Interoperability</b></div>
+      </td>
+      <td colspan="7">
+        <div align="center"><b>IIOP</b></div>
+      </td>
+      <td>
+        <div align="center"><b>DCE</b></div>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="3">
+        <div align="center"><b>Level</b></div>
+      </td>
+      <td colspan="6">
+        <div align="center"><b>SECIOP</b></div>
+      </td>
+      <td rowspan="3">
+        <div align="center"><b>SSL</b></div>
+        <div align="center"></div>
+        <div align="center"></div>
+      </td>
+      <td rowspan="3">
+        <div align="center"><b>CIOP</b></div>
+        <div align="center"></div>
+        <div align="center"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div align="center"><b>SPKM</b></div>
+      </td>
+      <td rowspan="2">
+        <div align="center"><b>Kerberos</b></div>
+      </td>
+      <td colspan="3">
+        <div align="center"><b>CSI-ECMA</b></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div align="center"><b>SPKM 1</b></div>
+      </td>
+      <td>
+        <div align="center"><b>SPKM 2</b></div>
+      </td>
+      <td>
+        <div align="center"><b>Private</b></div>
+      </td>
+      <td>
+        <div align="center"><b>Public</b></div>
+      </td>
+      <td>
+        <div align="center"><b>Hybrid</b></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div align="center">Level 0</div>
+      </td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td bgcolor="#33FF33">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+        <div align="center">Level 1</div>
+      </td>
+      <td bgcolor="#999999">&nbsp; </td>
+      <td bgcolor="#999999">&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td bgcolor="#999999">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+        <div align="center">Level 2</div>
+      </td>
+      <td bgcolor="#999999">&nbsp;</td>
+      <td bgcolor="#999999">&nbsp;</td>
+      <td bgcolor="#999999">&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td bgcolor="#999999">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <table width="71%" border="1" align="center">
+    <tr>
+      <td width="22%" height="32">
+        <div align="center"><b>Supported</b></div>
+      </td>
+      <td width="18%" height="32">
+        <div align="center"><b>Pending</b></div>
+      </td>
+      <td width="16%" height="32">
+        <div align="center"><b>N/A</b></div>
+      </td>
+    </tr>
+    <tr>
+      <td width="22%" height="32" bgcolor="#33FF33">
+        <div align="left"></div>
+      </td>
+      <td width="18%" height="32" bgcolor="#3333FF">
+        <div align="left"></div>
+      </td>
+      <td width="16%" height="32" bgcolor="#999999">
+        <div align="left"></div>
+      </td>
+    </tr>
+  </table>
+  <h3>1.2 Scope of Product<a name="Introduction_2"></a></h3>
+  <p> TAO supports confidential communication through its IIOP over SSL pluggable
+    protocol, <a href="SSLIOP.html">SSLIOP</a>.</p>
+  <h3>1.3 Security Overview<a name="Introduction_3"></a></h3>
+  <p>Using TAO's SSLIOP pluggable protocol, it is possible to ensure that all
+    remote method invocations between ORBs that implement IIOP over SSL are confidential.
+    This is made possible by the confidentiality the Secure Socket Layer (SSL)
+    provides. X.509 certificate-based access control is also possible using TAO's
+    <code>SSLIOP::Current</code> extension.</p>
+  <ul>
+    <ul>
+      <blockquote>
+        <ul>
+          <ul>
+            <ul>
+            </ul>
+          </ul>
+        </ul>
+      </blockquote>
+    </ul>
+  </ul>
+  <h2>2. Security Conformance<a name="Security_Conformance"></a></h2>
+  <p>TAO conformance to the CORBA Security Service is detailed in this section.</p>
+  <h3>2.1 Main Security Functionality Level<a name="Security_Conformance_1"></a></h3>
+  <p>Work is currently underway to implement Security Functionality Level 1.</p>
+  <h3>2.2 Security Functionality Options<a name="Security_Conformance_2"></a></h3>
+  <p>There are no current plans to implement non-repudiation. However, this may
+    change in the future.</p>
+  <h3>2.3 Security Replaceability<a name="Security_Conformance_3"></a></h3>
+  <p>Work is currently underway to implement the core Security Replaceability
+    components detailed in the Security Service.</p>
+  <h3>2.4 Secure Interoperability<a name="Security_Conformance_4"></a></h3>
+  <p>TAO supports SSL based interoperability. It uses <a href="http://www.openssl.org/">OpenSSL</a>
+    as its underlying SSL implementation.</p>
+  <h3>2.5 Level of Interoperability<a name="Security_Conformance_5"></a></h3>
+  <p>TAO supports <i>level 0</i> interoperability through its IIOP over SSL pluggable
+    protocol, <a href="SSLIOP.html">SSLIOP</a>.</p>
+  <h3>2.6 Mechanism Profiles<a name="Security_Conformance_6"></a></h3>
+  <p>All cryptographic profiles supported by SSL, OpenSSL in particular, are supported
+    by TAO. ORBs that support those profiles should be able to interoperate with
+    TAO. </p>
+  <h2>3. Assurance<a name="Assurance"></a></h2>
+  <h3>3.1 Philosophy of Protection<a name="Assurance_1"></a></h3>
+  <h3>3.2 Threats<a name="Assurance_2"></a></h3>
+  <h3>3.3 Security Policies<a name="Assurance_3"></a></h3>
+  <h3>3.4 Security Protection Mechanisms<a name="Assurance_4"></a></h3>
+  <h3>3.5 Environmental Support<a name="Assurance_5"></a></h3>
+  <h3>3.6 Configuration Constraints<a name="Assurance_6"></a></h3>
+  <h3>3.7 Security Policy Extensions<a name="Assurance_7"></a></h3>
+  <h2>4. Supplemental Product Information<a name="Supplemental"></a></h2>
+  <!-- #EndEditable --></div>
+<div id="Layer1" style="position:absolute; left:87px; top:162px; width:153px; height:373px; z-index:4"><!-- Image with table -->
+  <table border="0" cellpadding="0" cellspacing="0" width="158">
+    <!-- fwtable fwsrc="Untitled" fwbase="nav_bar.gif" -->
+    <tr> <!-- Shim row, height 1. -->
+      <td><img src="/fireworks/shim.gif" width="9" height="1" border="0" name="undefined_2"></td>
+      <td><img src="/fireworks/shim.gif" width="141" height="1" border="0" name="undefined_2"></td>
+      <td><img src="/fireworks/shim.gif" width="8" height="1" border="0" name="undefined_2"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="1" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 1 -->
+      <td colspan="3"><img name="nav_bar_r01_c1" src="fireworks/nav_bar_r01_c1.gif" width="158" height="35" border="0"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="35" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 2 -->
+      <td rowspan="12"><img name="nav_bar_r02_c1" src="fireworks/nav_bar_r02_c1.gif" width="9" height="342" border="0"></td>
+      <td><a href="index.html" onMouseOut="MM_nbGroup('out');"  onMouseOver="MM_nbGroup('over','Home','fireworks/nav_bar_r02_c2_f2.gif','fireworks/nav_bar_r02_c2_f4.gif',1)"  onClick="MM_nbGroup('down','navbar1','Home','fireworks/nav_bar_r02_c2_f3.gif',1)" ><img name="Home" src="fireworks/nav_bar_r02_c2.gif" border="0" onLoad=""></a></td>
+      <td rowspan="12"><img name="nav_bar_r02_c3" src="fireworks/nav_bar_r02_c3.gif" width="8" height="342" border="0"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="36" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 3 -->
+      <td><img name="nav_bar_r03_c2" src="fireworks/nav_bar_r03_c2.gif" width="141" height="5" border="0"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="5" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 4 -->
+      <td><a href="Download.html" onMouseOut="MM_nbGroup('out');"  onMouseOver="MM_nbGroup('over','Download','fireworks/nav_bar_r04_c2_f2.gif','fireworks/nav_bar_r04_c2_f4.gif',1)"  onClick="MM_nbGroup('down','navbar1','Download','fireworks/nav_bar_r04_c2_f3.gif',1)" ><img name="Download" src="fireworks/nav_bar_r04_c2.gif" width="141" height="36" border="0" onLoad=""></a></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="36" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 5 -->
+      <td><img name="nav_bar_r05_c2" src="fireworks/nav_bar_r05_c2.gif" width="141" height="5" border="0"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="5" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 6 -->
+      <td><a href="http://www.cs.wustl.edu/~schmidt/TAO.html" onMouseOut="MM_nbGroup('out');"  onMouseOver="MM_nbGroup('over','TAO','fireworks/nav_bar_r06_c2_f2.gif','fireworks/nav_bar_r06_c2_f4.gif',1)"  onClick="MM_nbGroup('down','navbar1','TAO','fireworks/nav_bar_r06_c2_f3.gif',1)" ><img name="TAO" src="fireworks/nav_bar_r06_c2.gif" width="141" height="36" border="0" onLoad=""></a></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="36" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 7 -->
+      <td><img name="nav_bar_r07_c2" src="fireworks/nav_bar_r07_c2.gif" width="141" height="5" border="0"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="5" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 8 -->
+      <td><a href="SSLIOP.html" onMouseOut="MM_nbGroup('out');"  onMouseOver="MM_nbGroup('over','SSLIOP','fireworks/nav_bar_r08_c2_f2.gif','fireworks/nav_bar_r08_c2_f4.gif',1)"  onClick="MM_nbGroup('down','navbar1','SSLIOP','fireworks/nav_bar_r08_c2_f3.gif',1)" ><img name="SSLIOP" src="fireworks/nav_bar_r08_c2.gif" width="141" height="36" border="0" onLoad=""></a></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="36" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 9 -->
+      <td><img name="nav_bar_r09_c2" src="fireworks/nav_bar_r09_c2.gif" width="141" height="5" border="0"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="5" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 10 -->
+      <td><a href="Security_Service.html" onMouseOut="MM_nbGroup('out');"  onMouseOver="MM_nbGroup('over','Security_Service','fireworks/nav_bar_r10_c2_f2.gif','fireworks/nav_bar_r10_c2_f4.gif',1)"  onClick="MM_nbGroup('down','navbar1','Security_Service','fireworks/nav_bar_r10_c2_f3.gif',1)" ><img name="Security_Service" src="fireworks/nav_bar_r10_c2.gif" width="141" height="36" border="0" onLoad=""></a></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="36" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 11 -->
+      <td><img name="nav_bar_r11_c2" src="fireworks/nav_bar_r11_c2.gif" width="141" height="5" border="0"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="5" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 12 -->
+      <td><a href="FAQ.html" onMouseOut="MM_nbGroup('out');"  onMouseOver="MM_nbGroup('over','FAQ','fireworks/nav_bar_r12_c2_f2.gif','fireworks/nav_bar_r12_c2_f4.gif',1)"  onClick="MM_nbGroup('down','navbar1','FAQ','fireworks/nav_bar_r12_c2_f3.gif',1)" ><img name="FAQ" src="fireworks/nav_bar_r12_c2.gif" width="141" height="36" border="0" onLoad=""></a></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="36" border="0" name="undefined_2"></td>
+    </tr>
+    <tr valign="top"><!-- row 13 -->
+      <td><img name="nav_bar_r13_c2" src="fireworks/nav_bar_r13_c2.gif" width="141" height="101" border="0"></td>
+      <td><img src="/fireworks/shim.gif" width="1" height="101" border="0" name="undefined_2"></td>
+    </tr>
+    <!--   This table was automatically created with Macromedia Fireworks 3.0   -->
+    <!--   http://www.macromedia.com   -->
+  </table>
+</div>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+<!-- #EndTemplate --></html>

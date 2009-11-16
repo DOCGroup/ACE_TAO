@@ -1,0 +1,4 @@
+// $Id$
+feature(mcpp) {
+  macros += USE_MCPP_BUFFER_LEXING
+}
