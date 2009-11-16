@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef KEYED_TEST_CONNECTOR_EXEC_H_
-#define KEYED_TEST_CONNECTOR_EXEC_H_
+#ifndef UNKEYED_TEST_CONNECTOR_EXEC_H_
+#define UNKEYED_TEST_CONNECTOR_EXEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -42,7 +42,7 @@ namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
     ::CCM_DDS::UnkeyedTest::RawListener,
     ::CCM_DDS::ConnectorStatusListener> UnkeyedTest_Connector_Traits;
 
-  class KEYED_TEST_CONNECTOR_EXEC_Export Unkeyed_Test_Connector_exec_i :
+  class UNKEYED_TEST_CONNECTOR_EXEC_Export Unkeyed_Test_Connector_exec_i :
     public Connector_T <UnkeyedTest_DDS_Traits, UnkeyedTest_Connector_Traits>
   {
   public:
@@ -50,7 +50,7 @@ namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
     virtual ~Unkeyed_Test_Connector_exec_i (void);
   };
 
-  extern "C" KEYED_TEST_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
+  extern "C" UNKEYED_TEST_CONNECTOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Unkeyed_Test_Unkeyed_Test_Connector_Impl (void);
 }
 
