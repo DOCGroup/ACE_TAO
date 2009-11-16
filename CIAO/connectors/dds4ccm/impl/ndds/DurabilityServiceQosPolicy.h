@@ -15,7 +15,7 @@ inline void
 operator<<= (::DDS::DurabilityServiceQosPolicy &ddsqos, const ::DDS_DurabilityServiceQosPolicy & qos)
 {
   ddsqos.service_cleanup_delay <<= qos.service_cleanup_delay;
-  ddsqos.history_kind = static_cast <::DDS::HistoryQosPolicyKind> (qos.history_kind);
+  ddsqos.history_kind = static_cast < ::DDS::HistoryQosPolicyKind> (qos.history_kind);
   ddsqos.history_depth = qos.history_depth;
   ddsqos.max_samples = qos.max_samples;
   ddsqos.max_instances = qos.max_instances;
@@ -26,7 +26,7 @@ inline void
 operator<<= (::DDS_DurabilityServiceQosPolicy &ddsqos, const ::DDS::DurabilityServiceQosPolicy & qos)
 {
   ddsqos.service_cleanup_delay <<= qos.service_cleanup_delay;
-  ddsqos.history_kind = static_cast <::DDS_HistoryQosPolicyKind> (qos.history_kind);
+  ddsqos.history_kind = static_cast < ::DDS_HistoryQosPolicyKind> (qos.history_kind);
   ddsqos.history_depth = qos.history_depth;
   ddsqos.max_samples = qos.max_samples;
   ddsqos.max_instances = qos.max_instances;
@@ -37,7 +37,7 @@ inline void
 operator>>= (const ::DDS_DurabilityServiceQosPolicy &qos, ::DDS::DurabilityServiceQosPolicy & ddsqos)
 {
   ddsqos.service_cleanup_delay <<= qos.service_cleanup_delay;
-  ddsqos.history_kind = static_cast <::DDS::HistoryQosPolicyKind> (qos.history_kind);
+  ddsqos.history_kind = static_cast < ::DDS::HistoryQosPolicyKind> (qos.history_kind);
   ddsqos.history_depth = qos.history_depth;
   ddsqos.max_samples = qos.max_samples;
   ddsqos.max_instances = qos.max_instances;
@@ -48,7 +48,7 @@ inline void
 operator>>= (const ::DDS::DurabilityServiceQosPolicy &qos, ::DDS_DurabilityServiceQosPolicy & ddsqos)
 {
   ddsqos.service_cleanup_delay <<= qos.service_cleanup_delay;
-  ddsqos.history_kind = static_cast <::DDS_HistoryQosPolicyKind> (qos.history_kind);
+  ddsqos.history_kind = static_cast < ::DDS_HistoryQosPolicyKind> (qos.history_kind);
   ddsqos.history_depth = qos.history_depth;
   ddsqos.max_samples = qos.max_samples;
   ddsqos.max_instances = qos.max_instances;
