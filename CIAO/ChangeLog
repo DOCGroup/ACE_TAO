@@ -1,3 +1,11 @@
+Mon Nov 16 19:13:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/Plan.cdp:
+          Removed updater and created writer.
+
 Mon Nov 16 17:15:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector_exec.h:

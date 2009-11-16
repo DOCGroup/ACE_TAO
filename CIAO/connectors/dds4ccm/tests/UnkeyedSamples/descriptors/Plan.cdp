@@ -387,15 +387,15 @@
   </connection>
 
   <connection>
-    <name>updater_connection</name>
+    <name>writer_connection</name>
     <internalEndpoint>
-      <portName>info_update_data</portName>
+      <portName>info_in_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SenderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_update_data</portName>
+      <portName>info_in_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance" />
