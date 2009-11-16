@@ -12,10 +12,8 @@ ACE_RCSID (BiDir_GIOP,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Set the flag to zero to start with
-bool TAO_BiDirGIOP_Loader::is_activated_ = false;
-
 TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
+  : initialized_ (false)
 {
 }
 
@@ -26,7 +24,7 @@ TAO_BiDirGIOP_Loader::~TAO_BiDirGIOP_Loader (void)
 int
 TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 {
-  if (TAO_BiDirGIOP_Loader::is_activated_ == false && TAO_DEF_GIOP_MINOR >= 2)
+  if (!this->initialized_ && TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -48,7 +46,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
           PortableInterceptor::register_orb_initializer (
             bidir_orb_initializer.in ());
 
-          TAO_BiDirGIOP_Loader::is_activated_ = true;
+          this->initialized_ = true;
         }
       catch (const ::CORBA::Exception& ex)
         {

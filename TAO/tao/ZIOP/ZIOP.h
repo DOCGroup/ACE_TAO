@@ -66,9 +66,8 @@ public:
 
 private:
 
-  /// Flag to indicate whether the ZIOP library has been
-  /// activated.
-  static bool is_activated_;
+  /// Set to true after init is called.
+  bool initialized_;
 
   /// dump a ZIOP datablock after (de)compression
   void dump_msg (const char *type,  const u_char *ptr,

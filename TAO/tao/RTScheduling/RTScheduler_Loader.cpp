@@ -13,6 +13,11 @@ ACE_RCSID (TAO, RTScheduler_Loader, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_RTScheduler_Loader::TAO_RTScheduler_Loader (void)
+  : initialized_ (false)
+{
+}
+
 TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
 {
 }
@@ -26,13 +31,11 @@ TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
     ACE_DEBUG ((LM_DEBUG,
                 "In RTScheduler_Loader::init\n"));
 
-  static bool initialized = false;
-
   // Only allow initialization once.
-  if (initialized)
+  if (this->initialized_)
     return 0;
 
-  initialized = true;
+  this->initialized_ = true;
 
   // Register the ORB initializer.
   try

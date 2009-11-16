@@ -14,10 +14,8 @@ ACE_RCSID (ZIOP,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Set the flag to zero to start with
-bool TAO_ZIOP_Loader::is_activated_ = false;
-
 TAO_ZIOP_Loader::TAO_ZIOP_Loader (void)
+  : initialized_ (false)
 {
 }
 
@@ -29,7 +27,7 @@ int
 TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-  if (TAO_ZIOP_Loader::is_activated_ == false && TAO_DEF_GIOP_MINOR >= 2)
+  if (!this->initialized_ && TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -51,7 +49,7 @@ TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
           PortableInterceptor::register_orb_initializer (
             ziop_orb_initializer.in ());
 
-          TAO_ZIOP_Loader::is_activated_ = true;
+          this->initialized_ = true;
         }
       catch (const ::CORBA::Exception& ex)
         {
