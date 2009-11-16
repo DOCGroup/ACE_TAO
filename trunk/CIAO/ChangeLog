@@ -1,3 +1,14 @@
+Mon Nov 16 13:59:05 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp:
+          Checked for nil before using ports.
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.mpc:
+          Defines were not property named.
+
 Mon Nov 16 10:21:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:

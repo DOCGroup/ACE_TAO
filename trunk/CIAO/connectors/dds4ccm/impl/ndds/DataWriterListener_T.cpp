@@ -29,7 +29,10 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_mis
                                               ::DDS::DataWriter_ptr the_Writer,
                                                const ::DDS::OfferedDeadlineMissedStatus & status)
 {
-  this->info_out_connector_status_->on_offered_deadline_missed (the_Writer, status);
+  if (!CORBA::is_nil (this->info_out_connector_status_))
+    {
+      this->info_out_connector_status_->on_offered_deadline_missed (the_Writer, status);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -38,7 +41,10 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible
                                   ::DDS::DataWriter_ptr the_Writer,
                                   const ::DDS::OfferedIncompatibleQosStatus & status)
 {
-  this->info_out_connector_status_->on_offered_incompatible_qos (the_Writer, status);
+  if (!CORBA::is_nil (this->info_out_connector_status_))
+    {
+      this->info_out_connector_status_->on_offered_incompatible_qos (the_Writer, status);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -47,7 +53,10 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
                                 ::DDS::DataWriter_ptr the_Writer,
                                 const ::DDS::LivelinessLostStatus &)
 {
-  this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
+  if (!CORBA::is_nil (this->info_out_connector_status_))
+    {
+      this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -56,7 +65,10 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched 
                                 ::DDS::DataWriter_ptr the_Writer,
                                 const ::DDS::PublicationMatchedStatus &)
 {
-  this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
+  if (!CORBA::is_nil (this->info_out_connector_status_))
+    {
+      this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
