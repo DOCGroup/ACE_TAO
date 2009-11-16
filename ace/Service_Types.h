@@ -178,7 +178,7 @@ private:
  * @brief Define the methods for handling the configuration of
  * ACE_Streams.
  */
-class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl, ACE_Module_Container
+class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl, public ACE_Module_Container
 {
 public:
   // = Initialization method.

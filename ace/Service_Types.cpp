@@ -300,20 +300,6 @@ ACE_Module_Type::link (void) const
   return this->link_;
 }
 
-void
-ACE_Module_Type::module_container (ACE_Module_Container *n)
-{
-  ACE_TRACE ("ACE_Module_Type::module_container");
-  this->module_container_ = n;
-}
-
-ACE_Module_Container *
-ACE_Module_Type::module_container (void) const
-{
-  ACE_TRACE ("ACE_Module_Type::module_container");
-  return this->module_container_;
-}
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Type)
 
 void
