@@ -7,8 +7,8 @@
  * by-hand translation of the idl3p.
  */
 
-#ifndef KEYED_TEST_CONNECTOR_IDL_
-#define KEYED_TEST_CONNECTOR_IDL_
+#ifndef UNKEYED_TEST_CONNECTOR_IDL_
+#define UNKEYED_TEST_CONNECTOR_IDL_
 
 #include  <Components.idl>
 #include "Base/Unkeyed_Test_Base.idl"
