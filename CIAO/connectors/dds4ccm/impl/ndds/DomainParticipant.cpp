@@ -48,7 +48,7 @@ namespace CIAO
                      "Creating Publisher\n"));
 
         DDS_PublisherQos rti_qos;
-        rti_qos <<= qos;
+        //rti_qos <<= qos;
         RTI_PublisherListener_i *rti_pl = new RTI_PublisherListener_i (a_listener);
         DDSPublisher * rti_pub =
           this->impl_->create_publisher (rti_qos,
