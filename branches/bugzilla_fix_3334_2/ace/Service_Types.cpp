@@ -261,7 +261,7 @@ ACE_Module_Type::fini (void)
   mod->close (MT_Module::M_DELETE);
   if (module_container_ != 0)
   {
-    module_container_->remove (const_cast<ACE_Module_Type*>(this));
+    module_container_->remove (this);
     module_container_ = 0;
   }
 
