@@ -1,8 +1,13 @@
+Mon Nov 16 15:44:30 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3748_Regression/run_test.pl:
+          Extended the time for starting client even more.
+
 Fri Nov 13 19:49:54 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_interface.h:
         * TAO_IDL/be/be_interface.cpp:
-        
+
           Added 2 private methods, called from traverse_inheritance_graph(),
           to enqueue base components or base homes. Making these steps
           into method calls allows them to be done tail-recursively
@@ -13,7 +18,7 @@ Fri Nov 13 19:49:54 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Nov 13 10:17:33 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/FaultTolerance/IOGRManipulation/run_test.pl:
-          
+
        Warring in fuzz build was fixed.
 
 Fri Nov 13 09:18:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
@@ -51,8 +56,8 @@ Fri Nov 13 09:18:57 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
         * tests/Reliable_Oneways/run_sync_with_target.pl:
         * bin/tao_other_tests.lst:
         * bin/tao_orb_tests.lst:
-        
-        Tests are converted to use new test framework and added to fuzz build.  
+
+        Tests are converted to use new test framework and added to fuzz build.
 
 Fri Nov 13 00:33:49 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
@@ -64,9 +69,9 @@ Fri Nov 13 00:33:49 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 Thu Nov 12 20:39:18 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
-        
+
           Fixed bug in the logic of operation table generation for
-          components and homes. 
+          components and homes.
 
 Thu Nov 12 12:12:51 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
