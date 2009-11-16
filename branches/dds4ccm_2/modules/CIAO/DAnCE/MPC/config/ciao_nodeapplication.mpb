@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance_deployment_stub, ciao_nodeapp_configurator {
+  libs  += CIAO_NodeApplication
+  after += NodeApplicationLib
+}
