@@ -16,6 +16,7 @@
 #include "InstanceHandleSeq.h"
 #include "Subscriber.h"
 #include "TopicDescription.h"
+#include "DataReaderQos.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -108,18 +109,21 @@ namespace CIAO
 
       ::DDS::ReturnCode_t
       RTI_DataReader_i::set_qos (
-        const ::DDS::DataReaderQos & /*qos*/)
+        const ::DDS::DataReaderQos &qos)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_DataReaderQos ddsqos;
+        ddsqos <<= qos;
+        return this->impl_->set_qos (ddsqos);
       }
 
       ::DDS::ReturnCode_t
       RTI_DataReader_i::get_qos (
-        ::DDS::DataReaderQos & /*qos*/)
+        ::DDS::DataReaderQos &qos)
       {
-        throw CORBA::NO_IMPLEMENT ();
-        // Add your implementation here
+        ::DDS_DataReaderQos ddsqos;
+        ::DDS_ReturnCode_t const retval = this->impl_->get_qos (ddsqos);
+        qos <<= ddsqos;
+        return retval;
       }
 
       ::DDS::ReturnCode_t

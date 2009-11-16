@@ -6,12 +6,10 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_RTI_TOPICQOS_H
-#define CIAO_RTI_TOPICQOS_H
+#ifndef CIAO_RTI_DATAREADERQOS_H
+#define CIAO_RTI_DATAREADERQOS_H
 
-#include "TopicDataQosPolicy.h"
 #include "DurabilityQosPolicy.h"
-#include "DurabilityServiceQosPolicy.h"
 #include "DeadlineQosPolicy.h"
 #include "LatencyBudgetQosPolicy.h"
 #include "LivelinessQosPolicy.h"
@@ -19,16 +17,15 @@
 #include "DestinationOrderQosPolicy.h"
 #include "HistoryQosPolicy.h"
 #include "ResourceLimitsQosPolicy.h"
-#include "TransportPriorityQosPolicy.h"
-#include "LifespanQosPolicy.h"
+#include "UserDataQosPolicy.h"
 #include "OwnershipQosPolicy.h"
+#include "TimeBasedFilterQosPolicy.h"
+#include "ReaderDataLifecycleQosPolicy.h"
 
 inline void
-operator<<= (::DDS::TopicQos &ddsqos, const ::DDS_TopicQos & qos)
+operator<<= (::DDS::DataReaderQos &ddsqos, const ::DDS_DataReaderQos & qos)
 {
-  ddsqos.topic_data <<= qos.topic_data;
   ddsqos.durability <<= qos.durability;
-  ddsqos.durability_service <<= qos.durability_service;
   ddsqos.deadline <<= qos.deadline;
   ddsqos.latency_budget <<= qos.latency_budget;
   ddsqos.liveliness <<= qos.liveliness;
@@ -36,17 +33,16 @@ operator<<= (::DDS::TopicQos &ddsqos, const ::DDS_TopicQos & qos)
   ddsqos.destination_order <<= qos.destination_order;
   ddsqos.history <<= qos.history;
   ddsqos.resource_limits <<= qos.resource_limits;
-  ddsqos.transport_priority <<= qos.transport_priority;
-  ddsqos.lifespan <<= qos.lifespan;
+  ddsqos.user_data <<= qos.user_data;
   ddsqos.ownership <<= qos.ownership;
+  ddsqos.time_based_filter <<= qos.time_based_filter;
+  ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
 }
 
 inline void
-operator<<= (::DDS_TopicQos &ddsqos, const ::DDS::TopicQos & qos)
+operator<<= (::DDS_DataReaderQos &ddsqos, const ::DDS::DataReaderQos & qos)
 {
-  ddsqos.topic_data <<= qos.topic_data;
   ddsqos.durability <<= qos.durability;
-  ddsqos.durability_service <<= qos.durability_service;
   ddsqos.deadline <<= qos.deadline;
   ddsqos.latency_budget <<= qos.latency_budget;
   ddsqos.liveliness <<= qos.liveliness;
@@ -54,17 +50,16 @@ operator<<= (::DDS_TopicQos &ddsqos, const ::DDS::TopicQos & qos)
   ddsqos.destination_order <<= qos.destination_order;
   ddsqos.history <<= qos.history;
   ddsqos.resource_limits <<= qos.resource_limits;
-  ddsqos.transport_priority <<= qos.transport_priority;
-  ddsqos.lifespan <<= qos.lifespan;
+  ddsqos.user_data <<= qos.user_data;
   ddsqos.ownership <<= qos.ownership;
+  ddsqos.time_based_filter <<= qos.time_based_filter;
+  ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
 }
 
 inline void
-operator>>= (const ::DDS_TopicQos &qos, ::DDS::TopicQos & ddsqos)
+operator>>= (const ::DDS_DataReaderQos &qos, ::DDS::DataReaderQos & ddsqos)
 {
-  ddsqos.topic_data <<= qos.topic_data;
   ddsqos.durability <<= qos.durability;
-  ddsqos.durability_service <<= qos.durability_service;
   ddsqos.deadline <<= qos.deadline;
   ddsqos.latency_budget <<= qos.latency_budget;
   ddsqos.liveliness <<= qos.liveliness;
@@ -72,17 +67,16 @@ operator>>= (const ::DDS_TopicQos &qos, ::DDS::TopicQos & ddsqos)
   ddsqos.destination_order <<= qos.destination_order;
   ddsqos.history <<= qos.history;
   ddsqos.resource_limits <<= qos.resource_limits;
-  ddsqos.transport_priority <<= qos.transport_priority;
-  ddsqos.lifespan <<= qos.lifespan;
+  ddsqos.user_data <<= qos.user_data;
   ddsqos.ownership <<= qos.ownership;
+  ddsqos.time_based_filter <<= qos.time_based_filter;
+  ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
 }
 
 inline void
-operator>>= (const ::DDS::TopicQos &qos, ::DDS_TopicQos & ddsqos)
+operator>>= (const ::DDS::DataReaderQos &qos, ::DDS_DataReaderQos & ddsqos)
 {
-  ddsqos.topic_data <<= qos.topic_data;
   ddsqos.durability <<= qos.durability;
-  ddsqos.durability_service <<= qos.durability_service;
   ddsqos.deadline <<= qos.deadline;
   ddsqos.latency_budget <<= qos.latency_budget;
   ddsqos.liveliness <<= qos.liveliness;
@@ -90,9 +84,10 @@ operator>>= (const ::DDS::TopicQos &qos, ::DDS_TopicQos & ddsqos)
   ddsqos.destination_order <<= qos.destination_order;
   ddsqos.history <<= qos.history;
   ddsqos.resource_limits <<= qos.resource_limits;
-  ddsqos.transport_priority <<= qos.transport_priority;
-  ddsqos.lifespan <<= qos.lifespan;
+  ddsqos.user_data <<= qos.user_data;
   ddsqos.ownership <<= qos.ownership;
+  ddsqos.time_based_filter <<= qos.time_based_filter;
+  ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
 }
 
-#endif /* CIAO_RTI_TOPICQOS_H */
+#endif /* CIAO_RTI_DATAREADERQOS_H */

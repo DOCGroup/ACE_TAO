@@ -1,3 +1,24 @@
+Mon Nov 16 07:19:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderQos.h
+        * connectors/dds4ccm/impl/ndds/DeadlineQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/DestinationOrderQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/DurabilityQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/DurabilityServiceQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/HistoryQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/LifespanQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/LivelinessQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/OwnershipQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/ReliabilityQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/TimeBasedFilterQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/Topic.cpp
+        * connectors/dds4ccm/impl/ndds/TopicDataQosPolicy.h
+        * connectors/dds4ccm/impl/ndds/TopicQos.h
+        * connectors/dds4ccm/impl/ndds/UserDataQosPolicy.h
+          Added more QoS conversions
+
 Sun Nov 15 19:05:00 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dds4ccm/examples/Hello/Connector/Hello_Connector.mpc
