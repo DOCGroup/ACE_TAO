@@ -15,6 +15,7 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener
         enabled_ (enabled)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
+  printf ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
   this->info_out_portstatus_ = this->context_->get_connection_info_out_status ();
   this->info_out_connector_status_ = this->context_->get_connection_error_listener ();
 }
@@ -55,7 +56,10 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadl
                                               ::DDS::DataReader_ptr the_reader,
                                                const ::DDS::RequestedDeadlineMissedStatus & status)
 {
-  this->info_out_portstatus_->on_requested_deadline_missed (the_reader, status);
+  if (!CORBA::is_nil (this->info_out_portstatus_))
+    {
+      this->info_out_portstatus_->on_requested_deadline_missed (the_reader, status);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -64,7 +68,10 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
                                   ::DDS::DataReader_ptr the_reader,
                                   const ::DDS::SampleLostStatus & status)
 {
-  this->info_out_portstatus_->on_sample_lost (the_reader, status);
+  if (!CORBA::is_nil (this->info_out_portstatus_))
+    {
+      this->info_out_portstatus_->on_sample_lost (the_reader, status);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -73,7 +80,10 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incom
                                 ::DDS::DataReader_ptr the_reader,
                                 const ::DDS::RequestedIncompatibleQosStatus & status)
 {
-  this->info_out_connector_status_->on_requested_incompatible_qos (the_reader, status);
+  if (!CORBA::is_nil (this->info_out_connector_status_))
+    {
+      this->info_out_connector_status_->on_requested_incompatible_qos (the_reader, status);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
