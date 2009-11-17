@@ -46,10 +46,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID (be,
-           be_interface,
-           "$Id$")
-
 // Default constructor.
 be_interface::be_interface (void)
   : COMMON_Base (),
@@ -767,8 +763,9 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
        si.next ())
     {
       d = be_decl::narrow_from_decl (si.item ());
+      AST_Decl::NodeType nt = d->node_type ();
 
-      if (d->node_type () == AST_Decl::NT_op)
+      if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
         {
           // Hack to force the generation of the pure virtual ' = 0'
           // at the end of the operation declaration.
