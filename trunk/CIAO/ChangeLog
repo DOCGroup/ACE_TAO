@@ -1,3 +1,9 @@
+Tue Nov 17 10:39:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL_Test/Double_Inherited_Component/ComponentC_exec.h:
+        * tests/IDL_Test/Double_Inherited_Component/Inherited_components.idl:
+          Extended tests with some more interfaces.
+
 Tue Nov 17 10:12:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
