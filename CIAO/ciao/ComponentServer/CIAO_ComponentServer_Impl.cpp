@@ -86,7 +86,7 @@ namespace CIAO
           this->containers_.insert (CIAO::Deployment::Container::_duplicate(cont_var.in ()));
 
           CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_ComponentServer_i::create_container - Container successfully activated and stored,"
-                       "now manage %u containers\n",
+                       " now managing %u containers\n",
                        this->containers_.size ()));
 
           return cont_var._retn ();
@@ -104,10 +104,9 @@ namespace CIAO
       throw Components::CreateFailure ();
     }
 
-
-
     void
-    CIAO_ComponentServer_i::remove_container (::Components::Deployment::Container_ptr cref)
+    CIAO_ComponentServer_i::remove_container (
+      ::Components::Deployment::Container_ptr cref)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::remove_container");
 
@@ -239,9 +238,7 @@ namespace CIAO
     CIAO_ComponentServer_i::init (::Components::Deployment::ServerActivator_ptr sa,
                                   Components::ConfigValues *cvs)
     {
-      if (!CORBA::is_nil (sa))
-        this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
-
+      this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
       if (cvs != 0)
         {
           this->config_values_ = cvs;

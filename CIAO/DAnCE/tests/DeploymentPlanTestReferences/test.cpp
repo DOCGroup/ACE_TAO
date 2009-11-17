@@ -24,7 +24,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         {
           if (plan->instance[i].implementationRef > plan->implementation.length() - 1)
             {
-              DANCE_ERROR((LM_ERROR, ACE_TEXT ("[%M] incorrect implementationRef in instance %C.\n"), plan->instance[i].name.in()));
+              DANCE_ERROR((LM_ERROR,
+                          ACE_TEXT ("[%M] incorrect implementationRef in instance %C.\n"), plan->instance[i].name.in()));
               return 1;
             }
         }
@@ -36,7 +37,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
             {
               if (plan->implementation[i].artifactRef[0] > plan->artifact.length() - 1)
                 {
-                  DANCE_ERROR((LM_ERROR, ACE_TEXT ("[%M] incorrect artifactRef in the implementation %C.\n"), plan->implementation[i].name.in()));
+                  DANCE_ERROR((LM_ERROR,
+                              ACE_TEXT ("[%M] incorrect artifactRef in the implementation %C.\n"), plan->implementation[i].name.in()));
                   return 1;
                 }
             }

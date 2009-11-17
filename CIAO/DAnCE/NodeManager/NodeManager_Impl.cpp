@@ -32,7 +32,7 @@ namespace DAnCE
     while (!i.done ())
       {
         DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeManager_Impl::NodeManager_Impl - ")
-                      ACE_TEXT("Binding property %s provided by caller.\n"), i->key ().c_str ()));
+                      ACE_TEXT("Binding property %C provided by caller.\n"), i->key ().c_str ()));
         this->properties_.bind (i->key (), i->item ());
         i.advance ();
       }
@@ -49,7 +49,7 @@ namespace DAnCE
           {
             PortableServer::ObjectId_var id = this->poa_->servant_to_id ( (*iter).int_id_);
             DANCE_DEBUG ((LM_TRACE, DLINFO
-                          ACE_TEXT("NodeManager_impl::~NodeManager_impl - Deactivating NodeApplicationManager %s\n"),
+                          ACE_TEXT("NodeManager_impl::~NodeManager_impl - Deactivating NodeApplicationManager %C\n"),
                           (*iter).ext_id_.c_str ()));
             this->poa_->deactivate_object (id.in());
             DANCE_DEBUG ((LM_TRACE, DLINFO
@@ -62,7 +62,7 @@ namespace DAnCE
           {
             DANCE_ERROR ((LM_WARNING, DLINFO
                           ACE_TEXT("NodeManager_impl::~NodeManager_impl - Caught exception while removing ")
-                          ACE_TEXT("NodeApplicationManager %s\n"), (*iter).ext_id_.c_str ()));
+                          ACE_TEXT("NodeApplicationManager %C\n"), (*iter).ext_id_.c_str ()));
           }
       }
   }

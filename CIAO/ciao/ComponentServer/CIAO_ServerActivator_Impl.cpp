@@ -62,8 +62,6 @@ namespace CIAO
           throw CORBA::BAD_PARAM ();
         }
 
-      //SERVER_INFOS::iterator i (this->server_infos_.begin ());
-      //i.first ();
       Server_Info *info = 0;
 
       for (SERVER_INFOS::iterator i (this->server_infos_.begin ());
@@ -255,7 +253,7 @@ namespace CIAO
     {
       CIAO_TRACE ("CIAO_ServerActivator_i::construct_command_line");
 
-      // Build our command line to launch the compoent server
+      // Build our command line to launch the component server
       ACE_CString cmd_options (this->cs_args_);
 
       CORBA::Any val;
@@ -276,6 +274,20 @@ namespace CIAO
           ACE_Utils::UUID uuid;
           ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
           server.uuid_ = *uuid.to_string ();
+        }
+
+      if (server.cmap_->find (SERVER_ARGUMENTS, val) == 0)
+        {
+          const char *args = 0;
+          val >>= args;
+
+          CIAO_DEBUG ((LM_TRACE, CLINFO
+                 "CIAO_ServerActivator_i::construct_command_line - "
+                 "Adding provided server arguments %C\n", args));
+
+          cmd_options += ' ';
+          cmd_options += args;
+          cmd_options += ' ';
         }
 
       CIAO_DEBUG ((LM_DEBUG, CLINFO
@@ -307,7 +319,7 @@ namespace CIAO
         {
           val >>= path;
           CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
-                       "Using provided component server executable:%C\n", path));
+                       "Using provided component server executable: %C\n", path));
         }
       else
         {

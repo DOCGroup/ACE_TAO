@@ -41,7 +41,8 @@ namespace
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<T>");
     CORBA::Any any;
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<T> - ")
+    DANCE_DEBUG ((LM_TRACE, DLINFO
+                  ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<T> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
 
@@ -53,13 +54,15 @@ namespace
                   }
         else
           {
-            DANCE_ERROR ((LM_WARNING, DLINFO ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<T> - ")
+            DANCE_ERROR ((LM_WARNING, DLINFO
+                          ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<T> - ")
                           ACE_TEXT("Failed to extract property value for %C\n"), name));
             return false;
           }
       }
 
-    DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<T> - ")
+    DANCE_DEBUG ((LM_TRACE, DLINFO
+                  ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<T> - ")
                   ACE_TEXT("Property value for name '%C' has no value\n"), name));
 
     return false;
@@ -69,12 +72,12 @@ namespace
   bool get_property_value (const char *name, PROPERTY_MAP &properties, bool &val)
   {
     DANCE_TRACE ("NodeApplicion::<anonymous>::get_property_value<bool>");
-    CORBA::Any any;
 
     DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicion::<anonymous>::get_property_value<bool> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
 
+    CORBA::Any any;
     if (properties.find (name, any) == 0)
       {
         if (any >>= CORBA::Any::to_boolean(val))
@@ -222,6 +225,23 @@ namespace
       }
 
     return 0;
+  }
+
+  void append_properties (::Deployment::Properties &dest,
+			  const ::Deployment::Properties &src)
+  {
+    // @@Todo:  At the moment, I'm just targeting a single property to pass
+    // to the component server.  All this stuff needs to be rearchitected anyway,
+    // it's turning into a mess.
+    for (CORBA::ULong i = 0; i < src.length (); ++i)
+      {
+        if (ACE_OS::strcmp ("edu.vanderbilt.dre.CIAO.ComponentServerArgs", src[i].name.in ()) == 0)
+          {
+            dest.length (1);
+            dest[0].name = CORBA::string_dup (src[i].name.in ());
+            dest[0].value = src[i].value;
+          }
+      }
   }
 }
 
@@ -977,6 +997,16 @@ NodeApplication_Impl::create_component_server (size_t index)
       DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::create_component_Server - ")
                    ACE_TEXT("creating component server %u\n"), index));
       ::Components::ConfigValues config_values;
+
+      config_values.length (this->servers_[index].properties.length ());
+      for (CORBA::ULong i = 0; i < this->servers_[index].properties.length ();
+	   ++i)
+	{
+	  config_values[i] = new CIAO::ConfigValue_impl (this->servers_[index].properties[i].name.in (),
+							 this->servers_[index].properties[i].value);
+
+	}
+
       server.ref = this->activator_->create_component_server (config_values);
       DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::create_component_server - ")
                    ACE_TEXT("component server created\n")));
@@ -1180,7 +1210,6 @@ NodeApplication_Impl::init_components()
       this->servers_[i].containers.size (1);
     }
 
-
   for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
     {
       try
@@ -1201,6 +1230,8 @@ NodeApplication_Impl::init_components()
                               this->plan_.instance[i].name.in ()));
                 size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t pos = this->servers_[svr].containers[0].homes.size ();
+		append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+
                 this->servers_[svr].containers[0].homes.size (pos + 1);
                 this->servers_[svr].containers[0].homes[pos] = Instance (eHome,
                                                                          &this->servers_[svr].containers[0],
@@ -1216,6 +1247,7 @@ NodeApplication_Impl::init_components()
                               this->plan_.instance[i].name.in ()));
                 size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t pos = this->servers_[svr].containers[0].components.size ();
+		append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eComponent,
                                                                               &this->servers_[svr].containers[0],
@@ -1231,6 +1263,7 @@ NodeApplication_Impl::init_components()
                               this->plan_.instance[i].name.in ()));
                 size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t pos = this->servers_[svr].containers[0].components.size ();
+		append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eHomedComponent,
                                                                               &this->servers_[svr].containers[0],
@@ -1756,7 +1789,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
   }
 #endif /* GEN_OSTREAM_OPS */
 
-  for (unsigned int j = 0; j < this->plan_.connection.length(); ++j)
+  for (CORBA::ULong j = 0; j < this->plan_.connection.length(); ++j)
     {
       CORBA::ULong inst (this->plan_.connection[j].internalEndpoint[0].instanceRef);
 
@@ -1790,7 +1823,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
 
       ACE_CString name = conn.name.in();
 
-      for (unsigned int i = 0; i < providedReference.length(); ++i)
+      for (CORBA::ULong i = 0; i < providedReference.length(); ++i)
         {
           /*DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
                        "loop on all connections iteration %d for connection %C\n",
@@ -1948,7 +1981,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
               catch (::Deployment::StartError &ex)
                 {
                   DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
-                                ACE_TEXT("Intercepted StartError exception while configuring %C connection, rethrowing\n"),
+                                ACE_TEXT("Intercepted StartError exception while configuring [%C] connection, rethrowing\n"),
                                 name.c_str ()));
                   ex.name = name.c_str ();
                   throw;
@@ -1956,7 +1989,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
               catch (::Deployment::InvalidConnection &ex)
                 {
                   DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_impl::finishLaunch - ")
-                                ACE_TEXT("Intercepted InvalidConnection exception while configuring %C connection, rethrowing\n"),
+                                ACE_TEXT("Intercepted InvalidConnection exception while configuring [%C] connection, rethrowing\n"),
                                 name.c_str ()));
                   ex.name = name.c_str ();
                   throw;
@@ -2172,20 +2205,9 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
   return res;
 }
 
+
 void NodeApplication_Impl::create_config_values(const ::Deployment::Properties& prop,
                                                 Components::ConfigValues& cfg) const
 {
-  ACE_CString cdmw_name = "cdmw.config.";
-  CORBA::ULong len = prop.length();
-  unsigned int ind = 0;
-  for (CORBA::ULong i = 0; i < len; ++i)
-    {
-      ACE_CString s = prop[i].name.in();
-      if (0 == s.find(cdmw_name))
-        {
-          cfg.length(ind+1);
-          cfg[ind++] = new CIAO::ConfigValue_impl (s.substring(cdmw_name.length()).c_str(), prop[i].value);
-        }
-    }
 }
 

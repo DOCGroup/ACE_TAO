@@ -59,14 +59,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 bool
 write_IOR (const ACE_TCHAR * ior_file_name, const char* ior)
 {
-  FILE* ior_output_file_ =
-    ACE_OS::fopen (ior_file_name, "w");
+  FILE* ior_output_file_ = ACE_OS::fopen (ior_file_name, "w");
 
   if (ior_output_file_)
     {
-      ACE_OS::fprintf (ior_output_file_,
-                       "%s",
-                       ior);
+      ACE_OS::fprintf (ior_output_file_, "%s", ior);
       ACE_OS::fclose (ior_output_file_);
       return true;
     }
@@ -131,7 +128,10 @@ namespace CIAO
       CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
                    "Creating server implementation object\n"));
       CIAO::Deployment::CIAO_ComponentServer_i *ci_srv = 0;
-      ACE_NEW_NORETURN (ci_srv, CIAO_ComponentServer_i (this->uuid_, this->orb_.in (), root_poa.in ()));
+      ACE_NEW_NORETURN (ci_srv,
+                        CIAO_ComponentServer_i (this->uuid_,
+                                                this->orb_.in (),
+                                                root_poa.in ()));
 
       if (ci_srv == 0)
         {
@@ -153,7 +153,7 @@ namespace CIAO
 
       if (this->callback_ior_str_ != ACE_TEXT(""))
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO " resolving callback IOR\n"));
+          CIAO_DEBUG ((LM_TRACE, CLINFO "Resolving callback IOR\n"));
           CORBA::Object_ptr obj = this->orb_->string_to_object (this->callback_ior_str_.c_str ());
           ServerActivator_var sa (ServerActivator::_narrow (obj));
 
@@ -320,8 +320,10 @@ namespace CIAO
       if (this->uuid_ == "")
         throw Error ("Option required: -u|--uuid");
       if (this->callback_ior_str_ == ACE_TEXT(""))
-        CIAO_ERROR ((LM_WARNING, CLINFO
-                     "ComponentServer_Task::parse_args - Starting ComponentServer without a callback IOR\n"));
+        {
+          CIAO_ERROR ((LM_WARNING, CLINFO
+                       "ComponentServer_Task::parse_args - Starting ComponentServer without a callback IOR\n"));
+        }
     }
 
     void
