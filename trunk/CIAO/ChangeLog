@@ -1,3 +1,12 @@
+Tue Nov 17 19:40:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+          Changed to meet the latest version of the DDS implementation.
+          Disabled the updater for now. Also implemented some exception
+          handling. 
+
 Tue Nov 17 15:55:38 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.idl:
