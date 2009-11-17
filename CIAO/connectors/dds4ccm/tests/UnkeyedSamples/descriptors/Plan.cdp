@@ -319,7 +319,7 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_data</portName>
+      <portName>push_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
@@ -334,7 +334,7 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_data_control</portName>
+      <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
@@ -349,7 +349,7 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_status</portName>
+      <portName>push_consumer_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
@@ -364,7 +364,7 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_data_listener</portName>
+      <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
@@ -373,13 +373,13 @@
   <connection>
     <name>info_out_get_fresh_data</name>
     <internalEndpoint>
-      <portName>info_out_get_fresh_data</portName>
+      <portName>info_get_fresh_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_get_fresh_data</portName>
+      <portName>pull_consumer_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
@@ -389,13 +389,13 @@
   <connection>
     <name>writer_connection</name>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>info_write_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="SenderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance" />
