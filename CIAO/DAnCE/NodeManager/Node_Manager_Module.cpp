@@ -28,14 +28,11 @@ namespace DAnCE
     bool
     write_IOR (const ACE_TCHAR * ior_file_name, const char* ior)
     {
-      FILE* ior_output_file_ =
-        ACE_OS::fopen (ior_file_name, ACE_TEXT("w"));
+      FILE* ior_output_file_ = ACE_OS::fopen (ior_file_name, ACE_TEXT("w"));
 
       if (ior_output_file_)
         {
-          ACE_OS::fprintf (ior_output_file_,
-                           "%s",
-                           ior);
+          ACE_OS::fprintf (ior_output_file_, "%s", ior);
           ACE_OS::fclose (ior_output_file_);
           return true;
         }
@@ -544,11 +541,13 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       mgr->activate ();
 
       // Finishing Deployment part
-      DANCE_DEBUG ((LM_NOTICE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
+      DANCE_DEBUG ((LM_NOTICE, DLINFO
+                    ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
                     ACE_TEXT ("DAnCE_NodeManager is running...\n")));
 
-      DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
-                    ACE_TEXT ("NodeManager IOR: %s\n"), ior.in ()));
+      DANCE_DEBUG ((LM_DEBUG, DLINFO
+                    ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")
+                    ACE_TEXT ("NodeManager IOR: %C\n"), ior.in ()));
 
       return nm_obj._retn ();
     }

@@ -100,7 +100,6 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
 
       ComponentServer_var server2 (ComponentServer::_narrow (sa->create_component_server (configs)));
 
-
       // Initialize servant
 
       if (CORBA::is_nil (server1.in ()) ||

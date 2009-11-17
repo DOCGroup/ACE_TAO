@@ -48,7 +48,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 //        url += inst_name;
 //        url += "/";
 //        url += port_name;
-      DANCE_DEBUG((LM_DEBUG, "[%M] URL : %s\n", url.c_str()));
+      DANCE_DEBUG((LM_DEBUG, "[%M] URL : %C\n", url.c_str()));
 
       CORBA::Object_var obj = orb->string_to_object (url.c_str());
       if (CORBA::is_nil (obj))
