@@ -19,20 +19,13 @@
 #define DATAREADER_QOS_USE_TOPIC_QOS
 
 #include "tao/StringSeq.pidl"
+#include "dds_rtf2_dcps_instance_handle.idl"
 
 module DDS {
-    struct NativeInstanceHandle_t {
-        octet value[16];
-        unsigned long length;
-    };
     typedef long DomainId_t;
-    typedef NativeInstanceHandle_t InstanceHandle_t;
     struct BuiltinTopicKey_t {
         long value[3];
     };
-
-    typedef sequence<InstanceHandle_t> InstanceHandleSeq;
-
     typedef long ReturnCode_t;
     typedef long QosPolicyId_t;
     typedef sequence<string> StringSeq;

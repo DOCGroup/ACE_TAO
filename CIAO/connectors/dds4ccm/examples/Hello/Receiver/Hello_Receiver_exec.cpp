@@ -10,28 +10,34 @@
 namespace CIAO_Hello_Receiver_Impl
 {
   //============================================================
-  // Facet Executor Implementation Class: DDSHello_RawListener_exec_i
+  // Facet Executor Implementation Class: DDSHello_Listener_exec_i
   //============================================================
 
-  DDSHello_RawListener_exec_i::DDSHello_RawListener_exec_i (Atomic_ULong &received,
+  DDSHello_Listener_exec_i::DDSHello_Listener_exec_i (Atomic_ULong &received,
                                                             const ACE_CString &name)
       : received_ (received),
         name_ (name)
   {
   }
 
-  DDSHello_RawListener_exec_i::~DDSHello_RawListener_exec_i (void)
+  DDSHello_Listener_exec_i::~DDSHello_Listener_exec_i (void)
   {
   }
 
-  // Operations from ::CCM_DDS::DDSHello_RawListener
+  // Operations from ::CCM_DDS::DDSHello_Listener
 
   void
-  DDSHello_RawListener_exec_i::on_data (
+  DDSHello_Listener_exec_i::on_many_data (
+    const DDSHello_Seq & an_instance,
+    const ::CCM_DDS::ReadInfoSeq & info)
+  {
+  }
+
+  void
+  DDSHello_Listener_exec_i::on_one_data (
     const DDSHello & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-
     ++this->received_;
     ACE_CString rec (an_instance.hello.in ());
     ACE_Date_Time now;
@@ -55,7 +61,7 @@ namespace CIAO_Hello_Receiver_Impl
       an_instance.iterator));
     }
 /*
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DDSHello_RawListener: ")
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DDSHello_Listener: ")
             ACE_TEXT ("received hello for <%C> - iterator <%d>\n"),
             an_instance.hello.in (),
             an_instance.iterator));
@@ -149,17 +155,17 @@ namespace CIAO_Hello_Receiver_Impl
   {
     printf("ConnectorStatusListener_exec_i::on_unexpected_status\n");
   }
-  
+
   void ConnectorStatusListener_exec_i::on_subscription_matched (
     ::DDS::DataReader_ptr /*the_reader*/,
     const ::DDS::SubscriptionMatchedStatus & /*status*/)
   {
     printf ("##$@##$@#$@#$@#$@#$@#$@#$\n");
   }
-  
+
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iDDSHello_RawListener_exec_i ();
+  // Component Executor Implementation Class: Receiver_exec_iDDSHello_Listener_exec_i ();
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
@@ -198,11 +204,11 @@ namespace CIAO_Hello_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::Hello::CCM_RawListener_ptr
+  ::CCM_DDS::Hello::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new DDSHello RAW listener\n")));
-    return new DDSHello_RawListener_exec_i (this->received_, this->name_);
+    return new DDSHello_Listener_exec_i (this->received_, this->name_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -240,7 +246,7 @@ namespace CIAO_Hello_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::ListenerControl_var lc =
+    ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
@@ -248,7 +254,7 @@ namespace CIAO_Hello_Receiver_Impl
         CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    lc->enabled (true);
+    lc->mode ( ::CCM_DDS::ONE_BY_ONE);
   }
 
   void

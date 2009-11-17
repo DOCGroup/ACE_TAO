@@ -39,7 +39,8 @@ namespace CIAO_Keyed_Test_Keyed_Test_Connector_Impl
     ::CCM_DDS::KeyedTest::CCM_Getter,
     ::CCM_DDS::KeyedTest::CCM_Reader,
     ::Keyed_Test::CCM_Keyed_Test_Connector_Context,
-    ::CCM_DDS::KeyedTest::RawListener,
+    ::CCM_DDS::KeyedTest::Listener,
+    ::CCM_DDS::KeyedTest::StateListener,
     ::CCM_DDS::ConnectorStatusListener> KeyedTest_Connector_Traits;
 
   class KEYED_TEST_CONNECTOR_EXEC_Export Keyed_Test_Connector_exec_i :

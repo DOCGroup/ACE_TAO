@@ -34,17 +34,3 @@ module Quoter
 
 #endif
 
-/*
-#ifndef DDS_DISTRIBUTOR_IDL3P
-#define DDS_DISTRIBUTOR_IDL3P
-
-module Quoter
-{
-  component Distributor
-  {
-    port CCM_DDS::DDS_Write <Stock_Info> info;
-  };
-};
-
- */
-

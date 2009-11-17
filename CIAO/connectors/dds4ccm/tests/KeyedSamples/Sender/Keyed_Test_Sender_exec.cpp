@@ -53,7 +53,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
           {
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Create key <%C>\n"),
                     this->last_key->first.c_str ()));
-            this->updater_->create (this->last_key->second);
+            this->updater_->create_one (this->last_key->second);
           }
         catch (CCM_DDS::AlreadyCreated& )
           {
@@ -71,7 +71,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
         try
           {
             ++this->last_key->second->iteration;
-            this->updater_->update (this->last_key->second);
+            this->updater_->update_one (this->last_key->second, ::DDS::HANDLE_NIL);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updated key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
@@ -102,7 +102,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
                     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting key <%C> with <%d>\n"),
                             this->last_key->first.c_str (),
                             this->last_key->second->iteration));
-                    this->updater_->_cxx_delete (this->last_key->second);
+                    this->updater_->delete_one (this->last_key->second, ::DDS::HANDLE_NIL);
                   }
                 catch (CCM_DDS::NonExistent& )
                   {

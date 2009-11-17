@@ -207,22 +207,6 @@
   </connection>
 
   <connection>
-    <name>info_out_get_data</name>
-    <internalEndpoint>
-      <portName>info_out_get_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="BrokerComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>info_out_get_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-
-  <connection>
     <name>_listenercontrol</name>
     <internalEndpoint>
       <portName>info_out_data_control</portName>

@@ -134,7 +134,7 @@ namespace CIAO_Quoter_Broker_Impl
 
     try
       {
-        this->reader_->read_one (stock_info, readinfo );
+        this->reader_->read_one_last (stock_info, readinfo, ::DDS::HANDLE_NIL);
         time_t tim = readinfo.source_timestamp.sec;
         printf("Read_Info. -> date = %s",ctime(&tim));
         printf ("Stock_Info_Read_One: received a stock_info for <%s> at %u:%u:%u\n",
@@ -186,7 +186,7 @@ namespace CIAO_Quoter_Broker_Impl
 
     ::Quoter::Stock_Info_Seq_var  stock_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    this->reader_->read_all_history(stock_infos.out(), readinfoseq.out());
+    this->reader_->read_all(stock_infos.out(), readinfoseq.out());
     if(readinfoseq->length()!= 0)
       {
         int nr_of_infos = readinfoseq->length();
@@ -222,7 +222,7 @@ namespace CIAO_Quoter_Broker_Impl
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     try
       {
-        this->reader_->read_one_history(stock_info,stock_infos.out(), readinfoseq.out());
+        this->reader_->read_one_all(stock_info,stock_infos.out(), readinfoseq.out(), ::DDS::HANDLE_NIL);
         if(readinfoseq->length()!= 0)
           {
             int nr_of_infos = readinfoseq->length();
@@ -252,25 +252,30 @@ namespace CIAO_Quoter_Broker_Impl
       }
   }
   //============================================================
-  // Facet Executor Implementation Class: Stock_Info_RawListener_exec_i
+  // Facet Executor Implementation Class: Stock_Info_Listener_exec_i
   //============================================================
 
-  Stock_Info_RawListener_exec_i::Stock_Info_RawListener_exec_i (void)
+  Stock_Info_Listener_exec_i::Stock_Info_Listener_exec_i (void)
   {
   }
 
-  Stock_Info_RawListener_exec_i::~Stock_Info_RawListener_exec_i (void)
+  Stock_Info_Listener_exec_i::~Stock_Info_Listener_exec_i (void)
   {
   }
-
-  // Operations from ::CCM_DDS::Stock_Info_RawListener
 
   void
-  Stock_Info_RawListener_exec_i::on_data (
+  Stock_Info_Listener_exec_i::on_many_data (
+    const ::Quoter::Stock_Info_Seq & an_instance,
+    const ::CCM_DDS::ReadInfoSeq & /* info */)
+  {
+  }
+
+  void
+  Stock_Info_Listener_exec_i::on_one_data (
     const ::Quoter::Stock_Info & an_instance,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    printf ("Stock_Info_RawListener: received a stock_info for <%s> at %u:%u:%u\n",
+    printf ("Stock_Info_Listener: received a stock_info for <%s> at %u:%u:%u\n",
             an_instance.symbol.in (),
             an_instance.low,
             an_instance.current,
@@ -330,11 +335,11 @@ namespace CIAO_Quoter_Broker_Impl
 
   // Port operations.
 
-  ::CCM_DDS::Quoter::CCM_RawListener_ptr
+  ::CCM_DDS::Quoter::CCM_Listener_ptr
   Broker_exec_i::get_info_out_data_listener (void)
   {
     printf ("*************** out listener\n");
-    return new Stock_Info_RawListener_exec_i ();
+    return new Stock_Info_Listener_exec_i ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -387,7 +392,7 @@ namespace CIAO_Quoter_Broker_Impl
   Broker_exec_i::ccm_activate (void)
   {
     std::cerr << ">>> Broker_exec_i::ccm_activate" << endl;
-    ::CCM_DDS::ListenerControl_var lc =
+    ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
@@ -395,9 +400,9 @@ namespace CIAO_Quoter_Broker_Impl
         printf ("Error:  Listener control receptacle is null!\n");
         throw CORBA::INTERNAL ();
       }
-    //in case of testing RawListener set lc-> enabled true
-    lc->enabled (true);
-    //in case of testing Reader set lc-> enabled false, so the RawListener doesn't consume all the messages
+    //in case of testing Listener set lc-> enabled true
+    lc->mode ( ::CCM_DDS::ONE_BY_ONE);
+    //in case of testing Reader set lc-> enabled false, so the Listener doesn't consume all the messages
     //lc->enabled (false);
     this->start();
   }

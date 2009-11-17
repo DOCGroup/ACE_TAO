@@ -10,13 +10,14 @@
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
       typename CCM_TYPE::context_type::_ptr_type context,
-      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
+      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
+      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data)
       : context_ (CCM_TYPE::context_type::_duplicate (context)),
-        enabled_ (enabled)
+        mode_ (mode),
+        max_delivered_data_ (max_delivered_data)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
-  printf ("CIAO::DDS4CCM::RTI::DataReaderListener_T::DataReaderListener_T");
-  this->info_out_portstatus_ = this->context_->get_connection_info_out_status ();
+  this->info_out_portstatus_ = this->context_->get_connection_pull_consumer_status ();
   this->info_out_connector_status_ = this->context_->get_connection_error_listener ();
 }
 
@@ -31,7 +32,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader *rdr)
 {
-  if (!this->enabled_.value ())
+  if (this->mode_.value () == ::CCM_DDS::NOT_ENABLED)
     return;
 
   ::CIAO::DDS4CCM::RTI::RTI_DataReader_i* rd =
@@ -84,19 +85,5 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incom
     {
       this->info_out_connector_status_->on_requested_incompatible_qos (the_reader, status);
     }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-bool
-CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::enabled (void) const
-{
-  return this->enabled_;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::enabled (bool enabled)
-{
-  this->enabled_ = enabled;
 }
 

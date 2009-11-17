@@ -371,15 +371,15 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>info_out_get_data</name>
+    <name>info_out_get_fresh_data</name>
     <internalEndpoint>
-      <portName>info_out_get_data</portName>
+      <portName>info_out_get_fresh_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_get_data</portName>
+      <portName>info_out_get_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Keyed_Test_ConnectorComponentInstance2" />

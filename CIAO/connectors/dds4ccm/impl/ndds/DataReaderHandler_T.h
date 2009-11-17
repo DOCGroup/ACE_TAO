@@ -31,7 +31,7 @@ namespace CIAO
         private:
           typename CCM_TYPE::context_type::_var_type context_;
           typename DDS_TYPE::data_reader * reader_;
-          typename CCM_TYPE::rawlistener_type::_var_type listener_;
+          typename CCM_TYPE::listener_type::_var_type listener_;
       };
     }
   }

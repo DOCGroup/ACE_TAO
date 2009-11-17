@@ -23,17 +23,4 @@ module Hello
   };
 };
 
-/*
-For future use: IDL3 plus
-#include <dds4ccm/idl/dds4ccm_Connector_Base.idl3p>
-#include <dds4ccm/idl/dds4ccm_Port_RawListen.idl3p>
-
-module Hello
-{
-  component Receiver
-  {
-    port CCM_DDS::DDS_RawListen <DDSHello> info;
-  };
-};
-*/
 #endif

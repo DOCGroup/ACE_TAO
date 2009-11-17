@@ -17,7 +17,7 @@ module Shapes
 {
   component Sender
   {
-    port CCM_DDS::ShapeType::DDS_Update info_update;
+    port CCM_DDS::ShapeType::DDS_Write info_write;
     attribute unsigned long rate;
     attribute unsigned short max_x;
     attribute unsigned short max_y;
@@ -26,14 +26,4 @@ module Shapes
   };
 };
 
-/*
-For future use: IDL3 plus
-module Shapes
-{
-  component Sender
-  {
-    port CCM_DDS::DDS_Write <Shape_Info> info;
-  };
-};
-*/
 #endif

@@ -9,7 +9,7 @@
 #include "dds4ccm/impl/ndds/Updater_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
-#include "dds4ccm/impl/ndds/ListenerControl.h"
+#include "dds4ccm/impl/ndds/DataListenerControl.h"
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -20,8 +20,9 @@ Connector_T<DDS_TYPE, CCM_TYPE>::Connector_T (const char * topic_name)
     default_topic_configured_ (false),
     topic_name_ (topic_name),
     __info_in_configured_ (false),
-    __info_out_configured_ (false),
-    __info_out_rawlistener_enabled_ (false)
+    __listen_configured_ (false),
+    __listen_datalistener_mode_ ( ::CCM_DDS::NOT_ENABLED),
+    __listen_datalistener_max_delivered_data_ (0)
 {
 }
 
@@ -204,10 +205,11 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 
       if (CORBA::is_nil  (this->__info_in_datawriter_.in ()))
         {
-          this->__info_out_datawriterlistener = new ::CIAO::DDS4CCM::DataWriterListener_T
+          this->__listen_datawriterlistener = new ::CIAO::DDS4CCM::DataWriterListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
-                  this->__info_out_rawlistener_enabled_);
+                  this->__listen_datalistener_mode_,
+                  this->__listen_datalistener_max_delivered_data_);
 
           ::DDS::DataWriterQos dwqos;
           //test mh
@@ -218,7 +220,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
      //     dwqos.deadline.period.sec = 1;
           ::DDS::DataWriter_var dwv_tmp = this->__info_in_publisher_->create_datawriter (this->topic_.in (),
                                                                                           dwqos,
-                                                                                          this->__info_out_datawriterlistener.in (),
+                                                                                          this->__listen_datawriterlistener.in (),
                                                                                           0);
           this->__info_in_datawriter_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
           __info_in_configured_ = true;
@@ -233,47 +235,48 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_out_ (bool create_getter)
+Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (bool create_getter)
 {
-  if (this->__info_out_configured_ && this->__info_get_configured_ )
+  if (this->__listen_configured_ && this->__info_get_configured_ )
     return;
 
   this->configure_default_topic_ ();
 
   try
     {
-      if (CORBA::is_nil (this->__info_out_subscriber_.in ()))
+      if (CORBA::is_nil (this->__listen_subscriber_.in ()))
         {
           ::DDS::SubscriberQos sqos;
-          this->__info_out_subscriber_ = this->domain_->create_subscriber (sqos,
+          this->__listen_subscriber_ = this->domain_->create_subscriber (sqos,
                                                                             0,
                                                                             0);
         }
 
-      if (CORBA::is_nil (this->__info_out_datareader_.in ()))
+      if (CORBA::is_nil (this->__listen_datareader_.in ()))
         {
-          this->__info_out_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
+          this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
             <DDS_TYPE, CCM_TYPE> (
                   this->context_,
-                  this->__info_out_rawlistener_enabled_);
+                  this->__listen_datalistener_mode_,
+                  this->__listen_datalistener_max_delivered_data_);
           ::DDS::DataReaderQos drqos;
           if (create_getter)
             {
               this->__info_get_datareader_ =
-                  this->__info_out_subscriber_->create_datareader (this->topic_.in (),
+                  this->__listen_subscriber_->create_datareader (this->topic_.in (),
                                                                drqos,
-                                                               this->__info_out_datareaderlistener.in (),
+                                                               this->__listen_datareaderlistener.in (),
                                                                DDS_DATA_AVAILABLE_STATUS);
               this->__info_get_configured_ = true;
             }
           else
             {
-               this->__info_out_datareader_ =
-                  this->__info_out_subscriber_->create_datareader (this->topic_.in (),
+               this->__listen_datareader_ =
+                  this->__listen_subscriber_->create_datareader (this->topic_.in (),
                                                                drqos,
-                                                               this->__info_out_datareaderlistener.in (),
+                                                               this->__listen_datareaderlistener.in (),
                                                                DDS_DATA_AVAILABLE_STATUS);
-              this->__info_out_configured_ = true;
+              this->__listen_configured_ = true;
             }
         }
 
@@ -287,7 +290,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_out_ (bool create_getter)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::writer_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_in_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_data (void)
 {
   CIAO_TRACE ("get_info_in_data");
 
@@ -299,7 +302,18 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_in_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataWriter_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_in_dds_entity (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_dds_entity (void)
+{
+  CIAO_TRACE ("get_info_in_dds_entity");
+
+  this->configure_port_info_in_ ();
+
+  return this->__info_in_datawriter_.in ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+::DDS::CCM_DataWriter_ptr
+Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_dds_entity (void)
 {
   CIAO_TRACE ("get_info_in_dds_entity");
 
@@ -310,7 +324,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_in_dds_entity (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::updater_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_update_data (void)
 {
   CIAO_TRACE ("get_info_update_data");
 
@@ -321,11 +335,11 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::getter_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_get_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data (void)
 {
   CIAO_TRACE ("get_info_get_out_data");
 
-  this->configure_port_info_out_ (true);
+  this->configure_port_listen_ (true);
 
   return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> (
           this->__info_get_datareader_.in ());
@@ -333,30 +347,51 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_get_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::reader_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_data (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
 {
-  CIAO_TRACE ("get_info_out_data");
+  CIAO_TRACE ("get_listen_data");
 
-  this->configure_port_info_out_ (false);
+  this->configure_port_listen_ (false);
 
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
-          this->__info_out_datareader_.in ());
+          this->__listen_datareader_.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-::CCM_DDS::CCM_ListenerControl_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_data_control (void)
+typename CCM_TYPE::reader_type::_ptr_type
+Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
 {
-  CIAO_TRACE ("get_info_out_control");
-  return new CCM_DDS_ListenerControl_i (
-          this->__info_out_rawlistener_enabled_);
+  CIAO_TRACE ("get_listen_data");
+
+  this->configure_port_listen_ (false);
+
+  return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
+          this->__listen_datareader_.in ());
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+::CCM_DDS::CCM_DataListenerControl_ptr
+Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control (void)
+{
+  CIAO_TRACE ("get_listen_control");
+  return new CCM_DDS_DataListenerControl_i (
+          this->__listen_datalistener_mode_,
+          this->__listen_datalistener_max_delivered_data_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataReader_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_out_dds_entity (void)
+Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_dds_entity (void)
 {
-  CIAO_TRACE ("get_info_out_dds_entity");
+  CIAO_TRACE ("get_listen_dds_entity");
+  return ::DDS::CCM_DataReader::_nil ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+::DDS::CCM_DataReader_ptr
+Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_dds_entity (void)
+{
+  CIAO_TRACE ("get_listen_dds_entity");
   return ::DDS::CCM_DataReader::_nil ();
 }
 
@@ -387,11 +422,11 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
-  if (!CORBA::is_nil (this->context_->get_connection_info_out_data_listener ()) ||
-     (!CORBA::is_nil (this->context_->get_connection_info_out_status () )))
+  if (!CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ()) ||
+     (!CORBA::is_nil (this->context_->get_connection_push_consumer_status () )))
     {
-      this->configure_port_info_out_ (false);
-      this->configure_port_info_out_ (true);
+      this->configure_port_listen_ (false);
+      this->configure_port_listen_ (true);
       this->configure_port_info_in_ ();
     }
 }

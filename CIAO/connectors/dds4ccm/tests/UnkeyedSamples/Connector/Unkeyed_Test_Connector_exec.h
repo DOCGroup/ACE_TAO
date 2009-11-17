@@ -22,7 +22,6 @@
 
 namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
 {
-
   // @from use of UnkeyedTest as a parameter
   typedef CIAO::DDS4CCM::RTI::Type_Traits < 
     UnkeyedTest,
@@ -39,7 +38,8 @@ namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
     ::CCM_DDS::UnkeyedTest::CCM_Getter,
     ::CCM_DDS::UnkeyedTest::CCM_Reader,
     ::Unkeyed_Test::CCM_Unkeyed_Test_Connector_Context,
-    ::CCM_DDS::UnkeyedTest::RawListener,
+    ::CCM_DDS::UnkeyedTest::Listener,
+    ::CCM_DDS::UnkeyedTest::StateListener,
     ::CCM_DDS::ConnectorStatusListener> UnkeyedTest_Connector_Traits;
 
   class UNKEYED_TEST_CONNECTOR_EXEC_Export Unkeyed_Test_Connector_exec_i :

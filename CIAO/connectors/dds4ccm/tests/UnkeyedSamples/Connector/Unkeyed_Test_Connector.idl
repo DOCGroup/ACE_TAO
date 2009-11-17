@@ -18,7 +18,7 @@ TYPED_MODULE( ::UnkeyedTest, ::UnkeyedTest_Seq, UnkeyedTest)
 
 module Unkeyed_Test
 {
-  connector Unkeyed_Test_Connector : ::CCM_DDS::UnkeyedTest::DDS_MonoConnector
+  connector Unkeyed_Test_Connector : ::CCM_DDS::UnkeyedTest::DDS_Event
   {
   };
 };

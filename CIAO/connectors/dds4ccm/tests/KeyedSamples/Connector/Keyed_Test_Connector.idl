@@ -18,7 +18,7 @@ TYPED_MODULE( ::KeyedTest, ::KeyedTest_Seq, KeyedTest)
 
 module Keyed_Test
 {
-  connector Keyed_Test_Connector : ::CCM_DDS::KeyedTest::DDS_MonoConnector
+  connector Keyed_Test_Connector : ::CCM_DDS::KeyedTest::DDS_Event
   {
   };
 };
