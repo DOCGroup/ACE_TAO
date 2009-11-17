@@ -324,7 +324,7 @@ namespace CIAO
       else
         {
           CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ServerActivator_i::spawn_component_server - "
-          "Using default component server execuable\n"));
+          "Using default component server executable\n"));
         }
 
       options.command_line ("%s %s -c %s",
