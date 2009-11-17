@@ -291,7 +291,7 @@ namespace CIAO
         }
 
       CIAO_DEBUG ((LM_DEBUG, CLINFO
-                   "CIAO_ServerActivator_i::construct_command_line - Creating component server "
+                   "CIAO_ServerActivator_i::construct_command_line - Creating component server"
                    " with UUID %C\n", server.uuid_.c_str ()));
 
       cmd_options += " -u ";

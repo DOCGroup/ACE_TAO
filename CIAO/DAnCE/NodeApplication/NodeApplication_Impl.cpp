@@ -230,17 +230,15 @@ namespace
   void append_properties (::Deployment::Properties &dest,
 			  const ::Deployment::Properties &src)
   {
-    // @@Todo:  At the moment, I'm just targeting a single property to pass
-    // to the component server.  All this stuff needs to be rearchitected anyway,
-    // it's turning into a mess.
     for (CORBA::ULong i = 0; i < src.length (); ++i)
       {
-        if (ACE_OS::strcmp ("edu.vanderbilt.dre.CIAO.ComponentServerArgs", src[i].name.in ()) == 0)
-          {
-            dest.length (1);
-            dest[0].name = CORBA::string_dup (src[i].name.in ());
-            dest[0].value = src[i].value;
-          }
+        DANCE_DEBUG ((LM_TRACE, DLINFO
+                  ACE_TEXT("NodeApplicion::append_properties - ")
+                  ACE_TEXT("Adding property %C\n"), src[i].name.in ()));
+        CORBA::ULong const dest_length = dest.length ();
+        dest.length (dest_length + 1);
+        dest[dest_length].name = CORBA::string_dup (src[i].name.in ());
+        dest[dest_length].value = src[i].value;
       }
   }
 }
@@ -249,13 +247,11 @@ namespace
 NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa,
                                             const ::Deployment::DeploymentPlan& plan,
-//                                            RedirectionService & redirection,
                                             const ACE_CString& node_name,
                                             const PROPERTY_MAP &properties)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     plan_ (plan),
-//    redirection_ (redirection),
     node_name_ (node_name),
     properties_ (),
     instances_ (plan.instance.length ())
@@ -281,70 +277,70 @@ NodeApplication_Impl::~NodeApplication_Impl()
   config_values.length (1L);
   CORBA::Any feature_any;
 
-      /* TODO: This is highly suspect.  I believe we should be using get_component_server,
-         not calling create_container. */
+  /* TODO: This is highly suspect.  I believe we should be using get_component_server,
+     not calling create_container. */
+  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+                ACE_TEXT("Deactivating %u ComponentServers\n"),
+                this->servers_.size ()));
+  for (size_t i = 0; i < this->servers_.size (); ++i)
+    {
+      ComponentServer &server = this->servers_[i];
+
       DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                    ACE_TEXT("Deactivating %u ComponentServers\n"),
-                    this->servers_.size ()));
-      for (size_t i = 0; i < this->servers_.size (); ++i)
+                    ACE_TEXT("In ComponentServer %u, deactivating %u containers\n"), i, server.containers.size ()));
+      for (size_t j = 0; j < server.containers.size (); ++j)
         {
-          ComponentServer &server = this->servers_[i];
+          Container &container = server.containers[j];
 
           DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                        ACE_TEXT("In ComponentServer %u, deactivating %u containers\n"), i, server.containers.size ()));
-          for (size_t j = 0; j < server.containers.size (); ++j)
-            {
-              Container &container = server.containers[j];
-
-              DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                            ACE_TEXT("In container %u hosted in server %u\n"), j, i));
-
-              try
-                {
-                  if (!CORBA::is_nil (container.ref))
-                    server.ref->remove_container (container.ref.in ());
-
-                  container.ref = CIAO::Deployment::Container::_nil ();
-                }
-              catch (const CORBA::Exception &ex)
-                {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                                ACE_TEXT("Caught CORBA exception while removing container %u on server %u: %C\n"),
-                                j, i, ex._info ().c_str ()));
-                }
-              catch (...)
-                {
-                  DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                                ACE_TEXT("Caught unknown C++ exception while removing container %u on server %u.\n"),
-                                j, i));
-                }
-            }
-
-          DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                        ACE_TEXT("Removing component server %u\n"), i));
+                        ACE_TEXT("In container %u hosted in server %u\n"), j, i));
 
           try
             {
-              if (!CORBA::is_nil (server.ref))
-                this->activator_->remove_component_server (server.ref.in ());
+              if (!CORBA::is_nil (container.ref))
+                server.ref->remove_container (container.ref.in ());
+
+              container.ref = CIAO::Deployment::Container::_nil ();
             }
           catch (const CORBA::Exception &ex)
             {
               DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                            ACE_TEXT("Caught CORBA exception while removing server %u: %C\n"),
-                            i, ex._info ().c_str ()));
+                            ACE_TEXT("Caught CORBA exception while removing container %u on server %u: %C\n"),
+                            j, i, ex._info ().c_str ()));
             }
           catch (...)
             {
               DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                            ACE_TEXT("Caught unknown C++ exception while removing server %u.\n"),
-                            i));
+                            ACE_TEXT("Caught unknown C++ exception while removing container %u on server %u.\n"),
+                            j, i));
             }
-
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
-                        ACE_TEXT("Successfully removed container %u on node %C.\n"),
-                        i, this->node_name_.c_str ()));
         }
+
+      DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+                    ACE_TEXT("Removing component server %u\n"), i));
+
+      try
+        {
+          if (!CORBA::is_nil (server.ref))
+            this->activator_->remove_component_server (server.ref.in ());
+        }
+      catch (const CORBA::Exception &ex)
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+                        ACE_TEXT("Caught CORBA exception while removing server %u: %C\n"),
+                        i, ex._info ().c_str ()));
+        }
+      catch (...)
+        {
+          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+                        ACE_TEXT("Caught unknown C++ exception while removing server %u.\n"),
+                        i));
+        }
+
+      DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT("NodeApplication_Impl::~NodeApplication_Impl - ")
+                    ACE_TEXT("Successfully removed container %u on node %C.\n"),
+                    i, this->node_name_.c_str ()));
+    }
 }
 
 void
@@ -1127,7 +1123,7 @@ NodeApplication_Impl::create_colocation_groups (void)
   DANCE_TRACE ("NodeApplication_impl::create_colocation_groups");
 
   ColocationMap  retval;
-  size_t num_servers (0);
+  size_t num_servers = 0;
 
   for (CORBA::ULong i = 0; i < this->plan_.instance.length (); ++i)
     {
@@ -1138,7 +1134,8 @@ NodeApplication_Impl::create_colocation_groups (void)
     {
       if (this->plan_.localityConstraint[i].constraint != ::Deployment::PlanSameProcess)
         {
-          DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
+          DANCE_ERROR ((LM_ERROR, DLINFO
+                        ACE_TEXT ("NodeApplication_impl::create_colocation_groups - ")
                         ACE_TEXT ("Error: On locality constraint %u, unsupported locality constraint.\n"),
                         i));
           continue;
@@ -1150,8 +1147,9 @@ NodeApplication_Impl::create_colocation_groups (void)
         {
           std::string id = this->plan_.instance[instances[j]].name.in ();
 
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
-                        ACE_TEXT ("Instance <%s> allocated to component server %u\n"),
+          DANCE_DEBUG ((LM_INFO, DLINFO
+                        ACE_TEXT ("NodeApplication_impl::create_colocation_groups - ")
+                        ACE_TEXT ("Instance <%C> allocated to component server %u\n"),
                         id.c_str (), num_servers));
 
           retval[id] = num_servers;
@@ -1169,19 +1167,24 @@ NodeApplication_Impl::create_colocation_groups (void)
         {
           if (!create_default_server)
             {
-              DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
+              DANCE_DEBUG ((LM_INFO, DLINFO
+                            ACE_TEXT ("NodeApplication_impl::create_colocation_groups - ")
                             ACE_TEXT ("Creating default colocation group.\n")));
               create_default_server = true;
             }
 
-          DANCE_DEBUG ((LM_INFO, DLINFO ACE_TEXT ("NodeApplication_impl::create_colocation_groups")
-                        ACE_TEXT ("Assigning instance <%s> to default colocation group.\n"),
+          DANCE_DEBUG ((LM_INFO, DLINFO
+                        ACE_TEXT ("NodeApplication_impl::create_colocation_groups - ")
+                        ACE_TEXT ("Assigning instance <%C> to default colocation group.\n"),
                         i->first.c_str ()));
           i->second = num_servers;
         }
     }
 
-  if (create_default_server) ++num_servers;
+  if (create_default_server)
+    {
+      ++num_servers;
+    }
 
   this->servers_.size (num_servers);
 
@@ -1194,7 +1197,8 @@ NodeApplication_Impl::init_components()
   DANCE_TRACE ("NodeApplication_impl::init_components");
 
   Components::ConfigValues config_values;
-  DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
+  DANCE_DEBUG((LM_DEBUG, DLINFO
+               ACE_TEXT("NodeApplication_impl::init_components - ")
                ACE_TEXT("Configuring %u component/home instances\n"),
                this->plan_.instance.length()));
 
@@ -1210,7 +1214,7 @@ NodeApplication_Impl::init_components()
       this->servers_[i].containers.size (1);
     }
 
-  for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
+  for (CORBA::ULong i = 0; i < this->plan_.instance.length(); i++)
     {
       try
         {
@@ -1225,19 +1229,20 @@ NodeApplication_Impl::init_components()
             {
             case eHome:
               {
-                DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
+                DANCE_DEBUG ((LM_DEBUG, DLINFO
+                              ACE_TEXT("NodeApplication_impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home\n"),
                               this->plan_.instance[i].name.in ()));
-                size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
-                size_t pos = this->servers_[svr].containers[0].homes.size ();
-		append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
+                size_t const pos = this->servers_[svr].containers[0].homes.size ();
+
+		            append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
 
                 this->servers_[svr].containers[0].homes.size (pos + 1);
                 this->servers_[svr].containers[0].homes[pos] = Instance (eHome,
                                                                          &this->servers_[svr].containers[0],
                                                                          i,
                                                                          this->plan_.instance[i].implementationRef);
-                //this->instances_[i] = &this->servers_[0].containers[0].homes[pos];
                 break;
               }
             case eComponent:
@@ -1245,15 +1250,14 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a standalone component\n"),
                               this->plan_.instance[i].name.in ()));
-                size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
-                size_t pos = this->servers_[svr].containers[0].components.size ();
-		append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
+                size_t const pos = this->servers_[svr].containers[0].components.size ();
+		            append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eComponent,
                                                                               &this->servers_[svr].containers[0],
                                                                               i,
                                                                               this->plan_.instance[i].implementationRef);
-                //this->instances_[i] = &this->servers_[0].containers[0].components[pos];
                 break;
               }
             case eHomedComponent:
@@ -1261,15 +1265,14 @@ NodeApplication_Impl::init_components()
                 DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
                               ACE_TEXT("Allocating instance %C as a home managed component\n"),
                               this->plan_.instance[i].name.in ()));
-                size_t svr = colocation_map[this->plan_.instance[i].name.in ()];
-                size_t pos = this->servers_[svr].containers[0].components.size ();
-		append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
+                size_t const pos = this->servers_[svr].containers[0].components.size ();
+		            append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eHomedComponent,
                                                                               &this->servers_[svr].containers[0],
                                                                               i,
                                                                               this->plan_.instance[i].implementationRef);
-                //this->instances_[i] = &this->servers_[0].containers[0].components[pos];
                 break;
               }
             default:
@@ -1280,15 +1283,20 @@ NodeApplication_Impl::init_components()
                                                      "Unable to affirmatively determine instance type");
               }
             } // switch
-        } catch (...)
+        }
+        catch (...)
         {
-          DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT("Exception was thrown while sorting instance \"%C\".\n"), this->plan_.instance[i].name.in()));
+          DANCE_ERROR((LM_ERROR, DLINFO
+                      ACE_TEXT("Exception was thrown while sorting instance \"%C\".\n"),
+                      this->plan_.instance[i].name.in()));
           throw;
         }
     }
 
-  DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
+  DANCE_DEBUG ((LM_TRACE, DLINFO
+                ACE_TEXT("NodeApplication_impl::init_components - ")
                 ACE_TEXT("Creating component servers and installing components.\n")));
+
   for (size_t i = 0; i < this->servers_.size (); ++i)
     {
       DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplication_impl::init_components - ")
@@ -1784,7 +1792,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
   {
     std::ostringstream pr_stream;
     pr_stream << providedReference << std::endl;
-    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::finishLaunch - Provided references: %s",
+    DANCE_DEBUG ((LM_TRACE, DLINFO "NodeApplication_impl::finishLaunch - Provided references: %C\n",
                   pr_stream.str ().c_str ()));
   }
 #endif /* GEN_OSTREAM_OPS */
@@ -1802,7 +1810,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
       {
         std::ostringstream conn_stream;
         conn_stream << this->plan_.connection[j] << std::endl;
-        DANCE_DEBUG ((LM_TRACE, "NodeApplication_impl::finishLaunch - Local connections: %s", conn_stream.str ().c_str ()));
+        DANCE_DEBUG ((LM_TRACE, "NodeApplication_impl::finishLaunch - Local connections: %C\n", conn_stream.str ().c_str ()));
       }
 #endif /* GEN_OSTREAM_OPS  */
 

@@ -99,6 +99,7 @@ namespace CIAO
       this->orb_ = CORBA::ORB_init (argc, argv);
 
       this->parse_args (argc, argv);
+
       this->configure_logging_backend ();
 
       CIAO::Server_init (this->orb_.in ());
@@ -261,10 +262,7 @@ namespace CIAO
       opts.long_option (ACE_TEXT("trace"),'t', ACE_Get_Opt::NO_ARG);
       opts.long_option (ACE_TEXT("output-ior"),'o', ACE_Get_Opt::ARG_REQUIRED);
 
-      //int j;
-      int c;
-      ACE_CString s;
-
+      int c = 0;
       while ((c = opts ()) != -1)
         {
           CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::parse_args - "
