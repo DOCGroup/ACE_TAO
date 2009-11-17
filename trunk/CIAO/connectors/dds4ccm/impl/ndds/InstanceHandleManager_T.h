@@ -45,6 +45,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/ndds/InstanceHandlemanager_T.cpp"
+#include "dds4ccm/impl/ndds/InstanceHandleManager_T.cpp"
 
 #endif /* INSTANCE_HANDLEMANGER_T_H */
