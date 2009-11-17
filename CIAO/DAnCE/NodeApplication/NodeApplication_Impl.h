@@ -203,8 +203,6 @@ namespace DAnCE
     //ComponentInstallation_Impl* installation_;
     auto_ptr<CIAO::Deployment::CIAO_ServerActivator_i>  activator_;
 
-//    RedirectionService & redirection_;
-
     ACE_CString node_name_;
 
     PROPERTY_MAP properties_;

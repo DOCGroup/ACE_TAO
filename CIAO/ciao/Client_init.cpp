@@ -59,13 +59,14 @@ namespace CIAO
             }
           else if (retval == -1)
             {
-              CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Error binding value for %C, ignoring.\n",
+              CIAO_ERROR ((LM_WARNING, CLINFO
+                          "build_config_values_map: Error binding value for %C, ignoring.\n",
                           config[i]->name ()));
             }
           else
             {
               CIAO_DEBUG ((LM_TRACE, CLINFO
-                "build_config_values_map: Bound value for config value %C\n",
+                           "build_config_values_map: Bound value for config value %C\n",
                       config[i]->name ()));
             }
         }

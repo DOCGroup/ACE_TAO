@@ -1,3 +1,25 @@
+Tue Nov 17 13:26:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Client_init.cpp:
+          Layout changes
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+          Removed not used variable
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+          Layout change
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Take over all properties, makes it easier to implement and
+          also makes it possible to specify a different component server
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+          Removed commented out code
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+          Cleanup
+
 Tue Nov 17 14:20:52 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.idl:
