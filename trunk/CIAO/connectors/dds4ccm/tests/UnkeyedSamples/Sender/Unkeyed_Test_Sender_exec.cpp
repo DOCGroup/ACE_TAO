@@ -163,7 +163,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ = this->context_->get_connection_info_in_data ();
+    this->writer_ = this->context_->get_connection_info_write_data ();
   }
 
   void
