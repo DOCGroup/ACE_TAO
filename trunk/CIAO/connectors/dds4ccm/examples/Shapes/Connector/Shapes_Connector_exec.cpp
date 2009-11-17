@@ -6,7 +6,7 @@
 namespace CIAO_Shapes_Shapes_Connector_Impl
 {
   Shapes_Connector_exec_i::Shapes_Connector_exec_i (const char * topic_name)
-    : Connector_T<ShapeType_DDS_Traits, ShapeType_Connector_Traits> (topic_name)
+    : DDS_Event_Connector_T<ShapeType_DDS_Traits, ShapeType_Connector_Traits> (topic_name)
   {
   }
 

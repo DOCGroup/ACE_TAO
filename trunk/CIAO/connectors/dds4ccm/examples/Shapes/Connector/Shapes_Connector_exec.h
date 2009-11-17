@@ -44,7 +44,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
     ::CCM_DDS::ConnectorStatusListener> ShapeType_Connector_Traits;
 
   class SHAPES_CONNECTOR_EXEC_Export Shapes_Connector_exec_i :
-    public Connector_T <ShapeType_DDS_Traits, ShapeType_Connector_Traits>
+    public DDS_Event_Connector_T <ShapeType_DDS_Traits, ShapeType_Connector_Traits>
   {
   public:
     Shapes_Connector_exec_i (const char * topic_name);

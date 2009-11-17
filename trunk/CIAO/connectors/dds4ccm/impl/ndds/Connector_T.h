@@ -12,14 +12,14 @@
 #include "ace/Copy_Disabled.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-class Connector_T
+class DDS_Event_Connector_T
   : public virtual CCM_TYPE::base_type,
     public virtual ::CORBA::LocalObject,
     private virtual ACE_Copy_Disabled
 {
 public:
-  Connector_T (const char * topic_name);
-  virtual ~Connector_T (void);
+  DDS_Event_Connector_T (const char * topic_name);
+  virtual ~DDS_Event_Connector_T (void);
 
   virtual char *topic_name (void);
 
