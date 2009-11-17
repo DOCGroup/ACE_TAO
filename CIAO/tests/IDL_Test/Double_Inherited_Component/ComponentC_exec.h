@@ -41,7 +41,16 @@ namespace CIAO_connector_test_C_Impl
     topic_name_a (const char * topic_name);
     virtual char *
     topic_name_a (void);
-    
+
+    virtual ::connector_test::CCM_X_ptr
+    get_x_a2 (void) { return 0; }
+
+    virtual ::connector_test::CCM_Y_ptr
+    get_y_b2 (void) { return 0; }
+
+    virtual ::connector_test::CCM_Z_ptr
+    get_z_c2 (void) { return 0; }
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
