@@ -1,0 +1,20 @@
+// $Id$
+
+/**
+ * @file dds4ccm_ListenerControl.idl3
+ *
+ */
+
+#ifndef DDS4CCM_STATELISTENERCONTROL_IDL
+#define DDS4CCM_STATELISTENERCONTROL_IDL
+
+#include "connectors/dds4ccm/idl/dds4ccm_DataListenerControl.idl"
+
+module CCM_DDS
+{
+  interface StateListenerControl : DataListenerControl {
+    attribute boolean is_filter_interpreted;
+  };
+};
+
+#endif
