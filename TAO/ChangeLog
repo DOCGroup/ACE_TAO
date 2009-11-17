@@ -1,3 +1,56 @@
+Tue Nov 17 11:45:03 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/MessengerServer.cpp:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/run_test.pl:
+        * DevGuideExamples/Multithreading/Reactive/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/Reactive/MessengerClient.cpp:
+        * DevGuideExamples/Multithreading/Reactive/run_test.pl:
+        * DevGuideExamples/ValueTypes/Messenger/MessengerServer.cpp:
+        * DevGuideExamples/ValueTypes/Messenger/MessengerClient.cpp:
+        * DevGuideExamples/ValueTypes/Messenger/run_test.pl:
+        * DevGuideExamples/ValueTypes/Bank/server.cpp:
+        * DevGuideExamples/ValueTypes/Bank/run_test.pl:
+        * DevGuideExamples/ValueTypes/Bank/client.cpp:
+        * DevGuideExamples/LocalObjects/ServantLocator/MessengerServer.cpp:
+        * DevGuideExamples/LocalObjects/ServantLocator/run_test.pl:
+        * DevGuideExamples/GettingStarted/MessengerServer.cpp:
+        * DevGuideExamples/GettingStarted/MessengerClient.cpp:
+        * DevGuideExamples/GettingStarted/run_test.pl:
+        * DevGuideExamples/PortableInterceptors/Auth/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/Auth/run_test.pl:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/run_test.pl:
+        * DevGuideExamples/PortableInterceptors/IOR/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/IOR/run_test.pl:
+        * DevGuideExamples/PortableInterceptors/PICurrent/MessengerServer.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/MessengerClient.cpp:
+        * DevGuideExamples/PortableInterceptors/PICurrent/run_test.pl:
+        * DevGuideExamples/RTCORBA/MessengerServer.cpp:
+        * DevGuideExamples/RTCORBA/run_test.pl:
+        * DevGuideExamples/Messaging/AMIcallback/MessengerServer.cpp:
+        * DevGuideExamples/Messaging/AMIcallback/MessengerClient.cpp:
+        * DevGuideExamples/Messaging/AMIcallback/run_test.pl:
+        * DevGuideExamples/Messaging/RelativeRoundtripTimeout/MessengerServer.cpp:
+        * DevGuideExamples/Messaging/RelativeRoundtripTimeout/MessengerClient.cpp:
+        * DevGuideExamples/Messaging/RelativeRoundtripTimeout/run_test.pl:
+        * tests/OBV/Supports/client.cpp:
+        * tests/OBV/Supports/server.cpp:
+        * tests/OBV/Supports/run_test.pl:
+        * tests/Bug_2683_Regression/run_test.pl:
+        * tests/Exposed_Policies/run_test.pl:
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+          
+          Tests are converted to use new test framework and added to fuzz build.
+
 Mon Nov 16 15:52:21 UTC 2009  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
