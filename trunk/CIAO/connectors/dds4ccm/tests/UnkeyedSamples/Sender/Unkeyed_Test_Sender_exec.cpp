@@ -52,7 +52,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
         try
           {
             ++this->last_key->second->iteration;
-            this->writer_->write (this->last_key->second);
+            this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updated key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
@@ -147,7 +147,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   {
     this->keys_ = keys;
   }
-  
+
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
