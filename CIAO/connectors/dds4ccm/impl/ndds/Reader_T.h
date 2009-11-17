@@ -29,22 +29,24 @@ namespace CIAO
         // Destructor
         virtual ~Reader_T (void);
 
+        virtual void read_last (
+          typename CCM_TYPE::seq_type::_out_type instances,
+          ::CCM_DDS::ReadInfoSeq_out infos);
+
         virtual void read_all (
           typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos);
 
-        virtual void read_all_history (
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos);
-
-        virtual void read_one (
+        virtual void read_one_last (
           typename DDS_TYPE::value_type& an_instance,
-          ::CCM_DDS::ReadInfo_out info);
+          ::CCM_DDS::ReadInfo_out info,
+          const ::DDS::InstanceHandle_t & instance_handle);
 
-        virtual void read_one_history (
+        virtual void read_one_all (
           const typename DDS_TYPE::value_type& an_instance,
           typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos);
+          ::CCM_DDS::ReadInfoSeq_out infos,
+          const ::DDS::InstanceHandle_t & instance_handle);
 
         virtual ::CCM_DDS::QueryFilter *filter (void);
 

@@ -39,7 +39,8 @@ namespace CIAO_Hello_Hello_Connector_Impl
     ::CCM_DDS::Hello::CCM_Getter,
     ::CCM_DDS::Hello::CCM_Reader,
     ::Hello::CCM_Hello_Connector_Context,
-    ::CCM_DDS::Hello::RawListener,
+    ::CCM_DDS::Hello::Listener,
+    ::CCM_DDS::Hello::StateListener,
     ::CCM_DDS::ConnectorStatusListener> DDSHello_Connector_Traits;
 
   class HELLO_CONNECTOR_EXEC_Export Hello_Connector_exec_i :

@@ -48,24 +48,24 @@ namespace CIAO_Hello_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
 
-  class HELLO_RECEIVER_EXEC_Export DDSHello_RawListener_exec_i
-    : public virtual ::CCM_DDS::Hello::CCM_RawListener,
+  class HELLO_RECEIVER_EXEC_Export DDSHello_Listener_exec_i
+    : public virtual ::CCM_DDS::Hello::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    DDSHello_RawListener_exec_i (Atomic_ULong &,
+    DDSHello_Listener_exec_i (Atomic_ULong &,
                                   const ACE_CString &);
-    virtual ~DDSHello_RawListener_exec_i (void);
-
-    // Operations and attributes from ::CCM_DDS::DDSHello_RawListener
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    virtual ~DDSHello_Listener_exec_i (void);
 
     virtual void
-    on_data (
+    on_one_data (
       const DDSHello & an_instance,
       const ::CCM_DDS::ReadInfo & info);
+
+    virtual void
+    on_many_data (
+      const DDSHello_Seq & an_instance,
+      const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Atomic_ULong &received_;
     const ACE_CString &name_;
@@ -149,14 +149,14 @@ namespace CIAO_Hello_Receiver_Impl
     virtual char * name (void);
     virtual void name (const char *name);
 
-    virtual ::CCM_DDS::Hello::CCM_RawListener_ptr
+    virtual ::CCM_DDS::Hello::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_out_connector_status (void);
-    
+
 
     // Operations from Components::SessionComponent.
 

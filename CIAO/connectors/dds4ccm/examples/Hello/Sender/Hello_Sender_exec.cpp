@@ -77,7 +77,7 @@ namespace CIAO_Hello_Sender_Impl
         ACE_CString msg = create_message (this->msg_);
         new_msg->hello = msg.c_str ();
         new_msg->iterator = ++this->iteration_;
-        this->writer_->write (*new_msg);
+        this->writer_->write_one (*new_msg, ::DDS::HANDLE_NIL);
       }
     else
       { //we're done

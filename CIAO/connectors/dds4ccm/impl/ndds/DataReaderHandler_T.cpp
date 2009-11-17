@@ -13,7 +13,7 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::DataReaderHandler_T
       : context_ (CCM_TYPE::context_type::_duplicate (context)),
         reader_ (reader)
 {
-  listener_ = CCM_TYPE::rawlistener_type::_duplicate (this->context_->get_connection_info_out_data_listener ());
+  listener_ = CCM_TYPE::listener_type::_duplicate (this->context_->get_connection_push_consumer_data_listener ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -43,7 +43,7 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (A
         {
           CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderHandler_T : found valid data\n")));
           ::CCM_DDS::ReadInfo empty;
-          listener_->on_data (instance, empty);
+          listener_->on_one_data (instance, empty);
         }
     }
   return 0;

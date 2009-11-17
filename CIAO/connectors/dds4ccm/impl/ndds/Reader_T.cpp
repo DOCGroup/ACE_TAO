@@ -46,7 +46,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::~Reader_T (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
   typename CCM_TYPE::seq_type::_out_type instances,
   ::CCM_DDS::ReadInfoSeq_out infos)
 {
@@ -114,7 +114,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all_history (
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
           typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
@@ -179,9 +179,10 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all_history (
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one (
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
           typename DDS_TYPE::value_type& an_instance,
-          ::CCM_DDS::ReadInfo_out info)
+          ::CCM_DDS::ReadInfo_out info,
+          const ::DDS::InstanceHandle_t & instance_handle)
 {
   DDS_InstanceHandle_t hnd = this->impl_->lookup_instance (an_instance);
   DDS_SampleInfoSeq sample_info;
@@ -259,10 +260,11 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one (
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_history (
+CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
           const typename DDS_TYPE::value_type& an_instance,
           typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos)
+          ::CCM_DDS::ReadInfoSeq_out infos,
+          const ::DDS::InstanceHandle_t & instance_handle)
 {
   //this function has to return all samples of all instances
   typename CCM_TYPE::seq_type::_var_type  inst_seq = new typename CCM_TYPE::seq_type;

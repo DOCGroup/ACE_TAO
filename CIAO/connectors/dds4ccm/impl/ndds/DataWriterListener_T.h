@@ -23,7 +23,8 @@ namespace CIAO
       /// Constructor
       DataWriterListener_T (
                     typename CCM_TYPE::context_type::_ptr_type context,
-                    ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled);
+                    ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
+                    ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data);
 
       /// Destructor
       virtual ~DataWriterListener_T (void);
@@ -44,13 +45,11 @@ namespace CIAO
         ::DDS::DataWriter *the_writer,
         const ::DDS::PublicationMatchedStatus & status);
 
-      bool enabled () const;
-      void enabled (bool enable);
-
     private:
       typename CCM_TYPE::context_type::_var_type context_;
       CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;
-      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enable_;
+      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode_;
+      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data_;
     };
   }
 }

@@ -25,7 +25,8 @@ namespace CIAO
         /// Constructor
         DataReaderListener_T (
                       typename CCM_TYPE::context_type::_ptr_type context,
-                      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled);
+                      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
+                      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data);
 
         /// Destructor
         virtual ~DataReaderListener_T (void);
@@ -41,15 +42,13 @@ namespace CIAO
         virtual void on_requested_incompatible_qos (::DDS::DataReader_ptr the_reader,
                                  const ::DDS::RequestedIncompatibleQosStatus & status);
 
-        bool enabled () const;
-        void enabled (bool enable);
-
       private:
         typename CCM_TYPE::context_type::_var_type context_;
 
         CCM_DDS::ConnectorStatusListener_var  info_out_connector_status_;
         CCM_DDS::PortStatusListener_var       info_out_portstatus_;
-        ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled_;
+        ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode_;
+        ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data_;
       };
     }
   }

@@ -43,18 +43,22 @@ namespace CIAO_Shapes_Receiver_Impl
 
   };
 
-  class RECEIVER_EXEC_Export ShapeType_RawListener_exec_i
-    : public virtual ::CCM_DDS::ShapeType::CCM_RawListener,
+  class RECEIVER_EXEC_Export ShapeType_Listener_exec_i
+    : public virtual ::CCM_DDS::ShapeType::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ShapeType_RawListener_exec_i (void);
-    virtual ~ShapeType_RawListener_exec_i (void);
+    ShapeType_Listener_exec_i (void);
+    virtual ~ShapeType_Listener_exec_i (void);
 
     virtual void
-    on_data (
+    on_one_data (
       const ShapeType & an_instance,
       const ::CCM_DDS::ReadInfo & info);
+    virtual void
+    on_many_data (
+      const ShapeType_Seq & an_instance,
+      const ::CCM_DDS::ReadInfoSeq & info);
   };
 
   class RECEIVER_EXEC_Export PortStatusListener_exec_i
@@ -108,12 +112,15 @@ namespace CIAO_Shapes_Receiver_Impl
     virtual void raw_listen (::CORBA::Boolean raw_listen);
 
     // Port operations.
-    virtual ::CCM_DDS::ShapeType::CCM_RawListener_ptr
+    virtual ::CCM_DDS::ShapeType::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
 
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_info_get_status (void);
+    
     // Operations from Components::SessionComponent.
     virtual void
     set_session_context (
@@ -132,7 +139,7 @@ namespace CIAO_Shapes_Receiver_Impl
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
-    CORBA::Boolean get_data_, read_data_, raw_listen_;
+    ::CORBA::Boolean get_data_, read_data_, raw_listen_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

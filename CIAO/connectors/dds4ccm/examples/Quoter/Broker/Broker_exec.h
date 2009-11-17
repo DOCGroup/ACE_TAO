@@ -98,18 +98,22 @@ namespace CIAO_Quoter_Broker_Impl
     Broker_exec_i &pulse_callback_;
   };
 
-  class BROKER_EXEC_Export Stock_Info_RawListener_exec_i
-    : public virtual ::CCM_DDS::Quoter::CCM_RawListener,
+  class BROKER_EXEC_Export Stock_Info_Listener_exec_i
+    : public virtual ::CCM_DDS::Quoter::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Stock_Info_RawListener_exec_i (void);
-    virtual ~Stock_Info_RawListener_exec_i (void);
+    Stock_Info_Listener_exec_i (void);
+    virtual ~Stock_Info_Listener_exec_i (void);
 
     virtual void
-    on_data (
+    on_one_data (
       const ::Quoter::Stock_Info & an_instance,
       const ::CCM_DDS::ReadInfo & info);
+    virtual void
+    on_many_data (
+      const ::Quoter::Stock_Info_Seq & an_instance,
+      const ::CCM_DDS::ReadInfoSeq & info);
   };
 
   class BROKER_EXEC_Export PortStatusListener_exec_i
@@ -146,7 +150,7 @@ namespace CIAO_Quoter_Broker_Impl
 
     // Port operations.
 
-    virtual ::CCM_DDS::Quoter::CCM_RawListener_ptr
+    virtual ::CCM_DDS::Quoter::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

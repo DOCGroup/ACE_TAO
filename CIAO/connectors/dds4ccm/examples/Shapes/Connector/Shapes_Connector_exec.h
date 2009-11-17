@@ -39,7 +39,8 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
     ::CCM_DDS::ShapeType::CCM_Getter,
     ::CCM_DDS::ShapeType::CCM_Reader,
     ::Shapes::CCM_Shapes_Connector_Context,
-    ::CCM_DDS::ShapeType::RawListener,
+    ::CCM_DDS::ShapeType::Listener,
+    ::CCM_DDS::ShapeType::StateListener,
     ::CCM_DDS::ConnectorStatusListener> ShapeType_Connector_Traits;
 
   class SHAPES_CONNECTOR_EXEC_Export Shapes_Connector_exec_i :

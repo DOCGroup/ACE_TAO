@@ -29,23 +29,17 @@
 // TAO_IDL - Generated from
 // C:\ACE\latest\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:471
 
-#ifndef _TAO_IDL_CCM_DDSS_H
-#define _TAO_IDL_CCM_DDSS_H
+#ifndef _TAO_IDL_DDS_RTF2_DCPS_I_HANDLES_H_S
+#define _TAO_IDL_DDS_RTF2_DCPS_I_HANDLES_H_S
 
 #include /**/ "ace/pre.h"
 
-#include "dds4ccm_BaseC.h"
-#include "dds_rtf2_dcpsS.h"
+#include "dds_rtf2_dcps_i_handleC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "connectors/dds4ccm/idl/dds4ccm_DataListenerControlS.h"
-#include "connectors/dds4ccm/idl/dds4ccm_StateListenerControlS.h"
-#include "connectors/dds4ccm/idl/dds4ccm_PortStatusListenerS.h"
-#include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListenerS.h"
-#include "connectors/dds4ccm/idl/dds4ccm_ConnectorS.h"
 
 #include /**/ "dds4ccm_skel_export.h"
 

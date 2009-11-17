@@ -8,10 +8,12 @@
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::DataWriterListener_T (
       typename CCM_TYPE::context_type::_ptr_type context,
-      ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> &enabled)
+      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> &mode,
+      ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> &max_delivered_data)
       : context_ (CCM_TYPE::context_type::_duplicate (context)),
         info_out_connector_status_ (CCM_DDS::ConnectorStatusListener::_duplicate (context->get_connection_error_listener ())),
-        enable_ (enabled)
+        mode_ (mode),
+        max_delivered_data_ (max_delivered_data)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::DataWriterListener_T");
 }
@@ -69,19 +71,5 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched 
     {
       this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
     }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-bool
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::enabled (void) const
-{
-  return this->enabled_;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::enabled (bool enabled)
-{
-  this->enabled_ = enabled;
 }
 

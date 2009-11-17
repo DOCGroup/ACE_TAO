@@ -7,8 +7,12 @@
  * Wrapper facade for NDDS.
  */
 
+#ifndef WRITER_T_H
+#define WRITER_T_H
+
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
+#include "InstanceHandleManager_T.h"
 
 namespace CIAO
 {
@@ -18,9 +22,7 @@ namespace CIAO
     {
       template <typename DDS_TYPE, typename CCM_TYPE>
       class Writer_T :
-        public virtual CCM_TYPE::writer_type,
-        public virtual ::CORBA::LocalObject,
-        private virtual ACE_Copy_Disabled
+        public InstanceHandleManager_T <DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type>
       {
       public:
         /// Constructor
@@ -29,16 +31,22 @@ namespace CIAO
         /// Destructor
         virtual ~Writer_T (void);
 
-        virtual void write (const typename DDS_TYPE::value_type& an_instance);
+        virtual void write_one (
+          const typename DDS_TYPE::value_type& an_instance,
+          const ::DDS::InstanceHandle_t & instance_handle);
 
-        virtual void write_many (const typename CCM_TYPE::seq_type& instances);
-        
-        virtual ::DDS::InstanceHandle_t register_instance (const typename DDS_TYPE::value_type & datum);
-    
-        virtual void unregister_instance (const typename DDS_TYPE::value_type & datum, const ::DDS::InstanceHandle_t & instance_handle);
+        virtual void write_many (
+          const typename CCM_TYPE::seq_type& instances);
+
+        virtual ::CORBA::Boolean is_coherent_write (void) const;
+
+        virtual void is_coherent_write ( ::CORBA::Boolean value);
 
       private:
-        typename DDS_TYPE::data_writer *impl_;
+        void write (const typename DDS_TYPE::value_type& datum,
+                    const ::DDS::InstanceHandle_t& instance_handle,
+                    ::CCM_DDS::DataNumber_t index);
+
         bool is_coherent_write_;
       };
     }
@@ -46,3 +54,5 @@ namespace CIAO
 }
 
 #include "dds4ccm/impl/ndds/Writer_T.cpp"
+
+#endif /* WRITER_T_H */

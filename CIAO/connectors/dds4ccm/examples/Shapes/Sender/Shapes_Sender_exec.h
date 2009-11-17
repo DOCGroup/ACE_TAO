@@ -21,13 +21,12 @@ namespace CIAO_Shapes_Sender_Impl
 {
   class Sender_exec_i;
 
-  class pulse_Generator :
-    public ACE_Event_Handler
+  class pulse_Generator : public ACE_Event_Handler
   {
   public:
     pulse_Generator (Sender_exec_i &callback);
 
-    ~pulse_Generator ();
+    virtual ~pulse_Generator ();
 
     /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -79,7 +78,7 @@ namespace CIAO_Shapes_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::ShapeType::Updater_var updater_;
+    CCM_DDS::ShapeType::Writer_var writer_;
 
     pulse_Generator * ticker_;
     ::Shapes::CCM_Sender_Context_var context_;
@@ -94,6 +93,8 @@ namespace CIAO_Shapes_Sender_Impl
     bool size_increasing_;
 
     ShapeType* square_;
+
+    ::DDS::InstanceHandle_t instance_handle_;
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

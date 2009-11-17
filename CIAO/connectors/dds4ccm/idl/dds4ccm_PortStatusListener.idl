@@ -7,15 +7,14 @@
 #ifndef DDS4CCM_PORTSTATUSLISTNER_IDL3
 #define DDS4CCM_PORTSTATUSLISTNER_IDL3
 
-#include "connectors/dds4ccm/idl/dds4ccm_Base.idl3"
+#include "connectors/dds4ccm/idl/dds4ccm_Base.idl"
 
 module CCM_DDS
 {
   interface PortStatusListener {
-    // status that are relevant to the component
     void on_requested_deadline_missed(in DDS::DataReader the_reader,
                                       in DDS::RequestedDeadlineMissedStatus status);
-    void on_sample_lost(in DDS::DataReader the_reader, 
+    void on_sample_lost(in DDS::DataReader the_reader,
                         in DDS::SampleLostStatus status);
   };
 };

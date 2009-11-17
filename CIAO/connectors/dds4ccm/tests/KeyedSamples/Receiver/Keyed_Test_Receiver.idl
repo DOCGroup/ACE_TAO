@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file 
+ * @file
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
@@ -16,6 +16,7 @@ module Keyed_Test
   component Receiver
   {
     port CCM_DDS::KeyedTest::DDS_Listen info_out;
+    port CCM_DDS::KeyedTest::DDS_Get info_get;
     attribute unsigned long rate;
     attribute unsigned short iterations;
     attribute unsigned short keys;

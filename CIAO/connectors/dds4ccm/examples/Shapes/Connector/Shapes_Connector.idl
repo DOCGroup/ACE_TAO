@@ -18,26 +18,10 @@ TYPED_MODULE( ::ShapeType, ::ShapeType_Seq, ShapeType)
 
 module Shapes
 {
-  connector Shapes_Connector : ::CCM_DDS::ShapeType::DDS_MonoConnector
+  connector Shapes_Connector : ::CCM_DDS::ShapeType::DDS_Event
   {
   };
 };
-
-/*
-For future use: IDL3 plus
-#include <dds4ccm/idl/dds4ccm_Connector_Base.idl3p>
-#include <dds4ccm/idl/dds4ccm_Port_RawListen.idl3p>
-#include <dds4ccm/idl/dds4ccm_Port_Write.idl3p>
-
-module Shapes
-{
-  connector Shapes_Connector : CCM_DDS::DDS_TopicBase
-  {
-    mirrorport CCM_DDS::DDS_Write <Shape_Info> info_in;
-    mirrorport CCM_DDS::DDS_RawListen <Shape_Info> info_out;
-  };
-};
-*/
 
 #endif /* SHAPES_CONNECTOR_IDL_ */
 

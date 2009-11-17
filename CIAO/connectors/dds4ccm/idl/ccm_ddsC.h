@@ -55,8 +55,10 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ComponentsC.h"
-#include "connectors/dds4ccm/idl/dds4ccm_ListenerControlC.h"
-#include "connectors/dds4ccm/idl/dds4ccm_ListenerControlEC.h"
+#include "connectors/dds4ccm/idl/dds4ccm_DataListenerControlC.h"
+#include "connectors/dds4ccm/idl/dds4ccm_DataListenerControlEC.h"
+#include "connectors/dds4ccm/idl/dds4ccm_StateListenerControlC.h"
+#include "connectors/dds4ccm/idl/dds4ccm_StateListenerControlEC.h"
 #include "connectors/dds4ccm/idl/dds4ccm_PortStatusListenerC.h"
 #include "connectors/dds4ccm/idl/dds4ccm_PortStatusListenerEC.h"
 #include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
