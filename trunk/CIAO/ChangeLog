@@ -1,3 +1,12 @@
+Tue Nov 17 15:12:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DAnCE/DomainApplicationManager/Node_Locator.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Various code improvements
+
 Tue Nov 17 13:26:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Client_init.cpp:
