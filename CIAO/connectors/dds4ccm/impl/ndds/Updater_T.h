@@ -54,6 +54,20 @@ namespace CIAO
         virtual void is_coherent_write (bool value_);
 
       private:
+        void create_i (
+          const typename DDS_TYPE::value_type& an_instance,
+          ::CCM_DDS::DataNumber_t index);
+
+        void update_i (
+          const typename DDS_TYPE::value_type& an_instance,
+          const ::DDS::InstanceHandle_t & instance_handle,
+          ::CCM_DDS::DataNumber_t index);
+
+        void delete_i (
+          const typename DDS_TYPE::value_type& an_instance,
+          const ::DDS::InstanceHandle_t & instance_handle,
+          ::CCM_DDS::DataNumber_t index);
+
         bool is_global_scope_;
         bool is_coherent_write_;
       };

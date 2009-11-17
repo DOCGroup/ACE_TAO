@@ -1,3 +1,12 @@
+Tue Nov 17 09:08:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Updater_T.cpp
+        * connectors/dds4ccm/impl/ndds/Updater_T.h
+          Reworked the updater
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp
+          Updated because of beta 2
+
 Tue Nov 17 08:23:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl
