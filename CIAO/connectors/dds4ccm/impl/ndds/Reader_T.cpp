@@ -184,31 +184,34 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
           ::CCM_DDS::ReadInfo_out info,
           const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS_InstanceHandle_t hnd = this->impl_->lookup_instance (an_instance);
+  DDS_InstanceHandle_t hnd = ::DDS_HANDLE_NIL;
+  hnd <<= instance_handle;
+  if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
+    {
+      hnd = this->impl_->lookup_instance (an_instance);
+    }
   DDS_SampleInfoSeq sample_info;
   DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
-
   typename DDS_TYPE::dds_seq_type data;
 
-  // DDS_TYPE::dds_seq_type = dds sequence
-  // CCM_TYPE::seq_type = ccm sequence
-      // if initial instance has a registered key, pass back instance with this key,
-      // else return last instance regardless of key
-      if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
-        {
-          retval = this->impl_->read_instance(data,
+  // if initial instance has a registered key, pass back instance with this key,
+  // else return last instance regardless of key
+  if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
+    {
+      retval = this->impl_->read_instance(data,
                             sample_info,
                             DDS_LENGTH_UNLIMITED,
                             hnd,
                             DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
                             DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                             DDS_ALIVE_INSTANCE_STATE);
-        }
-      else
-        {
-          CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_history - ")
-                                ACE_TEXT ("No instance found.\n")));
-          retval = this->impl_->read(data,
+    }
+  else
+    {
+      CIAO_DEBUG ((LM_INFO,
+                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_history - ")
+                  ACE_TEXT ("No instance found.\n")));
+      retval = this->impl_->read(data,
                             sample_info,
                             DDS_LENGTH_UNLIMITED,
                             DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
@@ -266,6 +269,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
           ::CCM_DDS::ReadInfoSeq_out infos,
           const ::DDS::InstanceHandle_t & instance_handle)
 {
+  ACE_UNUSED_ARG (instance_handle);
   //this function has to return all samples of all instances
   typename CCM_TYPE::seq_type::_var_type  inst_seq = new typename CCM_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;

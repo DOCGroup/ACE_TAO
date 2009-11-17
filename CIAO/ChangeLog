@@ -1,10 +1,16 @@
+Tue Nov 17 10:12:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Fixed compile warnings
+
 Tue Nov 17 10:11:20 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * tests/IDL_Test/Double_Inherited_Component/ComponentC.cdp:
         * tests/IDL_Test/Double_Inherited_Component/ComponentC_exec.h:
         * tests/IDL_Test/Double_Inherited_Component/ComponentC_exec.cpp:
         * tests/IDL_Test/Double_Inherited_Component/Inherited_components.idl:
-          Extended test with setting attributes on each level. 
+          Extended test with setting attributes on each level.
 
 Tue Nov 17 09:49:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
