@@ -40,9 +40,9 @@ namespace DAnCE
 
       virtual ~DomainApplicationManager_Impl();
 
-      virtual Deployment::Application_ptr
-      startLaunch (const Deployment::Properties & configProperty,
-                   Deployment::Connections_out providedReference);
+      virtual Deployment::Application_ptr startLaunch (
+        const Deployment::Properties & configProperty,
+        Deployment::Connections_out providedReference);
 
       virtual void destroyApplication (Deployment::Application_ptr);
 
@@ -61,8 +61,8 @@ namespace DAnCE
       typedef ACE_Vector<DomainApplication_Impl*> TApplications;
       TApplications running_app_;
 
-      static void split_plan (const Deployment::DeploymentPlan & plan,
-                              TNodePlans & sub_plans);
+      void split_plan (const Deployment::DeploymentPlan & plan,
+                       TNodePlans & sub_plans);
 
       void preparePlan();
     };

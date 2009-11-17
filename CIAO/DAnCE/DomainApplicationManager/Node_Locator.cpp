@@ -89,24 +89,14 @@ namespace DAnCE
 
     CORBA::Object_var obj = this->orb_->string_to_object (ior);
 
-    if (CORBA::is_nil (obj.in ()))
-      {
-        DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
-                      ACE_TEXT("Error:  Unable to resolve object reference for destination ")
-                      ACE_TEXT("%s and ior %s\n"),
-                      name, ior));
-        return false;
-      }
-
     ::Deployment::NodeManager_var nm = ::Deployment::NodeManager::_narrow (obj.in ());
 
     if (CORBA::is_nil (nm.in ()))
       {
         DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::resolve_ior - ")
-                      ACE_TEXT("Error:  Unable to narrow reference for destination ")
+                      ACE_TEXT("Error: Unable to retrieve reference for destination ")
                       ACE_TEXT("%s and ior %s\n"),
                       name, ior));
-        return false;
       }
 
     return nm._retn ();
@@ -148,7 +138,6 @@ namespace DAnCE
             DANCE_ERROR ((LM_ERROR, DLINFO ACE_TEXT("Node_Locator::ns_lookup - ")
                           ACE_TEXT("Unable to narrow provided reference for node %s\n"),
                           nodename));
-            return ::Deployment::NodeManager::_nil ();
           }
 
         return nm._retn ();

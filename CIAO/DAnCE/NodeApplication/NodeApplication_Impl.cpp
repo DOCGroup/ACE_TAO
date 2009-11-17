@@ -1668,7 +1668,7 @@ NodeApplication_Impl::getAllConnections()
               ACE_CString inst_name =
                 this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in();
 
-              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections() - ")
+              DANCE_DEBUG ((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                             ACE_TEXT("Found provider '%C' for connection '%C'\n"),
                             this->plan_.connection[i].name.in (),
                             inst_name.c_str ()));
