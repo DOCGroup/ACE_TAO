@@ -44,7 +44,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     ::CCM_DDS::ConnectorStatusListener> Stock_Info_Connector_Traits;
 
   class QUOTER_CONNECTOR_EXEC_Export Quoter_Connector_exec_i :
-    public Connector_T <Stock_Info_DDS_Traits, Stock_Info_Connector_Traits>
+    public DDS_Event_Connector_T <Stock_Info_DDS_Traits, Stock_Info_Connector_Traits>
   {
   public:
     Quoter_Connector_exec_i (const char * topic_name);

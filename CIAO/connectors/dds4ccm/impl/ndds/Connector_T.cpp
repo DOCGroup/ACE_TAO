@@ -14,7 +14,7 @@
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-Connector_T<DDS_TYPE, CCM_TYPE>::Connector_T (const char * topic_name)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Event_Connector_T (const char * topic_name)
   : default_domain_configured_ (false),
     domain_id_ (0),
     default_topic_configured_ (false),
@@ -27,13 +27,13 @@ Connector_T<DDS_TYPE, CCM_TYPE>::Connector_T (const char * topic_name)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-Connector_T<DDS_TYPE, CCM_TYPE>::~Connector_T (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_Event_Connector_T (void)
 {
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 char *
-Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (void)
 {
   // @from DDS_TopicBase
   return CORBA::string_dup (this->topic_name_.in ());
@@ -41,7 +41,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
   const char * topic_name)
 {
   // @from DDS_TopicBase
@@ -50,7 +50,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (const ::DDS::StringSeq & key_fields)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (const ::DDS::StringSeq & key_fields)
 {
   ACE_UNUSED_ARG (key_fields);
   // @todo
@@ -58,7 +58,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (const ::DDS::StringSeq & key_fields
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StringSeq *
-Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
 {
   // @from DDS_TopicBase
   ::DDS::StringSeq *retval =
@@ -73,7 +73,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::DomainId_t
-Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
 {
   // @from DDS_Base
   return this->domain_id_;
@@ -81,7 +81,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
   ::DDS::DomainId_t domain_id)
 {
   // @from DDS_Base
@@ -90,7 +90,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 char *
-Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
 {
   // @from DDS_Base
   return CORBA::string_dup (this->qos_profile_.in ());
@@ -98,7 +98,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
   const char * qos_profile)
 {
   // @from DDS_Base
@@ -109,9 +109,9 @@ Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "Connector_T::configure_default_domain_ - "
+  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_Event_Connector_T::configure_default_domain_ - "
                 "Configuring default domain\n"));
 
   if (this->default_domain_configured_)
@@ -142,9 +142,9 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
 {
-  CIAO_DEBUG ((LM_TRACE, CLINFO "Connector_T::configure_default_topic_ - "
+  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_Event_Connector_T::configure_default_topic_ - "
                 "Configuring default topic\n"));
 
   if (this->default_topic_configured_)
@@ -186,7 +186,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 {
   if (this->__info_in_configured_)
     return;
@@ -235,7 +235,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (bool create_getter)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (bool create_getter)
 {
   if (this->__listen_configured_ && this->__info_get_configured_ )
     return;
@@ -290,7 +290,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (bool create_getter)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::writer_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_data (void)
 {
   CIAO_TRACE ("get_info_in_data");
 
@@ -302,7 +302,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataWriter_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_dds_entity (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_dds_entity (void)
 {
   CIAO_TRACE ("get_info_in_dds_entity");
 
@@ -313,7 +313,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_dds_entity (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataWriter_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_dds_entity (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_dds_entity (void)
 {
   CIAO_TRACE ("get_info_in_dds_entity");
 
@@ -324,7 +324,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_dds_entity (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::updater_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_update_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_update_data (void)
 {
   CIAO_TRACE ("get_info_update_data");
 
@@ -335,7 +335,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_update_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::getter_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data (void)
 {
   CIAO_TRACE ("get_info_get_out_data");
 
@@ -347,7 +347,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::reader_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
 {
   CIAO_TRACE ("get_listen_data");
 
@@ -359,7 +359,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::reader_type::_ptr_type
-Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
 {
   CIAO_TRACE ("get_listen_data");
 
@@ -371,7 +371,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_DataListenerControl_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control (void)
 {
   CIAO_TRACE ("get_listen_control");
   return new CCM_DDS_DataListenerControl_i (
@@ -381,7 +381,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataReader_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_dds_entity (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_dds_entity (void)
 {
   CIAO_TRACE ("get_listen_dds_entity");
   return ::DDS::CCM_DataReader::_nil ();
@@ -389,7 +389,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_dds_entity (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataReader_ptr
-Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_dds_entity (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_dds_entity (void)
 {
   CIAO_TRACE ("get_listen_dds_entity");
   return ::DDS::CCM_DataReader::_nil ();
@@ -397,7 +397,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_dds_entity (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
   ::Components::SessionContext_ptr ctx)
 {
   CIAO_TRACE ("set_session_context");
@@ -414,13 +414,13 @@ Connector_T<DDS_TYPE, CCM_TYPE>::set_session_context (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
   if (!CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ()) ||
      (!CORBA::is_nil (this->context_->get_connection_push_consumer_status () )))
@@ -433,12 +433,12 @@ Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
 {
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
 }

@@ -43,7 +43,7 @@ namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
     ::CCM_DDS::ConnectorStatusListener> UnkeyedTest_Connector_Traits;
 
   class UNKEYED_TEST_CONNECTOR_EXEC_Export Unkeyed_Test_Connector_exec_i :
-    public Connector_T <UnkeyedTest_DDS_Traits, UnkeyedTest_Connector_Traits>
+    public DDS_Event_Connector_T <UnkeyedTest_DDS_Traits, UnkeyedTest_Connector_Traits>
   {
   public:
     Unkeyed_Test_Connector_exec_i (const char * topic_name);

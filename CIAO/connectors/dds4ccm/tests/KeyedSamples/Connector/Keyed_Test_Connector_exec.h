@@ -44,7 +44,7 @@ namespace CIAO_Keyed_Test_Keyed_Test_Connector_Impl
     ::CCM_DDS::ConnectorStatusListener> KeyedTest_Connector_Traits;
 
   class KEYED_TEST_CONNECTOR_EXEC_Export Keyed_Test_Connector_exec_i :
-    public Connector_T <KeyedTest_DDS_Traits, KeyedTest_Connector_Traits>
+    public DDS_Event_Connector_T <KeyedTest_DDS_Traits, KeyedTest_Connector_Traits>
   {
   public:
     Keyed_Test_Connector_exec_i (const char * topic_name);

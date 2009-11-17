@@ -1,3 +1,20 @@
+Tue Nov 17 09:21:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector_exec.cpp
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector_exec.cpp
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector_exec.h
+          Renamed Connector_T to DDS_Event_Connector_T, we currently only have a
+          DDS_Event connector
+
 Tue Nov 17 09:08:55 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Updater_T.cpp
