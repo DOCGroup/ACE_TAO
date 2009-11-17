@@ -115,7 +115,7 @@ namespace CIAO_Quoter_Distributor_Impl
       }
     catch (...)
       {
-        printf("pulse_Generator::handle_timeout: Caught exception\n");
+        printf("Distributor pulse_Generator::handle_timeout: Caught exception\n");
       }
 
     return 0;
@@ -191,7 +191,8 @@ namespace CIAO_Quoter_Distributor_Impl
   }
 
   Distributor_exec_i::Distributor_exec_i (void)
-    : rate_ (1)
+    : rate_ (1),
+      updater_ (0)
   {
     ACE_OS::srand (static_cast <u_int> (ACE_OS::time ()));
     this->ticker_ = new pulse_Generator (*this);
@@ -232,10 +233,22 @@ namespace CIAO_Quoter_Distributor_Impl
                             i->second->low,
                             i->second->current,
                             i->second->high);
-              this->writer_->write_one (i->second, ::DDS::HANDLE_NIL);
               try
                 {
-                  this->updater_->create_one (i->second);
+                  this->writer_->write_one (i->second, ::DDS::HANDLE_NIL);
+                }
+              catch (CCM_DDS::InternalError& )
+                {
+                  printf ("Internal Error while writing Stock_info for <%s>.\n",
+                                i->first.c_str ());
+                }
+
+              try
+                {
+                  if (!CORBA::is_nil (this->updater_))
+                    {
+                      this->updater_->create_one (i->second);
+                    }
                 }
               catch (CCM_DDS::AlreadyCreated& )
                 {
@@ -330,12 +343,15 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::stop (void)
   {
-    for (Stock_Table::iterator i = this->stocks_.begin ();
-         i != this->stocks_.end ();
-         ++i)
+    if (!CORBA::is_nil (this->updater_))
       {
-        printf ("Unregister <%s>\n", i->first.c_str ());
-        this->updater_->delete_one (i->second, ::DDS::HANDLE_NIL);
+        for (Stock_Table::iterator i = this->stocks_.begin ();
+            i != this->stocks_.end ();
+            ++i)
+          {
+            printf ("Unregister <%s>\n", i->first.c_str ());
+            this->updater_->delete_one (i->second, ::DDS::HANDLE_NIL);
+          }
       }
     this->ticker_->stop ();
   }
@@ -384,7 +400,7 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::configuration_complete (void)
   {
     this->writer_  = this->context_->get_connection_info_in_data ();
-    this->updater_ = this->context_->get_connection_info_update_data ();
+    //this->updater_ = this->context_->get_connection_info_update_data ();
     this->ticker_->activate ();
   }
 
