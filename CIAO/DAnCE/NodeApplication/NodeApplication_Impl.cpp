@@ -228,7 +228,7 @@ namespace
   }
 
   void append_properties (::Deployment::Properties &dest,
-			  const ::Deployment::Properties &src)
+        const ::Deployment::Properties &src)
   {
     for (CORBA::ULong i = 0; i < src.length (); ++i)
       {
@@ -996,12 +996,12 @@ NodeApplication_Impl::create_component_server (size_t index)
 
       config_values.length (this->servers_[index].properties.length ());
       for (CORBA::ULong i = 0; i < this->servers_[index].properties.length ();
-	   ++i)
-	{
-	  config_values[i] = new CIAO::ConfigValue_impl (this->servers_[index].properties[i].name.in (),
-							 this->servers_[index].properties[i].value);
+     ++i)
+  {
+    config_values[i] = new CIAO::ConfigValue_impl (this->servers_[index].properties[i].name.in (),
+               this->servers_[index].properties[i].value);
 
-	}
+  }
 
       server.ref = this->activator_->create_component_server (config_values);
       DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::create_component_server - ")
@@ -1236,7 +1236,7 @@ NodeApplication_Impl::init_components()
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t const pos = this->servers_[svr].containers[0].homes.size ();
 
-		            append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
 
                 this->servers_[svr].containers[0].homes.size (pos + 1);
                 this->servers_[svr].containers[0].homes[pos] = Instance (eHome,
@@ -1252,7 +1252,7 @@ NodeApplication_Impl::init_components()
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t const pos = this->servers_[svr].containers[0].components.size ();
-		            append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eComponent,
                                                                               &this->servers_[svr].containers[0],
@@ -1267,7 +1267,7 @@ NodeApplication_Impl::init_components()
                               this->plan_.instance[i].name.in ()));
                 size_t const svr = colocation_map[this->plan_.instance[i].name.in ()];
                 size_t const pos = this->servers_[svr].containers[0].components.size ();
-		            append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
+                append_properties (this->servers_[svr].properties, this->plan_.instance[i].configProperty);
                 this->servers_[svr].containers[0].components.size (pos + 1);
                 this->servers_[svr].containers[0].components[pos] = Instance (eHomedComponent,
                                                                               &this->servers_[svr].containers[0],
