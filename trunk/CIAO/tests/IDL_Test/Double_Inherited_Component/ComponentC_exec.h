@@ -30,9 +30,17 @@ namespace CIAO_connector_test_C_Impl
     virtual ~ComponentC_exec_i  (void);
 
     virtual void
-    topic_name (const char * topic_name);
+    topic_name_c (const char * topic_name);
     virtual char *
-    topic_name (void);
+    topic_name_c (void);
+    virtual void
+    topic_name_b (const char * topic_name);
+    virtual char *
+    topic_name_b (void);
+    virtual void
+    topic_name_a (const char * topic_name);
+    virtual char *
+    topic_name_a (void);
     
     virtual void
     set_session_context (
@@ -44,12 +52,16 @@ namespace CIAO_connector_test_C_Impl
   
   private:
     ::connector_test::CCM_C_Context_var context_;
-    CORBA::String_var topic_name_;
-    bool topic_name_has_been_set_;
+    CORBA::String_var topic_name_c_;
+    CORBA::String_var topic_name_b_;
+    CORBA::String_var topic_name_a_;
+    bool topic_name_c_has_been_set_;
+    bool topic_name_b_has_been_set_;
+    bool topic_name_a_has_been_set_;
   };
   
   extern "C" INHERITED_COMPONENTS_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Hello_Sender_Impl (void);
+  create_ComponentC_Impl (void);
 }
 
 #endif /* ifndef */

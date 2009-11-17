@@ -10,31 +10,59 @@ namespace CIAO_connector_test_C_Impl
   // Pulse generator
   //============================================================
 
-  ComponentC_exec_i ::ComponentC_exec_i  (void)
-    : topic_name_has_been_set_ (false)
+  ComponentC_exec_i::ComponentC_exec_i  (void)
+    : topic_name_c_ (""),
+      topic_name_b_ (""),
+      topic_name_a_ (""),
+      topic_name_c_has_been_set_ (false),
+      topic_name_b_has_been_set_ (false),
+      topic_name_a_has_been_set_ (false)
   {
   }
 
-  ComponentC_exec_i ::~ComponentC_exec_i  (void)
+  ComponentC_exec_i::~ComponentC_exec_i  (void)
   {
   }
 
   // Port operations.
-    void
-    ComponentC_exec_i ::topic_name (const char * topic_name)
-    {
-      this->topic_name_ = topic_name;
-      this->topic_name_has_been_set_ = true;
-    }
-    char *
-    ComponentC_exec_i ::topic_name (void)
-    {
-      return CORBA::string_dup (this->topic_name_.in ());
-    }
+  void
+  ComponentC_exec_i::topic_name_c (const char * topic_name)
+  {
+    this->topic_name_c_ = topic_name;
+    this->topic_name_c_has_been_set_ = true;
+  }
+  char *
+  ComponentC_exec_i::topic_name_c (void)
+  {
+    return CORBA::string_dup (this->topic_name_c_.in ());
+  }
 
+  void
+  ComponentC_exec_i::topic_name_b (const char * topic_name)
+  {
+    this->topic_name_b_ = topic_name;
+    this->topic_name_b_has_been_set_ = true;
+  }
+  char *
+  ComponentC_exec_i::topic_name_b (void)
+  {
+    return CORBA::string_dup (this->topic_name_b_.in ());
+  }
+
+  void
+  ComponentC_exec_i::topic_name_a (const char * topic_name)
+  {
+    this->topic_name_a_ = topic_name;
+    this->topic_name_a_has_been_set_ = true;
+  }
+  char *
+  ComponentC_exec_i::topic_name_a (void)
+  {
+    return CORBA::string_dup (this->topic_name_a_.in ());
+  }
   // Operations from Components::SessionComponent.
   void
-  ComponentC_exec_i ::set_session_context (
+  ComponentC_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
@@ -47,29 +75,33 @@ namespace CIAO_connector_test_C_Impl
   }
 
   void
-  ComponentC_exec_i ::configuration_complete (void)
+  ComponentC_exec_i::configuration_complete (void)
   {
   }
 
   void
-  ComponentC_exec_i ::ccm_activate (void)
+  ComponentC_exec_i::ccm_activate (void)
   {
   }
 
   void
-  ComponentC_exec_i ::ccm_passivate (void)
+  ComponentC_exec_i::ccm_passivate (void)
   {
   }
 
   void
-  ComponentC_exec_i ::ccm_remove (void)
+  ComponentC_exec_i::ccm_remove (void)
   {
-    if (!this->topic_name_has_been_set_)
-      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name has not been set\n")));
+    if (!this->topic_name_c_has_been_set_)
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name C has not been set\n")));
+    if (!this->topic_name_b_has_been_set_)
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name B has not been set\n")));
+    if (!this->topic_name_a_has_been_set_)
+      CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Topic name A has not been set\n")));
   }
 
   extern "C" INHERITED_COMPONENTS_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Hello_Sender_Impl (void)
+  create_ComponentC_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();

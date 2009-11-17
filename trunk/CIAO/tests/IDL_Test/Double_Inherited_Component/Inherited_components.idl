@@ -14,14 +14,17 @@ module connector_test
 {
   component A
   {
-    attribute string topic_name;
+    attribute string topic_name_a;
   };
+
   component B : A
   {
+    attribute string topic_name_b;
   };
 
   component C : B
   {
+    attribute string topic_name_c;
   };
 };
 #endif

@@ -22,7 +22,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Sender_Impl</string>
+          <string>create_ComponentC_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -68,13 +68,35 @@
     <source/>
     <implementation xmi:idref="ComponentCComponentImplementation" />
     <configProperty>
-      <name>topic_name</name>
+      <name>topic_name_c</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Square</string>
+          <string>ComponentC</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name_b</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ComponentB</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name_a</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ComponentA</string>
         </value>
       </value>
     </configProperty>
