@@ -30,7 +30,34 @@
 # define ACE_MAIN testClient
 #endif
 
-const ACE_TCHAR *iorFile = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'k':
+        ior = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-k <ior> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates successful parsing of the command line
+  return 0;
+}
+
 ACE_UINT32 niter = 10;
 ACE_UINT32 SIZE_BLOCK= 256;
 
@@ -60,7 +87,7 @@ private:
 };
 
 
-//int testClient (char* orbName, char* iorFile)
+//int testClient (char* orbName, char* ior)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
@@ -70,8 +97,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            argv,
                            "ORB_Test_Client");
 
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
       CORBA::Object_var object =
-        orb->string_to_object (iorFile);
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in ());
@@ -80,7 +110,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             iorFile),
+                             ior),
                             1);
         }
 

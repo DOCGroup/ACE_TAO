@@ -4,6 +4,48 @@
 #include <fstream>
 #include <iostream>
 #include <fstream>
+#include "ace/Get_Opt.h"
+
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("MessengerServer.ior");
+unsigned int seconds_to_wait = 0;
+CORBA::Boolean servant_throws_exception = false;
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:e:t:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.opt_arg ();
+        break;
+      case 'e':
+        servant_throws_exception = true;
+        std::cout << "Messenger_i::send_message() will throw an exception." << std::endl;
+        break;
+      case 't':
+        seconds_to_wait = ACE_OS::atoi(get_opts.opt_arg ());
+        std::cout << "Messenger_i::send_message() will wait "
+          << seconds_to_wait << " seconds" << std::endl;
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " -o <iorfile>"
+                           " -e"
+                           " -t <seconds_to_wait>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
@@ -12,26 +54,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    // Set a wait time to an integer if it has been passed as a
-    // command line argument. Otherwise, have
-    // Messenger_i::send_message() throw an exception if e
-    // has been passed as the command lin argument.
-    unsigned int seconds_to_wait = 0;
-    CORBA::Boolean servant_throws_exception = false;
-    if (argc == 2)
-    {
-      if (argv[1][0] == 'e')
-      {
-        servant_throws_exception = true;
-        std::cout << "Messenger_i::send_message() will throw an exception." << std::endl;
-      }
-      else
-      {
-        seconds_to_wait = ACE_OS::atoi(argv[1]);
-        std::cout << "Messenger_i::send_message() will wait "
-          << seconds_to_wait << " seconds" << std::endl;
-      }
-    }
+    if (parse_args (argc, argv) != 0)
+      return 1;
 
     // Get reference to Root POA.
     CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
@@ -50,10 +74,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     obj = poa->id_to_reference(oid.in());
     Messenger_var messenger = Messenger::_narrow(obj.in());
     CORBA::String_var str = orb->object_to_string(messenger.in());
-    std::ofstream fout("MessengerServer.ior");
+    std::ofstream fout(ACE_TEXT_ALWAYS_CHAR(ior_output_file));
     fout << str.in() << std::endl;
     fout.close();
-    std::cout << "IOR written to file MessengerServer.ior" << std::endl;
+    std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;
 
     // Accept requests
     orb->run();
