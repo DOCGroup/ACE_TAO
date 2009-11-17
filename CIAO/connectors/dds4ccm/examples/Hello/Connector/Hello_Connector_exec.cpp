@@ -6,7 +6,7 @@
 namespace CIAO_Hello_Hello_Connector_Impl
 {
   Hello_Connector_exec_i::Hello_Connector_exec_i (const char * topic_name)
-    : Connector_T<DDSHello_DDS_Traits, DDSHello_Connector_Traits> (topic_name)
+    : DDS_Event_Connector_T<DDSHello_DDS_Traits, DDSHello_Connector_Traits> (topic_name)
   {
   }
 

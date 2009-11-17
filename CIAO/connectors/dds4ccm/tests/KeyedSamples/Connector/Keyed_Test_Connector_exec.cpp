@@ -6,7 +6,7 @@
 namespace CIAO_Keyed_Test_Keyed_Test_Connector_Impl
 {
   Keyed_Test_Connector_exec_i::Keyed_Test_Connector_exec_i (const char * topic_name)
-    : Connector_T<KeyedTest_DDS_Traits, KeyedTest_Connector_Traits> (topic_name)
+    : DDS_Event_Connector_T<KeyedTest_DDS_Traits, KeyedTest_Connector_Traits> (topic_name)
   {
   }
 

@@ -44,7 +44,7 @@ namespace CIAO_Hello_Hello_Connector_Impl
     ::CCM_DDS::ConnectorStatusListener> DDSHello_Connector_Traits;
 
   class HELLO_CONNECTOR_EXEC_Export Hello_Connector_exec_i :
-    public Connector_T <DDSHello_DDS_Traits, DDSHello_Connector_Traits>
+    public DDS_Event_Connector_T <DDSHello_DDS_Traits, DDSHello_Connector_Traits>
   {
   public:
     Hello_Connector_exec_i (const char * topic_name);

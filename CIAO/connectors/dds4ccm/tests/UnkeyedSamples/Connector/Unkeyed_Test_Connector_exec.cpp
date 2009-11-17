@@ -6,7 +6,7 @@
 namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
 {
   Unkeyed_Test_Connector_exec_i::Unkeyed_Test_Connector_exec_i (const char * topic_name)
-    : Connector_T<UnkeyedTest_DDS_Traits, UnkeyedTest_Connector_Traits> (topic_name)
+    : DDS_Event_Connector_T<UnkeyedTest_DDS_Traits, UnkeyedTest_Connector_Traits> (topic_name)
   {
   }
 
