@@ -47,43 +47,19 @@ namespace CIAO_Keyed_Test_Sender_Impl
   void
   Sender_exec_i::tick ()
   {
-    if (this->last_key->second->iteration == 0)
-      {
-        try
-          {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Create key <%C>\n"),
-                    this->last_key->first.c_str ()));
-            this->updater_->create_one (this->last_key->second);
-          }
-        catch (CCM_DDS::AlreadyCreated& )
-          {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("keyedtest_info for <%C> already created.\n"),
-                        this->last_key->first.c_str ()));
-          }
-        catch (CCM_DDS::InternalError& )
-          {
-            CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while creating keyedtest_info for <%C>.\n"),
-                        this->last_key->first.c_str ()));
-          }
-      }
     if (this->last_key != this->ktests_.end ())
       {
         try
           {
             ++this->last_key->second->iteration;
-            this->updater_->update_one (this->last_key->second, ::DDS::HANDLE_NIL);
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Updated key <%C> with <%d>\n"),
+            this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
+            CIAO_DEBUG ((LM_ERROR, ACE_TEXT ("Written key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
           }
-        catch (CCM_DDS::NonExistent& )
-          {
-            printf ("Stock_info for <%s> not updated: <%s> didn't exist.\n",
-                        this->last_key->first.c_str (), this->last_key->first.c_str ());
-          }
         catch (CCM_DDS::InternalError& )
           {
-            printf ("Internal Error while updating Stock_info for <%s>.\n",
+            printf ("Internal Error while writing KeyedTest info for <%s>.\n",
                         this->last_key->first.c_str ());
           }
         ++this->last_key;
@@ -96,26 +72,6 @@ namespace CIAO_Keyed_Test_Sender_Impl
           {
             if (this->last_key->second->iteration == this->iterations_)
               {
-                //we're done with this one -> unregister it.
-                try
-                  {
-                    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting key <%C> with <%d>\n"),
-                            this->last_key->first.c_str (),
-                            this->last_key->second->iteration));
-                    this->updater_->delete_one (this->last_key->second, ::DDS::HANDLE_NIL);
-                  }
-                catch (CCM_DDS::NonExistent& )
-                  {
-                    CIAO_ERROR ((LM_ERROR,
-                                ACE_TEXT ("keyedtest_info for <%C> not deleted: <%C> didn't exist.\n"),
-                                this->last_key->first.c_str (), this->last_key->first.c_str ()));
-                  }
-                catch (CCM_DDS::InternalError& )
-                  {
-                    CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while deleting keyedtest_info for <%C>.\n"),
-                                this->last_key->first.c_str ()));
-                  }
-                //next key
                 ++this->last_key;
               }
             else
@@ -201,7 +157,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->updater_ = this->context_->get_connection_info_update_data ();
+    this->writer_ = this->context_->get_connection_info_write_data ();
   }
 
   void
@@ -237,7 +193,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Shape_Sender_Impl (void)
+  create_Keyed_Test_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
@@ -249,4 +205,3 @@ namespace CIAO_Keyed_Test_Sender_Impl
     return retval;
   }
 }
-

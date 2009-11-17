@@ -68,7 +68,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::KeyedTest::Updater_var updater_;
+    CCM_DDS::KeyedTest::Writer_var writer_;
 
     pulse_Generator * ticker_;
     ::Keyed_Test::CCM_Sender_Context_var context_;
@@ -83,7 +83,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Shape_Sender_Impl (void);
+  create_Keyed_Test_Sender_Impl (void);
 }
 
 #endif /* ifndef */
