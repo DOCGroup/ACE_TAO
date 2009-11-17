@@ -56,7 +56,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (parse_args (argc, argv) != 0)
         {
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot process args\n"),
+                            1);
         }
 
       ACE_ARGV orb1_argv (orb1_args);
