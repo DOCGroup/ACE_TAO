@@ -1,8 +1,7 @@
 // $Id$
 
 /**
- * @file dds4ccm_ListenerControl.idl3
- *
+ * @file dds4ccm_ListenerControl.idl
  */
 
 #ifndef DDS4CCM_STATELISTENERCONTROL_IDL
