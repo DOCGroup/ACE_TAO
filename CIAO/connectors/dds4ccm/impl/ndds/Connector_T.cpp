@@ -312,28 +312,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_dds_entity (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-::DDS::CCM_DataWriter_ptr
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_info_update_dds_entity (void)
-{
-  CIAO_TRACE ("get_info_in_dds_entity");
-
-  this->configure_port_info_in_ ();
-
-  return this->__info_in_datawriter_.in ();
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-typename CCM_TYPE::updater_type::_ptr_type
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_update_data (void)
-{
-  CIAO_TRACE ("get_info_update_data");
-
-  this->configure_port_info_in_ ();
-  return new CIAO::DDS4CCM::RTI::Updater_T<DDS_TYPE, CCM_TYPE> (
-          this->__info_in_datawriter_.in ());
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::getter_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data (void)
 {

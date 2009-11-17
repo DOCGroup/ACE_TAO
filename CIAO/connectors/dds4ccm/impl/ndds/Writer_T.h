@@ -43,9 +43,9 @@ namespace CIAO
         virtual void is_coherent_write ( ::CORBA::Boolean value);
 
       private:
-        void write (const typename DDS_TYPE::value_type& datum,
-                    const ::DDS::InstanceHandle_t& instance_handle,
-                    ::CCM_DDS::DataNumber_t index);
+        void write_i (const typename DDS_TYPE::value_type& datum,
+                      const ::DDS::InstanceHandle_t& instance_handle,
+                      ::CCM_DDS::DataNumber_t index);
 
         bool is_coherent_write_;
       };
