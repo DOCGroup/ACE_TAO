@@ -22,12 +22,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
           throw 0;
         }
 
-      //get NodeApplicationManager
+      // Get NodeApplicationManager
       Deployment::DeploymentPlan plan;
       Deployment::NodeApplicationManager_var nam;
       nam = nm->preparePlan (plan, Deployment::ResourceCommitmentManager::_nil());
 
-      //call startLaunch
+      // Call startLaunch
       Deployment::Properties dp;
       Deployment::Connections_var dc;
       Deployment::Application_ptr app = nam->startLaunch (dp, dc.out());

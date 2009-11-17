@@ -14,14 +14,12 @@ using namespace DAnCE;
 NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
                                                           PortableServer::POA_ptr poa,
                                                           const Deployment::DeploymentPlan& plan,
-//                                                          RedirectionService & redirection,
                                                           const ACE_CString& node_name,
                                                           const PROPERTY_MAP &properties)
     : plan_ (plan),
       orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
       application_ (0),
-      //redirection_ (redirection),
       node_name_ (node_name),
       properties_ ()
 {
@@ -81,7 +79,6 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
                     NodeApplication_Impl (this->orb_.in(),
                                           this->poa_.in(),
                                           this->plan_,
-//                                          this->redirection_,
                                           this->node_name_,
                                           this->properties_),
                     CORBA::NO_MEMORY ());
@@ -136,7 +133,6 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
         this->application_->remove_components ();
       }
 
-
     PortableServer::ObjectId_var id = this->poa_->reference_to_id (application);
     this->poa_->deactivate_object (id);
 
@@ -188,7 +184,7 @@ NodeApplicationManager_Impl::register_plan(void)
           if (this->plan_.connection[i].internalEndpoint[j].provider)
             {
               DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::register_plan - "),
-                            ACE_TEXT("Registering Port '%s' on instance '%s' on node '%s'\n"),
+                            ACE_TEXT("Registering Port '%C' on instance '%C' on node '%C'\n"),
                             this->plan_.connection[i].internalEndpoint[j].portName.in(),
                             this->plan_.instance[this->plan_.connection[i].internalEndpoint[j].instanceRef].name.in(),
                             this->node_name_.c_str ()));
