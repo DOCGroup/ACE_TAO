@@ -19,7 +19,7 @@
 #define DATAREADER_QOS_USE_TOPIC_QOS
 
 #include "tao/StringSeq.pidl"
-#include "dds_rtf2_dcps_instance_handle.idl"
+#include "connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handle.idl"
 
 module DDS {
     typedef long DomainId_t;
