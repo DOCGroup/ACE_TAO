@@ -94,10 +94,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (ast,
-           ast_decl,
-           "$Id$")
-
 COMMON_Base::COMMON_Base (bool local,
                           bool abstract)
   : is_local_ (local),

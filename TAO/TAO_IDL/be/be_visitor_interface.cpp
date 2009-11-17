@@ -94,6 +94,3 @@
 #include "be_visitor_interface/amh_rh_ss.cpp"
 #include "be_visitor_interface/amh_rh_sh.cpp"
 
-ACE_RCSID (be,
-           be_visitor_interface,
-           "$Id$")
