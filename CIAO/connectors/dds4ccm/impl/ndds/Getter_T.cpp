@@ -132,7 +132,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           info <<= sample_info; //retrieves the last sample.
           if (retcode == DDS_RETCODE_OK && data.length () >= 0)
             {
-              an_instance = new DDS_TYPE::value_type (data[0]);
+              an_instance = new typename DDS_TYPE::value_type (data[0]);
             }
           else
             {
