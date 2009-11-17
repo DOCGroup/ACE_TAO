@@ -1,0 +1,15 @@
+// $Id$
+
+#ifndef DDS_RFT2_DCPS_IDL_I
+#define DDS_RFT2_DCPS_IDL_I
+
+module DDS {
+    struct NativeInstanceHandle_t {
+        octet value[16];
+        unsigned long length;
+    };
+    typedef NativeInstanceHandle_t InstanceHandle_t;
+    typedef sequence<InstanceHandle_t> InstanceHandleSeq;
+};
+
+#endif
