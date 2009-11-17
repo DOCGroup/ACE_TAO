@@ -41,10 +41,6 @@ public:
 
   virtual ::DDS::CCM_DataWriter_ptr get_supplier_dds_entity (void);
 
-  virtual ::DDS::CCM_DataWriter_ptr get_info_update_dds_entity (void);
-
-  virtual typename CCM_TYPE::updater_type::_ptr_type get_update_data (void);
-
   virtual typename CCM_TYPE::reader_type::_ptr_type get_pull_consumer_data (void);
 
   virtual typename CCM_TYPE::getter_type::_ptr_type get_pull_consumer_fresh_data (void);
