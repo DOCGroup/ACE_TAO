@@ -17,21 +17,6 @@ module CCM_DDS
   typedef sequence<DataNumber_t> DataNumberSeq;
   const DataNumber_t UNLIMITED = 0;
 
-  exception AlreadyCreated {
-    DataNumberSeq indexes; // of the erroneous
-  };
-
-  exception NonExistent{
-    DataNumberSeq indexes; // of the erroneous
-  };
-
-  exception InternalError{
-    DDS::ReturnCode_t error_code;
-    DataNumber_t index; // of the erroneaous
-  };
-
-  exception NonChangeable {};
-
   enum AccessStatus {
     FRESH_INFO,
     ALREADY_SEEN
@@ -43,12 +28,6 @@ module CCM_DDS
     INSTANCE_UPDATED,
     INSTANCE_FILTERED_OUT,
     INSTANCE_DELETED
-  };
-
-  enum ListenerMode {
-    NOT_ENABLED,
-    ONE_BY_ONE,
-    MANY_BY_MANY
   };
 
   struct ReadInfo {
@@ -63,6 +42,27 @@ module CCM_DDS
     string            query;
     ::DDS::StringSeq  query_parameters;
   };
+
+  enum ListenerMode {
+    NOT_ENABLED,
+    ONE_BY_ONE,
+    MANY_BY_MANY
+  };
+
+  exception AlreadyCreated {
+    DataNumberSeq indexes; // of the erroneous
+  };
+
+  exception NonExistent{
+    DataNumberSeq indexes; // of the erroneous
+  };
+
+  exception InternalError{
+    DDS::ReturnCode_t error_code;
+    DataNumber_t index; // of the erroneaous
+  };
+
+  exception NonChangeable {};
 };
 
 #endif

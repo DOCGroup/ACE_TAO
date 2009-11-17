@@ -10,7 +10,8 @@ template <typename DDS_TYPE, typename CCM_TYPE >
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (::DDS::DataReader_ptr reader)
 : impl_ (0),
   condition_(0),
-  time_out_ ()
+  time_out_ (),
+  max_delivered_data_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
 
@@ -78,7 +79,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::wait (
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_all (
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
           typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
@@ -89,24 +90,8 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_all (
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 bool
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_all_history (
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos)
-{
-  DDSConditionSeq active_conditions;
-  DDS_SampleInfoSeq sample_info;
-  if (!this->wait (active_conditions))
-    return false;
-
-  ACE_UNUSED_ARG (instances);
-  ACE_UNUSED_ARG (infos);
-  return false;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE >
-bool
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
-          typename DDS_TYPE::value_type& an_instance,
+          typename DDS_TYPE::value_type::_out_type an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
   DDSConditionSeq active_conditions;
@@ -147,7 +132,8 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           info <<= sample_info; //retrieves the last sample.
           if (retcode == DDS_RETCODE_OK && data.length () >= 0)
             {
-              an_instance = data[0];
+// @todo            
+//              an_instance = data[0];
             }
           else
             {
@@ -165,44 +151,6 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
-bool
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one_history (
-          const typename DDS_TYPE::value_type& an_instance,
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos)
-{
-  ACE_UNUSED_ARG (an_instance);
-  ACE_UNUSED_ARG (instances);
-  ACE_UNUSED_ARG (infos);
-  return true;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE >
-bool
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_next (
-          typename DDS_TYPE::value_type::_out_type  an_instance,
-          ::CCM_DDS::ReadInfo_out info)
-{
-  ACE_UNUSED_ARG (an_instance);
-  ACE_UNUSED_ARG (info);
-  return true;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE >
- ::CCM_DDS::QueryFilter *
- CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::filter (void)
-{
-  return 0;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE >
-void
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::filter (const ::CCM_DDS::QueryFilter & filter)
-{
-  this->query_filter_ = filter;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE >
 ::DDS::Duration_t
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::time_out (void)
 {
@@ -211,7 +159,23 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::time_out (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::time_out (const ::DDS::Duration_t & time_out)
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::time_out (
+  const ::DDS::Duration_t & time_out)
 {
   this->time_out_ = time_out;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE >
+::CCM_DDS::DataNumber_t
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (void) const
+{
+  return this->max_delivered_data_;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE >
+void
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
+  const ::CCM_DDS::DataNumber_t & max_delivered_data)
+{
+  this->max_delivered_data_ = max_delivered_data;
 }

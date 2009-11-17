@@ -35,30 +35,37 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   }
 
   //============================================================
-  // Facet Executor Implementation Class: UnkeyedTest_RawListener_exec_i
+  // Facet Executor Implementation Class: UnkeyedTest_Listener_exec_i
   //============================================================
 
-  UnkeyedTest_RawListener_exec_i::UnkeyedTest_RawListener_exec_i (Atomic_ULong &received)
+  UnkeyedTest_Listener_exec_i::UnkeyedTest_Listener_exec_i (Atomic_ULong &received)
       : received_ (received)
   {
   }
 
-  UnkeyedTest_RawListener_exec_i::~UnkeyedTest_RawListener_exec_i (void)
+  UnkeyedTest_Listener_exec_i::~UnkeyedTest_Listener_exec_i (void)
   {
   }
 
-  // Operations from ::CCM_DDS::UnkeyedTest_RawListener
+  // Operations from ::CCM_DDS::UnkeyedTest_Listener
 
   void
-  UnkeyedTest_RawListener_exec_i::on_data (
+  UnkeyedTest_Listener_exec_i::on_one_data (
     const UnkeyedTest & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ++this->received_;
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UnkeyedTest_RawListener: ")
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UnkeyedTest_Listener: ")
             ACE_TEXT ("received keyed_test_info for <%C> at %u\n"),
             an_instance.key.in (),
             an_instance.iteration));
+  }
+
+  void
+  UnkeyedTest_Listener_exec_i::on_many_data (
+    const UnkeyedTest_Seq & an_instance ,
+    const ::CCM_DDS::ReadInfoSeq & /* info */)
+  {
   }
 
   //============================================================
@@ -92,7 +99,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iUnkeyedTest_RawListener_exec_i ();
+  // Component Executor Implementation Class: Receiver_exec_iUnkeyedTest_Listener_exec_i ();
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
@@ -126,7 +133,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
             ACE_OS::sprintf (key, "KEY_%d", i);
             keyedtest_info.key = key;
             ::CCM_DDS::ReadInfo readinfo;
-            this->reader_->read_one (keyedtest_info, readinfo );
+            this->reader_->read_one_last (keyedtest_info, readinfo, ::DDS::HANDLE_NIL);
             ++this->received_;
             time_t tim = readinfo.source_timestamp.sec;
             tm* time = localtime(&tim);
@@ -179,13 +186,13 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   void
   Receiver_exec_i::get_one (void)
   {
-    UnkeyedTest  keyedtest_info;
-    keyedtest_info.key = "KEY1";
+    UnkeyedTest_var  keyedtest_info;
+//    keyedtest_info.key = "KEY1";
     ::CCM_DDS::ReadInfo readinfo;
 
     try
       {
-        if (this->getter_->get_one (keyedtest_info, readinfo ))
+        if (this->getter_->get_one (keyedtest_info.out (), readinfo ))
           {
             time_t tim = readinfo.source_timestamp.sec;
             tm* time = localtime(&tim);
@@ -197,13 +204,13 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
                                 readinfo.source_timestamp.nanosec));
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE UnkeyedTest : ")
                                    ACE_TEXT ("received keyedtest_info for <%C> at %u\n"),
-                keyedtest_info.key.in (),
-                keyedtest_info.iteration));
+                keyedtest_info->key.in (),
+                keyedtest_info->iteration));
           }
         else
           {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE No data available for <%C>\n"), 
-                    keyedtest_info.key.in ()));
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE No data available for <%C>\n"),
+                    keyedtest_info->key.in ()));
           }
       }
     catch(CCM_DDS::NonExistent& )
@@ -211,7 +218,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("UnkeyedTest_Read_One: no keyedtest_info received\n")));
       }
   }
-   
+
   void
   Receiver_exec_i::get_all (void)
   {
@@ -223,14 +230,14 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   {
     return this->rate_;
   }
-  
+
   void
   Receiver_exec_i::rate (
     ::CORBA::ULong rate)
   {
     this->rate_ = rate;
   }
-  
+
   ::CORBA::UShort
   Receiver_exec_i::iterations (void)
   {
@@ -256,26 +263,26 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     this->keys_ = keys;
     this->expected_ = this->iterations_ * this->keys_;
   }
-  
+
   ::CORBA::Boolean
   Receiver_exec_i::get_data (void)
   {
     return this->get_data_;
   }
-  
+
   void
   Receiver_exec_i::get_data (
     ::CORBA::Boolean get_data)
   {
     this->get_data_ = get_data;
   }
-  
+
   ::CORBA::Boolean
   Receiver_exec_i::read_data (void)
   {
     return this->read_data_;
   }
-  
+
   void
   Receiver_exec_i::read_data (
     ::CORBA::Boolean read_data)
@@ -297,20 +304,27 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::UnkeyedTest::CCM_RawListener_ptr
+  ::CCM_DDS::UnkeyedTest::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new UnkeyedTest RAW listener\n")));
-    return new UnkeyedTest_RawListener_exec_i (this->received_);
+    return new UnkeyedTest_Listener_exec_i (this->received_);
   }
-  
+
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
-  
+
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_info_get_status (void)
+  {
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    return new PortStatusListener_exec_i ();
+  }
+
   // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
@@ -323,7 +337,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Receiver_exec_i::configuration_complete (void)
   {
@@ -333,14 +347,14 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
       }
     if (this->get_data ())
       {
-        this->getter_ = this->context_->get_connection_info_out_get_data();
+        this->getter_ = this->context_->get_connection_info_get_fresh_data();
       }
   }
-  
+
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::ListenerControl_var lc = 
+    ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
@@ -348,7 +362,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
         CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    lc->enabled (this->raw_listen_);
+    lc->mode (this->raw_listen_ ? ::CCM_DDS::ONE_BY_ONE : CCM_DDS::NOT_ENABLED);
 
     // calculate the interval time
     long usec = 1000000 / this->rate_;
@@ -361,14 +375,14 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
         CIAO_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
       }
   }
-  
+
   void
   Receiver_exec_i::ccm_passivate (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
     delete this->ticker_;
   }
-  
+
   void
   Receiver_exec_i::ccm_remove (void)
   {
@@ -380,7 +394,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
           this->received_.value (), this->expected_));
       }
   }
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Unkeyed_Test_Receiver_Impl (void)
   {

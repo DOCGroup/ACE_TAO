@@ -37,19 +37,25 @@ public:
 
   virtual void qos_profile (const char * qos_profile);
 
-  virtual typename CCM_TYPE::writer_type::_ptr_type get_info_in_data (void);
+  virtual typename CCM_TYPE::writer_type::_ptr_type get_supplier_data (void);
 
-  virtual ::DDS::CCM_DataWriter_ptr get_info_in_dds_entity (void);
+  virtual ::DDS::CCM_DataWriter_ptr get_supplier_dds_entity (void);
 
-  virtual typename CCM_TYPE::updater_type::_ptr_type get_info_update_data (void);
+  virtual ::DDS::CCM_DataWriter_ptr get_info_update_dds_entity (void);
 
-  virtual typename CCM_TYPE::getter_type::_ptr_type get_info_out_get_data (void);
+  virtual typename CCM_TYPE::updater_type::_ptr_type get_update_data (void);
 
-  virtual typename CCM_TYPE::reader_type::_ptr_type get_info_out_data (void);
+  virtual typename CCM_TYPE::reader_type::_ptr_type get_pull_consumer_data (void);
 
-  virtual ::CCM_DDS::CCM_ListenerControl_ptr get_info_out_data_control (void);
+  virtual typename CCM_TYPE::getter_type::_ptr_type get_pull_consumer_fresh_data (void);
 
-  virtual ::DDS::CCM_DataReader_ptr get_info_out_dds_entity (void);
+  virtual typename CCM_TYPE::reader_type::_ptr_type get_push_consumer_data (void);
+
+  virtual ::CCM_DDS::CCM_DataListenerControl_ptr get_push_consumer_data_control (void);
+
+  virtual ::DDS::CCM_DataReader_ptr get_pull_consumer_dds_entity (void);
+
+  virtual ::DDS::CCM_DataReader_ptr get_push_consumer_dds_entity (void);
 
   virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
@@ -87,13 +93,14 @@ private:
   typename CCM_TYPE::writer_type::_var_type __info_in_writer_;
 
   // @from DDS_RawListen
-  void configure_port_info_out_ (bool create_getter);
-  bool __info_out_configured_;
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> __info_out_rawlistener_enabled_;
-  ::DDS::Subscriber_var __info_out_subscriber_;
-  ::DDS::DataReader_var __info_out_datareader_;
-  ::DDS::DataReaderListener_var __info_out_datareaderlistener;
-  ::DDS::DataWriterListener_var __info_out_datawriterlistener;
+  void configure_port_listen_ (bool create_getter);
+  bool __listen_configured_;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> __listen_datalistener_mode_;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> __listen_datalistener_max_delivered_data_;
+  ::DDS::Subscriber_var __listen_subscriber_;
+  ::DDS::DataReader_var __listen_datareader_;
+  ::DDS::DataReaderListener_var __listen_datareaderlistener;
+  ::DDS::DataWriterListener_var __listen_datawriterlistener;
 
   // @from DDS_Getter
   bool __info_get_configured_;
@@ -107,7 +114,8 @@ private:
             typename GETTER_TYPE,
             typename READER_TYPE,
             typename CONTEXT_TYPE,
-            typename RAWLISTENER_TYPE,
+            typename LISTENER_TYPE,
+            typename STATELISTENER_TYPE,
             typename CONNECTORSTATUSLISTENER_TYPE
   >
 
@@ -120,7 +128,8 @@ private:
     typedef GETTER_TYPE getter_type;
     typedef READER_TYPE reader_type;
     typedef CONTEXT_TYPE context_type;
-    typedef RAWLISTENER_TYPE rawlistener_type;
+    typedef LISTENER_TYPE listener_type;
+    typedef STATELISTENER_TYPE statelistener_type;
     typedef CONNECTORSTATUSLISTENER_TYPE connectorstatuslistener_type;
   };
 

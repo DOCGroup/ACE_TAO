@@ -18,8 +18,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   int
-  read_action_Generator::handle_timeout (const ACE_Time_Value &,
-                                   const void *)
+  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
     if (pulse_callback_.read_data ())
       {
@@ -35,25 +34,31 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   //============================================================
-  // Facet Executor Implementation Class: ShapeType_RawListener_exec_i
+  // Facet Executor Implementation Class: ShapeType_Listener_exec_i
   //============================================================
 
-  ShapeType_RawListener_exec_i::ShapeType_RawListener_exec_i (void)
+  ShapeType_Listener_exec_i::ShapeType_Listener_exec_i (void)
   {
   }
 
-  ShapeType_RawListener_exec_i::~ShapeType_RawListener_exec_i (void)
+  ShapeType_Listener_exec_i::~ShapeType_Listener_exec_i (void)
   {
   }
 
-  // Operations from ::CCM_DDS::ShapeType_RawListener
+  // Operations from ::CCM_DDS::ShapeType_Listener
+  void
+  ShapeType_Listener_exec_i::on_many_data (
+    const ShapeType_Seq & an_instance ,
+    const ::CCM_DDS::ReadInfoSeq & /* info */)
+  {
+  }
 
   void
-  ShapeType_RawListener_exec_i::on_data (
+  ShapeType_Listener_exec_i::on_one_data (
     const ShapeType & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_RawListener: ")
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_Listener: ")
             ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
             an_instance.color.in (),
             an_instance.x,
@@ -91,7 +96,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iShapeType_RawListener_exec_i ();
+  // Component Executor Implementation Class: Receiver_exec_iShapeType_Listener_exec_i ();
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
@@ -118,7 +123,7 @@ namespace CIAO_Shapes_Receiver_Impl
 
     try
       {
-        this->reader_->read_one (shape_info, readinfo );
+        this->reader_->read_one_last (shape_info, readinfo, ::DDS::HANDLE_NIL);
         time_t tim = readinfo.source_timestamp.sec;
         tm* time = localtime(&tim);
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
@@ -173,33 +178,33 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::get_one (void)
   {
-    ShapeType  shape_info;
-    shape_info.color = "yellow";
-    ::CCM_DDS::ReadInfo readinfo;
+    ShapeType_var shape_info;
+//    shape_info.color = "yellow";
+    ::CCM_DDS::ReadInfo_var readinfo;
 
     try
       {
-        if (this->getter_->get_one (shape_info, readinfo ))
+        if (this->getter_->get_one (shape_info.out (), readinfo.out ()))
           {
-            time_t tim = readinfo.source_timestamp.sec;
+            time_t tim = readinfo->source_timestamp.sec;
             tm* time = localtime(&tim);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
                                    ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
                                 time->tm_hour,
                                 time->tm_min,
                                 time->tm_sec,
-                                readinfo.source_timestamp.nanosec));
+                                readinfo->source_timestamp.nanosec));
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType : ")
                                    ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
-                shape_info.color.in (),
-                shape_info.x,
-                shape_info.y,
-                shape_info.shapesize));
+                shape_info->color.in (),
+                shape_info->x,
+                shape_info->y,
+                shape_info->shapesize));
           }
         else
           {
-            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE No data available for <%C>\n"), 
-                    shape_info.color.in ()));
+            CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE No data available for <%C>\n"),
+                    shape_info->color.in ()));
           }
       }
     catch(CCM_DDS::NonExistent& )
@@ -207,7 +212,7 @@ namespace CIAO_Shapes_Receiver_Impl
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: no shape_info receieved\n")));
       }
   }
-   
+
   void
   Receiver_exec_i::get_all (void)
   {
@@ -218,7 +223,7 @@ namespace CIAO_Shapes_Receiver_Impl
   {
     return this->rate_;
   }
-  
+
   void
   Receiver_exec_i::rate (
     ::CORBA::ULong rate)
@@ -230,20 +235,20 @@ namespace CIAO_Shapes_Receiver_Impl
   {
     return this->get_data_;
   }
-  
+
   void
   Receiver_exec_i::get_data (
     ::CORBA::Boolean get_data)
   {
     this->get_data_ = get_data;
   }
-  
+
   ::CORBA::Boolean
   Receiver_exec_i::read_data (void)
   {
     return this->read_data_;
   }
-  
+
   void
   Receiver_exec_i::read_data (
     ::CORBA::Boolean read_data)
@@ -265,20 +270,27 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::ShapeType::CCM_RawListener_ptr
+  ::CCM_DDS::ShapeType::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new ShapeType RAW listener\n")));
-    return new ShapeType_RawListener_exec_i ();
+    return new ShapeType_Listener_exec_i ();
   }
-  
+
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
-  
+
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_info_get_status (void)
+  {
+    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
+    return new PortStatusListener_exec_i ();
+  }
+
   // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
@@ -291,24 +303,24 @@ namespace CIAO_Shapes_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Receiver_exec_i::configuration_complete (void)
   {
     if (this->read_data ())
       {
-        this->reader_ = this->context_->get_connection_info_out_data();
+        this->reader_ = this->context_->get_connection_info_out_data ();
       }
     if (this->get_data ())
       {
-        this->getter_ = this->context_->get_connection_info_out_get_data();
+        this->getter_ = this->context_->get_connection_info_get_fresh_data ();
       }
   }
-  
+
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::ListenerControl_var lc = 
+    ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
 
     if (CORBA::is_nil (lc.in ()))
@@ -316,10 +328,11 @@ namespace CIAO_Shapes_Receiver_Impl
         CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    lc->enabled (this->raw_listen_);
+
+    lc->mode (this->raw_listen_ ? ::CCM_DDS::ONE_BY_ONE : ::CCM_DDS::NOT_ENABLED);
 
     // calculate the interval time
-    long usec = 1000000 / this->rate_;
+    long const usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                                           this->ticker_,
                                           0,
@@ -329,19 +342,19 @@ namespace CIAO_Shapes_Receiver_Impl
         CIAO_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
       }
   }
-  
+
   void
   Receiver_exec_i::ccm_passivate (void)
   {
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
     delete this->ticker_;
   }
-  
+
   void
   Receiver_exec_i::ccm_remove (void)
   {
   }
-  
+
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Shapes_Receiver_Impl (void)
   {

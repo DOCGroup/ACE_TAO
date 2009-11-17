@@ -91,7 +91,7 @@ namespace CIAO_Shapes_Sender_Impl
       }
     try
       {
-        this->updater_->update (*square_);
+        this->writer_->write_one (*square_, this->instance_handle_);
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("UPDATED Shape_info for <%C> %u:%u:%u\n"),
                   square_->color.in (),
                   square_->x,
@@ -135,7 +135,7 @@ namespace CIAO_Shapes_Sender_Impl
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     try
       {
-        this->updater_->_cxx_delete (*this->square_);
+        this->writer_->unregister_instance (*this->square_, this->instance_handle_);
       }
     catch (CCM_DDS::NonExistent& )
       {
@@ -227,7 +227,7 @@ namespace CIAO_Shapes_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->updater_ = this->context_->get_connection_info_update_data ();
+    this->writer_ = this->context_->get_connection_info_write_data ();
   }
 
   void
@@ -247,7 +247,7 @@ namespace CIAO_Shapes_Sender_Impl
                   square_->shapesize));
     try
       {
-        this->updater_->create (*square_);
+        this->instance_handle_ = this->writer_->register_instance (*square_);
       }
     catch (CCM_DDS::AlreadyCreated& )
       {

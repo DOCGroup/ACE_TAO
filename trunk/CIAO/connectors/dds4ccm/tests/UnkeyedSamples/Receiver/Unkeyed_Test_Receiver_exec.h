@@ -19,7 +19,7 @@
 namespace CIAO_Unkeyed_Test_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
-  
+
   class Receiver_exec_i;
   /**
   * @class reader activity generator
@@ -45,18 +45,22 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
 
   };
 
-  class RECEIVER_EXEC_Export UnkeyedTest_RawListener_exec_i
-    : public virtual ::CCM_DDS::UnkeyedTest::CCM_RawListener,
+  class RECEIVER_EXEC_Export UnkeyedTest_Listener_exec_i
+    : public virtual ::CCM_DDS::UnkeyedTest::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    UnkeyedTest_RawListener_exec_i (Atomic_ULong &);
-    virtual ~UnkeyedTest_RawListener_exec_i (void);
+    UnkeyedTest_Listener_exec_i (Atomic_ULong &);
+    virtual ~UnkeyedTest_Listener_exec_i (void);
 
     virtual void
-    on_data (
+    on_one_data (
       const UnkeyedTest & an_instance,
       const ::CCM_DDS::ReadInfo & info);
+    virtual void
+    on_many_data (
+      const UnkeyedTest_Seq & an_instance,
+      const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Atomic_ULong &received_;
   };
@@ -106,7 +110,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     virtual ::CORBA::UShort keys (void);
 
     virtual void keys (::CORBA::UShort keys);
-    
+
     virtual ::CORBA::Boolean get_data (void);
 
     virtual void get_data (::CORBA::Boolean get_data);
@@ -120,12 +124,15 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     virtual void raw_listen (::CORBA::Boolean raw_listen);
 
     // Port operations.
-    virtual ::CCM_DDS::UnkeyedTest::CCM_RawListener_ptr
+    virtual ::CCM_DDS::UnkeyedTest::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
 
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_info_get_status (void);
+    
     // Operations from Components::SessionComponent.
     virtual void
     set_session_context (

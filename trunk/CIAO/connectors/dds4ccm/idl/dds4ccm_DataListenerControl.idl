@@ -8,12 +8,13 @@
 #ifndef DDS4CCM_LISTENERCONTROL_IDL3
 #define DDS4CCM_LISTENERCONTROL_IDL3
 
-#include "connectors/dds4ccm/idl/dds4ccm_Base.idl3"
+#include "connectors/dds4ccm/idl/dds4ccm_Base.idl"
 
 module CCM_DDS
 {
-  interface ListenerControl {
-    attribute boolean enabled;
+  interface DataListenerControl {
+    attribute ListenerMode mode;
+    attribute DataNumber_t max_delivered_data;
   };
 };
 

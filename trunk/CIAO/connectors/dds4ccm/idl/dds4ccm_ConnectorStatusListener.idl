@@ -8,7 +8,7 @@
 #ifndef DDS4CCM_CONNECTORSTATUSLISTNER_IDL3
 #define DDS4CCM_CONNECTORSTATUSLISTNER_IDL3
 
-#include "connectors/dds4ccm/idl/dds4ccm_Base.idl3"
+#include "connectors/dds4ccm/idl/dds4ccm_Base.idl"
 
 module CCM_DDS
 {

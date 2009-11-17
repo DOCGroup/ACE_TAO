@@ -8,6 +8,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
+#include "InstanceHandleManager_T.h"
 
 namespace CIAO
 {
@@ -17,9 +18,7 @@ namespace CIAO
     {
       template <typename DDS_TYPE, typename CCM_TYPE>
       class Updater_T :
-        public virtual CCM_TYPE::updater_type,
-        public virtual ::CORBA::LocalObject,
-        private ACE_Copy_Disabled
+        public InstanceHandleManager_T <DDS_TYPE, CCM_TYPE, typename CCM_TYPE::updater_type>
       {
       public:
         /// Constructor
@@ -28,21 +27,34 @@ namespace CIAO
         /// Destructor
         virtual ~Updater_T (void);
 
-        virtual void create (const typename DDS_TYPE::value_type& an_instance);
+        virtual void create_one (
+          const typename DDS_TYPE::value_type& an_instance);
 
-        virtual void update (const typename DDS_TYPE::value_type& an_instance);
+        virtual void update_one (
+          const typename DDS_TYPE::value_type& an_instance,
+          const ::DDS::InstanceHandle_t & instance_handle);
 
-        virtual void _cxx_delete (const typename DDS_TYPE::value_type& an_instance);
+        virtual void delete_one (
+          const typename DDS_TYPE::value_type& an_instance,
+          const ::DDS::InstanceHandle_t & instance_handle);
 
-        virtual bool is_lifecycle_checked ();
+        virtual void create_many (
+          const typename CCM_TYPE::seq_type& data);
 
-        virtual ::DDS::InstanceHandle_t register_instance (const typename DDS_TYPE::value_type & datum);
+        virtual void update_many (
+          const typename CCM_TYPE::seq_type& data);
 
-        virtual void unregister_instance (const typename DDS_TYPE::value_type & datum, const ::DDS::InstanceHandle_t & instance_handle);
+        virtual void delete_many (
+          const typename CCM_TYPE::seq_type& data);
+
+        virtual bool is_global_scope () const;
+
+        virtual bool is_coherent_write () const;
+
+        virtual void is_coherent_write (bool value_);
 
       private:
-        typename DDS_TYPE::data_writer *impl_;
-        bool is_lifecycle_checked_;
+        bool is_global_scope_;
         bool is_coherent_write_;
       };
     }
