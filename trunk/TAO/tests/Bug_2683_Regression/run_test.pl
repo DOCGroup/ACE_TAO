@@ -24,7 +24,9 @@ my $iorbase = "test.ior";
 my $port = 43210;
 my $hostname = $server->HostName();
 my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level ".
                                         "-o $server_iorfile ".
@@ -50,6 +52,13 @@ if ($server->GetFile ($iorbase) == -1) {
     exit 1;
 }
 
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
@@ -65,5 +74,6 @@ if ($server_status != 0) {
 }
 
 $server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;
