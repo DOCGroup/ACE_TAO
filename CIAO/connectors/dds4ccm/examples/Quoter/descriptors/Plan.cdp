@@ -199,7 +199,7 @@
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_data</portName>
+      <portName>push_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
@@ -215,7 +215,7 @@
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_data_control</portName>
+      <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
@@ -231,7 +231,7 @@
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_data_listener</portName>
+      <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
@@ -247,7 +247,7 @@
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_dds_entity</portName>
+      <portName>push_consumer_dds_entity</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
@@ -263,7 +263,7 @@
       <instance xmi:idref="BrokerComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_out_status</portName>
+      <portName>push_consumer_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance2" />
@@ -295,14 +295,14 @@
       <instance xmi:idref="DistributorComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
-  <connection>
+  <!--connection>
     <name>updater_connection</name>
     <internalEndpoint>
       <portName>info_update_data</portName>
@@ -316,7 +316,7 @@
       <kind>Facet</kind>
       <instance xmi:idref="Quoter_ConnectorComponentInstance" />
     </internalEndpoint>
-  </connection>
+  </connection-->
 
   <artifact xmi:id="Distributor_ExecArtifact">
     <name>Distributor_exec</name>
