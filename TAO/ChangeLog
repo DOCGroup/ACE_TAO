@@ -1,3 +1,9 @@
+Tue Nov 17 14:43:36 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          
+          Test, which is not converted now, is disabled in FUZZ build.
+
 Tue Nov 17 13:49:10 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * bin/tao_other_tests.lst:
