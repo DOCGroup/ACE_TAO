@@ -5,9 +5,10 @@
 
 ACE_RCSID(Single_Read, test_i, "$Id$")
 
-test_i::test_i (CORBA::ORB_ptr orb)
+test_i::test_i (CORBA::ORB_ptr orb, const ACE_TCHAR *file_name)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    client_done_ (false)
+    client_done_ (false),
+    client_done_file_(file_name)
 {
 }
 
@@ -21,7 +22,7 @@ test_i::method (CORBA::ULong request_number,
 
   if (!client_done_)
     {
-      FILE *input_file = ACE_OS::fopen ("client_done", "r");
+      FILE *input_file = ACE_OS::fopen (client_done_file_, "r");
       if (input_file == 0)
         {
           // Time required to process this request.

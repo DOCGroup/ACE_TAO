@@ -46,14 +46,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv ());
 
+      if (parse_args (argc, argv) != 0)
+            return 1;
       {
         ACE_Manual_Event me;
 

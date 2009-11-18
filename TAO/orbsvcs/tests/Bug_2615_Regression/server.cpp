@@ -39,6 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
+                           "-p <iorfile>"
                            "\n",
                            argv [0]),
                           -1);
