@@ -83,7 +83,7 @@ CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::write_many (
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 ::CORBA::Boolean
-CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::is_coherent_write (void) const
+CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>::is_coherent_write (void)
 {
   return this->is_coherent_write_;
 }
