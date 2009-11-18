@@ -1,3 +1,14 @@
+
+Wed Nov 18 09:24:04 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.h:
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Writer_T.h:
+        * connectors/dds4ccm/impl/ndds/Writer_T.cpp:
+          Fixed compiler issues related to TAO IDL compiler
+          fix (see Tue Nov 17 20:47:27 UTC 2009  Jeff Parsons in
+          TAO changelog for details).
+
 Wed Nov 18 09:20:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Connector_T.cpp:

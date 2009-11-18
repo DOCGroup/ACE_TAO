@@ -166,7 +166,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::time_out (
 
 template <typename DDS_TYPE, typename CCM_TYPE >
 ::CCM_DDS::DataNumber_t
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (void) const
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (void)
 {
   return this->max_delivered_data_;
 }
@@ -174,7 +174,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (void) cons
 template <typename DDS_TYPE, typename CCM_TYPE >
 void
 CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
-  const ::CCM_DDS::DataNumber_t & max_delivered_data)
+  ::CCM_DDS::DataNumber_t max_delivered_data)
 {
   this->max_delivered_data_ = max_delivered_data;
 }
