@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file Get_Connection_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef KEYED_TEST_CONNECTOR_IDL_
+#define KEYED_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Get_Connection_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+TYPED_MODULE( ::Get_ConnectionTest, ::Get_ConnectionTest_Seq, Get_ConnectionTest)
+
+module Get_Connection_Test
+{
+  connector Get_Connection_Test_Connector : ::CCM_DDS::Get_ConnectionTest::DDS_Event
+  {
+  };
+};
+
+#endif /* Get_Connection_Test_CONNECTOR_IDL_ */

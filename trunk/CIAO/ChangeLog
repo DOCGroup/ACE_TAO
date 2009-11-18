@@ -1,3 +1,38 @@
+Wed Nov 18 13:58:28 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Resolved minor typo.
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/Get_Connection_Test:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Base:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Base/Get_Connection_Test_Base.idl:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Base/Get_Connection_Test_Base.mpc:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector.idl:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector_exec.h:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender/Get_Connection_Test_Sender.idl:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender/Get_Connection_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender/Get_Connection_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender/Get_Connection_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Get_Connection_Test/descriptors:
+        * connectors/dds4ccm/tests/Get_Connection_Test/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/Get_Connection_Test/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Get_Connection_Test/descriptors/run_test.pl:
+          Added test to test connections within DDS4CCM.
+
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/Plan.cdp:
+          Changed naming of topics.
+
 Wed Nov 18 11:10:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.cpp:

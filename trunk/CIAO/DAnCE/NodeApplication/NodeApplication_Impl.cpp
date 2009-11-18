@@ -2036,7 +2036,7 @@ NodeApplication_Impl::connect_receptacle (Components::CCMObject_ptr inst,
       DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::finishLaunch - ")
                    ACE_TEXT("Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n")));
       throw ::Deployment::InvalidConnection("",
-                                            "Caught AlredyConnected exception while connecting receptacle");
+                                            "Caught AlreadyConnected exception while connecting receptacle");
     }
   catch (const ::Components::ExceededConnectionLimit& )
     {

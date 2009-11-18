@@ -3,8 +3,8 @@
    xmlns:xmi="http://www.omg.org/XMI"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>Unkeyed_Test_Depl_1</label>
-  <UUID>Unkeyed_Test_Depl_1</UUID>
+  <label>Get_Connection_Test_Depl_1</label>
+  <UUID>Get_Connection_Test_Depl_1</UUID>
 
   <implementation xmi:id="ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
@@ -19,7 +19,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Unkeyed_Test_Receiver_Impl</string>
+          <string>create_Get_Connection_Test_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -30,7 +30,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Unkeyed_Test_Receiver_Servant</string>
+          <string>create_Get_Connection_Test_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -58,11 +58,11 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="Unkeyed_Test_ConnectorComponentImplementation">
-    <name>Unkeyed_Test_ConnectorComponentImplementation</name>
+  <implementation xmi:id="Get_Connection_Test_ConnectorComponentImplementation">
+    <name>Get_Connection_Test_ConnectorComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Unkeyed_Test_Connector_ExecArtifact" />
-    <artifact xmi:idref="Unkeyed_Test_Connector_SvntArtifact" />
+    <artifact xmi:idref="Get_Connection_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="Get_Connection_Test_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Unkeyed_Test_Unkeyed_Test_Connector_Impl</string>
+          <string>create_Get_Connection_Test_Get_Connection_Test_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Unkeyed_Test_Unkeyed_Test_Connector_Servant</string>
+          <string>create_Get_Connection_Test_Get_Connection_Test_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -93,7 +93,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Unkeyed_Test_Connector_svnt</string>
+          <string>Get_Connection_Test_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -104,7 +104,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Unkeyed_Test_Connector_exec</string>
+          <string>Get_Connection_Test_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -122,7 +122,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Shape_Sender_Impl</string>
+          <string>create_Get_Connection_Test_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -133,7 +133,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Unkeyed_Test_Sender_Servant</string>
+          <string>create_Get_Connection_Test_Sender_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -166,79 +166,13 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
-    <configProperty>
-      <name>rate</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>10</long>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>keys</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <ulong>5</ulong>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>iterations</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <ulong>10</ulong>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>get_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>read_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>raw_listen</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>true</boolean>
-        </value>
-      </value>
-    </configProperty>
   </instance>
-  <instance xmi:id="Unkeyed_Test_ConnectorComponentInstance">
-    <name>Unkeyed_Test_ConnectorComponent</name>
+  <instance xmi:id="Get_Connection_Test_ConnectorComponentInstance">
+    <name>Get_Connection_Test_ConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Unkeyed_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="Get_Connection_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -246,17 +180,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Unkeyed_Test</string>
+          <string>Get_Connection_Test</string>
         </value>
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="Unkeyed_Test_ConnectorComponentInstance2">
-    <name>Unkeyed_Test_ConnectorComponent2</name>
+  <instance xmi:id="Get_Connection_Test_ConnectorComponentInstance2">
+    <name>Get_Connection_Test_ConnectorComponent2</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Unkeyed_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="Get_Connection_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -264,7 +198,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Unkeyed_Test</string>
+          <string>Get_Connection_Test</string>
         </value>
       </value>
     </configProperty>
@@ -275,45 +209,12 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
-    <configProperty>
-      <name>rate</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>1</long>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>keys</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <ulong>5</ulong>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>iterations</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <ulong>10</ulong>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <connection>
-    <name>info_out_data</name>
+    <name>listen_data</name>
     <internalEndpoint>
-      <portName>info_out_data</portName>
+      <portName>info_listen_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -322,28 +223,14 @@
       <portName>push_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
+
   <connection>
-    <name>_listenercontrol</name>
+    <name>listen_portstatuslistener</name>
     <internalEndpoint>
-      <portName>info_out_data_control</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_data_control</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>_portstatuslistener</name>
-    <internalEndpoint>
-      <portName>info_out_status</portName>
+      <portName>info_listen_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -352,13 +239,14 @@
       <portName>push_consumer_status</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
+
   <connection>
-    <name>_rawlistner</name>
+    <name>listen_rawlistener</name>
     <internalEndpoint>
-      <portName>info_out_data_listener</portName>
+      <portName>info_listen_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -367,11 +255,60 @@
       <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
+
   <connection>
-    <name>info_out_get_fresh_data</name>
+    <name>listen_datacontrol</name>
+    <internalEndpoint>
+      <portName>info_listen_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>listen_dds_reader</name>
+    <internalEndpoint>
+      <portName>info_listen_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>getter_portstatuslistener</name>
+    <internalEndpoint>
+      <portName>info_get_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_consumer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>getter_fresh_data</name>
     <internalEndpoint>
       <portName>info_get_fresh_data</portName>
       <provider>false</provider>
@@ -382,12 +319,44 @@
       <portName>pull_consumer_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>writer_connection</name>
+    <name>getter_data</name>
+    <internalEndpoint>
+      <portName>info_get_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>getter_dds_reader</name>
+    <internalEndpoint>
+      <portName>info_get_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_consumer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_data</name>
     <internalEndpoint>
       <portName>info_write_data</portName>
       <provider>false</provider>
@@ -398,9 +367,57 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance" />
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
+
+  <connection>
+    <name>writer_dds_writer</name>
+    <internalEndpoint>
+      <portName>info_write_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <!--connection>
+    <name>updater_data</name>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>updater_dds_writer</name>
+    <internalEndpoint>
+      <portName>info_write_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Get_Connection_Test_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection-->
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
@@ -420,23 +437,23 @@
     <node/>
     <location>Sender_stub</location>
   </artifact>
-  <artifact xmi:id="Unkeyed_Test_Connector_ExecArtifact">
-    <name>Unkeyed_Test_Connector_exec</name>
+  <artifact xmi:id="Get_Connection_Test_Connector_ExecArtifact">
+    <name>Get_Connection_Test_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_Unkeyed_Test_Connector_exec</location>
+    <location>DDS_Get_Connection_Test_Connector_exec</location>
   </artifact>
-  <artifact xmi:id="Unkeyed_Test_Connector_SvntArtifact">
-    <name>Unkeyed_Test_Connector_svnt</name>
+  <artifact xmi:id="Get_Connection_Test_Connector_SvntArtifact">
+    <name>Get_Connection_Test_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Unkeyed_Test_Connector_svnt</location>
+    <location>DDS_Get_Connection_Test_Connector_svnt</location>
   </artifact>
-  <artifact xmi:id="Unkeyed_Test_Connector_StubArtifact">
-    <name>Unkeyed_Test_Connector_stub</name>
+  <artifact xmi:id="Get_Connection_Test_Connector_StubArtifact">
+    <name>Get_Connection_Test_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_Unkeyed_Test_Connector_stub</location>
+    <location>DDS_Get_Connection_Test_Connector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
