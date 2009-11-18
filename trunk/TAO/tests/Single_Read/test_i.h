@@ -24,7 +24,7 @@ class test_i : public POA_test
   //   Simple implementation.
   //
 public:
-  test_i (CORBA::ORB_ptr orb);
+  test_i (CORBA::ORB_ptr orb, const ACE_TCHAR *file_name);
   // ctor.
 
   // = The test interface methods.
@@ -39,6 +39,7 @@ private:
 
   CORBA::Boolean client_done_;
 
+  const ACE_TCHAR *client_done_file_;
 };
 
 #endif /* TAO_SINGLE_READ_TEST_I_H*/

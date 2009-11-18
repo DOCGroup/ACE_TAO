@@ -32,6 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
+                           "-l <iogr> "
                            "\n",
                            argv [0]),
                           -1);
