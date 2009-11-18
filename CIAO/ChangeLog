@@ -1,3 +1,8 @@
+Wed Nov 18 11:10:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.cpp:
+          Length of a key is 16
+
 Wed Nov 18 10:28:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Connector_T.h:
