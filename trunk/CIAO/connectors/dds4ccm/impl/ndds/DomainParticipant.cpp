@@ -12,6 +12,7 @@
 #include "Time_t.h"
 #include "InstanceHandleSeq.h"
 #include "PublisherListener.h"
+#include "TopicListener.h"
 #include "PublisherQos.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
@@ -159,7 +160,7 @@ namespace CIAO
       RTI_DomainParticipant_i::create_topic (const char * impl_name,
                                              const char * type_name,
                                              const ::DDS::TopicQos & /*qos*/,
-                                             ::DDS::TopicListener_ptr /*a_listener*/,
+                                             ::DDS::TopicListener_ptr a_listener,
                                              ::DDS::StatusMask mask)
       {
         CIAO_TRACE ("DDS_DomainParticipant_i::create_topic");
@@ -184,10 +185,11 @@ namespace CIAO
                      "Attempting to create topic with name %C and type %C\n",
                      impl_name, type_name));
 
+        RTI_TopicListener_i *rti_tl = new RTI_TopicListener_i (a_listener);
         DDSTopic *rti_topic = this->impl_->create_topic (impl_name,
                                                          type_name,
                                                          DDS_TOPIC_QOS_DEFAULT,
-                                                         0,
+                                                         rti_tl,
                                                          mask);
 
         if (rti_topic == 0)
