@@ -246,7 +246,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Square</string>
+          <string>Keyed_Test</string>
         </value>
       </value>
     </configProperty>
@@ -264,7 +264,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Square</string>
+          <string>Keyed_Test</string>
         </value>
       </value>
     </configProperty>
