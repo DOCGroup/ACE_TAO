@@ -88,7 +88,7 @@ private:
   ::DDS::CCM_DataWriter_var __info_in_datawriter_;
   typename CCM_TYPE::writer_type::_var_type __info_in_writer_;
 
-  // @from DDS_RawListen
+  // @from DDS_Listen
   void configure_port_listen_ (bool create_getter);
   bool __listen_configured_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> __listen_datalistener_mode_;
