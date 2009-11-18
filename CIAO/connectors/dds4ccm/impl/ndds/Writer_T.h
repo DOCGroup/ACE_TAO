@@ -38,7 +38,7 @@ namespace CIAO
         virtual void write_many (
           const typename CCM_TYPE::seq_type& instances);
 
-        virtual ::CORBA::Boolean is_coherent_write (void) const;
+        virtual ::CORBA::Boolean is_coherent_write (void);
 
         virtual void is_coherent_write ( ::CORBA::Boolean value);
 

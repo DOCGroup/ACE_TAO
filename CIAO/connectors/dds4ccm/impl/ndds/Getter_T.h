@@ -42,8 +42,8 @@ namespace CIAO
         virtual ::DDS::Duration_t time_out (void);
         virtual void time_out (const ::DDS::Duration_t & time_out);
 
-        virtual ::CCM_DDS::DataNumber_t max_delivered_data (void) const;
-        virtual void max_delivered_data (const ::CCM_DDS::DataNumber_t & max_delivered_data);
+        virtual ::CCM_DDS::DataNumber_t max_delivered_data (void);
+        virtual void max_delivered_data (::CCM_DDS::DataNumber_t max_delivered_data);
       private:
         bool wait (DDSConditionSeq& active_conditions);
 
