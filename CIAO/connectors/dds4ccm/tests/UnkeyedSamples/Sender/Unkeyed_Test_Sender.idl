@@ -24,14 +24,4 @@ module Unkeyed_Test
   };
 };
 
-/*
-For future use: IDL3 plus
-module Unkeyed_Test
-{
-  component Sender
-  {
-    port CCM_DDS::DDS_Write <Shape_Info> info;
-  };
-};
-*/
 #endif

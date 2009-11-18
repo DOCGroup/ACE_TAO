@@ -158,7 +158,7 @@
       <instance xmi:idref="Hello_SenderComponentImplementation" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstance" />

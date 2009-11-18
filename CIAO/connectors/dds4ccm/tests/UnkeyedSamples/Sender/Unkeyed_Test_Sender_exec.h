@@ -83,7 +83,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Shape_Sender_Impl (void);
+  create_Unkeyed_Test_Sender_Impl (void);
 }
 
 #endif /* ifndef */

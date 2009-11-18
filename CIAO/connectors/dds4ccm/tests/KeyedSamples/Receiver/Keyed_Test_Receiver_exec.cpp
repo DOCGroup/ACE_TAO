@@ -174,7 +174,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
       }
     for(CORBA::ULong i = 0; i < keyedtest_infos->length(); ++i)
       {
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
               ACE_TEXT ("Number <%d> : received keyedtest_info for <%C> at %u\n"),
             i,
             keyedtest_infos[i].key.in (),
