@@ -271,41 +271,6 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
           return CORBA::Object::_nil ();
         }
 
-
-      /* @@CDMW stuff, figure out what to do with this later....
-         try
-         {
-         CORBA::Object_var obj = orb->resolve_initial_references ("ProcessDestinationNC");
-         if (CORBA::is_nil(obj))
-         {
-         DANCE_ERROR((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-         "ProcessDestinationNC can not be resolved. RIR returned nil.\n"));
-         return CORBA::Object::_nil();
-         }
-
-         CosNaming::NamingContext_var pdnc = CosNaming::NamingContext::_narrow(obj.in());
-         if (CORBA::is_nil(pdnc.in()))
-         {
-         DANCE_ERROR((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-         "ProcessDestinationNC can not be narrowed to NC.\n"));
-         return CORBA::Object::_nil();
-         }
-         }
-         catch (CORBA::ORB::InvalidName &)
-         {
-         DANCE_ERROR((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-         "ProcessDestinationNC can not be resolved. InvalidName.\n"));
-         return CORBA::Object::_nil();
-         }
-         catch(...)
-         {
-         DANCE_ERROR((LM_ERROR, DLINFO "DAnCE_NodeManager_Module::create_object - "
-         "ProcessDestinationNC can not be retrieved. Unknown exception.\n"));
-         return CORBA::Object::_nil();
-         }
-      */
-
-
       this->register_value_factories ();
       this->create_poas ();
 
@@ -437,19 +402,6 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
             }
         }
 
-      //Creating redirection object
-/*      if (this->redirection_ == 0)
-        {
-          DANCE_DEBUG ((LM_TRACE, DLINFO "DAnCE_NodeManager_Module::create_object - "
-                        "Creating redirection service object\n"));
-          this->redirection_ = new DAnCE::RedirectionService (orb,
-                                                              this->root_poa_.in (),
-                                                              plan_nc.in (),
-                                                              rebind_nc.in (),
-                                                              this->options_.create_plan_ns_,
-                                                              this->options_.port_indirection_);
-        }*/
-
       // Make sure that we have only one Node Manager
       if (this->options_.node_managers_.size () != 1)
         {
@@ -491,7 +443,6 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                           DAnCE::NodeManager_Impl (orb,
                                                    this->root_poa_.in (),
                                                    ACE_TEXT_ALWAYS_CHAR (node_name.c_str()),
-//                                                   *this->redirection_,
                                                    properties),
                           CORBA::Object::_nil ());
           DANCE_DEBUG ((LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::create_object - ")

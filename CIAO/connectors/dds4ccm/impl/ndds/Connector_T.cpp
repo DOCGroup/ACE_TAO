@@ -158,7 +158,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
         {
           CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part =
             dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
-          DDS_ReturnCode_t retcode = DDS_TYPE::type_support::register_type(
+          DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
                 part->get_participant (), DDS_TYPE::type_support::get_type_name ());
           if (retcode == DDS_RETCODE_OK)
             {

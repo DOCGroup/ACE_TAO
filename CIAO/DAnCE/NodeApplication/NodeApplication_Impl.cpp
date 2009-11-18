@@ -24,8 +24,6 @@
 
 #include <string>
 
-//#include "ComponentInstallation_Impl.h"
-
 #ifdef GEN_OSTREAM_OPS
 #include <iostream>
 #include <sstream>
@@ -213,32 +211,22 @@ namespace
       }
   }
 
-  const char * get_artifact_location (const char * name,
-                                      const ::Deployment::ArtifactDeploymentDescriptions &art)
-  {
-    DANCE_TRACE ("NodeApplication::<anonymous>::get_artifact_location");
-
-    for (CORBA::ULong i = 0; i < art.length (); ++i)
-      {
-        if (ACE_OS::strcmp (name, art[0].name.in ()) == 0)
-          return art[0].location[0].in ();
-      }
-
-    return 0;
-  }
-
   void append_properties (::Deployment::Properties &dest,
         const ::Deployment::Properties &src)
   {
+    const char* edu_prop = "edu.vanderbilt.dre.";
     for (CORBA::ULong i = 0; i < src.length (); ++i)
       {
-        DANCE_DEBUG ((LM_TRACE, DLINFO
-                  ACE_TEXT("NodeApplicion::append_properties - ")
-                  ACE_TEXT("Adding property %C\n"), src[i].name.in ()));
-        CORBA::ULong const dest_length = dest.length ();
-        dest.length (dest_length + 1);
-        dest[dest_length].name = CORBA::string_dup (src[i].name.in ());
-        dest[dest_length].value = src[i].value;
+        if (ACE_OS::strncmp (src[i].name.in (), edu_prop, ACE_OS::strlen (edu_prop)) == 0)
+          {
+            DANCE_DEBUG ((LM_TRACE, DLINFO
+                      ACE_TEXT("NodeApplicion::append_properties - ")
+                      ACE_TEXT("Adding property %C\n"), src[i].name.in ()));
+            CORBA::ULong const dest_length = dest.length ();
+            dest.length (dest_length + 1);
+            dest[dest_length].name = CORBA::string_dup (src[i].name.in ());
+            dest[dest_length].value = src[i].value;
+          }
       }
   }
 }
