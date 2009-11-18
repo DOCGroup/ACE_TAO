@@ -94,6 +94,7 @@ private:
   ::DDS::DataReader_var __info_out_datareader_;
   ::DDS::DataReaderListener_var __info_out_datareaderlistener;
   ::DDS::DataWriterListener_var __info_out_datawriterlistener;
+  ::DDS::TopicListener_var __listen_topiclistener;
 
   // @from DDS_Getter
   bool __info_get_configured_;

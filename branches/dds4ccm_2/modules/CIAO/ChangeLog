@@ -1,3 +1,43 @@
+
+Wed Nov 18 9:46:22 UTC 2009  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp
+        * connectors/dds4ccm/impl/ndds/ndds_impl.mpc
+        * connectors/dds4ccm/impl/ndds/TopicListener.cpp
+        * connectors/dds4ccm/impl/ndds/TopicListener.h
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/TopicListener_T.h
+        * connectors/dds4ccm/tests/ConnectorStatusListener
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Base
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Base/ConnectorStatusListener_Test_Base.cxx
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Base/ConnectorStatusListener_Test_Base.h
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Base/ConnectorStatusListener_Test_Base.idl
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Base/ConnectorStatusListener_Test_Base.mpc
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Connector
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Connector/ConnectorStatusListener_Test_Connector.idl
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Connector/ConnectorStatusListener_Test_Connector.mpc
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Connector/ConnectorStatusListener_Test_Connector_exec.cpp
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Connector/ConnectorStatusListener_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/ConnectorStatusListener/descriptors
+        * connectors/dds4ccm/tests/ConnectorStatusListener/descriptors/Plan.cdp
+        * connectors/dds4ccm/tests/ConnectorStatusListener/descriptors/run_test.pl
+        * connectors/dds4ccm/tests/ConnectorStatusListener/descriptors/USER_QOS_PROFILES.xml
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Receiver
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Receiver/ConnectorStatusListener_Test_Receiver.idl
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Receiver/ConnectorStatusListener_Test_Receiver.mpc
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp
+        * connectors/dds4ccm/        * connectors/dds4ccm/tests/ConnectorStatusListener/Receiver/ConnectorStatusListener_Test_Receiver_exec.h
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Sender
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Sender/ConnectorStatusListener_Test_Sender.idl
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Sender/ConnectorStatusListener_Test_Sender.mpc
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Sender/ConnectorStatusListener_Test_Sender_exec.cpp
+        * connectors/dds4ccm/tests/ConnectorStatusListener/Sender/ConnectorStatusListener_Test_Sender_exec.h
+	Add test for ConnectorStatusListener : on_inconsistent_topic
+
+
+
 Mon Nov 16 10:21:22 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:

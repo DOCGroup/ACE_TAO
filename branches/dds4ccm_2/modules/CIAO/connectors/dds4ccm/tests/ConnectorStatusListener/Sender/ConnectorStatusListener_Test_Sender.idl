@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef DDS_CONNECTORSTATUSLISTENER_TEST_SENDER_IDL
+#define DDS_CONNECTORSTATUSLISTENER_TEST_SENDER_IDL
+
+#include "Connector/ConnectorStatusListener_Test_Connector.idl"
+#include "Connector/ConnectorStatusListener_Test_ConnectorE.idl"
+
+module ConnectorStatusListener_Test
+{
+  component Sender
+  {
+    //port CCM_DDS::TestTopic::DDS_Listen info_out;  
+    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
+ 
+  };
+};
+#endif

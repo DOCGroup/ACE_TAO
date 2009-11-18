@@ -1,0 +1,43 @@
+// $Id$
+
+/**
+ * @file ConnectorStatusListener_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand translation of the idl3p.
+ */
+
+#ifndef CONNECTORSTATUSLISTENER_TEST_CONNECTOR_IDL_
+#define CONNECTORSTATUSLISTENER_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/ConnectorStatusListener_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+TYPED_MODULE( ::TestTopic, ::TestTopic_Seq, TestTopic)
+
+module ConnectorStatusListener_Test
+{
+  connector ConnectorStatusListener_Test_Connector : ::CCM_DDS::TestTopic::DDS_MonoConnector
+  {
+  };
+};
+
+//TYPED_MODULE( ::KeyedTest, ::KeyedTest_Seq, KeyedTest)
+
+//module Keyed_Test
+//{
+//  connector Keyed_Test_Connector : ::CCM_DDS::KeyedTest::DDS_MonoConnector
+//  {
+//  };
+//};
+//TYPED_MODULE( ::Quoter::Stock_Info, ::Quoter::Stock_Info_Seq, Quoter)
+
+//module Quoter
+//{
+//  connector Quoter_Connector : ::CCM_DDS::Quoter::DDS_MonoConnector
+//  {
+//  };
+//};
+
+#endif /* ConnectorStatusListener_CONNECTOR_IDL_ */

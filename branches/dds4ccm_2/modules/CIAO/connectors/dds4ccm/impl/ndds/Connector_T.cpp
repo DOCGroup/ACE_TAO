@@ -5,11 +5,13 @@
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
+#include "dds4ccm/impl/ndds/TopicListener_T.h"
 #include "dds4ccm/impl/ndds/Writer_T.h"
 #include "dds4ccm/impl/ndds/Updater_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
 #include "dds4ccm/impl/ndds/Reader_T.h"
 #include "dds4ccm/impl/ndds/ListenerControl.h"
+
 
 #include "ciao/Logger/Log_Macros.h"
 
@@ -146,6 +148,9 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
   CIAO_DEBUG ((LM_TRACE, CLINFO "Connector_T::configure_default_topic_ - "
                 "Configuring default topic\n"));
 
+  CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_Event_Connector_T::configure_default_topic_ - "
+                "Configuring default topic\n"));
+
   if (this->default_topic_configured_)
     return;
 
@@ -157,8 +162,12 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
         {
           CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part =
             dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
-          DDS_ReturnCode_t retcode = DDS_TYPE::type_support::register_type(
+          DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
                 part->get_participant (), DDS_TYPE::type_support::get_type_name ());
+          this->__listen_topiclistener = new ::CIAO::DDS4CCM::TopicListener_T
+            <DDS_TYPE, CCM_TYPE> (
+                  this->context_);
+
           if (retcode == DDS_RETCODE_OK)
             {
               ::DDS::TopicQos tqos;
@@ -166,13 +175,13 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
                 this->domain_->create_topic (this->topic_name_.in (),
                                              DDS_TYPE::type_support::get_type_name (),
                                              tqos,
-                                             0,
-                                             0);
+                                             this->__listen_topiclistener.in (),
+                                             DDS_INCONSISTENT_TOPIC_STATUS);
               this->default_topic_configured_ = true;
             }
           else
             {
-              throw CORBA::INTERNAL ();
+              throw CCM_DDS::InternalError (retcode, 0);
             }
         }
     }
@@ -181,6 +190,7 @@ Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
       CIAO_ERROR ((LM_ERROR, "Caught unknown error while configuring default topic\n"));
       throw CORBA::INTERNAL ();
     }
+
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
