@@ -3,9 +3,9 @@
 
 #include "dds_rtf2_dcps_instance_handleC.h"
 
-static ::DDS::InstanceHandle_t S_HANDLE = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0};
+static ::DDS::InstanceHandle_t S_HANDLE = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 16};
 
-namespace DDS 
+namespace DDS
 {
   ::DDS::InstanceHandle_t const HANDLE_NIL = S_HANDLE;
 };
