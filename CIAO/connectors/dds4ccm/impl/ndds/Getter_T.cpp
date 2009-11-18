@@ -126,7 +126,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           else if (retcode != DDS_RETCODE_OK)
             {
               CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
-                    "Unable to return the loan to DDS: <%d>\n", retcode));
+                    "Unable to return the loan to DDS: <%C>\n", translate_retcode (retcode)));
               break;
             }
           info <<= sample_info; //retrieves the last sample.
@@ -142,7 +142,7 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           retcode = this->impl_->return_loan(data,sample_info);
           if (retcode != DDS_RETCODE_OK)
             {
-              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("return loan error %d\n"), retcode));
+              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("return loan error %C\n"), translate_retcode (retcode)));
             }
         }
     }

@@ -1,3 +1,18 @@
+Wed Nov 18 09:20:10 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+          Const change
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+          Print DDS return values as string
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Cleanup all code and only pass properties that start with
+          edu.vanderbilt.dre. to the component server
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+          Removed old stuff
+
 Tue Nov 17 19:40:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl:
@@ -5,7 +20,7 @@ Tue Nov 17 19:40:10 UTC 2009  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
           Changed to meet the latest version of the DDS implementation.
           Disabled the updater for now. Also implemented some exception
-          handling. 
+          handling.
 
 Tue Nov 17 15:55:38 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
