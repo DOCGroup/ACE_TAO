@@ -532,7 +532,7 @@
       <instance xmi:idref="Hello_SenderComponentInstanceOne" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceOne" />
@@ -547,7 +547,7 @@
       <instance xmi:idref="Hello_SenderComponentInstanceTwo" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceTwo" />
@@ -562,7 +562,7 @@
       <instance xmi:idref="Hello_SenderComponentInstanceThree" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceThree" />
@@ -577,7 +577,7 @@
       <instance xmi:idref="Hello_SenderComponentInstanceFour" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceFour" />
@@ -592,7 +592,7 @@
       <instance xmi:idref="Hello_SenderComponentInstanceFive" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>info_in_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello_SenderConnectorComponentInstanceFive" />
