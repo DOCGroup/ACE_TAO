@@ -9,62 +9,7 @@
 namespace CIAO_Get_Connection_Test_Receiver_Impl
 {
   //============================================================
-  // Facet Executor Implementation Class: Get_ConnectionTest_Listener_exec_i
-  //============================================================
-
-  Get_ConnectionTest_Listener_exec_i::Get_ConnectionTest_Listener_exec_i ()
-  {
-  }
-
-  Get_ConnectionTest_Listener_exec_i::~Get_ConnectionTest_Listener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::Get_ConnectionTest_Listener
-  void
-  Get_ConnectionTest_Listener_exec_i::on_many_data (
-    const Get_ConnectionTest_Seq & ,
-    const ::CCM_DDS::ReadInfoSeq & )
-  {
-  }
-
-  void
-  Get_ConnectionTest_Listener_exec_i::on_one_data (
-    const Get_ConnectionTest &  ,
-    const ::CCM_DDS::ReadInfo & )
-  {
-  }
-
-  //============================================================
-  // Facet Executor Implementation Class: PortStatusListener_exec_i
-  //============================================================
-
-  PortStatusListener_exec_i::PortStatusListener_exec_i (void)
-  {
-  }
-
-  PortStatusListener_exec_i::~PortStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::PortStatusListener
-
-  void
-  PortStatusListener_exec_i::on_requested_deadline_missed (
-    ::DDS::DataReader_ptr ,
-    const ::DDS::RequestedDeadlineMissedStatus & )
-  {
-  }
-
-  void
-  PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr ,
-    const ::DDS::SampleLostStatus & )
-  {
-  }
-
-  //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iGet_ConnectionTest_Listener_exec_i ();
+  // Component Executor Implementation Class: Receiver_exec_i
   //============================================================
 
   Receiver_exec_i::Receiver_exec_i (void)
@@ -74,7 +19,8 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
       data_listener_control_ok_ (false),
       raw_listener_created_ (false),
       listen_port_status_created_ (false),
-      get_port_status_created_ (false)
+      get_port_status_created_ (false),
+      get_status_listener_created_ (false)
   {
   }
 
@@ -88,7 +34,7 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new Get_ConnectionTest RAW listener\n")));
     this->raw_listener_created_ = true;
-    return new Get_ConnectionTest_Listener_exec_i ();
+    return 0;
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -96,16 +42,23 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
   {
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener for DDS_Listen\n")));
     this->listen_port_status_created_ = true;
-    return new PortStatusListener_exec_i ();
+    return 0;
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_get_status (void)
   {
-    CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener for DDS_Get\n")));
     this->get_port_status_created_ = true;
-    return new PortStatusListener_exec_i ();
+    return 0;
   }
+  
+  CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Receiver_exec_i::get_status_listener(void)
+  {
+    this->get_status_listener_created_ = true;
+    return 0;
+  }
+
 
   // Operations from Components::SessionComponent.
   void
@@ -190,6 +143,10 @@ namespace CIAO_Get_Connection_Test_Receiver_Impl
     if (!this->get_port_status_created_)
       {
         CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : PortStatusListener of DDS_Get not created\n")));
+      }
+    if (!this->get_status_listener_created_)
+      {
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : ConnectorStatusListener not created\n")));
       }
   }
 
