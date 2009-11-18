@@ -54,6 +54,8 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
 
      virtual CORBA::Policy_ptr copy ();
 
+     virtual CORBA::PolicyType policy_type (void);
+
      virtual void destroy ();
 
  private:
