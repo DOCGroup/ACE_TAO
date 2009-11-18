@@ -5,6 +5,7 @@
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/DataReaderListener_T.h"
 #include "dds4ccm/impl/ndds/DataWriterListener_T.h"
+#include "dds4ccm/impl/ndds/TopicListener_T.h"
 #include "dds4ccm/impl/ndds/Writer_T.h"
 #include "dds4ccm/impl/ndds/Updater_T.h"
 #include "dds4ccm/impl/ndds/Getter_T.h"
@@ -162,18 +163,22 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
                 part->get_participant (), DDS_TYPE::type_support::get_type_name ());
           if (retcode == DDS_RETCODE_OK)
             {
+              this->__listen_topiclistener = new ::CIAO::DDS4CCM::TopicListener_T
+                <DDS_TYPE, CCM_TYPE> (
+                    this->context_);
+
               ::DDS::TopicQos tqos;
               this->topic_ =
                 this->domain_->create_topic (this->topic_name_.in (),
                                              DDS_TYPE::type_support::get_type_name (),
                                              tqos,
-                                             0,
-                                             0);
+                                             this->__listen_topiclistener.in (),
+                                             DDS_INCONSISTENT_TOPIC_STATUS);
               this->default_topic_configured_ = true;
             }
           else
             {
-              throw CORBA::INTERNAL ();
+              throw CCM_DDS::InternalError (retcode, 0);
             }
         }
     }
@@ -212,12 +217,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
                   this->__listen_datalistener_max_delivered_data_);
 
           ::DDS::DataWriterQos dwqos;
-          //test mh
-     //     dwqos.history.depth=1;
-      //    dwqos.resource_limits.max_instances   = 5; // >= Initial Instances
-      //    dwqos.resource_limits.max_samples_per_instance = 4; //>= Depth,  <=Max Samples
-      //    dwqos.deadline.period.nanosec = 0;
-     //     dwqos.deadline.period.sec = 1;
           ::DDS::DataWriter_var dwv_tmp = this->__info_in_publisher_->create_datawriter (this->topic_.in (),
                                                                                           dwqos,
                                                                                           this->__listen_datawriterlistener.in (),
