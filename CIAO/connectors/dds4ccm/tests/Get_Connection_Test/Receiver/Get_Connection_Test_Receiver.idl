@@ -18,6 +18,7 @@ module Get_Connection_Test
     port CCM_DDS::Get_ConnectionTest::DDS_Listen  info_listen;
     port CCM_DDS::Get_ConnectionTest::DDS_Get     info_get;
     //port CCM_DDS::Get_ConnectionTest::DDS_StateListen
+    provides CCM_DDS::ConnectorStatusListener status_listener;
   };
 };
 
