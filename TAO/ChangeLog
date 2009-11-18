@@ -1,3 +1,15 @@
+Wed Nov 18 11:09:55 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+          Added policy_type implementation. As a result of
+          change in the IDL compiler (see Tue Nov 17
+          20:47:27 UTC 2009  Jeff Parsons for more details).
+
 Tue Nov 17 20:47:27 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
@@ -5,11 +17,11 @@ Tue Nov 17 20:47:27 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
         * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
         * TAO_IDL/be/be_visitor_operation.cpp:
-        
+
           Cosmetic changes.
 
         * TAO_IDL/be/be_interface.cpp:
-        
+
           Fixed bug in stub header code generation for local interfaces.
           Operations inherited from non-local interfaces are re-generated
           as pure virtual, but the operations associated with attributes

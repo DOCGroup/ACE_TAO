@@ -45,6 +45,12 @@ FP_Segment_Sched_Param_Policy::copy (void)
   return tmp;
 }
 
+CORBA::PolicyType
+FP_Segment_Sched_Param_Policy::policy_type (void)
+{
+  return 0;
+}
+
 void
 FP_Segment_Sched_Param_Policy::destroy (void)
 {

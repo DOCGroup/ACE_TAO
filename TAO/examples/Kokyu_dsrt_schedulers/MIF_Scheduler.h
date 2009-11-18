@@ -51,6 +51,8 @@ public MIF_Scheduling::SchedulingParameterPolicy,
 
      virtual CORBA::Policy_ptr copy ();
 
+     virtual CORBA::PolicyType policy_type (void);
+
      virtual void destroy ();
 
  private:
