@@ -80,22 +80,23 @@ enum Color
   BLUE
 };
 
-module T2 
+module T2
 {
-  interface Write 
+  interface Write
   {
   };
-  
+
   porttype MyPort
   {
     uses Write writer;
   };
-  
-  component Base 
+
+  component Base
   {
     port MyPort usage;
+    attribute string topic_name;
   };
-  
+
   component Derived : Base
   {
   };
