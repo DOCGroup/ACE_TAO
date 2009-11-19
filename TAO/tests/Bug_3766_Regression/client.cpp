@@ -20,9 +20,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Test_var test = Test::_narrow (object.in ());
 
-      Info_var info;
+      VariableLengthInfo_var variable_info;
+      test->do_something_VariableLength(variable_info);
 
-      test->do_something(info);
+      FixedLengthInfo_var fixed_info;
+      test->do_something_FixedLength(fixed_info);
 
       orb->destroy ();
     }
