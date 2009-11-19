@@ -8,5 +8,5 @@ static ::DDS::InstanceHandle_t S_HANDLE = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 namespace DDS
 {
   ::DDS::InstanceHandle_t const HANDLE_NIL = S_HANDLE;
-};
+}
 

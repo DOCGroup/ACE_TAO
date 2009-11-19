@@ -89,7 +89,80 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
   if (!this->wait (active_conditions))
     return false;
 
-  return false;
+  ::DDS_Long max_samples = this->max_delivered_data_;
+  if (max_samples == 0)
+    {
+      max_samples = DDS_LENGTH_UNLIMITED;
+    }
+
+  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::dds_seq_type data;
+  for (::DDS_Long i = 0; i < active_conditions.length(); i++)
+    {
+      if (active_conditions[i] == gd_)
+        {
+          gd_->set_trigger_value (false);
+        }
+
+      if (active_conditions[i] == rd_condition_)
+        {
+          // Check trigger
+          active_conditions[i]->get_trigger_value ();
+
+          // Take read condition
+          DDS_ReturnCode_t retcode = this->impl_->read (data,
+                                    sample_info,
+                                    max_samples,
+                                    DDS_NOT_READ_SAMPLE_STATE ,
+                                    DDS_ANY_VIEW_STATE,
+                                    DDS_ANY_INSTANCE_STATE);
+
+          if (retcode == DDS_RETCODE_NO_DATA)
+            {
+              throw CCM_DDS::InternalError (retcode, 1);
+            }
+          else if (retcode != DDS_RETCODE_OK)
+            {
+              CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
+                    "Unable to return the loan to DDS: <%C>\n", translate_retcode (retcode)));
+              break;
+            }
+          if (retcode == DDS_RETCODE_OK && data.length () >= 1)
+            {
+              ::CORBA::ULong number_read = 0;
+              for (::DDS_Long index = 0; index < sample_info.length (); index ++) 
+                {
+                  if (sample_info[index].valid_data)
+                    {
+                      ++number_read;
+                    }
+                }
+              infos->length (number_read);
+              instances->length (number_read);
+              number_read = 0;
+              for (::DDS_Long j = 0; j < data.length (); j ++) 
+                {
+                  if (sample_info[j].valid_data)
+                    {
+                      infos->operator[](number_read) <<= sample_info[j]; //retrieves the last sample.
+                      instances->operator[](number_read) = data[j];
+                      ++number_read;
+                    }
+                }
+            }
+          else
+            {
+              throw CCM_DDS::InternalError (retcode, 0);
+            }
+
+          retcode = this->impl_->return_loan(data,sample_info);
+          if (retcode != DDS_RETCODE_OK)
+            {
+              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("return loan error %C\n"), translate_retcode (retcode)));
+            }
+        }
+    }
+  return true;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
