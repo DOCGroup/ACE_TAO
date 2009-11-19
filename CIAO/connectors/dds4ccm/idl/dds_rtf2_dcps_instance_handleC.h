@@ -24,7 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace DDS
 {
   extern DDS4CCM_STUB_Export ::DDS::InstanceHandle_t const HANDLE_NIL;
-};
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
