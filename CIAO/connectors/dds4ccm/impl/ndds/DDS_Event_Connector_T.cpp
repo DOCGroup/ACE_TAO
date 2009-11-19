@@ -15,8 +15,8 @@
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Event_Connector_T (const char * topic_name)
-  : domain_id_ (0),
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Event_Connector_T (const char * topic_name) :
+    DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>(),
     topic_name_ (topic_name),
     __listen_datalistener_mode_ ( ::CCM_DDS::NOT_ENABLED),
     __listen_datalistener_max_delivered_data_ (0)
@@ -66,36 +66,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
   return retval;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-::DDS::DomainId_t
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
-{
-  return this->domain_id_;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
-  ::DDS::DomainId_t domain_id)
-{
-  this->domain_id_ = domain_id;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-char *
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
-{
-  return CORBA::string_dup (this->qos_profile_.in ());
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
-  const char * qos_profile)
-{
-  this->qos_profile_ = qos_profile;
-}
-
 // Port operations.
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -125,7 +95,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
       }
     catch (...)
       {
-        CIAO_ERROR ((LM_ERROR, "Caught unknown C++ exception whilst configuring default domain\n"));
+        CIAO_ERROR ((LM_ERROR, "Caught unknown C++ exception while configuring default domain\n"));
         throw CORBA::INTERNAL ();
       }
     }
