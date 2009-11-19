@@ -5,6 +5,7 @@
 #include "Keyed_Test_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
+#include "ace/OS_NS_time.h"
 
 namespace CIAO_Keyed_Test_Receiver_Impl
 {
@@ -18,18 +19,24 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   }
 
   int
-  read_action_Generator::handle_timeout (const ACE_Time_Value &,
-                                   const void *)
+  read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
-    if (pulse_callback_.read_data ())
+    try
       {
-        this->pulse_callback_.read_one();
-        //this->pulse_callback_.read_all();
+        if (pulse_callback_.read_data ())
+          {
+            this->pulse_callback_.read_one();
+            //this->pulse_callback_.read_all();
+          }
+        if (pulse_callback_.get_data ())
+          {
+            this->pulse_callback_.get_one ();
+            this->pulse_callback_.get_all ();
+          }
       }
-    if (pulse_callback_.get_data ())
+    catch (...)
       {
-        this->pulse_callback_.get_one ();
-        this->pulse_callback_.get_all ();
+        // @todo
       }
     return 0;
   }
@@ -123,24 +130,29 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::read_one (void)
   {
+    if (CORBA::is_nil (this->reader_.in ()))
+      {
+        return;
+      }
+      
     try
       {
         for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
           {
-            KeyedTest  keyedtest_info;
-            char* key (0);
+            KeyedTest keyedtest_info;
+            char key[100];
             ACE_OS::sprintf (key, "KEY_%d", i);
-            keyedtest_info.key = key;
+            keyedtest_info.key = CORBA::string_dup (key);
             ::CCM_DDS::ReadInfo readinfo;
             this->reader_->read_one_last (keyedtest_info, readinfo, ::DDS::HANDLE_NIL);
             ++this->received_;
             time_t tim = readinfo.source_timestamp.sec;
-            tm* time = localtime(&tim);
+            tm* time = ACE_OS::localtime(&tim);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
                       ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
-                                time->tm_hour,
-                                time->tm_min,
-                                time->tm_sec,
+                                time ? time->tm_hour : 0,
+                                time ? time->tm_min : 0,
+                                time ? time->tm_sec : 0,
                                 readinfo.source_timestamp.nanosec));
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE keyed test info : ")
                 ACE_TEXT ("received keyedtest_info for <%C> at %u\n"),
@@ -158,18 +170,23 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
+    if (CORBA::is_nil (this->reader_.in ()))
+      {
+        return;
+      }
+      
     KeyedTest_Seq_var keyedtest_infos;
     ::CCM_DDS::ReadInfoSeq_var readinfoseq;
     this->reader_->read_all(keyedtest_infos.out(), readinfoseq.out());
-    for(unsigned int i = 0; i < readinfoseq->length(); ++i)
+    for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
       {
         time_t tim = readinfoseq[i].source_timestamp.sec;
-        tm* time = localtime(&tim);
+        tm* time = ACE_OS::localtime(&tim);
         CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
             ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
-                            time->tm_hour,
-                            time->tm_min,
-                            time->tm_sec,
+                            time ? time->tm_hour : 0,
+                            time ? time->tm_min : 0,
+                            time ? time->tm_sec : 0,
                             readinfoseq[i].source_timestamp.nanosec));
       }
     for(CORBA::ULong i = 0; i < keyedtest_infos->length(); ++i)
@@ -185,6 +202,11 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::get_one (void)
   {
+    if (CORBA::is_nil (this->getter_.in ()))
+      {
+        return;
+      }
+      
     KeyedTest_var keyedtest_info;
     //keyedtest_info.key = "KEY1";
     ::CCM_DDS::ReadInfo_var readinfo;
@@ -194,12 +216,12 @@ namespace CIAO_Keyed_Test_Receiver_Impl
         if (this->getter_->get_one (keyedtest_info.out (), readinfo.out ()))
           {
             time_t tim = readinfo->source_timestamp.sec;
-            tm* time = localtime(&tim);
+            tm* time = ACE_OS::localtime(&tim);
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
                                    ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
-                                time->tm_hour,
-                                time->tm_min,
-                                time->tm_sec,
+                                time ? time->tm_hour : 0,
+                                time ? time->tm_min : 0,
+                                time ? time->tm_sec : 0,
                                 readinfo->source_timestamp.nanosec));
             CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE KeyedTest : ")
                                    ACE_TEXT ("received keyedtest_info for <%C> at %u\n"),
@@ -221,6 +243,10 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::get_all (void)
   {
+    if (CORBA::is_nil (this->getter_.in ()))
+      {
+        return;
+      }
   }
 
   // Component attributes.
@@ -323,7 +349,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i ();
   }
-  
+
   // Operations from Components::SessionComponent.
   void
   Receiver_exec_i::set_session_context (
@@ -342,7 +368,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   {
     if (this->read_data ())
       {
-        this->reader_ = this->context_->get_connection_info_out_data();
+       this->reader_ = this->context_->get_connection_info_out_data();
       }
     if (this->get_data ())
       {

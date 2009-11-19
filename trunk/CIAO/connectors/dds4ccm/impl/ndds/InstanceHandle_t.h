@@ -13,7 +13,7 @@
 inline void
 operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle)
 {
-  ACE_OS::memcpy (ddsinstancehandle.value, instancehandle.keyHash.value, MIG_RTPS_KEY_HASH_MAX_LENGTH);
+  ACE_OS::memcpy (ddsinstancehandle.value, instancehandle.keyHash.value, sizeof (instancehandle.keyHash.value));
   ddsinstancehandle.length = instancehandle.keyHash.length;
   ddsinstancehandle.isValid = instancehandle.isValid;
 }
@@ -21,7 +21,7 @@ operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHan
 inline void
 operator<<= (::DDS_InstanceHandle_t &ddsinstancehandle, const ::DDS::InstanceHandle_t & instancehandle)
 {
-  ACE_OS::memcpy (ddsinstancehandle.keyHash.value, instancehandle.value, MIG_RTPS_KEY_HASH_MAX_LENGTH);
+  ACE_OS::memcpy (ddsinstancehandle.keyHash.value, instancehandle.value, sizeof (instancehandle.value));
   ddsinstancehandle.keyHash.length = instancehandle.length;
   ddsinstancehandle.isValid = instancehandle.isValid;
 }
@@ -29,7 +29,7 @@ operator<<= (::DDS_InstanceHandle_t &ddsinstancehandle, const ::DDS::InstanceHan
 inline void
 operator>>= (const ::DDS_InstanceHandle_t &instancehandle, ::DDS::InstanceHandle_t & ddsinstancehandle)
 {
-  ACE_OS::memcpy (ddsinstancehandle.value, instancehandle.keyHash.value, MIG_RTPS_KEY_HASH_MAX_LENGTH);
+  ACE_OS::memcpy (ddsinstancehandle.value, instancehandle.keyHash.value, sizeof (instancehandle.keyHash.value));
   ddsinstancehandle.length = instancehandle.keyHash.length;
   ddsinstancehandle.isValid = instancehandle.isValid;
 }
@@ -37,7 +37,7 @@ operator>>= (const ::DDS_InstanceHandle_t &instancehandle, ::DDS::InstanceHandle
 inline void
 operator>>= (const ::DDS::InstanceHandle_t &instancehandle, ::DDS_InstanceHandle_t & ddsinstancehandle)
 {
-  ACE_OS::memcpy (ddsinstancehandle.keyHash.value, instancehandle.value, MIG_RTPS_KEY_HASH_MAX_LENGTH);
+  ACE_OS::memcpy (ddsinstancehandle.keyHash.value, instancehandle.value, sizeof (instancehandle.value));
   ddsinstancehandle.keyHash.length = instancehandle.length;
   ddsinstancehandle.isValid = instancehandle.isValid;
 }

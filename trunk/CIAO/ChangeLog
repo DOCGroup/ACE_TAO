@@ -1,3 +1,15 @@
+Thu Nov 19 12:36:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp
+        * connectors/dds4ccm/impl/ndds/SampleInfo.h
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp
+          Various fixes to get the reader int he keyed_test working
+
 Thu Nov 19 09:31:36 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Get_Connection_Test/Base/Get_Connection_Test_Base.mpc:

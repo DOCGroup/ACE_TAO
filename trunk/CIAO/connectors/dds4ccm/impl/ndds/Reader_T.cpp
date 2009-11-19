@@ -209,7 +209,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
   else
     {
       CIAO_DEBUG ((LM_INFO,
-                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_history - ")
+                  ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
                   ACE_TEXT ("No instance found.\n")));
       retval = this->impl_->read(data,
                             sample_info,
@@ -218,29 +218,25 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
                             DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                             DDS_ALIVE_INSTANCE_STATE);
 
-        }
-  int number_of_samples = 0;
+    }
   switch(retval)
     {
       case DDS_RETCODE_OK:
-        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one - ")
-                              ACE_TEXT ("number_of_samples =%d\n"), number_of_samples));
-        number_of_samples = data.length();
-        //get last instance
-        if(sample_info[number_of_samples-1].valid_data)
-          {
-            an_instance = data[number_of_samples-1];
-            //info <<= sample_info;
-            sample_info[number_of_samples-1].source_timestamp >>= info.source_timestamp;
-          }
-        //else   ?? What to do ?
+        {
+          ::DDS_Long number_of_samples = data.length();
+          CIAO_DEBUG ((LM_INFO,
+                      ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
+                      ACE_TEXT ("number_of_samples = %d\n"),
+                      number_of_samples));
 
-        //what about the following attributes?
-        //info.access_status     DDS_SampleStateKind  sample_state or   DDS_ViewStateKind view_state; ?
-        //info.instance_status   DDS_InstanceStateKind instance_state;
-        //info.instance_rank     DDS_Long sample_rank;   is always 0 with last sample
-        //return the loan
-        this->impl_->return_loan(data,sample_info);
+          // Get last instance
+          if(sample_info[number_of_samples-1].valid_data)
+            {
+              an_instance = data[number_of_samples-1];
+              info <<= sample_info[number_of_samples-1];
+            }
+          this->impl_->return_loan(data,sample_info);
+          }
         break;
       case DDS_RETCODE_NO_DATA:
         CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one - ")
