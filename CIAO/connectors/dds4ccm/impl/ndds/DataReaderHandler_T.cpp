@@ -25,7 +25,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 int
 CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
 {
-  try 
+  try
     {
       // Loop until there are messages available in the queue
       for(;;)
@@ -45,6 +45,7 @@ CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (A
             {
               CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderHandler_T : found valid data\n")));
               ::CCM_DDS::ReadInfo empty;
+              empty <<= sampleinfo;
               listener_->on_one_data (instance, empty);
             }
         }

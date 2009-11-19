@@ -33,16 +33,17 @@ operator<<= (::CCM_DDS::InstanceStatus & instance_status, const ::DDS_InstanceSt
 }
 
 inline void
-operator<<= (::CCM_DDS::ReadInfo & ccm_dds_readinfo, const ::DDS_SampleInfoSeq & sample_info)
+operator<<= (::CCM_DDS::ReadInfo& ccm_dds_readinfo, const ::DDS_SampleInfo& sample_info)
 {
-  ccm_dds_readinfo.source_timestamp <<= sample_info[sample_info.length () - 1].source_timestamp;
-  ccm_dds_readinfo.access_status <<= sample_info[sample_info.length () - 1].sample_state;
-  ccm_dds_readinfo.instance_status <<= sample_info[sample_info.length () - 1].instance_state;
+  ccm_dds_readinfo.source_timestamp <<= sample_info.source_timestamp;
+  ccm_dds_readinfo.access_status <<= sample_info.sample_state;
+  ccm_dds_readinfo.instance_status <<= sample_info.instance_state;
 }
 
 inline void
 operator<<= (::CCM_DDS::ReadInfoSeq & ccm_dds_readinfo_seq, const ::DDS_SampleInfoSeq & sample_info)
 {
+// @todo, not ok, check
   ccm_dds_readinfo_seq.length(sample_info.length ());
   for (::DDS_Long i = 0; i < sample_info.length(); i++)
     {
