@@ -326,7 +326,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
 {
-  CIAO_TRACE ("get_listen_data");
+  CIAO_TRACE ("get_push_consumer_data");
 
   this->configure_port_listen_ (false);
 
@@ -338,7 +338,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
 {
-  CIAO_TRACE ("get_listen_data");
+  CIAO_TRACE ("get_pull_consumer_data");
 
   this->configure_port_listen_ (false);
 
@@ -350,7 +350,7 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::CCM_DataListenerControl_ptr
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data_control (void)
 {
-  CIAO_TRACE ("get_listen_control");
+  CIAO_TRACE ("get_push_consumer_data_control");
   return new CCM_DDS_DataListenerControl_i (
           this->__listen_datalistener_mode_,
           this->__listen_datalistener_max_delivered_data_);
