@@ -89,7 +89,7 @@ private:
   typename CCM_TYPE::writer_type::_var_type __info_in_writer_;
 
   // @from DDS_Listen
-  void configure_port_listen_ (bool create_getter);
+  void configure_port_listen_ (void);
   bool __listen_configured_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> __listen_datalistener_mode_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> __listen_datalistener_max_delivered_data_;

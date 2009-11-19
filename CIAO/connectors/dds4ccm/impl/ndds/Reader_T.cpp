@@ -51,13 +51,11 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
   ::CCM_DDS::ReadInfoSeq_out infos)
 {
   //this function has to return the last sample of all instances
-  typename CCM_TYPE::seq_type::_var_type  inst_seq = new typename CCM_TYPE::seq_type;
+  typename CCM_TYPE::seq_type::_var_type inst_seq = new typename CCM_TYPE::seq_type;
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
-  // DDS_TYPE::dds_seq_type = dds sequence
-  // CCM_TYPE::seq_type = ccm sequence
   DDS_ReturnCode_t retval = this->impl_->read ( data,
                             sample_info,
                             DDS_LENGTH_UNLIMITED,
@@ -123,12 +121,9 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
   ::CCM_DDS::ReadInfoSeq_var infoseq = new ::CCM_DDS::ReadInfoSeq;
 
   DDS_SampleInfoSeq sample_info;
-  DDS_ReturnCode_t retval = DDS_RETCODE_NO_DATA;
   typename DDS_TYPE::dds_seq_type data;
 
-  // DDS_TYPE::dds_seq_type = dds sequence
-  // CCM_TYPE::seq_type = ccm sequence
-      retval = this->impl_->read ( data,
+  DDS_ReturnCode_t retval = this->impl_->read ( data,
                             sample_info,
                             DDS_LENGTH_UNLIMITED,
                             DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
@@ -200,7 +195,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
     {
       retval = this->impl_->read_instance(data,
                             sample_info,
-                            DDS_LENGTH_UNLIMITED,
+                            1,
                             hnd,
                             DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
                             DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
@@ -213,7 +208,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
                   ACE_TEXT ("No instance found.\n")));
       retval = this->impl_->read(data,
                             sample_info,
-                            DDS_LENGTH_UNLIMITED,
+                            1,
                             DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE ,
                             DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                             DDS_ALIVE_INSTANCE_STATE);

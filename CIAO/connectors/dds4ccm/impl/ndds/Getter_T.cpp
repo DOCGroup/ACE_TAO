@@ -14,7 +14,6 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (::DDS::DataReader_pt
   max_delivered_data_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
-
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
   if (rdr == 0)
     {
@@ -83,9 +82,14 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
           typename CCM_TYPE::seq_type::_out_type instances,
           ::CCM_DDS::ReadInfoSeq_out infos)
 {
-  ACE_UNUSED_ARG (instances);
-  ACE_UNUSED_ARG (infos);
-  return true;
+  instances = new typename CCM_TYPE::seq_type;
+  infos = new ::CCM_DDS::ReadInfoSeq;
+
+  DDSConditionSeq active_conditions;
+  if (!this->wait (active_conditions))
+    return false;
+
+  return false;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE >
@@ -94,12 +98,15 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           typename DDS_TYPE::value_type::_out_type an_instance,
           ::CCM_DDS::ReadInfo_out info)
 {
+  an_instance = new typename DDS_TYPE::value_type;
+
   DDSConditionSeq active_conditions;
-  DDS_SampleInfoSeq sample_info;
   if (!this->wait (active_conditions))
     return false;
+
+  DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
-  for (int i = 0; i < active_conditions.length(); i++)
+  for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
       if (active_conditions[i] == gd_)
         {
@@ -129,10 +136,10 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
                     "Unable to return the loan to DDS: <%C>\n", translate_retcode (retcode)));
               break;
             }
-          if (retcode == DDS_RETCODE_OK && data.length () >= 0)
+          if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
               info <<= sample_info[0]; //retrieves the last sample.
-              an_instance = new typename DDS_TYPE::value_type (data[0]);
+              *an_instance = data[0];
             }
           else
             {
