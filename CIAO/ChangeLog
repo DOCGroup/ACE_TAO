@@ -1,3 +1,14 @@
+Thu Nov 19 09:31:36 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Get_Connection_Test/Base/Get_Connection_Test_Base.mpc:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Sender/Get_Connection_Test_Sender.mpc:
+          Resolved fuzz warnings.
+
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+          Added read connection.
+
 Thu Nov 19 09:03:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
