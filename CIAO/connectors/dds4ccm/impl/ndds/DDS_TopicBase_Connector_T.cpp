@@ -34,14 +34,12 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (const ::DDS::StringSeq & key_fields)
 {
   ACE_UNUSED_ARG (key_fields);
-  // @todo
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StringSeq *
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
 {
-  // @from DDS_TopicBase
   ::DDS::StringSeq *retval =
     new ::DDS::StringSeq (this->key_fields_.length ());
 
