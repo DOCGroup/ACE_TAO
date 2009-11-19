@@ -1,3 +1,11 @@
+Thu Nov 19 19:23:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h:
+          Introduce DDS_Base connector
+
 Thu Nov 19 19:09:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp:

@@ -10,12 +10,11 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
+#include "dds4ccm/impl/ndds/DDS_Base_Connector_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Event_Connector_T
-  : public virtual CCM_TYPE::base_type,
-    public virtual ::CORBA::LocalObject,
-    private virtual ACE_Copy_Disabled
+  : public virtual DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>
 {
 public:
   DDS_Event_Connector_T (const char * topic_name);
@@ -28,14 +27,6 @@ public:
   virtual ::DDS::StringSeq *key_fields (void);
 
   virtual void key_fields (const ::DDS::StringSeq & key_fields);
-
-  virtual ::DDS::DomainId_t domain_id (void);
-
-  virtual void domain_id (::DDS::DomainId_t domain_id);
-
-  virtual char *qos_profile (void);
-
-  virtual void qos_profile (const char * qos_profile);
 
   /**
    * @name DDS_Write
@@ -86,10 +77,6 @@ private:
   void configure_default_domain_ (void);
   ::DDS::DomainParticipantFactory_var domain_factory_;
   ::DDS::DomainParticipant_var domain_;
-
-  // @from DDS_Base
-  DDS::DomainId_t domain_id_;
-  CORBA::String_var qos_profile_;
 
   // @from DDS_TopicBase
   void configure_default_topic_ (void);
