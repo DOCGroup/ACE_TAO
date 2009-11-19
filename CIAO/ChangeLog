@@ -1,3 +1,9 @@
+Thu Nov 19 14:53:44 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/CommandlinePassage/CommandlinePassage_exec.cpp:
+        * DAnCE/tests/CIAO/CommandlinePassage/Component.cdp:
+          Quotes in command line argument were in the wrong places.
+
 Thu Nov 19 13:42:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Connector_T.cpp:

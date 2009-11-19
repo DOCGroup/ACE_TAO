@@ -76,7 +76,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>-ORBSvcConfDirective static Resource_Factory "-ORBConnectionCacheMax 3"</string>
+          <string>-ORBSvcConfDirective "static Resource_Factory -ORBConnectionCacheMax 1"</string>
         </value>
       </value>
     </configProperty>
@@ -87,7 +87,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>3</long>
+          <long>1</long>
         </value>
       </value>
     </configProperty>
