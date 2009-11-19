@@ -1,3 +1,8 @@
+Thu Nov 19 13:45:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/CommandlinePassage/Component.cdp:
+          Corrected command line options.
+
 Thu Nov 19 13:22:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/CommandlinePassage:
