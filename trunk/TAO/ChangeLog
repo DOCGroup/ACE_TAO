@@ -1,3 +1,13 @@
+Thu Nov 19 20:18:53 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3766_Regression/Test.idl:
+        * tests/Bug_3766_Regression/TestI.h:
+        * tests/Bug_3766_Regression/TestI.cpp:
+        * tests/Bug_3766_Regression/client.cpp:
+
+          Extend this test to test Variable sized types in addition
+          to Fixed size types.
+
 Thu Nov 19 19:50:30 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
 
         * bin/tao_orb_tests.lst:

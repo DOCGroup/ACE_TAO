@@ -50,8 +50,12 @@ public:
   virtual ~Test_i (void);
   
   virtual
-  void do_something (
-    ::Info_out my_info);
+  void do_something_FixedLength (
+    ::FixedLengthInfo_out my_info);
+  
+  virtual
+  void do_something_VariableLength (
+    ::VariableLengthInfo_out my_info);
 };
 
 
