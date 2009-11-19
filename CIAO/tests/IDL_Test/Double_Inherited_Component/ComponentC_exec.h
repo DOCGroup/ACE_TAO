@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef HELLO_SENDER_EXEC_H_
-#define HELLO_SENDER_EXEC_H_
+#ifndef INHERITED_COMPONENTS_EXEC_H_
+#define INHERITED_COMPONENTS_EXEC_H_
 
 
 #include "Inherited_componentsEC.h"
@@ -14,8 +14,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
-#include "ace/Reactor.h"
 
 #include <map>
 

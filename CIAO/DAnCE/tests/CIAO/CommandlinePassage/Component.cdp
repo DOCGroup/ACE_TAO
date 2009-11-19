@@ -3,17 +3,17 @@
  xmlns:xmi="http://www.omg.org/XMI"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>Inherited_Components_Deployment_1</label>
-  <UUID>Inherited_Components_Deployment_1</UUID>
+  <label>Hello_DDS_Deployment_1</label>
+  <UUID>Hello_DDS_Deployment_1</UUID>
 
   <!-- Implementations declarations -->
 
   <!-- Home implementation -->
-  <implementation xmi:id="ComponentCComponentImplementation">
-    <name>ComponentCComponentImplementation</name>
+  <implementation xmi:id="CommandlinePassageComponentImplementation">
+    <name>CommandlinePassageComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="ComponentC_ExecArtifact" />
-    <artifact xmi:idref="ComponentC_SvntArtifact" />
+    <artifact xmi:idref="CommandlinePassage_ExecArtifact" />
+    <artifact xmi:idref="CommandlinePassage_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -22,7 +22,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ComponentC_Impl</string>
+          <string>create_Component_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -33,7 +33,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_connector_test_C_Servant</string>
+          <string>create_command_line_test_A_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -44,7 +44,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ComponentC_svnt</string>
+          <string>CommandlinePassage_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -55,71 +55,63 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ComponentC_exec</string>
+          <string>CommandlinePassage_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
   
-  <instance xmi:id="ComponentCComponentInstance">
-    <name>ComponentCComponent</name>
-    <node>ComponentCNode</node>
+  <instance xmi:id="CommandlinePassageComponentInstance">
+    <name>CommandlinePassageComponent</name>
+    <node>CommandlinePassageNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="ComponentCComponentImplementation" />
+    <implementation xmi:idref="CommandlinePassageComponentImplementation" />
+    <!-- set both edu.vanderbilt.dre.CIAO.ComponentServerArgs and
+         tc_max to the same number -->
     <configProperty>
-      <name>topic_name_c</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentServerArgs</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ComponentC</string>
+          <string>-ORBConnectionCacheMax 3</string>
+          <!--string>-ORBLogFile component.log</string-->
         </value>
       </value>
     </configProperty>
     <configProperty>
-      <name>topic_name_b</name>
+      <name>tc_max</name>
       <value>
         <type>
-          <kind>tk_string</kind>
+          <kind>tk_long</kind>
         </type>
         <value>
-          <string>ComponentB</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>topic_name_a</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ComponentA</string>
+          <long>3</long>
         </value>
       </value>
     </configProperty>
   </instance>
 
   <!-- Artifacts declarations -->
-  <artifact xmi:id="ComponentC_ExecArtifact">
-    <name>ComponentC_exec</name>
+  <artifact xmi:id="CommandlinePassage_ExecArtifact">
+    <name>CommandlinePassage_exec</name>
     <source/>
     <node/>
-    <location>ComponentC_exec</location>
+    <location>CommandlinePassage_exec</location>
   </artifact>
-  <artifact xmi:id="ComponentC_SvntArtifact">
-    <name>ComponentC_svnt</name>
+  <artifact xmi:id="CommandlinePassage_SvntArtifact">
+    <name>CommandlinePassage_svnt</name>
     <source/>
     <node/>
-    <location>ComponentC_svnt</location>
+    <location>CommandlinePassage_svnt</location>
   </artifact>
-  <artifact xmi:id="ComponentC_StubArtifact">
-    <name>ComponentC_stub</name>
+  <artifact xmi:id="CommandlinePassage_StubArtifact">
+    <name>CommandlinePassage_stub</name>
     <source/>
     <node/>
-    <location>ComponentC_stub</location>
+    <location>CommandlinePassage_stub</location>
   </artifact>
 
 </Deployment:DeploymentPlan>
