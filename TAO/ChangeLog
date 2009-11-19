@@ -1,3 +1,9 @@
+Thu Nov 19 12:38:10 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * tests/Bug_2234_Regression/server.cpp:
+          
+          Test is converted to use new test framework and added to fuzz build.
+
 Thu Nov 19 08:25:13 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Trading/export_test.cpp:
