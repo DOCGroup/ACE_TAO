@@ -1,3 +1,41 @@
+Thu Nov 19 08:25:13 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
+
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/run_test.pl:
+        * orbsvcs/tests/Security/Callback/server.cpp:
+        * orbsvcs/tests/Security/Callback/client.cpp:
+        * orbsvcs/tests/Security/Callback/run_test.pl:
+        * orbsvcs/tests/Security/mixed_security_test/run_test.pl:
+        * orbsvcs/tests/Security/ssliop_CSD/MessengerServer.cpp:
+        * orbsvcs/tests/Security/ssliop_CSD/MessengerClient.cpp:
+        * orbsvcs/tests/Security/ssliop_CSD/run_test.pl:
+        * orbsvcs/examples/CosEC/Simple/Service.cpp:
+        * orbsvcs/examples/CosEC/Simple/Supplier.cpp:
+        * orbsvcs/examples/CosEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/Simple/run_test.pl:
+        * tests/AMI_Buffering/run_timeout.pl:
+        * tests/AMI_Buffering/run_buffer_size.pl:
+        * tests/AMI_Buffering/run_timeout_reactive.pl:
+        * tests/AMI_Buffering/run_test.pl:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Bug_3743_Regression/run_test.pl:
+        * tests/Bug_3531_Regression/client.cpp:
+        * tests/Bug_3531_Regression/server.cpp:
+        * tests/Bug_3531_Regression/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+        * tests/Server_Connection_Purging/server.cpp:
+        * tests/Server_Connection_Purging/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout.pl:
+        * tests/Oneway_Buffering/run_message_count.pl:
+        * tests/Oneway_Buffering/run_buffer_size.pl:
+        * tests/Oneway_Buffering/run_timeout_reactive.pl:
+        * tests/Oneway_Buffering/run_test.pl:
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+        
+          Tests are converted to use new test framework and added to fuzz build.
+          
 Wed Nov 18 12:58:16 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Bug_2925_Regression/run_test_ipv6.pl:
