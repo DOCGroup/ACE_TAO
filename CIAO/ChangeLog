@@ -1,3 +1,8 @@
+Thu Nov 19 15:39:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Debug changes
+
 Thu Nov 19 14:54:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.cpp:
