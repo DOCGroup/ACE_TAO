@@ -1,3 +1,13 @@
+Thu Nov 19 13:42:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Connector_T.h:
+          DDS_Event delivers get and read ports
+
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
+          Fixed several problems which could lead to a crash
+
 Thu Nov 19 13:45:29 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/CommandlinePassage/Component.cdp:
