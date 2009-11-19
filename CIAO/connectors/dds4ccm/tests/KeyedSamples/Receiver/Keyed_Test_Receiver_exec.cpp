@@ -134,7 +134,6 @@ namespace CIAO_Keyed_Test_Receiver_Impl
       {
         return;
       }
-      
     try
       {
         for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
@@ -387,7 +386,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
         CIAO_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
-    lc->mode (::CCM_DDS::ONE_BY_ONE);
+    lc->mode (this->raw_listen_ ? ::CCM_DDS::ONE_BY_ONE : ::CCM_DDS::NOT_ENABLED);
 
     // calculate the interval time
     long usec = 1000000 / this->rate_;
