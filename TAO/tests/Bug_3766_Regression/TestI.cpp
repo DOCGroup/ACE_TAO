@@ -42,10 +42,24 @@ Test_i::~Test_i (void)
 {
 }
 
-void Test_i::do_something (
-  ::Info_out my_info)
+void Test_i::do_something_FixedLength (
+  ::FixedLengthInfo_out my_info)
 {
   // Add your implementation here
+  my_info.a = 1;
+  my_info.b = 2;
+  my_info.c = 3;
+}
+
+void Test_i::do_something_VariableLength (
+  ::VariableLengthInfo_out my_info)
+{
+  // Add your implementation here
+  my_info = new ::VariableLengthInfo;
+  my_info->a = 1;
+  my_info->b = 2;
+  my_info->c = 3;
+  my_info->d = ::CORBA::string_dup("Howdy");
 }
 
 
