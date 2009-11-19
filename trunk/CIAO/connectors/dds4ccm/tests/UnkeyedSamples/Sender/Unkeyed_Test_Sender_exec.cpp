@@ -112,14 +112,14 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
     delete this->ticker_;
   }
 
-  ::CORBA::ULong
+  ::CORBA::UShort
   Sender_exec_i::rate (void)
   {
     return this->rate_;
   }
 
   void
-  Sender_exec_i::rate (::CORBA::ULong rate)
+  Sender_exec_i::rate (::CORBA::UShort rate)
   {
     this->rate_ = rate;
   }

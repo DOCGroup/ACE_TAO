@@ -1,3 +1,21 @@
+Thu Nov 19 16:46:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+          Made RawListener depend on raw_listen flag.
+
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+          For now, only use rawlistener.
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/Plan.cdp:
+          Only need write and listen when unkeyed samples are used. Got rid of the
+          other stuff.
+
 Thu Nov 19 15:39:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Reader_T.cpp:
