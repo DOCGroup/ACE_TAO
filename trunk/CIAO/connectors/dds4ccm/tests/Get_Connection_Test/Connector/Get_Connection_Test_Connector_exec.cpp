@@ -5,8 +5,8 @@
 
 namespace CIAO_Get_Connection_Test_Get_Connection_Test_Connector_Impl
 {
-  Get_Connection_Test_Connector_exec_i::Get_Connection_Test_Connector_exec_i (const char * topic_name)
-    : DDS_Event_Connector_T<Get_ConnectionTest_DDS_Traits, Get_ConnectionTest_Connector_Traits> (topic_name)
+  Get_Connection_Test_Connector_exec_i::Get_Connection_Test_Connector_exec_i ()
+    : DDS_Event_Connector_T<Get_ConnectionTest_DDS_Traits, Get_ConnectionTest_Connector_Traits> ()
   {
   }
 
@@ -22,7 +22,7 @@ namespace CIAO_Get_Connection_Test_Get_Connection_Test_Connector_Impl
 
     ACE_NEW_NORETURN (
       retval,
-      Get_Connection_Test_Connector_exec_i ("Default_Topic_Name")); //should be set by dep. plan.
+      Get_Connection_Test_Connector_exec_i ());
 
     return retval;
   }

@@ -31,9 +31,17 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_mis
                                               ::DDS::DataWriter_ptr the_Writer,
                                                const ::DDS::OfferedDeadlineMissedStatus & status)
 {
-  if (!CORBA::is_nil (this->info_out_connector_status_))
+  try
     {
-      this->info_out_connector_status_->on_offered_deadline_missed (the_Writer, status);
+      if (!CORBA::is_nil (this->info_out_connector_status_))
+        {
+          this->info_out_connector_status_->on_offered_deadline_missed (the_Writer, status);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_offered_deadline_missed")
+                             ACE_TEXT (" : DDS Exception caught\n")));
     }
 }
 
@@ -43,9 +51,17 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible
                                   ::DDS::DataWriter_ptr the_Writer,
                                   const ::DDS::OfferedIncompatibleQosStatus & status)
 {
-  if (!CORBA::is_nil (this->info_out_connector_status_))
+  try
     {
-      this->info_out_connector_status_->on_offered_incompatible_qos (the_Writer, status);
+      if (!CORBA::is_nil (this->info_out_connector_status_))
+        {
+          this->info_out_connector_status_->on_offered_incompatible_qos (the_Writer, status);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_offered_incompatible_qos")
+                             ACE_TEXT (" : DDS Exception caught\n")));
     }
 }
 
@@ -55,9 +71,17 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
                                 ::DDS::DataWriter_ptr the_Writer,
                                 const ::DDS::LivelinessLostStatus &)
 {
-  if (!CORBA::is_nil (this->info_out_connector_status_))
+  try
     {
-      this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
+      if (!CORBA::is_nil (this->info_out_connector_status_))
+        {
+          this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_liveliness_lost")
+                             ACE_TEXT (" : DDS Exception caught\n")));
     }
 }
 
@@ -67,9 +91,17 @@ CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched 
                                 ::DDS::DataWriter_ptr the_Writer,
                                 const ::DDS::PublicationMatchedStatus &)
 {
-  if (!CORBA::is_nil (this->info_out_connector_status_))
+  try
     {
-      this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
+      if (!CORBA::is_nil (this->info_out_connector_status_))
+        {
+          this->info_out_connector_status_->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataWriterListener_T::on_publication_matched")
+                             ACE_TEXT (" : DDS Exception caught\n")));
     }
 }
 

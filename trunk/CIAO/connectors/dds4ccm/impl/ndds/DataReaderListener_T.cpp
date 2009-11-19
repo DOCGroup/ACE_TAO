@@ -57,9 +57,17 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadl
                                               ::DDS::DataReader_ptr the_reader,
                                                const ::DDS::RequestedDeadlineMissedStatus & status)
 {
-  if (!CORBA::is_nil (this->info_out_portstatus_))
+  try
     {
-      this->info_out_portstatus_->on_requested_deadline_missed (the_reader, status);
+      if (!CORBA::is_nil (this->info_out_portstatus_))
+        {
+          this->info_out_portstatus_->on_requested_deadline_missed (the_reader, status);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_requested_deadline_missed")
+                             ACE_TEXT (" : DDS Exception caught\n")));
     }
 }
 
@@ -69,9 +77,17 @@ CIAO::DDS4CCM::RTI::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
                                   ::DDS::DataReader_ptr the_reader,
                                   const ::DDS::SampleLostStatus & status)
 {
-  if (!CORBA::is_nil (this->info_out_portstatus_))
+  try
     {
-      this->info_out_portstatus_->on_sample_lost (the_reader, status);
+      if (!CORBA::is_nil (this->info_out_portstatus_))
+        {
+          this->info_out_portstatus_->on_sample_lost (the_reader, status);
+        }
+    }
+  catch (...)
+    {
+      CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderListener_T::on_sample_lost")
+                             ACE_TEXT (" : DDS Exception caught\n")));
     }
 }
 

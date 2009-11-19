@@ -15,8 +15,8 @@
 #include /**/ "Get_Connection_Test_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/ndds/NDDS_Traits.h"
-#include "dds4ccm/impl/ndds/Connector_T.h"
+#include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
+#include "dds4ccm/impl/ndds/DDS_Event_Connector_T.h"
 
 #include "Base/Get_Connection_Test_BaseSupport.h"
 
@@ -31,7 +31,7 @@ namespace CIAO_Get_Connection_Test_Get_Connection_Test_Connector_Impl
     Get_ConnectionTestDataWriter,
     Get_ConnectionTestDataReader > Get_ConnectionTest_DDS_Traits;
 
-  typedef Connector_Traits <
+  typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_Get_Connection_Test_Get_Connection_Test_Connector_Impl::Get_Connection_Test_Connector_Exec,
     Get_ConnectionTest_Seq,
     ::CCM_DDS::Get_ConnectionTest::CCM_Writer,
@@ -47,7 +47,7 @@ namespace CIAO_Get_Connection_Test_Get_Connection_Test_Connector_Impl
     public DDS_Event_Connector_T <Get_ConnectionTest_DDS_Traits, Get_ConnectionTest_Connector_Traits>
   {
   public:
-    Get_Connection_Test_Connector_exec_i (const char * topic_name);
+    Get_Connection_Test_Connector_exec_i ();
     virtual ~Get_Connection_Test_Connector_exec_i (void);
   };
 
