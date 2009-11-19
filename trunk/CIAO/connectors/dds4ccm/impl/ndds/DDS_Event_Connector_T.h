@@ -104,33 +104,6 @@ private:
   ::DDS::DataReader_var __info_get_datareader_;
 };
 
-  template <typename BASE_TYPE,
-            typename SEQ_TYPE,
-            typename WRITER_TYPE,
-            typename UPDATER_TYPE,
-            typename GETTER_TYPE,
-            typename READER_TYPE,
-            typename CONTEXT_TYPE,
-            typename LISTENER_TYPE,
-            typename STATELISTENER_TYPE,
-            typename CONNECTORSTATUSLISTENER_TYPE
-  >
-
-  struct Connector_Traits
-  {
-    typedef BASE_TYPE base_type;
-    typedef SEQ_TYPE seq_type;
-    typedef WRITER_TYPE writer_type;
-    typedef UPDATER_TYPE updater_type;
-    typedef GETTER_TYPE getter_type;
-    typedef READER_TYPE reader_type;
-    typedef CONTEXT_TYPE context_type;
-    typedef LISTENER_TYPE listener_type;
-    typedef STATELISTENER_TYPE statelistener_type;
-    typedef CONNECTORSTATUSLISTENER_TYPE connectorstatuslistener_type;
-  };
-
-
-#include "dds4ccm/impl/ndds/Connector_T.cpp"
+#include "dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp"
 
 #endif /* CONNECTOR_T_H_ */

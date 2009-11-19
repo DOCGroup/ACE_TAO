@@ -15,8 +15,8 @@
 #include /**/ "Quoter_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/ndds/NDDS_Traits.h"
-#include "dds4ccm/impl/ndds/Connector_T.h"
+#include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
+#include "dds4ccm/impl/ndds/DDS_Event_Connector_T.h"
 
 #include "Base/Quoter_BaseSupport.h"
 
@@ -31,7 +31,7 @@ namespace CIAO_Quoter_Quoter_Connector_Impl
     ::Quoter::Stock_InfoDataWriter,
     ::Quoter::Stock_InfoDataReader > Stock_Info_DDS_Traits;
 
-  typedef Connector_Traits <
+  typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_Quoter_Quoter_Connector_Impl::Quoter_Connector_Exec,
     ::Quoter::Stock_Info_Seq,
     ::CCM_DDS::Quoter::CCM_Writer,
