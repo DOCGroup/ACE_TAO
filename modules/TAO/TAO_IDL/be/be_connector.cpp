@@ -9,8 +9,7 @@ ACE_RCSID (be,
 
 be_connector::be_connector (
       UTL_ScopedName *n,
-      AST_Connector *base_connector,
-      FE_Utils::T_PARAMLIST_INFO *template_params)
+      AST_Connector *base_connector)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_connector,
@@ -31,12 +30,8 @@ be_connector::be_connector (
                    0,
                    0,
                    0),
-    AST_Template_Common (AST_Decl::NT_connector,
-                         n,
-                         template_params),
     AST_Connector (n,
-                   base_connector,
-                   template_params),
+                   base_connector),
     be_scope (AST_Decl::NT_connector),
     be_decl (AST_Decl::NT_connector,
               n),

@@ -314,8 +314,7 @@ public:
   virtual
   AST_Connector *create_connector (
     UTL_ScopedName *n,
-    AST_Connector *base_connector,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
+    AST_Connector *base_connector);
     
   virtual
   AST_Tmpl_Port *create_tmpl_port (

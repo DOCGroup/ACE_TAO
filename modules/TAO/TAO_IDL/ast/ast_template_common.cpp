@@ -11,10 +11,6 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_template_common,
-           "$Id$")
-
 AST_Template_Common::AST_Template_Common (
       AST_Decl::NodeType nt,
       UTL_ScopedName *n,

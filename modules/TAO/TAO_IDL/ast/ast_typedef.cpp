@@ -76,19 +76,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (ast,
-           ast_typedef,
-           "$Id$")
-
-AST_Typedef::AST_Typedef (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    pd_base_type (0),
-    owns_base_type_ (false)
-{
-}
-
 AST_Typedef::AST_Typedef (AST_Type *bt,
                           UTL_ScopedName *n,
                           bool local,
@@ -99,16 +86,10 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
               n),
     AST_Type (AST_Decl::NT_typedef,
               n),
-    pd_base_type (bt),
-    owns_base_type_ (false)
+    AST_Field (AST_Decl::NT_typedef,
+               bt,
+               n)
 {
-  AST_Decl::NodeType nt = bt->node_type ();
-
-  if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
-    {
-      this->owns_base_type_ = true;
-      bt->anonymous (false);
-    }
 }
 
 AST_Typedef::~AST_Typedef (void)
@@ -137,7 +118,7 @@ AST_Typedef::primitive_base_type (void) const
 AST_Type *
 AST_Typedef::base_type (void) const
 {
-  return this->pd_base_type;
+  return this->ref_type_;
 }
 
 bool
@@ -149,7 +130,7 @@ AST_Typedef::legal_for_primary_key (void) const
 bool
 AST_Typedef::is_local (void)
 {
-  return this->pd_base_type->is_local ();
+  return this->ref_type_->is_local ();
 }
 
 bool
@@ -169,7 +150,7 @@ void
 AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
 {
   this->dump_i (o, "typedef ");
-  this->pd_base_type->dump (o);
+  this->ref_type_->dump (o);
   this->dump_i (o, " ");
   this->local_name ()->dump (o);
 }
@@ -178,7 +159,7 @@ AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
 int
 AST_Typedef::compute_size_type (void)
 {
-  AST_Type *type = this->base_type ();
+  AST_Type *type = this->ref_type_;
 
   if (type == 0)
     {
@@ -206,18 +187,8 @@ AST_Typedef::ast_accept (ast_visitor *visitor)
 void
 AST_Typedef::destroy (void)
 {
-  if (this->owns_base_type_)
-    {
-      this->pd_base_type->destroy ();
-      delete this->pd_base_type;
-      this->pd_base_type = 0;
-    }
-
+  this->AST_Field::destroy ();
   this->AST_Type::destroy ();
 }
-
-// Data accessors.
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Typedef)
