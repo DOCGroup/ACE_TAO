@@ -7,10 +7,40 @@
 #include "ace/Auto_Ptr.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID (Trading,
            export_test,
            "$Id$")
+
+const ACE_TCHAR *done_file = ACE_TEXT("export_test_ready");
+
+int
+parse_args_spec (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'd':
+          done_file = get_opts.opt_arg ();
+                  break;
+
+      case '?':
+      default:
+             ACE_ERROR_RETURN ((LM_ERROR,
+                                     "usage:  %s "
+                                     "-d <done_file> "
+                                     "\n",
+                                     argv [0]),
+                                    -1);
+
+      }
+  return 0;
+}
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -22,6 +52,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Command line argument interpretation.
       TT_Parse_Args parse_args (argc, argv);
+
+      //Command line argument parser for
+      if (parse_args_spec (argc, argv) != 0)
+          return 1;
 
       // Init the orb and bootstrap to the trading service.
       CORBA::ORB_var orb = orb_manager.orb ();
@@ -108,7 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if ((offset = (size_t)ACE_OS::strrchr(file, ACE_TEXT('/'))) != 0) {
         offset -= ((size_t)file - 1);
       }
-      ACE_OS::strcpy(file + offset, ACE_TEXT("export_test_ready"));
+      ACE_OS::strcpy(file + offset, done_file);
 
       FILE *ready_file =
         ACE_OS::fopen (file, "w");

@@ -6,31 +6,45 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
+$status = 0;
+
+my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+my $tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
 if (exists $ENV{HOST_ROOT}) {
     $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
 }
 
 # IDL file names
-$idl_file = PerlACE::LocalFile ("Test.idl");
+my $test_idlfile = $test->LocalFile ("Test.idl");
+
+# Files to delete after test
+my @generated_files = ("TestC.cpp", "TestS.cpp", "TestC.inl", "TestS.inl", "Test.skel.h", "Test.stub.h");
 
 # The IDL compiler
-$TAO_IDL = new PerlACE::Process ("$tao_idl");
+$TAO_IDL = $test->CreateProcess ("$tao_idl");
 if (exists $ENV{HOST_ROOT}) {
     $TAO_IDL->IgnoreHostRoot(1);
 }
 
-$TAO_IDL->Arguments ("-Se -DTAO -hs .skel.h -hc .stub.h -I$ENV{TAO_ROOT} -I$ENV{TAO_ROOT}/orbsvcs/ $idl_file");
-$TAO_IDL->SpawnWaitKill (60);
+$TAO_IDL->Arguments ("-Se -DTAO -hs .skel.h -hc .stub.h ".
+                     "-I$ENV{TAO_ROOT} -I$ENV{TAO_ROOT}/orbsvcs/ $test_idlfile");
+
+$test_status = $TAO_IDL->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
+if ($test_status != 0) {
+    print STDERR "ERROR: test returned $test_status\n";
+    exit 1;
+}
 
 $found = 0;
 
-$stub_h = PerlACE::LocalFile("Test.stub.h");
+$stub_h = $test->LocalFile("Test.stub.h");
+
 open (STUB_HANDLE, "<$stub_h");
-while ($line = <STUB_HANDLE>)
-{
+
+while ($line = <STUB_HANDLE>) {
     # Process the line.
     chomp $line;
 
@@ -43,12 +57,14 @@ while ($line = <STUB_HANDLE>)
         $found++;
     }
 }
+
 close(STUB_HANDLE);
 
-$skel_h = PerlACE::LocalFile("Test.skel.h");
+$skel_h = $test->LocalFile("Test.skel.h");
+
 open (SKEL_HANDLE, "<$skel_h");
-while ($line = <SKEL_HANDLE>)
-{
+
+while ($line = <SKEL_HANDLE>) {
     # Process the line.
     chomp $line;
 
@@ -65,14 +81,18 @@ while ($line = <SKEL_HANDLE>)
         $found++;
     }
 }
+
 close(SKEL_HANDLE);
 
-unlink <*.cpp *.inl *.h>;
+foreach $generated_file (@generated_files) {
+    $test->DeleteFile($generated_file);
+}
 
 if ($found == 5) {
     print "INFO: Test passed!\n";
-    exit 0;
 } else {
     print STDERR "ERROR: Custom endings are incorrectly applied.\n";
-    exit 1;
+    $status = 1;
 }
+
+exit $status;
