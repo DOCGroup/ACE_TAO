@@ -15,8 +15,8 @@
 #include /**/ "Hello_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/ndds/NDDS_Traits.h"
-#include "dds4ccm/impl/ndds/Connector_T.h"
+#include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
+#include "dds4ccm/impl/ndds/DDS_Event_Connector_T.h"
 
 #include "Base/Hello_BaseSupport.h"
 
@@ -31,7 +31,7 @@ namespace CIAO_Hello_Hello_Connector_Impl
     DDSHelloDataWriter,
     DDSHelloDataReader > DDSHello_DDS_Traits;
 
-  typedef Connector_Traits <
+  typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_Hello_Hello_Connector_Impl::Hello_Connector_Exec,
     DDSHello_Seq,
     ::CCM_DDS::Hello::CCM_Writer,

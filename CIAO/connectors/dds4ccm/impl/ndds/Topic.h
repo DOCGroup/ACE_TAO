@@ -9,7 +9,7 @@
 
 #ifndef CIAO_NDDS_TOPIC_H
 #define CIAO_NDDS_TOPIC_H
-#include "NDDS_Traits.h"
+
 #include "DomainParticipant.h"
 
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_impl_export.h"

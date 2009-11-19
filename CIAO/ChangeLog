@@ -1,3 +1,22 @@
+Thu Nov 19 18:48:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h
+        * connectors/dds4ccm/impl/ndds/Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS4CCM_Traits.h
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/Getter_T.cpp
+        * connectors/dds4ccm/impl/ndds/NDDS_Traits.h
+        * connectors/dds4ccm/impl/ndds/Topic.h
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector_exec.h
+          Use DDS4CCM Traits and renamed Connector_T to show that this is
+          the DDS_Event connector
+
 Thu Nov 19 16:46:46 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:

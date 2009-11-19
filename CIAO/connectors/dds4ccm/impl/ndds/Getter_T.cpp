@@ -7,11 +7,12 @@
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (::DDS::DataReader_ptr reader)
-: impl_ (0),
-  condition_(0),
-  time_out_ (),
-  max_delivered_data_ (0)
+CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (
+  ::DDS::DataReader_ptr reader) :
+   impl_ (0),
+    condition_(0),
+    time_out_ (),
+    max_delivered_data_ (0)
 {
   CIAO_TRACE ("CIAO::DDS4CCM::RTI::Getter_T::Getter_T");
   RTI_DataReader_i *rdr = dynamic_cast <RTI_DataReader_i *> (reader);
@@ -31,7 +32,8 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::Getter_T (::DDS::DataReader_pt
                    "type necessary to publish messages\n"));
       throw CORBA::INTERNAL ();
     }
-  //now create the waitset conditions
+
+  // Now create the waitset conditions
   ws_ = new DDSWaitSet ();
   gd_ = new DDSGuardCondition ();
   rd_condition_ = this->impl_->create_readcondition (DDS_NOT_READ_SAMPLE_STATE,
@@ -123,14 +125,16 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
             }
           else if (retcode != DDS_RETCODE_OK)
             {
-              CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
-                    "Unable to return the loan to DDS: <%C>\n", translate_retcode (retcode)));
+              CIAO_ERROR ((LM_ERROR, CLINFO
+                    "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
+                    "Unable to return the loan to DDS: <%C>\n",
+                    translate_retcode (retcode)));
               break;
             }
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
               ::CORBA::ULong number_read = 0;
-              for (::DDS_Long index = 0; index < sample_info.length (); index ++) 
+              for (::DDS_Long index = 0; index < sample_info.length (); index ++)
                 {
                   if (sample_info[index].valid_data)
                     {
@@ -140,11 +144,11 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
               infos->length (number_read);
               instances->length (number_read);
               number_read = 0;
-              for (::DDS_Long j = 0; j < data.length (); j ++) 
+              for (::DDS_Long j = 0; j < data.length (); j ++)
                 {
                   if (sample_info[j].valid_data)
                     {
-                      infos->operator[](number_read) <<= sample_info[j]; //retrieves the last sample.
+                      infos->operator[](number_read) <<= sample_info[j];
                       instances->operator[](number_read) = data[j];
                       ++number_read;
                     }
@@ -158,7 +162,8 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_many (
           retcode = this->impl_->return_loan(data,sample_info);
           if (retcode != DDS_RETCODE_OK)
             {
-              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("return loan error %C\n"), translate_retcode (retcode)));
+              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("return loan error %C\n"),
+                          translate_retcode (retcode)));
             }
         }
     }
@@ -205,8 +210,10 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
             }
           else if (retcode != DDS_RETCODE_OK)
             {
-              CIAO_ERROR ((LM_ERROR, CLINFO "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
-                    "Unable to return the loan to DDS: <%C>\n", translate_retcode (retcode)));
+              CIAO_ERROR ((LM_ERROR, CLINFO
+                    "CIAO::DDS4CCM::RTI::Getter_T::Getter_T - "
+                    "Unable to return the loan to DDS: <%C>\n",
+                    translate_retcode (retcode)));
               break;
             }
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
@@ -222,7 +229,9 @@ CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE>::get_one (
           retcode = this->impl_->return_loan(data,sample_info);
           if (retcode != DDS_RETCODE_OK)
             {
-              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("return loan error %C\n"), translate_retcode (retcode)));
+              CIAO_ERROR ((LM_ERROR,
+                          ACE_TEXT ("return loan error %C\n"),
+                          translate_retcode (retcode)));
             }
         }
     }
