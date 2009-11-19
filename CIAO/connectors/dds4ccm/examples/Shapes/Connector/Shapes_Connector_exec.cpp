@@ -5,8 +5,8 @@
 
 namespace CIAO_Shapes_Shapes_Connector_Impl
 {
-  Shapes_Connector_exec_i::Shapes_Connector_exec_i (const char * topic_name)
-    : DDS_Event_Connector_T<ShapeType_DDS_Traits, ShapeType_Connector_Traits> (topic_name)
+  Shapes_Connector_exec_i::Shapes_Connector_exec_i (void)
+    : DDS_Event_Connector_T<ShapeType_DDS_Traits, ShapeType_Connector_Traits> ()
   {
   }
 
@@ -22,7 +22,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
 
     ACE_NEW_NORETURN (
       retval,
-      Shapes_Connector_exec_i ("Default_Topic_Name")); //should be set by dep. plan.
+      Shapes_Connector_exec_i ());
 
     return retval;
   }

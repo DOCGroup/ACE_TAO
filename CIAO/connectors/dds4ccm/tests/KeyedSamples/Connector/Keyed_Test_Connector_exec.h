@@ -47,7 +47,7 @@ namespace CIAO_Keyed_Test_Keyed_Test_Connector_Impl
     public DDS_Event_Connector_T <KeyedTest_DDS_Traits, KeyedTest_Connector_Traits>
   {
   public:
-    Keyed_Test_Connector_exec_i (const char * topic_name);
+    Keyed_Test_Connector_exec_i (void);
     virtual ~Keyed_Test_Connector_exec_i (void);
   };
 

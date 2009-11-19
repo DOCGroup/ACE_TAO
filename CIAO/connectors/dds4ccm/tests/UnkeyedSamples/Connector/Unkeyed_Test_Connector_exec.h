@@ -46,7 +46,7 @@ namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
     public DDS_Event_Connector_T <UnkeyedTest_DDS_Traits, UnkeyedTest_Connector_Traits>
   {
   public:
-    Unkeyed_Test_Connector_exec_i (const char * topic_name);
+    Unkeyed_Test_Connector_exec_i (void);
     virtual ~Unkeyed_Test_Connector_exec_i (void);
   };
 

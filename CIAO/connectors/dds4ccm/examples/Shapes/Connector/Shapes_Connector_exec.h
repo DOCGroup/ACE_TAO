@@ -47,7 +47,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
     public DDS_Event_Connector_T <ShapeType_DDS_Traits, ShapeType_Connector_Traits>
   {
   public:
-    Shapes_Connector_exec_i (const char * topic_name);
+    Shapes_Connector_exec_i (void);
     virtual ~Shapes_Connector_exec_i (void);
   };
 
