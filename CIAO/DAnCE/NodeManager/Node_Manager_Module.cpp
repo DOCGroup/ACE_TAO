@@ -41,8 +41,24 @@ namespace DAnCE
   }
 }
 
+DAnCE_NodeManager_Module::SOptions::SOptions(void)
+  : process_ns_ (false),
+    process_ns_file_ (0),
+    create_plan_ns_ (false),
+    create_plan_ns_ior_ (0),
+    rebind_plan_ns_ (false),
+    rebind_plan_ns_ior_ (0),
+    ignore_failure_ (false),
+    cs_path_ (ACE_TEXT("ciao_componentserver")),
+    timeout_ (5),
+    standalone_ (false),
+    server_args_ (0),
+    domain_nc_ (0),
+    instance_nc_ (0)
+{
+}
+
 DAnCE_NodeManager_Module::DAnCE_NodeManager_Module (void)
-  //: redirection_ (0)
 {
   DANCE_TRACE("DAnCE_NodeManager_Module::DAnCE_NodeManager_Module");
 }
@@ -57,8 +73,6 @@ DAnCE_NodeManager_Module::~DAnCE_NodeManager_Module (void)
     {
       delete (*it).int_id_;
     }
-
-  //delete this->redirection_;
 }
 
 const char *

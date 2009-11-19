@@ -38,7 +38,6 @@
 namespace DAnCE
 {
   class NodeManager_Impl;
-//  class RedirectionService;
 }
 
 /**
@@ -71,22 +70,7 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
         const ACE_TCHAR * domain_nc_;
         const ACE_TCHAR * instance_nc_;
 
-        SOptions()
-            : process_ns_ (false),
-              process_ns_file_ (0),
-              create_plan_ns_ (false),
-              create_plan_ns_ior_ (0),
-              rebind_plan_ns_ (false),
-              rebind_plan_ns_ior_ (0),
-              ignore_failure_ (false),
-              cs_path_ (0),
-              timeout_ (5),
-              standalone_ (false),
-              server_args_ (0),
-              domain_nc_ (0),
-              instance_nc_ (0)
-        {
-        }
+        SOptions();
       };
 
   /// Constructor.
@@ -118,8 +102,6 @@ class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
   CORBA::ORB_var orb_;
   CosNaming::NamingContext_var domain_nc_;
 
-  /// Single redirection service for all NMs.
-  //DAnCE::RedirectionService * redirection_;
   SOptions options_;
 
   PortableServer::POA_var root_poa_;

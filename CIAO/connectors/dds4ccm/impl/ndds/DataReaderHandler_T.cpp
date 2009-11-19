@@ -25,26 +25,32 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 int
 CIAO::DDS4CCM::RTI::DataReaderHandler_T<DDS_TYPE, CCM_TYPE>::handle_exception (ACE_HANDLE)
 {
-  // Loop until there are messages available in the queue 
-  for(;;) 
+  try 
     {
-      typename DDS_TYPE::value_type instance;
-      ::DDS_SampleInfo sampleinfo;
-      ::DDS::ReturnCode_t const result  = this->reader_->take_next_sample(instance,
-                                                                  sampleinfo);
-      if (result == DDS_RETCODE_NO_DATA) 
-          break;
-      else if (result != DDS_RETCODE_OK) 
+      // Loop until there are messages available in the queue
+      for(;;)
         {
-          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
-          return 1;
+          typename DDS_TYPE::value_type instance;
+          ::DDS_SampleInfo sampleinfo;
+          ::DDS::ReturnCode_t const result  = this->reader_->take_next_sample(instance,
+                                                                      sampleinfo);
+          if (result == DDS_RETCODE_NO_DATA)
+              break;
+          else if (result != DDS_RETCODE_OK)
+            {
+              CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
+              return 1;
+            }
+          if (sampleinfo.valid_data)
+            {
+              CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderHandler_T : found valid data\n")));
+              ::CCM_DDS::ReadInfo empty;
+              listener_->on_one_data (instance, empty);
+            }
         }
-      if (sampleinfo.valid_data) 
-        {
-          CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("DataReaderHandler_T : found valid data\n")));
-          ::CCM_DDS::ReadInfo empty;
-          listener_->on_one_data (instance, empty);
-        }
+    }
+  catch (...)
+    {
     }
   return 0;
 }
