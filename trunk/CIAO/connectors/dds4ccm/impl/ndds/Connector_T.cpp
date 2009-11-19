@@ -234,7 +234,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (bool create_getter)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (void)
 {
   if (this->__listen_configured_ && this->__info_get_configured_ )
     return;
@@ -247,36 +247,35 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (bool create_g
         {
           ::DDS::SubscriberQos sqos;
           this->__listen_subscriber_ = this->domain_->create_subscriber (sqos,
-                                                                            0,
-                                                                            0);
+                                                                         0,
+                                                                          0);
         }
 
+     this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
+          <DDS_TYPE, CCM_TYPE> (
+                this->context_,
+                this->__listen_datalistener_mode_,
+                this->__listen_datalistener_max_delivered_data_);
       if (CORBA::is_nil (this->__listen_datareader_.in ()))
         {
-          this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
-            <DDS_TYPE, CCM_TYPE> (
-                  this->context_,
-                  this->__listen_datalistener_mode_,
-                  this->__listen_datalistener_max_delivered_data_);
           ::DDS::DataReaderQos drqos;
-          if (create_getter)
-            {
-              this->__info_get_datareader_ =
-                  this->__listen_subscriber_->create_datareader (this->topic_.in (),
-                                                               drqos,
-                                                               this->__listen_datareaderlistener.in (),
-                                                               DDS_DATA_AVAILABLE_STATUS);
-              this->__info_get_configured_ = true;
-            }
-          else
-            {
-               this->__listen_datareader_ =
-                  this->__listen_subscriber_->create_datareader (this->topic_.in (),
-                                                               drqos,
-                                                               this->__listen_datareaderlistener.in (),
-                                                               DDS_DATA_AVAILABLE_STATUS);
-              this->__listen_configured_ = true;
-            }
+          this->__listen_datareader_ =
+              this->__listen_subscriber_->create_datareader (this->topic_.in (),
+                                                           drqos,
+                                                           this->__listen_datareaderlistener.in (),
+                                                           DDS_DATA_AVAILABLE_STATUS);
+          this->__listen_configured_ = true;
+        }
+
+      if (CORBA::is_nil (this->__info_get_datareader_.in ()))
+        {
+          ::DDS::DataReaderQos drqos;
+          this->__info_get_datareader_ =
+              this->__listen_subscriber_->create_datareader (this->topic_.in (),
+                                                           drqos,
+                                                           this->__listen_datareaderlistener.in (),
+                                                           DDS_DATA_AVAILABLE_STATUS);
+          this->__info_get_configured_ = true;
         }
 
     }
@@ -316,7 +315,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data (void)
 {
   CIAO_TRACE ("get_info_get_out_data");
 
-  this->configure_port_listen_ (true);
+  this->configure_port_listen_ ();
 
   return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> (
           this->__info_get_datareader_.in ());
@@ -328,7 +327,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
 {
   CIAO_TRACE ("get_push_consumer_data");
 
-  this->configure_port_listen_ (false);
+  this->configure_port_listen_ ();
 
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
           this->__listen_datareader_.in ());
@@ -340,7 +339,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
 {
   CIAO_TRACE ("get_pull_consumer_data");
 
-  this->configure_port_listen_ (false);
+  this->configure_port_listen_ ();
 
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
           this->__listen_datareader_.in ());
@@ -402,8 +401,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
   if (!CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ()) ||
      (!CORBA::is_nil (this->context_->get_connection_push_consumer_status () )))
     {
-      this->configure_port_listen_ (false);
-      this->configure_port_listen_ (true);
+      this->configure_port_listen_ ();
       this->configure_port_info_in_ ();
     }
 }
