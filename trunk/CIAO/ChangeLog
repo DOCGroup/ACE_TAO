@@ -1,3 +1,22 @@
+Thu Nov 19 13:22:49 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/CommandlinePassage:
+        * DAnCE/tests/CIAO/CommandlinePassage/CommandlinePassage.idl:
+        * DAnCE/tests/CIAO/CommandlinePassage/CommandlinePassage.mpc:
+        * DAnCE/tests/CIAO/CommandlinePassage/CommandlinePassage_exec.h:
+        * DAnCE/tests/CIAO/CommandlinePassage/CommandlinePassage_exec.cpp:
+        * DAnCE/tests/CIAO/CommandlinePassage/Component.cdp:
+        * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
+        * bin/ciao_tests.lst:
+          Added test to test the passage of ComponentServerArgs, configured
+          in  the deployment plans, from Dance to the CIAO component server.
+
+        * tests/IDL_Test/Double_Inherited_Component/ComponentC.cdp:
+        * tests/IDL_Test/Double_Inherited_Component/ComponentC_exec.h:
+        * tests/IDL_Test/Double_Inherited_Component/Inherited_components.idl:
+        * tests/IDL_Test/Double_Inherited_Component/Inherited_components.mpc:
+          Renamed some inconsistencies.
+
 Thu Nov 19 12:36:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Connector_T.cpp
