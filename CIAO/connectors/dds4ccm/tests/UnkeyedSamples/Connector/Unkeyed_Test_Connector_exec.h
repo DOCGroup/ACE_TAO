@@ -15,8 +15,8 @@
 #include /**/ "Unkeyed_Test_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/ndds/NDDS_Traits.h"
-#include "dds4ccm/impl/ndds/Connector_T.h"
+#include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
+#include "dds4ccm/impl/ndds/DDS_Event_Connector_T.h"
 
 #include "Base/Unkeyed_Test_BaseSupport.h"
 
@@ -30,7 +30,7 @@ namespace CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl
     UnkeyedTestDataWriter,
     UnkeyedTestDataReader > UnkeyedTest_DDS_Traits;
 
-  typedef Connector_Traits <
+  typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_Unkeyed_Test_Unkeyed_Test_Connector_Impl::Unkeyed_Test_Connector_Exec,
     UnkeyedTest_Seq,
     ::CCM_DDS::UnkeyedTest::CCM_Writer,

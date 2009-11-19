@@ -26,7 +26,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
         if (pulse_callback_.read_data ())
           {
             this->pulse_callback_.read_one();
-            //this->pulse_callback_.read_all();
+            this->pulse_callback_.read_all();
           }
         if (pulse_callback_.get_data ())
           {

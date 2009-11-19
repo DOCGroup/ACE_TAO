@@ -15,8 +15,8 @@
 #include /**/ "Shapes_Connector_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/ndds/NDDS_Traits.h"
-#include "dds4ccm/impl/ndds/Connector_T.h"
+#include "dds4ccm/impl/ndds/DDS4CCM_Traits.h"
+#include "dds4ccm/impl/ndds/DDS_Event_Connector_T.h"
 
 #include "Base/Shapes_BaseSupport.h"
 
@@ -31,7 +31,7 @@ namespace CIAO_Shapes_Shapes_Connector_Impl
     ShapeTypeDataWriter,
     ShapeTypeDataReader > ShapeType_DDS_Traits;
 
-  typedef Connector_Traits <
+  typedef CIAO::DDS4CCM::Connector_Traits <
     ::CIAO_Shapes_Shapes_Connector_Impl::Shapes_Connector_Exec,
     ShapeType_Seq,
     ::CCM_DDS::ShapeType::CCM_Writer,
