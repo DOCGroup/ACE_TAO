@@ -8,14 +8,9 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast,
-           ast_connector,
-           "$Id$")
-
 AST_Connector::AST_Connector (
       UTL_ScopedName *n,
-      AST_Connector *base_connector,
-      FE_Utils::T_PARAMLIST_INFO *template_params)
+      AST_Connector *base_connector)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_connector,
@@ -35,10 +30,7 @@ AST_Connector::AST_Connector (
                    0,
                    0,
                    0,
-                   0),
-    AST_Template_Common (AST_Decl::NT_connector,
-                         n,
-                         template_params)
+                   0)
 {
 }
 
@@ -56,8 +48,6 @@ void
 AST_Connector::destroy (void)
 {
   this->AST_Component::destroy ();
-  delete this->template_params_;
-  this->template_params_ = 0;
 }
 
 void

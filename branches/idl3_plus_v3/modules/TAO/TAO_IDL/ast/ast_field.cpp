@@ -79,16 +79,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID (ast,
-           ast_field,
-           "$Id$")
-
 AST_Field::AST_Field (void)
   : COMMON_Base (),
     AST_Decl (),
     ref_type_ (0),
     visibility_ (vis_NA),
-    anonymous_type_ (false)
+    owns_base_type_ (false)
 {
 }
 
@@ -101,13 +97,13 @@ AST_Field::AST_Field (AST_Type *ft,
               n),
     ref_type_ (ft),
     visibility_ (vis),
-    anonymous_type_ (false)
+    owns_base_type_ (false)
 {
   AST_Decl::NodeType fnt = ft->node_type ();
   
   if (AST_Decl::NT_array == fnt || AST_Decl::NT_sequence == fnt)
     {
-      this->anonymous_type_ = true;
+      this->owns_base_type_ = true;
     }
 }
 
@@ -121,13 +117,13 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
               n),
     ref_type_ (ft),
     visibility_ (vis),
-    anonymous_type_ (false)
+    owns_base_type_ (false)
 {
   AST_Decl::NodeType fnt = ft->node_type ();
   
   if (AST_Decl::NT_array == fnt || AST_Decl::NT_sequence == fnt)
     {
-      this->anonymous_type_ = true;
+      this->owns_base_type_ = true;
     }
 }
 
@@ -169,7 +165,7 @@ AST_Field::ast_accept (ast_visitor *visitor)
 void
 AST_Field::destroy (void)
 {
-  if (this->anonymous_type_)
+  if (this->owns_base_type_)
     {
       this->ref_type_->destroy ();
       delete this->ref_type_;

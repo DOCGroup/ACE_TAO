@@ -69,7 +69,7 @@ be_visitor_context_ex_idl::visit_component (
   os_ << be_uidt_nl
       << "{" << be_idt;
 
-  if (this->visit_component_scope (node) == -1)
+  if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_context_ex_idl::")

@@ -68,18 +68,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_TYPEDEF_AST_TYPEDEF_HH
 
 #include "ast_type.h"
+#include "ast_field.h"
 
 // Representation of typedef declaration.
 // A typedef declaration is a renaming of a base type.
 
-class TAO_IDL_FE_Export AST_Typedef : public virtual AST_Type
+class TAO_IDL_FE_Export AST_Typedef : public virtual AST_Type,
+                                      public virtual AST_Field
 {
 public:
-  // Operations.
-
-  // Constructor(s) and destructor.
-  AST_Typedef (void);
-
   AST_Typedef (AST_Type *base_type,
                UTL_ScopedName *n,
                bool local,
@@ -107,8 +104,7 @@ public:
   // Sometimes this has to be accessed or managed from outside.
 
   // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Typedef);
+  DEF_NARROW_FROM_DECL (AST_Typedef);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -122,16 +118,6 @@ public:
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
-
-private:
-  // Data.
-
-  AST_Type *pd_base_type;
-  // Typedef base type.
-
-  bool owns_base_type_;
-  // If our base type is anonymous array or sequence, we're
-  // responsible for destroying it.
 };
 
 #endif           // _AST_TYPEDEF_AST_TYPEDEF_HH

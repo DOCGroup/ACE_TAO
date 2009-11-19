@@ -1061,14 +1061,12 @@ be_generator::create_mirror_port (
 AST_Connector *
 be_generator::create_connector (
   UTL_ScopedName *n,
-  AST_Connector *base_connector,
-  FE_Utils::T_PARAMLIST_INFO *template_params)
+  AST_Connector *base_connector)
 {
   be_connector *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_connector (n,
-                                base_connector,
-                                template_params),
+                                base_connector),
                   0);
                   
   return retval;

@@ -31,9 +31,6 @@ class be_typedef : public virtual AST_Typedef,
                    public virtual be_type
 {
 public:
-  be_typedef (void);
-  // Default constructor.
-
   be_typedef (AST_Type *bt,
               UTL_ScopedName *n,
               bool l,

@@ -3,10 +3,6 @@
 #include "be_template_interface.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be,
-           be_template_interface,
-           "$Id$")
-
 be_template_interface::be_template_interface (
       UTL_ScopedName *n,
       AST_Interface **ih,
@@ -28,7 +24,7 @@ be_template_interface::be_template_interface (
                    nih_flat,
                    false,
                    false),
-    AST_Template_Common (AST_Decl::NT_porttype,
+    AST_Template_Common (AST_Decl::NT_interface,
                          n,
                          template_params),
     AST_Template_Interface (n,

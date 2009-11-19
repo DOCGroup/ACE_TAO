@@ -1,3 +1,47 @@
+Thu Nov 19 20:47:43 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_param_holder.h:
+        * TAO_IDL/include/ast_template_module.h:
+        * TAO_IDL/be/be_param_holder.cpp:
+        * TAO_IDL/be/be_template_module.cpp:
+        * TAO_IDL/ast/ast_template_module.cpp:
+        * TAO_IDL/ast/ast_param_holder.cpp:
+        * TAO_IDL/be_include/be_template_module.h:
+        * TAO_IDL/be_include/be_param_holder.h:
+
+          New files, containing new AST node types
+          corresponding to updates in the IDL3+ grammar.
+
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_connector.h:
+        * TAO_IDL/be/be_enum_val.cpp:
+        * TAO_IDL/be/be_template_interface.cpp:
+        * TAO_IDL/be/be_connector.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_connector.cpp:
+        * TAO_IDL/ast/ast_template_common.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be_include/be_connector.h:
+        * TAO_IDL/be_include/be_generator.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be_include/be_typedef.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/include/ast_field.h:
+
+          Made typedef nodes subclasses of field
+          nodes, similar to argument, attribute,
+          port, etc. so the case when these nodes
+          refer to IDL template parameters can be
+          handled in a consistent manner.
+
 Thu Nov 19 14:43:01 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

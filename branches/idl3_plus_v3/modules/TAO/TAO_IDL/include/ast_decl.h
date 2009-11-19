@@ -170,6 +170,7 @@ public:
       , NT_ext_port                 // Denotes an extended port
       , NT_mirror_port              // Denotes a mirror port
       , NT_connector                // Denotes a CCM connector
+      , NT_param_holder             // Denotes a template param placeholder
   };
 
   // Operations.
