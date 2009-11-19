@@ -1,7 +1,19 @@
+Thu Nov 19 15:40:53 UTC 2009  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * tests/Bug_3766_Regression:
+        * tests/Bug_3766_Regression/Bug_3766_Regression.mpc:
+        * tests/Bug_3766_Regression/Test.idl:
+        * tests/Bug_3766_Regression/TestI.h:
+        * tests/Bug_3766_Regression/TestI.cpp:
+        * tests/Bug_3766_Regression/run_test.pl:
+        * tests/Bug_3766_Regression/server.cpp:
+
+          Added a regression test for Bugzilla 3766.
+
 Thu Nov 19 12:38:10 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * tests/Bug_2234_Regression/server.cpp:
-          
+
           Test is converted to use new test framework and added to fuzz build.
 
 Thu Nov 19 08:25:13 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
@@ -39,9 +51,9 @@ Thu Nov 19 08:25:13 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
         * tests/Oneway_Buffering/run_test.pl:
         * bin/tao_other_tests.lst:
         * bin/tao_orb_tests.lst:
-        
+
           Tests are converted to use new test framework and added to fuzz build.
-          
+
 Wed Nov 18 12:58:16 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Bug_2925_Regression/run_test_ipv6.pl:
