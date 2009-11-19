@@ -70,7 +70,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
       case DDS_RETCODE_OK:
         ix = 0;
         nr_of_last_samples = 0;
-        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+        CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
                                 ACE_TEXT ("number_of_samples <%d>\n"), data.length() ));
         //infoseq <<= sample_info; ??
 
@@ -96,11 +96,11 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_last (
           }
         break;
       case DDS_RETCODE_NO_DATA:
-        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - No data")));
+        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - No data")));
         break;
       default:
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
-                                ACE_TEXT ("retval is %d\n"), retval));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_last - ")
+                                ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
     }
@@ -134,7 +134,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
     switch(retval)
       {
         case DDS_RETCODE_OK:
-          CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all_history - ")
+          CIAO_DEBUG ((LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
                                  ACE_TEXT ("number_of_samples <%d>\n"), data.length ()));
           //count the number of valid data
           for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
@@ -158,11 +158,11 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_all (
             }
           break;
         case DDS_RETCODE_NO_DATA:
-          CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all_history - No data")));
+          CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - No data")));
           break;
         default:
-          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all_history - ")
-                                ACE_TEXT ("retval is %d\n"), retval));
+          CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_all - ")
+                                ACE_TEXT ("retval is %C\n"), translate_retcode(retval)));
           throw ::CCM_DDS::InternalError (retval, 0);
           break;
       }
@@ -218,7 +218,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
     {
       case DDS_RETCODE_OK:
         {
-          ::DDS_Long number_of_samples = data.length();
+          ::DDS_Long const number_of_samples = data.length();
           CIAO_DEBUG ((LM_INFO,
                       ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
                       ACE_TEXT ("number_of_samples = %d\n"),
@@ -234,7 +234,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
           }
         break;
       case DDS_RETCODE_NO_DATA:
-        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one - ")
+        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
                               ACE_TEXT ("No data\n")));
         this->impl_->return_loan(data,sample_info);
         //only if a key and no instance for that key throw NonExistent exception
@@ -244,8 +244,8 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_last (
           }
         break;
       default:
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one - ")
-                               ACE_TEXT ("retval <%d>\n"), retval));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_last - ")
+                               ACE_TEXT ("retval <%C>\n"), translate_retcode(retval)));
         this->impl_->return_loan(data,sample_info);
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
@@ -283,7 +283,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
         }
       else
         {
-          CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_history - ")
+          CIAO_DEBUG ((LM_INFO, ACE_TEXT ("CIAO::DDS4CCM::RTI::Reader_T::read_one_all - ")
                                 ACE_TEXT ("No instance found.\n")));
           retval = this->impl_->read(data,
                             sample_info,
@@ -317,7 +317,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
           }
         break;
       case DDS_RETCODE_NO_DATA:
-        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("Reader_T: read_all_history No data : retval is %d ---\n"), retval));
+        CIAO_DEBUG ((LM_INFO, ACE_TEXT ("Reader_T: read_one_all No data : retval is %C ---\n"), translate_retcode(retval)));
         if (!DDS_InstanceHandle_equals (&hnd, & ::DDS_HANDLE_NIL))
           {
             this->impl_->return_loan(data,sample_info);
@@ -325,7 +325,7 @@ CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE>::read_one_all (
           }
         break;
       default:
-        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Reader_T: read_all_history Failed retval is %d ---\n"), retval));
+        CIAO_ERROR ((LM_ERROR, ACE_TEXT ("Reader_T: read_one_all Failed retval is %C ---\n"), translate_retcode(retval)));
         this->impl_->return_loan(data,sample_info);
         throw ::CCM_DDS::InternalError (retval, 0);
         break;
