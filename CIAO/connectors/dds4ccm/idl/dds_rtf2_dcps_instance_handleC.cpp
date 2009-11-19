@@ -3,7 +3,7 @@
 
 #include "dds_rtf2_dcps_instance_handleC.h"
 
-static ::DDS::InstanceHandle_t S_HANDLE = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 16};
+static ::DDS::InstanceHandle_t S_HANDLE = { {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 16, 0};
 
 namespace DDS
 {

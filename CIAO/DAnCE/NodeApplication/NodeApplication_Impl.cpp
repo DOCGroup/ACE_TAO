@@ -47,9 +47,9 @@ namespace
     if (properties.find (name, any) == 0)
       {
         if (any >>= val)
-                  {
+          {
             return true;
-                  }
+          }
         else
           {
             DANCE_ERROR ((LM_WARNING, DLINFO
@@ -835,7 +835,6 @@ NodeApplication_Impl::install_homed_component (Container &cont, Instance &inst)
 {
   DANCE_TRACE("NodeApplication_Impl::install_homed_component (unsigned int index)");
 
-  //const ::Deployment::MonolithicDeploymentDescription &mdd = this->plan_.implementation[inst.mdd_idx];
   const ::Deployment::InstanceDeploymentDescription &idd = this->plan_.instance[inst.idd_idx];
   this->instances_[inst.idd_idx] = &inst;
 
@@ -1585,40 +1584,6 @@ NodeApplication_Impl::get_instance_type (const ::Deployment::Properties& prop) c
   return eInvalid;
 }
 
-void
-NodeApplication_Impl::create_config_values (const ::Deployment::Properties& /*prop*/,
-                                            const ERequestType request,
-                                            Components::ConfigValues& /*cfg*/) const
-{
-  DANCE_TRACE ("NodeApplication_Impl::create_config_values");
-
-  CORBA::Any_var feature_any;
-  switch (request)
-    {
-    case eCreateComponentServer:
-      {
-        break;
-      }
-    case eCreateContainer:
-      {
-
-        break;
-      }
-    case eInstallHome:
-      {
-        break;
-      }
-    default:
-      {
-        DANCE_ERROR((LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_impl::create_config_values - ")
-                     ACE_TEXT("request is not a know type: eCreateComponentServer, eCreateContainer, ")
-                     ACE_TEXT("eInstallHome, eCreateComponentWithConfigValues\n")));
-        throw ::Deployment::InvalidProperty("",
-                                            "Invalid creation type for filling in config values");
-      }
-    }
-}
-
 ::Deployment::Connections*
 NodeApplication_Impl::getAllConnections()
 {
@@ -1629,23 +1594,10 @@ NodeApplication_Impl::getAllConnections()
                     ::Deployment::Connections (),
                     CORBA::NO_MEMORY ());
   unsigned int index = 0;
-  /*
-  this->redirection_.registration_start (this->node_name_, this->plan_.UUID.in());
 
-  CCMObjects registration
-  for (TComponents::iterator it = this->components_.begin();
-       !it.done();
-       ++it)
+  for (CORBA::ULong i = 0; i < this->plan_.connection.length(); i++)
     {
-      this->redirection_.registration (this->node_name_,
-                                       this->plan_.UUID.in(),
-                                       (*it).ext_id_,
-                                       (*it).int_id_.in());
-
-    }*/
-  for (unsigned int i = 0; i < this->plan_.connection.length(); i++)
-    {
-      for (unsigned int j = 0; j < this->plan_.connection[i].internalEndpoint.length(); j++)
+      for (CORBA::ULong j = 0; j < this->plan_.connection[i].internalEndpoint.length(); j++)
         {
           if (this->plan_.connection[i].internalEndpoint[j].provider)
             {
@@ -1666,8 +1618,6 @@ NodeApplication_Impl::getAllConnections()
                 _narrow (this->instances_[this->plan_.connection[i].internalEndpoint[j].instanceRef]->ref.in ());
 
               (*conn) [index].endpoint.length (1L);
-              //              ACE_CString path = CCMObjectLocator::TreeNode::mergePath (inst_name.c_str()
-              //                                                                        , this->plan_.connection[i].internalEndpoint[j].portName.in());
               switch (this->plan_.connection[i].internalEndpoint[j].kind)
                 {
                 case ::Deployment::Facet:
@@ -1696,12 +1646,6 @@ NodeApplication_Impl::getAllConnections()
                                          this->plan_.connection[i].internalEndpoint[j].portName.in()));
                             (*conn) [index].endpoint[0] = CORBA::Object::_duplicate (obj.in());
                           }
-                        /*                        this->redirection_.registration (this->node_name_,
-                                                         this->plan_.UUID.in(),
-                                                         inst_name,
-                                                         name,
-                                                         (*conn) [index].endpoint[0].in());*/
-                        //app_node.addChild(path.c_str(), obj->provide_facet(facet_name));
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - provide_facet finished\n")));
                       }
                     catch (const ::Components::InvalidName& )
@@ -1725,13 +1669,6 @@ NodeApplication_Impl::getAllConnections()
                                      this->plan_.connection[i].name.in(),
                                      this->plan_.connection[i].internalEndpoint[j].portName.in()));
                         (*conn) [index].endpoint[0] = obj->get_consumer (this->plan_.connection[i].internalEndpoint[j].portName.in());
-                        /*this->redirection_.registration (this->node_name_,
-                                                         this->plan_.UUID.in(),
-                                                         inst_name,
-                                                         this->plan_.connection[i].internalEndpoint[j].portName.in(),
-                                                         (*conn) [index].endpoint[0].in());*/
-
-                        //app_node.addChild(path.c_str(), obj->get_consumer(this->plan_.connection[i].internalEndpoint[j].portName));
                         DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - ")
                                      ACE_TEXT("get_consumer finished\n")));
                       }
@@ -1756,12 +1693,9 @@ NodeApplication_Impl::getAllConnections()
                                                         "Invalid connection type, should be Facet or EventConsumer");
                   }
                 }
-              //              index++;
             }
         }
     }
-  /*this->redirection_.registration_finish (this->node_name_, this->plan_.UUID.in());*/
-  //this->node_.registerObjects(this->plan_.UUID.in(), app_node);
   DANCE_DEBUG((LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_impl::getAllConnections - finished\n")));
   return conn._retn();
 }
@@ -1821,11 +1755,6 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
 
       for (CORBA::ULong i = 0; i < providedReference.length(); ++i)
         {
-          /*DANCE_DEBUG((LM_DEBUG, DLINFO "NodeApplication_impl::finishLaunch - "
-                       "loop on all connections iteration %d for connection %C\n",
-                       i,
-                       providedReference[i].name.in()));*/
-
           if (name.compare (providedReference[i].name.in()) == 0)
             {
               try
@@ -1852,14 +1781,6 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                                                               conn.internalEndpoint[1].portName.in(),
                                                               providedReference[i].endpoint[0].in());
                                   }
-                                /*
-                                  DANCE_ERROR ((LM_ERROR, DLINFO "NodeApplication_impl::finishLaunch - "
-                                  "Unsupported facet connection; lacks either external reference or "
-                                  "multiple internalEndpoints.\n"));
-                                  throw ::Deployment::StartError (name.c_str (),
-                                  "Unsupported facet connection; lacks either external reference "
-                                  "or multiple internalEndpoints.\n");
-                                */
                                 break;
                               }
                             CORBA::Object_var tmp =
@@ -2199,11 +2120,5 @@ NodeApplication_Impl::connect_publisher (Components::CCMObject_ptr inst,
       throw ::Deployment::InvalidConnection("", "Caught ExceededConnectionLimit exception while connecting publisher.");
     }
   return res;
-}
-
-
-void NodeApplication_Impl::create_config_values(const ::Deployment::Properties& prop,
-                                                Components::ConfigValues& cfg) const
-{
 }
 

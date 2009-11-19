@@ -15,6 +15,7 @@ operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHan
 {
   ACE_OS::memcpy (ddsinstancehandle.value, instancehandle.keyHash.value, MIG_RTPS_KEY_HASH_MAX_LENGTH);
   ddsinstancehandle.length = instancehandle.keyHash.length;
+  ddsinstancehandle.isValid = instancehandle.isValid;
 }
 
 inline void
@@ -22,6 +23,7 @@ operator<<= (::DDS_InstanceHandle_t &ddsinstancehandle, const ::DDS::InstanceHan
 {
   ACE_OS::memcpy (ddsinstancehandle.keyHash.value, instancehandle.value, MIG_RTPS_KEY_HASH_MAX_LENGTH);
   ddsinstancehandle.keyHash.length = instancehandle.length;
+  ddsinstancehandle.isValid = instancehandle.isValid;
 }
 
 inline void
@@ -29,6 +31,7 @@ operator>>= (const ::DDS_InstanceHandle_t &instancehandle, ::DDS::InstanceHandle
 {
   ACE_OS::memcpy (ddsinstancehandle.value, instancehandle.keyHash.value, MIG_RTPS_KEY_HASH_MAX_LENGTH);
   ddsinstancehandle.length = instancehandle.keyHash.length;
+  ddsinstancehandle.isValid = instancehandle.isValid;
 }
 
 inline void
@@ -36,6 +39,7 @@ operator>>= (const ::DDS::InstanceHandle_t &instancehandle, ::DDS_InstanceHandle
 {
   ACE_OS::memcpy (ddsinstancehandle.keyHash.value, instancehandle.value, MIG_RTPS_KEY_HASH_MAX_LENGTH);
   ddsinstancehandle.keyHash.length = instancehandle.length;
+  ddsinstancehandle.isValid = instancehandle.isValid;
 }
 
 #endif /* CIAO_RTI_INSTANCEHANDLE_T_H */

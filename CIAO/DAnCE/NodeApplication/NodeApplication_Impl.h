@@ -148,13 +148,6 @@ namespace DAnCE
 
     EInstanceType get_instance_type (const ::Deployment::Properties& prop) const;
 
-    void create_config_values (const ::Deployment::Properties& prop,
-                               const ERequestType request,
-                               Components::ConfigValues& cfg) const;
-
-    void create_config_values(const ::Deployment::Properties& prop,
-                            Components::ConfigValues& cfg) const;
-
     typedef std::map <std::string, int> ColocationMap;
 
     /// Creates colocation groups for all components in this node's deployment.
