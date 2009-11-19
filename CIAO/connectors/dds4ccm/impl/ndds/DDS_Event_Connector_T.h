@@ -37,21 +37,39 @@ public:
 
   virtual void qos_profile (const char * qos_profile);
 
+  /**
+   * @name DDS_Write
+   * DDS_Write operations
+   */
+  //@{
   virtual typename CCM_TYPE::writer_type::_ptr_type get_supplier_data (void);
 
   virtual ::DDS::CCM_DataWriter_ptr get_supplier_dds_entity (void);
+  //@}
 
+  /**
+   * @name DDS_Get
+   * DDS_Get operations
+   */
+  //@{
   virtual typename CCM_TYPE::reader_type::_ptr_type get_pull_consumer_data (void);
 
   virtual typename CCM_TYPE::getter_type::_ptr_type get_pull_consumer_fresh_data (void);
 
+  virtual ::DDS::CCM_DataReader_ptr get_pull_consumer_dds_entity (void);
+  //@}
+
+  /**
+   * @name DDS_Listen
+   * DDS_Listen operations
+   */
+  //@{
   virtual typename CCM_TYPE::reader_type::_ptr_type get_push_consumer_data (void);
 
   virtual ::CCM_DDS::CCM_DataListenerControl_ptr get_push_consumer_data_control (void);
 
-  virtual ::DDS::CCM_DataReader_ptr get_pull_consumer_dds_entity (void);
-
   virtual ::DDS::CCM_DataReader_ptr get_push_consumer_dds_entity (void);
+  //@}
 
   virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
@@ -66,7 +84,6 @@ private:
 
   // Default stuff
   void configure_default_domain_ (void);
-  bool default_domain_configured_;
   ::DDS::DomainParticipantFactory_var domain_factory_;
   ::DDS::DomainParticipant_var domain_;
 
@@ -76,21 +93,18 @@ private:
 
   // @from DDS_TopicBase
   void configure_default_topic_ (void);
-  bool default_topic_configured_;
   ::DDS::Topic_var topic_;
   CORBA::String_var topic_name_;
   DDS::StringSeq key_fields_;
 
   // @from DDS_Write for
-  void configure_port_info_in_ (void);
-  bool __info_in_configured_;
+  void configure_port_dds_write (void);
   ::DDS::Publisher_var __info_in_publisher_;
   ::DDS::CCM_DataWriter_var __info_in_datawriter_;
   typename CCM_TYPE::writer_type::_var_type __info_in_writer_;
 
   // @from DDS_Listen
-  void configure_port_listen_ (void);
-  bool __listen_configured_;
+  void configure_port_listen (void);
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> __listen_datalistener_mode_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> __listen_datalistener_max_delivered_data_;
   ::DDS::Subscriber_var __listen_subscriber_;
@@ -100,7 +114,6 @@ private:
   ::DDS::TopicListener_var __listen_topiclistener;
 
   // @from DDS_Getter
-  bool __info_get_configured_;
   ::DDS::DataReader_var __info_get_datareader_;
 };
 
