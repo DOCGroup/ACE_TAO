@@ -927,8 +927,8 @@ static const tao_yytype_uint16 tao_yyrline[] =
     5969,  5975,  5979,  5997,  5996,  6018,  6025,  6039,  6046,  6070,
     6077,  6088,  6093,  6098,  6103,  6087,  6118,  6125,  6130,  6137,
     6136,  6145,  6144,  6155,  6237,  6300,  6304,  6305,  6309,  6323,
-    6328,  6333,  6327,  6394,  6399,  6393,  6414,  6418,  6419,  6424,
-    6423,  6434,  6433,  6444,  6443,  6454,  6453
+    6328,  6333,  6327,  6393,  6398,  6392,  6413,  6417,  6418,  6423,
+    6422,  6433,  6432,  6443,  6442,  6453,  6452
 };
 #endif
 
@@ -9064,7 +9064,7 @@ tao_yyreduce:
               else
                 {
                   FE_Utils::T_PARAMLIST_INFO *p_list =
-                    pt->formal_parameters ();
+                    pt->template_params ();
 
                   if (p_list != 0 && p_list->size () != 0)
                     {
@@ -9149,7 +9149,7 @@ tao_yyreduce:
                else
                  {
                    FE_Utils::T_PARAMLIST_INFO *p_list =
-                     pt->formal_parameters ();
+                     pt->template_params ();
 
                    if (p_list != 0 && p_list->size () != 0)
                      {
@@ -9259,8 +9259,7 @@ tao_yyreduce:
             {
               AST_Connector *c =
                 idl_global->gen ()->create_connector (&sn,
-                                                      parent,
-                                                      (tao_yyvsp[(3) - (5)].strval));
+                                                      parent);
 
               (void) s->fe_add_connector (c);
 

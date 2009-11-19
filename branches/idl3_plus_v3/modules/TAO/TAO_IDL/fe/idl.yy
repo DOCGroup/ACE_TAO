@@ -6179,7 +6179,7 @@ extended_port_decl
               else
                 {
                   FE_Utils::T_PARAMLIST_INFO *p_list =
-                    pt->formal_parameters ();
+                    pt->template_params ();
 
                   if (p_list != 0 && p_list->size () != 0)
                     {
@@ -6261,7 +6261,7 @@ extended_port_decl
                else
                  {
                    FE_Utils::T_PARAMLIST_INFO *p_list =
-                     pt->formal_parameters ();
+                     pt->template_params ();
 
                    if (p_list != 0 && p_list->size () != 0)
                      {
@@ -6378,8 +6378,7 @@ connector_header
             {
               AST_Connector *c =
                 idl_global->gen ()->create_connector (&sn,
-                                                      parent,
-                                                      $3);
+                                                      parent);
 
               (void) s->fe_add_connector (c);
 
