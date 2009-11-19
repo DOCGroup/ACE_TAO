@@ -78,10 +78,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (ast,
-           ast_expression,
-           "$Id$")
-
 // Helper function to fill out the details of where this expression
 // is defined.
 void
@@ -93,8 +89,6 @@ AST_Expression::fill_definition_details (void)
   this->pd_line = idl_global->lineno ();
   this->pd_file_name = idl_global->filename ();
 }
-
-// Constructor(s) and destructor.
 
 // An AST_Expression denoting a symbolic name.
 AST_Expression::AST_Expression (UTL_ScopedName *nm)
@@ -119,7 +113,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
     tdef (0)
 {
   this->fill_definition_details ();
-  
+
   // If we are here because one string constant has
   // another one as its rhs, we must copy the UTL_String
   // so both can be destroyed at cleanup.
@@ -127,7 +121,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
     {
       ACE_NEW (this->pd_ev,
               AST_ExprValue);
-               
+
       ACE_NEW (this->pd_ev->u.strval,
                UTL_String (v->pd_ev->u.strval));
 
@@ -137,7 +131,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
     {
       ACE_NEW (this->pd_ev,
               AST_ExprValue);
-               
+
       this->pd_ev->u.wstrval = ACE::strnew (v->pd_ev->u.wstrval);
       this->pd_ev->et = EV_string;
     }
@@ -150,7 +144,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
           idl_global->err ()->coercion_error (v,
                                               t);
         }
-        
+
       if (0 != v->pd_n)
         {
           this->pd_n =
@@ -390,7 +384,7 @@ AST_Expression::AST_Expression (UTL_String *sv)
 
   ACE_NEW (this->pd_ev,
            AST_ExprValue);
-           
+
   UTL_String *new_str = 0;
   ACE_NEW (new_str,
            UTL_String (sv));
