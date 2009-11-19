@@ -16,12 +16,8 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Event_Connector_T (const char * topic_name)
-  : default_domain_configured_ (false),
-    domain_id_ (0),
-    default_topic_configured_ (false),
+  : domain_id_ (0),
     topic_name_ (topic_name),
-    __info_in_configured_ (false),
-    __listen_configured_ (false),
     __listen_datalistener_mode_ ( ::CCM_DDS::NOT_ENABLED),
     __listen_datalistener_max_delivered_data_ (0)
 {
@@ -36,7 +32,6 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 char *
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (void)
 {
-  // @from DDS_TopicBase
   return CORBA::string_dup (this->topic_name_.in ());
 }
 
@@ -45,7 +40,6 @@ void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
   const char * topic_name)
 {
-  // @from DDS_TopicBase
   this->topic_name_ = topic_name;
 }
 
@@ -76,7 +70,6 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::DomainId_t
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (void)
 {
-  // @from DDS_Base
   return this->domain_id_;
 }
 
@@ -85,7 +78,6 @@ void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::domain_id (
   ::DDS::DomainId_t domain_id)
 {
-  // @from DDS_Base
   this->domain_id_ = domain_id;
 }
 
@@ -93,7 +85,6 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 char *
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (void)
 {
-  // @from DDS_Base
   return CORBA::string_dup (this->qos_profile_.in ());
 }
 
@@ -102,7 +93,6 @@ void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::qos_profile (
   const char * qos_profile)
 {
-  // @from DDS_Base
   this->qos_profile_ = qos_profile;
 }
 
@@ -115,29 +105,29 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_domain_ (void)
   CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_Event_Connector_T::configure_default_domain_ - "
                 "Configuring default domain\n"));
 
-  if (this->default_domain_configured_)
-    return;
-
-  try
+  if (CORBA::is_nil (this->domain_factory_.in ()))
     {
-      //NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
-      //                                                           NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
+      try
+      {
+        //NDDSConfigLogger::get_instance()->set_verbosity_by_category(NDDS_CONFIG_LOG_CATEGORY_API,
+        //                                                           NDDS_CONFIG_LOG_VERBOSITY_STATUS_ALL );
 
-      // Generic code
-      this->domain_factory_ = new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
+        // Generic code
+        this->domain_factory_ =
+          new ::CIAO::DDS4CCM::RTI::RTI_DomainParticipantFactory_i ();
 
-      ::DDS::DomainParticipantQos qos;
-      this->domain_ =
-        this->domain_factory_->create_participant (this->domain_id_,
-                                                    qos,
-                                                    0,
-                                                    0);
-      default_domain_configured_ = true;
-    }
-  catch (...)
-    {
-      CIAO_ERROR ((LM_ERROR, "Caught unknown C++ exception whilst configuring default domain\n"));
-      throw CORBA::INTERNAL ();
+        ::DDS::DomainParticipantQos qos;
+        this->domain_ =
+          this->domain_factory_->create_participant (this->domain_id_,
+                                                     qos,
+                                                     0,
+                                                     0);
+      }
+    catch (...)
+      {
+        CIAO_ERROR ((LM_ERROR, "Caught unknown C++ exception whilst configuring default domain\n"));
+        throw CORBA::INTERNAL ();
+      }
     }
 }
 
@@ -148,14 +138,11 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
   CIAO_DEBUG ((LM_TRACE, CLINFO "DDS_Event_Connector_T::configure_default_topic_ - "
                 "Configuring default topic\n"));
 
-  if (this->default_topic_configured_)
-    return;
-
   this->configure_default_domain_ ();
 
-  try
+  if (CORBA::is_nil (this->topic_))
     {
-      if (CORBA::is_nil (this->topic_))
+      try
         {
           CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i *part =
             dynamic_cast< CIAO::DDS4CCM::RTI::RTI_DomainParticipant_i * > (this->domain_.in ());
@@ -174,28 +161,24 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_default_topic_ (void)
                                              tqos,
                                              this->__listen_topiclistener.in (),
                                              DDS_INCONSISTENT_TOPIC_STATUS);
-              this->default_topic_configured_ = true;
             }
           else
             {
               throw CCM_DDS::InternalError (retcode, 0);
             }
         }
-    }
-  catch (...)
-    {
-      CIAO_ERROR ((LM_ERROR, "Caught unknown error while configuring default topic\n"));
-      throw CORBA::INTERNAL ();
+      catch (...)
+        {
+          CIAO_ERROR ((LM_ERROR, "Caught unknown error while configuring default topic\n"));
+          throw CORBA::INTERNAL ();
+        }
     }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_dds_write (void)
 {
-  if (this->__info_in_configured_)
-    return;
-
   this->configure_default_topic_ ();
 
   try
@@ -222,7 +205,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
                                                                                           this->__listen_datawriterlistener.in (),
                                                                                           0);
           this->__info_in_datawriter_ = ::DDS::CCM_DataWriter::_narrow (dwv_tmp);
-          __info_in_configured_ = true;
         }
     }
   catch (...)
@@ -234,11 +216,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_info_in_ (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (void)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen (void)
 {
-  if (this->__listen_configured_ && this->__info_get_configured_ )
-    return;
-
   this->configure_default_topic_ ();
 
   try
@@ -251,11 +230,14 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (void)
                                                                           0);
         }
 
-     this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
+      if (CORBA::is_nil (this->__listen_datareaderlistener.in ()))
+        {
+        this->__listen_datareaderlistener = new ::CIAO::DDS4CCM::RTI::DataReaderListener_T
           <DDS_TYPE, CCM_TYPE> (
                 this->context_,
                 this->__listen_datalistener_mode_,
                 this->__listen_datalistener_max_delivered_data_);
+        }
       if (CORBA::is_nil (this->__listen_datareader_.in ()))
         {
           ::DDS::DataReaderQos drqos;
@@ -264,7 +246,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (void)
                                                            drqos,
                                                            this->__listen_datareaderlistener.in (),
                                                            DDS_DATA_AVAILABLE_STATUS);
-          this->__listen_configured_ = true;
         }
 
       if (CORBA::is_nil (this->__info_get_datareader_.in ()))
@@ -275,7 +256,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::configure_port_listen_ (void)
                                                            drqos,
                                                            this->__listen_datareaderlistener.in (),
                                                            DDS_DATA_AVAILABLE_STATUS);
-          this->__info_get_configured_ = true;
         }
 
     }
@@ -292,8 +272,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_data (void)
 {
   CIAO_TRACE ("get_info_in_data");
 
-  this->configure_port_info_in_ ();
-
   return new CIAO::DDS4CCM::RTI::Writer_T<DDS_TYPE, CCM_TYPE>
           (this->__info_in_datawriter_.in ());
 }
@@ -304,8 +282,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_supplier_dds_entity (void)
 {
   CIAO_TRACE ("get_info_in_dds_entity");
 
-  this->configure_port_info_in_ ();
-
   return this->__info_in_datawriter_.in ();
 }
 
@@ -314,8 +290,6 @@ typename CCM_TYPE::getter_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_fresh_data (void)
 {
   CIAO_TRACE ("get_info_get_out_data");
-
-  this->configure_port_listen_ ();
 
   return new CIAO::DDS4CCM::RTI::Getter_T<DDS_TYPE, CCM_TYPE> (
           this->__info_get_datareader_.in ());
@@ -327,8 +301,6 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_push_consumer_data (void)
 {
   CIAO_TRACE ("get_push_consumer_data");
 
-  this->configure_port_listen_ ();
-
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
           this->__listen_datareader_.in ());
 }
@@ -338,8 +310,6 @@ typename CCM_TYPE::reader_type::_ptr_type
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::get_pull_consumer_data (void)
 {
   CIAO_TRACE ("get_pull_consumer_data");
-
-  this->configure_port_listen_ ();
 
   return new CIAO::DDS4CCM::RTI::Reader_T<DDS_TYPE, CCM_TYPE> (
           this->__listen_datareader_.in ());
@@ -398,12 +368,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
 {
-  if (!CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ()) ||
-     (!CORBA::is_nil (this->context_->get_connection_push_consumer_status () )))
-    {
-      this->configure_port_listen_ ();
-      this->configure_port_info_in_ ();
-    }
+  this->configure_port_listen ();
+  this->configure_port_dds_write ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
