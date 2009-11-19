@@ -1,5 +1,5 @@
 /**
- * @file NDDS_Traits.h
+ * @file DDS4CCM_Traits.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * $Id$
