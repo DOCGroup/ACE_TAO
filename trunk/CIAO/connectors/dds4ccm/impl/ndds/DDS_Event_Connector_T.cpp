@@ -15,9 +15,8 @@
 #include "ciao/Logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Event_Connector_T (const char * topic_name) :
-    DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>(),
-    topic_name_ (topic_name),
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_Event_Connector_T (void) :
+    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>(),
     __listen_datalistener_mode_ ( ::CCM_DDS::NOT_ENABLED),
     __listen_datalistener_max_delivered_data_ (0)
 {
@@ -27,46 +26,6 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::~DDS_Event_Connector_T (void)
 {
 }
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-char *
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (void)
-{
-  return CORBA::string_dup (this->topic_name_.in ());
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::topic_name (
-  const char * topic_name)
-{
-  this->topic_name_ = topic_name;
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (const ::DDS::StringSeq & key_fields)
-{
-  ACE_UNUSED_ARG (key_fields);
-  // @todo
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-::DDS::StringSeq *
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE>::key_fields (void)
-{
-  // @from DDS_TopicBase
-  ::DDS::StringSeq *retval =
-    new ::DDS::StringSeq (this->key_fields_.length ());
-
-  for (CORBA::ULong i = 0; i < this->key_fields_.length (); ++i)
-    {
-      (*retval)[i] = CORBA::string_dup (this->key_fields_[i]);
-    }
-  return retval;
-}
-
-// Port operations.
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void

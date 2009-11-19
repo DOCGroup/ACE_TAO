@@ -47,7 +47,7 @@ namespace CIAO_Hello_Hello_Connector_Impl
     public DDS_Event_Connector_T <DDSHello_DDS_Traits, DDSHello_Connector_Traits>
   {
   public:
-    Hello_Connector_exec_i (const char * topic_name);
+    Hello_Connector_exec_i (void);
     virtual ~Hello_Connector_exec_i (void);
   };
 
