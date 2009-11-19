@@ -1,3 +1,14 @@
+Thu Nov 19 20:10:15 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriterListener_T.cpp:
+          Used try-catches since DDS might throw exceptions when
+          invoking these callback methods.
+
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector_exec.h:
+        * connectors/dds4ccm/tests/Get_Connection_Test/Connector/Get_Connection_Test_Connector_exec.cpp:
+          Resolved some compiler errors.
+
 Thu Nov 19 19:38:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.cpp
