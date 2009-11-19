@@ -167,68 +167,14 @@
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
     <configProperty>
-      <name>rate</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>10</long>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>keys</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <ulong>5</ulong>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_ulong</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <ulong>10</ulong>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>get_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>read_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>raw_listen</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>true</boolean>
+          <!-- Sender->keys * Sender->iterations -->
+          <ushort>50</ushort>
         </value>
       </value>
     </configProperty>
@@ -279,21 +225,10 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <long>1</long>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>keys</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <ulong>5</ulong>
+          <ushort>1</ushort>
         </value>
       </value>
     </configProperty>
@@ -301,60 +236,26 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_ulong</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <ulong>10</ulong>
+          <ushort>10</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>keys</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>5</ushort>
         </value>
       </value>
     </configProperty>
   </instance>
 
-  <connection>
-    <name>info_out_data</name>
-    <internalEndpoint>
-      <portName>info_out_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>_listenercontrol</name>
-    <internalEndpoint>
-      <portName>info_out_data_control</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_data_control</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>_portstatuslistener</name>
-    <internalEndpoint>
-      <portName>info_out_status</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_status</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
   <connection>
     <name>_rawlistner</name>
     <internalEndpoint>
@@ -370,22 +271,23 @@
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
+
   <connection>
-    <name>info_out_get_fresh_data</name>
+    <name>_datacontrol</name>
     <internalEndpoint>
-      <portName>info_get_fresh_data</portName>
+      <portName>info_out_data_control</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>pull_consumer_fresh_data</portName>
+      <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Unkeyed_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-
+  
   <connection>
     <name>writer_connection</name>
     <internalEndpoint>

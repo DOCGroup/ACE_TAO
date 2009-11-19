@@ -42,9 +42,9 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    virtual ::CORBA::ULong rate (void);
+    virtual ::CORBA::UShort rate (void);
 
-    virtual void rate (::CORBA::ULong rate);
+    virtual void rate (::CORBA::UShort rate);
 
     virtual ::CORBA::UShort iterations (void);
 
@@ -72,7 +72,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
 
     pulse_Generator * ticker_;
     ::Unkeyed_Test::CCM_Sender_Context_var context_;
-    CORBA::ULong rate_;
+    CORBA::UShort rate_;
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
 

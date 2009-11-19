@@ -206,7 +206,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>true</boolean>
+          <boolean>false</boolean>
         </value>
       </value>
     </configProperty>
@@ -217,7 +217,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>true</boolean>
+          <boolean>false</boolean>
         </value>
       </value>
     </configProperty>
@@ -228,7 +228,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>false</boolean>
+          <boolean>true</boolean>
         </value>
       </value>
     </configProperty>
