@@ -1,3 +1,14 @@
+Thu Nov 19 14:23:09 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Finished first cut of production rules for revised IDL3+ grammar.
+
 Mon Nov 16 20:22:50 UTC 2009  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
