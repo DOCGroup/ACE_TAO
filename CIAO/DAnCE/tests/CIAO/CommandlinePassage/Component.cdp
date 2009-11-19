@@ -76,8 +76,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>-ORBConnectionCacheMax 3</string>
-          <!--string>-ORBLogFile component.log</string-->
+          <string>-ORBSvcConfDirective static Resource_Factory "-ORBConnectionCacheMax 3"</string>
         </value>
       </value>
     </configProperty>
