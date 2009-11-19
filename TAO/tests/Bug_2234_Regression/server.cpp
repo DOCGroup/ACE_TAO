@@ -43,7 +43,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "-o <iorfile>"
                            "\n",
                            argv [0]),
-                          -1);
+                           -1);
       }
   // Indicates sucessful parsing of the command line
   return 0;
@@ -816,7 +816,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       phooeyObj= rootPOA->id_to_reference( phooeyId.in() );
     CORBA::String_var
       stringifiedObj= orb->object_to_string( phooeyObj.in() );
-    ofstream file( ior_output_file );
+    ofstream file( ACE_TEXT_ALWAYS_CHAR(ior_output_file) );
     file << stringifiedObj;
     file.close();
 
