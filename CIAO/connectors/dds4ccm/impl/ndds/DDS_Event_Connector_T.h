@@ -8,25 +8,15 @@
 #ifndef CONNECTOR_T_H_
 #define CONNECTOR_T_H_
 
-#include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "ace/Copy_Disabled.h"
-#include "dds4ccm/impl/ndds/DDS_Base_Connector_T.h"
+#include "dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Event_Connector_T
-  : public virtual DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
 {
 public:
-  DDS_Event_Connector_T (const char * topic_name);
+  DDS_Event_Connector_T (void);
   virtual ~DDS_Event_Connector_T (void);
-
-  virtual char *topic_name (void);
-
-  virtual void topic_name (const char * topic_name);
-
-  virtual ::DDS::StringSeq *key_fields (void);
-
-  virtual void key_fields (const ::DDS::StringSeq & key_fields);
 
   /**
    * @name DDS_Write

@@ -1,3 +1,22 @@
+Thu Nov 19 19:38:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector_exec.h
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector_exec.h
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.cpp
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector_exec.h
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.cpp
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector_exec.cpp
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector_exec.h
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector_exec.cpp
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector_exec.h
+          Added DDS_TopicBase connector and removed default topic_name,
+          this has to come from the cdp
+
 Thu Nov 19 19:23:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DDS_Base_Connector_T.cpp:
