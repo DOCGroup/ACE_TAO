@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef TEST_IDL_
+#define TEST_IDL_
+
+struct Info
+{
+  long a;
+  long b;
+  long c;
+};
+
+interface Test
+{
+  void do_something(out Info my_info);
+};
+
+#endif /* TEST_IDL_ */
