@@ -1,3 +1,28 @@
+Thu Nov 19 09:03:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
+          Added isValid
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handleC.cpp:
+          Initialize isValid to 0
+
+        * connectors/dds4ccm/impl/ndds/DataReaderHandler_T.cpp:
+          Added try/catch
+
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h:
+          Copy isValid
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+          Removed commented out and not used code
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+          Default component server to ciao_componentserver, this fixes
+          bugzilla 3764
+
 Wed Nov 18 15:27:24 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Get_Connection_Test/Receiver/Get_Connection_Test_Receiver.idl:
