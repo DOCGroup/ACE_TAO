@@ -206,7 +206,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>false</boolean>
+          <boolean>true</boolean>
         </value>
       </value>
     </configProperty>
@@ -217,7 +217,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>false</boolean>
+          <boolean>true</boolean>
         </value>
       </value>
     </configProperty>
@@ -228,7 +228,7 @@
           <kind>tk_boolean</kind>
         </type>
         <value>
-          <boolean>true</boolean>
+          <boolean>false</boolean>
         </value>
       </value>
     </configProperty>
@@ -356,7 +356,22 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>info_out_get_fresh_data</name>
+    <name>info_out_data</name>
+    <internalEndpoint>
+      <portName>info_out_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Keyed_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>info_get_get_fresh_data</name>
     <internalEndpoint>
       <portName>info_get_fresh_data</portName>
       <provider>false</provider>
