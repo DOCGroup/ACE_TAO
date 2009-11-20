@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file CIAO_ComponentServer.h
+ * @file CIAO_ComponentServer_Task.h
  * @author William R. Otte
  *
  * Defines interface for the bootstrap element of the CIAO Component

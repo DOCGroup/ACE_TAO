@@ -71,8 +71,6 @@ private:
   // @from DDS_TopicBase
   void configure_default_topic_ (void);
   ::DDS::Topic_var topic_;
-  CORBA::String_var topic_name_;
-  DDS::StringSeq key_fields_;
 
   // @from DDS_Write for
   void configure_port_dds_write (void);

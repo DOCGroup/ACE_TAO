@@ -1,3 +1,25 @@
+Fri Nov 20 09:55:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.h:
+          Fixed fuzz
+
+        * ciao/Servants/Home_Servant_Impl_Base.cpp:
+          Layout changes
+
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+          Small improvements
+
+        * ciao/Servants/Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_T.h:
+          Major cleanup and improvements
+
+        * connectors/dds4ccm/impl/ndds/DDS_Event_Connector_T.h:
+          Removed members that now are in the base
+
+        * connectors/dds4ccm/impl/ndds/DDS_TopicBase_Connector_T.h:
+          Made members protected
+
 Fri Nov 20 09:22:24 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer.h

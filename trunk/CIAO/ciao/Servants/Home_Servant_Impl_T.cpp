@@ -81,8 +81,10 @@ namespace CIAO
       {
         throw Components::RemoveFailure ();
       }
-
-    _ciao_comp->remove ();
+    else
+      {
+        _ciao_comp->remove ();
+      }
 
     CIAO_DEBUG ((LM_INFO, CLINFO "Home_Servant_Impl<>::remove_component - Removed the component\n"));
   }
@@ -103,10 +105,7 @@ namespace CIAO
       {
         CIAO_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>::update_component_map - "
                      "Invalid component object reference\n"));
-        return;
       }
-
-    return;
   }
 
   // Operations for keyless home interface.
@@ -169,13 +168,13 @@ namespace CIAO
 
     Components::CCMHome_var home =
       Components::CCMHome::_narrow (hobj.in ());
-    
+
     char buffer[256];
     unsigned long serial = this->serial_number_++;
     ACE_OS::sprintf (buffer,
                      "%ld",
                      serial);
-    
+
     typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
     ACE_NEW_THROW_EX (svt,

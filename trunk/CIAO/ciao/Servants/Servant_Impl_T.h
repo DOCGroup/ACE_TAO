@@ -52,41 +52,21 @@ namespace CIAO
 
     // Operations for CCMObject interface.
 
-    virtual CORBA::Boolean
-    same_component (CORBA::Object_ptr object_ref);
+    virtual CORBA::Boolean same_component (CORBA::Object_ptr object_ref);
 
-    virtual ::Components::CCMHome_ptr
-    get_ccm_home ();
+    virtual ::Components::CCMHome_ptr get_ccm_home ();
 
-    virtual CORBA::Object_ptr
-    _get_component ();
+    virtual CORBA::Object_ptr _get_component ();
 
-    virtual Components::SessionComponent_ptr
-    get_executor ();
+    virtual Components::SessionComponent_ptr get_executor ();
 
-   // CIAO-specific operations.
+    void configuration_complete ();
 
-    void
-    configuration_complete ();
+    virtual void activate_component ();
 
-    void
-    ciao_activate ();
+    virtual void passivate_component ();
 
-    /// @@NOTE: The busted operation.
-    void
-    ciao_passivate ();
-
-    CORBA::Boolean
-    is_activated ();
-
-    virtual void
-    activate_component ();
-    
-    virtual void
-    passivate_component ();
-    
   protected:
-
     CORBA::Boolean activated_;
     CORBA::Boolean configuration_completed_;
 
