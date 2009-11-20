@@ -44,10 +44,12 @@ namespace CIAO
 {
   namespace Deployment
   {
+    ComponentServer_Task::Error::Error(const ACE_CString &err) : err_(err)
+    {
+    }
+
     ComponentServer_Task::ComponentServer_Task (int argc, ACE_TCHAR **argv)
-      : orb_ (0),
-        uuid_ (""),
-        callback_ior_str_ (ACE_TEXT(""))
+      : orb_ (0)
     {
       CIAO_TRACE ("CIAO_ComponentServer_Task::CIAO_ComponentServer_Task ()");
 
@@ -55,16 +57,20 @@ namespace CIAO
         *clf = ACE_Dynamic_Service<Logger_Service>::instance ("CIAO_Logger_Backend_Factory");
 
       if (!clf)
-        clf = new Logger_Service;
+        {
+          clf = new Logger_Service;
+        }
 
       this->logger_.reset (clf);
 
       this->logger_->init (argc, argv);
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+                   "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
                    "Creating server object\n"));
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+                   "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
                    "Creating ORB\n"));
       this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -74,7 +80,8 @@ namespace CIAO
 
       CIAO::Server_init (this->orb_.in ());
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+                   "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
                    "CIAO_ComponentServer object created.\n"));
     }
 
@@ -83,8 +90,10 @@ namespace CIAO
     {
       CIAO_TRACE ("ComponentServer_Task::svc");
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+                   "ComponentServer_Task::svc - "
                    "Activating the root POA\n"));
+
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RootPOA");
 
@@ -96,8 +105,10 @@ namespace CIAO
 
       poa_manager->activate ();
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+                   "ComponentServer_Task::svc - "
                    "Creating server implementation object\n"));
+
       CIAO::Deployment::CIAO_ComponentServer_i *ci_srv = 0;
       ACE_NEW_NORETURN (ci_srv,
                         CIAO_ComponentServer_i (this->uuid_,
@@ -106,7 +117,8 @@ namespace CIAO
 
       if (ci_srv == 0)
         {
-          CIAO_ERROR ((LM_CRITICAL, "ComponentServer_Task::run - "
+          CIAO_ERROR ((LM_CRITICAL,
+                       "ComponentServer_Task::run - "
                        "Out of memory error while allocating servant."));
           throw Error ("Out of memory whilst allocating servant.");
         }
@@ -125,12 +137,14 @@ namespace CIAO
       if (this->callback_ior_str_ != ACE_TEXT(""))
         {
           CIAO_DEBUG ((LM_TRACE, CLINFO "Resolving callback IOR\n"));
-          CORBA::Object_ptr obj = this->orb_->string_to_object (this->callback_ior_str_.c_str ());
+          CORBA::Object_ptr obj =
+            this->orb_->string_to_object (this->callback_ior_str_.c_str ());
           ServerActivator_var sa (ServerActivator::_narrow (obj));
 
           if (CORBA::is_nil (sa.in ()))
             {
-              CIAO_DEBUG ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
+              CIAO_DEBUG ((LM_ERROR, CLINFO
+                           "ComponentServer_Task::svc - "
                            "Failed to narrow callback IOR\n"));
               throw Error ("Failed to narrow callback IOR");
             }
@@ -152,7 +166,8 @@ namespace CIAO
           }
 
           // Make callback.
-          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+          CIAO_DEBUG ((LM_TRACE, CLINFO
+                       "ComponentServer_Task::svc - "
                        "Making callback on my ServerActivator\n"));
 
           try
@@ -177,7 +192,8 @@ namespace CIAO
           catch (const CORBA::BAD_PARAM &)
             {
               CIAO_ERROR ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
-                           "The Callback IOR provided pointed to the wrong ServerActivator\n"));
+                           "The Callback IOR provided pointed to the "
+                           "wrong ServerActivator\n"));
               throw Error ("Bad callback IOR");
             }
           catch (...)
@@ -191,11 +207,13 @@ namespace CIAO
       else
         {
           CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
-                       "Initializing ComponentServer without ServantActivator callback\n"));
+                       "Initializing ComponentServer without ServantActivator "
+                       "callback\n"));
           ci_srv->init (0, 0);
         }
 
       this->orb_->run ();
+
       CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
                    "ORB Event loop completed.\n"));
 
@@ -213,7 +231,9 @@ namespace CIAO
 
       CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::run - Starting ORB\n"));
       this->svc ();
-      CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer_Task::run - ORB has shutdown, terminating ComponentServer\n"));
+      CIAO_DEBUG ((LM_INFO,
+                  CLINFO "ComponentServer_Task::run - ORB has "
+                  "shutdown, terminating ComponentServer\n"));
     }
 
     void
@@ -221,7 +241,8 @@ namespace CIAO
     {
       CIAO_TRACE ("ComponentServer_Task::parse_args");
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::parse_args - parsing arguments...\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::parse_args - "
+                    "parsing arguments...\n"));
 
       ACE_Get_Opt opts (argc, argv, ACE_TEXT("hu:c:"), 1, 0,
                         ACE_Get_Opt::RETURN_IN_ORDER);
