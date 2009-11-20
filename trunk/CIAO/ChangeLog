@@ -1,3 +1,8 @@
+Fri Nov 20 13:34:35 UTC 2009  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added dds4ccm writer test.
+
 Fri Nov 20 13:21:38 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
