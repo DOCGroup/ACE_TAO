@@ -1,14 +1,20 @@
-Fri Nov 20 13:53:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+Fri Nov 20 16:55:01 UTC 2009  Yan Dai  <dai_y@ociweb.com>
 
         * NEWS:
         
           Update for next release.
 
+Fri Nov 20 13:53:51 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+
+          Update for next release.
+
 Fri Nov 20 13:02:24 UTC 2009  Denis Budko  <denis.budko@remedy.nl>
 
         * orbsvcs/tests/Security/Callback/server.cpp:
-			
-		  Test is converted to use new test framework and added to fuzz build.          
+
+                  Test is converted to use new test framework and added to fuzz build.
 
 Fri Nov 20 10:03:43 UTC 2009  Marcel Smit  <msmit@remedy.nl>
 
