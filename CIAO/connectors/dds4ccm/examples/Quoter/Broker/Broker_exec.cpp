@@ -265,7 +265,7 @@ namespace CIAO_Quoter_Broker_Impl
 
   void
   Stock_Info_Listener_exec_i::on_many_data (
-    const ::Quoter::Stock_Info_Seq & an_instance,
+    const ::Quoter::Stock_Info_Seq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
